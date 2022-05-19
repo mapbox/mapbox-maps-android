@@ -53,7 +53,6 @@ class GlobeActivity : AppCompatActivity() {
     infoTextView = binding.infoText
     mapboxMap = binding.mapView.getMapboxMap().apply {
       // set globe projection even before style load so that it appears immediately
-      setMapProjection(currentProjectionName.toMapProjection())
       loadStyle(
         style(Style.TRAFFIC_DAY) {
           +fillExtrusionLayer("3d-buildings", "composite") {
@@ -74,6 +73,7 @@ class GlobeActivity : AppCompatActivity() {
             skyType(SkyType.ATMOSPHERE)
             skyAtmosphereSun(listOf(15.0, 89.5))
           }
+          +projection(ProjectionName.GLOBE)
         }
       )
     }

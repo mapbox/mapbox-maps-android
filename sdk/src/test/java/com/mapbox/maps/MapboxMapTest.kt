@@ -4,7 +4,6 @@ import android.os.Looper
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
-import com.mapbox.maps.extension.observable.eventdata.MapLoadingErrorEventData
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.plugin.MapProjection
@@ -12,6 +11,7 @@ import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.delegates.listeners.*
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import com.mapbox.maps.plugin.gestures.OnMoveListener
+import com.mapbox.verifyNo
 import io.mockk.*
 import junit.framework.Assert.*
 import org.junit.After
@@ -131,10 +131,11 @@ class MapboxMapTest {
     assertTrue(mapboxMap.isStyleLoadInitiated)
   }
 
+  // TODO fix test
   @Test
-  fun finishLoadingStyleExtension() {
+  fun bindsStyleExtensionComponentsInCorrectOrderAfterStyleDataLoadEvents() {
     val style = mockk<Style>()
-    val styleExtension = mockk<StyleContract.StyleExtension>()
+    val styleExtension = mockk<StyleContract.StyleExtension>(relaxed = true)
 
     val source = mockk<StyleContract.StyleSourceExtension>(relaxed = true)
     every { styleExtension.sources } returns listOf(source)
@@ -144,9 +145,7 @@ class MapboxMapTest {
 
     val layer = mockk<StyleContract.StyleLayerExtension>(relaxed = true)
     val layerPosition = LayerPosition(null, null, 0)
-    every { styleExtension.layers } returns listOf(
-      Pair(layer, layerPosition)
-    )
+    every { styleExtension.layers } returns listOf(Pair(layer, layerPosition))
 
     val light = mockk<StyleContract.StyleLightExtension>(relaxed = true)
     every { styleExtension.light } returns light
@@ -162,16 +161,60 @@ class MapboxMapTest {
 
     val styleLoadCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
 
-    mapboxMap.onFinishLoadingStyleExtension(style, styleExtension, styleLoadCallback)
+    val userCallbackStyleSlots = mutableListOf<Style.OnStyleLoaded?>()
+    val callbackStyleSlots = mutableListOf<Style.OnStyleLoaded?>()
+    val callbackStyleSpritesSlots = mutableListOf<Style.OnStyleLoaded?>()
+    val callbackStyleSourcesSlots = mutableListOf<Style.OnStyleLoaded?>()
 
-    assertEquals(mapboxMap.style, style)
-    verify { source.bindTo(style) }
-    verify { image.bindTo(style) }
-    verify { layer.bindTo(style, layerPosition) }
+    mapboxMap.loadStyle(styleExtension, styleLoadCallback)
+
+    verify {
+      styleObserver.setLoadStyleListener(
+        captureNullable(userCallbackStyleSlots),
+        captureNullable(callbackStyleSlots),
+        captureNullable(callbackStyleSpritesSlots),
+        captureNullable(callbackStyleSourcesSlots),
+        any(),
+      )
+    }
+
+    verifyNo { source.bindTo(style) }
+    verifyNo { image.bindTo(style) }
+    verifyNo { layer.bindTo(style, layerPosition) }
+    verifyNo { light.bindTo(style) }
+    verifyNo { terrain.bindTo(style) }
+    verifyNo { projection.bindTo(style) }
+    verifyNo { atmosphere.bindTo(style) }
+    verifyNo { styleLoadCallback.onStyleLoaded(style) }
+
+    callbackStyleSlots.first()!!.onStyleLoaded(style)
+
     verify { light.bindTo(style) }
     verify { terrain.bindTo(style) }
     verify { projection.bindTo(style) }
     verify { atmosphere.bindTo(style) }
+    verifyNo { source.bindTo(style) }
+    verifyNo { image.bindTo(style) }
+    verifyNo { layer.bindTo(style, layerPosition) }
+    verifyNo { styleLoadCallback.onStyleLoaded(style) }
+
+    // TODO https://github.com/mapbox/mapbox-maps-android/issues/1371
+//    callbackStyleSpritesSlots.first()!!.onStyleLoaded(style)
+//
+//    verify { image.bindTo(style) }
+//    verifyNo { source.bindTo(style) }
+//    verifyNo { layer.bindTo(style, layerPosition) }
+//    verifyNo { styleLoadCallback.onStyleLoaded(style) }
+//
+//    callbackStyleSourcesSlots.first()!!.onStyleLoaded(style)
+//
+//    verify { source.bindTo(style) }
+//    verify { layer.bindTo(style, layerPosition) }
+
+    userCallbackStyleSlots.first()!!.onStyleLoaded(style)
+    verify { image.bindTo(style) }
+    verify { source.bindTo(style) }
+    verify { layer.bindTo(style, layerPosition) }
     verify { styleLoadCallback.onStyleLoaded(style) }
   }
 
@@ -1068,19 +1111,24 @@ class MapboxMapTest {
   }
 
   @Test
-  fun setStyleTransition() {
+  fun setsStyleTransitionAfterOnStyleDataEvent() {
     val options = mockk<TransitionOptions>(relaxed = true)
+    val style = mockk<Style>(relaxUnitFun = true)
     mapboxMap.loadStyleUri(
       "style",
       options,
-      {},
-      object : OnMapLoadErrorListener {
-        override fun onMapLoadError(eventData: MapLoadingErrorEventData) {}
-      }
+      {}
     )
-    verify(exactly = 1) {
-      styleObserver.setLoadStyleListener(options, any(), any())
+
+    val userCallbackStyleSlot = CapturingSlot<Style.OnStyleLoaded>()
+
+    verify {
+      styleObserver.setLoadStyleListener(any(), capture(userCallbackStyleSlot), any(), any(), any())
     }
+
+    userCallbackStyleSlot.captured.onStyleLoaded(style)
+
+    verify { style.styleTransition = options }
   }
 
   @Test

@@ -15,6 +15,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Introduce pinchScrollEnabled configuration to enable/disable 2-finger map panning, default to true. ([#1343](https://github.com/mapbox/mapbox-maps-android/pull/1343))
 * Re-throw native exceptions `jni::PendingJavaException` as readable Java exceptions with detailed exception text. ([#1363](https://github.com/mapbox/mapbox-maps-android/pull/1363))
 * Add static `MapView.isTerrainRenderingSupported()` method to validate if 3D terrain rendering is supported on given device. ([1368](https://github.com/mapbox/mapbox-maps-android/pull/1368))
+* Optimize `MapboxMap.loadStyle()` to apply styling properties earlier. [#1362](https://github.com/mapbox/mapbox-maps-android/pull/1362)
 
 ## Bug fixes 🐞
 * Enable two finger pan gesture. ([#1280](https://github.com/mapbox/mapbox-maps-android/pull/1280))

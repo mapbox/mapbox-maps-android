@@ -146,10 +146,16 @@ class MapboxMap :
     styleUri: String,
     styleTransitionOptions: TransitionOptions? = null,
     onStyleLoaded: Style.OnStyleLoaded? = null,
-    onMapLoadErrorListener: OnMapLoadErrorListener? = null
+    onMapLoadErrorListener: OnMapLoadErrorListener? = null,
   ) {
     checkNativeMap("loadStyleUri")
-    initializeStyleLoad(onStyleLoaded, onMapLoadErrorListener, styleTransitionOptions)
+    initializeStyleLoad(
+      onStyleLoaded,
+      styleDataStyleLoadedListener = {
+        styleTransitionOptions?.let(it::setStyleTransition)
+      },
+      onMapLoadErrorListener = onMapLoadErrorListener,
+    )
     if (styleUri.isEmpty()) {
       nativeMap.styleJSON = EMPTY_STYLE_JSON
     } else {
@@ -189,15 +195,7 @@ class MapboxMap :
     styleUri: String,
     onStyleLoaded: Style.OnStyleLoaded? = null,
     onMapLoadErrorListener: OnMapLoadErrorListener? = null
-  ) {
-    checkNativeMap("loadStyleUri")
-    initializeStyleLoad(onStyleLoaded, onMapLoadErrorListener, null)
-    if (styleUri.isEmpty()) {
-      nativeMap.styleJSON = EMPTY_STYLE_JSON
-    } else {
-      nativeMap.styleURI = styleUri
-    }
-  }
+  ) = loadStyleUri(styleUri, null, onStyleLoaded, onMapLoadErrorListener)
 
   /**
    * Will load a new map style asynchronous from the specified URI.
@@ -229,7 +227,13 @@ class MapboxMap :
     onMapLoadErrorListener: OnMapLoadErrorListener? = null,
   ) {
     checkNativeMap("loadStyleJson")
-    initializeStyleLoad(onStyleLoaded, onMapLoadErrorListener, styleTransitionOptions)
+    initializeStyleLoad(
+      onStyleLoaded,
+      styleDataStyleLoadedListener = {
+        styleTransitionOptions?.let(it::setStyleTransition)
+      },
+      onMapLoadErrorListener = onMapLoadErrorListener
+    )
     nativeMap.styleJSON = styleJson
   }
 
@@ -240,11 +244,7 @@ class MapboxMap :
     styleJson: String,
     onStyleLoaded: Style.OnStyleLoaded? = null,
     onMapLoadErrorListener: OnMapLoadErrorListener? = null
-  ) {
-    checkNativeMap("loadStyleJson")
-    initializeStyleLoad(onStyleLoaded, onMapLoadErrorListener, null)
-    nativeMap.styleJSON = styleJson
-  }
+  ) = loadStyleJson(styleJson, null, onStyleLoaded, onMapLoadErrorListener)
 
   /**
    * Load style JSON.
@@ -274,12 +274,49 @@ class MapboxMap :
     onMapLoadErrorListener: OnMapLoadErrorListener? = null,
   ) {
     checkNativeMap("loadStyle")
-    this.loadStyleUri(
-      styleExtension.styleUri,
-      transitionOptions,
-      { style -> onFinishLoadingStyleExtension(style, styleExtension, onStyleLoaded) },
-      onMapLoadErrorListener
+    initializeStyleLoad(
+      onStyleLoaded = { style ->
+        // TODO https://github.com/mapbox/mapbox-maps-android/issues/1371
+        styleExtension.images.forEach {
+          it.bindTo(style)
+        }
+        styleExtension.sources.forEach {
+          it.bindTo(style)
+        }
+        styleExtension.layers.forEach { (layer, layerPosition) ->
+          layer.bindTo(style, layerPosition)
+        }
+        onStyleLoaded?.onStyleLoaded(style)
+      },
+      styleDataStyleLoadedListener = { style ->
+        styleExtension.light?.bindTo(style)
+        styleExtension.terrain?.bindTo(style)
+        styleExtension.atmosphere?.bindTo(style)
+        styleExtension.projection?.bindTo(style)
+        transitionOptions?.let(style::setStyleTransition)
+      },
+      styleDataSourcesLoadedListener = { style ->
+        // TODO https://github.com/mapbox/mapbox-maps-android/issues/1371
+//        styleExtension.sources.forEach {
+//          it.bindTo(style)
+//        }
+//        styleExtension.layers.forEach { (layer, layerPosition) ->
+//          layer.bindTo(style, layerPosition)
+//        }
+      },
+      styleDataSpritesLoadedListener = { style ->
+        // TODO https://github.com/mapbox/mapbox-maps-android/issues/1371
+//        styleExtension.images.forEach {
+//          it.bindTo(style)
+//        }
+      },
+      onMapLoadErrorListener = onMapLoadErrorListener,
     )
+    if (styleExtension.styleUri.isEmpty()) {
+      nativeMap.styleJSON = EMPTY_STYLE_JSON
+    } else {
+      nativeMap.styleURI = styleExtension.styleUri
+    }
   }
 
   /**
@@ -289,15 +326,7 @@ class MapboxMap :
     styleExtension: StyleContract.StyleExtension,
     onStyleLoaded: Style.OnStyleLoaded? = null,
     onMapLoadErrorListener: OnMapLoadErrorListener? = null,
-  ) {
-    checkNativeMap("loadStyle")
-    this.loadStyleUri(
-      styleExtension.styleUri,
-      null,
-      { style -> onFinishLoadingStyleExtension(style, styleExtension, onStyleLoaded) },
-      onMapLoadErrorListener
-    )
-  }
+  ) = loadStyle(styleExtension, null, onStyleLoaded, onMapLoadErrorListener)
 
   /**
    * Load the style from Style Extension.
@@ -314,41 +343,20 @@ class MapboxMap :
     styleExtension: StyleContract.StyleExtension
   ) = loadStyle(styleExtension, null, null, null)
 
-  /**
-   * Handle the style loading from Style Extension.
-   */
-  internal fun onFinishLoadingStyleExtension(
-    style: Style,
-    styleExtension: StyleContract.StyleExtension,
-    onStyleLoaded: Style.OnStyleLoaded? = null
-  ) {
-    this.style = style
-    styleExtension.sources.forEach {
-      it.bindTo(style)
-    }
-    styleExtension.layers.forEach { (layer, layerPosition) ->
-      layer.bindTo(style, layerPosition)
-    }
-    styleExtension.images.forEach {
-      it.bindTo(style)
-    }
-    styleExtension.light?.bindTo(style)
-    styleExtension.terrain?.bindTo(style)
-    styleExtension.atmosphere?.bindTo(style)
-    styleExtension.projection?.bindTo(style)
-    onStyleLoaded?.onStyleLoaded(style)
-  }
-
   private fun initializeStyleLoad(
     onStyleLoaded: Style.OnStyleLoaded? = null,
+    styleDataStyleLoadedListener: Style.OnStyleLoaded? = null,
+    styleDataSpritesLoadedListener: Style.OnStyleLoaded? = null,
+    styleDataSourcesLoadedListener: Style.OnStyleLoaded? = null,
     onMapLoadErrorListener: OnMapLoadErrorListener? = null,
-    styleTransitionOptions: TransitionOptions? = null
   ) {
     style = null
     styleObserver.setLoadStyleListener(
-      styleTransitionOptions,
       onStyleLoaded,
-      onMapLoadErrorListener
+      styleDataStyleLoadedListener = styleDataStyleLoadedListener,
+      styleDataSpritesLoadedListener = styleDataSpritesLoadedListener,
+      styleDataSourcesLoadedListener = styleDataSourcesLoadedListener,
+      onMapLoadErrorListener = onMapLoadErrorListener,
     )
     isStyleLoadInitiated = true
   }
@@ -1704,6 +1712,9 @@ class MapboxMap :
    * @param mapProjection [MapProjection] to be applied to the map
    */
   @MapboxExperimental
+  @Deprecated(
+    "Use style extension instead: `loadStyle(styleUri) { +projection(projectionName) }`"
+  )
   override fun setMapProjection(mapProjection: MapProjection) {
     checkNativeMap("setMapProjection")
     val expected = nativeMap.setStyleProjection(
@@ -1725,6 +1736,9 @@ class MapboxMap :
    * @return [MapProjection] map is using.
    */
   @MapboxExperimental
+  @Deprecated(
+    "Use `Style.getProjection` instead"
+  )
   override fun getMapProjection(): MapProjection {
     checkNativeMap("getMapProjection")
     nativeMap.getStyleProjectionProperty("name").apply {
@@ -1821,7 +1835,10 @@ class MapboxMap :
 
   private fun checkNativeMap(methodName: String) {
     if (!isMapValid) {
-      logE(TAG, "Mapbox SDK memory leak detected! MapboxMap object (accessing $methodName) should not be stored and used after MapView is destroyed.")
+      logE(
+        TAG,
+        "Mapbox SDK memory leak detected! MapboxMap object (accessing $methodName) should not be stored and used after MapView is destroyed."
+      )
     }
   }
 
