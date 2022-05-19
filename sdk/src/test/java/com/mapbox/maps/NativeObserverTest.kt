@@ -647,6 +647,4 @@ class NativeObserverTest {
     assertTrue(nativeObserver.onStyleImageUnusedListeners.isEmpty())
     assertTrue(nativeObserver.onStyleDataLoadedListeners.isEmpty())
   }
-
-
 }

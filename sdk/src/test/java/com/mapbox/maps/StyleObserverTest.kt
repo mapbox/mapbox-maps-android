@@ -1,7 +1,6 @@
 package com.mapbox.maps
 
 import com.mapbox.maps.extension.observable.eventdata.StyleDataLoadedEventData
-import com.mapbox.maps.extension.observable.eventdata.StyleLoadedEventData
 import com.mapbox.maps.extension.observable.model.StyleDataType
 import com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener
 import com.mapbox.verifyNo
