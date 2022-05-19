@@ -25,6 +25,7 @@ buildscript {
     classpath(Plugins.mapboxSdkRegistry)
     classpath(Plugins.mapboxSdkVersionsPlugin)
     classpath(Plugins.pitestPlugin)
+    classpath(Plugins.detekt)
   }
 }
 
@@ -45,6 +46,12 @@ allprojects {
     maven {
       url = uri("https://oss.jfrog.org/artifactory/oss-snapshot-local/")
     }
+  }
+  apply(from = "$rootDir/gradle/detekt.gradle")
+
+  dependencies {
+    "detektPlugins"(Dependencies.detektFormatting)
+    "detektPlugins"(Dependencies.detektCLI)
   }
 }
 
@@ -115,4 +122,43 @@ apiValidation {
    * Flag to programmatically disable compatibility validator
    */
   validationDisabled = false
+}
+
+val detektAll by tasks.registering(io.gitlab.arturbosch.detekt.Detekt::class) {
+  configureDetekt(this)
+}
+
+val detektFixAll by tasks.registering(io.gitlab.arturbosch.detekt.Detekt::class) {
+  configureDetekt(this)
+  autoCorrect = true
+}
+
+fun configureDetekt(detekt: io.gitlab.arturbosch.detekt.Detekt) {
+  detekt.apply {
+    description = "Runs over whole code base without the starting overhead for each module."
+    parallel = true
+    buildUponDefaultConfig = true
+    setSource(files(rootDir))
+    config.from(files("$rootDir/detekt.yml"))
+    allRules = false
+    include("**/*.kt")
+    include("**/*.kts")
+    exclude("**/res/**")
+    exclude("**/build/**")
+    val reportsDir = "${rootProject.buildDir}/reports"
+    reports {
+      xml {
+        enabled = true
+        destination = file("$reportsDir/detekt.xml")
+      }
+      html {
+        enabled = true
+        destination = file("$reportsDir/detekt.html")
+      }
+      custom {
+        reportId = "CustomJsonReport"
+        destination = file("$reportsDir/detekt.json")
+      }
+    }
+  }
 }

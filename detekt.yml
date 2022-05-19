@@ -1,0 +1,116 @@
+exceptions:
+  active: true
+  SwallowedException:
+    active: false
+  TooGenericExceptionCaught:
+    active: false
+  ThrowingExceptionsWithoutMessageOrCause:
+    active: false
+  TooGenericExceptionThrown:
+    active: false
+
+style:
+  NewLineAtEndOfFile:
+    active: false
+  MaxLineLength:
+    active: false
+  MagicNumber:
+    active: false
+  UnusedPrivateMember:
+    active: false
+  WildcardImport:
+    active: false
+  ReturnCount:
+    active: false
+  UnnecessaryAbstractClass:
+    active: false
+  ThrowsCount:
+    active: false
+  ForbiddenComment:
+    active: false
+
+potential-bugs:
+  ImplicitDefaultLocale:
+    active: false
+
+performance:
+  SpreadOperator:
+    active: false
+  ArrayPrimitive:
+    active: false
+
+formatting:
+  PackageName:
+    active: false
+  Indentation:
+    active: false
+  ImportOrdering:
+    active: false
+  FinalNewline:
+    active: false
+  MaximumLineLength:
+    active: false
+  NoWildcardImports:
+    active: false
+  ParameterListWrapping:
+    active: false
+  SpacingAroundOperators:
+    active: false
+  StringTemplate:
+    active: false
+  NoConsecutiveBlankLines:
+    active: false
+  NoUnusedImports:
+    active: false
+  CommentSpacing:
+    active: false
+  NoTrailingSpaces:
+    active: false
+  NoMultipleSpaces:
+    active: false
+  Filename:
+    active: false
+  NoBlankLineBeforeRbrace:
+    active: false
+  SpacingAroundColon:
+    active: false
+  TooGenericExceptionThrown:
+    active: false
+  EmptyFunctionBlock:
+    active: false
+
+naming:
+  PackageNaming:
+    active: false
+  VariableMaxLength:
+    maximumVariableNameLength: 64
+  FunctionNaming:
+    ignoreAnnotated: [ 'Composable' ]
+  VariableNaming:
+    active: false
+  MatchingDeclarationName:
+    active: false
+
+empty-blocks:
+  EmptyCatchBlock:
+    active: false
+  EmptyFunctionBlock:
+    active: false
+  EmptyElseBlock:
+    active: false
+
+complexity:
+  TooManyFunctions:
+    active: false
+  ComplexMethod:
+    active: false
+  LongMethod:
+    active: false
+  ComplexCondition:
+    active: false
+  LargeClass:
+    active: false
+  NestedBlockDepth:
+    active: false
+  LongParameterList:
+    active: false
