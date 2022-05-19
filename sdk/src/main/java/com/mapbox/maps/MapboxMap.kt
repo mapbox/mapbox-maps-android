@@ -151,11 +151,9 @@ class MapboxMap :
     checkNativeMap("loadStyleUri")
     initializeStyleLoad(
       onStyleLoaded,
-      styleDataStyleLoadedListener = if (styleTransitionOptions != null) {
-        {
-          it.styleTransition = styleTransitionOptions
-        }
-      } else null,
+      styleDataStyleLoadedListener = {
+        styleTransitionOptions?.let(it::setStyleTransition)
+      },
       onMapLoadErrorListener = onMapLoadErrorListener,
     )
     if (styleUri.isEmpty()) {
@@ -277,7 +275,23 @@ class MapboxMap :
   ) {
     checkNativeMap("loadStyle")
     initializeStyleLoad(
-      onStyleLoaded,
+      onStyleLoaded = { style ->
+        // TODO order of styleDataSourcesLoadedListener / styleDataSpritesLoadedListener is not defined
+        // and the callbacks are optional - e.g. style without sources / sprites won't trigger those events.
+        // To make sure every style extension component is loaded
+        // we bind them in the final onStyleLoaded callback.
+        // Need to revisit in 10.6.0-beta.2
+        styleExtension.images.forEach {
+          it.bindTo(style)
+        }
+        styleExtension.sources.forEach {
+          it.bindTo(style)
+        }
+        styleExtension.layers.forEach { (layer, layerPosition) ->
+          layer.bindTo(style, layerPosition)
+        }
+        onStyleLoaded?.onStyleLoaded(style)
+      },
       styleDataStyleLoadedListener = { style ->
         styleExtension.light?.bindTo(style)
         styleExtension.terrain?.bindTo(style)
@@ -286,17 +300,19 @@ class MapboxMap :
         transitionOptions?.let(style::setStyleTransition)
       },
       styleDataSourcesLoadedListener = { style ->
-        styleExtension.sources.forEach {
-          it.bindTo(style)
-        }
-        styleExtension.layers.forEach { (layer, layerPosition) ->
-          layer.bindTo(style, layerPosition)
-        }
+        // TODO
+//        styleExtension.sources.forEach {
+//          it.bindTo(style)
+//        }
+//        styleExtension.layers.forEach { (layer, layerPosition) ->
+//          layer.bindTo(style, layerPosition)
+//        }
       },
       styleDataSpritesLoadedListener = { style ->
-        styleExtension.images.forEach {
-          it.bindTo(style)
-        }
+        // TODO
+//        styleExtension.images.forEach {
+//          it.bindTo(style)
+//        }
       },
       onMapLoadErrorListener = onMapLoadErrorListener,
     )
@@ -1725,7 +1741,7 @@ class MapboxMap :
    */
   @MapboxExperimental
   @Deprecated(
-    "Use Style.getProjection instead"
+    "Use `Style.getProjection` instead"
   )
   override fun getMapProjection(): MapProjection {
     checkNativeMap("getMapProjection")
