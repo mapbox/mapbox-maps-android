@@ -2,7 +2,8 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# main
+# 10.6.0-beta.1 May 19, 2022
+
 ## Features ✨ and improvements 🏁
 * Enable support for incremental annotation processing. ([#1323](https://github.com/mapbox/mapbox-maps-android/pull/1323))
 * Make use of non-deprecated common Mapbox logger. ([#1327](https://github.com/mapbox/mapbox-maps-android/pull/1327))
