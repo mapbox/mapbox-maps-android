@@ -6,6 +6,13 @@ set -Eeuo pipefail
 #
 # Note: if run locally, execute `mbx env` and `./gradlew assembleRelease` first.
 #
+if ! command -v gh &> /dev/null
+then
+    echo "gh (github cli tool) is not found, install it first"
+    exit
+fi
+gh auth login --with-token < ./gh_token.txt
+
 CURRENT_DIR=$(dirname "$0")
 MAJOR_CHANGE_FILE=${CURRENT_DIR}/../api_compat_report/major.txt
 [ -e $MAJOR_CHANGE_FILE ] && rm $MAJOR_CHANGE_FILE
@@ -25,8 +32,28 @@ if ! [ -x "$(command -v revapi.sh)" ]; then
     popd > /dev/null
 fi
 
-RELEATE_TAG=${1-""}
-echo "Release tag: $RELEATE_TAG"
+RELEASE_TAG=${1-""}
+
+CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+TARGET_BRANCH=$(gh pr view "$CURRENT_BRANCH" --json baseRefName --jq '.baseRefName')
+echo "CURRENT_BRANCH: $CURRENT_BRANCH"
+echo "TARGET_BRANCH: $TARGET_BRANCH"
+
+if ! [ "$TARGET_BRANCH" = "main" ]; then # Release branches
+  LATEST_RELEASE_TAG_IN_THIS_BRANCH=$(git tag --merged "$CURRENT_BRANCH" --sort=-creatordate | grep "android-v"| head -n 1)
+  if [ "$LATEST_RELEASE_TAG_IN_THIS_BRANCH" = "*beta*" ] || [ "$LATEST_RELEASE_TAG_IN_THIS_BRANCH" = "*rc*" ]; then
+    # Use the latest stable minor release tag during rc and beta release
+    LAST_STABLE_RELEASE_TAG=$(git tag --list 'android-v*.0' --sort=-creatordate | head -n 1)
+  else
+    # Use the latest stable minor release tag in this branch
+    LAST_STABLE_RELEASE_TAG=$(git tag --merged "$CURRENT_BRANCH" --sort=-creatordate | grep "android-v.*0$"| head -n 1)
+  fi
+else
+  # Use the latest stable minor release tag for main branch
+  LAST_STABLE_RELEASE_TAG=$(git tag --list 'android-v*.0' --sort=-creatordate | head -n 1)
+fi
+echo "LAST_STABLE_RELEASE_TAG: $LAST_STABLE_RELEASE_TAG"
+echo "Release tag: $RELEASE_TAG"
 MODULES=$(sed -e '/include(/,/)/!d' ./settings.gradle.kts | tr -d '\n' | sed 's/.*(\([^]]*\)).*/\1/g;s/,\n/\n/g' | tr , \\n | sed 's/.*":\([^]]*\)".*/\1/g')
 for i in $MODULES; do
   if [ -f "./$i/build/outputs/aar/$i-release.aar" ]; then
@@ -39,7 +66,7 @@ for i in $MODULES; do
       continue
     fi
     echo "========================  Checking module: $i, module aar name: $MODULE_NAME  ===================================="
-    "${CURRENT_DIR}"/java-api-check.sh "$RELEATE_TAG" "./$i/build/outputs/aar/$i-release.aar" "$MODULE_NAME"
+    "${CURRENT_DIR}"/java-api-check.sh "$RELEASE_TAG" "./$i/build/outputs/aar/$i-release.aar" "$MODULE_NAME" "$LAST_STABLE_RELEASE_TAG"
   fi
 done
 

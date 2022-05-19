@@ -3,14 +3,12 @@
 set -Eeuo pipefail
 
 # Usage:
-#   ./java-api-check.sh <current release tag (empty for branches)> <path to current aar> <module name> <optional, path to previously released aar>
+#   ./java-api-check.sh <current release tag (empty for branches)> <path to current aar> <module name> <last stable release> <optional, path to previously released aar>
 #
-
-if ! command -v gh &> /dev/null
-then
-    echo "gh (github cli tool) is not found, install it first"
-    exit
-fi
+echo "\$1:$1"
+echo "\$2:$2"
+echo "\$3:$3"
+echo "\$4:$4"
 
 if [[ ! -f $2 ]]
 then
@@ -50,19 +48,18 @@ PREVIOUS_RELEASE=${TMPDIR}/previous/sdk-release.aar
 CURRENT_RELEASE_DIR=$(dirname "${CURRENT_RELEASE}")
 PREVIOUS_RELEASE_DIR=$(dirname "${PREVIOUS_RELEASE}")
 
-gh auth login --with-token < ./gh_token.txt
-LAST_VERSION_TAG=$(gh release list -L 1) #android-v10.3.0
-LAST_VERSION_TAG_ARRAY=($LAST_VERSION_TAG)
-LAST_VERSION=${LAST_VERSION_TAG_ARRAY[0]:9}
+LAST_STABLE_VERSION_TAG=$4 #android-v10.3.0
+LAST_STABLE_VERSION_TAG_ARRAY=($LAST_STABLE_VERSION_TAG)
+LAST_STABLE_VERSION=${LAST_STABLE_VERSION_TAG_ARRAY[0]:9}
 
-RELEASE_TAG=${4-""}
+RELEASE_TAG=${5-""}
 if [[ -z $RELEASE_TAG ]]; then
-  echo "Path to previous version of aar is not set, using ${LAST_VERSION}"
-  AAR_PATH="s3://mapbox-api-downloads-production/v2/mobile-maps-android-"${MODULE_NAME}"/releases/android/"${LAST_VERSION}"/maven/maps-"${MODULE_NAME}"-"${LAST_VERSION}".aar"
+  echo "Path to previous version of aar is not set, using ${LAST_STABLE_VERSION}"
+  AAR_PATH="s3://mapbox-api-downloads-production/v2/mobile-maps-android-"${MODULE_NAME}"/releases/android/"${LAST_STABLE_VERSION}"/maven/maps-"${MODULE_NAME}"-"${LAST_STABLE_VERSION}".aar"
   if [[ $MODULE_NAME == sdk ]]; then
-    AAR_PATH="s3://mapbox-api-downloads-production/v2/mobile-maps-android/releases/android/"${LAST_VERSION}"/maven/android-"${LAST_VERSION}".aar"
+    AAR_PATH="s3://mapbox-api-downloads-production/v2/mobile-maps-android/releases/android/"${LAST_STABLE_VERSION}"/maven/android-"${LAST_STABLE_VERSION}".aar"
   elif [[ $MODULE_NAME == sdk-base ]]; then
-    AAR_PATH="s3://mapbox-api-downloads-production/v2/mobile-maps-android-base/releases/android/"${LAST_VERSION}"/maven/base-"${LAST_VERSION}".aar"
+    AAR_PATH="s3://mapbox-api-downloads-production/v2/mobile-maps-android-base/releases/android/"${LAST_STABLE_VERSION}"/maven/base-"${LAST_STABLE_VERSION}".aar"
   fi
   echo "aar path is: $AAR_PATH, checking file"
   if [[ -z $(aws s3 ls "$AAR_PATH") ]]; then
@@ -167,4 +164,4 @@ if [[ $api_compat == major ]]; then
   cat ${REPORT_DIR}/api_compat.txt >> "${MAJOR_CHANGE_FILE}"
 fi
 
-"${CURRENT_DIR}"/semver-check.sh "${TAGGED_RELEASE_VERSION}" "${LAST_VERSION}" "${api_compat}"
+"${CURRENT_DIR}"/semver-check.sh "${TAGGED_RELEASE_VERSION}" "${LAST_STABLE_VERSION}" "${api_compat}"
