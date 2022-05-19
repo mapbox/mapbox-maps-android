@@ -1,116 +1,116 @@
 exceptions:
   active: true
   SwallowedException:
-    active: false
+    active: true
   TooGenericExceptionCaught:
-    active: false
+    active: true
   ThrowingExceptionsWithoutMessageOrCause:
-    active: false
+    active: true
   TooGenericExceptionThrown:
-    active: false
+    active: true
 
 style:
   NewLineAtEndOfFile:
-    active: false
+    active: true
   MaxLineLength:
-    active: false
+    active: true
   MagicNumber:
-    active: false
+    active: true
   UnusedPrivateMember:
-    active: false
+    active: true
   WildcardImport:
-    active: false
+    active: true
   ReturnCount:
-    active: false
+    active: true
   UnnecessaryAbstractClass:
-    active: false
+    active: true
   ThrowsCount:
-    active: false
+    active: true
   ForbiddenComment:
-    active: false
+    active: true
 
 potential-bugs:
   ImplicitDefaultLocale:
-    active: false
+    active: true
 
 performance:
   SpreadOperator:
-    active: false
+    active: true
   ArrayPrimitive:
-    active: false
+    active: true
 
 formatting:
   PackageName:
-    active: false
+    active: true
   Indentation:
-    active: false
+    active: true
   ImportOrdering:
-    active: false
+    active: true
   FinalNewline:
-    active: false
+    active: true
   MaximumLineLength:
-    active: false
+    active: true
   NoWildcardImports:
-    active: false
+    active: true
   ParameterListWrapping:
-    active: false
+    active: true
   SpacingAroundOperators:
-    active: false
+    active: true
   StringTemplate:
-    active: false
+    active: true
   NoConsecutiveBlankLines:
-    active: false
+    active: true
   NoUnusedImports:
-    active: false
+    active: true
   CommentSpacing:
-    active: false
+    active: true
   NoTrailingSpaces:
-    active: false
+    active: true
   NoMultipleSpaces:
-    active: false
+    active: true
   Filename:
-    active: false
+    active: true
   NoBlankLineBeforeRbrace:
-    active: false
+    active: true
   SpacingAroundColon:
-    active: false
+    active: true
   TooGenericExceptionThrown:
-    active: false
+    active: true
   EmptyFunctionBlock:
-    active: false
+    active: true
 
 naming:
   PackageNaming:
-    active: false
+    active: true
   VariableMaxLength:
     maximumVariableNameLength: 64
   FunctionNaming:
     ignoreAnnotated: [ 'Composable' ]
   VariableNaming:
-    active: false
+    active: true
   MatchingDeclarationName:
-    active: false
+    active: true
 
 empty-blocks:
   EmptyCatchBlock:
-    active: false
+    active: true
   EmptyFunctionBlock:
-    active: false
+    active: true
   EmptyElseBlock:
-    active: false
+    active: true
 
 complexity:
   TooManyFunctions:
-    active: false
+    active: true
   ComplexMethod:
-    active: false
+    active: true
   LongMethod:
-    active: false
+    active: true
   ComplexCondition:
-    active: false
+    active: true
   LargeClass:
-    active: false
+    active: true
   NestedBlockDepth:
-    active: false
+    active: true
   LongParameterList:
-    active: false
+    active: true
