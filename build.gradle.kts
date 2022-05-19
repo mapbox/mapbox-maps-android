@@ -15,7 +15,6 @@ buildscript {
     maven {
       url = uri("https://plugins.gradle.org/m2/")
     }
-    jcenter()
   }
   dependencies {
     classpath(Plugins.android)
@@ -46,7 +45,6 @@ allprojects {
     maven {
       url = uri("https://oss.jfrog.org/artifactory/oss-snapshot-local/")
     }
-    jcenter()
   }
 }
 

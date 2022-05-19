@@ -3,7 +3,6 @@ pluginManagement {
   repositories {
     gradlePluginPortal()
     mavenCentral()
-    jcenter()
   }
 }
 
