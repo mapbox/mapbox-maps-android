@@ -18,7 +18,7 @@ import com.mapbox.maps.extension.style.utils.silentUnwrap
 import java.util.*
 
 /**
- * Model layer
+ * A layer to render 3D Models.
  *
  * @param layerId the ID of the layer
  * @param sourceId the ID of the source
