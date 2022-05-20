@@ -1,6 +1,5 @@
 package com.mapbox.maps.extension.style.model
 
-import com.mapbox.maps.Image
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.StyleInterface
@@ -18,7 +17,7 @@ class ModelExtensionImpl(private val builder: Builder) : StyleContract.StyleMode
    */
   override fun bindTo(delegate: StyleInterface) {
     delegate.addStyleModel(
-      builder.imageId,
+      builder.modelId,
       builder.uri
     ).check()
   }
@@ -29,15 +28,10 @@ class ModelExtensionImpl(private val builder: Builder) : StyleContract.StyleMode
   @MapboxExperimental
   class Builder(
     /**
-     * ID of the image.
+     * ID of the model.
      */
-    val imageId: String
+    val modelId: String
   ) {
-    /**
-     * Pixel data of the image.
-     */
-    internal lateinit var internalImage: Image
-
     /**
      * Uri for the model.
      */
@@ -53,7 +47,7 @@ class ModelExtensionImpl(private val builder: Builder) : StyleContract.StyleMode
     /**
      * Build the ModelExtensionImpl.
      *
-     * @return ImagePluginImpl
+     * @return ModelExtensionImpl
      */
     fun build(): ModelExtensionImpl {
       if (this.uri.isEmpty()) {

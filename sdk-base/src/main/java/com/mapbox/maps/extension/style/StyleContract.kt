@@ -142,7 +142,7 @@ interface StyleContract {
   }
 
   /**
-   * Define the interfaces for the Image plugin.
+   * Define the interfaces for the model extension.
    */
   fun interface StyleModelExtension {
     /**
