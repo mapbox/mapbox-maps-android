@@ -2,13 +2,18 @@
 
 package com.mapbox.maps.extension.style.layers.generated
 
+import androidx.annotation.ColorInt
 import androidx.annotation.UiThread
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.Layer
 import com.mapbox.maps.extension.style.layers.properties.*
 import com.mapbox.maps.extension.style.layers.properties.generated.*
 import com.mapbox.maps.extension.style.types.*
+import com.mapbox.maps.extension.style.utils.ColorUtils.colorIntToRgbaExpression
+import com.mapbox.maps.extension.style.utils.ColorUtils.rgbaExpressionToColorInt
+import com.mapbox.maps.extension.style.utils.ColorUtils.rgbaExpressionToColorString
 import com.mapbox.maps.extension.style.utils.silentUnwrap
 import java.util.*
 
@@ -19,6 +24,7 @@ import java.util.*
  * @param sourceId the ID of the source
  */
 @UiThread
+@MapboxExperimental
 class ModelLayer(override val layerId: String, val sourceId: String) : ModelLayerDsl, Layer() {
   init {
     internalSourceId = sourceId
@@ -1452,6 +1458,7 @@ interface ModelLayerDsl {
 /**
  * DSL function for [ModelLayer].
  */
+@MapboxExperimental
 fun modelLayer(layerId: String, sourceId: String, block: ModelLayerDsl.() -> Unit): ModelLayer = ModelLayer(layerId, sourceId).apply(block)
 
 // End of generated file.

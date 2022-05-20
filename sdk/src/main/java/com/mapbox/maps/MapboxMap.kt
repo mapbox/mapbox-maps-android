@@ -280,6 +280,9 @@ class MapboxMap :
         styleExtension.images.forEach {
           it.bindTo(style)
         }
+        styleExtension.models.forEach {
+          it.bindTo(style)
+        }
         styleExtension.sources.forEach {
           it.bindTo(style)
         }

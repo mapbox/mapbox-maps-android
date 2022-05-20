@@ -26,6 +26,11 @@ interface StyleContract {
     val images: List<StyleImageExtension>
 
     /**
+     * The models of the style.
+     */
+    val models: List<StyleModelExtension>
+
+    /**
      * The layers of the style.
      */
     val layers: List<Pair<StyleLayerExtension, LayerPosition>>
@@ -130,6 +135,18 @@ interface StyleContract {
   fun interface StyleImageExtension {
     /**
      * Bind the image to the Style.
+     *
+     * @param delegate The style delegate
+     */
+    fun bindTo(delegate: StyleInterface)
+  }
+
+  /**
+   * Define the interfaces for the Image plugin.
+   */
+  fun interface StyleModelExtension {
+    /**
+     * Bind the model to the Style.
      *
      * @param delegate The style delegate
      */
