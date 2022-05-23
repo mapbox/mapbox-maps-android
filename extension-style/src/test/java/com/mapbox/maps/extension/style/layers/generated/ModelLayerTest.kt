@@ -2,6 +2,7 @@
 
 package com.mapbox.maps.extension.style.layers.generated
 
+import android.graphics.Color
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
