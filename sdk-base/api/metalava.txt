@@ -1,13 +1,4 @@
 // Signature format: 3.0
-package com.mapbox {
-
-  @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) public final class RestrictedAPITest {
-    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) public void printMessage();
-    field public static final com.mapbox.RestrictedAPITest INSTANCE;
-  }
-
-}
-
 package com.mapbox.maps {
 
   public final class ExtensionUtils {

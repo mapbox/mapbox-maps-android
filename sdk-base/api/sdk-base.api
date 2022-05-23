@@ -1,8 +1,3 @@
-public final class com/mapbox/RestrictedAPITest {
-	public static final field INSTANCE Lcom/mapbox/RestrictedAPITest;
-	public final fun printMessage ()V
-}
-
 public final class com/mapbox/maps/ExtensionUtils {
 	public static final fun bitmap (Lcom/mapbox/maps/MapSnapshotInterface;)Landroid/graphics/Bitmap;
 	public static final fun toCameraOptions (Lcom/mapbox/maps/CameraState;)Lcom/mapbox/maps/CameraOptions;
