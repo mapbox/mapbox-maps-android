@@ -275,22 +275,7 @@ class MapboxMap :
   ) {
     checkNativeMap("loadStyle")
     initializeStyleLoad(
-      onStyleLoaded = { style ->
-        // TODO https://github.com/mapbox/mapbox-maps-android/issues/1371
-        styleExtension.images.forEach {
-          it.bindTo(style)
-        }
-        styleExtension.models.forEach {
-          it.bindTo(style)
-        }
-        styleExtension.sources.forEach {
-          it.bindTo(style)
-        }
-        styleExtension.layers.forEach { (layer, layerPosition) ->
-          layer.bindTo(style, layerPosition)
-        }
-        onStyleLoaded?.onStyleLoaded(style)
-      },
+      onStyleLoaded = onStyleLoaded,
       styleDataStyleLoadedListener = { style ->
         styleExtension.light?.bindTo(style)
         styleExtension.terrain?.bindTo(style)
@@ -299,19 +284,21 @@ class MapboxMap :
         transitionOptions?.let(style::setStyleTransition)
       },
       styleDataSourcesLoadedListener = { style ->
-        // TODO https://github.com/mapbox/mapbox-maps-android/issues/1371
-//        styleExtension.sources.forEach {
-//          it.bindTo(style)
-//        }
-//        styleExtension.layers.forEach { (layer, layerPosition) ->
-//          layer.bindTo(style, layerPosition)
-//        }
+        styleExtension.sources.forEach {
+          it.bindTo(style)
+        }
+        styleExtension.layers.forEach { (layer, layerPosition) ->
+          layer.bindTo(style, layerPosition)
+        }
       },
       styleDataSpritesLoadedListener = { style ->
-        // TODO https://github.com/mapbox/mapbox-maps-android/issues/1371
-//        styleExtension.images.forEach {
-//          it.bindTo(style)
-//        }
+        styleExtension.images.forEach {
+          it.bindTo(style)
+        }
+        // note - it is not strictly required to load models here, models can be loaded anytime during style load flow
+        styleExtension.models.forEach {
+          it.bindTo(style)
+        }
       },
       onMapLoadErrorListener = onMapLoadErrorListener,
     )

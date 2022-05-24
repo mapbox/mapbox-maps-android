@@ -131,7 +131,6 @@ class MapboxMapTest {
     assertTrue(mapboxMap.isStyleLoadInitiated)
   }
 
-  // TODO fix test
   @Test
   fun bindsStyleExtensionComponentsInCorrectOrderAfterStyleDataLoadEvents() {
     val style = mockk<Style>()
@@ -158,6 +157,9 @@ class MapboxMapTest {
 
     val projection = mockk<StyleContract.StyleProjectionExtension>(relaxed = true)
     every { styleExtension.projection } returns projection
+
+    val model = mockk<StyleContract.StyleModelExtension>(relaxed = true)
+    every { styleExtension.models } returns listOf(model)
 
     val styleLoadCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
 
@@ -186,6 +188,7 @@ class MapboxMapTest {
     verifyNo { projection.bindTo(style) }
     verifyNo { atmosphere.bindTo(style) }
     verifyNo { styleLoadCallback.onStyleLoaded(style) }
+    verifyNo { model.bindTo(style) }
 
     callbackStyleSlots.first()!!.onStyleLoaded(style)
 
@@ -197,19 +200,20 @@ class MapboxMapTest {
     verifyNo { image.bindTo(style) }
     verifyNo { layer.bindTo(style, layerPosition) }
     verifyNo { styleLoadCallback.onStyleLoaded(style) }
+    verifyNo { model.bindTo(style) }
 
-    // TODO https://github.com/mapbox/mapbox-maps-android/issues/1371
-//    callbackStyleSpritesSlots.first()!!.onStyleLoaded(style)
-//
-//    verify { image.bindTo(style) }
-//    verifyNo { source.bindTo(style) }
-//    verifyNo { layer.bindTo(style, layerPosition) }
-//    verifyNo { styleLoadCallback.onStyleLoaded(style) }
-//
-//    callbackStyleSourcesSlots.first()!!.onStyleLoaded(style)
-//
-//    verify { source.bindTo(style) }
-//    verify { layer.bindTo(style, layerPosition) }
+    callbackStyleSpritesSlots.first()!!.onStyleLoaded(style)
+
+    verify { image.bindTo(style) }
+    verify { model.bindTo(style) }
+    verifyNo { source.bindTo(style) }
+    verifyNo { layer.bindTo(style, layerPosition) }
+    verifyNo { styleLoadCallback.onStyleLoaded(style) }
+
+    callbackStyleSourcesSlots.first()!!.onStyleLoaded(style)
+
+    verify { source.bindTo(style) }
+    verify { layer.bindTo(style, layerPosition) }
 
     userCallbackStyleSlots.first()!!.onStyleLoaded(style)
     verify { image.bindTo(style) }
