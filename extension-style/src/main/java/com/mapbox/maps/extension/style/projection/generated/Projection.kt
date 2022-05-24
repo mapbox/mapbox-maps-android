@@ -69,7 +69,7 @@ class Projection(val name: ProjectionName) : StyleContract.StyleProjectionExtens
 }
 
 /**
- * DSL function for [Projection].
+ * DSL function for creating [Projection] instance.
  */
 fun projection(name: ProjectionName): Projection {
   return Projection(name)
