@@ -143,6 +143,9 @@ class DebugModeActivity : AppCompatActivity() {
       R.id.menu_debug_mode_depth_buffer -> {
         item.isChecked = toggleDebugOptions(MapDebugOptions.DEPTH_BUFFER)
       }
+      else -> {
+        return super.onOptionsItemSelected(item)
+      }
     }
     return true
   }

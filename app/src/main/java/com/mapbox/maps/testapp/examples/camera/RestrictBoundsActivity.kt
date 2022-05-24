@@ -52,25 +52,27 @@ class RestrictBoundsActivity : AppCompatActivity() {
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
-    when (item.itemId) {
+    return when (item.itemId) {
       R.id.menu_action_san_francisco_bounds -> {
         setupBounds(SAN_FRANCISCO_BOUND)
-        return true
+        true
       }
       R.id.menu_action_allmost_world_bounds -> {
         setupBounds(ALMOST_WORLD_BOUNDS)
-        return true
+        true
       }
       R.id.menu_action_cross_idl -> {
         setupBounds(CROSS_IDL_BOUNDS)
-        return true
+        true
       }
       R.id.menu_action_reset -> {
         setupBounds(INFINITE_BOUNDS)
-        return true
+        true
+      }
+      else -> {
+        super.onOptionsItemSelected(item)
       }
     }
-    return super.onOptionsItemSelected(item)
   }
 
   private fun setupBounds(bounds: CameraBoundsOptions) {
