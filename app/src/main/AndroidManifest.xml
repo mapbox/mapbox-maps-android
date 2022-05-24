@@ -1160,6 +1160,18 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
+            android:name=".examples.terrain3D.ModelLayerActivity"
+            android:description="@string/description_model_layer"
+            android:exported="true"
+            android:label="@string/activity_model_layer">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_3D" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ExampleOverviewActivity" />
+        </activity>
+        <activity
             android:name=".TestMapActivity"
             android:exported="true" />
     </application>

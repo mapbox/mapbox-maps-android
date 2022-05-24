@@ -498,6 +498,7 @@ public abstract interface class com/mapbox/maps/extension/style/StyleContract$St
 	public abstract fun getImages ()Ljava/util/List;
 	public abstract fun getLayers ()Ljava/util/List;
 	public abstract fun getLight ()Lcom/mapbox/maps/extension/style/StyleContract$StyleLightExtension;
+	public abstract fun getModels ()Ljava/util/List;
 	public abstract fun getProjection ()Lcom/mapbox/maps/extension/style/StyleContract$StyleProjectionExtension;
 	public abstract fun getSources ()Ljava/util/List;
 	public abstract fun getStyleUri ()Ljava/lang/String;
@@ -517,6 +518,10 @@ public final class com/mapbox/maps/extension/style/StyleContract$StyleLayerExten
 }
 
 public abstract interface class com/mapbox/maps/extension/style/StyleContract$StyleLightExtension {
+	public abstract fun bindTo (Lcom/mapbox/maps/extension/style/StyleInterface;)V
+}
+
+public abstract interface class com/mapbox/maps/extension/style/StyleContract$StyleModelExtension {
 	public abstract fun bindTo (Lcom/mapbox/maps/extension/style/StyleInterface;)V
 }
 
