@@ -75,17 +75,21 @@ class TileJsonActivity : AppCompatActivity() {
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
-    when (item.itemId) {
+    return when (item.itemId) {
       R.id.menu_set_tile_request_delay -> {
         item.isChecked = !item.isChecked
         setTileDelay(TILE_REQUEST, item.isChecked)
+        true
       }
       R.id.menu_set_tile_network_request_delay -> {
         item.isChecked = !item.isChecked
         setTileDelay(NETWORK_REQUEST, item.isChecked)
+        true
+      }
+      else -> {
+        super.onOptionsItemSelected(item)
       }
     }
-    return true
   }
 
   private fun setTileDelay(requestType: String, isChecked: Boolean = false) {

@@ -242,6 +242,9 @@ class GesturesActivity : AppCompatActivity() {
         }
         item.isChecked = true
       }
+      else -> {
+        return super.onOptionsItemSelected(item)
+      }
     }
     return true
   }
