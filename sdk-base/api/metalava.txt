@@ -533,7 +533,7 @@ package com.mapbox.maps.extension.style {
     method public void bindTo(com.mapbox.maps.extension.style.StyleInterface delegate);
   }
 
-  public static fun interface StyleContract.StyleModelExtension {
+  @com.mapbox.maps.MapboxExperimental public static fun interface StyleContract.StyleModelExtension {
     method public void bindTo(com.mapbox.maps.extension.style.StyleInterface delegate);
   }
 

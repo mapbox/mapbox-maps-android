@@ -4385,7 +4385,7 @@ package com.mapbox.maps.extension.style.model {
   }
 
   public final class ModelUtils {
-    method @com.mapbox.maps.MapboxExperimental public static void addModel(com.mapbox.maps.extension.style.StyleInterface, com.mapbox.maps.extension.style.StyleContract.StyleModelExtension image);
+    method @com.mapbox.maps.MapboxExperimental public static void addModel(com.mapbox.maps.extension.style.StyleInterface, com.mapbox.maps.extension.style.StyleContract.StyleModelExtension model);
     method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.style.model.ModelExtensionImpl model(String modelId, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.model.ModelExtensionImpl.Builder,kotlin.Unit> block);
   }
 
