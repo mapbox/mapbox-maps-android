@@ -505,6 +505,7 @@ package com.mapbox.maps.extension.style {
     method public java.util.List<com.mapbox.maps.extension.style.StyleContract.StyleImageExtension> getImages();
     method public java.util.List<kotlin.Pair<com.mapbox.maps.extension.style.StyleContract.StyleLayerExtension,com.mapbox.maps.LayerPosition>> getLayers();
     method public com.mapbox.maps.extension.style.StyleContract.StyleLightExtension? getLight();
+    method public java.util.List<com.mapbox.maps.extension.style.StyleContract.StyleModelExtension> getModels();
     method public com.mapbox.maps.extension.style.StyleContract.StyleProjectionExtension? getProjection();
     method public java.util.List<com.mapbox.maps.extension.style.StyleContract.StyleSourceExtension> getSources();
     method public String getStyleUri();
@@ -513,6 +514,7 @@ package com.mapbox.maps.extension.style {
     property public abstract java.util.List<com.mapbox.maps.extension.style.StyleContract.StyleImageExtension> images;
     property public abstract java.util.List<kotlin.Pair<com.mapbox.maps.extension.style.StyleContract.StyleLayerExtension,com.mapbox.maps.LayerPosition>> layers;
     property public abstract com.mapbox.maps.extension.style.StyleContract.StyleLightExtension? light;
+    property public abstract java.util.List<com.mapbox.maps.extension.style.StyleContract.StyleModelExtension> models;
     property public abstract com.mapbox.maps.extension.style.StyleContract.StyleProjectionExtension? projection;
     property public abstract java.util.List<com.mapbox.maps.extension.style.StyleContract.StyleSourceExtension> sources;
     property public abstract String styleUri;
@@ -528,6 +530,10 @@ package com.mapbox.maps.extension.style {
   }
 
   public static fun interface StyleContract.StyleLightExtension {
+    method public void bindTo(com.mapbox.maps.extension.style.StyleInterface delegate);
+  }
+
+  @com.mapbox.maps.MapboxExperimental public static fun interface StyleContract.StyleModelExtension {
     method public void bindTo(com.mapbox.maps.extension.style.StyleInterface delegate);
   }
 
