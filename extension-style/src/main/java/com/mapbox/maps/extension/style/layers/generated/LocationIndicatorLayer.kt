@@ -27,11 +27,11 @@ import java.util.*
 class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLayerDsl, Layer() {
 
   /**
-   * Visibility of the layer.
+   * Whether this layer is displayed.
    */
   override val visibility: Visibility?
     /**
-     * Get the Visibility property
+     * Whether this layer is displayed.
      *
      * @return VISIBILITY
      */
@@ -44,7 +44,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * Set the Visibility property
+   * Whether this layer is displayed.
    *
    * @param visibility value of Visibility
    */
@@ -71,7 +71,11 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * Set the minzoom property
+   * The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.
+   *
+   * Range:
+   *       minimum: 0
+   *       maximum: 24
    *
    * @param value value of minzoom
    */
@@ -98,7 +102,11 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * Set the maxzoom property
+   * The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden.
+   *
+   * Range:
+   *       minimum: 0
+   *       maximum: 24
    *
    * @param value value of maxzoom
    */
@@ -114,7 +122,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    */
   val bearingImage: String?
     /**
-     * Get the BearingImage property
+     * Name of image in sprite to use as the middle of the location indicator.
      *
      * @return String
      */
@@ -123,7 +131,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * Set the BearingImage property
+   * Name of image in sprite to use as the middle of the location indicator.
    *
    * @param bearingImage value of bearingImage
    */
@@ -133,12 +141,16 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
   }
 
   /**
+   * Name of image in sprite to use as the middle of the location indicator.
+   *
    * This is an Expression representation of "bearing-image".
    *
    * Name of image in sprite to use as the middle of the location indicator.
    */
   val bearingImageAsExpression: Expression?
     /**
+     * Name of image in sprite to use as the middle of the location indicator.
+     *
      * Get the BearingImage property as an Expression
      *
      * @return String
@@ -154,7 +166,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * Set the BearingImage property
+   * Name of image in sprite to use as the middle of the location indicator.
    *
    * @param bearingImage value of bearingImage as Expression
    */
@@ -168,7 +180,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    */
   val shadowImage: String?
     /**
-     * Get the ShadowImage property
+     * Name of image in sprite to use as the background of the location indicator.
      *
      * @return String
      */
@@ -177,7 +189,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * Set the ShadowImage property
+   * Name of image in sprite to use as the background of the location indicator.
    *
    * @param shadowImage value of shadowImage
    */
@@ -187,12 +199,16 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
   }
 
   /**
+   * Name of image in sprite to use as the background of the location indicator.
+   *
    * This is an Expression representation of "shadow-image".
    *
    * Name of image in sprite to use as the background of the location indicator.
    */
   val shadowImageAsExpression: Expression?
     /**
+     * Name of image in sprite to use as the background of the location indicator.
+     *
      * Get the ShadowImage property as an Expression
      *
      * @return String
@@ -208,7 +224,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * Set the ShadowImage property
+   * Name of image in sprite to use as the background of the location indicator.
    *
    * @param shadowImage value of shadowImage as Expression
    */
@@ -222,7 +238,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    */
   val topImage: String?
     /**
-     * Get the TopImage property
+     * Name of image in sprite to use as the top of the location indicator.
      *
      * @return String
      */
@@ -231,7 +247,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * Set the TopImage property
+   * Name of image in sprite to use as the top of the location indicator.
    *
    * @param topImage value of topImage
    */
@@ -241,12 +257,16 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
   }
 
   /**
+   * Name of image in sprite to use as the top of the location indicator.
+   *
    * This is an Expression representation of "top-image".
    *
    * Name of image in sprite to use as the top of the location indicator.
    */
   val topImageAsExpression: Expression?
     /**
+     * Name of image in sprite to use as the top of the location indicator.
+     *
      * Get the TopImage property as an Expression
      *
      * @return String
@@ -262,7 +282,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * Set the TopImage property
+   * Name of image in sprite to use as the top of the location indicator.
    *
    * @param topImage value of topImage as Expression
    */
@@ -276,7 +296,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    */
   val accuracyRadius: Double?
     /**
-     * Get the AccuracyRadius property
+     * The accuracy, in meters, of the position source used to retrieve the position of the location indicator.
      *
      * @return Double
      */
@@ -285,7 +305,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * Set the AccuracyRadius property
+   * The accuracy, in meters, of the position source used to retrieve the position of the location indicator.
    *
    * @param accuracyRadius value of accuracyRadius
    */
@@ -295,12 +315,16 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
   }
 
   /**
+   * The accuracy, in meters, of the position source used to retrieve the position of the location indicator.
+   *
    * This is an Expression representation of "accuracy-radius".
    *
    * The accuracy, in meters, of the position source used to retrieve the position of the location indicator.
    */
   val accuracyRadiusAsExpression: Expression?
     /**
+     * The accuracy, in meters, of the position source used to retrieve the position of the location indicator.
+     *
      * Get the AccuracyRadius property as an Expression
      *
      * @return Double
@@ -316,7 +340,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * Set the AccuracyRadius property
+   * The accuracy, in meters, of the position source used to retrieve the position of the location indicator.
    *
    * @param accuracyRadius value of accuracyRadius as Expression
    */
@@ -360,7 +384,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    */
   val accuracyRadiusBorderColor: String?
     /**
-     * Get the AccuracyRadiusBorderColor property
+     * The color for drawing the accuracy radius border. To adjust transparency, set the alpha component of the color accordingly.
      *
      * @return String
      */
@@ -372,7 +396,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * Set the AccuracyRadiusBorderColor property
+   * The color for drawing the accuracy radius border. To adjust transparency, set the alpha component of the color accordingly.
    *
    * @param accuracyRadiusBorderColor value of accuracyRadiusBorderColor
    */
@@ -382,12 +406,16 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
   }
 
   /**
+   * The color for drawing the accuracy radius border. To adjust transparency, set the alpha component of the color accordingly.
+   *
    * This is an Expression representation of "accuracy-radius-border-color".
    *
    * The color for drawing the accuracy radius border. To adjust transparency, set the alpha component of the color accordingly.
    */
   val accuracyRadiusBorderColorAsExpression: Expression?
     /**
+     * The color for drawing the accuracy radius border. To adjust transparency, set the alpha component of the color accordingly.
+     *
      * Get the AccuracyRadiusBorderColor property as an Expression
      *
      * @return String
@@ -400,7 +428,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * Set the AccuracyRadiusBorderColor property
+   * The color for drawing the accuracy radius border. To adjust transparency, set the alpha component of the color accordingly.
    *
    * @param accuracyRadiusBorderColor value of accuracyRadiusBorderColor as Expression
    */
@@ -427,7 +455,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * Set the AccuracyRadiusBorderColor property.
+   * The color for drawing the accuracy radius border. To adjust transparency, set the alpha component of the color accordingly.
    *
    * @param accuracyRadiusBorderColor value of accuracyRadiusBorderColor
    */
@@ -471,7 +499,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    */
   val accuracyRadiusColor: String?
     /**
-     * Get the AccuracyRadiusColor property
+     * The color for drawing the accuracy radius, as a circle. To adjust transparency, set the alpha component of the color accordingly.
      *
      * @return String
      */
@@ -483,7 +511,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * Set the AccuracyRadiusColor property
+   * The color for drawing the accuracy radius, as a circle. To adjust transparency, set the alpha component of the color accordingly.
    *
    * @param accuracyRadiusColor value of accuracyRadiusColor
    */
@@ -493,12 +521,16 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
   }
 
   /**
+   * The color for drawing the accuracy radius, as a circle. To adjust transparency, set the alpha component of the color accordingly.
+   *
    * This is an Expression representation of "accuracy-radius-color".
    *
    * The color for drawing the accuracy radius, as a circle. To adjust transparency, set the alpha component of the color accordingly.
    */
   val accuracyRadiusColorAsExpression: Expression?
     /**
+     * The color for drawing the accuracy radius, as a circle. To adjust transparency, set the alpha component of the color accordingly.
+     *
      * Get the AccuracyRadiusColor property as an Expression
      *
      * @return String
@@ -511,7 +543,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * Set the AccuracyRadiusColor property
+   * The color for drawing the accuracy radius, as a circle. To adjust transparency, set the alpha component of the color accordingly.
    *
    * @param accuracyRadiusColor value of accuracyRadiusColor as Expression
    */
@@ -538,7 +570,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * Set the AccuracyRadiusColor property.
+   * The color for drawing the accuracy radius, as a circle. To adjust transparency, set the alpha component of the color accordingly.
    *
    * @param accuracyRadiusColor value of accuracyRadiusColor
    */
@@ -582,7 +614,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    */
   val bearing: Double?
     /**
-     * Get the Bearing property
+     * The bearing of the location indicator.
      *
      * @return Double
      */
@@ -591,7 +623,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * Set the Bearing property
+   * The bearing of the location indicator.
    *
    * @param bearing value of bearing
    */
@@ -601,12 +633,16 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
   }
 
   /**
+   * The bearing of the location indicator.
+   *
    * This is an Expression representation of "bearing".
    *
    * The bearing of the location indicator.
    */
   val bearingAsExpression: Expression?
     /**
+     * The bearing of the location indicator.
+     *
      * Get the Bearing property as an Expression
      *
      * @return Double
@@ -622,7 +658,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * Set the Bearing property
+   * The bearing of the location indicator.
    *
    * @param bearing value of bearing as Expression
    */
@@ -666,7 +702,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    */
   val bearingImageSize: Double?
     /**
-     * Get the BearingImageSize property
+     * The size of the bearing image, as a scale factor applied to the size of the specified image.
      *
      * @return Double
      */
@@ -675,7 +711,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * Set the BearingImageSize property
+   * The size of the bearing image, as a scale factor applied to the size of the specified image.
    *
    * @param bearingImageSize value of bearingImageSize
    */
@@ -685,12 +721,16 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
   }
 
   /**
+   * The size of the bearing image, as a scale factor applied to the size of the specified image.
+   *
    * This is an Expression representation of "bearing-image-size".
    *
    * The size of the bearing image, as a scale factor applied to the size of the specified image.
    */
   val bearingImageSizeAsExpression: Expression?
     /**
+     * The size of the bearing image, as a scale factor applied to the size of the specified image.
+     *
      * Get the BearingImageSize property as an Expression
      *
      * @return Double
@@ -706,7 +746,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * Set the BearingImageSize property
+   * The size of the bearing image, as a scale factor applied to the size of the specified image.
    *
    * @param bearingImageSize value of bearingImageSize as Expression
    */
@@ -750,7 +790,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    */
   val emphasisCircleColor: String?
     /**
-     * Get the EmphasisCircleColor property
+     * The color of the circle emphasizing the indicator. To adjust transparency, set the alpha component of the color accordingly.
      *
      * @return String
      */
@@ -762,7 +802,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * Set the EmphasisCircleColor property
+   * The color of the circle emphasizing the indicator. To adjust transparency, set the alpha component of the color accordingly.
    *
    * @param emphasisCircleColor value of emphasisCircleColor
    */
@@ -772,12 +812,16 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
   }
 
   /**
+   * The color of the circle emphasizing the indicator. To adjust transparency, set the alpha component of the color accordingly.
+   *
    * This is an Expression representation of "emphasis-circle-color".
    *
    * The color of the circle emphasizing the indicator. To adjust transparency, set the alpha component of the color accordingly.
    */
   val emphasisCircleColorAsExpression: Expression?
     /**
+     * The color of the circle emphasizing the indicator. To adjust transparency, set the alpha component of the color accordingly.
+     *
      * Get the EmphasisCircleColor property as an Expression
      *
      * @return String
@@ -790,7 +834,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * Set the EmphasisCircleColor property
+   * The color of the circle emphasizing the indicator. To adjust transparency, set the alpha component of the color accordingly.
    *
    * @param emphasisCircleColor value of emphasisCircleColor as Expression
    */
@@ -817,7 +861,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * Set the EmphasisCircleColor property.
+   * The color of the circle emphasizing the indicator. To adjust transparency, set the alpha component of the color accordingly.
    *
    * @param emphasisCircleColor value of emphasisCircleColor
    */
@@ -861,7 +905,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    */
   val emphasisCircleRadius: Double?
     /**
-     * Get the EmphasisCircleRadius property
+     * The radius, in pixel, of the circle emphasizing the indicator, drawn between the accuracy radius and the indicator shadow.
      *
      * @return Double
      */
@@ -870,7 +914,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * Set the EmphasisCircleRadius property
+   * The radius, in pixel, of the circle emphasizing the indicator, drawn between the accuracy radius and the indicator shadow.
    *
    * @param emphasisCircleRadius value of emphasisCircleRadius
    */
@@ -880,12 +924,16 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
   }
 
   /**
+   * The radius, in pixel, of the circle emphasizing the indicator, drawn between the accuracy radius and the indicator shadow.
+   *
    * This is an Expression representation of "emphasis-circle-radius".
    *
    * The radius, in pixel, of the circle emphasizing the indicator, drawn between the accuracy radius and the indicator shadow.
    */
   val emphasisCircleRadiusAsExpression: Expression?
     /**
+     * The radius, in pixel, of the circle emphasizing the indicator, drawn between the accuracy radius and the indicator shadow.
+     *
      * Get the EmphasisCircleRadius property as an Expression
      *
      * @return Double
@@ -901,7 +949,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * Set the EmphasisCircleRadius property
+   * The radius, in pixel, of the circle emphasizing the indicator, drawn between the accuracy radius and the indicator shadow.
    *
    * @param emphasisCircleRadius value of emphasisCircleRadius as Expression
    */
@@ -945,7 +993,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    */
   val imagePitchDisplacement: Double?
     /**
-     * Get the ImagePitchDisplacement property
+     * The displacement off the center of the top image and the shadow image when the pitch of the map is greater than 0. This helps producing a three-dimensional appearence.
      *
      * @return Double
      */
@@ -954,7 +1002,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * Set the ImagePitchDisplacement property
+   * The displacement off the center of the top image and the shadow image when the pitch of the map is greater than 0. This helps producing a three-dimensional appearence.
    *
    * @param imagePitchDisplacement value of imagePitchDisplacement
    */
@@ -964,12 +1012,16 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
   }
 
   /**
+   * The displacement off the center of the top image and the shadow image when the pitch of the map is greater than 0. This helps producing a three-dimensional appearence.
+   *
    * This is an Expression representation of "image-pitch-displacement".
    *
    * The displacement off the center of the top image and the shadow image when the pitch of the map is greater than 0. This helps producing a three-dimensional appearence.
    */
   val imagePitchDisplacementAsExpression: Expression?
     /**
+     * The displacement off the center of the top image and the shadow image when the pitch of the map is greater than 0. This helps producing a three-dimensional appearence.
+     *
      * Get the ImagePitchDisplacement property as an Expression
      *
      * @return Double
@@ -985,7 +1037,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * Set the ImagePitchDisplacement property
+   * The displacement off the center of the top image and the shadow image when the pitch of the map is greater than 0. This helps producing a three-dimensional appearence.
    *
    * @param imagePitchDisplacement value of imagePitchDisplacement as Expression
    */
@@ -999,7 +1051,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    */
   val location: List<Double>?
     /**
-     * Get the Location property
+     * An array of [latitude, longitude, altitude] position of the location indicator.
      *
      * @return List<Double>
      */
@@ -1008,7 +1060,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * Set the Location property
+   * An array of [latitude, longitude, altitude] position of the location indicator.
    *
    * @param location value of location
    */
@@ -1018,12 +1070,16 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
   }
 
   /**
+   * An array of [latitude, longitude, altitude] position of the location indicator.
+   *
    * This is an Expression representation of "location".
    *
    * An array of [latitude, longitude, altitude] position of the location indicator.
    */
   val locationAsExpression: Expression?
     /**
+     * An array of [latitude, longitude, altitude] position of the location indicator.
+     *
      * Get the Location property as an Expression
      *
      * @return List<Double>
@@ -1039,7 +1095,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * Set the Location property
+   * An array of [latitude, longitude, altitude] position of the location indicator.
    *
    * @param location value of location as Expression
    */
@@ -1083,7 +1139,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    */
   val perspectiveCompensation: Double?
     /**
-     * Get the PerspectiveCompensation property
+     * The amount of the perspective compensation, between 0 and 1. A value of 1 produces a location indicator of constant width across the screen. A value of 0 makes it scale naturally according to the viewing projection.
      *
      * @return Double
      */
@@ -1092,7 +1148,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * Set the PerspectiveCompensation property
+   * The amount of the perspective compensation, between 0 and 1. A value of 1 produces a location indicator of constant width across the screen. A value of 0 makes it scale naturally according to the viewing projection.
    *
    * @param perspectiveCompensation value of perspectiveCompensation
    */
@@ -1102,12 +1158,16 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
   }
 
   /**
+   * The amount of the perspective compensation, between 0 and 1. A value of 1 produces a location indicator of constant width across the screen. A value of 0 makes it scale naturally according to the viewing projection.
+   *
    * This is an Expression representation of "perspective-compensation".
    *
    * The amount of the perspective compensation, between 0 and 1. A value of 1 produces a location indicator of constant width across the screen. A value of 0 makes it scale naturally according to the viewing projection.
    */
   val perspectiveCompensationAsExpression: Expression?
     /**
+     * The amount of the perspective compensation, between 0 and 1. A value of 1 produces a location indicator of constant width across the screen. A value of 0 makes it scale naturally according to the viewing projection.
+     *
      * Get the PerspectiveCompensation property as an Expression
      *
      * @return Double
@@ -1123,7 +1183,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * Set the PerspectiveCompensation property
+   * The amount of the perspective compensation, between 0 and 1. A value of 1 produces a location indicator of constant width across the screen. A value of 0 makes it scale naturally according to the viewing projection.
    *
    * @param perspectiveCompensation value of perspectiveCompensation as Expression
    */
@@ -1137,7 +1197,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    */
   val shadowImageSize: Double?
     /**
-     * Get the ShadowImageSize property
+     * The size of the shadow image, as a scale factor applied to the size of the specified image.
      *
      * @return Double
      */
@@ -1146,7 +1206,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * Set the ShadowImageSize property
+   * The size of the shadow image, as a scale factor applied to the size of the specified image.
    *
    * @param shadowImageSize value of shadowImageSize
    */
@@ -1156,12 +1216,16 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
   }
 
   /**
+   * The size of the shadow image, as a scale factor applied to the size of the specified image.
+   *
    * This is an Expression representation of "shadow-image-size".
    *
    * The size of the shadow image, as a scale factor applied to the size of the specified image.
    */
   val shadowImageSizeAsExpression: Expression?
     /**
+     * The size of the shadow image, as a scale factor applied to the size of the specified image.
+     *
      * Get the ShadowImageSize property as an Expression
      *
      * @return Double
@@ -1177,7 +1241,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * Set the ShadowImageSize property
+   * The size of the shadow image, as a scale factor applied to the size of the specified image.
    *
    * @param shadowImageSize value of shadowImageSize as Expression
    */
@@ -1221,7 +1285,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    */
   val topImageSize: Double?
     /**
-     * Get the TopImageSize property
+     * The size of the top image, as a scale factor applied to the size of the specified image.
      *
      * @return Double
      */
@@ -1230,7 +1294,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * Set the TopImageSize property
+   * The size of the top image, as a scale factor applied to the size of the specified image.
    *
    * @param topImageSize value of topImageSize
    */
@@ -1240,12 +1304,16 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
   }
 
   /**
+   * The size of the top image, as a scale factor applied to the size of the specified image.
+   *
    * This is an Expression representation of "top-image-size".
    *
    * The size of the top image, as a scale factor applied to the size of the specified image.
    */
   val topImageSizeAsExpression: Expression?
     /**
+     * The size of the top image, as a scale factor applied to the size of the specified image.
+     *
      * Get the TopImageSize property as an Expression
      *
      * @return Double
@@ -1261,7 +1329,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     }
 
   /**
-   * Set the TopImageSize property
+   * The size of the top image, as a scale factor applied to the size of the specified image.
    *
    * @param topImageSize value of topImageSize as Expression
    */
@@ -1364,6 +1432,8 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
      */
     val defaultBearingImage: String?
       /**
+       * Name of image in sprite to use as the middle of the location indicator.
+       *
        * Get the default value of BearingImage property
        *
        * @return String
@@ -1373,6 +1443,8 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
       }
 
     /**
+     * Name of image in sprite to use as the middle of the location indicator.
+     *
      * This is an Expression representation of "bearing-image".
      *
      * Name of image in sprite to use as the middle of the location indicator.
@@ -1398,6 +1470,8 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
      */
     val defaultShadowImage: String?
       /**
+       * Name of image in sprite to use as the background of the location indicator.
+       *
        * Get the default value of ShadowImage property
        *
        * @return String
@@ -1407,6 +1481,8 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
       }
 
     /**
+     * Name of image in sprite to use as the background of the location indicator.
+     *
      * This is an Expression representation of "shadow-image".
      *
      * Name of image in sprite to use as the background of the location indicator.
@@ -1432,6 +1508,8 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
      */
     val defaultTopImage: String?
       /**
+       * Name of image in sprite to use as the top of the location indicator.
+       *
        * Get the default value of TopImage property
        *
        * @return String
@@ -1441,6 +1519,8 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
       }
 
     /**
+     * Name of image in sprite to use as the top of the location indicator.
+     *
      * This is an Expression representation of "top-image".
      *
      * Name of image in sprite to use as the top of the location indicator.
@@ -1466,6 +1546,8 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
      */
     val defaultAccuracyRadius: Double?
       /**
+       * The accuracy, in meters, of the position source used to retrieve the position of the location indicator.
+       *
        * Get the default value of AccuracyRadius property
        *
        * @return Double
@@ -1475,6 +1557,8 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
       }
 
     /**
+     * The accuracy, in meters, of the position source used to retrieve the position of the location indicator.
+     *
      * This is an Expression representation of "accuracy-radius".
      *
      * The accuracy, in meters, of the position source used to retrieve the position of the location indicator.
@@ -1511,6 +1595,8 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
      */
     val defaultAccuracyRadiusBorderColor: String?
       /**
+       * The color for drawing the accuracy radius border. To adjust transparency, set the alpha component of the color accordingly.
+       *
        * Get the default value of AccuracyRadiusBorderColor property
        *
        * @return String
@@ -1523,6 +1609,8 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
       }
 
     /**
+     * The color for drawing the accuracy radius border. To adjust transparency, set the alpha component of the color accordingly.
+     *
      * This is an Expression representation of "accuracy-radius-border-color".
      *
      * The color for drawing the accuracy radius border. To adjust transparency, set the alpha component of the color accordingly.
@@ -1545,6 +1633,8 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
      */
     val defaultAccuracyRadiusBorderColorAsColorInt: Int?
       /**
+       * The color for drawing the accuracy radius border. To adjust transparency, set the alpha component of the color accordingly.
+       *
        * Get the default value of AccuracyRadiusBorderColor property as color int.
        *
        * @return int representation of a rgba string color
@@ -1573,6 +1663,8 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
      */
     val defaultAccuracyRadiusColor: String?
       /**
+       * The color for drawing the accuracy radius, as a circle. To adjust transparency, set the alpha component of the color accordingly.
+       *
        * Get the default value of AccuracyRadiusColor property
        *
        * @return String
@@ -1585,6 +1677,8 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
       }
 
     /**
+     * The color for drawing the accuracy radius, as a circle. To adjust transparency, set the alpha component of the color accordingly.
+     *
      * This is an Expression representation of "accuracy-radius-color".
      *
      * The color for drawing the accuracy radius, as a circle. To adjust transparency, set the alpha component of the color accordingly.
@@ -1607,6 +1701,8 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
      */
     val defaultAccuracyRadiusColorAsColorInt: Int?
       /**
+       * The color for drawing the accuracy radius, as a circle. To adjust transparency, set the alpha component of the color accordingly.
+       *
        * Get the default value of AccuracyRadiusColor property as color int.
        *
        * @return int representation of a rgba string color
@@ -1635,6 +1731,8 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
      */
     val defaultBearing: Double?
       /**
+       * The bearing of the location indicator.
+       *
        * Get the default value of Bearing property
        *
        * @return Double
@@ -1644,6 +1742,8 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
       }
 
     /**
+     * The bearing of the location indicator.
+     *
      * This is an Expression representation of "bearing".
      *
      * The bearing of the location indicator.
@@ -1680,6 +1780,8 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
      */
     val defaultBearingImageSize: Double?
       /**
+       * The size of the bearing image, as a scale factor applied to the size of the specified image.
+       *
        * Get the default value of BearingImageSize property
        *
        * @return Double
@@ -1689,6 +1791,8 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
       }
 
     /**
+     * The size of the bearing image, as a scale factor applied to the size of the specified image.
+     *
      * This is an Expression representation of "bearing-image-size".
      *
      * The size of the bearing image, as a scale factor applied to the size of the specified image.
@@ -1725,6 +1829,8 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
      */
     val defaultEmphasisCircleColor: String?
       /**
+       * The color of the circle emphasizing the indicator. To adjust transparency, set the alpha component of the color accordingly.
+       *
        * Get the default value of EmphasisCircleColor property
        *
        * @return String
@@ -1737,6 +1843,8 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
       }
 
     /**
+     * The color of the circle emphasizing the indicator. To adjust transparency, set the alpha component of the color accordingly.
+     *
      * This is an Expression representation of "emphasis-circle-color".
      *
      * The color of the circle emphasizing the indicator. To adjust transparency, set the alpha component of the color accordingly.
@@ -1759,6 +1867,8 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
      */
     val defaultEmphasisCircleColorAsColorInt: Int?
       /**
+       * The color of the circle emphasizing the indicator. To adjust transparency, set the alpha component of the color accordingly.
+       *
        * Get the default value of EmphasisCircleColor property as color int.
        *
        * @return int representation of a rgba string color
@@ -1787,6 +1897,8 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
      */
     val defaultEmphasisCircleRadius: Double?
       /**
+       * The radius, in pixel, of the circle emphasizing the indicator, drawn between the accuracy radius and the indicator shadow.
+       *
        * Get the default value of EmphasisCircleRadius property
        *
        * @return Double
@@ -1796,6 +1908,8 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
       }
 
     /**
+     * The radius, in pixel, of the circle emphasizing the indicator, drawn between the accuracy radius and the indicator shadow.
+     *
      * This is an Expression representation of "emphasis-circle-radius".
      *
      * The radius, in pixel, of the circle emphasizing the indicator, drawn between the accuracy radius and the indicator shadow.
@@ -1832,6 +1946,8 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
      */
     val defaultImagePitchDisplacement: Double?
       /**
+       * The displacement off the center of the top image and the shadow image when the pitch of the map is greater than 0. This helps producing a three-dimensional appearence.
+       *
        * Get the default value of ImagePitchDisplacement property
        *
        * @return Double
@@ -1841,6 +1957,8 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
       }
 
     /**
+     * The displacement off the center of the top image and the shadow image when the pitch of the map is greater than 0. This helps producing a three-dimensional appearence.
+     *
      * This is an Expression representation of "image-pitch-displacement".
      *
      * The displacement off the center of the top image and the shadow image when the pitch of the map is greater than 0. This helps producing a three-dimensional appearence.
@@ -1866,6 +1984,8 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
      */
     val defaultLocation: List<Double>?
       /**
+       * An array of [latitude, longitude, altitude] position of the location indicator.
+       *
        * Get the default value of Location property
        *
        * @return List<Double>
@@ -1875,6 +1995,8 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
       }
 
     /**
+     * An array of [latitude, longitude, altitude] position of the location indicator.
+     *
      * This is an Expression representation of "location".
      *
      * An array of [latitude, longitude, altitude] position of the location indicator.
@@ -1911,6 +2033,8 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
      */
     val defaultPerspectiveCompensation: Double?
       /**
+       * The amount of the perspective compensation, between 0 and 1. A value of 1 produces a location indicator of constant width across the screen. A value of 0 makes it scale naturally according to the viewing projection.
+       *
        * Get the default value of PerspectiveCompensation property
        *
        * @return Double
@@ -1920,6 +2044,8 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
       }
 
     /**
+     * The amount of the perspective compensation, between 0 and 1. A value of 1 produces a location indicator of constant width across the screen. A value of 0 makes it scale naturally according to the viewing projection.
+     *
      * This is an Expression representation of "perspective-compensation".
      *
      * The amount of the perspective compensation, between 0 and 1. A value of 1 produces a location indicator of constant width across the screen. A value of 0 makes it scale naturally according to the viewing projection.
@@ -1945,6 +2071,8 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
      */
     val defaultShadowImageSize: Double?
       /**
+       * The size of the shadow image, as a scale factor applied to the size of the specified image.
+       *
        * Get the default value of ShadowImageSize property
        *
        * @return Double
@@ -1954,6 +2082,8 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
       }
 
     /**
+     * The size of the shadow image, as a scale factor applied to the size of the specified image.
+     *
      * This is an Expression representation of "shadow-image-size".
      *
      * The size of the shadow image, as a scale factor applied to the size of the specified image.
@@ -1990,6 +2120,8 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
      */
     val defaultTopImageSize: Double?
       /**
+       * The size of the top image, as a scale factor applied to the size of the specified image.
+       *
        * Get the default value of TopImageSize property
        *
        * @return Double
@@ -1999,6 +2131,8 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
       }
 
     /**
+     * The size of the top image, as a scale factor applied to the size of the specified image.
+     *
      * This is an Expression representation of "top-image-size".
      *
      * The size of the top image, as a scale factor applied to the size of the specified image.
@@ -2042,21 +2176,29 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
 interface LocationIndicatorLayerDsl {
 
   /**
-   * Set the Visibility property
+   * Whether this layer is displayed.
    *
    * @param visibility value of Visibility
    */
   fun visibility(visibility: Visibility): LocationIndicatorLayer
 
   /**
-   * Set the minzoom property
+   * The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.
+   *
+   * Range:
+   *       minimum: 0
+   *       maximum: 24
    *
    * @param value value of minzoom
    */
   fun minZoom(minZoom: Double): LocationIndicatorLayer
 
   /**
-   * Set the maxzoom property
+   * The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden.
+   *
+   * Range:
+   *       minimum: 0
+   *       maximum: 24
    *
    * @param value value of maxzoom
    */
@@ -2065,62 +2207,64 @@ interface LocationIndicatorLayerDsl {
   // Property getters and setters
 
   /**
-   * Set the BearingImage property
+   * Name of image in sprite to use as the middle of the location indicator.
    *
    * @param bearingImage value of bearingImage
    */
   fun bearingImage(bearingImage: String): LocationIndicatorLayer
 
   /**
-   * Set the BearingImage property
+   * Name of image in sprite to use as the middle of the location indicator.
    *
    * @param bearingImage value of bearingImage as Expression
    */
   fun bearingImage(bearingImage: Expression): LocationIndicatorLayer
 
   /**
-   * Set the ShadowImage property
+   * Name of image in sprite to use as the background of the location indicator.
    *
    * @param shadowImage value of shadowImage
    */
   fun shadowImage(shadowImage: String): LocationIndicatorLayer
 
   /**
-   * Set the ShadowImage property
+   * Name of image in sprite to use as the background of the location indicator.
    *
    * @param shadowImage value of shadowImage as Expression
    */
   fun shadowImage(shadowImage: Expression): LocationIndicatorLayer
 
   /**
-   * Set the TopImage property
+   * Name of image in sprite to use as the top of the location indicator.
    *
    * @param topImage value of topImage
    */
   fun topImage(topImage: String): LocationIndicatorLayer
 
   /**
-   * Set the TopImage property
+   * Name of image in sprite to use as the top of the location indicator.
    *
    * @param topImage value of topImage as Expression
    */
   fun topImage(topImage: Expression): LocationIndicatorLayer
 
   /**
-   * Set the AccuracyRadius property
+   * The accuracy, in meters, of the position source used to retrieve the position of the location indicator.
    *
    * @param accuracyRadius value of accuracyRadius
    */
   fun accuracyRadius(accuracyRadius: Double = 0.0): LocationIndicatorLayer
 
   /**
-   * Set the AccuracyRadius property
+   * The accuracy, in meters, of the position source used to retrieve the position of the location indicator.
    *
    * @param accuracyRadius value of accuracyRadius as Expression
    */
   fun accuracyRadius(accuracyRadius: Expression): LocationIndicatorLayer
 
   /**
+   * The accuracy, in meters, of the position source used to retrieve the position of the location indicator.
+   *
    * Set the AccuracyRadius property transition options
    *
    * @param options transition options for Double
@@ -2128,32 +2272,36 @@ interface LocationIndicatorLayerDsl {
   fun accuracyRadiusTransition(options: StyleTransition): LocationIndicatorLayer
 
   /**
+   * The accuracy, in meters, of the position source used to retrieve the position of the location indicator.
+   *
    * DSL for [accuracyRadiusTransition].
    */
   fun accuracyRadiusTransition(block: StyleTransition.Builder.() -> Unit): LocationIndicatorLayer
 
   /**
-   * Set the AccuracyRadiusBorderColor property
+   * The color for drawing the accuracy radius border. To adjust transparency, set the alpha component of the color accordingly.
    *
    * @param accuracyRadiusBorderColor value of accuracyRadiusBorderColor
    */
   fun accuracyRadiusBorderColor(accuracyRadiusBorderColor: String = "#ffffff"): LocationIndicatorLayer
 
   /**
-   * Set the AccuracyRadiusBorderColor property
+   * The color for drawing the accuracy radius border. To adjust transparency, set the alpha component of the color accordingly.
    *
    * @param accuracyRadiusBorderColor value of accuracyRadiusBorderColor as Expression
    */
   fun accuracyRadiusBorderColor(accuracyRadiusBorderColor: Expression): LocationIndicatorLayer
 
   /**
-   * Set the AccuracyRadiusBorderColor property.
+   * The color for drawing the accuracy radius border. To adjust transparency, set the alpha component of the color accordingly.
    *
    * @param accuracyRadiusBorderColor value of accuracyRadiusBorderColor
    */
   fun accuracyRadiusBorderColor(@ColorInt accuracyRadiusBorderColor: Int): LocationIndicatorLayer
 
   /**
+   * The color for drawing the accuracy radius border. To adjust transparency, set the alpha component of the color accordingly.
+   *
    * Set the AccuracyRadiusBorderColor property transition options
    *
    * @param options transition options for String
@@ -2161,32 +2309,36 @@ interface LocationIndicatorLayerDsl {
   fun accuracyRadiusBorderColorTransition(options: StyleTransition): LocationIndicatorLayer
 
   /**
+   * The color for drawing the accuracy radius border. To adjust transparency, set the alpha component of the color accordingly.
+   *
    * DSL for [accuracyRadiusBorderColorTransition].
    */
   fun accuracyRadiusBorderColorTransition(block: StyleTransition.Builder.() -> Unit): LocationIndicatorLayer
 
   /**
-   * Set the AccuracyRadiusColor property
+   * The color for drawing the accuracy radius, as a circle. To adjust transparency, set the alpha component of the color accordingly.
    *
    * @param accuracyRadiusColor value of accuracyRadiusColor
    */
   fun accuracyRadiusColor(accuracyRadiusColor: String = "#ffffff"): LocationIndicatorLayer
 
   /**
-   * Set the AccuracyRadiusColor property
+   * The color for drawing the accuracy radius, as a circle. To adjust transparency, set the alpha component of the color accordingly.
    *
    * @param accuracyRadiusColor value of accuracyRadiusColor as Expression
    */
   fun accuracyRadiusColor(accuracyRadiusColor: Expression): LocationIndicatorLayer
 
   /**
-   * Set the AccuracyRadiusColor property.
+   * The color for drawing the accuracy radius, as a circle. To adjust transparency, set the alpha component of the color accordingly.
    *
    * @param accuracyRadiusColor value of accuracyRadiusColor
    */
   fun accuracyRadiusColor(@ColorInt accuracyRadiusColor: Int): LocationIndicatorLayer
 
   /**
+   * The color for drawing the accuracy radius, as a circle. To adjust transparency, set the alpha component of the color accordingly.
+   *
    * Set the AccuracyRadiusColor property transition options
    *
    * @param options transition options for String
@@ -2194,25 +2346,29 @@ interface LocationIndicatorLayerDsl {
   fun accuracyRadiusColorTransition(options: StyleTransition): LocationIndicatorLayer
 
   /**
+   * The color for drawing the accuracy radius, as a circle. To adjust transparency, set the alpha component of the color accordingly.
+   *
    * DSL for [accuracyRadiusColorTransition].
    */
   fun accuracyRadiusColorTransition(block: StyleTransition.Builder.() -> Unit): LocationIndicatorLayer
 
   /**
-   * Set the Bearing property
+   * The bearing of the location indicator.
    *
    * @param bearing value of bearing
    */
   fun bearing(bearing: Double = 0.0): LocationIndicatorLayer
 
   /**
-   * Set the Bearing property
+   * The bearing of the location indicator.
    *
    * @param bearing value of bearing as Expression
    */
   fun bearing(bearing: Expression): LocationIndicatorLayer
 
   /**
+   * The bearing of the location indicator.
+   *
    * Set the Bearing property transition options
    *
    * @param options transition options for Double
@@ -2220,25 +2376,29 @@ interface LocationIndicatorLayerDsl {
   fun bearingTransition(options: StyleTransition): LocationIndicatorLayer
 
   /**
+   * The bearing of the location indicator.
+   *
    * DSL for [bearingTransition].
    */
   fun bearingTransition(block: StyleTransition.Builder.() -> Unit): LocationIndicatorLayer
 
   /**
-   * Set the BearingImageSize property
+   * The size of the bearing image, as a scale factor applied to the size of the specified image.
    *
    * @param bearingImageSize value of bearingImageSize
    */
   fun bearingImageSize(bearingImageSize: Double = 1.0): LocationIndicatorLayer
 
   /**
-   * Set the BearingImageSize property
+   * The size of the bearing image, as a scale factor applied to the size of the specified image.
    *
    * @param bearingImageSize value of bearingImageSize as Expression
    */
   fun bearingImageSize(bearingImageSize: Expression): LocationIndicatorLayer
 
   /**
+   * The size of the bearing image, as a scale factor applied to the size of the specified image.
+   *
    * Set the BearingImageSize property transition options
    *
    * @param options transition options for Double
@@ -2246,32 +2406,36 @@ interface LocationIndicatorLayerDsl {
   fun bearingImageSizeTransition(options: StyleTransition): LocationIndicatorLayer
 
   /**
+   * The size of the bearing image, as a scale factor applied to the size of the specified image.
+   *
    * DSL for [bearingImageSizeTransition].
    */
   fun bearingImageSizeTransition(block: StyleTransition.Builder.() -> Unit): LocationIndicatorLayer
 
   /**
-   * Set the EmphasisCircleColor property
+   * The color of the circle emphasizing the indicator. To adjust transparency, set the alpha component of the color accordingly.
    *
    * @param emphasisCircleColor value of emphasisCircleColor
    */
   fun emphasisCircleColor(emphasisCircleColor: String = "#ffffff"): LocationIndicatorLayer
 
   /**
-   * Set the EmphasisCircleColor property
+   * The color of the circle emphasizing the indicator. To adjust transparency, set the alpha component of the color accordingly.
    *
    * @param emphasisCircleColor value of emphasisCircleColor as Expression
    */
   fun emphasisCircleColor(emphasisCircleColor: Expression): LocationIndicatorLayer
 
   /**
-   * Set the EmphasisCircleColor property.
+   * The color of the circle emphasizing the indicator. To adjust transparency, set the alpha component of the color accordingly.
    *
    * @param emphasisCircleColor value of emphasisCircleColor
    */
   fun emphasisCircleColor(@ColorInt emphasisCircleColor: Int): LocationIndicatorLayer
 
   /**
+   * The color of the circle emphasizing the indicator. To adjust transparency, set the alpha component of the color accordingly.
+   *
    * Set the EmphasisCircleColor property transition options
    *
    * @param options transition options for String
@@ -2279,25 +2443,29 @@ interface LocationIndicatorLayerDsl {
   fun emphasisCircleColorTransition(options: StyleTransition): LocationIndicatorLayer
 
   /**
+   * The color of the circle emphasizing the indicator. To adjust transparency, set the alpha component of the color accordingly.
+   *
    * DSL for [emphasisCircleColorTransition].
    */
   fun emphasisCircleColorTransition(block: StyleTransition.Builder.() -> Unit): LocationIndicatorLayer
 
   /**
-   * Set the EmphasisCircleRadius property
+   * The radius, in pixel, of the circle emphasizing the indicator, drawn between the accuracy radius and the indicator shadow.
    *
    * @param emphasisCircleRadius value of emphasisCircleRadius
    */
   fun emphasisCircleRadius(emphasisCircleRadius: Double = 0.0): LocationIndicatorLayer
 
   /**
-   * Set the EmphasisCircleRadius property
+   * The radius, in pixel, of the circle emphasizing the indicator, drawn between the accuracy radius and the indicator shadow.
    *
    * @param emphasisCircleRadius value of emphasisCircleRadius as Expression
    */
   fun emphasisCircleRadius(emphasisCircleRadius: Expression): LocationIndicatorLayer
 
   /**
+   * The radius, in pixel, of the circle emphasizing the indicator, drawn between the accuracy radius and the indicator shadow.
+   *
    * Set the EmphasisCircleRadius property transition options
    *
    * @param options transition options for Double
@@ -2305,39 +2473,43 @@ interface LocationIndicatorLayerDsl {
   fun emphasisCircleRadiusTransition(options: StyleTransition): LocationIndicatorLayer
 
   /**
+   * The radius, in pixel, of the circle emphasizing the indicator, drawn between the accuracy radius and the indicator shadow.
+   *
    * DSL for [emphasisCircleRadiusTransition].
    */
   fun emphasisCircleRadiusTransition(block: StyleTransition.Builder.() -> Unit): LocationIndicatorLayer
 
   /**
-   * Set the ImagePitchDisplacement property
+   * The displacement off the center of the top image and the shadow image when the pitch of the map is greater than 0. This helps producing a three-dimensional appearence.
    *
    * @param imagePitchDisplacement value of imagePitchDisplacement
    */
   fun imagePitchDisplacement(imagePitchDisplacement: Double = 0.0): LocationIndicatorLayer
 
   /**
-   * Set the ImagePitchDisplacement property
+   * The displacement off the center of the top image and the shadow image when the pitch of the map is greater than 0. This helps producing a three-dimensional appearence.
    *
    * @param imagePitchDisplacement value of imagePitchDisplacement as Expression
    */
   fun imagePitchDisplacement(imagePitchDisplacement: Expression): LocationIndicatorLayer
 
   /**
-   * Set the Location property
+   * An array of [latitude, longitude, altitude] position of the location indicator.
    *
    * @param location value of location
    */
   fun location(location: List<Double> = listOf(0.0, 0.0, 0.0)): LocationIndicatorLayer
 
   /**
-   * Set the Location property
+   * An array of [latitude, longitude, altitude] position of the location indicator.
    *
    * @param location value of location as Expression
    */
   fun location(location: Expression): LocationIndicatorLayer
 
   /**
+   * An array of [latitude, longitude, altitude] position of the location indicator.
+   *
    * Set the Location property transition options
    *
    * @param options transition options for List<Double>
@@ -2345,39 +2517,43 @@ interface LocationIndicatorLayerDsl {
   fun locationTransition(options: StyleTransition): LocationIndicatorLayer
 
   /**
+   * An array of [latitude, longitude, altitude] position of the location indicator.
+   *
    * DSL for [locationTransition].
    */
   fun locationTransition(block: StyleTransition.Builder.() -> Unit): LocationIndicatorLayer
 
   /**
-   * Set the PerspectiveCompensation property
+   * The amount of the perspective compensation, between 0 and 1. A value of 1 produces a location indicator of constant width across the screen. A value of 0 makes it scale naturally according to the viewing projection.
    *
    * @param perspectiveCompensation value of perspectiveCompensation
    */
   fun perspectiveCompensation(perspectiveCompensation: Double = 0.85): LocationIndicatorLayer
 
   /**
-   * Set the PerspectiveCompensation property
+   * The amount of the perspective compensation, between 0 and 1. A value of 1 produces a location indicator of constant width across the screen. A value of 0 makes it scale naturally according to the viewing projection.
    *
    * @param perspectiveCompensation value of perspectiveCompensation as Expression
    */
   fun perspectiveCompensation(perspectiveCompensation: Expression): LocationIndicatorLayer
 
   /**
-   * Set the ShadowImageSize property
+   * The size of the shadow image, as a scale factor applied to the size of the specified image.
    *
    * @param shadowImageSize value of shadowImageSize
    */
   fun shadowImageSize(shadowImageSize: Double = 1.0): LocationIndicatorLayer
 
   /**
-   * Set the ShadowImageSize property
+   * The size of the shadow image, as a scale factor applied to the size of the specified image.
    *
    * @param shadowImageSize value of shadowImageSize as Expression
    */
   fun shadowImageSize(shadowImageSize: Expression): LocationIndicatorLayer
 
   /**
+   * The size of the shadow image, as a scale factor applied to the size of the specified image.
+   *
    * Set the ShadowImageSize property transition options
    *
    * @param options transition options for Double
@@ -2385,25 +2561,29 @@ interface LocationIndicatorLayerDsl {
   fun shadowImageSizeTransition(options: StyleTransition): LocationIndicatorLayer
 
   /**
+   * The size of the shadow image, as a scale factor applied to the size of the specified image.
+   *
    * DSL for [shadowImageSizeTransition].
    */
   fun shadowImageSizeTransition(block: StyleTransition.Builder.() -> Unit): LocationIndicatorLayer
 
   /**
-   * Set the TopImageSize property
+   * The size of the top image, as a scale factor applied to the size of the specified image.
    *
    * @param topImageSize value of topImageSize
    */
   fun topImageSize(topImageSize: Double = 1.0): LocationIndicatorLayer
 
   /**
-   * Set the TopImageSize property
+   * The size of the top image, as a scale factor applied to the size of the specified image.
    *
    * @param topImageSize value of topImageSize as Expression
    */
   fun topImageSize(topImageSize: Expression): LocationIndicatorLayer
 
   /**
+   * The size of the top image, as a scale factor applied to the size of the specified image.
+   *
    * Set the TopImageSize property transition options
    *
    * @param options transition options for Double
@@ -2411,13 +2591,15 @@ interface LocationIndicatorLayerDsl {
   fun topImageSizeTransition(options: StyleTransition): LocationIndicatorLayer
 
   /**
+   * The size of the top image, as a scale factor applied to the size of the specified image.
+   *
    * DSL for [topImageSizeTransition].
    */
   fun topImageSizeTransition(block: StyleTransition.Builder.() -> Unit): LocationIndicatorLayer
 }
 
 /**
- * DSL function for [LocationIndicatorLayer].
+ * DSL functions for creating a [LocationIndicatorLayer].
  */
 fun locationIndicatorLayer(layerId: String, block: LocationIndicatorLayerDsl.() -> Unit): LocationIndicatorLayer = LocationIndicatorLayer(layerId).apply(block)
 

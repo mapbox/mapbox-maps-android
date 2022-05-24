@@ -27,7 +27,8 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   }
 
   /**
-   * Set the sourceLayer property
+   * A source layer is an individual layer of data within a vector source.
+   * A vector source can have multiple source layers.
    *
    * @param sourceLayer value of sourceLayer
    */
@@ -37,7 +38,8 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   }
 
   /**
-   * Source layer.
+   * A source layer is an individual layer of data within a vector source.
+   * A vector source can have multiple source layers.
    */
   val sourceLayer: String?
     /**
@@ -50,11 +52,11 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * Visibility of the layer.
+   * Whether this layer is displayed.
    */
   override val visibility: Visibility?
     /**
-     * Get the Visibility property
+     * Whether this layer is displayed.
      *
      * @return VISIBILITY
      */
@@ -67,7 +69,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * Set the Visibility property
+   * Whether this layer is displayed.
    *
    * @param visibility value of Visibility
    */
@@ -94,7 +96,11 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * Set the minzoom property
+   * The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.
+   *
+   * Range:
+   *       minimum: 0
+   *       maximum: 24
    *
    * @param value value of minzoom
    */
@@ -121,7 +127,11 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * Set the maxzoom property
+   * The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden.
+   *
+   * Range:
+   *       minimum: 0
+   *       maximum: 24
    *
    * @param value value of maxzoom
    */
@@ -137,7 +147,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
    */
   val rasterBrightnessMax: Double?
     /**
-     * Get the RasterBrightnessMax property
+     * Increase or reduce the brightness of the image. The value is the maximum brightness.
      *
      * @return Double
      */
@@ -146,7 +156,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * Set the RasterBrightnessMax property
+   * Increase or reduce the brightness of the image. The value is the maximum brightness.
    *
    * @param rasterBrightnessMax value of rasterBrightnessMax
    */
@@ -156,12 +166,16 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   }
 
   /**
+   * Increase or reduce the brightness of the image. The value is the maximum brightness.
+   *
    * This is an Expression representation of "raster-brightness-max".
    *
    * Increase or reduce the brightness of the image. The value is the maximum brightness.
    */
   val rasterBrightnessMaxAsExpression: Expression?
     /**
+     * Increase or reduce the brightness of the image. The value is the maximum brightness.
+     *
      * Get the RasterBrightnessMax property as an Expression
      *
      * @return Double
@@ -177,7 +191,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * Set the RasterBrightnessMax property
+   * Increase or reduce the brightness of the image. The value is the maximum brightness.
    *
    * @param rasterBrightnessMax value of rasterBrightnessMax as Expression
    */
@@ -221,7 +235,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
    */
   val rasterBrightnessMin: Double?
     /**
-     * Get the RasterBrightnessMin property
+     * Increase or reduce the brightness of the image. The value is the minimum brightness.
      *
      * @return Double
      */
@@ -230,7 +244,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * Set the RasterBrightnessMin property
+   * Increase or reduce the brightness of the image. The value is the minimum brightness.
    *
    * @param rasterBrightnessMin value of rasterBrightnessMin
    */
@@ -240,12 +254,16 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   }
 
   /**
+   * Increase or reduce the brightness of the image. The value is the minimum brightness.
+   *
    * This is an Expression representation of "raster-brightness-min".
    *
    * Increase or reduce the brightness of the image. The value is the minimum brightness.
    */
   val rasterBrightnessMinAsExpression: Expression?
     /**
+     * Increase or reduce the brightness of the image. The value is the minimum brightness.
+     *
      * Get the RasterBrightnessMin property as an Expression
      *
      * @return Double
@@ -261,7 +279,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * Set the RasterBrightnessMin property
+   * Increase or reduce the brightness of the image. The value is the minimum brightness.
    *
    * @param rasterBrightnessMin value of rasterBrightnessMin as Expression
    */
@@ -305,7 +323,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
    */
   val rasterContrast: Double?
     /**
-     * Get the RasterContrast property
+     * Increase or reduce the contrast of the image.
      *
      * @return Double
      */
@@ -314,7 +332,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * Set the RasterContrast property
+   * Increase or reduce the contrast of the image.
    *
    * @param rasterContrast value of rasterContrast
    */
@@ -324,12 +342,16 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   }
 
   /**
+   * Increase or reduce the contrast of the image.
+   *
    * This is an Expression representation of "raster-contrast".
    *
    * Increase or reduce the contrast of the image.
    */
   val rasterContrastAsExpression: Expression?
     /**
+     * Increase or reduce the contrast of the image.
+     *
      * Get the RasterContrast property as an Expression
      *
      * @return Double
@@ -345,7 +367,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * Set the RasterContrast property
+   * Increase or reduce the contrast of the image.
    *
    * @param rasterContrast value of rasterContrast as Expression
    */
@@ -389,7 +411,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
    */
   val rasterFadeDuration: Double?
     /**
-     * Get the RasterFadeDuration property
+     * Fade duration when a new tile is added.
      *
      * @return Double
      */
@@ -398,7 +420,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * Set the RasterFadeDuration property
+   * Fade duration when a new tile is added.
    *
    * @param rasterFadeDuration value of rasterFadeDuration
    */
@@ -408,12 +430,16 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   }
 
   /**
+   * Fade duration when a new tile is added.
+   *
    * This is an Expression representation of "raster-fade-duration".
    *
    * Fade duration when a new tile is added.
    */
   val rasterFadeDurationAsExpression: Expression?
     /**
+     * Fade duration when a new tile is added.
+     *
      * Get the RasterFadeDuration property as an Expression
      *
      * @return Double
@@ -429,7 +455,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * Set the RasterFadeDuration property
+   * Fade duration when a new tile is added.
    *
    * @param rasterFadeDuration value of rasterFadeDuration as Expression
    */
@@ -443,7 +469,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
    */
   val rasterHueRotate: Double?
     /**
-     * Get the RasterHueRotate property
+     * Rotates hues around the color wheel.
      *
      * @return Double
      */
@@ -452,7 +478,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * Set the RasterHueRotate property
+   * Rotates hues around the color wheel.
    *
    * @param rasterHueRotate value of rasterHueRotate
    */
@@ -462,12 +488,16 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   }
 
   /**
+   * Rotates hues around the color wheel.
+   *
    * This is an Expression representation of "raster-hue-rotate".
    *
    * Rotates hues around the color wheel.
    */
   val rasterHueRotateAsExpression: Expression?
     /**
+     * Rotates hues around the color wheel.
+     *
      * Get the RasterHueRotate property as an Expression
      *
      * @return Double
@@ -483,7 +513,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * Set the RasterHueRotate property
+   * Rotates hues around the color wheel.
    *
    * @param rasterHueRotate value of rasterHueRotate as Expression
    */
@@ -527,7 +557,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
    */
   val rasterOpacity: Double?
     /**
-     * Get the RasterOpacity property
+     * The opacity at which the image will be drawn.
      *
      * @return Double
      */
@@ -536,7 +566,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * Set the RasterOpacity property
+   * The opacity at which the image will be drawn.
    *
    * @param rasterOpacity value of rasterOpacity
    */
@@ -546,12 +576,16 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   }
 
   /**
+   * The opacity at which the image will be drawn.
+   *
    * This is an Expression representation of "raster-opacity".
    *
    * The opacity at which the image will be drawn.
    */
   val rasterOpacityAsExpression: Expression?
     /**
+     * The opacity at which the image will be drawn.
+     *
      * Get the RasterOpacity property as an Expression
      *
      * @return Double
@@ -567,7 +601,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * Set the RasterOpacity property
+   * The opacity at which the image will be drawn.
    *
    * @param rasterOpacity value of rasterOpacity as Expression
    */
@@ -611,7 +645,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
    */
   val rasterResampling: RasterResampling?
     /**
-     * Get the RasterResampling property
+     * The resampling/interpolation method to use for overscaling, also known as texture magnification filter
      *
      * @return RasterResampling
      */
@@ -623,7 +657,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * Set the RasterResampling property
+   * The resampling/interpolation method to use for overscaling, also known as texture magnification filter
    *
    * @param rasterResampling value of rasterResampling
    */
@@ -633,12 +667,16 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   }
 
   /**
+   * The resampling/interpolation method to use for overscaling, also known as texture magnification filter
+   *
    * This is an Expression representation of "raster-resampling".
    *
    * The resampling/interpolation method to use for overscaling, also known as texture magnification filter
    */
   val rasterResamplingAsExpression: Expression?
     /**
+     * The resampling/interpolation method to use for overscaling, also known as texture magnification filter
+     *
      * Get the RasterResampling property as an Expression
      *
      * @return RasterResampling
@@ -654,7 +692,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * Set the RasterResampling property
+   * The resampling/interpolation method to use for overscaling, also known as texture magnification filter
    *
    * @param rasterResampling value of rasterResampling as Expression
    */
@@ -668,7 +706,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
    */
   val rasterSaturation: Double?
     /**
-     * Get the RasterSaturation property
+     * Increase or reduce the saturation of the image.
      *
      * @return Double
      */
@@ -677,7 +715,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * Set the RasterSaturation property
+   * Increase or reduce the saturation of the image.
    *
    * @param rasterSaturation value of rasterSaturation
    */
@@ -687,12 +725,16 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   }
 
   /**
+   * Increase or reduce the saturation of the image.
+   *
    * This is an Expression representation of "raster-saturation".
    *
    * Increase or reduce the saturation of the image.
    */
   val rasterSaturationAsExpression: Expression?
     /**
+     * Increase or reduce the saturation of the image.
+     *
      * Get the RasterSaturation property as an Expression
      *
      * @return Double
@@ -708,7 +750,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * Set the RasterSaturation property
+   * Increase or reduce the saturation of the image.
    *
    * @param rasterSaturation value of rasterSaturation as Expression
    */
@@ -811,6 +853,8 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
      */
     val defaultRasterBrightnessMax: Double?
       /**
+       * Increase or reduce the brightness of the image. The value is the maximum brightness.
+       *
        * Get the default value of RasterBrightnessMax property
        *
        * @return Double
@@ -820,6 +864,8 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
       }
 
     /**
+     * Increase or reduce the brightness of the image. The value is the maximum brightness.
+     *
      * This is an Expression representation of "raster-brightness-max".
      *
      * Increase or reduce the brightness of the image. The value is the maximum brightness.
@@ -856,6 +902,8 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
      */
     val defaultRasterBrightnessMin: Double?
       /**
+       * Increase or reduce the brightness of the image. The value is the minimum brightness.
+       *
        * Get the default value of RasterBrightnessMin property
        *
        * @return Double
@@ -865,6 +913,8 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
       }
 
     /**
+     * Increase or reduce the brightness of the image. The value is the minimum brightness.
+     *
      * This is an Expression representation of "raster-brightness-min".
      *
      * Increase or reduce the brightness of the image. The value is the minimum brightness.
@@ -901,6 +951,8 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
      */
     val defaultRasterContrast: Double?
       /**
+       * Increase or reduce the contrast of the image.
+       *
        * Get the default value of RasterContrast property
        *
        * @return Double
@@ -910,6 +962,8 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
       }
 
     /**
+     * Increase or reduce the contrast of the image.
+     *
      * This is an Expression representation of "raster-contrast".
      *
      * Increase or reduce the contrast of the image.
@@ -946,6 +1000,8 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
      */
     val defaultRasterFadeDuration: Double?
       /**
+       * Fade duration when a new tile is added.
+       *
        * Get the default value of RasterFadeDuration property
        *
        * @return Double
@@ -955,6 +1011,8 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
       }
 
     /**
+     * Fade duration when a new tile is added.
+     *
      * This is an Expression representation of "raster-fade-duration".
      *
      * Fade duration when a new tile is added.
@@ -980,6 +1038,8 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
      */
     val defaultRasterHueRotate: Double?
       /**
+       * Rotates hues around the color wheel.
+       *
        * Get the default value of RasterHueRotate property
        *
        * @return Double
@@ -989,6 +1049,8 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
       }
 
     /**
+     * Rotates hues around the color wheel.
+     *
      * This is an Expression representation of "raster-hue-rotate".
      *
      * Rotates hues around the color wheel.
@@ -1025,6 +1087,8 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
      */
     val defaultRasterOpacity: Double?
       /**
+       * The opacity at which the image will be drawn.
+       *
        * Get the default value of RasterOpacity property
        *
        * @return Double
@@ -1034,6 +1098,8 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
       }
 
     /**
+     * The opacity at which the image will be drawn.
+     *
      * This is an Expression representation of "raster-opacity".
      *
      * The opacity at which the image will be drawn.
@@ -1070,6 +1136,8 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
      */
     val defaultRasterResampling: RasterResampling?
       /**
+       * The resampling/interpolation method to use for overscaling, also known as texture magnification filter
+       *
        * Get the default value of RasterResampling property
        *
        * @return RasterResampling
@@ -1082,6 +1150,8 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
       }
 
     /**
+     * The resampling/interpolation method to use for overscaling, also known as texture magnification filter
+     *
      * This is an Expression representation of "raster-resampling".
      *
      * The resampling/interpolation method to use for overscaling, also known as texture magnification filter
@@ -1107,6 +1177,8 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
      */
     val defaultRasterSaturation: Double?
       /**
+       * Increase or reduce the saturation of the image.
+       *
        * Get the default value of RasterSaturation property
        *
        * @return Double
@@ -1116,6 +1188,8 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
       }
 
     /**
+     * Increase or reduce the saturation of the image.
+     *
      * This is an Expression representation of "raster-saturation".
      *
      * Increase or reduce the saturation of the image.
@@ -1158,28 +1232,37 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
 @LayersDsl
 interface RasterLayerDsl {
   /**
-   * Set the sourceLayer property
+   * A source layer is an individual layer of data within a vector source.
+   * A vector source can have multiple source layers.
    *
    * @param sourceLayer value of sourceLayer
    */
   fun sourceLayer(sourceLayer: String): RasterLayer
 
   /**
-   * Set the Visibility property
+   * Whether this layer is displayed.
    *
    * @param visibility value of Visibility
    */
   fun visibility(visibility: Visibility): RasterLayer
 
   /**
-   * Set the minzoom property
+   * The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.
+   *
+   * Range:
+   *       minimum: 0
+   *       maximum: 24
    *
    * @param value value of minzoom
    */
   fun minZoom(minZoom: Double): RasterLayer
 
   /**
-   * Set the maxzoom property
+   * The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden.
+   *
+   * Range:
+   *       minimum: 0
+   *       maximum: 24
    *
    * @param value value of maxzoom
    */
@@ -1188,20 +1271,22 @@ interface RasterLayerDsl {
   // Property getters and setters
 
   /**
-   * Set the RasterBrightnessMax property
+   * Increase or reduce the brightness of the image. The value is the maximum brightness.
    *
    * @param rasterBrightnessMax value of rasterBrightnessMax
    */
   fun rasterBrightnessMax(rasterBrightnessMax: Double = 1.0): RasterLayer
 
   /**
-   * Set the RasterBrightnessMax property
+   * Increase or reduce the brightness of the image. The value is the maximum brightness.
    *
    * @param rasterBrightnessMax value of rasterBrightnessMax as Expression
    */
   fun rasterBrightnessMax(rasterBrightnessMax: Expression): RasterLayer
 
   /**
+   * Increase or reduce the brightness of the image. The value is the maximum brightness.
+   *
    * Set the RasterBrightnessMax property transition options
    *
    * @param options transition options for Double
@@ -1209,25 +1294,29 @@ interface RasterLayerDsl {
   fun rasterBrightnessMaxTransition(options: StyleTransition): RasterLayer
 
   /**
+   * Increase or reduce the brightness of the image. The value is the maximum brightness.
+   *
    * DSL for [rasterBrightnessMaxTransition].
    */
   fun rasterBrightnessMaxTransition(block: StyleTransition.Builder.() -> Unit): RasterLayer
 
   /**
-   * Set the RasterBrightnessMin property
+   * Increase or reduce the brightness of the image. The value is the minimum brightness.
    *
    * @param rasterBrightnessMin value of rasterBrightnessMin
    */
   fun rasterBrightnessMin(rasterBrightnessMin: Double = 0.0): RasterLayer
 
   /**
-   * Set the RasterBrightnessMin property
+   * Increase or reduce the brightness of the image. The value is the minimum brightness.
    *
    * @param rasterBrightnessMin value of rasterBrightnessMin as Expression
    */
   fun rasterBrightnessMin(rasterBrightnessMin: Expression): RasterLayer
 
   /**
+   * Increase or reduce the brightness of the image. The value is the minimum brightness.
+   *
    * Set the RasterBrightnessMin property transition options
    *
    * @param options transition options for Double
@@ -1235,25 +1324,29 @@ interface RasterLayerDsl {
   fun rasterBrightnessMinTransition(options: StyleTransition): RasterLayer
 
   /**
+   * Increase or reduce the brightness of the image. The value is the minimum brightness.
+   *
    * DSL for [rasterBrightnessMinTransition].
    */
   fun rasterBrightnessMinTransition(block: StyleTransition.Builder.() -> Unit): RasterLayer
 
   /**
-   * Set the RasterContrast property
+   * Increase or reduce the contrast of the image.
    *
    * @param rasterContrast value of rasterContrast
    */
   fun rasterContrast(rasterContrast: Double = 0.0): RasterLayer
 
   /**
-   * Set the RasterContrast property
+   * Increase or reduce the contrast of the image.
    *
    * @param rasterContrast value of rasterContrast as Expression
    */
   fun rasterContrast(rasterContrast: Expression): RasterLayer
 
   /**
+   * Increase or reduce the contrast of the image.
+   *
    * Set the RasterContrast property transition options
    *
    * @param options transition options for Double
@@ -1261,39 +1354,43 @@ interface RasterLayerDsl {
   fun rasterContrastTransition(options: StyleTransition): RasterLayer
 
   /**
+   * Increase or reduce the contrast of the image.
+   *
    * DSL for [rasterContrastTransition].
    */
   fun rasterContrastTransition(block: StyleTransition.Builder.() -> Unit): RasterLayer
 
   /**
-   * Set the RasterFadeDuration property
+   * Fade duration when a new tile is added.
    *
    * @param rasterFadeDuration value of rasterFadeDuration
    */
   fun rasterFadeDuration(rasterFadeDuration: Double = 300.0): RasterLayer
 
   /**
-   * Set the RasterFadeDuration property
+   * Fade duration when a new tile is added.
    *
    * @param rasterFadeDuration value of rasterFadeDuration as Expression
    */
   fun rasterFadeDuration(rasterFadeDuration: Expression): RasterLayer
 
   /**
-   * Set the RasterHueRotate property
+   * Rotates hues around the color wheel.
    *
    * @param rasterHueRotate value of rasterHueRotate
    */
   fun rasterHueRotate(rasterHueRotate: Double = 0.0): RasterLayer
 
   /**
-   * Set the RasterHueRotate property
+   * Rotates hues around the color wheel.
    *
    * @param rasterHueRotate value of rasterHueRotate as Expression
    */
   fun rasterHueRotate(rasterHueRotate: Expression): RasterLayer
 
   /**
+   * Rotates hues around the color wheel.
+   *
    * Set the RasterHueRotate property transition options
    *
    * @param options transition options for Double
@@ -1301,25 +1398,29 @@ interface RasterLayerDsl {
   fun rasterHueRotateTransition(options: StyleTransition): RasterLayer
 
   /**
+   * Rotates hues around the color wheel.
+   *
    * DSL for [rasterHueRotateTransition].
    */
   fun rasterHueRotateTransition(block: StyleTransition.Builder.() -> Unit): RasterLayer
 
   /**
-   * Set the RasterOpacity property
+   * The opacity at which the image will be drawn.
    *
    * @param rasterOpacity value of rasterOpacity
    */
   fun rasterOpacity(rasterOpacity: Double = 1.0): RasterLayer
 
   /**
-   * Set the RasterOpacity property
+   * The opacity at which the image will be drawn.
    *
    * @param rasterOpacity value of rasterOpacity as Expression
    */
   fun rasterOpacity(rasterOpacity: Expression): RasterLayer
 
   /**
+   * The opacity at which the image will be drawn.
+   *
    * Set the RasterOpacity property transition options
    *
    * @param options transition options for Double
@@ -1327,39 +1428,43 @@ interface RasterLayerDsl {
   fun rasterOpacityTransition(options: StyleTransition): RasterLayer
 
   /**
+   * The opacity at which the image will be drawn.
+   *
    * DSL for [rasterOpacityTransition].
    */
   fun rasterOpacityTransition(block: StyleTransition.Builder.() -> Unit): RasterLayer
 
   /**
-   * Set the RasterResampling property
+   * The resampling/interpolation method to use for overscaling, also known as texture magnification filter
    *
    * @param rasterResampling value of rasterResampling
    */
   fun rasterResampling(rasterResampling: RasterResampling = RasterResampling.LINEAR): RasterLayer
 
   /**
-   * Set the RasterResampling property
+   * The resampling/interpolation method to use for overscaling, also known as texture magnification filter
    *
    * @param rasterResampling value of rasterResampling as Expression
    */
   fun rasterResampling(rasterResampling: Expression): RasterLayer
 
   /**
-   * Set the RasterSaturation property
+   * Increase or reduce the saturation of the image.
    *
    * @param rasterSaturation value of rasterSaturation
    */
   fun rasterSaturation(rasterSaturation: Double = 0.0): RasterLayer
 
   /**
-   * Set the RasterSaturation property
+   * Increase or reduce the saturation of the image.
    *
    * @param rasterSaturation value of rasterSaturation as Expression
    */
   fun rasterSaturation(rasterSaturation: Expression): RasterLayer
 
   /**
+   * Increase or reduce the saturation of the image.
+   *
    * Set the RasterSaturation property transition options
    *
    * @param options transition options for Double
@@ -1367,13 +1472,15 @@ interface RasterLayerDsl {
   fun rasterSaturationTransition(options: StyleTransition): RasterLayer
 
   /**
+   * Increase or reduce the saturation of the image.
+   *
    * DSL for [rasterSaturationTransition].
    */
   fun rasterSaturationTransition(block: StyleTransition.Builder.() -> Unit): RasterLayer
 }
 
 /**
- * DSL function for [RasterLayer].
+ * DSL function for creating a [RasterLayer].
  */
 fun rasterLayer(layerId: String, sourceId: String, block: RasterLayerDsl.() -> Unit): RasterLayer = RasterLayer(layerId, sourceId).apply(block)
 

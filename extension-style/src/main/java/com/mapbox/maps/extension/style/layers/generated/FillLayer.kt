@@ -31,7 +31,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   }
 
   /**
-   * Set the sourceLayer property
+   * A source layer is an individual layer of data within a vector source.
+   * A vector source can have multiple source layers.
    *
    * @param sourceLayer value of sourceLayer
    */
@@ -41,7 +42,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   }
 
   /**
-   * Source layer.
+   * A source layer is an individual layer of data within a vector source.
+   * A vector source can have multiple source layers.
    */
   val sourceLayer: String?
     /**
@@ -54,7 +56,13 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     }
 
   /**
-   * Set the filter property
+   * A filter is a property at the layer level that determines which features should be rendered in a style layer.
+   *
+   * Filters are written as expressions, which give you fine-grained control over which features to include: the
+   * style layer only displays the features that match the filter condition that you define.
+   *
+   * Note: Zoom expressions in filters are only evaluated at integer zoom levels. The `feature-state` expression
+   * is not supported in filter expressions.
    *
    * @param filter the expression filter to set
    */
@@ -64,7 +72,13 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   }
 
   /**
-   * A expression specifying conditions on source features. Only features that match the filter are displayed. Zoom expressions in filters are only evaluated at integer zoom levels. The `feature-state` expression is not supported in filter expressions.
+   * A filter is a property at the layer level that determines which features should be rendered in a style layer.
+   *
+   * Filters are written as expressions, which give you fine-grained control over which features to include: the
+   * style layer only displays the features that match the filter condition that you define.
+   *
+   * Note: Zoom expressions in filters are only evaluated at integer zoom levels. The `feature-state` expression
+   * is not supported in filter expressions.
    */
   val filter: Expression?
     /**
@@ -75,11 +89,11 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     get() = getPropertyValue<Expression>("filter")
 
   /**
-   * Visibility of the layer.
+   * Whether this layer is displayed.
    */
   override val visibility: Visibility?
     /**
-     * Get the Visibility property
+     * Whether this layer is displayed.
      *
      * @return VISIBILITY
      */
@@ -92,7 +106,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     }
 
   /**
-   * Set the Visibility property
+   * Whether this layer is displayed.
    *
    * @param visibility value of Visibility
    */
@@ -119,7 +133,11 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     }
 
   /**
-   * Set the minzoom property
+   * The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.
+   *
+   * Range:
+   *       minimum: 0
+   *       maximum: 24
    *
    * @param value value of minzoom
    */
@@ -146,7 +164,11 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     }
 
   /**
-   * Set the maxzoom property
+   * The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden.
+   *
+   * Range:
+   *       minimum: 0
+   *       maximum: 24
    *
    * @param value value of maxzoom
    */
@@ -162,7 +184,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    */
   val fillSortKey: Double?
     /**
-     * Get the FillSortKey property
+     * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
      *
      * @return Double
      */
@@ -171,7 +193,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     }
 
   /**
-   * Set the FillSortKey property
+   * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
    *
    * @param fillSortKey value of fillSortKey
    */
@@ -181,12 +203,16 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   }
 
   /**
+   * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
+   *
    * This is an Expression representation of "fill-sort-key".
    *
    * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
    */
   val fillSortKeyAsExpression: Expression?
     /**
+     * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
+     *
      * Get the FillSortKey property as an Expression
      *
      * @return Double
@@ -202,7 +228,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     }
 
   /**
-   * Set the FillSortKey property
+   * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
    *
    * @param fillSortKey value of fillSortKey as Expression
    */
@@ -216,7 +242,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    */
   val fillAntialias: Boolean?
     /**
-     * Get the FillAntialias property
+     * Whether or not the fill should be antialiased.
      *
      * @return Boolean
      */
@@ -225,7 +251,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     }
 
   /**
-   * Set the FillAntialias property
+   * Whether or not the fill should be antialiased.
    *
    * @param fillAntialias value of fillAntialias
    */
@@ -235,12 +261,16 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   }
 
   /**
+   * Whether or not the fill should be antialiased.
+   *
    * This is an Expression representation of "fill-antialias".
    *
    * Whether or not the fill should be antialiased.
    */
   val fillAntialiasAsExpression: Expression?
     /**
+     * Whether or not the fill should be antialiased.
+     *
      * Get the FillAntialias property as an Expression
      *
      * @return Boolean
@@ -256,7 +286,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     }
 
   /**
-   * Set the FillAntialias property
+   * Whether or not the fill should be antialiased.
    *
    * @param fillAntialias value of fillAntialias as Expression
    */
@@ -270,7 +300,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    */
   val fillColor: String?
     /**
-     * Get the FillColor property
+     * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
      *
      * @return String
      */
@@ -282,7 +312,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     }
 
   /**
-   * Set the FillColor property
+   * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
    *
    * @param fillColor value of fillColor
    */
@@ -292,12 +322,16 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   }
 
   /**
+   * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
+   *
    * This is an Expression representation of "fill-color".
    *
    * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
    */
   val fillColorAsExpression: Expression?
     /**
+     * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
+     *
      * Get the FillColor property as an Expression
      *
      * @return String
@@ -310,7 +344,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     }
 
   /**
-   * Set the FillColor property
+   * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
    *
    * @param fillColor value of fillColor as Expression
    */
@@ -337,7 +371,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     }
 
   /**
-   * Set the FillColor property.
+   * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
    *
    * @param fillColor value of fillColor
    */
@@ -381,7 +415,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    */
   val fillOpacity: Double?
     /**
-     * Get the FillOpacity property
+     * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used.
      *
      * @return Double
      */
@@ -390,7 +424,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     }
 
   /**
-   * Set the FillOpacity property
+   * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used.
    *
    * @param fillOpacity value of fillOpacity
    */
@@ -400,12 +434,16 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   }
 
   /**
+   * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used.
+   *
    * This is an Expression representation of "fill-opacity".
    *
    * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used.
    */
   val fillOpacityAsExpression: Expression?
     /**
+     * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used.
+     *
      * Get the FillOpacity property as an Expression
      *
      * @return Double
@@ -421,7 +459,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     }
 
   /**
-   * Set the FillOpacity property
+   * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used.
    *
    * @param fillOpacity value of fillOpacity as Expression
    */
@@ -465,7 +503,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    */
   val fillOutlineColor: String?
     /**
-     * Get the FillOutlineColor property
+     * The outline color of the fill. Matches the value of `fill-color` if unspecified.
      *
      * @return String
      */
@@ -477,7 +515,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     }
 
   /**
-   * Set the FillOutlineColor property
+   * The outline color of the fill. Matches the value of `fill-color` if unspecified.
    *
    * @param fillOutlineColor value of fillOutlineColor
    */
@@ -487,12 +525,16 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   }
 
   /**
+   * The outline color of the fill. Matches the value of `fill-color` if unspecified.
+   *
    * This is an Expression representation of "fill-outline-color".
    *
    * The outline color of the fill. Matches the value of `fill-color` if unspecified.
    */
   val fillOutlineColorAsExpression: Expression?
     /**
+     * The outline color of the fill. Matches the value of `fill-color` if unspecified.
+     *
      * Get the FillOutlineColor property as an Expression
      *
      * @return String
@@ -505,7 +547,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     }
 
   /**
-   * Set the FillOutlineColor property
+   * The outline color of the fill. Matches the value of `fill-color` if unspecified.
    *
    * @param fillOutlineColor value of fillOutlineColor as Expression
    */
@@ -532,7 +574,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     }
 
   /**
-   * Set the FillOutlineColor property.
+   * The outline color of the fill. Matches the value of `fill-color` if unspecified.
    *
    * @param fillOutlineColor value of fillOutlineColor
    */
@@ -576,7 +618,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    */
   val fillPattern: String?
     /**
-     * Get the FillPattern property
+     * Name of image in sprite to use for drawing image fills. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
      *
      * @return String
      */
@@ -585,7 +627,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     }
 
   /**
-   * Set the FillPattern property
+   * Name of image in sprite to use for drawing image fills. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
    *
    * @param fillPattern value of fillPattern
    */
@@ -595,12 +637,16 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   }
 
   /**
+   * Name of image in sprite to use for drawing image fills. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
+   *
    * This is an Expression representation of "fill-pattern".
    *
    * Name of image in sprite to use for drawing image fills. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
    */
   val fillPatternAsExpression: Expression?
     /**
+     * Name of image in sprite to use for drawing image fills. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
+     *
      * Get the FillPattern property as an Expression
      *
      * @return String
@@ -616,7 +662,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     }
 
   /**
-   * Set the FillPattern property
+   * Name of image in sprite to use for drawing image fills. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
    *
    * @param fillPattern value of fillPattern as Expression
    */
@@ -660,7 +706,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    */
   val fillTranslate: List<Double>?
     /**
-     * Get the FillTranslate property
+     * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
      *
      * @return List<Double>
      */
@@ -669,7 +715,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     }
 
   /**
-   * Set the FillTranslate property
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
    *
    * @param fillTranslate value of fillTranslate
    */
@@ -679,12 +725,16 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   }
 
   /**
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
+   *
    * This is an Expression representation of "fill-translate".
    *
    * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
    */
   val fillTranslateAsExpression: Expression?
     /**
+     * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
+     *
      * Get the FillTranslate property as an Expression
      *
      * @return List<Double>
@@ -700,7 +750,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     }
 
   /**
-   * Set the FillTranslate property
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
    *
    * @param fillTranslate value of fillTranslate as Expression
    */
@@ -744,7 +794,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    */
   val fillTranslateAnchor: FillTranslateAnchor?
     /**
-     * Get the FillTranslateAnchor property
+     * Controls the frame of reference for `fill-translate`.
      *
      * @return FillTranslateAnchor
      */
@@ -756,7 +806,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     }
 
   /**
-   * Set the FillTranslateAnchor property
+   * Controls the frame of reference for `fill-translate`.
    *
    * @param fillTranslateAnchor value of fillTranslateAnchor
    */
@@ -766,12 +816,16 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   }
 
   /**
+   * Controls the frame of reference for `fill-translate`.
+   *
    * This is an Expression representation of "fill-translate-anchor".
    *
    * Controls the frame of reference for `fill-translate`.
    */
   val fillTranslateAnchorAsExpression: Expression?
     /**
+     * Controls the frame of reference for `fill-translate`.
+     *
      * Get the FillTranslateAnchor property as an Expression
      *
      * @return FillTranslateAnchor
@@ -787,7 +841,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     }
 
   /**
-   * Set the FillTranslateAnchor property
+   * Controls the frame of reference for `fill-translate`.
    *
    * @param fillTranslateAnchor value of fillTranslateAnchor as Expression
    */
@@ -860,6 +914,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
      */
     val defaultFillSortKey: Double?
       /**
+       * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
+       *
        * Get the default value of FillSortKey property
        *
        * @return Double
@@ -869,6 +925,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
       }
 
     /**
+     * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
+     *
      * This is an Expression representation of "fill-sort-key".
      *
      * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
@@ -894,6 +952,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
      */
     val defaultFillAntialias: Boolean?
       /**
+       * Whether or not the fill should be antialiased.
+       *
        * Get the default value of FillAntialias property
        *
        * @return Boolean
@@ -903,6 +963,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
       }
 
     /**
+     * Whether or not the fill should be antialiased.
+     *
      * This is an Expression representation of "fill-antialias".
      *
      * Whether or not the fill should be antialiased.
@@ -928,6 +990,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
      */
     val defaultFillColor: String?
       /**
+       * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
+       *
        * Get the default value of FillColor property
        *
        * @return String
@@ -940,6 +1004,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
       }
 
     /**
+     * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
+     *
      * This is an Expression representation of "fill-color".
      *
      * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
@@ -962,6 +1028,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
      */
     val defaultFillColorAsColorInt: Int?
       /**
+       * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
+       *
        * Get the default value of FillColor property as color int.
        *
        * @return int representation of a rgba string color
@@ -990,6 +1058,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
      */
     val defaultFillOpacity: Double?
       /**
+       * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used.
+       *
        * Get the default value of FillOpacity property
        *
        * @return Double
@@ -999,6 +1069,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
       }
 
     /**
+     * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used.
+     *
      * This is an Expression representation of "fill-opacity".
      *
      * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used.
@@ -1035,6 +1107,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
      */
     val defaultFillOutlineColor: String?
       /**
+       * The outline color of the fill. Matches the value of `fill-color` if unspecified.
+       *
        * Get the default value of FillOutlineColor property
        *
        * @return String
@@ -1047,6 +1121,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
       }
 
     /**
+     * The outline color of the fill. Matches the value of `fill-color` if unspecified.
+     *
      * This is an Expression representation of "fill-outline-color".
      *
      * The outline color of the fill. Matches the value of `fill-color` if unspecified.
@@ -1069,6 +1145,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
      */
     val defaultFillOutlineColorAsColorInt: Int?
       /**
+       * The outline color of the fill. Matches the value of `fill-color` if unspecified.
+       *
        * Get the default value of FillOutlineColor property as color int.
        *
        * @return int representation of a rgba string color
@@ -1097,6 +1175,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
      */
     val defaultFillPattern: String?
       /**
+       * Name of image in sprite to use for drawing image fills. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
+       *
        * Get the default value of FillPattern property
        *
        * @return String
@@ -1106,6 +1186,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
       }
 
     /**
+     * Name of image in sprite to use for drawing image fills. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
+     *
      * This is an Expression representation of "fill-pattern".
      *
      * Name of image in sprite to use for drawing image fills. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
@@ -1142,6 +1224,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
      */
     val defaultFillTranslate: List<Double>?
       /**
+       * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
+       *
        * Get the default value of FillTranslate property
        *
        * @return List<Double>
@@ -1151,6 +1235,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
       }
 
     /**
+     * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
+     *
      * This is an Expression representation of "fill-translate".
      *
      * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
@@ -1187,6 +1273,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
      */
     val defaultFillTranslateAnchor: FillTranslateAnchor?
       /**
+       * Controls the frame of reference for `fill-translate`.
+       *
        * Get the default value of FillTranslateAnchor property
        *
        * @return FillTranslateAnchor
@@ -1199,6 +1287,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
       }
 
     /**
+     * Controls the frame of reference for `fill-translate`.
+     *
      * This is an Expression representation of "fill-translate-anchor".
      *
      * Controls the frame of reference for `fill-translate`.
@@ -1230,35 +1320,50 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
 @LayersDsl
 interface FillLayerDsl {
   /**
-   * Set the sourceLayer property
+   * A source layer is an individual layer of data within a vector source.
+   * A vector source can have multiple source layers.
    *
    * @param sourceLayer value of sourceLayer
    */
   fun sourceLayer(sourceLayer: String): FillLayer
 
   /**
-   * Set the filter property
+   * A filter is a property at the layer level that determines which features should be rendered in a style layer.
+   *
+   * Filters are written as expressions, which give you fine-grained control over which features to include: the
+   * style layer only displays the features that match the filter condition that you define.
+   *
+   * Note: Zoom expressions in filters are only evaluated at integer zoom levels. The `feature-state` expression
+   * is not supported in filter expressions.
    *
    * @param filter the expression filter to set
    */
   fun filter(filter: Expression): FillLayer
 
   /**
-   * Set the Visibility property
+   * Whether this layer is displayed.
    *
    * @param visibility value of Visibility
    */
   fun visibility(visibility: Visibility): FillLayer
 
   /**
-   * Set the minzoom property
+   * The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.
+   *
+   * Range:
+   *       minimum: 0
+   *       maximum: 24
    *
    * @param value value of minzoom
    */
   fun minZoom(minZoom: Double): FillLayer
 
   /**
-   * Set the maxzoom property
+   * The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden.
+   *
+   * Range:
+   *       minimum: 0
+   *       maximum: 24
    *
    * @param value value of maxzoom
    */
@@ -1267,55 +1372,57 @@ interface FillLayerDsl {
   // Property getters and setters
 
   /**
-   * Set the FillSortKey property
+   * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
    *
    * @param fillSortKey value of fillSortKey
    */
   fun fillSortKey(fillSortKey: Double): FillLayer
 
   /**
-   * Set the FillSortKey property
+   * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
    *
    * @param fillSortKey value of fillSortKey as Expression
    */
   fun fillSortKey(fillSortKey: Expression): FillLayer
 
   /**
-   * Set the FillAntialias property
+   * Whether or not the fill should be antialiased.
    *
    * @param fillAntialias value of fillAntialias
    */
   fun fillAntialias(fillAntialias: Boolean = true): FillLayer
 
   /**
-   * Set the FillAntialias property
+   * Whether or not the fill should be antialiased.
    *
    * @param fillAntialias value of fillAntialias as Expression
    */
   fun fillAntialias(fillAntialias: Expression): FillLayer
 
   /**
-   * Set the FillColor property
+   * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
    *
    * @param fillColor value of fillColor
    */
   fun fillColor(fillColor: String = "#000000"): FillLayer
 
   /**
-   * Set the FillColor property
+   * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
    *
    * @param fillColor value of fillColor as Expression
    */
   fun fillColor(fillColor: Expression): FillLayer
 
   /**
-   * Set the FillColor property.
+   * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
    *
    * @param fillColor value of fillColor
    */
   fun fillColor(@ColorInt fillColor: Int): FillLayer
 
   /**
+   * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
+   *
    * Set the FillColor property transition options
    *
    * @param options transition options for String
@@ -1323,25 +1430,29 @@ interface FillLayerDsl {
   fun fillColorTransition(options: StyleTransition): FillLayer
 
   /**
+   * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
+   *
    * DSL for [fillColorTransition].
    */
   fun fillColorTransition(block: StyleTransition.Builder.() -> Unit): FillLayer
 
   /**
-   * Set the FillOpacity property
+   * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used.
    *
    * @param fillOpacity value of fillOpacity
    */
   fun fillOpacity(fillOpacity: Double = 1.0): FillLayer
 
   /**
-   * Set the FillOpacity property
+   * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used.
    *
    * @param fillOpacity value of fillOpacity as Expression
    */
   fun fillOpacity(fillOpacity: Expression): FillLayer
 
   /**
+   * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used.
+   *
    * Set the FillOpacity property transition options
    *
    * @param options transition options for Double
@@ -1349,32 +1460,36 @@ interface FillLayerDsl {
   fun fillOpacityTransition(options: StyleTransition): FillLayer
 
   /**
+   * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used.
+   *
    * DSL for [fillOpacityTransition].
    */
   fun fillOpacityTransition(block: StyleTransition.Builder.() -> Unit): FillLayer
 
   /**
-   * Set the FillOutlineColor property
+   * The outline color of the fill. Matches the value of `fill-color` if unspecified.
    *
    * @param fillOutlineColor value of fillOutlineColor
    */
   fun fillOutlineColor(fillOutlineColor: String): FillLayer
 
   /**
-   * Set the FillOutlineColor property
+   * The outline color of the fill. Matches the value of `fill-color` if unspecified.
    *
    * @param fillOutlineColor value of fillOutlineColor as Expression
    */
   fun fillOutlineColor(fillOutlineColor: Expression): FillLayer
 
   /**
-   * Set the FillOutlineColor property.
+   * The outline color of the fill. Matches the value of `fill-color` if unspecified.
    *
    * @param fillOutlineColor value of fillOutlineColor
    */
   fun fillOutlineColor(@ColorInt fillOutlineColor: Int): FillLayer
 
   /**
+   * The outline color of the fill. Matches the value of `fill-color` if unspecified.
+   *
    * Set the FillOutlineColor property transition options
    *
    * @param options transition options for String
@@ -1382,25 +1497,29 @@ interface FillLayerDsl {
   fun fillOutlineColorTransition(options: StyleTransition): FillLayer
 
   /**
+   * The outline color of the fill. Matches the value of `fill-color` if unspecified.
+   *
    * DSL for [fillOutlineColorTransition].
    */
   fun fillOutlineColorTransition(block: StyleTransition.Builder.() -> Unit): FillLayer
 
   /**
-   * Set the FillPattern property
+   * Name of image in sprite to use for drawing image fills. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
    *
    * @param fillPattern value of fillPattern
    */
   fun fillPattern(fillPattern: String): FillLayer
 
   /**
-   * Set the FillPattern property
+   * Name of image in sprite to use for drawing image fills. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
    *
    * @param fillPattern value of fillPattern as Expression
    */
   fun fillPattern(fillPattern: Expression): FillLayer
 
   /**
+   * Name of image in sprite to use for drawing image fills. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
+   *
    * Set the FillPattern property transition options
    *
    * @param options transition options for String
@@ -1408,25 +1527,29 @@ interface FillLayerDsl {
   fun fillPatternTransition(options: StyleTransition): FillLayer
 
   /**
+   * Name of image in sprite to use for drawing image fills. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
+   *
    * DSL for [fillPatternTransition].
    */
   fun fillPatternTransition(block: StyleTransition.Builder.() -> Unit): FillLayer
 
   /**
-   * Set the FillTranslate property
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
    *
    * @param fillTranslate value of fillTranslate
    */
   fun fillTranslate(fillTranslate: List<Double> = listOf(0.0, 0.0)): FillLayer
 
   /**
-   * Set the FillTranslate property
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
    *
    * @param fillTranslate value of fillTranslate as Expression
    */
   fun fillTranslate(fillTranslate: Expression): FillLayer
 
   /**
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
+   *
    * Set the FillTranslate property transition options
    *
    * @param options transition options for List<Double>
@@ -1434,19 +1557,21 @@ interface FillLayerDsl {
   fun fillTranslateTransition(options: StyleTransition): FillLayer
 
   /**
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
+   *
    * DSL for [fillTranslateTransition].
    */
   fun fillTranslateTransition(block: StyleTransition.Builder.() -> Unit): FillLayer
 
   /**
-   * Set the FillTranslateAnchor property
+   * Controls the frame of reference for `fill-translate`.
    *
    * @param fillTranslateAnchor value of fillTranslateAnchor
    */
   fun fillTranslateAnchor(fillTranslateAnchor: FillTranslateAnchor = FillTranslateAnchor.MAP): FillLayer
 
   /**
-   * Set the FillTranslateAnchor property
+   * Controls the frame of reference for `fill-translate`.
    *
    * @param fillTranslateAnchor value of fillTranslateAnchor as Expression
    */
@@ -1454,7 +1579,7 @@ interface FillLayerDsl {
 }
 
 /**
- * DSL function for [FillLayer].
+ * DSL function for creating a [FillLayer].
  */
 fun fillLayer(layerId: String, sourceId: String, block: FillLayerDsl.() -> Unit): FillLayer = FillLayer(layerId, sourceId).apply(block)
 
