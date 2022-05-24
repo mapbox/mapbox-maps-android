@@ -111,16 +111,22 @@ internal class StyleObserver(
         styleDataStyleLoadedListener = null
       }
       StyleDataType.SPRITE -> {
-        styleDataSpritesLoadedListener?.onStyleLoaded(
-          loadedStyle ?: throw MapboxMapException("Style is not initialized yet although SPRITES event has arrived!")
-        )
-        styleDataSpritesLoadedListener = null
+        styleDataSpritesLoadedListener?.let {
+          styleDataSpritesLoadedListener = null
+          it.onStyleLoaded(
+            loadedStyle ?: throw MapboxMapException("Style is not initialized yet although SPRITES event has arrived!")
+          )
+        }
       }
       StyleDataType.SOURCES -> {
-        styleDataSourcesLoadedListener?.onStyleLoaded(
-          loadedStyle ?: throw MapboxMapException("Style is not initialized yet although SOURCES event has arrived!")
-        )
-        styleDataSourcesLoadedListener = null
+        styleDataSourcesLoadedListener?.let {
+          // reset listener first, firing onStyleLoaded
+          // may produce another StyleDataType.SOURCES event if sources are added
+          styleDataSourcesLoadedListener = null
+          it.onStyleLoaded(
+            loadedStyle ?: throw MapboxMapException("Style is not initialized yet although SOURCES event has arrived!")
+          )
+        }
       }
     }
   }
