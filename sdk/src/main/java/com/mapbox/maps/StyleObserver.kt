@@ -44,9 +44,9 @@ internal class StyleObserver(
    */
   fun setLoadStyleListener(
     userOnStyleLoaded: Style.OnStyleLoaded?,
-    styleDataStyleLoadedListener: Style.OnStyleLoaded?,
-    styleDataSpritesLoadedListener: Style.OnStyleLoaded?,
-    styleDataSourcesLoadedListener: Style.OnStyleLoaded?,
+    styleDataStyleLoadedListener: Style.OnStyleLoaded? = null,
+    styleDataSpritesLoadedListener: Style.OnStyleLoaded? = null,
+    styleDataSourcesLoadedListener: Style.OnStyleLoaded? = null,
     onMapLoadErrorListener: OnMapLoadErrorListener?
   ) {
     this.userStyleLoadedListener = userOnStyleLoaded
@@ -70,18 +70,8 @@ internal class StyleObserver(
   override fun onStyleLoaded(eventData: StyleLoadedEventData) {
     val style = loadedStyle ?: throw MapboxMapException("Style is not initialized on onStyleLoaded callback!")
 
-    // sprites listener is not null - it means style does not contain them thus StyleDataType.SPRITE
-    // was not fired, explicitly call it to bind all the necessary style extensions upstream
-    if (styleDataSpritesLoadedListener != null) {
-      styleDataSpritesLoadedListener?.onStyleLoaded(style)
-      styleDataSpritesLoadedListener = null
-    }
-    // sources listener is not null - it means style does not contain them thus StyleDataType.SOURCES
-    // was not fired, explicitly call it to bind all the necessary style extensions upstream
-    if (styleDataSourcesLoadedListener != null) {
-      styleDataSourcesLoadedListener?.onStyleLoaded(style)
-      styleDataSourcesLoadedListener = null
-    }
+    onStyleSpritesReady()
+    onStyleSourcesReady()
     styleLoadedListener.onStyleLoaded(style)
 
     userStyleLoadedListener?.onStyleLoaded(style)
@@ -111,23 +101,35 @@ internal class StyleObserver(
         styleDataStyleLoadedListener = null
       }
       StyleDataType.SPRITE -> {
-        styleDataSpritesLoadedListener?.let {
-          styleDataSpritesLoadedListener = null
-          it.onStyleLoaded(
-            loadedStyle ?: throw MapboxMapException("Style is not initialized yet although SPRITES event has arrived!")
-          )
-        }
+        onStyleSpritesReady()
       }
       StyleDataType.SOURCES -> {
-        styleDataSourcesLoadedListener?.let {
-          // reset listener first, firing onStyleLoaded
-          // may produce another StyleDataType.SOURCES event if sources are added
-          styleDataSourcesLoadedListener = null
-          it.onStyleLoaded(
-            loadedStyle ?: throw MapboxMapException("Style is not initialized yet although SOURCES event has arrived!")
-          )
-        }
+        onStyleSourcesReady()
       }
+    }
+  }
+
+  private fun onStyleSourcesReady() {
+    // sources listener is not null - it means style does not contain them thus StyleDataType.SOURCES
+    // was not fired, explicitly call it to bind all the necessary style extensions upstream
+    styleDataSourcesLoadedListener?.let {
+      // reset listener first, firing onStyleLoaded
+      // may produce another StyleDataType.SOURCES event if sources are added
+      styleDataSourcesLoadedListener = null
+      it.onStyleLoaded(
+        loadedStyle ?: throw MapboxMapException("Style is not initialized yet although SOURCES event has arrived!")
+      )
+    }
+  }
+
+  private fun onStyleSpritesReady() {
+    // sprites listener is not null - it means style does not contain them thus StyleDataType.SPRITE
+    // was not fired, explicitly call it to bind all the necessary style extensions upstream
+    styleDataSpritesLoadedListener?.let {
+      styleDataSpritesLoadedListener = null
+      it.onStyleLoaded(
+        loadedStyle ?: throw MapboxMapException("Style is not initialized yet although SPRITES event has arrived!")
+      )
     }
   }
 
