@@ -6,6 +6,7 @@ import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
 import com.mapbox.maps.MapView
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.Style
 import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.extension.style.expressions.dsl.generated.get
@@ -17,8 +18,9 @@ import com.mapbox.maps.extension.style.style
 import com.mapbox.turf.TurfMeasurement
 
 /**
- * Showcase adding a 3D model using model layer.
+ * Showcase adding 3D models using model layer.
  */
+@MapboxExperimental
 class ModelLayerActivity : AppCompatActivity() {
   private lateinit var mapView: MapView
 
@@ -31,8 +33,8 @@ class ModelLayerActivity : AppCompatActivity() {
       setCamera(
         cameraOptions {
           center(TurfMeasurement.midpoint(HELSINKI, MAPBOX_HELSINKI))
-          zoom(14.0)
-          pitch(45.0)
+          zoom(CAMERA_ZOOM)
+          pitch(CAMERA_PITCH)
         }
       )
       loadStyle(
@@ -57,6 +59,9 @@ class ModelLayerActivity : AppCompatActivity() {
             modelId(get(MODEL_ID_KEY))
             modelType(ModelType.COMMON_3D)
             modelScale(listOf(100.0, 100.0, 100.0))
+            modelTranslation(listOf(0.0, 0.0, 0.0))
+            modelRotation(listOf(0.0, 0.0, 90.0))
+            modelOpacity(0.7)
           }
         }
       )
@@ -64,6 +69,8 @@ class ModelLayerActivity : AppCompatActivity() {
   }
 
   private companion object {
+    const val CAMERA_ZOOM = 14.0
+    const val CAMERA_PITCH = 45.0
     const val SOURCE_ID = "source-id"
     const val MODEL_LAYER_ID = "model-layer-id"
     const val MODEL_ID_KEY = "model-id-key"

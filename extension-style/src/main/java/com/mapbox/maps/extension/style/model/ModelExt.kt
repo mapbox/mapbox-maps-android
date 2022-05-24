@@ -13,11 +13,11 @@ fun model(modelId: String, block: ModelExtensionImpl.Builder.() -> Unit): ModelE
   ModelExtensionImpl.Builder(modelId).apply(block).build()
 
 /**
- * Extension function to add an model provided by the Style Extension to the Style.
+ * Extension function to add a model provided by the Style Extension to the Style.
  *
- * @param image The image to be added
+ * @param model The model to be added
  */
 @MapboxExperimental
-fun StyleInterface.addModel(image: StyleContract.StyleModelExtension) {
-  image.bindTo(this)
+fun StyleInterface.addModel(model: StyleContract.StyleModelExtension) {
+  model.bindTo(this)
 }

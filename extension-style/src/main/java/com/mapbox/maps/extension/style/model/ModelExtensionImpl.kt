@@ -51,7 +51,7 @@ class ModelExtensionImpl(private val builder: Builder) : StyleContract.StyleMode
      */
     fun build(): ModelExtensionImpl {
       if (this.uri.isEmpty()) {
-        throw IllegalStateException("An model extension requires an model uri input.")
+        throw IllegalStateException("3D Model extension requires model uri input.")
       }
       return ModelExtensionImpl(this)
     }

@@ -4,7 +4,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 ## Features ✨ and improvements 🏁
-* Introduce ModelLayer experimental API to render 3D model on the map. ([#1369](https://github.com/mapbox/mapbox-maps-android/pull/1369))
+* Introduce experimental ModelLayer API to render 3D models on the map. ([#1369](https://github.com/mapbox/mapbox-maps-android/pull/1369))
 
 # 10.6.0-beta.1 May 19, 2022
 

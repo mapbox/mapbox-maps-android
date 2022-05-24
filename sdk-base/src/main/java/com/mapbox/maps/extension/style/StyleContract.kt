@@ -1,6 +1,7 @@
 package com.mapbox.maps.extension.style
 
 import com.mapbox.maps.LayerPosition
+import com.mapbox.maps.MapboxExperimental
 
 /**
  * Define the common interfaces for the Style component.
@@ -144,6 +145,7 @@ interface StyleContract {
   /**
    * Define the interfaces for the model extension.
    */
+  @MapboxExperimental
   fun interface StyleModelExtension {
     /**
      * Bind the model to the Style.
