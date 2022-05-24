@@ -15,10 +15,21 @@ import org.robolectric.RobolectricTestRunner
 @RunWith(RobolectricTestRunner::class)
 class StyleObserverTest {
 
+  private lateinit var mainStyleLoadedListener: Style.OnStyleLoaded
+  private lateinit var styleObserver: StyleObserver
+
   @Before
   fun setUp() {
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logE(any(), any()) } just Runs
+
+    mainStyleLoadedListener = mockk(relaxed = true)
+    styleObserver = StyleObserver(
+      nativeMap = mockk(relaxUnitFun = true),
+      styleLoadedListener = mainStyleLoadedListener,
+      nativeObserver = mockk(relaxUnitFun = true),
+      pixelRatio = 1.0f
+    )
   }
 
   @After
@@ -56,20 +67,12 @@ class StyleObserverTest {
    */
   @Test
   fun onStyleLoadSuccess() {
-    val mainStyleLoadedListener = mockk<Style.OnStyleLoaded>(relaxed = true)
-    val nativeMap = mockk<MapInterface>(relaxed = true)
-    val styleObserver = StyleObserver(
-      nativeMap = nativeMap,
-      styleLoadedListener = mainStyleLoadedListener,
-      nativeObserver = mockk(relaxed = true),
-      pixelRatio = 1.0f
-    )
     val styleLoaded = mockk<Style.OnStyleLoaded>(relaxed = true)
     styleObserver.setLoadStyleListener(styleLoaded, null, null, null, null)
     styleObserver.onStyleDataLoaded(StyleDataLoadedEventData(0, 0, StyleDataType.STYLE)) // needed to initialize style internally
     styleObserver.onStyleLoaded(mockk())
-    verify(exactly = 1) { styleLoaded.onStyleLoaded(any()) }
-    verify(exactly = 1) { mainStyleLoadedListener.onStyleLoaded(any()) }
+    verify { styleLoaded.onStyleLoaded(any()) }
+    verify { mainStyleLoadedListener.onStyleLoaded(any()) }
   }
 
   /**
@@ -77,12 +80,6 @@ class StyleObserverTest {
    */
   @Test
   fun onStyleLoadSuccessMulti() {
-    val styleObserver = StyleObserver(
-      nativeMap = mockk(relaxed = true),
-      styleLoadedListener = mockk(relaxed = true),
-      nativeObserver = mockk(relaxed = true),
-      pixelRatio = 1.0f
-    )
     val userLoadStyleListener = mockk<Style.OnStyleLoaded>(relaxed = true)
     styleObserver.setLoadStyleListener(
       userLoadStyleListener,
@@ -107,12 +104,6 @@ class StyleObserverTest {
    */
   @Test
   fun onStyleLoadedOverwritten() {
-    val styleObserver = StyleObserver(
-      nativeMap = mockk(relaxed = true),
-      styleLoadedListener = mockk(relaxed = true),
-      nativeObserver = mockk(relaxed = true),
-      pixelRatio = 1.0f
-    )
     val styleLoadedFail = mockk<Style.OnStyleLoaded>(relaxed = true)
     styleObserver.setLoadStyleListener(styleLoadedFail, null, null, null, null)
     val styleLoadedSuccess = mockk<Style.OnStyleLoaded>(relaxed = true)
@@ -128,12 +119,6 @@ class StyleObserverTest {
    */
   @Test
   fun onStyleLoadError() {
-    val styleObserver = StyleObserver(
-      nativeMap = mockk(relaxed = true),
-      styleLoadedListener = mockk(relaxed = true),
-      nativeObserver = mockk(relaxed = true),
-      pixelRatio = 1.0f
-    )
     val errorListener = mockk<OnMapLoadErrorListener>(relaxed = true)
     styleObserver.setLoadStyleListener(null, null, null, null, errorListener)
     styleObserver.onMapLoadError(mockk(relaxed = true))
@@ -145,12 +130,6 @@ class StyleObserverTest {
    */
   @Test
   fun onStyleLoadErrorNotCalled() {
-    val styleObserver = StyleObserver(
-      nativeMap = mockk(relaxed = true),
-      styleLoadedListener = mockk(relaxed = true),
-      nativeObserver = mockk(relaxed = true),
-      pixelRatio = 1.0f
-    )
     val errorListenerFail = mockk<OnMapLoadErrorListener>(relaxed = true)
     styleObserver.setLoadStyleListener(null, null, null, null, errorListenerFail)
     val errorListenerSuccess = mockk<OnMapLoadErrorListener>(relaxed = true)
@@ -162,14 +141,6 @@ class StyleObserverTest {
 
   @Test
   fun onStyleDataLoadedNotifiesMapboxMap() {
-    val nativeMap = mockk<MapInterface>(relaxUnitFun = true)
-    val styleObserver = StyleObserver(
-      nativeMap = nativeMap,
-      styleLoadedListener = mockk(relaxUnitFun = true),
-      nativeObserver = mockk(relaxed = true),
-      pixelRatio = 1.0f
-    )
-
     val styleCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
     val styleSpritesCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
     val styleSourcesCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
@@ -191,14 +162,6 @@ class StyleObserverTest {
 
   @Test
   fun onStyleDataSpritesLoadedNotifiesMapboxMap() {
-    val nativeMap = mockk<MapInterface>(relaxed = true)
-    val styleObserver = StyleObserver(
-      nativeMap = nativeMap,
-      styleLoadedListener = mockk(relaxUnitFun = true),
-      nativeObserver = mockk(relaxed = true),
-      pixelRatio = 1.0f
-    )
-
     val styleCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
     val styleSpritesCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
     val styleSourcesCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
@@ -225,14 +188,6 @@ class StyleObserverTest {
 
   @Test
   fun onStyleDataSourcesLoadedNotifiesMapboxMap() {
-    val nativeMap = mockk<MapInterface>(relaxed = true)
-    val styleObserver = StyleObserver(
-      nativeMap = nativeMap,
-      styleLoadedListener = mockk(relaxUnitFun = true),
-      nativeObserver = mockk(relaxed = true),
-      pixelRatio = 1.0f
-    )
-
     val styleCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
     val styleSpritesCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
     val styleSourcesCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
@@ -259,12 +214,6 @@ class StyleObserverTest {
 
   @Test
   fun onStyleDataOverwritten() {
-    val styleObserver = StyleObserver(
-      nativeMap = mockk(relaxed = true),
-      styleLoadedListener = mockk(relaxed = true),
-      nativeObserver = mockk(relaxed = true),
-      pixelRatio = 1.0f
-    )
     val styleNotCalled = mockk<Style.OnStyleLoaded>(relaxed = true)
     val spritesNotCalled = mockk<Style.OnStyleLoaded>(relaxed = true)
     val sourcesNotCalled = mockk<Style.OnStyleLoaded>(relaxed = true)
@@ -291,14 +240,6 @@ class StyleObserverTest {
 
   @Test
   fun onStyleDataSourcesThrowsIfNoStyleData() {
-    val nativeMap = mockk<MapInterface>(relaxed = true)
-    val styleObserver = StyleObserver(
-      nativeMap = nativeMap,
-      styleLoadedListener = mockk(relaxUnitFun = true),
-      nativeObserver = mockk(relaxed = true),
-      pixelRatio = 1.0f
-    )
-
     val styleCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
     val styleSpritesCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
     val styleSourcesCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
@@ -318,14 +259,6 @@ class StyleObserverTest {
 
   @Test
   fun onStyleDataSpritesThrowsIfNoStyleData() {
-    val nativeMap = mockk<MapInterface>(relaxUnitFun = true)
-    val styleObserver = StyleObserver(
-      nativeMap = nativeMap,
-      styleLoadedListener = mockk(relaxUnitFun = true),
-      nativeObserver = mockk(relaxed = true),
-      pixelRatio = 1.0f
-    )
-
     val styleCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
     val styleSpritesCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
     val styleSourcesCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
@@ -345,14 +278,6 @@ class StyleObserverTest {
 
   @Test
   fun onStyleLoadedThrowsIfNoStyleData() {
-    val nativeMap = mockk<MapInterface>(relaxUnitFun = true)
-    val styleObserver = StyleObserver(
-      nativeMap = nativeMap,
-      styleLoadedListener = mockk(relaxUnitFun = true),
-      nativeObserver = mockk(relaxUnitFun = true),
-      pixelRatio = 1.0f
-    )
-
     val styleCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
     val styleSpritesCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
     val styleSourcesCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
@@ -368,5 +293,51 @@ class StyleObserverTest {
     assertThrows(MapboxMapException::class.java) {
       styleObserver.onStyleLoaded(mockk())
     }
+  }
+
+  @Test
+  fun onStyleLoadedCallsSpritesListenerIfNoStyleDataSpritesLoaded() {
+    val styleCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
+    val styleSpritesCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
+
+    styleObserver.setLoadStyleListener(
+      null,
+      styleCallback,
+      styleSpritesCallback,
+      null,
+      null
+    )
+
+    styleObserver.onStyleDataLoaded(StyleDataLoadedEventData(0, 0, StyleDataType.STYLE))
+    styleObserver.onStyleDataLoaded(StyleDataLoadedEventData(0, 0, StyleDataType.SOURCES))
+
+    verifyNo { styleSpritesCallback.onStyleLoaded(any()) }
+
+    styleObserver.onStyleLoaded(mockk())
+
+    verify { styleSpritesCallback.onStyleLoaded(any()) }
+  }
+
+  @Test
+  fun onStyleLoadedCallsSourcesListenerIfNoStyleDataSourcesLoaded() {
+    val styleCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
+    val styleSourcesCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
+
+    styleObserver.setLoadStyleListener(
+      null,
+      styleCallback,
+      null,
+      styleSourcesCallback,
+      null
+    )
+
+    styleObserver.onStyleDataLoaded(StyleDataLoadedEventData(0, 0, StyleDataType.STYLE))
+    styleObserver.onStyleDataLoaded(StyleDataLoadedEventData(0, 0, StyleDataType.SPRITE))
+
+    verifyNo { styleSourcesCallback.onStyleLoaded(any()) }
+
+    styleObserver.onStyleLoaded(mockk())
+
+    verify { styleSourcesCallback.onStyleLoaded(any()) }
   }
 }
