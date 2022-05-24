@@ -38,6 +38,7 @@
     <string name="description_camera_low_level">Animate the map camera to a new position using camera animators. Individual camera properties such as zoom, bearing, and center coordinate can be animated independently.</string>
     <string name="description_animate_camera_during_gesture">Animate the map camera properties during user gestures.</string>
     <string name="description_fill_extrusion">Extrude the building layer in the Mapbox Light style using FillExtrusionLayer and set up the light position.</string>
+    <string name="description_model_layer">Showcase the usage of a 3D model layer.</string>
     <string name="description_icon_property">Add point data and several images to a style and use the switchCase and get expressions to choose which image to display at each point in a SymbolLayer based on a data property.</string>
     <string name="description_animated_image_source">Load a raster image to a style using ImageSource and display it on a map as animated weather data using RasterLayer.</string>
     <string name="description_dds_multiple_geometries">Display multiple shapes on a map</string>

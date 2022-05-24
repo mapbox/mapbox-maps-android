@@ -74,42 +74,46 @@ class LocalizationActivity : AppCompatActivity() {
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
-    if (item.groupId == R.id.layers) {
-      item.isChecked = !item.isChecked
-      when (item.itemId) {
-        R.id.country_label -> {
-          if (item.isChecked) {
-            layerIdList.add(COUNTRY_LABEL)
-          } else {
-            layerIdList.remove(COUNTRY_LABEL)
+    when (item.groupId) {
+      R.id.layers -> {
+        item.isChecked = !item.isChecked
+        when (item.itemId) {
+          R.id.country_label -> {
+            if (item.isChecked) {
+              layerIdList.add(COUNTRY_LABEL)
+            } else {
+              layerIdList.remove(COUNTRY_LABEL)
+            }
           }
-        }
-        R.id.state_label -> {
-          if (item.isChecked) {
-            layerIdList.add(STATE_LABEL)
-          } else {
-            layerIdList.remove(STATE_LABEL)
+          R.id.state_label -> {
+            if (item.isChecked) {
+              layerIdList.add(STATE_LABEL)
+            } else {
+              layerIdList.remove(STATE_LABEL)
+            }
           }
         }
       }
-    } else {
-      applySelectedLanguage = true
-      item.isChecked = true
-      selectedLocale = when (item.itemId) {
-        R.id.english -> Locale.ENGLISH
-        R.id.spanish -> Locale("es", "ES")
-        R.id.french -> Locale.FRENCH
-        R.id.german -> Locale.GERMAN
-        R.id.russian -> Locale("ru", "RU")
-        R.id.chinese -> Locale.CHINESE
-        R.id.simplified_chinese -> Locale.SIMPLIFIED_CHINESE
-        R.id.portuguese -> Locale("pt", "PT")
-        R.id.japanese -> Locale.JAPANESE
-        R.id.korean -> Locale.KOREAN
-        R.id.vietnamese -> Locale("vi", "VN")
-        R.id.italian -> Locale.ITALIAN
-        else -> locale
+      R.id.group -> {
+        applySelectedLanguage = true
+        item.isChecked = true
+        selectedLocale = when (item.itemId) {
+          R.id.english -> Locale.ENGLISH
+          R.id.spanish -> Locale("es", "ES")
+          R.id.french -> Locale.FRENCH
+          R.id.german -> Locale.GERMAN
+          R.id.russian -> Locale("ru", "RU")
+          R.id.chinese -> Locale.CHINESE
+          R.id.simplified_chinese -> Locale.SIMPLIFIED_CHINESE
+          R.id.portuguese -> Locale("pt", "PT")
+          R.id.japanese -> Locale.JAPANESE
+          R.id.korean -> Locale.KOREAN
+          R.id.vietnamese -> Locale("vi", "VN")
+          R.id.italian -> Locale.ITALIAN
+          else -> locale
+        }
       }
+      else -> return super.onOptionsItemSelected(item)
     }
     mapboxMap.getStyle()?.localizeLabels(selectedLocale, layerIdList.toList())
     return true
