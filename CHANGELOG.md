@@ -2,6 +2,13 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
+#main
+
+# 10.6.0-beta.2 May 25, 2022
+
+## Features ✨ and improvements 🏁
+* Update SDK name in attribution action sheet. ([1375](https://github.com/mapbox/mapbox-maps-android/pull/1375))
+
 # 10.6.0-beta.1 May 19, 2022
 
 ## Features ✨ and improvements 🏁
