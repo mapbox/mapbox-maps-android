@@ -6,6 +6,7 @@ public final class com/mapbox/maps/extension/style/StyleExtensionImpl : com/mapb
 	public fun getLayers ()Ljava/util/List;
 	public synthetic fun getLight ()Lcom/mapbox/maps/extension/style/StyleContract$StyleLightExtension;
 	public fun getLight ()Lcom/mapbox/maps/extension/style/light/generated/Light;
+	public fun getModels ()Ljava/util/List;
 	public synthetic fun getProjection ()Lcom/mapbox/maps/extension/style/StyleContract$StyleProjectionExtension;
 	public fun getProjection ()Lcom/mapbox/maps/extension/style/projection/generated/Projection;
 	public fun getSources ()Ljava/util/List;
@@ -20,6 +21,7 @@ public final class com/mapbox/maps/extension/style/StyleExtensionImpl$Builder {
 	public final fun addImage9Patch (Lcom/mapbox/maps/extension/style/image/ImageNinePatchExtensionImpl;)V
 	public final fun addLayer (Lcom/mapbox/maps/extension/style/layers/Layer;)V
 	public final fun addLayerAtPosition (Lkotlin/Pair;)V
+	public final fun addModel (Lcom/mapbox/maps/extension/style/model/ModelExtensionImpl;)V
 	public final fun addSource (Lcom/mapbox/maps/extension/style/sources/Source;)V
 	public final fun build ()Lcom/mapbox/maps/extension/style/StyleContract$StyleExtension;
 	public final fun getStyleUri ()Ljava/lang/String;
@@ -2216,6 +2218,158 @@ public final class com/mapbox/maps/extension/style/layers/generated/LocationIndi
 	public static final fun locationIndicatorLayer (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 }
 
+public final class com/mapbox/maps/extension/style/layers/generated/ModelLayer : com/mapbox/maps/extension/style/layers/Layer, com/mapbox/maps/extension/style/layers/generated/ModelLayerDsl {
+	public static final field Companion Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer$Companion;
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public fun filter (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public final fun getFilter ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public fun getLayerId ()Ljava/lang/String;
+	public fun getMaxZoom ()Ljava/lang/Double;
+	public fun getMinZoom ()Ljava/lang/Double;
+	public final fun getModelColor ()Ljava/lang/String;
+	public final fun getModelColorAsColorInt ()Ljava/lang/Integer;
+	public final fun getModelColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getModelColorMixIntensity ()Ljava/lang/Double;
+	public final fun getModelColorMixIntensityAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getModelColorMixIntensityTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
+	public final fun getModelColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
+	public final fun getModelId ()Ljava/lang/String;
+	public final fun getModelIdAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getModelOpacity ()Ljava/lang/Double;
+	public final fun getModelOpacityAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getModelOpacityTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
+	public final fun getModelRotation ()Ljava/util/List;
+	public final fun getModelRotationAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getModelRotationTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
+	public final fun getModelScale ()Ljava/util/List;
+	public final fun getModelScaleAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getModelScaleTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
+	public final fun getModelTranslation ()Ljava/util/List;
+	public final fun getModelTranslationAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getModelTranslationTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
+	public final fun getModelType ()Lcom/mapbox/maps/extension/style/layers/properties/generated/ModelType;
+	public final fun getModelTypeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getSourceId ()Ljava/lang/String;
+	public final fun getSourceLayer ()Ljava/lang/String;
+	public fun getVisibility ()Lcom/mapbox/maps/extension/style/layers/properties/generated/Visibility;
+	public synthetic fun maxZoom (D)Lcom/mapbox/maps/extension/style/layers/Layer;
+	public fun maxZoom (D)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public synthetic fun minZoom (D)Lcom/mapbox/maps/extension/style/layers/Layer;
+	public fun minZoom (D)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public fun modelColor (I)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public fun modelColor (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public fun modelColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public fun modelColorMixIntensity (D)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public fun modelColorMixIntensity (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public fun modelColorMixIntensityTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public fun modelColorMixIntensityTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public fun modelColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public fun modelColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public fun modelId (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public fun modelId (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public fun modelOpacity (D)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public fun modelOpacity (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public fun modelOpacityTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public fun modelOpacityTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public fun modelRotation (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public fun modelRotation (Ljava/util/List;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public fun modelRotationTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public fun modelRotationTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public fun modelScale (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public fun modelScale (Ljava/util/List;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public fun modelScaleTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public fun modelScaleTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public fun modelTranslation (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public fun modelTranslation (Ljava/util/List;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public fun modelTranslationTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public fun modelTranslationTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public fun modelType (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public fun modelType (Lcom/mapbox/maps/extension/style/layers/properties/generated/ModelType;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public fun sourceLayer (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public synthetic fun visibility (Lcom/mapbox/maps/extension/style/layers/properties/generated/Visibility;)Lcom/mapbox/maps/extension/style/layers/Layer;
+	public fun visibility (Lcom/mapbox/maps/extension/style/layers/properties/generated/Visibility;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+}
+
+public final class com/mapbox/maps/extension/style/layers/generated/ModelLayer$Companion {
+	public final fun getDefaultMaxZoom ()Ljava/lang/Double;
+	public final fun getDefaultMinZoom ()Ljava/lang/Double;
+	public final fun getDefaultModelColor ()Ljava/lang/String;
+	public final fun getDefaultModelColorAsColorInt ()Ljava/lang/Integer;
+	public final fun getDefaultModelColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getDefaultModelColorMixIntensity ()Ljava/lang/Double;
+	public final fun getDefaultModelColorMixIntensityAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getDefaultModelColorMixIntensityTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
+	public final fun getDefaultModelColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
+	public final fun getDefaultModelId ()Ljava/lang/String;
+	public final fun getDefaultModelIdAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getDefaultModelOpacity ()Ljava/lang/Double;
+	public final fun getDefaultModelOpacityAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getDefaultModelOpacityTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
+	public final fun getDefaultModelRotation ()Ljava/util/List;
+	public final fun getDefaultModelRotationAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getDefaultModelRotationTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
+	public final fun getDefaultModelScale ()Ljava/util/List;
+	public final fun getDefaultModelScaleAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getDefaultModelScaleTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
+	public final fun getDefaultModelTranslation ()Ljava/util/List;
+	public final fun getDefaultModelTranslationAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getDefaultModelTranslationTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
+	public final fun getDefaultModelType ()Lcom/mapbox/maps/extension/style/layers/properties/generated/ModelType;
+	public final fun getDefaultModelTypeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getDefaultVisibility ()Lcom/mapbox/maps/extension/style/layers/properties/generated/Visibility;
+}
+
+public abstract interface class com/mapbox/maps/extension/style/layers/generated/ModelLayerDsl {
+	public abstract fun filter (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public abstract fun maxZoom (D)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public abstract fun minZoom (D)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public abstract fun modelColor (I)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public abstract fun modelColor (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public abstract fun modelColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public abstract fun modelColorMixIntensity (D)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public abstract fun modelColorMixIntensity (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public abstract fun modelColorMixIntensityTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public abstract fun modelColorMixIntensityTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public abstract fun modelColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public abstract fun modelColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public abstract fun modelId (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public abstract fun modelId (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public abstract fun modelOpacity (D)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public abstract fun modelOpacity (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public abstract fun modelOpacityTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public abstract fun modelOpacityTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public abstract fun modelRotation (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public abstract fun modelRotation (Ljava/util/List;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public abstract fun modelRotationTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public abstract fun modelRotationTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public abstract fun modelScale (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public abstract fun modelScale (Ljava/util/List;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public abstract fun modelScaleTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public abstract fun modelScaleTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public abstract fun modelTranslation (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public abstract fun modelTranslation (Ljava/util/List;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public abstract fun modelTranslationTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public abstract fun modelTranslationTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public abstract fun modelType (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public abstract fun modelType (Lcom/mapbox/maps/extension/style/layers/properties/generated/ModelType;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public abstract fun sourceLayer (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public abstract fun visibility (Lcom/mapbox/maps/extension/style/layers/properties/generated/Visibility;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+}
+
+public final class com/mapbox/maps/extension/style/layers/generated/ModelLayerDsl$DefaultImpls {
+	public static synthetic fun modelColor$default (Lcom/mapbox/maps/extension/style/layers/generated/ModelLayerDsl;Ljava/lang/String;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public static synthetic fun modelColorMixIntensity$default (Lcom/mapbox/maps/extension/style/layers/generated/ModelLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public static synthetic fun modelOpacity$default (Lcom/mapbox/maps/extension/style/layers/generated/ModelLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public static synthetic fun modelRotation$default (Lcom/mapbox/maps/extension/style/layers/generated/ModelLayerDsl;Ljava/util/List;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public static synthetic fun modelScale$default (Lcom/mapbox/maps/extension/style/layers/generated/ModelLayerDsl;Ljava/util/List;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public static synthetic fun modelTranslation$default (Lcom/mapbox/maps/extension/style/layers/generated/ModelLayerDsl;Ljava/util/List;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public static synthetic fun modelType$default (Lcom/mapbox/maps/extension/style/layers/generated/ModelLayerDsl;Lcom/mapbox/maps/extension/style/layers/properties/generated/ModelType;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+}
+
+public final class com/mapbox/maps/extension/style/layers/generated/ModelLayerKt {
+	public static final fun modelLayer (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+}
+
 public final class com/mapbox/maps/extension/style/layers/generated/RasterLayer : com/mapbox/maps/extension/style/layers/Layer, com/mapbox/maps/extension/style/layers/generated/RasterLayerDsl {
 	public static final field Companion Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer$Companion;
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
@@ -3262,6 +3416,14 @@ public final class com/mapbox/maps/extension/style/layers/properties/generated/L
 	public static fun values ()[Lcom/mapbox/maps/extension/style/layers/properties/generated/LineTranslateAnchor;
 }
 
+public final class com/mapbox/maps/extension/style/layers/properties/generated/ModelType : java/lang/Enum, com/mapbox/maps/extension/style/layers/properties/generated/LayerProperty {
+	public static final field COMMON_3D Lcom/mapbox/maps/extension/style/layers/properties/generated/ModelType;
+	public static final field LOCATION_INDICATOR Lcom/mapbox/maps/extension/style/layers/properties/generated/ModelType;
+	public fun getValue ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/properties/generated/ModelType;
+	public static fun values ()[Lcom/mapbox/maps/extension/style/layers/properties/generated/ModelType;
+}
+
 public final class com/mapbox/maps/extension/style/layers/properties/generated/ProjectionName : java/lang/Enum, com/mapbox/maps/extension/style/layers/properties/generated/LayerProperty {
 	public static final field GLOBE Lcom/mapbox/maps/extension/style/layers/properties/generated/ProjectionName;
 	public static final field MERCATOR Lcom/mapbox/maps/extension/style/layers/properties/generated/ProjectionName;
@@ -3468,6 +3630,23 @@ public final class com/mapbox/maps/extension/style/light/generated/LightKt {
 public final class com/mapbox/maps/extension/style/light/generated/LightUtils {
 	public static final fun getLight (Lcom/mapbox/maps/extension/style/StyleInterface;)Lcom/mapbox/maps/extension/style/light/generated/Light;
 	public static final fun setLight (Lcom/mapbox/maps/extension/style/StyleInterface;Lcom/mapbox/maps/extension/style/StyleContract$StyleLightExtension;)V
+}
+
+public final class com/mapbox/maps/extension/style/model/ModelExtensionImpl : com/mapbox/maps/extension/style/StyleContract$StyleModelExtension {
+	public fun <init> (Lcom/mapbox/maps/extension/style/model/ModelExtensionImpl$Builder;)V
+	public fun bindTo (Lcom/mapbox/maps/extension/style/StyleInterface;)V
+}
+
+public final class com/mapbox/maps/extension/style/model/ModelExtensionImpl$Builder {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun build ()Lcom/mapbox/maps/extension/style/model/ModelExtensionImpl;
+	public final fun getModelId ()Ljava/lang/String;
+	public final fun uri (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/model/ModelExtensionImpl$Builder;
+}
+
+public final class com/mapbox/maps/extension/style/model/ModelUtils {
+	public static final fun addModel (Lcom/mapbox/maps/extension/style/StyleInterface;Lcom/mapbox/maps/extension/style/StyleContract$StyleModelExtension;)V
+	public static final fun model (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/model/ModelExtensionImpl;
 }
 
 public final class com/mapbox/maps/extension/style/projection/generated/Projection : com/mapbox/maps/extension/style/StyleContract$StyleProjectionExtension {
