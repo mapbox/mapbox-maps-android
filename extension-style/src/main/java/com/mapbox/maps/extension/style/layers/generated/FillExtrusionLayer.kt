@@ -31,7 +31,8 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * Set the sourceLayer property
+   * A source layer is an individual layer of data within a vector source.
+   * A vector source can have multiple source layers.
    *
    * @param sourceLayer value of sourceLayer
    */
@@ -41,7 +42,8 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * Source layer.
+   * A source layer is an individual layer of data within a vector source.
+   * A vector source can have multiple source layers.
    */
   val sourceLayer: String?
     /**
@@ -54,7 +56,13 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * Set the filter property
+   * A filter is a property at the layer level that determines which features should be rendered in a style layer.
+   *
+   * Filters are written as expressions, which give you fine-grained control over which features to include: the
+   * style layer only displays the features that match the filter condition that you define.
+   *
+   * Note: Zoom expressions in filters are only evaluated at integer zoom levels. The `feature-state` expression
+   * is not supported in filter expressions.
    *
    * @param filter the expression filter to set
    */
@@ -64,7 +72,13 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * A expression specifying conditions on source features. Only features that match the filter are displayed. Zoom expressions in filters are only evaluated at integer zoom levels. The `feature-state` expression is not supported in filter expressions.
+   * A filter is a property at the layer level that determines which features should be rendered in a style layer.
+   *
+   * Filters are written as expressions, which give you fine-grained control over which features to include: the
+   * style layer only displays the features that match the filter condition that you define.
+   *
+   * Note: Zoom expressions in filters are only evaluated at integer zoom levels. The `feature-state` expression
+   * is not supported in filter expressions.
    */
   val filter: Expression?
     /**
@@ -75,11 +89,11 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     get() = getPropertyValue<Expression>("filter")
 
   /**
-   * Visibility of the layer.
+   * Whether this layer is displayed.
    */
   override val visibility: Visibility?
     /**
-     * Get the Visibility property
+     * Whether this layer is displayed.
      *
      * @return VISIBILITY
      */
@@ -92,7 +106,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * Set the Visibility property
+   * Whether this layer is displayed.
    *
    * @param visibility value of Visibility
    */
@@ -119,7 +133,11 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * Set the minzoom property
+   * The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.
+   *
+   * Range:
+   *       minimum: 0
+   *       maximum: 24
    *
    * @param value value of minzoom
    */
@@ -146,7 +164,11 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * Set the maxzoom property
+   * The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden.
+   *
+   * Range:
+   *       minimum: 0
+   *       maximum: 24
    *
    * @param value value of maxzoom
    */
@@ -162,7 +184,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
    */
   val fillExtrusionBase: Double?
     /**
-     * Get the FillExtrusionBase property
+     * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`.
      *
      * @return Double
      */
@@ -171,7 +193,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * Set the FillExtrusionBase property
+   * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`.
    *
    * @param fillExtrusionBase value of fillExtrusionBase
    */
@@ -181,12 +203,16 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
+   * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`.
+   *
    * This is an Expression representation of "fill-extrusion-base".
    *
    * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`.
    */
   val fillExtrusionBaseAsExpression: Expression?
     /**
+     * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`.
+     *
      * Get the FillExtrusionBase property as an Expression
      *
      * @return Double
@@ -202,7 +228,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * Set the FillExtrusionBase property
+   * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`.
    *
    * @param fillExtrusionBase value of fillExtrusionBase as Expression
    */
@@ -246,7 +272,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
    */
   val fillExtrusionColor: String?
     /**
-     * Get the FillExtrusionColor property
+     * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity.
      *
      * @return String
      */
@@ -258,7 +284,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * Set the FillExtrusionColor property
+   * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity.
    *
    * @param fillExtrusionColor value of fillExtrusionColor
    */
@@ -268,12 +294,16 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
+   * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity.
+   *
    * This is an Expression representation of "fill-extrusion-color".
    *
    * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity.
    */
   val fillExtrusionColorAsExpression: Expression?
     /**
+     * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity.
+     *
      * Get the FillExtrusionColor property as an Expression
      *
      * @return String
@@ -286,7 +316,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * Set the FillExtrusionColor property
+   * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity.
    *
    * @param fillExtrusionColor value of fillExtrusionColor as Expression
    */
@@ -313,7 +343,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * Set the FillExtrusionColor property.
+   * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity.
    *
    * @param fillExtrusionColor value of fillExtrusionColor
    */
@@ -357,7 +387,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
    */
   val fillExtrusionHeight: Double?
     /**
-     * Get the FillExtrusionHeight property
+     * The height with which to extrude this layer.
      *
      * @return Double
      */
@@ -366,7 +396,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * Set the FillExtrusionHeight property
+   * The height with which to extrude this layer.
    *
    * @param fillExtrusionHeight value of fillExtrusionHeight
    */
@@ -376,12 +406,16 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
+   * The height with which to extrude this layer.
+   *
    * This is an Expression representation of "fill-extrusion-height".
    *
    * The height with which to extrude this layer.
    */
   val fillExtrusionHeightAsExpression: Expression?
     /**
+     * The height with which to extrude this layer.
+     *
      * Get the FillExtrusionHeight property as an Expression
      *
      * @return Double
@@ -397,7 +431,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * Set the FillExtrusionHeight property
+   * The height with which to extrude this layer.
    *
    * @param fillExtrusionHeight value of fillExtrusionHeight as Expression
    */
@@ -441,7 +475,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
    */
   val fillExtrusionOpacity: Double?
     /**
-     * Get the FillExtrusionOpacity property
+     * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available.
      *
      * @return Double
      */
@@ -450,7 +484,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * Set the FillExtrusionOpacity property
+   * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available.
    *
    * @param fillExtrusionOpacity value of fillExtrusionOpacity
    */
@@ -460,12 +494,16 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
+   * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available.
+   *
    * This is an Expression representation of "fill-extrusion-opacity".
    *
    * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available.
    */
   val fillExtrusionOpacityAsExpression: Expression?
     /**
+     * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available.
+     *
      * Get the FillExtrusionOpacity property as an Expression
      *
      * @return Double
@@ -481,7 +519,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * Set the FillExtrusionOpacity property
+   * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available.
    *
    * @param fillExtrusionOpacity value of fillExtrusionOpacity as Expression
    */
@@ -525,7 +563,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
    */
   val fillExtrusionPattern: String?
     /**
-     * Get the FillExtrusionPattern property
+     * Name of image in sprite to use for drawing images on extruded fills. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
      *
      * @return String
      */
@@ -534,7 +572,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * Set the FillExtrusionPattern property
+   * Name of image in sprite to use for drawing images on extruded fills. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
    *
    * @param fillExtrusionPattern value of fillExtrusionPattern
    */
@@ -544,12 +582,16 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
+   * Name of image in sprite to use for drawing images on extruded fills. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
+   *
    * This is an Expression representation of "fill-extrusion-pattern".
    *
    * Name of image in sprite to use for drawing images on extruded fills. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
    */
   val fillExtrusionPatternAsExpression: Expression?
     /**
+     * Name of image in sprite to use for drawing images on extruded fills. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
+     *
      * Get the FillExtrusionPattern property as an Expression
      *
      * @return String
@@ -565,7 +607,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * Set the FillExtrusionPattern property
+   * Name of image in sprite to use for drawing images on extruded fills. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
    *
    * @param fillExtrusionPattern value of fillExtrusionPattern as Expression
    */
@@ -609,7 +651,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
    */
   val fillExtrusionTranslate: List<Double>?
     /**
-     * Get the FillExtrusionTranslate property
+     * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively.
      *
      * @return List<Double>
      */
@@ -618,7 +660,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * Set the FillExtrusionTranslate property
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively.
    *
    * @param fillExtrusionTranslate value of fillExtrusionTranslate
    */
@@ -628,12 +670,16 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively.
+   *
    * This is an Expression representation of "fill-extrusion-translate".
    *
    * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively.
    */
   val fillExtrusionTranslateAsExpression: Expression?
     /**
+     * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively.
+     *
      * Get the FillExtrusionTranslate property as an Expression
      *
      * @return List<Double>
@@ -649,7 +695,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * Set the FillExtrusionTranslate property
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively.
    *
    * @param fillExtrusionTranslate value of fillExtrusionTranslate as Expression
    */
@@ -693,7 +739,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
    */
   val fillExtrusionTranslateAnchor: FillExtrusionTranslateAnchor?
     /**
-     * Get the FillExtrusionTranslateAnchor property
+     * Controls the frame of reference for `fill-extrusion-translate`.
      *
      * @return FillExtrusionTranslateAnchor
      */
@@ -705,7 +751,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * Set the FillExtrusionTranslateAnchor property
+   * Controls the frame of reference for `fill-extrusion-translate`.
    *
    * @param fillExtrusionTranslateAnchor value of fillExtrusionTranslateAnchor
    */
@@ -715,12 +761,16 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
+   * Controls the frame of reference for `fill-extrusion-translate`.
+   *
    * This is an Expression representation of "fill-extrusion-translate-anchor".
    *
    * Controls the frame of reference for `fill-extrusion-translate`.
    */
   val fillExtrusionTranslateAnchorAsExpression: Expression?
     /**
+     * Controls the frame of reference for `fill-extrusion-translate`.
+     *
      * Get the FillExtrusionTranslateAnchor property as an Expression
      *
      * @return FillExtrusionTranslateAnchor
@@ -736,7 +786,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * Set the FillExtrusionTranslateAnchor property
+   * Controls the frame of reference for `fill-extrusion-translate`.
    *
    * @param fillExtrusionTranslateAnchor value of fillExtrusionTranslateAnchor as Expression
    */
@@ -750,7 +800,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
    */
   val fillExtrusionVerticalGradient: Boolean?
     /**
-     * Get the FillExtrusionVerticalGradient property
+     * Whether to apply a vertical gradient to the sides of a fill-extrusion layer. If true, sides will be shaded slightly darker farther down.
      *
      * @return Boolean
      */
@@ -759,7 +809,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * Set the FillExtrusionVerticalGradient property
+   * Whether to apply a vertical gradient to the sides of a fill-extrusion layer. If true, sides will be shaded slightly darker farther down.
    *
    * @param fillExtrusionVerticalGradient value of fillExtrusionVerticalGradient
    */
@@ -769,12 +819,16 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
+   * Whether to apply a vertical gradient to the sides of a fill-extrusion layer. If true, sides will be shaded slightly darker farther down.
+   *
    * This is an Expression representation of "fill-extrusion-vertical-gradient".
    *
    * Whether to apply a vertical gradient to the sides of a fill-extrusion layer. If true, sides will be shaded slightly darker farther down.
    */
   val fillExtrusionVerticalGradientAsExpression: Expression?
     /**
+     * Whether to apply a vertical gradient to the sides of a fill-extrusion layer. If true, sides will be shaded slightly darker farther down.
+     *
      * Get the FillExtrusionVerticalGradient property as an Expression
      *
      * @return Boolean
@@ -790,7 +844,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * Set the FillExtrusionVerticalGradient property
+   * Whether to apply a vertical gradient to the sides of a fill-extrusion layer. If true, sides will be shaded slightly darker farther down.
    *
    * @param fillExtrusionVerticalGradient value of fillExtrusionVerticalGradient as Expression
    */
@@ -863,6 +917,8 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
      */
     val defaultFillExtrusionBase: Double?
       /**
+       * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`.
+       *
        * Get the default value of FillExtrusionBase property
        *
        * @return Double
@@ -872,6 +928,8 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
+     * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`.
+     *
      * This is an Expression representation of "fill-extrusion-base".
      *
      * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`.
@@ -908,6 +966,8 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
      */
     val defaultFillExtrusionColor: String?
       /**
+       * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity.
+       *
        * Get the default value of FillExtrusionColor property
        *
        * @return String
@@ -920,6 +980,8 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
+     * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity.
+     *
      * This is an Expression representation of "fill-extrusion-color".
      *
      * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity.
@@ -942,6 +1004,8 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
      */
     val defaultFillExtrusionColorAsColorInt: Int?
       /**
+       * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity.
+       *
        * Get the default value of FillExtrusionColor property as color int.
        *
        * @return int representation of a rgba string color
@@ -970,6 +1034,8 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
      */
     val defaultFillExtrusionHeight: Double?
       /**
+       * The height with which to extrude this layer.
+       *
        * Get the default value of FillExtrusionHeight property
        *
        * @return Double
@@ -979,6 +1045,8 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
+     * The height with which to extrude this layer.
+     *
      * This is an Expression representation of "fill-extrusion-height".
      *
      * The height with which to extrude this layer.
@@ -1015,6 +1083,8 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
      */
     val defaultFillExtrusionOpacity: Double?
       /**
+       * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available.
+       *
        * Get the default value of FillExtrusionOpacity property
        *
        * @return Double
@@ -1024,6 +1094,8 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
+     * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available.
+     *
      * This is an Expression representation of "fill-extrusion-opacity".
      *
      * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available.
@@ -1060,6 +1132,8 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
      */
     val defaultFillExtrusionPattern: String?
       /**
+       * Name of image in sprite to use for drawing images on extruded fills. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
+       *
        * Get the default value of FillExtrusionPattern property
        *
        * @return String
@@ -1069,6 +1143,8 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
+     * Name of image in sprite to use for drawing images on extruded fills. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
+     *
      * This is an Expression representation of "fill-extrusion-pattern".
      *
      * Name of image in sprite to use for drawing images on extruded fills. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
@@ -1105,6 +1181,8 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
      */
     val defaultFillExtrusionTranslate: List<Double>?
       /**
+       * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively.
+       *
        * Get the default value of FillExtrusionTranslate property
        *
        * @return List<Double>
@@ -1114,6 +1192,8 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
+     * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively.
+     *
      * This is an Expression representation of "fill-extrusion-translate".
      *
      * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively.
@@ -1150,6 +1230,8 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
      */
     val defaultFillExtrusionTranslateAnchor: FillExtrusionTranslateAnchor?
       /**
+       * Controls the frame of reference for `fill-extrusion-translate`.
+       *
        * Get the default value of FillExtrusionTranslateAnchor property
        *
        * @return FillExtrusionTranslateAnchor
@@ -1162,6 +1244,8 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
+     * Controls the frame of reference for `fill-extrusion-translate`.
+     *
      * This is an Expression representation of "fill-extrusion-translate-anchor".
      *
      * Controls the frame of reference for `fill-extrusion-translate`.
@@ -1187,6 +1271,8 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
      */
     val defaultFillExtrusionVerticalGradient: Boolean?
       /**
+       * Whether to apply a vertical gradient to the sides of a fill-extrusion layer. If true, sides will be shaded slightly darker farther down.
+       *
        * Get the default value of FillExtrusionVerticalGradient property
        *
        * @return Boolean
@@ -1196,6 +1282,8 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
+     * Whether to apply a vertical gradient to the sides of a fill-extrusion layer. If true, sides will be shaded slightly darker farther down.
+     *
      * This is an Expression representation of "fill-extrusion-vertical-gradient".
      *
      * Whether to apply a vertical gradient to the sides of a fill-extrusion layer. If true, sides will be shaded slightly darker farther down.
@@ -1227,35 +1315,50 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
 @LayersDsl
 interface FillExtrusionLayerDsl {
   /**
-   * Set the sourceLayer property
+   * A source layer is an individual layer of data within a vector source.
+   * A vector source can have multiple source layers.
    *
    * @param sourceLayer value of sourceLayer
    */
   fun sourceLayer(sourceLayer: String): FillExtrusionLayer
 
   /**
-   * Set the filter property
+   * A filter is a property at the layer level that determines which features should be rendered in a style layer.
+   *
+   * Filters are written as expressions, which give you fine-grained control over which features to include: the
+   * style layer only displays the features that match the filter condition that you define.
+   *
+   * Note: Zoom expressions in filters are only evaluated at integer zoom levels. The `feature-state` expression
+   * is not supported in filter expressions.
    *
    * @param filter the expression filter to set
    */
   fun filter(filter: Expression): FillExtrusionLayer
 
   /**
-   * Set the Visibility property
+   * Whether this layer is displayed.
    *
    * @param visibility value of Visibility
    */
   fun visibility(visibility: Visibility): FillExtrusionLayer
 
   /**
-   * Set the minzoom property
+   * The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.
+   *
+   * Range:
+   *       minimum: 0
+   *       maximum: 24
    *
    * @param value value of minzoom
    */
   fun minZoom(minZoom: Double): FillExtrusionLayer
 
   /**
-   * Set the maxzoom property
+   * The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden.
+   *
+   * Range:
+   *       minimum: 0
+   *       maximum: 24
    *
    * @param value value of maxzoom
    */
@@ -1264,20 +1367,22 @@ interface FillExtrusionLayerDsl {
   // Property getters and setters
 
   /**
-   * Set the FillExtrusionBase property
+   * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`.
    *
    * @param fillExtrusionBase value of fillExtrusionBase
    */
   fun fillExtrusionBase(fillExtrusionBase: Double = 0.0): FillExtrusionLayer
 
   /**
-   * Set the FillExtrusionBase property
+   * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`.
    *
    * @param fillExtrusionBase value of fillExtrusionBase as Expression
    */
   fun fillExtrusionBase(fillExtrusionBase: Expression): FillExtrusionLayer
 
   /**
+   * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`.
+   *
    * Set the FillExtrusionBase property transition options
    *
    * @param options transition options for Double
@@ -1285,32 +1390,36 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionBaseTransition(options: StyleTransition): FillExtrusionLayer
 
   /**
+   * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`.
+   *
    * DSL for [fillExtrusionBaseTransition].
    */
   fun fillExtrusionBaseTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer
 
   /**
-   * Set the FillExtrusionColor property
+   * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity.
    *
    * @param fillExtrusionColor value of fillExtrusionColor
    */
   fun fillExtrusionColor(fillExtrusionColor: String = "#000000"): FillExtrusionLayer
 
   /**
-   * Set the FillExtrusionColor property
+   * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity.
    *
    * @param fillExtrusionColor value of fillExtrusionColor as Expression
    */
   fun fillExtrusionColor(fillExtrusionColor: Expression): FillExtrusionLayer
 
   /**
-   * Set the FillExtrusionColor property.
+   * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity.
    *
    * @param fillExtrusionColor value of fillExtrusionColor
    */
   fun fillExtrusionColor(@ColorInt fillExtrusionColor: Int): FillExtrusionLayer
 
   /**
+   * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity.
+   *
    * Set the FillExtrusionColor property transition options
    *
    * @param options transition options for String
@@ -1318,25 +1427,29 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionColorTransition(options: StyleTransition): FillExtrusionLayer
 
   /**
+   * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity.
+   *
    * DSL for [fillExtrusionColorTransition].
    */
   fun fillExtrusionColorTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer
 
   /**
-   * Set the FillExtrusionHeight property
+   * The height with which to extrude this layer.
    *
    * @param fillExtrusionHeight value of fillExtrusionHeight
    */
   fun fillExtrusionHeight(fillExtrusionHeight: Double = 0.0): FillExtrusionLayer
 
   /**
-   * Set the FillExtrusionHeight property
+   * The height with which to extrude this layer.
    *
    * @param fillExtrusionHeight value of fillExtrusionHeight as Expression
    */
   fun fillExtrusionHeight(fillExtrusionHeight: Expression): FillExtrusionLayer
 
   /**
+   * The height with which to extrude this layer.
+   *
    * Set the FillExtrusionHeight property transition options
    *
    * @param options transition options for Double
@@ -1344,25 +1457,29 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionHeightTransition(options: StyleTransition): FillExtrusionLayer
 
   /**
+   * The height with which to extrude this layer.
+   *
    * DSL for [fillExtrusionHeightTransition].
    */
   fun fillExtrusionHeightTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer
 
   /**
-   * Set the FillExtrusionOpacity property
+   * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available.
    *
    * @param fillExtrusionOpacity value of fillExtrusionOpacity
    */
   fun fillExtrusionOpacity(fillExtrusionOpacity: Double = 1.0): FillExtrusionLayer
 
   /**
-   * Set the FillExtrusionOpacity property
+   * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available.
    *
    * @param fillExtrusionOpacity value of fillExtrusionOpacity as Expression
    */
   fun fillExtrusionOpacity(fillExtrusionOpacity: Expression): FillExtrusionLayer
 
   /**
+   * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available.
+   *
    * Set the FillExtrusionOpacity property transition options
    *
    * @param options transition options for Double
@@ -1370,25 +1487,29 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionOpacityTransition(options: StyleTransition): FillExtrusionLayer
 
   /**
+   * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available.
+   *
    * DSL for [fillExtrusionOpacityTransition].
    */
   fun fillExtrusionOpacityTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer
 
   /**
-   * Set the FillExtrusionPattern property
+   * Name of image in sprite to use for drawing images on extruded fills. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
    *
    * @param fillExtrusionPattern value of fillExtrusionPattern
    */
   fun fillExtrusionPattern(fillExtrusionPattern: String): FillExtrusionLayer
 
   /**
-   * Set the FillExtrusionPattern property
+   * Name of image in sprite to use for drawing images on extruded fills. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
    *
    * @param fillExtrusionPattern value of fillExtrusionPattern as Expression
    */
   fun fillExtrusionPattern(fillExtrusionPattern: Expression): FillExtrusionLayer
 
   /**
+   * Name of image in sprite to use for drawing images on extruded fills. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
+   *
    * Set the FillExtrusionPattern property transition options
    *
    * @param options transition options for String
@@ -1396,25 +1517,29 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionPatternTransition(options: StyleTransition): FillExtrusionLayer
 
   /**
+   * Name of image in sprite to use for drawing images on extruded fills. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
+   *
    * DSL for [fillExtrusionPatternTransition].
    */
   fun fillExtrusionPatternTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer
 
   /**
-   * Set the FillExtrusionTranslate property
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively.
    *
    * @param fillExtrusionTranslate value of fillExtrusionTranslate
    */
   fun fillExtrusionTranslate(fillExtrusionTranslate: List<Double> = listOf(0.0, 0.0)): FillExtrusionLayer
 
   /**
-   * Set the FillExtrusionTranslate property
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively.
    *
    * @param fillExtrusionTranslate value of fillExtrusionTranslate as Expression
    */
   fun fillExtrusionTranslate(fillExtrusionTranslate: Expression): FillExtrusionLayer
 
   /**
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively.
+   *
    * Set the FillExtrusionTranslate property transition options
    *
    * @param options transition options for List<Double>
@@ -1422,33 +1547,35 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionTranslateTransition(options: StyleTransition): FillExtrusionLayer
 
   /**
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively.
+   *
    * DSL for [fillExtrusionTranslateTransition].
    */
   fun fillExtrusionTranslateTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer
 
   /**
-   * Set the FillExtrusionTranslateAnchor property
+   * Controls the frame of reference for `fill-extrusion-translate`.
    *
    * @param fillExtrusionTranslateAnchor value of fillExtrusionTranslateAnchor
    */
   fun fillExtrusionTranslateAnchor(fillExtrusionTranslateAnchor: FillExtrusionTranslateAnchor = FillExtrusionTranslateAnchor.MAP): FillExtrusionLayer
 
   /**
-   * Set the FillExtrusionTranslateAnchor property
+   * Controls the frame of reference for `fill-extrusion-translate`.
    *
    * @param fillExtrusionTranslateAnchor value of fillExtrusionTranslateAnchor as Expression
    */
   fun fillExtrusionTranslateAnchor(fillExtrusionTranslateAnchor: Expression): FillExtrusionLayer
 
   /**
-   * Set the FillExtrusionVerticalGradient property
+   * Whether to apply a vertical gradient to the sides of a fill-extrusion layer. If true, sides will be shaded slightly darker farther down.
    *
    * @param fillExtrusionVerticalGradient value of fillExtrusionVerticalGradient
    */
   fun fillExtrusionVerticalGradient(fillExtrusionVerticalGradient: Boolean = true): FillExtrusionLayer
 
   /**
-   * Set the FillExtrusionVerticalGradient property
+   * Whether to apply a vertical gradient to the sides of a fill-extrusion layer. If true, sides will be shaded slightly darker farther down.
    *
    * @param fillExtrusionVerticalGradient value of fillExtrusionVerticalGradient as Expression
    */
@@ -1456,7 +1583,7 @@ interface FillExtrusionLayerDsl {
 }
 
 /**
- * DSL function for [FillExtrusionLayer].
+ * DSL function for creating a [FillExtrusionLayer].
  */
 fun fillExtrusionLayer(layerId: String, sourceId: String, block: FillExtrusionLayerDsl.() -> Unit): FillExtrusionLayer = FillExtrusionLayer(layerId, sourceId).apply(block)
 

@@ -37,7 +37,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
    */
   val anchor: Anchor?
     /**
-     * Get the Anchor property.
+     * Whether extruded geometries are lit relative to the map or viewport.
      *
      * @return anchor as Anchor
      */
@@ -48,8 +48,6 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
       return null
     }
   /**
-   * Set the Anchor property.
-   *
    * Whether extruded geometries are lit relative to the map or viewport.
    *
    * @param anchor as Anchor
@@ -59,12 +57,14 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
   }
 
   /**
-   * This is an Expression representation of "anchor".
-   *
    * Whether extruded geometries are lit relative to the map or viewport.
+   *
+   * This is an Expression representation of "anchor".
    */
   val anchorAsExpression: Expression?
     /**
+     * Whether extruded geometries are lit relative to the map or viewport.
+     *
      * Get the Anchor property as an Expression
      *
      * @return Anchor
@@ -79,7 +79,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
       return null
     }
   /**
-   * Set the Anchor property
+   * Whether extruded geometries are lit relative to the map or viewport.
    *
    * @param anchor value of anchor as Expression
    */
@@ -92,7 +92,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
    */
   val colorAsColorInt: Int?
     /**
-     * Get the Color property.
+     * Color tint for lighting extruded geometries.
      *
      * @return color as int
      */
@@ -104,7 +104,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
       return null
     }
   /**
-   * Set the Color property.
+   * Color tint for lighting extruded geometries.
    *
    * @param color as int
    */
@@ -117,7 +117,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
    */
   val color: String?
     /**
-     * Get the Color property.
+     * Color tint for lighting extruded geometries.
      *
      * @return color as String
      */
@@ -128,8 +128,6 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
       return null
     }
   /**
-   * Set the Color property.
-   *
    * Color tint for lighting extruded geometries.
    *
    * @param color as String
@@ -139,12 +137,14 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
   }
 
   /**
-   * This is an Expression representation of "color".
-   *
    * Color tint for lighting extruded geometries.
+   *
+   * This is an Expression representation of "color".
    */
   val colorAsExpression: Expression?
     /**
+     * Color tint for lighting extruded geometries.
+     *
      * Get the Color property as an Expression
      *
      * @return String
@@ -156,7 +156,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
       return null
     }
   /**
-   * Set the Color property
+   * Color tint for lighting extruded geometries.
    *
    * @param color value of color as Expression
    */
@@ -197,7 +197,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
    */
   val intensity: Double?
     /**
-     * Get the Intensity property.
+     * Intensity of lighting (on a scale from 0 to 1). Higher numbers will present as more extreme contrast.
      *
      * @return intensity as Double
      */
@@ -205,8 +205,6 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
       return getPropertyValue("intensity")
     }
   /**
-   * Set the Intensity property.
-   *
    * Intensity of lighting (on a scale from 0 to 1). Higher numbers will present as more extreme contrast.
    *
    * @param intensity as Double
@@ -216,12 +214,14 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
   }
 
   /**
-   * This is an Expression representation of "intensity".
-   *
    * Intensity of lighting (on a scale from 0 to 1). Higher numbers will present as more extreme contrast.
+   *
+   * This is an Expression representation of "intensity".
    */
   val intensityAsExpression: Expression?
     /**
+     * Intensity of lighting (on a scale from 0 to 1). Higher numbers will present as more extreme contrast.
+     *
      * Get the Intensity property as an Expression
      *
      * @return Double
@@ -236,7 +236,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
       return null
     }
   /**
-   * Set the Intensity property
+   * Intensity of lighting (on a scale from 0 to 1). Higher numbers will present as more extreme contrast.
    *
    * @param intensity value of intensity as Expression
    */
@@ -277,7 +277,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
    */
   val position: LightPosition?
     /**
-     * Get the Position property.
+     * Position of the light source relative to lit (extruded) geometries, in [r radial coordinate, a azimuthal angle, p polar angle] where r indicates the distance from the center of the base of an object to its light, a indicates the position of the light relative to 0 degree (0 degree when `light.anchor` is set to `viewport` corresponds to the top of the viewport, or 0 degree when `light.anchor` is set to `map` corresponds to due north, and degrees proceed clockwise), and p indicates the height of the light (from 0 degree, directly above, to 180 degree, directly below).
      *
      * @return position as LightPosition
      */
@@ -289,14 +289,14 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
     }
 
   /**
+   * Position of the light source relative to lit (extruded) geometries, in [r radial coordinate, a azimuthal angle, p polar angle] where r indicates the distance from the center of the base of an object to its light, a indicates the position of the light relative to 0 degree (0 degree when `light.anchor` is set to `viewport` corresponds to the top of the viewport, or 0 degree when `light.anchor` is set to `map` corresponds to due north, and degrees proceed clockwise), and p indicates the height of the light (from 0 degree, directly above, to 180 degree, directly below).
+   *
    * DSL for setting [LightPosition].
    */
   override fun position(radialCoordinate: Double, azimuthalAngle: Double, polarAngle: Double) = apply {
     position(LightPosition(radialCoordinate, azimuthalAngle, polarAngle))
   }
   /**
-   * Set the Position property.
-   *
    * Position of the light source relative to lit (extruded) geometries, in [r radial coordinate, a azimuthal angle, p polar angle] where r indicates the distance from the center of the base of an object to its light, a indicates the position of the light relative to 0 degree (0 degree when `light.anchor` is set to `viewport` corresponds to the top of the viewport, or 0 degree when `light.anchor` is set to `map` corresponds to due north, and degrees proceed clockwise), and p indicates the height of the light (from 0 degree, directly above, to 180 degree, directly below).
    *
    * @param position as LightPosition
@@ -306,12 +306,14 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
   }
 
   /**
-   * This is an Expression representation of "position".
-   *
    * Position of the light source relative to lit (extruded) geometries, in [r radial coordinate, a azimuthal angle, p polar angle] where r indicates the distance from the center of the base of an object to its light, a indicates the position of the light relative to 0 degree (0 degree when `light.anchor` is set to `viewport` corresponds to the top of the viewport, or 0 degree when `light.anchor` is set to `map` corresponds to due north, and degrees proceed clockwise), and p indicates the height of the light (from 0 degree, directly above, to 180 degree, directly below).
+   *
+   * This is an Expression representation of "position".
    */
   val positionAsExpression: Expression?
     /**
+     * Position of the light source relative to lit (extruded) geometries, in [r radial coordinate, a azimuthal angle, p polar angle] where r indicates the distance from the center of the base of an object to its light, a indicates the position of the light relative to 0 degree (0 degree when `light.anchor` is set to `viewport` corresponds to the top of the viewport, or 0 degree when `light.anchor` is set to `map` corresponds to due north, and degrees proceed clockwise), and p indicates the height of the light (from 0 degree, directly above, to 180 degree, directly below).
+     *
      * Get the Position property as an Expression
      *
      * @return LightPosition
@@ -326,7 +328,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
       return null
     }
   /**
-   * Set the Position property
+   * Position of the light source relative to lit (extruded) geometries, in [r radial coordinate, a azimuthal angle, p polar angle] where r indicates the distance from the center of the base of an object to its light, a indicates the position of the light relative to 0 degree (0 degree when `light.anchor` is set to `viewport` corresponds to the top of the viewport, or 0 degree when `light.anchor` is set to `map` corresponds to due north, and degrees proceed clockwise), and p indicates the height of the light (from 0 degree, directly above, to 180 degree, directly below).
    *
    * @param position value of position as Expression
    */
@@ -443,8 +445,6 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
 interface LightDslReceiver {
 
   /**
-   * Set the Anchor property.
-   *
    * Whether extruded geometries are lit relative to the map or viewport.
    *
    * @param anchor as Anchor
@@ -452,22 +452,20 @@ interface LightDslReceiver {
   fun anchor(anchor: Anchor = Anchor.VIEWPORT): Light
 
   /**
-   * Set the Anchor property
+   * Whether extruded geometries are lit relative to the map or viewport.
    *
    * @param anchor value of anchor as Expression
    */
   fun anchor(anchor: Expression): Light
 
   /**
-   * Set the Color property.
+   * Color tint for lighting extruded geometries.
    *
    * @param color as int
    */
   fun color(@ColorInt color: Int): Light
 
   /**
-   * Set the Color property.
-   *
    * Color tint for lighting extruded geometries.
    *
    * @param color as String
@@ -475,7 +473,7 @@ interface LightDslReceiver {
   fun color(color: String = "#ffffff"): Light
 
   /**
-   * Set the Color property
+   * Color tint for lighting extruded geometries.
    *
    * @param color value of color as Expression
    */
@@ -494,8 +492,6 @@ interface LightDslReceiver {
   fun colorTransition(block: StyleTransition.Builder.() -> Unit): Light
 
   /**
-   * Set the Intensity property.
-   *
    * Intensity of lighting (on a scale from 0 to 1). Higher numbers will present as more extreme contrast.
    *
    * @param intensity as Double
@@ -503,7 +499,7 @@ interface LightDslReceiver {
   fun intensity(intensity: Double = 0.5): Light
 
   /**
-   * Set the Intensity property
+   * Intensity of lighting (on a scale from 0 to 1). Higher numbers will present as more extreme contrast.
    *
    * @param intensity value of intensity as Expression
    */
@@ -522,13 +518,13 @@ interface LightDslReceiver {
   fun intensityTransition(block: StyleTransition.Builder.() -> Unit): Light
 
   /**
+   * Position of the light source relative to lit (extruded) geometries, in [r radial coordinate, a azimuthal angle, p polar angle] where r indicates the distance from the center of the base of an object to its light, a indicates the position of the light relative to 0 degree (0 degree when `light.anchor` is set to `viewport` corresponds to the top of the viewport, or 0 degree when `light.anchor` is set to `map` corresponds to due north, and degrees proceed clockwise), and p indicates the height of the light (from 0 degree, directly above, to 180 degree, directly below).
+   *
    * DSL for setting [LightPosition].
    */
   fun position(radialCoordinate: Double, azimuthalAngle: Double, polarAngle: Double): Light
 
   /**
-   * Set the Position property.
-   *
    * Position of the light source relative to lit (extruded) geometries, in [r radial coordinate, a azimuthal angle, p polar angle] where r indicates the distance from the center of the base of an object to its light, a indicates the position of the light relative to 0 degree (0 degree when `light.anchor` is set to `viewport` corresponds to the top of the viewport, or 0 degree when `light.anchor` is set to `map` corresponds to due north, and degrees proceed clockwise), and p indicates the height of the light (from 0 degree, directly above, to 180 degree, directly below).
    *
    * @param position as LightPosition
@@ -536,7 +532,7 @@ interface LightDslReceiver {
   fun position(position: LightPosition = LightPosition(1.15, 210.0, 30.0)): Light
 
   /**
-   * Set the Position property
+   * Position of the light source relative to lit (extruded) geometries, in [r radial coordinate, a azimuthal angle, p polar angle] where r indicates the distance from the center of the base of an object to its light, a indicates the position of the light relative to 0 degree (0 degree when `light.anchor` is set to `viewport` corresponds to the top of the viewport, or 0 degree when `light.anchor` is set to `map` corresponds to due north, and degrees proceed clockwise), and p indicates the height of the light (from 0 degree, directly above, to 180 degree, directly below).
    *
    * @param position value of position as Expression
    */
@@ -556,7 +552,7 @@ interface LightDslReceiver {
 }
 
 /**
- * DSL function for [Light].
+ * DSL function for creating [Light] instance.
  */
 fun light(block: LightDslReceiver.() -> Unit): Light = Light().apply(block)
 

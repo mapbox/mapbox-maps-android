@@ -27,7 +27,13 @@ import java.util.*
 class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
 
   /**
-   * Set the filter property
+   * A filter is a property at the layer level that determines which features should be rendered in a style layer.
+   *
+   * Filters are written as expressions, which give you fine-grained control over which features to include: the
+   * style layer only displays the features that match the filter condition that you define.
+   *
+   * Note: Zoom expressions in filters are only evaluated at integer zoom levels. The `feature-state` expression
+   * is not supported in filter expressions.
    *
    * @param filter the expression filter to set
    */
@@ -37,7 +43,13 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
   }
 
   /**
-   * A expression specifying conditions on source features. Only features that match the filter are displayed. Zoom expressions in filters are only evaluated at integer zoom levels. The `feature-state` expression is not supported in filter expressions.
+   * A filter is a property at the layer level that determines which features should be rendered in a style layer.
+   *
+   * Filters are written as expressions, which give you fine-grained control over which features to include: the
+   * style layer only displays the features that match the filter condition that you define.
+   *
+   * Note: Zoom expressions in filters are only evaluated at integer zoom levels. The `feature-state` expression
+   * is not supported in filter expressions.
    */
   val filter: Expression?
     /**
@@ -48,11 +60,11 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
     get() = getPropertyValue<Expression>("filter")
 
   /**
-   * Visibility of the layer.
+   * Whether this layer is displayed.
    */
   override val visibility: Visibility?
     /**
-     * Get the Visibility property
+     * Whether this layer is displayed.
      *
      * @return VISIBILITY
      */
@@ -65,7 +77,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
     }
 
   /**
-   * Set the Visibility property
+   * Whether this layer is displayed.
    *
    * @param visibility value of Visibility
    */
@@ -92,7 +104,11 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
     }
 
   /**
-   * Set the minzoom property
+   * The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.
+   *
+   * Range:
+   *       minimum: 0
+   *       maximum: 24
    *
    * @param value value of minzoom
    */
@@ -119,7 +135,11 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
     }
 
   /**
-   * Set the maxzoom property
+   * The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden.
+   *
+   * Range:
+   *       minimum: 0
+   *       maximum: 24
    *
    * @param value value of maxzoom
    */
@@ -135,7 +155,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
    */
   val skyAtmosphereColor: String?
     /**
-     * Get the SkyAtmosphereColor property
+     * A color used to tweak the main atmospheric scattering coefficients. Using white applies the default coefficients giving the natural blue color to the atmosphere. This color affects how heavily the corresponding wavelength is represented during scattering. The alpha channel describes the density of the atmosphere, with 1 maximum density and 0 no density.
      *
      * @return String
      */
@@ -147,7 +167,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
     }
 
   /**
-   * Set the SkyAtmosphereColor property
+   * A color used to tweak the main atmospheric scattering coefficients. Using white applies the default coefficients giving the natural blue color to the atmosphere. This color affects how heavily the corresponding wavelength is represented during scattering. The alpha channel describes the density of the atmosphere, with 1 maximum density and 0 no density.
    *
    * @param skyAtmosphereColor value of skyAtmosphereColor
    */
@@ -157,12 +177,16 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
   }
 
   /**
+   * A color used to tweak the main atmospheric scattering coefficients. Using white applies the default coefficients giving the natural blue color to the atmosphere. This color affects how heavily the corresponding wavelength is represented during scattering. The alpha channel describes the density of the atmosphere, with 1 maximum density and 0 no density.
+   *
    * This is an Expression representation of "sky-atmosphere-color".
    *
    * A color used to tweak the main atmospheric scattering coefficients. Using white applies the default coefficients giving the natural blue color to the atmosphere. This color affects how heavily the corresponding wavelength is represented during scattering. The alpha channel describes the density of the atmosphere, with 1 maximum density and 0 no density.
    */
   val skyAtmosphereColorAsExpression: Expression?
     /**
+     * A color used to tweak the main atmospheric scattering coefficients. Using white applies the default coefficients giving the natural blue color to the atmosphere. This color affects how heavily the corresponding wavelength is represented during scattering. The alpha channel describes the density of the atmosphere, with 1 maximum density and 0 no density.
+     *
      * Get the SkyAtmosphereColor property as an Expression
      *
      * @return String
@@ -175,7 +199,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
     }
 
   /**
-   * Set the SkyAtmosphereColor property
+   * A color used to tweak the main atmospheric scattering coefficients. Using white applies the default coefficients giving the natural blue color to the atmosphere. This color affects how heavily the corresponding wavelength is represented during scattering. The alpha channel describes the density of the atmosphere, with 1 maximum density and 0 no density.
    *
    * @param skyAtmosphereColor value of skyAtmosphereColor as Expression
    */
@@ -202,7 +226,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
     }
 
   /**
-   * Set the SkyAtmosphereColor property.
+   * A color used to tweak the main atmospheric scattering coefficients. Using white applies the default coefficients giving the natural blue color to the atmosphere. This color affects how heavily the corresponding wavelength is represented during scattering. The alpha channel describes the density of the atmosphere, with 1 maximum density and 0 no density.
    *
    * @param skyAtmosphereColor value of skyAtmosphereColor
    */
@@ -216,7 +240,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
    */
   val skyAtmosphereHaloColor: String?
     /**
-     * Get the SkyAtmosphereHaloColor property
+     * A color applied to the atmosphere sun halo. The alpha channel describes how strongly the sun halo is represented in an atmosphere sky layer.
      *
      * @return String
      */
@@ -228,7 +252,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
     }
 
   /**
-   * Set the SkyAtmosphereHaloColor property
+   * A color applied to the atmosphere sun halo. The alpha channel describes how strongly the sun halo is represented in an atmosphere sky layer.
    *
    * @param skyAtmosphereHaloColor value of skyAtmosphereHaloColor
    */
@@ -238,12 +262,16 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
   }
 
   /**
+   * A color applied to the atmosphere sun halo. The alpha channel describes how strongly the sun halo is represented in an atmosphere sky layer.
+   *
    * This is an Expression representation of "sky-atmosphere-halo-color".
    *
    * A color applied to the atmosphere sun halo. The alpha channel describes how strongly the sun halo is represented in an atmosphere sky layer.
    */
   val skyAtmosphereHaloColorAsExpression: Expression?
     /**
+     * A color applied to the atmosphere sun halo. The alpha channel describes how strongly the sun halo is represented in an atmosphere sky layer.
+     *
      * Get the SkyAtmosphereHaloColor property as an Expression
      *
      * @return String
@@ -256,7 +284,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
     }
 
   /**
-   * Set the SkyAtmosphereHaloColor property
+   * A color applied to the atmosphere sun halo. The alpha channel describes how strongly the sun halo is represented in an atmosphere sky layer.
    *
    * @param skyAtmosphereHaloColor value of skyAtmosphereHaloColor as Expression
    */
@@ -283,7 +311,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
     }
 
   /**
-   * Set the SkyAtmosphereHaloColor property.
+   * A color applied to the atmosphere sun halo. The alpha channel describes how strongly the sun halo is represented in an atmosphere sky layer.
    *
    * @param skyAtmosphereHaloColor value of skyAtmosphereHaloColor
    */
@@ -297,7 +325,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
    */
   val skyAtmosphereSun: List<Double>?
     /**
-     * Get the SkyAtmosphereSun property
+     * Position of the sun center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the sun relative to 0 degree north, where degrees proceed clockwise. The polar angle indicates the height of the sun, where 0 degree is directly above, at zenith, and 90 degree at the horizon. When this property is ommitted, the sun center is directly inherited from the light position.
      *
      * @return List<Double>
      */
@@ -306,7 +334,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
     }
 
   /**
-   * Set the SkyAtmosphereSun property
+   * Position of the sun center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the sun relative to 0 degree north, where degrees proceed clockwise. The polar angle indicates the height of the sun, where 0 degree is directly above, at zenith, and 90 degree at the horizon. When this property is ommitted, the sun center is directly inherited from the light position.
    *
    * @param skyAtmosphereSun value of skyAtmosphereSun
    */
@@ -316,12 +344,16 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
   }
 
   /**
+   * Position of the sun center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the sun relative to 0 degree north, where degrees proceed clockwise. The polar angle indicates the height of the sun, where 0 degree is directly above, at zenith, and 90 degree at the horizon. When this property is ommitted, the sun center is directly inherited from the light position.
+   *
    * This is an Expression representation of "sky-atmosphere-sun".
    *
    * Position of the sun center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the sun relative to 0 degree north, where degrees proceed clockwise. The polar angle indicates the height of the sun, where 0 degree is directly above, at zenith, and 90 degree at the horizon. When this property is ommitted, the sun center is directly inherited from the light position.
    */
   val skyAtmosphereSunAsExpression: Expression?
     /**
+     * Position of the sun center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the sun relative to 0 degree north, where degrees proceed clockwise. The polar angle indicates the height of the sun, where 0 degree is directly above, at zenith, and 90 degree at the horizon. When this property is ommitted, the sun center is directly inherited from the light position.
+     *
      * Get the SkyAtmosphereSun property as an Expression
      *
      * @return List<Double>
@@ -337,7 +369,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
     }
 
   /**
-   * Set the SkyAtmosphereSun property
+   * Position of the sun center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the sun relative to 0 degree north, where degrees proceed clockwise. The polar angle indicates the height of the sun, where 0 degree is directly above, at zenith, and 90 degree at the horizon. When this property is ommitted, the sun center is directly inherited from the light position.
    *
    * @param skyAtmosphereSun value of skyAtmosphereSun as Expression
    */
@@ -351,7 +383,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
    */
   val skyAtmosphereSunIntensity: Double?
     /**
-     * Get the SkyAtmosphereSunIntensity property
+     * Intensity of the sun as a light source in the atmosphere (on a scale from 0 to a 100). Setting higher values will brighten up the sky.
      *
      * @return Double
      */
@@ -360,7 +392,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
     }
 
   /**
-   * Set the SkyAtmosphereSunIntensity property
+   * Intensity of the sun as a light source in the atmosphere (on a scale from 0 to a 100). Setting higher values will brighten up the sky.
    *
    * @param skyAtmosphereSunIntensity value of skyAtmosphereSunIntensity
    */
@@ -370,12 +402,16 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
   }
 
   /**
+   * Intensity of the sun as a light source in the atmosphere (on a scale from 0 to a 100). Setting higher values will brighten up the sky.
+   *
    * This is an Expression representation of "sky-atmosphere-sun-intensity".
    *
    * Intensity of the sun as a light source in the atmosphere (on a scale from 0 to a 100). Setting higher values will brighten up the sky.
    */
   val skyAtmosphereSunIntensityAsExpression: Expression?
     /**
+     * Intensity of the sun as a light source in the atmosphere (on a scale from 0 to a 100). Setting higher values will brighten up the sky.
+     *
      * Get the SkyAtmosphereSunIntensity property as an Expression
      *
      * @return Double
@@ -391,7 +427,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
     }
 
   /**
-   * Set the SkyAtmosphereSunIntensity property
+   * Intensity of the sun as a light source in the atmosphere (on a scale from 0 to a 100). Setting higher values will brighten up the sky.
    *
    * @param skyAtmosphereSunIntensity value of skyAtmosphereSunIntensity as Expression
    */
@@ -405,7 +441,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
    */
   val skyGradient: Expression?
     /**
-     * Get the SkyGradient property
+     * Defines a radial color gradient with which to color the sky. The color values can be interpolated with an expression using `sky-radial-progress`. The range [0, 1] for the interpolant covers a radial distance (in degrees) of [0, `sky-gradient-radius`] centered at the position specified by `sky-gradient-center`.
      *
      * @return Expression
      */
@@ -414,7 +450,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
     }
 
   /**
-   * Set the SkyGradient property
+   * Defines a radial color gradient with which to color the sky. The color values can be interpolated with an expression using `sky-radial-progress`. The range [0, 1] for the interpolant covers a radial distance (in degrees) of [0, `sky-gradient-radius`] centered at the position specified by `sky-gradient-center`.
    *
    * @param skyGradient value of skyGradient
    */
@@ -428,7 +464,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
    */
   val skyGradientCenter: List<Double>?
     /**
-     * Get the SkyGradientCenter property
+     * Position of the gradient center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the gradient center relative to 0 degree north, where degrees proceed clockwise. The polar angle indicates the height of the gradient center, where 0 degree is directly above, at zenith, and 90 degree at the horizon.
      *
      * @return List<Double>
      */
@@ -437,7 +473,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
     }
 
   /**
-   * Set the SkyGradientCenter property
+   * Position of the gradient center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the gradient center relative to 0 degree north, where degrees proceed clockwise. The polar angle indicates the height of the gradient center, where 0 degree is directly above, at zenith, and 90 degree at the horizon.
    *
    * @param skyGradientCenter value of skyGradientCenter
    */
@@ -447,12 +483,16 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
   }
 
   /**
+   * Position of the gradient center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the gradient center relative to 0 degree north, where degrees proceed clockwise. The polar angle indicates the height of the gradient center, where 0 degree is directly above, at zenith, and 90 degree at the horizon.
+   *
    * This is an Expression representation of "sky-gradient-center".
    *
    * Position of the gradient center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the gradient center relative to 0 degree north, where degrees proceed clockwise. The polar angle indicates the height of the gradient center, where 0 degree is directly above, at zenith, and 90 degree at the horizon.
    */
   val skyGradientCenterAsExpression: Expression?
     /**
+     * Position of the gradient center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the gradient center relative to 0 degree north, where degrees proceed clockwise. The polar angle indicates the height of the gradient center, where 0 degree is directly above, at zenith, and 90 degree at the horizon.
+     *
      * Get the SkyGradientCenter property as an Expression
      *
      * @return List<Double>
@@ -468,7 +508,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
     }
 
   /**
-   * Set the SkyGradientCenter property
+   * Position of the gradient center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the gradient center relative to 0 degree north, where degrees proceed clockwise. The polar angle indicates the height of the gradient center, where 0 degree is directly above, at zenith, and 90 degree at the horizon.
    *
    * @param skyGradientCenter value of skyGradientCenter as Expression
    */
@@ -482,7 +522,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
    */
   val skyGradientRadius: Double?
     /**
-     * Get the SkyGradientRadius property
+     * The angular distance (measured in degrees) from `sky-gradient-center` up to which the gradient extends. A value of 180 causes the gradient to wrap around to the opposite direction from `sky-gradient-center`.
      *
      * @return Double
      */
@@ -491,7 +531,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
     }
 
   /**
-   * Set the SkyGradientRadius property
+   * The angular distance (measured in degrees) from `sky-gradient-center` up to which the gradient extends. A value of 180 causes the gradient to wrap around to the opposite direction from `sky-gradient-center`.
    *
    * @param skyGradientRadius value of skyGradientRadius
    */
@@ -501,12 +541,16 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
   }
 
   /**
+   * The angular distance (measured in degrees) from `sky-gradient-center` up to which the gradient extends. A value of 180 causes the gradient to wrap around to the opposite direction from `sky-gradient-center`.
+   *
    * This is an Expression representation of "sky-gradient-radius".
    *
    * The angular distance (measured in degrees) from `sky-gradient-center` up to which the gradient extends. A value of 180 causes the gradient to wrap around to the opposite direction from `sky-gradient-center`.
    */
   val skyGradientRadiusAsExpression: Expression?
     /**
+     * The angular distance (measured in degrees) from `sky-gradient-center` up to which the gradient extends. A value of 180 causes the gradient to wrap around to the opposite direction from `sky-gradient-center`.
+     *
      * Get the SkyGradientRadius property as an Expression
      *
      * @return Double
@@ -522,7 +566,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
     }
 
   /**
-   * Set the SkyGradientRadius property
+   * The angular distance (measured in degrees) from `sky-gradient-center` up to which the gradient extends. A value of 180 causes the gradient to wrap around to the opposite direction from `sky-gradient-center`.
    *
    * @param skyGradientRadius value of skyGradientRadius as Expression
    */
@@ -536,7 +580,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
    */
   val skyOpacity: Double?
     /**
-     * Get the SkyOpacity property
+     * The opacity of the entire sky layer.
      *
      * @return Double
      */
@@ -545,7 +589,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
     }
 
   /**
-   * Set the SkyOpacity property
+   * The opacity of the entire sky layer.
    *
    * @param skyOpacity value of skyOpacity
    */
@@ -555,12 +599,16 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
   }
 
   /**
+   * The opacity of the entire sky layer.
+   *
    * This is an Expression representation of "sky-opacity".
    *
    * The opacity of the entire sky layer.
    */
   val skyOpacityAsExpression: Expression?
     /**
+     * The opacity of the entire sky layer.
+     *
      * Get the SkyOpacity property as an Expression
      *
      * @return Double
@@ -576,7 +624,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
     }
 
   /**
-   * Set the SkyOpacity property
+   * The opacity of the entire sky layer.
    *
    * @param skyOpacity value of skyOpacity as Expression
    */
@@ -620,7 +668,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
    */
   val skyType: SkyType?
     /**
-     * Get the SkyType property
+     * The type of the sky
      *
      * @return SkyType
      */
@@ -632,7 +680,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
     }
 
   /**
-   * Set the SkyType property
+   * The type of the sky
    *
    * @param skyType value of skyType
    */
@@ -642,12 +690,16 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
   }
 
   /**
+   * The type of the sky
+   *
    * This is an Expression representation of "sky-type".
    *
    * The type of the sky
    */
   val skyTypeAsExpression: Expression?
     /**
+     * The type of the sky
+     *
      * Get the SkyType property as an Expression
      *
      * @return SkyType
@@ -663,7 +715,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
     }
 
   /**
-   * Set the SkyType property
+   * The type of the sky
    *
    * @param skyType value of skyType as Expression
    */
@@ -736,6 +788,8 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
      */
     val defaultSkyAtmosphereColor: String?
       /**
+       * A color used to tweak the main atmospheric scattering coefficients. Using white applies the default coefficients giving the natural blue color to the atmosphere. This color affects how heavily the corresponding wavelength is represented during scattering. The alpha channel describes the density of the atmosphere, with 1 maximum density and 0 no density.
+       *
        * Get the default value of SkyAtmosphereColor property
        *
        * @return String
@@ -748,6 +802,8 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
       }
 
     /**
+     * A color used to tweak the main atmospheric scattering coefficients. Using white applies the default coefficients giving the natural blue color to the atmosphere. This color affects how heavily the corresponding wavelength is represented during scattering. The alpha channel describes the density of the atmosphere, with 1 maximum density and 0 no density.
+     *
      * This is an Expression representation of "sky-atmosphere-color".
      *
      * A color used to tweak the main atmospheric scattering coefficients. Using white applies the default coefficients giving the natural blue color to the atmosphere. This color affects how heavily the corresponding wavelength is represented during scattering. The alpha channel describes the density of the atmosphere, with 1 maximum density and 0 no density.
@@ -770,6 +826,8 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
      */
     val defaultSkyAtmosphereColorAsColorInt: Int?
       /**
+       * A color used to tweak the main atmospheric scattering coefficients. Using white applies the default coefficients giving the natural blue color to the atmosphere. This color affects how heavily the corresponding wavelength is represented during scattering. The alpha channel describes the density of the atmosphere, with 1 maximum density and 0 no density.
+       *
        * Get the default value of SkyAtmosphereColor property as color int.
        *
        * @return int representation of a rgba string color
@@ -787,6 +845,8 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
      */
     val defaultSkyAtmosphereHaloColor: String?
       /**
+       * A color applied to the atmosphere sun halo. The alpha channel describes how strongly the sun halo is represented in an atmosphere sky layer.
+       *
        * Get the default value of SkyAtmosphereHaloColor property
        *
        * @return String
@@ -799,6 +859,8 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
       }
 
     /**
+     * A color applied to the atmosphere sun halo. The alpha channel describes how strongly the sun halo is represented in an atmosphere sky layer.
+     *
      * This is an Expression representation of "sky-atmosphere-halo-color".
      *
      * A color applied to the atmosphere sun halo. The alpha channel describes how strongly the sun halo is represented in an atmosphere sky layer.
@@ -821,6 +883,8 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
      */
     val defaultSkyAtmosphereHaloColorAsColorInt: Int?
       /**
+       * A color applied to the atmosphere sun halo. The alpha channel describes how strongly the sun halo is represented in an atmosphere sky layer.
+       *
        * Get the default value of SkyAtmosphereHaloColor property as color int.
        *
        * @return int representation of a rgba string color
@@ -838,6 +902,8 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
      */
     val defaultSkyAtmosphereSun: List<Double>?
       /**
+       * Position of the sun center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the sun relative to 0 degree north, where degrees proceed clockwise. The polar angle indicates the height of the sun, where 0 degree is directly above, at zenith, and 90 degree at the horizon. When this property is ommitted, the sun center is directly inherited from the light position.
+       *
        * Get the default value of SkyAtmosphereSun property
        *
        * @return List<Double>
@@ -847,6 +913,8 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
       }
 
     /**
+     * Position of the sun center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the sun relative to 0 degree north, where degrees proceed clockwise. The polar angle indicates the height of the sun, where 0 degree is directly above, at zenith, and 90 degree at the horizon. When this property is ommitted, the sun center is directly inherited from the light position.
+     *
      * This is an Expression representation of "sky-atmosphere-sun".
      *
      * Position of the sun center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the sun relative to 0 degree north, where degrees proceed clockwise. The polar angle indicates the height of the sun, where 0 degree is directly above, at zenith, and 90 degree at the horizon. When this property is ommitted, the sun center is directly inherited from the light position.
@@ -872,6 +940,8 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
      */
     val defaultSkyAtmosphereSunIntensity: Double?
       /**
+       * Intensity of the sun as a light source in the atmosphere (on a scale from 0 to a 100). Setting higher values will brighten up the sky.
+       *
        * Get the default value of SkyAtmosphereSunIntensity property
        *
        * @return Double
@@ -881,6 +951,8 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
       }
 
     /**
+     * Intensity of the sun as a light source in the atmosphere (on a scale from 0 to a 100). Setting higher values will brighten up the sky.
+     *
      * This is an Expression representation of "sky-atmosphere-sun-intensity".
      *
      * Intensity of the sun as a light source in the atmosphere (on a scale from 0 to a 100). Setting higher values will brighten up the sky.
@@ -906,6 +978,8 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
      */
     val defaultSkyGradient: Expression?
       /**
+       * Defines a radial color gradient with which to color the sky. The color values can be interpolated with an expression using `sky-radial-progress`. The range [0, 1] for the interpolant covers a radial distance (in degrees) of [0, `sky-gradient-radius`] centered at the position specified by `sky-gradient-center`.
+       *
        * Get the default value of SkyGradient property
        *
        * @return Expression
@@ -919,6 +993,8 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
      */
     val defaultSkyGradientCenter: List<Double>?
       /**
+       * Position of the gradient center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the gradient center relative to 0 degree north, where degrees proceed clockwise. The polar angle indicates the height of the gradient center, where 0 degree is directly above, at zenith, and 90 degree at the horizon.
+       *
        * Get the default value of SkyGradientCenter property
        *
        * @return List<Double>
@@ -928,6 +1004,8 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
       }
 
     /**
+     * Position of the gradient center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the gradient center relative to 0 degree north, where degrees proceed clockwise. The polar angle indicates the height of the gradient center, where 0 degree is directly above, at zenith, and 90 degree at the horizon.
+     *
      * This is an Expression representation of "sky-gradient-center".
      *
      * Position of the gradient center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the gradient center relative to 0 degree north, where degrees proceed clockwise. The polar angle indicates the height of the gradient center, where 0 degree is directly above, at zenith, and 90 degree at the horizon.
@@ -953,6 +1031,8 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
      */
     val defaultSkyGradientRadius: Double?
       /**
+       * The angular distance (measured in degrees) from `sky-gradient-center` up to which the gradient extends. A value of 180 causes the gradient to wrap around to the opposite direction from `sky-gradient-center`.
+       *
        * Get the default value of SkyGradientRadius property
        *
        * @return Double
@@ -962,6 +1042,8 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
       }
 
     /**
+     * The angular distance (measured in degrees) from `sky-gradient-center` up to which the gradient extends. A value of 180 causes the gradient to wrap around to the opposite direction from `sky-gradient-center`.
+     *
      * This is an Expression representation of "sky-gradient-radius".
      *
      * The angular distance (measured in degrees) from `sky-gradient-center` up to which the gradient extends. A value of 180 causes the gradient to wrap around to the opposite direction from `sky-gradient-center`.
@@ -987,6 +1069,8 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
      */
     val defaultSkyOpacity: Double?
       /**
+       * The opacity of the entire sky layer.
+       *
        * Get the default value of SkyOpacity property
        *
        * @return Double
@@ -996,6 +1080,8 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
       }
 
     /**
+     * The opacity of the entire sky layer.
+     *
      * This is an Expression representation of "sky-opacity".
      *
      * The opacity of the entire sky layer.
@@ -1032,6 +1118,8 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
      */
     val defaultSkyType: SkyType?
       /**
+       * The type of the sky
+       *
        * Get the default value of SkyType property
        *
        * @return SkyType
@@ -1044,6 +1132,8 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
       }
 
     /**
+     * The type of the sky
+     *
      * This is an Expression representation of "sky-type".
      *
      * The type of the sky
@@ -1076,28 +1166,42 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
 interface SkyLayerDsl {
 
   /**
-   * Set the filter property
+   * A filter is a property at the layer level that determines which features should be rendered in a style layer.
+   *
+   * Filters are written as expressions, which give you fine-grained control over which features to include: the
+   * style layer only displays the features that match the filter condition that you define.
+   *
+   * Note: Zoom expressions in filters are only evaluated at integer zoom levels. The `feature-state` expression
+   * is not supported in filter expressions.
    *
    * @param filter the expression filter to set
    */
   fun filter(filter: Expression): SkyLayer
 
   /**
-   * Set the Visibility property
+   * Whether this layer is displayed.
    *
    * @param visibility value of Visibility
    */
   fun visibility(visibility: Visibility): SkyLayer
 
   /**
-   * Set the minzoom property
+   * The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.
+   *
+   * Range:
+   *       minimum: 0
+   *       maximum: 24
    *
    * @param value value of minzoom
    */
   fun minZoom(minZoom: Double): SkyLayer
 
   /**
-   * Set the maxzoom property
+   * The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden.
+   *
+   * Range:
+   *       minimum: 0
+   *       maximum: 24
    *
    * @param value value of maxzoom
    */
@@ -1106,125 +1210,127 @@ interface SkyLayerDsl {
   // Property getters and setters
 
   /**
-   * Set the SkyAtmosphereColor property
+   * A color used to tweak the main atmospheric scattering coefficients. Using white applies the default coefficients giving the natural blue color to the atmosphere. This color affects how heavily the corresponding wavelength is represented during scattering. The alpha channel describes the density of the atmosphere, with 1 maximum density and 0 no density.
    *
    * @param skyAtmosphereColor value of skyAtmosphereColor
    */
   fun skyAtmosphereColor(skyAtmosphereColor: String = "white"): SkyLayer
 
   /**
-   * Set the SkyAtmosphereColor property
+   * A color used to tweak the main atmospheric scattering coefficients. Using white applies the default coefficients giving the natural blue color to the atmosphere. This color affects how heavily the corresponding wavelength is represented during scattering. The alpha channel describes the density of the atmosphere, with 1 maximum density and 0 no density.
    *
    * @param skyAtmosphereColor value of skyAtmosphereColor as Expression
    */
   fun skyAtmosphereColor(skyAtmosphereColor: Expression): SkyLayer
 
   /**
-   * Set the SkyAtmosphereColor property.
+   * A color used to tweak the main atmospheric scattering coefficients. Using white applies the default coefficients giving the natural blue color to the atmosphere. This color affects how heavily the corresponding wavelength is represented during scattering. The alpha channel describes the density of the atmosphere, with 1 maximum density and 0 no density.
    *
    * @param skyAtmosphereColor value of skyAtmosphereColor
    */
   fun skyAtmosphereColor(@ColorInt skyAtmosphereColor: Int): SkyLayer
 
   /**
-   * Set the SkyAtmosphereHaloColor property
+   * A color applied to the atmosphere sun halo. The alpha channel describes how strongly the sun halo is represented in an atmosphere sky layer.
    *
    * @param skyAtmosphereHaloColor value of skyAtmosphereHaloColor
    */
   fun skyAtmosphereHaloColor(skyAtmosphereHaloColor: String = "white"): SkyLayer
 
   /**
-   * Set the SkyAtmosphereHaloColor property
+   * A color applied to the atmosphere sun halo. The alpha channel describes how strongly the sun halo is represented in an atmosphere sky layer.
    *
    * @param skyAtmosphereHaloColor value of skyAtmosphereHaloColor as Expression
    */
   fun skyAtmosphereHaloColor(skyAtmosphereHaloColor: Expression): SkyLayer
 
   /**
-   * Set the SkyAtmosphereHaloColor property.
+   * A color applied to the atmosphere sun halo. The alpha channel describes how strongly the sun halo is represented in an atmosphere sky layer.
    *
    * @param skyAtmosphereHaloColor value of skyAtmosphereHaloColor
    */
   fun skyAtmosphereHaloColor(@ColorInt skyAtmosphereHaloColor: Int): SkyLayer
 
   /**
-   * Set the SkyAtmosphereSun property
+   * Position of the sun center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the sun relative to 0 degree north, where degrees proceed clockwise. The polar angle indicates the height of the sun, where 0 degree is directly above, at zenith, and 90 degree at the horizon. When this property is ommitted, the sun center is directly inherited from the light position.
    *
    * @param skyAtmosphereSun value of skyAtmosphereSun
    */
   fun skyAtmosphereSun(skyAtmosphereSun: List<Double>): SkyLayer
 
   /**
-   * Set the SkyAtmosphereSun property
+   * Position of the sun center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the sun relative to 0 degree north, where degrees proceed clockwise. The polar angle indicates the height of the sun, where 0 degree is directly above, at zenith, and 90 degree at the horizon. When this property is ommitted, the sun center is directly inherited from the light position.
    *
    * @param skyAtmosphereSun value of skyAtmosphereSun as Expression
    */
   fun skyAtmosphereSun(skyAtmosphereSun: Expression): SkyLayer
 
   /**
-   * Set the SkyAtmosphereSunIntensity property
+   * Intensity of the sun as a light source in the atmosphere (on a scale from 0 to a 100). Setting higher values will brighten up the sky.
    *
    * @param skyAtmosphereSunIntensity value of skyAtmosphereSunIntensity
    */
   fun skyAtmosphereSunIntensity(skyAtmosphereSunIntensity: Double = 10.0): SkyLayer
 
   /**
-   * Set the SkyAtmosphereSunIntensity property
+   * Intensity of the sun as a light source in the atmosphere (on a scale from 0 to a 100). Setting higher values will brighten up the sky.
    *
    * @param skyAtmosphereSunIntensity value of skyAtmosphereSunIntensity as Expression
    */
   fun skyAtmosphereSunIntensity(skyAtmosphereSunIntensity: Expression): SkyLayer
 
   /**
-   * Set the SkyGradient property
+   * Defines a radial color gradient with which to color the sky. The color values can be interpolated with an expression using `sky-radial-progress`. The range [0, 1] for the interpolant covers a radial distance (in degrees) of [0, `sky-gradient-radius`] centered at the position specified by `sky-gradient-center`.
    *
    * @param skyGradient value of skyGradient
    */
   fun skyGradient(skyGradient: Expression): SkyLayer
 
   /**
-   * Set the SkyGradientCenter property
+   * Position of the gradient center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the gradient center relative to 0 degree north, where degrees proceed clockwise. The polar angle indicates the height of the gradient center, where 0 degree is directly above, at zenith, and 90 degree at the horizon.
    *
    * @param skyGradientCenter value of skyGradientCenter
    */
   fun skyGradientCenter(skyGradientCenter: List<Double> = listOf(0.0, 0.0)): SkyLayer
 
   /**
-   * Set the SkyGradientCenter property
+   * Position of the gradient center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the gradient center relative to 0 degree north, where degrees proceed clockwise. The polar angle indicates the height of the gradient center, where 0 degree is directly above, at zenith, and 90 degree at the horizon.
    *
    * @param skyGradientCenter value of skyGradientCenter as Expression
    */
   fun skyGradientCenter(skyGradientCenter: Expression): SkyLayer
 
   /**
-   * Set the SkyGradientRadius property
+   * The angular distance (measured in degrees) from `sky-gradient-center` up to which the gradient extends. A value of 180 causes the gradient to wrap around to the opposite direction from `sky-gradient-center`.
    *
    * @param skyGradientRadius value of skyGradientRadius
    */
   fun skyGradientRadius(skyGradientRadius: Double = 90.0): SkyLayer
 
   /**
-   * Set the SkyGradientRadius property
+   * The angular distance (measured in degrees) from `sky-gradient-center` up to which the gradient extends. A value of 180 causes the gradient to wrap around to the opposite direction from `sky-gradient-center`.
    *
    * @param skyGradientRadius value of skyGradientRadius as Expression
    */
   fun skyGradientRadius(skyGradientRadius: Expression): SkyLayer
 
   /**
-   * Set the SkyOpacity property
+   * The opacity of the entire sky layer.
    *
    * @param skyOpacity value of skyOpacity
    */
   fun skyOpacity(skyOpacity: Double = 1.0): SkyLayer
 
   /**
-   * Set the SkyOpacity property
+   * The opacity of the entire sky layer.
    *
    * @param skyOpacity value of skyOpacity as Expression
    */
   fun skyOpacity(skyOpacity: Expression): SkyLayer
 
   /**
+   * The opacity of the entire sky layer.
+   *
    * Set the SkyOpacity property transition options
    *
    * @param options transition options for Double
@@ -1232,19 +1338,21 @@ interface SkyLayerDsl {
   fun skyOpacityTransition(options: StyleTransition): SkyLayer
 
   /**
+   * The opacity of the entire sky layer.
+   *
    * DSL for [skyOpacityTransition].
    */
   fun skyOpacityTransition(block: StyleTransition.Builder.() -> Unit): SkyLayer
 
   /**
-   * Set the SkyType property
+   * The type of the sky
    *
    * @param skyType value of skyType
    */
   fun skyType(skyType: SkyType = SkyType.ATMOSPHERE): SkyLayer
 
   /**
-   * Set the SkyType property
+   * The type of the sky
    *
    * @param skyType value of skyType as Expression
    */
@@ -1252,7 +1360,7 @@ interface SkyLayerDsl {
 }
 
 /**
- * DSL function for [SkyLayer].
+ * DSL functions for creating a [SkyLayer].
  */
 fun skyLayer(layerId: String, block: SkyLayerDsl.() -> Unit): SkyLayer = SkyLayer(layerId).apply(block)
 

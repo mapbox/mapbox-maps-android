@@ -27,11 +27,11 @@ import java.util.*
 class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer() {
 
   /**
-   * Visibility of the layer.
+   * Whether this layer is displayed.
    */
   override val visibility: Visibility?
     /**
-     * Get the Visibility property
+     * Whether this layer is displayed.
      *
      * @return VISIBILITY
      */
@@ -44,7 +44,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
     }
 
   /**
-   * Set the Visibility property
+   * Whether this layer is displayed.
    *
    * @param visibility value of Visibility
    */
@@ -71,7 +71,11 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
     }
 
   /**
-   * Set the minzoom property
+   * The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.
+   *
+   * Range:
+   *       minimum: 0
+   *       maximum: 24
    *
    * @param value value of minzoom
    */
@@ -98,7 +102,11 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
     }
 
   /**
-   * Set the maxzoom property
+   * The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden.
+   *
+   * Range:
+   *       minimum: 0
+   *       maximum: 24
    *
    * @param value value of maxzoom
    */
@@ -114,7 +122,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
    */
   val backgroundColor: String?
     /**
-     * Get the BackgroundColor property
+     * The color with which the background will be drawn.
      *
      * @return String
      */
@@ -126,7 +134,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
     }
 
   /**
-   * Set the BackgroundColor property
+   * The color with which the background will be drawn.
    *
    * @param backgroundColor value of backgroundColor
    */
@@ -136,12 +144,16 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
   }
 
   /**
+   * The color with which the background will be drawn.
+   *
    * This is an Expression representation of "background-color".
    *
    * The color with which the background will be drawn.
    */
   val backgroundColorAsExpression: Expression?
     /**
+     * The color with which the background will be drawn.
+     *
      * Get the BackgroundColor property as an Expression
      *
      * @return String
@@ -154,7 +166,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
     }
 
   /**
-   * Set the BackgroundColor property
+   * The color with which the background will be drawn.
    *
    * @param backgroundColor value of backgroundColor as Expression
    */
@@ -181,7 +193,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
     }
 
   /**
-   * Set the BackgroundColor property.
+   * The color with which the background will be drawn.
    *
    * @param backgroundColor value of backgroundColor
    */
@@ -225,7 +237,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
    */
   val backgroundOpacity: Double?
     /**
-     * Get the BackgroundOpacity property
+     * The opacity at which the background will be drawn.
      *
      * @return Double
      */
@@ -234,7 +246,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
     }
 
   /**
-   * Set the BackgroundOpacity property
+   * The opacity at which the background will be drawn.
    *
    * @param backgroundOpacity value of backgroundOpacity
    */
@@ -244,12 +256,16 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
   }
 
   /**
+   * The opacity at which the background will be drawn.
+   *
    * This is an Expression representation of "background-opacity".
    *
    * The opacity at which the background will be drawn.
    */
   val backgroundOpacityAsExpression: Expression?
     /**
+     * The opacity at which the background will be drawn.
+     *
      * Get the BackgroundOpacity property as an Expression
      *
      * @return Double
@@ -265,7 +281,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
     }
 
   /**
-   * Set the BackgroundOpacity property
+   * The opacity at which the background will be drawn.
    *
    * @param backgroundOpacity value of backgroundOpacity as Expression
    */
@@ -309,7 +325,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
    */
   val backgroundPattern: String?
     /**
-     * Get the BackgroundPattern property
+     * Name of image in sprite to use for drawing an image background. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
      *
      * @return String
      */
@@ -318,7 +334,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
     }
 
   /**
-   * Set the BackgroundPattern property
+   * Name of image in sprite to use for drawing an image background. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
    *
    * @param backgroundPattern value of backgroundPattern
    */
@@ -328,12 +344,16 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
   }
 
   /**
+   * Name of image in sprite to use for drawing an image background. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
+   *
    * This is an Expression representation of "background-pattern".
    *
    * Name of image in sprite to use for drawing an image background. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
    */
   val backgroundPatternAsExpression: Expression?
     /**
+     * Name of image in sprite to use for drawing an image background. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
+     *
      * Get the BackgroundPattern property as an Expression
      *
      * @return String
@@ -349,7 +369,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
     }
 
   /**
-   * Set the BackgroundPattern property
+   * Name of image in sprite to use for drawing an image background. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
    *
    * @param backgroundPattern value of backgroundPattern as Expression
    */
@@ -452,6 +472,8 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
      */
     val defaultBackgroundColor: String?
       /**
+       * The color with which the background will be drawn.
+       *
        * Get the default value of BackgroundColor property
        *
        * @return String
@@ -464,6 +486,8 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
       }
 
     /**
+     * The color with which the background will be drawn.
+     *
      * This is an Expression representation of "background-color".
      *
      * The color with which the background will be drawn.
@@ -486,6 +510,8 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
      */
     val defaultBackgroundColorAsColorInt: Int?
       /**
+       * The color with which the background will be drawn.
+       *
        * Get the default value of BackgroundColor property as color int.
        *
        * @return int representation of a rgba string color
@@ -514,6 +540,8 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
      */
     val defaultBackgroundOpacity: Double?
       /**
+       * The opacity at which the background will be drawn.
+       *
        * Get the default value of BackgroundOpacity property
        *
        * @return Double
@@ -523,6 +551,8 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
       }
 
     /**
+     * The opacity at which the background will be drawn.
+     *
      * This is an Expression representation of "background-opacity".
      *
      * The opacity at which the background will be drawn.
@@ -559,6 +589,8 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
      */
     val defaultBackgroundPattern: String?
       /**
+       * Name of image in sprite to use for drawing an image background. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
+       *
        * Get the default value of BackgroundPattern property
        *
        * @return String
@@ -568,6 +600,8 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
       }
 
     /**
+     * Name of image in sprite to use for drawing an image background. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
+     *
      * This is an Expression representation of "background-pattern".
      *
      * Name of image in sprite to use for drawing an image background. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
@@ -611,21 +645,29 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
 interface BackgroundLayerDsl {
 
   /**
-   * Set the Visibility property
+   * Whether this layer is displayed.
    *
    * @param visibility value of Visibility
    */
   fun visibility(visibility: Visibility): BackgroundLayer
 
   /**
-   * Set the minzoom property
+   * The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.
+   *
+   * Range:
+   *       minimum: 0
+   *       maximum: 24
    *
    * @param value value of minzoom
    */
   fun minZoom(minZoom: Double): BackgroundLayer
 
   /**
-   * Set the maxzoom property
+   * The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden.
+   *
+   * Range:
+   *       minimum: 0
+   *       maximum: 24
    *
    * @param value value of maxzoom
    */
@@ -634,27 +676,29 @@ interface BackgroundLayerDsl {
   // Property getters and setters
 
   /**
-   * Set the BackgroundColor property
+   * The color with which the background will be drawn.
    *
    * @param backgroundColor value of backgroundColor
    */
   fun backgroundColor(backgroundColor: String = "#000000"): BackgroundLayer
 
   /**
-   * Set the BackgroundColor property
+   * The color with which the background will be drawn.
    *
    * @param backgroundColor value of backgroundColor as Expression
    */
   fun backgroundColor(backgroundColor: Expression): BackgroundLayer
 
   /**
-   * Set the BackgroundColor property.
+   * The color with which the background will be drawn.
    *
    * @param backgroundColor value of backgroundColor
    */
   fun backgroundColor(@ColorInt backgroundColor: Int): BackgroundLayer
 
   /**
+   * The color with which the background will be drawn.
+   *
    * Set the BackgroundColor property transition options
    *
    * @param options transition options for String
@@ -662,25 +706,29 @@ interface BackgroundLayerDsl {
   fun backgroundColorTransition(options: StyleTransition): BackgroundLayer
 
   /**
+   * The color with which the background will be drawn.
+   *
    * DSL for [backgroundColorTransition].
    */
   fun backgroundColorTransition(block: StyleTransition.Builder.() -> Unit): BackgroundLayer
 
   /**
-   * Set the BackgroundOpacity property
+   * The opacity at which the background will be drawn.
    *
    * @param backgroundOpacity value of backgroundOpacity
    */
   fun backgroundOpacity(backgroundOpacity: Double = 1.0): BackgroundLayer
 
   /**
-   * Set the BackgroundOpacity property
+   * The opacity at which the background will be drawn.
    *
    * @param backgroundOpacity value of backgroundOpacity as Expression
    */
   fun backgroundOpacity(backgroundOpacity: Expression): BackgroundLayer
 
   /**
+   * The opacity at which the background will be drawn.
+   *
    * Set the BackgroundOpacity property transition options
    *
    * @param options transition options for Double
@@ -688,25 +736,29 @@ interface BackgroundLayerDsl {
   fun backgroundOpacityTransition(options: StyleTransition): BackgroundLayer
 
   /**
+   * The opacity at which the background will be drawn.
+   *
    * DSL for [backgroundOpacityTransition].
    */
   fun backgroundOpacityTransition(block: StyleTransition.Builder.() -> Unit): BackgroundLayer
 
   /**
-   * Set the BackgroundPattern property
+   * Name of image in sprite to use for drawing an image background. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
    *
    * @param backgroundPattern value of backgroundPattern
    */
   fun backgroundPattern(backgroundPattern: String): BackgroundLayer
 
   /**
-   * Set the BackgroundPattern property
+   * Name of image in sprite to use for drawing an image background. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
    *
    * @param backgroundPattern value of backgroundPattern as Expression
    */
   fun backgroundPattern(backgroundPattern: Expression): BackgroundLayer
 
   /**
+   * Name of image in sprite to use for drawing an image background. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
+   *
    * Set the BackgroundPattern property transition options
    *
    * @param options transition options for String
@@ -714,13 +766,15 @@ interface BackgroundLayerDsl {
   fun backgroundPatternTransition(options: StyleTransition): BackgroundLayer
 
   /**
+   * Name of image in sprite to use for drawing an image background. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
+   *
    * DSL for [backgroundPatternTransition].
    */
   fun backgroundPatternTransition(block: StyleTransition.Builder.() -> Unit): BackgroundLayer
 }
 
 /**
- * DSL function for [BackgroundLayer].
+ * DSL functions for creating a [BackgroundLayer].
  */
 fun backgroundLayer(layerId: String, block: BackgroundLayerDsl.() -> Unit): BackgroundLayer = BackgroundLayer(layerId).apply(block)
 
