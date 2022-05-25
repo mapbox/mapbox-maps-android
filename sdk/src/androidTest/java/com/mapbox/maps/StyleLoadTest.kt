@@ -4,6 +4,7 @@ import androidx.test.annotation.UiThreadTest
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
+import com.mapbox.maps.extension.style.style
 import junit.framework.TestCase.*
 import org.junit.*
 import org.junit.runner.RunWith
@@ -35,93 +36,113 @@ class StyleLoadTest {
   @Test
   fun testStyleNull() {
     countDownLatch = CountDownLatch(1)
-    var callbackInvoked = false
     rule.scenario.onActivity {
       it.runOnUiThread {
         mapView.onStart()
         mapboxMap.getStyle {
-          callbackInvoked = true
           countDownLatch.countDown()
         }
       }
     }
-    countDownLatch.await(5, TimeUnit.SECONDS)
-    assertTrue(callbackInvoked)
+    countDownLatch.throwExceptionOnTimeoutMs()
   }
 
   @Test
-  fun testDestroyAllStyle() {
-    countDownLatch = CountDownLatch(1)
-    var styleList = mutableListOf<Style>()
+  fun testStyleIsValid() {
+    countDownLatch = CountDownLatch(2)
+    val styles = mutableListOf<Style>()
     rule.scenario.onActivity { style ->
       style.runOnUiThread {
-        mapboxMap.getStyle { styleList.add(it) }
         mapboxMap.loadStyleUri(
           Style.MAPBOX_STREETS
         ) { newStyle ->
-          styleList.add(newStyle)
+          styles.add(newStyle)
           countDownLatch.countDown()
+
+          mapboxMap.loadStyleUri(
+            Style.MAPBOX_STREETS
+          ) { newStyle2 ->
+            styles.add(newStyle2)
+            countDownLatch.countDown()
+          }
         }
         mapView.onStart()
       }
     }
-    countDownLatch.await(10, TimeUnit.SECONDS)
-    Assert.assertEquals(2, styleList.size)
-    assertTrue(styleList[0].isValid())
-    assertTrue(styleList[1].isValid())
+    countDownLatch.throwExceptionOnTimeoutMs()
+
+    assertFalse(styles[0].isValid())
+    assertTrue(styles[1].isValid())
+
     mapboxMap.onDestroy()
-    assertFalse(styleList[0].isValid())
-    assertFalse(styleList[1].isValid())
+
+    assertFalse(styles[1].isValid())
   }
 
   @Test
   fun testStyleAsyncGetter() {
-    countDownLatch = CountDownLatch(1)
-    var styleLoadedCount = 0
+    countDownLatch = CountDownLatch(2)
     rule.scenario.onActivity {
       it.runOnUiThread {
         mapboxMap.getStyle { style ->
-          assertNotNull("Style should but non null", style)
           assertTrue("Style should be fully loaded", style.isStyleLoaded)
-          styleLoadedCount++
+          countDownLatch.countDown()
         }
 
         mapboxMap.loadStyleUri(
           Style.MAPBOX_STREETS
         ) { style ->
-          assertNotNull("Style should but non null", style)
           assertTrue("Style should be fully loaded", style.isStyleLoaded)
-          styleLoadedCount++
           countDownLatch.countDown()
         }
         mapView.onStart()
       }
     }
-    countDownLatch.await(10, TimeUnit.SECONDS)
-    Assert.assertEquals(2, styleLoadedCount)
+    countDownLatch.throwExceptionOnTimeoutMs(10_000)
   }
 
   @Test
-  fun testFullyLoadedFalse() {
+  fun testStyleIsLoadedOnStyleChange() {
     rule.scenario.onActivity {
       it.runOnUiThread {
         mapboxMap.loadStyleUri(
           Style.MAPBOX_STREETS
         ) { style ->
-          assertNotNull("Style should but non null", style)
           assertTrue("Style should be fully loaded", style.isStyleLoaded)
-          mapboxMap.loadStyleUri(Style.SATELLITE)
+          mapboxMap.loadStyleUri(Style.SATELLITE) {
+            assertTrue("Style should be fully loaded again", style.isStyleLoaded)
+            countDownLatch.countDown()
+          }
           assertFalse("Map shouldn't be fully loaded", style.isStyleLoaded)
+        }
+        mapView.onStart()
+      }
+    }
+    countDownLatch.throwExceptionOnTimeoutMs(30_000)
+  }
+
+  @Test
+  fun testLoadMultipleStylesInARow() {
+    countDownLatch = CountDownLatch(1)
+    rule.scenario.onActivity {
+      it.runOnUiThread {
+        mapboxMap.loadStyleUri(Style.MAPBOX_STREETS)
+        mapboxMap.loadStyle(style("") {})
+        mapboxMap.loadStyleUri(Style.SATELLITE)
+        mapboxMap.loadStyleUri(Style.MAPBOX_STREETS)
+        mapboxMap.loadStyle(style("") {})
+        mapboxMap.loadStyleUri(Style.MAPBOX_STREETS)
+        mapboxMap.loadStyleUri(Style.SATELLITE)
+        mapboxMap.loadStyleUri(Style.MAPBOX_STREETS) { style ->
+          assertTrue("Style should be fully loaded", style.isStyleLoaded)
           countDownLatch.countDown()
         }
         mapView.onStart()
       }
     }
-    countDownLatch = CountDownLatch(1)
-    if (!countDownLatch.await(30, TimeUnit.SECONDS)) {
-      throw TimeoutException()
-    }
+    countDownLatch.throwExceptionOnTimeoutMs()
   }
+
 
   @After
   @UiThreadTest
