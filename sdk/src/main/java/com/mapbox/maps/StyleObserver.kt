@@ -74,8 +74,10 @@ internal class StyleObserver(
     onStyleSourcesReady()
     styleLoadedListener.onStyleLoaded(style)
 
-    userStyleLoadedListener?.onStyleLoaded(style)
-    userStyleLoadedListener = null
+    userStyleLoadedListener?.let {
+      userStyleLoadedListener = null
+      it.onStyleLoaded(style)
+    }
 
     getStyleListeners.forEach { listener ->
       listener.onStyleLoaded(style)
