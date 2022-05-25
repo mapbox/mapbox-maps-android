@@ -27,7 +27,8 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
   }
 
   /**
-   * Set the sourceLayer property
+   * A source layer is an individual layer of data within a vector source.
+   * A vector source can have multiple source layers.
    *
    * @param sourceLayer value of sourceLayer
    */
@@ -37,7 +38,8 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
   }
 
   /**
-   * Source layer.
+   * A source layer is an individual layer of data within a vector source.
+   * A vector source can have multiple source layers.
    */
   val sourceLayer: String?
     /**
@@ -50,7 +52,13 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
     }
 
   /**
-   * Set the filter property
+   * A filter is a property at the layer level that determines which features should be rendered in a style layer.
+   *
+   * Filters are written as expressions, which give you fine-grained control over which features to include: the
+   * style layer only displays the features that match the filter condition that you define.
+   *
+   * Note: Zoom expressions in filters are only evaluated at integer zoom levels. The `feature-state` expression
+   * is not supported in filter expressions.
    *
    * @param filter the expression filter to set
    */
@@ -60,7 +68,13 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
   }
 
   /**
-   * A expression specifying conditions on source features. Only features that match the filter are displayed. Zoom expressions in filters are only evaluated at integer zoom levels. The `feature-state` expression is not supported in filter expressions.
+   * A filter is a property at the layer level that determines which features should be rendered in a style layer.
+   *
+   * Filters are written as expressions, which give you fine-grained control over which features to include: the
+   * style layer only displays the features that match the filter condition that you define.
+   *
+   * Note: Zoom expressions in filters are only evaluated at integer zoom levels. The `feature-state` expression
+   * is not supported in filter expressions.
    */
   val filter: Expression?
     /**
@@ -71,11 +85,11 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
     get() = getPropertyValue<Expression>("filter")
 
   /**
-   * Visibility of the layer.
+   * Whether this layer is displayed.
    */
   override val visibility: Visibility?
     /**
-     * Get the Visibility property
+     * Whether this layer is displayed.
      *
      * @return VISIBILITY
      */
@@ -88,7 +102,7 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
     }
 
   /**
-   * Set the Visibility property
+   * Whether this layer is displayed.
    *
    * @param visibility value of Visibility
    */
@@ -115,7 +129,11 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
     }
 
   /**
-   * Set the minzoom property
+   * The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.
+   *
+   * Range:
+   *       minimum: 0
+   *       maximum: 24
    *
    * @param value value of minzoom
    */
@@ -142,7 +160,11 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
     }
 
   /**
-   * Set the maxzoom property
+   * The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden.
+   *
+   * Range:
+   *       minimum: 0
+   *       maximum: 24
    *
    * @param value value of maxzoom
    */
@@ -158,7 +180,7 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
    */
   val heatmapColor: Expression?
     /**
-     * Get the HeatmapColor property
+     * Defines the color of each pixel based on its density value in a heatmap.  Should be an expression that uses `["heatmap-density"]` as input.
      *
      * @return Expression
      */
@@ -167,7 +189,7 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
     }
 
   /**
-   * Set the HeatmapColor property
+   * Defines the color of each pixel based on its density value in a heatmap.  Should be an expression that uses `["heatmap-density"]` as input.
    *
    * @param heatmapColor value of heatmapColor
    */
@@ -181,7 +203,7 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
    */
   val heatmapIntensity: Double?
     /**
-     * Get the HeatmapIntensity property
+     * Similar to `heatmap-weight` but controls the intensity of the heatmap globally. Primarily used for adjusting the heatmap based on zoom level.
      *
      * @return Double
      */
@@ -190,7 +212,7 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
     }
 
   /**
-   * Set the HeatmapIntensity property
+   * Similar to `heatmap-weight` but controls the intensity of the heatmap globally. Primarily used for adjusting the heatmap based on zoom level.
    *
    * @param heatmapIntensity value of heatmapIntensity
    */
@@ -200,12 +222,16 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
   }
 
   /**
+   * Similar to `heatmap-weight` but controls the intensity of the heatmap globally. Primarily used for adjusting the heatmap based on zoom level.
+   *
    * This is an Expression representation of "heatmap-intensity".
    *
    * Similar to `heatmap-weight` but controls the intensity of the heatmap globally. Primarily used for adjusting the heatmap based on zoom level.
    */
   val heatmapIntensityAsExpression: Expression?
     /**
+     * Similar to `heatmap-weight` but controls the intensity of the heatmap globally. Primarily used for adjusting the heatmap based on zoom level.
+     *
      * Get the HeatmapIntensity property as an Expression
      *
      * @return Double
@@ -221,7 +247,7 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
     }
 
   /**
-   * Set the HeatmapIntensity property
+   * Similar to `heatmap-weight` but controls the intensity of the heatmap globally. Primarily used for adjusting the heatmap based on zoom level.
    *
    * @param heatmapIntensity value of heatmapIntensity as Expression
    */
@@ -265,7 +291,7 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
    */
   val heatmapOpacity: Double?
     /**
-     * Get the HeatmapOpacity property
+     * The global opacity at which the heatmap layer will be drawn.
      *
      * @return Double
      */
@@ -274,7 +300,7 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
     }
 
   /**
-   * Set the HeatmapOpacity property
+   * The global opacity at which the heatmap layer will be drawn.
    *
    * @param heatmapOpacity value of heatmapOpacity
    */
@@ -284,12 +310,16 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
   }
 
   /**
+   * The global opacity at which the heatmap layer will be drawn.
+   *
    * This is an Expression representation of "heatmap-opacity".
    *
    * The global opacity at which the heatmap layer will be drawn.
    */
   val heatmapOpacityAsExpression: Expression?
     /**
+     * The global opacity at which the heatmap layer will be drawn.
+     *
      * Get the HeatmapOpacity property as an Expression
      *
      * @return Double
@@ -305,7 +335,7 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
     }
 
   /**
-   * Set the HeatmapOpacity property
+   * The global opacity at which the heatmap layer will be drawn.
    *
    * @param heatmapOpacity value of heatmapOpacity as Expression
    */
@@ -349,7 +379,7 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
    */
   val heatmapRadius: Double?
     /**
-     * Get the HeatmapRadius property
+     * Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed.
      *
      * @return Double
      */
@@ -358,7 +388,7 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
     }
 
   /**
-   * Set the HeatmapRadius property
+   * Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed.
    *
    * @param heatmapRadius value of heatmapRadius
    */
@@ -368,12 +398,16 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
   }
 
   /**
+   * Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed.
+   *
    * This is an Expression representation of "heatmap-radius".
    *
    * Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed.
    */
   val heatmapRadiusAsExpression: Expression?
     /**
+     * Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed.
+     *
      * Get the HeatmapRadius property as an Expression
      *
      * @return Double
@@ -389,7 +423,7 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
     }
 
   /**
-   * Set the HeatmapRadius property
+   * Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed.
    *
    * @param heatmapRadius value of heatmapRadius as Expression
    */
@@ -433,7 +467,7 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
    */
   val heatmapWeight: Double?
     /**
-     * Get the HeatmapWeight property
+     * A measure of how much an individual point contributes to the heatmap. A value of 10 would be equivalent to having 10 points of weight 1 in the same spot. Especially useful when combined with clustering.
      *
      * @return Double
      */
@@ -442,7 +476,7 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
     }
 
   /**
-   * Set the HeatmapWeight property
+   * A measure of how much an individual point contributes to the heatmap. A value of 10 would be equivalent to having 10 points of weight 1 in the same spot. Especially useful when combined with clustering.
    *
    * @param heatmapWeight value of heatmapWeight
    */
@@ -452,12 +486,16 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
   }
 
   /**
+   * A measure of how much an individual point contributes to the heatmap. A value of 10 would be equivalent to having 10 points of weight 1 in the same spot. Especially useful when combined with clustering.
+   *
    * This is an Expression representation of "heatmap-weight".
    *
    * A measure of how much an individual point contributes to the heatmap. A value of 10 would be equivalent to having 10 points of weight 1 in the same spot. Especially useful when combined with clustering.
    */
   val heatmapWeightAsExpression: Expression?
     /**
+     * A measure of how much an individual point contributes to the heatmap. A value of 10 would be equivalent to having 10 points of weight 1 in the same spot. Especially useful when combined with clustering.
+     *
      * Get the HeatmapWeight property as an Expression
      *
      * @return Double
@@ -473,7 +511,7 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
     }
 
   /**
-   * Set the HeatmapWeight property
+   * A measure of how much an individual point contributes to the heatmap. A value of 10 would be equivalent to having 10 points of weight 1 in the same spot. Especially useful when combined with clustering.
    *
    * @param heatmapWeight value of heatmapWeight as Expression
    */
@@ -546,6 +584,8 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
      */
     val defaultHeatmapColor: Expression?
       /**
+       * Defines the color of each pixel based on its density value in a heatmap.  Should be an expression that uses `["heatmap-density"]` as input.
+       *
        * Get the default value of HeatmapColor property
        *
        * @return Expression
@@ -559,6 +599,8 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
      */
     val defaultHeatmapIntensity: Double?
       /**
+       * Similar to `heatmap-weight` but controls the intensity of the heatmap globally. Primarily used for adjusting the heatmap based on zoom level.
+       *
        * Get the default value of HeatmapIntensity property
        *
        * @return Double
@@ -568,6 +610,8 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
       }
 
     /**
+     * Similar to `heatmap-weight` but controls the intensity of the heatmap globally. Primarily used for adjusting the heatmap based on zoom level.
+     *
      * This is an Expression representation of "heatmap-intensity".
      *
      * Similar to `heatmap-weight` but controls the intensity of the heatmap globally. Primarily used for adjusting the heatmap based on zoom level.
@@ -604,6 +648,8 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
      */
     val defaultHeatmapOpacity: Double?
       /**
+       * The global opacity at which the heatmap layer will be drawn.
+       *
        * Get the default value of HeatmapOpacity property
        *
        * @return Double
@@ -613,6 +659,8 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
       }
 
     /**
+     * The global opacity at which the heatmap layer will be drawn.
+     *
      * This is an Expression representation of "heatmap-opacity".
      *
      * The global opacity at which the heatmap layer will be drawn.
@@ -649,6 +697,8 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
      */
     val defaultHeatmapRadius: Double?
       /**
+       * Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed.
+       *
        * Get the default value of HeatmapRadius property
        *
        * @return Double
@@ -658,6 +708,8 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
       }
 
     /**
+     * Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed.
+     *
      * This is an Expression representation of "heatmap-radius".
      *
      * Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed.
@@ -694,6 +746,8 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
      */
     val defaultHeatmapWeight: Double?
       /**
+       * A measure of how much an individual point contributes to the heatmap. A value of 10 would be equivalent to having 10 points of weight 1 in the same spot. Especially useful when combined with clustering.
+       *
        * Get the default value of HeatmapWeight property
        *
        * @return Double
@@ -703,6 +757,8 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
       }
 
     /**
+     * A measure of how much an individual point contributes to the heatmap. A value of 10 would be equivalent to having 10 points of weight 1 in the same spot. Especially useful when combined with clustering.
+     *
      * This is an Expression representation of "heatmap-weight".
      *
      * A measure of how much an individual point contributes to the heatmap. A value of 10 would be equivalent to having 10 points of weight 1 in the same spot. Especially useful when combined with clustering.
@@ -734,35 +790,50 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
 @LayersDsl
 interface HeatmapLayerDsl {
   /**
-   * Set the sourceLayer property
+   * A source layer is an individual layer of data within a vector source.
+   * A vector source can have multiple source layers.
    *
    * @param sourceLayer value of sourceLayer
    */
   fun sourceLayer(sourceLayer: String): HeatmapLayer
 
   /**
-   * Set the filter property
+   * A filter is a property at the layer level that determines which features should be rendered in a style layer.
+   *
+   * Filters are written as expressions, which give you fine-grained control over which features to include: the
+   * style layer only displays the features that match the filter condition that you define.
+   *
+   * Note: Zoom expressions in filters are only evaluated at integer zoom levels. The `feature-state` expression
+   * is not supported in filter expressions.
    *
    * @param filter the expression filter to set
    */
   fun filter(filter: Expression): HeatmapLayer
 
   /**
-   * Set the Visibility property
+   * Whether this layer is displayed.
    *
    * @param visibility value of Visibility
    */
   fun visibility(visibility: Visibility): HeatmapLayer
 
   /**
-   * Set the minzoom property
+   * The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.
+   *
+   * Range:
+   *       minimum: 0
+   *       maximum: 24
    *
    * @param value value of minzoom
    */
   fun minZoom(minZoom: Double): HeatmapLayer
 
   /**
-   * Set the maxzoom property
+   * The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden.
+   *
+   * Range:
+   *       minimum: 0
+   *       maximum: 24
    *
    * @param value value of maxzoom
    */
@@ -771,27 +842,29 @@ interface HeatmapLayerDsl {
   // Property getters and setters
 
   /**
-   * Set the HeatmapColor property
+   * Defines the color of each pixel based on its density value in a heatmap.  Should be an expression that uses `["heatmap-density"]` as input.
    *
    * @param heatmapColor value of heatmapColor
    */
   fun heatmapColor(heatmapColor: Expression): HeatmapLayer
 
   /**
-   * Set the HeatmapIntensity property
+   * Similar to `heatmap-weight` but controls the intensity of the heatmap globally. Primarily used for adjusting the heatmap based on zoom level.
    *
    * @param heatmapIntensity value of heatmapIntensity
    */
   fun heatmapIntensity(heatmapIntensity: Double = 1.0): HeatmapLayer
 
   /**
-   * Set the HeatmapIntensity property
+   * Similar to `heatmap-weight` but controls the intensity of the heatmap globally. Primarily used for adjusting the heatmap based on zoom level.
    *
    * @param heatmapIntensity value of heatmapIntensity as Expression
    */
   fun heatmapIntensity(heatmapIntensity: Expression): HeatmapLayer
 
   /**
+   * Similar to `heatmap-weight` but controls the intensity of the heatmap globally. Primarily used for adjusting the heatmap based on zoom level.
+   *
    * Set the HeatmapIntensity property transition options
    *
    * @param options transition options for Double
@@ -799,25 +872,29 @@ interface HeatmapLayerDsl {
   fun heatmapIntensityTransition(options: StyleTransition): HeatmapLayer
 
   /**
+   * Similar to `heatmap-weight` but controls the intensity of the heatmap globally. Primarily used for adjusting the heatmap based on zoom level.
+   *
    * DSL for [heatmapIntensityTransition].
    */
   fun heatmapIntensityTransition(block: StyleTransition.Builder.() -> Unit): HeatmapLayer
 
   /**
-   * Set the HeatmapOpacity property
+   * The global opacity at which the heatmap layer will be drawn.
    *
    * @param heatmapOpacity value of heatmapOpacity
    */
   fun heatmapOpacity(heatmapOpacity: Double = 1.0): HeatmapLayer
 
   /**
-   * Set the HeatmapOpacity property
+   * The global opacity at which the heatmap layer will be drawn.
    *
    * @param heatmapOpacity value of heatmapOpacity as Expression
    */
   fun heatmapOpacity(heatmapOpacity: Expression): HeatmapLayer
 
   /**
+   * The global opacity at which the heatmap layer will be drawn.
+   *
    * Set the HeatmapOpacity property transition options
    *
    * @param options transition options for Double
@@ -825,25 +902,29 @@ interface HeatmapLayerDsl {
   fun heatmapOpacityTransition(options: StyleTransition): HeatmapLayer
 
   /**
+   * The global opacity at which the heatmap layer will be drawn.
+   *
    * DSL for [heatmapOpacityTransition].
    */
   fun heatmapOpacityTransition(block: StyleTransition.Builder.() -> Unit): HeatmapLayer
 
   /**
-   * Set the HeatmapRadius property
+   * Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed.
    *
    * @param heatmapRadius value of heatmapRadius
    */
   fun heatmapRadius(heatmapRadius: Double = 30.0): HeatmapLayer
 
   /**
-   * Set the HeatmapRadius property
+   * Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed.
    *
    * @param heatmapRadius value of heatmapRadius as Expression
    */
   fun heatmapRadius(heatmapRadius: Expression): HeatmapLayer
 
   /**
+   * Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed.
+   *
    * Set the HeatmapRadius property transition options
    *
    * @param options transition options for Double
@@ -851,19 +932,21 @@ interface HeatmapLayerDsl {
   fun heatmapRadiusTransition(options: StyleTransition): HeatmapLayer
 
   /**
+   * Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed.
+   *
    * DSL for [heatmapRadiusTransition].
    */
   fun heatmapRadiusTransition(block: StyleTransition.Builder.() -> Unit): HeatmapLayer
 
   /**
-   * Set the HeatmapWeight property
+   * A measure of how much an individual point contributes to the heatmap. A value of 10 would be equivalent to having 10 points of weight 1 in the same spot. Especially useful when combined with clustering.
    *
    * @param heatmapWeight value of heatmapWeight
    */
   fun heatmapWeight(heatmapWeight: Double = 1.0): HeatmapLayer
 
   /**
-   * Set the HeatmapWeight property
+   * A measure of how much an individual point contributes to the heatmap. A value of 10 would be equivalent to having 10 points of weight 1 in the same spot. Especially useful when combined with clustering.
    *
    * @param heatmapWeight value of heatmapWeight as Expression
    */
@@ -871,7 +954,7 @@ interface HeatmapLayerDsl {
 }
 
 /**
- * DSL function for [HeatmapLayer].
+ * DSL function for creating a [HeatmapLayer].
  */
 fun heatmapLayer(layerId: String, sourceId: String, block: HeatmapLayerDsl.() -> Unit): HeatmapLayer = HeatmapLayer(layerId, sourceId).apply(block)
 
