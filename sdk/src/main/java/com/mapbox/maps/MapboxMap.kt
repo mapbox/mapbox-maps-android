@@ -627,7 +627,7 @@ class MapboxMap :
     bearing: Double?,
     pitch: Double?
   ): CameraOptions {
-    checkNativeMap("getDebug")
+    checkNativeMap("cameraForCoordinates")
     return nativeMap.cameraForCoordinates(coordinates, padding, bearing, pitch)
   }
 
