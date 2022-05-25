@@ -308,8 +308,14 @@ internal class ViewAnnotationManagerImpl(
           }
         }
         annotation.view.apply {
-          translationX = descriptor.leftTopCoordinate.x.toFloat()
-          translationY = descriptor.leftTopCoordinate.y.toFloat()
+          if (translationX != descriptor.leftTopCoordinate.x.toFloat()) {
+            logE("KIRYLDD", "onViewAnnotationPositionsUpdate newX=${descriptor.leftTopCoordinate.x.toFloat()}, oldX=${translationX}")
+            translationX = descriptor.leftTopCoordinate.x.toFloat()
+          }
+          if (translationY != descriptor.leftTopCoordinate.y.toFloat()) {
+            logE("KIRYLDD", "onViewAnnotationPositionsUpdate newY=${descriptor.leftTopCoordinate.y.toFloat()}, oldY=${translationY}")
+            translationY = descriptor.leftTopCoordinate.y.toFloat()
+          }
         }
         if (!currentViewsDrawnMap.keys.contains(descriptor.identifier) && mapView.indexOfChild(annotation.view) == -1) {
           mapView.addView(annotation.view, annotation.viewLayoutParams)

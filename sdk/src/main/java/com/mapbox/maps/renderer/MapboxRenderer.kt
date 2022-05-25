@@ -60,18 +60,17 @@ internal abstract class MapboxRenderer : MapClient {
 
   @AnyThread
   override fun scheduleRepaint() {
-    renderThread.queueRenderEvent(renderEventSdk, 0)
+    renderThread.queueRenderEvent(renderEventSdk)
   }
 
   @AnyThread
-  override fun scheduleTask(task: Task, priority: Int?) {
+  override fun scheduleTask(task: Task) {
     renderThread.queueRenderEvent(
       RenderEvent(
         runnable = { task.run() },
         needRender = false,
         eventType = if (renderThread.renderDestroyCallChain) EventType.DESTROY_RENDERER else EventType.SDK
-      ),
-      priority!!
+      )
     )
   }
 
@@ -82,8 +81,7 @@ internal abstract class MapboxRenderer : MapClient {
         runnable = runnable,
         needRender = true,
         eventType = EventType.OTHER
-      ),
-      0
+      )
     )
   }
 
@@ -94,8 +92,7 @@ internal abstract class MapboxRenderer : MapClient {
         runnable = runnable,
         needRender = false,
         eventType = EventType.OTHER
-      ),
-      0
+      )
     )
   }
 
@@ -160,8 +157,7 @@ internal abstract class MapboxRenderer : MapClient {
           },
           needRender = true,
           eventType = EventType.SDK
-        ),
-        0
+        )
       )
       waitCondition.await(1, TimeUnit.SECONDS)
       return snapshot
@@ -179,8 +175,7 @@ internal abstract class MapboxRenderer : MapClient {
         runnable = { listener.onSnapshotReady(performSnapshot()) },
         needRender = true,
         eventType = EventType.SDK
-      ),
-      0
+      )
     )
   }
 

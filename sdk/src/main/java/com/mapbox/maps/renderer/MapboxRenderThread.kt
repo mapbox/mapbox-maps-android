@@ -455,7 +455,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   }
 
   @AnyThread
-  fun queueRenderEvent(renderEvent: RenderEvent, priority: Int) {
+  fun queueRenderEvent(renderEvent: RenderEvent) {
     if (renderEvent.needRender) {
       renderEvent.runnable?.let {
         renderEventQueue.add(renderEvent)
@@ -473,7 +473,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       // as render thread SDK tasks queue will be cleared when new surface will arrive
       if (renderEvent.eventType == EventType.SDK) {
         if (renderThreadPrepared) {
-          postNonRenderEvent(renderEvent, 0, priority)
+          postNonRenderEvent(renderEvent, 0)
         }
       } else {
         postNonRenderEvent(renderEvent)
@@ -496,17 +496,11 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     waitUntilViewAnnotationPositioned.set(true)
   }
 
-  private fun postNonRenderEvent(renderEvent: RenderEvent, delayMillis: Long = 0L, priority: Int = 0) {
+  private fun postNonRenderEvent(renderEvent: RenderEvent, delayMillis: Long = 0L) {
     // if we already waiting listening for next VSYNC then add runnable to queue to execute
     // after actual drawing otherwise execute asap on render thread
-    if (awaitingNextVsync && priority == 0) {
+    if (awaitingNextVsync) {
       nonRenderEventQueue.add(renderEvent)
-    } else if (priority > 0) {
-      renderHandlerThread.postImmediate {
-        if (renderThreadPrepared) {
-          renderEvent.runnable?.run()
-        }
-      }
     } else {
       renderHandlerThread.postDelayed(
         {
