@@ -45,9 +45,9 @@ class Terrain(private val sourceId: String) : TerrainDslReceiver, StyleContract.
   }
 
   /**
-   * This is an Expression representation of "exaggeration".
-   *
    * Exaggerates the elevation of the terrain by multiplying the data from the DEM with this value.
+   *
+   * This is an Expression representation of "exaggeration".
    */
   val exaggerationAsExpression: Expression?
     /**
@@ -139,8 +139,6 @@ class Terrain(private val sourceId: String) : TerrainDslReceiver, StyleContract.
 @TerrainDsl
 interface TerrainDslReceiver {
   /**
-   * Set the Exaggeration property.
-   *
    * Exaggerates the elevation of the terrain by multiplying the data from the DEM with this value.
    *
    * @param exaggeration as Double
@@ -148,7 +146,7 @@ interface TerrainDslReceiver {
   fun exaggeration(exaggeration: Double = 1.0): Terrain
 
   /**
-   * Set the Exaggeration property
+   * Exaggerates the elevation of the terrain by multiplying the data from the DEM with this value.
    *
    * @param exaggeration value of exaggeration as Expression
    */
