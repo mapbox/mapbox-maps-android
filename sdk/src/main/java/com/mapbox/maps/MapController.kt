@@ -207,12 +207,12 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     renderer.setOnFpsChangedListener(listener)
   }
 
-  fun viewAnnotationDraw() {
-    renderer.renderThread.viewAnnotationsDraw()
+  internal fun forceRenderSwapBuffers() {
+    renderer.renderThread.forceRenderSwapBuffers()
   }
 
-  fun viewAnnotationPositionArrived() {
-    renderer.renderThread.viewAnnotationPositionArrived()
+  fun setHasViewAnnotations(hasViewAnnotations: Boolean) {
+    renderer.renderThread.setHasViewAnnotations(hasViewAnnotations)
   }
 
   override fun addWidget(widget: Widget) {

@@ -89,6 +89,9 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   // TODO needed for workaround until issue is fixed in gl-native
   internal var renderDestroyCallChain = false
 
+  @Volatile
+  private var needSyncWithViewAnnotations = false
+
   constructor(
     mapboxRenderer: MapboxRenderer,
     mapboxWidgetRenderer: MapboxWidgetRenderer,
@@ -232,28 +235,6 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   }
 
   private fun draw() {
-//    if (needSwapBuffersWithCachedMap.getAndSet(false)) {
-//      when (val swapStatus = eglCore.swapBuffers(eglSurface)) {
-//        EGL10.EGL_SUCCESS -> {
-//          logE("KIRYLDD", "Swap with cached map")
-//        }
-//        EGL11.EGL_CONTEXT_LOST -> {
-//          logW(TAG, "Context lost. Waiting for re-acquire")
-//          releaseEgl()
-//        }
-//        else -> {
-//          logW(TAG, "eglSwapBuffer error: $swapStatus. Waiting for new surface")
-//          releaseEglSurface()
-//        }
-//      }
-//      logE("KIRYLDD", "Render cached start")
-//      mapboxRenderer.render()
-//      logE("KIRYLDD", "Render cached end")
-////      waitUntilViewAnnotationPositioned.set(true)
-//      return
-//    }
-    // render but do not swap buffers yet
-//    if (waitUntilViewAnnotationPositioned.get()) return
     val renderTimeNsCopy = renderTimeNs
     val currentTimeNs = SystemClock.elapsedRealtimeNanos()
     val expectedEndRenderTimeNs = currentTimeNs + renderTimeNsCopy
@@ -263,8 +244,6 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       postPrepareRenderFrame()
       return
     }
-
-
 
     if (widgetRenderer.hasWidgets()) {
       if (widgetRenderer.needTextureUpdate) {
@@ -278,15 +257,23 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
         widgetTextureRenderer.render(widgetRenderer.getTexture())
       }
     } else {
-      logE("KIRYLDD", "Render start")
+      logE("KIRYLDD", "Render start needSyncWithViewAnnotations = $needSyncWithViewAnnotations")
       mapboxRenderer.render()
-      logE("KIRYLDD", "Render end")
+      logE("KIRYLDD", "Render end needSyncWithViewAnnotations = $needSyncWithViewAnnotations")
     }
 
     // assuming render event queue holds user's runnables with OpenGL ES commands
     // it makes sense to execute them after drawing a map but before swapping buffers
     // **note** this queue also holds snapshot tasks
     drainQueue(renderEventQueue)
+    if (needSyncWithViewAnnotations) {
+      // think of smth but for now simply wait until view annotation manager will call swapBuffers
+    } else {
+      swapBuffers()
+    }
+  }
+
+  private fun swapBuffers() {
     logE("KIRYLDD", "swapBuffers before")
     when (val swapStatus = eglCore.swapBuffers(eglSurface)) {
       EGL10.EGL_SUCCESS -> {
@@ -301,19 +288,20 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
         releaseEglSurface()
       }
     }
-    val actualEndRenderTimeNs = SystemClock.elapsedRealtimeNanos()
-    if (renderTimeNsCopy != 0L && actualEndRenderTimeNs < expectedEndRenderTimeNs) {
-      // we need to stop swap buffers for less than time requested in order to have some time to render upcoming frame
-      // before next vsync so it will be drawn, otherwise we will drop it
-      expectedVsyncWakeTimeNs = expectedEndRenderTimeNs - ONE_MILLISECOND_NS
-    }
-    fpsChangedListener?.let {
-      val fps = 1E9 / (actualEndRenderTimeNs - timeElapsed)
-      if (timeElapsed != 0L) {
-        it.onFpsChanged(fps)
-      }
-      timeElapsed = actualEndRenderTimeNs
-    }
+    // TODO uncomment if approach will work
+//    val actualEndRenderTimeNs = SystemClock.elapsedRealtimeNanos()
+//    if (renderTimeNsCopy != 0L && actualEndRenderTimeNs < expectedEndRenderTimeNs) {
+//      // we need to stop swap buffers for less than time requested in order to have some time to render upcoming frame
+//      // before next vsync so it will be drawn, otherwise we will drop it
+//      expectedVsyncWakeTimeNs = expectedEndRenderTimeNs - ONE_MILLISECOND_NS
+//    }
+//    fpsChangedListener?.let {
+//      val fps = 1E9 / (actualEndRenderTimeNs - timeElapsed)
+//      if (timeElapsed != 0L) {
+//        it.onFpsChanged(fps)
+//      }
+//      timeElapsed = actualEndRenderTimeNs
+//    }
   }
 
   private fun releaseEgl() {
@@ -486,19 +474,14 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     }
   }
 
-  private val needSwapBuffersWithCachedMap = AtomicBoolean(false)
-  private val waitUntilViewAnnotationPositioned = AtomicBoolean(false)
-
-  internal fun viewAnnotationsDraw() {
-//    waitUntilViewAnnotationPositioned.set(false)
-//    needSwapBuffersWithCachedMap.set(true)
-    if (!awaitingNextVsync) {
-      postPrepareRenderFrame()
+  internal fun forceRenderSwapBuffers() {
+    renderHandlerThread.postImmediate {
+      swapBuffers()
     }
   }
 
-  internal fun viewAnnotationPositionArrived() {
-//    waitUntilViewAnnotationPositioned.set(true)
+  internal fun setHasViewAnnotations(hasViewAnnotations: Boolean) {
+    needSyncWithViewAnnotations = hasViewAnnotations
   }
 
   private fun postNonRenderEvent(renderEvent: RenderEvent, delayMillis: Long = 0L) {

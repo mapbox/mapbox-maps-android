@@ -344,12 +344,12 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
     fun onSnapshotReady(bitmap: Bitmap?)
   }
 
-  internal fun forceSwapBuffers() {
-    mapController.viewAnnotationDraw()
+  internal fun forceRenderSwapBuffers() {
+    mapController.forceRenderSwapBuffers()
   }
 
-  internal fun viewAnnotationPositionArrived() {
-    mapController.viewAnnotationPositionArrived()
+  internal fun setHasViewAnnotations(hasViewAnnotations: Boolean) {
+    mapController.setHasViewAnnotations(hasViewAnnotations)
   }
 
   /**

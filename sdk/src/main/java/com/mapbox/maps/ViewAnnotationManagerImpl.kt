@@ -29,7 +29,9 @@ internal class ViewAnnotationManagerImpl(
 
     // pre-draw for MapView is called when translation is changed for any view annotation attached
     mapView.viewTreeObserver.addOnPreDrawListener {
-      mapView.viewAnnotationDraw()
+      if (annotationMap.isNotEmpty()) {
+        mapView.forceRenderSwapBuffers()
+      }
       true
     }
     mapboxMap.setViewAnnotationPositionsUpdateListener(this)
@@ -82,6 +84,7 @@ internal class ViewAnnotationManagerImpl(
   override fun removeViewAnnotation(view: View): Boolean {
     val id = idLookupMap.remove(view) ?: return false
     val annotation = annotationMap.remove(id) ?: return false
+    mapView.setHasViewAnnotations(annotationMap.isNotEmpty())
     remove(id, annotation)
     return true
   }
@@ -267,6 +270,7 @@ internal class ViewAnnotationManagerImpl(
     inflatedView.addOnAttachStateChangeListener(viewAnnotation.attachStateListener)
     annotationMap[viewAnnotation.id] = viewAnnotation
     idLookupMap[inflatedView] = viewAnnotation.id
+    mapView.setHasViewAnnotations(annotationMap.isNotEmpty())
     getValue(mapboxMap.addViewAnnotation(viewAnnotation.id, updatedOptions))
     return inflatedView
   }
