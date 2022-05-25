@@ -9,8 +9,6 @@ import junit.framework.TestCase.*
 import org.junit.*
 import org.junit.runner.RunWith
 import java.util.concurrent.CountDownLatch
-import java.util.concurrent.TimeUnit
-import java.util.concurrent.TimeoutException
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest
@@ -76,6 +74,7 @@ class StyleLoadTest {
 
     mapboxMap.onDestroy()
 
+    assertFalse(styles[0].isValid())
     assertFalse(styles[1].isValid())
   }
 
@@ -109,8 +108,11 @@ class StyleLoadTest {
           Style.MAPBOX_STREETS
         ) { style ->
           assertTrue("Style should be fully loaded", style.isStyleLoaded)
-          mapboxMap.loadStyleUri(Style.SATELLITE) {
-            assertTrue("Style should be fully loaded again", style.isStyleLoaded)
+          mapboxMap.loadStyleUri(Style.SATELLITE) { style2 ->
+            assertTrue("Style should be still fully loaded although its flaw in our current implementation", style.isStyleLoaded)
+            assertTrue("Style should be fully loaded again", style2.isStyleLoaded)
+            assertTrue("New style should be valid", style2.isValid())
+            assertFalse("Old style should not be valid", style.isValid())
             countDownLatch.countDown()
           }
           assertFalse("Map shouldn't be fully loaded", style.isStyleLoaded)
@@ -124,25 +126,46 @@ class StyleLoadTest {
   @Test
   fun testLoadMultipleStylesInARow() {
     countDownLatch = CountDownLatch(1)
+    var loadedStyles = 0
     rule.scenario.onActivity {
       it.runOnUiThread {
-        mapboxMap.loadStyleUri(Style.MAPBOX_STREETS)
-        mapboxMap.loadStyle(style("") {})
-        mapboxMap.loadStyleUri(Style.SATELLITE)
-        mapboxMap.loadStyleUri(Style.MAPBOX_STREETS)
-        mapboxMap.loadStyle(style("") {})
-        mapboxMap.loadStyleUri(Style.MAPBOX_STREETS)
-        mapboxMap.loadStyleUri(Style.SATELLITE)
+        mapboxMap.loadStyleUri(Style.MAPBOX_STREETS) { loadedStyles++ }
+        mapboxMap.loadStyle(style("") {}) { loadedStyles++ }
+        mapboxMap.loadStyleUri(Style.SATELLITE) { loadedStyles++ }
+        mapboxMap.loadStyleUri(Style.MAPBOX_STREETS) { loadedStyles++ }
+        mapboxMap.loadStyle(style("") {}) { loadedStyles++ }
+        mapboxMap.loadStyleJson(
+          """
+            {
+              "version": 8,
+              "name": "Land",
+              "metadata": {
+                "mapbox:autocomposite": true
+              },
+              "sources": {
+                "composite": {
+                  "url": "mapbox://mapbox.mapbox-terrain-v2",
+                  "type": "vector"
+                }
+              },
+              "sprite": "mapbox://sprites/mapbox/mapbox-terrain-v2",
+              "glyphs": "mapbox://fonts/mapbox/{fontstack}/{range}.pbf"
+            }
+          """.trimIndent()
+        ) { loadedStyles++ }
+        mapboxMap.loadStyleUri(Style.MAPBOX_STREETS) { loadedStyles++ }
+        mapboxMap.loadStyleUri(Style.SATELLITE) { loadedStyles++ }
         mapboxMap.loadStyleUri(Style.MAPBOX_STREETS) { style ->
           assertTrue("Style should be fully loaded", style.isStyleLoaded)
+          assertTrue("Style should be valid", style.isValid())
           countDownLatch.countDown()
         }
         mapView.onStart()
       }
     }
     countDownLatch.throwExceptionOnTimeoutMs()
+    assertEquals(loadedStyles, 1)
   }
-
 
   @After
   @UiThreadTest
