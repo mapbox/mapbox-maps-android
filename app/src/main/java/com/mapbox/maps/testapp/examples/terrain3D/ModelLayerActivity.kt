@@ -2,6 +2,7 @@ package com.mapbox.maps.testapp.examples.terrain3D
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
@@ -9,12 +10,18 @@ import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.Style
 import com.mapbox.maps.dsl.cameraOptions
-import com.mapbox.maps.extension.style.expressions.dsl.generated.get
+import com.mapbox.maps.extension.style.expressions.dsl.generated.*
+import com.mapbox.maps.extension.style.expressions.generated.Expression
+import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.generated.modelLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.ModelType
+import com.mapbox.maps.extension.style.model.addModel
 import com.mapbox.maps.extension.style.model.model
+import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
+import com.mapbox.maps.extension.style.sources.generated.vectorSource
 import com.mapbox.maps.extension.style.style
+import com.mapbox.maps.logE
 import com.mapbox.turf.TurfMeasurement
 
 /**
@@ -49,8 +56,14 @@ class ModelLayerActivity : AppCompatActivity() {
             featureCollection(
               FeatureCollection.fromFeatures(
                 listOf(
-                  Feature.fromGeometry(HELSINKI).also { it.addStringProperty(MODEL_ID_KEY, MODEL_ID_1) },
-                  Feature.fromGeometry(MAPBOX_HELSINKI).also { it.addStringProperty(MODEL_ID_KEY, MODEL_ID_2) }
+                  Feature.fromGeometry(HELSINKI).also {
+                    it.addStringProperty(MODEL_ID_KEY, MODEL_ID_1)
+                    it.addNumberProperty("height", 100.0)
+                  },
+                  Feature.fromGeometry(MAPBOX_HELSINKI).also {
+                    it.addStringProperty(MODEL_ID_KEY, MODEL_ID_2)
+                    it.addNumberProperty("height", 3.0)
+                  }
                 )
               )
             )
@@ -58,13 +71,76 @@ class ModelLayerActivity : AppCompatActivity() {
           +modelLayer(MODEL_LAYER_ID, SOURCE_ID) {
             modelId(get(MODEL_ID_KEY))
             modelType(ModelType.COMMON_3D)
-            modelScale(listOf(100.0, 100.0, 100.0))
             modelTranslation(listOf(0.0, 0.0, 0.0))
             modelRotation(listOf(0.0, 0.0, 90.0))
             modelOpacity(0.7)
           }
         }
-      )
+      ) { style ->
+        style.setStyleLayerProperty(
+          MODEL_LAYER_ID,
+          "model-scale",
+          Value(
+            listOf(
+              Value(100.0),
+              Value(100.0),
+              Value(listOf(
+                Value("get"),
+                Value("height")
+              ))
+            )
+          )
+        ).also {
+          logE("testtest", it.error!!)
+        }
+//        style.addLayer(
+//          modelLayer(MODEL_LAYER_ID, "vegetation") {
+//            sourceLayer("trees")
+//            modelId(
+//              switchCase {
+//                eq {
+//                  get("type")
+//                  literal("pine")
+//                }
+//                literal("pine-tree-model")
+//                eq {
+//                  get("type")
+//                  literal("palm")
+//                }
+//                literal("palm-tree-model")
+//                literal("default-tree-model")
+//              }
+//            )
+//            modelScale(
+//              array {
+//                literal("number")
+//                literal(3)
+//                literal(1.0)
+//                literal(1.0)
+//                get("height")
+//              }
+//            )
+//            modelTranslation(
+//              array {
+//                literal("number")
+//                literal(3)
+//                literal(0.0)
+//                literal(0.0)
+//                get("z-offset")
+//              }
+//            )
+//            modelRotation(
+//              array {
+//                literal("number")
+//                literal(3)
+//                literal(1.0)
+//                literal(1.0)
+//                get("z-rotation")
+//              }
+//            )
+//          }
+//        )
+      }
     }
   }
 
