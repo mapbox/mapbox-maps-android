@@ -7,6 +7,7 @@ plugins {
   id("com.jaredsburrows.license")
   id("org.jetbrains.dokka")
   id("com.mapbox.android.sdk.versions")
+  id("io.gitlab.arturbosch.detekt").version(Versions.detekt)
 }
 
 android {
@@ -88,6 +89,7 @@ dependencies {
   androidTestImplementation(Dependencies.androidxEspresso)
   androidTestImplementation(Dependencies.androidxUiAutomator)
   androidTestUtil(Dependencies.androidxOrchestrator)
+  detektPlugins(Dependencies.detektFormatting)
 }
 
 tasks.withType<DokkaTask>().configureEach {
@@ -113,4 +115,5 @@ project.apply {
   from("$rootDir/gradle/jacoco.gradle")
   from("$rootDir/gradle/sdk-registry.gradle")
   from("$rootDir/gradle/track-public-apis.gradle")
+  from("$rootDir/gradle/detekt.gradle")
 }

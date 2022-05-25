@@ -76,9 +76,6 @@ object Dependencies {
   const val equalsVerifier = "nl.jqno.equalsverifier:equalsverifier:${Versions.equalsVerifier}"
   const val asyncInflater = "androidx.asynclayoutinflater:asynclayoutinflater:${Versions.asyncInflater}"
   const val kotlinReflect = "org.jetbrains.kotlin:kotlin-reflect:${Versions.pluginKotlin}"
-
-  const val detektAPI = "io.gitlab.arturbosch.detekt:detekt-api:${Versions.detekt}"
-  const val detektCLI = "io.gitlab.arturbosch.detekt:detekt-cli:${Versions.detekt}"
   const val detektFormatting = "io.gitlab.arturbosch.detekt:detekt-formatting:${Versions.detekt}"
 }
 

@@ -7,6 +7,7 @@ plugins {
   id("com.jaredsburrows.license")
   id("org.jetbrains.dokka")
   //id("com.mapbox.maps.token") #mapbox-android-gradle-plugins/issues/29
+  id("io.gitlab.arturbosch.detekt").version(Versions.detekt)
 }
 
 android {
@@ -36,6 +37,7 @@ dependencies {
   testImplementation(Dependencies.mockk)
   testImplementation(Dependencies.androidxTestCore)
   testImplementation(Dependencies.equalsVerifier)
+  detektPlugins(Dependencies.detektFormatting)
 }
 
 tasks.withType<DokkaTask>().configureEach {
@@ -53,4 +55,5 @@ project.apply {
   from("$rootDir/gradle/jacoco.gradle")
   from("$rootDir/gradle/sdk-registry.gradle")
   from("$rootDir/gradle/track-public-apis.gradle")
+  from("$rootDir/gradle/detekt.gradle")
 }
