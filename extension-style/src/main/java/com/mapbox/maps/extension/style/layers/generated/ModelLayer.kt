@@ -31,7 +31,8 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * Set the sourceLayer property
+   * A source layer is an individual layer of data within a vector source.
+   * A vector source can have multiple source layers.
    *
    * @param sourceLayer value of sourceLayer
    */
@@ -41,7 +42,8 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * Source layer.
+   * A source layer is an individual layer of data within a vector source.
+   * A vector source can have multiple source layers.
    */
   val sourceLayer: String?
     /**
@@ -54,7 +56,13 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * Set the filter property
+   * A filter is a property at the layer level that determines which features should be rendered in a style layer.
+   *
+   * Filters are written as expressions, which give you fine-grained control over which features to include: the
+   * style layer only displays the features that match the filter condition that you define.
+   *
+   * Note: Zoom expressions in filters are only evaluated at integer zoom levels. The `feature-state` expression
+   * is not supported in filter expressions.
    *
    * @param filter the expression filter to set
    */
@@ -64,7 +72,13 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * A expression specifying conditions on source features. Only features that match the filter are displayed. Zoom expressions in filters are only evaluated at integer zoom levels. The `feature-state` expression is not supported in filter expressions.
+   * A filter is a property at the layer level that determines which features should be rendered in a style layer.
+   *
+   * Filters are written as expressions, which give you fine-grained control over which features to include: the
+   * style layer only displays the features that match the filter condition that you define.
+   *
+   * Note: Zoom expressions in filters are only evaluated at integer zoom levels. The `feature-state` expression
+   * is not supported in filter expressions.
    */
   val filter: Expression?
     /**
@@ -75,11 +89,11 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     get() = getPropertyValue<Expression>("filter")
 
   /**
-   * Visibility of the layer.
+   * Whether this layer is displayed.
    */
   override val visibility: Visibility?
     /**
-     * Get the Visibility property
+     * Whether this layer is displayed.
      *
      * @return VISIBILITY
      */
@@ -92,7 +106,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * Set the Visibility property
+   * Whether this layer is displayed.
    *
    * @param visibility value of Visibility
    */
@@ -119,7 +133,11 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * Set the minzoom property
+   * The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.
+   *
+   * Range:
+   *       minimum: 0
+   *       maximum: 24
    *
    * @param value value of minzoom
    */
@@ -146,7 +164,11 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * Set the maxzoom property
+   * The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden.
+   *
+   * Range:
+   *       minimum: 0
+   *       maximum: 24
    *
    * @param value value of maxzoom
    */
@@ -162,7 +184,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    */
   val modelId: String?
     /**
-     * Get the ModelId property
+     * Model to render.
      *
      * @return String
      */
@@ -171,7 +193,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * Set the ModelId property
+   * Model to render.
    *
    * @param modelId value of modelId
    */
@@ -181,12 +203,16 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
+   * Model to render.
+   *
    * This is an Expression representation of "model-id".
    *
    * Model to render.
    */
   val modelIdAsExpression: Expression?
     /**
+     * Model to render.
+     *
      * Get the ModelId property as an Expression
      *
      * @return String
@@ -202,7 +228,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * Set the ModelId property
+   * Model to render.
    *
    * @param modelId value of modelId as Expression
    */
@@ -216,7 +242,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    */
   val modelColor: String?
     /**
-     * Get the ModelColor property
+     * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0.
      *
      * @return String
      */
@@ -228,7 +254,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * Set the ModelColor property
+   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0.
    *
    * @param modelColor value of modelColor
    */
@@ -238,12 +264,16 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
+   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0.
+   *
    * This is an Expression representation of "model-color".
    *
    * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0.
    */
   val modelColorAsExpression: Expression?
     /**
+     * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0.
+     *
      * Get the ModelColor property as an Expression
      *
      * @return String
@@ -256,7 +286,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * Set the ModelColor property
+   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0.
    *
    * @param modelColor value of modelColor as Expression
    */
@@ -283,7 +313,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * Set the ModelColor property.
+   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0.
    *
    * @param modelColor value of modelColor
    */
@@ -327,7 +357,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    */
   val modelColorMixIntensity: Double?
     /**
-     * Get the ModelColorMixIntensity property
+     * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix.
      *
      * @return Double
      */
@@ -336,7 +366,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * Set the ModelColorMixIntensity property
+   * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix.
    *
    * @param modelColorMixIntensity value of modelColorMixIntensity
    */
@@ -346,12 +376,16 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
+   * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix.
+   *
    * This is an Expression representation of "model-color-mix-intensity".
    *
    * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix.
    */
   val modelColorMixIntensityAsExpression: Expression?
     /**
+     * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix.
+     *
      * Get the ModelColorMixIntensity property as an Expression
      *
      * @return Double
@@ -367,7 +401,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * Set the ModelColorMixIntensity property
+   * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix.
    *
    * @param modelColorMixIntensity value of modelColorMixIntensity as Expression
    */
@@ -411,7 +445,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    */
   val modelOpacity: Double?
     /**
-     * Get the ModelOpacity property
+     * The opacity of the model layer.
      *
      * @return Double
      */
@@ -420,7 +454,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * Set the ModelOpacity property
+   * The opacity of the model layer.
    *
    * @param modelOpacity value of modelOpacity
    */
@@ -430,12 +464,16 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
+   * The opacity of the model layer.
+   *
    * This is an Expression representation of "model-opacity".
    *
    * The opacity of the model layer.
    */
   val modelOpacityAsExpression: Expression?
     /**
+     * The opacity of the model layer.
+     *
      * Get the ModelOpacity property as an Expression
      *
      * @return Double
@@ -451,7 +489,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * Set the ModelOpacity property
+   * The opacity of the model layer.
    *
    * @param modelOpacity value of modelOpacity as Expression
    */
@@ -495,7 +533,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    */
   val modelRotation: List<Double>?
     /**
-     * Get the ModelRotation property
+     * The rotation of the model in euler angles [lon, lat, z].
      *
      * @return List<Double>
      */
@@ -504,7 +542,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * Set the ModelRotation property
+   * The rotation of the model in euler angles [lon, lat, z].
    *
    * @param modelRotation value of modelRotation
    */
@@ -514,12 +552,16 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
+   * The rotation of the model in euler angles [lon, lat, z].
+   *
    * This is an Expression representation of "model-rotation".
    *
    * The rotation of the model in euler angles [lon, lat, z].
    */
   val modelRotationAsExpression: Expression?
     /**
+     * The rotation of the model in euler angles [lon, lat, z].
+     *
      * Get the ModelRotation property as an Expression
      *
      * @return List<Double>
@@ -535,7 +577,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * Set the ModelRotation property
+   * The rotation of the model in euler angles [lon, lat, z].
    *
    * @param modelRotation value of modelRotation as Expression
    */
@@ -579,7 +621,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    */
   val modelScale: List<Double>?
     /**
-     * Get the ModelScale property
+     * The scale of the model.
      *
      * @return List<Double>
      */
@@ -588,7 +630,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * Set the ModelScale property
+   * The scale of the model.
    *
    * @param modelScale value of modelScale
    */
@@ -598,12 +640,16 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
+   * The scale of the model.
+   *
    * This is an Expression representation of "model-scale".
    *
    * The scale of the model.
    */
   val modelScaleAsExpression: Expression?
     /**
+     * The scale of the model.
+     *
      * Get the ModelScale property as an Expression
      *
      * @return List<Double>
@@ -619,7 +665,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * Set the ModelScale property
+   * The scale of the model.
    *
    * @param modelScale value of modelScale as Expression
    */
@@ -663,7 +709,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    */
   val modelTranslation: List<Double>?
     /**
-     * Get the ModelTranslation property
+     * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets.
      *
      * @return List<Double>
      */
@@ -672,7 +718,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * Set the ModelTranslation property
+   * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets.
    *
    * @param modelTranslation value of modelTranslation
    */
@@ -682,12 +728,16 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
+   * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets.
+   *
    * This is an Expression representation of "model-translation".
    *
    * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets.
    */
   val modelTranslationAsExpression: Expression?
     /**
+     * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets.
+     *
      * Get the ModelTranslation property as an Expression
      *
      * @return List<Double>
@@ -703,7 +753,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * Set the ModelTranslation property
+   * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets.
    *
    * @param modelTranslation value of modelTranslation as Expression
    */
@@ -747,7 +797,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    */
   val modelType: ModelType?
     /**
-     * Get the ModelType property
+     * Defines rendering behavior of model in respect to other 3D scene objects.
      *
      * @return ModelType
      */
@@ -759,7 +809,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * Set the ModelType property
+   * Defines rendering behavior of model in respect to other 3D scene objects.
    *
    * @param modelType value of modelType
    */
@@ -769,12 +819,16 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
+   * Defines rendering behavior of model in respect to other 3D scene objects.
+   *
    * This is an Expression representation of "model-type".
    *
    * Defines rendering behavior of model in respect to other 3D scene objects.
    */
   val modelTypeAsExpression: Expression?
     /**
+     * Defines rendering behavior of model in respect to other 3D scene objects.
+     *
      * Get the ModelType property as an Expression
      *
      * @return ModelType
@@ -790,7 +844,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * Set the ModelType property
+   * Defines rendering behavior of model in respect to other 3D scene objects.
    *
    * @param modelType value of modelType as Expression
    */
@@ -863,6 +917,8 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      */
     val defaultModelId: String?
       /**
+       * Model to render.
+       *
        * Get the default value of ModelId property
        *
        * @return String
@@ -872,6 +928,8 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       }
 
     /**
+     * Model to render.
+     *
      * This is an Expression representation of "model-id".
      *
      * Model to render.
@@ -897,6 +955,8 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      */
     val defaultModelColor: String?
       /**
+       * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0.
+       *
        * Get the default value of ModelColor property
        *
        * @return String
@@ -909,6 +969,8 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       }
 
     /**
+     * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0.
+     *
      * This is an Expression representation of "model-color".
      *
      * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0.
@@ -931,6 +993,8 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      */
     val defaultModelColorAsColorInt: Int?
       /**
+       * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0.
+       *
        * Get the default value of ModelColor property as color int.
        *
        * @return int representation of a rgba string color
@@ -959,6 +1023,8 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      */
     val defaultModelColorMixIntensity: Double?
       /**
+       * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix.
+       *
        * Get the default value of ModelColorMixIntensity property
        *
        * @return Double
@@ -968,6 +1034,8 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       }
 
     /**
+     * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix.
+     *
      * This is an Expression representation of "model-color-mix-intensity".
      *
      * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix.
@@ -1004,6 +1072,8 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      */
     val defaultModelOpacity: Double?
       /**
+       * The opacity of the model layer.
+       *
        * Get the default value of ModelOpacity property
        *
        * @return Double
@@ -1013,6 +1083,8 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       }
 
     /**
+     * The opacity of the model layer.
+     *
      * This is an Expression representation of "model-opacity".
      *
      * The opacity of the model layer.
@@ -1049,6 +1121,8 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      */
     val defaultModelRotation: List<Double>?
       /**
+       * The rotation of the model in euler angles [lon, lat, z].
+       *
        * Get the default value of ModelRotation property
        *
        * @return List<Double>
@@ -1058,6 +1132,8 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       }
 
     /**
+     * The rotation of the model in euler angles [lon, lat, z].
+     *
      * This is an Expression representation of "model-rotation".
      *
      * The rotation of the model in euler angles [lon, lat, z].
@@ -1094,6 +1170,8 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      */
     val defaultModelScale: List<Double>?
       /**
+       * The scale of the model.
+       *
        * Get the default value of ModelScale property
        *
        * @return List<Double>
@@ -1103,6 +1181,8 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       }
 
     /**
+     * The scale of the model.
+     *
      * This is an Expression representation of "model-scale".
      *
      * The scale of the model.
@@ -1139,6 +1219,8 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      */
     val defaultModelTranslation: List<Double>?
       /**
+       * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets.
+       *
        * Get the default value of ModelTranslation property
        *
        * @return List<Double>
@@ -1148,6 +1230,8 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       }
 
     /**
+     * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets.
+     *
      * This is an Expression representation of "model-translation".
      *
      * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets.
@@ -1184,6 +1268,8 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      */
     val defaultModelType: ModelType?
       /**
+       * Defines rendering behavior of model in respect to other 3D scene objects.
+       *
        * Get the default value of ModelType property
        *
        * @return ModelType
@@ -1196,6 +1282,8 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       }
 
     /**
+     * Defines rendering behavior of model in respect to other 3D scene objects.
+     *
      * This is an Expression representation of "model-type".
      *
      * Defines rendering behavior of model in respect to other 3D scene objects.
@@ -1227,35 +1315,50 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
 @LayersDsl
 interface ModelLayerDsl {
   /**
-   * Set the sourceLayer property
+   * A source layer is an individual layer of data within a vector source.
+   * A vector source can have multiple source layers.
    *
    * @param sourceLayer value of sourceLayer
    */
   fun sourceLayer(sourceLayer: String): ModelLayer
 
   /**
-   * Set the filter property
+   * A filter is a property at the layer level that determines which features should be rendered in a style layer.
+   *
+   * Filters are written as expressions, which give you fine-grained control over which features to include: the
+   * style layer only displays the features that match the filter condition that you define.
+   *
+   * Note: Zoom expressions in filters are only evaluated at integer zoom levels. The `feature-state` expression
+   * is not supported in filter expressions.
    *
    * @param filter the expression filter to set
    */
   fun filter(filter: Expression): ModelLayer
 
   /**
-   * Set the Visibility property
+   * Whether this layer is displayed.
    *
    * @param visibility value of Visibility
    */
   fun visibility(visibility: Visibility): ModelLayer
 
   /**
-   * Set the minzoom property
+   * The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.
+   *
+   * Range:
+   *       minimum: 0
+   *       maximum: 24
    *
    * @param value value of minzoom
    */
   fun minZoom(minZoom: Double): ModelLayer
 
   /**
-   * Set the maxzoom property
+   * The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden.
+   *
+   * Range:
+   *       minimum: 0
+   *       maximum: 24
    *
    * @param value value of maxzoom
    */
@@ -1264,41 +1367,43 @@ interface ModelLayerDsl {
   // Property getters and setters
 
   /**
-   * Set the ModelId property
+   * Model to render.
    *
    * @param modelId value of modelId
    */
   fun modelId(modelId: String): ModelLayer
 
   /**
-   * Set the ModelId property
+   * Model to render.
    *
    * @param modelId value of modelId as Expression
    */
   fun modelId(modelId: Expression): ModelLayer
 
   /**
-   * Set the ModelColor property
+   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0.
    *
    * @param modelColor value of modelColor
    */
   fun modelColor(modelColor: String = "#ffffff"): ModelLayer
 
   /**
-   * Set the ModelColor property
+   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0.
    *
    * @param modelColor value of modelColor as Expression
    */
   fun modelColor(modelColor: Expression): ModelLayer
 
   /**
-   * Set the ModelColor property.
+   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0.
    *
    * @param modelColor value of modelColor
    */
   fun modelColor(@ColorInt modelColor: Int): ModelLayer
 
   /**
+   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0.
+   *
    * Set the ModelColor property transition options
    *
    * @param options transition options for String
@@ -1306,25 +1411,29 @@ interface ModelLayerDsl {
   fun modelColorTransition(options: StyleTransition): ModelLayer
 
   /**
+   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0.
+   *
    * DSL for [modelColorTransition].
    */
   fun modelColorTransition(block: StyleTransition.Builder.() -> Unit): ModelLayer
 
   /**
-   * Set the ModelColorMixIntensity property
+   * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix.
    *
    * @param modelColorMixIntensity value of modelColorMixIntensity
    */
   fun modelColorMixIntensity(modelColorMixIntensity: Double = 0.0): ModelLayer
 
   /**
-   * Set the ModelColorMixIntensity property
+   * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix.
    *
    * @param modelColorMixIntensity value of modelColorMixIntensity as Expression
    */
   fun modelColorMixIntensity(modelColorMixIntensity: Expression): ModelLayer
 
   /**
+   * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix.
+   *
    * Set the ModelColorMixIntensity property transition options
    *
    * @param options transition options for Double
@@ -1332,25 +1441,29 @@ interface ModelLayerDsl {
   fun modelColorMixIntensityTransition(options: StyleTransition): ModelLayer
 
   /**
+   * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix.
+   *
    * DSL for [modelColorMixIntensityTransition].
    */
   fun modelColorMixIntensityTransition(block: StyleTransition.Builder.() -> Unit): ModelLayer
 
   /**
-   * Set the ModelOpacity property
+   * The opacity of the model layer.
    *
    * @param modelOpacity value of modelOpacity
    */
   fun modelOpacity(modelOpacity: Double = 1.0): ModelLayer
 
   /**
-   * Set the ModelOpacity property
+   * The opacity of the model layer.
    *
    * @param modelOpacity value of modelOpacity as Expression
    */
   fun modelOpacity(modelOpacity: Expression): ModelLayer
 
   /**
+   * The opacity of the model layer.
+   *
    * Set the ModelOpacity property transition options
    *
    * @param options transition options for Double
@@ -1358,25 +1471,29 @@ interface ModelLayerDsl {
   fun modelOpacityTransition(options: StyleTransition): ModelLayer
 
   /**
+   * The opacity of the model layer.
+   *
    * DSL for [modelOpacityTransition].
    */
   fun modelOpacityTransition(block: StyleTransition.Builder.() -> Unit): ModelLayer
 
   /**
-   * Set the ModelRotation property
+   * The rotation of the model in euler angles [lon, lat, z].
    *
    * @param modelRotation value of modelRotation
    */
   fun modelRotation(modelRotation: List<Double> = listOf(0.0, 0.0, 0.0)): ModelLayer
 
   /**
-   * Set the ModelRotation property
+   * The rotation of the model in euler angles [lon, lat, z].
    *
    * @param modelRotation value of modelRotation as Expression
    */
   fun modelRotation(modelRotation: Expression): ModelLayer
 
   /**
+   * The rotation of the model in euler angles [lon, lat, z].
+   *
    * Set the ModelRotation property transition options
    *
    * @param options transition options for List<Double>
@@ -1384,25 +1501,29 @@ interface ModelLayerDsl {
   fun modelRotationTransition(options: StyleTransition): ModelLayer
 
   /**
+   * The rotation of the model in euler angles [lon, lat, z].
+   *
    * DSL for [modelRotationTransition].
    */
   fun modelRotationTransition(block: StyleTransition.Builder.() -> Unit): ModelLayer
 
   /**
-   * Set the ModelScale property
+   * The scale of the model.
    *
    * @param modelScale value of modelScale
    */
   fun modelScale(modelScale: List<Double> = listOf(1.0, 1.0, 1.0)): ModelLayer
 
   /**
-   * Set the ModelScale property
+   * The scale of the model.
    *
    * @param modelScale value of modelScale as Expression
    */
   fun modelScale(modelScale: Expression): ModelLayer
 
   /**
+   * The scale of the model.
+   *
    * Set the ModelScale property transition options
    *
    * @param options transition options for List<Double>
@@ -1410,25 +1531,29 @@ interface ModelLayerDsl {
   fun modelScaleTransition(options: StyleTransition): ModelLayer
 
   /**
+   * The scale of the model.
+   *
    * DSL for [modelScaleTransition].
    */
   fun modelScaleTransition(block: StyleTransition.Builder.() -> Unit): ModelLayer
 
   /**
-   * Set the ModelTranslation property
+   * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets.
    *
    * @param modelTranslation value of modelTranslation
    */
   fun modelTranslation(modelTranslation: List<Double> = listOf(0.0, 0.0, 0.0)): ModelLayer
 
   /**
-   * Set the ModelTranslation property
+   * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets.
    *
    * @param modelTranslation value of modelTranslation as Expression
    */
   fun modelTranslation(modelTranslation: Expression): ModelLayer
 
   /**
+   * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets.
+   *
    * Set the ModelTranslation property transition options
    *
    * @param options transition options for List<Double>
@@ -1436,19 +1561,21 @@ interface ModelLayerDsl {
   fun modelTranslationTransition(options: StyleTransition): ModelLayer
 
   /**
+   * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets.
+   *
    * DSL for [modelTranslationTransition].
    */
   fun modelTranslationTransition(block: StyleTransition.Builder.() -> Unit): ModelLayer
 
   /**
-   * Set the ModelType property
+   * Defines rendering behavior of model in respect to other 3D scene objects.
    *
    * @param modelType value of modelType
    */
   fun modelType(modelType: ModelType = ModelType.COMMON_3D): ModelLayer
 
   /**
-   * Set the ModelType property
+   * Defines rendering behavior of model in respect to other 3D scene objects.
    *
    * @param modelType value of modelType as Expression
    */
@@ -1456,7 +1583,7 @@ interface ModelLayerDsl {
 }
 
 /**
- * DSL function for [ModelLayer].
+ * DSL function for creating a [ModelLayer].
  */
 @MapboxExperimental
 fun modelLayer(layerId: String, sourceId: String, block: ModelLayerDsl.() -> Unit): ModelLayer = ModelLayer(layerId, sourceId).apply(block)
