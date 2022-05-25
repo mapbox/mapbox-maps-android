@@ -232,28 +232,28 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   }
 
   private fun draw() {
-    if (needSwapBuffersWithCachedMap.getAndSet(false)) {
-      when (val swapStatus = eglCore.swapBuffers(eglSurface)) {
-        EGL10.EGL_SUCCESS -> {
-          logE("KIRYLDD", "Swap with cached map")
-        }
-        EGL11.EGL_CONTEXT_LOST -> {
-          logW(TAG, "Context lost. Waiting for re-acquire")
-          releaseEgl()
-        }
-        else -> {
-          logW(TAG, "eglSwapBuffer error: $swapStatus. Waiting for new surface")
-          releaseEglSurface()
-        }
-      }
-      logE("KIRYLDD", "Render cached start")
-      mapboxRenderer.render()
-      logE("KIRYLDD", "Render cached end")
-//      waitUntilViewAnnotationPositioned.set(true)
-      return
-    }
+//    if (needSwapBuffersWithCachedMap.getAndSet(false)) {
+//      when (val swapStatus = eglCore.swapBuffers(eglSurface)) {
+//        EGL10.EGL_SUCCESS -> {
+//          logE("KIRYLDD", "Swap with cached map")
+//        }
+//        EGL11.EGL_CONTEXT_LOST -> {
+//          logW(TAG, "Context lost. Waiting for re-acquire")
+//          releaseEgl()
+//        }
+//        else -> {
+//          logW(TAG, "eglSwapBuffer error: $swapStatus. Waiting for new surface")
+//          releaseEglSurface()
+//        }
+//      }
+//      logE("KIRYLDD", "Render cached start")
+//      mapboxRenderer.render()
+//      logE("KIRYLDD", "Render cached end")
+////      waitUntilViewAnnotationPositioned.set(true)
+//      return
+//    }
     // render but do not swap buffers yet
-    if (waitUntilViewAnnotationPositioned.get()) return
+//    if (waitUntilViewAnnotationPositioned.get()) return
     val renderTimeNsCopy = renderTimeNs
     val currentTimeNs = SystemClock.elapsedRealtimeNanos()
     val expectedEndRenderTimeNs = currentTimeNs + renderTimeNsCopy
@@ -263,6 +263,8 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       postPrepareRenderFrame()
       return
     }
+
+
 
     if (widgetRenderer.hasWidgets()) {
       if (widgetRenderer.needTextureUpdate) {
@@ -276,16 +278,19 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
         widgetTextureRenderer.render(widgetRenderer.getTexture())
       }
     } else {
+      logE("KIRYLDD", "Render start")
       mapboxRenderer.render()
+      logE("KIRYLDD", "Render end")
     }
 
     // assuming render event queue holds user's runnables with OpenGL ES commands
     // it makes sense to execute them after drawing a map but before swapping buffers
     // **note** this queue also holds snapshot tasks
     drainQueue(renderEventQueue)
+    logE("KIRYLDD", "swapBuffers before")
     when (val swapStatus = eglCore.swapBuffers(eglSurface)) {
       EGL10.EGL_SUCCESS -> {
-        logE("KIRYLDD", "Swap with latest map")
+        logE("KIRYLDD", "swapBuffers after")
       }
       EGL11.EGL_CONTEXT_LOST -> {
         logW(TAG, "Context lost. Waiting for re-acquire")
@@ -486,14 +491,14 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
 
   internal fun viewAnnotationsDraw() {
 //    waitUntilViewAnnotationPositioned.set(false)
-    needSwapBuffersWithCachedMap.set(true)
+//    needSwapBuffersWithCachedMap.set(true)
     if (!awaitingNextVsync) {
       postPrepareRenderFrame()
     }
   }
 
   internal fun viewAnnotationPositionArrived() {
-    waitUntilViewAnnotationPositioned.set(true)
+//    waitUntilViewAnnotationPositioned.set(true)
   }
 
   private fun postNonRenderEvent(renderEvent: RenderEvent, delayMillis: Long = 0L) {

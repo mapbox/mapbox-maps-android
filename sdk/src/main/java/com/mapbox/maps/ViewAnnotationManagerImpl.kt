@@ -26,14 +26,10 @@ internal class ViewAnnotationManagerImpl(
 
   init {
     mapView.requestDisallowInterceptTouchEvent(false)
+
+    // pre-draw for MapView is called when translation is changed for any view annotation attached
     mapView.viewTreeObserver.addOnPreDrawListener {
-      if (annotationMap.isNotEmpty()) {
-        logE("KIRYLDD", "mapView onPreDraw")
-        annotationMap.forEach {
-          it.value.view.invalidate()
-        }
-        mapView.viewAnnotationDraw()
-      }
+      mapView.viewAnnotationDraw()
       true
     }
     mapboxMap.setViewAnnotationPositionsUpdateListener(this)
@@ -147,7 +143,7 @@ internal class ViewAnnotationManagerImpl(
 //      drawAnnotationViews(positions)
 //      logE("KIRYLDD", "onViewAnnotationPositionsUpdate processed")
 //    }
-    mapView.viewAnnotationPositionArrived()
+//    mapView.viewAnnotationPositionArrived()
     drawAnnotationViews(positions)
   }
 
@@ -192,6 +188,13 @@ internal class ViewAnnotationManagerImpl(
       measuredWidth = if (options.width != null) USER_FIXED_DIMENSION else inflatedViewLayout.width,
       measuredHeight = if (options.height != null) USER_FIXED_DIMENSION else inflatedViewLayout.height,
     )
+    inflatedView.viewTreeObserver.addOnPreDrawListener {
+      logE("KIRYLDD", "view pre draw!")
+      true
+    }
+    inflatedView.viewTreeObserver.addOnDrawListener {
+      logE("KIRYLDD", "view draw!")
+    }
     val globalLayoutListener = ViewTreeObserver.OnGlobalLayoutListener {
       if (viewAnnotation.measuredWidth != USER_FIXED_DIMENSION &&
         inflatedView.measuredWidth > 0 &&
@@ -326,11 +329,6 @@ internal class ViewAnnotationManagerImpl(
             else
               ViewAnnotationVisibility.INVISIBLE
           )
-//          annotation.view.viewTreeObserver.addOnPreDrawListener {
-//            annotation.view.invalidate()
-//            mapView.viewAnnotationDraw()
-//            true
-//          }
         }
         if (viewUpdatedListenerSet.isNotEmpty()) {
           viewUpdatedListenerSet.forEach {

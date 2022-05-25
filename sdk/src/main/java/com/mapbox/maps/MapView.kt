@@ -344,7 +344,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
     fun onSnapshotReady(bitmap: Bitmap?)
   }
 
-  internal fun viewAnnotationDraw() {
+  internal fun forceSwapBuffers() {
     mapController.viewAnnotationDraw()
   }
 

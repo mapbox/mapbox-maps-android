@@ -8,7 +8,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
+import com.mapbox.maps.plugin.attribution.attribution
+import com.mapbox.maps.plugin.compass.compass
 import com.mapbox.maps.plugin.gestures.*
+import com.mapbox.maps.plugin.logo.logo
+import com.mapbox.maps.plugin.scalebar.scalebar
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityViewAnnotationShowcaseBinding
 import com.mapbox.maps.testapp.databinding.ItemCalloutViewBinding
@@ -27,6 +31,13 @@ class ViewAnnotationBasicAddActivity : AppCompatActivity(), OnMapClickListener {
     super.onCreate(savedInstanceState)
     val binding = ActivityViewAnnotationShowcaseBinding.inflate(layoutInflater)
     setContentView(binding.root)
+
+    binding.mapView.apply {
+      compass.enabled = false
+      scalebar.enabled = false
+      logo.enabled = false
+      attribution.enabled = false
+    }
 
     viewAnnotationManager = binding.mapView.viewAnnotationManager
 
