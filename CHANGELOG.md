@@ -4,6 +4,9 @@ Mapbox welcomes participation and contributions from everyone.
 
 #main
 
+## Bug fixes 🐞
+Fix compass is not showing in "edge-to-edge" mode. ([1391](https://github.com/mapbox/mapbox-maps-android/pull/1391))
+
 # 10.6.0-beta.2 May 25, 2022
 
 ## Features ✨ and improvements 🏁
