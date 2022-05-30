@@ -235,6 +235,9 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   }
 
   private fun draw() {
+//    if (needSyncWithViewAnnotations) {
+//      swapBuffers()
+//    }
     val renderTimeNsCopy = renderTimeNs
     val currentTimeNs = SystemClock.elapsedRealtimeNanos()
     val expectedEndRenderTimeNs = currentTimeNs + renderTimeNsCopy
@@ -266,11 +269,14 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     // it makes sense to execute them after drawing a map but before swapping buffers
     // **note** this queue also holds snapshot tasks
     drainQueue(renderEventQueue)
-    if (needSyncWithViewAnnotations) {
-      // think of smth but for now simply wait until view annotation manager will call swapBuffers
-    } else {
-      swapBuffers()
-    }
+//    if (needSyncWithViewAnnotations) {
+//      // think of smth but for now simply wait until view annotation manager will call swapBuffers
+//    } else {
+//      logE("KIRYLDD", "regular before swapBuffers")
+//      swapBuffers()
+//      logE("KIRYLDD", "regular after swapBuffers")
+//    }
+    swapBuffers()
   }
 
   private fun swapBuffers() {
@@ -475,9 +481,12 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   }
 
   internal fun forceRenderSwapBuffers() {
-    renderHandlerThread.postImmediate {
-      swapBuffers()
-    }
+//    logE("KIRYLDD", "forceRenderSwapBuffers schedule")
+//    renderHandlerThread.postImmediate {
+//      logE("KIRYLDD", "forceRenderSwapBuffers before swapBuffers")
+//      swapBuffers()
+//      logE("KIRYLDD", "forceRenderSwapBuffers after swapBuffers")
+//    }
   }
 
   internal fun setHasViewAnnotations(hasViewAnnotations: Boolean) {

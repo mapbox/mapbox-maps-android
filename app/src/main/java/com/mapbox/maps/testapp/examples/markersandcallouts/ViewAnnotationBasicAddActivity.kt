@@ -1,5 +1,7 @@
 package com.mapbox.maps.testapp.examples.markersandcallouts
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.ViewGroup
@@ -8,6 +10,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
+import com.mapbox.maps.dsl.cameraOptions
+import com.mapbox.maps.plugin.animation.MapAnimationOptions
+import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
+import com.mapbox.maps.plugin.animation.easeTo
+import com.mapbox.maps.plugin.animation.flyTo
 import com.mapbox.maps.plugin.attribution.attribution
 import com.mapbox.maps.plugin.compass.compass
 import com.mapbox.maps.plugin.gestures.*
@@ -22,8 +29,10 @@ import com.mapbox.maps.viewannotation.viewAnnotationOptions
 /**
  * Example how to add view annotations by clicking on the map.
  */
-class ViewAnnotationBasicAddActivity : AppCompatActivity(), OnMapClickListener {
+class ViewAnnotationBasicAddActivity : AppCompatActivity(), OnMapClickListener,
+  OnMapLongClickListener {
 
+  private lateinit var mapView: MapView
   private lateinit var mapboxMap: MapboxMap
   private lateinit var viewAnnotationManager: ViewAnnotationManager
 
@@ -39,11 +48,13 @@ class ViewAnnotationBasicAddActivity : AppCompatActivity(), OnMapClickListener {
       attribution.enabled = false
     }
 
+    mapView = binding.mapView
     viewAnnotationManager = binding.mapView.viewAnnotationManager
 
     mapboxMap = binding.mapView.getMapboxMap().apply {
       loadStyleUri(Style.MAPBOX_STREETS) {
         addOnMapClickListener(this@ViewAnnotationBasicAddActivity)
+        addOnMapLongClickListener(this@ViewAnnotationBasicAddActivity)
         binding.fabStyleToggle.setOnClickListener {
           when (getStyle()?.styleURI) {
             Style.MAPBOX_STREETS -> loadStyleUri(Style.SATELLITE_STREETS)
@@ -56,7 +67,31 @@ class ViewAnnotationBasicAddActivity : AppCompatActivity(), OnMapClickListener {
   }
 
   override fun onMapClick(point: Point): Boolean {
-    addViewAnnotation(point)
+    logE("KIRYLDD", "onMapClick")
+//    mapView.gestures.scrollEnabled = false
+    mapboxMap.easeTo(
+      cameraOptions { center(point) },
+      mapAnimationOptions {
+        duration(3_000L)
+        animatorListener(object : AnimatorListenerAdapter() {
+          override fun onAnimationStart(animation: Animator?) {
+            super.onAnimationStart(animation)
+            logE("KIRYLDD", "onAnimationStart")
+          }
+
+          override fun onAnimationCancel(animation: Animator?) {
+            super.onAnimationCancel(animation)
+            logE("KIRYLDD", "onAnimationCancel")
+          }
+
+          override fun onAnimationEnd(animation: Animator?) {
+            super.onAnimationEnd(animation)
+            logE("KIRYLDD", "onAnimationEnd")
+//            mapView.gestures.scrollEnabled = true
+          }
+        })
+      }
+    )
     return true
   }
 
@@ -98,5 +133,10 @@ class ViewAnnotationBasicAddActivity : AppCompatActivity(), OnMapClickListener {
   private companion object {
     const val SELECTED_ADD_COEF_PX = 25
     const val STARTUP_TEXT = "Click on a map to add a view annotation."
+  }
+
+  override fun onMapLongClick(point: Point): Boolean {
+    addViewAnnotation(point)
+    return true
   }
 }

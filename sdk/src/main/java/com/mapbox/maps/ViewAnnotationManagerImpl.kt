@@ -1,5 +1,8 @@
 package com.mapbox.maps
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.animation.ObjectAnimator
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewTreeObserver
@@ -191,13 +194,13 @@ internal class ViewAnnotationManagerImpl(
       measuredWidth = if (options.width != null) USER_FIXED_DIMENSION else inflatedViewLayout.width,
       measuredHeight = if (options.height != null) USER_FIXED_DIMENSION else inflatedViewLayout.height,
     )
-    inflatedView.viewTreeObserver.addOnPreDrawListener {
-      logE("KIRYLDD", "view pre draw!")
-      true
-    }
-    inflatedView.viewTreeObserver.addOnDrawListener {
-      logE("KIRYLDD", "view draw!")
-    }
+//    inflatedView.viewTreeObserver.addOnPreDrawListener {
+//      logE("KIRYLDD", "view pre draw!")
+//      true
+//    }
+//    inflatedView.viewTreeObserver.addOnDrawListener {
+//      logE("KIRYLDD", "view draw!")
+//    }
     val globalLayoutListener = ViewTreeObserver.OnGlobalLayoutListener {
       if (viewAnnotation.measuredWidth != USER_FIXED_DIMENSION &&
         inflatedView.measuredWidth > 0 &&
@@ -317,11 +320,37 @@ internal class ViewAnnotationManagerImpl(
         annotation.view.apply {
           if (translationX != descriptor.leftTopCoordinate.x.toFloat()) {
             logE("KIRYLDD", "onViewAnnotationPositionsUpdate newX=${descriptor.leftTopCoordinate.x.toFloat()}, oldX=${translationX}")
-            translationX = descriptor.leftTopCoordinate.x.toFloat()
+//            translationX = descriptor.leftTopCoordinate.x.toFloat()
+            ObjectAnimator.ofFloat(this, "translationX", descriptor.leftTopCoordinate.x.toFloat()).apply {
+              duration = 0
+              addUpdateListener {
+                logE("KIRYLDD", "translationX update: ${it.animatedValue}, fraction: ${it.animatedFraction}")
+              }
+              addListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator?) {
+                  super.onAnimationEnd(animation)
+                  logE("KIRYLDD", "onAnimationEnd translationX")
+                }
+              })
+              start()
+            }
           }
           if (translationY != descriptor.leftTopCoordinate.y.toFloat()) {
             logE("KIRYLDD", "onViewAnnotationPositionsUpdate newY=${descriptor.leftTopCoordinate.y.toFloat()}, oldY=${translationY}")
-            translationY = descriptor.leftTopCoordinate.y.toFloat()
+//            translationY = descriptor.leftTopCoordinate.y.toFloat()
+            ObjectAnimator.ofFloat(this, "translationY", descriptor.leftTopCoordinate.y.toFloat()).apply {
+              duration = 0
+              addUpdateListener {
+                logE("KIRYLDD", "translationY update: ${it.animatedValue}, fraction: ${it.animatedFraction}")
+              }
+              addListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator?) {
+                  super.onAnimationEnd(animation)
+                  logE("KIRYLDD", "onAnimationEnd translationY")
+                }
+              })
+              start()
+            }
           }
         }
         if (!currentViewsDrawnMap.keys.contains(descriptor.identifier) && mapView.indexOfChild(annotation.view) == -1) {
