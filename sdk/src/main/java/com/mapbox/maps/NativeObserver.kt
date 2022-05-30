@@ -265,6 +265,15 @@ internal class NativeObserver(
     }
   }
 
+  // This method is needed to prevent receiving styleLoaded events with the old style
+  // when new style is loaded. For example loading empty style and another style immediately after
+  // that will notify STYLE_LOADED event for the first style after second style has already started
+  // loading
+  fun resubscribeStyleLoadListeners() {
+    unsubscribeUnusedEvent(MapEvents.STYLE_LOADED)
+    subscribeNewEvent(MapEvents.STYLE_LOADED)
+  }
+
   fun addOnStyleDataLoadedListener(onStyleDataLoadedListener: OnStyleDataLoadedListener) {
     if (onStyleDataLoadedListeners.isEmpty()) {
       subscribeNewEvent(MapEvents.STYLE_DATA_LOADED)

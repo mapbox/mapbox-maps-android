@@ -49,6 +49,8 @@ internal class StyleObserver(
     styleDataSourcesLoadedListener: Style.OnStyleLoaded? = null,
     onMapLoadErrorListener: OnMapLoadErrorListener?
   ) {
+    // needed to prevent receiving onStyleLoaded for the old style in some rare cases
+    nativeObserver.resubscribeStyleLoadListeners()
     this.userStyleLoadedListener = userOnStyleLoaded
     this.styleDataStyleLoadedListener = styleDataStyleLoadedListener
     this.styleDataSpritesLoadedListener = styleDataSpritesLoadedListener
@@ -68,7 +70,8 @@ internal class StyleObserver(
    * Invoked when a style has loaded
    */
   override fun onStyleLoaded(eventData: StyleLoadedEventData) {
-    val style = loadedStyle ?: throw MapboxMapException("Style is not initialized on onStyleLoaded callback!")
+    val style = loadedStyle
+      ?: throw MapboxMapException("Style is not initialized on onStyleLoaded callback!")
 
     onStyleSpritesReady()
     onStyleSourcesReady()

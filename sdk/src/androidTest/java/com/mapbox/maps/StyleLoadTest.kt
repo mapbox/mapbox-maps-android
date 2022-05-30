@@ -102,6 +102,7 @@ class StyleLoadTest {
 
   @Test
   fun testStyleIsLoadedOnStyleChange() {
+    countDownLatch = CountDownLatch(1)
     rule.scenario.onActivity {
       it.runOnUiThread {
         mapboxMap.loadStyleUri(
@@ -156,6 +157,7 @@ class StyleLoadTest {
         mapboxMap.loadStyleUri(Style.MAPBOX_STREETS) { loadedStyles++ }
         mapboxMap.loadStyleUri(Style.SATELLITE) { loadedStyles++ }
         mapboxMap.loadStyleUri(Style.MAPBOX_STREETS) { style ->
+          loadedStyles++
           assertTrue("Style should be fully loaded", style.isStyleLoaded)
           assertTrue("Style should be valid", style.isValid())
           countDownLatch.countDown()
