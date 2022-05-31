@@ -307,6 +307,8 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     renderDestroyCallChain = true
     mapboxRenderer.destroyRenderer()
     renderDestroyCallChain = false
+    renderEventQueue.clear()
+    nonRenderEventQueue.clear()
     renderCreated = false
     releaseEgl()
     surface?.release()
@@ -325,6 +327,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       // at least on Android 8 devices we create surface before Activity#onStart
       // so we need to proceed to EGL creation in any case to avoid deadlock
       if (!creatingSurface) {
+        logW(TAG, "Skip render frame - NOT creating surface but renderNotSupported ($renderNotSupported) || paused ($paused)")
         return
       }
     }
@@ -332,6 +335,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     if (creatingSurface || !renderThreadPrepared) {
       val renderThreadPreparedOk = setUpRenderThread(creatingSurface)
       if (!renderThreadPreparedOk) {
+        logW(TAG, "Skip render frame - NOT render thread prepared but creatingSurface ($creatingSurface) || !renderThreadPrepared (${!renderThreadPrepared})")
         return
       }
     }
@@ -355,6 +359,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
 
   @UiThread
   fun onSurfaceDestroyed() {
+    logW(TAG, "RenderThread : surface destroyed")
     lock.withLock {
       // in some situations `destroy` is called earlier than onSurfaceDestroyed - in that case no need to clean up
       if (renderHandlerThread.started) {
@@ -386,6 +391,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   internal fun processAndroidSurface(surface: Surface, width: Int, height: Int) {
     if (this.surface != surface) {
       if (this.surface != null) {
+        logW(TAG, "Process android surface while current is not null, will release EGL")
         releaseEgl()
         this.surface?.release()
       }
@@ -394,10 +400,6 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     this.width = width
     this.height = height
     widgetRenderer.onSurfaceChanged(width = width, height = height)
-    renderEventQueue.removeAll { it.eventType == EventType.SDK }
-    nonRenderEventQueue.removeAll { it.eventType == EventType.SDK }
-    // we do not want to clear render events scheduled by user
-    renderHandlerThread.clearMessageQueue(clearAll = false)
     prepareRenderFrame(creatingSurface = true)
   }
 
@@ -435,24 +437,9 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       renderEvent.runnable?.let {
         renderEventQueue.add(renderEvent)
       }
-      // in case of native Mapbox events we schedule render event only when we're fully ready for render
-      if (renderEvent.eventType == EventType.SDK) {
-        if (renderThreadPrepared) {
-          postPrepareRenderFrame()
-        }
-      } else {
-        postPrepareRenderFrame()
-      }
+      postPrepareRenderFrame()
     } else {
-      // no sense in scheduling non-render SDK tasks if thread is not fully ready for render
-      // as render thread SDK tasks queue will be cleared when new surface will arrive
-      if (renderEvent.eventType == EventType.SDK) {
-        if (renderThreadPrepared) {
-          postNonRenderEvent(renderEvent)
-        }
-      } else {
-        postNonRenderEvent(renderEvent)
-      }
+      postNonRenderEvent(renderEvent)
     }
   }
 
@@ -501,7 +488,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
             if (renderCreated) {
               releaseAll()
             }
-            renderHandlerThread.clearMessageQueue(clearAll = true)
+            renderHandlerThread.clearMessageQueue()
             destroyCondition.signal()
           }
         }
