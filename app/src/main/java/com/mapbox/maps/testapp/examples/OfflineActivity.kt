@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mapbox.bindgen.Value
 import com.mapbox.common.*
 import com.mapbox.geojson.Point
+import com.mapbox.geojson.Polygon
 import com.mapbox.maps.*
 import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions
@@ -101,12 +102,12 @@ class OfflineActivity : AppCompatActivity() {
         // no extra action is needed.
         mapView = MapView(this@OfflineActivity).also { mapview ->
           val mapboxMap = mapview.getMapboxMap()
-          mapboxMap.setCamera(CameraOptions.Builder().zoom(ZOOM).center(TOKYO).build())
+          mapboxMap.setCamera(CameraOptions.Builder().zoom(ZOOM).center(MINSK).build())
           mapboxMap.loadStyleUri(Style.OUTDOORS) {
             // Add a circle annotation to the offline geometry.
             mapview.annotations.createCircleAnnotationManager().create(
               CircleAnnotationOptions()
-                .withPoint(TOKYO)
+                .withPoint(MINSK)
                 .withCircleColor(Color.RED)
             )
           }
@@ -158,7 +159,7 @@ class OfflineActivity : AppCompatActivity() {
     // Style packs are stored in the disk cache database, but their resources are not subject to
     // the data eviction algorithm and are not considered when calculating the disk cache size.
     stylePackCancelable = offlineManager.loadStylePack(
-      Style.OUTDOORS,
+      "mapbox://styles/mapbox-map-design/ckugoby69bah419ns4agy07a3",
       // Build Style pack load options
       StylePackLoadOptions.Builder()
         .glyphsRasterizationMode(GlyphsRasterizationMode.IDEOGRAPHS_RASTERIZED_LOCALLY)
@@ -210,7 +211,7 @@ class OfflineActivity : AppCompatActivity() {
     // The OfflineManager is responsible for creating tileset descriptors for the given style and zoom range.
     val tilesetDescriptor = offlineManager.createTilesetDescriptor(
       TilesetDescriptorOptions.Builder()
-        .styleURI(Style.OUTDOORS)
+        .styleURI("mapbox://styles/mapbox-map-design/ckugoby69bah419ns4agy07a3")
         .minZoom(0)
         .maxZoom(16)
         .build()
@@ -223,7 +224,7 @@ class OfflineActivity : AppCompatActivity() {
     tilePackCancelable = tileStore.loadTileRegion(
       TILE_REGION_ID,
       TileRegionLoadOptions.Builder()
-        .geometry(TOKYO)
+        .geometry(Polygon.fromJson("{\"type\":\"Polygon\",\"coordinates\":[[[27.305831909179688,53.768601682473886],[27.815322875976562,53.768601682473886],[27.815322875976562,54.01180381407852],[27.305831909179688,54.01180381407852],[27.305831909179688,53.768601682473886]]]}"))
         .descriptors(listOf(tilesetDescriptor))
         .metadata(Value(TILE_REGION_METADATA))
         .acceptExpired(true)
@@ -296,7 +297,7 @@ class OfflineActivity : AppCompatActivity() {
     // Remove the style pack with the style url.
     // Note this will not remove the downloaded style pack, instead, it will just mark the resources
     // not a part of the existing style pack. The resources still exists as disk cache.
-    offlineManager.removeStylePack(Style.OUTDOORS)
+    offlineManager.removeStylePack("mapbox://styles/mapbox-map-design/ckugoby69bah419ns4agy07a3")
 
     MapboxMap.clearData(resourceOptions) {
       it.error?.let { error ->
@@ -417,7 +418,7 @@ class OfflineActivity : AppCompatActivity() {
   companion object {
     private const val TAG = "OfflineActivity"
     private const val ZOOM = 12.0
-    private val TOKYO: Point = Point.fromLngLat(139.769305, 35.682027)
+    private val MINSK: Point = Point.fromLngLat(27.5574012,53.8983641)
     private const val TILE_REGION_ID = "myTileRegion"
     private const val STYLE_PACK_METADATA = "my-outdoor-style-pack"
     private const val TILE_REGION_METADATA = "my-outdoors-tile-region"
