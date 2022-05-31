@@ -8,6 +8,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
+import com.mapbox.maps.plugin.animation.MapAnimationOptions
+import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
+import com.mapbox.maps.plugin.animation.easeTo
+import com.mapbox.maps.plugin.animation.moveBy
 import com.mapbox.maps.plugin.gestures.*
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityViewAnnotationShowcaseBinding
@@ -28,18 +32,31 @@ class ViewAnnotationBasicAddActivity : AppCompatActivity(), OnMapClickListener {
     val binding = ActivityViewAnnotationShowcaseBinding.inflate(layoutInflater)
     setContentView(binding.root)
 
-    viewAnnotationManager = binding.mapView.viewAnnotationManager
+    viewAnnotationManager = binding.mapView.viewAnnotationManager.apply {
+      binding.mapView.post {
+        addViewAnnotation(
+          mapboxMap.coordinateForPixel(
+            ScreenCoordinate(
+              binding.mapView.width / 2.0,
+              binding.mapView.height / 2.0 - 200.0
+            )
+          )
+        )
+      }
+    }
 
     mapboxMap = binding.mapView.getMapboxMap().apply {
       loadStyleUri(Style.MAPBOX_STREETS) {
         addOnMapClickListener(this@ViewAnnotationBasicAddActivity)
         binding.fabStyleToggle.setOnClickListener {
-          when (getStyle()?.styleURI) {
-            Style.MAPBOX_STREETS -> loadStyleUri(Style.SATELLITE_STREETS)
-            Style.SATELLITE_STREETS -> loadStyleUri(Style.MAPBOX_STREETS)
-          }
+          moveBy(
+            ScreenCoordinate(0.0, 950.0),
+            mapAnimationOptions {
+              duration(1_000L)
+            }
+          )
         }
-        Toast.makeText(this@ViewAnnotationBasicAddActivity, STARTUP_TEXT, Toast.LENGTH_LONG).show()
+//        Toast.makeText(this@ViewAnnotationBasicAddActivity, STARTUP_TEXT, Toast.LENGTH_LONG).show()
       }
     }
   }

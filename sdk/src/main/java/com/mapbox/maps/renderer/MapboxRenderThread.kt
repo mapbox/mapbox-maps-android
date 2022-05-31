@@ -1,8 +1,10 @@
 package com.mapbox.maps.renderer
 
+import android.os.Build
 import android.os.SystemClock
 import android.view.Choreographer
 import android.view.Surface
+import android.view.SurfaceView
 import androidx.annotation.AnyThread
 import androidx.annotation.UiThread
 import androidx.annotation.VisibleForTesting
@@ -13,6 +15,8 @@ import com.mapbox.maps.renderer.egl.EGLCore
 import com.mapbox.maps.renderer.gl.TextureRenderer
 import com.mapbox.maps.renderer.widget.Widget
 import java.util.concurrent.ConcurrentLinkedQueue
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.TimeUnit
 import java.util.concurrent.locks.ReentrantLock
 import javax.microedition.khronos.egl.EGL10
 import javax.microedition.khronos.egl.EGL11
@@ -41,7 +45,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal val nonRenderEventQueue = ConcurrentLinkedQueue<RenderEvent>()
 
-  private var surface: Surface? = null
+  internal var surface: Surface? = null
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal var eglSurface: EGLSurface
   private var width: Int = 0
@@ -230,7 +234,21 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     }
   }
 
-  private fun draw() {
+  private fun draw(time: Long) {
+    logE("KIRYLDD", "eglCore.swapBuffers before $time")
+    when (val swapStatus = eglCore.swapBuffers(eglSurface)) {
+      EGL10.EGL_SUCCESS -> {
+        logE("KIRYLDD", "eglCore.swapBuffers after $time")
+      }
+      EGL11.EGL_CONTEXT_LOST -> {
+        logW(TAG, "Context lost. Waiting for re-acquire")
+        releaseEgl()
+      }
+      else -> {
+        logW(TAG, "eglSwapBuffer error: $swapStatus. Waiting for new surface")
+        releaseEglSurface()
+      }
+    }
     val renderTimeNsCopy = renderTimeNs
     val currentTimeNs = SystemClock.elapsedRealtimeNanos()
     val expectedEndRenderTimeNs = currentTimeNs + renderTimeNsCopy
@@ -253,24 +271,30 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
         widgetTextureRenderer.render(widgetRenderer.getTexture())
       }
     } else {
+      logE("KIRYLDD", "mapboxRenderer.render() before")
       mapboxRenderer.render()
+      logE("KIRYLDD", "mapboxRenderer.render() after")
     }
 
     // assuming render event queue holds user's runnables with OpenGL ES commands
     // it makes sense to execute them after drawing a map but before swapping buffers
     // **note** this queue also holds snapshot tasks
-    drainQueue(renderEventQueue)
-    when (val swapStatus = eglCore.swapBuffers(eglSurface)) {
-      EGL10.EGL_SUCCESS -> {}
-      EGL11.EGL_CONTEXT_LOST -> {
-        logW(TAG, "Context lost. Waiting for re-acquire")
-        releaseEgl()
-      }
-      else -> {
-        logW(TAG, "eglSwapBuffer error: $swapStatus. Waiting for new surface")
-        releaseEglSurface()
-      }
-    }
+//    drainQueue(renderEventQueue)
+
+//    logE("KIRYLDD", "eglCore.swapBuffers before, time $time")
+//    when (val swapStatus = eglCore.swapBuffers(eglSurface)) {
+//      EGL10.EGL_SUCCESS -> {
+//        logE("KIRYLDD", "eglCore.swapBuffers after")
+//      }
+//      EGL11.EGL_CONTEXT_LOST -> {
+//        logW(TAG, "Context lost. Waiting for re-acquire")
+//        releaseEgl()
+//      }
+//      else -> {
+//        logW(TAG, "eglSwapBuffer error: $swapStatus. Waiting for new surface")
+//        releaseEglSurface()
+//      }
+//    }
     val actualEndRenderTimeNs = SystemClock.elapsedRealtimeNanos()
     if (renderTimeNsCopy != 0L && actualEndRenderTimeNs < expectedEndRenderTimeNs) {
       // we need to stop swap buffers for less than time requested in order to have some time to render upcoming frame
@@ -420,7 +444,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   override fun doFrame(frameTimeNanos: Long) {
     // it makes sense to draw not only when EGL config is prepared but when native renderer is created
     if (renderThreadPrepared && !paused) {
-      draw()
+      draw(frameTimeNanos)
     }
     awaitingNextVsync = false
     // It's critical to drain queue after setting `awaitingNextVsync` to false as some tasks may recursively schedule other tasks when executed.
@@ -522,6 +546,8 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
 
   companion object {
     private const val TAG = "Mbgl-RenderThread"
+
+    var megaLock = CountDownLatch(1)
 
     private val ONE_SECOND_NS = 10.0.pow(9.0).toLong()
     private val ONE_MILLISECOND_NS = 10.0.pow(6.0).toLong()

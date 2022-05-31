@@ -1,18 +1,21 @@
 package com.mapbox.maps
 
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewTreeObserver
+import android.annotation.SuppressLint
+import android.view.*
 import android.widget.FrameLayout
+import android.widget.TextView
 import androidx.annotation.LayoutRes
 import androidx.annotation.VisibleForTesting
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater
+import androidx.core.view.children
 import com.mapbox.bindgen.Expected
+import com.mapbox.maps.renderer.MapboxRenderThread
 import com.mapbox.maps.viewannotation.OnViewAnnotationUpdatedListener
 import com.mapbox.maps.viewannotation.ViewAnnotation
 import com.mapbox.maps.viewannotation.ViewAnnotation.Companion.USER_FIXED_DIMENSION
 import com.mapbox.maps.viewannotation.ViewAnnotationManager
 import com.mapbox.maps.viewannotation.ViewAnnotationVisibility
+import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.CopyOnWriteArraySet
 import kotlin.collections.HashMap
@@ -27,6 +30,15 @@ internal class ViewAnnotationManagerImpl(
   init {
     mapView.requestDisallowInterceptTouchEvent(false)
     mapboxMap.setViewAnnotationPositionsUpdateListener(this)
+//    mapView.viewTreeObserver.addOnPreDrawListener {
+//      logE("KIRYLDD", "Pre draw")
+//      MapboxRenderThread.megaLock.countDown()
+//      true
+//    }
+//    mapView.viewTreeObserver.addOnDrawListener {
+//      logE("KIRYLDD", "draw")
+//      MapboxRenderThread.megaLock.countDown()
+//    }
   }
 
   private val annotationMap = ConcurrentHashMap<String, ViewAnnotation>()
@@ -263,6 +275,7 @@ internal class ViewAnnotationManagerImpl(
     return null to null
   }
 
+  @SuppressLint("SetTextI18n")
   private fun drawAnnotationViews(
     positionDescriptorCoreList: List<ViewAnnotationPositionDescriptor>
   ) {
@@ -292,8 +305,15 @@ internal class ViewAnnotationManagerImpl(
           }
         }
         annotation.view.apply {
-          translationX = descriptor.leftTopCoordinate.x.toFloat()
-          translationY = descriptor.leftTopCoordinate.y.toFloat()
+          logE("KIRYLDD", "ACTUAL translationX=${translationX}, translationY=${translationY}")
+          Choreographer.getInstance().postFrameCallback {
+            logE("KIRYLDD", "View annotation postFrameCallback , time=$it")
+            translationX = descriptor.leftTopCoordinate.x.toFloat()
+            translationY = descriptor.leftTopCoordinate.y.toFloat()
+            val id = UUID.randomUUID().toString().substring(0, 10)
+//            ((this as ViewGroup).children.elementAt(0) as TextView).text = "$id\n${descriptor.leftTopCoordinate.x.toFloat()}\n${descriptor.leftTopCoordinate.y.toFloat()}"
+            logE("KIRYLDD", "NEW id=$id, translationX=${descriptor.leftTopCoordinate.x.toFloat()}, translationY=${descriptor.leftTopCoordinate.y.toFloat()}, time=$it")
+          }
         }
         if (!currentViewsDrawnMap.keys.contains(descriptor.identifier) && mapView.indexOfChild(annotation.view) == -1) {
           mapView.addView(annotation.view, annotation.viewLayoutParams)

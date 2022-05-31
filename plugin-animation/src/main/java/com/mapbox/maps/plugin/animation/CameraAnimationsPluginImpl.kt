@@ -177,9 +177,13 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     handler.removeCallbacks(commitChangesRunnable)
   }
 
+  private fun CameraOptions.isEmpty() =
+    bearing == null && anchor == null && padding == null && zoom == null && center == null && pitch == null
+
+
   @VisibleForTesting(otherwise = PRIVATE)
   internal fun performMapJump(cameraOptions: CameraOptions) {
-    if (lastCameraOptions == cameraOptions) {
+    if (lastCameraOptions == cameraOptions || cameraOptions.isEmpty()) {
       return
     }
     // move native map to new position
