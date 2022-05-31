@@ -19,6 +19,7 @@ object Plugins {
   const val binaryCompatibilityValidatorId = "org.jetbrains.kotlinx.binary-compatibility-validator"
   const val taskTreeId = "com.dorongold.task-tree"
   const val pitestPlugin = "pl.droidsonroids.gradle:gradle-pitest-plugin:${Versions.pitest}"
+  const val detekt = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:${Versions.detekt}"
 }
 
 object Dependencies {
@@ -75,6 +76,7 @@ object Dependencies {
   const val equalsVerifier = "nl.jqno.equalsverifier:equalsverifier:${Versions.equalsVerifier}"
   const val asyncInflater = "androidx.asynclayoutinflater:asynclayoutinflater:${Versions.asyncInflater}"
   const val kotlinReflect = "org.jetbrains.kotlin:kotlin-reflect:${Versions.pluginKotlin}"
+  const val detektFormatting = "io.gitlab.arturbosch.detekt:detekt-formatting:${Versions.detekt}"
 }
 
 object Versions {
@@ -122,4 +124,5 @@ object Versions {
   const val asyncInflater = "1.0.0"
   const val mapboxSdkVersionsPlugin = "1.1.3"
   const val pitest = "0.2.8"
+  const val detekt = "1.20.0"
 }

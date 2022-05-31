@@ -1,0 +1,26 @@
+apply plugin: "io.gitlab.arturbosch.detekt"
+
+def configDir = "${project.rootDir}"
+def reportsDir = "${project.buildDir}/reports"
+
+detekt {
+    input = files(
+            "$projectDir/src",
+            "$projectDir/build.gradle.kts"
+    )
+    config = files("$configDir/detekt.yml")
+    reports {
+        xml {
+            enabled = true
+            destination = file("$reportsDir/detekt.xml")
+        }
+        html {
+            enabled = true
+            destination = file("$reportsDir/detekt.html")
+        }
+        custom {
+            reportId = "CustomJsonReport"
+            destination = file("$reportsDir/detekt.json")
+        }
+    }
+}

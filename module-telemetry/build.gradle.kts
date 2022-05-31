@@ -5,6 +5,7 @@ plugins {
   kotlin("android")
   kotlin("kapt")
   id("org.jetbrains.dokka")
+  id("io.gitlab.arturbosch.detekt").version(Versions.detekt)
 }
 
 val VERSION_NAME: String by project
@@ -36,6 +37,7 @@ dependencies {
   androidTestImplementation(Dependencies.androidxTestRunner)
   androidTestImplementation(Dependencies.androidxJUnitTestRules)
   androidTestImplementation(Dependencies.androidxEspresso)
+  detektPlugins(Dependencies.detektFormatting)
 }
 
 tasks.withType<DokkaTask>().configureEach {
@@ -53,4 +55,5 @@ project.apply {
   from("$rootDir/gradle/jacoco.gradle")
   from("$rootDir/gradle/sdk-registry.gradle")
   from("$rootDir/gradle/track-public-apis.gradle")
+  from("$rootDir/gradle/detekt.gradle")
 }

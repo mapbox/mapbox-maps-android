@@ -3,6 +3,7 @@ plugins {
   kotlin("android")
   kotlin("android.extensions")
   id("com.mapbox.maps.token")
+  id("io.gitlab.arturbosch.detekt").version(Versions.detekt)
 }
 
 val buildFromSource: String by project
@@ -65,11 +66,13 @@ dependencies {
   androidTestImplementation(Dependencies.androidxEspresso)
   androidTestImplementation(Dependencies.androidxUiAutomator)
   testImplementation(Dependencies.junit)
+  detektPlugins(Dependencies.detektFormatting)
 }
 
 project.apply {
   from("$rootDir/gradle/ktlint.gradle")
   from("$rootDir/gradle/lint.gradle")
+  from("$rootDir/gradle/detekt.gradle")
 }
 
 val localPath:String = org.apache.commons.io.FilenameUtils.getFullPathNoEndSeparator(project.buildscript.sourceFile.toString())
