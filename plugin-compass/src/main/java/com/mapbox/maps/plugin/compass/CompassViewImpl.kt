@@ -52,7 +52,7 @@ open class CompassViewImpl
       visibility = if (value) {
         View.VISIBLE
       } else {
-        View.INVISIBLE
+        View.GONE
       }
     }
 
