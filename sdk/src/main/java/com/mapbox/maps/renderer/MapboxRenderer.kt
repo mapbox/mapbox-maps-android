@@ -48,6 +48,7 @@ internal abstract class MapboxRenderer : MapClient {
 
   @UiThread
   fun onDestroy() {
+    logW(TAG, "onDestroy")
     renderThread.destroy()
     renderThread.fpsChangedListener = null
   }
@@ -60,7 +61,7 @@ internal abstract class MapboxRenderer : MapClient {
 
   @AnyThread
   override fun scheduleRepaint() {
-    renderThread.queueRenderEvent(renderEventSdk)
+    renderThread.queueRenderEvent(repaintRenderEvent)
   }
 
   @AnyThread
@@ -69,7 +70,7 @@ internal abstract class MapboxRenderer : MapClient {
       RenderEvent(
         runnable = { task.run() },
         needRender = false,
-        eventType = if (renderThread.renderDestroyCallChain) EventType.DESTROY_RENDERER else EventType.SDK
+        eventType = if (renderThread.renderDestroyCallChain) EventType.DESTROY_RENDERER else EventType.OTHER
       )
     )
   }
@@ -86,7 +87,7 @@ internal abstract class MapboxRenderer : MapClient {
   }
 
   @AnyThread
-  fun queueEvent(runnable: Runnable) {
+  fun queueNonRenderEvent(runnable: Runnable) {
     renderThread.queueRenderEvent(
       RenderEvent(
         runnable = runnable,
@@ -113,6 +114,7 @@ internal abstract class MapboxRenderer : MapClient {
 
   @WorkerThread
   fun destroyRenderer() {
+    logW(TAG, "Destroy renderer")
     map?.destroyRenderer()
     // additionally it's correct moment to release pixel reader while we still have EGL context
     pixelReader?.release()
@@ -156,7 +158,7 @@ internal abstract class MapboxRenderer : MapClient {
             }
           },
           needRender = true,
-          eventType = EventType.SDK
+          eventType = EventType.OTHER
         )
       )
       waitCondition.await(1, TimeUnit.SECONDS)
@@ -174,7 +176,7 @@ internal abstract class MapboxRenderer : MapClient {
       RenderEvent(
         runnable = { listener.onSnapshotReady(performSnapshot()) },
         needRender = true,
-        eventType = EventType.SDK
+        eventType = EventType.OTHER
       )
     )
   }
@@ -232,6 +234,6 @@ internal abstract class MapboxRenderer : MapClient {
   companion object {
     private const val TAG = "Mbgl-Renderer"
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    internal val renderEventSdk = RenderEvent(null, true, EventType.SDK)
+    internal val repaintRenderEvent = RenderEvent(null, true, EventType.OTHER)
   }
 }

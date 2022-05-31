@@ -104,7 +104,7 @@ internal abstract class MapboxRendererTest {
   @Test
   fun queueEventTest() {
     val event = mockk<Runnable>(relaxUnitFun = true)
-    mapboxRenderer.queueEvent(event)
+    mapboxRenderer.queueNonRenderEvent(event)
     verify {
       renderThread.queueRenderEvent(
         RenderEvent(

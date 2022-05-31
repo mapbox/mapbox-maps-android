@@ -18,10 +18,10 @@ internal class RenderHandlerThread {
     get() = handlerThread.isAlive
 
   fun post(task: () -> Unit) {
-    postDelayed(task, 0, EventType.SDK)
+    postDelayed(task, 0, EventType.OTHER)
   }
 
-  fun postDelayed(task: () -> Unit, delayMillis: Long, eventType: EventType = EventType.SDK) {
+  fun postDelayed(task: () -> Unit, delayMillis: Long, eventType: EventType = EventType.OTHER) {
     handler?.let {
       val message = Message.obtain(it, task)
       message.obj = eventType
@@ -46,12 +46,8 @@ internal class RenderHandlerThread {
     }
   }
 
-  fun clearMessageQueue(clearAll: Boolean = true) {
-    if (clearAll) {
-      handler?.removeCallbacksAndMessages(null)
-    } else {
-      handler?.removeCallbacksAndMessages(EventType.SDK)
-    }
+  fun clearMessageQueue() {
+    handler?.removeCallbacksAndMessages(null)
   }
 
   companion object {
