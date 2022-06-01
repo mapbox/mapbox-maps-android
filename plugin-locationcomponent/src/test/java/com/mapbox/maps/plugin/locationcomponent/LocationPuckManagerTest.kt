@@ -183,7 +183,19 @@ class LocationPuckManagerTest {
 
   @Test
   fun testUpdateCurrentBearing() {
-    locationPuckManager.updateCurrentBearing(0.0)
+    locationPuckManager.updateCurrentBearing(0.1)
+    verify { animationManager.animateBearing(targets = anyDoubleVararg(), options = null) }
+  }
+
+  @Test
+  fun testUpdateCurrentBearingWithinThreshold() {
+    locationPuckManager.updateCurrentBearing(0.005)
+    verify(exactly = 0) { animationManager.animateBearing(targets = anyDoubleVararg(), options = null) }
+  }
+
+  @Test
+  fun testUpdateCurrentBearingWithForceUpdate() {
+    locationPuckManager.updateCurrentBearing(0.005, forceUpdate = true)
     verify { animationManager.animateBearing(targets = anyDoubleVararg(), options = null) }
   }
 

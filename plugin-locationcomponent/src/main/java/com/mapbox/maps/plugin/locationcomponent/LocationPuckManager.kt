@@ -95,7 +95,7 @@ internal class LocationPuckManager(
       lastLocation?.let {
         updateCurrentPosition(it)
       }
-      updateCurrentBearing(lastBearing)
+      updateCurrentBearing(lastBearing, forceUpdate = true)
       locationLayerRenderer.addLayers(positionManager)
       locationLayerRenderer.initializeComponents(style)
       styleScaling(settings)
@@ -165,7 +165,11 @@ internal class LocationPuckManager(
     )
   }
 
-  fun updateCurrentBearing(vararg bearings: Double, options: (ValueAnimator.() -> Unit)? = null) {
+  fun updateCurrentBearing(vararg bearings: Double, options: (ValueAnimator.() -> Unit)? = null, forceUpdate: Boolean = false) {
+    // Skip bearing updates if the change from the lastBearing is too small, thus avoid unnecessary calls to gl-native.
+    if (!forceUpdate && (abs(bearings.last() - lastBearing) < BEARING_UPDATE_THRESHOLD)) {
+      return
+    }
     val targets = doubleArrayOf(lastBearing, *bearings)
     animationManager.animateBearing(
       *targets,
@@ -283,6 +287,7 @@ internal class LocationPuckManager(
   private companion object {
     const val MIN_ZOOM = 0.50
     const val MAX_ZOOM = 22.0
+
     // To make the 3D puck's size constant across different zoom levels, the 3D puck's size (real world object size)
     // should be exponential to the zoom level.
     // The base of the exponential expression is decided by how the tile pyramid works: at zoom level n, we have 2^(n+1)
@@ -297,6 +302,7 @@ internal class LocationPuckManager(
     // Threshold to update the mercator scale factor when the latitude changes, so that we don't update the
     // scale expression too frequently and cause performance issues.
     const val MERCATOR_SCALE_THRESHOLD = 0.01
+    const val BEARING_UPDATE_THRESHOLD = 0.01
   }
 }
 
