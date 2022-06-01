@@ -201,14 +201,18 @@ class RasterDemSource(builder: Builder) : Source(builder.sourceId) {
     get() = getPropertyValue("prefetch-zoom-delta")
 
   /**
-   * Minimum tile update interval in milliseconds, which is used to throttle the tile update network requests.
+   * Minimum tile update interval in seconds, which is used to throttle the tile update network requests.
+   * If the given source supports loading tiles from a server, sets the minimum tile update interval.
+   * Update network requests that are more frequent than the minimum tile update interval are suppressed.
    */
   fun minimumTileUpdateInterval(value: Double = 0.0) = apply {
     setVolatileProperty(PropertyValue("minimum-tile-update-interval", TypeUtils.wrapToValue(value)))
   }
 
   /**
-   * Minimum tile update interval in milliseconds, which is used to throttle the tile update network requests.
+   * Minimum tile update interval in seconds, which is used to throttle the tile update network requests.
+   * If the given source supports loading tiles from a server, sets the minimum tile update interval.
+   * Update network requests that are more frequent than the minimum tile update interval are suppressed.
    */
   val minimumTileUpdateInterval: Double?
     /**
@@ -387,7 +391,9 @@ class RasterDemSource(builder: Builder) : Source(builder.sourceId) {
     }
 
     /**
-     * Minimum tile update interval in milliseconds, which is used to throttle the tile update network requests.
+     * Minimum tile update interval in seconds, which is used to throttle the tile update network requests.
+     * If the given source supports loading tiles from a server, sets the minimum tile update interval.
+     * Update network requests that are more frequent than the minimum tile update interval are suppressed.
      */
     fun minimumTileUpdateInterval(value: Double = 0.0) = apply {
       val propertyValue = PropertyValue("minimum-tile-update-interval", TypeUtils.wrapToValue(value))
@@ -531,7 +537,9 @@ class RasterDemSource(builder: Builder) : Source(builder.sourceId) {
       get() = StyleManager.getStyleSourcePropertyDefaultValue("raster-dem", "prefetch-zoom-delta").silentUnwrap()
 
     /**
-     * Minimum tile update interval in milliseconds, which is used to throttle the tile update network requests.
+     * Minimum tile update interval in seconds, which is used to throttle the tile update network requests.
+     * If the given source supports loading tiles from a server, sets the minimum tile update interval.
+     * Update network requests that are more frequent than the minimum tile update interval are suppressed.
      */
     val defaultMinimumTileUpdateInterval: Double?
       /**
