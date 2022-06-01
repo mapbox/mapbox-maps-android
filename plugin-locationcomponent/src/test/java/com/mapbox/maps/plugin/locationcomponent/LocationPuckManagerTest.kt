@@ -229,6 +229,14 @@ class LocationPuckManagerTest {
   }
 
   @Test
+  fun testShowForceUpdate() {
+    locationPuckManager.isHidden = false
+    locationPuckManager.show(forceUpdate = true)
+    verify { locationLayerRenderer.show() }
+    assertFalse(locationPuckManager.isHidden)
+  }
+
+  @Test
   fun testHide() {
     locationPuckManager.hide()
     verify { locationLayerRenderer.hide() }
