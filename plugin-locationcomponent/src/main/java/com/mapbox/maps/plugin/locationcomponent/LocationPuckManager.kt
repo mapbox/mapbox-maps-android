@@ -28,8 +28,8 @@ internal class LocationPuckManager(
   private val animationManager: PuckAnimatorManager
 ) {
 
-  var isHidden = true
-    private set
+  @VisibleForTesting(otherwise = PRIVATE)
+  internal var isHidden = true
 
   @VisibleForTesting(otherwise = PRIVATE)
   internal var lastLocation: Point? = null
@@ -100,7 +100,7 @@ internal class LocationPuckManager(
       locationLayerRenderer.initializeComponents(style)
       styleScaling(settings)
       if (lastLocation != null && settings.enabled) {
-        show()
+        show(forceUpdate = true)
       } else {
         hide()
       }
@@ -200,9 +200,11 @@ internal class LocationPuckManager(
   //
   // Layer action
   //
-  fun show() {
-    isHidden = false
-    locationLayerRenderer.show()
+  fun show(forceUpdate: Boolean = false) {
+    if (forceUpdate || isHidden) {
+      isHidden = false
+      locationLayerRenderer.show()
+    }
   }
 
   fun hide() {
