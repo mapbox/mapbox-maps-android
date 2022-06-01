@@ -150,8 +150,11 @@ abstract class Layer : StyleContract.StyleLayerExtension {
       return try {
         it.getStyleLayerProperty(layerId, propertyName).unwrap()
       } catch (e: RuntimeException) {
-        Log.e(TAG, "Get layer property failed: ${e.message}")
-        Log.e(TAG, it.getStyleLayerProperty(layerId, propertyName).toString())
+        Log.e(
+          TAG,
+          "Get layer property=$propertyName for layerId=$layerId failed: ${e.message}. " +
+            "Value obtained: ${it.getStyleLayerProperty(layerId, propertyName)}"
+        )
         null
       }
     }
