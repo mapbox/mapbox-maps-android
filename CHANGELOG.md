@@ -19,6 +19,9 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * Fix an unexpected request update delay for tiles taken from in-memory cache when minimumTileUpdateInterval is set. ([#1396](https://github.com/mapbox/mapbox-maps-android/pull/1396))
 
+## Dependencies
+* Bump gl-native to v10.6.0-rc.1, common to 22.0.0-rc.2. ([#1396](https://github.com/mapbox/mapbox-maps-android/pull/1396))
+
 # 10.6.0-beta.2 May 25, 2022
 
 ## Features ✨ and improvements 🏁
