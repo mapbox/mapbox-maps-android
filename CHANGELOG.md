@@ -4,10 +4,10 @@ Mapbox welcomes participation and contributions from everyone.
 
 #main
 ## Features ✨ and improvements 🏁
-Optimise the bearing update frequency for the location puck animator. ([1398](https://github.com/mapbox/mapbox-maps-android/pull/1398))
+* Optimise the bearing update frequency for the location puck animator. ([1398](https://github.com/mapbox/mapbox-maps-android/pull/1398))
 
 ## Bug fixes 🐞
-Fix compass is not showing in "edge-to-edge" mode. ([1391](https://github.com/mapbox/mapbox-maps-android/pull/1391))
+* Fix compass is not showing in "edge-to-edge" mode. ([1391](https://github.com/mapbox/mapbox-maps-android/pull/1391))
 
 # 10.6.0-beta.2 May 25, 2022
 
