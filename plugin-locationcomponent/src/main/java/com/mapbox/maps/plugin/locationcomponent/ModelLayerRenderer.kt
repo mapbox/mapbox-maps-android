@@ -1,5 +1,7 @@
 package com.mapbox.maps.plugin.locationcomponent
 
+import androidx.annotation.VisibleForTesting
+import androidx.annotation.VisibleForTesting.PRIVATE
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.style.StyleInterface
@@ -13,6 +15,10 @@ internal class ModelLayerRenderer(
 ) : LocationLayerRenderer {
 
   private var style: StyleInterface? = null
+
+  @VisibleForTesting(otherwise = PRIVATE)
+  internal var lastLocation: Point? = null
+  private var lastBearing: Double = 0.0
   private var modelLayer = layerSourceProvider.getModelLayer(locationModelLayerOptions)
   private var source = layerSourceProvider.getModelSource(locationModelLayerOptions)
 
@@ -34,6 +40,7 @@ internal class ModelLayerRenderer(
   }
 
   override fun addLayers(positionManager: LocationComponentPositionManager) {
+    modelLayer.modelRotation(locationModelLayerOptions.modelRotation.map { it.toDouble() })
     positionManager.addLayerToMap(modelLayer)
   }
 
@@ -73,14 +80,25 @@ internal class ModelLayerRenderer(
   }
 
   private fun setLayerLocation(latLng: Point) {
-    val modelValues = listOf(latLng.longitude(), latLng.latitude())
-    source.setPosition(modelValues)
+    updateLocationOrBearing(point = latLng)
   }
 
   private fun setLayerBearing(bearing: Double) {
-    val orientation = locationModelLayerOptions.modelRotation.map { it.toDouble() }.toMutableList()
-    orientation[2] = orientation[2] + bearing
-    modelLayer.modelRotation(orientation)
+    updateLocationOrBearing(bearing = bearing)
+  }
+
+  private fun updateLocationOrBearing(point: Point? = null, bearing: Double? = null) {
+    point?.let {
+      lastLocation = it
+    }
+    bearing?.let {
+      lastBearing = it
+    }
+    lastLocation?.let { location ->
+      val latLng = listOf(location.longitude(), location.latitude())
+      val orientation = listOf(0.0, 0.0, lastBearing)
+      source.setPositionAndOrientation(latLng, orientation)
+    }
   }
 
   /**
