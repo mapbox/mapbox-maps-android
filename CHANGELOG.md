@@ -11,11 +11,18 @@ Fix compass is not showing in "edge-to-edge" mode. ([1391](https://github.com/ma
 
 ## Features ✨ and improvements 🏁
 * Minimise tiles relayout on camera zooming with globe view. Improve the overall performance and reduce latency of the cached tiles appearance. ([#1396](https://github.com/mapbox/mapbox-maps-android/pull/1396))
-* Add minimum and maximum range check for sky layer property 'sky-atmosphere-sun' and 'sky-gradient-center'. If the input is invalid, the default property value will be used. ([#1396](https://github.com/mapbox/mapbox-maps-android/pull/1396))
+* Add minimum and maximum range check for sky layer property `sky-atmosphere-sun` and `sky-gradient-center`. If the input is invalid, the default property value will be used. ([#1396](https://github.com/mapbox/mapbox-maps-android/pull/1396))
 * Share render data between vector render tiles referring to the same logical tile. ([#1396](https://github.com/mapbox/mapbox-maps-android/pull/1396))
 
 ## Bug fixes 🐞
 * Fix an unexpected request update delay for tiles taken from in-memory cache when minimumTileUpdateInterval is set. ([#1396](https://github.com/mapbox/mapbox-maps-android/pull/1396))
+* Fix a rare bug where some tiles would not show up correctly on globe. ([#1396](https://github.com/mapbox/mapbox-maps-android/pull/1396))
+* Fix a bug where features could be queried without cursor intersecting the globe. ([#1396](https://github.com/mapbox/mapbox-maps-android/pull/1396))
+* Fix view annotations disappearing on the globe. ([#1396](https://github.com/mapbox/mapbox-maps-android/pull/1396))
+* Fix symbols ignoring both collision and placement on the globe. ([#1396](https://github.com/mapbox/mapbox-maps-android/pull/1396))
+* Add anti-aliasing on the globe on low zoom levels. ([#1396](https://github.com/mapbox/mapbox-maps-android/pull/1396))
+* Fix globe controls when map orientation is something else than "north". ([#1396](https://github.com/mapbox/mapbox-maps-android/pull/1396))
+* Fix circle and heatmap layers not being aligned with globe's surface. ([#1396](https://github.com/mapbox/mapbox-maps-android/pull/1396))
 
 ## Dependencies
 * Bump gl-native to v10.6.0-rc.1, common to 22.0.0-rc.2. ([#1396](https://github.com/mapbox/mapbox-maps-android/pull/1396))
