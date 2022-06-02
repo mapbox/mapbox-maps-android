@@ -30,7 +30,7 @@ allprojects {
 
 // In the app build.gradle file
 dependencies {
-  implementation 'com.mapbox.plugin:maps-lifecycle:10.6.0-beta.1'
+  implementation 'com.mapbox.plugin:maps-lifecycle:10.6.0-rc.1'
   // Make sure the version of appcompat is 1.3.0+
   implementation 'androidx.appcompat:appcompat:1.3.0'
 }
