@@ -183,13 +183,25 @@ class LocationPuckManagerTest {
   }
 
   @Test
-  fun testFirstLocationUpdate() {
+  fun testFirstLocationUpdateWhileEnabled() {
+    every { settings.enabled } returns true
     locationPuckManager.updateCurrentPosition(Point.fromLngLat(0.0, 0.0))
     verify { animationManager.animatePosition(targets = anyVararg(), options = null) }
     verify(exactly = 1) { locationLayerRenderer.show() }
     locationPuckManager.updateCurrentPosition(Point.fromLngLat(10.0, 10.0))
     verify { animationManager.animatePosition(targets = anyVararg(), options = null) }
     verify(exactly = 1) { locationLayerRenderer.show() }
+  }
+
+  @Test
+  fun testFirstLocationUpdateWhileDisabled() {
+    every { settings.enabled } returns false
+    locationPuckManager.updateCurrentPosition(Point.fromLngLat(0.0, 0.0))
+    verify { animationManager.animatePosition(targets = anyVararg(), options = null) }
+    verify(exactly = 0) { locationLayerRenderer.show() }
+    locationPuckManager.updateCurrentPosition(Point.fromLngLat(10.0, 10.0))
+    verify { animationManager.animatePosition(targets = anyVararg(), options = null) }
+    verify(exactly = 0) { locationLayerRenderer.show() }
   }
 
   @Test
