@@ -2,6 +2,11 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
+# 10.6.0
+
+## Bug fixes 🐞
+* Optimise the frequency to update location layer's visibility. ([1399](https://github.com/mapbox/mapbox-maps-android/pull/1399))
+
 # 10.6.0-rc.1 June 2, 2022
 
 ## Features ✨ and improvements 🏁
