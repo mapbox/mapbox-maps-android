@@ -1,5 +1,6 @@
 package com.mapbox.maps.renderer
 
+import android.opengl.GLES20
 import android.os.Build
 import android.os.SystemClock
 import android.view.Choreographer
@@ -235,20 +236,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   }
 
   private fun draw(time: Long) {
-    logE("KIRYLDD", "eglCore.swapBuffers before $time")
-    when (val swapStatus = eglCore.swapBuffers(eglSurface)) {
-      EGL10.EGL_SUCCESS -> {
-        logE("KIRYLDD", "eglCore.swapBuffers after $time")
-      }
-      EGL11.EGL_CONTEXT_LOST -> {
-        logW(TAG, "Context lost. Waiting for re-acquire")
-        releaseEgl()
-      }
-      else -> {
-        logW(TAG, "eglSwapBuffer error: $swapStatus. Waiting for new surface")
-        releaseEglSurface()
-      }
-    }
+    logE("KIRYLDD", "draw $time")
     val renderTimeNsCopy = renderTimeNs
     val currentTimeNs = SystemClock.elapsedRealtimeNanos()
     val expectedEndRenderTimeNs = currentTimeNs + renderTimeNsCopy
@@ -275,6 +263,27 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       mapboxRenderer.render()
       logE("KIRYLDD", "mapboxRenderer.render() after")
     }
+
+    Choreographer.getInstance().postFrameCallback {
+      logE("KIRYLDD", "eglCore.swapBuffers before $it")
+      when (val swapStatus = eglCore.swapBuffers(eglSurface)) {
+        EGL10.EGL_SUCCESS -> {
+          logE("KIRYLDD", "eglCore.swapBuffers after $it")
+        }
+        EGL11.EGL_CONTEXT_LOST -> {
+          logW(TAG, "Context lost. Waiting for re-acquire")
+          releaseEgl()
+        }
+        else -> {
+          logW(TAG, "eglSwapBuffer error: $swapStatus. Waiting for new surface")
+          releaseEglSurface()
+        }
+      }
+    }
+
+    logE("KIRYLDD", "mapboxRenderer.glFinish before")
+    GLES20.glFinish()
+    logE("KIRYLDD", "mapboxRenderer.glFinish after")
 
     // assuming render event queue holds user's runnables with OpenGL ES commands
     // it makes sense to execute them after drawing a map but before swapping buffers
