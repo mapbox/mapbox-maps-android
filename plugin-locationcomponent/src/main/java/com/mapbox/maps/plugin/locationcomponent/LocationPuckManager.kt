@@ -155,8 +155,8 @@ internal class LocationPuckManager(
   }
 
   fun updateCurrentPosition(vararg points: Point, options: (ValueAnimator.() -> Unit)? = null) {
+    show()
     val targets = lastLocation?.let {
-      show()
       arrayOf(it, *points)
     } ?: arrayOf(*points, *points)
     animationManager.animatePosition(
