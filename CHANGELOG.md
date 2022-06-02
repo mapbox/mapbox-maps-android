@@ -7,10 +7,9 @@ Mapbox welcomes participation and contributions from everyone.
 * Optimise the bearing update frequency for the location puck animator. ([1398](https://github.com/mapbox/mapbox-maps-android/pull/1398))
 
 ## Bug fixes 🐞
-* Fix compass is not showing in "edge-to-edge" mode. ([1391](https://github.com/mapbox/mapbox-maps-android/pull/1391))
 * Optimise the frequency to update location layer's visibility. ([1399](https://github.com/mapbox/mapbox-maps-android/pull/1399))
 
-# 10.6.0-rc.1 June 1, 2022
+# 10.6.0-rc.1 June 2, 2022
 
 ## Features ✨ and improvements 🏁
 * Minimise tiles relayout on camera zooming with globe view. Improve the overall performance and reduce latency of the cached tiles appearance. ([#1396](https://github.com/mapbox/mapbox-maps-android/pull/1396))
@@ -18,6 +17,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Share render data between vector render tiles referring to the same logical tile. ([#1396](https://github.com/mapbox/mapbox-maps-android/pull/1396))
 
 ## Bug fixes 🐞
+* Fix compass is not showing in "edge-to-edge" mode. ([1391](https://github.com/mapbox/mapbox-maps-android/pull/1391))
 * Fix an unexpected request update delay for tiles taken from in-memory cache when minimumTileUpdateInterval is set. ([#1396](https://github.com/mapbox/mapbox-maps-android/pull/1396))
 * Fix a rare bug where some tiles would not show up correctly on globe. ([#1396](https://github.com/mapbox/mapbox-maps-android/pull/1396))
 * Fix a bug where features could be queried without cursor intersecting the globe. ([#1396](https://github.com/mapbox/mapbox-maps-android/pull/1396))
