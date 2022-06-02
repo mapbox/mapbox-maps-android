@@ -8,6 +8,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Bug fixes 🐞
 * Optimise the frequency to update location layer's visibility. ([1399](https://github.com/mapbox/mapbox-maps-android/pull/1399))
+* Fix the delay in the first appearance of the location puck. ([1403](https://github.com/mapbox/mapbox-maps-android/pull/1403))
 
 # 10.6.0-rc.1 June 2, 2022
 
