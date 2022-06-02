@@ -155,12 +155,13 @@ class LocationPuckManagerTest {
     callbackSlot.captured.invoke(style)
     verify { locationLayerRenderer.addLayers(positionManager) }
     verify { locationLayerRenderer.initializeComponents(style) }
-    verify { locationPuckManager.hide() }
+    verify { locationLayerRenderer.hide() }
 
     locationPuckManager.lastLocation = Point.fromLngLat(0.0, 0.0)
     locationPuckManager.updateSettings(settings)
+    locationPuckManager.locationLayerRenderer = locationLayerRenderer
     callbackSlot.captured.invoke(style)
-    verify { locationPuckManager.show() }
+    verify { locationLayerRenderer.show() }
   }
 
   @Test
@@ -213,7 +214,24 @@ class LocationPuckManagerTest {
 
   @Test
   fun testShow() {
+    locationPuckManager.isHidden = true
     locationPuckManager.show()
+    verify { locationLayerRenderer.show() }
+    assertFalse(locationPuckManager.isHidden)
+  }
+
+  @Test
+  fun testShowWhileAlreadyShown() {
+    locationPuckManager.isHidden = false
+    locationPuckManager.show()
+    verify(exactly = 0) { locationLayerRenderer.show() }
+    assertFalse(locationPuckManager.isHidden)
+  }
+
+  @Test
+  fun testShowForceUpdate() {
+    locationPuckManager.isHidden = false
+    locationPuckManager.show(forceUpdate = true)
     verify { locationLayerRenderer.show() }
     assertFalse(locationPuckManager.isHidden)
   }
