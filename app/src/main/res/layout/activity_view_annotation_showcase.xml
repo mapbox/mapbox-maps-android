@@ -8,7 +8,8 @@
     <com.mapbox.maps.MapView
         android:id="@+id/mapView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        app:mapbox_mapSurface="surface_view" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_style_toggle"

@@ -1,5 +1,6 @@
 package com.mapbox.maps
 
+import android.view.Choreographer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewTreeObserver
@@ -132,6 +133,7 @@ internal class ViewAnnotationManagerImpl(
   }
 
   override fun onViewAnnotationPositionsUpdate(positions: MutableList<ViewAnnotationPositionDescriptor>) {
+    hasViewAnnotations = true
     drawAnnotationViews(positions)
   }
 
@@ -292,8 +294,12 @@ internal class ViewAnnotationManagerImpl(
           }
         }
         annotation.view.apply {
-          translationX = descriptor.leftTopCoordinate.x.toFloat()
-          translationY = descriptor.leftTopCoordinate.y.toFloat()
+          logE("KIRYLDD", "Translation upd post")
+          Choreographer.getInstance().postFrameCallback {
+            translationX = descriptor.leftTopCoordinate.x.toFloat()
+            translationY = descriptor.leftTopCoordinate.y.toFloat()
+            logE("KIRYLDD", "Translation upd time=$it: x=${translationX}, y=${translationY}")
+          }
         }
         if (!currentViewsDrawnMap.keys.contains(descriptor.identifier) && mapView.indexOfChild(annotation.view) == -1) {
           mapView.addView(annotation.view, annotation.viewLayoutParams)
@@ -383,5 +389,7 @@ internal class ViewAnnotationManagerImpl(
     internal const val EXCEPTION_TEXT_GEOMETRY_IS_NULL = "Geometry can not be null!"
     internal const val EXCEPTION_TEXT_ASSOCIATED_FEATURE_ID_ALREADY_EXISTS =
       "View annotation with associatedFeatureId=%s already exists!"
+    @Volatile
+    internal var hasViewAnnotations = false
   }
 }
