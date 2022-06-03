@@ -1,18 +1,18 @@
 package com.mapbox.maps
 
+import android.view.Choreographer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewTreeObserver
 import android.widget.FrameLayout
-import androidx.annotation.LayoutRes
-import androidx.annotation.VisibleForTesting
+import androidx.annotation.*
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater
 import com.mapbox.bindgen.Expected
-import com.mapbox.maps.viewannotation.OnViewAnnotationUpdatedListener
+import com.mapbox.maps.viewannotation.*
 import com.mapbox.maps.viewannotation.ViewAnnotation
 import com.mapbox.maps.viewannotation.ViewAnnotation.Companion.USER_FIXED_DIMENSION
-import com.mapbox.maps.viewannotation.ViewAnnotationManager
 import com.mapbox.maps.viewannotation.ViewAnnotationVisibility
+import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.CopyOnWriteArraySet
 import kotlin.collections.HashMap
@@ -23,6 +23,7 @@ internal class ViewAnnotationManagerImpl(
 
   private val mapboxMap: MapboxMap = mapView.getMapboxMap()
   private val viewPlugins = mapView.mapController.pluginRegistry.viewPlugins
+  private val renderThread = mapView.mapController.renderer.renderThread
 
   init {
     mapView.requestDisallowInterceptTouchEvent(false)
@@ -40,6 +41,9 @@ internal class ViewAnnotationManagerImpl(
   // using copy on write as user could remove listener while callback is invoked
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal val viewUpdatedListenerSet = CopyOnWriteArraySet<OnViewAnnotationUpdatedListener>()
+
+  @Volatile
+  private var updatedPositionsList: MutableList<ViewAnnotationPositionDescriptor> = mutableListOf()
 
   override fun addViewAnnotation(
     @LayoutRes resId: Int,
@@ -131,8 +135,40 @@ internal class ViewAnnotationManagerImpl(
     viewUpdatedListenerSet.remove(listener)
   }
 
+  @AnyThread
+  override fun setViewAnnotationUpdateMode(mode: ViewAnnotationUpdateMode) {
+    renderThread.viewAnnotationMode = mode
+  }
+
+  /**
+   * Always called from render thread in the end of [MapInterface.render] call if positions did change.
+   *
+   * It's crucial to notify render thread in this callback as depending on mode we're using we need
+   * either swap buffers the same or the next frame.
+   */
+  @WorkerThread
   override fun onViewAnnotationPositionsUpdate(positions: MutableList<ViewAnnotationPositionDescriptor>) {
-    drawAnnotationViews(positions)
+    logE("KIRYLDD", "onViewAnnotationPositionsUpdate ${positions.joinToString(", ")}")
+    // update that flag here if callback was triggered, it will be reset by renderer directly when swapping buffers
+    renderThread.hasViewAnnotations = true
+    updatedPositionsList = positions
+  }
+
+  /**
+   * Called as soon as possible on main thread after updated positions arrived on render thread.
+   *
+   * We need another callback from core as scheduling from render thread to main happens too slow
+   * when using Java Main Looper.
+   */
+  @MainThread
+  override fun onViewAnnotationPositionsUpdateMainThread() {
+    val immutablePositionListCopy = LinkedList(updatedPositionsList)
+    logE("KIRYLDD", "onViewAnnotationPositionsUpdateMainThread postFrameCallback ${immutablePositionListCopy.joinToString(", ")}")
+    Choreographer.getInstance().postFrameCallback {
+      logE("KIRYLDD", "positioning views start, time=$it")
+      positionAnnotationViews(immutablePositionListCopy)
+      logE("KIRYLDD", "positioning views end")
+    }
   }
 
   fun destroy() {
@@ -263,7 +299,7 @@ internal class ViewAnnotationManagerImpl(
     return null to null
   }
 
-  private fun drawAnnotationViews(
+  private fun positionAnnotationViews(
     positionDescriptorCoreList: List<ViewAnnotationPositionDescriptor>
   ) {
     // firstly delete views that do not belong to the viewport
@@ -282,6 +318,11 @@ internal class ViewAnnotationManagerImpl(
     // add and reposition new and existed views
     positionDescriptorCoreList.forEach { descriptor ->
       annotationMap[descriptor.identifier]?.let { annotation ->
+        // update translation first - notify Android render node to schedule updates
+        annotation.view.apply {
+          translationX = descriptor.leftTopCoordinate.x.toFloat()
+          translationY = descriptor.leftTopCoordinate.y.toFloat()
+        }
         // update layout params explicitly if user has specified concrete width or height
         annotation.viewLayoutParams.apply {
           if (annotation.measuredWidth == USER_FIXED_DIMENSION) {
@@ -290,10 +331,6 @@ internal class ViewAnnotationManagerImpl(
           if (annotation.measuredHeight == USER_FIXED_DIMENSION) {
             height = descriptor.height
           }
-        }
-        annotation.view.apply {
-          translationX = descriptor.leftTopCoordinate.x.toFloat()
-          translationY = descriptor.leftTopCoordinate.y.toFloat()
         }
         if (!currentViewsDrawnMap.keys.contains(descriptor.identifier) && mapView.indexOfChild(annotation.view) == -1) {
           mapView.addView(annotation.view, annotation.viewLayoutParams)
@@ -380,6 +417,7 @@ internal class ViewAnnotationManagerImpl(
   }
 
   companion object {
+    internal const val TAG = "ViewAnnotation"
     internal const val EXCEPTION_TEXT_GEOMETRY_IS_NULL = "Geometry can not be null!"
     internal const val EXCEPTION_TEXT_ASSOCIATED_FEATURE_ID_ALREADY_EXISTS =
       "View annotation with associatedFeatureId=%s already exists!"

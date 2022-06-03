@@ -45,7 +45,7 @@ import com.mapbox.maps.renderer.widget.Widget
 
 internal class MapController : MapPluginProviderDelegate, MapControllable {
 
-  private val renderer: MapboxRenderer
+  internal val renderer: MapboxRenderer
   private val nativeObserver: NativeObserver
   private val mapInitOptions: MapInitOptions
   private val nativeMap: MapInterface
