@@ -28,7 +28,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 private fun MapboxMap() {
-  val mapView = MapView()
+  val mapView = mapView()
   AndroidView(
     factory = { mapView },
     modifier = Modifier.fillMaxSize()
@@ -47,7 +47,7 @@ private fun MapboxMap() {
 }
 
 @Composable
-private fun MapView(): MapView {
+private fun mapView(): MapView {
   val context = LocalContext.current
   return MapView(context)
 }
