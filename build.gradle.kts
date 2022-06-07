@@ -26,6 +26,7 @@ buildscript {
     classpath(Plugins.mapboxSdkRegistry)
     classpath(Plugins.mapboxSdkVersionsPlugin)
     classpath(Plugins.pitestPlugin)
+    classpath(Plugins.playPublisher)
   }
 }
 
