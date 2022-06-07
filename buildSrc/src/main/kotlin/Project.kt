@@ -19,6 +19,7 @@ object Plugins {
   const val binaryCompatibilityValidatorId = "org.jetbrains.kotlinx.binary-compatibility-validator"
   const val taskTreeId = "com.dorongold.task-tree"
   const val pitestPlugin = "pl.droidsonroids.gradle:gradle-pitest-plugin:${Versions.pitest}"
+  const val playPublisher = "com.github.triplet.gradle:play-publisher:${Versions.pluginPlayPublisher}"
 }
 
 object Dependencies {
@@ -90,7 +91,7 @@ object Versions {
   const val mapboxGestures = "0.7.0"
   const val mapboxJavaServices = "5.4.1"
   const val mapboxBase = "0.8.0"
-  const val mapboxGlNative = "10.6.0-rc.1"
+  const val mapboxGlNative = "10.6.0"
   const val mapboxCommon = "22.0.0-rc.2"
   const val mapboxAndroidCore = "5.0.0"
   const val mapboxAndroidTelemetry = "8.1.0"
@@ -122,4 +123,5 @@ object Versions {
   const val asyncInflater = "1.0.0"
   const val mapboxSdkVersionsPlugin = "1.1.3"
   const val pitest = "0.2.8"
+  const val pluginPlayPublisher = "3.7.0"
 }

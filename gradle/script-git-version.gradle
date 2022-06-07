@@ -1,0 +1,18 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.ajoberstar.grgit:grgit-gradle:4.1.1")
+    }
+}
+
+import org.ajoberstar.grgit.Grgit
+
+ext {
+    println("projectDir = "+projectDir)
+    git = Grgit.open(currentDir: projectDir)
+    def tagSize = git.tag.list().size()
+    gitVersionCode = tagSize+1
+    gitVersionName = "0.1.$tagSize".toString()
+}

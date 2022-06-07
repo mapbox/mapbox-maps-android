@@ -4,6 +4,9 @@ plugins {
   id("com.mapbox.maps.token")
 }
 
+apply {
+  from("$rootDir/gradle/script-git-version.gradle")
+}
 val buildFromSource: String by project
 
 android {
@@ -12,8 +15,8 @@ android {
     applicationId = "com.mapbox.maps.testapp"
     minSdk = AndroidVersions.minSdkVersion
     targetSdk = AndroidVersions.targetSdkVersion
-    versionCode = 1
-    versionName = "0.1.0"
+    versionCode = if (project.hasProperty("gitVersionCode")) project.property("gitVersionCode") as Int else 1
+    versionName = if (project.hasProperty("gitVersionName")) project.property("gitVersionName") as String else "0.1.0"
     multiDexEnabled = true
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     testInstrumentationRunnerArguments(mapOf("clearPackageData" to "true"))
