@@ -1,5 +1,7 @@
 package com.mapbox.maps
 
+import android.os.Handler
+import android.os.Looper
 import android.view.Choreographer
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +9,7 @@ import android.view.ViewTreeObserver
 import android.widget.FrameLayout
 import androidx.annotation.LayoutRes
 import androidx.annotation.VisibleForTesting
+import androidx.annotation.WorkerThread
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater
 import com.mapbox.bindgen.Expected
 import com.mapbox.maps.viewannotation.OnViewAnnotationUpdatedListener
@@ -24,6 +27,7 @@ internal class ViewAnnotationManagerImpl(
 
   private val mapboxMap: MapboxMap = mapView.getMapboxMap()
   private val viewPlugins = mapView.mapController.pluginRegistry.viewPlugins
+  private val mainHandler = Handler(Looper.getMainLooper())
 
   init {
     mapView.requestDisallowInterceptTouchEvent(false)
@@ -132,6 +136,10 @@ internal class ViewAnnotationManagerImpl(
     viewUpdatedListenerSet.remove(listener)
   }
 
+  /**
+   * Always called from render thread in the end of [MapInterface.render] call.
+   */
+  @WorkerThread
   override fun onViewAnnotationPositionsUpdate(positions: MutableList<ViewAnnotationPositionDescriptor>) {
     hasViewAnnotations = true
     drawAnnotationViews(positions)
@@ -274,9 +282,11 @@ internal class ViewAnnotationManagerImpl(
         annotationMap[id]?.let { annotation ->
           // if view is invisible / gone we don't remove it so that visibility logic could
           // still be handled by OnGlobalLayoutListener
-          if (annotation.view.visibility == View.VISIBLE) {
-            mapView.removeView(annotation.view)
-            updateVisibilityAndNotifyUpdateListeners(annotation, ViewAnnotationVisibility.INVISIBLE)
+          mainHandler.post {
+            if (annotation.view.visibility == View.VISIBLE) {
+              mapView.removeView(annotation.view)
+              updateVisibilityAndNotifyUpdateListeners(annotation, ViewAnnotationVisibility.INVISIBLE)
+            }
           }
         }
       }
