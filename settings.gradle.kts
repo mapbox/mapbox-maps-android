@@ -7,9 +7,10 @@ pluginManagement {
 }
 
 include(
-  "android-auto-app",
+  ":android-auto-app",
+  ":compose-app",
   ":app",
-  "extension-androidauto",
+  ":extension-androidauto",
   ":extension-style",
   ":extension-localization",
   ":extension-style-app",

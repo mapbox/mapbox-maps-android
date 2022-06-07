@@ -9,21 +9,28 @@ plugins {
 val buildFromSource: String by project
 
 android {
-  compileSdk = AndroidVersions.AndroidAuto.compileSdkVersion
+  compileSdk = AndroidVersions.Compose.compileSdkVersion
   defaultConfig {
-    applicationId = "com.mapbox.maps.testapp.auto"
-    minSdk = AndroidVersions.AndroidAuto.minSdkVersion
-    targetSdk = AndroidVersions.AndroidAuto.targetSdkVersion
+    applicationId = "com.mapbox.maps.testapp.compose"
+    minSdk = AndroidVersions.Compose.minSdkVersion
+    targetSdk = AndroidVersions.Compose.targetSdkVersion
     versionCode = 1
     versionName = "0.1.0"
     multiDexEnabled = true
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     testInstrumentationRunnerArguments(mapOf("clearPackageData" to "true"))
+    vectorDrawables {
+      useSupportLibrary = true
+    }
   }
 
   compileOptions {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
+  }
+
+  composeOptions {
+    kotlinCompilerExtensionVersion = Versions.compose
   }
 
   testOptions {
@@ -37,6 +44,10 @@ android {
       jniLibs.pickFirsts.add("**/libc++_shared.so")
     }
   }
+
+  buildFeatures {
+    compose = true
+  }
 }
 
 androidExtensions {
@@ -44,19 +55,15 @@ androidExtensions {
 }
 
 dependencies {
-  implementation(project(":extension-androidauto"))
   implementation(project(":sdk"))
-  implementation(Dependencies.googleCarAppLibrary)
-  implementation(Dependencies.kotlin)
+  implementation(Dependencies.googleMaterialDesign)
+  implementation(Dependencies.composeUi)
+  implementation(Dependencies.composeMaterial)
+  implementation(Dependencies.composeUiToolingPreview)
+  implementation(Dependencies.androidxLifecycleKtx)
+  implementation(Dependencies.androidxActivityCompose)
   implementation(Dependencies.androidxAppCompat)
   implementation(Dependencies.androidxCoreKtx)
-
-  // By default, the Maps SDK uses the Android Location Provider to obtain raw location updates.
-  // And with Android 11, the raw location updates might suffer from precision issue.
-  // The Maps SDK also comes pre-compiled with support for the [Google's Fused Location Provider](https://developers.google.com/location-context/fused-location-provider)
-  // if that dependency is available. This means, that if your target devices support Google Play
-  // Services, [we recommend adding the Google Play Location Services dependency to your project](https://developers.google.com/android/guides/setup).
-  implementation(Dependencies.googlePlayServicesLocation)
 
   androidTestUtil(Dependencies.androidxOrchestrator)
   androidTestImplementation(Dependencies.androidxTestRunner)

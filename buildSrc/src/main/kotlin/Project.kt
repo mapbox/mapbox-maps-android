@@ -2,9 +2,16 @@ object AndroidVersions {
   const val minSdkVersion = 21
   const val targetSdkVersion = 30
   const val compileSdkVersion = 30
-  const val minSdkVersion_AndroidAuto = 23
-  const val targetSdkVersion_AndroidAuto = 30
-  const val compileSdkVersion_AndroidAuto = 31
+  object AndroidAuto {
+    const val minSdkVersion = 23
+    const val targetSdkVersion = 30
+    const val compileSdkVersion = 31
+  }
+  object Compose {
+    const val minSdkVersion = 23
+    const val targetSdkVersion = 30
+    const val compileSdkVersion = 31
+  }
 }
 
 object Plugins {
@@ -52,6 +59,8 @@ object Dependencies {
   const val androidxOrchestrator = "androidx.test:orchestrator:${Versions.androidxTest}"
   const val androidxMultidex = "androidx.multidex:multidex:${Versions.androidxMultidex}"
   const val androidxLifecycle = "androidx.lifecycle:lifecycle-runtime:${Versions.androidxLifecycle}"
+  const val androidxLifecycleKtx = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.androidxLifecycle}"
+  const val androidxActivityCompose = "androidx.activity:activity-compose:${Versions.androidxActivityCompose}"
   const val googleMaterialDesign = "com.google.android.material:material:${Versions.materialDesign}"
   const val googlePlayServicesLocation = "com.google.android.gms:play-services-location:${Versions.googlePlayServicesLocation}"
   const val googleCarAppLibrary = "androidx.car.app:app:${Versions.googleCarAppLibrary}"
@@ -77,6 +86,10 @@ object Dependencies {
   const val asyncInflater = "androidx.asynclayoutinflater:asynclayoutinflater:${Versions.asyncInflater}"
   const val kotlinReflect = "org.jetbrains.kotlin:kotlin-reflect:${Versions.pluginKotlin}"
   const val detektFormatting = "io.gitlab.arturbosch.detekt:detekt-formatting:${Versions.detekt}"
+  const val composeUi = "androidx.compose.ui:ui:${Versions.compose}"
+  const val composeMaterial = "androidx.compose.material:material:${Versions.compose}"
+  const val composeUiToolingPreview = "androidx.compose.ui:ui-tooling-preview:${Versions.compose}"
+
 }
 
 object Versions {
@@ -108,6 +121,7 @@ object Versions {
   const val androidxInterpolator="1.0.0"
   const val androidxMultidex = "2.0.1"
   const val androidxLifecycle = "2.3.0"
+  const val androidxActivityCompose = "1.4.0"
   const val squareRetrofit="2.9.0"
   const val squareLeakCanary = "2.4"
   const val materialDesign = "1.2.0"
@@ -125,4 +139,5 @@ object Versions {
   const val mapboxSdkVersionsPlugin = "1.1.3"
   const val pitest = "0.2.8"
   const val detekt = "1.20.0"
+  const val compose = "1.1.0-beta03"
 }
