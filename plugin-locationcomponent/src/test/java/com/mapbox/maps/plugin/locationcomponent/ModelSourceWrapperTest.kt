@@ -51,8 +51,8 @@ class ModelSourceWrapperTest {
     val orientation = arrayListOf(0.0, 0.0, 5.0)
     modelSource.setPositionAndOrientation(position, orientation)
     val property = hashMapOf(
-      Pair(ModelSourceWrapper.POSITION, Value(position.map { Value(it) })),
-      Pair(ModelSourceWrapper.ORIENTATION, Value(orientation.map { Value(it) })),
+      Pair(ModelSourceWrapper.POSITION, Value(position.map(::Value))),
+      Pair(ModelSourceWrapper.ORIENTATION, Value(orientation.map(::Value))),
       Pair(ModelSourceWrapper.URL, Value("uri"))
     )
     val updateModel = hashMapOf(Pair(ModelSourceWrapper.DEFAULT_MODEL_NAME, Value(property)))
@@ -69,8 +69,8 @@ class ModelSourceWrapperTest {
     val orientation = arrayListOf(0.0, 0.0, 5.0)
     modelSource.setPositionAndOrientation(position, orientation)
     val property = hashMapOf(
-      Pair(ModelSourceWrapper.POSITION, Value(position.map { Value(it) })),
-      Pair(ModelSourceWrapper.ORIENTATION, Value(orientation.map { Value(it) })),
+      Pair(ModelSourceWrapper.POSITION, Value(position.map(::Value))),
+      Pair(ModelSourceWrapper.ORIENTATION, Value(orientation.map(::Value))),
       Pair(ModelSourceWrapper.URL, Value("uri"))
     )
     val updateModel = hashMapOf(Pair(ModelSourceWrapper.DEFAULT_MODEL_NAME, Value(property)))
@@ -90,8 +90,8 @@ class ModelSourceWrapperTest {
     val orientation = arrayListOf(0.0, 0.0, 5.0)
     modelSource.setPositionAndOrientation(position, orientation)
     val property = hashMapOf(
-      Pair(ModelSourceWrapper.POSITION, Value(position.map { Value(it) })),
-      Pair(ModelSourceWrapper.ORIENTATION, Value(orientation.map { Value(it) })),
+      Pair(ModelSourceWrapper.POSITION, Value(position.map(::Value))),
+      Pair(ModelSourceWrapper.ORIENTATION, Value(orientation.map(::Value))),
       Pair(ModelSourceWrapper.URL, Value("uri"))
     )
     val updateModel = hashMapOf(Pair(ModelSourceWrapper.DEFAULT_MODEL_NAME, Value(property)))

@@ -46,26 +46,26 @@ class Expression : Value {
     this.literalValue = value
   }
 
-  private constructor(value: DoubleArray) : super(value.map { Value(it) }) {
+  private constructor(value: DoubleArray) : super(value.map(::Value)) {
     this.literalValue = value
   }
 
-  private constructor(value: LongArray) : super(value.map { Value(it) }) {
+  private constructor(value: LongArray) : super(value.map(::Value)) {
     this.literalValue = value
   }
 
-  private constructor(value: BooleanArray) : super(value.map { Value(it) }) {
+  private constructor(value: BooleanArray) : super(value.map(::Value)) {
     this.literalValue = value
   }
 
-  private constructor(value: Array<String>) : super(value.map { Value(it) }) {
+  private constructor(value: Array<String>) : super(value.map(::Value)) {
     this.literalValue = value
   }
 
   internal constructor(value: Array<DoubleArray>) : super(
     value.map { doubleArray ->
       Value(
-        doubleArray.map { Value(it) }
+        doubleArray.map(::Value)
       )
     }
   ) {

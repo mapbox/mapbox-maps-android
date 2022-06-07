@@ -22,7 +22,7 @@ internal class LocationIndicatorLayerWrapper(layerId: String) : LocationLayerWra
 
   fun bearing(bearing: Double) = updateProperty("bearing", Value(bearing))
 
-  fun location(location: List<Double>) = updateProperty("location", Value(location.map { Value(it) }))
+  fun location(location: List<Double>) = updateProperty("location", Value(location.map(::Value)))
 
   fun accuracyRadiusColor(expression: List<Value>) = updateProperty("accuracy-radius-color", Value(expression))
 

@@ -50,21 +50,21 @@ class ModelLayerWrapperTest {
   fun testScale() {
     val scale = arrayListOf(1.0, 2.0)
     layer.modelScale(scale)
-    verify { style.setStyleLayerProperty(MODEL_LAYER_ID, "model-scale", Value(scale.map { Value(it) })) }
+    verify { style.setStyleLayerProperty(MODEL_LAYER_ID, "model-scale", Value(scale.map(::Value))) }
   }
 
   @Test
   fun testRotation() {
     val rotation = arrayListOf(1.0, 2.0)
     layer.modelRotation(rotation)
-    verify { style.setStyleLayerProperty(MODEL_LAYER_ID, "model-rotation", Value(rotation.map { Value(it) })) }
+    verify { style.setStyleLayerProperty(MODEL_LAYER_ID, "model-rotation", Value(rotation.map(::Value))) }
   }
 
   @Test
   fun testTranslation() {
     val translation = arrayListOf(1.0, 2.0)
     layer.modelTranslation(translation)
-    verify { style.setStyleLayerProperty(MODEL_LAYER_ID, "model-translation", Value(translation.map { Value(it) })) }
+    verify { style.setStyleLayerProperty(MODEL_LAYER_ID, "model-translation", Value(translation.map(::Value))) }
   }
 
   @Test
@@ -72,7 +72,7 @@ class ModelLayerWrapperTest {
     every { style.styleLayerExists(any()) } returns false
     val scale = arrayListOf(1.0, 2.0)
     layer.modelScale(scale)
-    verify(exactly = 0) { style.setStyleLayerProperty(MODEL_LAYER_ID, "model-scale", Value(scale.map { Value(it) })) }
+    verify(exactly = 0) { style.setStyleLayerProperty(MODEL_LAYER_ID, "model-scale", Value(scale.map(::Value))) }
   }
 
   @Test
@@ -83,8 +83,8 @@ class ModelLayerWrapperTest {
     layer.updateStyle(newStyle)
     val scale = listOf(1.0, 2.0, 3.0)
     layer.modelScale(scale)
-    verify(exactly = 0) { style.setStyleLayerProperty(MODEL_LAYER_ID, "model-scale", Value(scale.map { Value(it) })) }
-    verify(exactly = 1) { newStyle.setStyleLayerProperty(MODEL_LAYER_ID, "model-scale", Value(scale.map { Value(it) })) }
+    verify(exactly = 0) { style.setStyleLayerProperty(MODEL_LAYER_ID, "model-scale", Value(scale.map(::Value))) }
+    verify(exactly = 1) { newStyle.setStyleLayerProperty(MODEL_LAYER_ID, "model-scale", Value(scale.map(::Value))) }
   }
 
   companion object {

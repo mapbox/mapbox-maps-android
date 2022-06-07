@@ -34,7 +34,7 @@ class TileSet private constructor(builder: Builder) : HashMap<String, Value>(bui
 
     init {
       parameters["tilejson"] = Value(tilejson)
-      parameters["tiles"] = Value(tiles.map { Value(it) })
+      parameters["tiles"] = Value(tiles.map(::Value))
     }
 
     /**
@@ -143,7 +143,7 @@ class TileSet private constructor(builder: Builder) : HashMap<String, Value>(bui
      * @param value the grids to set
      */
     fun grids(value: List<String>) = apply {
-      parameters["grids"] = Value(value.map { Value(it) })
+      parameters["grids"] = Value(value.map(::Value))
     }
 
     /**
@@ -161,7 +161,7 @@ class TileSet private constructor(builder: Builder) : HashMap<String, Value>(bui
      * @param value the data array to set
      */
     fun data(value: List<String>) = apply {
-      parameters["data"] = Value(value.map { Value(it) })
+      parameters["data"] = Value(value.map(::Value))
     }
 
     /**
@@ -191,7 +191,7 @@ class TileSet private constructor(builder: Builder) : HashMap<String, Value>(bui
      * @param value the Double list to set
      */
     fun bounds(value: List<Double> = listOf(-180.0, -90.0, 180.0, 90.0)) = apply {
-      parameters["bounds"] = Value(value.map { Value(it) })
+      parameters["bounds"] = Value(value.map(::Value))
     }
 
     /**
@@ -206,7 +206,7 @@ class TileSet private constructor(builder: Builder) : HashMap<String, Value>(bui
      * @param value the Double array to set
      */
     fun center(value: List<Double>) = apply {
-      parameters["center"] = Value(value.map { Value(it) })
+      parameters["center"] = Value(value.map(::Value))
     }
 
     /**
