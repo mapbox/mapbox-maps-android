@@ -144,4 +144,19 @@ interface ViewAnnotationManager {
    * Remove an instance of [OnViewAnnotationUpdatedListener].
    */
   fun removeOnViewAnnotationUpdatedListener(listener: OnViewAnnotationUpdatedListener)
+
+  /**
+   * Set view annotation update mode defined in [ViewAnnotationUpdateMode].
+   */
+  fun setViewAnnotationUpdateMode(mode: ViewAnnotationUpdateMode)
+
+  /**
+   * Static methods and variables.
+   */
+  companion object {
+    /**
+     * Default view annotation update mode.
+     */
+    val DEFAULT_UPDATE_MODE = ViewAnnotationUpdateMode.FIXED_DELAY
+  }
 }

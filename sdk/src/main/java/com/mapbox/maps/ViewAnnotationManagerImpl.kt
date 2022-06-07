@@ -7,15 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewTreeObserver
 import android.widget.FrameLayout
+import androidx.annotation.AnyThread
 import androidx.annotation.LayoutRes
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.WorkerThread
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater
 import com.mapbox.bindgen.Expected
-import com.mapbox.maps.viewannotation.OnViewAnnotationUpdatedListener
+import com.mapbox.maps.viewannotation.*
 import com.mapbox.maps.viewannotation.ViewAnnotation
 import com.mapbox.maps.viewannotation.ViewAnnotation.Companion.USER_FIXED_DIMENSION
-import com.mapbox.maps.viewannotation.ViewAnnotationManager
 import com.mapbox.maps.viewannotation.ViewAnnotationVisibility
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.CopyOnWriteArraySet
@@ -27,7 +27,10 @@ internal class ViewAnnotationManagerImpl(
 
   private val mapboxMap: MapboxMap = mapView.getMapboxMap()
   private val viewPlugins = mapView.mapController.pluginRegistry.viewPlugins
+  private val renderThread = mapView.mapController.renderer.renderThread
   private val mainHandler = Handler(Looper.getMainLooper())
+  @Volatile
+  private var mode = ViewAnnotationManager.DEFAULT_UPDATE_MODE
 
   init {
     mapView.requestDisallowInterceptTouchEvent(false)
@@ -136,17 +139,53 @@ internal class ViewAnnotationManagerImpl(
     viewUpdatedListenerSet.remove(listener)
   }
 
+  @AnyThread
+  override fun setViewAnnotationUpdateMode(mode: ViewAnnotationUpdateMode) {
+    this.mode = mode
+    renderThread.viewAnnotationMode = mode
+  }
+
   /**
-   * Always called from render thread in the end of [MapInterface.render] call.
+   * Always called from render thread in the end of [MapInterface.render] call if positions did change.
    */
   @WorkerThread
   override fun onViewAnnotationPositionsUpdate(positions: MutableList<ViewAnnotationPositionDescriptor>) {
-    hasViewAnnotations = true
-    drawAnnotationViews(positions)
+    // update that flag here if callback was triggered, it will be reset by renderer when swapping buffers
+    renderThread.hasViewAnnotations = true
+    // it's fine to update translation for views on non-main thread we simply update fields and let
+    // Android render node pick them up using Android Render thread. We don't even bother if view
+    // was not actually added on top of MapView.
+    positions.forEach { descriptor ->
+      annotationMap[descriptor.identifier]?.let { annotation ->
+        annotation.view.apply {
+          logE("KIRYLDD", "Translation upd post, mode = ${mode.name}")
+          // if we're updating independent from the map - update render node immediately;
+          // as we're located already inside choreographer's `doFrame` -
+          // Android renderer could potentially have time to apply new translation before VSYNC
+          if (mode == ViewAnnotationUpdateMode.MAP_INDEPENDENT) {
+            translationX = descriptor.leftTopCoordinate.x.toFloat()
+            translationY = descriptor.leftTopCoordinate.y.toFloat()
+            logE("KIRYLDD", "Translation upd time=SAME_FRAME: x=$translationX, y=$translationY")
+          } else {
+            // for modes that depend on the map - we explicitly request updating render node on next `doFrame`
+            Choreographer.getInstance().postFrameCallback {
+              translationX = descriptor.leftTopCoordinate.x.toFloat()
+              translationY = descriptor.leftTopCoordinate.y.toFloat()
+              logE("KIRYLDD", "Translation upd time=$it: x=$translationX, y=$translationY")
+            }
+          }
+        }
+      }
+    }
+    // adding, removing, changing visibility for Android views should be done from Main UI thread only.
+    mainHandler.post {
+      positionAnnotationViews(positions)
+    }
   }
 
   fun destroy() {
     mapboxMap.setViewAnnotationPositionsUpdateListener(null)
+    mainHandler.removeCallbacksAndMessages(null)
     viewUpdatedListenerSet.clear()
     removeAllViewAnnotations()
   }
@@ -273,7 +312,7 @@ internal class ViewAnnotationManagerImpl(
     return null to null
   }
 
-  private fun drawAnnotationViews(
+  private fun positionAnnotationViews(
     positionDescriptorCoreList: List<ViewAnnotationPositionDescriptor>
   ) {
     // firstly delete views that do not belong to the viewport
@@ -282,11 +321,9 @@ internal class ViewAnnotationManagerImpl(
         annotationMap[id]?.let { annotation ->
           // if view is invisible / gone we don't remove it so that visibility logic could
           // still be handled by OnGlobalLayoutListener
-          mainHandler.post {
-            if (annotation.view.visibility == View.VISIBLE) {
-              mapView.removeView(annotation.view)
-              updateVisibilityAndNotifyUpdateListeners(annotation, ViewAnnotationVisibility.INVISIBLE)
-            }
+          if (annotation.view.visibility == View.VISIBLE) {
+            mapView.removeView(annotation.view)
+            updateVisibilityAndNotifyUpdateListeners(annotation, ViewAnnotationVisibility.INVISIBLE)
           }
         }
       }
@@ -301,14 +338,6 @@ internal class ViewAnnotationManagerImpl(
           }
           if (annotation.measuredHeight == USER_FIXED_DIMENSION) {
             height = descriptor.height
-          }
-        }
-        annotation.view.apply {
-          logE("KIRYLDD", "Translation upd post")
-          Choreographer.getInstance().postFrameCallback {
-            translationX = descriptor.leftTopCoordinate.x.toFloat()
-            translationY = descriptor.leftTopCoordinate.y.toFloat()
-            logE("KIRYLDD", "Translation upd time=$it: x=${translationX}, y=${translationY}")
           }
         }
         if (!currentViewsDrawnMap.keys.contains(descriptor.identifier) && mapView.indexOfChild(annotation.view) == -1) {
@@ -399,7 +428,5 @@ internal class ViewAnnotationManagerImpl(
     internal const val EXCEPTION_TEXT_GEOMETRY_IS_NULL = "Geometry can not be null!"
     internal const val EXCEPTION_TEXT_ASSOCIATED_FEATURE_ID_ALREADY_EXISTS =
       "View annotation with associatedFeatureId=%s already exists!"
-    @Volatile
-    internal var hasViewAnnotations = false
   }
 }

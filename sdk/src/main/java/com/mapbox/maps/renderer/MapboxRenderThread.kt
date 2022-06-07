@@ -7,12 +7,13 @@ import androidx.annotation.AnyThread
 import androidx.annotation.UiThread
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.WorkerThread
-import com.mapbox.maps.ViewAnnotationManagerImpl
 import com.mapbox.maps.logE
 import com.mapbox.maps.logW
 import com.mapbox.maps.renderer.egl.EGLCore
 import com.mapbox.maps.renderer.gl.TextureRenderer
 import com.mapbox.maps.renderer.widget.Widget
+import com.mapbox.maps.viewannotation.ViewAnnotationManager
+import com.mapbox.maps.viewannotation.ViewAnnotationUpdateMode
 import java.util.concurrent.ConcurrentLinkedQueue
 import java.util.concurrent.locks.ReentrantLock
 import javax.microedition.khronos.egl.EGL10
@@ -88,6 +89,14 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
 
   // TODO needed for workaround until issue is fixed in gl-native
   internal var renderDestroyCallChain = false
+
+  /**
+   * Modified from render thread only, needed to understand when exactly to swap buffers
+   * to achieve better synchronization with view annotation updates.
+   */
+  internal var hasViewAnnotations = false
+  @Volatile
+  internal var viewAnnotationMode = ViewAnnotationManager.DEFAULT_UPDATE_MODE
 
   constructor(
     mapboxRenderer: MapboxRenderer,
@@ -231,7 +240,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     }
   }
 
-  private fun draw(time: Long) {
+  private fun draw(frameTimeNanos: Long) {
     val renderTimeNsCopy = renderTimeNs
     val currentTimeNs = SystemClock.elapsedRealtimeNanos()
     val expectedEndRenderTimeNs = currentTimeNs + renderTimeNsCopy
@@ -254,74 +263,74 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
         widgetTextureRenderer.render(widgetRenderer.getTexture())
       }
     } else {
-      logE("KIRYLDD", "render start $time")
+      logE("KIRYLDD", "render start $frameTimeNanos")
       mapboxRenderer.render()
-      logE("KIRYLDD", "render end $time")
+      logE("KIRYLDD", "render end $frameTimeNanos")
     }
 
     // assuming render event queue holds user's runnables with OpenGL ES commands
     // it makes sense to execute them after drawing a map but before swapping buffers
     // **note** this queue also holds snapshot tasks
     drainQueue(renderEventQueue)
-    if (ViewAnnotationManagerImpl.hasViewAnnotations) {
-      ViewAnnotationManagerImpl.hasViewAnnotations = false
-      Choreographer.getInstance().postFrameCallback {
-        logE("KIRYLDD", "swapBuffers start $it, delta = ${(it - time) / 10.0.pow(6.0)}")
-        when (val swapStatus = eglCore.swapBuffers(eglSurface)) {
-          EGL10.EGL_SUCCESS -> {
-            logE("KIRYLDD", "swapBuffers end $it")
-          }
-          EGL11.EGL_CONTEXT_LOST -> {
-            logW(TAG, "Context lost. Waiting for re-acquire")
-            releaseEgl()
-          }
-          else -> {
-            logW(TAG, "eglSwapBuffer error: $swapStatus. Waiting for new surface")
-            releaseEglSurface()
-          }
+    if (hasViewAnnotations) {
+      hasViewAnnotations = false
+      if (viewAnnotationMode == ViewAnnotationUpdateMode.MAP_SYNCHRONIZED) {
+        Choreographer.getInstance().postFrameCallback {
+          swap(
+            nextFrameTimeNanos = it,
+            currentFrameTimeNanos = frameTimeNanos,
+            renderTimeNsCopy = renderTimeNsCopy,
+            expectedEndRenderTimeNs = expectedEndRenderTimeNs
+          )
         }
-        val actualEndRenderTimeNs = SystemClock.elapsedRealtimeNanos()
-        if (renderTimeNsCopy != 0L && actualEndRenderTimeNs < expectedEndRenderTimeNs) {
-          // we need to stop swap buffers for less than time requested in order to have some time to render upcoming frame
-          // before next vsync so it will be drawn, otherwise we will drop it
-          expectedVsyncWakeTimeNs = expectedEndRenderTimeNs - ONE_MILLISECOND_NS
-        }
-        fpsChangedListener?.let {
-          val fps = 1E9 / (actualEndRenderTimeNs - timeElapsed)
-          if (timeElapsed != 0L) {
-            it.onFpsChanged(fps)
-          }
-          timeElapsed = actualEndRenderTimeNs
-        }
+        return
       }
+    }
+    // perform swap immediately if no view annotations are visible or mode is not MAP_SYNCHRONIZED
+    swap(
+      nextFrameTimeNanos = -1L,
+      currentFrameTimeNanos = frameTimeNanos,
+      renderTimeNsCopy = renderTimeNsCopy,
+      expectedEndRenderTimeNs = expectedEndRenderTimeNs
+    )
+  }
+
+  private fun swap(
+    nextFrameTimeNanos: Long,
+    currentFrameTimeNanos: Long,
+    renderTimeNsCopy: Long,
+    expectedEndRenderTimeNs: Long
+  ) {
+    if (nextFrameTimeNanos == -1L) {
+      logE("KIRYLDD", "swapBuffers start $currentFrameTimeNanos")
     } else {
-      logE("KIRYLDD", "swapBuffers start $time")
-      when (val swapStatus = eglCore.swapBuffers(eglSurface)) {
-        EGL10.EGL_SUCCESS -> {
-          logE("KIRYLDD", "swapBuffers end $time")
-        }
-        EGL11.EGL_CONTEXT_LOST -> {
-          logW(TAG, "Context lost. Waiting for re-acquire")
-          releaseEgl()
-        }
-        else -> {
-          logW(TAG, "eglSwapBuffer error: $swapStatus. Waiting for new surface")
-          releaseEglSurface()
-        }
+      logE("KIRYLDD", "swapBuffers start $nextFrameTimeNanos, delta = ${(nextFrameTimeNanos - currentFrameTimeNanos) / 10.0.pow(6.0)}")
+    }
+    when (val swapStatus = eglCore.swapBuffers(eglSurface)) {
+      EGL10.EGL_SUCCESS -> {
+        logE("KIRYLDD", "swapBuffers end ${if (nextFrameTimeNanos == -1L) currentFrameTimeNanos else nextFrameTimeNanos}")
       }
-      val actualEndRenderTimeNs = SystemClock.elapsedRealtimeNanos()
-      if (renderTimeNsCopy != 0L && actualEndRenderTimeNs < expectedEndRenderTimeNs) {
-        // we need to stop swap buffers for less than time requested in order to have some time to render upcoming frame
-        // before next vsync so it will be drawn, otherwise we will drop it
-        expectedVsyncWakeTimeNs = expectedEndRenderTimeNs - ONE_MILLISECOND_NS
+      EGL11.EGL_CONTEXT_LOST -> {
+        logW(TAG, "Context lost. Waiting for re-acquire")
+        releaseEgl()
       }
-      fpsChangedListener?.let {
-        val fps = 1E9 / (actualEndRenderTimeNs - timeElapsed)
-        if (timeElapsed != 0L) {
-          it.onFpsChanged(fps)
-        }
-        timeElapsed = actualEndRenderTimeNs
+      else -> {
+        logW(TAG, "eglSwapBuffer error: $swapStatus. Waiting for new surface")
+        releaseEglSurface()
       }
+    }
+    val actualEndRenderTimeNs = SystemClock.elapsedRealtimeNanos()
+    if (renderTimeNsCopy != 0L && actualEndRenderTimeNs < expectedEndRenderTimeNs) {
+      // we need to stop swap buffers for less than time requested in order to have some time to render upcoming frame
+      // before next vsync so it will be drawn, otherwise we will drop it
+      expectedVsyncWakeTimeNs = expectedEndRenderTimeNs - ONE_MILLISECOND_NS
+    }
+    fpsChangedListener?.let {
+      val fps = 1E9 / (actualEndRenderTimeNs - timeElapsed)
+      if (timeElapsed != 0L) {
+        it.onFpsChanged(fps)
+      }
+      timeElapsed = actualEndRenderTimeNs
     }
   }
 

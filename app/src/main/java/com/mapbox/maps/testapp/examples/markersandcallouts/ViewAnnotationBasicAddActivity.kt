@@ -4,19 +4,17 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
-import com.mapbox.maps.plugin.animation.MapAnimationOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
-import com.mapbox.maps.plugin.animation.easeTo
 import com.mapbox.maps.plugin.animation.moveBy
 import com.mapbox.maps.plugin.gestures.*
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityViewAnnotationShowcaseBinding
 import com.mapbox.maps.testapp.databinding.ItemCalloutViewBinding
 import com.mapbox.maps.viewannotation.ViewAnnotationManager
+import com.mapbox.maps.viewannotation.ViewAnnotationUpdateMode
 import com.mapbox.maps.viewannotation.viewAnnotationOptions
 
 /**
@@ -33,6 +31,7 @@ class ViewAnnotationBasicAddActivity : AppCompatActivity(), OnMapClickListener {
     setContentView(binding.root)
 
     viewAnnotationManager = binding.mapView.viewAnnotationManager.apply {
+      setViewAnnotationUpdateMode(ViewAnnotationUpdateMode.MAP_SYNCHRONIZED)
       binding.mapView.post {
         addViewAnnotation(
           mapboxMap.coordinateForPixel(
@@ -103,6 +102,6 @@ class ViewAnnotationBasicAddActivity : AppCompatActivity(), OnMapClickListener {
 
   private companion object {
     const val SELECTED_ADD_COEF_PX = 25
-    const val STARTUP_TEXT = "Click on a map to add a view annotation."
+//    const val STARTUP_TEXT = "Click on a map to add a view annotation."
   }
 }
