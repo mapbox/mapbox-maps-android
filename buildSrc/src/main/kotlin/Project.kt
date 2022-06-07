@@ -2,12 +2,16 @@ object AndroidVersions {
   const val minSdkVersion = 21
   const val targetSdkVersion = 30
   const val compileSdkVersion = 30
-  const val minSdkVersion_AndroidAuto = 23
-  const val targetSdkVersion_AndroidAuto = 30
-  const val compileSdkVersion_AndroidAuto = 31
-  const val minSdkVersion_Compose = 23
-  const val targetSdkVersion_Compose = 30
-  const val compileSdkVersion_Compose = 31
+  object AndroidAuto {
+    const val minSdkVersion = 23
+    const val targetSdkVersion = 30
+    const val compileSdkVersion = 31
+  }
+  object Compose {
+    const val minSdkVersion = 23
+    const val targetSdkVersion = 30
+    const val compileSdkVersion = 31
+  }
 }
 
 object Plugins {

@@ -9,11 +9,11 @@ plugins {
 val buildFromSource: String by project
 
 android {
-  compileSdk = AndroidVersions.compileSdkVersion_AndroidAuto
+  compileSdk = AndroidVersions.AndroidAuto.compileSdkVersion
   defaultConfig {
     applicationId = "com.mapbox.maps.testapp.auto"
-    minSdk = AndroidVersions.minSdkVersion_AndroidAuto
-    targetSdk = AndroidVersions.targetSdkVersion_AndroidAuto
+    minSdk = AndroidVersions.AndroidAuto.minSdkVersion
+    targetSdk = AndroidVersions.AndroidAuto.targetSdkVersion
     versionCode = 1
     versionName = "0.1.0"
     multiDexEnabled = true
