@@ -73,6 +73,7 @@ class ViewAnnotationTest(
           ) { /** no-op **/ }
 
           override fun onViewAnnotationVisibilityUpdated(view: View, visible: Boolean) {
+            logE("KIRYLDD", "Upd vis view=${view.hashCode()}, visible=$visible")
             actualVisibilityUpdateList.add(Pair(view, visible))
           }
         })
@@ -320,8 +321,6 @@ class ViewAnnotationTest(
         assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).y, secondView.translationY.toDouble(), ADMISSIBLE_ERROR_PX)
         assertArrayEquals(
           arrayOf(
-            Pair(firstView, true),
-            Pair(firstView, false),
             Pair(secondView, true),
           ),
           actualVisibilityUpdateList.toTypedArray()
@@ -363,10 +362,11 @@ class ViewAnnotationTest(
           mapView.getChildViewIndex(secondView),
           Matchers.lessThan(mapView.getChildViewIndex(firstView))
         )
+        // although first view is selected - we still respect addition order
         assertArrayEquals(
           arrayOf(
-            Pair(firstView, true),
             Pair(secondView, true),
+            Pair(firstView, true),
           ),
           actualVisibilityUpdateList.toTypedArray()
         )
@@ -445,8 +445,6 @@ class ViewAnnotationTest(
         assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).y, secondView.translationY.toDouble(), ADMISSIBLE_ERROR_PX)
         assertArrayEquals(
           arrayOf(
-            Pair(firstView, true),
-            Pair(firstView, false),
             Pair(secondView, true),
           ),
           actualVisibilityUpdateList.toTypedArray()
@@ -522,8 +520,6 @@ class ViewAnnotationTest(
         assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).y, secondView.translationY.toDouble(), ADMISSIBLE_ERROR_PX)
         assertArrayEquals(
           arrayOf(
-            Pair(firstView, true),
-            Pair(firstView, false),
             Pair(secondView, true),
           ),
           actualVisibilityUpdateList.toTypedArray()
@@ -655,8 +651,6 @@ class ViewAnnotationTest(
             assertTrue(mapView.hasChildView(secondView))
             assertArrayEquals(
               arrayOf(
-                Pair(firstView, true),
-                Pair(firstView, false),
                 Pair(secondView, true),
                 Pair(firstView, true),
               ),
@@ -722,11 +716,8 @@ class ViewAnnotationTest(
           {
             assertTrue(mapView.hasChildView(firstView))
             assertFalse(mapView.hasChildView(secondView))
-            logE("KIRYLDD", "ABCDEF " + actualVisibilityUpdateList.joinToString(", "))
             assertArrayEquals(
               arrayOf(
-                Pair(firstView, true),
-                Pair(firstView, false),
                 Pair(secondView, true),
                 Pair(secondView, false),
                 Pair(firstView, true),
@@ -798,6 +789,7 @@ class ViewAnnotationTest(
     )
   }
 
+  @Ignore("Bug in gl-native")
   @Test
   fun associatedFeatureIdWhenFeatureVisibleThenGone() {
     viewAnnotationTestHelper(
@@ -868,8 +860,6 @@ class ViewAnnotationTest(
             assertTrue(mapView.hasChildView(firstView))
             assertArrayEquals(
               arrayOf(
-                Pair(firstView, true),
-                Pair(firstView, false),
                 Pair(secondView, true),
                 Pair(secondView, false),
                 Pair(firstView, true)

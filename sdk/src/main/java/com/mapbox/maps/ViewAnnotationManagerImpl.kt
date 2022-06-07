@@ -172,7 +172,7 @@ internal class ViewAnnotationManagerImpl(
             }
           }
         }
-      }
+      } ?: logE(TAG, "Core calculated position for ${descriptor.identifier} but actual view was not added!")
     }
     // adding, removing, changing visibility for Android views should be done from Main UI thread only.
     mainHandler.post {
@@ -422,6 +422,7 @@ internal class ViewAnnotationManagerImpl(
   }
 
   companion object {
+    internal const val TAG = "ViewAnnotation"
     internal const val EXCEPTION_TEXT_GEOMETRY_IS_NULL = "Geometry can not be null!"
     internal const val EXCEPTION_TEXT_ASSOCIATED_FEATURE_ID_ALREADY_EXISTS =
       "View annotation with associatedFeatureId=%s already exists!"

@@ -156,6 +156,7 @@ interface ViewAnnotationManager {
   companion object {
     /**
      * Default view annotation update mode.
+     * [ViewAnnotationUpdateMode.FIXED_DELAY] is used by default as it has most consistent behaviour and no performance penalty.
      */
     val DEFAULT_UPDATE_MODE = ViewAnnotationUpdateMode.FIXED_DELAY
   }

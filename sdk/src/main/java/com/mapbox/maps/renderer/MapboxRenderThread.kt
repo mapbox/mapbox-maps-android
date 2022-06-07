@@ -243,7 +243,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   private fun draw(frameTimeNanos: Long) {
     val renderTimeNsCopy = renderTimeNs
     val currentTimeNs = SystemClock.elapsedRealtimeNanos()
-    val expectedEndRenderTimeNs = currentTimeNs + renderTimeNsCopy
+    val expectedEndRenderTimeNanos = currentTimeNs + renderTimeNsCopy
     if (expectedVsyncWakeTimeNs > currentTimeNs) {
       // when we have FPS limited and desire to skip core render - we must schedule new draw call
       // otherwise map may remain in not fully loaded state
@@ -280,7 +280,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
             nextFrameTimeNanos = it,
             currentFrameTimeNanos = frameTimeNanos,
             renderTimeNsCopy = renderTimeNsCopy,
-            expectedEndRenderTimeNs = expectedEndRenderTimeNs
+            expectedEndRenderTimeNanos = expectedEndRenderTimeNanos
           )
         }
         return
@@ -291,7 +291,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       nextFrameTimeNanos = -1L,
       currentFrameTimeNanos = frameTimeNanos,
       renderTimeNsCopy = renderTimeNsCopy,
-      expectedEndRenderTimeNs = expectedEndRenderTimeNs
+      expectedEndRenderTimeNanos = expectedEndRenderTimeNanos
     )
   }
 
@@ -299,7 +299,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     nextFrameTimeNanos: Long,
     currentFrameTimeNanos: Long,
     renderTimeNsCopy: Long,
-    expectedEndRenderTimeNs: Long
+    expectedEndRenderTimeNanos: Long
   ) {
     if (nextFrameTimeNanos == -1L) {
       logE("KIRYLDD", "swapBuffers start $currentFrameTimeNanos")
@@ -319,18 +319,18 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
         releaseEglSurface()
       }
     }
-    val actualEndRenderTimeNs = SystemClock.elapsedRealtimeNanos()
-    if (renderTimeNsCopy != 0L && actualEndRenderTimeNs < expectedEndRenderTimeNs) {
+    val actualEndRenderTimeNanos = SystemClock.elapsedRealtimeNanos()
+    if (renderTimeNsCopy != 0L && actualEndRenderTimeNanos < expectedEndRenderTimeNanos) {
       // we need to stop swap buffers for less than time requested in order to have some time to render upcoming frame
       // before next vsync so it will be drawn, otherwise we will drop it
-      expectedVsyncWakeTimeNs = expectedEndRenderTimeNs - ONE_MILLISECOND_NS
+      expectedVsyncWakeTimeNs = expectedEndRenderTimeNanos - ONE_MILLISECOND_NS
     }
     fpsChangedListener?.let {
-      val fps = 1E9 / (actualEndRenderTimeNs - timeElapsed)
+      val fps = 1E9 / (actualEndRenderTimeNanos - timeElapsed)
       if (timeElapsed != 0L) {
         it.onFpsChanged(fps)
       }
-      timeElapsed = actualEndRenderTimeNs
+      timeElapsed = actualEndRenderTimeNanos
     }
   }
 

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Point
 import com.mapbox.maps.MapView
@@ -19,6 +20,7 @@ import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityViewAnnotationShowcaseBinding
 import com.mapbox.maps.testapp.databinding.ItemCalloutViewBinding
 import com.mapbox.maps.testapp.utils.BitmapUtils
+import com.mapbox.maps.viewannotation.ViewAnnotationUpdateMode
 import com.mapbox.maps.viewannotation.viewAnnotationOptions
 
 /**
@@ -51,10 +53,20 @@ class ViewAnnotationWithPointAnnotationActivity : AppCompatActivity() {
         }
         true
       }
+      var count = 0
       // show / hide view annotation based on marker visibility
       binding.fabStyleToggle.setOnClickListener {
-        pointAnnotation.iconImageBitmap = if (pointAnnotation.iconImage == null) iconBitmap else null
-        pointAnnotationManager.update(pointAnnotation)
+//        pointAnnotation.iconImageBitmap = if (pointAnnotation.iconImage == null) iconBitmap else null
+//        pointAnnotationManager.update(pointAnnotation)
+        val mode = when (count.mod(3)) {
+          0 -> ViewAnnotationUpdateMode.FIXED_DELAY
+          1 -> ViewAnnotationUpdateMode.MAP_SYNCHRONIZED
+          2 -> ViewAnnotationUpdateMode.MAP_INDEPENDENT
+          else -> ViewAnnotationUpdateMode.FIXED_DELAY
+        }
+        binding.mapView.viewAnnotationManager.setViewAnnotationUpdateMode(mode)
+        Toast.makeText(this, mode.name, Toast.LENGTH_SHORT).show()
+        count++
       }
       // update view annotation geometry if dragging the marker
       pointAnnotationManager.addDragListener(object : OnPointAnnotationDragListener {
