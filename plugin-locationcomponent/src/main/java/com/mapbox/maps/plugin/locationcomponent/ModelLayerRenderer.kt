@@ -80,20 +80,16 @@ internal class ModelLayerRenderer(
   }
 
   private fun setLayerLocation(latLng: Point) {
-    updateLocationOrBearing(point = latLng)
+    lastLocation = latLng
+    updateLocationOrBearing()
   }
 
   private fun setLayerBearing(bearing: Double) {
-    updateLocationOrBearing(bearing = bearing)
+    lastBearing = bearing
+    updateLocationOrBearing()
   }
 
-  private fun updateLocationOrBearing(point: Point? = null, bearing: Double? = null) {
-    point?.let {
-      lastLocation = it
-    }
-    bearing?.let {
-      lastBearing = it
-    }
+  private fun updateLocationOrBearing() {
     lastLocation?.let { location ->
       val latLng = listOf(location.longitude(), location.latitude())
       val orientation = listOf(0.0, 0.0, lastBearing)
