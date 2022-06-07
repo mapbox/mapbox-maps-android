@@ -19,6 +19,7 @@ import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.test.R
 import com.mapbox.maps.viewannotation.OnViewAnnotationUpdatedListener
 import com.mapbox.maps.viewannotation.ViewAnnotationManager
+import com.mapbox.maps.viewannotation.ViewAnnotationUpdateMode
 import com.mapbox.maps.viewannotation.viewAnnotationOptions
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
@@ -33,7 +34,8 @@ import java.util.concurrent.TimeoutException
 @RunWith(Parameterized::class)
 @LargeTest
 class ViewAnnotationTest(
-  @LayoutRes private val layoutResId: Int
+  @LayoutRes private val layoutResId: Int,
+  private val mode: ViewAnnotationUpdateMode,
 ) {
   private lateinit var mapboxMap: MapboxMap
   private lateinit var mapView: MapView
@@ -60,6 +62,7 @@ class ViewAnnotationTest(
       it.setContentView(mapView)
 
       viewAnnotationManager = mapView.viewAnnotationManager.apply {
+        setViewAnnotationUpdateMode(mode)
         // no need to remove it afterwards as map view is destroyed in cleanup
         addOnViewAnnotationUpdatedListener(object : OnViewAnnotationUpdatedListener {
           override fun onViewAnnotationPositionUpdated(
@@ -719,6 +722,7 @@ class ViewAnnotationTest(
           {
             assertTrue(mapView.hasChildView(firstView))
             assertFalse(mapView.hasChildView(secondView))
+            logE("KIRYLDD", "ABCDEF " + actualVisibilityUpdateList.joinToString(", "))
             assertArrayEquals(
               arrayOf(
                 Pair(firstView, true),
@@ -961,8 +965,12 @@ class ViewAnnotationTest(
     @JvmStatic
     @Parameterized.Parameters
     fun data() = listOf(
-      R.layout.view_annotation,
-      R.layout.view_annotation_wrap_content,
+      arrayOf(R.layout.view_annotation, ViewAnnotationUpdateMode.MAP_SYNCHRONIZED),
+      arrayOf(R.layout.view_annotation, ViewAnnotationUpdateMode.MAP_INDEPENDENT),
+      arrayOf(R.layout.view_annotation, ViewAnnotationUpdateMode.FIXED_DELAY),
+      arrayOf(R.layout.view_annotation_wrap_content, ViewAnnotationUpdateMode.MAP_SYNCHRONIZED),
+      arrayOf(R.layout.view_annotation_wrap_content, ViewAnnotationUpdateMode.MAP_INDEPENDENT),
+      arrayOf(R.layout.view_annotation_wrap_content, ViewAnnotationUpdateMode.FIXED_DELAY),
     )
   }
 }

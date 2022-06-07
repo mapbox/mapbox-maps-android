@@ -29,8 +29,6 @@ internal class ViewAnnotationManagerImpl(
   private val viewPlugins = mapView.mapController.pluginRegistry.viewPlugins
   private val renderThread = mapView.mapController.renderer.renderThread
   private val mainHandler = Handler(Looper.getMainLooper())
-  @Volatile
-  private var mode = ViewAnnotationManager.DEFAULT_UPDATE_MODE
 
   init {
     mapView.requestDisallowInterceptTouchEvent(false)
@@ -141,7 +139,6 @@ internal class ViewAnnotationManagerImpl(
 
   @AnyThread
   override fun setViewAnnotationUpdateMode(mode: ViewAnnotationUpdateMode) {
-    this.mode = mode
     renderThread.viewAnnotationMode = mode
   }
 
@@ -158,11 +155,11 @@ internal class ViewAnnotationManagerImpl(
     positions.forEach { descriptor ->
       annotationMap[descriptor.identifier]?.let { annotation ->
         annotation.view.apply {
-          logE("KIRYLDD", "Translation upd post, mode = ${mode.name}")
+          logE("KIRYLDD", "Translation upd post, mode = ${renderThread.viewAnnotationMode.name}")
           // if we're updating independent from the map - update render node immediately;
           // as we're located already inside choreographer's `doFrame` -
           // Android renderer could potentially have time to apply new translation before VSYNC
-          if (mode == ViewAnnotationUpdateMode.MAP_INDEPENDENT) {
+          if (renderThread.viewAnnotationMode == ViewAnnotationUpdateMode.MAP_INDEPENDENT) {
             translationX = descriptor.leftTopCoordinate.x.toFloat()
             translationY = descriptor.leftTopCoordinate.y.toFloat()
             logE("KIRYLDD", "Translation upd time=SAME_FRAME: x=$translationX, y=$translationY")
