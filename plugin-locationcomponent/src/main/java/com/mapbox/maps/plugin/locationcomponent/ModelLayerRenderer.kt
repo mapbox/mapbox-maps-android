@@ -91,9 +91,9 @@ internal class ModelLayerRenderer(
 
   private fun updateLocationOrBearing() {
     lastLocation?.let { location ->
-      val latLng = listOf(location.longitude(), location.latitude())
+      val lngLat = listOf(location.longitude(), location.latitude())
       val orientation = listOf(0.0, 0.0, lastBearing)
-      source.setPositionAndOrientation(latLng, orientation)
+      source.setPositionAndOrientation(lngLat, orientation)
     }
   }
 
