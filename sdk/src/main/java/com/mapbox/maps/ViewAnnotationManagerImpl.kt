@@ -156,20 +156,11 @@ internal class ViewAnnotationManagerImpl(
       annotationMap[descriptor.identifier]?.let { annotation ->
         annotation.view.apply {
           logE("KIRYLDD", "Translation upd post, mode = ${renderThread.viewAnnotationMode.name}")
-          // if we're updating independent from the map - update render node immediately;
-          // as we're located already inside choreographer's `doFrame` -
-          // Android renderer could potentially have time to apply new translation before VSYNC
-          if (renderThread.viewAnnotationMode == ViewAnnotationUpdateMode.MAP_INDEPENDENT) {
+          // we explicitly request updating render node on next `doFrame` for consistency
+          Choreographer.getInstance().postFrameCallback {
             translationX = descriptor.leftTopCoordinate.x.toFloat()
             translationY = descriptor.leftTopCoordinate.y.toFloat()
-            logE("KIRYLDD", "Translation upd time=SAME_FRAME: x=$translationX, y=$translationY")
-          } else {
-            // for modes that depend on the map - we explicitly request updating render node on next `doFrame`
-            Choreographer.getInstance().postFrameCallback {
-              translationX = descriptor.leftTopCoordinate.x.toFloat()
-              translationY = descriptor.leftTopCoordinate.y.toFloat()
-              logE("KIRYLDD", "Translation upd time=$it: x=$translationX, y=$translationY")
-            }
+            logE("KIRYLDD", "Translation upd time=$it: x=$translationX, y=$translationY")
           }
         }
       } ?: logE(TAG, "Core calculated position for ${descriptor.identifier} but actual view was not added!")

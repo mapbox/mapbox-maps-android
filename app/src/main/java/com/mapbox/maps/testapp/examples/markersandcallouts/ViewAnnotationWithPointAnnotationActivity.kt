@@ -58,11 +58,10 @@ class ViewAnnotationWithPointAnnotationActivity : AppCompatActivity() {
       binding.fabStyleToggle.setOnClickListener {
 //        pointAnnotation.iconImageBitmap = if (pointAnnotation.iconImage == null) iconBitmap else null
 //        pointAnnotationManager.update(pointAnnotation)
-        val mode = when (count.mod(3)) {
-          0 -> ViewAnnotationUpdateMode.FIXED_DELAY
+        val mode = when (count.mod(2)) {
+          0 -> ViewAnnotationUpdateMode.MAP_FIXED_DELAY
           1 -> ViewAnnotationUpdateMode.MAP_SYNCHRONIZED
-          2 -> ViewAnnotationUpdateMode.MAP_INDEPENDENT
-          else -> ViewAnnotationUpdateMode.FIXED_DELAY
+          else -> ViewAnnotationUpdateMode.MAP_FIXED_DELAY
         }
         binding.mapView.viewAnnotationManager.setViewAnnotationUpdateMode(mode)
         Toast.makeText(this, mode.name, Toast.LENGTH_SHORT).show()

@@ -789,7 +789,6 @@ class ViewAnnotationTest(
     )
   }
 
-  @Ignore("Bug in gl-native")
   @Test
   fun associatedFeatureIdWhenFeatureVisibleThenGone() {
     viewAnnotationTestHelper(
@@ -956,11 +955,9 @@ class ViewAnnotationTest(
     @Parameterized.Parameters
     fun data() = listOf(
       arrayOf(R.layout.view_annotation, ViewAnnotationUpdateMode.MAP_SYNCHRONIZED),
-      arrayOf(R.layout.view_annotation, ViewAnnotationUpdateMode.MAP_INDEPENDENT),
-      arrayOf(R.layout.view_annotation, ViewAnnotationUpdateMode.FIXED_DELAY),
+      arrayOf(R.layout.view_annotation, ViewAnnotationUpdateMode.MAP_FIXED_DELAY),
       arrayOf(R.layout.view_annotation_wrap_content, ViewAnnotationUpdateMode.MAP_SYNCHRONIZED),
-      arrayOf(R.layout.view_annotation_wrap_content, ViewAnnotationUpdateMode.MAP_INDEPENDENT),
-      arrayOf(R.layout.view_annotation_wrap_content, ViewAnnotationUpdateMode.FIXED_DELAY),
+      arrayOf(R.layout.view_annotation_wrap_content, ViewAnnotationUpdateMode.MAP_FIXED_DELAY),
     )
   }
 }

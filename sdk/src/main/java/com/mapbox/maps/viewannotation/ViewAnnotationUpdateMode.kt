@@ -13,15 +13,7 @@ enum class ViewAnnotationUpdateMode {
    * Using this mode introduces fixed 1-frame delay for view annotation position and if panning the map
    * quickly view annotation will be visually behind the map.
    */
-  FIXED_DELAY,
-
-  /**
-   * View annotations are updated independent from MapView.
-   * View annotation position could be updated on the same frame as the map camera as well as on next one.
-   *
-   * Using this mode is not recommended as it will most likely bring in view annotation jittering.
-   */
-  MAP_INDEPENDENT,
+  MAP_FIXED_DELAY,
 
   /**
    * View annotations are updated on the same frame as the MapView camera.
