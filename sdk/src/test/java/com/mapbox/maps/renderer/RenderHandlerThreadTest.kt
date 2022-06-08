@@ -51,7 +51,7 @@ class RenderHandlerThreadTest {
     renderHandlerThread.start()
     val handler = mockk<Handler>(relaxed = true)
     renderHandlerThread.handler = handler
-    renderHandlerThread.clearMessageQueue()
+    renderHandlerThread.clearDefaultMessages()
     verify { renderHandlerThread.handler?.removeCallbacksAndMessages(null) }
   }
 
@@ -60,7 +60,7 @@ class RenderHandlerThreadTest {
     renderHandlerThread.start()
     val handler = mockk<Handler>(relaxed = true)
     renderHandlerThread.handler = handler
-    renderHandlerThread.clearMessageQueue(false)
+    renderHandlerThread.clearDefaultMessages()
     verify { renderHandlerThread.handler?.removeCallbacksAndMessages(EventType.SDK) }
   }
 

@@ -48,7 +48,7 @@ internal abstract class MapboxRenderer : MapClient {
 
   @UiThread
   fun onDestroy() {
-    logW(TAG, "onDestroy")
+    logI(TAG, "onDestroy")
     renderThread.destroy()
     renderThread.fpsChangedListener = null
   }
@@ -70,7 +70,7 @@ internal abstract class MapboxRenderer : MapClient {
       RenderEvent(
         runnable = { task.run() },
         needRender = false,
-        eventType = if (renderThread.renderDestroyCallChain) EventType.DESTROY_RENDERER else EventType.OTHER
+        eventType = if (renderThread.renderDestroyCallChain) EventType.DESTROY_RENDERER else EventType.DEFAULT
       )
     )
   }
@@ -81,7 +81,7 @@ internal abstract class MapboxRenderer : MapClient {
       RenderEvent(
         runnable = runnable,
         needRender = true,
-        eventType = EventType.OTHER
+        eventType = EventType.DEFAULT
       )
     )
   }
@@ -92,7 +92,7 @@ internal abstract class MapboxRenderer : MapClient {
       RenderEvent(
         runnable = runnable,
         needRender = false,
-        eventType = EventType.OTHER
+        eventType = EventType.DEFAULT
       )
     )
   }
@@ -114,7 +114,7 @@ internal abstract class MapboxRenderer : MapClient {
 
   @WorkerThread
   fun destroyRenderer() {
-    logW(TAG, "Destroy renderer")
+    logI(TAG, "Destroy renderer")
     map?.destroyRenderer()
     // additionally it's correct moment to release pixel reader while we still have EGL context
     pixelReader?.release()
@@ -158,7 +158,7 @@ internal abstract class MapboxRenderer : MapClient {
             }
           },
           needRender = true,
-          eventType = EventType.OTHER
+          eventType = EventType.DEFAULT
         )
       )
       waitCondition.await(1, TimeUnit.SECONDS)
@@ -176,7 +176,7 @@ internal abstract class MapboxRenderer : MapClient {
       RenderEvent(
         runnable = { listener.onSnapshotReady(performSnapshot()) },
         needRender = true,
-        eventType = EventType.OTHER
+        eventType = EventType.DEFAULT
       )
     )
   }
@@ -234,6 +234,6 @@ internal abstract class MapboxRenderer : MapClient {
   companion object {
     private const val TAG = "Mbgl-Renderer"
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    internal val repaintRenderEvent = RenderEvent(null, true, EventType.OTHER)
+    internal val repaintRenderEvent = RenderEvent(null, true, EventType.DEFAULT)
   }
 }

@@ -18,10 +18,10 @@ internal class RenderHandlerThread {
     get() = handlerThread.isAlive
 
   fun post(task: () -> Unit) {
-    postDelayed(task, 0, EventType.OTHER)
+    postDelayed(task, 0, EventType.DEFAULT)
   }
 
-  fun postDelayed(task: () -> Unit, delayMillis: Long, eventType: EventType = EventType.OTHER) {
+  fun postDelayed(task: () -> Unit, delayMillis: Long, eventType: EventType = EventType.DEFAULT) {
     handler?.let {
       val message = Message.obtain(it, task)
       message.obj = eventType
@@ -37,7 +37,9 @@ internal class RenderHandlerThread {
   }
 
   fun stop() {
-    handlerThread.quit()
+    // quit and wait until all the messages will be processed - DESTROY_RENDERER messages
+    // are still there
+    handlerThread.quitSafely()
     try {
       handlerThread.join()
     } catch (e: InterruptedException) {
@@ -46,8 +48,11 @@ internal class RenderHandlerThread {
     }
   }
 
-  fun clearMessageQueue() {
-    handler?.removeCallbacksAndMessages(null)
+  /**
+   * Clears all messages except of [EventType.DESTROY_RENDERER] messages.
+   */
+  fun clearDefaultMessages() {
+    handler?.removeCallbacksAndMessages(EventType.DEFAULT)
   }
 
   companion object {

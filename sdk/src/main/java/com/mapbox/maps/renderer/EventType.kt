@@ -5,14 +5,15 @@ package com.mapbox.maps.renderer
  */
 internal enum class EventType {
   /**
-   * Those events are scheduled not by the Maps SDK (most likely by the user using MapView#queueEvent)
+   * Those events are scheduled by the Maps SDK or by user.
    * Such events do not get cleared when Android provides new surface or texture.
-   * In case render thread is not fully prepared - such messages will keep being rescheduled until
+   * If render thread is not fully prepared - such messages will keep being rescheduled until
    * thread is prepared or killed.
    */
-  OTHER,
+  DEFAULT,
 
   /**
+   * Special event type to handle when renderer is being destroyed
    * TODO remove when gl-native fix will land
    */
   DESTROY_RENDERER,

@@ -328,7 +328,7 @@ class MapboxRenderThreadTest {
       RenderEvent(
         runnable,
         true,
-        EventType.OTHER
+        EventType.DEFAULT
       )
     )
     assertEquals(1, mapboxRenderThread.renderEventQueue.size)
@@ -409,7 +409,7 @@ class MapboxRenderThreadTest {
       RenderEvent(
         runnable,
         false,
-        EventType.OTHER
+        EventType.DEFAULT
       )
     )
     // simulate render thread is not fully prepared, e.g. EGL context is lost

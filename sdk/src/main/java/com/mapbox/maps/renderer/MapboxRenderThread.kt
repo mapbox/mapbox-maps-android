@@ -8,6 +8,7 @@ import androidx.annotation.UiThread
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.WorkerThread
 import com.mapbox.maps.logE
+import com.mapbox.maps.logI
 import com.mapbox.maps.logW
 import com.mapbox.maps.renderer.egl.EGLCore
 import com.mapbox.maps.renderer.gl.TextureRenderer
@@ -327,7 +328,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       // at least on Android 8 devices we create surface before Activity#onStart
       // so we need to proceed to EGL creation in any case to avoid deadlock
       if (!creatingSurface) {
-        logW(TAG, "Skip render frame - NOT creating surface but renderNotSupported ($renderNotSupported) || paused ($paused)")
+        logI(TAG, "Skip render frame - NOT creating surface but renderNotSupported ($renderNotSupported) || paused ($paused)")
         return
       }
     }
@@ -335,7 +336,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     if (creatingSurface || !renderThreadPrepared) {
       val renderThreadPreparedOk = setUpRenderThread(creatingSurface)
       if (!renderThreadPreparedOk) {
-        logW(TAG, "Skip render frame - NOT render thread prepared but creatingSurface ($creatingSurface) || !renderThreadPrepared (${!renderThreadPrepared})")
+        logI(TAG, "Skip render frame - NOT render thread prepared but creatingSurface ($creatingSurface) || !renderThreadPrepared (${!renderThreadPrepared})")
         return
       }
     }
@@ -359,7 +360,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
 
   @UiThread
   fun onSurfaceDestroyed() {
-    logW(TAG, "RenderThread : surface destroyed")
+    logI(TAG, "RenderThread : surface destroyed")
     lock.withLock {
       // in some situations `destroy` is called earlier than onSurfaceDestroyed - in that case no need to clean up
       if (renderHandlerThread.started) {
@@ -370,6 +371,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
             // TODO https://github.com/mapbox/mapbox-maps-android/issues/607
             if (renderCreated && mapboxRenderer is MapboxTextureViewRenderer) {
               releaseAll()
+              renderHandlerThread.clearDefaultMessages()
             } else {
               releaseEglSurface()
             }
@@ -391,7 +393,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   internal fun processAndroidSurface(surface: Surface, width: Int, height: Int) {
     if (this.surface != surface) {
       if (this.surface != null) {
-        logW(TAG, "Process android surface while current is not null, will release EGL")
+        logI(TAG, "Process android surface while current is not null, will release EGL")
         releaseEgl()
         this.surface?.release()
       }
@@ -488,7 +490,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
             if (renderCreated) {
               releaseAll()
             }
-            renderHandlerThread.clearMessageQueue()
+            renderHandlerThread.clearDefaultMessages()
             destroyCondition.signal()
           }
         }

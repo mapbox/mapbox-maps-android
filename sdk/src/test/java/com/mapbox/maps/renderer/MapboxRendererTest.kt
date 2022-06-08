@@ -110,7 +110,7 @@ internal abstract class MapboxRendererTest {
         RenderEvent(
           event,
           false,
-          EventType.OTHER
+          EventType.DEFAULT
         )
       )
     }
@@ -125,7 +125,7 @@ internal abstract class MapboxRendererTest {
         RenderEvent(
           event,
           true,
-          EventType.OTHER
+          EventType.DEFAULT
         )
       )
     }
