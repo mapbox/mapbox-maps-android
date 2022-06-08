@@ -57,7 +57,7 @@ data class FormattedSection @JvmOverloads constructor(
       params["font-scale"] = Value(it)
     }
     fontStack?.let { strings ->
-      params["text-font"] = Value(strings.map { Value(it) })
+      params["text-font"] = Value(strings.map(::Value))
     }
     textColor?.let {
       params["text-color"] = Value(it)

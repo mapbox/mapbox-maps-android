@@ -14,16 +14,16 @@ internal class ModelLayerWrapper(
     layerProperties["type"] = Value("model")
     layerProperties["source"] = Value(sourceId)
     layerProperties["model-type"] = Value("location-indicator")
-    layerProperties["model-scale"] = Value(modelScale.map { Value(it) })
-    layerProperties["model-rotation"] = Value(modelRotation.map { Value(it) })
-    layerProperties["model-translation"] = Value(modelTranslation.map { Value(it) })
+    layerProperties["model-scale"] = Value(modelScale.map(::Value))
+    layerProperties["model-rotation"] = Value(modelRotation.map(::Value))
+    layerProperties["model-translation"] = Value(modelTranslation.map(::Value))
   }
 
-  fun modelScale(scale: List<Double>) = updateProperty("model-scale", Value(scale.map { Value(it) }))
+  fun modelScale(scale: List<Double>) = updateProperty("model-scale", Value(scale.map(::Value)))
 
   fun modelScaleExpression(scaleExpression: Value) = updateProperty("model-scale", scaleExpression)
 
-  fun modelRotation(rotation: List<Double>) = updateProperty("model-rotation", Value(rotation.map { Value(it) }))
+  fun modelRotation(rotation: List<Double>) = updateProperty("model-rotation", Value(rotation.map(::Value)))
 
-  fun modelTranslation(translation: List<Double>) = updateProperty("model-translation", Value(translation.map { Value(it) }))
+  fun modelTranslation(translation: List<Double>) = updateProperty("model-translation", Value(translation.map(::Value)))
 }

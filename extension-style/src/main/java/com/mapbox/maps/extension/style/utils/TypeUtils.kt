@@ -57,11 +57,11 @@ internal object TypeUtils {
         Value(valueArray)
       }
       is BooleanArray -> {
-        val valueArray = value.map { Value(it) }
+        val valueArray = value.map(::Value)
         Value(valueArray)
       }
       is DoubleArray -> {
-        val valueArray = value.map { Value(it) }
+        val valueArray = value.map(::Value)
         Value(valueArray)
       }
       is FloatArray -> {
@@ -69,7 +69,7 @@ internal object TypeUtils {
         Value(valueArray)
       }
       is LongArray -> {
-        val valueArray = value.map { Value(it) }
+        val valueArray = value.map(::Value)
         Value(valueArray)
       }
       is Array<*> -> {

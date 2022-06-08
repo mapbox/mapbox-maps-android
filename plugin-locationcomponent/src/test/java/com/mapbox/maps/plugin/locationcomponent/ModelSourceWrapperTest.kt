@@ -47,9 +47,14 @@ class ModelSourceWrapperTest {
     val modelSource = ModelSourceWrapper(SOURCE_ID, "uri", listOf(1.0, 2.0))
     modelSource.bindTo(style)
 
-    val position = arrayListOf(5.0)
-    modelSource.setPosition(position)
-    val property = hashMapOf(Pair(ModelSourceWrapper.POSITION, Value(position.map { Value(it) })), Pair(ModelSourceWrapper.URL, Value("uri")))
+    val position = arrayListOf(5.0, 5.0)
+    val orientation = arrayListOf(0.0, 0.0, 5.0)
+    modelSource.setPositionAndOrientation(position, orientation)
+    val property = hashMapOf(
+      Pair(ModelSourceWrapper.POSITION, Value(position.map(::Value))),
+      Pair(ModelSourceWrapper.ORIENTATION, Value(orientation.map(::Value))),
+      Pair(ModelSourceWrapper.URL, Value("uri"))
+    )
     val updateModel = hashMapOf(Pair(ModelSourceWrapper.DEFAULT_MODEL_NAME, Value(property)))
     verify { style.setStyleSourceProperty(SOURCE_ID, ModelSourceWrapper.MODELS, Value(updateModel)) }
   }
@@ -60,9 +65,14 @@ class ModelSourceWrapperTest {
     val modelSource = ModelSourceWrapper(SOURCE_ID, "uri", listOf(1.0, 2.0))
     modelSource.bindTo(style)
 
-    val position = arrayListOf(5.0)
-    modelSource.setPosition(position)
-    val property = hashMapOf(Pair(ModelSourceWrapper.POSITION, Value(position.map { Value(it) })), Pair(ModelSourceWrapper.URL, Value("uri")))
+    val position = arrayListOf(5.0, 5.0)
+    val orientation = arrayListOf(0.0, 0.0, 5.0)
+    modelSource.setPositionAndOrientation(position, orientation)
+    val property = hashMapOf(
+      Pair(ModelSourceWrapper.POSITION, Value(position.map(::Value))),
+      Pair(ModelSourceWrapper.ORIENTATION, Value(orientation.map(::Value))),
+      Pair(ModelSourceWrapper.URL, Value("uri"))
+    )
     val updateModel = hashMapOf(Pair(ModelSourceWrapper.DEFAULT_MODEL_NAME, Value(property)))
     verify(exactly = 0) { style.setStyleSourceProperty(SOURCE_ID, ModelSourceWrapper.MODELS, Value(updateModel)) }
   }
@@ -76,9 +86,14 @@ class ModelSourceWrapperTest {
     every { newStyle.addStyleSource(any(), any()) } returns expected
     every { newStyle.setStyleSourceProperty(any(), any(), any()) } returns expected
     modelSource.updateStyle(newStyle)
-    val position = arrayListOf(5.0)
-    modelSource.setPosition(position)
-    val property = hashMapOf(Pair(ModelSourceWrapper.POSITION, Value(position.map { Value(it) })), Pair(ModelSourceWrapper.URL, Value("uri")))
+    val position = arrayListOf(5.0, 5.0)
+    val orientation = arrayListOf(0.0, 0.0, 5.0)
+    modelSource.setPositionAndOrientation(position, orientation)
+    val property = hashMapOf(
+      Pair(ModelSourceWrapper.POSITION, Value(position.map(::Value))),
+      Pair(ModelSourceWrapper.ORIENTATION, Value(orientation.map(::Value))),
+      Pair(ModelSourceWrapper.URL, Value("uri"))
+    )
     val updateModel = hashMapOf(Pair(ModelSourceWrapper.DEFAULT_MODEL_NAME, Value(property)))
     verify(exactly = 0) { style.setStyleSourceProperty(SOURCE_ID, ModelSourceWrapper.MODELS, Value(updateModel)) }
     verify(exactly = 1) { newStyle.setStyleSourceProperty(SOURCE_ID, ModelSourceWrapper.MODELS, Value(updateModel)) }

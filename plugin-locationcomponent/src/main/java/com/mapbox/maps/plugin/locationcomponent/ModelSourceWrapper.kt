@@ -19,8 +19,8 @@ internal class ModelSourceWrapper(
   init {
     val modelProperties = HashMap<String, Value>()
     modelProperties[URL] = Value(url)
-    modelProperties[POSITION] = Value(position.map { Value(it) })
-    modelProperties[ORIENTATION] = Value(listOf(0.0, 0.0, 0.0).map { Value(it) })
+    modelProperties[POSITION] = Value(position.map(::Value))
+    modelProperties[ORIENTATION] = Value(listOf(0.0, 0.0, 0.0).map(::Value))
 
     val models = HashMap<String, Value>()
     models[DEFAULT_MODEL_NAME] = Value(modelProperties)
@@ -42,9 +42,13 @@ internal class ModelSourceWrapper(
     }
   }
 
-  fun setPosition(value: List<Double>) {
-    val property = hashMapOf(Pair(POSITION, Value(value.map { Value(it) })), Pair(URL, Value(url)))
-    val updateModel = hashMapOf(Pair(DEFAULT_MODEL_NAME, Value(property)))
+  fun setPositionAndOrientation(lngLat: List<Double>, orientation: List<Double>) {
+    val property = hashMapOf(
+      POSITION to Value(lngLat.map(::Value)),
+      ORIENTATION to Value(orientation.map(::Value)),
+      URL to Value(url)
+    )
+    val updateModel = hashMapOf(DEFAULT_MODEL_NAME to Value(property))
     updateProperty(MODELS, Value(updateModel))
   }
 

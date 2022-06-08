@@ -44,8 +44,8 @@ class ModelLayerRendererTest {
 
     locationLayerRenderer.initializeComponents(style)
 
-    verify { sourceWrapper.setPosition(listOf(10.0, 20.0)) }
-    verify { layerWrapper.modelRotation(listOf(0.0, 0.0, 11.0)) }
+    verify { sourceWrapper.setPositionAndOrientation(listOf(10.0, 20.0), listOf(0.0, 0.0, 11.0)) }
+    verify(exactly = 0) { layerWrapper.modelRotation(any()) }
   }
 
   @Test
@@ -81,16 +81,25 @@ class ModelLayerRendererTest {
     locationLayerRenderer.setLatLng(latLng)
 
     verify {
-      sourceWrapper.setPosition(listOf(10.0, 20.0))
+      sourceWrapper.setPositionAndOrientation(listOf(10.0, 20.0), listOf(0.0, 0.0, 0.0))
     }
   }
 
   @Test
-  fun setBearing() {
+  fun setBearingWithoutLastLocation() {
     val bearing = 30.0
     locationLayerRenderer.show()
     locationLayerRenderer.setBearing(bearing)
-    verify { layerWrapper.modelRotation(listOf(0.0, 0.0, bearing)) }
+    verify(exactly = 0) { sourceWrapper.setPositionAndOrientation(any(), any()) }
+  }
+
+  @Test
+  fun setBearingWithLastLocation() {
+    val bearing = 30.0
+    locationLayerRenderer.show()
+    locationLayerRenderer.lastLocation = Point.fromLngLat(0.0, 0.0)
+    locationLayerRenderer.setBearing(bearing)
+    verify(exactly = 1) { sourceWrapper.setPositionAndOrientation(any(), listOf(0.0, 0.0, bearing)) }
   }
 
   @Test
