@@ -163,19 +163,12 @@ internal class ViewAnnotationManagerImpl(
   @MainThread
   override fun onViewAnnotationPositionsUpdateMainThread() {
     val immutablePositionListCopy = LinkedList(updatedPositionsList)
-    logE("KIRYLDD", "onViewAnnotationPositionsUpdateMainThread ${immutablePositionListCopy.joinToString(", ")}")
-    immutablePositionListCopy.forEach { descriptor ->
-      annotationMap[descriptor.identifier]?.let { annotation ->
-        logE("KIRYLDD", "Translation post to next frame, mode = ${renderThread.viewAnnotationMode.name}")
-        Choreographer.getInstance().postFrameCallback {
-          annotation.view.translationX = descriptor.leftTopCoordinate.x.toFloat()
-          annotation.view.translationY = descriptor.leftTopCoordinate.y.toFloat()
-          logE("KIRYLDD", "Translation upd time=$it: x=${annotation.view.translationX}, y=${annotation.view.translationY}")
-        }
-      } ?: logE(TAG, "Core calculated position for ${descriptor.identifier} but actual view was not added!")
+    logE("KIRYLDD", "onViewAnnotationPositionsUpdateMainThread postFrameCallback ${immutablePositionListCopy.joinToString(", ")}")
+    Choreographer.getInstance().postFrameCallback {
+      logE("KIRYLDD", "positioning views start, time=$it")
+      positionAnnotationViews(immutablePositionListCopy)
+      logE("KIRYLDD", "positioning views end")
     }
-    // adding, removing, changing visibility for Android views should be done from Main UI thread only.
-    positionAnnotationViews(immutablePositionListCopy)
   }
 
   fun destroy() {
@@ -325,6 +318,11 @@ internal class ViewAnnotationManagerImpl(
     // add and reposition new and existed views
     positionDescriptorCoreList.forEach { descriptor ->
       annotationMap[descriptor.identifier]?.let { annotation ->
+        // update translation first - notify Android render node to schedule updates
+        annotation.view.apply {
+          translationX = descriptor.leftTopCoordinate.x.toFloat()
+          translationY = descriptor.leftTopCoordinate.y.toFloat()
+        }
         // update layout params explicitly if user has specified concrete width or height
         annotation.viewLayoutParams.apply {
           if (annotation.measuredWidth == USER_FIXED_DIMENSION) {
