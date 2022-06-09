@@ -273,7 +273,11 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     // **note** this queue also holds snapshot tasks
     drainQueue(renderEventQueue)
     if (hasViewAnnotations) {
+      // immediately reset the flag
       hasViewAnnotations = false
+      // when we're syncing view annotations with the map -
+      // we swap buffers the next frame to achieve better synchronization with view annotations update
+      // that always happens 1 frame later
       if (viewAnnotationMode == ViewAnnotationUpdateMode.MAP_SYNCHRONIZED) {
         Choreographer.getInstance().postFrameCallback {
           swap(

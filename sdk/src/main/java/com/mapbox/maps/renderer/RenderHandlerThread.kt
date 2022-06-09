@@ -37,7 +37,7 @@ internal class RenderHandlerThread {
   }
 
   fun stop() {
-    handlerThread.quit()
+    handlerThread.quitSafely()
     try {
       handlerThread.join()
     } catch (e: InterruptedException) {

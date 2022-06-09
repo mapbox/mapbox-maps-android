@@ -1,22 +1,18 @@
 package com.mapbox.maps
 
-import android.os.Handler
-import android.os.Looper
 import android.view.Choreographer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewTreeObserver
 import android.widget.FrameLayout
-import androidx.annotation.AnyThread
-import androidx.annotation.LayoutRes
-import androidx.annotation.VisibleForTesting
-import androidx.annotation.WorkerThread
+import androidx.annotation.*
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater
 import com.mapbox.bindgen.Expected
 import com.mapbox.maps.viewannotation.*
 import com.mapbox.maps.viewannotation.ViewAnnotation
 import com.mapbox.maps.viewannotation.ViewAnnotation.Companion.USER_FIXED_DIMENSION
 import com.mapbox.maps.viewannotation.ViewAnnotationVisibility
+import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.CopyOnWriteArraySet
 import kotlin.collections.HashMap
@@ -28,7 +24,6 @@ internal class ViewAnnotationManagerImpl(
   private val mapboxMap: MapboxMap = mapView.getMapboxMap()
   private val viewPlugins = mapView.mapController.pluginRegistry.viewPlugins
   private val renderThread = mapView.mapController.renderer.renderThread
-  private val mainHandler = Handler(Looper.getMainLooper())
 
   init {
     mapView.requestDisallowInterceptTouchEvent(false)
@@ -46,6 +41,9 @@ internal class ViewAnnotationManagerImpl(
   // using copy on write as user could remove listener while callback is invoked
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal val viewUpdatedListenerSet = CopyOnWriteArraySet<OnViewAnnotationUpdatedListener>()
+
+  @Volatile
+  private var updatedPositionsList: MutableList<ViewAnnotationPositionDescriptor> = mutableListOf()
 
   override fun addViewAnnotation(
     @LayoutRes resId: Int,
@@ -144,36 +142,44 @@ internal class ViewAnnotationManagerImpl(
 
   /**
    * Always called from render thread in the end of [MapInterface.render] call if positions did change.
+   *
+   * It's crucial to notify render thread in this callback as depending on mode we're using we need
+   * either swap buffers the same or the next frame.
    */
   @WorkerThread
   override fun onViewAnnotationPositionsUpdate(positions: MutableList<ViewAnnotationPositionDescriptor>) {
-    // update that flag here if callback was triggered, it will be reset by renderer when swapping buffers
+    logE("KIRYLDD", "onViewAnnotationPositionsUpdate ${positions.joinToString(", ")}")
+    // update that flag here if callback was triggered, it will be reset by renderer directly when swapping buffers
     renderThread.hasViewAnnotations = true
-    // it's fine to update translation for views on non-main thread we simply update fields and let
-    // Android render node pick them up using Android Render thread. We don't even bother if view
-    // was not actually added on top of MapView.
-    positions.forEach { descriptor ->
+    updatedPositionsList = positions
+  }
+
+  /**
+   * Called as soon as possible on main thread after updated positions arrived on render thread.
+   *
+   * We need another callback from core as scheduling from render thread to main happens too slow
+   * when using Java Main Looper.
+   */
+  @MainThread
+  override fun onViewAnnotationPositionsUpdateMainThread() {
+    val immutablePositionListCopy = LinkedList(updatedPositionsList)
+    logE("KIRYLDD", "onViewAnnotationPositionsUpdateMainThread ${immutablePositionListCopy.joinToString(", ")}")
+    immutablePositionListCopy.forEach { descriptor ->
       annotationMap[descriptor.identifier]?.let { annotation ->
-        annotation.view.apply {
-          logE("KIRYLDD", "Translation upd post, mode = ${renderThread.viewAnnotationMode.name}")
-          // we explicitly request updating render node on next `doFrame` for consistency
-          Choreographer.getInstance().postFrameCallback {
-            translationX = descriptor.leftTopCoordinate.x.toFloat()
-            translationY = descriptor.leftTopCoordinate.y.toFloat()
-            logE("KIRYLDD", "Translation upd time=$it: x=$translationX, y=$translationY")
-          }
+        logE("KIRYLDD", "Translation post to next frame, mode = ${renderThread.viewAnnotationMode.name}")
+        Choreographer.getInstance().postFrameCallback {
+          annotation.view.translationX = descriptor.leftTopCoordinate.x.toFloat()
+          annotation.view.translationY = descriptor.leftTopCoordinate.y.toFloat()
+          logE("KIRYLDD", "Translation upd time=$it: x=${annotation.view.translationX}, y=${annotation.view.translationY}")
         }
       } ?: logE(TAG, "Core calculated position for ${descriptor.identifier} but actual view was not added!")
     }
     // adding, removing, changing visibility for Android views should be done from Main UI thread only.
-    mainHandler.post {
-      positionAnnotationViews(positions)
-    }
+    positionAnnotationViews(immutablePositionListCopy)
   }
 
   fun destroy() {
     mapboxMap.setViewAnnotationPositionsUpdateListener(null)
-    mainHandler.removeCallbacksAndMessages(null)
     viewUpdatedListenerSet.clear()
     removeAllViewAnnotations()
   }
