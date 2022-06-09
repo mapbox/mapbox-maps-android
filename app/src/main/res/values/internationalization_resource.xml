@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="language_array">
+        <item>English US en-US</item>
+        <item>English UK en-GB</item>
+        <item>French (France) fr-FR</item>
+        <item>French (Canada) fr-CA</item>
+        <item>German (Germany) de-DE</item>
+        <item>Japanese jp-JA</item>
+        <item>Italian (Italy) it-IT</item>
+        <item>Chinese Mainland zh-CN</item>
+        <item>Chinese Taiwan zh-TW</item>
+        <item>Finnish (Finland)-Suomi fi-FI</item>
+        <item>Arabic (UAE) ar</item>
+        <item>Czech (Czech Republic) cs</item>
+        <item>Danish (Denmark) da</item>
+        <item>Swedish (Sweden) sv-SE</item>
+        <item>Spanish (Spain) es-ES</item>
+        <item>Russian (Russia) ru-RU</item>
+        <item>Chinese HongKong zh-HK</item>
+        <item>Dutch (Netherlands) nl-NL</item>
+        <item>Dutch (Belgium) nl-BE</item>
+        <item>Greek (Greece) el-GR</item>
+        <item>Hebrew (Modern) heb-IS</item>
+        <item>Hungarian (Hungary) hun-HU</item>
+        <item>Indonesian (Indonesia) id-ID</item>
+        <item>Norwegian (Norway) no-NO</item>
+        <item>Polish (Poland) po-PL</item>
+        <item>Portuguese (Brazil) pt-BR</item>
+        <item>Portuguese (Portugal) pt-PT</item>
+        <item>Romanian ro-RO</item>
+        <item>Slovak (Slovakia) sk-SK</item>
+        <item>Slovenian (Slovenia) slv-SVN-Latn</item>
+        <item>Spanish US (Mexican) es-MX</item>
+        <item>Thai (Thailand) th-TH</item>
+        <item>Turkish (Turkey) tr-TR</item>
+        <item>Ukrainian (UK) ukr-UKR-Cyrl</item>
+        <item>Vietnamese vie-VNM-Latn</item>
+        <item>Serbian sr-Cyrl-CS</item>
+        <item>Hindi (India) hi-IN</item>
+        <item>Bangla (India) bn-IN</item>
+        <item>Bangla (Bangladesh) bn-BD</item>
+    </string-array>
+    <string-array name="language_array_value">
+        <item>en-US</item>
+        <item>en-GB</item>
+        <item>fr-FR</item>
+        <item>fr-CA</item>
+        <item>de-DE</item>
+        <item>jp-JA</item>
+        <item>it-IT</item>
+        <item>zh-CN</item>
+        <item>zh-TW</item>
+        <item>fi-FI</item>
+        <item>ar</item>
+        <item>cs</item>
+        <item>da</item>
+        <item>sv-SE</item>
+        <item>es-ES</item>
+        <item>ru-RU</item>
+        <item>zh-HK</item>
+        <item>nl-NL</item>
+        <item>nl-BE</item>
+        <item>el-GR</item>
+        <item>heb-IS</item>
+        <item>hun-HU</item>
+        <item>id-ID</item>
+        <item>no-NO</item>
+        <item>po-PL</item>
+        <item>pt-BR</item>
+        <item>pt-PT</item>
+        <item>ro-RO</item>
+        <item>sk-SK</item>
+        <item>slv-SVN-Latn</item>
+        <item>es-MX</item>
+        <item>th-TH</item>
+        <item>tr-TR</item>
+        <item>ukr-UKR-Cyrl</item>
+        <item>vie-VNM-Latn</item>
+        <item>sr-Cyrl-CS</item>
+        <item>hi-IN</item>
+        <item>bn-IN</item>
+        <item>bn-BD</item>
+    </string-array>
+
+    <string-array name="worldview_array">
+        <item>US</item>
+        <item>CN</item>
+        <item>RU</item>
+        <item>IN</item>
+        <item>JP</item> <!--Japan -->
+        <item>MA</item> <!--Morocco -->
+        <item>TR</item> <!--Turkey -->
+    </string-array>
+</resources>

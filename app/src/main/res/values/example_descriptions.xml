@@ -92,4 +92,5 @@
     <string name="description_info_window">Legacy InfoWindow implementation using view annotations</string>
     <string name="description_viewport">Viewport camera showcase</string>
     <string name="description_advanced_viewport">Advanced viewport with gestures showcase</string>
+    <string name="description_server_based_localization_settings">Set server based localization</string>
 </resources>

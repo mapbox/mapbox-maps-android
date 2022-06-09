@@ -163,4 +163,10 @@
 
     <!-- Line trim offset -->
     <string name="trim_offset">Increase trim offset</string>
+
+    <!-- Internationalization -->
+    <string name="select_language">Select language</string>
+    <string name="select_worldview">Select worldview</string>
+    <string name="check_setting">Check setting</string>
+    <string name="drop_down_text">%1$s - %2$s</string>
 </resources>

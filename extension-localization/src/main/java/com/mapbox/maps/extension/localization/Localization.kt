@@ -1,5 +1,12 @@
 package com.mapbox.maps.extension.localization
 
+import android.os.Handler
+import android.os.HandlerThread
+import android.os.Looper
+import android.os.Process.THREAD_PRIORITY_DEFAULT
+import com.mapbox.common.Logger
+import com.mapbox.common.SettingsServiceFactory
+import com.mapbox.common.SettingsServiceStorageType
 import com.mapbox.maps.StyleObjectInfo
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.expressions.dsl.generated.get
@@ -11,6 +18,8 @@ import com.mapbox.maps.extension.style.sources.getSourceAs
 import com.mapbox.maps.logE
 import com.mapbox.maps.logI
 import java.util.*
+import com.mapbox.common.MapboxCommonSettings.LANGUAGE
+import com.mapbox.common.MapboxCommonSettings.WORLDVIEW
 
 /**
  * Apply languages to style by locale. It will replace the `["get","name_en"]` expression with a new expression `["get","name_xx"]`,
@@ -24,6 +33,21 @@ internal fun setMapLanguage(locale: Locale, style: StyleInterface, layerIds: Lis
   if (!isSupportedLanguage(convertedLocale)) {
     logE(TAG, "Locale: $locale is not supported.")
     return
+  }
+
+  /**
+   * Check if the server side localization is set and Log the error if present.
+   * `localizeLabel` method (ie Style localization) will not work with server side localization
+   */
+  checkServerSideLocalizationSet { isLocalizationSet ->
+    if (isLocalizationSet) {
+      Logger.e(
+        TAG,
+        "Style localization will not work when language or worldview is set." +
+          " Either remove localizeLabel method or remove server side localization " +
+          "with SettingsInterface.erase(Language) function"
+      )
+    }
   }
 
   style.styleSources
@@ -51,6 +75,37 @@ internal fun setMapLanguage(locale: Locale, style: StyleInterface, layerIds: Lis
           }
         }
     }
+}
+
+fun checkServerSideLocalizationSet(listener: (Boolean) -> Unit) {
+  // create worker thread to run settingsInterface methods.
+  val workerThread = HandlerThread(
+    "SETTINGS_THREAD", THREAD_PRIORITY_DEFAULT
+  ).apply { start() }
+
+  val workerHandler = Handler(workerThread.looper)
+  val settingsServiceInterface =
+    SettingsServiceFactory.getInstance(SettingsServiceStorageType.PERSISTENT)
+
+  workerHandler.post {
+    var isLocalizationSet = false
+    val expectedLanguageSetting = settingsServiceInterface.has(LANGUAGE)
+    expectedLanguageSetting.value?.let { language ->
+      if (language) {
+        isLocalizationSet = true
+      }
+    }
+    val expectedWorldviewSetting = settingsServiceInterface.has(WORLDVIEW)
+    expectedWorldviewSetting.value?.let { worldview ->
+      if (worldview) {
+        isLocalizationSet = true
+      }
+    }
+    Handler(Looper.getMainLooper()).post {
+      listener.invoke(isLocalizationSet)
+    }
+    workerThread.quitSafely()
+  }
 }
 
 private fun convertExpression(language: String, layer: SymbolLayer, textField: Expression?) {

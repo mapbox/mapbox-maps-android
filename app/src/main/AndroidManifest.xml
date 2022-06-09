@@ -1175,5 +1175,17 @@
         <activity
             android:name=".TestMapActivity"
             android:exported="true" />
+        <activity
+            android:name=".examples.localization.LocalizationSettingsActivity"
+            android:description="@string/description_server_based_localization_settings"
+            android:exported="true"
+            android:label="@string/activity_localization_settings">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_basic" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ExampleOverviewActivity" />
+        </activity>
     </application>
 </manifest>
