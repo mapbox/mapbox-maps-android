@@ -49,12 +49,8 @@ internal class LocationPuckManager(
     lastLocation = it
     if (settings.locationPuck is LocationPuck3D) {
       delegateProvider.getStyle { style ->
-        val projectionProperty = style.getStyleProjectionProperty("name")
-        val isGlobeProjection =
-          projectionProperty.kind == StylePropertyValueKind.CONSTANT &&
-            (projectionProperty.value.contents as String).uppercase() == "GLOBE"
         val latitude =
-          if (isGlobeProjection) {
+          if (style.isGlobeProjection()) {
             delegateProvider.mapCameraManagerDelegate.cameraState.center.latitude()
           } else it.latitude()
         lastMercatorScale = mercatorScale(latitude)
@@ -292,6 +288,12 @@ internal class LocationPuckManager(
       // convert decimal latitude degrees to radians
       lat.coerceIn(-LATITUDE_MAX, LATITUDE_MAX) * Math.PI / 180.0
     )
+  }
+
+  private fun StyleInterface.isGlobeProjection(): Boolean {
+    val projectionProperty = getStyleProjectionProperty("name")
+    return projectionProperty.kind == StylePropertyValueKind.CONSTANT &&
+      (projectionProperty.value.contents as String).uppercase() == "GLOBE"
   }
 
   private companion object {
