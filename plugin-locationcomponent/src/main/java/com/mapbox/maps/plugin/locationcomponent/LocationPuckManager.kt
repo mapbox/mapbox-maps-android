@@ -7,10 +7,10 @@ import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
 import com.mapbox.maps.MapboxLocationComponentException
+import com.mapbox.maps.StylePropertyValueKind
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.LocationPuck3D
-import com.mapbox.maps.plugin.MapProjection
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.locationcomponent.animators.PuckAnimatorManager
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
@@ -48,11 +48,17 @@ internal class LocationPuckManager(
   private val onLocationUpdated: ((Point) -> Unit) = {
     lastLocation = it
     if (settings.locationPuck is LocationPuck3D) {
-      val latitude =
-        if (delegateProvider.mapProjectionDelegate.getMapProjection() == MapProjection.Globe) {
-          delegateProvider.mapCameraManagerDelegate.cameraState.center.latitude()
-        } else it.latitude()
-      lastMercatorScale = mercatorScale(latitude)
+      delegateProvider.getStyle { style ->
+        val projectionProperty = style.getStyleProjectionProperty("name")
+        val isGlobeProjection =
+          projectionProperty.kind == StylePropertyValueKind.CONSTANT &&
+            (projectionProperty.value.contents as String).uppercase() == "GLOBE"
+        val latitude =
+          if (isGlobeProjection) {
+            delegateProvider.mapCameraManagerDelegate.cameraState.center.latitude()
+          } else it.latitude()
+        lastMercatorScale = mercatorScale(latitude)
+      }
     }
   }
 

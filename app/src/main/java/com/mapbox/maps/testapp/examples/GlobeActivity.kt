@@ -18,7 +18,6 @@ import com.mapbox.maps.extension.style.projection.generated.getProjection
 import com.mapbox.maps.extension.style.projection.generated.projection
 import com.mapbox.maps.extension.style.projection.generated.setProjection
 import com.mapbox.maps.extension.style.style
-import com.mapbox.maps.plugin.MapProjection
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Companion.cameraAnimatorOptions
 import com.mapbox.maps.plugin.animation.camera
 import com.mapbox.maps.testapp.R
@@ -40,11 +39,6 @@ class GlobeActivity : AppCompatActivity() {
   private lateinit var mapboxMap: MapboxMap
   private lateinit var infoTextView: TextView
 
-  private fun ProjectionName.toMapProjection() = when (this) {
-    ProjectionName.MERCATOR -> MapProjection.Mercator
-    ProjectionName.GLOBE -> MapProjection.Globe
-  }
-
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     val binding = ActivityGlobeViewBinding.inflate(layoutInflater)
@@ -52,7 +46,7 @@ class GlobeActivity : AppCompatActivity() {
 
     infoTextView = binding.infoText
     mapboxMap = binding.mapView.getMapboxMap().apply {
-      // set globe projection even before style load so that it appears immediately
+      // set globe projection with Style DSL load so that it appears immediately
       loadStyle(
         style(Style.TRAFFIC_DAY) {
           +fillExtrusionLayer("3d-buildings", "composite") {
@@ -138,7 +132,6 @@ class GlobeActivity : AppCompatActivity() {
     private const val TARGET_ZOOM = 18.51596061886663
     private const val TARGET_PITCH = 78.50097654853042
 
-    private val MODEL_POINT = Point.fromLngLat(-73.99462885531243, 40.7188264245498)
     private val TARGET_POINT = Point.fromLngLat(-73.99429285004713, 40.71976882733935)
   }
 }
