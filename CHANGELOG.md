@@ -11,6 +11,19 @@ Mapbox welcomes participation and contributions from everyone.
 * Optimise the frequency to update location layer's visibility. ([1399](https://github.com/mapbox/mapbox-maps-android/pull/1399))
 * Fix the delay in the first appearance of the location puck. ([1403](https://github.com/mapbox/mapbox-maps-android/pull/1403))
 
+# 10.6.0
+
+## Breaking changes ⚠️
+* Remove deprecated (since `v10.5.0`) experimental methods `MapboxMap.setMapProjection`/`MapboxMap.getMapProjection`. ([1420](https://github.com/mapbox/mapbox-maps-android/pull/1420))
+Those methods should be replaced with setting projection as part of Style DSL:
+```kotlin
+mapView.getMapboxMap().loadStyle(
+    style(styleUri) {
+        +projection(ProjectionName.GLOBE) // or ProjectionName.MERCATOR
+    }
+)
+```
+
 # 10.6.0-rc.1 June 2, 2022
 
 ## Features ✨ and improvements 🏁
