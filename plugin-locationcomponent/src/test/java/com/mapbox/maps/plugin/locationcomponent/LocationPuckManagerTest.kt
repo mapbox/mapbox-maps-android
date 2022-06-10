@@ -307,6 +307,8 @@ class LocationPuckManagerTest {
   @Test
   fun testDefault3DStyleScalingWithMercatorScale() {
     val onLocationUpdatedSlot = slot<((Point) -> Unit)>()
+    val getStyleSlot = slot<((StyleInterface) -> Unit)>()
+    val style = mockk<StyleInterface>(relaxed = true)
     val valueSlots = mutableListOf<Value>()
     every { settings.locationPuck } returns LocationPuck3D(
       modelUri = "uri",
@@ -315,6 +317,8 @@ class LocationPuckManagerTest {
     locationPuckManager.initialize(mockk())
     verify { animationManager.setUpdateListeners(capture(onLocationUpdatedSlot), any(), any()) }
     onLocationUpdatedSlot.captured.invoke(Point.fromLngLat(60.0, 60.0))
+    verify { delegateProvider.getStyle(capture(getStyleSlot)) }
+    getStyleSlot.captured.invoke(style)
     assertEquals(locationPuckManager.lastMercatorScale, 0.5, 1E-5)
     verify { locationLayerRenderer.styleScaling(capture(valueSlots)) }
     val value = valueSlots.last().toString()
