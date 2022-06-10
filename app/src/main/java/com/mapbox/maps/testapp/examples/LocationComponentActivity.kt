@@ -9,9 +9,12 @@ import androidx.appcompat.content.res.AppCompatResources
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.expressions.dsl.generated.interpolate
+import com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName
+import com.mapbox.maps.extension.style.projection.generated.getProjection
+import com.mapbox.maps.extension.style.projection.generated.projection
+import com.mapbox.maps.extension.style.projection.generated.setProjection
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.LocationPuck3D
-import com.mapbox.maps.plugin.MapProjection
 import com.mapbox.maps.plugin.PuckBearingSource
 import com.mapbox.maps.plugin.gestures.gestures
 import com.mapbox.maps.plugin.locationcomponent.*
@@ -22,6 +25,7 @@ import java.lang.ref.WeakReference
 
 class LocationComponentActivity : AppCompatActivity() {
 
+  private var lastLoadedStyle: Style? = null
   private var lastStyleUri = Style.DARK
   private lateinit var locationPermissionHelper: LocationPermissionHelper
   private val onIndicatorPositionChangedListener = OnIndicatorPositionChangedListener {
@@ -39,6 +43,7 @@ class LocationComponentActivity : AppCompatActivity() {
     locationPermissionHelper = LocationPermissionHelper(WeakReference(this))
     locationPermissionHelper.checkPermissions {
       binding.mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS) {
+        lastLoadedStyle = it
         // Disable scroll gesture, since we are updating the camera position based on the indicator location.
         binding.mapView.gestures.scrollEnabled = false
         binding.mapView.gestures.addOnMapClickListener { point ->
@@ -172,16 +177,21 @@ class LocationComponentActivity : AppCompatActivity() {
   private fun toggleMapStyle() {
     val styleUrl = if (lastStyleUri == Style.DARK) Style.LIGHT else Style.DARK
     binding.mapView.getMapboxMap().loadStyleUri(styleUrl) {
+      lastLoadedStyle = it
       lastStyleUri = styleUrl
     }
   }
 
   private fun toggleMapProjection() {
-    binding.mapView.getMapboxMap().apply {
-      when (getMapProjection()) {
-        MapProjection.Mercator -> setMapProjection(MapProjection.Globe)
-        MapProjection.Globe -> setMapProjection(MapProjection.Mercator)
-      }
+    lastLoadedStyle?.let { style ->
+      style.setProjection(
+        projection(
+          when (style.getProjection().name) {
+            ProjectionName.MERCATOR -> ProjectionName.GLOBE
+            ProjectionName.GLOBE -> ProjectionName.MERCATOR
+          }
+        )
+      )
     }
   }
 
