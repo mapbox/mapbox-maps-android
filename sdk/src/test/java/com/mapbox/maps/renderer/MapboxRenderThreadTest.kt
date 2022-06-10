@@ -3,6 +3,7 @@ package com.mapbox.maps.renderer
 import android.view.Surface
 import com.mapbox.countDownEvery
 import com.mapbox.maps.logE
+import com.mapbox.maps.logI
 import com.mapbox.maps.logW
 import com.mapbox.maps.renderer.MapboxRenderThread.Companion.RETRY_DELAY_MS
 import com.mapbox.maps.renderer.egl.EGLCore
@@ -53,6 +54,7 @@ class MapboxRenderThreadTest {
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logE(any(), any()) } just Runs
     every { logW(any(), any()) } just Runs
+    every { logI(any(), any()) } just Runs
   }
 
   private fun mockSurface() {
@@ -80,6 +82,16 @@ class MapboxRenderThreadTest {
     every { eglCore.swapBuffers(any()) } returns EGL10.EGL_SUCCESS
   }
 
+  private fun pauseHandler() = Shadows.shadowOf(renderHandlerThread.handler?.looper).pause()
+
+  /**
+   * advances system clock by [millis] and executes all the tasks posted by the advanced time
+   * by default millis = 0 (e.g. only tasks posted without delay are executed)
+   */
+  private fun idleHandler(
+    millis: Long = 0L
+  ) = Shadows.shadowOf(renderHandlerThread.handler?.looper).idleFor(millis, TimeUnit.MILLISECONDS)
+
   private fun provideValidSurface() {
     mockSurface()
     mapboxRenderThread.onSurfaceCreated(surface, 1, 1)
@@ -89,10 +101,6 @@ class MapboxRenderThreadTest {
   private fun mockCountdownRunnable(latch: CountDownLatch) = mockk<Runnable>(relaxUnitFun = true).also {
     every { it.run() } answers { latch.countDown() }
   }
-
-  private fun pauseHandler() = Shadows.shadowOf(renderHandlerThread.handler?.looper).pause()
-
-  private fun idleHandler() = Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
 
   @After
   fun cleanup() {
@@ -352,7 +360,7 @@ class MapboxRenderThreadTest {
       RenderEvent(
         runnable,
         false,
-        EventType.SDK
+        EventType.DEFAULT
       )
     )
     // we do not add non-render event to the queue
@@ -377,7 +385,7 @@ class MapboxRenderThreadTest {
       RenderEvent(
         runnable,
         false,
-        EventType.SDK
+        EventType.DEFAULT
       )
     )
     // we add to the queue
@@ -436,7 +444,7 @@ class MapboxRenderThreadTest {
       RenderEvent(
         runnable,
         false,
-        EventType.SDK
+        EventType.DEFAULT
       )
     )
     // simulate render thread is not fully prepared, e.g. EGL context is lost
@@ -495,9 +503,9 @@ class MapboxRenderThreadTest {
 
       pauseHandler()
 
-      mapboxRenderThread.queueRenderEvent(RenderEvent(runnable, true, EventType.SDK))
-      mapboxRenderThread.queueRenderEvent(RenderEvent(runnable2, true, EventType.SDK))
-      mapboxRenderThread.queueRenderEvent(RenderEvent(runnable3, true, EventType.SDK))
+      mapboxRenderThread.queueRenderEvent(RenderEvent(runnable, true, EventType.DEFAULT))
+      mapboxRenderThread.queueRenderEvent(RenderEvent(runnable2, true, EventType.DEFAULT))
+      mapboxRenderThread.queueRenderEvent(RenderEvent(runnable3, true, EventType.DEFAULT))
 
       idleHandler()
     }
@@ -678,5 +686,54 @@ class MapboxRenderThreadTest {
     verifyNo {
       mapboxWidgetRenderer.setSharedContext(any())
     }
+  }
+
+  @Test
+  fun onDestroyExecutesAllDestroyTasks() {
+    initRenderThread()
+    every { eglCore.makeCurrent(any()) } returns true
+    val runnables = listOf<Runnable>(
+      mockk(relaxUnitFun = true),
+      mockk(relaxUnitFun = true),
+      mockk(relaxUnitFun = true),
+    )
+    val events = runnables.map { RenderEvent(it, false, EventType.DESTROY_RENDERER) }
+
+    // simulate chained DESTROY events being added via scheduleTask on destroyRenderer call
+    every { mapboxRenderer.destroyRenderer() } answers {
+      events.forEach(mapboxRenderThread::queueRenderEvent)
+    }
+
+    provideValidSurface()
+    mapboxRenderThread.destroy()
+
+    verifyOrder {
+      runnables.forEach { it.run() }
+    }
+  }
+
+  @Test
+  fun onAddRenderEventWhenSurfaceIsDestroyed() {
+    initRenderThread()
+    provideValidSurface()
+
+    lateinit var runnable: Runnable
+    lateinit var runnable2: Runnable
+    waitZeroCounter(startCounter = 2) {
+      runnable = mockCountdownRunnable(this)
+      runnable2 = mockCountdownRunnable(this)
+      mapboxRenderThread.onSurfaceDestroyed()
+
+      mapboxRenderThread.queueRenderEvent(RenderEvent(runnable, false, EventType.DEFAULT))
+      mapboxRenderThread.queueRenderEvent(RenderEvent(runnable2, false, EventType.DEFAULT))
+
+      mapboxRenderThread.onSurfaceCreated(surface, 1, 1)
+
+      // non-render events are posted with 50 millis delay when surface is destroyed
+      idleHandler(50L)
+    }
+
+    verify { runnable.run() }
+    verify { runnable2.run() }
   }
 }

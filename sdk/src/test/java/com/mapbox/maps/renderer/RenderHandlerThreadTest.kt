@@ -1,8 +1,8 @@
 package com.mapbox.maps.renderer
 
-import android.os.Handler
 import android.os.Looper
 import com.mapbox.maps.logW
+import com.mapbox.verifyNo
 import io.mockk.*
 import org.junit.After
 import org.junit.Before
@@ -47,21 +47,11 @@ class RenderHandlerThreadTest {
   }
 
   @Test
-  fun clearMessageQueueAllTest() {
+  fun clearDefaultMessagesTest() {
     renderHandlerThread.start()
-    val handler = mockk<Handler>(relaxed = true)
-    renderHandlerThread.handler = handler
+    renderHandlerThread.handler = mockk(relaxed = true)
     renderHandlerThread.clearDefaultMessages()
-    verify { renderHandlerThread.handler?.removeCallbacksAndMessages(null) }
-  }
-
-  @Test
-  fun clearMessageQueueSDKTest() {
-    renderHandlerThread.start()
-    val handler = mockk<Handler>(relaxed = true)
-    renderHandlerThread.handler = handler
-    renderHandlerThread.clearDefaultMessages()
-    verify { renderHandlerThread.handler?.removeCallbacksAndMessages(EventType.SDK) }
+    verify { renderHandlerThread.handler?.removeCallbacksAndMessages(EventType.DEFAULT) }
   }
 
   @Test
@@ -70,7 +60,7 @@ class RenderHandlerThreadTest {
     Shadows.shadowOf(Looper.getMainLooper()).pause()
     renderHandlerThread.post { action() }
     Shadows.shadowOf(Looper.getMainLooper()).idle()
-    verify(exactly = 0) { action.invoke() }
+    verifyNo { action.invoke() }
   }
 
   @Test
@@ -84,7 +74,7 @@ class RenderHandlerThreadTest {
       post { actionTwo() }
     }
     Shadows.shadowOf(Looper.getMainLooper()).idleFor(Duration.ofMillis(50))
-    verify(exactly = 1) { actionOne.invoke() }
-    verify(exactly = 1) { actionTwo.invoke() }
+    verify { actionOne.invoke() }
+    verify { actionTwo.invoke() }
   }
 }

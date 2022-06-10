@@ -328,7 +328,11 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       // at least on Android 8 devices we create surface before Activity#onStart
       // so we need to proceed to EGL creation in any case to avoid deadlock
       if (!creatingSurface) {
-        logI(TAG, "Skip render frame - NOT creating surface but renderNotSupported ($renderNotSupported) || paused ($paused)")
+        logI(
+          TAG,
+          "Skip render frame - NOT creating surface although " +
+            "renderNotSupported ($renderNotSupported) || paused ($paused)"
+        )
         return
       }
     }
@@ -336,7 +340,11 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     if (creatingSurface || !renderThreadPrepared) {
       val renderThreadPreparedOk = setUpRenderThread(creatingSurface)
       if (!renderThreadPreparedOk) {
-        logI(TAG, "Skip render frame - NOT render thread prepared but creatingSurface ($creatingSurface) || !renderThreadPrepared (${!renderThreadPrepared})")
+        logI(
+          TAG,
+          "Skip render frame - render thread NOT prepared although " +
+            "creatingSurface ($creatingSurface) || !renderThreadPrepared (${!renderThreadPrepared})"
+        )
         return
       }
     }
@@ -393,7 +401,11 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   internal fun processAndroidSurface(surface: Surface, width: Int, height: Int) {
     if (this.surface != surface) {
       if (this.surface != null) {
-        logI(TAG, "Process android surface while current is not null, will release EGL")
+        logI(
+          TAG,
+          "Processing new android surface while current is not null, " +
+            "releasing current EGL"
+        )
         releaseEgl()
         this.surface?.release()
       }
@@ -439,7 +451,9 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       renderEvent.runnable?.let {
         renderEventQueue.add(renderEvent)
       }
-      postPrepareRenderFrame()
+      if (renderThreadPrepared) {
+        postPrepareRenderFrame()
+      }
     } else {
       postNonRenderEvent(renderEvent)
     }

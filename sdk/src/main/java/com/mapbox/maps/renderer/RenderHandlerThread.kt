@@ -37,19 +37,15 @@ internal class RenderHandlerThread {
   }
 
   fun stop() {
-    // quit and wait until all the messages will be processed - DESTROY_RENDERER messages
-    // are still there
+    // quit safely to guarantee all DESTROY_RENDERER messages
+    // that may be in the queue will be executed
     handlerThread.quitSafely()
-    try {
-      handlerThread.join()
-    } catch (e: InterruptedException) {
-    } finally {
-      handler = null
-    }
+    handler = null
   }
 
   /**
-   * Clears all messages except of [EventType.DESTROY_RENDERER] messages.
+   * Clears all messages except of [EventType.DESTROY_RENDERER] messages, since they clear
+   * various resources allocated in core and we don't want to leak those resources.
    */
   fun clearDefaultMessages() {
     handler?.removeCallbacksAndMessages(EventType.DEFAULT)
