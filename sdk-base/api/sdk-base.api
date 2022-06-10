@@ -2472,9 +2472,8 @@ public final class com/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateB
 }
 
 public final class com/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateOptions {
-	public synthetic fun <init> (Lcom/mapbox/maps/EdgeInsets;Ljava/lang/Double;Lcom/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateBearing;Ljava/lang/Double;JLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Lcom/mapbox/maps/EdgeInsets;Ljava/lang/Double;Lcom/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateBearing;Ljava/lang/Double;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getAnimationDurationMs ()J
 	public final fun getBearing ()Lcom/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateBearing;
 	public final fun getPadding ()Lcom/mapbox/maps/EdgeInsets;
 	public final fun getPitch ()Ljava/lang/Double;
@@ -2486,7 +2485,6 @@ public final class com/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateO
 
 public final class com/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateOptions$Builder {
 	public fun <init> ()V
-	public final fun animationDurationMs (J)Lcom/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateOptions$Builder;
 	public final fun bearing (Lcom/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateBearing;)Lcom/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateOptions$Builder;
 	public final fun build ()Lcom/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateOptions;
 	public final fun padding (Lcom/mapbox/maps/EdgeInsets;)Lcom/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateOptions$Builder;

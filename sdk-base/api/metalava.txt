@@ -2626,13 +2626,11 @@ package com.mapbox.maps.plugin.viewport.data {
   }
 
   @com.mapbox.maps.MapboxExperimental public final class FollowPuckViewportStateOptions {
-    method @Deprecated public long getAnimationDurationMs();
     method public com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateBearing! getBearing();
     method public com.mapbox.maps.EdgeInsets! getPadding();
     method public Double! getPitch();
     method public Double! getZoom();
     method public com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions.Builder toBuilder();
-    property @Deprecated public final long animationDurationMs;
     property public final com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateBearing! bearing;
     property public final com.mapbox.maps.EdgeInsets! padding;
     property public final Double! pitch;
@@ -2641,7 +2639,6 @@ package com.mapbox.maps.plugin.viewport.data {
 
   public static final class FollowPuckViewportStateOptions.Builder {
     ctor public FollowPuckViewportStateOptions.Builder();
-    method @Deprecated public com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions.Builder animationDurationMs(long duration);
     method public com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions.Builder bearing(com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateBearing? options);
     method public com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions build();
     method public com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions.Builder padding(com.mapbox.maps.EdgeInsets? padding);

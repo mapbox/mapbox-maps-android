@@ -3,6 +3,9 @@
 Mapbox welcomes participation and contributions from everyone.
 
 #main
+## Breaking changes ⚠️
+* Remove deprecated `FollowPuckViewportStateOptions.animationDurationMs` from experimental viewport plugin. ([1421](https://github.com/mapbox/mapbox-maps-android/pull/1421))
+
 ## Features ✨ and improvements 🏁
 * Optimise the bearing update frequency for the location puck animator. ([1398](https://github.com/mapbox/mapbox-maps-android/pull/1398))
 * Use `orientation` model source property to update the 3D puck's bearing, as it is more efficient than updating the `model-rotation` layer property. ([1407](https://github.com/mapbox/mapbox-maps-android/pull/1407))
