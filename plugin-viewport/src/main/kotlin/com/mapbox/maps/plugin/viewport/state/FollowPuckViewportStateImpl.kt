@@ -14,6 +14,7 @@ import com.mapbox.maps.plugin.locationcomponent.LocationComponentPlugin
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorBearingChangedListener
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener
 import com.mapbox.maps.plugin.locationcomponent.location
+import com.mapbox.maps.plugin.viewport.DEFAULT_STATE_ANIMATION_DURATION_MS
 import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateBearing
 import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions
 import com.mapbox.maps.plugin.viewport.transition.MapboxViewportTransitionFactory
@@ -197,7 +198,7 @@ internal class FollowPuckViewportStateImpl(
     onComplete: ((isFinished: Boolean) -> Unit)? = null
   ) {
     startAnimation(
-      transitionFactory.transitionLinear(cameraOptions, options.animationDurationMs)
+      transitionFactory.transitionLinear(cameraOptions, DEFAULT_STATE_ANIMATION_DURATION_MS)
         .apply {
           addListener(
             object : Animator.AnimatorListener {

@@ -5,9 +5,7 @@ import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.plugin.viewport.DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_PITCH
 import com.mapbox.maps.plugin.viewport.DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_ZOOM
-import com.mapbox.maps.plugin.viewport.DEFAULT_STATE_ANIMATION_DURATION_MS
 import com.mapbox.maps.plugin.viewport.state.FollowPuckViewportState
-import com.mapbox.maps.plugin.viewport.transition.DefaultViewportTransition
 import java.util.Objects
 
 /**
@@ -49,25 +47,11 @@ class FollowPuckViewportStateOptions private constructor(
    * Defaults to [DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_PITCH] degrees.
    */
   val pitch: Double?,
-  /**
-   * The duration of an animation that happens once when [FollowPuckViewportState.startUpdatingCamera]
-   * is invoked.
-   *
-   * Note: At the moment, [DefaultViewportTransition] calculates its animations based on the puck location
-   * at the beginning of the transition, so the farther the puck moves while the transition is in progress,
-   * the larger the jump when it completes and control is transferred to the target state. Tune this value
-   * for your use case to reduce the visibility of that jump.
-   *
-   * Defaults to [DEFAULT_STATE_ANIMATION_DURATION_MS] milliseconds
-   */
-  @Deprecated("AnimationDurationMs is not needed any more, the transition will be handled properly internally.")
-  val animationDurationMs: Long
 ) {
   /**
    * Returns a builder that created the [FollowPuckViewportStateOptions]
    */
   fun toBuilder() = Builder().padding(padding).zoom(zoom).bearing(bearing).pitch(pitch)
-    .animationDurationMs(animationDurationMs)
 
   /**
    * Indicates whether some other object is "equal to" this one.
@@ -76,20 +60,18 @@ class FollowPuckViewportStateOptions private constructor(
     padding == other.padding &&
     Objects.equals(zoom, other.zoom) &&
     bearing == other.bearing &&
-    Objects.equals(pitch, other.pitch) &&
-    animationDurationMs == other.animationDurationMs
+    Objects.equals(pitch, other.pitch)
 
   /**
    * Returns a hash code value for the object.
    */
-  override fun hashCode() =
-    Objects.hash(padding, zoom, bearing, pitch, animationDurationMs)
+  override fun hashCode() = Objects.hash(padding, zoom, bearing, pitch)
 
   /**
    * Returns a String for the object.
    */
   override fun toString() =
-    "FollowPuckViewportStateOptions(padding=$padding, zoom=$zoom, bearing=$bearing, pitch=$pitch, animationDurationMs=$animationDurationMs)"
+    "FollowPuckViewportStateOptions(padding=$padding, zoom=$zoom, bearing=$bearing, pitch=$pitch)"
 
   /**
    * Builder for [FollowPuckViewportStateOptions]
@@ -100,7 +82,6 @@ class FollowPuckViewportStateOptions private constructor(
     private var bearing: FollowPuckViewportStateBearing? =
       FollowPuckViewportStateBearing.SyncWithLocationPuck
     private var pitch: Double? = DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_PITCH
-    private var animationDurationMs: Long = DEFAULT_STATE_ANIMATION_DURATION_MS
 
     /**
      * The value to use for setting [CameraOptions.padding]. If null, padding will not be modified by
@@ -143,22 +124,6 @@ class FollowPuckViewportStateOptions private constructor(
     }
 
     /**
-     * The duration of an animation that happens once when [FollowPuckViewportState.startUpdatingCamera]
-     * is invoked.
-     *
-     * Note: At the moment, [DefaultViewportTransition] calculates its animations based on the puck location
-     * at the beginning of the transition, so the farther the puck moves while the transition is in progress,
-     * the larger the jump when it completes and control is transferred to the target state. Tune this value
-     * for your use case to reduce the visibility of that jump.
-     *
-     * Defaults to [DEFAULT_STATE_ANIMATION_DURATION_MS] milliseconds
-     */
-    @Deprecated("AnimationDurationMs is not needed any more, the transition will be handled properly internally.")
-    fun animationDurationMs(duration: Long) = apply {
-      this.animationDurationMs = duration
-    }
-
-    /**
      * Builds [FollowPuckViewportStateOptions]
      */
     fun build() =
@@ -167,7 +132,6 @@ class FollowPuckViewportStateOptions private constructor(
         zoom,
         bearing,
         pitch,
-        animationDurationMs
       )
   }
 }

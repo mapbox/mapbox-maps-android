@@ -55,7 +55,6 @@ class AdvancedViewportGesturesExample : AppCompatActivity() {
     mapView.viewport.makeFollowPuckViewportState(
       FollowPuckViewportStateOptions.Builder()
         .bearing(FollowPuckViewportStateBearing.Constant(0.0))
-        .animationDurationMs(500)
         .padding(EdgeInsets(200.0 * resources.displayMetrics.density, 0.0, 0.0, 0.0))
         .build()
     )
