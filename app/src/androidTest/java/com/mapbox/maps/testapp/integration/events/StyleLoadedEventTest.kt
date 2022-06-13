@@ -60,7 +60,6 @@ class StyleLoadedEventTest {
             "type": "vector"
           }
         },
-        "sprite": "mapbox://sprites/mapbox/mapbox-terrain-v2",
         "glyphs": "mapbox://fonts/mapbox/{fontstack}/{range}.pbf",
         "layers": [
           {
