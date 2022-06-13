@@ -14,15 +14,7 @@ Mapbox welcomes participation and contributions from everyone.
 # 10.6.0
 
 ## Breaking changes ⚠️
-* Remove deprecated (since `v10.5.0`) experimental methods `MapboxMap.setMapProjection`/`MapboxMap.getMapProjection`. ([1420](https://github.com/mapbox/mapbox-maps-android/pull/1420))
-Those methods should be replaced with setting projection as part of Style DSL:
-```kotlin
-mapView.getMapboxMap().loadStyle(
-    style(styleUri) {
-        +projection(ProjectionName.GLOBE) // or ProjectionName.MERCATOR
-    }
-)
-```
+* Remove deprecated (since `v10.5.0`) experimental methods `MapboxMap.setMapProjection`/`MapboxMap.getMapProjection`. Those methods should be replaced with setting projection as part of Style DSL to achieve the same behavior. ([1420](https://github.com/mapbox/mapbox-maps-android/pull/1420))
 
 # 10.6.0-rc.1 June 2, 2022
 
