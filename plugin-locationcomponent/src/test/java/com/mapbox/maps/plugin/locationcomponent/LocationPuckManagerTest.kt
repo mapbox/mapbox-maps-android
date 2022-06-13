@@ -5,6 +5,8 @@ import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraState
 import com.mapbox.maps.EdgeInsets
+import com.mapbox.maps.StylePropertyValue
+import com.mapbox.maps.StylePropertyValueKind
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.LocationPuck3D
@@ -316,9 +318,42 @@ class LocationPuckManagerTest {
         assert(absoluteDifference < 2 * maxUlp)
       }
   }
+
   @Test
   fun testDefault3DStyleScalingWithMercatorScale() {
+    // in mercator projection we take actual location update as camera center, so
+    // lat = 60.0, cos(60.0) = 0.5
+    testDefault3DScaling(
+      actualProjection = "mercator",
+      actualLocationUpdate = Point.fromLngLat(60.0, 60.0),
+      expectedLastMercatorScale = 0.5,
+      expectedLastMercatorScaleString = "0.5000000000000001"
+    )
+  }
+
+  @Test
+  fun testDefault3DStyleScalingWithGlobeScale() {
+    // in globe projection we take mapCameraDelegate.cameraState as camera center, so
+    // lat = 0.0, cos(0.0) = 1.0
+    testDefault3DScaling(
+      actualProjection = "globe",
+      actualLocationUpdate = Point.fromLngLat(60.0, 60.0),
+      expectedLastMercatorScale = 1.0,
+      expectedLastMercatorScaleString = "1.0"
+    )
+  }
+
+  private fun testDefault3DScaling(
+    actualProjection: String,
+    actualLocationUpdate: Point,
+    expectedLastMercatorScale: Double,
+    expectedLastMercatorScaleString: String
+  ) {
     val onLocationUpdatedSlot = slot<((Point) -> Unit)>()
+    val getStyleSlot = slot<((StyleInterface) -> Unit)>()
+    val style = mockk<StyleInterface>()
+    every { style.getStyleProjectionProperty("name") } returns
+      StylePropertyValue(Value(actualProjection), StylePropertyValueKind.CONSTANT)
     val valueSlots = mutableListOf<Value>()
     every { settings.locationPuck } returns LocationPuck3D(
       modelUri = "uri",
@@ -326,20 +361,22 @@ class LocationPuckManagerTest {
     every { Value.fromJson(any()) } returns ExpectedFactory.createValue(Value("expression"))
     locationPuckManager.initialize(mockk())
     verify { animationManager.setUpdateListeners(capture(onLocationUpdatedSlot), any(), any()) }
-    onLocationUpdatedSlot.captured.invoke(Point.fromLngLat(60.0, 60.0))
-    assertEquals(locationPuckManager.lastMercatorScale, 0.5, 1E-5)
+    onLocationUpdatedSlot.captured.invoke(actualLocationUpdate)
+    verify { delegateProvider.getStyle(capture(getStyleSlot)) }
+    getStyleSlot.captured.invoke(style)
+    assertEquals(expectedLastMercatorScale, locationPuckManager.lastMercatorScale, 1E-5)
     verify { locationLayerRenderer.styleScaling(capture(valueSlots)) }
     val value = valueSlots.last().toString()
     assertTrue(value.startsWith("[interpolate, [exponential, 0.5], [zoom], 0.5, [literal, ["))
-    assertTrue(value.endsWith("]], 22.0, [literal, [0.5000000000000001, 0.5000000000000001, 0.5000000000000001]]]"))
+    assertTrue(value.endsWith("]], 22.0, [literal, [$expectedLastMercatorScaleString, $expectedLastMercatorScaleString, $expectedLastMercatorScaleString]]]"))
     value
       .replace("[interpolate, [exponential, 0.5], [zoom], 0.5, [literal, [", "")
-      .replace("]], 22.0, [literal, [0.5000000000000001, 0.5000000000000001, 0.5000000000000001]]]", "")
+      .replace("]], 22.0, [literal, [$expectedLastMercatorScaleString, $expectedLastMercatorScaleString, $expectedLastMercatorScaleString]]]", "")
       .split(", ")
       .map { it.toDouble() }
       .forEach {
-        val absoluteDifference: Float = abs(it - MODEL_SCALE_CONSTANT * 0.5).toFloat()
-        val maxUlp = Math.ulp(it).coerceAtLeast(Math.ulp(MODEL_SCALE_CONSTANT * 0.5)).toFloat()
+        val absoluteDifference: Float = abs(it - MODEL_SCALE_CONSTANT * expectedLastMercatorScale).toFloat()
+        val maxUlp = Math.ulp(it).coerceAtLeast(Math.ulp(MODEL_SCALE_CONSTANT * expectedLastMercatorScale)).toFloat()
         assert(absoluteDifference < 2 * maxUlp)
       }
   }

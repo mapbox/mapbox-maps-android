@@ -658,18 +658,6 @@ public final class com/mapbox/maps/plugin/MapPlugin$DefaultImpls {
 	public static fun onDelegateProvider (Lcom/mapbox/maps/plugin/MapPlugin;Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;)V
 }
 
-public abstract class com/mapbox/maps/plugin/MapProjection {
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class com/mapbox/maps/plugin/MapProjection$Globe : com/mapbox/maps/plugin/MapProjection {
-	public static final field INSTANCE Lcom/mapbox/maps/plugin/MapProjection$Globe;
-}
-
-public final class com/mapbox/maps/plugin/MapProjection$Mercator : com/mapbox/maps/plugin/MapProjection {
-	public static final field INSTANCE Lcom/mapbox/maps/plugin/MapProjection$Mercator;
-}
-
 public abstract interface class com/mapbox/maps/plugin/MapSizePlugin {
 	public abstract fun onSizeChanged (II)V
 }
@@ -1521,12 +1509,10 @@ public abstract interface class com/mapbox/maps/plugin/delegates/MapPluginProvid
 
 public abstract interface class com/mapbox/maps/plugin/delegates/MapProjectionDelegate {
 	public abstract fun coordinateForProjectedMeters (Lcom/mapbox/maps/ProjectedMeters;)Lcom/mapbox/geojson/Point;
-	public abstract fun getMapProjection ()Lcom/mapbox/maps/plugin/MapProjection;
 	public abstract fun getMetersPerPixelAtLatitude (D)D
 	public abstract fun getMetersPerPixelAtLatitude (DD)D
 	public abstract fun project (Lcom/mapbox/geojson/Point;D)Lcom/mapbox/maps/MercatorCoordinate;
 	public abstract fun projectedMetersForCoordinate (Lcom/mapbox/geojson/Point;)Lcom/mapbox/maps/ProjectedMeters;
-	public abstract fun setMapProjection (Lcom/mapbox/maps/plugin/MapProjection;)V
 	public abstract fun unproject (Lcom/mapbox/maps/MercatorCoordinate;D)Lcom/mapbox/geojson/Point;
 }
 
