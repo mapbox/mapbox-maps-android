@@ -9,9 +9,12 @@ import androidx.appcompat.content.res.AppCompatResources
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.expressions.dsl.generated.interpolate
+import com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName
+import com.mapbox.maps.extension.style.projection.generated.getProjection
+import com.mapbox.maps.extension.style.projection.generated.projection
+import com.mapbox.maps.extension.style.projection.generated.setProjection
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.LocationPuck3D
-import com.mapbox.maps.plugin.MapProjection
 import com.mapbox.maps.plugin.PuckBearingSource
 import com.mapbox.maps.plugin.gestures.gestures
 import com.mapbox.maps.plugin.locationcomponent.*
@@ -177,11 +180,15 @@ class LocationComponentActivity : AppCompatActivity() {
   }
 
   private fun toggleMapProjection() {
-    binding.mapView.getMapboxMap().apply {
-      when (getMapProjection()) {
-        MapProjection.Mercator -> setMapProjection(MapProjection.Globe)
-        MapProjection.Globe -> setMapProjection(MapProjection.Mercator)
-      }
+    binding.mapView.getMapboxMap().getStyle { style ->
+      style.setProjection(
+        projection(
+          when (style.getProjection().name) {
+            ProjectionName.MERCATOR -> ProjectionName.GLOBE
+            ProjectionName.GLOBE -> ProjectionName.MERCATOR
+          }
+        )
+      )
     }
   }
 

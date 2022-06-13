@@ -6,7 +6,6 @@ import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.style
-import com.mapbox.maps.plugin.MapProjection
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.delegates.listeners.*
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
@@ -1051,56 +1050,6 @@ class MapboxMapTest {
     val callback = mockk<AsyncOperationResultCallback>(relaxed = true)
     mapboxMap.clearData(callback)
     verify { Map.clearData(resourceOptions, callback) }
-  }
-
-  @Test
-  fun setMapProjectionMercator() {
-    verifySetMapProjection(MapProjection.Mercator, "mercator")
-  }
-
-  @Test
-  fun setMapProjectionGlobe() {
-    verifySetMapProjection(MapProjection.Globe, "globe")
-  }
-
-  private fun verifySetMapProjection(givenProjection: MapProjection, expectedValue: String) {
-    mapboxMap.setMapProjection(givenProjection)
-    verify {
-      nativeMap.setStyleProjection(
-        Value.valueOf(
-          hashMapOf(
-            "name" to Value(expectedValue)
-          )
-        )
-      )
-    }
-  }
-
-  @Test
-  fun getMapProjectionMercator() {
-    every { nativeMap.getStyleProjectionProperty("name") } returns StylePropertyValue(
-      Value.valueOf("mercator"),
-      StylePropertyValueKind.CONSTANT
-    )
-    assertEquals(MapProjection.Mercator, mapboxMap.getMapProjection())
-  }
-
-  @Test
-  fun getMapProjectionGlobe() {
-    every { nativeMap.getStyleProjectionProperty("name") } returns StylePropertyValue(
-      Value.valueOf("globe"),
-      StylePropertyValueKind.CONSTANT
-    )
-    assertEquals(MapProjection.Globe, mapboxMap.getMapProjection())
-  }
-
-  @Test
-  fun getMapProjectionDefault() {
-    every { nativeMap.getStyleProjectionProperty("name") } returns StylePropertyValue(
-      Value.valueOf("globe"),
-      StylePropertyValueKind.UNDEFINED
-    )
-    assertEquals(MapProjection.Mercator, mapboxMap.getMapProjection())
   }
 
   @Test
