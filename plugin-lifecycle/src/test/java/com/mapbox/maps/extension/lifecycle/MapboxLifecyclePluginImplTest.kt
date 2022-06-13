@@ -10,6 +10,7 @@ import android.content.ComponentCallbacks2.TRIM_MEMORY_RUNNING_MODERATE
 import android.content.ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN
 import android.content.Context
 import android.widget.FrameLayout
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewTreeLifecycleOwner
 import com.mapbox.maps.MapboxLifecycleObserver
@@ -19,11 +20,15 @@ import com.mapbox.maps.plugin.lifecycle.MapboxLifecyclePluginImpl
 import io.mockk.*
 import org.junit.After
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.robolectric.ParameterizedRobolectricTestRunner
+import org.junit.runners.Parameterized
 
 class MapboxLifecyclePluginImplTest {
+  @get:Rule
+  val instantTaskExecutorRule = InstantTaskExecutorRule()
+
   private lateinit var mapboxLifecyclePlugin: MapboxLifecyclePlugin
   private val mapView: FrameLayout = mockk(relaxed = true)
   private val context: Context = mockk(relaxed = true)
@@ -50,8 +55,11 @@ class MapboxLifecyclePluginImplTest {
   }
 }
 
-@RunWith(ParameterizedRobolectricTestRunner::class)
+@RunWith(Parameterized::class)
 class TrimMemoryLevelTest(private val level: Pair<Int, Int>) {
+  @get:Rule
+  val instantTaskExecutorRule = InstantTaskExecutorRule()
+
   private lateinit var mapboxLifecyclePlugin: MapboxLifecyclePlugin
   private val mapView: FrameLayout = mockk(relaxed = true)
   private val context: Context = mockk(relaxed = true)
@@ -87,7 +95,7 @@ class TrimMemoryLevelTest(private val level: Pair<Int, Int>) {
 
   companion object {
     @JvmStatic
-    @ParameterizedRobolectricTestRunner.Parameters(name = "The TrimMemoryLevel and number of onLowMemory calls should match: {0}")
+    @Parameterized.Parameters(name = "The TrimMemoryLevel and number of onLowMemory calls should match: {0}")
     fun data() = listOf(
       TRIM_MEMORY_RUNNING_CRITICAL to 1,
       TRIM_MEMORY_RUNNING_LOW to 1,

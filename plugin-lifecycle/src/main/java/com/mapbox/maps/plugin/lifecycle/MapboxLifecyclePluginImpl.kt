@@ -27,9 +27,8 @@ class MapboxLifecyclePluginImpl : MapboxLifecyclePlugin {
    * @param observer the observer that listen to the life cycle events
    */
   override fun registerLifecycleObserver(mapView: View, observer: MapboxLifecycleObserver) {
-    val viewLifecycleRegistry = ViewLifecycleRegistry(
-      view = mapView,
-      hostingLifecycleOwner = requireNotNull(ViewTreeLifecycleOwner.get(mapView))
+    val viewLifecycleRegistry = ViewLifecycleOwner(
+      view = mapView
     )
 
     val componentCallback = object : ComponentCallbacks2 {
