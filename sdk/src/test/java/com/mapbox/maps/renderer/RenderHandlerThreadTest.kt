@@ -43,7 +43,6 @@ class RenderHandlerThreadTest {
     renderHandlerThread.start()
     renderHandlerThread.stop()
     assert(renderHandlerThread.handler == null)
-    assert(!renderHandlerThread.handlerThread.isAlive)
   }
 
   @Test
@@ -61,6 +60,22 @@ class RenderHandlerThreadTest {
     renderHandlerThread.post { action() }
     Shadows.shadowOf(Looper.getMainLooper()).idle()
     verifyNo { action.invoke() }
+  }
+
+  @Test
+  fun postThreadStopped() {
+    val actionOne = mockk<() -> Unit>(relaxed = true)
+    val actionTwo = mockk<() -> Unit>(relaxed = true)
+    Shadows.shadowOf(Looper.getMainLooper()).pause()
+    renderHandlerThread.apply {
+      start()
+      post { actionOne() }
+      stop()
+      post { actionTwo() }
+    }
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+    verify { actionOne.invoke() }
+    verifyNo { actionTwo.invoke() }
   }
 
   @Test

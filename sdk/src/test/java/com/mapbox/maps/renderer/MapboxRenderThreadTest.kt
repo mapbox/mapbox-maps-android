@@ -350,7 +350,7 @@ class MapboxRenderThreadTest {
   }
 
   @Test
-  fun queueSdkNonRenderEventTestNoVsync() {
+  fun queueNonRenderEventTestNoVsync() {
     initRenderThread()
     provideValidSurface()
     val runnable = mockk<Runnable>(relaxUnitFun = true)
@@ -375,7 +375,7 @@ class MapboxRenderThreadTest {
   }
 
   @Test
-  fun queueSdkNonRenderEventTestWithVsync() {
+  fun queueNonRenderEventTestWithVsync() {
     initRenderThread()
     provideValidSurface()
     val runnable = mockk<Runnable>(relaxUnitFun = true)
@@ -408,7 +408,7 @@ class MapboxRenderThreadTest {
   }
 
   @Test
-  fun queueUserNonRenderEventLoosingSurfaceTest() {
+  fun queueNonRenderEventLoosingSurfaceTest() {
     initRenderThread()
     provideValidSurface()
     val runnable = mockk<Runnable>(relaxUnitFun = true)
@@ -429,36 +429,9 @@ class MapboxRenderThreadTest {
     mapboxRenderThread.eglContextCreated = true
     mapboxRenderThread.processAndroidSurface(surface, 1, 1)
     // taking into account we try to reschedule event with some delay
-    Shadows.shadowOf(renderHandlerThread.handler?.looper).idleFor(RETRY_DELAY_MS, TimeUnit.MILLISECONDS)
+    idleHandler(RETRY_DELAY_MS)
     // user's runnable is executed when thread is fully prepared again
     verifyOnce { runnable.run() }
-  }
-
-  @Test
-  fun queueSdkNonRenderEventLoosingSurfaceTest() {
-    initRenderThread()
-    provideValidSurface()
-    val runnable = mockk<Runnable>(relaxUnitFun = true)
-    pauseHandler()
-    mapboxRenderThread.queueRenderEvent(
-      RenderEvent(
-        runnable,
-        false,
-        EventType.DEFAULT
-      )
-    )
-    // simulate render thread is not fully prepared, e.g. EGL context is lost
-    mapboxRenderThread.eglContextCreated = false
-    idleHandler()
-    verifyNo { runnable.run() }
-    pauseHandler()
-    // simulate render thread is fully prepared again
-    mapboxRenderThread.eglContextCreated = true
-    mapboxRenderThread.processAndroidSurface(surface, 1, 1)
-    // taking into account we try to reschedule event with some delay
-    Shadows.shadowOf(renderHandlerThread.handler?.looper).idleFor(RETRY_DELAY_MS, TimeUnit.MILLISECONDS)
-    // SDK's task is not executed with new surface
-    verifyNo { runnable.run() }
   }
 
   @Test
@@ -730,7 +703,7 @@ class MapboxRenderThreadTest {
       mapboxRenderThread.onSurfaceCreated(surface, 1, 1)
 
       // non-render events are posted with 50 millis delay when surface is destroyed
-      idleHandler(50L)
+      idleHandler(RETRY_DELAY_MS)
     }
 
     verify { runnable.run() }
