@@ -25,7 +25,6 @@ import java.lang.ref.WeakReference
 
 class LocationComponentActivity : AppCompatActivity() {
 
-  private var lastLoadedStyle: Style? = null
   private var lastStyleUri = Style.DARK
   private lateinit var locationPermissionHelper: LocationPermissionHelper
   private val onIndicatorPositionChangedListener = OnIndicatorPositionChangedListener {
@@ -43,7 +42,6 @@ class LocationComponentActivity : AppCompatActivity() {
     locationPermissionHelper = LocationPermissionHelper(WeakReference(this))
     locationPermissionHelper.checkPermissions {
       binding.mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS) {
-        lastLoadedStyle = it
         // Disable scroll gesture, since we are updating the camera position based on the indicator location.
         binding.mapView.gestures.scrollEnabled = false
         binding.mapView.gestures.addOnMapClickListener { point ->
@@ -177,13 +175,12 @@ class LocationComponentActivity : AppCompatActivity() {
   private fun toggleMapStyle() {
     val styleUrl = if (lastStyleUri == Style.DARK) Style.LIGHT else Style.DARK
     binding.mapView.getMapboxMap().loadStyleUri(styleUrl) {
-      lastLoadedStyle = it
       lastStyleUri = styleUrl
     }
   }
 
   private fun toggleMapProjection() {
-    lastLoadedStyle?.let { style ->
+    binding.mapView.getMapboxMap().getStyle { style ->
       style.setProjection(
         projection(
           when (style.getProjection().name) {
