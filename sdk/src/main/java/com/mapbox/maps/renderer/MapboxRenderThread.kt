@@ -288,9 +288,9 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
             expectedEndRenderTimeNanos = expectedEndRenderTimeNanos
           )
         }
-        // explicit flush as we will not be doing any drawing until buffer swap for the next frame
-        // `glFlush` tells the driver to send all queued up commands to the hardware (even if the queue isn't full yet).
-        // This doesn't block the calling thread. It merely signals the driver that we might not be sending any additional commands.
+        // explicit flush as we will not be doing any drawing until buffer swap for the next frame -
+        // we send commands to GPU this frame as we should have some free time and perform buffer swap asap on the next frame
+        // note that this doesn't block the calling thread, it merely signals the driver that we might not be sending any additional commands.
         // ref https://stackoverflow.com/a/38297697
         GLES20.glFlush()
         return
