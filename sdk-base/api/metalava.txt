@@ -2528,7 +2528,7 @@ package com.mapbox.maps.plugin.scalebar.generated {
 
 package com.mapbox.maps.plugin.viewport {
 
-  @com.mapbox.maps.MapboxExperimental public fun interface CompletionListener {
+  public fun interface CompletionListener {
     method public void onComplete(boolean isFinished);
   }
 
@@ -2539,7 +2539,7 @@ package com.mapbox.maps.plugin.viewport {
     field public static final long DEFAULT_TRANSITION_MAX_DURATION_MS = 3500L; // 0xdacL
   }
 
-  @com.mapbox.maps.MapboxExperimental public interface ViewportPlugin extends com.mapbox.maps.plugin.MapPlugin {
+  public interface ViewportPlugin extends com.mapbox.maps.plugin.MapPlugin {
     method public void addStatusObserver(com.mapbox.maps.plugin.viewport.ViewportStatusObserver viewportStatusObserver);
     method public com.mapbox.maps.plugin.viewport.transition.ViewportTransition getDefaultTransition();
     method public com.mapbox.maps.plugin.viewport.data.ViewportOptions getOptions();
@@ -2558,7 +2558,7 @@ package com.mapbox.maps.plugin.viewport {
     property public abstract com.mapbox.maps.plugin.viewport.ViewportStatus status;
   }
 
-  @com.mapbox.maps.MapboxExperimental public abstract sealed class ViewportStatus {
+  public abstract sealed class ViewportStatus {
   }
 
   public static final class ViewportStatus.Idle extends com.mapbox.maps.plugin.viewport.ViewportStatus {
@@ -2579,7 +2579,7 @@ package com.mapbox.maps.plugin.viewport {
     property public final com.mapbox.maps.plugin.viewport.transition.ViewportTransition transition;
   }
 
-  @com.mapbox.maps.MapboxExperimental public fun interface ViewportStatusObserver {
+  public fun interface ViewportStatusObserver {
     method public void onViewportStatusChanged(com.mapbox.maps.plugin.viewport.ViewportStatus from, com.mapbox.maps.plugin.viewport.ViewportStatus to, com.mapbox.maps.plugin.viewport.data.ViewportStatusChangeReason reason);
   }
 
@@ -2587,7 +2587,7 @@ package com.mapbox.maps.plugin.viewport {
 
 package com.mapbox.maps.plugin.viewport.data {
 
-  @com.mapbox.maps.MapboxExperimental public final class DefaultViewportTransitionOptions {
+  public final class DefaultViewportTransitionOptions {
     method public long getMaxDurationMs();
     method public com.mapbox.maps.plugin.viewport.data.DefaultViewportTransitionOptions.Builder toBuilder();
     property public final long maxDurationMs;
@@ -2599,7 +2599,7 @@ package com.mapbox.maps.plugin.viewport.data {
     method public com.mapbox.maps.plugin.viewport.data.DefaultViewportTransitionOptions.Builder maxDurationMs(long maxDurationMs);
   }
 
-  @com.mapbox.maps.MapboxExperimental public abstract sealed class FollowPuckViewportStateBearing {
+  public abstract sealed class FollowPuckViewportStateBearing {
   }
 
   public static final class FollowPuckViewportStateBearing.Constant extends com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateBearing {
@@ -2612,7 +2612,7 @@ package com.mapbox.maps.plugin.viewport.data {
     field public static final com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateBearing.SyncWithLocationPuck INSTANCE;
   }
 
-  @com.mapbox.maps.MapboxExperimental public final class FollowPuckViewportStateOptions {
+  public final class FollowPuckViewportStateOptions {
     method public com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateBearing! getBearing();
     method public com.mapbox.maps.EdgeInsets! getPadding();
     method public Double! getPitch();
@@ -2633,7 +2633,7 @@ package com.mapbox.maps.plugin.viewport.data {
     method public com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions.Builder zoom(Double? zoom);
   }
 
-  @com.mapbox.maps.MapboxExperimental public final class OverviewViewportStateOptions {
+  public final class OverviewViewportStateOptions {
     method public long getAnimationDurationMs();
     method public Double! getBearing();
     method public com.mapbox.geojson.Geometry! getGeometry();
@@ -2657,7 +2657,7 @@ package com.mapbox.maps.plugin.viewport.data {
     method public com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions.Builder pitch(Double? pitch);
   }
 
-  @com.mapbox.maps.MapboxExperimental public final class ViewportOptions {
+  public final class ViewportOptions {
     method public boolean getTransitionsToIdleUponUserInteraction();
     method public com.mapbox.maps.plugin.viewport.data.ViewportOptions.Builder toBuilder();
     property public final boolean transitionsToIdleUponUserInteraction;
@@ -2669,7 +2669,7 @@ package com.mapbox.maps.plugin.viewport.data {
     method public com.mapbox.maps.plugin.viewport.data.ViewportOptions.Builder transitionsToIdleUponUserInteraction(boolean transitionsToIdleUponUserInteraction);
   }
 
-  @com.mapbox.maps.MapboxExperimental public final class ViewportStatusChangeReason {
+  public final class ViewportStatusChangeReason {
     field public static final com.mapbox.maps.plugin.viewport.data.ViewportStatusChangeReason.Companion Companion;
     field public static final com.mapbox.maps.plugin.viewport.data.ViewportStatusChangeReason IDLE_REQUESTED;
     field public static final com.mapbox.maps.plugin.viewport.data.ViewportStatusChangeReason TRANSITION_FAILED;
@@ -2685,25 +2685,25 @@ package com.mapbox.maps.plugin.viewport.data {
 
 package com.mapbox.maps.plugin.viewport.state {
 
-  @com.mapbox.maps.MapboxExperimental public interface FollowPuckViewportState extends com.mapbox.maps.plugin.viewport.state.ViewportState {
+  public interface FollowPuckViewportState extends com.mapbox.maps.plugin.viewport.state.ViewportState {
     method public com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions getOptions();
     method public void setOptions(com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions options);
     property public abstract com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions options;
   }
 
-  @com.mapbox.maps.MapboxExperimental public interface OverviewViewportState extends com.mapbox.maps.plugin.viewport.state.ViewportState {
+  public interface OverviewViewportState extends com.mapbox.maps.plugin.viewport.state.ViewportState {
     method public com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions getOptions();
     method public void setOptions(com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions options);
     property public abstract com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions options;
   }
 
-  @com.mapbox.maps.MapboxExperimental public interface ViewportState {
+  public interface ViewportState {
     method public com.mapbox.maps.plugin.animation.Cancelable observeDataSource(com.mapbox.maps.plugin.viewport.state.ViewportStateDataObserver viewportStateDataObserver);
     method public void startUpdatingCamera();
     method public void stopUpdatingCamera();
   }
 
-  @com.mapbox.maps.MapboxExperimental public fun interface ViewportStateDataObserver {
+  public fun interface ViewportStateDataObserver {
     method public boolean onNewData(com.mapbox.maps.CameraOptions cameraOptions);
   }
 
@@ -2711,13 +2711,13 @@ package com.mapbox.maps.plugin.viewport.state {
 
 package com.mapbox.maps.plugin.viewport.transition {
 
-  @com.mapbox.maps.MapboxExperimental public interface DefaultViewportTransition extends com.mapbox.maps.plugin.viewport.transition.ViewportTransition {
+  public interface DefaultViewportTransition extends com.mapbox.maps.plugin.viewport.transition.ViewportTransition {
     method public com.mapbox.maps.plugin.viewport.data.DefaultViewportTransitionOptions getOptions();
     method public void setOptions(com.mapbox.maps.plugin.viewport.data.DefaultViewportTransitionOptions options);
     property public abstract com.mapbox.maps.plugin.viewport.data.DefaultViewportTransitionOptions options;
   }
 
-  @com.mapbox.maps.MapboxExperimental public fun interface ViewportTransition {
+  public fun interface ViewportTransition {
     method public com.mapbox.maps.plugin.animation.Cancelable run(com.mapbox.maps.plugin.viewport.state.ViewportState to, com.mapbox.maps.plugin.viewport.CompletionListener completionListener);
   }
 

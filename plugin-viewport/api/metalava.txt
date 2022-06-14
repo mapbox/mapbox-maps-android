@@ -1,7 +1,7 @@
 // Signature format: 3.0
 package com.mapbox.maps.plugin.viewport {
 
-  @com.mapbox.maps.MapboxExperimental public final class ViewportPluginImpl implements com.mapbox.maps.plugin.viewport.ViewportPlugin {
+  public final class ViewportPluginImpl implements com.mapbox.maps.plugin.viewport.ViewportPlugin {
     ctor public ViewportPluginImpl(android.os.Handler handler = android.os.Handler(Looper.getMainLooper()));
     method public void addStatusObserver(com.mapbox.maps.plugin.viewport.ViewportStatusObserver viewportStatusObserver);
     method public void cleanup();
