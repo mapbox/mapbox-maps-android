@@ -2,7 +2,6 @@
 
 package com.mapbox.maps.plugin.viewport
 
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 
@@ -14,7 +13,6 @@ import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
  * a GeoJSON geometry. Transitions between states can be animated with a built-in
  * default transition and via custom transitions.
  */
-@MapboxExperimental
 val MapPluginProviderDelegate.viewport: ViewportPlugin
   @JvmName("getViewport")
   get() = this.getPlugin(Plugin.MAPBOX_VIEWPORT_PLUGIN_ID)!!

@@ -1,6 +1,5 @@
 package com.mapbox.maps.plugin.viewport.transition
 
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.plugin.viewport.ViewportPlugin
 import com.mapbox.maps.plugin.viewport.data.DefaultViewportTransitionOptions
 import com.mapbox.maps.plugin.viewport.state.ViewportState
@@ -13,7 +12,6 @@ import com.mapbox.maps.plugin.viewport.state.ViewportState
  * Note: Users are responsible to create the viewport transitions and keep a reference to these transitions for
  * future operations.
  */
-@MapboxExperimental
 interface DefaultViewportTransition : ViewportTransition {
   /**
    * Describes the configuration options for the [DefaultViewportTransition].

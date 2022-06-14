@@ -1,7 +1,6 @@
 package com.mapbox.maps.plugin.viewport.data
 
 import com.mapbox.maps.CameraOptions
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.plugin.viewport.state.FollowPuckViewportState
 import java.util.Objects
 
@@ -9,7 +8,6 @@ import java.util.Objects
  * Describes different ways that [FollowPuckViewportState] can obtain values to use when setting
  * [CameraOptions.bearing].
  */
-@MapboxExperimental
 sealed class FollowPuckViewportStateBearing {
   /**
    * The [FollowPuckViewportState] sets the camera bearing to the constant value on every frame.

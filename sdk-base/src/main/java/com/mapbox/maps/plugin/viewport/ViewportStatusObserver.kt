@@ -1,6 +1,5 @@
 package com.mapbox.maps.plugin.viewport
 
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.plugin.viewport.data.ViewportStatusChangeReason
 
 /**
@@ -9,7 +8,6 @@ import com.mapbox.maps.plugin.viewport.data.ViewportStatusChangeReason
  * @see [ViewportPlugin.addStatusObserver]
  * @see [ViewportPlugin.removeStatusObserver]
  */
-@MapboxExperimental
 fun interface ViewportStatusObserver {
   /**
    * Called whenever [ViewportStatus] changes.

@@ -2,7 +2,6 @@ package com.mapbox.maps.plugin.viewport.data
 
 import com.mapbox.geojson.Geometry
 import com.mapbox.maps.EdgeInsets
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.plugin.viewport.DEFAULT_STATE_ANIMATION_DURATION_MS
 import com.mapbox.maps.plugin.viewport.state.OverviewViewportState
 import java.lang.IllegalArgumentException
@@ -11,7 +10,6 @@ import java.util.*
 /**
  * Configuration options that impact the [OverviewViewportState].
  */
-@MapboxExperimental
 class OverviewViewportStateOptions private constructor(
   /**
    * The geometry that the [OverviewViewportState] should use when calculating its camera.

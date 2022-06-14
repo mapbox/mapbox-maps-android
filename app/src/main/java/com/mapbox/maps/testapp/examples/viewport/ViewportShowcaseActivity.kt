@@ -34,7 +34,6 @@ import com.mapbox.maps.testapp.utils.SimulateRouteLocationProvider
  *
  * @see [User location guide](https://docs.mapbox.com/android/maps/guides/user-location/#location-tracking)
  */
-@MapboxExperimental
 class ViewportShowcaseActivity : AppCompatActivity() {
   private lateinit var mapboxMap: MapboxMap
   private lateinit var mapView: MapView

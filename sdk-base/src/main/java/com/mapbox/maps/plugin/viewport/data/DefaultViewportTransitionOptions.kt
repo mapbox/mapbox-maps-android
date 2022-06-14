@@ -1,13 +1,11 @@
 package com.mapbox.maps.plugin.viewport.data
 
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.plugin.viewport.DEFAULT_TRANSITION_MAX_DURATION_MS
 import com.mapbox.maps.plugin.viewport.transition.DefaultViewportTransition
 
 /**
  * Configuration options that impact the [DefaultViewportTransition].
  */
-@MapboxExperimental
 class DefaultViewportTransitionOptions private constructor(
   /**
    * The maximum duration of the transitions in milliseconds.

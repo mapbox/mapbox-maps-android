@@ -35,7 +35,6 @@ import com.mapbox.turf.TurfMisc
  * The simulator provides 3 camera tracking modes: OVERVIEW, TRACKING and NONE.
  * APIs are exposed so that user can play the navigation route scripts by switching the camera modes.
  */
-@OptIn(MapboxExperimental::class)
 class NavigationSimulator(
   private val mapView: MapView,
   private val routePoints: LineString,

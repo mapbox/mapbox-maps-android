@@ -1,13 +1,11 @@
 package com.mapbox.maps.plugin.viewport.data
 
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.plugin.viewport.ViewportPlugin
 import com.mapbox.maps.plugin.viewport.state.ViewportState
 
 /**
  * Configuration options that impact the [ViewportPlugin].
  */
-@MapboxExperimental
 class ViewportOptions private constructor(
   /**
    * Indicates whether the [ViewportPlugin] should idle when user interact with the map using gestures.

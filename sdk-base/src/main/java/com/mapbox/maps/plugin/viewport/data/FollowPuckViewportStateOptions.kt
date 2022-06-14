@@ -2,7 +2,6 @@ package com.mapbox.maps.plugin.viewport.data
 
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.EdgeInsets
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.plugin.viewport.DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_PITCH
 import com.mapbox.maps.plugin.viewport.DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_ZOOM
 import com.mapbox.maps.plugin.viewport.state.FollowPuckViewportState
@@ -17,7 +16,6 @@ import java.util.Objects
  *
  * @see [ViewportOptions.transitionsToIdleUponUserInteraction]
  */
-@MapboxExperimental
 class FollowPuckViewportStateOptions private constructor(
   /**
    * The value to use for setting [CameraOptions.padding]. If null, padding will not be modified by

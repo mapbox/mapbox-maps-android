@@ -1,6 +1,5 @@
 package com.mapbox.maps.plugin.viewport.transition
 
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.plugin.animation.Cancelable
 import com.mapbox.maps.plugin.viewport.CompletionListener
 import com.mapbox.maps.plugin.viewport.ViewportPlugin
@@ -19,7 +18,6 @@ import com.mapbox.maps.plugin.viewport.state.ViewportState
  * @see [ViewportPlugin.makeDefaultViewportTransition]
  * @see [ViewportPlugin.makeImmediateViewportTransition]
  */
-@MapboxExperimental
 fun interface ViewportTransition {
   /**
    * Run the [ViewportTransition] from current viewport to the target [ViewportState].
