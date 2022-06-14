@@ -10,7 +10,6 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
 import androidx.lifecycle.ViewTreeLifecycleOwner
 import java.lang.ref.WeakReference
-import java.util.concurrent.Flow
 
 /**
  * A [LifecycleOwner] that merges the hosting lifecycle owner's [Lifecycle] (of an Activity or Fragment)
