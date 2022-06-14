@@ -66,16 +66,29 @@ class RenderHandlerThreadTest {
   fun postThreadStopped() {
     val actionOne = mockk<() -> Unit>(relaxed = true)
     val actionTwo = mockk<() -> Unit>(relaxed = true)
+    val actionThree = mockk<() -> Unit>(relaxed = true)
+    val actionFour = mockk<() -> Unit>(relaxed = true)
     Shadows.shadowOf(Looper.getMainLooper()).pause()
     renderHandlerThread.apply {
       start()
-      post { actionOne() }
+      post(actionOne)
+      postDelayed(
+        actionTwo,
+        50
+      )
+      Shadows.shadowOf(Looper.getMainLooper()).idleFor(Duration.ofMillis(50))
       stop()
-      post { actionTwo() }
+      post(actionThree)
+      postDelayed(
+        actionFour,
+        50
+      )
     }
-    Shadows.shadowOf(Looper.getMainLooper()).idle()
+    Shadows.shadowOf(Looper.getMainLooper()).idleFor(Duration.ofMillis(50))
     verify { actionOne.invoke() }
-    verifyNo { actionTwo.invoke() }
+    verify { actionTwo.invoke() }
+    verifyNo { actionThree.invoke() }
+    verifyNo { actionFour.invoke() }
   }
 
   @Test
@@ -85,8 +98,8 @@ class RenderHandlerThreadTest {
     Shadows.shadowOf(Looper.getMainLooper()).pause()
     renderHandlerThread.apply {
       start()
-      post { actionOne() }
-      post { actionTwo() }
+      post(actionOne)
+      postDelayed(actionTwo, 50)
     }
     Shadows.shadowOf(Looper.getMainLooper()).idleFor(Duration.ofMillis(50))
     verify { actionOne.invoke() }
