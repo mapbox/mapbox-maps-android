@@ -2,6 +2,7 @@ package com.mapbox.maps
 
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.plugin.delegates.listeners.*
+import com.mapbox.verifyNo
 import io.mockk.*
 import org.junit.Assert.*
 import org.junit.Before
@@ -29,7 +30,7 @@ class NativeObserverTest {
     val listener = mockk<OnCameraChangeListener>(relaxUnitFun = true)
     nativeObserver.addOnCameraChangeListener(listener)
     assertEquals(1, nativeObserver.onCameraChangeListeners.size)
-    verify(exactly = 1) { observableInterface.subscribe(any(), listOf(MapEvents.CAMERA_CHANGED)) }
+    verify { observableInterface.subscribe(any(), listOf(MapEvents.CAMERA_CHANGED)) }
     assertTrue(nativeObserver.observedEvents.contains(MapEvents.CAMERA_CHANGED))
     notifyEvents(MapEvents.CAMERA_CHANGED)
     verify { listener.onCameraChanged(any()) }
@@ -37,7 +38,7 @@ class NativeObserverTest {
     val listener2 = mockk<OnCameraChangeListener>(relaxUnitFun = true)
     nativeObserver.addOnCameraChangeListener(listener2)
     assertEquals(2, nativeObserver.onCameraChangeListeners.size)
-    verify(exactly = 1) { observableInterface.subscribe(any(), listOf(MapEvents.CAMERA_CHANGED)) }
+    verify { observableInterface.subscribe(any(), listOf(MapEvents.CAMERA_CHANGED)) }
     notifyEvents(MapEvents.CAMERA_CHANGED)
     verify { listener2.onCameraChanged(any()) }
   }
@@ -51,14 +52,14 @@ class NativeObserverTest {
     assertEquals(2, nativeObserver.onCameraChangeListeners.size)
     nativeObserver.removeOnCameraChangeListener(listener)
     assertEquals(1, nativeObserver.onCameraChangeListeners.size)
-    verify(exactly = 0) { observableInterface.unsubscribe(any(), listOf(MapEvents.CAMERA_CHANGED)) }
+    verifyNo { observableInterface.unsubscribe(any(), listOf(MapEvents.CAMERA_CHANGED)) }
     nativeObserver.removeOnCameraChangeListener(listener2)
     assertEquals(0, nativeObserver.onCameraChangeListeners.size)
     assertFalse(nativeObserver.observedEvents.contains(MapEvents.CAMERA_CHANGED))
     verify { observableInterface.unsubscribe(any(), listOf(MapEvents.CAMERA_CHANGED)) }
     notifyEvents(MapEvents.CAMERA_CHANGED)
-    verify(exactly = 0) { listener.onCameraChanged(any()) }
-    verify(exactly = 0) { listener2.onCameraChanged(any()) }
+    verifyNo { listener.onCameraChanged(any()) }
+    verifyNo { listener2.onCameraChanged(any()) }
   }
 
   // Map events
@@ -74,7 +75,7 @@ class NativeObserverTest {
     val listener2 = mockk<OnMapIdleListener>(relaxUnitFun = true)
     nativeObserver.addOnMapIdleListener(listener2)
     assertEquals(2, nativeObserver.onMapIdleListeners.size)
-    verify(exactly = 1) { observableInterface.subscribe(any(), listOf(MapEvents.MAP_IDLE)) }
+    verify { observableInterface.subscribe(any(), listOf(MapEvents.MAP_IDLE)) }
     notifyEvents(MapEvents.MAP_IDLE)
     verify { listener2.onMapIdle(any()) }
   }
@@ -88,14 +89,14 @@ class NativeObserverTest {
     assertEquals(2, nativeObserver.onMapIdleListeners.size)
     nativeObserver.removeOnMapIdleListener(listener)
     assertEquals(1, nativeObserver.onMapIdleListeners.size)
-    verify(exactly = 0) { observableInterface.unsubscribe(any(), listOf(MapEvents.MAP_IDLE)) }
+    verifyNo { observableInterface.unsubscribe(any(), listOf(MapEvents.MAP_IDLE)) }
     nativeObserver.removeOnMapIdleListener(listener2)
     assertEquals(0, nativeObserver.onMapIdleListeners.size)
     assertFalse(nativeObserver.observedEvents.contains(MapEvents.MAP_IDLE))
     verify { observableInterface.unsubscribe(any(), listOf(MapEvents.MAP_IDLE)) }
     notifyEvents(MapEvents.MAP_IDLE)
-    verify(exactly = 0) { listener.onMapIdle(any()) }
-    verify(exactly = 0) { listener2.onMapIdle(any()) }
+    verifyNo { listener.onMapIdle(any()) }
+    verifyNo { listener2.onMapIdle(any()) }
   }
 
   @Test
@@ -123,7 +124,7 @@ class NativeObserverTest {
     val listener2 = mockk<OnMapLoadErrorListener>(relaxUnitFun = true)
     nativeObserver.addOnMapLoadErrorListener(listener2)
     assertEquals(2, nativeObserver.onMapLoadErrorListeners.size)
-    verify(exactly = 1) {
+    verify {
       observableInterface.subscribe(
         any(),
         listOf(MapEvents.MAP_LOADING_ERROR)
@@ -142,7 +143,7 @@ class NativeObserverTest {
     assertEquals(2, nativeObserver.onMapLoadErrorListeners.size)
     nativeObserver.removeOnMapLoadErrorListener(listener)
     assertEquals(1, nativeObserver.onMapLoadErrorListeners.size)
-    verify(exactly = 0) {
+    verifyNo {
       observableInterface.unsubscribe(
         any(),
         listOf(MapEvents.MAP_LOADING_ERROR)
@@ -153,8 +154,8 @@ class NativeObserverTest {
     assertFalse(nativeObserver.observedEvents.contains(MapEvents.MAP_LOADING_ERROR))
     verify { observableInterface.unsubscribe(any(), listOf(MapEvents.MAP_LOADING_ERROR)) }
     notifyEvents(MapEvents.MAP_IDLE)
-    verify(exactly = 0) { listener.onMapLoadError(any()) }
-    verify(exactly = 0) { listener2.onMapLoadError(any()) }
+    verifyNo { listener.onMapLoadError(any()) }
+    verifyNo { listener2.onMapLoadError(any()) }
   }
 
   @Test
@@ -169,7 +170,7 @@ class NativeObserverTest {
     val listener2 = mockk<OnMapLoadedListener>(relaxUnitFun = true)
     nativeObserver.addOnMapLoadedListener(listener2)
     assertEquals(2, nativeObserver.onMapLoadedListeners.size)
-    verify(exactly = 1) { observableInterface.subscribe(any(), listOf(MapEvents.MAP_LOADED)) }
+    verify { observableInterface.subscribe(any(), listOf(MapEvents.MAP_LOADED)) }
     notifyEvents(MapEvents.MAP_LOADED)
     verify { listener2.onMapLoaded(any()) }
   }
@@ -183,14 +184,14 @@ class NativeObserverTest {
     assertEquals(2, nativeObserver.onMapLoadedListeners.size)
     nativeObserver.removeOnMapLoadedListener(listener)
     assertEquals(1, nativeObserver.onMapLoadedListeners.size)
-    verify(exactly = 0) { observableInterface.unsubscribe(any(), listOf(MapEvents.MAP_LOADED)) }
+    verifyNo { observableInterface.unsubscribe(any(), listOf(MapEvents.MAP_LOADED)) }
     nativeObserver.removeOnMapLoadedListener(listener2)
     assertEquals(0, nativeObserver.onMapLoadedListeners.size)
     assertFalse(nativeObserver.observedEvents.contains(MapEvents.MAP_LOADED))
     verify { observableInterface.unsubscribe(any(), listOf(MapEvents.MAP_LOADED)) }
     notifyEvents(MapEvents.MAP_LOADED)
-    verify(exactly = 0) { listener.onMapLoaded(any()) }
-    verify(exactly = 0) { listener2.onMapLoaded(any()) }
+    verifyNo { listener.onMapLoaded(any()) }
+    verifyNo { listener2.onMapLoaded(any()) }
   }
 
   // Render frame events
@@ -213,7 +214,7 @@ class NativeObserverTest {
     val listener2 = mockk<OnRenderFrameFinishedListener>(relaxUnitFun = true)
     nativeObserver.addOnRenderFrameFinishedListener(listener2)
     assertEquals(2, nativeObserver.onRenderFrameFinishedListeners.size)
-    verify(exactly = 1) {
+    verify {
       observableInterface.subscribe(
         any(),
         listOf(MapEvents.RENDER_FRAME_FINISHED)
@@ -232,7 +233,7 @@ class NativeObserverTest {
     assertEquals(2, nativeObserver.onRenderFrameFinishedListeners.size)
     nativeObserver.removeOnRenderFrameFinishedListener(listener)
     assertEquals(1, nativeObserver.onRenderFrameFinishedListeners.size)
-    verify(exactly = 0) {
+    verifyNo {
       observableInterface.unsubscribe(
         any(),
         listOf(MapEvents.RENDER_FRAME_FINISHED)
@@ -243,8 +244,8 @@ class NativeObserverTest {
     assertFalse(nativeObserver.observedEvents.contains(MapEvents.RENDER_FRAME_FINISHED))
     verify { observableInterface.unsubscribe(any(), listOf(MapEvents.RENDER_FRAME_FINISHED)) }
     notifyEvents(MapEvents.RENDER_FRAME_FINISHED)
-    verify(exactly = 0) { listener.onRenderFrameFinished(any()) }
-    verify(exactly = 0) { listener2.onRenderFrameFinished(any()) }
+    verifyNo { listener.onRenderFrameFinished(any()) }
+    verifyNo { listener2.onRenderFrameFinished(any()) }
   }
 
   @Test
@@ -259,7 +260,7 @@ class NativeObserverTest {
     val listener2 = mockk<OnRenderFrameStartedListener>(relaxUnitFun = true)
     nativeObserver.addOnRenderFrameStartedListener(listener2)
     assertEquals(2, nativeObserver.onRenderFrameStartedListeners.size)
-    verify(exactly = 1) {
+    verify {
       observableInterface.subscribe(
         any(),
         listOf(MapEvents.RENDER_FRAME_STARTED)
@@ -278,7 +279,7 @@ class NativeObserverTest {
     assertEquals(2, nativeObserver.onRenderFrameStartedListeners.size)
     nativeObserver.removeOnRenderFrameStartedListener(listener)
     assertEquals(1, nativeObserver.onRenderFrameStartedListeners.size)
-    verify(exactly = 0) {
+    verifyNo {
       observableInterface.unsubscribe(
         any(),
         listOf(MapEvents.RENDER_FRAME_STARTED)
@@ -289,8 +290,8 @@ class NativeObserverTest {
     assertFalse(nativeObserver.observedEvents.contains(MapEvents.RENDER_FRAME_STARTED))
     verify { observableInterface.unsubscribe(any(), listOf(MapEvents.RENDER_FRAME_STARTED)) }
     notifyEvents(MapEvents.RENDER_FRAME_STARTED)
-    verify(exactly = 0) { listener.onRenderFrameStarted(any()) }
-    verify(exactly = 0) { listener2.onRenderFrameStarted(any()) }
+    verifyNo { listener.onRenderFrameStarted(any()) }
+    verifyNo { listener2.onRenderFrameStarted(any()) }
   }
 
   // Source events
@@ -306,7 +307,7 @@ class NativeObserverTest {
     val listener2 = mockk<OnSourceAddedListener>(relaxUnitFun = true)
     nativeObserver.addOnSourceAddedListener(listener2)
     assertEquals(2, nativeObserver.onSourceAddedListeners.size)
-    verify(exactly = 1) { observableInterface.subscribe(any(), listOf(MapEvents.SOURCE_ADDED)) }
+    verify { observableInterface.subscribe(any(), listOf(MapEvents.SOURCE_ADDED)) }
     notifyEvents(MapEvents.SOURCE_ADDED)
     verify { listener2.onSourceAdded(any()) }
   }
@@ -320,14 +321,14 @@ class NativeObserverTest {
     assertEquals(2, nativeObserver.onSourceAddedListeners.size)
     nativeObserver.removeOnSourceAddedListener(listener)
     assertEquals(1, nativeObserver.onSourceAddedListeners.size)
-    verify(exactly = 0) { observableInterface.unsubscribe(any(), listOf(MapEvents.SOURCE_ADDED)) }
+    verifyNo { observableInterface.unsubscribe(any(), listOf(MapEvents.SOURCE_ADDED)) }
     nativeObserver.removeOnSourceAddedListener(listener2)
     assertEquals(0, nativeObserver.onSourceAddedListeners.size)
     assertFalse(nativeObserver.observedEvents.contains(MapEvents.SOURCE_ADDED))
     verify { observableInterface.unsubscribe(any(), listOf(MapEvents.SOURCE_ADDED)) }
     notifyEvents(MapEvents.SOURCE_ADDED)
-    verify(exactly = 0) { listener.onSourceAdded(any()) }
-    verify(exactly = 0) { listener2.onSourceAdded(any()) }
+    verifyNo { listener.onSourceAdded(any()) }
+    verifyNo { listener2.onSourceAdded(any()) }
   }
 
   @Test
@@ -355,7 +356,7 @@ class NativeObserverTest {
     val listener2 = mockk<OnSourceDataLoadedListener>(relaxUnitFun = true)
     nativeObserver.addOnSourceDataLoadedListener(listener2)
     assertEquals(2, nativeObserver.onSourceDataLoadedListeners.size)
-    verify(exactly = 1) {
+    verify {
       observableInterface.subscribe(
         any(),
         listOf(MapEvents.SOURCE_DATA_LOADED)
@@ -374,7 +375,7 @@ class NativeObserverTest {
     assertEquals(2, nativeObserver.onSourceDataLoadedListeners.size)
     nativeObserver.removeOnSourceDataLoadedListener(listener)
     assertEquals(1, nativeObserver.onSourceDataLoadedListeners.size)
-    verify(exactly = 0) {
+    verifyNo {
       observableInterface.unsubscribe(
         any(),
         listOf(MapEvents.SOURCE_DATA_LOADED)
@@ -385,8 +386,8 @@ class NativeObserverTest {
     assertFalse(nativeObserver.observedEvents.contains(MapEvents.SOURCE_DATA_LOADED))
     verify { observableInterface.unsubscribe(any(), listOf(MapEvents.SOURCE_DATA_LOADED)) }
     notifyEvents(MapEvents.SOURCE_ADDED)
-    verify(exactly = 0) { listener.onSourceDataLoaded(any()) }
-    verify(exactly = 0) { listener2.onSourceDataLoaded(any()) }
+    verifyNo { listener.onSourceDataLoaded(any()) }
+    verifyNo { listener2.onSourceDataLoaded(any()) }
   }
 
   @Test
@@ -401,7 +402,7 @@ class NativeObserverTest {
     val listener2 = mockk<OnSourceRemovedListener>(relaxUnitFun = true)
     nativeObserver.addOnSourceRemovedListener(listener2)
     assertEquals(2, nativeObserver.onSourceRemovedListeners.size)
-    verify(exactly = 1) { observableInterface.subscribe(any(), listOf(MapEvents.SOURCE_REMOVED)) }
+    verify { observableInterface.subscribe(any(), listOf(MapEvents.SOURCE_REMOVED)) }
     notifyEvents(MapEvents.SOURCE_REMOVED)
     verify { listener2.onSourceRemoved(any()) }
   }
@@ -415,14 +416,14 @@ class NativeObserverTest {
     assertEquals(2, nativeObserver.onSourceRemovedListeners.size)
     nativeObserver.removeOnSourceRemovedListener(listener)
     assertEquals(1, nativeObserver.onSourceRemovedListeners.size)
-    verify(exactly = 0) { observableInterface.unsubscribe(any(), listOf(MapEvents.SOURCE_REMOVED)) }
+    verifyNo { observableInterface.unsubscribe(any(), listOf(MapEvents.SOURCE_REMOVED)) }
     nativeObserver.removeOnSourceRemovedListener(listener2)
     assertEquals(0, nativeObserver.onSourceRemovedListeners.size)
     assertFalse(nativeObserver.observedEvents.contains(MapEvents.SOURCE_REMOVED))
     verify { observableInterface.unsubscribe(any(), listOf(MapEvents.SOURCE_REMOVED)) }
     notifyEvents(MapEvents.SOURCE_REMOVED)
-    verify(exactly = 0) { listener.onSourceRemoved(any()) }
-    verify(exactly = 0) { listener2.onSourceRemoved(any()) }
+    verifyNo { listener.onSourceRemoved(any()) }
+    verifyNo { listener2.onSourceRemoved(any()) }
   }
 
   // Style events
@@ -438,7 +439,7 @@ class NativeObserverTest {
     val listener2 = mockk<OnStyleLoadedListener>(relaxUnitFun = true)
     nativeObserver.addOnStyleLoadedListener(listener2)
     assertEquals(2, nativeObserver.onStyleLoadedListeners.size)
-    verify(exactly = 1) { observableInterface.subscribe(any(), listOf(MapEvents.STYLE_LOADED)) }
+    verify { observableInterface.subscribe(any(), listOf(MapEvents.STYLE_LOADED)) }
     notifyEvents(MapEvents.STYLE_LOADED)
     verify { listener2.onStyleLoaded(any()) }
   }
@@ -452,14 +453,14 @@ class NativeObserverTest {
     assertEquals(2, nativeObserver.onStyleLoadedListeners.size)
     nativeObserver.removeOnStyleLoadedListener(listener)
     assertEquals(1, nativeObserver.onStyleLoadedListeners.size)
-    verify(exactly = 0) { observableInterface.unsubscribe(any(), listOf(MapEvents.STYLE_LOADED)) }
+    verifyNo { observableInterface.unsubscribe(any(), listOf(MapEvents.STYLE_LOADED)) }
     nativeObserver.removeOnStyleLoadedListener(listener2)
     assertEquals(0, nativeObserver.onStyleLoadedListeners.size)
     assertFalse(nativeObserver.observedEvents.contains(MapEvents.STYLE_LOADED))
     verify { observableInterface.unsubscribe(any(), listOf(MapEvents.STYLE_LOADED)) }
     notifyEvents(MapEvents.STYLE_LOADED)
-    verify(exactly = 0) { listener.onStyleLoaded(any()) }
-    verify(exactly = 0) { listener2.onStyleLoaded(any()) }
+    verifyNo { listener.onStyleLoaded(any()) }
+    verifyNo { listener2.onStyleLoaded(any()) }
   }
 
   @Test
@@ -474,7 +475,7 @@ class NativeObserverTest {
     val listener2 = mockk<OnStyleImageMissingListener>(relaxUnitFun = true)
     nativeObserver.addOnStyleImageMissingListener(listener2)
     assertEquals(2, nativeObserver.onStyleImageMissingListeners.size)
-    verify(exactly = 1) {
+    verify {
       observableInterface.subscribe(
         any(),
         listOf(MapEvents.STYLE_IMAGE_MISSING)
@@ -493,7 +494,7 @@ class NativeObserverTest {
     assertEquals(2, nativeObserver.onStyleImageMissingListeners.size)
     nativeObserver.removeOnStyleImageMissingListener(listener)
     assertEquals(1, nativeObserver.onStyleImageMissingListeners.size)
-    verify(exactly = 0) {
+    verifyNo {
       observableInterface.unsubscribe(
         any(),
         listOf(MapEvents.STYLE_IMAGE_MISSING)
@@ -504,8 +505,8 @@ class NativeObserverTest {
     assertFalse(nativeObserver.observedEvents.contains(MapEvents.STYLE_IMAGE_MISSING))
     verify { observableInterface.unsubscribe(any(), listOf(MapEvents.STYLE_IMAGE_MISSING)) }
     notifyEvents(MapEvents.STYLE_IMAGE_MISSING)
-    verify(exactly = 0) { listener.onStyleImageMissing(any()) }
-    verify(exactly = 0) { listener2.onStyleImageMissing(any()) }
+    verifyNo { listener.onStyleImageMissing(any()) }
+    verifyNo { listener2.onStyleImageMissing(any()) }
   }
 
   @Test
@@ -520,7 +521,7 @@ class NativeObserverTest {
     val listener2 = mockk<OnStyleImageUnusedListener>(relaxUnitFun = true)
     nativeObserver.addOnStyleImageUnusedListener(listener2)
     assertEquals(2, nativeObserver.onStyleImageUnusedListeners.size)
-    verify(exactly = 1) {
+    verify {
       observableInterface.subscribe(
         any(),
         listOf(MapEvents.STYLE_IMAGE_REMOVE_UNUSED)
@@ -539,7 +540,7 @@ class NativeObserverTest {
     assertEquals(2, nativeObserver.onStyleImageUnusedListeners.size)
     nativeObserver.removeOnStyleImageUnusedListener(listener)
     assertEquals(1, nativeObserver.onStyleImageUnusedListeners.size)
-    verify(exactly = 0) {
+    verifyNo {
       observableInterface.unsubscribe(
         any(),
         listOf(MapEvents.STYLE_IMAGE_REMOVE_UNUSED)
@@ -550,8 +551,8 @@ class NativeObserverTest {
     assertFalse(nativeObserver.observedEvents.contains(MapEvents.STYLE_IMAGE_REMOVE_UNUSED))
     verify { observableInterface.unsubscribe(any(), listOf(MapEvents.STYLE_IMAGE_REMOVE_UNUSED)) }
     notifyEvents(MapEvents.STYLE_IMAGE_REMOVE_UNUSED)
-    verify(exactly = 0) { listener.onStyleImageUnused(any()) }
-    verify(exactly = 0) { listener2.onStyleImageUnused(any()) }
+    verifyNo { listener.onStyleImageUnused(any()) }
+    verifyNo { listener2.onStyleImageUnused(any()) }
   }
 
   @Test
@@ -571,7 +572,7 @@ class NativeObserverTest {
     val listener2 = mockk<OnStyleDataLoadedListener>(relaxUnitFun = true)
     nativeObserver.addOnStyleDataLoadedListener(listener2)
     assertEquals(2, nativeObserver.onStyleDataLoadedListeners.size)
-    verify(exactly = 1) {
+    verify {
       observableInterface.subscribe(
         any(),
         listOf(MapEvents.STYLE_DATA_LOADED)
@@ -590,7 +591,7 @@ class NativeObserverTest {
     assertEquals(2, nativeObserver.onStyleDataLoadedListeners.size)
     nativeObserver.removeOnStyleDataLoadedListener(listener)
     assertEquals(1, nativeObserver.onStyleDataLoadedListeners.size)
-    verify(exactly = 0) {
+    verifyNo {
       observableInterface.unsubscribe(
         any(),
         listOf(MapEvents.STYLE_DATA_LOADED)
@@ -601,8 +602,8 @@ class NativeObserverTest {
     assertFalse(nativeObserver.observedEvents.contains(MapEvents.STYLE_DATA_LOADED))
     verify { observableInterface.unsubscribe(any(), listOf(MapEvents.STYLE_DATA_LOADED)) }
     notifyEvents(MapEvents.STYLE_DATA_LOADED)
-    verify(exactly = 0) { listener.onStyleDataLoaded(any()) }
-    verify(exactly = 0) { listener2.onStyleDataLoaded(any()) }
+    verifyNo { listener.onStyleDataLoaded(any()) }
+    verifyNo { listener2.onStyleDataLoaded(any()) }
   }
 
   @Test
@@ -646,5 +647,23 @@ class NativeObserverTest {
     assertTrue(nativeObserver.onStyleImageMissingListeners.isEmpty())
     assertTrue(nativeObserver.onStyleImageUnusedListeners.isEmpty())
     assertTrue(nativeObserver.onStyleDataLoadedListeners.isEmpty())
+  }
+
+  @Test
+  fun resubscribesStyleLoadedEvents() {
+    nativeObserver.addOnStyleDataLoadedListener(mockk())
+    nativeObserver.addOnStyleLoadedListener(mockk())
+    nativeObserver.resubscribeStyleLoadListeners()
+
+    verify(exactly = 2) {
+      observableInterface.subscribe(
+        nativeObserver,
+        listOf(MapEvents.STYLE_DATA_LOADED)
+      )
+      observableInterface.subscribe(
+        nativeObserver,
+        listOf(MapEvents.STYLE_LOADED)
+      )
+    }
   }
 }

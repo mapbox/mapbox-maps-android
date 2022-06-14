@@ -9,6 +9,7 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 * Optimise the bearing update frequency for the location puck animator. ([1398](https://github.com/mapbox/mapbox-maps-android/pull/1398))
 * Use `orientation` model source property to update the 3D puck's bearing, as it is more efficient than updating the `model-rotation` layer property. ([1407](https://github.com/mapbox/mapbox-maps-android/pull/1407))
+* Optimize `MapboxMap.loadStyle()` to apply images and models earlier. [#1378](https://github.com/mapbox/mapbox-maps-android/pull/1378)
 
 ## Bug fixes 🐞
 * Optimise the frequency to update location layer's visibility. ([1399](https://github.com/mapbox/mapbox-maps-android/pull/1399))
