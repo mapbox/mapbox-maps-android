@@ -1,5 +1,6 @@
 package com.mapbox.maps.renderer
 
+import android.opengl.GLES20
 import android.os.SystemClock
 import android.view.Choreographer
 import android.view.Surface
@@ -287,6 +288,11 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
             expectedEndRenderTimeNanos = expectedEndRenderTimeNanos
           )
         }
+        // explicit flush as we will not be doing any drawing until buffer swap for the next frame
+        // `glFlush` tells the driver to send all queued up commands to the hardware (even if the queue isn't full yet).
+        // This doesn't block the calling thread. It merely signals the driver that we might not be sending any additional commands.
+        // ref https://stackoverflow.com/a/38297697
+        GLES20.glFlush()
         return
       }
     }
