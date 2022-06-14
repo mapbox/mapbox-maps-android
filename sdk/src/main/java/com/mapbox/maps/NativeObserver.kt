@@ -272,6 +272,8 @@ internal class NativeObserver(
   fun resubscribeStyleLoadListeners() {
     unsubscribeUnusedEvent(MapEvents.STYLE_LOADED)
     subscribeNewEvent(MapEvents.STYLE_LOADED)
+    unsubscribeUnusedEvent(MapEvents.STYLE_DATA_LOADED)
+    subscribeNewEvent(MapEvents.STYLE_DATA_LOADED)
   }
 
   fun addOnStyleDataLoadedListener(onStyleDataLoadedListener: OnStyleDataLoadedListener) {
