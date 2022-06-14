@@ -30,7 +30,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   internal val renderHandlerThread: RenderHandlerThread
   private val translucentSurface: Boolean
   private val mapboxRenderer: MapboxRenderer
-  private val eglCore: EGLCore
+  internal val eglCore: EGLCore
 
   private val lock = ReentrantLock()
   private val createCondition = lock.newCondition()
@@ -505,6 +505,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
               releaseAll()
             }
             renderHandlerThread.clearDefaultMessages()
+            eglCore.clearRendererStateListeners()
             destroyCondition.signal()
           }
         }
