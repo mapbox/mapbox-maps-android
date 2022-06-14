@@ -16,13 +16,10 @@ import java.util.concurrent.Flow
  * A [LifecycleOwner] that merges the hosting lifecycle owner's [Lifecycle] (of an Activity or Fragment)
  * with the [View]'s drawing surface lifecycle.
  *
- * This lifecycle is useful for continuously running tasks that obtain the data and draw it in the [View],
- * for example by collecting [Flow]s and drawing results in the nested views or on the map.
- *
  * In general, this lifecycle reflects the hosting lifecycle owner's [Lifecycle] whenever the `View` is attached
- * but whenever the `View` is detached and we want to stop the coroutines tied to the lifecycle's scope,
- * this lifecycle will transition to [Lifecycle.State.CREATED] (and invoke [Lifecycle.Event.ON_STOP])
- * even if the hosting Activity or Fragment is still running.
+ * but whenever the `View` is detached and we want to stop rendering the MapView, this lifecycle will transition
+ * to [Lifecycle.State.CREATED] (and invoke [Lifecycle.Event.ON_STOP]) even if the hosting Activity or Fragment
+ * is still running.
  *
  * This lifecycle reaches [Lifecycle.State.DESTROYED] only when the hosting lifecycle owner is destroyed.
  */
