@@ -2,6 +2,7 @@ package com.mapbox.maps
 
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.plugin.delegates.listeners.*
+import com.mapbox.verifyNo
 import io.mockk.*
 import org.junit.Assert.*
 import org.junit.Before

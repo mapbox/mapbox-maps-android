@@ -144,9 +144,10 @@ class StyleObserverTest {
     val styleCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
     val styleSpritesCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
     val styleSourcesCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
+    val styleUserCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
 
     styleObserver.setLoadStyleListener(
-      null,
+      styleUserCallback,
       styleCallback,
       styleSpritesCallback,
       styleSourcesCallback,
@@ -158,6 +159,9 @@ class StyleObserverTest {
     verify { styleCallback.onStyleLoaded(any()) }
     verifyNo { styleSpritesCallback.onStyleLoaded(any()) }
     verifyNo { styleSourcesCallback.onStyleLoaded(any()) }
+
+    verifyNo { styleSpritesCallback.onStyleLoaded(any()) }
+    verifyNo { mainStyleLoadedListener.onStyleLoaded(any()) }
   }
 
   @Test
@@ -165,9 +169,10 @@ class StyleObserverTest {
     val styleCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
     val styleSpritesCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
     val styleSourcesCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
+    val styleUserCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
 
     styleObserver.setLoadStyleListener(
-      null,
+      styleUserCallback,
       styleCallback,
       styleSpritesCallback,
       styleSourcesCallback,
@@ -184,6 +189,9 @@ class StyleObserverTest {
 
     verify { styleSpritesCallback.onStyleLoaded(any()) }
     verifyNo { styleSourcesCallback.onStyleLoaded(any()) }
+
+    verifyNo { styleUserCallback.onStyleLoaded(any()) }
+    verifyNo { mainStyleLoadedListener.onStyleLoaded(any()) }
   }
 
   @Test
@@ -191,9 +199,10 @@ class StyleObserverTest {
     val styleCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
     val styleSpritesCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
     val styleSourcesCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
+    val styleUserCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
 
     styleObserver.setLoadStyleListener(
-      null,
+      styleUserCallback,
       styleCallback,
       styleSpritesCallback,
       styleSourcesCallback,
@@ -210,6 +219,9 @@ class StyleObserverTest {
     verify { styleSourcesCallback.onStyleLoaded(any()) }
     verify { styleCallback.onStyleLoaded(any()) }
     verifyNo { styleSpritesCallback.onStyleLoaded(any()) }
+
+    verifyNo { styleSpritesCallback.onStyleLoaded(any()) }
+    verifyNo { mainStyleLoadedListener.onStyleLoaded(any()) }
   }
 
   @Test

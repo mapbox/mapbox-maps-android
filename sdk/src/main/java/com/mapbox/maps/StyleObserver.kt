@@ -29,7 +29,13 @@ internal class StyleObserver(
   private var loadStyleErrorListener: OnMapLoadErrorListener? = null
 
   private val getStyleListeners = CopyOnWriteArraySet<Style.OnStyleLoaded>()
+  /** Initialized after [MapEvents.STYLE_LOADED] event from [preLoadedStyle], sent to user and all plugins. */
   private var loadedStyle: Style? = null
+  /** Initialized after [MapEvents.STYLE_DATA_LOADED] event to notify [styleDataStyleLoadedListener]
+   *  listener to apply style extension properties. They should be applied ASAP (before the final
+   *  [MapEvents.STYLE_LOADED] event) to make sure map is rendered correctly from the very beginning
+   *  (e.g. with the correct [Projection]). */
+  private var preLoadedStyle: Style? = null
 
   init {
     nativeObserver.addOnStyleLoadedListener(this)
@@ -70,6 +76,8 @@ internal class StyleObserver(
    * Invoked when a style has loaded
    */
   override fun onStyleLoaded(eventData: StyleLoadedEventData) {
+    loadedStyle?.markInvalid()
+    loadedStyle = preLoadedStyle
     val style = loadedStyle
       ?: throw MapboxMapException("Style is not initialized on onStyleLoaded callback!")
 
@@ -99,8 +107,7 @@ internal class StyleObserver(
   override fun onStyleDataLoaded(eventData: StyleDataLoadedEventData) {
     when (eventData.type) {
       StyleDataType.STYLE -> {
-        loadedStyle?.markInvalid()
-        loadedStyle = Style(nativeMap, pixelRatio).also {
+        preLoadedStyle = Style(nativeMap, pixelRatio).also {
           styleDataStyleLoadedListener?.onStyleLoaded(it)
         }
         styleDataStyleLoadedListener = null
@@ -122,7 +129,7 @@ internal class StyleObserver(
       // may produce another StyleDataType.SOURCES event if sources are added
       styleDataSourcesLoadedListener = null
       it.onStyleLoaded(
-        loadedStyle ?: throw MapboxMapException("Style is not initialized yet although SOURCES event has arrived!")
+        preLoadedStyle ?: throw MapboxMapException("Style is not initialized yet although SOURCES event has arrived!")
       )
     }
   }
@@ -133,7 +140,7 @@ internal class StyleObserver(
     styleDataSpritesLoadedListener?.let {
       styleDataSpritesLoadedListener = null
       it.onStyleLoaded(
-        loadedStyle ?: throw MapboxMapException("Style is not initialized yet although SPRITES event has arrived!")
+        preLoadedStyle ?: throw MapboxMapException("Style is not initialized yet although SPRITES event has arrived!")
       )
     }
   }
@@ -144,6 +151,8 @@ internal class StyleObserver(
     styleDataSpritesLoadedListener = null
     styleDataSourcesLoadedListener = null
     loadStyleErrorListener = null
+    preLoadedStyle?.markInvalid()
+    preLoadedStyle = null
     loadedStyle?.markInvalid()
     loadedStyle = null
     getStyleListeners.clear()
