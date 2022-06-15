@@ -16,6 +16,9 @@ Mapbox welcomes participation and contributions from everyone.
 * Optimise the frequency to update location layer's visibility. ([1399](https://github.com/mapbox/mapbox-maps-android/pull/1399))
 * Fix the delay in the first appearance of the location puck. ([1403](https://github.com/mapbox/mapbox-maps-android/pull/1403))
 
+## Dependencies
+* Bump telemetry to 8.1.3, android core to 5.0.2. ([1430](https://github.com/mapbox/mapbox-maps-android/pull/1430))
+
 # 10.6.0
 
 ## Breaking changes ⚠️
