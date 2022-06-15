@@ -218,14 +218,14 @@ class MapControllerTest {
   @Test
   fun queueEvent() {
     val event = mockk<Runnable>()
-    every { mockRenderer.queueEvent(event) } just Runs
+    every { mockRenderer.queueNonRenderEvent(event) } just Runs
     every { mockRenderer.queueRenderEvent(event) } just Runs
 
     testMapController.queueEvent(event, false)
     testMapController.queueEvent(event, true)
 
     verifySequence {
-      mockRenderer.queueEvent(event)
+      mockRenderer.queueNonRenderEvent(event)
       mockRenderer.queueRenderEvent(event)
     }
   }

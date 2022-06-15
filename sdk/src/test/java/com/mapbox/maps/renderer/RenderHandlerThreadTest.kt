@@ -1,8 +1,8 @@
 package com.mapbox.maps.renderer
 
-import android.os.Handler
 import android.os.Looper
 import com.mapbox.maps.logW
+import com.mapbox.verifyNo
 import io.mockk.*
 import org.junit.After
 import org.junit.Before
@@ -43,25 +43,14 @@ class RenderHandlerThreadTest {
     renderHandlerThread.start()
     renderHandlerThread.stop()
     assert(renderHandlerThread.handler == null)
-    assert(!renderHandlerThread.handlerThread.isAlive)
   }
 
   @Test
-  fun clearMessageQueueAllTest() {
+  fun clearDefaultMessagesTest() {
     renderHandlerThread.start()
-    val handler = mockk<Handler>(relaxed = true)
-    renderHandlerThread.handler = handler
-    renderHandlerThread.clearMessageQueue()
-    verify { renderHandlerThread.handler?.removeCallbacksAndMessages(null) }
-  }
-
-  @Test
-  fun clearMessageQueueSDKTest() {
-    renderHandlerThread.start()
-    val handler = mockk<Handler>(relaxed = true)
-    renderHandlerThread.handler = handler
-    renderHandlerThread.clearMessageQueue(false)
-    verify { renderHandlerThread.handler?.removeCallbacksAndMessages(EventType.SDK) }
+    renderHandlerThread.handler = mockk(relaxed = true)
+    renderHandlerThread.clearDefaultMessages()
+    verify { renderHandlerThread.handler?.removeCallbacksAndMessages(EventType.DEFAULT) }
   }
 
   @Test
@@ -70,7 +59,36 @@ class RenderHandlerThreadTest {
     Shadows.shadowOf(Looper.getMainLooper()).pause()
     renderHandlerThread.post { action() }
     Shadows.shadowOf(Looper.getMainLooper()).idle()
-    verify(exactly = 0) { action.invoke() }
+    verifyNo { action.invoke() }
+  }
+
+  @Test
+  fun postThreadStopped() {
+    val actionOne = mockk<() -> Unit>(relaxed = true)
+    val actionTwo = mockk<() -> Unit>(relaxed = true)
+    val actionThree = mockk<() -> Unit>(relaxed = true)
+    val actionFour = mockk<() -> Unit>(relaxed = true)
+    Shadows.shadowOf(Looper.getMainLooper()).pause()
+    renderHandlerThread.apply {
+      start()
+      post(actionOne)
+      postDelayed(
+        actionTwo,
+        50
+      )
+      Shadows.shadowOf(Looper.getMainLooper()).idleFor(Duration.ofMillis(50))
+      stop()
+      post(actionThree)
+      postDelayed(
+        actionFour,
+        50
+      )
+    }
+    Shadows.shadowOf(Looper.getMainLooper()).idleFor(Duration.ofMillis(50))
+    verify { actionOne.invoke() }
+    verify { actionTwo.invoke() }
+    verifyNo { actionThree.invoke() }
+    verifyNo { actionFour.invoke() }
   }
 
   @Test
@@ -80,11 +98,11 @@ class RenderHandlerThreadTest {
     Shadows.shadowOf(Looper.getMainLooper()).pause()
     renderHandlerThread.apply {
       start()
-      post { actionOne() }
-      post { actionTwo() }
+      post(actionOne)
+      postDelayed(actionTwo, 50)
     }
     Shadows.shadowOf(Looper.getMainLooper()).idleFor(Duration.ofMillis(50))
-    verify(exactly = 1) { actionOne.invoke() }
-    verify(exactly = 1) { actionTwo.invoke() }
+    verify { actionOne.invoke() }
+    verify { actionTwo.invoke() }
   }
 }

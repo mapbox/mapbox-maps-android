@@ -3,6 +3,7 @@ package com.mapbox.maps.renderer
 import android.view.Surface
 import com.mapbox.countDownEvery
 import com.mapbox.maps.logE
+import com.mapbox.maps.logI
 import com.mapbox.maps.logW
 import com.mapbox.maps.renderer.MapboxRenderThread.Companion.RETRY_DELAY_MS
 import com.mapbox.maps.renderer.egl.EGLCore
@@ -53,6 +54,7 @@ class MapboxRenderThreadTest {
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logE(any(), any()) } just Runs
     every { logW(any(), any()) } just Runs
+    every { logI(any(), any()) } just Runs
   }
 
   private fun mockSurface() {
@@ -80,6 +82,16 @@ class MapboxRenderThreadTest {
     every { eglCore.swapBuffers(any()) } returns EGL10.EGL_SUCCESS
   }
 
+  private fun pauseHandler() = Shadows.shadowOf(renderHandlerThread.handler?.looper).pause()
+
+  /**
+   * advances system clock by [millis] and executes all the tasks posted by the advanced time
+   * by default millis = 0 (e.g. only tasks posted without delay are executed)
+   */
+  private fun idleHandler(
+    millis: Long = 0L
+  ) = Shadows.shadowOf(renderHandlerThread.handler?.looper).idleFor(millis, TimeUnit.MILLISECONDS)
+
   private fun provideValidSurface() {
     mockSurface()
     mapboxRenderThread.onSurfaceCreated(surface, 1, 1)
@@ -89,10 +101,6 @@ class MapboxRenderThreadTest {
   private fun mockCountdownRunnable(latch: CountDownLatch) = mockk<Runnable>(relaxUnitFun = true).also {
     every { it.run() } answers { latch.countDown() }
   }
-
-  private fun pauseHandler() = Shadows.shadowOf(renderHandlerThread.handler?.looper).pause()
-
-  private fun idleHandler() = Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
 
   @After
   fun cleanup() {
@@ -217,9 +225,9 @@ class MapboxRenderThreadTest {
     initRenderThread()
     provideValidSurface()
     pauseHandler()
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
     idleHandler()
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
     idleHandler()
     // one swap buffer for surface creation, two for not squashed render requests
     verify(exactly = 3) {
@@ -236,8 +244,8 @@ class MapboxRenderThreadTest {
     initRenderThread()
     provideValidSurface()
     pauseHandler()
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
     idleHandler()
     // one swap buffer for surface creation, 2 render requests squash in one swap buffers call
     verify(exactly = 2) {
@@ -257,11 +265,11 @@ class MapboxRenderThreadTest {
     initRenderThread()
     provideValidSurface()
     pauseHandler()
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
     idleHandler()
     mapboxRenderThread.pause()
     idleHandler()
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
     idleHandler()
     // one swap buffer for surface creation, one request render after pause is omitted
     verify(exactly = 2) {
@@ -274,17 +282,17 @@ class MapboxRenderThreadTest {
     initRenderThread()
     provideValidSurface()
     pauseHandler()
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
     idleHandler()
     mapboxRenderThread.pause()
     idleHandler()
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
     idleHandler()
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
     idleHandler()
     mapboxRenderThread.resume()
     idleHandler()
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
     idleHandler()
     // render requests after pause do not swap buffer, we do it on resume if needed once
     verify(exactly = 4) {
@@ -297,13 +305,13 @@ class MapboxRenderThreadTest {
     initRenderThread()
     provideValidSurface()
     pauseHandler()
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
     idleHandler()
     mapboxRenderThread.pause()
     idleHandler()
     mapboxRenderThread.resume()
     idleHandler()
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
     idleHandler()
     // we always do extra render call on resume
     verify(exactly = 4) {
@@ -328,7 +336,7 @@ class MapboxRenderThreadTest {
       RenderEvent(
         runnable,
         true,
-        EventType.OTHER
+        EventType.DEFAULT
       )
     )
     assertEquals(1, mapboxRenderThread.renderEventQueue.size)
@@ -342,7 +350,7 @@ class MapboxRenderThreadTest {
   }
 
   @Test
-  fun queueSdkNonRenderEventTestNoVsync() {
+  fun queueNonRenderEventTestNoVsync() {
     initRenderThread()
     provideValidSurface()
     val runnable = mockk<Runnable>(relaxUnitFun = true)
@@ -352,7 +360,7 @@ class MapboxRenderThreadTest {
       RenderEvent(
         runnable,
         false,
-        EventType.SDK
+        EventType.DEFAULT
       )
     )
     // we do not add non-render event to the queue
@@ -367,7 +375,7 @@ class MapboxRenderThreadTest {
   }
 
   @Test
-  fun queueSdkNonRenderEventTestWithVsync() {
+  fun queueNonRenderEventTestWithVsync() {
     initRenderThread()
     provideValidSurface()
     val runnable = mockk<Runnable>(relaxUnitFun = true)
@@ -377,7 +385,7 @@ class MapboxRenderThreadTest {
       RenderEvent(
         runnable,
         false,
-        EventType.SDK
+        EventType.DEFAULT
       )
     )
     // we add to the queue
@@ -389,7 +397,7 @@ class MapboxRenderThreadTest {
     mapboxRenderThread.awaitingNextVsync = false
     pauseHandler()
     // schedule render request
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
     idleHandler()
     assert(mapboxRenderThread.nonRenderEventQueue.isEmpty())
     // one swap buffer from surface creation + one for render request
@@ -400,7 +408,7 @@ class MapboxRenderThreadTest {
   }
 
   @Test
-  fun queueUserNonRenderEventLoosingSurfaceTest() {
+  fun queueNonRenderEventLoosingSurfaceTest() {
     initRenderThread()
     provideValidSurface()
     val runnable = mockk<Runnable>(relaxUnitFun = true)
@@ -409,7 +417,7 @@ class MapboxRenderThreadTest {
       RenderEvent(
         runnable,
         false,
-        EventType.OTHER
+        EventType.DEFAULT
       )
     )
     // simulate render thread is not fully prepared, e.g. EGL context is lost
@@ -421,36 +429,9 @@ class MapboxRenderThreadTest {
     mapboxRenderThread.eglContextCreated = true
     mapboxRenderThread.processAndroidSurface(surface, 1, 1)
     // taking into account we try to reschedule event with some delay
-    Shadows.shadowOf(renderHandlerThread.handler?.looper).idleFor(RETRY_DELAY_MS, TimeUnit.MILLISECONDS)
+    idleHandler(RETRY_DELAY_MS)
     // user's runnable is executed when thread is fully prepared again
     verifyOnce { runnable.run() }
-  }
-
-  @Test
-  fun queueSdkNonRenderEventLoosingSurfaceTest() {
-    initRenderThread()
-    provideValidSurface()
-    val runnable = mockk<Runnable>(relaxUnitFun = true)
-    pauseHandler()
-    mapboxRenderThread.queueRenderEvent(
-      RenderEvent(
-        runnable,
-        false,
-        EventType.SDK
-      )
-    )
-    // simulate render thread is not fully prepared, e.g. EGL context is lost
-    mapboxRenderThread.eglContextCreated = false
-    idleHandler()
-    verifyNo { runnable.run() }
-    pauseHandler()
-    // simulate render thread is fully prepared again
-    mapboxRenderThread.eglContextCreated = true
-    mapboxRenderThread.processAndroidSurface(surface, 1, 1)
-    // taking into account we try to reschedule event with some delay
-    Shadows.shadowOf(renderHandlerThread.handler?.looper).idleFor(RETRY_DELAY_MS, TimeUnit.MILLISECONDS)
-    // SDK's task is not executed with new surface
-    verifyNo { runnable.run() }
   }
 
   @Test
@@ -460,10 +441,10 @@ class MapboxRenderThreadTest {
     mapboxRenderThread.fpsChangedListener = listener
     provideValidSurface()
     pauseHandler()
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
     idleHandler()
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
     idleHandler()
     verify(exactly = 2) {
       listener.onFpsChanged(any())
@@ -495,9 +476,9 @@ class MapboxRenderThreadTest {
 
       pauseHandler()
 
-      mapboxRenderThread.queueRenderEvent(RenderEvent(runnable, true, EventType.SDK))
-      mapboxRenderThread.queueRenderEvent(RenderEvent(runnable2, true, EventType.SDK))
-      mapboxRenderThread.queueRenderEvent(RenderEvent(runnable3, true, EventType.SDK))
+      mapboxRenderThread.queueRenderEvent(RenderEvent(runnable, true, EventType.DEFAULT))
+      mapboxRenderThread.queueRenderEvent(RenderEvent(runnable2, true, EventType.DEFAULT))
+      mapboxRenderThread.queueRenderEvent(RenderEvent(runnable3, true, EventType.DEFAULT))
 
       idleHandler()
     }
@@ -517,7 +498,7 @@ class MapboxRenderThreadTest {
     provideValidSurface()
     mapboxRenderThread.onSurfaceDestroyed()
     idleHandler()
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
     idleHandler()
     verifyNo {
       // we do not destroy native renderer if it's stop and not destroy
@@ -534,7 +515,7 @@ class MapboxRenderThreadTest {
     provideValidSurface()
     mapboxRenderThread.onSurfaceDestroyed()
     idleHandler()
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
     idleHandler()
 
     verifyOnce {
@@ -552,7 +533,7 @@ class MapboxRenderThreadTest {
     provideValidSurface()
     mapboxRenderThread.setMaximumFps(15)
     pauseHandler()
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
     idleHandler()
     // 1 swap when creating surface + 1 for request render call
     verify(exactly = 2) {
@@ -567,9 +548,9 @@ class MapboxRenderThreadTest {
     every { mapboxWidgetRenderer.needTextureUpdate } returns false
     every { mapboxWidgetRenderer.getTexture() } returns 0
     pauseHandler()
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
     idleHandler()
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
     idleHandler()
     verifyNo {
       mapboxWidgetRenderer.updateTexture()
@@ -587,9 +568,9 @@ class MapboxRenderThreadTest {
     every { mapboxWidgetRenderer.hasTexture() } returns true
     every { mapboxWidgetRenderer.getTexture() } returns textureId
     pauseHandler()
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
     idleHandler()
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
     idleHandler()
     verify(exactly = 2) {
       mapboxWidgetRenderer.updateTexture()
@@ -607,7 +588,7 @@ class MapboxRenderThreadTest {
     every { mapboxWidgetRenderer.hasTexture() } returns true
     every { mapboxWidgetRenderer.getTexture() } returns textureId
     pauseHandler()
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
     idleHandler()
     verifyOrder {
       mapboxWidgetRenderer.updateTexture()
@@ -678,5 +659,54 @@ class MapboxRenderThreadTest {
     verifyNo {
       mapboxWidgetRenderer.setSharedContext(any())
     }
+  }
+
+  @Test
+  fun onDestroyExecutesAllDestroyTasks() {
+    initRenderThread()
+    every { eglCore.makeCurrent(any()) } returns true
+    val runnables = listOf<Runnable>(
+      mockk(relaxUnitFun = true),
+      mockk(relaxUnitFun = true),
+      mockk(relaxUnitFun = true),
+    )
+    val events = runnables.map { RenderEvent(it, false, EventType.DESTROY_RENDERER) }
+
+    // simulate chained DESTROY events being added via scheduleTask on destroyRenderer call
+    every { mapboxRenderer.destroyRenderer() } answers {
+      events.forEach(mapboxRenderThread::queueRenderEvent)
+    }
+
+    provideValidSurface()
+    mapboxRenderThread.destroy()
+
+    verifyOrder {
+      runnables.forEach { it.run() }
+    }
+  }
+
+  @Test
+  fun onAddRenderEventWhenSurfaceIsDestroyed() {
+    initRenderThread()
+    provideValidSurface()
+
+    lateinit var runnable: Runnable
+    lateinit var runnable2: Runnable
+    waitZeroCounter(startCounter = 2) {
+      runnable = mockCountdownRunnable(this)
+      runnable2 = mockCountdownRunnable(this)
+      mapboxRenderThread.onSurfaceDestroyed()
+
+      mapboxRenderThread.queueRenderEvent(RenderEvent(runnable, false, EventType.DEFAULT))
+      mapboxRenderThread.queueRenderEvent(RenderEvent(runnable2, false, EventType.DEFAULT))
+
+      mapboxRenderThread.onSurfaceCreated(surface, 1, 1)
+
+      // non-render events are posted with 50 millis delay when surface is destroyed
+      idleHandler(RETRY_DELAY_MS)
+    }
+
+    verify { runnable.run() }
+    verify { runnable2.run() }
   }
 }

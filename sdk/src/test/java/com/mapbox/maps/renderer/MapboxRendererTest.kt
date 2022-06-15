@@ -29,6 +29,8 @@ internal abstract class MapboxRendererTest {
     renderThread = mockk(relaxUnitFun = true)
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logE(any(), any()) } just Runs
+    every { logI(any(), any()) } just Runs
+    every { logW(any(), any()) } just Runs
   }
 
   @After
@@ -51,7 +53,7 @@ internal abstract class MapboxRendererTest {
         RenderEvent(
           null,
           true,
-          EventType.SDK
+          EventType.DEFAULT
         )
       )
     }
@@ -67,7 +69,7 @@ internal abstract class MapboxRendererTest {
       renderThread.queueRenderEvent(capture(event))
     }
     assert(!event.captured.needRender)
-    assert(event.captured.eventType == EventType.SDK)
+    assert(event.captured.eventType == EventType.DEFAULT)
   }
 
   @Test
@@ -104,13 +106,13 @@ internal abstract class MapboxRendererTest {
   @Test
   fun queueEventTest() {
     val event = mockk<Runnable>(relaxUnitFun = true)
-    mapboxRenderer.queueEvent(event)
+    mapboxRenderer.queueNonRenderEvent(event)
     verify {
       renderThread.queueRenderEvent(
         RenderEvent(
           event,
           false,
-          EventType.OTHER
+          EventType.DEFAULT
         )
       )
     }
@@ -125,7 +127,7 @@ internal abstract class MapboxRendererTest {
         RenderEvent(
           event,
           true,
-          EventType.OTHER
+          EventType.DEFAULT
         )
       )
     }

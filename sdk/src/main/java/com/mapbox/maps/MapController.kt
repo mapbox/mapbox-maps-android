@@ -186,7 +186,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     if (needRender) {
       renderer.queueRenderEvent(event)
     } else {
-      renderer.queueEvent(event)
+      renderer.queueNonRenderEvent(event)
     }
   }
 
