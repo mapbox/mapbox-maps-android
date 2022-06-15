@@ -1,6 +1,5 @@
 package com.mapbox.maps.plugin.viewport
 
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.viewport.data.DefaultViewportTransitionOptions
 import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions
@@ -21,7 +20,6 @@ import com.mapbox.maps.plugin.viewport.transition.ViewportTransition
  *  - in a state (camera is being managed by a [ViewportState])
  *  - transitioning (camera is being managed by a [ViewportTransition])
  */
-@MapboxExperimental
 interface ViewportPlugin : MapPlugin {
 
   /**

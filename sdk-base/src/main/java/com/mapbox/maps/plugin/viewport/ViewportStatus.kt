@@ -1,6 +1,5 @@
 package com.mapbox.maps.plugin.viewport
 
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.plugin.viewport.state.ViewportState
 import com.mapbox.maps.plugin.viewport.transition.ViewportTransition
 import java.util.*
@@ -13,7 +12,6 @@ import java.util.*
  * The [ViewportStatus.State] amd [ViewportStatus.Transition] have associated values that are reference
  * types, so equality and hash are implemented in terms of the identities of those objects.
  */
-@MapboxExperimental
 sealed class ViewportStatus {
   /**
    * Represents the current status is a [ViewportState].

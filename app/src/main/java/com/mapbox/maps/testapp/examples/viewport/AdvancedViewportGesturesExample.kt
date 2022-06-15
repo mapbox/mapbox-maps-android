@@ -11,7 +11,6 @@ import com.mapbox.core.constants.Constants
 import com.mapbox.geojson.LineString
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapView
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.expressions.dsl.generated.interpolate
 import com.mapbox.maps.extension.style.layers.generated.lineLayer
@@ -47,7 +46,6 @@ import com.mapbox.maps.testapp.utils.SimulateRouteLocationProvider
  *
  * @see [User location guide](https://docs.mapbox.com/android/maps/guides/user-location/#location-tracking)
  */
-@MapboxExperimental
 class AdvancedViewportGesturesExample : AppCompatActivity() {
   private lateinit var mapView: MapView
   private lateinit var routePoints: LineString
@@ -71,7 +69,7 @@ class AdvancedViewportGesturesExample : AppCompatActivity() {
     mapView.gestures.focalPoint = mapView.getMapboxMap().pixelForCoordinate(it)
   }
 
-  private val viewportStatusObserver = ViewportStatusObserver { from, to, reason ->
+  private val viewportStatusObserver = ViewportStatusObserver { from, to, _ ->
     // Clean up the gestures settings when current viewport is moving away from followPuckViewportState
     if (from == ViewportStatus.State(followPuckViewportState)) {
       clearAdvancedGesturesForFollowPuckViewportState()

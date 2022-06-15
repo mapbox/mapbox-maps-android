@@ -1,6 +1,5 @@
 package com.mapbox.maps.plugin.viewport.state
 
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.plugin.viewport.ViewportPlugin
 import com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions
 
@@ -12,7 +11,6 @@ import com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions
  * Note: Users are responsible to create the viewport states and keep a reference to these states for
  * future operations.
  */
-@MapboxExperimental
 interface OverviewViewportState : ViewportState {
   /**
    * Describes the configuration options of the state.
