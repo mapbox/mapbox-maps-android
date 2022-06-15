@@ -18,10 +18,10 @@ internal class RenderHandlerThread {
     get() = handlerThread.isAlive
 
   fun post(task: () -> Unit) {
-    postDelayed(task, 0, EventType.SDK)
+    postDelayed(task, 0, EventType.DEFAULT)
   }
 
-  fun postDelayed(task: () -> Unit, delayMillis: Long, eventType: EventType = EventType.SDK) {
+  fun postDelayed(task: () -> Unit, delayMillis: Long, eventType: EventType = EventType.DEFAULT) {
     handler?.let {
       val message = Message.obtain(it, task)
       message.obj = eventType
@@ -37,21 +37,18 @@ internal class RenderHandlerThread {
   }
 
   fun stop() {
-    handlerThread.quit()
-    try {
-      handlerThread.join()
-    } catch (e: InterruptedException) {
-    } finally {
-      handler = null
-    }
+    // quit safely to guarantee all DESTROY_RENDERER messages
+    // that may be in the queue will be executed
+    handlerThread.quitSafely()
+    handler = null
   }
 
-  fun clearMessageQueue(clearAll: Boolean = true) {
-    if (clearAll) {
-      handler?.removeCallbacksAndMessages(null)
-    } else {
-      handler?.removeCallbacksAndMessages(EventType.SDK)
-    }
+  /**
+   * Clears all messages except of [EventType.DESTROY_RENDERER] messages, since they clear
+   * various resources allocated in core and we don't want to leak those resources.
+   */
+  fun clearDefaultMessages() {
+    handler?.removeCallbacksAndMessages(EventType.DEFAULT)
   }
 
   companion object {
