@@ -8,14 +8,20 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.get
 import com.mapbox.geojson.Point
 import com.mapbox.maps.MapView
+import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.Style
 import com.mapbox.maps.ViewAnnotationAnchor
 import com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor
+import com.mapbox.maps.plugin.animation.MapAnimationOptions
+import com.mapbox.maps.plugin.animation.moveBy
 import com.mapbox.maps.plugin.annotation.Annotation
 import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.*
+import com.mapbox.maps.plugin.gestures.OnMapClickListener
+import com.mapbox.maps.plugin.gestures.addOnMapClickListener
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityViewAnnotationShowcaseBinding
 import com.mapbox.maps.testapp.databinding.ItemCalloutViewBinding
@@ -42,6 +48,16 @@ class ViewAnnotationWithPointAnnotationActivity : AppCompatActivity() {
       this@ViewAnnotationWithPointAnnotationActivity,
       R.drawable.blue_marker_view
     )!!
+
+    binding.mapView.getMapboxMap().addOnMapClickListener {
+      binding.mapView.getMapboxMap().moveBy(
+        ScreenCoordinate(0.0, 950.0),
+        MapAnimationOptions.mapAnimationOptions {
+          duration(3_000L)
+        }
+      )
+      true
+    }
 
     binding.mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS) {
       prepareAnnotationMarker(binding.mapView, iconBitmap)
