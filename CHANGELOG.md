@@ -12,17 +12,15 @@ Mapbox welcomes participation and contributions from everyone.
 * Optimize `MapboxMap.loadStyle()` to apply images and models earlier. [#1378](https://github.com/mapbox/mapbox-maps-android/pull/1378)
 * Remove `MapboxExperimental` annotation from viewport plugin and promote viewport plugin as stable API. ([1425](https://github.com/mapbox/mapbox-maps-android/pull/1425))
 
-## Bug fixes 🐞
-* Optimise the frequency to update location layer's visibility. ([1399](https://github.com/mapbox/mapbox-maps-android/pull/1399))
-* Fix the delay in the first appearance of the location puck. ([1403](https://github.com/mapbox/mapbox-maps-android/pull/1403))
-
 # 10.6.0
 
 ## Breaking changes ⚠️
 * Remove deprecated (since `v10.5.0`) experimental methods `MapboxMap.setMapProjection`/`MapboxMap.getMapProjection`. Those methods should be replaced with setting projection as part of Style DSL to achieve the same behavior. ([1420](https://github.com/mapbox/mapbox-maps-android/pull/1420))
 
 ## Bug fixes 🐞
-* Remove `android.permission.GET_TASKS` permission from the SDK. ([1430](https://github.com/mapbox/mapbox-maps-android/pull/1430)) 
+* Optimise the frequency to update location layer's visibility. ([1399](https://github.com/mapbox/mapbox-maps-android/pull/1399))
+* Fix the delay in the first appearance of the location puck. ([1403](https://github.com/mapbox/mapbox-maps-android/pull/1403))
+* Remove `android.permission.GET_TASKS` permission from the SDK. ([1430](https://github.com/mapbox/mapbox-maps-android/pull/1430))
 
 ## Dependencies
 * Bump telemetry to 8.1.3, android core to 5.0.2. ([1430](https://github.com/mapbox/mapbox-maps-android/pull/1430))
