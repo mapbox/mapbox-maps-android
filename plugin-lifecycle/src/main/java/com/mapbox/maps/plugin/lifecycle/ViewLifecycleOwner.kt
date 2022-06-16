@@ -43,11 +43,11 @@ internal class ViewLifecycleOwner(
   }
 
   private val attachStateChangeListener = object : View.OnAttachStateChangeListener {
-    override fun onViewAttachedToWindow(p0: View) {
-      doOnAttached(p0)
+    override fun onViewAttachedToWindow(view: View) {
+      doOnAttached(view)
     }
 
-    override fun onViewDetachedFromWindow(p0: View) {
+    override fun onViewDetachedFromWindow(view: View) {
       doOnDetached()
     }
   }

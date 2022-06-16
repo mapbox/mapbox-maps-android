@@ -174,6 +174,13 @@ class ViewLifecycleOwnerTest {
     verify { view.removeOnAttachStateChangeListener(attachStateSlot.captured) }
   }
 
+  @Test(expected = IllegalStateException::class)
+  fun testNullLifecycleOwner() {
+    every { ViewTreeLifecycleOwner.get(view) } returns null
+    every { view.isAttachedToWindow } returns true
+    ViewLifecycleOwner(view)
+  }
+
   @After
   fun tearDown() {
     unmockkStatic(ViewTreeLifecycleOwner::class)
