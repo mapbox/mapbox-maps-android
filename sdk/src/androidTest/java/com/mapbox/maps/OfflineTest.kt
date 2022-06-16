@@ -107,10 +107,9 @@ class OfflineTest {
         downloadProgress?.requiredResourceCount,
         downloadProgress?.completedResourceCount
       )
-      // TODO remove -1 when issue will be fixed in gl-native, requiredResourceCount should be equal to completedResourceCount
       Assert.assertEquals(
         downloadedStyle?.requiredResourceCount,
-        (downloadedStyle?.completedResourceCount ?: 0) - 1L
+        downloadedStyle?.completedResourceCount
       )
       Assert.assertEquals(STYLE, downloadedStyle?.styleURI)
     }
