@@ -63,11 +63,10 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix crash on globe symbol placement that happens during style change. ([#1432](https://github.com/mapbox/mapbox-maps-android/pull/1432))
 * Fix incorrect image source rendering with terrain enabled. ([#1432](https://github.com/mapbox/mapbox-maps-android/pull/1432))
 * Fix in-memory tile cache for non-geometry tiles when the map projection changes. Before, the tiles cached while the previous projection was active could not be used with the new projection active. ([#1432](https://github.com/mapbox/mapbox-maps-android/pull/1432))
-* Fix unexpected request delay for tiles taken from in-memory cache when minimumTileUpdateInterval is set. ([#1432](https://github.com/mapbox/mapbox-maps-android/pull/1432))
 
 ## Dependencies
 * Bump Mapbox Android base library to v0.8.0. ([#1323](https://github.com/mapbox/mapbox-maps-android/pull/1323))
-* Bump gl-native to v10.6.0, common to 22.0.0. ([#1351](https://github.com/mapbox/mapbox-maps-android/pull/1351), [#1354](https://github.com/mapbox/mapbox-maps-android/pull/1354), [#1359](https://github.com/mapbox/mapbox-maps-android/pull/1359), [#1396](https://github.com/mapbox/mapbox-maps-android/pull/1396), [#1432](https://github.com/mapbox/mapbox-maps-android/pull/1432))
+* Bump gl-native to v10.6.0, common to 22.0.0. ([#1432](https://github.com/mapbox/mapbox-maps-android/pull/1432))
 * Bump telemetry to [v8.1.3](https://github.com/mapbox/mapbox-events-android/releases/tag/telem-8.1.3-core-5.0.2), android core to [5.0.2](https://github.com/mapbox/mapbox-events-android/releases/tag/core-5.0.2). ([1430](https://github.com/mapbox/mapbox-maps-android/pull/1430))
 
 # 10.6.0-rc.1 June 2, 2022
