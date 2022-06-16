@@ -6,7 +6,7 @@ import android.text.Html
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.URLSpan
-import com.mapbox.maps.base.R
+import com.mapbox.maps.R
 import com.mapbox.maps.plugin.attribution.Attribution
 import java.lang.ref.WeakReference
 import java.util.*
