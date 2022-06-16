@@ -23,7 +23,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Remove `android.permission.GET_TASKS` permission from the SDK. ([1430](https://github.com/mapbox/mapbox-maps-android/pull/1430))
 
 ## Dependencies
-* Bump telemetry to 8.1.3, android core to 5.0.2. ([1430](https://github.com/mapbox/mapbox-maps-android/pull/1430))
+* Bump telemetry to [v8.1.3](https://github.com/mapbox/mapbox-events-android/releases/tag/telem-8.1.3-core-5.0.2), android core to [5.0.2](https://github.com/mapbox/mapbox-events-android/releases/tag/core-5.0.2). ([1430](https://github.com/mapbox/mapbox-maps-android/pull/1430))
 
 # 10.6.0-rc.1 June 2, 2022
 
