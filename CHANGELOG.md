@@ -12,8 +12,8 @@ Mapbox welcomes participation and contributions from everyone.
 * Optimize `MapboxMap.loadStyle()` to apply images and models earlier. [#1378](https://github.com/mapbox/mapbox-maps-android/pull/1378)
 * Remove `MapboxExperimental` annotation from viewport plugin and promote viewport plugin as stable API. ([1425](https://github.com/mapbox/mapbox-maps-android/pull/1425))
 
-# 10.6.0
-
+# 10.6.0 - June 16, 2022
+[Changes](https://github.com/mapbox/mapbox-maps-android/compare/android-v10.5.0...android-v10.6.0) since [Mapbox Maps SDK for Android 10.5.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/android-v10.5.0)
 ## Breaking changes ⚠️
 * Remove deprecated (since `v10.5.0`) experimental methods `MapboxMap.setMapProjection`/`MapboxMap.getMapProjection`. Those methods should be replaced with setting projection as part of Style DSL to achieve the same behavior. ([1420](https://github.com/mapbox/mapbox-maps-android/pull/1420))
 
