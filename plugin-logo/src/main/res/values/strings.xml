@@ -1,0 +1,3 @@
+<resources>
+    <string name="mapbox_warning_logo_disabled" translatable="false">The Mapbox logo wordmark must remain enabled in accordance with our Terms of Service. See https://www.mapbox.com/legal/tos for more details.</string>
+</resources>

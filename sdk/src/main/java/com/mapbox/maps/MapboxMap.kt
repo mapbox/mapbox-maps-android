@@ -1140,7 +1140,7 @@ class MapboxMap :
    * \p state map will be updated. An entry in the feature state map that is not listed in \p state will
    * retain its previous value.
    *
-   * Note that updates to feature state are asynchronous, so changes made by this method migth not be
+   * Note that updates to feature state are asynchronous, so changes made by this method might not be
    * immediately visible using getStateFeature().
    *
    * @param sourceId Style source identifier.
@@ -1186,7 +1186,7 @@ class MapboxMap :
    *
    * Remove a specified entry or all entries from a feature's state map, depending on the value of stateKey.
    *
-   * Note that updates to feature state are asynchronous, so changes made by this method migth not be
+   * Note that updates to feature state are asynchronous, so changes made by this method might not be
    * immediately visible using getStateFeature().
    *
    * @param sourceId Style source identifier.
