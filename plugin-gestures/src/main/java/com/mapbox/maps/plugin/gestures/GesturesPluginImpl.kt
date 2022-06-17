@@ -99,10 +99,18 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
   private val scheduledAnimators = ArrayList<ValueAnimator>()
   private var gesturesInterpolator = LinearOutSlowInInterpolator()
 
-  // needed most likely for devices with API <= 23 only
-  // duration = 0 will still make animation end / cancel not immediately
-  // this may cause cancelling some easeTo animation without single camera update
+  // Devices with API <= 23 animating with duration = 0 will send initial value from Looper with
+  // some small delay as a result.
+  // Hence multiple immediate animations sent close to each other may cancel previous ones.
+  // This becomes visible with move gesture since animation steps are relative to each other.
+  // So we defer move distances that are not applied to apply later (when immediate ease will end).
   private var immediateEaseInProcess = false
+  private var deferredMoveDistanceX: Float = 0f
+  private var deferredMoveDistanceY: Float = 0f
+  private var deferredZoomBy: Double = 0.0
+  private var deferredRotate: Double = 0.0
+  private var deferredShove: Double = 0.0
+
   private fun easeToImmediately(
     camera: CameraOptions,
     actionAfter: (() -> Unit)? = null
@@ -653,15 +661,20 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
         }
         cameraAnimationsPlugin.playAnimatorsTogether(zoom, anchorAnimator)
       } else {
+        if (immediateEaseInProcess) {
+          deferredZoomBy += zoomBy
+          return true
+        }
         easeToImmediately(
           CameraOptions.Builder()
-            .zoom(mapCameraManagerDelegate.cameraState.zoom + zoomBy)
+            .zoom(mapCameraManagerDelegate.cameraState.zoom + zoomBy + deferredZoomBy)
             .anchor(focalPoint)
             .build(),
           actionAfter = {
             onScaleAnimationEnd(detector)
           }
         )
+        deferredZoomBy = 0.0
       }
     }
     return true
@@ -675,6 +688,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
 
   internal fun handleScaleBegin(detector: StandardScaleGestureDetector): Boolean {
     quickZoom = detector.pointersCount == 1
+    deferredRotate = 0.0
 
     if (quickZoom) {
       if (!internalSettings.quickZoomEnabled) {
@@ -880,7 +894,12 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
     // Calculate map bearing value
     val currentBearing = mapCameraManagerDelegate.cameraState.bearing
     rotateCachedAnchor = cameraAnimationsPlugin.anchor
-    val bearing = currentBearing + rotationDegreesSinceLast
+    if (immediateEaseInProcess) {
+      deferredRotate += rotationDegreesSinceLast
+      return true
+    }
+    val bearing = currentBearing + rotationDegreesSinceLast + deferredRotate
+    deferredRotate = 0.0
     val focalPoint = getRotateFocalPoint(detector)
     // Rotate the map
     if (internalSettings.simultaneousRotateAndPinchToZoomEnabled) {
@@ -928,6 +947,8 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
     if (!internalSettings.rotateEnabled) {
       return false
     }
+
+    deferredRotate = 0.0
 
     val deltaSinceLast = abs(detector.deltaSinceLast)
     val currTime = detector.currentEvent.eventTime.toDouble()
@@ -998,6 +1019,8 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
       return false
     }
 
+    deferredShove = 0.0
+
     cancelTransitionsIfRequired()
 
     // disabling move gesture during shove
@@ -1013,8 +1036,13 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
     deltaPixelsSinceLast: Float
   ): Boolean {
     // Get pitch value (scale and clamp)
+    if (immediateEaseInProcess) {
+      deferredShove += deltaPixelsSinceLast
+      return true
+    }
     var pitch = mapCameraManagerDelegate.cameraState.pitch
-    val optimizedPitch = pitch - (SHOVE_PIXEL_CHANGE_FACTOR * deltaPixelsSinceLast).toDouble()
+    val optimizedPitch = pitch - (SHOVE_PIXEL_CHANGE_FACTOR * (deltaPixelsSinceLast + deferredShove))
+    deferredShove = 0.0
     pitch = clamp(optimizedPitch, MINIMUM_PITCH, MAXIMUM_PITCH)
     easeToImmediately(
       CameraOptions.Builder().pitch(pitch).build(),
@@ -1331,6 +1359,9 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
       return false
     }
 
+    deferredMoveDistanceX = 0f
+    deferredMoveDistanceY = 0f
+
     cancelTransitionsIfRequired()
     notifyOnMoveBeginListeners(detector)
     return true
@@ -1401,10 +1432,17 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
         dragInProgress = true
         mapCameraManagerDelegate.dragStart(ScreenCoordinate(fromX, fromY))
       }
+      if (immediateEaseInProcess) {
+        deferredMoveDistanceX += distanceX
+        deferredMoveDistanceY += distanceY
+        return true
+      }
       val resolvedDistanceX =
-        if (internalSettings.isScrollHorizontallyLimited()) 0.0 else distanceX.toDouble()
+        if (internalSettings.isScrollHorizontallyLimited()) 0.0 else (distanceX.toDouble() + deferredMoveDistanceX)
       val resolvedDistanceY =
-        if (internalSettings.isScrollVerticallyLimited()) 0.0 else distanceY.toDouble()
+        if (internalSettings.isScrollVerticallyLimited()) 0.0 else (distanceY.toDouble() + deferredMoveDistanceY)
+      deferredMoveDistanceX = 0f
+      deferredMoveDistanceY = 0f
 
       val toX = fromX - resolvedDistanceX
       val toY = fromY - resolvedDistanceY
