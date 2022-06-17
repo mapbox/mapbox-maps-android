@@ -9,7 +9,7 @@ internal class MapboxTextureViewRenderer : MapboxRenderer, TextureView.SurfaceTe
 
   override val widgetRenderer: MapboxWidgetRenderer
 
-  constructor(textureView: TextureView, antialiasingSampleCount: Int) {
+  constructor(textureView: TextureView, antialiasingSampleCount: Int, displayRate: Long): super(displayRate) {
     val widgetRenderer = MapboxWidgetRenderer(
       antialiasingSampleCount = antialiasingSampleCount,
     )
@@ -27,7 +27,7 @@ internal class MapboxTextureViewRenderer : MapboxRenderer, TextureView.SurfaceTe
   }
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  internal constructor(renderThread: MapboxRenderThread) {
+  internal constructor(renderThread: MapboxRenderThread): super(60L) {
     val widgetRenderer = MapboxWidgetRenderer(
       antialiasingSampleCount = 1,
     )

@@ -1,5 +1,8 @@
 package com.mapbox.maps.renderer.egl
 
+import android.opengl.EGL14.*
+import android.opengl.EGLConfig
+import android.opengl.EGLDisplay
 import android.os.Build
 import com.mapbox.maps.MAPBOX_LOCALE
 import com.mapbox.maps.MapView.Companion.DEFAULT_ANTIALIASING_SAMPLE_COUNT
@@ -9,10 +12,6 @@ import com.mapbox.maps.logW
 import java.lang.Boolean.compare
 import java.lang.Integer.compare
 import java.util.*
-import javax.microedition.khronos.egl.EGL10
-import javax.microedition.khronos.egl.EGL10.*
-import javax.microedition.khronos.egl.EGLConfig
-import javax.microedition.khronos.egl.EGLDisplay
 
 internal class EGLConfigChooser constructor(
   private val translucentSurface: Boolean,
@@ -58,9 +57,9 @@ internal class EGLConfigChooser constructor(
     }
   private var eglChooserSuccess = true
 
-  fun chooseConfig(egl: EGL10, display: EGLDisplay): EGLConfig? {
+  fun chooseConfig(display: EGLDisplay): EGLConfig? {
     // Determine number of possible configurations
-    val numConfigs = getNumberOfConfigurations(egl, display)
+    val numConfigs = getNumberOfConfigurations(display)
     if (!eglChooserSuccess) {
       return null
     }
@@ -70,7 +69,6 @@ internal class EGLConfigChooser constructor(
     }
     // Get all possible configurations
     val possibleConfigurations = getPossibleConfigurations(
-      egl,
       display,
       numConfigs
     )
@@ -78,7 +76,7 @@ internal class EGLConfigChooser constructor(
       return null
     }
     // Choose best match
-    val config = chooseBestMatchConfig(egl, display, possibleConfigurations)
+    val config = chooseBestMatchConfig(display, possibleConfigurations)
     if (config == null) {
       logE(TAG, "No config chosen, see log above for concrete error.")
       return null
@@ -87,21 +85,20 @@ internal class EGLConfigChooser constructor(
   }
 
   private fun getNumberOfConfigurations(
-    egl: EGL10,
     display: EGLDisplay
   ): IntArray {
     val numConfigs = IntArray(1)
     val initialSampleCount = antialiasingSampleCount
     var suitableConfigsFound = false
     while (!suitableConfigsFound) {
-      val success = egl.eglChooseConfig(display, configAttributes, null, 0, numConfigs)
+      val success = eglChooseConfig(display, configAttributes, 0, null, 0, 0, numConfigs, 0)
       if (!success || numConfigs[0] < 1) {
         logE(
           TAG,
           String.format(
             MAPBOX_LOCALE,
             "eglChooseConfig returned error %d",
-            egl.eglGetError()
+            eglGetError()
           )
         )
         if (antialiasingSampleCount > 1) {
@@ -130,18 +127,17 @@ internal class EGLConfigChooser constructor(
   }
 
   private fun getPossibleConfigurations(
-    egl: EGL10,
     display: EGLDisplay,
     numConfigs: IntArray
   ): Array<EGLConfig> {
     val configs = arrayOfNulls<EGLConfig>(numConfigs[0])
-    if (!egl.eglChooseConfig(display, configAttributes, configs, numConfigs[0], numConfigs)) {
+    if (!eglChooseConfig(display, configAttributes, 0, configs, 0, numConfigs[0], numConfigs, 0)) {
       logE(
         TAG,
         String.format(
           MAPBOX_LOCALE,
           "Weird: eglChooseConfig() returned error %d although ran fine before.",
-          egl.eglGetError()
+          eglGetError()
         )
       )
       eglChooserSuccess = false
@@ -164,7 +160,6 @@ internal class EGLConfigChooser constructor(
   }
 
   private fun chooseBestMatchConfig(
-    egl: EGL10,
     display: EGLDisplay,
     configs: Array<EGLConfig>
   ): EGLConfig? {
@@ -211,20 +206,20 @@ internal class EGLConfigChooser constructor(
     for (config in configs) {
       i++
 
-      val caveat = getConfigAttr(egl, display, config, EGL_CONFIG_CAVEAT)
+      val caveat = getConfigAttr(display, config, EGL_CONFIG_CAVEAT)
       val conformant = getConfigAttr(
-        egl, display, config,
+        display, config,
         EGL_CONFORMANT
       )
-      val bits = getConfigAttr(egl, display, config, EGL_BUFFER_SIZE)
-      val red = getConfigAttr(egl, display, config, EGL_RED_SIZE)
-      val green = getConfigAttr(egl, display, config, EGL_GREEN_SIZE)
-      val blue = getConfigAttr(egl, display, config, EGL_BLUE_SIZE)
-      val alpha = getConfigAttr(egl, display, config, EGL_ALPHA_SIZE)
-      val depth = getConfigAttr(egl, display, config, EGL_DEPTH_SIZE)
-      val stencil = getConfigAttr(egl, display, config, EGL_STENCIL_SIZE)
-      val sampleBuffers = getConfigAttr(egl, display, config, EGL_SAMPLE_BUFFERS)
-      val samples = getConfigAttr(egl, display, config, EGL_SAMPLES)
+      val bits = getConfigAttr(display, config, EGL_BUFFER_SIZE)
+      val red = getConfigAttr(display, config, EGL_RED_SIZE)
+      val green = getConfigAttr(display, config, EGL_GREEN_SIZE)
+      val blue = getConfigAttr(display, config, EGL_BLUE_SIZE)
+      val alpha = getConfigAttr(display, config, EGL_ALPHA_SIZE)
+      val depth = getConfigAttr(display, config, EGL_DEPTH_SIZE)
+      val stencil = getConfigAttr(display, config, EGL_STENCIL_SIZE)
+      val sampleBuffers = getConfigAttr(display, config, EGL_SAMPLE_BUFFERS)
+      val samples = getConfigAttr(display, config, EGL_SAMPLES)
 
       // validate every attribute is set correctly
       if (!eglChooserSuccess) {
@@ -311,20 +306,19 @@ internal class EGLConfigChooser constructor(
   }
 
   private fun getConfigAttr(
-    egl: EGL10,
     display: EGLDisplay,
     config: EGLConfig,
     attributeName: Int
   ): Int {
     val attributeValue = IntArray(1)
-    if (!egl.eglGetConfigAttrib(display, config, attributeName, attributeValue)) {
+    if (!eglGetConfigAttrib(display, config, attributeName, attributeValue, 0)) {
       logE(
         TAG,
         String.format(
           MAPBOX_LOCALE,
           "eglGetConfigAttrib(%d) returned error %d",
           attributeName,
-          egl.eglGetError()
+          eglGetError()
         )
       )
       eglChooserSuccess = false

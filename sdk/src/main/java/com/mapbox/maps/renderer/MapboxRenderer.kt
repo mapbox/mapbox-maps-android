@@ -15,7 +15,9 @@ import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.locks.ReentrantLock
 import kotlin.concurrent.withLock
 
-internal abstract class MapboxRenderer : MapClient {
+internal abstract class MapboxRenderer(
+  val displayRate: Long
+) : MapClient {
 
   internal lateinit var renderThread: MapboxRenderThread
   internal abstract val widgetRenderer: MapboxWidgetRenderer

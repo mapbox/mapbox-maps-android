@@ -14,6 +14,7 @@ import android.widget.FrameLayout
 import androidx.annotation.IntRange
 import androidx.annotation.RequiresApi
 import androidx.annotation.VisibleForTesting
+import com.mapbox.android.gestures.Utils
 import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
@@ -101,10 +102,11 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
     } else {
       SurfaceView(context, attrs)
     }
+    val refreshRate = getDisplayRefreshNsec(context)
     mapController = MapController(
       when (view) {
-        is SurfaceView -> MapboxSurfaceHolderRenderer(view.holder, resolvedMapInitOptions.antialiasingSampleCount)
-        is TextureView -> MapboxTextureViewRenderer(view, resolvedMapInitOptions.antialiasingSampleCount)
+        is SurfaceView -> MapboxSurfaceHolderRenderer(view.holder, resolvedMapInitOptions.antialiasingSampleCount, refreshRate)
+        is TextureView -> MapboxTextureViewRenderer(view, resolvedMapInitOptions.antialiasingSampleCount, refreshRate)
         else -> throw IllegalArgumentException("Provided view has to be a texture or a surface.")
       },
       resolvedMapInitOptions

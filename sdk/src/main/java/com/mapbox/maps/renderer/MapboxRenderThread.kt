@@ -1,6 +1,8 @@
 package com.mapbox.maps.renderer
 
-import android.opengl.GLES20
+import android.opengl.EGL14.EGL_CONTEXT_LOST
+import android.opengl.EGL14.EGL_SUCCESS
+import android.opengl.EGLSurface
 import android.os.SystemClock
 import android.view.Choreographer
 import android.view.Surface
@@ -17,9 +19,6 @@ import com.mapbox.maps.viewannotation.ViewAnnotationManager
 import com.mapbox.maps.viewannotation.ViewAnnotationUpdateMode
 import java.util.concurrent.ConcurrentLinkedQueue
 import java.util.concurrent.locks.ReentrantLock
-import javax.microedition.khronos.egl.EGL10
-import javax.microedition.khronos.egl.EGL11
-import javax.microedition.khronos.egl.EGLSurface
 import kotlin.concurrent.withLock
 import kotlin.math.pow
 
@@ -279,48 +278,21 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       // when we're syncing view annotations with the map -
       // we swap buffers the next frame to achieve better synchronization with view annotations update
       // that always happens 1 frame later
-      if (viewAnnotationMode == ViewAnnotationUpdateMode.MAP_SYNCHRONIZED) {
-        Choreographer.getInstance().postFrameCallback {
-          swap(
-            nextFrameTimeNanos = it,
-            currentFrameTimeNanos = frameTimeNanos,
-            renderTimeNsCopy = renderTimeNsCopy,
-            expectedEndRenderTimeNanos = expectedEndRenderTimeNanos
-          )
-        }
-        // explicit flush as we will not be doing any drawing until buffer swap for the next frame -
-        // we send commands to GPU this frame as we should have some free time and perform buffer swap asap on the next frame
-        // note that this doesn't block the calling thread, it merely signals the driver that we might not be sending any additional commands.
-        // ref https://stackoverflow.com/a/38297697
-        GLES20.glFlush()
-        return
-      }
-    }
-    // perform swap immediately if no view annotations are visible or mode is not MAP_SYNCHRONIZED
-    swap(
-      nextFrameTimeNanos = -1L,
-      currentFrameTimeNanos = frameTimeNanos,
-      renderTimeNsCopy = renderTimeNsCopy,
-      expectedEndRenderTimeNanos = expectedEndRenderTimeNanos
-    )
-  }
 
-  private fun swap(
-    nextFrameTimeNanos: Long,
-    currentFrameTimeNanos: Long,
-    renderTimeNsCopy: Long,
-    expectedEndRenderTimeNanos: Long
-  ) {
-    if (nextFrameTimeNanos == -1L) {
-      logE("KIRYLDD", "swapBuffers start $currentFrameTimeNanos")
-    } else {
-      logE("KIRYLDD", "swapBuffers start $nextFrameTimeNanos, delta = ${(nextFrameTimeNanos - currentFrameTimeNanos) / 10.0.pow(6.0)}")
-    }
-    when (val swapStatus = eglCore.swapBuffers(eglSurface)) {
-      EGL10.EGL_SUCCESS -> {
-        logE("KIRYLDD", "swapBuffers end ${if (nextFrameTimeNanos == -1L) currentFrameTimeNanos else nextFrameTimeNanos}")
+      // that corresponds to 2 as default VSYNC behaviour is to present on frame N+1 so we explicitly
+      // say to present on N+2;
+      // for some reason that logic does not work as expected on 120 Gz Samsung S20 Ultra
+      if (viewAnnotationMode == ViewAnnotationUpdateMode.MAP_SYNCHRONIZED) {
+        val presentNs = frameTimeNanos + mapboxRenderer.displayRate * 2
+        eglCore.setPresentationTime(eglSurface, presentNs)
       }
-      EGL11.EGL_CONTEXT_LOST -> {
+    }
+    logE("KIRYLDD", "swapBuffers start $frameTimeNanos")
+    when (val swapStatus = eglCore.swapBuffers(eglSurface)) {
+      EGL_SUCCESS -> {
+        logE("KIRYLDD", "swapBuffers end $frameTimeNanos")
+      }
+      EGL_CONTEXT_LOST -> {
         logW(TAG, "Context lost. Waiting for re-acquire")
         releaseEgl()
       }

@@ -5,7 +5,7 @@ import androidx.annotation.VisibleForTesting
 
 internal class MapboxSurfaceHolderRenderer : MapboxSurfaceRenderer, SurfaceHolder.Callback {
 
-  constructor(surfaceHolder: SurfaceHolder, antialiasingSampleCount: Int) : super(antialiasingSampleCount) {
+  constructor(surfaceHolder: SurfaceHolder, antialiasingSampleCount: Int, displayRate: Long) : super(antialiasingSampleCount, displayRate) {
     surfaceHolder.addCallback(this)
   }
 
