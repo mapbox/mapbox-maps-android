@@ -1,4 +1,4 @@
-package com.mapbox.maps.compose.ui.theme
+package com.mapbox.maps.testapp.compose.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
