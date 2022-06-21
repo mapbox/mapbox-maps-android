@@ -12,6 +12,7 @@ import com.mapbox.maps.renderer.RendererError
 import com.mapbox.maps.renderer.RendererSetupErrorListener
 import java.util.*
 import javax.microedition.khronos.egl.*
+import kotlin.collections.HashSet
 
 /**
  * Core EGL state (display, context, config).
@@ -43,7 +44,7 @@ internal class EGLCore(
    * in that case accumulated errors will still be delivered to the user.
    */
   private val accumulatedRendererErrorList = LinkedList<RendererError>()
-  private val rendererSetupErrorListenerSet = LinkedList<RendererSetupErrorListener>()
+  private val rendererSetupErrorListenerSet = HashSet<RendererSetupErrorListener>()
 
   fun prepareEgl(): Boolean {
     egl = EGLContext.getEGL() as EGL10
@@ -240,8 +241,9 @@ internal class EGLCore(
   private fun notifyListeners(error: RendererError) {
     accumulatedRendererErrorList.add(error)
     if (rendererSetupErrorListenerSet.isNotEmpty()) {
+      val immutableCopy = HashSet(rendererSetupErrorListenerSet)
       mainHandler.post {
-        rendererSetupErrorListenerSet.forEach {
+        immutableCopy.forEach {
           it.onError(error)
         }
       }
