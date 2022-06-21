@@ -5,6 +5,7 @@ import android.os.Handler
 import android.os.Looper
 import android.view.ViewGroup
 import androidx.core.os.postDelayed
+import androidx.test.annotation.UiThreadTest
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
@@ -35,6 +36,7 @@ class RendererSetupTest {
   }
 
   @Before
+  @UiThreadTest
   fun setUp() {
     countDownLatch = CountDownLatch(1)
     eventList.clear()
@@ -70,6 +72,41 @@ class RendererSetupTest {
   }
 
   @Test
+  fun severalErrorListenersTest() {
+    countDownLatch = CountDownLatch(2)
+    rule.scenario.onActivity { activity ->
+      EGLConfigChooser.STENCIL_SIZE = INVALID_STENCIL_SIZE
+      val mapView = MapView(activity)
+      activity.frameLayout.addView(mapView)
+      mapView.addRendererSetupErrorListener {
+        when (it) {
+          RendererError.NO_VALID_EGL_CONFIG_FOUND -> {
+            eventList.add(Event.RENDERER_ERROR)
+            countDownLatch.countDown()
+          }
+          RendererError.OUT_OF_MEMORY -> { /** no-op **/ }
+          else -> { /** no-op **/ }
+        }
+      }
+      mapView.addRendererSetupErrorListener {
+        when (it) {
+          RendererError.NO_VALID_EGL_CONFIG_FOUND -> {
+            eventList.add(Event.RENDERER_ERROR)
+            countDownLatch.countDown()
+          }
+          RendererError.OUT_OF_MEMORY -> { /** no-op **/ }
+          else -> { /** no-op **/ }
+        }
+      }
+    }
+    countDownLatch.await(DEFAULT_LATCH_TIMEOUT_MS, TimeUnit.MILLISECONDS)
+    assertArrayEquals(
+      arrayOf(Event.RENDERER_ERROR, Event.RENDERER_ERROR),
+      eventList.toArray()
+    )
+  }
+
+  @Test
   fun recreateMapWithDelayOnErrorTest() {
     rule.scenario.onActivity {
       EGLConfigChooser.STENCIL_SIZE = INVALID_STENCIL_SIZE
@@ -87,18 +124,19 @@ class RendererSetupTest {
   private fun createMapView(
     activity: Activity,
     mapView: MapView,
-    withDelayMs: Long
+    withDelayMs: Long,
   ) {
     mapView.onStart()
     mapView.getMapboxMap().addOnMapLoadedListener {
       eventList.add(Event.MAP_LOAD_SUCCESS)
+      mapView.onStop()
+      mapView.onDestroy()
       countDownLatch.countDown()
     }
     mainHandler.postDelayed(withDelayMs) {
       mapView.addRendererSetupErrorListener {
         when (it) {
-          is RendererError.EglError -> { /** no-op **/ }
-          RendererError.NoValidEglConfigFound -> {
+          RendererError.NO_VALID_EGL_CONFIG_FOUND -> {
             eventList.add(Event.RENDERER_ERROR)
             mapView.onStop()
             mapView.onDestroy()
@@ -110,13 +148,15 @@ class RendererSetupTest {
             // create valid map view without delay to subscribe to new renderer errors asap
             createMapView(activity, validMapView, withDelayMs = 0)
           }
-          RendererError.OutOfMemory -> { /** no-op **/ }
+          RendererError.OUT_OF_MEMORY -> { /** no-op **/ }
+          else -> { /** no-op **/ }
         }
       }
     }
   }
 
   @After
+  @UiThreadTest
   fun cleanUp() {
     EGLConfigChooser.STENCIL_SIZE = VALID_STENCIL_SIZE
   }

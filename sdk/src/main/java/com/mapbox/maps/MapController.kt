@@ -215,11 +215,15 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   override fun removeWidget(widget: Widget) = renderer.renderThread.removeWidget(widget)
 
   override fun addRendererSetupErrorListener(rendererSetupErrorListener: RendererSetupErrorListener) {
-    renderer.renderThread.eglCore.addRendererStateListener(rendererSetupErrorListener)
+    renderer.renderThread.renderHandlerThread.post {
+      renderer.renderThread.eglCore.addRendererStateListener(rendererSetupErrorListener)
+    }
   }
 
   override fun removeRendererSetupErrorListener(rendererSetupErrorListener: RendererSetupErrorListener) {
-    renderer.renderThread.eglCore.removeRendererStateListener(rendererSetupErrorListener)
+    renderer.renderThread.renderHandlerThread.post {
+      renderer.renderThread.eglCore.removeRendererStateListener(rendererSetupErrorListener)
+    }
   }
 
   //

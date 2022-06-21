@@ -3,7 +3,7 @@ package com.mapbox.maps.renderer.egl
 import android.os.Handler
 import android.os.Looper
 import android.view.Surface
-import androidx.annotation.MainThread
+import androidx.annotation.WorkerThread
 import com.mapbox.maps.MapView
 import com.mapbox.maps.logE
 import com.mapbox.maps.logI
@@ -11,9 +11,7 @@ import com.mapbox.maps.logW
 import com.mapbox.maps.renderer.RendererError
 import com.mapbox.maps.renderer.RendererSetupErrorListener
 import java.util.*
-import java.util.concurrent.locks.ReentrantLock
 import javax.microedition.khronos.egl.*
-import kotlin.concurrent.withLock
 
 /**
  * Core EGL state (display, context, config).
@@ -46,7 +44,6 @@ internal class EGLCore(
    */
   private val accumulatedRendererErrorList = LinkedList<RendererError>()
   private val rendererSetupErrorListenerSet = LinkedList<RendererSetupErrorListener>()
-  private val rendererErrorLock = ReentrantLock()
 
   fun prepareEgl(): Boolean {
     egl = EGLContext.getEGL() as EGL10
@@ -63,7 +60,7 @@ internal class EGLCore(
     EGLConfigChooser(translucentSurface, antialiasingSampleCount).chooseConfig(egl, eglDisplay)?.let {
       eglConfig = it
     } ?: run {
-      notifyListeners(RendererError.NoValidEglConfigFound)
+      notifyListeners(RendererError.NO_VALID_EGL_CONFIG_FOUND)
       return false
     }
     val context = egl.eglCreateContext(
@@ -194,40 +191,37 @@ internal class EGLCore(
     return EGL10.EGL_SUCCESS
   }
 
-  @MainThread
+  @WorkerThread
   internal fun addRendererStateListener(listener: RendererSetupErrorListener) {
-    rendererErrorLock.withLock {
-      rendererSetupErrorListenerSet.add(listener)
-      if (accumulatedRendererErrorList.isNotEmpty()) {
-        accumulatedRendererErrorList.forEach { error ->
+    rendererSetupErrorListenerSet.add(listener)
+    if (accumulatedRendererErrorList.isNotEmpty()) {
+      val immutableCopy = LinkedList(accumulatedRendererErrorList)
+      mainHandler.post {
+        immutableCopy.forEach { error ->
           listener.onError(error)
         }
-        accumulatedRendererErrorList.clear()
       }
     }
   }
 
-  @MainThread
+  @WorkerThread
   internal fun removeRendererStateListener(listener: RendererSetupErrorListener) {
-    rendererErrorLock.withLock {
-      rendererSetupErrorListenerSet.remove(listener)
-    }
+    rendererSetupErrorListenerSet.remove(listener)
   }
 
+  @WorkerThread
   internal fun clearRendererStateListeners() {
-    rendererErrorLock.withLock {
-      accumulatedRendererErrorList.clear()
-      rendererSetupErrorListenerSet.clear()
-    }
+    accumulatedRendererErrorList.clear()
+    rendererSetupErrorListenerSet.clear()
   }
 
   private fun checkEglErrorAndNotify(functionName: String): Int? {
     val eglError = checkEglError(functionName)
     if (eglError != null) {
       val mappedError = if (eglError == EGL10.EGL_BAD_ALLOC)
-        RendererError.OutOfMemory
+        RendererError.OUT_OF_MEMORY
       else
-        RendererError.EglError(eglError)
+        RendererError(eglError)
       logE(TAG, "EGL error ${mappedError.eglErrorCode} occurred for $functionName!")
       notifyListeners(mappedError)
     }
@@ -244,14 +238,11 @@ internal class EGLCore(
   }
 
   private fun notifyListeners(error: RendererError) {
-    rendererErrorLock.withLock {
-      if (rendererSetupErrorListenerSet.isEmpty()) {
-        accumulatedRendererErrorList.add(error)
-      } else {
-        mainHandler.post {
-          rendererSetupErrorListenerSet.forEach {
-            it.onError(error)
-          }
+    accumulatedRendererErrorList.add(error)
+    if (rendererSetupErrorListenerSet.isNotEmpty()) {
+      mainHandler.post {
+        rendererSetupErrorListenerSet.forEach {
+          it.onError(error)
         }
       }
     }

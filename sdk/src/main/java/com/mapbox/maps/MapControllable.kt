@@ -94,8 +94,7 @@ interface MapControllable : MapboxLifecycleObserver {
    * Add an instance of [RendererSetupErrorListener].
    *
    * Please note that errors could be already reported from the renderer during [MapView] creation
-   * before this method will be called - any accumulated renderer errors will be delivered to the
-   * **first** added [rendererSetupErrorListener].
+   * before this method will be called - all accumulated renderer errors will be delivered.
    */
   fun addRendererSetupErrorListener(rendererSetupErrorListener: RendererSetupErrorListener)
 
