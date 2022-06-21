@@ -35,7 +35,7 @@ internal class EGLConfigChooser constructor(
         EGL_BLUE_SIZE, 5,
         EGL_ALPHA_SIZE, if (translucentSurface) 8 else 0,
         EGL_DEPTH_SIZE, 16,
-        EGL_STENCIL_SIZE, if (INVALID_CONFIG_FOR_TEST) 343534 else 8,
+        EGL_STENCIL_SIZE, STENCIL_SIZE,
         EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT
       ).plus(
         if (antialiasingEnabled) {
@@ -375,6 +375,6 @@ internal class EGLConfigChooser constructor(
     private const val EGL_OPENGL_ES2_BIT = 0x0004
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    internal var INVALID_CONFIG_FOR_TEST = false
+    internal var STENCIL_SIZE = 8
   }
 }

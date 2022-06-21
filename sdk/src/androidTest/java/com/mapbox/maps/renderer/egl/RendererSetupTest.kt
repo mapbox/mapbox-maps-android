@@ -11,10 +11,8 @@ import androidx.test.filters.LargeTest
 import com.mapbox.maps.EmptyActivity
 import com.mapbox.maps.MapView
 import com.mapbox.maps.renderer.RendererError
-import org.junit.After
-import org.junit.Assert
-import org.junit.Rule
-import org.junit.Test
+import org.junit.*
+import org.junit.Assert.assertArrayEquals
 import org.junit.runner.RunWith
 import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.CountDownLatch
@@ -36,17 +34,21 @@ class RendererSetupTest {
     RENDERER_ERROR,
   }
 
-  @Test
-  fun regularCreateMapTest() {
+  @Before
+  fun setUp() {
     countDownLatch = CountDownLatch(1)
     eventList.clear()
+  }
+
+  @Test
+  fun regularCreateMapTest() {
     rule.scenario.onActivity {
       val mapView = MapView(it)
       it.frameLayout.addView(mapView)
       createMapView(it, mapView, withDelayMs = 0L)
     }
     countDownLatch.await(DEFAULT_LATCH_TIMEOUT_MS, TimeUnit.MILLISECONDS)
-    Assert.assertArrayEquals(
+    assertArrayEquals(
       arrayOf(Event.MAP_LOAD_SUCCESS),
       eventList.toArray()
     )
@@ -54,16 +56,14 @@ class RendererSetupTest {
 
   @Test
   fun recreateMapImmediateOnErrorTest() {
-    countDownLatch = CountDownLatch(1)
-    eventList.clear()
     rule.scenario.onActivity {
-      EGLConfigChooser.INVALID_CONFIG_FOR_TEST = true
+      EGLConfigChooser.STENCIL_SIZE = INVALID_STENCIL_SIZE
       val mapView = MapView(it)
       it.frameLayout.addView(mapView)
       createMapView(it, mapView, withDelayMs = 0L)
     }
     countDownLatch.await(DEFAULT_LATCH_TIMEOUT_MS, TimeUnit.MILLISECONDS)
-    Assert.assertArrayEquals(
+    assertArrayEquals(
       arrayOf(Event.RENDERER_ERROR, Event.MAP_LOAD_SUCCESS),
       eventList.toArray()
     )
@@ -71,16 +71,14 @@ class RendererSetupTest {
 
   @Test
   fun recreateMapWithDelayOnErrorTest() {
-    countDownLatch = CountDownLatch(1)
-    eventList.clear()
     rule.scenario.onActivity {
-      EGLConfigChooser.INVALID_CONFIG_FOR_TEST = true
+      EGLConfigChooser.STENCIL_SIZE = INVALID_STENCIL_SIZE
       val mapView = MapView(it)
       it.frameLayout.addView(mapView)
       createMapView(it, mapView, withDelayMs = 500L)
     }
     countDownLatch.await(DEFAULT_LATCH_TIMEOUT_MS, TimeUnit.MILLISECONDS)
-    Assert.assertArrayEquals(
+    assertArrayEquals(
       arrayOf(Event.RENDERER_ERROR, Event.MAP_LOAD_SUCCESS),
       eventList.toArray()
     )
@@ -104,7 +102,7 @@ class RendererSetupTest {
             eventList.add(Event.RENDERER_ERROR)
             mapView.onStop()
             mapView.onDestroy()
-            EGLConfigChooser.INVALID_CONFIG_FOR_TEST = false
+            EGLConfigChooser.STENCIL_SIZE = VALID_STENCIL_SIZE
             val parent = (mapView.parent as ViewGroup)
             val validMapView = MapView(activity)
             parent.removeView(mapView)
@@ -120,10 +118,12 @@ class RendererSetupTest {
 
   @After
   fun cleanUp() {
-    EGLConfigChooser.INVALID_CONFIG_FOR_TEST = false
+    EGLConfigChooser.STENCIL_SIZE = VALID_STENCIL_SIZE
   }
 
   private companion object {
     const val DEFAULT_LATCH_TIMEOUT_MS = 5_000L
+    const val INVALID_STENCIL_SIZE = 23423
+    const val VALID_STENCIL_SIZE = 8
   }
 }
