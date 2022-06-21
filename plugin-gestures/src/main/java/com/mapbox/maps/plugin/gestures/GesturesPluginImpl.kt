@@ -10,6 +10,7 @@ import android.os.Looper
 import android.util.AttributeSet
 import android.view.InputDevice
 import android.view.MotionEvent
+import android.view.ScaleGestureDetector
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
 import androidx.core.animation.addListener
@@ -606,6 +607,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
   internal fun handleScale(detector: StandardScaleGestureDetector): Boolean {
     // in order not to mess up initial anchor values
     if (!internalSettings.simultaneousRotateAndPinchToZoomEnabled && immediateEaseInProcess) {
+      deferredZoomBy += calculateZoomBy(detector)
       return true
     }
     val focalPoint = getScaleFocalPoint(detector)
@@ -636,8 +638,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
         }
       )
     } else {
-      val zoomBy =
-        ln(detector.scaleFactor.toDouble()) / ln(PI / 2) * ZOOM_RATE.toDouble() * internalSettings.zoomAnimationAmount.toDouble()
+      val zoomBy = calculateZoomBy(detector)
       if (internalSettings.simultaneousRotateAndPinchToZoomEnabled) {
         val zoom = cameraAnimationsPlugin.createZoomAnimator(
           cameraAnimatorOptions(mapCameraManagerDelegate.cameraState.zoom + zoomBy) {
@@ -661,10 +662,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
         }
         cameraAnimationsPlugin.playAnimatorsTogether(zoom, anchorAnimator)
       } else {
-        if (immediateEaseInProcess) {
-          deferredZoomBy += zoomBy
-          return true
-        }
         easeToImmediately(
           CameraOptions.Builder()
             .zoom(mapCameraManagerDelegate.cameraState.zoom + zoomBy + deferredZoomBy)
@@ -688,7 +685,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
 
   internal fun handleScaleBegin(detector: StandardScaleGestureDetector): Boolean {
     quickZoom = detector.pointersCount == 1
-    deferredRotate = 0.0
+    deferredZoomBy = 0.0
 
     if (quickZoom) {
       if (!internalSettings.quickZoomEnabled) {
@@ -889,15 +886,12 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
   ): Boolean {
     // in order not to mess up initial anchor values
     if (!internalSettings.simultaneousRotateAndPinchToZoomEnabled && immediateEaseInProcess) {
+      deferredRotate += rotationDegreesSinceLast
       return true
     }
     // Calculate map bearing value
     val currentBearing = mapCameraManagerDelegate.cameraState.bearing
     rotateCachedAnchor = cameraAnimationsPlugin.anchor
-    if (immediateEaseInProcess) {
-      deferredRotate += rotationDegreesSinceLast
-      return true
-    }
     val bearing = currentBearing + rotationDegreesSinceLast + deferredRotate
     deferredRotate = 0.0
     val focalPoint = getRotateFocalPoint(detector)
@@ -1035,11 +1029,11 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
     detector: ShoveGestureDetector,
     deltaPixelsSinceLast: Float
   ): Boolean {
-    // Get pitch value (scale and clamp)
     if (immediateEaseInProcess) {
       deferredShove += deltaPixelsSinceLast
       return true
     }
+    // Get pitch value (scale and clamp)
     var pitch = mapCameraManagerDelegate.cameraState.pitch
     val optimizedPitch = pitch - (SHOVE_PIXEL_CHANGE_FACTOR * (deltaPixelsSinceLast + deferredShove))
     deferredShove = 0.0
@@ -1393,6 +1387,13 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
     val roundtripPoint = mapCameraManagerDelegate.pixelForCoordinate(coordinate)
     return (roundtripPoint.y >= point.y + reprojectErrorMargin)
   }
+
+  @VisibleForTesting(otherwise = PRIVATE)
+  internal fun calculateZoomBy(standardScaleGestureDetector: StandardScaleGestureDetector) =
+    ln(standardScaleGestureDetector.scaleFactor.toDouble()) /
+      ln(PI / 2) *
+      ZOOM_RATE.toDouble() *
+      internalSettings.zoomAnimationAmount.toDouble()
 
   internal fun handleMove(
     detector: MoveGestureDetector,
