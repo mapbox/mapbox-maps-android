@@ -14,6 +14,9 @@ android {
     targetSdk = AndroidVersions.targetSdkVersion
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
+  testOptions {
+    unitTests.isReturnDefaultValues = true
+  }
 }
 
 dependencies {
@@ -26,6 +29,8 @@ dependencies {
   testImplementation(Dependencies.mockk)
   testImplementation(Dependencies.androidxTestCore)
   testImplementation(Dependencies.robolectric)
+  testImplementation(Dependencies.androidxArchCoreTest)
+  testImplementation(Dependencies.androidxLifecycleRuntimeTesting)
   androidTestImplementation(Dependencies.androidxTestRunner)
   androidTestImplementation(Dependencies.androidxJUnitTestRules)
   androidTestImplementation(Dependencies.androidxEspresso)
