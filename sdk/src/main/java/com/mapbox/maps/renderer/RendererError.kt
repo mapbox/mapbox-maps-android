@@ -7,7 +7,7 @@ import javax.microedition.khronos.egl.EGL10
  * Typed enum wrapping up all the EGL error codes represented as ints.
  * We do have SDK specific error types: [NO_VALID_EGL_CONFIG_FOUND] and [OUT_OF_MEMORY].
  */
-open class RendererError(val eglErrorCode: Int) {
+class RendererError(val eglErrorCode: Int) {
   /**
    * Indicates whether some other object is "equal to" this one.
    */
