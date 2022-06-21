@@ -3,6 +3,7 @@ package com.mapbox.maps.renderer.egl
 import android.os.Handler
 import android.os.Looper
 import android.view.Surface
+import androidx.annotation.MainThread
 import com.mapbox.maps.MapView
 import com.mapbox.maps.logE
 import com.mapbox.maps.logI
@@ -193,21 +194,20 @@ internal class EGLCore(
     return EGL10.EGL_SUCCESS
   }
 
+  @MainThread
   internal fun addRendererStateListener(listener: RendererSetupErrorListener) {
     rendererErrorLock.withLock {
       rendererSetupErrorListenerSet.add(listener)
       if (accumulatedRendererErrorList.isNotEmpty()) {
-        val errorListCopy = LinkedList(accumulatedRendererErrorList)
-        accumulatedRendererErrorList.clear()
-        mainHandler.post {
-          errorListCopy.forEach { error ->
-            listener.onError(error)
-          }
+        accumulatedRendererErrorList.forEach { error ->
+          listener.onError(error)
         }
+        accumulatedRendererErrorList.clear()
       }
     }
   }
 
+  @MainThread
   internal fun removeRendererStateListener(listener: RendererSetupErrorListener) {
     rendererErrorLock.withLock {
       rendererSetupErrorListenerSet.remove(listener)
