@@ -10,7 +10,6 @@ import android.os.Looper
 import android.util.AttributeSet
 import android.view.InputDevice
 import android.view.MotionEvent
-import android.view.ScaleGestureDetector
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
 import androidx.core.animation.addListener
@@ -685,6 +684,9 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
 
   internal fun handleScaleBegin(detector: StandardScaleGestureDetector): Boolean {
     quickZoom = detector.pointersCount == 1
+    // Reset deferred animation values here in onBegin, ignores the last possible defererred value
+    // before the onEnd. However it's not noticeable since onEnd animates using velocity.
+    // Allows to keep things simple.
     deferredZoomBy = 0.0
 
     if (quickZoom) {
@@ -942,6 +944,9 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
       return false
     }
 
+    // Reset deferred animation values here in onBegin, ignores the last possible defererred value
+    // before the onEnd. However it's not noticeable since onEnd animates using velocity.
+    // Allows to keep things simple.
     deferredRotate = 0.0
 
     val deltaSinceLast = abs(detector.deltaSinceLast)
@@ -1013,6 +1018,9 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
       return false
     }
 
+    // Reset deferred animation values here in onBegin, ignores the last possible defererred value
+    // before the onEnd. However it's not noticeable since onEnd animates using velocity.
+    // Allows to keep things simple.
     deferredShove = 0.0
 
     cancelTransitionsIfRequired()
@@ -1353,6 +1361,9 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
       return false
     }
 
+    // Reset deferred animation values here in onBegin, ignores the last possible defererred value
+    // before the onEnd. However it's not noticeable since onEnd animates using velocity.
+    // Allows to keep things simple.
     deferredMoveDistanceX = 0f
     deferredMoveDistanceY = 0f
 
