@@ -3,6 +3,7 @@ package com.mapbox.maps
 import android.graphics.Bitmap
 import android.view.MotionEvent
 import com.mapbox.maps.renderer.OnFpsChangedListener
+import com.mapbox.maps.renderer.RendererSetupErrorListener
 import com.mapbox.maps.renderer.widget.Widget
 
 /**
@@ -88,4 +89,17 @@ interface MapControllable : MapboxLifecycleObserver {
    */
   @MapboxExperimental
   fun removeWidget(widget: Widget): Boolean
+
+  /**
+   * Add an instance of [RendererSetupErrorListener].
+   *
+   * Please note that errors could be already reported from the renderer during [MapView] creation
+   * before this method will be called - all accumulated renderer errors will be delivered.
+   */
+  fun addRendererSetupErrorListener(rendererSetupErrorListener: RendererSetupErrorListener)
+
+  /**
+   * Remove an instance of [RendererSetupErrorListener].
+   */
+  fun removeRendererSetupErrorListener(rendererSetupErrorListener: RendererSetupErrorListener)
 }

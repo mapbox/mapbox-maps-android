@@ -1,6 +1,7 @@
 package com.mapbox.maps.renderer.egl
 
 import android.os.Build
+import androidx.annotation.VisibleForTesting
 import com.mapbox.maps.MAPBOX_LOCALE
 import com.mapbox.maps.MapView.Companion.DEFAULT_ANTIALIASING_SAMPLE_COUNT
 import com.mapbox.maps.logE
@@ -34,7 +35,7 @@ internal class EGLConfigChooser constructor(
         EGL_BLUE_SIZE, 5,
         EGL_ALPHA_SIZE, if (translucentSurface) 8 else 0,
         EGL_DEPTH_SIZE, 16,
-        EGL_STENCIL_SIZE, 8,
+        EGL_STENCIL_SIZE, STENCIL_SIZE,
         EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT
       ).plus(
         if (antialiasingEnabled) {
@@ -372,5 +373,8 @@ internal class EGLConfigChooser constructor(
      * @see android.opengl.EGL14.EGL_OPENGL_ES2_BIT;
      */
     private const val EGL_OPENGL_ES2_BIT = 0x0004
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    internal var STENCIL_SIZE = 8
   }
 }

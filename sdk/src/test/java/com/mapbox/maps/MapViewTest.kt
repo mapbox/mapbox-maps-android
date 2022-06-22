@@ -4,6 +4,7 @@ import android.view.MotionEvent
 import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.renderer.OnFpsChangedListener
+import com.mapbox.maps.renderer.RendererSetupErrorListener
 import io.mockk.*
 import org.junit.After
 import org.junit.Assert.assertFalse
@@ -160,5 +161,19 @@ class MapViewTest {
     val listener = mockk<OnFpsChangedListener>()
     mapView.setOnFpsChangedListener(listener)
     verify { mapController.setOnFpsChangedListener(listener) }
+  }
+
+  @Test
+  fun addRendererSetupErrorListener() {
+    val listener = mockk<RendererSetupErrorListener>()
+    mapView.addRendererSetupErrorListener(listener)
+    verify { mapController.addRendererSetupErrorListener(listener) }
+  }
+
+  @Test
+  fun removeRendererSetupErrorListener() {
+    val listener = mockk<RendererSetupErrorListener>()
+    mapView.removeRendererSetupErrorListener(listener)
+    verify { mapController.removeRendererSetupErrorListener(listener) }
   }
 }

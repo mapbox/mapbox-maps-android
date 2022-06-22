@@ -2,12 +2,14 @@
 package com.mapbox.maps {
 
   public interface MapControllable extends com.mapbox.maps.MapboxLifecycleObserver {
+    method public void addRendererSetupErrorListener(com.mapbox.maps.renderer.RendererSetupErrorListener rendererSetupErrorListener);
     method @com.mapbox.maps.MapboxExperimental public void addWidget(com.mapbox.maps.renderer.widget.Widget widget);
     method public com.mapbox.maps.MapboxMap getMapboxMap();
     method public boolean onGenericMotionEvent(android.view.MotionEvent event);
     method public void onSizeChanged(int w, int h);
     method public boolean onTouchEvent(android.view.MotionEvent event);
     method public void queueEvent(Runnable event, boolean needRender = true);
+    method public void removeRendererSetupErrorListener(com.mapbox.maps.renderer.RendererSetupErrorListener rendererSetupErrorListener);
     method @com.mapbox.maps.MapboxExperimental public boolean removeWidget(com.mapbox.maps.renderer.widget.Widget widget);
     method public void setMaximumFps(int fps);
     method public void setOnFpsChangedListener(com.mapbox.maps.renderer.OnFpsChangedListener listener);
@@ -78,6 +80,7 @@ package com.mapbox.maps {
   public final class MapSurface implements com.mapbox.maps.MapControllable com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate {
     ctor public MapSurface(android.content.Context context, android.view.Surface surface, com.mapbox.maps.MapInitOptions mapInitOptions = com.mapbox.maps.MapInitOptions(context));
     ctor public MapSurface(android.content.Context context, android.view.Surface surface);
+    method public void addRendererSetupErrorListener(com.mapbox.maps.renderer.RendererSetupErrorListener rendererSetupErrorListener);
     method @com.mapbox.maps.MapboxExperimental public void addWidget(com.mapbox.maps.renderer.widget.Widget widget);
     method public com.mapbox.maps.MapboxMap getMapboxMap();
     method public <T extends com.mapbox.maps.plugin.MapPlugin> T? getPlugin(String id);
@@ -90,6 +93,7 @@ package com.mapbox.maps {
     method public void onStop();
     method public boolean onTouchEvent(android.view.MotionEvent event);
     method public void queueEvent(Runnable event, boolean needRender);
+    method public void removeRendererSetupErrorListener(com.mapbox.maps.renderer.RendererSetupErrorListener rendererSetupErrorListener);
     method @com.mapbox.maps.MapboxExperimental public boolean removeWidget(com.mapbox.maps.renderer.widget.Widget widget);
     method public void setMaximumFps(int fps);
     method public void setOnFpsChangedListener(com.mapbox.maps.renderer.OnFpsChangedListener listener);
@@ -106,6 +110,7 @@ package com.mapbox.maps {
     ctor public MapView(android.content.Context context);
     ctor public MapView(android.content.Context context, android.util.AttributeSet? attrs);
     ctor public MapView(android.content.Context context, android.util.AttributeSet? attrs, int defStyleAttr);
+    method public void addRendererSetupErrorListener(com.mapbox.maps.renderer.RendererSetupErrorListener rendererSetupErrorListener);
     method @com.mapbox.maps.MapboxExperimental public void addWidget(com.mapbox.maps.renderer.widget.Widget widget);
     method public final void createPlugin(com.mapbox.maps.plugin.Plugin plugin);
     method public com.mapbox.maps.MapboxMap getMapboxMap();
@@ -120,6 +125,7 @@ package com.mapbox.maps {
     method public void onStart();
     method public void onStop();
     method public void queueEvent(Runnable event, boolean needRender);
+    method public void removeRendererSetupErrorListener(com.mapbox.maps.renderer.RendererSetupErrorListener rendererSetupErrorListener);
     method @com.mapbox.maps.MapboxExperimental public boolean removeWidget(com.mapbox.maps.renderer.widget.Widget widget);
     method public void setMaximumFps(@IntRange(from=1L, to=Int.MAX_VALUE.toLong()) int maximumFps);
     method public void setOnFpsChangedListener(com.mapbox.maps.renderer.OnFpsChangedListener listener);
@@ -500,6 +506,22 @@ package com.mapbox.maps.renderer {
 
   public fun interface OnFpsChangedListener {
     method @WorkerThread public void onFpsChanged(double fps);
+  }
+
+  public final class RendererError {
+    ctor public RendererError(int eglErrorCode);
+    method public int getEglErrorCode();
+    property public final int eglErrorCode;
+    field public static final com.mapbox.maps.renderer.RendererError.Companion Companion;
+    field public static final com.mapbox.maps.renderer.RendererError NO_VALID_EGL_CONFIG_FOUND;
+    field public static final com.mapbox.maps.renderer.RendererError OUT_OF_MEMORY;
+  }
+
+  public static final class RendererError.Companion {
+  }
+
+  public fun interface RendererSetupErrorListener {
+    method public void onError(com.mapbox.maps.renderer.RendererError error);
   }
 
 }

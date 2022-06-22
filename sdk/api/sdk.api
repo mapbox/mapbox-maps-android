@@ -1,10 +1,12 @@
 public abstract interface class com/mapbox/maps/MapControllable : com/mapbox/maps/MapboxLifecycleObserver {
+	public abstract fun addRendererSetupErrorListener (Lcom/mapbox/maps/renderer/RendererSetupErrorListener;)V
 	public abstract fun addWidget (Lcom/mapbox/maps/renderer/widget/Widget;)V
 	public abstract fun getMapboxMap ()Lcom/mapbox/maps/MapboxMap;
 	public abstract fun onGenericMotionEvent (Landroid/view/MotionEvent;)Z
 	public abstract fun onSizeChanged (II)V
 	public abstract fun onTouchEvent (Landroid/view/MotionEvent;)Z
 	public abstract fun queueEvent (Ljava/lang/Runnable;Z)V
+	public abstract fun removeRendererSetupErrorListener (Lcom/mapbox/maps/renderer/RendererSetupErrorListener;)V
 	public abstract fun removeWidget (Lcom/mapbox/maps/renderer/widget/Widget;)Z
 	public abstract fun setMaximumFps (I)V
 	public abstract fun setOnFpsChangedListener (Lcom/mapbox/maps/renderer/OnFpsChangedListener;)V
@@ -75,6 +77,7 @@ public final class com/mapbox/maps/MapSurface : com/mapbox/maps/MapControllable,
 	public fun <init> (Landroid/content/Context;Landroid/view/Surface;)V
 	public fun <init> (Landroid/content/Context;Landroid/view/Surface;Lcom/mapbox/maps/MapInitOptions;)V
 	public synthetic fun <init> (Landroid/content/Context;Landroid/view/Surface;Lcom/mapbox/maps/MapInitOptions;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun addRendererSetupErrorListener (Lcom/mapbox/maps/renderer/RendererSetupErrorListener;)V
 	public fun addWidget (Lcom/mapbox/maps/renderer/widget/Widget;)V
 	public fun getMapboxMap ()Lcom/mapbox/maps/MapboxMap;
 	public fun getPlugin (Ljava/lang/String;)Lcom/mapbox/maps/plugin/MapPlugin;
@@ -87,6 +90,7 @@ public final class com/mapbox/maps/MapSurface : com/mapbox/maps/MapControllable,
 	public fun onStop ()V
 	public fun onTouchEvent (Landroid/view/MotionEvent;)Z
 	public fun queueEvent (Ljava/lang/Runnable;Z)V
+	public fun removeRendererSetupErrorListener (Lcom/mapbox/maps/renderer/RendererSetupErrorListener;)V
 	public fun removeWidget (Lcom/mapbox/maps/renderer/widget/Widget;)Z
 	public fun setMaximumFps (I)V
 	public fun setOnFpsChangedListener (Lcom/mapbox/maps/renderer/OnFpsChangedListener;)V
@@ -104,6 +108,7 @@ public class com/mapbox/maps/MapView : android/widget/FrameLayout, com/mapbox/ma
 	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;I)V
 	public fun <init> (Landroid/content/Context;Lcom/mapbox/maps/MapInitOptions;)V
 	public synthetic fun <init> (Landroid/content/Context;Lcom/mapbox/maps/MapInitOptions;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun addRendererSetupErrorListener (Lcom/mapbox/maps/renderer/RendererSetupErrorListener;)V
 	public fun addWidget (Lcom/mapbox/maps/renderer/widget/Widget;)V
 	public final fun createPlugin (Lcom/mapbox/maps/plugin/Plugin;)V
 	public fun getMapboxMap ()Lcom/mapbox/maps/MapboxMap;
@@ -121,6 +126,7 @@ public class com/mapbox/maps/MapView : android/widget/FrameLayout, com/mapbox/ma
 	public fun onStop ()V
 	public fun onTouchEvent (Landroid/view/MotionEvent;)Z
 	public fun queueEvent (Ljava/lang/Runnable;Z)V
+	public fun removeRendererSetupErrorListener (Lcom/mapbox/maps/renderer/RendererSetupErrorListener;)V
 	public fun removeWidget (Lcom/mapbox/maps/renderer/widget/Widget;)Z
 	public fun setMaximumFps (I)V
 	public fun setOnFpsChangedListener (Lcom/mapbox/maps/renderer/OnFpsChangedListener;)V
@@ -508,6 +514,24 @@ public final class com/mapbox/maps/plugin/InvalidViewPluginHostException : java/
 
 public abstract interface class com/mapbox/maps/renderer/OnFpsChangedListener {
 	public abstract fun onFpsChanged (D)V
+}
+
+public final class com/mapbox/maps/renderer/RendererError {
+	public static final field Companion Lcom/mapbox/maps/renderer/RendererError$Companion;
+	public static final field NO_VALID_EGL_CONFIG_FOUND Lcom/mapbox/maps/renderer/RendererError;
+	public static final field OUT_OF_MEMORY Lcom/mapbox/maps/renderer/RendererError;
+	public fun <init> (I)V
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEglErrorCode ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/renderer/RendererError$Companion {
+}
+
+public abstract interface class com/mapbox/maps/renderer/RendererSetupErrorListener {
+	public abstract fun onError (Lcom/mapbox/maps/renderer/RendererError;)V
 }
 
 public class com/mapbox/maps/renderer/widget/BitmapWidget : com/mapbox/maps/renderer/widget/Widget {

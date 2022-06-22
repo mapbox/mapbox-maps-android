@@ -1,18 +1,15 @@
 package com.mapbox.maps
 
 import android.annotation.SuppressLint
-import android.annotation.TargetApi
 import android.content.Context
 import android.graphics.Bitmap
 import android.opengl.GLES20
-import android.os.Build
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.SurfaceView
 import android.view.TextureView
 import android.widget.FrameLayout
 import androidx.annotation.IntRange
-import androidx.annotation.RequiresApi
 import androidx.annotation.VisibleForTesting
 import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.Plugin
@@ -20,6 +17,7 @@ import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 import com.mapbox.maps.renderer.MapboxSurfaceHolderRenderer
 import com.mapbox.maps.renderer.MapboxTextureViewRenderer
 import com.mapbox.maps.renderer.OnFpsChangedListener
+import com.mapbox.maps.renderer.RendererSetupErrorListener
 import com.mapbox.maps.renderer.egl.EGLCore
 import com.mapbox.maps.renderer.widget.Widget
 import com.mapbox.maps.viewannotation.ViewAnnotationManager
@@ -83,7 +81,6 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    * and an [Int] which represents a style resource file.
    */
   @Suppress("UNCHECKED_CAST")
-  @TargetApi(Build.VERSION_CODES.LOLLIPOP)
   internal constructor(
     context: Context,
     attrs: AttributeSet?,
@@ -156,7 +153,6 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
     }
   }
 
-  @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
   @VisibleForTesting
   internal constructor(
     context: Context,
@@ -331,6 +327,23 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    */
   @MapboxExperimental
   override fun removeWidget(widget: Widget) = mapController.removeWidget(widget)
+
+  /**
+   * Add an instance of [RendererSetupErrorListener].
+   *
+   * Please note that errors could be already reported from the renderer during [MapView] creation
+   * before this method will be called - all accumulated renderer errors will be delivered.
+   */
+  override fun addRendererSetupErrorListener(rendererSetupErrorListener: RendererSetupErrorListener) {
+    mapController.addRendererSetupErrorListener(rendererSetupErrorListener)
+  }
+
+  /**
+   * Remove an instance of [RendererSetupErrorListener].
+   */
+  override fun removeRendererSetupErrorListener(rendererSetupErrorListener: RendererSetupErrorListener) {
+    mapController.removeRendererSetupErrorListener(rendererSetupErrorListener)
+  }
 
   /**
    * Interface for getting snapshot result [Bitmap].

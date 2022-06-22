@@ -40,6 +40,7 @@ import com.mapbox.maps.plugin.scalebar.ScaleBarPluginImpl
 import com.mapbox.maps.plugin.viewport.ViewportPluginImpl
 import com.mapbox.maps.renderer.MapboxRenderer
 import com.mapbox.maps.renderer.OnFpsChangedListener
+import com.mapbox.maps.renderer.RendererSetupErrorListener
 import com.mapbox.maps.renderer.widget.Widget
 
 internal class MapController : MapPluginProviderDelegate, MapControllable {
@@ -212,6 +213,18 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   }
 
   override fun removeWidget(widget: Widget) = renderer.renderThread.removeWidget(widget)
+
+  override fun addRendererSetupErrorListener(rendererSetupErrorListener: RendererSetupErrorListener) {
+    renderer.renderThread.renderHandlerThread.post {
+      renderer.renderThread.eglCore.addRendererStateListener(rendererSetupErrorListener)
+    }
+  }
+
+  override fun removeRendererSetupErrorListener(rendererSetupErrorListener: RendererSetupErrorListener) {
+    renderer.renderThread.renderHandlerThread.post {
+      renderer.renderThread.eglCore.removeRendererStateListener(rendererSetupErrorListener)
+    }
+  }
 
   //
   // Telemetry

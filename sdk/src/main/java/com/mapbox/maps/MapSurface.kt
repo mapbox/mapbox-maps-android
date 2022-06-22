@@ -8,6 +8,7 @@ import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 import com.mapbox.maps.renderer.MapboxSurfaceRenderer
 import com.mapbox.maps.renderer.OnFpsChangedListener
+import com.mapbox.maps.renderer.RendererSetupErrorListener
 import com.mapbox.maps.renderer.widget.Widget
 
 /**
@@ -194,6 +195,23 @@ class MapSurface @JvmOverloads constructor(
    */
   @MapboxExperimental
   override fun removeWidget(widget: Widget) = mapController.removeWidget(widget)
+
+  /**
+   * Add an instance of [RendererSetupErrorListener].
+   *
+   * Please note that errors could be already reported from the renderer during [MapView] creation
+   * before this method will be called - all accumulated renderer errors will be delivered.
+   */
+  override fun addRendererSetupErrorListener(rendererSetupErrorListener: RendererSetupErrorListener) {
+    mapController.addRendererSetupErrorListener(rendererSetupErrorListener)
+  }
+
+  /**
+   * Remove an instance of [RendererSetupErrorListener].
+   */
+  override fun removeRendererSetupErrorListener(rendererSetupErrorListener: RendererSetupErrorListener) {
+    mapController.removeRendererSetupErrorListener(rendererSetupErrorListener)
+  }
 
   /**
    * Get the plugin instance.
