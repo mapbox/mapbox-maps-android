@@ -8,6 +8,7 @@ import com.mapbox.maps.extension.style.atmosphere.generated.atmosphere
 import com.mapbox.maps.extension.style.layers.generated.skyLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName
 import com.mapbox.maps.extension.style.layers.properties.generated.SkyType
+import com.mapbox.maps.extension.style.light.generated.light
 import com.mapbox.maps.extension.style.projection.generated.projection
 import com.mapbox.maps.extension.style.sources.generated.rasterDemSource
 import com.mapbox.maps.extension.style.style
@@ -40,6 +41,10 @@ class Terrain3DShowcaseActivity : AppCompatActivity() {
         }
         +atmosphere { }
         +projection(ProjectionName.GLOBE)
+        +light {
+          castShadows(true)
+          shadowIntensity(10.0)
+        }
       }
     )
   }
