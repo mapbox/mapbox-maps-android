@@ -380,50 +380,6 @@ class GesturesPluginTest {
   }
 
   @Test
-  fun verifyMoveListener() {
-    val listener: OnMoveListener = mockk(relaxed = true)
-    presenter.addOnMoveListener(listener)
-    every { mapCameraManagerDelegate.cameraState } returns CameraState(
-      Point.fromLngLat(0.0, 0.0),
-      EdgeInsets(0.0, 0.0, 0.0, 0.0),
-      0.0,
-      0.0,
-      0.0
-    )
-    every {
-      mapCameraManagerDelegate.getDragCameraOptions(
-        any(),
-        any()
-      )
-    } returns CameraOptions.Builder().center(Point.fromLngLat(0.0, 0.0)).build()
-
-    val moveGestureDetector = mockk<MoveGestureDetector>()
-    every {
-      moveGestureDetector.focalPoint
-    } returns PointF(0.0f, 0.0f)
-    every { moveGestureDetector.pointersCount } returns 3
-    var handled = presenter.handleMove(moveGestureDetector, 50.0f, 50.0f)
-    // verify three finger pan gesture shouldn't work
-    assertFalse(handled)
-    every { moveGestureDetector.pointersCount } returns 2
-    handled = presenter.handleMove(moveGestureDetector, 50.0f, 50.0f)
-    // verify two finger pan gesture should work
-    assert(handled)
-    every { moveGestureDetector.pointersCount } returns 1
-    handled = presenter.handleMove(moveGestureDetector, 50.0f, 50.0f)
-    // verify single finger pan gesture should work
-    assert(handled)
-    verify(exactly = 1) { listener.onMove(any()) }
-    verify(exactly = 1) {
-      mapCameraManagerDelegate.getDragCameraOptions(
-        ScreenCoordinate(0.0, 0.0),
-        ScreenCoordinate(-50.0, -50.0)
-      )
-    }
-    verify(exactly = 1) { cameraAnimationsPlugin.easeTo(any(), any()) }
-  }
-
-  @Test
   fun verifyHandleMoveExceptionFreeForInvalidFocalPoint() {
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logE(any(), any()) } just Runs
@@ -479,7 +435,8 @@ class GesturesPluginTest {
     handled = presenter.handleMove(moveGestureDetector, 50.0f, 50.0f)
     // verify single finger pan gesture should work
     assert(handled)
-    verify(exactly = 1) { listener.onMove(any()) }
+    // listeners are notified every time, but animations applied only once
+    verify(exactly = 3) { listener.onMove(any()) }
     verify(exactly = 1) {
       mapCameraManagerDelegate.getDragCameraOptions(
         ScreenCoordinate(0.0, 0.0),
@@ -507,31 +464,39 @@ class GesturesPluginTest {
         any()
       )
     } returns CameraOptions.Builder().center(Point.fromLngLat(0.0, 0.0)).build()
-
     val moveGestureDetector = mockk<MoveGestureDetector>()
     every {
       moveGestureDetector.focalPoint
     } returns PointF(0.0f, 0.0f)
+
     every { moveGestureDetector.pointersCount } returns 3
     var handled = presenter.handleMove(moveGestureDetector, 50.0f, 50.0f)
     // verify three finger pan gesture shouldn't work
     assertFalse(handled)
+
     every { moveGestureDetector.pointersCount } returns 2
     handled = presenter.handleMove(moveGestureDetector, 50.0f, 50.0f)
     // verify two finger pan gesture should work
     assert(handled)
+    val mapAnimationOptionsSlot = slot<MapAnimationOptions>()
+    verify(exactly = 1) {
+      cameraAnimationsPlugin.easeTo(any(), capture(mapAnimationOptionsSlot))
+    }
+    mapAnimationOptionsSlot.captured.animatorListener!!.onAnimationEnd(mockk())
+
     every { moveGestureDetector.pointersCount } returns 1
     handled = presenter.handleMove(moveGestureDetector, 50.0f, 50.0f)
     // verify single finger pan gesture should work
     assert(handled)
-    verify(exactly = 1) { listener.onMove(any()) }
-    verify(exactly = 1) {
+    // listeners are notified every time, but animations applied twice
+    verify(exactly = 3) { listener.onMove(any()) }
+    verify(exactly = 2) {
       mapCameraManagerDelegate.getDragCameraOptions(
         ScreenCoordinate(0.0, 0.0),
         ScreenCoordinate(-50.0, -50.0)
       )
     }
-    verify(exactly = 1) { cameraAnimationsPlugin.easeTo(any(), any()) }
+    verify(exactly = 2) { cameraAnimationsPlugin.easeTo(any(), any()) }
   }
 
   @Test
