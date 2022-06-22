@@ -1186,5 +1186,10 @@
         <activity
             android:name=".TestMapActivity"
             android:exported="true" />
+
+        <meta-data
+            android:name="com.mapbox.maps.ThreadChecker"
+            android:value="true" />
+
     </application>
 </manifest>

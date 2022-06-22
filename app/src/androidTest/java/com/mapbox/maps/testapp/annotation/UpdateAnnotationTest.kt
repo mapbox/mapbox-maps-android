@@ -2,6 +2,7 @@ package com.mapbox.maps.testapp.annotation
 
 import android.graphics.Color
 import android.os.Handler
+import android.os.Looper
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.mapbox.geojson.Point
@@ -64,43 +65,51 @@ class UpdateAnnotationTest : BaseMapTest() {
 
   override fun loadMap() {
     super.loadMap()
-    pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
-    pointAnnotationManager.textFont = listOf("Open Sans Regular")
+    val latch = CountDownLatch(1)
+    handler = Handler(Looper.getMainLooper())
+    handler.post {
+      pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
+      pointAnnotationManager.textFont = listOf("Open Sans Regular")
 
-    pointAnnotation = pointAnnotationManager.create(
-      PointAnnotationOptions()
-        .withIconColor(ColorUtils.colorToRgbaString(Color.RED))
-        .withIconImage("car-15")
-        .withDraggable(true)
-        .withIconAnchor(IconAnchor.CENTER)
-        .withIconHaloBlur(1.0)
-        .withIconHaloColor(ColorUtils.colorToRgbaString(Color.YELLOW))
-        .withIconHaloWidth(2.0)
-        .withIconOffset(listOf(1.0, 2.0))
-        .withIconOpacity(0.8)
-        .withIconRotate(0.5)
-        .withIconSize(5.0)
-        .withIconHaloColor(ColorUtils.colorToRgbaString(Color.WHITE))
-        .withSymbolSortKey(1.0)
-        .withTextAnchor(TextAnchor.TOP)
-        .withTextColor(ColorUtils.colorToRgbaString(Color.YELLOW))
-        .withTextField("Car")
-        .withTextHaloBlur(1.0)
-        .withTextHaloWidth(5.0)
-        .withTextJustify(TextJustify.CENTER)
-        .withTextLetterSpacing(2.0)
-        .withTextRotate(5.0)
-        .withTextTransform(TextTransform.UPPERCASE)
-        .withTextSize(15.0)
-        .withTextRadialOffset(1.0)
-        .withTextOffset(listOf(1.0, 2.0))
-        .withTextMaxWidth(10.0)
-        .withPoint(Point.fromLngLat(0.0, 0.0))
-    )
-    for (i in 0..100) {
-      // Verify there is no ConcurrentModificationException https://github.com/mapbox/mapbox-maps-android/issues/383
-      pointAnnotation.textOpacity = 0.8
-      Thread.sleep(0, 2000)
+      pointAnnotation = pointAnnotationManager.create(
+        PointAnnotationOptions()
+          .withIconColor(ColorUtils.colorToRgbaString(Color.RED))
+          .withIconImage("car-15")
+          .withDraggable(true)
+          .withIconAnchor(IconAnchor.CENTER)
+          .withIconHaloBlur(1.0)
+          .withIconHaloColor(ColorUtils.colorToRgbaString(Color.YELLOW))
+          .withIconHaloWidth(2.0)
+          .withIconOffset(listOf(1.0, 2.0))
+          .withIconOpacity(0.8)
+          .withIconRotate(0.5)
+          .withIconSize(5.0)
+          .withIconHaloColor(ColorUtils.colorToRgbaString(Color.WHITE))
+          .withSymbolSortKey(1.0)
+          .withTextAnchor(TextAnchor.TOP)
+          .withTextColor(ColorUtils.colorToRgbaString(Color.YELLOW))
+          .withTextField("Car")
+          .withTextHaloBlur(1.0)
+          .withTextHaloWidth(5.0)
+          .withTextJustify(TextJustify.CENTER)
+          .withTextLetterSpacing(2.0)
+          .withTextRotate(5.0)
+          .withTextTransform(TextTransform.UPPERCASE)
+          .withTextSize(15.0)
+          .withTextRadialOffset(1.0)
+          .withTextOffset(listOf(1.0, 2.0))
+          .withTextMaxWidth(10.0)
+          .withPoint(Point.fromLngLat(0.0, 0.0))
+      )
+      for (i in 0..100) {
+        // Verify there is no ConcurrentModificationException https://github.com/mapbox/mapbox-maps-android/issues/383
+        pointAnnotation.textOpacity = 0.8
+        Thread.sleep(0, 2000)
+      }
+      latch.countDown()
+    }
+    if (!latch.await(3000, TimeUnit.MILLISECONDS)) {
+      throw TimeoutException()
     }
     Assert.assertEquals(pointAnnotation, pointAnnotationManager.annotations[0])
   }

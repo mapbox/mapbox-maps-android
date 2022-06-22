@@ -20,6 +20,9 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.TimeUnit
+import java.util.concurrent.TimeoutException
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -42,12 +45,29 @@ class GestureActivityTest : BaseMapTest() {
 
   @Test
   fun sanity_quickZoom() {
-    val initialZoom: Double = mapboxMap.cameraState.zoom
+    var initialZoom = 0.0
+    val latch = CountDownLatch(1)
+    rule.scenario.onActivity {
+      it.runOnUiThread {
+        initialZoom = mapboxMap.cameraState.zoom
+        latch.countDown()
+      }
+    }
+    if (!latch.await(3000, TimeUnit.MILLISECONDS)) {
+      throw TimeoutException()
+    }
+
     onView(withId(R.id.mapView)).perform(quickScale(maxHeight / 2f, withVelocity = false))
+
+    val resultLatch = CountDownLatch(1)
     rule.scenario.onActivity {
       it.runOnUiThread {
         assertTrue(mapboxMap.cameraState.zoom > initialZoom)
+        resultLatch.countDown()
       }
+    }
+    if (!resultLatch.await(3000, TimeUnit.MILLISECONDS)) {
+      throw TimeoutException()
     }
   }
 

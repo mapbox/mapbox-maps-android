@@ -918,7 +918,7 @@ class MapboxMap :
     options: RenderedQueryOptions,
     callback: QueryFeaturesCallback
   ) {
-    checkNativeMap("queryRenderedFeatures")
+    checkNativeMap("queryRenderedFeatures", false)
     nativeMap.queryRenderedFeatures(shape, options, callback)
   }
 
@@ -943,7 +943,7 @@ class MapboxMap :
     options: RenderedQueryOptions,
     callback: QueryFeaturesCallback
   ) {
-    checkNativeMap("queryRenderedFeatures")
+    checkNativeMap("queryRenderedFeatures", false)
     nativeMap.queryRenderedFeatures(box, options, callback)
   }
 
@@ -968,7 +968,7 @@ class MapboxMap :
     options: RenderedQueryOptions,
     callback: QueryFeaturesCallback
   ) {
-    checkNativeMap("queryRenderedFeatures")
+    checkNativeMap("queryRenderedFeatures", false)
     nativeMap.queryRenderedFeatures(pixel, options, callback)
   }
 
@@ -985,7 +985,7 @@ class MapboxMap :
     options: RenderedQueryOptions,
     callback: QueryFeaturesCallback
   ): Cancelable {
-    checkNativeMap("queryRenderedFeatures")
+    checkNativeMap("queryRenderedFeatures", false)
     return nativeMap.queryRenderedFeatures(geometry, options, callback)
   }
 
@@ -1002,7 +1002,7 @@ class MapboxMap :
     options: SourceQueryOptions,
     callback: QueryFeaturesCallback
   ) {
-    checkNativeMap("querySourceFeatures")
+    checkNativeMap("querySourceFeatures", false)
     nativeMap.querySourceFeatures(sourceId, options, callback)
   }
 
@@ -1766,7 +1766,10 @@ class MapboxMap :
     return nativeMap.setViewAnnotationPositionsUpdateListener(listener)
   }
 
-  private fun checkNativeMap(methodName: String) {
+  private fun checkNativeMap(methodName: String, checkMainThread: Boolean = true) {
+    if (checkMainThread) {
+      ThreadChecker.throwIfNotMainThread()
+    }
     if (!isMapValid) {
       logE(
         TAG,

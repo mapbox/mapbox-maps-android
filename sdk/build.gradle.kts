@@ -89,6 +89,7 @@ dependencies {
   androidTestImplementation(Dependencies.androidxJUnitTestRules)
   androidTestImplementation(Dependencies.androidxEspresso)
   androidTestImplementation(Dependencies.androidxUiAutomator)
+  androidTestImplementation(Dependencies.coroutines)
   androidTestUtil(Dependencies.androidxOrchestrator)
   detektPlugins(Dependencies.detektFormatting)
 }

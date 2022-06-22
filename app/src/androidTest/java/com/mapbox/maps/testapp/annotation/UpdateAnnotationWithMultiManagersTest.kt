@@ -91,11 +91,13 @@ class UpdateAnnotationWithMultiManagersTest : BaseMapTest() {
 
           Thread {
             for (i in 1..updateTimes) {
-              pointAnnotation.point = Point.fromLngLat(
-                pointAnnotation.point.longitude() + updateSteps,
-                pointAnnotation.point.latitude() + updateSteps
-              )
-              pointAnnotationManager.update(pointAnnotation)
+              handler.post {
+                pointAnnotation.point = Point.fromLngLat(
+                  pointAnnotation.point.longitude() + updateSteps,
+                  pointAnnotation.point.latitude() + updateSteps
+                )
+                pointAnnotationManager.update(pointAnnotation)
+              }
               Thread.sleep(10)
             }
             latch.countDown()
@@ -103,11 +105,13 @@ class UpdateAnnotationWithMultiManagersTest : BaseMapTest() {
 
           Thread {
             for (i in 1..updateTimes) {
-              circleAnnotation.point = Point.fromLngLat(
-                circleAnnotation.point.longitude() + updateSteps,
-                circleAnnotation.point.latitude() + updateSteps
-              )
-              circleAnnotationManager.update(circleAnnotation)
+              handler.post {
+                circleAnnotation.point = Point.fromLngLat(
+                  circleAnnotation.point.longitude() + updateSteps,
+                  circleAnnotation.point.latitude() + updateSteps
+                )
+                circleAnnotationManager.update(circleAnnotation)
+              }
               Thread.sleep(10)
             }
             latch.countDown()
@@ -115,24 +119,28 @@ class UpdateAnnotationWithMultiManagersTest : BaseMapTest() {
 
           Thread {
             for (i in 1..updateTimes) {
-              points[0][0] = Point.fromLngLat(
-                points[0][0].longitude() + updateSteps,
-                points[0][0].latitude() + updateSteps
-              )
-              polygonAnnotation.points = points
-              polygonAnnotationManager.update(polygonAnnotation)
+              handler.post {
+                points[0][0] = Point.fromLngLat(
+                  points[0][0].longitude() + updateSteps,
+                  points[0][0].latitude() + updateSteps
+                )
+                polygonAnnotation.points = points
+                polygonAnnotationManager.update(polygonAnnotation)
+              }
               Thread.sleep(10)
             }
             latch.countDown()
           }.start()
           Thread {
             for (i in 1..updateTimes) {
-              polylinePoints[0] = Point.fromLngLat(
-                polylinePoints[0].longitude() + updateSteps,
-                polylinePoints[0].latitude() + updateSteps
-              )
-              polylineAnnotation.points = polylinePoints
-              polylineAnnotationManager.update(polylineAnnotation)
+              handler.post {
+                polylinePoints[0] = Point.fromLngLat(
+                  polylinePoints[0].longitude() + updateSteps,
+                  polylinePoints[0].latitude() + updateSteps
+                )
+                polylineAnnotation.points = polylinePoints
+                polylineAnnotationManager.update(polylineAnnotation)
+              }
               Thread.sleep(10)
             }
             latch.countDown()
