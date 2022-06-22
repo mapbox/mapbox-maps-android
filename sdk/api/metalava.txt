@@ -508,21 +508,16 @@ package com.mapbox.maps.renderer {
     method @WorkerThread public void onFpsChanged(double fps);
   }
 
-  public abstract sealed class RendererError {
-    method public final int getEglErrorCode();
+  public final class RendererError {
+    ctor public RendererError(int eglErrorCode);
+    method public int getEglErrorCode();
     property public final int eglErrorCode;
+    field public static final com.mapbox.maps.renderer.RendererError.Companion Companion;
+    field public static final com.mapbox.maps.renderer.RendererError NO_VALID_EGL_CONFIG_FOUND;
+    field public static final com.mapbox.maps.renderer.RendererError OUT_OF_MEMORY;
   }
 
-  public static final class RendererError.EglError extends com.mapbox.maps.renderer.RendererError {
-    ctor public RendererError.EglError(int eglErrorCode);
-  }
-
-  public static final class RendererError.NoValidEglConfigFound extends com.mapbox.maps.renderer.RendererError {
-    field public static final com.mapbox.maps.renderer.RendererError.NoValidEglConfigFound INSTANCE;
-  }
-
-  public static final class RendererError.OutOfMemory extends com.mapbox.maps.renderer.RendererError {
-    field public static final com.mapbox.maps.renderer.RendererError.OutOfMemory INSTANCE;
+  public static final class RendererError.Companion {
   }
 
   public fun interface RendererSetupErrorListener {

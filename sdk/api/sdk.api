@@ -516,21 +516,18 @@ public abstract interface class com/mapbox/maps/renderer/OnFpsChangedListener {
 	public abstract fun onFpsChanged (D)V
 }
 
-public abstract class com/mapbox/maps/renderer/RendererError {
-	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun getEglErrorCode ()I
-}
-
-public final class com/mapbox/maps/renderer/RendererError$EglError : com/mapbox/maps/renderer/RendererError {
+public final class com/mapbox/maps/renderer/RendererError {
+	public static final field Companion Lcom/mapbox/maps/renderer/RendererError$Companion;
+	public static final field NO_VALID_EGL_CONFIG_FOUND Lcom/mapbox/maps/renderer/RendererError;
+	public static final field OUT_OF_MEMORY Lcom/mapbox/maps/renderer/RendererError;
 	public fun <init> (I)V
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEglErrorCode ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/mapbox/maps/renderer/RendererError$NoValidEglConfigFound : com/mapbox/maps/renderer/RendererError {
-	public static final field INSTANCE Lcom/mapbox/maps/renderer/RendererError$NoValidEglConfigFound;
-}
-
-public final class com/mapbox/maps/renderer/RendererError$OutOfMemory : com/mapbox/maps/renderer/RendererError {
-	public static final field INSTANCE Lcom/mapbox/maps/renderer/RendererError$OutOfMemory;
+public final class com/mapbox/maps/renderer/RendererError$Companion {
 }
 
 public abstract interface class com/mapbox/maps/renderer/RendererSetupErrorListener {
