@@ -76,6 +76,7 @@ internal class PuckAnimatorManager(
     vararg targets: Double,
     options: (ValueAnimator.() -> Unit)?
   ) {
+    println("PuckAnimatorManager prepare animate bearing ${targets.joinToString(", ")}")
     bearingAnimator.animate(
       *MathUtils.prepareOptimalBearingPath(targets).toTypedArray(),
       options = options
@@ -86,6 +87,7 @@ internal class PuckAnimatorManager(
     vararg targets: Point,
     options: (ValueAnimator.() -> Unit)?
   ) {
+    println("Animate position ${targets.joinToString(", ")}")
     positionAnimator.animate(*targets, options = options)
   }
 

@@ -286,6 +286,7 @@ class LocationComponentPluginImpl : LocationComponentPlugin2, LocationConsumer2,
    *  Otherwise default animator options will be used.
    */
   override fun onBearingUpdated(vararg bearing: Double, options: (ValueAnimator.() -> Unit)?) {
+    println("LocationPlugin bearing updated ${bearing.joinToString(", ")}")
     locationPuckManager?.updateCurrentBearing(*bearing, options = options)
   }
 
@@ -316,6 +317,7 @@ class LocationComponentPluginImpl : LocationComponentPlugin2, LocationConsumer2,
    * This will apply to all upcoming updates.
    */
   override fun onPuckBearingAnimatorDefaultOptionsUpdated(options: ValueAnimator.() -> Unit) {
+    println("LocationPlugin updateBearingAnimator")
     locationPuckManager?.updateBearingAnimator(options)
   }
 

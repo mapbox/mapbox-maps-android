@@ -58,8 +58,11 @@ internal class LocationPuckManager(
     }
   }
 
-  private var lastBearing: Double = delegateProvider.mapCameraManagerDelegate.cameraState.bearing
+  private var lastBearing: Double = delegateProvider.mapCameraManagerDelegate.cameraState.bearing.also {
+    println("LocationPuckManager start bearing : $it")
+  }
   private val onBearingUpdated: ((Double) -> Unit) = {
+    println("LocationPuckManager bearing updated $it")
     lastBearing = it
   }
 
@@ -85,6 +88,7 @@ internal class LocationPuckManager(
   }
 
   fun initialize(style: StyleInterface) {
+    println("LocationPuckManager initialize")
     if (!locationLayerRenderer.isRendererInitialised()) {
       animationManager.setUpdateListeners(
         onLocationUpdated,
@@ -157,6 +161,7 @@ internal class LocationPuckManager(
   }
 
   fun updateCurrentPosition(vararg points: Point, options: (ValueAnimator.() -> Unit)? = null) {
+    println("LocationPuckManager update current position ${points.joinToString(", ")}")
     if (settings.enabled) {
       show()
     }
@@ -170,6 +175,7 @@ internal class LocationPuckManager(
   }
 
   fun updateCurrentBearing(vararg bearings: Double, options: (ValueAnimator.() -> Unit)? = null) {
+    println("LocationPuckManager update current bearing from $lastBearing to ${bearings.joinToString(", ")}")
     val targets = doubleArrayOf(lastBearing, *bearings)
     animationManager.animateBearing(
       *targets,

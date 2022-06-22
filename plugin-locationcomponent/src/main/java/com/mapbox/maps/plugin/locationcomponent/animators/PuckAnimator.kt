@@ -88,9 +88,11 @@ internal abstract class PuckAnimator<T>(
   ) {
     cancelRunning()
     if (options == null) {
+      println("PuckAnimator animate bearing ${targets.joinToString(", ")}")
       setObjectValues(*targets)
       start()
     } else {
+      println("PuckAnimator animate bearing with user animator ${targets.joinToString(", ")}")
       options.invoke(userConfiguredAnimator)
       userConfiguredAnimator.setObjectValues(*targets)
       userConfiguredAnimator.start()
@@ -98,16 +100,19 @@ internal abstract class PuckAnimator<T>(
   }
 
   fun updateOptions(block: ValueAnimator.() -> Unit) {
+    println("PuckAnimator update options")
     if (isRunning) {
       addListener(object : AnimatorListenerAdapter() {
 
         override fun onAnimationEnd(animation: Animator?, isReverse: Boolean) {
           super.onAnimationEnd(animation, isReverse)
+          println("PuckAnimator invoke update options block from animationEnd")
           block.invoke(this@PuckAnimator)
           removeListener(this)
         }
       })
     } else {
+      println("PuckAnimator invoke update options block")
       block.invoke(this@PuckAnimator)
     }
   }
