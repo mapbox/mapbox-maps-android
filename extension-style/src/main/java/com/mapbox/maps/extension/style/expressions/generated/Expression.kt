@@ -131,15 +131,17 @@ class Expression : Value {
     open fun build(): Expression {
       if (this.operator == "match") {
         val newBuilder = ExpressionBuilder("match")
-        this.arguments.forEachIndexed { i, e ->
+        val lastIndex = this.arguments.size - 1
+        this.arguments.forEachIndexed { index, argument ->
           newBuilder.addArgument(
             // https://github.com/mapbox/mapbox-maps-android/issues/965
             // the match expression is an exception and it takes raw list instead of a list wrapped into
-            // literal expression when literal array is used as the label.
-            if (i % 2 == 1 && i != this.arguments.size - 1) {
-              e.unwrapFromLiteralArray()
+            // literal expression when literal array is used as the label, the last member of the arguments
+            // will be the default output should shouldn't be unwrapped.
+            if (index % 2 == 1 && index != lastIndex) {
+              argument.unwrapFromLiteralArray()
             } else {
-              e
+              argument
             }
           )
         }

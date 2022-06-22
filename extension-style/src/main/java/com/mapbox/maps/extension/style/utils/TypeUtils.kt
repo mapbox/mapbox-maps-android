@@ -194,8 +194,8 @@ internal fun Expression.unwrapFromLiteralArray(): Expression {
   if (this.contents is List<*>) {
     @Suppress("UNCHECKED_CAST")
     val listValue = this.contents as List<Value>
-    val operator = listValue.first().contents as? String
-    if ("literal" == operator) {
+    val expressionOperator = listValue.first().contents as? String
+    if ("literal" == expressionOperator) {
       when (val literalValue = listValue.last().contents) {
         is List<*> -> {
           @Suppress("UNCHECKED_CAST")
