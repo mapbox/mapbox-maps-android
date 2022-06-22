@@ -13,6 +13,7 @@ import com.mapbox.maps.extension.style.utils.ColorUtils
 import com.mapbox.maps.extension.style.utils.TypeUtils
 import com.mapbox.maps.extension.style.utils.take
 import com.mapbox.maps.extension.style.utils.unwrapFromLiteralArray
+import com.mapbox.maps.extension.style.utils.unwrapToExpression
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
