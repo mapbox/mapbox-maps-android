@@ -46,6 +46,7 @@ class GlobeFlyToActivity : AppCompatActivity(), OnMapClickListener {
           url("mapbox://mapbox.terrain-rgb")
         }
         +terrain("raster-dem") {
+          // camera seems to be a bit jumping on high zoom level - check with gl-native
 //          exaggeration(1.5)
         }
       }

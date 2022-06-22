@@ -44,7 +44,7 @@ class MapboxMap :
   MapCameraManagerDelegate,
   MapStyleStateDelegate {
 
-  val nativeMap: MapInterface
+  private val nativeMap: MapInterface
   private var isMapValid = true
 
   /**
