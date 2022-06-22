@@ -106,6 +106,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
    *
    * @param castShadows as Boolean
    */
+  @MapboxExperimental
   override fun castShadows(castShadows: Boolean) = apply {
     setProperty(PropertyValue("cast-shadows", castShadows))
   }
@@ -138,6 +139,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
    *
    * @param castShadows value of castShadows as Expression
    */
+  @MapboxExperimental
   override fun castShadows(castShadows: Expression) = apply {
     val propertyValue = PropertyValue("cast-shadows", castShadows)
     setProperty(propertyValue)
@@ -437,6 +439,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
    *
    * @param shadowIntensity as Double
    */
+  @MapboxExperimental
   override fun shadowIntensity(shadowIntensity: Double) = apply {
     setProperty(PropertyValue("shadow-intensity", shadowIntensity))
   }
@@ -469,6 +472,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
    *
    * @param shadowIntensity value of shadowIntensity as Expression
    */
+  @MapboxExperimental
   override fun shadowIntensity(shadowIntensity: Expression) = apply {
     val propertyValue = PropertyValue("shadow-intensity", shadowIntensity)
     setProperty(propertyValue)
@@ -491,6 +495,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
    *
    * @param options transition options for shadow-intensity
    */
+  @MapboxExperimental
   override fun shadowIntensityTransition(options: StyleTransition) = apply {
     val propertyValue = PropertyValue("shadow-intensity-transition", options)
     setProperty(propertyValue)
@@ -499,6 +504,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
   /**
    * DSL for [shadowIntensityTransition].
    */
+  @MapboxExperimental
   override fun shadowIntensityTransition(block: StyleTransition.Builder.() -> Unit) = apply {
     shadowIntensityTransition(StyleTransition.Builder().apply(block).build())
   }
