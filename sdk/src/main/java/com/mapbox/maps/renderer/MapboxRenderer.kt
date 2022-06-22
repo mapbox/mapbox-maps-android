@@ -108,6 +108,7 @@ internal abstract class MapboxRenderer : MapClient {
       this.width = width
       this.height = height
       GLES20.glViewport(0, 0, width, height)
+      logE("KIRYLDD", "w=$width, h=$height")
       map?.size = Size(width.toFloat(), height.toFloat())
     }
   }
