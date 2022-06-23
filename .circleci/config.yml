@@ -390,7 +390,9 @@ jobs:
       - store-results
 
   verify-docs:
-    executor: ubuntu
+    executor:
+      name: ubuntu
+      machine: xlarge
     steps:
       - checkout
       - restore-gradle-cache
@@ -400,7 +402,9 @@ jobs:
           command: sh scripts/kdoc-validate.sh
 
   verify-api-metalava:
-    executor: ubuntu
+    executor:
+      name: ubuntu
+      machine: xlarge
     steps:
       - checkout
       - restore-gradle-cache
