@@ -1179,8 +1179,7 @@ class ExpressionTest : BaseStyleTest() {
    * Selects the output whose label value matches the input value, or the fallback value if no match is found. The input can be any expression (e.g. `["get", "building_type"]`). Each label must be either:
    * a single literal value; or
    * an array of literal values, whose values must be all strings or all numbers (e.g. `[100, 101]` or `["c", "b"]`). The input matches if any of the values in the array matches, similar to the deprecated `"in"` operator.
-
-   Each label must be unique. If the input type does not match the type of the labels, the result will be the fallback value.
+   * Each label must be unique. If the input type does not match the type of the labels, the result will be the fallback value.
    */
   @Test
   @UiThreadTest
@@ -1206,8 +1205,7 @@ class ExpressionTest : BaseStyleTest() {
    * Selects the output whose label value matches the input value, or the fallback value if no match is found. The input can be any expression (e.g. `["get", "building_type"]`). Each label must be either:
    * a single literal value; or
    * an array of literal values, whose values must be all strings or all numbers (e.g. `[100, 101]` or `["c", "b"]`). The input matches if any of the values in the array matches, similar to the deprecated `"in"` operator.
-
-   Each label must be unique. If the input type does not match the type of the labels, the result will be the fallback value.
+   * Each label must be unique. If the input type does not match the type of the labels, the result will be the fallback value.
    */
   @Test
   @UiThreadTest
@@ -1227,6 +1225,37 @@ class ExpressionTest : BaseStyleTest() {
     }
     setupLayer(layer)
     assertEquals(expression.toJson(), layer.textColorAsExpression?.toJson())
+  }
+
+  /**
+   * Selects the output whose label value matches the input value, or the fallback value if no match is found. The input can be any expression (e.g. `["get", "building_type"]`). Each label must be either:
+   * a single literal value; or
+   * an array of literal values, whose values must be all strings or all numbers (e.g. `[100, 101]` or `["c", "b"]`). The input matches if any of the values in the array matches, similar to the deprecated `"in"` operator.
+   * Each label must be unique. If the input type does not match the type of the labels, the result will be the fallback value.
+   */
+  @Test
+  @UiThreadTest
+  fun matchWithOutputListTest() {
+    val expression = match {
+      mod {
+        number {
+          id()
+        }
+        literal(4.0)
+      }
+      literal(0)
+      literal(listOf(0.0, 0.0, 0.0))
+      literal(1)
+      literal(listOf(0.0, 0.0, 20.0))
+      literal(2)
+      literal(listOf(3.0, 0.0, 40.0))
+      literal(listOf(-3.0, 0.0, 60.0))
+    }
+    val layer = modelLayer("id", "source") {
+      modelRotation(expression)
+    }
+    setupLayer(layer)
+    assertEquals(expression.toJson(), layer.modelRotationAsExpression?.toJson())
   }
 
   /**
