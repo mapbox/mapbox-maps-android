@@ -186,6 +186,29 @@ fun Value.unwrapToStyleTransition(): StyleTransition {
 }
 
 /**
+ * Unwraps an literal array to a array.
+ *
+ * e.g. translate ["literal", [0.0, 0.0, 0.0]] to [0.0, 0.0, 0.0].
+ */
+internal fun Expression.unwrapFromLiteralArray(): Expression {
+  if (this.contents is List<*>) {
+    @Suppress("UNCHECKED_CAST")
+    val listValue = this.contents as List<Value>
+    val expressionOperator = listValue.first().contents as? String
+    if ("literal" == expressionOperator) {
+      when (val literalValue = listValue.last().contents) {
+        is List<*> -> {
+          @Suppress("UNCHECKED_CAST")
+          val literalList = literalValue as List<Value>
+          return Expression(literalList)
+        }
+      }
+    }
+  }
+  return this
+}
+
+/**
  * Extension function for [Value] to unwrap Value to [Expression].
  *
  * Throws exception if couldn't convert.
