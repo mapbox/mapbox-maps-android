@@ -15,7 +15,7 @@ import javax.microedition.khronos.egl.EGL10.*
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.egl.EGLDisplay
 
-internal class EGLConfigChooser constructor(
+class EGLConfigChooser constructor(
   private val translucentSurface: Boolean,
   private var antialiasingSampleCount: Int,
 ) {
@@ -375,6 +375,6 @@ internal class EGLConfigChooser constructor(
     private const val EGL_OPENGL_ES2_BIT = 0x0004
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    internal var STENCIL_SIZE = 8
+    var STENCIL_SIZE = 8
   }
 }
