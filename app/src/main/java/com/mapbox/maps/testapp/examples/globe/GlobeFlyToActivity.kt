@@ -83,8 +83,8 @@ class GlobeFlyToActivity : AppCompatActivity(), OnMapClickListener {
     private val CAMERA_END = cameraOptions {
       center(Point.fromLngLat(8.11862, 46.58842))
       zoom(12.5)
-      pitch(130.0)
-      bearing(75.0)
+      pitch(75.0)
+      bearing(130.0)
     }
   }
 }
