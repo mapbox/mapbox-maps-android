@@ -47,15 +47,10 @@ class GlobeFlyToActivity : AppCompatActivity(), OnMapClickListener {
         }
         +terrain("raster-dem") {
           // camera seems to be a bit jumping on high zoom level - check with gl-native
-//          exaggeration(1.5)
+          exaggeration(1.5)
         }
       }
     ) {
-      mapboxMap.setCamera(
-        cameraOptions {
-          zoom(1.0)
-        }
-      )
       // Toast instructing user to tap on the map
       Toast.makeText(
         this@GlobeFlyToActivity,
