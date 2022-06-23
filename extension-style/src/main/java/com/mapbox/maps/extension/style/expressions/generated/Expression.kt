@@ -12,6 +12,7 @@ import com.mapbox.maps.extension.style.types.ExpressionDsl
 import com.mapbox.maps.extension.style.utils.ColorUtils
 import com.mapbox.maps.extension.style.utils.TypeUtils
 import com.mapbox.maps.extension.style.utils.take
+import com.mapbox.maps.extension.style.utils.unwrapFromLiteralArray
 import com.mapbox.maps.extension.style.utils.unwrapToExpression
 import java.util.*
 import kotlin.collections.ArrayList
@@ -129,7 +130,27 @@ class Expression : Value {
      *
      * @return Expression
      */
-    open fun build() = Expression(this)
+    open fun build(): Expression {
+      if (this.operator == "match") {
+        val newBuilder = ExpressionBuilder("match")
+        val lastIndex = this.arguments.size - 1
+        this.arguments.forEachIndexed { index, argument ->
+          newBuilder.addArgument(
+            // https://github.com/mapbox/mapbox-maps-android/issues/965
+            // the match expression is an exception and it takes raw list instead of a list wrapped into
+            // literal expression when literal array is used as the label, the last member of the arguments
+            // will be the default output should shouldn't be unwrapped.
+            if (index % 2 == 1 && index != lastIndex) {
+              argument.unwrapFromLiteralArray()
+            } else {
+              argument
+            }
+          )
+        }
+        return Expression(newBuilder)
+      }
+      return Expression(this)
+    }
   }
 
   /**
@@ -599,14 +620,7 @@ class Expression : Value {
      * Provides a literal array or object value.
      */
     fun literal(value: List<Any>) {
-      // https://github.com/mapbox/mapbox-maps-android/issues/965
-      // the match expression is an exception and it takes raw list instead of a list wrapped into
-      // literal expression.
-      if (this@ExpressionBuilder.operator == "match") {
-        this@ExpressionBuilder.arguments.add(Expression(value))
-      } else {
-        this@ExpressionBuilder.arguments.add(Companion.literal(value))
-      }
+      this@ExpressionBuilder.arguments.add(Companion.literal(value))
     }
 
     /**
@@ -1665,6 +1679,7 @@ class Expression : Value {
       return super.build()
     }
   }
+
   /**
    * Static variables and methods.
    */
