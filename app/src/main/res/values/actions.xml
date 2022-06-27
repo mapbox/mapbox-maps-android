@@ -4,4 +4,6 @@
     <string name="red">Red</string>
     <string name="green">Green</string>
     <string name="blue">Blue</string>
+    <string name="view_annotation_mode_map_sync">Map Synchronized</string>
+    <string name="view_annotation_mode_map_fixed_delay">Map Fixed Delay</string>
 </resources>

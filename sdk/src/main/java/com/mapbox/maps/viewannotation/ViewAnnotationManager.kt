@@ -151,13 +151,17 @@ interface ViewAnnotationManager {
   fun setViewAnnotationUpdateMode(mode: ViewAnnotationUpdateMode)
 
   /**
+   * Get view annotation update mode.
+   */
+  fun getViewAnnotationUpdateMode(): ViewAnnotationUpdateMode
+
+  /**
    * Static methods and variables.
    */
   companion object {
     /**
      * Default view annotation update mode.
-     * [ViewAnnotationUpdateMode.MAP_FIXED_DELAY] is used by default as it has most consistent behaviour and no performance penalty.
      */
-    val DEFAULT_UPDATE_MODE = ViewAnnotationUpdateMode.MAP_FIXED_DELAY
+    val DEFAULT_UPDATE_MODE = ViewAnnotationUpdateMode.MAP_SYNCHRONIZED
   }
 }

@@ -10,6 +10,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
+import com.mapbox.maps.dsl.isEmpty
 import com.mapbox.maps.plugin.animation.animator.*
 import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.util.MathUtils
@@ -177,18 +178,16 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     handler.removeCallbacks(commitChangesRunnable)
   }
 
-  private fun CameraOptions.isEmpty() =
-    center == null && bearing == null && pitch == null && padding == null && zoom == null && anchor == null
-
   @VisibleForTesting(otherwise = PRIVATE)
   internal fun performMapJump(cameraOptions: CameraOptions) {
+    // no need to call native setCamera if camera did not change or
+    // empty camera object has arrived (could be the case for gestures)
     if (lastCameraOptions == cameraOptions || cameraOptions.isEmpty()) {
       return
     }
     // move native map to new position
     try {
       mapCameraManagerDelegate.setCamera(cameraOptions)
-      logE("KIRYLDD", "setCamera: $cameraOptions")
       // notify listeners with actual values
       notifyListeners(mapCameraManagerDelegate.cameraState)
       lastCameraOptions = cameraOptions

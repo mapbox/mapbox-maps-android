@@ -73,7 +73,6 @@ class ViewAnnotationTest(
           ) { /** no-op **/ }
 
           override fun onViewAnnotationVisibilityUpdated(view: View, visible: Boolean) {
-            logE("KIRYLDD", "Upd vis view=${view.hashCode()}, visible=$visible")
             actualVisibilityUpdateList.add(Pair(view, visible))
           }
         })

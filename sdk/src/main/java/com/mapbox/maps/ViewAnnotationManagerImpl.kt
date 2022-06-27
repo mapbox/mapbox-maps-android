@@ -1,5 +1,6 @@
 package com.mapbox.maps
 
+import android.os.Looper
 import android.view.Choreographer
 import android.view.LayoutInflater
 import android.view.View
@@ -140,34 +141,35 @@ internal class ViewAnnotationManagerImpl(
     renderThread.viewAnnotationMode = mode
   }
 
-  /**
-   * Always called from render thread in the end of [MapInterface.render] call if positions did change.
-   *
-   * It's crucial to notify render thread in this callback as depending on mode we're using we need
-   * either swap buffers the same or the next frame.
-   */
-  @WorkerThread
-  override fun onViewAnnotationPositionsUpdate(positions: MutableList<ViewAnnotationPositionDescriptor>) {
-    logE("KIRYLDD", "onViewAnnotationPositionsUpdate ${positions.joinToString(", ")}")
-    // update that flag here if callback was triggered, it will be reset by renderer directly when swapping buffers
-    renderThread.hasViewAnnotations = true
-    updatedPositionsList = positions
+  @AnyThread
+  override fun getViewAnnotationUpdateMode(): ViewAnnotationUpdateMode {
+    return renderThread.viewAnnotationMode
   }
 
   /**
-   * Called as soon as possible on main thread after updated positions arrived on render thread.
-   *
-   * We need another callback from core as scheduling from render thread to main happens too slow
-   * when using Java Main Looper.
+   * First call will be always from Mapbox render thread that will be ALWAYS followed up
+   * another call from Android main thread.
    */
-  @MainThread
-  override fun onViewAnnotationPositionsUpdateMainThread() {
-    val immutablePositionListCopy = LinkedList(updatedPositionsList)
-    logE("KIRYLDD", "onViewAnnotationPositionsUpdateMainThread postFrameCallback ${immutablePositionListCopy.joinToString(", ")}")
-    Choreographer.getInstance().postFrameCallback {
-      logE("KIRYLDD", "positioning views start, time=$it")
-      positionAnnotationViews(immutablePositionListCopy)
-      logE("KIRYLDD", "positioning views end")
+  @AnyThread
+  override fun onViewAnnotationPositionsUpdate(positions: MutableList<ViewAnnotationPositionDescriptor>) {
+    // When called from render thread it means we're in the end of [MapInterface.render] call if positions did change.
+    // It's crucial to notify render thread in this callback as depending on mode we're using we need
+    // either swap buffers the same or the next frame.
+    if (Looper.myLooper() == Looper.getMainLooper()) {
+      // create copy to avoid concurrent modification exception
+      val immutablePositionListCopy = LinkedList(updatedPositionsList)
+      // schedule positioning on next frame using Choreographer from main thread
+      Choreographer.getInstance().postFrameCallback {
+        positionAnnotationViews(immutablePositionListCopy)
+      }
+    } else {
+      // Called as soon as possible on main thread after updated positions arrived on render thread.
+      // We need another callback from core as scheduling from render thread to main happens too slow
+      // when using Java Main Looper.
+
+      // update that flag here if callback was triggered, it will be reset by renderer directly when swapping buffers
+      renderThread.needViewAnnotationSync = true
+      updatedPositionsList = positions
     }
   }
 
@@ -417,7 +419,6 @@ internal class ViewAnnotationManagerImpl(
   }
 
   companion object {
-    internal const val TAG = "ViewAnnotation"
     internal const val EXCEPTION_TEXT_GEOMETRY_IS_NULL = "Geometry can not be null!"
     internal const val EXCEPTION_TEXT_ASSOCIATED_FEATURE_ID_ALREADY_EXISTS =
       "View annotation with associatedFeatureId=%s already exists!"

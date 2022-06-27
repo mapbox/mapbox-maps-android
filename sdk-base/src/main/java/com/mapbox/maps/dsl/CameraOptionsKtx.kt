@@ -25,3 +25,9 @@ inline fun cameraOptions(
   .pitch(cameraState.pitch)
   .apply(block)
   .build()
+
+/**
+ * Check if camera options has all the empty properties.
+ */
+fun CameraOptions.isEmpty() =
+  center == null && bearing == null && pitch == null && padding == null && zoom == null && anchor == null

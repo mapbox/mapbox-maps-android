@@ -18,7 +18,7 @@ enum class ViewAnnotationUpdateMode {
   /**
    * View annotations are updated on the same frame as the MapView camera.
    *
-   * Using this mode uses the same frame to update both map camera and view annotation position.
+   * Using this mode results in updating both map camera and view annotation position with 1-frame delay.
    * Please note that using this mode may slightly decrease FPS when view annotations are visible on the map.
    */
   MAP_SYNCHRONIZED,
