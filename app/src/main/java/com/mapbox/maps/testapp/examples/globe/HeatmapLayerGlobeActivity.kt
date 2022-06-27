@@ -1,4 +1,4 @@
-package com.mapbox.maps.testapp.examples
+package com.mapbox.maps.testapp.examples.globe
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -21,9 +21,9 @@ import com.mapbox.maps.testapp.databinding.ActivityHeatmapLayerBinding
 
 /**
  * Add earthquake frequency data to a style from a GeoJSON file and render
- * it on a map using a HeatmapLayer.
+ * it on a map in globe projection using a HeatmapLayer.
  */
-class HeatmapLayerActivity : AppCompatActivity() {
+class HeatmapLayerGlobeActivity : AppCompatActivity() {
 
   private lateinit var mapboxMap: MapboxMap
 
