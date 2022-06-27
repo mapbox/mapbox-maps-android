@@ -168,14 +168,14 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   }
 
   /**
-   * Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options.
+   * Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options. SDF images are not supported in formatted text and will be ignored.
    */
   var textField: String? = null
 
   /**
    * Set text-field to initialise the pointAnnotation with.
    *
-   * Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options.
+   * Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options. SDF images are not supported in formatted text and will be ignored.
    *
    * @param textField the text-field value
    * @return this
@@ -218,6 +218,24 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
    */
   fun withTextLetterSpacing(textLetterSpacing: Double): PointAnnotationOptions {
     this.textLetterSpacing = textLetterSpacing
+    return this
+  }
+
+  /**
+   * Text leading value for multi-line text.
+   */
+  var textLineHeight: Double? = null
+
+  /**
+   * Set text-line-height to initialise the pointAnnotation with.
+   *
+   * Text leading value for multi-line text.
+   *
+   * @param textLineHeight the text-line-height value
+   * @return this
+   */
+  fun withTextLineHeight(textLineHeight: Double): PointAnnotationOptions {
+    this.textLineHeight = textLineHeight
     return this
   }
 
@@ -330,14 +348,14 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   }
 
   /**
-   * The color of the icon. This can only be used with sdf icons.
+   * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
    */
   var iconColor: String? = null
 
   /**
    * Set icon-color to initialise the pointAnnotation with.
    *
-   * The color of the icon. This can only be used with sdf icons.
+   * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
    *
    * @param iconColor the icon-color value
    * @return this
@@ -350,7 +368,7 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   /**
    * Set icon-color to initialise the pointAnnotation with.
    *
-   * The color of the icon. This can only be used with sdf icons.
+   * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
    *
    * @param iconColor the icon-color value with ColorInt format
    * @return this
@@ -379,14 +397,14 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   }
 
   /**
-   * The color of the icon's halo. Icon halos can only be used with SDF icons.
+   * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
    */
   var iconHaloColor: String? = null
 
   /**
    * Set icon-halo-color to initialise the pointAnnotation with.
    *
-   * The color of the icon's halo. Icon halos can only be used with SDF icons.
+   * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
    *
    * @param iconHaloColor the icon-halo-color value
    * @return this
@@ -399,7 +417,7 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   /**
    * Set icon-halo-color to initialise the pointAnnotation with.
    *
-   * The color of the icon's halo. Icon halos can only be used with SDF icons.
+   * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
    *
    * @param iconHaloColor the icon-halo-color value with ColorInt format
    * @return this
@@ -686,6 +704,9 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
     textLetterSpacing?.let {
       jsonObject.addProperty(PROPERTY_TEXT_LETTER_SPACING, it)
     }
+    textLineHeight?.let {
+      jsonObject.addProperty(PROPERTY_TEXT_LINE_HEIGHT, it)
+    }
     textMaxWidth?.let {
       jsonObject.addProperty(PROPERTY_TEXT_MAX_WIDTH, it)
     }
@@ -777,6 +798,9 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
 
     /** The property for text-letter-spacing */
     const val PROPERTY_TEXT_LETTER_SPACING = "text-letter-spacing"
+
+    /** The property for text-line-height */
+    const val PROPERTY_TEXT_LINE_HEIGHT = "text-line-height"
 
     /** The property for text-max-width */
     const val PROPERTY_TEXT_MAX_WIDTH = "text-max-width"
@@ -874,6 +898,9 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
       }
       if (feature.hasProperty(PROPERTY_TEXT_LETTER_SPACING)) {
         options.textLetterSpacing = feature.getProperty(PROPERTY_TEXT_LETTER_SPACING).asDouble
+      }
+      if (feature.hasProperty(PROPERTY_TEXT_LINE_HEIGHT)) {
+        options.textLineHeight = feature.getProperty(PROPERTY_TEXT_LINE_HEIGHT).asDouble
       }
       if (feature.hasProperty(PROPERTY_TEXT_MAX_WIDTH)) {
         options.textMaxWidth = feature.getProperty(PROPERTY_TEXT_MAX_WIDTH).asDouble
