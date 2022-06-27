@@ -18,6 +18,7 @@ import com.mapbox.maps.logW
 import com.mapbox.maps.plugin.PuckBearingSource
 import java.lang.ref.WeakReference
 import java.util.concurrent.CopyOnWriteArraySet
+import kotlin.math.abs
 
 /**
  * Default Location Provider implementation that produces location updates according to the device's
@@ -42,6 +43,7 @@ class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal c
   private var handler: Handler? = null
   private lateinit var runnable: Runnable
   private var updateDelay = INIT_UPDATE_DELAY
+  private var lastKnownUserHeading: Float = 0F
 
   private val locationEngineCallback: LocationEngineCallback<LocationEngineResult> =
     CurrentLocationEngineCallback(this)
@@ -49,9 +51,12 @@ class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal c
   @VisibleForTesting(otherwise = PRIVATE)
   internal val locationCompassListener =
     LocationCompassEngine.CompassListener { userHeading ->
-      locationConsumers.forEach { consumer ->
-        consumer.onBearingUpdated(userHeading.toDouble())
+      if (abs(userHeading - lastKnownUserHeading) > HEADING_DIFF_THRESHOLD) {
+        locationConsumers.forEach { consumer ->
+          consumer.onBearingUpdated(userHeading.toDouble())
+        }
       }
+      lastKnownUserHeading = userHeading
     }
 
   @SuppressLint("MissingPermission")
@@ -187,5 +192,6 @@ class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal c
     private const val TAG = "MapboxLocationProvider"
     private const val INIT_UPDATE_DELAY = 100L
     private const val MAX_UPDATE_DELAY = 5000L
+    private const val HEADING_DIFF_THRESHOLD = 1F
   }
 }
