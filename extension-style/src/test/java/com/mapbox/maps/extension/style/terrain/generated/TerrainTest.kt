@@ -8,6 +8,7 @@ import com.mapbox.bindgen.Value
 import com.mapbox.maps.StylePropertyValue
 import com.mapbox.maps.StylePropertyValueKind
 import com.mapbox.maps.extension.style.StyleInterface
+import com.mapbox.maps.extension.style.types.transitionOptions
 import com.mapbox.maps.extension.style.utils.TypeUtils
 import io.mockk.*
 import org.junit.After
@@ -94,6 +95,77 @@ class TerrainTest {
     assertEquals(1.0, terrain.exaggerationAsExpression?.contents as Double, 1E-5)
     assertEquals(1.0, terrain.exaggeration!!, 1E-5)
     verify { style.getStyleTerrainProperty("exaggeration") }
+  }
+
+  @Test
+  fun exaggerationTransitionSet() {
+    val terrain = terrain(sourceId) {
+      exaggerationTransition(
+        transitionOptions {
+          duration(100)
+          delay(200)
+        }
+      )
+    }
+    terrain.bindTo(style)
+    verify { style.setStyleTerrain(capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("exaggeration-transition={duration=100, delay=200}"))
+  }
+
+  @Test
+  fun exaggerationTransitionSetAfterInitialization() {
+    val terrain = terrain(sourceId) { }
+    terrain.bindTo(style)
+    terrain.exaggerationTransition(
+      transitionOptions {
+        duration(100)
+        delay(200)
+      }
+    )
+    verify { style.setStyleTerrainProperty("exaggeration-transition", capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("{duration=100, delay=200}"))
+  }
+
+  @Test
+  fun exaggerationTransitionGet() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    val terrain = terrain(sourceId) {}
+    terrain.bindTo(style)
+    assertEquals(transition.toValue().toString(), terrain.exaggerationTransition!!.toValue().toString())
+    verify { style.getStyleTerrainProperty("exaggeration-transition") }
+  }
+
+  @Test
+  fun exaggerationTransitionGetNull() {
+    val transition = "wrong type"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    val terrain = terrain(sourceId) {}
+    terrain.bindTo(style)
+    assertEquals(null, terrain.exaggerationTransition)
+    verify { style.getStyleTerrainProperty("exaggeration-transition") }
+  }
+
+  @Test(expected = RuntimeException::class)
+  fun exaggerationTransitionGetException() {
+    val terrain = terrain(sourceId) {}
+    terrain.exaggerationTransition
+  }
+
+  @Test
+  fun exaggerationTransitionSetDsl() {
+    val terrain = terrain(sourceId) {
+      exaggerationTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    terrain.bindTo(style)
+    verify { style.setStyleTerrain(capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("exaggeration-transition={duration=100, delay=200}"))
   }
 
   @Test

@@ -9,6 +9,7 @@ import com.mapbox.maps.StylePropertyValue
 import com.mapbox.maps.StylePropertyValueKind
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.expressions.dsl.generated.rgba
+import com.mapbox.maps.extension.style.types.transitionOptions
 import com.mapbox.maps.extension.style.utils.TypeUtils
 import io.mockk.*
 import org.junit.After
@@ -141,6 +142,77 @@ class AtmosphereTest {
     assertEquals(Color.BLACK, atmosphere.colorAsColorInt)
     verify { style.getStyleAtmosphereProperty("color") }
   }
+
+  @Test
+  fun colorTransitionSet() {
+    val atmosphere = atmosphere {
+      colorTransition(
+        transitionOptions {
+          duration(100)
+          delay(200)
+        }
+      )
+    }
+    atmosphere.bindTo(style)
+    verify { style.setStyleAtmosphere(capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("color-transition={duration=100, delay=200}"))
+  }
+
+  @Test
+  fun colorTransitionSetAfterInitialization() {
+    val atmosphere = atmosphere { }
+    atmosphere.bindTo(style)
+    atmosphere.colorTransition(
+      transitionOptions {
+        duration(100)
+        delay(200)
+      }
+    )
+    verify { style.setStyleAtmosphereProperty("color-transition", capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("{duration=100, delay=200}"))
+  }
+
+  @Test
+  fun colorTransitionGet() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    val atmosphere = atmosphere {}
+    atmosphere.bindTo(style)
+    assertEquals(transition.toValue().toString(), atmosphere.colorTransition!!.toValue().toString())
+    verify { style.getStyleAtmosphereProperty("color-transition") }
+  }
+
+  @Test
+  fun colorTransitionGetNull() {
+    val transition = "wrong type"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    val atmosphere = atmosphere {}
+    atmosphere.bindTo(style)
+    assertEquals(null, atmosphere.colorTransition)
+    verify { style.getStyleAtmosphereProperty("color-transition") }
+  }
+
+  @Test(expected = RuntimeException::class)
+  fun colorTransitionGetException() {
+    val atmosphere = atmosphere {}
+    atmosphere.colorTransition
+  }
+
+  @Test
+  fun colorTransitionSetDsl() {
+    val atmosphere = atmosphere {
+      colorTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    atmosphere.bindTo(style)
+    verify { style.setStyleAtmosphere(capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("color-transition={duration=100, delay=200}"))
+  }
   @Test
   fun highColorAsColorIntSet() {
     val atmosphere = atmosphere {
@@ -245,6 +317,77 @@ class AtmosphereTest {
   }
 
   @Test
+  fun highColorTransitionSet() {
+    val atmosphere = atmosphere {
+      highColorTransition(
+        transitionOptions {
+          duration(100)
+          delay(200)
+        }
+      )
+    }
+    atmosphere.bindTo(style)
+    verify { style.setStyleAtmosphere(capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("high-color-transition={duration=100, delay=200}"))
+  }
+
+  @Test
+  fun highColorTransitionSetAfterInitialization() {
+    val atmosphere = atmosphere { }
+    atmosphere.bindTo(style)
+    atmosphere.highColorTransition(
+      transitionOptions {
+        duration(100)
+        delay(200)
+      }
+    )
+    verify { style.setStyleAtmosphereProperty("high-color-transition", capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("{duration=100, delay=200}"))
+  }
+
+  @Test
+  fun highColorTransitionGet() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    val atmosphere = atmosphere {}
+    atmosphere.bindTo(style)
+    assertEquals(transition.toValue().toString(), atmosphere.highColorTransition!!.toValue().toString())
+    verify { style.getStyleAtmosphereProperty("high-color-transition") }
+  }
+
+  @Test
+  fun highColorTransitionGetNull() {
+    val transition = "wrong type"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    val atmosphere = atmosphere {}
+    atmosphere.bindTo(style)
+    assertEquals(null, atmosphere.highColorTransition)
+    verify { style.getStyleAtmosphereProperty("high-color-transition") }
+  }
+
+  @Test(expected = RuntimeException::class)
+  fun highColorTransitionGetException() {
+    val atmosphere = atmosphere {}
+    atmosphere.highColorTransition
+  }
+
+  @Test
+  fun highColorTransitionSetDsl() {
+    val atmosphere = atmosphere {
+      highColorTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    atmosphere.bindTo(style)
+    verify { style.setStyleAtmosphere(capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("high-color-transition={duration=100, delay=200}"))
+  }
+
+  @Test
   fun horizonBlendSet() {
     val atmosphere = atmosphere {
       horizonBlend(1.0)
@@ -294,6 +437,77 @@ class AtmosphereTest {
   }
 
   @Test
+  fun horizonBlendTransitionSet() {
+    val atmosphere = atmosphere {
+      horizonBlendTransition(
+        transitionOptions {
+          duration(100)
+          delay(200)
+        }
+      )
+    }
+    atmosphere.bindTo(style)
+    verify { style.setStyleAtmosphere(capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("horizon-blend-transition={duration=100, delay=200}"))
+  }
+
+  @Test
+  fun horizonBlendTransitionSetAfterInitialization() {
+    val atmosphere = atmosphere { }
+    atmosphere.bindTo(style)
+    atmosphere.horizonBlendTransition(
+      transitionOptions {
+        duration(100)
+        delay(200)
+      }
+    )
+    verify { style.setStyleAtmosphereProperty("horizon-blend-transition", capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("{duration=100, delay=200}"))
+  }
+
+  @Test
+  fun horizonBlendTransitionGet() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    val atmosphere = atmosphere {}
+    atmosphere.bindTo(style)
+    assertEquals(transition.toValue().toString(), atmosphere.horizonBlendTransition!!.toValue().toString())
+    verify { style.getStyleAtmosphereProperty("horizon-blend-transition") }
+  }
+
+  @Test
+  fun horizonBlendTransitionGetNull() {
+    val transition = "wrong type"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    val atmosphere = atmosphere {}
+    atmosphere.bindTo(style)
+    assertEquals(null, atmosphere.horizonBlendTransition)
+    verify { style.getStyleAtmosphereProperty("horizon-blend-transition") }
+  }
+
+  @Test(expected = RuntimeException::class)
+  fun horizonBlendTransitionGetException() {
+    val atmosphere = atmosphere {}
+    atmosphere.horizonBlendTransition
+  }
+
+  @Test
+  fun horizonBlendTransitionSetDsl() {
+    val atmosphere = atmosphere {
+      horizonBlendTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    atmosphere.bindTo(style)
+    verify { style.setStyleAtmosphere(capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("horizon-blend-transition={duration=100, delay=200}"))
+  }
+
+  @Test
   fun rangeSet() {
     val atmosphere = atmosphere {
       range(listOf(0.0, 1.0))
@@ -340,6 +554,77 @@ class AtmosphereTest {
     assertEquals("[literal, [0.0, 1.0]]", atmosphere.rangeAsExpression.toString())
     assertEquals(listOf(0.0, 1.0), atmosphere.range)
     verify { style.getStyleAtmosphereProperty("range") }
+  }
+
+  @Test
+  fun rangeTransitionSet() {
+    val atmosphere = atmosphere {
+      rangeTransition(
+        transitionOptions {
+          duration(100)
+          delay(200)
+        }
+      )
+    }
+    atmosphere.bindTo(style)
+    verify { style.setStyleAtmosphere(capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("range-transition={duration=100, delay=200}"))
+  }
+
+  @Test
+  fun rangeTransitionSetAfterInitialization() {
+    val atmosphere = atmosphere { }
+    atmosphere.bindTo(style)
+    atmosphere.rangeTransition(
+      transitionOptions {
+        duration(100)
+        delay(200)
+      }
+    )
+    verify { style.setStyleAtmosphereProperty("range-transition", capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("{duration=100, delay=200}"))
+  }
+
+  @Test
+  fun rangeTransitionGet() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    val atmosphere = atmosphere {}
+    atmosphere.bindTo(style)
+    assertEquals(transition.toValue().toString(), atmosphere.rangeTransition!!.toValue().toString())
+    verify { style.getStyleAtmosphereProperty("range-transition") }
+  }
+
+  @Test
+  fun rangeTransitionGetNull() {
+    val transition = "wrong type"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    val atmosphere = atmosphere {}
+    atmosphere.bindTo(style)
+    assertEquals(null, atmosphere.rangeTransition)
+    verify { style.getStyleAtmosphereProperty("range-transition") }
+  }
+
+  @Test(expected = RuntimeException::class)
+  fun rangeTransitionGetException() {
+    val atmosphere = atmosphere {}
+    atmosphere.rangeTransition
+  }
+
+  @Test
+  fun rangeTransitionSetDsl() {
+    val atmosphere = atmosphere {
+      rangeTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    atmosphere.bindTo(style)
+    verify { style.setStyleAtmosphere(capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("range-transition={duration=100, delay=200}"))
   }
   @Test
   fun spaceColorAsColorIntSet() {
@@ -445,6 +730,77 @@ class AtmosphereTest {
   }
 
   @Test
+  fun spaceColorTransitionSet() {
+    val atmosphere = atmosphere {
+      spaceColorTransition(
+        transitionOptions {
+          duration(100)
+          delay(200)
+        }
+      )
+    }
+    atmosphere.bindTo(style)
+    verify { style.setStyleAtmosphere(capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("space-color-transition={duration=100, delay=200}"))
+  }
+
+  @Test
+  fun spaceColorTransitionSetAfterInitialization() {
+    val atmosphere = atmosphere { }
+    atmosphere.bindTo(style)
+    atmosphere.spaceColorTransition(
+      transitionOptions {
+        duration(100)
+        delay(200)
+      }
+    )
+    verify { style.setStyleAtmosphereProperty("space-color-transition", capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("{duration=100, delay=200}"))
+  }
+
+  @Test
+  fun spaceColorTransitionGet() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    val atmosphere = atmosphere {}
+    atmosphere.bindTo(style)
+    assertEquals(transition.toValue().toString(), atmosphere.spaceColorTransition!!.toValue().toString())
+    verify { style.getStyleAtmosphereProperty("space-color-transition") }
+  }
+
+  @Test
+  fun spaceColorTransitionGetNull() {
+    val transition = "wrong type"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    val atmosphere = atmosphere {}
+    atmosphere.bindTo(style)
+    assertEquals(null, atmosphere.spaceColorTransition)
+    verify { style.getStyleAtmosphereProperty("space-color-transition") }
+  }
+
+  @Test(expected = RuntimeException::class)
+  fun spaceColorTransitionGetException() {
+    val atmosphere = atmosphere {}
+    atmosphere.spaceColorTransition
+  }
+
+  @Test
+  fun spaceColorTransitionSetDsl() {
+    val atmosphere = atmosphere {
+      spaceColorTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    atmosphere.bindTo(style)
+    verify { style.setStyleAtmosphere(capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("space-color-transition={duration=100, delay=200}"))
+  }
+
+  @Test
   fun starIntensitySet() {
     val atmosphere = atmosphere {
       starIntensity(1.0)
@@ -491,6 +847,77 @@ class AtmosphereTest {
     assertEquals(1.0, atmosphere.starIntensityAsExpression?.contents as Double, 1E-5)
     assertEquals(1.0, atmosphere.starIntensity!!, 1E-5)
     verify { style.getStyleAtmosphereProperty("star-intensity") }
+  }
+
+  @Test
+  fun starIntensityTransitionSet() {
+    val atmosphere = atmosphere {
+      starIntensityTransition(
+        transitionOptions {
+          duration(100)
+          delay(200)
+        }
+      )
+    }
+    atmosphere.bindTo(style)
+    verify { style.setStyleAtmosphere(capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("star-intensity-transition={duration=100, delay=200}"))
+  }
+
+  @Test
+  fun starIntensityTransitionSetAfterInitialization() {
+    val atmosphere = atmosphere { }
+    atmosphere.bindTo(style)
+    atmosphere.starIntensityTransition(
+      transitionOptions {
+        duration(100)
+        delay(200)
+      }
+    )
+    verify { style.setStyleAtmosphereProperty("star-intensity-transition", capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("{duration=100, delay=200}"))
+  }
+
+  @Test
+  fun starIntensityTransitionGet() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    val atmosphere = atmosphere {}
+    atmosphere.bindTo(style)
+    assertEquals(transition.toValue().toString(), atmosphere.starIntensityTransition!!.toValue().toString())
+    verify { style.getStyleAtmosphereProperty("star-intensity-transition") }
+  }
+
+  @Test
+  fun starIntensityTransitionGetNull() {
+    val transition = "wrong type"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    val atmosphere = atmosphere {}
+    atmosphere.bindTo(style)
+    assertEquals(null, atmosphere.starIntensityTransition)
+    verify { style.getStyleAtmosphereProperty("star-intensity-transition") }
+  }
+
+  @Test(expected = RuntimeException::class)
+  fun starIntensityTransitionGetException() {
+    val atmosphere = atmosphere {}
+    atmosphere.starIntensityTransition
+  }
+
+  @Test
+  fun starIntensityTransitionSetDsl() {
+    val atmosphere = atmosphere {
+      starIntensityTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    atmosphere.bindTo(style)
+    verify { style.setStyleAtmosphere(capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("star-intensity-transition={duration=100, delay=200}"))
   }
 
   @Test

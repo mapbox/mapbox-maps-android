@@ -8,6 +8,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.mapbox.maps.extension.style.atmosphere.generated.atmosphere
 import com.mapbox.maps.extension.style.expressions.dsl.generated.literal
 import com.mapbox.maps.extension.style.expressions.dsl.generated.rgba
+import com.mapbox.maps.extension.style.types.transitionOptions
 import com.mapbox.maps.testapp.style.BaseStyleTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -59,6 +60,37 @@ class AtmosphereTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun colorTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val atmosphere = atmosphere {
+      colorTransition(transition)
+    }
+    setupAtmosphere(atmosphere)
+    assertEquals(transition, atmosphere.colorTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun colorTransitionSetDslTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val atmosphere = atmosphere {
+      colorTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    setupAtmosphere(atmosphere)
+    assertEquals(transition, atmosphere.colorTransition)
+  }
+
+  @Test
+  @UiThreadTest
   fun highColorAsColorIntTest() {
     val atmosphere = atmosphere {
       highColor(Color.CYAN)
@@ -97,6 +129,37 @@ class AtmosphereTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun highColorTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val atmosphere = atmosphere {
+      highColorTransition(transition)
+    }
+    setupAtmosphere(atmosphere)
+    assertEquals(transition, atmosphere.highColorTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun highColorTransitionSetDslTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val atmosphere = atmosphere {
+      highColorTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    setupAtmosphere(atmosphere)
+    assertEquals(transition, atmosphere.highColorTransition)
+  }
+
+  @Test
+  @UiThreadTest
   fun horizonBlendTest() {
     val atmosphere = atmosphere {
       horizonBlend(1.0)
@@ -120,6 +183,37 @@ class AtmosphereTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun horizonBlendTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val atmosphere = atmosphere {
+      horizonBlendTransition(transition)
+    }
+    setupAtmosphere(atmosphere)
+    assertEquals(transition, atmosphere.horizonBlendTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun horizonBlendTransitionSetDslTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val atmosphere = atmosphere {
+      horizonBlendTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    setupAtmosphere(atmosphere)
+    assertEquals(transition, atmosphere.horizonBlendTransition)
+  }
+
+  @Test
+  @UiThreadTest
   fun rangeTest() {
     val atmosphere = atmosphere {
       range(listOf(0.0, 1.0))
@@ -139,6 +233,37 @@ class AtmosphereTest : BaseStyleTest() {
     }
     setupAtmosphere(atmosphere)
     assertEquals(expression.toString(), atmosphere.rangeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun rangeTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val atmosphere = atmosphere {
+      rangeTransition(transition)
+    }
+    setupAtmosphere(atmosphere)
+    assertEquals(transition, atmosphere.rangeTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun rangeTransitionSetDslTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val atmosphere = atmosphere {
+      rangeTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    setupAtmosphere(atmosphere)
+    assertEquals(transition, atmosphere.rangeTransition)
   }
 
   @Test
@@ -181,6 +306,37 @@ class AtmosphereTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun spaceColorTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val atmosphere = atmosphere {
+      spaceColorTransition(transition)
+    }
+    setupAtmosphere(atmosphere)
+    assertEquals(transition, atmosphere.spaceColorTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun spaceColorTransitionSetDslTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val atmosphere = atmosphere {
+      spaceColorTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    setupAtmosphere(atmosphere)
+    assertEquals(transition, atmosphere.spaceColorTransition)
+  }
+
+  @Test
+  @UiThreadTest
   fun starIntensityTest() {
     val atmosphere = atmosphere {
       starIntensity(1.0)
@@ -200,6 +356,37 @@ class AtmosphereTest : BaseStyleTest() {
     }
     setupAtmosphere(atmosphere)
     assertEquals(1.0, atmosphere.starIntensityAsExpression?.contents as Double, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun starIntensityTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val atmosphere = atmosphere {
+      starIntensityTransition(transition)
+    }
+    setupAtmosphere(atmosphere)
+    assertEquals(transition, atmosphere.starIntensityTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun starIntensityTransitionSetDslTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val atmosphere = atmosphere {
+      starIntensityTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    setupAtmosphere(atmosphere)
+    assertEquals(transition, atmosphere.starIntensityTransition)
   }
 }
 
