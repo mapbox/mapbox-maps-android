@@ -47,51 +47,81 @@ public final class com/mapbox/maps/extension/style/atmosphere/generated/Atmosphe
 	public fun color (I)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public fun color (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public fun color (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public fun colorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public fun colorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public final fun getColor ()Ljava/lang/String;
 	public final fun getColorAsColorInt ()Ljava/lang/Integer;
 	public final fun getColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getHighColor ()Ljava/lang/String;
 	public final fun getHighColorAsColorInt ()Ljava/lang/Integer;
 	public final fun getHighColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getHighColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getHorizonBlend ()Ljava/lang/Double;
 	public final fun getHorizonBlendAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getHorizonBlendTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getRange ()Ljava/util/List;
 	public final fun getRangeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getRangeTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getSpaceColor ()Ljava/lang/String;
 	public final fun getSpaceColorAsColorInt ()Ljava/lang/Integer;
 	public final fun getSpaceColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getSpaceColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getStarIntensity ()Ljava/lang/Double;
 	public final fun getStarIntensityAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getStarIntensityTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public fun highColor (I)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public fun highColor (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public fun highColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public fun highColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public fun highColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public fun horizonBlend (D)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public fun horizonBlend (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public fun horizonBlendTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public fun horizonBlendTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public fun range (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public fun range (Ljava/util/List;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public fun rangeTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public fun rangeTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public fun spaceColor (I)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public fun spaceColor (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public fun spaceColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public fun spaceColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public fun spaceColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public fun starIntensity (D)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public fun starIntensity (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public fun starIntensityTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public fun starIntensityTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 }
 
 public abstract interface class com/mapbox/maps/extension/style/atmosphere/generated/AtmosphereDslReceiver {
 	public abstract fun color (I)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public abstract fun color (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public abstract fun color (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public abstract fun colorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public abstract fun colorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public abstract fun highColor (I)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public abstract fun highColor (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public abstract fun highColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public abstract fun highColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public abstract fun highColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public abstract fun horizonBlend (D)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public abstract fun horizonBlend (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public abstract fun horizonBlendTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public abstract fun horizonBlendTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public abstract fun range (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public abstract fun range (Ljava/util/List;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public abstract fun rangeTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public abstract fun rangeTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public abstract fun spaceColor (I)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public abstract fun spaceColor (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public abstract fun spaceColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public abstract fun spaceColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public abstract fun spaceColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public abstract fun starIntensity (D)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public abstract fun starIntensity (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public abstract fun starIntensityTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public abstract fun starIntensityTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 }
 
 public final class com/mapbox/maps/extension/style/atmosphere/generated/AtmosphereDslReceiver$DefaultImpls {
@@ -4127,8 +4157,11 @@ public final class com/mapbox/maps/extension/style/terrain/generated/Terrain : c
 	public fun bindTo (Lcom/mapbox/maps/extension/style/StyleInterface;)V
 	public fun exaggeration (D)Lcom/mapbox/maps/extension/style/terrain/generated/Terrain;
 	public fun exaggeration (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/terrain/generated/Terrain;
+	public fun exaggerationTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/terrain/generated/Terrain;
+	public fun exaggerationTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/terrain/generated/Terrain;
 	public final fun getExaggeration ()Ljava/lang/Double;
 	public final fun getExaggerationAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getExaggerationTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 }
 
 public final class com/mapbox/maps/extension/style/terrain/generated/Terrain$Companion {
@@ -4137,6 +4170,8 @@ public final class com/mapbox/maps/extension/style/terrain/generated/Terrain$Com
 public abstract interface class com/mapbox/maps/extension/style/terrain/generated/TerrainDslReceiver {
 	public abstract fun exaggeration (D)Lcom/mapbox/maps/extension/style/terrain/generated/Terrain;
 	public abstract fun exaggeration (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/terrain/generated/Terrain;
+	public abstract fun exaggerationTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/terrain/generated/Terrain;
+	public abstract fun exaggerationTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/terrain/generated/Terrain;
 }
 
 public final class com/mapbox/maps/extension/style/terrain/generated/TerrainDslReceiver$DefaultImpls {

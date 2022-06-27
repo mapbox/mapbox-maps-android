@@ -12,6 +12,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Optimize `MapboxMap.loadStyle()` to apply images and models earlier. [#1378](https://github.com/mapbox/mapbox-maps-android/pull/1378)
 * Remove `MapboxExperimental` annotation from viewport plugin and promote viewport plugin as stable API. ([1425](https://github.com/mapbox/mapbox-maps-android/pull/1425))
 * Introduce `addRendererSetupErrorListener`/`removeRendererSetupErrorListener` methods for `MapView` and `MapSurface` to listen to renderer setup errors and give opportunity to control some edge cases. ([1427](https://github.com/mapbox/mapbox-maps-android/pull/1427))
+* Introduce transition properties for atmosphere and terrain. ([1451](https://github.com/mapbox/mapbox-maps-android/pull/1451))
 
 ## Bug fixes 🐞
 * Fix lifecycle edge cases not being handled properly by introducing internal `ViewLifecycleOwner` to have granular control over MapView's lifecycle. ([1330](https://github.com/mapbox/mapbox-maps-android/pull/1330))
