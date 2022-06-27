@@ -180,6 +180,182 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   // Property getters and setters
 
   /**
+   * Controls the intensity of ambient occlusion (AO) shading. Current AO implementation is a low-cost best-effort approach that shades area near ground and concave angles between walls. Default value 0.0 disables ambient occlusion and values around 0.3 provide the most plausible results for buildings.
+   */
+  val fillExtrusionAmbientOcclusionIntensity: Double?
+    /**
+     * Controls the intensity of ambient occlusion (AO) shading. Current AO implementation is a low-cost best-effort approach that shades area near ground and concave angles between walls. Default value 0.0 disables ambient occlusion and values around 0.3 provide the most plausible results for buildings.
+     *
+     * @return Double
+     */
+    get() {
+      return getPropertyValue("fill-extrusion-ambient-occlusion-intensity")
+    }
+
+  /**
+   * Controls the intensity of ambient occlusion (AO) shading. Current AO implementation is a low-cost best-effort approach that shades area near ground and concave angles between walls. Default value 0.0 disables ambient occlusion and values around 0.3 provide the most plausible results for buildings.
+   *
+   * @param fillExtrusionAmbientOcclusionIntensity value of fillExtrusionAmbientOcclusionIntensity
+   */
+  override fun fillExtrusionAmbientOcclusionIntensity(fillExtrusionAmbientOcclusionIntensity: Double) = apply {
+    val propertyValue = PropertyValue("fill-extrusion-ambient-occlusion-intensity", fillExtrusionAmbientOcclusionIntensity)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Controls the intensity of ambient occlusion (AO) shading. Current AO implementation is a low-cost best-effort approach that shades area near ground and concave angles between walls. Default value 0.0 disables ambient occlusion and values around 0.3 provide the most plausible results for buildings.
+   *
+   * This is an Expression representation of "fill-extrusion-ambient-occlusion-intensity".
+   *
+   * Controls the intensity of ambient occlusion (AO) shading. Current AO implementation is a low-cost best-effort approach that shades area near ground and concave angles between walls. Default value 0.0 disables ambient occlusion and values around 0.3 provide the most plausible results for buildings.
+   */
+  val fillExtrusionAmbientOcclusionIntensityAsExpression: Expression?
+    /**
+     * Controls the intensity of ambient occlusion (AO) shading. Current AO implementation is a low-cost best-effort approach that shades area near ground and concave angles between walls. Default value 0.0 disables ambient occlusion and values around 0.3 provide the most plausible results for buildings.
+     *
+     * Get the FillExtrusionAmbientOcclusionIntensity property as an Expression
+     *
+     * @return Double
+     */
+    get() {
+      getPropertyValue<Expression>("fill-extrusion-ambient-occlusion-intensity")?.let {
+        return it
+      }
+      fillExtrusionAmbientOcclusionIntensity?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * Controls the intensity of ambient occlusion (AO) shading. Current AO implementation is a low-cost best-effort approach that shades area near ground and concave angles between walls. Default value 0.0 disables ambient occlusion and values around 0.3 provide the most plausible results for buildings.
+   *
+   * @param fillExtrusionAmbientOcclusionIntensity value of fillExtrusionAmbientOcclusionIntensity as Expression
+   */
+  override fun fillExtrusionAmbientOcclusionIntensity(fillExtrusionAmbientOcclusionIntensity: Expression) = apply {
+    val propertyValue = PropertyValue("fill-extrusion-ambient-occlusion-intensity", fillExtrusionAmbientOcclusionIntensity)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Transition options for FillExtrusionAmbientOcclusionIntensity.
+   */
+  val fillExtrusionAmbientOcclusionIntensityTransition: StyleTransition?
+    /**
+     * Get the FillExtrusionAmbientOcclusionIntensity property transition options
+     *
+     * @return transition options for Double
+     */
+    get() {
+      return getPropertyValue("fill-extrusion-ambient-occlusion-intensity-transition")
+    }
+
+  /**
+   * Set the FillExtrusionAmbientOcclusionIntensity property transition options
+   *
+   * @param options transition options for Double
+   */
+  override fun fillExtrusionAmbientOcclusionIntensityTransition(options: StyleTransition) = apply {
+    val propertyValue = PropertyValue("fill-extrusion-ambient-occlusion-intensity-transition", options)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * DSL for [fillExtrusionAmbientOcclusionIntensityTransition].
+   */
+  override fun fillExtrusionAmbientOcclusionIntensityTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+    fillExtrusionAmbientOcclusionIntensityTransition(StyleTransition.Builder().apply(block).build())
+  }
+
+  /**
+   * The radius of ambient occlusion (AO) shading, in meters. Current AO implementation is a low-cost best-effort approach that shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to hight of one floor and brings the most plausible results for buildings.
+   */
+  val fillExtrusionAmbientOcclusionRadius: Double?
+    /**
+     * The radius of ambient occlusion (AO) shading, in meters. Current AO implementation is a low-cost best-effort approach that shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to hight of one floor and brings the most plausible results for buildings.
+     *
+     * @return Double
+     */
+    get() {
+      return getPropertyValue("fill-extrusion-ambient-occlusion-radius")
+    }
+
+  /**
+   * The radius of ambient occlusion (AO) shading, in meters. Current AO implementation is a low-cost best-effort approach that shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to hight of one floor and brings the most plausible results for buildings.
+   *
+   * @param fillExtrusionAmbientOcclusionRadius value of fillExtrusionAmbientOcclusionRadius
+   */
+  override fun fillExtrusionAmbientOcclusionRadius(fillExtrusionAmbientOcclusionRadius: Double) = apply {
+    val propertyValue = PropertyValue("fill-extrusion-ambient-occlusion-radius", fillExtrusionAmbientOcclusionRadius)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * The radius of ambient occlusion (AO) shading, in meters. Current AO implementation is a low-cost best-effort approach that shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to hight of one floor and brings the most plausible results for buildings.
+   *
+   * This is an Expression representation of "fill-extrusion-ambient-occlusion-radius".
+   *
+   * The radius of ambient occlusion (AO) shading, in meters. Current AO implementation is a low-cost best-effort approach that shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to hight of one floor and brings the most plausible results for buildings.
+   */
+  val fillExtrusionAmbientOcclusionRadiusAsExpression: Expression?
+    /**
+     * The radius of ambient occlusion (AO) shading, in meters. Current AO implementation is a low-cost best-effort approach that shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to hight of one floor and brings the most plausible results for buildings.
+     *
+     * Get the FillExtrusionAmbientOcclusionRadius property as an Expression
+     *
+     * @return Double
+     */
+    get() {
+      getPropertyValue<Expression>("fill-extrusion-ambient-occlusion-radius")?.let {
+        return it
+      }
+      fillExtrusionAmbientOcclusionRadius?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * The radius of ambient occlusion (AO) shading, in meters. Current AO implementation is a low-cost best-effort approach that shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to hight of one floor and brings the most plausible results for buildings.
+   *
+   * @param fillExtrusionAmbientOcclusionRadius value of fillExtrusionAmbientOcclusionRadius as Expression
+   */
+  override fun fillExtrusionAmbientOcclusionRadius(fillExtrusionAmbientOcclusionRadius: Expression) = apply {
+    val propertyValue = PropertyValue("fill-extrusion-ambient-occlusion-radius", fillExtrusionAmbientOcclusionRadius)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Transition options for FillExtrusionAmbientOcclusionRadius.
+   */
+  val fillExtrusionAmbientOcclusionRadiusTransition: StyleTransition?
+    /**
+     * Get the FillExtrusionAmbientOcclusionRadius property transition options
+     *
+     * @return transition options for Double
+     */
+    get() {
+      return getPropertyValue("fill-extrusion-ambient-occlusion-radius-transition")
+    }
+
+  /**
+   * Set the FillExtrusionAmbientOcclusionRadius property transition options
+   *
+   * @param options transition options for Double
+   */
+  override fun fillExtrusionAmbientOcclusionRadiusTransition(options: StyleTransition) = apply {
+    val propertyValue = PropertyValue("fill-extrusion-ambient-occlusion-radius-transition", options)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * DSL for [fillExtrusionAmbientOcclusionRadiusTransition].
+   */
+  override fun fillExtrusionAmbientOcclusionRadiusTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+    fillExtrusionAmbientOcclusionRadiusTransition(StyleTransition.Builder().apply(block).build())
+  }
+
+  /**
    * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`.
    */
   val fillExtrusionBase: Double?
@@ -913,6 +1089,104 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       get() = StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "maxzoom").silentUnwrap()
 
     /**
+     * Controls the intensity of ambient occlusion (AO) shading. Current AO implementation is a low-cost best-effort approach that shades area near ground and concave angles between walls. Default value 0.0 disables ambient occlusion and values around 0.3 provide the most plausible results for buildings.
+     */
+    val defaultFillExtrusionAmbientOcclusionIntensity: Double?
+      /**
+       * Controls the intensity of ambient occlusion (AO) shading. Current AO implementation is a low-cost best-effort approach that shades area near ground and concave angles between walls. Default value 0.0 disables ambient occlusion and values around 0.3 provide the most plausible results for buildings.
+       *
+       * Get the default value of FillExtrusionAmbientOcclusionIntensity property
+       *
+       * @return Double
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-ambient-occlusion-intensity").silentUnwrap()
+      }
+
+    /**
+     * Controls the intensity of ambient occlusion (AO) shading. Current AO implementation is a low-cost best-effort approach that shades area near ground and concave angles between walls. Default value 0.0 disables ambient occlusion and values around 0.3 provide the most plausible results for buildings.
+     *
+     * This is an Expression representation of "fill-extrusion-ambient-occlusion-intensity".
+     *
+     * Controls the intensity of ambient occlusion (AO) shading. Current AO implementation is a low-cost best-effort approach that shades area near ground and concave angles between walls. Default value 0.0 disables ambient occlusion and values around 0.3 provide the most plausible results for buildings.
+     */
+    val defaultFillExtrusionAmbientOcclusionIntensityAsExpression: Expression?
+      /**
+       * Get default value of the FillExtrusionAmbientOcclusionIntensity property as an Expression
+       *
+       * @return Double
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-ambient-occlusion-intensity").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultFillExtrusionAmbientOcclusionIntensity?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
+
+    /**
+     * Transition options for FillExtrusionAmbientOcclusionIntensity.
+     */
+    val defaultFillExtrusionAmbientOcclusionIntensityTransition: StyleTransition?
+      /**
+       * Get the FillExtrusionAmbientOcclusionIntensity property transition options
+       *
+       * @return transition options for Double
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-ambient-occlusion-intensity-transition").silentUnwrap()
+
+    /**
+     * The radius of ambient occlusion (AO) shading, in meters. Current AO implementation is a low-cost best-effort approach that shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to hight of one floor and brings the most plausible results for buildings.
+     */
+    val defaultFillExtrusionAmbientOcclusionRadius: Double?
+      /**
+       * The radius of ambient occlusion (AO) shading, in meters. Current AO implementation is a low-cost best-effort approach that shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to hight of one floor and brings the most plausible results for buildings.
+       *
+       * Get the default value of FillExtrusionAmbientOcclusionRadius property
+       *
+       * @return Double
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-ambient-occlusion-radius").silentUnwrap()
+      }
+
+    /**
+     * The radius of ambient occlusion (AO) shading, in meters. Current AO implementation is a low-cost best-effort approach that shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to hight of one floor and brings the most plausible results for buildings.
+     *
+     * This is an Expression representation of "fill-extrusion-ambient-occlusion-radius".
+     *
+     * The radius of ambient occlusion (AO) shading, in meters. Current AO implementation is a low-cost best-effort approach that shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to hight of one floor and brings the most plausible results for buildings.
+     */
+    val defaultFillExtrusionAmbientOcclusionRadiusAsExpression: Expression?
+      /**
+       * Get default value of the FillExtrusionAmbientOcclusionRadius property as an Expression
+       *
+       * @return Double
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-ambient-occlusion-radius").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultFillExtrusionAmbientOcclusionRadius?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
+
+    /**
+     * Transition options for FillExtrusionAmbientOcclusionRadius.
+     */
+    val defaultFillExtrusionAmbientOcclusionRadiusTransition: StyleTransition?
+      /**
+       * Get the FillExtrusionAmbientOcclusionRadius property transition options
+       *
+       * @return transition options for Double
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-ambient-occlusion-radius-transition").silentUnwrap()
+
+    /**
      * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`.
      */
     val defaultFillExtrusionBase: Double?
@@ -1365,6 +1639,66 @@ interface FillExtrusionLayerDsl {
   fun maxZoom(maxZoom: Double): FillExtrusionLayer
 
   // Property getters and setters
+
+  /**
+   * Controls the intensity of ambient occlusion (AO) shading. Current AO implementation is a low-cost best-effort approach that shades area near ground and concave angles between walls. Default value 0.0 disables ambient occlusion and values around 0.3 provide the most plausible results for buildings.
+   *
+   * @param fillExtrusionAmbientOcclusionIntensity value of fillExtrusionAmbientOcclusionIntensity
+   */
+  fun fillExtrusionAmbientOcclusionIntensity(fillExtrusionAmbientOcclusionIntensity: Double = 0.0): FillExtrusionLayer
+
+  /**
+   * Controls the intensity of ambient occlusion (AO) shading. Current AO implementation is a low-cost best-effort approach that shades area near ground and concave angles between walls. Default value 0.0 disables ambient occlusion and values around 0.3 provide the most plausible results for buildings.
+   *
+   * @param fillExtrusionAmbientOcclusionIntensity value of fillExtrusionAmbientOcclusionIntensity as Expression
+   */
+  fun fillExtrusionAmbientOcclusionIntensity(fillExtrusionAmbientOcclusionIntensity: Expression): FillExtrusionLayer
+
+  /**
+   * Controls the intensity of ambient occlusion (AO) shading. Current AO implementation is a low-cost best-effort approach that shades area near ground and concave angles between walls. Default value 0.0 disables ambient occlusion and values around 0.3 provide the most plausible results for buildings.
+   *
+   * Set the FillExtrusionAmbientOcclusionIntensity property transition options
+   *
+   * @param options transition options for Double
+   */
+  fun fillExtrusionAmbientOcclusionIntensityTransition(options: StyleTransition): FillExtrusionLayer
+
+  /**
+   * Controls the intensity of ambient occlusion (AO) shading. Current AO implementation is a low-cost best-effort approach that shades area near ground and concave angles between walls. Default value 0.0 disables ambient occlusion and values around 0.3 provide the most plausible results for buildings.
+   *
+   * DSL for [fillExtrusionAmbientOcclusionIntensityTransition].
+   */
+  fun fillExtrusionAmbientOcclusionIntensityTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer
+
+  /**
+   * The radius of ambient occlusion (AO) shading, in meters. Current AO implementation is a low-cost best-effort approach that shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to hight of one floor and brings the most plausible results for buildings.
+   *
+   * @param fillExtrusionAmbientOcclusionRadius value of fillExtrusionAmbientOcclusionRadius
+   */
+  fun fillExtrusionAmbientOcclusionRadius(fillExtrusionAmbientOcclusionRadius: Double = 3.0): FillExtrusionLayer
+
+  /**
+   * The radius of ambient occlusion (AO) shading, in meters. Current AO implementation is a low-cost best-effort approach that shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to hight of one floor and brings the most plausible results for buildings.
+   *
+   * @param fillExtrusionAmbientOcclusionRadius value of fillExtrusionAmbientOcclusionRadius as Expression
+   */
+  fun fillExtrusionAmbientOcclusionRadius(fillExtrusionAmbientOcclusionRadius: Expression): FillExtrusionLayer
+
+  /**
+   * The radius of ambient occlusion (AO) shading, in meters. Current AO implementation is a low-cost best-effort approach that shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to hight of one floor and brings the most plausible results for buildings.
+   *
+   * Set the FillExtrusionAmbientOcclusionRadius property transition options
+   *
+   * @param options transition options for Double
+   */
+  fun fillExtrusionAmbientOcclusionRadiusTransition(options: StyleTransition): FillExtrusionLayer
+
+  /**
+   * The radius of ambient occlusion (AO) shading, in meters. Current AO implementation is a low-cost best-effort approach that shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to hight of one floor and brings the most plausible results for buildings.
+   *
+   * DSL for [fillExtrusionAmbientOcclusionRadiusTransition].
+   */
+  fun fillExtrusionAmbientOcclusionRadiusTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer
 
   /**
    * The height with which to extrude the base of this layer. Must be less than or equal to `fill-extrusion-height`.
