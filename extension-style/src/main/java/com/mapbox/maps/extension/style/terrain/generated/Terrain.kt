@@ -9,6 +9,7 @@ import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
+import com.mapbox.maps.extension.style.types.StyleTransition
 import com.mapbox.maps.extension.style.types.TerrainDsl
 import com.mapbox.maps.extension.style.utils.unwrap
 
@@ -42,6 +43,35 @@ class Terrain(private val sourceId: String) : TerrainDslReceiver, StyleContract.
    */
   override fun exaggeration(exaggeration: Double) = apply {
     setProperty(PropertyValue("exaggeration", exaggeration))
+  }
+
+  /**
+   * Exaggeration property transition options.
+   */
+  val exaggerationTransition: StyleTransition?
+    /**
+     * Get the Exaggeration property transition options.
+     *
+     * @return transition options for exaggeration
+     */
+    get() {
+      return getTransitionProperty("exaggeration-transition")
+    }
+  /**
+   * Set the Exaggeration property transition options.
+   *
+   * @param options transition options for exaggeration
+   */
+  override fun exaggerationTransition(options: StyleTransition) = apply {
+    val propertyValue = PropertyValue("exaggeration-transition", options)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * DSL for [exaggerationTransition].
+   */
+  override fun exaggerationTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+    exaggerationTransition(StyleTransition.Builder().apply(block).build())
   }
 
   /**
@@ -122,6 +152,24 @@ class Terrain(private val sourceId: String) : TerrainDslReceiver, StyleContract.
     throw MapboxStyleException("Get property $propertyName failed: terrain is not added to style yet.")
   }
 
+  private fun getTransitionProperty(transitionName: String): StyleTransition? {
+    delegate?.let {
+      return try {
+        @Suppress("UNCHECKED_CAST")
+        val styleLayerProperty =
+          it.getStyleTerrainProperty(transitionName).value.contents as HashMap<String, Value>
+        val duration = styleLayerProperty["duration"]?.contents as Long
+        val delay = styleLayerProperty["delay"]?.contents as Long
+        StyleTransition.Builder().delay(delay).duration(duration).build()
+      } catch (e: RuntimeException) {
+        Log.e(TAG, "Get terrain property failed: ${e.message}")
+        Log.e(TAG, it.getStyleTerrainProperty(transitionName).toString())
+        null
+      }
+    }
+    throw MapboxStyleException("Get property $transitionName failed: terrain is not added to style yet.")
+  }
+
   /**
    * Static variables and methods.
    */
@@ -151,6 +199,18 @@ interface TerrainDslReceiver {
    * @param exaggeration value of exaggeration as Expression
    */
   fun exaggeration(exaggeration: Expression): Terrain
+
+  /**
+   * Set the Exaggeration property transition options.
+   *
+   * @param options transition options for exaggeration
+   */
+  fun exaggerationTransition(options: StyleTransition): Terrain
+
+  /**
+   * DSL for [exaggerationTransition].
+   */
+  fun exaggerationTransition(block: StyleTransition.Builder.() -> Unit): Terrain
 }
 
 /**

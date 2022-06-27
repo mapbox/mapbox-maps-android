@@ -6,6 +6,7 @@ import androidx.test.annotation.UiThreadTest
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.mapbox.maps.extension.style.expressions.dsl.generated.*
 import com.mapbox.maps.extension.style.terrain.generated.*
+import com.mapbox.maps.extension.style.types.transitionOptions
 import com.mapbox.maps.testapp.style.BaseStyleTest
 import org.junit.Assert.*
 import org.junit.Test
@@ -39,6 +40,37 @@ class TerrainTest : BaseStyleTest() {
     }
     setupTerrain(terrain)
     assertEquals(1.0, terrain.exaggerationAsExpression?.contents as Double, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun exaggerationTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val terrain = terrain(sourceId) {
+      exaggerationTransition(transition)
+    }
+    setupTerrain(terrain)
+    assertEquals(transition, terrain.exaggerationTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun exaggerationTransitionSetDslTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val terrain = terrain(sourceId) {
+      exaggerationTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    setupTerrain(terrain)
+    assertEquals(transition, terrain.exaggerationTransition)
   }
 }
 
