@@ -399,7 +399,7 @@ jobs:
       - run:
           no_output_timeout: 30m
           name: docs
-          command: sh scripts/kdoc-validate.sh
+          command: bash scripts/kdoc-validate.sh
 
   verify-api-metalava:
     executor:
