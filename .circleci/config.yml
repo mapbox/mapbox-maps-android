@@ -390,17 +390,21 @@ jobs:
       - store-results
 
   verify-docs:
-    executor: ubuntu
+    executor:
+      name: ubuntu
+      machine: xlarge
     steps:
       - checkout
       - restore-gradle-cache
       - run:
           no_output_timeout: 30m
           name: docs
-          command: sh scripts/kdoc-validate.sh
+          command: bash scripts/kdoc-validate.sh
 
   verify-api-metalava:
-    executor: ubuntu
+    executor:
+      name: ubuntu
+      machine: xlarge
     steps:
       - checkout
       - restore-gradle-cache
