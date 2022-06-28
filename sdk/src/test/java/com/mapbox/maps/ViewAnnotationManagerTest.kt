@@ -313,6 +313,7 @@ class ViewAnnotationManagerTest {
 
   @Test
   fun defaultViewAnnotationUpdateMode() {
+    every { renderer.viewAnnotationMode } returns ViewAnnotationManager.DEFAULT_UPDATE_MODE
     assertEquals(
       ViewAnnotationManager.DEFAULT_UPDATE_MODE,
       viewAnnotationManager.getViewAnnotationUpdateMode()
