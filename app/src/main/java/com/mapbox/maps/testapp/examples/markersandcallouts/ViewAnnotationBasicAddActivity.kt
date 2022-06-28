@@ -28,6 +28,8 @@ class ViewAnnotationBasicAddActivity : BaseViewAnnotationActivity(), OnMapClickL
     val binding = ActivityViewAnnotationShowcaseBinding.inflate(layoutInflater)
     setContentView(binding.root)
 
+    mapView = binding.mapView
+
     mapboxMap = mapView.getMapboxMap().apply {
       loadStyleUri(Style.MAPBOX_STREETS) {
         addOnMapClickListener(this@ViewAnnotationBasicAddActivity)
