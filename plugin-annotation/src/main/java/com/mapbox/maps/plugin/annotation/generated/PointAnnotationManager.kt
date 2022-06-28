@@ -1034,6 +1034,35 @@ class PointAnnotationManager(
     return symbolLayer(dragLayerId, dragSourceId) {}
   }
   /**
+   * The TextLineHeight property
+   *
+   * Text leading value for multi-line text.
+   */
+  @Deprecated(
+    "text-line-height property is now data driven, use `PointAnnotation.textLineHeight` instead.",
+    ReplaceWith("PointAnnotation.textLineHeight")
+  )
+  var textLineHeight: Double?
+    /**
+     * Get the TextLineHeight property
+     *
+     * @return property wrapper value around Double
+     */
+    get(): Double? {
+      return layer?.textLineHeight
+    }
+    /**
+     * Set the TextLineHeight property
+     * @param value property wrapper value around Double
+     */
+    set(value) {
+      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-line-height").silentUnwrap()
+      newValue?.let {
+        layer?.textLineHeight(it)
+        dragLayer?.textLineHeight(it)
+      }
+    }
+  /**
    * The filter on the managed pointAnnotations.
    *
    * @param expression expression
