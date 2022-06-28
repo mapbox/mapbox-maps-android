@@ -312,15 +312,6 @@ class ViewAnnotationManagerTest {
   }
 
   @Test
-  fun defaultViewAnnotationUpdateMode() {
-    every { renderer.viewAnnotationMode } returns ViewAnnotationManager.DEFAULT_UPDATE_MODE
-    assertEquals(
-      ViewAnnotationManager.DEFAULT_UPDATE_MODE,
-      viewAnnotationManager.getViewAnnotationUpdateMode()
-    )
-  }
-
-  @Test
   fun setViewAnnotationUpdateMode() {
     viewAnnotationManager.setViewAnnotationUpdateMode(ViewAnnotationUpdateMode.MAP_FIXED_DELAY)
     verify(exactly = 1) { renderer.viewAnnotationMode = ViewAnnotationUpdateMode.MAP_FIXED_DELAY }
@@ -328,7 +319,8 @@ class ViewAnnotationManagerTest {
 
   @Test
   fun getViewAnnotationUpdateMode() {
-    viewAnnotationManager.setViewAnnotationUpdateMode(ViewAnnotationUpdateMode.MAP_FIXED_DELAY)
+    every { renderer.viewAnnotationMode } returns ViewAnnotationManager.DEFAULT_UPDATE_MODE
+    assertEquals(ViewAnnotationManager.DEFAULT_UPDATE_MODE, viewAnnotationManager.getViewAnnotationUpdateMode())
     every { renderer.viewAnnotationMode } returns ViewAnnotationUpdateMode.MAP_FIXED_DELAY
     assertEquals(ViewAnnotationUpdateMode.MAP_FIXED_DELAY, viewAnnotationManager.getViewAnnotationUpdateMode())
   }
