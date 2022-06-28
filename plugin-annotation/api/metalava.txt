@@ -442,6 +442,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public java.util.List<java.lang.String>? getTextFont();
     method public Boolean? getTextIgnorePlacement();
     method public Boolean? getTextKeepUpright();
+    method @Deprecated public Double? getTextLineHeight();
     method public Double? getTextMaxAngle();
     method public Boolean? getTextOptional();
     method public Double? getTextPadding();
@@ -473,6 +474,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setTextFont(java.util.List<java.lang.String>? value);
     method public void setTextIgnorePlacement(Boolean? value);
     method public void setTextKeepUpright(Boolean? value);
+    method @Deprecated public void setTextLineHeight(Double? value);
     method public void setTextMaxAngle(Double? value);
     method public void setTextOptional(Boolean? value);
     method public void setTextPadding(Double? value);
@@ -506,6 +508,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final java.util.List<java.lang.String>? textFont;
     property public final Boolean? textIgnorePlacement;
     property public final Boolean? textKeepUpright;
+    property @Deprecated public final Double? textLineHeight;
     property public final Double? textMaxAngle;
     property public final Boolean? textOptional;
     property public final Double? textPadding;

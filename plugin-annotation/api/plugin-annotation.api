@@ -368,6 +368,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotationMa
 	public final fun getTextFont ()Ljava/util/List;
 	public final fun getTextIgnorePlacement ()Ljava/lang/Boolean;
 	public final fun getTextKeepUpright ()Ljava/lang/Boolean;
+	public final fun getTextLineHeight ()Ljava/lang/Double;
 	public final fun getTextMaxAngle ()Ljava/lang/Double;
 	public final fun getTextOptional ()Ljava/lang/Boolean;
 	public final fun getTextPadding ()Ljava/lang/Double;
@@ -397,6 +398,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotationMa
 	public final fun setTextFont (Ljava/util/List;)V
 	public final fun setTextIgnorePlacement (Ljava/lang/Boolean;)V
 	public final fun setTextKeepUpright (Ljava/lang/Boolean;)V
+	public final fun setTextLineHeight (Ljava/lang/Double;)V
 	public final fun setTextMaxAngle (Ljava/lang/Double;)V
 	public final fun setTextOptional (Ljava/lang/Boolean;)V
 	public final fun setTextPadding (Ljava/lang/Double;)V
