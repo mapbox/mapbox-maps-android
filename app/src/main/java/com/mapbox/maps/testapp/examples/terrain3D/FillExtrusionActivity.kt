@@ -56,6 +56,8 @@ class FillExtrusionActivity : AppCompatActivity() {
     fillExtrusionLayer.fillExtrusionHeight(get("height"))
     fillExtrusionLayer.fillExtrusionBase(get("min_height"))
     fillExtrusionLayer.fillExtrusionOpacity(0.6)
+    fillExtrusionLayer.fillExtrusionAmbientOcclusionIntensity(0.3)
+    fillExtrusionLayer.fillExtrusionAmbientOcclusionRadius(3.0)
     style.addLayer(fillExtrusionLayer)
   }
 

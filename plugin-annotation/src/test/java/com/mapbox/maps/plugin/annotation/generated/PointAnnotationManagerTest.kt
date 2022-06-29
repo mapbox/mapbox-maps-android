@@ -143,6 +143,8 @@ class PointAnnotationManagerTest {
     every { dragLayer.textJustify(any<Expression>()) } answers { dragLayer }
     every { layer.textLetterSpacing(any<Expression>()) } answers { layer }
     every { dragLayer.textLetterSpacing(any<Expression>()) } answers { dragLayer }
+    every { layer.textLineHeight(any<Expression>()) } answers { layer }
+    every { dragLayer.textLineHeight(any<Expression>()) } answers { dragLayer }
     every { layer.textMaxWidth(any<Expression>()) } answers { layer }
     every { dragLayer.textMaxWidth(any<Expression>()) } answers { dragLayer }
     every { layer.textOffset(any<Expression>()) } answers { layer }
@@ -441,6 +443,11 @@ class PointAnnotationManagerTest {
     assertEquals(0.0, annotation.textLetterSpacing)
     annotation.textLetterSpacing = null
     assertNull(annotation.textLetterSpacing)
+
+    annotation.textLineHeight = 1.2
+    assertEquals(1.2, annotation.textLineHeight)
+    annotation.textLineHeight = null
+    assertNull(annotation.textLineHeight)
 
     annotation.textMaxWidth = 10.0
     assertEquals(10.0, annotation.textMaxWidth)
@@ -879,6 +886,22 @@ class PointAnnotationManagerTest {
     manager.create(options)
     verify(exactly = 1) { manager.layer?.textLetterSpacing(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_LETTER_SPACING)) }
     verify(exactly = 1) { manager.dragLayer?.textLetterSpacing(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_LETTER_SPACING)) }
+  }
+
+  @Test
+  fun testTextLineHeightLayerProperty() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer?.textLineHeight(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_LINE_HEIGHT)) }
+    val options = PointAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+      .withTextLineHeight(1.2)
+    manager.create(options)
+    verify(exactly = 1) { manager.layer?.textLineHeight(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_LINE_HEIGHT)) }
+    verify(exactly = 1) { manager.dragLayer?.textLineHeight(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_LINE_HEIGHT)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer?.textLineHeight(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_LINE_HEIGHT)) }
+    verify(exactly = 1) { manager.dragLayer?.textLineHeight(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_LINE_HEIGHT)) }
   }
 
   @Test

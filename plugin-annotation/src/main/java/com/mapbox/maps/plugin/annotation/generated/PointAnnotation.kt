@@ -307,7 +307,7 @@ class PointAnnotation(
   /**
    * The textField property
    *
-   * Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options.
+   * Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options. SDF images are not supported in formatted text and will be ignored.
    */
   var textField: String?
     /**
@@ -400,6 +400,39 @@ class PointAnnotation(
         jsonObject.addProperty(PointAnnotationOptions.PROPERTY_TEXT_LETTER_SPACING, value)
       } else {
         jsonObject.remove(PointAnnotationOptions.PROPERTY_TEXT_LETTER_SPACING)
+      }
+    }
+
+  /**
+   * The textLineHeight property
+   *
+   * Text leading value for multi-line text.
+   */
+  var textLineHeight: Double?
+    /**
+     * Get the textLineHeight property
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = jsonObject.get(PointAnnotationOptions.PROPERTY_TEXT_LINE_HEIGHT)
+      value?.let {
+        return it.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the textLineHeight property
+     *
+     * To update the pointAnnotation on the map use {@link pointAnnotationManager#update(Annotation)}.
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      if (value != null) {
+        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_TEXT_LINE_HEIGHT, value)
+      } else {
+        jsonObject.remove(PointAnnotationOptions.PROPERTY_TEXT_LINE_HEIGHT)
       }
     }
 
@@ -602,7 +635,7 @@ class PointAnnotation(
 
   /**
    * The iconColor property in Int
-   * The color of the icon. This can only be used with sdf icons.
+   * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
    */
   var iconColorInt: Int?
     /**
@@ -638,7 +671,7 @@ class PointAnnotation(
   /**
    * The iconColor property in String
    *
-   * The color of the icon. This can only be used with sdf icons.
+   * The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
    */
   var iconColorString: String?
     /**
@@ -701,7 +734,7 @@ class PointAnnotation(
 
   /**
    * The iconHaloColor property in Int
-   * The color of the icon's halo. Icon halos can only be used with SDF icons.
+   * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
    */
   var iconHaloColorInt: Int?
     /**
@@ -737,7 +770,7 @@ class PointAnnotation(
   /**
    * The iconHaloColor property in String
    *
-   * The color of the icon's halo. Icon halos can only be used with SDF icons.
+   * The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/).
    */
   var iconHaloColorString: String?
     /**
@@ -1114,6 +1147,9 @@ class PointAnnotation(
     }
     jsonObject.get(PointAnnotationOptions.PROPERTY_TEXT_LETTER_SPACING)?.let {
       annotationManager.enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_TEXT_LETTER_SPACING)
+    }
+    jsonObject.get(PointAnnotationOptions.PROPERTY_TEXT_LINE_HEIGHT)?.let {
+      annotationManager.enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_TEXT_LINE_HEIGHT)
     }
     jsonObject.get(PointAnnotationOptions.PROPERTY_TEXT_MAX_WIDTH)?.let {
       annotationManager.enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_TEXT_MAX_WIDTH)
