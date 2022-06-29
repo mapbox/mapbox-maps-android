@@ -508,6 +508,10 @@ public final class com/mapbox/maps/attribution/AttributionParser$Options {
 	public final fun withTelemetryAttribution (Z)Lcom/mapbox/maps/attribution/AttributionParser$Options;
 }
 
+public final class com/mapbox/maps/exception/WorkerThreadException : java/lang/RuntimeException {
+	public fun <init> ()V
+}
+
 public final class com/mapbox/maps/plugin/InvalidViewPluginHostException : java/lang/Exception {
 	public fun <init> (Ljava/lang/String;)V
 }

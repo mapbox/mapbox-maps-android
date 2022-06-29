@@ -119,20 +119,25 @@ class MapOverlayPluginTest : BaseMapTest() {
 
   @Test
   fun getReframeCameraOption() {
-    mapOverlayPlugin.reframe {
-      assertNull(it)
-    }
-    mapOverlayPlugin.registerMapOverlayCoordinatesProvider(object : MapOverlayCoordinatesProvider {
-      override fun getShownCoordinates(): List<Point> {
-        return listOf(
-          Point.fromLngLat(0.0, 0.0),
-          Point.fromLngLat(10.0, 20.0)
-        )
-      }
-    })
+    rule.scenario.onActivity {
+      it.runOnUiThread {
+        mapOverlayPlugin.reframe {
+          assertNull(it)
+        }
+        mapOverlayPlugin.registerMapOverlayCoordinatesProvider(object :
+            MapOverlayCoordinatesProvider {
+            override fun getShownCoordinates(): List<Point> {
+              return listOf(
+                Point.fromLngLat(0.0, 0.0),
+                Point.fromLngLat(10.0, 20.0)
+              )
+            }
+          })
 
-    mapOverlayPlugin.reframe {
-      assertNotNull(it)
+        mapOverlayPlugin.reframe {
+          assertNotNull(it)
+        }
+      }
     }
   }
 
@@ -154,14 +159,16 @@ class MapOverlayPluginTest : BaseMapTest() {
         leftTopParams.setMargins(0, 0, 300, (mapView.height - 50.0).toInt())
         leftTop.layoutParams = leftTopParams
       }
-    }
 
-    mapOverlayPlugin.reframe {
-      assertNotNull(it)
-      mapboxMap.setCamera(it!!)
-      val currentCameraOptions = mapboxMap.cameraState
-      assertEquals(currentCameraOptions.center.latitude(), it.center!!.latitude(), 0.01)
-      assertEquals(currentCameraOptions.center.longitude(), it.center!!.longitude(), 0.01)
+      it.runOnUiThread {
+        mapOverlayPlugin.reframe {
+          assertNotNull(it)
+          mapboxMap.setCamera(it!!)
+          val currentCameraOptions = mapboxMap.cameraState
+          assertEquals(currentCameraOptions.center.latitude(), it.center!!.latitude(), 0.01)
+          assertEquals(currentCameraOptions.center.longitude(), it.center!!.longitude(), 0.01)
+        }
+      }
     }
   }
 }

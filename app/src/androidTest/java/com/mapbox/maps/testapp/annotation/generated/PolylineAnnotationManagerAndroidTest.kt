@@ -2,6 +2,7 @@
 
 package com.mapbox.maps.testapp.annotation.generated
 
+import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.mapbox.geojson.Feature
@@ -39,177 +40,213 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun testLineCap() {
-    val expectedValue = LineCap.BUTT
-    val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
-    polylineAnnotationManager.lineCap = expectedValue
-    assertEquals(expectedValue, polylineAnnotationManager.lineCap)
-    polylineAnnotationManager.lineCap = null
-    val expectedDefaultValue = LineCap.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cap").silentUnwrap<String>()!!.toUpperCase(Locale.US).replace('-', '_'))
-    assertEquals(expectedDefaultValue, polylineAnnotationManager.lineCap)
+    rule.runOnUiThread {
+      val expectedValue = LineCap.BUTT
+      val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
+      polylineAnnotationManager.lineCap = expectedValue
+      assertEquals(expectedValue, polylineAnnotationManager.lineCap)
+      polylineAnnotationManager.lineCap = null
+      val expectedDefaultValue = LineCap.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cap").silentUnwrap<String>()!!.toUpperCase(Locale.US).replace('-', '_'))
+      assertEquals(expectedDefaultValue, polylineAnnotationManager.lineCap)
+    }
   }
 
   @Test
   fun testLineMiterLimit() {
-    val expectedValue = 1.0
-    val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
-    polylineAnnotationManager.lineMiterLimit = expectedValue
-    assertEquals(expectedValue, polylineAnnotationManager.lineMiterLimit)
-    polylineAnnotationManager.lineMiterLimit = null
-    assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-miter-limit").silentUnwrap(), polylineAnnotationManager.lineMiterLimit)
+    rule.runOnUiThread {
+      val expectedValue = 1.0
+      val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
+      polylineAnnotationManager.lineMiterLimit = expectedValue
+      assertEquals(expectedValue, polylineAnnotationManager.lineMiterLimit)
+      polylineAnnotationManager.lineMiterLimit = null
+      assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-miter-limit").silentUnwrap(), polylineAnnotationManager.lineMiterLimit)
+    }
   }
 
   @Test
   fun testLineRoundLimit() {
-    val expectedValue = 1.0
-    val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
-    polylineAnnotationManager.lineRoundLimit = expectedValue
-    assertEquals(expectedValue, polylineAnnotationManager.lineRoundLimit)
-    polylineAnnotationManager.lineRoundLimit = null
-    assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-round-limit").silentUnwrap(), polylineAnnotationManager.lineRoundLimit)
+    rule.runOnUiThread {
+      val expectedValue = 1.0
+      val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
+      polylineAnnotationManager.lineRoundLimit = expectedValue
+      assertEquals(expectedValue, polylineAnnotationManager.lineRoundLimit)
+      polylineAnnotationManager.lineRoundLimit = null
+      assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-round-limit").silentUnwrap(), polylineAnnotationManager.lineRoundLimit)
+    }
   }
 
   @Test
   fun testLineDasharray() {
-    val expectedValue = listOf(1.0, 2.0)
-    val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
-    polylineAnnotationManager.lineDasharray = expectedValue
-    assertEquals(expectedValue, polylineAnnotationManager.lineDasharray)
-    polylineAnnotationManager.lineDasharray = null
-    assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-dasharray").silentUnwrap(), polylineAnnotationManager.lineDasharray)
+    rule.runOnUiThread {
+      val expectedValue = listOf(1.0, 2.0)
+      val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
+      polylineAnnotationManager.lineDasharray = expectedValue
+      assertEquals(expectedValue, polylineAnnotationManager.lineDasharray)
+      polylineAnnotationManager.lineDasharray = null
+      assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-dasharray").silentUnwrap(), polylineAnnotationManager.lineDasharray)
+    }
   }
 
   @Test
   fun testLineTranslate() {
-    val expectedValue = listOf(0.0, 1.0)
-    val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
-    polylineAnnotationManager.lineTranslate = expectedValue
-    assertEquals(expectedValue, polylineAnnotationManager.lineTranslate)
-    polylineAnnotationManager.lineTranslate = null
-    assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-translate").silentUnwrap(), polylineAnnotationManager.lineTranslate)
+    rule.runOnUiThread {
+      val expectedValue = listOf(0.0, 1.0)
+      val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
+      polylineAnnotationManager.lineTranslate = expectedValue
+      assertEquals(expectedValue, polylineAnnotationManager.lineTranslate)
+      polylineAnnotationManager.lineTranslate = null
+      assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-translate").silentUnwrap(), polylineAnnotationManager.lineTranslate)
+    }
   }
 
   @Test
   fun testLineTranslateAnchor() {
-    val expectedValue = LineTranslateAnchor.MAP
-    val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
-    polylineAnnotationManager.lineTranslateAnchor = expectedValue
-    assertEquals(expectedValue, polylineAnnotationManager.lineTranslateAnchor)
-    polylineAnnotationManager.lineTranslateAnchor = null
-    val expectedDefaultValue = LineTranslateAnchor.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-translate-anchor").silentUnwrap<String>()!!.toUpperCase(Locale.US).replace('-', '_'))
-    assertEquals(expectedDefaultValue, polylineAnnotationManager.lineTranslateAnchor)
+    rule.runOnUiThread {
+      val expectedValue = LineTranslateAnchor.MAP
+      val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
+      polylineAnnotationManager.lineTranslateAnchor = expectedValue
+      assertEquals(expectedValue, polylineAnnotationManager.lineTranslateAnchor)
+      polylineAnnotationManager.lineTranslateAnchor = null
+      val expectedDefaultValue = LineTranslateAnchor.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-translate-anchor").silentUnwrap<String>()!!.toUpperCase(Locale.US).replace('-', '_'))
+      assertEquals(expectedDefaultValue, polylineAnnotationManager.lineTranslateAnchor)
+    }
   }
 
   @Test
   fun testLineTrimOffset() {
-    val expectedValue = listOf(0.0, 1.0)
-    val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
-    polylineAnnotationManager.lineTrimOffset = expectedValue
-    assertEquals(expectedValue, polylineAnnotationManager.lineTrimOffset)
-    polylineAnnotationManager.lineTrimOffset = null
-    assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-trim-offset").silentUnwrap(), polylineAnnotationManager.lineTrimOffset)
+    rule.runOnUiThread {
+      val expectedValue = listOf(0.0, 1.0)
+      val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
+      polylineAnnotationManager.lineTrimOffset = expectedValue
+      assertEquals(expectedValue, polylineAnnotationManager.lineTrimOffset)
+      polylineAnnotationManager.lineTrimOffset = null
+      assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-trim-offset").silentUnwrap(), polylineAnnotationManager.lineTrimOffset)
+    }
   }
 
   @Test
   fun create() {
-    val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
-    val annotation = polylineAnnotationManager.create(
-      PolylineAnnotationOptions()
-        .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
-    )
-    assertEquals(annotation, polylineAnnotationManager.annotations[0])
+    rule.runOnUiThread {
+      val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
+      val annotation = polylineAnnotationManager.create(
+        PolylineAnnotationOptions()
+          .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
+      )
+      assertEquals(annotation, polylineAnnotationManager.annotations[0])
+    }
   }
 
   @Test
   fun createFromFeature() {
-    val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
-    val featureCollection =
-      FeatureCollection.fromFeature(Feature.fromGeometry(LineString.fromLngLats(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0)))))
-    val annotations = polylineAnnotationManager.create(featureCollection.toJson())
-    assertEquals(annotations.first(), polylineAnnotationManager.annotations[0])
-    val annotations1 = polylineAnnotationManager.create(featureCollection)
-    assertEquals(annotations1.first(), polylineAnnotationManager.annotations[1])
+    rule.runOnUiThread {
+      val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
+      val featureCollection =
+        FeatureCollection.fromFeature(Feature.fromGeometry(LineString.fromLngLats(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0)))))
+      val annotations = polylineAnnotationManager.create(featureCollection.toJson())
+      assertEquals(annotations.first(), polylineAnnotationManager.annotations[0])
+      val annotations1 = polylineAnnotationManager.create(featureCollection)
+      assertEquals(annotations1.first(), polylineAnnotationManager.annotations[1])
+    }
   }
 
   @Test
   fun createList() {
-    val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
-    val list = listOf(
-      PolylineAnnotationOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0))),
-      PolylineAnnotationOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
-    )
-    val annotations = polylineAnnotationManager.create(list)
-    assertEquals(annotations[0], polylineAnnotationManager.annotations[0])
-    assertEquals(annotations[1], polylineAnnotationManager.annotations[1])
+    rule.runOnUiThread {
+      val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
+      val list = listOf(
+        PolylineAnnotationOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0))),
+        PolylineAnnotationOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
+      )
+      val annotations = polylineAnnotationManager.create(list)
+      assertEquals(annotations[0], polylineAnnotationManager.annotations[0])
+      assertEquals(annotations[1], polylineAnnotationManager.annotations[1])
+    }
   }
 
   @Test
   fun update() {
-    val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
-    val annotation = polylineAnnotationManager.create(PolylineAnnotationOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0))))
-    assertEquals(annotation, polylineAnnotationManager.annotations[0])
-    annotation.points = listOf(Point.fromLngLat(1.0, 1.0), Point.fromLngLat(1.0, 1.0))
-    annotation.lineJoin = LineJoin.BEVEL
-    polylineAnnotationManager.update(annotation)
-    assertEquals(annotation, polylineAnnotationManager.annotations[0])
-    assertEquals(LineJoin.BEVEL, annotation.lineJoin)
+    rule.runOnUiThread {
+      val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
+      val annotation = polylineAnnotationManager.create(PolylineAnnotationOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0))))
+      assertEquals(annotation, polylineAnnotationManager.annotations[0])
+      annotation.points = listOf(Point.fromLngLat(1.0, 1.0), Point.fromLngLat(1.0, 1.0))
+      annotation.lineJoin = LineJoin.BEVEL
+      polylineAnnotationManager.update(annotation)
+      assertEquals(annotation, polylineAnnotationManager.annotations[0])
+      assertEquals(LineJoin.BEVEL, annotation.lineJoin)
+    }
   }
 
   @Test
   fun updateList() {
-    val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
-    val list = listOf(
-      PolylineAnnotationOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0))),
-      PolylineAnnotationOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
-    )
-    val annotations = polylineAnnotationManager.create(list)
-    assertEquals(annotations[0], polylineAnnotationManager.annotations[0])
-    assertEquals(annotations[1], polylineAnnotationManager.annotations[1])
-    annotations[0].points = listOf(Point.fromLngLat(1.0, 0.0), Point.fromLngLat(1.0, 0.0))
-    annotations[1].points = listOf(Point.fromLngLat(1.0, 0.0), Point.fromLngLat(1.0, 0.0))
-    polylineAnnotationManager.update(annotations)
-    assertEquals(annotations[0], polylineAnnotationManager.annotations[0])
-    assertEquals(annotations[1], polylineAnnotationManager.annotations[1])
+    rule.runOnUiThread {
+      val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
+      val list = listOf(
+        PolylineAnnotationOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0))),
+        PolylineAnnotationOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
+      )
+      val annotations = polylineAnnotationManager.create(list)
+      assertEquals(annotations[0], polylineAnnotationManager.annotations[0])
+      assertEquals(annotations[1], polylineAnnotationManager.annotations[1])
+      annotations[0].points = listOf(Point.fromLngLat(1.0, 0.0), Point.fromLngLat(1.0, 0.0))
+      annotations[1].points = listOf(Point.fromLngLat(1.0, 0.0), Point.fromLngLat(1.0, 0.0))
+      polylineAnnotationManager.update(annotations)
+      assertEquals(annotations[0], polylineAnnotationManager.annotations[0])
+      assertEquals(annotations[1], polylineAnnotationManager.annotations[1])
+    }
   }
 
   @Test
   fun delete() {
-    val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
-    val annotation = polylineAnnotationManager.create(
-      PolylineAnnotationOptions()
-        .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
-    )
-    assertEquals(annotation, polylineAnnotationManager.annotations[0])
-    polylineAnnotationManager.delete(annotation)
-    assertTrue(polylineAnnotationManager.annotations.isEmpty())
+    rule.runOnUiThread {
+      val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
+      val annotation = polylineAnnotationManager.create(
+        PolylineAnnotationOptions()
+          .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
+      )
+      assertEquals(annotation, polylineAnnotationManager.annotations[0])
+      polylineAnnotationManager.delete(annotation)
+      assertTrue(polylineAnnotationManager.annotations.isEmpty())
+    }
   }
 
   @Test
   fun deleteList() {
-    val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
-    val list = listOf(
-      PolylineAnnotationOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0))),
-      PolylineAnnotationOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
-    )
-    val annotations = polylineAnnotationManager.create(list)
-    assertEquals(annotations[0], polylineAnnotationManager.annotations[0])
-    assertEquals(annotations[1], polylineAnnotationManager.annotations[1])
+    rule.runOnUiThread {
+      val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
+      val list = listOf(
+        PolylineAnnotationOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0))),
+        PolylineAnnotationOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
+      )
+      val annotations = polylineAnnotationManager.create(list)
+      assertEquals(annotations[0], polylineAnnotationManager.annotations[0])
+      assertEquals(annotations[1], polylineAnnotationManager.annotations[1])
 
-    polylineAnnotationManager.delete(annotations)
-    assertTrue(polylineAnnotationManager.annotations.isEmpty())
+      polylineAnnotationManager.delete(annotations)
+      assertTrue(polylineAnnotationManager.annotations.isEmpty())
+    }
   }
 
   @Test
   fun deleteAll() {
-    val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
-    val list = listOf(
-      PolylineAnnotationOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0))),
-      PolylineAnnotationOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
-    )
-    val annotations = polylineAnnotationManager.create(list)
-    assertEquals(annotations[0], polylineAnnotationManager.annotations[0])
-    assertEquals(annotations[1], polylineAnnotationManager.annotations[1])
+    rule.runOnUiThread {
+      val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
+      val list = listOf(
+        PolylineAnnotationOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0))),
+        PolylineAnnotationOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
+      )
+      val annotations = polylineAnnotationManager.create(list)
+      assertEquals(annotations[0], polylineAnnotationManager.annotations[0])
+      assertEquals(annotations[1], polylineAnnotationManager.annotations[1])
 
-    polylineAnnotationManager.deleteAll()
-    assertTrue(polylineAnnotationManager.annotations.isEmpty())
+      polylineAnnotationManager.deleteAll()
+      assertTrue(polylineAnnotationManager.annotations.isEmpty())
+    }
+  }
+
+  fun ActivityScenarioRule<*>.runOnUiThread(block: () -> Unit) {
+    this.scenario.onActivity {
+      it.runOnUiThread(block)
+    }
   }
 }

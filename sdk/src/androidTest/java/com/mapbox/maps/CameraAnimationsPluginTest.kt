@@ -49,8 +49,16 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
     }
 
     if (listener.latchEnd.await(LATCH_MAX_TIME, TimeUnit.MILLISECONDS)) {
-      assertEquals(7.0, mapView.getMapboxMap().cameraState.zoom, EPS)
-      assertEquals(120.0, mapView.getMapboxMap().cameraState.bearing, EPS)
+      val resultLatch = CountDownLatch(1)
+      mainHandler.post {
+        assertEquals(7.0, mapView.getMapboxMap().cameraState.zoom, EPS)
+        assertEquals(120.0, mapView.getMapboxMap().cameraState.bearing, EPS)
+        resultLatch.countDown()
+      }
+
+      if (!resultLatch.await(LATCH_MAX_TIME, TimeUnit.MILLISECONDS)) {
+        throw TimeoutException()
+      }
     } else {
       throw TimeoutException()
     }
@@ -77,8 +85,15 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
     }
 
     if (listener.latchEnd.await(LATCH_MAX_TIME, TimeUnit.MILLISECONDS)) {
-      assertEquals(7.0, mapView.getMapboxMap().cameraState.zoom, EPS)
-      assertEquals(120.0, mapView.getMapboxMap().cameraState.bearing, EPS)
+      val resultLatch = CountDownLatch(1)
+      mainHandler.post {
+        assertEquals(7.0, mapView.getMapboxMap().cameraState.zoom, EPS)
+        assertEquals(120.0, mapView.getMapboxMap().cameraState.bearing, EPS)
+        resultLatch.countDown()
+      }
+      if (!resultLatch.await(LATCH_MAX_TIME, TimeUnit.MILLISECONDS)) {
+        throw TimeoutException()
+      }
     } else {
       throw TimeoutException()
     }
@@ -110,7 +125,14 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
     }
 
     if (listener.latchEnd.await(LATCH_MAX_TIME, TimeUnit.MILLISECONDS)) {
-      assertEquals(7.0, mapView.getMapboxMap().cameraState.zoom, EPS)
+      val resultLatch = CountDownLatch(1)
+      mainHandler.post {
+        assertEquals(7.0, mapView.getMapboxMap().cameraState.zoom, EPS)
+        resultLatch.countDown()
+      }
+      if (!resultLatch.await(LATCH_MAX_TIME, TimeUnit.MILLISECONDS)) {
+        throw TimeoutException()
+      }
     } else {
       throw TimeoutException()
     }
@@ -148,8 +170,14 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
     }
 
     if (listener.latchCancel.await(LATCH_MAX_TIME, TimeUnit.MILLISECONDS)) {
-      assertEquals(4.0, mapView.getMapboxMap().cameraState.zoom, EPS)
-      assertEquals(0.0, mapView.getMapboxMap().cameraState.bearing, EPS)
+      val resultLatch = CountDownLatch(1)
+      mainHandler.post {
+        assertEquals(4.0, mapView.getMapboxMap().cameraState.zoom, EPS)
+        resultLatch.countDown()
+      }
+      if (!resultLatch.await(LATCH_MAX_TIME, TimeUnit.MILLISECONDS)) {
+        throw TimeoutException()
+      }
     } else {
       throw TimeoutException()
     }
@@ -233,8 +261,14 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
       assertTrue(animatorListener2.started)
       assertTrue(animatorListener2.ended)
       assertTrue(animatorListener2.canceled)
-
-      assertEquals(180.0, mapView.getMapboxMap().cameraState.bearing, EPS)
+      val resultLatch = CountDownLatch(1)
+      mainHandler.post {
+        assertEquals(180.0, mapView.getMapboxMap().cameraState.bearing, EPS)
+        resultLatch.countDown()
+      }
+      if (!resultLatch.await(LATCH_MAX_TIME, TimeUnit.MILLISECONDS)) {
+        throw TimeoutException()
+      }
     } else {
       TimeoutException()
     }
@@ -355,7 +389,6 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
 
     val awaitLatch = CountDownLatch(1)
     if (animatorListener2.latchStart.await(LATCH_MAX_TIME, TimeUnit.MILLISECONDS)) {
-
       assertTrue(animatorListener1.canceled)
       assertFalse(animatorListener2.ended)
       assertFalse(animatorListener2.canceled)
@@ -364,8 +397,15 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
 
       // Check that new animator reset previous Camera options -
       // so camera should be definitely less than 35.0 (ideally near 0.0)
-      val cameraOptions = mapView.getMapboxMap().cameraState
-      MatcherAssert.assertThat(cameraOptions.bearing, Matchers.lessThan(35.0))
+      val resultLatch = CountDownLatch(1)
+      mainHandler.post {
+        val cameraOptions = mapView.getMapboxMap().cameraState
+        MatcherAssert.assertThat(cameraOptions.bearing, Matchers.lessThan(35.0))
+        resultLatch.countDown()
+      }
+      if (!resultLatch.await(LATCH_MAX_TIME, TimeUnit.MILLISECONDS)) {
+        throw TimeoutException()
+      }
     } else {
       throw TimeoutException()
     }
@@ -422,7 +462,12 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
       latch.countDown()
     }
 
-    mainHandler.post { cameraAnimationPlugin.easeTo(cameraOptions, mapAnimationOptions { duration(1) }) }
+    mainHandler.post {
+      cameraAnimationPlugin.easeTo(
+        cameraOptions,
+        mapAnimationOptions { duration(1) }
+      )
+    }
 
     if (latch.await(LATCH_MAX_TIME, TimeUnit.MILLISECONDS)) {
       assertArrayEquals(expectedValues.toDoubleArray(), updatedValues.toDoubleArray(), EPS)
@@ -450,9 +495,30 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
       updatedValues.add(it)
       latch.countDown()
     }
-    mainHandler.post { cameraAnimationPlugin.easeTo(cameraOptions1, mapAnimationOptions { duration(0) }) }
-    mainHandler.postDelayed({ cameraAnimationPlugin.easeTo(cameraOptions2, mapAnimationOptions { duration(0) }) }, 500)
-    mainHandler.postDelayed({ cameraAnimationPlugin.easeTo(cameraOptions3, mapAnimationOptions { duration(0) }) }, 1000)
+    mainHandler.post {
+      cameraAnimationPlugin.easeTo(
+        cameraOptions1,
+        mapAnimationOptions { duration(0) }
+      )
+    }
+    mainHandler.postDelayed(
+      {
+        cameraAnimationPlugin.easeTo(
+          cameraOptions2,
+          mapAnimationOptions { duration(0) }
+        )
+      },
+      500
+    )
+    mainHandler.postDelayed(
+      {
+        cameraAnimationPlugin.easeTo(
+          cameraOptions3,
+          mapAnimationOptions { duration(0) }
+        )
+      },
+      1000
+    )
 
     if (latch.await(LATCH_MAX_TIME, TimeUnit.MILLISECONDS)) {
       assertArrayEquals(expectedValues.toDoubleArray(), updatedValues.toDoubleArray(), EPS)
@@ -535,23 +601,26 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
     val expectedValues = mutableSetOf(targetBearing1)
     val updatedValues = mutableListOf<Double>()
 
-    val cameraAnimationPlugin = mapView.camera
     val latch = CountDownLatch(1)
-    cameraAnimationPlugin.addCameraBearingChangeListener {
-      logI(TAG, "onChanged $it")
-      updatedValues.add(it)
-    }
 
-    mainHandler.post {
-      cameraAnimationPlugin.easeTo(
-        cameraOptions1,
-        mapAnimationOptions {
-          duration(1)
-          startDelay(1000)
+    mainHandler.postDelayed(
+      {
+        val cameraAnimationPlugin = mapView.camera
+        cameraAnimationPlugin.easeTo(
+          cameraOptions1,
+          mapAnimationOptions {
+            duration(1)
+            startDelay(1000)
+          }
+        )
+        cameraAnimationPlugin.addCameraBearingChangeListener {
+          logI(TAG, "onChanged $it")
+          updatedValues.add(it)
         }
-      )
-    }
-    latch.await(900, TimeUnit.MILLISECONDS)
+      },
+      50
+    )
+    latch.await(50, TimeUnit.MILLISECONDS)
     // The animation is still waiting, no update value
     assertEquals(0, updatedValues.size)
 
@@ -582,9 +651,30 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
       updatedValues.add(it)
       latch.countDown()
     }
-    mainHandler.post { cameraAnimationPlugin.easeTo(cameraOptions1, mapAnimationOptions { duration(1) }) }
-    mainHandler.postDelayed({ cameraAnimationPlugin.easeTo(cameraOptions2, mapAnimationOptions { duration(1) }) }, 500)
-    mainHandler.postDelayed({ cameraAnimationPlugin.easeTo(cameraOptions3, mapAnimationOptions { duration(1) }) }, 1000)
+    mainHandler.post {
+      cameraAnimationPlugin.easeTo(
+        cameraOptions1,
+        mapAnimationOptions { duration(1) }
+      )
+    }
+    mainHandler.postDelayed(
+      {
+        cameraAnimationPlugin.easeTo(
+          cameraOptions2,
+          mapAnimationOptions { duration(1) }
+        )
+      },
+      500
+    )
+    mainHandler.postDelayed(
+      {
+        cameraAnimationPlugin.easeTo(
+          cameraOptions3,
+          mapAnimationOptions { duration(1) }
+        )
+      },
+      1000
+    )
 
     if (latch.await(LATCH_MAX_TIME, TimeUnit.MILLISECONDS)) {
       assertArrayEquals(expectedValues.toDoubleArray(), updatedValues.toDoubleArray(), EPS)
@@ -615,9 +705,30 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
       latch.countDown()
     }
     // assuming frame update time as 16 ms, putting delays less than it
-    mainHandler.post { cameraAnimationPlugin.easeTo(cameraOptions1, mapAnimationOptions { duration(1) }) }
-    mainHandler.postDelayed({ cameraAnimationPlugin.easeTo(cameraOptions2, mapAnimationOptions { duration(1) }) }, 4)
-    mainHandler.postDelayed({ cameraAnimationPlugin.easeTo(cameraOptions3, mapAnimationOptions { duration(1) }) }, 7)
+    mainHandler.post {
+      cameraAnimationPlugin.easeTo(
+        cameraOptions1,
+        mapAnimationOptions { duration(1) }
+      )
+    }
+    mainHandler.postDelayed(
+      {
+        cameraAnimationPlugin.easeTo(
+          cameraOptions2,
+          mapAnimationOptions { duration(1) }
+        )
+      },
+      4
+    )
+    mainHandler.postDelayed(
+      {
+        cameraAnimationPlugin.easeTo(
+          cameraOptions3,
+          mapAnimationOptions { duration(1) }
+        )
+      },
+      7
+    )
 
     if (latch.await(LATCH_MAX_TIME, TimeUnit.MILLISECONDS)) {
       assertArrayEquals(expectedValues.toDoubleArray(), updatedValues.toDoubleArray(), EPS)
@@ -705,8 +816,15 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
     }
     if (pitchListenerThree.latchEnd.await(LATCH_MAX_TIME, TimeUnit.MILLISECONDS)) {
       assertFalse(pitchListenerThree.canceled)
-      assertEquals(30.0, currentPitch, EPS)
-      assertEquals(30.0, mapView.getMapboxMap().cameraState.pitch, EPS)
+      val resultLatch = CountDownLatch(1)
+      mainHandler.post {
+        assertEquals(30.0, currentPitch, EPS)
+        assertEquals(30.0, mapView.getMapboxMap().cameraState.pitch, EPS)
+        resultLatch.countDown()
+      }
+      if (!resultLatch.await(LATCH_MAX_TIME, TimeUnit.MILLISECONDS)) {
+        throw TimeoutException()
+      }
     } else {
       throw TimeoutException()
     }
@@ -758,19 +876,22 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
           runningAnimatorOwner: String?,
           newAnimator: ValueAnimator,
           newAnimatorOwner: String?
-        ) {}
+        ) {
+        }
 
         override fun onAnimatorEnding(
           type: CameraAnimatorType,
           animator: ValueAnimator,
           owner: String?
-        ) {}
+        ) {
+        }
 
         override fun onAnimatorCancelling(
           type: CameraAnimatorType,
           animator: ValueAnimator,
           owner: String?
-        ) {}
+        ) {
+        }
       })
 
       set.start()
@@ -792,8 +913,15 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
       500L
     )
     if (listener.latchEnd.await(LATCH_MAX_TIME, TimeUnit.MILLISECONDS)) {
-      assertEquals(7.0, mapView.getMapboxMap().cameraState.zoom, EPS)
-      assertEquals(120.0, mapView.getMapboxMap().cameraState.bearing, EPS)
+      val resultLatch = CountDownLatch(1)
+      mainHandler.post {
+        assertEquals(7.0, mapView.getMapboxMap().cameraState.zoom, EPS)
+        assertEquals(120.0, mapView.getMapboxMap().cameraState.bearing, EPS)
+        resultLatch.countDown()
+      }
+      if (!resultLatch.await(LATCH_MAX_TIME, TimeUnit.MILLISECONDS)) {
+        throw TimeoutException()
+      }
     } else {
       throw TimeoutException()
     }
@@ -901,6 +1029,6 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
   companion object {
     private const val TAG = "Mbgl-CameraManager"
     private const val EPS = 0.000001
-    private const val LATCH_MAX_TIME = 5_000L
+    private const val LATCH_MAX_TIME = 6_000L
   }
 }

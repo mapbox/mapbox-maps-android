@@ -494,6 +494,14 @@ package com.mapbox.maps.attribution {
 
 }
 
+package com.mapbox.maps.exception {
+
+  public final class WorkerThreadException extends java.lang.RuntimeException {
+    ctor public WorkerThreadException();
+  }
+
+}
+
 package com.mapbox.maps.plugin {
 
   public final class InvalidViewPluginHostException extends java.lang.Exception {

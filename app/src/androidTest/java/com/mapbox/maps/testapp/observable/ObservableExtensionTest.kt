@@ -65,7 +65,6 @@ class ObservableExtensionTest : BaseMapTest() {
   }
 
   @Test
-  @UiThread
   fun subscribeResourceRequest() {
     val latch = CountDownLatch(1)
 
@@ -85,11 +84,15 @@ class ObservableExtensionTest : BaseMapTest() {
     if (!latch.await(20000, TimeUnit.MILLISECONDS)) {
       throw TimeoutException()
     }
-    mapboxMap.unsubscribeResourceRequest(observer)
+
+    rule.scenario.onActivity { activity ->
+      activity.runOnUiThread {
+        mapboxMap.unsubscribeResourceRequest(observer)
+      }
+    }
   }
 
   @Test
-  @UiThread
   fun subscribeMapLoadedEvent() {
     val latch = CountDownLatch(1)
 
@@ -110,11 +113,15 @@ class ObservableExtensionTest : BaseMapTest() {
     if (!latch.await(20000, TimeUnit.MILLISECONDS)) {
       throw TimeoutException()
     }
-    mapboxMap.removeOnMapLoadedListener(listener)
+
+    rule.scenario.onActivity { activity ->
+      activity.runOnUiThread {
+        mapboxMap.removeOnMapLoadedListener(listener)
+      }
+    }
   }
 
   @Test
-  @UiThread
   fun subscribeMapLoadingErrorEvent() {
     val latch = CountDownLatch(1)
 
@@ -142,11 +149,15 @@ class ObservableExtensionTest : BaseMapTest() {
     if (!latch.await(20000, TimeUnit.MILLISECONDS)) {
       throw TimeoutException()
     }
-    mapboxMap.removeOnMapLoadErrorListener(listener)
+
+    rule.scenario.onActivity { activity ->
+      activity.runOnUiThread {
+        mapboxMap.removeOnMapLoadErrorListener(listener)
+      }
+    }
   }
 
   @Test
-  @UiThread
   fun subscribeMapIdleEvent() {
     val latch = CountDownLatch(1)
 
@@ -167,11 +178,15 @@ class ObservableExtensionTest : BaseMapTest() {
     if (!latch.await(20000, TimeUnit.MILLISECONDS)) {
       throw TimeoutException()
     }
-    mapboxMap.removeOnMapIdleListener(listener)
+
+    rule.scenario.onActivity { activity ->
+      activity.runOnUiThread {
+        mapboxMap.removeOnMapIdleListener(listener)
+      }
+    }
   }
 
   @Test
-  @UiThread
   fun subscribeStyleDataLoadedEvent() {
     val latch = CountDownLatch(3)
 
@@ -193,11 +208,15 @@ class ObservableExtensionTest : BaseMapTest() {
     if (!latch.await(20000, TimeUnit.MILLISECONDS)) {
       throw TimeoutException()
     }
-    mapboxMap.removeOnStyleDataLoadedListener(listener)
+
+    rule.scenario.onActivity { activity ->
+      activity.runOnUiThread {
+        mapboxMap.removeOnStyleDataLoadedListener(listener)
+      }
+    }
   }
 
   @Test
-  @UiThread
   fun subscribeStyleLoadedEvent() {
     val latch = CountDownLatch(1)
 
@@ -218,11 +237,15 @@ class ObservableExtensionTest : BaseMapTest() {
     if (!latch.await(20000, TimeUnit.MILLISECONDS)) {
       throw TimeoutException()
     }
-    mapboxMap.removeOnStyleLoadedListener(listener)
+
+    rule.scenario.onActivity { activity ->
+      activity.runOnUiThread {
+        mapboxMap.removeOnStyleLoadedListener(listener)
+      }
+    }
   }
 
   @Test
-  @UiThread
   fun subscribeStyleImageMissingEvent() {
     val latch = CountDownLatch(1)
 
@@ -253,11 +276,15 @@ class ObservableExtensionTest : BaseMapTest() {
     if (!latch.await(20000, TimeUnit.MILLISECONDS)) {
       throw TimeoutException()
     }
-    mapboxMap.removeOnStyleImageMissingListener(listener)
+
+    rule.scenario.onActivity { activity ->
+      activity.runOnUiThread {
+        mapboxMap.removeOnStyleImageMissingListener(listener)
+      }
+    }
   }
 
   @Test
-  @UiThread
   fun subscribeStyleImageUnusedEvent() {
     val latch = CountDownLatch(1)
 
@@ -296,11 +323,15 @@ class ObservableExtensionTest : BaseMapTest() {
     if (!latch.await(20000, TimeUnit.MILLISECONDS)) {
       throw TimeoutException()
     }
-    mapboxMap.removeOnStyleImageUnusedListener(listener)
+
+    rule.scenario.onActivity { activity ->
+      activity.runOnUiThread {
+        mapboxMap.removeOnStyleImageUnusedListener(listener)
+      }
+    }
   }
 
   @Test
-  @UiThread
   fun subscribeSourceDataLoadedEvent() {
     val latch = CountDownLatch(1)
 
@@ -324,11 +355,15 @@ class ObservableExtensionTest : BaseMapTest() {
     if (!latch.await(20000, TimeUnit.MILLISECONDS)) {
       throw TimeoutException()
     }
-    mapboxMap.removeOnSourceDataLoadedListener(listener)
+
+    rule.scenario.onActivity { activity ->
+      activity.runOnUiThread {
+        mapboxMap.removeOnSourceDataLoadedListener(listener)
+      }
+    }
   }
 
   @Test
-  @UiThread
   fun subscribeSourceAddedEvent() {
     val latch = CountDownLatch(1)
 
@@ -367,11 +402,15 @@ class ObservableExtensionTest : BaseMapTest() {
     if (!latch.await(20000, TimeUnit.MILLISECONDS)) {
       throw TimeoutException()
     }
-    mapboxMap.removeOnSourceAddedListener(listener)
+
+    rule.scenario.onActivity { activity ->
+      activity.runOnUiThread {
+        mapboxMap.removeOnSourceAddedListener(listener)
+      }
+    }
   }
 
   @Test
-  @UiThread
   fun subscribeSourceRemovedEvent() {
     val latch = CountDownLatch(1)
 
@@ -416,7 +455,12 @@ class ObservableExtensionTest : BaseMapTest() {
     if (!latch.await(20000, TimeUnit.MILLISECONDS)) {
       throw TimeoutException()
     }
-    mapboxMap.removeOnSourceRemovedListener(listener)
+
+    rule.scenario.onActivity { activity ->
+      activity.runOnUiThread {
+        mapboxMap.removeOnSourceRemovedListener(listener)
+      }
+    }
   }
 
   @Test
@@ -441,7 +485,12 @@ class ObservableExtensionTest : BaseMapTest() {
     if (!latch.await(20000, TimeUnit.MILLISECONDS)) {
       throw TimeoutException()
     }
-    mapboxMap.removeOnRenderFrameStartedListener(listener)
+
+    rule.scenario.onActivity { activity ->
+      activity.runOnUiThread {
+        mapboxMap.removeOnRenderFrameStartedListener(listener)
+      }
+    }
   }
 
   @Test
@@ -469,7 +518,12 @@ class ObservableExtensionTest : BaseMapTest() {
     if (!latch.await(20000, TimeUnit.MILLISECONDS)) {
       throw TimeoutException()
     }
-    mapboxMap.removeOnRenderFrameFinishedListener(listener)
+
+    rule.scenario.onActivity { activity ->
+      activity.runOnUiThread {
+        mapboxMap.removeOnRenderFrameFinishedListener(listener)
+      }
+    }
   }
 
   @Test
@@ -494,7 +548,12 @@ class ObservableExtensionTest : BaseMapTest() {
     if (!latch.await(20000, TimeUnit.MILLISECONDS)) {
       throw TimeoutException()
     }
-    mapboxMap.removeOnCameraChangeListener(listener)
+
+    rule.scenario.onActivity { activity ->
+      activity.runOnUiThread {
+        mapboxMap.removeOnCameraChangeListener(listener)
+      }
+    }
   }
 
   private fun printAllEventsForDebug() {
