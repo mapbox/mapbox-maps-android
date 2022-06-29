@@ -53,7 +53,6 @@ public final class com/mapbox/maps/MapboxViewAnnotationException : java/lang/Run
 public final class com/mapbox/maps/dsl/CameraOptionsKtxKt {
 	public static final fun cameraOptions (Lcom/mapbox/maps/CameraState;Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/CameraOptions;
 	public static final fun cameraOptions (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/CameraOptions;
-	public static final fun isEmpty (Lcom/mapbox/maps/CameraOptions;)Z
 }
 
 public final class com/mapbox/maps/extension/observable/ObservableExtensionKt {

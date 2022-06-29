@@ -59,7 +59,6 @@ package com.mapbox.maps.dsl {
   public final class CameraOptionsKtxKt {
     method public static inline com.mapbox.maps.CameraOptions cameraOptions(kotlin.jvm.functions.Function1<? super com.mapbox.maps.CameraOptions.Builder,kotlin.Unit> block);
     method public static inline com.mapbox.maps.CameraOptions cameraOptions(com.mapbox.maps.CameraState cameraState, kotlin.jvm.functions.Function1<? super com.mapbox.maps.CameraOptions.Builder,kotlin.Unit> block);
-    method public static boolean isEmpty(com.mapbox.maps.CameraOptions);
   }
 
 }

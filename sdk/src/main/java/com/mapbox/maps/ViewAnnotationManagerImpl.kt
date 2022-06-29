@@ -13,7 +13,6 @@ import com.mapbox.maps.viewannotation.*
 import com.mapbox.maps.viewannotation.ViewAnnotation
 import com.mapbox.maps.viewannotation.ViewAnnotation.Companion.USER_FIXED_DIMENSION
 import com.mapbox.maps.viewannotation.ViewAnnotationVisibility
-import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.CopyOnWriteArraySet
 import kotlin.collections.HashMap
@@ -147,8 +146,12 @@ internal class ViewAnnotationManagerImpl(
   }
 
   /**
-   * First call will be always from Mapbox render thread that will be ALWAYS followed up
-   * another call from Android main thread.
+   * We will have two calls of this callback:
+   * - first from render thread with actual position list
+   * - second from main thread with empty list in any case.
+   *
+   * We need separate call from main thread as scheduling on main thread happens much faster in C++
+   * then rescheduling using Java handler.
    */
   @AnyThread
   override fun onViewAnnotationPositionsUpdate(positions: MutableList<ViewAnnotationPositionDescriptor>) {
@@ -157,7 +160,7 @@ internal class ViewAnnotationManagerImpl(
     // either swap buffers the same or the next frame.
     if (Looper.myLooper() == Looper.getMainLooper()) {
       // create copy to avoid concurrent modification exception
-      val immutablePositionListCopy = LinkedList(updatedPositionsList)
+      val immutablePositionListCopy = updatedPositionsList
       // schedule positioning on next frame using Choreographer from main thread
       Choreographer.getInstance().postFrameCallback {
         positionAnnotationViews(immutablePositionListCopy)
@@ -166,7 +169,6 @@ internal class ViewAnnotationManagerImpl(
       // Called as soon as possible on main thread after updated positions arrived on render thread.
       // We need another callback from core as scheduling from render thread to main happens too slow
       // when using Java Main Looper.
-
       // update that flag here if callback was triggered, it will be reset by renderer directly when swapping buffers
       renderThread.needViewAnnotationSync = true
       updatedPositionsList = positions

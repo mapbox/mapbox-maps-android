@@ -162,6 +162,7 @@ interface ViewAnnotationManager {
     /**
      * Default view annotation update mode.
      */
+    @JvmField
     val DEFAULT_UPDATE_MODE = ViewAnnotationUpdateMode.MAP_SYNCHRONIZED
   }
 }

@@ -3,9 +3,12 @@ package com.mapbox.maps.testapp.examples.markersandcallouts
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Point
 import com.mapbox.maps.MapView
 import com.mapbox.maps.Style
@@ -18,19 +21,19 @@ import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityViewAnnotationShowcaseBinding
 import com.mapbox.maps.testapp.databinding.ItemCalloutViewBinding
 import com.mapbox.maps.testapp.utils.BitmapUtils
+import com.mapbox.maps.viewannotation.ViewAnnotationManager
+import com.mapbox.maps.viewannotation.ViewAnnotationUpdateMode
 import com.mapbox.maps.viewannotation.viewAnnotationOptions
 
 /**
  * Example how to add view annotation to the point annotation.
  */
-class ViewAnnotationWithPointAnnotationActivity : BaseViewAnnotationActivity() {
+class ViewAnnotationWithPointAnnotationActivity : AppCompatActivity() {
 
+  private lateinit var viewAnnotationManager: ViewAnnotationManager
   private lateinit var pointAnnotationManager: PointAnnotationManager
   private lateinit var pointAnnotation: PointAnnotation
   private lateinit var viewAnnotation: View
-  private lateinit var mapView: MapView
-
-  override fun getViewAnnotationManager() = mapView.viewAnnotationManager
 
   @SuppressLint("SetTextI18n")
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,15 +41,15 @@ class ViewAnnotationWithPointAnnotationActivity : BaseViewAnnotationActivity() {
     val binding = ActivityViewAnnotationShowcaseBinding.inflate(layoutInflater)
     setContentView(binding.root)
 
-    mapView = binding.mapView
-
     val iconBitmap = BitmapUtils.bitmapFromDrawableRes(
       this@ViewAnnotationWithPointAnnotationActivity,
       R.drawable.blue_marker_view
     )!!
 
-    mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS) {
-      prepareAnnotationMarker(iconBitmap)
+    viewAnnotationManager = binding.mapView.viewAnnotationManager
+
+    binding.mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS) {
+      prepareAnnotationMarker(binding.mapView, iconBitmap)
       prepareViewAnnotation()
       // show / hide view annotation based on a marker click
       pointAnnotationManager.addClickListener { clickedAnnotation ->
@@ -88,13 +91,32 @@ class ViewAnnotationWithPointAnnotationActivity : BaseViewAnnotationActivity() {
     }
   }
 
+  override fun onCreateOptionsMenu(menu: Menu): Boolean {
+    menuInflater.inflate(R.menu.menu_view_annotation, menu)
+    return true
+  }
+
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    return when (item.itemId) {
+      R.id.action_view_annotation_fixed_delay -> {
+        viewAnnotationManager.setViewAnnotationUpdateMode(ViewAnnotationUpdateMode.MAP_FIXED_DELAY)
+        true
+      }
+      R.id.action_view_annotation_map_synchronized -> {
+        viewAnnotationManager.setViewAnnotationUpdateMode(ViewAnnotationUpdateMode.MAP_SYNCHRONIZED)
+        true
+      }
+      else -> super.onOptionsItemSelected(item)
+    }
+  }
+
   private fun View.toggleViewVisibility() {
     visibility = if (visibility == View.VISIBLE) View.GONE else View.VISIBLE
   }
 
   @SuppressLint("SetTextI18n")
   private fun prepareViewAnnotation() {
-    viewAnnotation = getViewAnnotationManager().addViewAnnotation(
+    viewAnnotation = viewAnnotationManager.addViewAnnotation(
       resId = R.layout.item_callout_view,
       options = viewAnnotationOptions {
         geometry(POINT)
@@ -106,14 +128,14 @@ class ViewAnnotationWithPointAnnotationActivity : BaseViewAnnotationActivity() {
     ItemCalloutViewBinding.bind(viewAnnotation).apply {
       textNativeView.text = "lat=%.2f\nlon=%.2f".format(POINT.latitude(), POINT.longitude())
       closeNativeView.setOnClickListener {
-        getViewAnnotationManager().removeViewAnnotation(viewAnnotation)
+        viewAnnotationManager.removeViewAnnotation(viewAnnotation)
       }
       selectButton.setOnClickListener { b ->
         val button = b as Button
         val isSelected = button.text.toString().equals("SELECT", true)
         val pxDelta = if (isSelected) SELECTED_ADD_COEF_PX else -SELECTED_ADD_COEF_PX
         button.text = if (isSelected) "DESELECT" else "SELECT"
-        getViewAnnotationManager().updateViewAnnotation(
+        viewAnnotationManager.updateViewAnnotation(
           viewAnnotation,
           viewAnnotationOptions {
             selected(isSelected)
@@ -129,7 +151,7 @@ class ViewAnnotationWithPointAnnotationActivity : BaseViewAnnotationActivity() {
     }
   }
 
-  private fun prepareAnnotationMarker(iconBitmap: Bitmap) {
+  private fun prepareAnnotationMarker(mapView: MapView, iconBitmap: Bitmap) {
     val annotationPlugin = mapView.annotations
     val pointAnnotationOptions: PointAnnotationOptions = PointAnnotationOptions()
       .withPoint(POINT)

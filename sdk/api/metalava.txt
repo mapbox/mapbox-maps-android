@@ -589,20 +589,25 @@ package com.mapbox.maps.viewannotation {
     method public void setViewAnnotationUpdateMode(com.mapbox.maps.viewannotation.ViewAnnotationUpdateMode mode);
     method public boolean updateViewAnnotation(android.view.View view, com.mapbox.maps.ViewAnnotationOptions options);
     field public static final com.mapbox.maps.viewannotation.ViewAnnotationManager.Companion Companion;
+    field public static final com.mapbox.maps.viewannotation.ViewAnnotationUpdateMode DEFAULT_UPDATE_MODE;
   }
 
   public static final class ViewAnnotationManager.Companion {
-    method public com.mapbox.maps.viewannotation.ViewAnnotationUpdateMode getDEFAULT_UPDATE_MODE();
-    property public final com.mapbox.maps.viewannotation.ViewAnnotationUpdateMode DEFAULT_UPDATE_MODE;
   }
 
   public final class ViewAnnotationOptionsKtxKt {
     method public static inline com.mapbox.maps.ViewAnnotationOptions viewAnnotationOptions(kotlin.jvm.functions.Function1<? super com.mapbox.maps.ViewAnnotationOptions.Builder,kotlin.Unit> block);
   }
 
-  public enum ViewAnnotationUpdateMode {
-    enum_constant public static final com.mapbox.maps.viewannotation.ViewAnnotationUpdateMode MAP_FIXED_DELAY;
-    enum_constant public static final com.mapbox.maps.viewannotation.ViewAnnotationUpdateMode MAP_SYNCHRONIZED;
+  public final class ViewAnnotationUpdateMode {
+    method public String! getMode();
+    property public final String! mode;
+    field public static final com.mapbox.maps.viewannotation.ViewAnnotationUpdateMode.Companion Companion;
+    field public static final com.mapbox.maps.viewannotation.ViewAnnotationUpdateMode MAP_FIXED_DELAY;
+    field public static final com.mapbox.maps.viewannotation.ViewAnnotationUpdateMode MAP_SYNCHRONIZED;
+  }
+
+  public static final class ViewAnnotationUpdateMode.Companion {
   }
 
 }

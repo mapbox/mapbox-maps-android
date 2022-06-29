@@ -256,7 +256,7 @@ class MapboxRenderThreadTest {
     idleHandler(choreographerCallbackDelayMs)
     // buffers are already swapped once when surface was created
     // they should not be swapped this frame N, they need to be swapped next frame N+1
-    verify(exactly = 1) {
+    verifyOnce {
       eglCore.swapBuffers(any())
     }
     // we need another explicit IDLE call as we're performing Choreographer.getInstance().postFrameCallback
