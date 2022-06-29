@@ -21,6 +21,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Refactor view annotation implementation to align map and annotation movement better when camera changes. ([#1462](https://github.com/mapbox/mapbox-maps-android/pull/1462))
 * Add API `OfflineManager::createTilesetDescriptor(TileDescriptorOptionsForTilesets)` to create tileset descriptor from a tilesets list. ([#1462](https://github.com/mapbox/mapbox-maps-android/pull/1462))
 * Implement shadow rendering support. ([#1462](https://github.com/mapbox/mapbox-maps-android/pull/1462))
+* Expose experimental shadow APIs for `Light`. [#1447](https://github.com/mapbox/mapbox-maps-android/pull/1447)
 
 ## Bug fixes 🐞
 * Fix lifecycle edge cases not being handled properly by introducing internal `ViewLifecycleOwner` to have granular control over MapView's lifecycle. ([1330](https://github.com/mapbox/mapbox-maps-android/pull/1330))

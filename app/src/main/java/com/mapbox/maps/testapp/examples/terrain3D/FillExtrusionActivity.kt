@@ -61,6 +61,8 @@ class FillExtrusionActivity : AppCompatActivity() {
 
   private fun setupLight(style: Style) {
     val light = style.getLight()
+    light.castShadows(true)
+    light.shadowIntensity(0.7)
     binding.fabLightPosition.setOnClickListener {
       isInitPosition = !isInitPosition
       if (isInitPosition) {
