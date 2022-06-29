@@ -13,11 +13,30 @@ Mapbox welcomes participation and contributions from everyone.
 * Remove `MapboxExperimental` annotation from viewport plugin and promote viewport plugin as stable API. ([1425](https://github.com/mapbox/mapbox-maps-android/pull/1425))
 * Introduce `addRendererSetupErrorListener`/`removeRendererSetupErrorListener` methods for `MapView` and `MapSurface` to listen to renderer setup errors and give opportunity to control some edge cases. ([1427](https://github.com/mapbox/mapbox-maps-android/pull/1427))
 * Introduce transition properties for atmosphere and terrain. ([1451](https://github.com/mapbox/mapbox-maps-android/pull/1451))
+* Reduce geometry on globe tile to increase rendering performance. ([#1462](https://github.com/mapbox/mapbox-maps-android/pull/1462))
+* Improve rendering performance with deleting layer render data on a worker thread. ([#1462](https://github.com/mapbox/mapbox-maps-android/pull/1462))
+* Support using `line-trim-offset` property with pure line color. ([#1462](https://github.com/mapbox/mapbox-maps-android/pull/1462))
+* Render cache and Terrain can now have mipmapping enabled to reduce aliasing. ([#1462](https://github.com/mapbox/mapbox-maps-android/pull/1462))
+* Fast ambient occlusion support for fill extrusion layer. ([#1462](https://github.com/mapbox/mapbox-maps-android/pull/1462))
+* Refactor view annotation implementation to align map and annotation movement better when camera changes. ([#1462](https://github.com/mapbox/mapbox-maps-android/pull/1462))
+* Add API `OfflineManager::createTilesetDescriptor(TileDescriptorOptionsForTilesets)` to create tileset descriptor from a tilesets list. ([#1462](https://github.com/mapbox/mapbox-maps-android/pull/1462))
+* Implement shadow rendering support. ([#1462](https://github.com/mapbox/mapbox-maps-android/pull/1462))
 
 ## Bug fixes 🐞
 * Fix lifecycle edge cases not being handled properly by introducing internal `ViewLifecycleOwner` to have granular control over MapView's lifecycle. ([1330](https://github.com/mapbox/mapbox-maps-android/pull/1330))
 * Fix an issue when `literal` array expression is used as output inside the `match` expression. ([1444](https://github.com/mapbox/mapbox-maps-android/pull/1444))
 * Fix skipping gesture updates resulting in slower gestures on low-end devices. ([#1440](https://github.com/mapbox/mapbox-maps-android/pull/1440))
+* Fix incorrect image source rendering with terrain enabled. ([#1462](https://github.com/mapbox/mapbox-maps-android/pull/1462))
+* Fix possible crash bug in image processing. ([#1462](https://github.com/mapbox/mapbox-maps-android/pull/1462))
+* Fix some cpu-updated symbols being invisible in globe view. ([#1462](https://github.com/mapbox/mapbox-maps-android/pull/1462))
+* Add support for terrain transition properties. ([#1462](https://github.com/mapbox/mapbox-maps-android/pull/1462))
+* Fix zoom constraining issue when the input 'maxZoom' is smaller than the current 'minZoom' value. ([#1462](https://github.com/mapbox/mapbox-maps-android/pull/1462))
+* Fix crash on calling Query Rendered Features API from renderer thread before initialising the renderer. ([#1462](https://github.com/mapbox/mapbox-maps-android/pull/1462))
+* Fix tile pre-fetching for the globe map projection. ([#1462](https://github.com/mapbox/mapbox-maps-android/pull/1462))
+* Fix a bug where changing size of the map would lead map center getting changed as well. ([#1462](https://github.com/mapbox/mapbox-maps-android/pull/1462))
+
+## Dependencies
+* Bump gl-native to v10.7.0-beta.1, common to 22.1.0-beta.1. ([#1462](https://github.com/mapbox/mapbox-maps-android/pull/1462))
 
 # 10.6.0 - June 16, 2022
 [Changes](https://github.com/mapbox/mapbox-maps-android/compare/android-v10.5.0...android-v10.6.0) since [Mapbox Maps SDK for Android 10.5.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/android-v10.5.0)
