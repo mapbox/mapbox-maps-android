@@ -328,7 +328,8 @@ public class RuntimeStylingJavaActivity extends AppCompatActivity {
         light.anchor(Anchor.MAP);
         light.color(Color.YELLOW);
         light.position(10.0, 40.0, 50.0);
-
+        light.castShadows(true);
+        light.shadowIntensity(2.0);
         LightUtils.setLight(style, light);
     }
 

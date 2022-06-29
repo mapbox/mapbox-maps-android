@@ -14,6 +14,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Introduce `addRendererSetupErrorListener`/`removeRendererSetupErrorListener` methods for `MapView` and `MapSurface` to listen to renderer setup errors and give opportunity to control some edge cases. ([1427](https://github.com/mapbox/mapbox-maps-android/pull/1427))
 * Introduce transition properties for atmosphere and terrain. ([1451](https://github.com/mapbox/mapbox-maps-android/pull/1451))
 * Enable main thread checking on the map/style object when running applications in debug build. This utility class will crash the application if these objects are accessed from a worked thread. It's required to call these object functions on the main thread, otherwise you can hit edge case crashes. This configurations is advised but can be opted out with a Manifest metadata entry of `com.mapbox.maps.ThreadChecker` and corresponding false value. ([#1316](https://github.com/mapbox/mapbox-maps-android/pull/1316)). 
+* Introduce view annotation `ViewAnnotationManager.setViewAnnotationUpdateMode` / `ViewAnnotationManager.getViewAnnotationUpdateMode` API with following synchronization modes: MAP_SYNCHRONIZED (used by default) and MAP_FIXED_DELAY. ([1415](https://github.com/mapbox/mapbox-maps-android/pull/1415))
 * Reduce geometry on globe tile to increase rendering performance. ([#1462](https://github.com/mapbox/mapbox-maps-android/pull/1462))
 * Improve rendering performance with deleting layer render data on a worker thread. ([#1462](https://github.com/mapbox/mapbox-maps-android/pull/1462))
 * Support using `line-trim-offset` property with pure line color. ([#1462](https://github.com/mapbox/mapbox-maps-android/pull/1462))
@@ -22,6 +23,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Refactor view annotation implementation to align map and annotation movement better when camera changes. ([#1462](https://github.com/mapbox/mapbox-maps-android/pull/1462))
 * Add API `OfflineManager::createTilesetDescriptor(TileDescriptorOptionsForTilesets)` to create tileset descriptor from a tilesets list. ([#1462](https://github.com/mapbox/mapbox-maps-android/pull/1462))
 * Implement shadow rendering support. ([#1462](https://github.com/mapbox/mapbox-maps-android/pull/1462))
+* Expose experimental shadow APIs for `Light`. [#1447](https://github.com/mapbox/mapbox-maps-android/pull/1447)
 
 ## Bug fixes 🐞
 * Fix lifecycle edge cases not being handled properly by introducing internal `ViewLifecycleOwner` to have granular control over MapView's lifecycle. ([1330](https://github.com/mapbox/mapbox-maps-android/pull/1330))

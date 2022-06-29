@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.annotation.ColorInt
 import androidx.annotation.UiThread
 import com.mapbox.bindgen.Value
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxStyleException
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.StyleInterface
@@ -85,6 +86,62 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
    */
   override fun anchor(anchor: Expression) = apply {
     val propertyValue = PropertyValue("anchor", anchor)
+    setProperty(propertyValue)
+  }
+  /**
+   * Enable/Disable shadow casting for this light
+   */
+  @MapboxExperimental
+  val castShadows: Boolean?
+    /**
+     * Enable/Disable shadow casting for this light
+     *
+     * @return castShadows as Boolean
+     */
+    get() {
+      return getPropertyValue("cast-shadows")
+    }
+  /**
+   * Enable/Disable shadow casting for this light
+   *
+   * @param castShadows as Boolean
+   */
+  @MapboxExperimental
+  override fun castShadows(castShadows: Boolean) = apply {
+    setProperty(PropertyValue("cast-shadows", castShadows))
+  }
+
+  /**
+   * Enable/Disable shadow casting for this light
+   *
+   * This is an Expression representation of "cast-shadows".
+   */
+  @MapboxExperimental
+  val castShadowsAsExpression: Expression?
+    /**
+     * Enable/Disable shadow casting for this light
+     *
+     * Get the CastShadows property as an Expression
+     *
+     * @return Boolean
+     */
+    get() {
+      getPropertyValue<Expression>("cast-shadows")?.let {
+        return it
+      }
+      castShadows?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+  /**
+   * Enable/Disable shadow casting for this light
+   *
+   * @param castShadows value of castShadows as Expression
+   */
+  @MapboxExperimental
+  override fun castShadows(castShadows: Expression) = apply {
+    val propertyValue = PropertyValue("cast-shadows", castShadows)
     setProperty(propertyValue)
   }
   /**
@@ -364,6 +421,93 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
   override fun positionTransition(block: StyleTransition.Builder.() -> Unit) = apply {
     positionTransition(StyleTransition.Builder().apply(block).build())
   }
+  /**
+   * Determines the shadow strength, affecting the shadow receiver surfaces final color. Values near 0.0 reduce the shadow contribution to the final color. Values near to 1.0 make occluded surfaces almost black.
+   */
+  @MapboxExperimental
+  val shadowIntensity: Double?
+    /**
+     * Determines the shadow strength, affecting the shadow receiver surfaces final color. Values near 0.0 reduce the shadow contribution to the final color. Values near to 1.0 make occluded surfaces almost black.
+     *
+     * @return shadowIntensity as Double
+     */
+    get() {
+      return getPropertyValue("shadow-intensity")
+    }
+  /**
+   * Determines the shadow strength, affecting the shadow receiver surfaces final color. Values near 0.0 reduce the shadow contribution to the final color. Values near to 1.0 make occluded surfaces almost black.
+   *
+   * @param shadowIntensity as Double
+   */
+  @MapboxExperimental
+  override fun shadowIntensity(shadowIntensity: Double) = apply {
+    setProperty(PropertyValue("shadow-intensity", shadowIntensity))
+  }
+
+  /**
+   * Determines the shadow strength, affecting the shadow receiver surfaces final color. Values near 0.0 reduce the shadow contribution to the final color. Values near to 1.0 make occluded surfaces almost black.
+   *
+   * This is an Expression representation of "shadow-intensity".
+   */
+  @MapboxExperimental
+  val shadowIntensityAsExpression: Expression?
+    /**
+     * Determines the shadow strength, affecting the shadow receiver surfaces final color. Values near 0.0 reduce the shadow contribution to the final color. Values near to 1.0 make occluded surfaces almost black.
+     *
+     * Get the ShadowIntensity property as an Expression
+     *
+     * @return Double
+     */
+    get() {
+      getPropertyValue<Expression>("shadow-intensity")?.let {
+        return it
+      }
+      shadowIntensity?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+  /**
+   * Determines the shadow strength, affecting the shadow receiver surfaces final color. Values near 0.0 reduce the shadow contribution to the final color. Values near to 1.0 make occluded surfaces almost black.
+   *
+   * @param shadowIntensity value of shadowIntensity as Expression
+   */
+  @MapboxExperimental
+  override fun shadowIntensity(shadowIntensity: Expression) = apply {
+    val propertyValue = PropertyValue("shadow-intensity", shadowIntensity)
+    setProperty(propertyValue)
+  }
+  /**
+   * ShadowIntensity property transition options.
+   */
+  @MapboxExperimental
+  val shadowIntensityTransition: StyleTransition?
+    /**
+     * Get the ShadowIntensity property transition options.
+     *
+     * @return transition options for shadow-intensity
+     */
+    get() {
+      return getTransitionProperty("shadow-intensity-transition")
+    }
+  /**
+   * Set the ShadowIntensity property transition options.
+   *
+   * @param options transition options for shadow-intensity
+   */
+  @MapboxExperimental
+  override fun shadowIntensityTransition(options: StyleTransition) = apply {
+    val propertyValue = PropertyValue("shadow-intensity-transition", options)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * DSL for [shadowIntensityTransition].
+   */
+  @MapboxExperimental
+  override fun shadowIntensityTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+    shadowIntensityTransition(StyleTransition.Builder().apply(block).build())
+  }
 
   /**
    * Bind the light to the map controller.
@@ -459,6 +603,22 @@ interface LightDslReceiver {
   fun anchor(anchor: Expression): Light
 
   /**
+   * Enable/Disable shadow casting for this light
+   *
+   * @param castShadows as Boolean
+   */
+  @MapboxExperimental
+  fun castShadows(castShadows: Boolean = false): Light
+
+  /**
+   * Enable/Disable shadow casting for this light
+   *
+   * @param castShadows value of castShadows as Expression
+   */
+  @MapboxExperimental
+  fun castShadows(castShadows: Expression): Light
+
+  /**
    * Color tint for lighting extruded geometries.
    *
    * @param color as int
@@ -549,6 +709,36 @@ interface LightDslReceiver {
    * DSL for [positionTransition].
    */
   fun positionTransition(block: StyleTransition.Builder.() -> Unit): Light
+
+  /**
+   * Determines the shadow strength, affecting the shadow receiver surfaces final color. Values near 0.0 reduce the shadow contribution to the final color. Values near to 1.0 make occluded surfaces almost black.
+   *
+   * @param shadowIntensity as Double
+   */
+  @MapboxExperimental
+  fun shadowIntensity(shadowIntensity: Double = 0.2): Light
+
+  /**
+   * Determines the shadow strength, affecting the shadow receiver surfaces final color. Values near 0.0 reduce the shadow contribution to the final color. Values near to 1.0 make occluded surfaces almost black.
+   *
+   * @param shadowIntensity value of shadowIntensity as Expression
+   */
+  @MapboxExperimental
+  fun shadowIntensity(shadowIntensity: Expression): Light
+
+  /**
+   * Set the ShadowIntensity property transition options.
+   *
+   * @param options transition options for shadow-intensity
+   */
+  @MapboxExperimental
+  fun shadowIntensityTransition(options: StyleTransition): Light
+
+  /**
+   * DSL for [shadowIntensityTransition].
+   */
+  @MapboxExperimental
+  fun shadowIntensityTransition(block: StyleTransition.Builder.() -> Unit): Light
 }
 
 /**

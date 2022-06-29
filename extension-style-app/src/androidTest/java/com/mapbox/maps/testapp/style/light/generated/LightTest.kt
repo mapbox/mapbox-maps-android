@@ -46,6 +46,29 @@ class LightTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun castShadowsTest() {
+    val light = light {
+      castShadows(true)
+    }
+    setupLight(light)
+    assertEquals(true, light.castShadows)
+  }
+
+  // Add Expression Test
+  @Test
+  @UiThreadTest
+  fun castShadowsAsExpressionTest() {
+    val expression = literal(true)
+
+    val light = light {
+      castShadows(expression)
+    }
+    setupLight(light)
+    assertEquals(expression.toString(), light.castShadowsAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
   fun colorAsColorIntTest() {
     val light = light {
       color(Color.CYAN)
@@ -230,6 +253,60 @@ class LightTest : BaseStyleTest() {
     }
     setupLight(light)
     assertEquals(transition, light.positionTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun shadowIntensityTest() {
+    val light = light {
+      shadowIntensity(1.0)
+    }
+    setupLight(light)
+    assertEquals(1.0, light.shadowIntensity!!, 1E-5)
+  }
+
+  // Add Expression Test
+  @Test
+  @UiThreadTest
+  fun shadowIntensityAsExpressionTest() {
+    val expression = literal(1.0)
+
+    val light = light {
+      shadowIntensity(expression)
+    }
+    setupLight(light)
+    assertEquals(1.0, light.shadowIntensityAsExpression?.contents as Double, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun shadowIntensityTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val light = light {
+      shadowIntensityTransition(transition)
+    }
+    setupLight(light)
+    assertEquals(transition, light.shadowIntensityTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun shadowIntensityTransitionSetDslTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val light = light {
+      shadowIntensityTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    setupLight(light)
+    assertEquals(transition, light.shadowIntensityTransition)
   }
 }
 

@@ -6,7 +6,10 @@ import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
 import com.mapbox.maps.ViewAnnotationManagerImpl.Companion.EXCEPTION_TEXT_ASSOCIATED_FEATURE_ID_ALREADY_EXISTS
+import com.mapbox.maps.renderer.MapboxRenderThread
 import com.mapbox.maps.viewannotation.OnViewAnnotationUpdatedListener
+import com.mapbox.maps.viewannotation.ViewAnnotationManager
+import com.mapbox.maps.viewannotation.ViewAnnotationUpdateMode
 import com.mapbox.maps.viewannotation.viewAnnotationOptions
 import io.mockk.*
 import org.junit.After
@@ -21,11 +24,14 @@ class ViewAnnotationManagerTest {
   private lateinit var viewAnnotationManager: ViewAnnotationManagerImpl
   private lateinit var frameLayoutParams: FrameLayout.LayoutParams
   private lateinit var view: View
+  private lateinit var renderer: MapboxRenderThread
 
   @Before
   fun setUp() {
     every { mapView.getMapboxMap() } returns mapboxMap
     every { mapView.mapController.pluginRegistry.viewPlugins } returns mutableMapOf()
+    renderer = mockk(relaxUnitFun = true)
+    every { mapView.mapController.renderer.renderThread } returns renderer
     viewAnnotationManager = ViewAnnotationManagerImpl(mapView)
     frameLayoutParams = mockk()
     frameLayoutParams.width = 20
@@ -303,6 +309,20 @@ class ViewAnnotationManagerTest {
     viewAnnotationManager.addOnViewAnnotationUpdatedListener(listener)
     viewAnnotationManager.removeOnViewAnnotationUpdatedListener(listener)
     assert(viewAnnotationManager.viewUpdatedListenerSet.isEmpty())
+  }
+
+  @Test
+  fun setViewAnnotationUpdateMode() {
+    viewAnnotationManager.setViewAnnotationUpdateMode(ViewAnnotationUpdateMode.MAP_FIXED_DELAY)
+    verify(exactly = 1) { renderer.viewAnnotationMode = ViewAnnotationUpdateMode.MAP_FIXED_DELAY }
+  }
+
+  @Test
+  fun getViewAnnotationUpdateMode() {
+    every { renderer.viewAnnotationMode } returns ViewAnnotationManager.DEFAULT_UPDATE_MODE
+    assertEquals(ViewAnnotationManager.DEFAULT_UPDATE_MODE, viewAnnotationManager.getViewAnnotationUpdateMode())
+    every { renderer.viewAnnotationMode } returns ViewAnnotationUpdateMode.MAP_FIXED_DELAY
+    assertEquals(ViewAnnotationUpdateMode.MAP_FIXED_DELAY, viewAnnotationManager.getViewAnnotationUpdateMode())
   }
 
   private companion object {

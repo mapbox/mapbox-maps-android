@@ -1,5 +1,6 @@
 package com.mapbox.maps.renderer
 
+import android.opengl.GLES20
 import android.os.SystemClock
 import android.view.Choreographer
 import android.view.Surface
@@ -13,6 +14,8 @@ import com.mapbox.maps.logW
 import com.mapbox.maps.renderer.egl.EGLCore
 import com.mapbox.maps.renderer.gl.TextureRenderer
 import com.mapbox.maps.renderer.widget.Widget
+import com.mapbox.maps.viewannotation.ViewAnnotationManager
+import com.mapbox.maps.viewannotation.ViewAnnotationUpdateMode
 import java.util.concurrent.ConcurrentLinkedQueue
 import java.util.concurrent.locks.ReentrantLock
 import javax.microedition.khronos.egl.EGL10
@@ -88,6 +91,14 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
 
   // TODO needed for workaround until issue is fixed in gl-native
   internal var renderDestroyCallChain = false
+
+  /**
+   * Modified from render thread only, needed to understand when exactly to swap buffers
+   * to achieve better synchronization with view annotation updates.
+   */
+  internal var needViewAnnotationSync = false
+  @Volatile
+  internal var viewAnnotationMode = ViewAnnotationManager.DEFAULT_UPDATE_MODE
 
   constructor(
     mapboxRenderer: MapboxRenderer,
@@ -261,8 +272,43 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     // it makes sense to execute them after drawing a map but before swapping buffers
     // **note** this queue also holds snapshot tasks
     drainQueue(renderEventQueue)
+    // calculate FPS here, before actual swap as swap could happen either this or next frame
+    val actualEndRenderTimeNanos = SystemClock.elapsedRealtimeNanos()
+    if (renderTimeNsCopy != 0L && actualEndRenderTimeNanos < expectedEndRenderTimeNs) {
+      // we need to stop swap buffers for less than time requested in order to have some time to render upcoming frame
+      // before next vsync so it will be drawn, otherwise we will drop it
+      expectedVsyncWakeTimeNs = expectedEndRenderTimeNs - ONE_MILLISECOND_NS
+    }
+    fpsChangedListener?.let {
+      val fps = 1E9 / (actualEndRenderTimeNanos - timeElapsed)
+      if (timeElapsed != 0L) {
+        it.onFpsChanged(fps)
+      }
+      timeElapsed = actualEndRenderTimeNanos
+    }
+    if (needViewAnnotationSync && viewAnnotationMode == ViewAnnotationUpdateMode.MAP_SYNCHRONIZED) {
+      // when we're syncing view annotations with the map -
+      // we swap buffers the next frame to achieve better synchronization with view annotations update
+      // that always happens 1 frame later
+      Choreographer.getInstance().postFrameCallback {
+        swapBuffers()
+      }
+      // explicit flush as we will not be doing any drawing until buffer swap for the next frame -
+      // we send commands to GPU this frame as we should have some free time and perform buffer swap asap on the next frame
+      // note that this doesn't block the calling thread, it merely signals the driver that we might not be sending any additional commands.
+      // ref https://stackoverflow.com/a/38297697
+      GLES20.glFlush()
+    } else {
+      // perform swap immediately if no view annotations are visible or mode is not MAP_SYNCHRONIZED
+      swapBuffers()
+    }
+    // always reset the flag
+    needViewAnnotationSync = false
+  }
+
+  private fun swapBuffers() {
     when (val swapStatus = eglCore.swapBuffers(eglSurface)) {
-      EGL10.EGL_SUCCESS -> {}
+      EGL10.EGL_SUCCESS -> { }
       EGL11.EGL_CONTEXT_LOST -> {
         logW(TAG, "Context lost. Waiting for re-acquire")
         releaseEgl()
@@ -271,19 +317,6 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
         logW(TAG, "eglSwapBuffer error: $swapStatus. Waiting for new surface")
         releaseEglSurface()
       }
-    }
-    val actualEndRenderTimeNs = SystemClock.elapsedRealtimeNanos()
-    if (renderTimeNsCopy != 0L && actualEndRenderTimeNs < expectedEndRenderTimeNs) {
-      // we need to stop swap buffers for less than time requested in order to have some time to render upcoming frame
-      // before next vsync so it will be drawn, otherwise we will drop it
-      expectedVsyncWakeTimeNs = expectedEndRenderTimeNs - ONE_MILLISECOND_NS
-    }
-    fpsChangedListener?.let {
-      val fps = 1E9 / (actualEndRenderTimeNs - timeElapsed)
-      if (timeElapsed != 0L) {
-        it.onFpsChanged(fps)
-      }
-      timeElapsed = actualEndRenderTimeNs
     }
   }
 

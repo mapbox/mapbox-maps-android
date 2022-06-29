@@ -19,6 +19,7 @@ import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.test.R
 import com.mapbox.maps.viewannotation.OnViewAnnotationUpdatedListener
 import com.mapbox.maps.viewannotation.ViewAnnotationManager
+import com.mapbox.maps.viewannotation.ViewAnnotationUpdateMode
 import com.mapbox.maps.viewannotation.viewAnnotationOptions
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
@@ -33,7 +34,8 @@ import java.util.concurrent.TimeoutException
 @RunWith(Parameterized::class)
 @LargeTest
 class ViewAnnotationTest(
-  @LayoutRes private val layoutResId: Int
+  @LayoutRes private val layoutResId: Int,
+  private val mode: ViewAnnotationUpdateMode,
 ) {
   private lateinit var mapboxMap: MapboxMap
   private lateinit var mapView: MapView
@@ -60,6 +62,7 @@ class ViewAnnotationTest(
       it.setContentView(mapView)
 
       viewAnnotationManager = mapView.viewAnnotationManager.apply {
+        setViewAnnotationUpdateMode(mode)
         // no need to remove it afterwards as map view is destroyed in cleanup
         addOnViewAnnotationUpdatedListener(object : OnViewAnnotationUpdatedListener {
           override fun onViewAnnotationPositionUpdated(
@@ -317,8 +320,6 @@ class ViewAnnotationTest(
         assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).y, secondView.translationY.toDouble(), ADMISSIBLE_ERROR_PX)
         assertArrayEquals(
           arrayOf(
-            Pair(firstView, true),
-            Pair(firstView, false),
             Pair(secondView, true),
           ),
           actualVisibilityUpdateList.toTypedArray()
@@ -360,10 +361,11 @@ class ViewAnnotationTest(
           mapView.getChildViewIndex(secondView),
           Matchers.lessThan(mapView.getChildViewIndex(firstView))
         )
+        // although first view is selected - we still respect addition order
         assertArrayEquals(
           arrayOf(
-            Pair(firstView, true),
             Pair(secondView, true),
+            Pair(firstView, true),
           ),
           actualVisibilityUpdateList.toTypedArray()
         )
@@ -442,8 +444,6 @@ class ViewAnnotationTest(
         assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).y, secondView.translationY.toDouble(), ADMISSIBLE_ERROR_PX)
         assertArrayEquals(
           arrayOf(
-            Pair(firstView, true),
-            Pair(firstView, false),
             Pair(secondView, true),
           ),
           actualVisibilityUpdateList.toTypedArray()
@@ -519,8 +519,6 @@ class ViewAnnotationTest(
         assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).y, secondView.translationY.toDouble(), ADMISSIBLE_ERROR_PX)
         assertArrayEquals(
           arrayOf(
-            Pair(firstView, true),
-            Pair(firstView, false),
             Pair(secondView, true),
           ),
           actualVisibilityUpdateList.toTypedArray()
@@ -652,8 +650,6 @@ class ViewAnnotationTest(
             assertTrue(mapView.hasChildView(secondView))
             assertArrayEquals(
               arrayOf(
-                Pair(firstView, true),
-                Pair(firstView, false),
                 Pair(secondView, true),
                 Pair(firstView, true),
               ),
@@ -721,8 +717,6 @@ class ViewAnnotationTest(
             assertFalse(mapView.hasChildView(secondView))
             assertArrayEquals(
               arrayOf(
-                Pair(firstView, true),
-                Pair(firstView, false),
                 Pair(secondView, true),
                 Pair(secondView, false),
                 Pair(firstView, true),
@@ -864,8 +858,6 @@ class ViewAnnotationTest(
             assertTrue(mapView.hasChildView(firstView))
             assertArrayEquals(
               arrayOf(
-                Pair(firstView, true),
-                Pair(firstView, false),
                 Pair(secondView, true),
                 Pair(secondView, false),
                 Pair(firstView, true)
@@ -961,8 +953,10 @@ class ViewAnnotationTest(
     @JvmStatic
     @Parameterized.Parameters
     fun data() = listOf(
-      R.layout.view_annotation,
-      R.layout.view_annotation_wrap_content,
+      arrayOf(R.layout.view_annotation, ViewAnnotationUpdateMode.MAP_SYNCHRONIZED),
+      arrayOf(R.layout.view_annotation, ViewAnnotationUpdateMode.MAP_FIXED_DELAY),
+      arrayOf(R.layout.view_annotation_wrap_content, ViewAnnotationUpdateMode.MAP_SYNCHRONIZED),
+      arrayOf(R.layout.view_annotation_wrap_content, ViewAnnotationUpdateMode.MAP_FIXED_DELAY),
     )
   }
 }

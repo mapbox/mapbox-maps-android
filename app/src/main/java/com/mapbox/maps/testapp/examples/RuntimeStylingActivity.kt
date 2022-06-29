@@ -308,6 +308,8 @@ class RuntimeStylingActivity : AppCompatActivity() {
         azimuthalAngle = 40.0,
         polarAngle = 50.0
       )
+      castShadows(true)
+      shadowIntensity(0.7)
     }
     style.setLight(light)
   }

@@ -3596,6 +3596,8 @@ public final class com/mapbox/maps/extension/style/light/generated/Light : com/m
 	public fun anchor (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/light/generated/Light;
 	public fun anchor (Lcom/mapbox/maps/extension/style/layers/properties/generated/Anchor;)Lcom/mapbox/maps/extension/style/light/generated/Light;
 	public fun bindTo (Lcom/mapbox/maps/extension/style/StyleInterface;)V
+	public fun castShadows (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/light/generated/Light;
+	public fun castShadows (Z)Lcom/mapbox/maps/extension/style/light/generated/Light;
 	public fun color (I)Lcom/mapbox/maps/extension/style/light/generated/Light;
 	public fun color (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/light/generated/Light;
 	public fun color (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/light/generated/Light;
@@ -3603,6 +3605,8 @@ public final class com/mapbox/maps/extension/style/light/generated/Light : com/m
 	public fun colorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/light/generated/Light;
 	public final fun getAnchor ()Lcom/mapbox/maps/extension/style/layers/properties/generated/Anchor;
 	public final fun getAnchorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getCastShadows ()Ljava/lang/Boolean;
+	public final fun getCastShadowsAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getColor ()Ljava/lang/String;
 	public final fun getColorAsColorInt ()Ljava/lang/Integer;
 	public final fun getColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
@@ -3613,6 +3617,9 @@ public final class com/mapbox/maps/extension/style/light/generated/Light : com/m
 	public final fun getPosition ()Lcom/mapbox/maps/extension/style/light/LightPosition;
 	public final fun getPositionAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getPositionTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
+	public final fun getShadowIntensity ()Ljava/lang/Double;
+	public final fun getShadowIntensityAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getShadowIntensityTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public fun intensity (D)Lcom/mapbox/maps/extension/style/light/generated/Light;
 	public fun intensity (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/light/generated/Light;
 	public fun intensityTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/light/generated/Light;
@@ -3622,6 +3629,10 @@ public final class com/mapbox/maps/extension/style/light/generated/Light : com/m
 	public fun position (Lcom/mapbox/maps/extension/style/light/LightPosition;)Lcom/mapbox/maps/extension/style/light/generated/Light;
 	public fun positionTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/light/generated/Light;
 	public fun positionTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/light/generated/Light;
+	public fun shadowIntensity (D)Lcom/mapbox/maps/extension/style/light/generated/Light;
+	public fun shadowIntensity (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/light/generated/Light;
+	public fun shadowIntensityTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/light/generated/Light;
+	public fun shadowIntensityTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/light/generated/Light;
 }
 
 public final class com/mapbox/maps/extension/style/light/generated/Light$Companion {
@@ -3630,6 +3641,8 @@ public final class com/mapbox/maps/extension/style/light/generated/Light$Compani
 public abstract interface class com/mapbox/maps/extension/style/light/generated/LightDslReceiver {
 	public abstract fun anchor (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/light/generated/Light;
 	public abstract fun anchor (Lcom/mapbox/maps/extension/style/layers/properties/generated/Anchor;)Lcom/mapbox/maps/extension/style/light/generated/Light;
+	public abstract fun castShadows (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/light/generated/Light;
+	public abstract fun castShadows (Z)Lcom/mapbox/maps/extension/style/light/generated/Light;
 	public abstract fun color (I)Lcom/mapbox/maps/extension/style/light/generated/Light;
 	public abstract fun color (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/light/generated/Light;
 	public abstract fun color (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/light/generated/Light;
@@ -3644,13 +3657,19 @@ public abstract interface class com/mapbox/maps/extension/style/light/generated/
 	public abstract fun position (Lcom/mapbox/maps/extension/style/light/LightPosition;)Lcom/mapbox/maps/extension/style/light/generated/Light;
 	public abstract fun positionTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/light/generated/Light;
 	public abstract fun positionTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/light/generated/Light;
+	public abstract fun shadowIntensity (D)Lcom/mapbox/maps/extension/style/light/generated/Light;
+	public abstract fun shadowIntensity (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/light/generated/Light;
+	public abstract fun shadowIntensityTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/light/generated/Light;
+	public abstract fun shadowIntensityTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/light/generated/Light;
 }
 
 public final class com/mapbox/maps/extension/style/light/generated/LightDslReceiver$DefaultImpls {
 	public static synthetic fun anchor$default (Lcom/mapbox/maps/extension/style/light/generated/LightDslReceiver;Lcom/mapbox/maps/extension/style/layers/properties/generated/Anchor;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/light/generated/Light;
+	public static synthetic fun castShadows$default (Lcom/mapbox/maps/extension/style/light/generated/LightDslReceiver;ZILjava/lang/Object;)Lcom/mapbox/maps/extension/style/light/generated/Light;
 	public static synthetic fun color$default (Lcom/mapbox/maps/extension/style/light/generated/LightDslReceiver;Ljava/lang/String;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/light/generated/Light;
 	public static synthetic fun intensity$default (Lcom/mapbox/maps/extension/style/light/generated/LightDslReceiver;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/light/generated/Light;
 	public static synthetic fun position$default (Lcom/mapbox/maps/extension/style/light/generated/LightDslReceiver;Lcom/mapbox/maps/extension/style/light/LightPosition;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/light/generated/Light;
+	public static synthetic fun shadowIntensity$default (Lcom/mapbox/maps/extension/style/light/generated/LightDslReceiver;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/light/generated/Light;
 }
 
 public final class com/mapbox/maps/extension/style/light/generated/LightKt {
