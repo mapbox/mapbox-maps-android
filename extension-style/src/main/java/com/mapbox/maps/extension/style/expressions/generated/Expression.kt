@@ -290,7 +290,7 @@ class Expression : Value {
     }
 
     /**
-     * Gets the value of a cluster property accumulated so far. Can only be used in the
+     * Returns the value of a cluster property accumulated so far. Can only be used in the
      * `clusterProperties` option of a clustered GeoJSON source.
      */
     fun accumulated() {
@@ -376,7 +376,9 @@ class Expression : Value {
     }
 
     /**
-     * Evaluates each expression in turn until the first non-null value is obtained, and returns that value.
+     * Evaluates each expression in turn until the first valid value is obtained. Invalid values are `null`
+     * and [`'image'`](#types-image) expressions that are unavailable in the style. If all values are invalid, `coalesce` returns
+     * the first value listed.
      */
     fun coalesce(block: ExpressionBuilder.() -> Unit) {
       this@ExpressionBuilder.arguments.add(Expression.coalesce(block))
@@ -435,7 +437,7 @@ class Expression : Value {
     }
 
     /**
-     * Retrieves a property value from the current feature's state. Returns null if the requested property is
+     * Retrieves a property value from the current feature's state. Returns `null` if the requested property is
      * not present on the feature's state. A feature's state is not part of the GeoJSON or
      * vector tile data, and must be set programmatically on each feature. Features are identified by their
      * `id` attribute, which must be an integer or a string that can be cast to an
@@ -465,7 +467,8 @@ class Expression : Value {
     }
 
     /**
-     * Gets the feature's geometry type: `Point`, `MultiPoint`, `LineString`, `MultiLineString`, `Polygon`, `MultiPolygon`.
+     * Returns the feature's geometry type: `Point`, `MultiPoint`, `LineString`, `MultiLineString`, `Polygon`, `MultiPolygon`. `Multi-` feature types are only
+     * returned in GeoJSON sources. When working with vector tile sources, use the singular forms.
      */
     fun geometryType() {
       this@ExpressionBuilder.arguments.add(Expression.geometryType())
@@ -473,7 +476,7 @@ class Expression : Value {
 
     /**
      * Retrieves a property value from the current feature's properties, or from another object if a second
-     * argument is provided. Returns null if the requested property is missing.
+     * argument is provided. Returns `null` if the requested property is missing.
      */
     fun get(block: ExpressionBuilder.() -> Unit) {
       this@ExpressionBuilder.arguments.add(Expression.get(block))
@@ -488,7 +491,7 @@ class Expression : Value {
     }
 
     /**
-     * Gets the kernel density estimation of a pixel in a heatmap layer, which is a relative
+     * Returns the kernel density estimation of a pixel in a heatmap layer, which is a relative
      * measure of how many data points are crowded around a particular pixel. Can only be used
      * in the `heatmap-color` property.
      */
@@ -497,25 +500,26 @@ class Expression : Value {
     }
 
     /**
-     * Gets the feature's id, if it has one.
+     * Returns the feature's id, if it has one.
      */
     fun id() {
       this@ExpressionBuilder.arguments.add(Expression.id())
     }
 
     /**
-     * Returns an `image` type for use in `icon-image`, `--pattern` entries and as a section in the
-     * `format` expression. If set, the `image` argument will check that the requested image exists in the
-     * style and will return either the resolved image name or `null`, depending on whether or not
-     * the image is currently in the style. This validation process is synchronous and requires the image
-     * to have been added to the style before requesting it in the `image` argument.
+     * Returns a [`ResolvedImage`](/mapbox-gl-js/style-spec/types/#resolvedimage) for use in [`icon-image`](/mapbox-gl-js/style-spec/layers/#layout-symbol-icon-image), `--pattern` entries, and as a section in the [`'format'`](#types-format)
+     * expression. A [`'coalesce'`](#coalesce) expression containing `image` expressions will evaluate to the first listed image that is
+     * currently in the style. This validation process is synchronous and requires the image to have been
+     * added to the style before requesting it in the `'image'` argument.
      */
     fun image(block: ExpressionBuilder.() -> Unit) {
       this@ExpressionBuilder.arguments.add(Expression.image(block))
     }
 
     /**
-     * Determines whether an item exists in an array or a substring exists in a string.
+     * Determines whether an item exists in an array or a substring exists in a string. In
+     * the specific case when the second and third arguments are string literals, you must wrap at
+     * least one of them in a [`literal`](#types-literal) expression to hint correct interpretation to the [type system](#type-system).
      */
     fun inExpression(block: ExpressionBuilder.() -> Unit) {
       this@ExpressionBuilder.arguments.add(Expression.inExpression(block))
@@ -560,7 +564,7 @@ class Expression : Value {
     }
 
     /**
-     * Gets the length of an array or string.
+     * Returns the length of an array or string.
      */
     fun length(block: ExpressionBuilder.() -> Unit) {
       this@ExpressionBuilder.arguments.add(Expression.length(block))
@@ -575,7 +579,7 @@ class Expression : Value {
     }
 
     /**
-     * Gets the progress along a gradient line. Can only be used in the `line-gradient` property.
+     * Returns the progress along a gradient line. Can only be used in the `line-gradient` property.
      */
     fun lineProgress() {
       this@ExpressionBuilder.arguments.add(Expression.lineProgress())
@@ -652,15 +656,17 @@ class Expression : Value {
     }
 
     /**
-     * Selects the output whose label value matches the input value, or the fallback value if no
-     * match is found. The input can be any expression (e.g. `["get", "building_type"]`). Each label must be
-     * either:
+     * Selects the output for which the label value matches the input value, or the fallback value
+     * if no match is found. The input can be any expression (for example, `["get", "building_type"]`). Each
+     * label must be unique, and must be either:
      * - a single literal value; or
-     * - an array of literal values, whose values must be all strings or all numbers
-     * (e.g. `[100, 101]` or `["c", "b"]`). The input matches if any of the values in the
-     * array matches, similar to the `"in"` operator.
-     * Each label must be unique. If the input type does not match the type of the
-     * labels, the result will be the fallback value.
+     * - an array of literal values, the values of which must be all strings or
+     * all numbers (for example `[100, 101]` or `["c", "b"]`).
+     *
+     * The input matches if any of the values in the array matches using strict equality, similar
+     * to the `"in"` operator.
+     * If the input type does not match the type of the labels, the result will be
+     * the fallback value.
      */
     fun match(block: ExpressionBuilder.() -> Unit) {
       this@ExpressionBuilder.arguments.add(Expression.match(block))
@@ -692,8 +698,9 @@ class Expression : Value {
     /**
      * Converts the input number into a string representation using the providing formatting rules. If set, the
      * `locale` argument specifies the locale to use, as a BCP 47 language tag. If set, the
-     * `currency` argument specifies an ISO 4217 code to use for currency-style formatting. If set, the `min-fraction-digits`
-     * and `max-fraction-digits` arguments specify the minimum and maximum number of fractional digits to include.
+     * `currency` argument specifies an ISO 4217 code to use for currency-style formatting. If set, the `unit`
+     * argument specifies a [simple ECMAScript unit](https://tc39.es/proposal-unified-intl-numberformat/section6/locales-currencies-tz_proposed_out.html#sec-issanctionedsimpleunitidentifier) to use for unit-style formatting. If set, the `min-fraction-digits` and
+     * `max-fraction-digits` arguments specify the minimum and maximum number of fractional digits to include.
      */
     fun numberFormat(input: Expression, block: NumberFormatBuilder.() -> Unit) {
       this@ExpressionBuilder.arguments.add(Expression.numberFormat(input, block))
@@ -716,8 +723,8 @@ class Expression : Value {
     }
 
     /**
-     * Gets the feature properties object.  Note that in some cases, it may be more efficient
-     * to use ["get", "property_name"] directly.
+     * Returns the feature properties object.  Note that in some cases, it may be more efficient
+     * to use `["get", "property_name"]` directly.
      */
     fun properties() {
       this@ExpressionBuilder.arguments.add(Expression.properties())
@@ -766,7 +773,7 @@ class Expression : Value {
     }
 
     /**
-     * Gets the distance of a point on the sky from the sun position. Returns 0 at
+     * Returns the distance of a point on the sky from the sun position. Returns 0 at
      * sun position and 1 when the distance reaches `sky-gradient-radius`. Can only be used in the `sky-gradient`
      * property.
      */
@@ -855,12 +862,13 @@ class Expression : Value {
 
     /**
      * Converts the input value to a string. If the input is `null`, the result is `""`.
-     * If the input is a boolean, the result is `"true"` or `"false"`. If the input is
+     * If the input is a [`boolean`](#types-boolean), the result is `"true"` or `"false"`. If the input is
      * a number, it is converted to a string as specified by the ["NumberToString" algorithm](https://tc39.github.io/ecma262/#sec-tostring-applied-to-the-number-type) of the
-     * ECMAScript Language Specification. If the input is a color, it is converted to a string of
+     * ECMAScript Language Specification. If the input is a [`color`](#color), it is converted to a string of
      * the form `"rgba(r,g,b,a)"`, where `r`, `g`, and `b` are numerals ranging from 0 to 255, and
-     * `a` ranges from 0 to 1. Otherwise, the input is converted to a string in the
-     * format specified by the [`JSON.stringify`](https://tc39.github.io/ecma262/#sec-json.stringify) function of the ECMAScript Language Specification.
+     * `a` ranges from 0 to 1. If the input is an [`'image'`](#types-image) expression, `'to-string'` returns the
+     * image name. Otherwise, the input is converted to a string in the format specified by the
+     * [`JSON.stringify`](https://tc39.github.io/ecma262/#sec-json.stringify) function of the ECMAScript Language Specification.
      */
     fun toString(block: ExpressionBuilder.() -> Unit) {
       this@ExpressionBuilder.arguments.add(Expression.toString(block))
@@ -902,7 +910,7 @@ class Expression : Value {
     }
 
     /**
-     * Gets the current zoom level.  Note that in style layout and paint properties, ["zoom"] may
+     * Returns the current zoom level.  Note that in style layout and paint properties, ["zoom"] may
      * only appear as the input to a top-level "step" or "interpolate" expression.
      */
     fun zoom() {
@@ -1967,7 +1975,7 @@ class Expression : Value {
       ExpressionBuilder("abs").apply(block).build()
 
     /**
-     * Gets the value of a cluster property accumulated so far. Can only be used in the
+     * Returns the value of a cluster property accumulated so far. Can only be used in the
      * `clusterProperties` option of a clustered GeoJSON source.
      */
     @JvmStatic
@@ -2162,7 +2170,9 @@ class Expression : Value {
       ExpressionBuilder("ceil").apply(block).build()
 
     /**
-     * Evaluates each expression in turn until the first non-null value is obtained, and returns that value.
+     * Evaluates each expression in turn until the first valid value is obtained. Invalid values are `null`
+     * and [`'image'`](#types-image) expressions that are unavailable in the style. If all values are invalid, `coalesce` returns
+     * the first value listed.
      */
     @JvmStatic
     fun coalesce(vararg expressions: Expression): Expression {
@@ -2315,7 +2325,7 @@ class Expression : Value {
     fun e() = ExpressionBuilder("e").build()
 
     /**
-     * Retrieves a property value from the current feature's state. Returns null if the requested property is
+     * Retrieves a property value from the current feature's state. Returns `null` if the requested property is
      * not present on the feature's state. A feature's state is not part of the GeoJSON or
      * vector tile data, and must be set programmatically on each feature. Features are identified by their
      * `id` attribute, which must be an integer or a string that can be cast to an
@@ -2382,14 +2392,15 @@ class Expression : Value {
       FormatBuilder().apply(block).build()
 
     /**
-     * Gets the feature's geometry type: `Point`, `MultiPoint`, `LineString`, `MultiLineString`, `Polygon`, `MultiPolygon`.
+     * Returns the feature's geometry type: `Point`, `MultiPoint`, `LineString`, `MultiLineString`, `Polygon`, `MultiPolygon`. `Multi-` feature types are only
+     * returned in GeoJSON sources. When working with vector tile sources, use the singular forms.
      */
     @JvmStatic
     fun geometryType() = ExpressionBuilder("geometry-type").build()
 
     /**
      * Retrieves a property value from the current feature's properties, or from another object if a second
-     * argument is provided. Returns null if the requested property is missing.
+     * argument is provided. Returns `null` if the requested property is missing.
      */
     @JvmStatic
     fun get(vararg expressions: Expression): Expression {
@@ -2426,7 +2437,7 @@ class Expression : Value {
       ExpressionBuilder("has").apply(block).build()
 
     /**
-     * Gets the kernel density estimation of a pixel in a heatmap layer, which is a relative
+     * Returns the kernel density estimation of a pixel in a heatmap layer, which is a relative
      * measure of how many data points are crowded around a particular pixel. Can only be used
      * in the `heatmap-color` property.
      */
@@ -2434,17 +2445,16 @@ class Expression : Value {
     fun heatmapDensity() = ExpressionBuilder("heatmap-density").build()
 
     /**
-     * Gets the feature's id, if it has one.
+     * Returns the feature's id, if it has one.
      */
     @JvmStatic
     fun id() = ExpressionBuilder("id").build()
 
     /**
-     * Returns an `image` type for use in `icon-image`, `--pattern` entries and as a section in the
-     * `format` expression. If set, the `image` argument will check that the requested image exists in the
-     * style and will return either the resolved image name or `null`, depending on whether or not
-     * the image is currently in the style. This validation process is synchronous and requires the image
-     * to have been added to the style before requesting it in the `image` argument.
+     * Returns a [`ResolvedImage`](/mapbox-gl-js/style-spec/types/#resolvedimage) for use in [`icon-image`](/mapbox-gl-js/style-spec/layers/#layout-symbol-icon-image), `--pattern` entries, and as a section in the [`'format'`](#types-format)
+     * expression. A [`'coalesce'`](#coalesce) expression containing `image` expressions will evaluate to the first listed image that is
+     * currently in the style. This validation process is synchronous and requires the image to have been
+     * added to the style before requesting it in the `'image'` argument.
      */
     @JvmStatic
     fun image(vararg expressions: Expression): Expression {
@@ -2462,7 +2472,9 @@ class Expression : Value {
       ExpressionBuilder("image").apply(block).build()
 
     /**
-     * Determines whether an item exists in an array or a substring exists in a string.
+     * Determines whether an item exists in an array or a substring exists in a string. In
+     * the specific case when the second and third arguments are string literals, you must wrap at
+     * least one of them in a [`literal`](#types-literal) expression to hint correct interpretation to the [type system](#type-system).
      */
     @JvmStatic
     fun inExpression(vararg expressions: Expression): Expression {
@@ -2551,7 +2563,7 @@ class Expression : Value {
       ExpressionBuilder("is-supported-script").apply(block).build()
 
     /**
-     * Gets the length of an array or string.
+     * Returns the length of an array or string.
      */
     @JvmStatic
     fun length(vararg expressions: Expression): Expression {
@@ -2588,7 +2600,7 @@ class Expression : Value {
       ExpressionBuilder("let").apply(block).build()
 
     /**
-     * Gets the progress along a gradient line. Can only be used in the `line-gradient` property.
+     * Returns the progress along a gradient line. Can only be used in the `line-gradient` property.
      */
     @JvmStatic
     fun lineProgress() = ExpressionBuilder("line-progress").build()
@@ -2706,15 +2718,17 @@ class Expression : Value {
       ExpressionBuilder("log2").apply(block).build()
 
     /**
-     * Selects the output whose label value matches the input value, or the fallback value if no
-     * match is found. The input can be any expression (e.g. `["get", "building_type"]`). Each label must be
-     * either:
+     * Selects the output for which the label value matches the input value, or the fallback value
+     * if no match is found. The input can be any expression (for example, `["get", "building_type"]`). Each
+     * label must be unique, and must be either:
      * - a single literal value; or
-     * - an array of literal values, whose values must be all strings or all numbers
-     * (e.g. `[100, 101]` or `["c", "b"]`). The input matches if any of the values in the
-     * array matches, similar to the `"in"` operator.
-     * Each label must be unique. If the input type does not match the type of the
-     * labels, the result will be the fallback value.
+     * - an array of literal values, the values of which must be all strings or
+     * all numbers (for example `[100, 101]` or `["c", "b"]`).
+     *
+     * The input matches if any of the values in the array matches using strict equality, similar
+     * to the `"in"` operator.
+     * If the input type does not match the type of the labels, the result will be
+     * the fallback value.
      */
     @JvmStatic
     fun match(vararg expressions: Expression): Expression {
@@ -2790,8 +2804,9 @@ class Expression : Value {
     /**
      * Converts the input number into a string representation using the providing formatting rules. If set, the
      * `locale` argument specifies the locale to use, as a BCP 47 language tag. If set, the
-     * `currency` argument specifies an ISO 4217 code to use for currency-style formatting. If set, the `min-fraction-digits`
-     * and `max-fraction-digits` arguments specify the minimum and maximum number of fractional digits to include.
+     * `currency` argument specifies an ISO 4217 code to use for currency-style formatting. If set, the `unit`
+     * argument specifies a [simple ECMAScript unit](https://tc39.es/proposal-unified-intl-numberformat/section6/locales-currencies-tz_proposed_out.html#sec-issanctionedsimpleunitidentifier) to use for unit-style formatting. If set, the `min-fraction-digits` and
+     * `max-fraction-digits` arguments specify the minimum and maximum number of fractional digits to include.
      */
     @JvmStatic
     fun numberFormat(
@@ -2842,8 +2857,8 @@ class Expression : Value {
     fun pi() = ExpressionBuilder("pi").build()
 
     /**
-     * Gets the feature properties object.  Note that in some cases, it may be more efficient
-     * to use ["get", "property_name"] directly.
+     * Returns the feature properties object.  Note that in some cases, it may be more efficient
+     * to use `["get", "property_name"]` directly.
      */
     @JvmStatic
     fun properties() = ExpressionBuilder("properties").build()
@@ -2946,7 +2961,7 @@ class Expression : Value {
       ExpressionBuilder("sin").apply(block).build()
 
     /**
-     * Gets the distance of a point on the sky from the sun position. Returns 0 at
+     * Returns the distance of a point on the sky from the sun position. Returns 0 at
      * sun position and 1 when the distance reaches `sky-gradient-radius`. Can only be used in the `sky-gradient`
      * property.
      */
@@ -3133,12 +3148,13 @@ class Expression : Value {
 
     /**
      * Converts the input value to a string. If the input is `null`, the result is `""`.
-     * If the input is a boolean, the result is `"true"` or `"false"`. If the input is
+     * If the input is a [`boolean`](#types-boolean), the result is `"true"` or `"false"`. If the input is
      * a number, it is converted to a string as specified by the ["NumberToString" algorithm](https://tc39.github.io/ecma262/#sec-tostring-applied-to-the-number-type) of the
-     * ECMAScript Language Specification. If the input is a color, it is converted to a string of
+     * ECMAScript Language Specification. If the input is a [`color`](#color), it is converted to a string of
      * the form `"rgba(r,g,b,a)"`, where `r`, `g`, and `b` are numerals ranging from 0 to 255, and
-     * `a` ranges from 0 to 1. Otherwise, the input is converted to a string in the
-     * format specified by the [`JSON.stringify`](https://tc39.github.io/ecma262/#sec-json.stringify) function of the ECMAScript Language Specification.
+     * `a` ranges from 0 to 1. If the input is an [`'image'`](#types-image) expression, `'to-string'` returns the
+     * image name. Otherwise, the input is converted to a string in the format specified by the
+     * [`JSON.stringify`](https://tc39.github.io/ecma262/#sec-json.stringify) function of the ECMAScript Language Specification.
      */
     @JvmStatic
     fun toString(vararg expressions: Expression): Expression {
@@ -3231,7 +3247,7 @@ class Expression : Value {
     }
 
     /**
-     * Gets the current zoom level.  Note that in style layout and paint properties, ["zoom"] may
+     * Returns the current zoom level.  Note that in style layout and paint properties, ["zoom"] may
      * only appear as the input to a top-level "step" or "interpolate" expression.
      */
     @JvmStatic

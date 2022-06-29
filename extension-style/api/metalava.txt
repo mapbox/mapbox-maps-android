@@ -1356,6 +1356,14 @@ package com.mapbox.maps.extension.style.layers.generated {
 
   @UiThread public final class FillExtrusionLayer extends com.mapbox.maps.extension.style.layers.Layer implements com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayerDsl {
     ctor public FillExtrusionLayer(String layerId, String sourceId);
+    method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionAmbientOcclusionIntensity(double fillExtrusionAmbientOcclusionIntensity);
+    method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionAmbientOcclusionIntensity(com.mapbox.maps.extension.style.expressions.generated.Expression fillExtrusionAmbientOcclusionIntensity);
+    method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionAmbientOcclusionIntensityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionAmbientOcclusionIntensityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionAmbientOcclusionRadius(double fillExtrusionAmbientOcclusionRadius);
+    method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionAmbientOcclusionRadius(com.mapbox.maps.extension.style.expressions.generated.Expression fillExtrusionAmbientOcclusionRadius);
+    method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionAmbientOcclusionRadiusTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionAmbientOcclusionRadiusTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionBase(double fillExtrusionBase);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionBase(com.mapbox.maps.extension.style.expressions.generated.Expression fillExtrusionBase);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionBaseTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -1386,6 +1394,12 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionVerticalGradient(boolean fillExtrusionVerticalGradient);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionVerticalGradient(com.mapbox.maps.extension.style.expressions.generated.Expression fillExtrusionVerticalGradient);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer filter(com.mapbox.maps.extension.style.expressions.generated.Expression filter);
+    method public Double? getFillExtrusionAmbientOcclusionIntensity();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getFillExtrusionAmbientOcclusionIntensityAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getFillExtrusionAmbientOcclusionIntensityTransition();
+    method public Double? getFillExtrusionAmbientOcclusionRadius();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getFillExtrusionAmbientOcclusionRadiusAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getFillExtrusionAmbientOcclusionRadiusTransition();
     method public Double? getFillExtrusionBase();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getFillExtrusionBaseAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getFillExtrusionBaseTransition();
@@ -1421,6 +1435,12 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer minZoom(double minZoom);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer sourceLayer(String sourceLayer);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer visibility(com.mapbox.maps.extension.style.layers.properties.generated.Visibility visibility);
+    property public final Double? fillExtrusionAmbientOcclusionIntensity;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? fillExtrusionAmbientOcclusionIntensityAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? fillExtrusionAmbientOcclusionIntensityTransition;
+    property public final Double? fillExtrusionAmbientOcclusionRadius;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? fillExtrusionAmbientOcclusionRadiusAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? fillExtrusionAmbientOcclusionRadiusTransition;
     property public final Double? fillExtrusionBase;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? fillExtrusionBaseAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? fillExtrusionBaseTransition;
@@ -1455,6 +1475,12 @@ package com.mapbox.maps.extension.style.layers.generated {
   }
 
   public static final class FillExtrusionLayer.Companion {
+    method public Double? getDefaultFillExtrusionAmbientOcclusionIntensity();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultFillExtrusionAmbientOcclusionIntensityAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultFillExtrusionAmbientOcclusionIntensityTransition();
+    method public Double? getDefaultFillExtrusionAmbientOcclusionRadius();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultFillExtrusionAmbientOcclusionRadiusAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultFillExtrusionAmbientOcclusionRadiusTransition();
     method public Double? getDefaultFillExtrusionBase();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultFillExtrusionBaseAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultFillExtrusionBaseTransition();
@@ -1481,6 +1507,12 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public Double? getDefaultMaxZoom();
     method public Double? getDefaultMinZoom();
     method public com.mapbox.maps.extension.style.layers.properties.generated.Visibility? getDefaultVisibility();
+    property public final Double? defaultFillExtrusionAmbientOcclusionIntensity;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultFillExtrusionAmbientOcclusionIntensityAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultFillExtrusionAmbientOcclusionIntensityTransition;
+    property public final Double? defaultFillExtrusionAmbientOcclusionRadius;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultFillExtrusionAmbientOcclusionRadiusAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultFillExtrusionAmbientOcclusionRadiusTransition;
     property public final Double? defaultFillExtrusionBase;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultFillExtrusionBaseAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultFillExtrusionBaseTransition;
@@ -1510,6 +1542,14 @@ package com.mapbox.maps.extension.style.layers.generated {
   }
 
   @com.mapbox.maps.extension.style.types.LayersDsl public interface FillExtrusionLayerDsl {
+    method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionAmbientOcclusionIntensity(double fillExtrusionAmbientOcclusionIntensity = 0.0);
+    method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionAmbientOcclusionIntensity(com.mapbox.maps.extension.style.expressions.generated.Expression fillExtrusionAmbientOcclusionIntensity);
+    method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionAmbientOcclusionIntensityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionAmbientOcclusionIntensityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionAmbientOcclusionRadius(double fillExtrusionAmbientOcclusionRadius = 3.0);
+    method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionAmbientOcclusionRadius(com.mapbox.maps.extension.style.expressions.generated.Expression fillExtrusionAmbientOcclusionRadius);
+    method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionAmbientOcclusionRadiusTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionAmbientOcclusionRadiusTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionBase(double fillExtrusionBase = 0.0);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionBase(com.mapbox.maps.extension.style.expressions.generated.Expression fillExtrusionBase);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionBaseTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -4331,6 +4371,8 @@ package com.mapbox.maps.extension.style.light.generated {
     method public com.mapbox.maps.extension.style.light.generated.Light anchor(com.mapbox.maps.extension.style.layers.properties.generated.Anchor anchor);
     method public com.mapbox.maps.extension.style.light.generated.Light anchor(com.mapbox.maps.extension.style.expressions.generated.Expression anchor);
     method public void bindTo(com.mapbox.maps.extension.style.StyleInterface delegate);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.light.generated.Light castShadows(boolean castShadows);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.light.generated.Light castShadows(com.mapbox.maps.extension.style.expressions.generated.Expression castShadows);
     method public com.mapbox.maps.extension.style.light.generated.Light color(@ColorInt int color);
     method public com.mapbox.maps.extension.style.light.generated.Light color(String color);
     method public com.mapbox.maps.extension.style.light.generated.Light color(com.mapbox.maps.extension.style.expressions.generated.Expression color);
@@ -4338,6 +4380,8 @@ package com.mapbox.maps.extension.style.light.generated {
     method public com.mapbox.maps.extension.style.light.generated.Light colorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.properties.generated.Anchor? getAnchor();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getAnchorAsExpression();
+    method public Boolean? getCastShadows();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getCastShadowsAsExpression();
     method public String? getColor();
     method @ColorInt public Integer? getColorAsColorInt();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getColorAsExpression();
@@ -4348,6 +4392,9 @@ package com.mapbox.maps.extension.style.light.generated {
     method public com.mapbox.maps.extension.style.light.LightPosition? getPosition();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getPositionAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getPositionTransition();
+    method public Double? getShadowIntensity();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getShadowIntensityAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getShadowIntensityTransition();
     method public com.mapbox.maps.extension.style.light.generated.Light intensity(double intensity);
     method public com.mapbox.maps.extension.style.light.generated.Light intensity(com.mapbox.maps.extension.style.expressions.generated.Expression intensity);
     method public com.mapbox.maps.extension.style.light.generated.Light intensityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -4357,8 +4404,14 @@ package com.mapbox.maps.extension.style.light.generated {
     method public com.mapbox.maps.extension.style.light.generated.Light position(com.mapbox.maps.extension.style.expressions.generated.Expression position);
     method public com.mapbox.maps.extension.style.light.generated.Light positionTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.light.generated.Light positionTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.light.generated.Light shadowIntensity(double shadowIntensity);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.light.generated.Light shadowIntensity(com.mapbox.maps.extension.style.expressions.generated.Expression shadowIntensity);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.light.generated.Light shadowIntensityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.light.generated.Light shadowIntensityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     property public final com.mapbox.maps.extension.style.layers.properties.generated.Anchor? anchor;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? anchorAsExpression;
+    property public final Boolean? castShadows;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? castShadowsAsExpression;
     property public final String? color;
     property @ColorInt public final Integer? colorAsColorInt;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? colorAsExpression;
@@ -4369,6 +4422,9 @@ package com.mapbox.maps.extension.style.light.generated {
     property public final com.mapbox.maps.extension.style.light.LightPosition? position;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? positionAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? positionTransition;
+    property public final Double? shadowIntensity;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? shadowIntensityAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? shadowIntensityTransition;
     field public static final com.mapbox.maps.extension.style.light.generated.Light.Companion Companion;
   }
 
@@ -4378,6 +4434,8 @@ package com.mapbox.maps.extension.style.light.generated {
   @com.mapbox.maps.extension.style.types.LightDsl public interface LightDslReceiver {
     method public com.mapbox.maps.extension.style.light.generated.Light anchor(com.mapbox.maps.extension.style.layers.properties.generated.Anchor anchor = com.mapbox.maps.extension.style.layers.properties.generated.Anchor.VIEWPORT);
     method public com.mapbox.maps.extension.style.light.generated.Light anchor(com.mapbox.maps.extension.style.expressions.generated.Expression anchor);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.light.generated.Light castShadows(boolean castShadows = false);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.light.generated.Light castShadows(com.mapbox.maps.extension.style.expressions.generated.Expression castShadows);
     method public com.mapbox.maps.extension.style.light.generated.Light color(@ColorInt int color);
     method public com.mapbox.maps.extension.style.light.generated.Light color(String color = "#ffffff");
     method public com.mapbox.maps.extension.style.light.generated.Light color(com.mapbox.maps.extension.style.expressions.generated.Expression color);
@@ -4392,6 +4450,10 @@ package com.mapbox.maps.extension.style.light.generated {
     method public com.mapbox.maps.extension.style.light.generated.Light position(com.mapbox.maps.extension.style.expressions.generated.Expression position);
     method public com.mapbox.maps.extension.style.light.generated.Light positionTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.light.generated.Light positionTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.light.generated.Light shadowIntensity(double shadowIntensity = 0.2);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.light.generated.Light shadowIntensity(com.mapbox.maps.extension.style.expressions.generated.Expression shadowIntensity);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.light.generated.Light shadowIntensityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.light.generated.Light shadowIntensityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
   }
 
   public final class LightKt {

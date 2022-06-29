@@ -375,11 +375,11 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
   }
 
   /**
-   * Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed.
+   * Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed. `queryRenderedFeatures` on heatmap layers will return points within this radius.
    */
   val heatmapRadius: Double?
     /**
-     * Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed.
+     * Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed. `queryRenderedFeatures` on heatmap layers will return points within this radius.
      *
      * @return Double
      */
@@ -388,7 +388,7 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
     }
 
   /**
-   * Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed.
+   * Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed. `queryRenderedFeatures` on heatmap layers will return points within this radius.
    *
    * @param heatmapRadius value of heatmapRadius
    */
@@ -398,15 +398,15 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
   }
 
   /**
-   * Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed.
+   * Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed. `queryRenderedFeatures` on heatmap layers will return points within this radius.
    *
    * This is an Expression representation of "heatmap-radius".
    *
-   * Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed.
+   * Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed. `queryRenderedFeatures` on heatmap layers will return points within this radius.
    */
   val heatmapRadiusAsExpression: Expression?
     /**
-     * Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed.
+     * Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed. `queryRenderedFeatures` on heatmap layers will return points within this radius.
      *
      * Get the HeatmapRadius property as an Expression
      *
@@ -423,7 +423,7 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
     }
 
   /**
-   * Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed.
+   * Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed. `queryRenderedFeatures` on heatmap layers will return points within this radius.
    *
    * @param heatmapRadius value of heatmapRadius as Expression
    */
@@ -693,11 +693,11 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
       get() = StyleManager.getStyleLayerPropertyDefaultValue("heatmap", "heatmap-opacity-transition").silentUnwrap()
 
     /**
-     * Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed.
+     * Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed. `queryRenderedFeatures` on heatmap layers will return points within this radius.
      */
     val defaultHeatmapRadius: Double?
       /**
-       * Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed.
+       * Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed. `queryRenderedFeatures` on heatmap layers will return points within this radius.
        *
        * Get the default value of HeatmapRadius property
        *
@@ -708,11 +708,11 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
       }
 
     /**
-     * Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed.
+     * Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed. `queryRenderedFeatures` on heatmap layers will return points within this radius.
      *
      * This is an Expression representation of "heatmap-radius".
      *
-     * Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed.
+     * Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed. `queryRenderedFeatures` on heatmap layers will return points within this radius.
      */
     val defaultHeatmapRadiusAsExpression: Expression?
       /**
@@ -909,21 +909,21 @@ interface HeatmapLayerDsl {
   fun heatmapOpacityTransition(block: StyleTransition.Builder.() -> Unit): HeatmapLayer
 
   /**
-   * Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed.
+   * Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed. `queryRenderedFeatures` on heatmap layers will return points within this radius.
    *
    * @param heatmapRadius value of heatmapRadius
    */
   fun heatmapRadius(heatmapRadius: Double = 30.0): HeatmapLayer
 
   /**
-   * Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed.
+   * Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed. `queryRenderedFeatures` on heatmap layers will return points within this radius.
    *
    * @param heatmapRadius value of heatmapRadius as Expression
    */
   fun heatmapRadius(heatmapRadius: Expression): HeatmapLayer
 
   /**
-   * Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed.
+   * Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed. `queryRenderedFeatures` on heatmap layers will return points within this radius.
    *
    * Set the HeatmapRadius property transition options
    *
@@ -932,7 +932,7 @@ interface HeatmapLayerDsl {
   fun heatmapRadiusTransition(options: StyleTransition): HeatmapLayer
 
   /**
-   * Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed.
+   * Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed. `queryRenderedFeatures` on heatmap layers will return points within this radius.
    *
    * DSL for [heatmapRadiusTransition].
    */

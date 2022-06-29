@@ -327,6 +327,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public Double? getTextHaloWidth();
     method public com.mapbox.maps.extension.style.layers.properties.generated.TextJustify? getTextJustify();
     method public Double? getTextLetterSpacing();
+    method public Double? getTextLineHeight();
     method public Double? getTextMaxWidth();
     method public java.util.List<java.lang.Double>? getTextOffset();
     method public Double? getTextOpacity();
@@ -360,6 +361,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setTextHaloWidth(Double? value);
     method public void setTextJustify(com.mapbox.maps.extension.style.layers.properties.generated.TextJustify? value);
     method public void setTextLetterSpacing(Double? value);
+    method public void setTextLineHeight(Double? value);
     method public void setTextMaxWidth(Double? value);
     method public void setTextOffset(java.util.List<java.lang.Double>? value);
     method public void setTextOpacity(Double? value);
@@ -393,6 +395,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final Double? textHaloWidth;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.TextJustify? textJustify;
     property public final Double? textLetterSpacing;
+    property public final Double? textLineHeight;
     property public final Double? textMaxWidth;
     property public final java.util.List<java.lang.Double>? textOffset;
     property public final Double? textOpacity;
@@ -439,7 +442,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public java.util.List<java.lang.String>? getTextFont();
     method public Boolean? getTextIgnorePlacement();
     method public Boolean? getTextKeepUpright();
-    method public Double? getTextLineHeight();
+    method @Deprecated public Double? getTextLineHeight();
     method public Double? getTextMaxAngle();
     method public Boolean? getTextOptional();
     method public Double? getTextPadding();
@@ -471,7 +474,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setTextFont(java.util.List<java.lang.String>? value);
     method public void setTextIgnorePlacement(Boolean? value);
     method public void setTextKeepUpright(Boolean? value);
-    method public void setTextLineHeight(Double? value);
+    method @Deprecated public void setTextLineHeight(Double? value);
     method public void setTextMaxAngle(Double? value);
     method public void setTextOptional(Boolean? value);
     method public void setTextPadding(Double? value);
@@ -505,7 +508,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final java.util.List<java.lang.String>? textFont;
     property public final Boolean? textIgnorePlacement;
     property public final Boolean? textKeepUpright;
-    property public final Double? textLineHeight;
+    property @Deprecated public final Double? textLineHeight;
     property public final Double? textMaxAngle;
     property public final Boolean? textOptional;
     property public final Double? textPadding;
@@ -556,6 +559,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public Double? getTextHaloWidth();
     method public com.mapbox.maps.extension.style.layers.properties.generated.TextJustify? getTextJustify();
     method public Double? getTextLetterSpacing();
+    method public Double? getTextLineHeight();
     method public Double? getTextMaxWidth();
     method public java.util.List<java.lang.Double>? getTextOffset();
     method public Double? getTextOpacity();
@@ -582,6 +586,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setTextHaloWidth(Double? textHaloWidth);
     method public void setTextJustify(com.mapbox.maps.extension.style.layers.properties.generated.TextJustify? textJustify);
     method public void setTextLetterSpacing(Double? textLetterSpacing);
+    method public void setTextLineHeight(Double? textLineHeight);
     method public void setTextMaxWidth(Double? textMaxWidth);
     method public void setTextOffset(java.util.List<java.lang.Double>? textOffset);
     method public void setTextOpacity(Double? textOpacity);
@@ -617,6 +622,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withTextHaloWidth(double textHaloWidth);
     method public com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withTextJustify(com.mapbox.maps.extension.style.layers.properties.generated.TextJustify textJustify);
     method public com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withTextLetterSpacing(double textLetterSpacing);
+    method public com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withTextLineHeight(double textLineHeight);
     method public com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withTextMaxWidth(double textMaxWidth);
     method public com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withTextOffset(java.util.List<java.lang.Double> textOffset);
     method public com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withTextOpacity(double textOpacity);
@@ -643,6 +649,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final Double? textHaloWidth;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.TextJustify? textJustify;
     property public final Double? textLetterSpacing;
+    property public final Double? textLineHeight;
     property public final Double? textMaxWidth;
     property public final java.util.List<java.lang.Double>? textOffset;
     property public final Double? textOpacity;
@@ -670,6 +677,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     field public static final String PROPERTY_TEXT_HALO_WIDTH = "text-halo-width";
     field public static final String PROPERTY_TEXT_JUSTIFY = "text-justify";
     field public static final String PROPERTY_TEXT_LETTER_SPACING = "text-letter-spacing";
+    field public static final String PROPERTY_TEXT_LINE_HEIGHT = "text-line-height";
     field public static final String PROPERTY_TEXT_MAX_WIDTH = "text-max-width";
     field public static final String PROPERTY_TEXT_OFFSET = "text-offset";
     field public static final String PROPERTY_TEXT_OPACITY = "text-opacity";

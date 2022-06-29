@@ -156,6 +156,220 @@ class FillExtrusionLayerTest {
   // Property getters and setters
 
   @Test
+  fun fillExtrusionAmbientOcclusionIntensitySet() {
+    val layer = fillExtrusionLayer("id", "source") {}
+    val testValue = 1.0
+    layer.bindTo(style)
+    layer.fillExtrusionAmbientOcclusionIntensity(testValue)
+    verify { style.setStyleLayerProperty("id", "fill-extrusion-ambient-occlusion-intensity", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "1.0")
+  }
+
+  @Test
+  fun fillExtrusionAmbientOcclusionIntensityGet() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = fillExtrusionLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), layer.fillExtrusionAmbientOcclusionIntensity?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-ambient-occlusion-intensity") }
+  }
+  // Expression Tests
+
+  @Test
+  fun fillExtrusionAmbientOcclusionIntensityAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = fillExtrusionLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.fillExtrusionAmbientOcclusionIntensity(expression)
+    verify { style.setStyleLayerProperty("id", "fill-extrusion-ambient-occlusion-intensity", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun fillExtrusionAmbientOcclusionIntensityAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = fillExtrusionLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.fillExtrusionAmbientOcclusionIntensityAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-ambient-occlusion-intensity") }
+  }
+
+  @Test
+  fun fillExtrusionAmbientOcclusionIntensityAsExpressionGetNull() {
+    val layer = fillExtrusionLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.fillExtrusionAmbientOcclusionIntensityAsExpression)
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-ambient-occlusion-intensity") }
+  }
+
+  @Test
+  fun fillExtrusionAmbientOcclusionIntensityAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    val layer = fillExtrusionLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(1.0, layer.fillExtrusionAmbientOcclusionIntensityAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.fillExtrusionAmbientOcclusionIntensity!!, 1E-5)
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-ambient-occlusion-intensity") }
+  }
+
+  @Test
+  fun fillExtrusionAmbientOcclusionIntensityTransitionSet() {
+    val layer = fillExtrusionLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.fillExtrusionAmbientOcclusionIntensityTransition(
+      transitionOptions {
+        duration(100)
+        delay(200)
+      }
+    )
+    verify { style.setStyleLayerProperty("id", "fill-extrusion-ambient-occlusion-intensity-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
+  fun fillExtrusionAmbientOcclusionIntensityTransitionGet() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+    val layer = fillExtrusionLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(transition.toValue().toString(), layer.fillExtrusionAmbientOcclusionIntensityTransition?.toValue().toString())
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-ambient-occlusion-intensity-transition") }
+  }
+
+  @Test
+  fun fillExtrusionAmbientOcclusionIntensityTransitionSetDsl() {
+    val layer = fillExtrusionLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.fillExtrusionAmbientOcclusionIntensityTransition {
+      duration(100)
+      delay(200)
+    }
+    verify { style.setStyleLayerProperty("id", "fill-extrusion-ambient-occlusion-intensity-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
+  fun fillExtrusionAmbientOcclusionRadiusSet() {
+    val layer = fillExtrusionLayer("id", "source") {}
+    val testValue = 1.0
+    layer.bindTo(style)
+    layer.fillExtrusionAmbientOcclusionRadius(testValue)
+    verify { style.setStyleLayerProperty("id", "fill-extrusion-ambient-occlusion-radius", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "1.0")
+  }
+
+  @Test
+  fun fillExtrusionAmbientOcclusionRadiusGet() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = fillExtrusionLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), layer.fillExtrusionAmbientOcclusionRadius?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-ambient-occlusion-radius") }
+  }
+  // Expression Tests
+
+  @Test
+  fun fillExtrusionAmbientOcclusionRadiusAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = fillExtrusionLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.fillExtrusionAmbientOcclusionRadius(expression)
+    verify { style.setStyleLayerProperty("id", "fill-extrusion-ambient-occlusion-radius", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun fillExtrusionAmbientOcclusionRadiusAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = fillExtrusionLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.fillExtrusionAmbientOcclusionRadiusAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-ambient-occlusion-radius") }
+  }
+
+  @Test
+  fun fillExtrusionAmbientOcclusionRadiusAsExpressionGetNull() {
+    val layer = fillExtrusionLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.fillExtrusionAmbientOcclusionRadiusAsExpression)
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-ambient-occlusion-radius") }
+  }
+
+  @Test
+  fun fillExtrusionAmbientOcclusionRadiusAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    val layer = fillExtrusionLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(1.0, layer.fillExtrusionAmbientOcclusionRadiusAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.fillExtrusionAmbientOcclusionRadius!!, 1E-5)
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-ambient-occlusion-radius") }
+  }
+
+  @Test
+  fun fillExtrusionAmbientOcclusionRadiusTransitionSet() {
+    val layer = fillExtrusionLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.fillExtrusionAmbientOcclusionRadiusTransition(
+      transitionOptions {
+        duration(100)
+        delay(200)
+      }
+    )
+    verify { style.setStyleLayerProperty("id", "fill-extrusion-ambient-occlusion-radius-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
+  fun fillExtrusionAmbientOcclusionRadiusTransitionGet() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+    val layer = fillExtrusionLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(transition.toValue().toString(), layer.fillExtrusionAmbientOcclusionRadiusTransition?.toValue().toString())
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-ambient-occlusion-radius-transition") }
+  }
+
+  @Test
+  fun fillExtrusionAmbientOcclusionRadiusTransitionSetDsl() {
+    val layer = fillExtrusionLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.fillExtrusionAmbientOcclusionRadiusTransition {
+      duration(100)
+      delay(200)
+    }
+    verify { style.setStyleLayerProperty("id", "fill-extrusion-ambient-occlusion-radius-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
   fun fillExtrusionBaseSet() {
     val layer = fillExtrusionLayer("id", "source") {}
     val testValue = 1.0
@@ -1021,6 +1235,94 @@ class FillExtrusionLayerTest {
   }
 
   // Default property getter tests
+
+  @Test
+  fun defaultFillExtrusionAmbientOcclusionIntensityTest() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionIntensity?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-ambient-occlusion-intensity") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultFillExtrusionAmbientOcclusionIntensityAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionIntensityAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-ambient-occlusion-intensity") }
+  }
+
+  @Test
+  fun defaultFillExtrusionAmbientOcclusionIntensityAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    assertEquals(1.0, FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionIntensityAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionIntensity!!, 1E-5)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-ambient-occlusion-intensity") }
+  }
+
+  @Test
+  fun defaultFillExtrusionAmbientOcclusionIntensityTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+
+    assertEquals(transition.toValue().toString(), FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionIntensityTransition?.toValue().toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-ambient-occlusion-intensity-transition") }
+  }
+
+  @Test
+  fun defaultFillExtrusionAmbientOcclusionRadiusTest() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionRadius?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-ambient-occlusion-radius") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultFillExtrusionAmbientOcclusionRadiusAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionRadiusAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-ambient-occlusion-radius") }
+  }
+
+  @Test
+  fun defaultFillExtrusionAmbientOcclusionRadiusAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    assertEquals(1.0, FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionRadiusAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionRadius!!, 1E-5)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-ambient-occlusion-radius") }
+  }
+
+  @Test
+  fun defaultFillExtrusionAmbientOcclusionRadiusTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+
+    assertEquals(transition.toValue().toString(), FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionRadiusTransition?.toValue().toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-ambient-occlusion-radius-transition") }
+  }
 
   @Test
   fun defaultFillExtrusionBaseTest() {

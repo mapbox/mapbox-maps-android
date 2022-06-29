@@ -291,6 +291,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotation :
 	public final fun getTextHaloWidth ()Ljava/lang/Double;
 	public final fun getTextJustify ()Lcom/mapbox/maps/extension/style/layers/properties/generated/TextJustify;
 	public final fun getTextLetterSpacing ()Ljava/lang/Double;
+	public final fun getTextLineHeight ()Ljava/lang/Double;
 	public final fun getTextMaxWidth ()Ljava/lang/Double;
 	public final fun getTextOffset ()Ljava/util/List;
 	public final fun getTextOpacity ()Ljava/lang/Double;
@@ -324,6 +325,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotation :
 	public final fun setTextHaloWidth (Ljava/lang/Double;)V
 	public final fun setTextJustify (Lcom/mapbox/maps/extension/style/layers/properties/generated/TextJustify;)V
 	public final fun setTextLetterSpacing (Ljava/lang/Double;)V
+	public final fun setTextLineHeight (Ljava/lang/Double;)V
 	public final fun setTextMaxWidth (Ljava/lang/Double;)V
 	public final fun setTextOffset (Ljava/util/List;)V
 	public final fun setTextOpacity (Ljava/lang/Double;)V
@@ -442,6 +444,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotationOp
 	public static final field PROPERTY_TEXT_HALO_WIDTH Ljava/lang/String;
 	public static final field PROPERTY_TEXT_JUSTIFY Ljava/lang/String;
 	public static final field PROPERTY_TEXT_LETTER_SPACING Ljava/lang/String;
+	public static final field PROPERTY_TEXT_LINE_HEIGHT Ljava/lang/String;
 	public static final field PROPERTY_TEXT_MAX_WIDTH Ljava/lang/String;
 	public static final field PROPERTY_TEXT_OFFSET Ljava/lang/String;
 	public static final field PROPERTY_TEXT_OPACITY Ljava/lang/String;
@@ -475,6 +478,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotationOp
 	public final fun getTextHaloWidth ()Ljava/lang/Double;
 	public final fun getTextJustify ()Lcom/mapbox/maps/extension/style/layers/properties/generated/TextJustify;
 	public final fun getTextLetterSpacing ()Ljava/lang/Double;
+	public final fun getTextLineHeight ()Ljava/lang/Double;
 	public final fun getTextMaxWidth ()Ljava/lang/Double;
 	public final fun getTextOffset ()Ljava/util/List;
 	public final fun getTextOpacity ()Ljava/lang/Double;
@@ -501,6 +505,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotationOp
 	public final fun setTextHaloWidth (Ljava/lang/Double;)V
 	public final fun setTextJustify (Lcom/mapbox/maps/extension/style/layers/properties/generated/TextJustify;)V
 	public final fun setTextLetterSpacing (Ljava/lang/Double;)V
+	public final fun setTextLineHeight (Ljava/lang/Double;)V
 	public final fun setTextMaxWidth (Ljava/lang/Double;)V
 	public final fun setTextOffset (Ljava/util/List;)V
 	public final fun setTextOpacity (Ljava/lang/Double;)V
@@ -536,6 +541,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotationOp
 	public final fun withTextHaloWidth (D)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withTextJustify (Lcom/mapbox/maps/extension/style/layers/properties/generated/TextJustify;)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withTextLetterSpacing (D)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
+	public final fun withTextLineHeight (D)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withTextMaxWidth (D)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withTextOffset (Ljava/util/List;)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withTextOpacity (D)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;

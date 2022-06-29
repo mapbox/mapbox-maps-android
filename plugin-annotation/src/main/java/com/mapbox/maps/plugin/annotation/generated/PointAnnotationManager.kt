@@ -56,6 +56,7 @@ class PointAnnotationManager(
     dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_TEXT_FIELD] = false
     dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_TEXT_JUSTIFY] = false
     dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_TEXT_LETTER_SPACING] = false
+    dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_TEXT_LINE_HEIGHT] = false
     dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_TEXT_MAX_WIDTH] = false
     dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_TEXT_OFFSET] = false
     dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_TEXT_RADIAL_OFFSET] = false
@@ -115,6 +116,10 @@ class PointAnnotationManager(
       PointAnnotationOptions.PROPERTY_TEXT_LETTER_SPACING -> {
         layer?.textLetterSpacing(get(PointAnnotationOptions.PROPERTY_TEXT_LETTER_SPACING))
         dragLayer?.textLetterSpacing(get(PointAnnotationOptions.PROPERTY_TEXT_LETTER_SPACING))
+      }
+      PointAnnotationOptions.PROPERTY_TEXT_LINE_HEIGHT -> {
+        layer?.textLineHeight(get(PointAnnotationOptions.PROPERTY_TEXT_LINE_HEIGHT))
+        dragLayer?.textLineHeight(get(PointAnnotationOptions.PROPERTY_TEXT_LINE_HEIGHT))
       }
       PointAnnotationOptions.PROPERTY_TEXT_MAX_WIDTH -> {
         layer?.textMaxWidth(get(PointAnnotationOptions.PROPERTY_TEXT_MAX_WIDTH))
@@ -199,6 +204,7 @@ class PointAnnotationManager(
    * PointAnnotationOptions.PROPERTY_TEXT_FIELD - String
    * PointAnnotationOptions.PROPERTY_TEXT_JUSTIFY - TextJustify
    * PointAnnotationOptions.PROPERTY_TEXT_LETTER_SPACING - Double
+   * PointAnnotationOptions.PROPERTY_TEXT_LINE_HEIGHT - Double
    * PointAnnotationOptions.PROPERTY_TEXT_MAX_WIDTH - Double
    * PointAnnotationOptions.PROPERTY_TEXT_OFFSET - List<Double>
    * PointAnnotationOptions.PROPERTY_TEXT_RADIAL_OFFSET - Double
@@ -243,6 +249,7 @@ class PointAnnotationManager(
    * PointAnnotationOptions.PROPERTY_TEXT_FIELD - String
    * PointAnnotationOptions.PROPERTY_TEXT_JUSTIFY - TextJustify
    * PointAnnotationOptions.PROPERTY_TEXT_LETTER_SPACING - Double
+   * PointAnnotationOptions.PROPERTY_TEXT_LINE_HEIGHT - Double
    * PointAnnotationOptions.PROPERTY_TEXT_MAX_WIDTH - Double
    * PointAnnotationOptions.PROPERTY_TEXT_OFFSET - List<Double>
    * PointAnnotationOptions.PROPERTY_TEXT_RADIAL_OFFSET - Double
@@ -730,32 +737,6 @@ class PointAnnotationManager(
     }
 
   /**
-   * The TextLineHeight property
-   *
-   * Text leading value for multi-line text.
-   */
-  var textLineHeight: Double?
-    /**
-     * Get the TextLineHeight property
-     *
-     * @return property wrapper value around Double
-     */
-    get(): Double? {
-      return layer?.textLineHeight
-    }
-    /**
-     * Set the TextLineHeight property
-     * @param value property wrapper value around Double
-     */
-    set(value) {
-      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-line-height").silentUnwrap()
-      newValue?.let {
-        layer?.textLineHeight(it)
-        dragLayer?.textLineHeight(it)
-      }
-    }
-
-  /**
    * The TextMaxAngle property
    *
    * Maximum angle change between adjacent characters.
@@ -914,7 +895,7 @@ class PointAnnotationManager(
   /**
    * The TextWritingMode property
    *
-   * The property allows control over a symbol's orientation. Note that the property values act as a hint, so that a symbol whose language doesn’t support the provided orientation will be laid out in its natural orientation. Example: English point symbol will be rendered horizontally even if array value contains single 'vertical' enum value. The order of elements in an array define priority order for the placement of an orientation variant.
+   * The property allows control over a symbol's orientation. Note that the property values act as a hint, so that a symbol whose language doesn’t support the provided orientation will be laid out in its natural orientation. Example: English point symbol will be rendered horizontally even if array value contains single 'vertical' enum value. For symbol with point placement, the order of elements in an array define priority order for the placement of an orientation variant. For symbol with line placement, the default text writing mode is either ['horizontal', 'vertical'] or ['vertical', 'horizontal'], the order doesn't affect the placement.
    */
   var textWritingMode: List<String>?
     /**
@@ -1052,6 +1033,35 @@ class PointAnnotationManager(
   override fun createDragLayer(): SymbolLayer {
     return symbolLayer(dragLayerId, dragSourceId) {}
   }
+  /**
+   * The TextLineHeight property
+   *
+   * Text leading value for multi-line text.
+   */
+  @Deprecated(
+    "text-line-height property is now data driven, use `PointAnnotation.textLineHeight` instead.",
+    ReplaceWith("PointAnnotation.textLineHeight")
+  )
+  var textLineHeight: Double?
+    /**
+     * Get the TextLineHeight property
+     *
+     * @return property wrapper value around Double
+     */
+    get(): Double? {
+      return layer?.textLineHeight
+    }
+    /**
+     * Set the TextLineHeight property
+     * @param value property wrapper value around Double
+     */
+    set(value) {
+      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-line-height").silentUnwrap()
+      newValue?.let {
+        layer?.textLineHeight(it)
+        dragLayer?.textLineHeight(it)
+      }
+    }
   /**
    * The filter on the managed pointAnnotations.
    *

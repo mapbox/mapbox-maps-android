@@ -70,6 +70,116 @@ class FillExtrusionLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun fillExtrusionAmbientOcclusionIntensityTest() {
+    val testValue = 1.0
+    val layer = fillExtrusionLayer("id", "source") {
+      fillExtrusionAmbientOcclusionIntensity(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(testValue, layer.fillExtrusionAmbientOcclusionIntensity!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun fillExtrusionAmbientOcclusionIntensityAsExpressionTest() {
+    val expression = literal(1.0)
+    val layer = fillExtrusionLayer("id", "source") {
+      fillExtrusionAmbientOcclusionIntensity(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(1.0, layer.fillExtrusionAmbientOcclusionIntensityAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.fillExtrusionAmbientOcclusionIntensity!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun fillExtrusionAmbientOcclusionIntensityTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = fillExtrusionLayer("id", "source") {
+      fillExtrusionAmbientOcclusionIntensityTransition(transition)
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.fillExtrusionAmbientOcclusionIntensityTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun fillExtrusionAmbientOcclusionIntensityTransitionSetDslTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = fillExtrusionLayer("id", "source") {
+      fillExtrusionAmbientOcclusionIntensityTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.fillExtrusionAmbientOcclusionIntensityTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun fillExtrusionAmbientOcclusionRadiusTest() {
+    val testValue = 1.0
+    val layer = fillExtrusionLayer("id", "source") {
+      fillExtrusionAmbientOcclusionRadius(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(testValue, layer.fillExtrusionAmbientOcclusionRadius!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun fillExtrusionAmbientOcclusionRadiusAsExpressionTest() {
+    val expression = literal(1.0)
+    val layer = fillExtrusionLayer("id", "source") {
+      fillExtrusionAmbientOcclusionRadius(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(1.0, layer.fillExtrusionAmbientOcclusionRadiusAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.fillExtrusionAmbientOcclusionRadius!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun fillExtrusionAmbientOcclusionRadiusTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = fillExtrusionLayer("id", "source") {
+      fillExtrusionAmbientOcclusionRadiusTransition(transition)
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.fillExtrusionAmbientOcclusionRadiusTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun fillExtrusionAmbientOcclusionRadiusTransitionSetDslTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = fillExtrusionLayer("id", "source") {
+      fillExtrusionAmbientOcclusionRadiusTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.fillExtrusionAmbientOcclusionRadiusTransition)
+  }
+
+  @Test
+  @UiThreadTest
   fun fillExtrusionBaseTest() {
     val testValue = 1.0
     val layer = fillExtrusionLayer("id", "source") {
@@ -491,6 +601,12 @@ class FillExtrusionLayerTest : BaseStyleTest() {
     assertNotNull("defaultVisibility should not be null", FillExtrusionLayer.defaultVisibility)
     assertNotNull("defaultMinZoom should not be null", FillExtrusionLayer.defaultMinZoom)
     assertNotNull("defaultMaxZoom should not be null", FillExtrusionLayer.defaultMaxZoom)
+    assertNotNull("defaultFillExtrusionAmbientOcclusionIntensity should not be null", FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionIntensity)
+    assertNotNull("defaultFillExtrusionAmbientOcclusionIntensityAsExpression should not be null", FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionIntensityAsExpression)
+    assertNotNull("defaultFillExtrusionAmbientOcclusionIntensityTransition should not be null", FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionIntensityTransition)
+    assertNotNull("defaultFillExtrusionAmbientOcclusionRadius should not be null", FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionRadius)
+    assertNotNull("defaultFillExtrusionAmbientOcclusionRadiusAsExpression should not be null", FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionRadiusAsExpression)
+    assertNotNull("defaultFillExtrusionAmbientOcclusionRadiusTransition should not be null", FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionRadiusTransition)
     assertNotNull("defaultFillExtrusionBase should not be null", FillExtrusionLayer.defaultFillExtrusionBase)
     assertNotNull("defaultFillExtrusionBaseAsExpression should not be null", FillExtrusionLayer.defaultFillExtrusionBaseAsExpression)
     assertNotNull("defaultFillExtrusionBaseTransition should not be null", FillExtrusionLayer.defaultFillExtrusionBaseTransition)

@@ -848,14 +848,18 @@ class SymbolLayerTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun textLineHeightAsExpressionTest() {
-    val expression = literal(1.0)
+    val expression = number {
+      get {
+        literal("number")
+      }
+    }
     val layer = symbolLayer("id", "source") {
       textLineHeight(expression)
     }
     setupLayer(layer)
 
-    assertEquals(1.0, layer.textLineHeightAsExpression?.contents as Double, 1E-5)
-    assertEquals(1.0, layer.textLineHeight!!, 1E-5)
+    assertEquals(expression.toString(), layer.textLineHeightAsExpression.toString())
+    assertEquals(null, layer.textLineHeight)
   }
 
   @Test
