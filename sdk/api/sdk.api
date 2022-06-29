@@ -579,6 +579,8 @@ public abstract interface class com/mapbox/maps/viewannotation/OnViewAnnotationU
 }
 
 public abstract interface class com/mapbox/maps/viewannotation/ViewAnnotationManager {
+	public static final field Companion Lcom/mapbox/maps/viewannotation/ViewAnnotationManager$Companion;
+	public static final field DEFAULT_UPDATE_MODE Lcom/mapbox/maps/viewannotation/ViewAnnotationUpdateMode;
 	public abstract fun addOnViewAnnotationUpdatedListener (Lcom/mapbox/maps/viewannotation/OnViewAnnotationUpdatedListener;)V
 	public abstract fun addViewAnnotation (ILcom/mapbox/maps/ViewAnnotationOptions;)Landroid/view/View;
 	public abstract fun addViewAnnotation (ILcom/mapbox/maps/ViewAnnotationOptions;Landroidx/asynclayoutinflater/view/AsyncLayoutInflater;Lkotlin/jvm/functions/Function1;)V
@@ -586,13 +588,30 @@ public abstract interface class com/mapbox/maps/viewannotation/ViewAnnotationMan
 	public abstract fun getViewAnnotationByFeatureId (Ljava/lang/String;)Landroid/view/View;
 	public abstract fun getViewAnnotationOptionsByFeatureId (Ljava/lang/String;)Lcom/mapbox/maps/ViewAnnotationOptions;
 	public abstract fun getViewAnnotationOptionsByView (Landroid/view/View;)Lcom/mapbox/maps/ViewAnnotationOptions;
+	public abstract fun getViewAnnotationUpdateMode ()Lcom/mapbox/maps/viewannotation/ViewAnnotationUpdateMode;
 	public abstract fun removeAllViewAnnotations ()V
 	public abstract fun removeOnViewAnnotationUpdatedListener (Lcom/mapbox/maps/viewannotation/OnViewAnnotationUpdatedListener;)V
 	public abstract fun removeViewAnnotation (Landroid/view/View;)Z
+	public abstract fun setViewAnnotationUpdateMode (Lcom/mapbox/maps/viewannotation/ViewAnnotationUpdateMode;)V
 	public abstract fun updateViewAnnotation (Landroid/view/View;Lcom/mapbox/maps/ViewAnnotationOptions;)Z
+}
+
+public final class com/mapbox/maps/viewannotation/ViewAnnotationManager$Companion {
 }
 
 public final class com/mapbox/maps/viewannotation/ViewAnnotationOptionsKtxKt {
 	public static final fun viewAnnotationOptions (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/ViewAnnotationOptions;
+}
+
+public final class com/mapbox/maps/viewannotation/ViewAnnotationUpdateMode {
+	public static final field Companion Lcom/mapbox/maps/viewannotation/ViewAnnotationUpdateMode$Companion;
+	public static final field MAP_FIXED_DELAY Lcom/mapbox/maps/viewannotation/ViewAnnotationUpdateMode;
+	public static final field MAP_SYNCHRONIZED Lcom/mapbox/maps/viewannotation/ViewAnnotationUpdateMode;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/viewannotation/ViewAnnotationUpdateMode$Companion {
 }
 

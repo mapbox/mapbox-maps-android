@@ -3,6 +3,8 @@ package com.mapbox.maps.testapp.examples.markersandcallouts
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -19,6 +21,8 @@ import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityViewAnnotationShowcaseBinding
 import com.mapbox.maps.testapp.databinding.ItemCalloutViewBinding
 import com.mapbox.maps.testapp.utils.BitmapUtils
+import com.mapbox.maps.viewannotation.ViewAnnotationManager
+import com.mapbox.maps.viewannotation.ViewAnnotationUpdateMode
 import com.mapbox.maps.viewannotation.viewAnnotationOptions
 
 /**
@@ -26,6 +30,7 @@ import com.mapbox.maps.viewannotation.viewAnnotationOptions
  */
 class ViewAnnotationWithPointAnnotationActivity : AppCompatActivity() {
 
+  private lateinit var viewAnnotationManager: ViewAnnotationManager
   private lateinit var pointAnnotationManager: PointAnnotationManager
   private lateinit var pointAnnotation: PointAnnotation
   private lateinit var viewAnnotation: View
@@ -41,9 +46,11 @@ class ViewAnnotationWithPointAnnotationActivity : AppCompatActivity() {
       R.drawable.blue_marker_view
     )!!
 
+    viewAnnotationManager = binding.mapView.viewAnnotationManager
+
     binding.mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS) {
       prepareAnnotationMarker(binding.mapView, iconBitmap)
-      prepareViewAnnotation(binding.mapView)
+      prepareViewAnnotation()
       // show / hide view annotation based on a marker click
       pointAnnotationManager.addClickListener { clickedAnnotation ->
         if (pointAnnotation == clickedAnnotation) {
@@ -84,13 +91,31 @@ class ViewAnnotationWithPointAnnotationActivity : AppCompatActivity() {
     }
   }
 
+  override fun onCreateOptionsMenu(menu: Menu): Boolean {
+    menuInflater.inflate(R.menu.menu_view_annotation, menu)
+    return true
+  }
+
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    return when (item.itemId) {
+      R.id.action_view_annotation_fixed_delay -> {
+        viewAnnotationManager.setViewAnnotationUpdateMode(ViewAnnotationUpdateMode.MAP_FIXED_DELAY)
+        true
+      }
+      R.id.action_view_annotation_map_synchronized -> {
+        viewAnnotationManager.setViewAnnotationUpdateMode(ViewAnnotationUpdateMode.MAP_SYNCHRONIZED)
+        true
+      }
+      else -> super.onOptionsItemSelected(item)
+    }
+  }
+
   private fun View.toggleViewVisibility() {
     visibility = if (visibility == View.VISIBLE) View.GONE else View.VISIBLE
   }
 
   @SuppressLint("SetTextI18n")
-  private fun prepareViewAnnotation(mapView: MapView) {
-    val viewAnnotationManager = mapView.viewAnnotationManager
+  private fun prepareViewAnnotation() {
     viewAnnotation = viewAnnotationManager.addViewAnnotation(
       resId = R.layout.item_callout_view,
       options = viewAnnotationOptions {

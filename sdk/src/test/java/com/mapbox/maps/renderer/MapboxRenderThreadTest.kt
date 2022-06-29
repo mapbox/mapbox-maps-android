@@ -8,6 +8,7 @@ import com.mapbox.maps.logW
 import com.mapbox.maps.renderer.MapboxRenderThread.Companion.RETRY_DELAY_MS
 import com.mapbox.maps.renderer.egl.EGLCore
 import com.mapbox.maps.renderer.gl.TextureRenderer
+import com.mapbox.maps.viewannotation.ViewAnnotationUpdateMode
 import com.mapbox.verifyNo
 import com.mapbox.verifyOnce
 import com.mapbox.waitZeroCounter
@@ -20,6 +21,7 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows
 import org.robolectric.annotation.LooperMode
+import org.robolectric.shadows.ShadowChoreographer
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import javax.microedition.khronos.egl.EGL10
@@ -236,6 +238,59 @@ class MapboxRenderThreadTest {
     // make EGL context current only once when creating surface
     verifyOnce {
       eglCore.makeNothingCurrent()
+    }
+  }
+
+  @Test
+  fun needViewAnnotationSyncMapSynchronized() {
+    initRenderThread()
+    provideValidSurface()
+    val choreographerCallbackDelayMs = 16L
+    // static method so does not matter which thread is called from -
+    // we need this interval for our render thread
+    ShadowChoreographer.setPostFrameCallbackDelay(choreographerCallbackDelayMs.toInt())
+    pauseHandler()
+    mapboxRenderThread.viewAnnotationMode = ViewAnnotationUpdateMode.MAP_SYNCHRONIZED
+    mapboxRenderThread.needViewAnnotationSync = true
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
+    idleHandler(choreographerCallbackDelayMs)
+    // buffers are already swapped once when surface was created
+    // they should not be swapped this frame N, they need to be swapped next frame N+1
+    verifyOnce {
+      eglCore.swapBuffers(any())
+    }
+    // we need another explicit IDLE call as we're performing Choreographer.getInstance().postFrameCallback
+    // inside doFrame we're already executing
+    idleHandler(choreographerCallbackDelayMs)
+    // we swap buffers for frame N+1
+    verify(exactly = 2) {
+      eglCore.swapBuffers(any())
+    }
+  }
+
+  @Test
+  fun needViewAnnotationSyncMapFixedDelay() {
+    initRenderThread()
+    provideValidSurface()
+    val choreographerCallbackDelayMs = 16L
+    // static method so does not matter which thread is called from -
+    // we need this interval for our render thread
+    ShadowChoreographer.setPostFrameCallbackDelay(choreographerCallbackDelayMs.toInt())
+    pauseHandler()
+    mapboxRenderThread.viewAnnotationMode = ViewAnnotationUpdateMode.MAP_FIXED_DELAY
+    mapboxRenderThread.needViewAnnotationSync = true
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
+    idleHandler(choreographerCallbackDelayMs)
+    // buffers are already swapped once when surface was created
+    // they should be swapped on this frame N
+    verify(exactly = 2) {
+      eglCore.swapBuffers(any())
+    }
+    // we need another explicit IDLE call to make sure we don't have anything scheduled
+    idleHandler(choreographerCallbackDelayMs)
+    // count should be the same as we already swapped buffers for frame N
+    verify(exactly = 2) {
+      eglCore.swapBuffers(any())
     }
   }
 

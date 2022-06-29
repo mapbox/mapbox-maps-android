@@ -13,6 +13,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Remove `MapboxExperimental` annotation from viewport plugin and promote viewport plugin as stable API. ([1425](https://github.com/mapbox/mapbox-maps-android/pull/1425))
 * Introduce `addRendererSetupErrorListener`/`removeRendererSetupErrorListener` methods for `MapView` and `MapSurface` to listen to renderer setup errors and give opportunity to control some edge cases. ([1427](https://github.com/mapbox/mapbox-maps-android/pull/1427))
 * Introduce transition properties for atmosphere and terrain. ([1451](https://github.com/mapbox/mapbox-maps-android/pull/1451))
+* Introduce view annotation `ViewAnnotationManager.setViewAnnotationUpdateMode` / `ViewAnnotationManager.getViewAnnotationUpdateMode` API with following synchronization modes: MAP_SYNCHRONIZED (used by default) and MAP_FIXED_DELAY. ([1415](https://github.com/mapbox/mapbox-maps-android/pull/1415))
 * Reduce geometry on globe tile to increase rendering performance. ([#1462](https://github.com/mapbox/mapbox-maps-android/pull/1462))
 * Improve rendering performance with deleting layer render data on a worker thread. ([#1462](https://github.com/mapbox/mapbox-maps-android/pull/1462))
 * Support using `line-trim-offset` property with pure line color. ([#1462](https://github.com/mapbox/mapbox-maps-android/pull/1462))
