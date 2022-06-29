@@ -43,7 +43,7 @@ class Terrain3DShowcaseActivity : AppCompatActivity() {
         +projection(ProjectionName.GLOBE)
         +light {
           castShadows(true)
-          shadowIntensity(10.0)
+          shadowIntensity(0.7)
         }
       }
     )
