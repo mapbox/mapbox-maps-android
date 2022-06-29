@@ -13,8 +13,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Remove `MapboxExperimental` annotation from viewport plugin and promote viewport plugin as stable API. ([1425](https://github.com/mapbox/mapbox-maps-android/pull/1425))
 * Introduce `addRendererSetupErrorListener`/`removeRendererSetupErrorListener` methods for `MapView` and `MapSurface` to listen to renderer setup errors and give opportunity to control some edge cases. ([1427](https://github.com/mapbox/mapbox-maps-android/pull/1427))
 * Introduce transition properties for atmosphere and terrain. ([1451](https://github.com/mapbox/mapbox-maps-android/pull/1451))
-* Enable main thread checking on the map/style object when running applications in debug mode. It's required to call these object functions on the main thread, otherwise you will hit edge case crashes. 
-This configurations is advised but can be opted out with a Manifest metadata entry of `com.mapbox.maps.ThreadChecker` and corresponding false value. ([#1316](https://github.com/mapbox/mapbox-maps-android/pull/1316)). 
+* Enable main thread checking on the map/style object when running applications in debug build. This utility class will crash the application if these objects are accessed from a worked thread. It's required to call these object functions on the main thread, otherwise you can hit edge case crashes. This configurations is advised but can be opted out with a Manifest metadata entry of `com.mapbox.maps.ThreadChecker` and corresponding false value. ([#1316](https://github.com/mapbox/mapbox-maps-android/pull/1316)). 
 
 ## Bug fixes 🐞
 * Fix lifecycle edge cases not being handled properly by introducing internal `ViewLifecycleOwner` to have granular control over MapView's lifecycle. ([1330](https://github.com/mapbox/mapbox-maps-android/pull/1330))
