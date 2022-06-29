@@ -608,7 +608,6 @@ public final class com/mapbox/maps/viewannotation/ViewAnnotationUpdateMode {
 	public static final field MAP_FIXED_DELAY Lcom/mapbox/maps/viewannotation/ViewAnnotationUpdateMode;
 	public static final field MAP_SYNCHRONIZED Lcom/mapbox/maps/viewannotation/ViewAnnotationUpdateMode;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getMode ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }

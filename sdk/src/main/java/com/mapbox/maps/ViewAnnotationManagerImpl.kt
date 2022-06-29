@@ -1,10 +1,8 @@
 package com.mapbox.maps
 
 import android.os.Looper
-import android.view.Choreographer
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewTreeObserver
+import android.view.*
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.FrameLayout
 import androidx.annotation.*
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater
@@ -306,15 +304,22 @@ internal class ViewAnnotationManagerImpl(
   private fun positionAnnotationViews(
     positionDescriptorCoreList: List<ViewAnnotationPositionDescriptor>
   ) {
-    // firstly delete views that do not belong to the viewport
-    currentViewsDrawnMap.keys.forEach { id ->
-      if (positionDescriptorCoreList.indexOfFirst { it.identifier == id } == -1) {
-        annotationMap[id]?.let { annotation ->
-          // if view is invisible / gone we don't remove it so that visibility logic could
-          // still be handled by OnGlobalLayoutListener
-          if (annotation.view.visibility == View.VISIBLE) {
-            mapView.removeView(annotation.view)
-            updateVisibilityAndNotifyUpdateListeners(annotation, ViewAnnotationVisibility.INVISIBLE)
+    // as per current implementation when view annotation was added with WRAP_CONTENT dimension AND
+    // allowOverlap = false - core will notify only about this particular view and thus we will remove
+    // all the others and then restore later resulting in a quick blink
+    val wrapContentWithAllowOverlapFalseViewAdded = positionDescriptorCoreList.size == 1 &&
+      (positionDescriptorCoreList[0].width == WRAP_CONTENT || positionDescriptorCoreList[0].height == WRAP_CONTENT)
+    // firstly delete views that do not belong to the viewport if it's not specific use-case from above
+    if (!wrapContentWithAllowOverlapFalseViewAdded) {
+      currentViewsDrawnMap.keys.forEach { id ->
+        if (positionDescriptorCoreList.indexOfFirst { it.identifier == id } == -1) {
+          annotationMap[id]?.let { annotation ->
+            // if view is invisible / gone we don't remove it so that visibility logic could
+            // still be handled by OnGlobalLayoutListener
+            if (annotation.view.visibility == View.VISIBLE) {
+              mapView.removeView(annotation.view)
+              updateVisibilityAndNotifyUpdateListeners(annotation, ViewAnnotationVisibility.INVISIBLE)
+            }
           }
         }
       }
@@ -373,9 +378,12 @@ internal class ViewAnnotationManagerImpl(
     viewPlugins.forEach {
       it.value.bringToFront()
     }
-    currentViewsDrawnMap.clear()
-    positionDescriptorCoreList.forEach {
-      currentViewsDrawnMap[it.identifier] = it.leftTopCoordinate
+    // all the views should stay as is for that use-case, otherwise we update current view map
+    if (!wrapContentWithAllowOverlapFalseViewAdded) {
+      currentViewsDrawnMap.clear()
+      positionDescriptorCoreList.forEach {
+        currentViewsDrawnMap[it.identifier] = it.leftTopCoordinate
+      }
     }
   }
 

@@ -600,8 +600,6 @@ package com.mapbox.maps.viewannotation {
   }
 
   public final class ViewAnnotationUpdateMode {
-    method public String! getMode();
-    property public final String! mode;
     field public static final com.mapbox.maps.viewannotation.ViewAnnotationUpdateMode.Companion Companion;
     field public static final com.mapbox.maps.viewannotation.ViewAnnotationUpdateMode MAP_FIXED_DELAY;
     field public static final com.mapbox.maps.viewannotation.ViewAnnotationUpdateMode MAP_SYNCHRONIZED;
