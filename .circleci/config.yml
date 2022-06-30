@@ -329,6 +329,8 @@ commands:
               gcloud firebase test android models list
               gcloud firebase test android run --type robo \
                 --app app/build/outputs/apk/release/app-release.apk \
+                ### Minimum SDK level the Maps SDK support
+                --device model=hwALE-H,version=21,locale=en,orientation=portrait \
                 --device model=harpia,version=23,locale=en,orientation=portrait \
                 ### Virtual device running at API level 30
                 --device model=Pixel3,version=30,locale=en,orientation=portrait \
