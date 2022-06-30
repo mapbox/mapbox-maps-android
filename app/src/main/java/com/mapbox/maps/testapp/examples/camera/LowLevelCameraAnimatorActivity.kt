@@ -3,9 +3,11 @@ package com.mapbox.maps.testapp.examples.camera
 import android.os.Bundle
 import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.appcompat.app.AppCompatActivity
+import com.mapbox.geojson.Point
 import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
+import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Companion.cameraAnimatorOptions
 import com.mapbox.maps.plugin.animation.camera
 
@@ -18,6 +20,7 @@ class LowLevelCameraAnimatorActivity : AppCompatActivity() {
     val mapView = MapView(this)
     setContentView(mapView)
     mapboxMap = mapView.getMapboxMap()
+    mapboxMap.setCamera(CAMERA_TARGET)
     mapboxMap.loadStyleUri(
       Style.MAPBOX_STREETS
     ) {
@@ -44,6 +47,13 @@ class LowLevelCameraAnimatorActivity : AppCompatActivity() {
         }
         playAnimatorsSequentially(zoom, pitch, bearing)
       }
+    }
+  }
+
+  private companion object {
+    private val CAMERA_TARGET = cameraOptions {
+      center(Point.fromLngLat(-74.0060, 40.7128))
+      zoom(3.0)
     }
   }
 }
