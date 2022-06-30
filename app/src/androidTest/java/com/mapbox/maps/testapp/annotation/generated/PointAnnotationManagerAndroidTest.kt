@@ -247,18 +247,6 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
   }
 
   @Test
-  fun testTextLineHeight() {
-    rule.runOnUiThread {
-      val expectedValue = 1.0
-      val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
-      pointAnnotationManager.textLineHeight = expectedValue
-      assertEquals(expectedValue, pointAnnotationManager.textLineHeight)
-      pointAnnotationManager.textLineHeight = null
-      assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-line-height").silentUnwrap(), pointAnnotationManager.textLineHeight)
-    }
-  }
-
-  @Test
   fun testTextMaxAngle() {
     rule.runOnUiThread {
       val expectedValue = 1.0
