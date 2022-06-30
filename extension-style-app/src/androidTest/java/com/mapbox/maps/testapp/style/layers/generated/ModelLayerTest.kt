@@ -82,8 +82,10 @@ class ModelLayerTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun modelIdAsExpressionTest() {
-    val expression = get {
-      literal("string")
+    val expression = toString {
+      get {
+        literal("string")
+      }
     }
     val layer = modelLayer("id", "source") {
       modelId(expression)
