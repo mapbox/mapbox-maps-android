@@ -51,7 +51,7 @@ class LowLevelCameraAnimatorActivity : AppCompatActivity() {
   }
 
   private companion object {
-    val CAMERA_TARGET = cameraOptions {
+    private val CAMERA_TARGET = cameraOptions {
       center(Point.fromLngLat(-74.0060, 40.7128))
       zoom(3.0)
     }

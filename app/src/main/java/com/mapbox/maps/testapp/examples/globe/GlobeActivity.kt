@@ -23,19 +23,18 @@ class GlobeActivity : AppCompatActivity() {
     setContentView(mapView)
 
     mapView.getMapboxMap().apply {
+      setCamera(
+        cameraOptions {
+          center(CENTER)
+          zoom(ZOOM)
+        }
+      )
       loadStyle(
         style(Style.SATELLITE_STREETS) {
           +atmosphere { }
           +projection(ProjectionName.GLOBE)
         }
-      ) {
-        setCamera(
-          cameraOptions {
-            center(CENTER)
-            zoom(ZOOM)
-          }
-        )
-      }
+      )
     }
   }
 
