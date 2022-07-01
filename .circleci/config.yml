@@ -330,13 +330,13 @@ commands:
               ### We use following devices to run robo tests:
               ### * 1 old API (the lower the better)
               ### * 1 new API (the higher the better)
-              ### * 1 x86-64 emulator(Pixel3)
+              ### * 1 x86-64 emulator(Pixel2)
               ### * API level 23 which is known to work weird sometimes
               gcloud firebase test android run --type robo \
                 --app app/build/outputs/apk/release/app-release.apk \
                 --device model=hwALE-H,version=21,locale=en,orientation=portrait \
                 --device model=harpia,version=23,locale=en,orientation=portrait \
-                --device model=Pixel3,version=30,locale=en,orientation=portrait \
+                --device model=Pixel2,version=29,locale=en,orientation=portrait \
                 --device model=oriole,version=31,locale=en,orientation=portrait \
                 --timeout 90s
             fi
