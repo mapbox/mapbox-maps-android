@@ -54,7 +54,7 @@ if [ -z "$MAPS_SDK_VERSION" ]; then
   exit 1
 fi
 
-#Split version name to remove the "android-v" prefix
+#Split version name to remove the "v" prefix
 array=(`echo $MAPS_SDK_VERSION | tr 'v' ' '` )
 MAPS_SDK_VERSION=${array[1]}
 read GITHUB_TOKEN < gh_token.txt

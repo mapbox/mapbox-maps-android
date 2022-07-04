@@ -19,7 +19,7 @@ workflows:
       - verify-code:
           filters:
             tags:
-              only: /(android-v.*|extension-androidauto-v.*)/
+              only: /(v.*|extension-androidauto-v.*)/
       - verify-docs:
           requires:
             - verify-code
@@ -59,7 +59,7 @@ workflows:
             - verify-code
           filters:
             tags:
-              only: /(android-v.*|extension-androidauto-v.*)/
+              only: /(v.*|extension-androidauto-v.*)/
       - run-app-instrumentation-test:
           requires:
             - build-modules-and-instrumentation-tests
@@ -177,7 +177,7 @@ commands:
       - run:
           name: Update version name
           command: |
-            if [[ $CIRCLE_TAG == android-v* ]]; then
+            if [[ $CIRCLE_TAG == v* ]]; then
               sed -i -e "s/^VERSION_NAME=.*/VERSION_NAME=${CIRCLE_TAG:9}/" gradle.properties
             elif [[ $CIRCLE_TAG == extension-androidauto-v* ]]; then
               sed -i -e "s/^MODULE_VERSION_NAME=.*/MODULE_VERSION_NAME=${CIRCLE_TAG:23}/" extension-androidauto/gradle.properties
@@ -191,7 +191,7 @@ commands:
       - run:
           name: Start internal CI release flow
           command: |
-            if [[ $CIRCLE_TAG == android-v* ]]; then
+            if [[ $CIRCLE_TAG == v* ]]; then
               TARGET_BRANCH=$(echo $CIRCLE_TAG | awk -F\- '{print $2}' | cut -f1-2 -d".")
               python3 scripts/start-internal-release-pipeline.py --token ${MOBILE_METRICS_TOKEN} --origin-slug mapbox/mapbox-maps-android --target-slug mapbox/mapbox-maps-android-internal --release_tag $CIRCLE_TAG --branch $TARGET_BRANCH
             fi
@@ -235,10 +235,10 @@ commands:
             - run:
                 name: Publish the SDK
                 command: |
-                  if [[ $CIRCLE_TAG == android-v* ||  $CIRCLE_BRANCH == main ]]; then
+                  if [[ $CIRCLE_TAG == v* ||  $CIRCLE_BRANCH == main ]]; then
                     make sdkRegistryUpload
                   fi
-                  if [[ $CIRCLE_TAG == android-v* ]]; then
+                  if [[ $CIRCLE_TAG == v* ]]; then
                     git config --global user.email "MapboxCI@users.noreply.github.com"
                     git config --global user.name "MapboxCI"
                     export GITHUB_TOKEN=$(./mbx-ci github writer private token)
@@ -443,7 +443,7 @@ jobs:
           command: |
             make build
             echo "$(./mbx-ci github reader token)" > gh_token.txt
-            if [[ $CIRCLE_TAG == android-v* ]]; then
+            if [[ $CIRCLE_TAG == v* ]]; then
               ./scripts/java-api-check-all.sh "${CIRCLE_TAG}"
             else
               ./scripts/java-api-check-all.sh ""
