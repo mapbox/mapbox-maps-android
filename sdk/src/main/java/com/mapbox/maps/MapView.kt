@@ -113,6 +113,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   override fun onAttachedToWindow() {
     super.onAttachedToWindow()
     mapController.onAttachedToWindow(this)
+    mapController.setScreenRefreshRate(display.refreshRate.toInt())
   }
 
   @SuppressLint("CustomViewStyleable")
@@ -261,10 +262,10 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   /**
    * Set new maximum FPS for map rendering.
    *
-   * @param maximumFps new maximum FPS value that must be > 0.
+   * @param fps new maximum FPS value that must be > 0 and less than [MAX_POSSIBLE_FPS].
    */
-  override fun setMaximumFps(@IntRange(from = 1L, to = Int.MAX_VALUE.toLong()) maximumFps: Int) {
-    mapController.setMaximumFps(maximumFps)
+  override fun setMaximumFps(@IntRange(from = 1L, to = MAX_POSSIBLE_FPS) fps: Int) {
+    mapController.setMaximumFps(fps)
   }
 
   /**
@@ -362,6 +363,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    */
   companion object {
     internal const val DEFAULT_ANTIALIASING_SAMPLE_COUNT = 1
+    internal const val MAX_POSSIBLE_FPS = 1000L
     /**
      * Static method to check if [MapView] could properly render on this device.
      * This method may take some time on slow devices.

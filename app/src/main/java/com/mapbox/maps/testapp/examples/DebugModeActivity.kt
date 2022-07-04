@@ -168,7 +168,7 @@ class DebugModeActivity : AppCompatActivity() {
     super.onStart()
     binding.mapView.setOnFpsChangedListener {
       runOnUiThread {
-        binding.fpsView.text = getString(R.string.fps, it.toInt().toString())
+        binding.fpsView.text = getString(R.string.fps, String.format("%.2f", it))
       }
     }
   }
