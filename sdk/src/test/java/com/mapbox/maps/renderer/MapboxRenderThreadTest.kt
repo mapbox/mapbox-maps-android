@@ -38,6 +38,7 @@ class MapboxRenderThreadTest {
   private lateinit var renderHandlerThread: RenderHandlerThread
   private lateinit var textureRenderer: TextureRenderer
   private lateinit var surface: Surface
+  private lateinit var fpsManager: FpsManager
 
   private fun initRenderThread(mapboxRenderer: MapboxRenderer = mockk(relaxUnitFun = true)) {
     this.mapboxRenderer = mapboxRenderer
@@ -45,11 +46,14 @@ class MapboxRenderThreadTest {
     mockWidgetRenderer()
     renderHandlerThread = RenderHandlerThread()
     textureRenderer = mockk(relaxed = true)
+    fpsManager = mockk(relaxUnitFun = true)
+    every { fpsManager.preRender(any()) } returns true
     mapboxRenderThread = MapboxRenderThread(
       mapboxRenderer,
       mapboxWidgetRenderer,
       renderHandlerThread,
       eglCore,
+      fpsManager,
       textureRenderer,
     )
     renderHandlerThread.start()
@@ -205,6 +209,7 @@ class MapboxRenderThreadTest {
     }
     verifyOnce { eglCore.release() }
     verifyOnce { mapboxRenderer.destroyRenderer() }
+    verifyOnce { fpsManager.destroy() }
     assertFalse(renderHandlerThread.started)
   }
 
@@ -219,6 +224,7 @@ class MapboxRenderThreadTest {
     }
     verifyOnce { eglCore.release() }
     verifyOnce { mapboxRenderer.destroyRenderer() }
+    verifyOnce { fpsManager.destroy() }
     assertFalse(renderHandlerThread.started)
   }
 
@@ -309,10 +315,14 @@ class MapboxRenderThreadTest {
   }
 
   @Test
-  fun setMaximumFpsTest() {
+  fun setUserRefreshRateTest() {
     initRenderThread()
-    mapboxRenderThread.setMaximumFps(30)
-    assert(mapboxRenderThread.renderTimeNs == 33333333L)
+    val userRefreshRate = 30
+    mapboxRenderThread.setUserRefreshRate(userRefreshRate)
+    idleHandler()
+    verifyOnce {
+      fpsManager.setUserRefreshRate(userRefreshRate)
+    }
   }
 
   @Test
@@ -492,17 +502,31 @@ class MapboxRenderThreadTest {
   @Test
   fun fpsListenerTest() {
     initRenderThread()
-    val listener = mockk<OnFpsChangedListener>(relaxUnitFun = true)
-    mapboxRenderThread.fpsChangedListener = listener
+    mapboxRenderThread.fpsChangedListener = mockk()
     provideValidSurface()
     pauseHandler()
+    every { fpsManager.preRender(any()) } returns false
     mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
+    every { fpsManager.preRender(any()) } returns true
     mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
     idleHandler()
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
-    idleHandler()
+    // one swap for surface creation and one more when preRender returns true
     verify(exactly = 2) {
-      listener.onFpsChanged(any())
+      eglCore.swapBuffers(any())
+    }
+  }
+
+  @Test
+  fun sameFpsListenerTest() {
+    initRenderThread()
+    val fpsChangedListener = mockk<OnFpsChangedListener>()
+    provideValidSurface()
+    mapboxRenderThread.fpsChangedListener = fpsChangedListener
+    idleHandler()
+    mapboxRenderThread.fpsChangedListener = fpsChangedListener
+    idleHandler()
+    verifyOnce {
+      fpsManager.fpsChangedListener = fpsChangedListener
     }
   }
 
@@ -593,6 +617,8 @@ class MapboxRenderThreadTest {
     }
     // we clear only EGLSurface but not all EGL
     verifyOnce { eglCore.releaseSurface(any()) }
+    // we notify fps manager
+    verifyOnce { fpsManager.onSurfaceDestroyed() }
   }
 
   @Test
@@ -610,6 +636,8 @@ class MapboxRenderThreadTest {
       // we clear all EGL
       eglCore.releaseSurface(any())
       eglCore.release()
+      // we notify fps manager
+      fpsManager.onSurfaceDestroyed()
     }
   }
 
@@ -617,7 +645,7 @@ class MapboxRenderThreadTest {
   fun renderWithMaxFpsSet() {
     initRenderThread()
     provideValidSurface()
-    mapboxRenderThread.setMaximumFps(15)
+    mapboxRenderThread.setUserRefreshRate(15)
     pauseHandler()
     mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
     idleHandler()

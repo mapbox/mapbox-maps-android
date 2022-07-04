@@ -63,6 +63,8 @@ Mapbox welcomes participation and contributions from everyone.
 * Bump telemetry to [v8.1.5](https://github.com/mapbox/mapbox-events-android/releases/tag/telem-8.1.5-core-5.0.2). ([1494](https://github.com/mapbox/mapbox-maps-android/pull/1494))
   Also bumps [WorkManager 2.7.1](https://developer.android.com/jetpack/androidx/releases/work#2.7.1) that enforces compileSdk 31 or newer.
 * Bump gl-native to v10.7.0, common to 22.1.0. ([1543](https://github.com/mapbox/mapbox-maps-android/pull/1543))
+* Fix `OnFpsChangedListener` listener to count number of frames rendered over the last second instead of immediate time for render call. ([1477](https://github.com/mapbox/mapbox-maps-android/pull/1477))
+* Fix `MapView.setMaximumFps` method to apply exact FPS value for rendering the map. ([1477](https://github.com/mapbox/mapbox-maps-android/pull/1477))
 
 # main
 ## Features ✨ and improvements 🏁

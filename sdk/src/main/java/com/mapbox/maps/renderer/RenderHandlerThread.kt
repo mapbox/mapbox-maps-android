@@ -29,10 +29,12 @@ internal class RenderHandlerThread {
     } ?: logW(TAG, "Thread $HANDLE_THREAD_NAME was not started, ignoring event")
   }
 
-  fun start() {
-    handlerThread = HandlerThread(HANDLE_THREAD_NAME, THREAD_PRIORITY_DISPLAY).apply {
-      start()
-      handler = Handler(this.looper)
+  fun start(): Handler {
+    handlerThread = HandlerThread(HANDLE_THREAD_NAME, THREAD_PRIORITY_DISPLAY)
+    handlerThread.start()
+    Handler(handlerThread.looper).also {
+      handler = it
+      return it
     }
   }
 

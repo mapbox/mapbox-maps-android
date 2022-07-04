@@ -1,13 +1,9 @@
 package com.mapbox.maps.renderer
 
 import android.opengl.GLES20
-import android.os.SystemClock
 import android.view.Choreographer
 import android.view.Surface
-import androidx.annotation.AnyThread
-import androidx.annotation.UiThread
-import androidx.annotation.VisibleForTesting
-import androidx.annotation.WorkerThread
+import androidx.annotation.*
 import com.mapbox.maps.logE
 import com.mapbox.maps.logI
 import com.mapbox.maps.logW
@@ -22,7 +18,7 @@ import javax.microedition.khronos.egl.EGL10
 import javax.microedition.khronos.egl.EGL11
 import javax.microedition.khronos.egl.EGLSurface
 import kotlin.concurrent.withLock
-import kotlin.math.pow
+import kotlin.properties.Delegates
 
 /**
  * The render thread is responsible for the communication between any thread and the render thread it creates.
@@ -57,11 +53,6 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
 
   @Volatile
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  internal var renderTimeNs = 0L
-  private var expectedVsyncWakeTimeNs = 0L
-
-  @Volatile
-  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal var awaitingNextVsync = false
   private var sizeChanged = false
   @Volatile
@@ -86,8 +77,27 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   private var eglPrepared = false
   private var renderNotSupported = false
 
-  internal var fpsChangedListener: OnFpsChangedListener? = null
-  private var timeElapsed = 0L
+  // could not be volatile as setter method is synchronized
+  internal var fpsChangedListener by Delegates.observable<OnFpsChangedListener?>(null) { _, old, new ->
+    new?.let {
+      if (old != it) {
+        /**
+         * Consider setting [OnFpsChangedListener] as non-render event to make sure that
+         * it does not get dropped if user has set it right after MapView creation before render thread
+         * is actually fully prepared for rendering.
+         */
+        postNonRenderEvent(
+          RenderEvent(
+            { fpsManager.fpsChangedListener = it },
+            false,
+            EventType.DEFAULT
+          )
+        )
+      }
+    }
+  }
+
+  private val fpsManager: FpsManager
 
   // TODO needed for workaround until issue is fixed in gl-native
   internal var renderDestroyCallChain = false
@@ -112,7 +122,9 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     this.eglCore = EGLCore(translucentSurface, antialiasingSampleCount)
     this.eglSurface = eglCore.eglNoSurface
     this.widgetTextureRenderer = TextureRenderer()
-    renderHandlerThread = RenderHandlerThread().apply { start() }
+    renderHandlerThread = RenderHandlerThread()
+    val handler = renderHandlerThread.start()
+    fpsManager = FpsManager(handler)
   }
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
@@ -121,6 +133,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     mapboxWidgetRenderer: MapboxWidgetRenderer,
     handlerThread: RenderHandlerThread,
     eglCore: EGLCore,
+    fpsManager: FpsManager,
     widgetTextureRenderer: TextureRenderer,
   ) {
     this.translucentSurface = false
@@ -128,6 +141,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     this.widgetRenderer = mapboxWidgetRenderer
     this.renderHandlerThread = handlerThread
     this.eglCore = eglCore
+    this.fpsManager = fpsManager
     this.widgetTextureRenderer = widgetTextureRenderer
     this.eglSurface = eglCore.eglNoSurface
   }
@@ -242,17 +256,13 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     }
   }
 
-  private fun draw() {
-    val renderTimeNsCopy = renderTimeNs
-    val currentTimeNs = SystemClock.elapsedRealtimeNanos()
-    val expectedEndRenderTimeNs = currentTimeNs + renderTimeNsCopy
-    if (expectedVsyncWakeTimeNs > currentTimeNs) {
+  private fun draw(frameTimeNanos: Long) {
+    if (!fpsManager.preRender(frameTimeNanos)) {
       // when we have FPS limited and desire to skip core render - we must schedule new draw call
       // otherwise map may remain in not fully loaded state
       postPrepareRenderFrame()
       return
     }
-
     if (widgetRenderer.hasWidgets()) {
       if (widgetRenderer.needTextureUpdate) {
         widgetRenderer.updateTexture()
@@ -272,20 +282,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     // it makes sense to execute them after drawing a map but before swapping buffers
     // **note** this queue also holds snapshot tasks
     drainQueue(renderEventQueue)
-    // calculate FPS here, before actual swap as swap could happen either this or next frame
-    val actualEndRenderTimeNanos = SystemClock.elapsedRealtimeNanos()
-    if (renderTimeNsCopy != 0L && actualEndRenderTimeNanos < expectedEndRenderTimeNs) {
-      // we need to stop swap buffers for less than time requested in order to have some time to render upcoming frame
-      // before next vsync so it will be drawn, otherwise we will drop it
-      expectedVsyncWakeTimeNs = expectedEndRenderTimeNs - ONE_MILLISECOND_NS
-    }
-    fpsChangedListener?.let {
-      val fps = 1E9 / (actualEndRenderTimeNanos - timeElapsed)
-      if (timeElapsed != 0L) {
-        it.onFpsChanged(fps)
-      }
-      timeElapsed = actualEndRenderTimeNanos
-    }
+    fpsManager.postRender()
     if (needViewAnnotationSync && viewAnnotationMode == ViewAnnotationUpdateMode.MAP_SYNCHRONIZED) {
       // when we're syncing view annotations with the map -
       // we swap buffers the next frame to achieve better synchronization with view annotations update
@@ -416,6 +413,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
             } else {
               releaseEglSurface()
             }
+            fpsManager.onSurfaceDestroyed()
             destroyCondition.signal()
           }
         }
@@ -450,6 +448,13 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     prepareRenderFrame(creatingSurface = true)
   }
 
+  @MainThread
+  fun setScreenRefreshRate(refreshRate: Int) {
+    renderHandlerThread.post {
+      fpsManager.setScreenRefreshRate(refreshRate)
+    }
+  }
+
   @UiThread
   fun onSurfaceCreated(surface: Surface, width: Int, height: Int) {
     lock.withLock {
@@ -461,15 +466,17 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   }
 
   @AnyThread
-  fun setMaximumFps(fps: Int) {
-    renderTimeNs = ONE_SECOND_NS / fps
+  fun setUserRefreshRate(fps: Int) {
+    renderHandlerThread.post {
+      fpsManager.setUserRefreshRate(fps)
+    }
   }
 
   @WorkerThread
   override fun doFrame(frameTimeNanos: Long) {
     // it makes sense to draw not only when EGL config is prepared but when native renderer is created
     if (renderThreadPrepared && !paused) {
-      draw()
+      draw(frameTimeNanos)
     }
     awaitingNextVsync = false
     // It's critical to drain queue after setting `awaitingNextVsync` to false as some tasks may recursively schedule other tasks when executed.
@@ -544,6 +551,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
               releaseAll()
             }
             renderHandlerThread.clearDefaultMessages()
+            fpsManager.destroy()
             eglCore.clearRendererStateListeners()
             destroyCondition.signal()
           }
@@ -563,12 +571,8 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     }
   }
 
-  companion object {
+  internal companion object {
     private const val TAG = "Mbgl-RenderThread"
-
-    private val ONE_SECOND_NS = 10.0.pow(9.0).toLong()
-    private val ONE_MILLISECOND_NS = 10.0.pow(6.0).toLong()
-
     /**
      * If we hit some issue caused by invalid state (most likely caused by GPU driver) we start
      * rescheduling configuration with that delay in order not to overflood handler thread message queue.

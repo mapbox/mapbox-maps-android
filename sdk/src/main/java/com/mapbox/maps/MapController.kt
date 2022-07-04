@@ -198,9 +198,6 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   }
 
   override fun setMaximumFps(fps: Int) {
-    if (fps <= 0) {
-      return
-    }
     renderer.setMaximumFps(fps)
   }
 
@@ -224,6 +221,18 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     renderer.renderThread.renderHandlerThread.post {
       renderer.renderThread.eglCore.removeRendererStateListener(rendererSetupErrorListener)
     }
+  }
+
+  internal fun setScreenRefreshRate(refreshRate: Int) {
+    if (refreshRate <= 0 || refreshRate >= MapView.MAX_POSSIBLE_FPS) {
+      logE(
+        TAG,
+        "Screen refresh rate could not be <= 0 or >= ${MapView.MAX_POSSIBLE_FPS}! " +
+          "Setting max fps and fps counter will not work properly."
+      )
+      return
+    }
+    renderer.renderThread.setScreenRefreshRate(refreshRate)
   }
 
   //

@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.view.MotionEvent
 import android.view.Surface
+import android.view.WindowManager
 import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 import com.mapbox.maps.renderer.MapboxSurfaceRenderer
@@ -28,7 +29,7 @@ import com.mapbox.maps.renderer.widget.Widget
  * @param mapInitOptions the init options to for map
  */
 class MapSurface @JvmOverloads constructor(
-  context: Context,
+  private val context: Context,
   val surface: Surface,
   mapInitOptions: MapInitOptions = MapInitOptions(context)
 ) : MapPluginProviderDelegate, MapControllable {
@@ -49,6 +50,11 @@ class MapSurface @JvmOverloads constructor(
    */
   fun surfaceCreated() {
     renderer.surfaceCreated()
+    mapController.setScreenRefreshRate(
+      (context.getSystemService(Context.WINDOW_SERVICE) as WindowManager)
+        .defaultDisplay
+        .refreshRate.toInt()
+    )
   }
 
   /**
@@ -139,9 +145,6 @@ class MapSurface @JvmOverloads constructor(
    * @param fps The maximum fps
    */
   override fun setMaximumFps(fps: Int) {
-    if (fps <= 0) {
-      return
-    }
     renderer.setMaximumFps(fps)
   }
 
