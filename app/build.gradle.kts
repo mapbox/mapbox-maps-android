@@ -46,7 +46,11 @@ android {
   buildTypes {
     getByName("release") {
       isMinifyEnabled = true
-      signingConfig = signingConfigs.getByName("release")
+      signingConfig = if (rootProject.file("$rootDir/testapp-release.keystore").exists()) {
+        signingConfigs.getByName("release")
+      } else {
+        signingConfigs.getByName("debug")
+      }
       proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
     }
     getByName("debug") {
