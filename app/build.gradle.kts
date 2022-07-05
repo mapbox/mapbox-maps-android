@@ -7,6 +7,7 @@ plugins {
 
 apply {
   from("$rootDir/gradle/script-git-version.gradle")
+  from("$rootDir/gradle/play-publisher.gradle")
 }
 val buildFromSource: String by project
 
