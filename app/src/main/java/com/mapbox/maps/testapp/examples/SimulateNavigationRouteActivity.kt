@@ -51,7 +51,7 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
     }
     handler.postDelayed(
       {
-//        finish()
+        finish()
       },
       SIMULATION_DURATION
     )
