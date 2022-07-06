@@ -175,6 +175,7 @@ class DefaultLocationProviderTest {
     val locationEngineResult = mockk<LocationEngineResult>(relaxed = true)
     val location = mockk<Location>(relaxed = true)
     every { locationEngineResult.lastLocation } returns location
+    every { location.hasAltitude() } returns true
     every { location.longitude } returns 12.0
     every { location.latitude } returns 34.0
     every { location.altitude } returns 10.0
@@ -202,6 +203,7 @@ class DefaultLocationProviderTest {
     val locationEngineResult = mockk<LocationEngineResult>(relaxed = true)
     val location = mockk<Location>(relaxed = true)
     every { locationEngineResult.lastLocation } returns location
+    every { location.hasAltitude() } returns true
     every { location.longitude } returns 12.0
     every { location.latitude } returns 34.0
     every { location.altitude } returns 10.0
