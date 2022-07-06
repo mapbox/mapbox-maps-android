@@ -6,7 +6,9 @@ import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
 import com.mapbox.maps.plugin.locationcomponent.LocationConsumer
 import com.mapbox.maps.plugin.locationcomponent.LocationProvider
+import com.mapbox.turf.TurfConstants
 import com.mapbox.turf.TurfMeasurement
+import com.mapbox.turf.TurfMisc
 import java.util.concurrent.*
 
 /**
@@ -17,6 +19,8 @@ class SimulateRouteLocationProvider(
   val route: LineString,
   private val handler: Handler = Handler(Looper.getMainLooper())
 ) : LocationProvider {
+  private val totalRouteLength = TurfMeasurement.length(route, TurfConstants.UNIT_CENTIMETERS)
+  private val routeStartPoint = route.coordinates().first()
   private val locationConsumers = CopyOnWriteArraySet<LocationConsumer>()
   private var isFakeLocationEmitting = false
   override fun registerLocationConsumer(locationConsumer: LocationConsumer) {
@@ -44,7 +48,7 @@ class SimulateRouteLocationProvider(
     handler.postDelayed(
       {
         if (iterator.hasNext()) {
-          val point = iterator.next()
+          val point = iterator.next().insertProgressInfo()
           val bearing = TurfMeasurement.bearing(lastLocation, point)
           lastLocation = point
           lastBearing = bearing
@@ -60,6 +64,17 @@ class SimulateRouteLocationProvider(
       LOCATION_UPDATE_INTERVAL_MS
     )
   }
+
+  // use altitude of Point to pass through progress data, and use internal animator to interpolate
+  // the progress, thus reduce the overhead to calculate the progress on each frame.
+  private fun Point.insertProgressInfo() = Point.fromLngLat(
+    longitude(),
+    latitude(),
+    TurfMeasurement.length(
+      TurfMisc.lineSlice(routeStartPoint, this, route),
+      TurfConstants.UNIT_CENTIMETERS
+    ) / totalRouteLength
+  )
 
   private companion object {
     const val LOCATION_UPDATE_INTERVAL_MS = 1000L

@@ -10,7 +10,8 @@ internal object Evaluators {
   val POINT = TypeEvaluator<Point> { fraction, startValue, endValue ->
     Point.fromLngLat(
       startValue.longitude() + fraction * (endValue.longitude() - startValue.longitude()),
-      startValue.latitude() + fraction * (endValue.latitude() - startValue.latitude())
+      startValue.latitude() + fraction * (endValue.latitude() - startValue.latitude()),
+      startValue.altitude() + fraction * (endValue.altitude() - startValue.altitude()),
     )
   }
 
