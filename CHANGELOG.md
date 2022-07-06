@@ -4,7 +4,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 #main
 ## Bug fixes 🐞
-* Point Evaluator of the location component will take the altitude into consideration and interpolate it similarly to latitude and longitude. ([1478](https://github.com/mapbox/mapbox-maps-android/pull/1478))
+* Support altitude interpolation in location component, and pass through GPS altitude information from the DefaultLocationProvider. ([1478](https://github.com/mapbox/mapbox-maps-android/pull/1478))
 
 # 10.7.0-beta.1 June 29, 2022
 ## Breaking changes ⚠️
