@@ -111,7 +111,7 @@ object Versions {
   const val mapboxGlNative = "10.7.0-beta.1"
   const val mapboxCommon = "22.1.0-beta.1"
   const val mapboxAndroidCore = "5.0.2"
-  const val mapboxAndroidTelemetry = "8.1.3"
+  const val mapboxAndroidTelemetry = "8.1.4"
   const val androidxCore = "1.3.1"
   const val androidxAnnotation = "1.1.0"
   const val androidxAppcompat = "1.3.0"
