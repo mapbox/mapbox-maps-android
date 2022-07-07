@@ -8,17 +8,16 @@ internal object Evaluators {
    * Type evaluator for Point data
    */
   val POINT = TypeEvaluator<Point> { fraction, startValue, endValue ->
+    val longitude = startValue.longitude() + fraction * (endValue.longitude() - startValue.longitude())
+    val latitude = startValue.latitude() + fraction * (endValue.latitude() - startValue.latitude())
     if (startValue.hasAltitude() && endValue.hasAltitude()) {
       Point.fromLngLat(
-        startValue.longitude() + fraction * (endValue.longitude() - startValue.longitude()),
-        startValue.latitude() + fraction * (endValue.latitude() - startValue.latitude()),
+        longitude,
+        latitude,
         startValue.altitude() + fraction * (endValue.altitude() - startValue.altitude()),
       )
     } else {
-      Point.fromLngLat(
-        startValue.longitude() + fraction * (endValue.longitude() - startValue.longitude()),
-        startValue.latitude() + fraction * (endValue.latitude() - startValue.latitude()),
-      )
+      Point.fromLngLat(longitude, latitude)
     }
   }
 
