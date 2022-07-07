@@ -12,15 +12,17 @@ import com.mapbox.maps.Style
 import com.mapbox.maps.plugin.LocationPuck3D
 import com.mapbox.maps.plugin.gestures.OnMapClickListener
 import com.mapbox.maps.plugin.gestures.gestures
-import com.mapbox.maps.plugin.locationcomponent.CustomLocationProvider
+import com.mapbox.maps.plugin.locationcomponent.Journey
+import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.plugin.locationcomponent.location2
+import java.util.*
 
 /**
  * Example of using custom location provider.
  */
 class CustomLocationProviderActivity : AppCompatActivity(), OnMapClickListener {
 
-  private val customLocationProvider = CustomLocationProvider()
+  private val journey = Journey()
   private lateinit var mapView: MapView
 
   @SuppressLint("SetTextI18n")
@@ -28,6 +30,9 @@ class CustomLocationProviderActivity : AppCompatActivity(), OnMapClickListener {
     super.onCreate(savedInstanceState)
     mapView = MapView(this)
     setContentView(mapView)
+    journey.stopOnLastLeg = false
+    mapView.location.addOnIndicatorPositionChangedListener(journey)
+
     mapView.addView(
       Button(this).apply {
         layoutParams = ViewGroup.LayoutParams(
@@ -36,7 +41,7 @@ class CustomLocationProviderActivity : AppCompatActivity(), OnMapClickListener {
         )
         text = "Cancel"
         setOnClickListener {
-          customLocationProvider.cancelPlayback()
+          journey.stop()
         }
       }
     )
@@ -52,7 +57,6 @@ class CustomLocationProviderActivity : AppCompatActivity(), OnMapClickListener {
         loadStyleUri(Style.MAPBOX_STREETS) {
           initLocationComponent()
           initClickListeners()
-          customLocationProvider.startPlayback()
         }
       }
   }
@@ -63,7 +67,7 @@ class CustomLocationProviderActivity : AppCompatActivity(), OnMapClickListener {
 
   private fun initLocationComponent() {
     val locationComponentPlugin2 = mapView.location2
-    locationComponentPlugin2.setLocationProvider(customLocationProvider)
+    locationComponentPlugin2.setLocationProvider(journey)
     locationComponentPlugin2.let {
       it.locationPuck = LocationPuck3D(
         modelUri = "asset://sportcar.glb",
@@ -77,7 +81,17 @@ class CustomLocationProviderActivity : AppCompatActivity(), OnMapClickListener {
   }
 
   override fun onMapClick(point: Point): Boolean {
-    customLocationProvider.queueLocationUpdate(point)
+    val leg = Journey.Leg()
+    leg.points.add(point)
+    var newLegs = LinkedList(journey.legs)
+    newLegs.add(leg)
+
+    // apparently lists don't feature value semaintics in Kotlin, this should simulate it
+    journey.legs = newLegs
+
+    if (!journey.isOngoing) {
+        journey.start()
+    }
     return true
   }
 
