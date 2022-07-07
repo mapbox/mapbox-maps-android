@@ -5,16 +5,40 @@ plugins {
   id("io.gitlab.arturbosch.detekt").version(Versions.detekt)
 }
 
+apply {
+  from("$rootDir/gradle/script-git-version.gradle")
+  from("$rootDir/gradle/play-publisher.gradle")
+}
 val buildFromSource: String by project
 
 android {
   compileSdk = AndroidVersions.compileSdkVersion
+  signingConfigs {
+    create("release") {
+      storeFile = rootProject.file("$rootDir/testapp-release.keystore")
+      storePassword = if (project.hasProperty("APP_KEYSTORE_PASSWORD")) {
+        project.property("APP_KEYSTORE_PASSWORD") as String
+      } else {
+        System.getenv("APP_KEYSTORE_PASSWORD")
+      }
+      keyAlias = if (project.hasProperty("APP_KEYSTORE_ALIAS")) {
+        project.property("APP_KEYSTORE_ALIAS") as String
+      } else {
+        System.getenv("APP_KEYSTORE_ALIAS")
+      }
+      keyPassword = if (project.hasProperty("APP_KEY_PASSWORD")) {
+        project.property("APP_KEY_PASSWORD") as String
+      } else {
+        System.getenv("APP_KEY_PASSWORD")
+      }
+    }
+  }
   defaultConfig {
     applicationId = "com.mapbox.maps.testapp"
     minSdk = AndroidVersions.minSdkVersion
     targetSdk = AndroidVersions.targetSdkVersion
-    versionCode = 1
-    versionName = "0.1.0"
+    versionCode = if (project.hasProperty("gitVersionCode")) project.property("gitVersionCode") as Int else 1
+    versionName = if (project.hasProperty("gitVersionName")) project.property("gitVersionName") as String else "0.1.0"
     multiDexEnabled = true
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     testInstrumentationRunnerArguments(mapOf("clearPackageData" to "true"))
@@ -22,6 +46,15 @@ android {
   buildTypes {
     getByName("release") {
       isMinifyEnabled = true
+      signingConfig = if (rootProject.file("$rootDir/testapp-release.keystore").exists()) {
+        signingConfigs.getByName("release")
+      } else {
+        signingConfigs.getByName("debug")
+      }
+      proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+    }
+    getByName("debug") {
+      isMinifyEnabled = false
       signingConfig = signingConfigs.getByName("debug")
       proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
     }
