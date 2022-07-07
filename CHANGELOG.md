@@ -3,7 +3,14 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # 10.6.1
+## Bug fixes 🐞
 * Fix an issue when `literal` array expression is used as output inside the `match` expression. ([1444](https://github.com/mapbox/mapbox-maps-android/pull/1444))
+* Fix possible crash bug due to image size overflow. ([1482](https://github.com/mapbox/mapbox-maps-android/pull/1482))
+* Remove `android.permission.WAKE_LOCK` permission from the SDK. ([1482](https://github.com/mapbox/mapbox-maps-android/pull/1482))
+
+## Dependencies
+* Bump gl-native to v10.6.1. ([#1482](https://github.com/mapbox/mapbox-maps-android/pull/1482))
+* Bump telemetry to [v8.1.4](https://github.com/mapbox/mapbox-events-android/releases/tag/telem-8.1.4-core-5.0.2). ([#1482](https://github.com/mapbox/mapbox-maps-android/pull/1482))
 
 # 10.6.0 - June 16, 2022
 [Changes](https://github.com/mapbox/mapbox-maps-android/compare/android-v10.5.0...android-v10.6.0) since [Mapbox Maps SDK for Android 10.5.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/android-v10.5.0)
