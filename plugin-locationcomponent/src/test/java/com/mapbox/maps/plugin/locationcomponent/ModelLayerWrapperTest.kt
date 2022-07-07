@@ -19,7 +19,7 @@ import org.robolectric.RobolectricTestRunner
 class ModelLayerWrapperTest {
 
   private val style: StyleManagerInterface = mockk(relaxed = true)
-  private val layer = ModelLayerWrapper(MODEL_LAYER_ID, MODEL_SOURCE_ID, INITIAL_SCALE, INITIAL_ROTATION, INITIAL_TRANSLATION)
+  private val layer = ModelLayerWrapper(MODEL_LAYER_ID, MODEL_SOURCE_ID, INITIAL_SCALE, INITIAL_ROTATION, INITIAL_TRANSLATION, INITIAL_CAST_SHADOWS)
   private val expected: Expected<String, None> = mockk(relaxed = true)
 
   @Before
@@ -93,5 +93,6 @@ class ModelLayerWrapperTest {
     private val INITIAL_SCALE = arrayListOf(6.0)
     private val INITIAL_ROTATION = arrayListOf(8.0)
     private val INITIAL_TRANSLATION = arrayListOf(0.0)
+    private val INITIAL_CAST_SHADOWS = true
   }
 }

@@ -25,7 +25,8 @@ internal class LayerSourceProvider {
       MODEL_SOURCE,
       locationModelLayerOptions.modelScale.map { it.toDouble() },
       locationModelLayerOptions.modelRotation.map { it.toDouble() },
-      locationModelLayerOptions.modelTranslation.map { it.toDouble() }
+      locationModelLayerOptions.modelTranslation.map { it.toDouble() },
+      locationModelLayerOptions.modelCastShadows
     )
 
   fun getLocationIndicatorLayer() = LocationIndicatorLayerWrapper(LOCATION_INDICATOR_LAYER)
