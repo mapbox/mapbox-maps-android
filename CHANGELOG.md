@@ -16,6 +16,9 @@ Mapbox welcomes participation and contributions from everyone.
 Also bumps [WorkManager 2.7.1](https://developer.android.com/jetpack/androidx/releases/work#2.7.1) that enforces compileSdk 31 or newer. 
 * Bump gl-native to v10.7.0-rc.1, common to 22.1.0-rc.1. ([#1497](https://github.com/mapbox/mapbox-maps-android/pull/1497))
 
+# main
+* Introduce experimental `ModelLayer.modelCastShadows` and `LocationPuck3D.modelCastShadows` property. ([1480](https://github.com/mapbox/mapbox-maps-android/pull/1480))
+
 # 10.7.0-beta.1 June 29, 2022
 ## Breaking changes ⚠️
 * Remove deprecated `FollowPuckViewportStateOptions.animationDurationMs` from experimental viewport plugin. ([1421](https://github.com/mapbox/mapbox-maps-android/pull/1421))
