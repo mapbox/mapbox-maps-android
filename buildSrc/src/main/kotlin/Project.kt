@@ -4,13 +4,13 @@ object AndroidVersions {
   const val compileSdkVersion = 31
   object AndroidAuto {
     const val minSdkVersion = 23
-    const val targetSdkVersion = 30
-    const val compileSdkVersion = 31
+    const val targetSdkVersion = 33
+    const val compileSdkVersion = 33
   }
   object Compose {
     const val minSdkVersion = 23
-    const val targetSdkVersion = 30
-    const val compileSdkVersion = 31
+    const val targetSdkVersion = 33
+    const val compileSdkVersion = 33
   }
 }
 
@@ -127,7 +127,7 @@ object Versions {
   const val androidxLifecycle = "2.3.0"
   const val androidxActivityCompose = "1.4.0"
   const val squareRetrofit="2.9.0"
-  const val squareLeakCanary = "2.4"
+  const val squareLeakCanary = "2.7"
   const val materialDesign = "1.2.0"
   const val googlePlayServicesLocation = "18.0.0"
   const val googleCarAppLibrary= "1.1.0"

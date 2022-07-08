@@ -101,7 +101,7 @@ internal abstract class PuckAnimator<T>(
     if (isRunning) {
       addListener(object : AnimatorListenerAdapter() {
 
-        override fun onAnimationEnd(animation: Animator?, isReverse: Boolean) {
+        override fun onAnimationEnd(animation: Animator, isReverse: Boolean) {
           super.onAnimationEnd(animation, isReverse)
           block.invoke(this@PuckAnimator)
           removeListener(this)

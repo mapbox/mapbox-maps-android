@@ -58,7 +58,7 @@ class SpinningGlobeActivity : AppCompatActivity() {
           duration(1_000L)
           interpolator(LinearInterpolator())
           animatorListener(object : AnimatorListenerAdapter() {
-            override fun onAnimationEnd(animation: Animator?) {
+            override fun onAnimationEnd(animation: Animator) {
               spinGlobe()
             }
           })

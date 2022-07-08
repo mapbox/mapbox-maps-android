@@ -111,7 +111,7 @@ class MovingIconWithTrailingLineActivity : AppCompatActivity() {
       interpolator = LinearInterpolator()
 
       addListener(object : AnimatorListenerAdapter() {
-        override fun onAnimationEnd(animation: Animator?) {
+        override fun onAnimationEnd(animation: Animator) {
           super.onAnimationEnd(animation)
           animate()
         }

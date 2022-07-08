@@ -123,7 +123,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
           duration(0)
           owner(MapAnimationOwnerRegistry.GESTURES)
           animatorListener(object : AnimatorListenerAdapter() {
-            override fun onAnimationEnd(animation: Animator?) {
+            override fun onAnimationEnd(animation: Animator) {
               actionAfter?.invoke()
               immediateEaseInProcess = false
             }
@@ -1111,7 +1111,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
     }
 
     zoomAnimator.addListener(object : AnimatorListenerAdapter() {
-      override fun onAnimationStart(animation: Animator?) {
+      override fun onAnimationStart(animation: Animator) {
         super.onAnimationStart(animation)
         // notify scale gesture started when zoom animation starts.
         notifyOnScaleListeners(gesturesManager.standardScaleGestureDetector)
@@ -1347,7 +1347,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
         interpolator(gesturesInterpolator)
         animatorListener(object : AnimatorListenerAdapter() {
 
-          override fun onAnimationEnd(animation: Animator?) {
+          override fun onAnimationEnd(animation: Animator) {
             super.onAnimationEnd(animation)
             mapCameraManagerDelegate.dragEnd()
           }
