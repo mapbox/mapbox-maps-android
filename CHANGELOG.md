@@ -1,7 +1,11 @@
 # Changelog for Mapbox Maps SDK v10 for Android
 
 Mapbox welcomes participation and contributions from everyone.
+
 # main
+## Features ✨ and improvements 🏁
+* Introduce experimental `ModelLayer.modelCastShadows` and `LocationPuck3D.modelCastShadows` property. ([1480](https://github.com/mapbox/mapbox-maps-android/pull/1480))
+
 ## Bug fixes 🐞
 * Avoid NaN when converting screen coordinates to geographical coordinates executed as part of gesture. [#1491](https://github.com/mapbox/mapbox-maps-android/pull/1491)
 * Remove android.permission.WAKE_LOCK permission from the SDK. ([1494](https://github.com/mapbox/mapbox-maps-android/pull/1494))
@@ -18,6 +22,10 @@ Also bumps [WorkManager 2.7.1](https://developer.android.com/jetpack/androidx/re
 
 # main
 * Introduce experimental `ModelLayer.modelCastShadows` and `LocationPuck3D.modelCastShadows` property. ([1480](https://github.com/mapbox/mapbox-maps-android/pull/1480))
+* Support altitude interpolation in location component, and pass through GPS altitude information from the DefaultLocationProvider. ([1478](https://github.com/mapbox/mapbox-maps-android/pull/1478))
+
+## Dependencies
+* Bump telemetry to [v8.1.4](https://github.com/mapbox/mapbox-events-android/releases/tag/telem-8.1.4-core-5.0.2). ([#1484](https://github.com/mapbox/mapbox-maps-android/pull/1484))
 
 # 10.7.0-beta.1 June 29, 2022
 ## Breaking changes ⚠️
