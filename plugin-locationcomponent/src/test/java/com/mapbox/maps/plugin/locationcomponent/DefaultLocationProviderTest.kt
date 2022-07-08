@@ -175,8 +175,10 @@ class DefaultLocationProviderTest {
     val locationEngineResult = mockk<LocationEngineResult>(relaxed = true)
     val location = mockk<Location>(relaxed = true)
     every { locationEngineResult.lastLocation } returns location
+    every { location.hasAltitude() } returns true
     every { location.longitude } returns 12.0
     every { location.latitude } returns 34.0
+    every { location.altitude } returns 10.0
     every { location.bearing } returns 90.0f
 
     defaultLocationProvider.registerLocationConsumer(locationConsumer1)
@@ -189,9 +191,9 @@ class DefaultLocationProviderTest {
       )
     }
     locationEngineCallbackSlot.captured.onSuccess(locationEngineResult)
-    verify { locationConsumer1.onLocationUpdated(Point.fromLngLat(12.0, 34.0)) }
+    verify { locationConsumer1.onLocationUpdated(Point.fromLngLat(12.0, 34.0, 10.0)) }
     verify { locationConsumer1.onBearingUpdated(90.0) }
-    verify { locationConsumer2.onLocationUpdated(Point.fromLngLat(12.0, 34.0)) }
+    verify { locationConsumer2.onLocationUpdated(Point.fromLngLat(12.0, 34.0, 10.0)) }
     verify { locationConsumer2.onBearingUpdated(90.0) }
   }
 
@@ -201,8 +203,10 @@ class DefaultLocationProviderTest {
     val locationEngineResult = mockk<LocationEngineResult>(relaxed = true)
     val location = mockk<Location>(relaxed = true)
     every { locationEngineResult.lastLocation } returns location
+    every { location.hasAltitude() } returns true
     every { location.longitude } returns 12.0
     every { location.latitude } returns 34.0
+    every { location.altitude } returns 10.0
     every { location.bearing } returns 90.0f
 
     defaultLocationProvider.registerLocationConsumer(locationConsumer1)
@@ -215,9 +219,9 @@ class DefaultLocationProviderTest {
       )
     }
     locationEngineCallbackSlot.captured.onSuccess(locationEngineResult)
-    verify { locationConsumer1.onLocationUpdated(Point.fromLngLat(12.0, 34.0)) }
+    verify { locationConsumer1.onLocationUpdated(Point.fromLngLat(12.0, 34.0, 10.0)) }
     verify(exactly = 0) { locationConsumer1.onBearingUpdated(90.0) }
-    verify { locationConsumer2.onLocationUpdated(Point.fromLngLat(12.0, 34.0)) }
+    verify { locationConsumer2.onLocationUpdated(Point.fromLngLat(12.0, 34.0, 10.0)) }
     verify(exactly = 0) { locationConsumer2.onBearingUpdated(90.0) }
     defaultLocationProvider.locationCompassListener.onCompassChanged(90.0f)
     verify { locationConsumer1.onBearingUpdated(90.0) }

@@ -8,6 +8,10 @@ Mapbox welcomes participation and contributions from everyone.
 ## Dependencies
 * Bump telemetry to [v8.1.4](https://github.com/mapbox/mapbox-events-android/releases/tag/telem-8.1.4-core-5.0.2). ([#1484](https://github.com/mapbox/mapbox-maps-android/pull/1484))
 
+#main
+## Bug fixes 🐞
+* Support altitude interpolation in location component, and pass through GPS altitude information from the DefaultLocationProvider. ([1478](https://github.com/mapbox/mapbox-maps-android/pull/1478))
+
 # 10.7.0-beta.1 June 29, 2022
 ## Breaking changes ⚠️
 * Remove deprecated `FollowPuckViewportStateOptions.animationDurationMs` from experimental viewport plugin. ([1421](https://github.com/mapbox/mapbox-maps-android/pull/1421))

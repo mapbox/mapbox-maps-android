@@ -79,8 +79,14 @@ class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal c
   }
 
   private fun notifyLocationUpdates(location: Location) {
+    val locationPoint = if (location.hasAltitude()) {
+      Point.fromLngLat(location.longitude, location.latitude, location.altitude)
+    } else {
+      Point.fromLngLat(location.longitude, location.latitude)
+    }
+
     locationConsumers.forEach { consumer ->
-      consumer.onLocationUpdated(Point.fromLngLat(location.longitude, location.latitude))
+      consumer.onLocationUpdated(locationPoint)
       if (currentPuckBearingSource == PuckBearingSource.COURSE) {
         consumer.onBearingUpdated(location.bearing.toDouble())
       }

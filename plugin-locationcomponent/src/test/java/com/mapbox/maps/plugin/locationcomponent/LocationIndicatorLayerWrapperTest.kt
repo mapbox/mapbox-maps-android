@@ -162,8 +162,8 @@ class LocationIndicatorLayerWrapperTest {
     layer.updateStyle(newStyle)
     val radius = 1.0
     layer.accuracyRadius(radius)
-    verify(exactly = 0) { style.setStyleLayerProperty(INDICATOR_LAYER_ID, "accuracy-radius", Value.valueOf(radius)) }
-    verify(exactly = 1) { newStyle.setStyleLayerProperty(INDICATOR_LAYER_ID, "accuracy-radius", Value.valueOf(radius)) }
+    verify(exactly = 0) { style.setStyleLayerProperty(INDICATOR_LAYER_ID, "accuracy-radius", any()) }
+    verify(exactly = 1) { newStyle.setStyleLayerProperty(INDICATOR_LAYER_ID, "accuracy-radius", any()) }
   }
 
   companion object {

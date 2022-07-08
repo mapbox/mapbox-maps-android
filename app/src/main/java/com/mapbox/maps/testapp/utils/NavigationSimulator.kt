@@ -25,9 +25,6 @@ import com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions
 import com.mapbox.maps.plugin.viewport.data.ViewportOptions
 import com.mapbox.maps.plugin.viewport.viewport
 import com.mapbox.maps.testapp.R
-import com.mapbox.turf.TurfConstants
-import com.mapbox.turf.TurfMeasurement
-import com.mapbox.turf.TurfMisc
 
 /**
  * Simulate a navigation route with pre-defined route as LineString.
@@ -47,8 +44,6 @@ class NavigationSimulator(
   private lateinit var routeLayer: LineLayer
   private lateinit var casingLayer: LineLayer
   private val handler = Handler(Looper.getMainLooper())
-  private val totalRouteLength = TurfMeasurement.length(routePoints, TurfConstants.UNIT_CENTIMETERS)
-  private val routeStartPoint = routePoints.coordinates().first()
   private val viewportPlugin = mapView.viewport
   private val followPuckViewportState =
     viewportPlugin.makeFollowPuckViewportState(FollowPuckViewportStateOptions.Builder().build())
@@ -338,12 +333,10 @@ class NavigationSimulator(
   }
 
   override fun onIndicatorPositionChanged(point: Point) {
-    val progress = TurfMeasurement.length(
-      TurfMisc.lineSlice(routeStartPoint, point, routePoints),
-      TurfConstants.UNIT_CENTIMETERS
-    ) / totalRouteLength
-    routeLayer.lineTrimOffset(listOf(0.0, progress))
-    casingLayer.lineTrimOffset(listOf(0.0, progress))
+    // use altitude to pass through interpolated progress data, reduce the overhead to
+    // calculate the progress on each frame.
+    routeLayer.lineTrimOffset(listOf(0.0, point.altitude()))
+    casingLayer.lineTrimOffset(listOf(0.0, point.altitude()))
   }
 
   fun onDestroy() {
