@@ -12,15 +12,17 @@ import com.mapbox.maps.Style
 import com.mapbox.maps.plugin.LocationPuck3D
 import com.mapbox.maps.plugin.gestures.OnMapClickListener
 import com.mapbox.maps.plugin.gestures.gestures
-import com.mapbox.maps.plugin.locationcomponent.CustomLocationProvider
+import com.mapbox.maps.plugin.locationcomponent.CustomJourneyLocationProvider
+import com.mapbox.maps.plugin.locationcomponent.Journey
 import com.mapbox.maps.plugin.locationcomponent.location2
 
 /**
  * Example of using custom location provider.
  */
-class CustomLocationProviderActivity : AppCompatActivity(), OnMapClickListener {
+class CustomJourneyLocationProviderActivity : AppCompatActivity(), OnMapClickListener {
 
-  private val customLocationProvider = CustomLocationProvider()
+  private val journey = Journey()
+  private val customJourneyLocationProvider = CustomJourneyLocationProvider().apply { loadJourney(journey) }
   private lateinit var mapView: MapView
 
   @SuppressLint("SetTextI18n")
@@ -36,7 +38,7 @@ class CustomLocationProviderActivity : AppCompatActivity(), OnMapClickListener {
         )
         text = "Cancel"
         setOnClickListener {
-          customLocationProvider.cancelPlayback()
+          journey.pause()
         }
       }
     )
@@ -52,7 +54,7 @@ class CustomLocationProviderActivity : AppCompatActivity(), OnMapClickListener {
         loadStyleUri(Style.MAPBOX_STREETS) {
           initLocationComponent()
           initClickListeners()
-          customLocationProvider.startPlayback()
+          journey.start()
         }
       }
   }
@@ -63,11 +65,11 @@ class CustomLocationProviderActivity : AppCompatActivity(), OnMapClickListener {
 
   private fun initLocationComponent() {
     val locationComponentPlugin2 = mapView.location2
-    locationComponentPlugin2.setLocationProvider(customLocationProvider)
+    locationComponentPlugin2.setLocationProvider(customJourneyLocationProvider)
     locationComponentPlugin2.let {
       it.locationPuck = LocationPuck3D(
         modelUri = "asset://sportcar.glb",
-        modelScale = listOf(0.1f, 0.1f, 0.1f),
+        modelScale = listOf(0.5f, 0.5f, 0.5f),
         modelTranslation = listOf(0.1f, 0.1f, 0.1f),
         modelRotation = listOf(0.0f, 0.0f, 180.0f)
       )
@@ -77,7 +79,7 @@ class CustomLocationProviderActivity : AppCompatActivity(), OnMapClickListener {
   }
 
   override fun onMapClick(point: Point): Boolean {
-    customLocationProvider.queueLocationUpdate(point)
+    journey.queueLocationUpdate(point)
     return true
   }
 

@@ -1197,7 +1197,7 @@
         </activity>
 
         <activity
-            android:name=".examples.CustomLocationProviderActivity"
+            android:name=".examples.CustomJourneyLocationProviderActivity"
             android:description="@string/description_custom_location_provider"
             android:exported="true"
             android:label="@string/activity_custom_location_provider">
