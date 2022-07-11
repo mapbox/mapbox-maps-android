@@ -569,7 +569,7 @@ class MapboxMap :
    * Calling this method in [Activity.onCreate] will lead to incorrect results.
    *
    * This API isn't supported by Globe projection.
-   * 
+   *
    * @param bounds The LatLngBounds to take in account when converting
    * @param padding The additional padding to take in account when converting
    * @param bearing The optional bearing to take in account when converting
