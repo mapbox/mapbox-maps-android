@@ -568,7 +568,9 @@ class MapboxMap :
    * measured and inflated to have correct width and height values.
    * Calling this method in [Activity.onCreate] will lead to incorrect results.
    *
-   * This API isn't supported by Globe projection.
+   * This API isn't supported by Globe projection and will return a no-op result.
+   * See [com.mapbox.maps.extension.style.projection.generated.setProjection]
+   * and [com.mapbox.maps.extension.style.projection.generated.getProjection]
    *
    * @param bounds The LatLngBounds to take in account when converting
    * @param padding The additional padding to take in account when converting
@@ -599,7 +601,9 @@ class MapboxMap :
    * measured and inflated to have correct width and height values.
    * Calling this method in [Activity.onCreate] will lead to incorrect results.
    *
-   * This API isn't supported by Globe projection.
+   * This API isn't supported by Globe projection and will return a no-op result.
+   * See [com.mapbox.maps.extension.style.projection.generated.setProjection]
+   * and [com.mapbox.maps.extension.style.projection.generated.getProjection]
    *
    * @param coordinates The List of coordinates to take in account when converting
    * @param padding The additional padding to take in account when converting
@@ -629,7 +633,9 @@ class MapboxMap :
    * coordinates on the left, top and right of \p camera.center fit into \p box.
    * Returns the provided camera options object unchanged upon error.
    *
-   * This API isn't supported by Globe projection.
+   * This API isn't supported by Globe projection and will return a no-op result.
+   * See [com.mapbox.maps.extension.style.projection.generated.setProjection]
+   * and [com.mapbox.maps.extension.style.projection.generated.getProjection]
    *
    * @param coordinates The coordinates representing the bounds of the map
    * @param box The box into which \p coordinates should fit
@@ -653,7 +659,9 @@ class MapboxMap :
    * measured and inflated to have correct width and height values.
    * Calling this method in [Activity.onCreate] will lead to incorrect results.
    *
-   * This API isn't supported by Globe projection.
+   * This API isn't supported by Globe projection and will return a no-op result.
+   * See [com.mapbox.maps.extension.style.projection.generated.setProjection]
+   * and [com.mapbox.maps.extension.style.projection.generated.getProjection]
    *
    * @param geometry The geometry to take in account when converting
    * @param padding The additional padding to take in account when converting
@@ -678,7 +686,9 @@ class MapboxMap :
    * Note that if the given `camera` shows the antimeridian, the returned wrapped [CoordinateBounds]
    * might not represent the minimum bounding box.
    *
-   * This API isn't supported by Globe projection.
+   * This API isn't supported by Globe projection and will return a no-op result.
+   * See [com.mapbox.maps.extension.style.projection.generated.setProjection]
+   * and [com.mapbox.maps.extension.style.projection.generated.getProjection]
    *
    * @param camera The [CameraOptions] to use for calculating [CoordinateBounds].
    *
@@ -694,7 +704,9 @@ class MapboxMap :
    *
    * This method is useful if the `camera` shows the antimeridian.
    *
-   * This API isn't supported by Globe projection.
+   * This API isn't supported by Globe projection and will return a no-op result.
+   * See [com.mapbox.maps.extension.style.projection.generated.setProjection]
+   * and [com.mapbox.maps.extension.style.projection.generated.getProjection]
    *
    * @param camera The [CameraOptions] to use for calculating [CoordinateBounds].
    *
@@ -717,7 +729,9 @@ class MapboxMap :
    *
    * See also {@link #coordinateBoundsZoomForCameraUnwrapped}
    *
-   * This API isn't supported by Globe projection.
+   * This API isn't supported by Globe projection and will return a no-op result.
+   * See [com.mapbox.maps.extension.style.projection.generated.setProjection]
+   * and [com.mapbox.maps.extension.style.projection.generated.getProjection]
    *
    *  @return Returns the coordinate bounds and zoom for a given camera.
    */
@@ -735,7 +749,9 @@ class MapboxMap :
    *
    * This method is particularly useful, if the camera shows the antimeridian.
    *
-   * This API isn't supported by Globe projection.
+   * This API isn't supported by Globe projection and will return a no-op result.
+   * See [com.mapbox.maps.extension.style.projection.generated.setProjection]
+   * and [com.mapbox.maps.extension.style.projection.generated.getProjection]
    *
    *  @return Returns the unwrapped coordinate bounds and zoom for a given camera.
    */
@@ -756,7 +772,9 @@ class MapboxMap :
    * If the screen coordinate is outside of the bounds of [MapView] the returned screen coordinate
    * contains -1 for both coordinates.
    *
-   * This API isn't supported by Globe projection.
+   * This API isn't supported by Globe projection and will return a no-op result.
+   * See [com.mapbox.maps.extension.style.projection.generated.setProjection]
+   * and [com.mapbox.maps.extension.style.projection.generated.getProjection]
    *
    * @param coordinate A geographical coordinate on the map to convert to a screen coordinate.
    *
@@ -782,7 +800,9 @@ class MapboxMap :
    *
    * Map must be fully loaded for getting an altitude-compliant result if using 3D terrain.
    *
-   * This API isn't supported by Globe projection.
+   * This API isn't supported by Globe projection and will return a no-op result.
+   * See [com.mapbox.maps.extension.style.projection.generated.setProjection]
+   * and [com.mapbox.maps.extension.style.projection.generated.getProjection]
    *
    * @param coordinates A batch of geographical coordinates on the map to convert to screen coordinates.
    *
@@ -802,7 +822,9 @@ class MapboxMap :
    *
    * Map must be fully loaded for getting an altitude-compliant result if using 3D terrain.
    *
-   * This API isn't supported by Globe projection.
+   * This API isn't supported by Globe projection and will return a no-op result.
+   * See [com.mapbox.maps.extension.style.projection.generated.setProjection]
+   * and [com.mapbox.maps.extension.style.projection.generated.getProjection]
    *
    * @param pixel A screen coordinate represented by x y coordinates.
    *
@@ -823,7 +845,9 @@ class MapboxMap :
    *
    * Map must be fully loaded for getting an altitude-compliant result if using 3D terrain.
    *
-   * This API isn't supported by Globe projection.
+   * This API isn't supported by Globe projection and will return a no-op result.
+   * See [com.mapbox.maps.extension.style.projection.generated.setProjection]
+   * and [com.mapbox.maps.extension.style.projection.generated.getProjection]
    *
    * @param pixels A batch of screen coordinates on the screen in [MapOptions.size] platform pixels.
    *
