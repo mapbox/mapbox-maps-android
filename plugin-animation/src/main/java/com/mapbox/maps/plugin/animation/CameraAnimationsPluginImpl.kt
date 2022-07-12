@@ -314,7 +314,7 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
 
       override fun onAnimationRepeat(animation: Animator) {}
 
-      private fun finishAnimation(animation: Animator?, finishStatus: AnimationFinishStatus) {
+      private fun finishAnimation(animation: Animator, finishStatus: AnimationFinishStatus) {
         (animation as? CameraAnimator<*>)?.apply {
           runningAnimatorsQueue.remove(animation)
           if (debugMode) {
