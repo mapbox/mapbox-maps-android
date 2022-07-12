@@ -631,7 +631,7 @@ jobs:
                               export E2E_VERSION_CONFIG="default"
                           fi
                           echo "Run E2E tests with ${E2E_VERSION_CONFIG} config."
-                          scripts/ci/ci-e2e-compatibility-start-pipeline.py --config mapbox-sdk-common=${CIRCLE_SHA1} --platform all --versions ${E2E_VERSION_CONFIG}
+                          scripts/ci/ci-e2e-compatibility-start-pipeline.py --config mapbox-maps-android=${CIRCLE_SHA1} --platform all --versions ${E2E_VERSION_CONFIG}
                       name: Trigger E2E SDK test devel pipeline
           - when:
               condition: << parameters.validation >>
