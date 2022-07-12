@@ -46,7 +46,7 @@ if ! [ "$TARGET_BRANCH" = "main" ]; then # Release branches
     LAST_STABLE_RELEASE_TAG=$(git tag --list 'v*.0' --sort=-creatordate | head -n 1)
   else
     # Use the latest stable minor release tag in this branch
-    LAST_STABLE_RELEASE_TAG=$(git tag --merged "$CURRENT_BRANCH" --sort=-creatordate | grep "v.*0$"| head -n 1)
+    LAST_STABLE_RELEASE_TAG=$(git tag --merged "$CURRENT_BRANCH" --sort=-creatordate | grep "v10\.[0-9]*\.0$"| head -n 1)
   fi
 else
   # Use the latest stable minor release tag for main branch
