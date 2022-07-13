@@ -12,6 +12,7 @@ import android.view.MotionEvent
 import android.view.MotionEvent.*
 import androidx.test.core.view.PointerCoordsBuilder
 import androidx.test.core.view.PointerPropertiesBuilder
+import com.google.common.base.CharMatcher.any
 import com.mapbox.android.gestures.*
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
@@ -978,7 +979,7 @@ class GesturesPluginTest {
   fun verifyDeferresShoveWhenImmediateAnimationIsNotFinished() {
     val shoveDistance = -10.0
     val startPitch = mapCameraManagerDelegate.cameraState.pitch
-    val expectedPitchDelta = - (SHOVE_PIXEL_CHANGE_FACTOR * shoveDistance)
+    val expectedPitchDelta = -(SHOVE_PIXEL_CHANGE_FACTOR * shoveDistance)
 
     presenter.handleShove(shoveGestureDetector, shoveDistance.toFloat())
 
@@ -1046,6 +1047,36 @@ class GesturesPluginTest {
   }
 
   @Test
+  fun testIsPointAboveHorizonNanX() {
+    mockkStatic("com.mapbox.maps.MapboxLogger")
+    every { logE(any(), any()) } just Runs
+
+    assertEquals(false, presenter.isPointAboveHorizon(ScreenCoordinate(Double.NaN, 10.0)))
+    verify {
+      mapCameraManagerDelegate.coordinateForPixel(ScreenCoordinate(0.0, 6.0))
+    }
+    verify {
+      logE(any(), "isPointAboveHorizon: screen coordinate x is NaN.")
+    }
+    unmockkStatic("com.mapbox.maps.MapboxLogger")
+  }
+
+  @Test
+  fun testIsPointAboveHorizonNanY() {
+    mockkStatic("com.mapbox.maps.MapboxLogger")
+    every { logE(any(), any()) } just Runs
+
+    assertEquals(false, presenter.isPointAboveHorizon(ScreenCoordinate(0.0, Double.NaN)))
+    verify {
+      mapCameraManagerDelegate.coordinateForPixel(ScreenCoordinate(0.0, -4.0))
+    }
+    verify {
+      logE(any(), "isPointAboveHorizon: screen coordinate y is NaN.")
+    }
+    unmockkStatic("com.mapbox.maps.MapboxLogger")
+  }
+
+  @Test
   fun verifyDeferresScaleWhenImmediateAnimationIsNotFinished() {
     presenter.updateSettings { simultaneousRotateAndPinchToZoomEnabled = false }
 
@@ -1097,7 +1128,9 @@ class GesturesPluginTest {
         200,
         MotionEvent.ACTION_SCROLL,
         1,
-        arrayOf(PointerPropertiesBuilder.newBuilder().setId(0).setToolType(TOOL_TYPE_FINGER).build()),
+        arrayOf(
+          PointerPropertiesBuilder.newBuilder().setId(0).setToolType(TOOL_TYPE_FINGER).build()
+        ),
         arrayOf(PointerCoordsBuilder.newBuilder().build()),
         0,
         buttonType,

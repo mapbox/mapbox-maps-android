@@ -16,6 +16,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Fixes rendering issues with the globe on unsupported hardware by falling back to mercator projection. ([1497](https://github.com/mapbox/mapbox-maps-android/pull/1497))
 * Fixed feature states not being applied on new tiles when zoom doesn't change. ([1497](https://github.com/mapbox/mapbox-maps-android/pull/1497))
 * Disable MapBuffer OpenGL extension on PowerVR SGX 544MP GPUs to fix incorrect usage of unimplemented methods. ([1497](https://github.com/mapbox/mapbox-maps-android/pull/1497))
+* Avoid NaN when converting screen coordinates to geographical coordinates executed as part of gesture. [#1491](https://github.com/mapbox/mapbox-maps-android/pull/1491)
 
 ## Dependencies
 * Bump telemetry to [v8.1.5](https://github.com/mapbox/mapbox-events-android/releases/tag/telem-8.1.5-core-5.0.2). ([#1494](https://github.com/mapbox/mapbox-maps-android/pull/1494))
