@@ -8,6 +8,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Bump telemetry to [v8.1.5](https://github.com/mapbox/mapbox-events-android/releases/tag/telem-8.1.5-core-5.0.2). ([#1494](https://github.com/mapbox/mapbox-maps-android/pull/1494))
+Also bumps [WorkManager 2.7.1](https://developer.android.com/jetpack/androidx/releases/work#2.7.1) that enforces compileSdk 31 or newer. 
 
 #main
 ## Bug fixes 🐞
