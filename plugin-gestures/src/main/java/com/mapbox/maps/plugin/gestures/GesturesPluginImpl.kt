@@ -1043,7 +1043,8 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
     }
     // Get pitch value (scale and clamp)
     var pitch = mapCameraManagerDelegate.cameraState.pitch
-    val optimizedPitch = pitch - (SHOVE_PIXEL_CHANGE_FACTOR * (deltaPixelsSinceLast + deferredShove))
+    val optimizedPitch =
+      pitch - (SHOVE_PIXEL_CHANGE_FACTOR * (deltaPixelsSinceLast + deferredShove))
     deferredShove = 0.0
     pitch = clamp(optimizedPitch, MINIMUM_PITCH, MAXIMUM_PITCH)
     easeToImmediately(
@@ -1393,7 +1394,22 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
     // Prevent drag start in area around horizon to avoid sharp map movements
     val topMapMargin = 0.04 * mapTransformDelegate.getSize().height
     val reprojectErrorMargin = min(10.0, topMapMargin / 2)
-    val point = ScreenCoordinate(pixel.x, pixel.y - topMapMargin)
+
+    // sanitize input x to be non NaN
+    var pointX = pixel.x
+    if (pointX.isNaN()) {
+      logE(TAG, "isPointAboveHorizon: screen coordinate x is NaN.")
+      pointX = 0.0
+    }
+
+    // sanitize input y to be non NaN
+    var pointY = pixel.y
+    if (pointY.isNaN()) {
+      logE(TAG, "isPointAboveHorizon: screen coordinate y is NaN.")
+      pointY = 0.0
+    }
+
+    val point = ScreenCoordinate(pointX, pointY - topMapMargin)
     val coordinate = mapCameraManagerDelegate.coordinateForPixel(point)
     val roundtripPoint = mapCameraManagerDelegate.pixelForCoordinate(coordinate)
     return (roundtripPoint.y >= point.y + reprojectErrorMargin)
