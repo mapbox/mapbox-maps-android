@@ -238,6 +238,64 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
+   * Enable/Disable shadow casting for this layer
+   */
+  val modelCastShadows: Boolean?
+    /**
+     * Enable/Disable shadow casting for this layer
+     *
+     * @return Boolean
+     */
+    get() {
+      return getPropertyValue("model-cast-shadows")
+    }
+
+  /**
+   * Enable/Disable shadow casting for this layer
+   *
+   * @param modelCastShadows value of modelCastShadows
+   */
+  override fun modelCastShadows(modelCastShadows: Boolean) = apply {
+    val propertyValue = PropertyValue("model-cast-shadows", modelCastShadows)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Enable/Disable shadow casting for this layer
+   *
+   * This is an Expression representation of "model-cast-shadows".
+   *
+   * Enable/Disable shadow casting for this layer
+   */
+  val modelCastShadowsAsExpression: Expression?
+    /**
+     * Enable/Disable shadow casting for this layer
+     *
+     * Get the ModelCastShadows property as an Expression
+     *
+     * @return Boolean
+     */
+    get() {
+      getPropertyValue<Expression>("model-cast-shadows")?.let {
+        return it
+      }
+      modelCastShadows?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * Enable/Disable shadow casting for this layer
+   *
+   * @param modelCastShadows value of modelCastShadows as Expression
+   */
+  override fun modelCastShadows(modelCastShadows: Expression) = apply {
+    val propertyValue = PropertyValue("model-cast-shadows", modelCastShadows)
+    setProperty(propertyValue)
+  }
+
+  /**
    * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0.
    */
   val modelColor: String?
@@ -951,6 +1009,44 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       }
 
     /**
+     * Enable/Disable shadow casting for this layer
+     */
+    val defaultModelCastShadows: Boolean?
+      /**
+       * Enable/Disable shadow casting for this layer
+       *
+       * Get the default value of ModelCastShadows property
+       *
+       * @return Boolean
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("model", "model-cast-shadows").silentUnwrap()
+      }
+
+    /**
+     * Enable/Disable shadow casting for this layer
+     *
+     * This is an Expression representation of "model-cast-shadows".
+     *
+     * Enable/Disable shadow casting for this layer
+     */
+    val defaultModelCastShadowsAsExpression: Expression?
+      /**
+       * Get default value of the ModelCastShadows property as an Expression
+       *
+       * @return Boolean
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("model", "model-cast-shadows").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultModelCastShadows?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
+
+    /**
      * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0.
      */
     val defaultModelColor: String?
@@ -1379,6 +1475,20 @@ interface ModelLayerDsl {
    * @param modelId value of modelId as Expression
    */
   fun modelId(modelId: Expression): ModelLayer
+
+  /**
+   * Enable/Disable shadow casting for this layer
+   *
+   * @param modelCastShadows value of modelCastShadows
+   */
+  fun modelCastShadows(modelCastShadows: Boolean = true): ModelLayer
+
+  /**
+   * Enable/Disable shadow casting for this layer
+   *
+   * @param modelCastShadows value of modelCastShadows as Expression
+   */
+  fun modelCastShadows(modelCastShadows: Expression): ModelLayer
 
   /**
    * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0.
