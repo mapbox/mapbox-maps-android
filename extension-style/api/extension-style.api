@@ -2286,6 +2286,8 @@ public final class com/mapbox/maps/extension/style/layers/generated/ModelLayer :
 	public fun getLayerId ()Ljava/lang/String;
 	public fun getMaxZoom ()Ljava/lang/Double;
 	public fun getMinZoom ()Ljava/lang/Double;
+	public final fun getModelCastShadows ()Ljava/lang/Boolean;
+	public final fun getModelCastShadowsAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getModelColor ()Ljava/lang/String;
 	public final fun getModelColorAsColorInt ()Ljava/lang/Integer;
 	public final fun getModelColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
@@ -2316,6 +2318,8 @@ public final class com/mapbox/maps/extension/style/layers/generated/ModelLayer :
 	public fun maxZoom (D)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public synthetic fun minZoom (D)Lcom/mapbox/maps/extension/style/layers/Layer;
 	public fun minZoom (D)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public fun modelCastShadows (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public fun modelCastShadows (Z)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public fun modelColor (I)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public fun modelColor (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public fun modelColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
@@ -2353,6 +2357,8 @@ public final class com/mapbox/maps/extension/style/layers/generated/ModelLayer :
 public final class com/mapbox/maps/extension/style/layers/generated/ModelLayer$Companion {
 	public final fun getDefaultMaxZoom ()Ljava/lang/Double;
 	public final fun getDefaultMinZoom ()Ljava/lang/Double;
+	public final fun getDefaultModelCastShadows ()Ljava/lang/Boolean;
+	public final fun getDefaultModelCastShadowsAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultModelColor ()Ljava/lang/String;
 	public final fun getDefaultModelColorAsColorInt ()Ljava/lang/Integer;
 	public final fun getDefaultModelColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
@@ -2383,6 +2389,8 @@ public abstract interface class com/mapbox/maps/extension/style/layers/generated
 	public abstract fun filter (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public abstract fun maxZoom (D)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public abstract fun minZoom (D)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public abstract fun modelCastShadows (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public abstract fun modelCastShadows (Z)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public abstract fun modelColor (I)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public abstract fun modelColor (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public abstract fun modelColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
@@ -2417,6 +2425,7 @@ public abstract interface class com/mapbox/maps/extension/style/layers/generated
 }
 
 public final class com/mapbox/maps/extension/style/layers/generated/ModelLayerDsl$DefaultImpls {
+	public static synthetic fun modelCastShadows$default (Lcom/mapbox/maps/extension/style/layers/generated/ModelLayerDsl;ZILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public static synthetic fun modelColor$default (Lcom/mapbox/maps/extension/style/layers/generated/ModelLayerDsl;Ljava/lang/String;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public static synthetic fun modelColorMixIntensity$default (Lcom/mapbox/maps/extension/style/layers/generated/ModelLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public static synthetic fun modelOpacity$default (Lcom/mapbox/maps/extension/style/layers/generated/ModelLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;

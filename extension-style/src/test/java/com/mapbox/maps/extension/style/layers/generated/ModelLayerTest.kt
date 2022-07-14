@@ -224,6 +224,74 @@ class ModelLayerTest {
   }
 
   @Test
+  fun modelCastShadowsSet() {
+    val layer = modelLayer("id", "source") {}
+    val testValue = true
+    layer.bindTo(style)
+    layer.modelCastShadows(testValue)
+    verify { style.setStyleLayerProperty("id", "model-cast-shadows", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "true")
+  }
+
+  @Test
+  fun modelCastShadowsGet() {
+    val testValue = true
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = modelLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = true
+    assertEquals(expectedValue.toString(), layer.modelCastShadows?.toString())
+    verify { style.getStyleLayerProperty("id", "model-cast-shadows") }
+  }
+  // Expression Tests
+
+  @Test
+  fun modelCastShadowsAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = modelLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.modelCastShadows(expression)
+    verify { style.setStyleLayerProperty("id", "model-cast-shadows", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun modelCastShadowsAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = modelLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.modelCastShadowsAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "model-cast-shadows") }
+  }
+
+  @Test
+  fun modelCastShadowsAsExpressionGetNull() {
+    val layer = modelLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.modelCastShadowsAsExpression)
+    verify { style.getStyleLayerProperty("id", "model-cast-shadows") }
+  }
+
+  @Test
+  fun modelCastShadowsAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(true)
+    val layer = modelLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals("true", layer.modelCastShadowsAsExpression.toString())
+    val expectedValue = true
+    assertEquals(expectedValue, layer.modelCastShadows)
+    verify { style.getStyleLayerProperty("id", "model-cast-shadows") }
+  }
+
+  @Test
   fun modelColorSet() {
     val layer = modelLayer("id", "source") {}
     val testValue = "rgba(0, 0, 0, 1)"
@@ -1053,6 +1121,38 @@ class ModelLayerTest {
     val expectedValue = "abc"
     assertEquals(expectedValue, ModelLayer.defaultModelId)
     verify { StyleManager.getStyleLayerPropertyDefaultValue("model", "model-id") }
+  }
+
+  @Test
+  fun defaultModelCastShadowsTest() {
+    val testValue = true
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = true
+    assertEquals(expectedValue.toString(), ModelLayer.defaultModelCastShadows?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("model", "model-cast-shadows") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultModelCastShadowsAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), ModelLayer.defaultModelCastShadowsAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("model", "model-cast-shadows") }
+  }
+
+  @Test
+  fun defaultModelCastShadowsAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(true)
+    assertEquals("true", ModelLayer.defaultModelCastShadowsAsExpression.toString())
+    val expectedValue = true
+    assertEquals(expectedValue, ModelLayer.defaultModelCastShadows)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("model", "model-cast-shadows") }
   }
 
   @Test

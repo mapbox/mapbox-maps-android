@@ -98,6 +98,30 @@ class ModelLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun modelCastShadowsTest() {
+    val testValue = true
+    val layer = modelLayer("id", "source") {
+      modelCastShadows(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(testValue.toString(), layer.modelCastShadows?.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun modelCastShadowsAsExpressionTest() {
+    val expression = literal(true)
+    val layer = modelLayer("id", "source") {
+      modelCastShadows(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(expression.toString(), layer.modelCastShadowsAsExpression.toString())
+    assertEquals(true, layer.modelCastShadows!!)
+  }
+
+  @Test
+  @UiThreadTest
   fun modelColorTest() {
     val testValue = "rgba(0, 0, 0, 1)"
     val layer = modelLayer("id", "source") {
@@ -505,6 +529,8 @@ class ModelLayerTest : BaseStyleTest() {
     assertNotNull("defaultMaxZoom should not be null", ModelLayer.defaultMaxZoom)
     assertNotNull("defaultModelId should not be null", ModelLayer.defaultModelId)
     assertNotNull("defaultModelIdAsExpression should not be null", ModelLayer.defaultModelIdAsExpression)
+    assertNotNull("defaultModelCastShadows should not be null", ModelLayer.defaultModelCastShadows)
+    assertNotNull("defaultModelCastShadowsAsExpression should not be null", ModelLayer.defaultModelCastShadowsAsExpression)
     assertNotNull("defaultModelColor should not be null", ModelLayer.defaultModelColor)
     assertNotNull("defaultModelColorAsExpression should not be null", ModelLayer.defaultModelColorAsExpression)
     assertNotNull("defaultModelColorAsColorInt should not be null", ModelLayer.defaultModelColorAsColorInt)

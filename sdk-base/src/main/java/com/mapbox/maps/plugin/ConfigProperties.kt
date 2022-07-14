@@ -3,6 +3,7 @@
 package com.mapbox.maps.plugin
 
 import android.graphics.drawable.Drawable
+import com.mapbox.maps.MapboxExperimental
 
 /**
  * Configures the directions in which the map is allowed to move during a scroll gesture.
@@ -99,6 +100,11 @@ data class LocationPuck3D @JvmOverloads constructor(
    * The rotation of the model.
    */
   var modelRotation: List<Float> = listOf(0f, 0f, 90f),
+  /**
+   * Enable/Disable shadow casting for this layer
+   */
+  @MapboxExperimental
+  var modelCastShadows: Boolean = true,
 ) : LocationPuck()
 
 // End of generated file.

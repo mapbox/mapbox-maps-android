@@ -2713,6 +2713,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public String getLayerId();
     method public Double? getMaxZoom();
     method public Double? getMinZoom();
+    method public Boolean? getModelCastShadows();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getModelCastShadowsAsExpression();
     method public String? getModelColor();
     method @ColorInt public Integer? getModelColorAsColorInt();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getModelColorAsExpression();
@@ -2742,6 +2744,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.properties.generated.Visibility? getVisibility();
     method public com.mapbox.maps.extension.style.layers.generated.ModelLayer maxZoom(double maxZoom);
     method public com.mapbox.maps.extension.style.layers.generated.ModelLayer minZoom(double minZoom);
+    method public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelCastShadows(boolean modelCastShadows);
+    method public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelCastShadows(com.mapbox.maps.extension.style.expressions.generated.Expression modelCastShadows);
     method public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelColor(String modelColor);
     method public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelColor(com.mapbox.maps.extension.style.expressions.generated.Expression modelColor);
     method public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelColor(@ColorInt int modelColor);
@@ -2777,6 +2781,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public String layerId;
     property public Double? maxZoom;
     property public Double? minZoom;
+    property public final Boolean? modelCastShadows;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? modelCastShadowsAsExpression;
     property public final String? modelColor;
     property @ColorInt public final Integer? modelColorAsColorInt;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? modelColorAsExpression;
@@ -2809,6 +2815,8 @@ package com.mapbox.maps.extension.style.layers.generated {
   public static final class ModelLayer.Companion {
     method public Double? getDefaultMaxZoom();
     method public Double? getDefaultMinZoom();
+    method public Boolean? getDefaultModelCastShadows();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultModelCastShadowsAsExpression();
     method public String? getDefaultModelColor();
     method @ColorInt public Integer? getDefaultModelColorAsColorInt();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultModelColorAsExpression();
@@ -2835,6 +2843,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.properties.generated.Visibility? getDefaultVisibility();
     property public final Double? defaultMaxZoom;
     property public final Double? defaultMinZoom;
+    property public final Boolean? defaultModelCastShadows;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultModelCastShadowsAsExpression;
     property public final String? defaultModelColor;
     property @ColorInt public final Integer? defaultModelColorAsColorInt;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultModelColorAsExpression;
@@ -2865,6 +2875,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.ModelLayer filter(com.mapbox.maps.extension.style.expressions.generated.Expression filter);
     method public com.mapbox.maps.extension.style.layers.generated.ModelLayer maxZoom(double maxZoom);
     method public com.mapbox.maps.extension.style.layers.generated.ModelLayer minZoom(double minZoom);
+    method public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelCastShadows(boolean modelCastShadows = true);
+    method public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelCastShadows(com.mapbox.maps.extension.style.expressions.generated.Expression modelCastShadows);
     method public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelColor(String modelColor = "#ffffff");
     method public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelColor(com.mapbox.maps.extension.style.expressions.generated.Expression modelColor);
     method public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelColor(@ColorInt int modelColor);
