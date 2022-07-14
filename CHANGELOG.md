@@ -1,6 +1,13 @@
 # Changelog for Mapbox Maps SDK v10 for Android
 
 Mapbox welcomes participation and contributions from everyone.
+# 10.7.0-rc.1
+## Bug fixes 🐞
+* Remove android.permission.WAKE_LOCK permission from the SDK. ([1494](https://github.com/mapbox/mapbox-maps-android/pull/1494))
+
+## Dependencies
+* Bump telemetry to [v8.1.5](https://github.com/mapbox/mapbox-events-android/releases/tag/telem-8.1.5-core-5.0.2). ([#1494](https://github.com/mapbox/mapbox-maps-android/pull/1494))
+Also bumps [WorkManager 2.7.1](https://developer.android.com/jetpack/androidx/releases/work#2.7.1) that enforces compileSdk 31 or newer. 
 
 # 10.7.0-beta.1 June 29, 2022
 ## Breaking changes ⚠️
