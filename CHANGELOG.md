@@ -2,12 +2,25 @@
 
 Mapbox welcomes participation and contributions from everyone.
 # 10.7.0-rc.1
+## Features ✨ and improvements 🏁
+* Add model-cast-shadows paint property to model layer to allow turning off shadow casting per model layer. ([1497](https://github.com/mapbox/mapbox-maps-android/pull/1497))
+* Reuse single index buffer in symbol layer rendering. ([1497](https://github.com/mapbox/mapbox-maps-android/pull/1497))
+* Use shared index buffers per tile to reduce the time spent in the upload pass. ([1497](https://github.com/mapbox/mapbox-maps-android/pull/1497))
+
 ## Bug fixes 🐞
 * Remove android.permission.WAKE_LOCK permission from the SDK. ([1494](https://github.com/mapbox/mapbox-maps-android/pull/1494))
+* Fix setting 'exaggeration-transition' property via 'setStyleTerrain' API. ([1497](https://github.com/mapbox/mapbox-maps-android/pull/1497))
+* Fix SDK fragment format in turnstile useragent. ([1497](https://github.com/mapbox/mapbox-maps-android/pull/1497))
+* Fix view annotation occlusion issue when Terrain enabled. ([1497](https://github.com/mapbox/mapbox-maps-android/pull/1497))
+* Fix symbol flickering issue when 'textAllowOverlap' or 'iconAllowOverlap' is true. ([1497](https://github.com/mapbox/mapbox-maps-android/pull/1497))
+* Fixes rendering issues with the globe on unsupported hardware by falling back to mercator projection. ([1497](https://github.com/mapbox/mapbox-maps-android/pull/1497))
+* Fixed feature states not being applied on new tiles when zoom doesn't change. ([1497](https://github.com/mapbox/mapbox-maps-android/pull/1497))
+* Disable MapBuffer OpenGL extension on PowerVR SGX 544MP GPUs to fix incorrect usage of unimplemented methods. ([1497](https://github.com/mapbox/mapbox-maps-android/pull/1497))
 
 ## Dependencies
 * Bump telemetry to [v8.1.5](https://github.com/mapbox/mapbox-events-android/releases/tag/telem-8.1.5-core-5.0.2). ([#1494](https://github.com/mapbox/mapbox-maps-android/pull/1494))
 Also bumps [WorkManager 2.7.1](https://developer.android.com/jetpack/androidx/releases/work#2.7.1) that enforces compileSdk 31 or newer. 
+* Bump gl-native to v10.7.0-rc.1, common to 22.1.0-rc.1. ([#1497](https://github.com/mapbox/mapbox-maps-android/pull/1497))
 
 # 10.7.0-beta.1 June 29, 2022
 ## Breaking changes ⚠️
