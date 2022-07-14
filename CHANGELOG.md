@@ -3,11 +3,12 @@
 Mapbox welcomes participation and contributions from everyone.
 # main
 ## Bug fixes 🐞
-* Remove android.permission.WAKE_LOCK permission from the SDK. ([1484](https://github.com/mapbox/mapbox-maps-android/pull/1484))
 * Avoid NaN when converting screen coordinates to geographical coordinates executed as part of gesture. [#1491](https://github.com/mapbox/mapbox-maps-android/pull/1491)
+* Remove android.permission.WAKE_LOCK permission from the SDK. ([1494](https://github.com/mapbox/mapbox-maps-android/pull/1494))
 
 ## Dependencies
-* Bump telemetry to [v8.1.4](https://github.com/mapbox/mapbox-events-android/releases/tag/telem-8.1.4-core-5.0.2). ([#1484](https://github.com/mapbox/mapbox-maps-android/pull/1484))
+* Bump telemetry to [v8.1.5](https://github.com/mapbox/mapbox-events-android/releases/tag/telem-8.1.5-core-5.0.2). ([#1494](https://github.com/mapbox/mapbox-maps-android/pull/1494))
+Also bumps [WorkManager 2.7.1](https://developer.android.com/jetpack/androidx/releases/work#2.7.1) that enforces compileSdk 31 or newer. 
 
 #main
 ## Bug fixes 🐞
