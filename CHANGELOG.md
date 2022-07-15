@@ -4,8 +4,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 # 10.6.2
 ## Dependencies
-* Bump gl-native to [v10.6.2](https://github.com/mapbox/mapbox-gl-native-internal/releases/tag/maps-v10.6.2). ([#1482](https://github.com/mapbox/mapbox-maps-android/pull/1482))
-* Bump telemetry to [v8.1.5](https://github.com/mapbox/mapbox-events-android/releases/tag/telem-8.1.5-core-5.0.2). ([#1482](https://github.com/mapbox/mapbox-maps-android/pull/1482))
+* Bump gl-native to [v10.6.2](https://github.com/mapbox/mapbox-gl-native-internal/releases/tag/maps-v10.6.2). ([#1505](https://github.com/mapbox/mapbox-maps-android/pull/1505))
+* Bump telemetry to [v8.1.5](https://github.com/mapbox/mapbox-events-android/releases/tag/telem-8.1.5-core-5.0.2). ([#1505](https://github.com/mapbox/mapbox-maps-android/pull/1505))
 Also bumps WorkManager 2.7.1 that enforces compileSdk 31 or newer.
 
 # 10.6.1
