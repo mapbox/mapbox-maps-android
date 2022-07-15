@@ -56,7 +56,14 @@ internal class CarMapSurfaceOwner(
     logI(TAG, "surfaceAvailable")
     val oldCarMapSurface = this.mapboxCarMapSurface
     this.mapboxCarMapSurface = mapboxCarMapSurface
-    oldCarMapSurface?.let { carMapObservers.forEach { it.onDetached(oldCarMapSurface) } }
+    oldCarMapSurface?.let {
+      carMapObservers.forEach { it.onDetached(oldCarMapSurface) }
+      // The surface can become available without a call to surfaceDestroyed
+      // https://issuetracker.google.com/issues/235121269
+      oldCarMapSurface.mapSurface.onStop()
+      oldCarMapSurface.mapSurface.surfaceDestroyed()
+      oldCarMapSurface.mapSurface.onDestroy()
+    }
     carMapObservers.forEach { it.onAttached(mapboxCarMapSurface) }
 
     notifyVisibleAreaChanged()

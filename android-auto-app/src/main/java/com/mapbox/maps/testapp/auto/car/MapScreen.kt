@@ -47,6 +47,21 @@ class MapScreen(
             }
             .build()
         )
+        .addAction(
+          Action.Builder()
+            .setIcon(
+              CarIcon.Builder(
+                IconCompat.createWithResource(
+                  carContext,
+                  android.R.drawable.ic_menu_search
+                )
+              ).build()
+            )
+            .setOnClickListener {
+              screenManager.push(SearchScreen(carContext))
+            }
+            .build()
+        )
         .build()
     )
     // Set the map action strip with the pan and zoom buttons.
