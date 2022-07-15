@@ -1190,19 +1190,5 @@
         <meta-data
             android:name="com.mapbox.maps.ThreadChecker"
             android:value="true" />
-
-        <activity
-            android:name="androidx.test.core.app.InstrumentationActivityInvoker$EmptyActivity"
-            android:exported="false"
-            tools:node="remove" />
-
-        <activity
-            android:name="androidx.test.core.app.InstrumentationActivityInvoker$BootstrapActivity"
-            tools:node="remove" />
-
-        <activity
-            android:name="androidx.test.core.app.InstrumentationActivityInvoker$EmptyFloatingActivity"
-            tools:node="remove" />
-
     </application>
 </manifest>

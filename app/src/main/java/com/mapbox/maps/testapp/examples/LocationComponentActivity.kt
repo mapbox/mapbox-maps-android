@@ -102,7 +102,7 @@ class LocationComponentActivity : AppCompatActivity() {
     style.addLayer(fillExtrusionLayer)
   }
 
-  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+  override fun onCreateOptionsMenu(menu: Menu): Boolean {
     menuInflater.inflate(R.menu.menu_location_component, menu)
     return true
   }

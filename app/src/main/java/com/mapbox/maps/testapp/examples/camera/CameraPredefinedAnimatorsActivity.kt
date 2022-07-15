@@ -119,7 +119,7 @@ class CameraPredefinedAnimatorsActivity : AppCompatActivity() {
     }
   }
 
-  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+  override fun onCreateOptionsMenu(menu: Menu): Boolean {
     menuInflater.inflate(R.menu.menu_predefined_animators, menu)
     return true
   }
