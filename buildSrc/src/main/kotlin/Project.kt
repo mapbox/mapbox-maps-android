@@ -1,7 +1,7 @@
 object AndroidVersions {
   const val minSdkVersion = 21
   const val targetSdkVersion = 30
-  const val compileSdkVersion = 30
+  const val compileSdkVersion = 31
   const val minSdkVersion_AndroidAuto = 23
   const val targetSdkVersion_AndroidAuto = 30
   const val compileSdkVersion_AndroidAuto = 31
@@ -90,10 +90,10 @@ object Versions {
   const val mapboxGestures = "0.7.0"
   const val mapboxJavaServices = "5.4.1"
   const val mapboxBase = "0.8.0"
-  const val mapboxGlNative = "10.6.1"
+  const val mapboxGlNative = "10.6.2"
   const val mapboxCommon = "22.0.0"
   const val mapboxAndroidCore = "5.0.2"
-  const val mapboxAndroidTelemetry = "8.1.4"
+  const val mapboxAndroidTelemetry = "8.1.5"
   const val androidxCore = "1.3.1"
   const val androidxAnnotation = "1.1.0"
   const val androidxAppcompat = "1.3.0"
