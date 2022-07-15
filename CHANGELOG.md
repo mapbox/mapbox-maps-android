@@ -2,6 +2,12 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
+# 10.6.2
+## Dependencies
+* Bump gl-native to [v10.6.2](https://github.com/mapbox/mapbox-gl-native-internal/releases/tag/maps-v10.6.2). ([#1505](https://github.com/mapbox/mapbox-maps-android/pull/1505))
+* Bump telemetry to [v8.1.5](https://github.com/mapbox/mapbox-events-android/releases/tag/telem-8.1.5-core-5.0.2). ([#1505](https://github.com/mapbox/mapbox-maps-android/pull/1505))
+Also bumps WorkManager 2.7.1 that enforces compileSdk 31 or newer.
+
 # 10.6.1
 ## Bug fixes 🐞
 * Fix an issue when `literal` array expression is used as output inside the `match` expression. ([1444](https://github.com/mapbox/mapbox-maps-android/pull/1444))
