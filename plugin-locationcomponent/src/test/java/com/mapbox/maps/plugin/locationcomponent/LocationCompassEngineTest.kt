@@ -4,6 +4,7 @@ import android.content.Context
 import android.hardware.Sensor
 import android.hardware.SensorManager
 import android.view.WindowManager
+import com.mapbox.maps.logD
 import com.mapbox.maps.logW
 import io.mockk.*
 import org.junit.After
@@ -27,6 +28,7 @@ class LocationCompassEngineTest {
   fun setUp() {
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logW(any(), any()) } just Runs
+    every { logD(any(), any()) } just Runs
     every { sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR) } returns compassSensor
     every { sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) } returns gravitySensor
     every { sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD) } returns magneticFieldSensor
@@ -99,5 +101,16 @@ class LocationCompassEngineTest {
     verify(exactly = 0) { sensorManager.unregisterListener(any(), compassSensor) }
     verify(exactly = 1) { sensorManager.unregisterListener(any(), gravitySensor) }
     verify(exactly = 1) { sensorManager.unregisterListener(any(), magneticFieldSensor) }
+  }
+
+  @Test
+  fun calibrationListenerTest() {
+    val calibrationListener = mockk<LocationCompassCalibrationListener>(relaxed = true)
+    locationCompassEngine = LocationCompassEngine(context)
+    locationCompassEngine.addCalibrationListener(calibrationListener)
+    locationCompassEngine.onAccuracyChanged(mockk(), 100)
+    verify(exactly = 0) { calibrationListener.onCompassCalibrationNeeded() }
+    locationCompassEngine.onAccuracyChanged(mockk(), SensorManager.SENSOR_STATUS_UNRELIABLE)
+    verify(exactly = 1) { calibrationListener.onCompassCalibrationNeeded() }
   }
 }

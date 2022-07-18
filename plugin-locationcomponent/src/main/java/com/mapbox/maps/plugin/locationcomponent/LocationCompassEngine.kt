@@ -8,6 +8,7 @@ import android.hardware.SensorManager
 import android.os.SystemClock
 import android.view.Surface
 import android.view.WindowManager
+import com.mapbox.maps.logD
 import com.mapbox.maps.logW
 
 /**
@@ -19,6 +20,7 @@ internal class LocationCompassEngine(context: Context) : SensorEventListener {
   private val sensorManager: SensorManager =
     context.applicationContext.getSystemService(Context.SENSOR_SERVICE) as SensorManager
   private val compassListeners = mutableSetOf<CompassListener>()
+  private val calibrationListeners = mutableListOf<LocationCompassCalibrationListener>()
 
   // Not all devices have a compassSensor
   private var compassSensor: Sensor? = null
@@ -57,6 +59,25 @@ internal class LocationCompassEngine(context: Context) : SensorEventListener {
     }
   }
 
+  fun addCalibrationListener(compassCalibrationListener: LocationCompassCalibrationListener) {
+    calibrationListeners.add(compassCalibrationListener)
+  }
+
+  fun removeCalibrationListener(compassCalibrationListener: LocationCompassCalibrationListener) {
+    calibrationListeners.remove(compassCalibrationListener)
+  }
+
+  override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+    if (accuracy == SensorManager.SENSOR_STATUS_UNRELIABLE) {
+      logD(TAG, "Compass sensor is unreliable, device calibration is needed.")
+      if (calibrationListeners.isNotEmpty()) {
+        for (calibrationListener in calibrationListeners) {
+          calibrationListener.onCompassCalibrationNeeded()
+        }
+      }
+    }
+  }
+
   override fun onSensorChanged(event: SensorEvent) {
     when (event.sensor.type) {
       Sensor.TYPE_ROTATION_VECTOR -> {
@@ -70,10 +91,6 @@ internal class LocationCompassEngine(context: Context) : SensorEventListener {
       }
     }
     updateOrientation()
-  }
-
-  override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
-    // no need
   }
 
   private fun updateOrientation() {

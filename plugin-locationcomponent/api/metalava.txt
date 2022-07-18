@@ -3,9 +3,15 @@ package com.mapbox.maps.plugin.locationcomponent {
 
   public final class DefaultLocationProvider implements com.mapbox.maps.plugin.locationcomponent.LocationProvider {
     ctor public DefaultLocationProvider(android.content.Context context);
+    method public void addOnCompassCalibrationListener(com.mapbox.maps.plugin.locationcomponent.LocationCompassCalibrationListener listener);
     method public void registerLocationConsumer(com.mapbox.maps.plugin.locationcomponent.LocationConsumer locationConsumer);
+    method public void removeCompassCalibrationListener(com.mapbox.maps.plugin.locationcomponent.LocationCompassCalibrationListener listener);
     method public void unRegisterLocationConsumer(com.mapbox.maps.plugin.locationcomponent.LocationConsumer locationConsumer);
     method public void updatePuckBearingSource(com.mapbox.maps.plugin.PuckBearingSource source);
+  }
+
+  public fun interface LocationCompassCalibrationListener {
+    method public void onCompassCalibrationNeeded();
   }
 
   public final class LocationComponentConstants {

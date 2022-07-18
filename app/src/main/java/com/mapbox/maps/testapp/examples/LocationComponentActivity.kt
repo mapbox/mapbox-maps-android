@@ -48,40 +48,46 @@ class LocationComponentActivity : AppCompatActivity() {
     setContentView(binding.root)
     locationPermissionHelper = LocationPermissionHelper(WeakReference(this))
     locationPermissionHelper.checkPermissions {
-      binding.mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS) {
-        setupBuildings(it)
-        it.setLight(
-          light {
-            anchor(Anchor.MAP)
-            color(Color.YELLOW)
-            position(
-              radialCoordinate = 10.0,
-              azimuthalAngle = 40.0,
-              polarAngle = 50.0
-            )
-            castShadows(true)
-            shadowIntensity(0.7)
+      binding.mapView.apply {
+        getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS) {
+          setupBuildings(it)
+          it.setLight(
+            light {
+              anchor(Anchor.MAP)
+              color(Color.YELLOW)
+              position(
+                radialCoordinate = 10.0,
+                azimuthalAngle = 40.0,
+                polarAngle = 50.0
+              )
+              castShadows(true)
+              shadowIntensity(0.7)
+            }
+          )
+          // Disable scroll gesture, since we are updating the camera position based on the indicator location.
+          gestures.scrollEnabled = false
+          gestures.addOnMapClickListener { point ->
+            location
+              .isLocatedAt(point) { isPuckLocatedAtPoint ->
+                if (isPuckLocatedAtPoint) {
+                  Toast.makeText(context, "Clicked on location puck", Toast.LENGTH_SHORT).show()
+                }
+              }
+            true
           }
-        )
-        // Disable scroll gesture, since we are updating the camera position based on the indicator location.
-        binding.mapView.gestures.scrollEnabled = false
-        binding.mapView.gestures.addOnMapClickListener { point ->
-          binding.mapView.location
-            .isLocatedAt(point) { isPuckLocatedAtPoint ->
+          gestures.addOnMapLongClickListener { point ->
+            location.isLocatedAt(point) { isPuckLocatedAtPoint ->
               if (isPuckLocatedAtPoint) {
-                Toast.makeText(this, "Clicked on location puck", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Long-clicked on location puck", Toast.LENGTH_SHORT)
+                  .show()
               }
             }
-          true
-        }
-        binding.mapView.gestures.addOnMapLongClickListener { point ->
-          binding.mapView.location
-            .isLocatedAt(point) { isPuckLocatedAtPoint ->
-              if (isPuckLocatedAtPoint) {
-                Toast.makeText(this, "Long-clicked on location puck", Toast.LENGTH_SHORT).show()
-              }
-            }
-          true
+            true
+          }
+          val locationProvider = location.getLocationProvider() as DefaultLocationProvider
+          locationProvider.addOnCompassCalibrationListener {
+            Toast.makeText(context, "Compass needs to be calibrated", Toast.LENGTH_LONG).show()
+          }
         }
       }
     }

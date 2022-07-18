@@ -166,6 +166,24 @@ class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal c
     }
   }
 
+  /**
+   * Register a listener to be invoked when compass needs to be calibrated.
+   *
+   * @param listener
+   */
+  fun addOnCompassCalibrationListener(listener: LocationCompassCalibrationListener) {
+    locationCompassEngine.addCalibrationListener(listener)
+  }
+
+  /**
+   * Unregister a listener to be invoked when compass needs to be calibrated.
+   *
+   * @param listener
+   */
+  fun removeCompassCalibrationListener(listener: LocationCompassCalibrationListener) {
+    locationCompassEngine.removeCalibrationListener(listener)
+  }
+
   // Callbacks may leak after GoogleLocationEngineImpl.removeLocationUpdates,
   // see https://github.com/mapbox/mapbox-events-android/issues/562 for more details
   private class CurrentLocationEngineCallback(locationProvider: DefaultLocationProvider) :
