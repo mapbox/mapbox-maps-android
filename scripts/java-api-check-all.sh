@@ -40,17 +40,17 @@ echo "CURRENT_BRANCH: $CURRENT_BRANCH"
 echo "TARGET_BRANCH: $TARGET_BRANCH"
 
 if ! [ "$TARGET_BRANCH" = "main" ]; then # Release branches
-  LATEST_RELEASE_TAG_IN_THIS_BRANCH=$(git tag --merged "$CURRENT_BRANCH" --sort=-creatordate | grep "v"| head -n 1)
+  LATEST_RELEASE_TAG_IN_THIS_BRANCH=$(git tag --merged "$CURRENT_BRANCH" --sort=-creatordate | grep "^(?!.*android-v*).*v*$"| head -n 1)
   if [ "$LATEST_RELEASE_TAG_IN_THIS_BRANCH" = "*beta*" ] || [ "$LATEST_RELEASE_TAG_IN_THIS_BRANCH" = "*rc*" ]; then
     # Use the latest stable minor release tag during rc and beta release
-    LAST_STABLE_RELEASE_TAG=$(git tag --list 'v*.0' --sort=-creatordate | head -n 1)
+    LAST_STABLE_RELEASE_TAG=$(git tag --list 'v.*0' --sort=-creatordate | head -n 1)
   else
     # Use the latest stable minor release tag in this branch
     LAST_STABLE_RELEASE_TAG=$(git tag --merged "$CURRENT_BRANCH" --sort=-creatordate | grep "v10\.[0-9]*\.0$"| head -n 1)
   fi
 else
   # Use the latest stable minor release tag for main branch
-  LAST_STABLE_RELEASE_TAG=$(git tag --list 'v*.0' --sort=-creatordate | head -n 1)
+  LAST_STABLE_RELEASE_TAG=$(git tag --list 'v.*0' --sort=-creatordate | head -n 1)
 fi
 echo "LAST_STABLE_RELEASE_TAG: $LAST_STABLE_RELEASE_TAG"
 echo "Release tag: $RELEASE_TAG"
