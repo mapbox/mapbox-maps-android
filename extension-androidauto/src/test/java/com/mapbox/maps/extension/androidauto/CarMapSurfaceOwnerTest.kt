@@ -224,13 +224,12 @@ class CarMapSurfaceOwnerTest {
       observer.onAttached(firstSurface)
       observer.onVisibleAreaChanged(any(), any())
       observer.onDetached(firstSurface)
+      firstMapSurface.onStop()
+      firstMapSurface.surfaceDestroyed()
+      firstMapSurface.onDestroy()
       observer.onAttached(secondSurface)
       observer.onVisibleAreaChanged(any(), any())
     }
-    // Map style changes should not destroy the map.
-    verify(exactly = 0) { firstMapSurface.onStop() }
-    verify(exactly = 0) { firstMapSurface.surfaceDestroyed() }
-    verify(exactly = 0) { firstMapSurface.onDestroy() }
   }
 
   @Test

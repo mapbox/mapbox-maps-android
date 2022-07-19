@@ -5,6 +5,7 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 ## Features ✨ and improvements 🏁
 ## Bug fixes 🐞
+* Destroy previous surface when new surface becomes available. This adds better support for `androidx.car.app:app-automotive`. ([#1509](https://github.com/mapbox/mapbox-maps-android/pull/1509))
 
 # 0.1.0 April 7, 2022
 
