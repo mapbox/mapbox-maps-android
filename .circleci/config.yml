@@ -46,11 +46,6 @@ workflows:
       - run-style-test:
           requires:
             - start-run-style-test
-      - start-run-compatibility-test:
-          type: approval
-      - run-compatibility-test:
-          requires:
-            - start-run-compatibility-test
       - build-android-auto-app:
           requires:
             - verify-code
@@ -69,6 +64,25 @@ workflows:
       - run-robo-test:
           requires:
             - build-modules-and-instrumentation-tests
+      - sdk-e2e-test:
+          filters:
+              branches:
+                  ignore:
+                      - main
+          name: run-sdk-e2e-test-devel
+          requires:
+              - verify-code
+      - sdk-e2e-test:
+          filters:
+              branches:
+                  only:
+                      - main
+              tags:
+                  only: /^v.*/
+          name: run-sdk-e2e-test-validation
+          requires:
+              - verify-code
+          validation: true
 
   validation:
     when: << pipeline.parameters.mapbox_upstream >>
@@ -531,20 +545,6 @@ jobs:
           module_target: "extension-style-app"
           app_target: "extension-style-app"
 
-  run-compatibility-test:
-    executor: ubuntu
-    steps:
-      - checkout
-      - run:
-          name: Install yaml
-          command: |
-            pip3 install PyYAML
-            pip3 install GitPython
-      - run:
-          name: Trigger compatibility test
-          command: |
-            python3 scripts/ci-compatibility-start-pipeline.py --target-slug mapbox/mapbox-sdk --token ${MOBILE_METRICS_TOKEN} --config mapbox-maps-android=${CIRCLE_SHA1} --origin-slug mapbox/mapbox-maps-android --platform android
-
   build-android-auto-app:
     executor: ubuntu
     steps:
@@ -589,6 +589,59 @@ jobs:
           path: "app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk"
       - save-to-workspace:
           path: "sdk/build/outputs/apk/androidTest/debug/sdk-debug-androidTest.apk"
+
+  sdk-e2e-test:
+      executor: ubuntu
+      parameters:
+          validation:
+              default: false
+              type: boolean
+      steps:
+          - add_ssh_keys:
+              fingerprints:
+                  - 3b:cd:47:bf:57:9c:e5:36:b0:4d:5f:12:5e:d3:b3:3e
+          - checkout
+          - init-aws
+          - run:
+              command: |
+                  curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+                  echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+                  sudo apt update && sudo apt install gh -y
+                  sudo pip3 install gitpython
+                  sudo cp ./mbx-ci /usr/local/bin/
+              name: Install dependency
+          - when:
+              condition:
+                  not: << parameters.validation >>
+              steps:
+                  - run:
+                      command: |
+                          E2E_TRIGGER=$(./scripts/ci/ci-e2e-job-trigger-checker.sh || echo -n "retval $?")
+                          if [[ $E2E_TRIGGER == *"retval 1"* ]]; then
+                              echo "E2E tests not requested, skipping."
+                              exit 0
+                          fi
+                          export GITHUB_TOKEN=$(mbx-ci github reader token)
+                          LABELS=$(gh pr view --repo $CIRCLE_REPOSITORY_URL $CIRCLE_PULL_REQUEST --json labels)
+                          if [[ $LABELS == *"e2e_trunk"* ]]; then
+                              export E2E_VERSION_CONFIG="trunk"
+                          elif [[ $LABELS == *"e2e_latest"* ]]; then
+                              export E2E_VERSION_CONFIG="latest"
+                          else
+                              export E2E_VERSION_CONFIG="default"
+                          fi
+                          echo "Run E2E tests with ${E2E_VERSION_CONFIG} config."
+                          scripts/ci/ci-e2e-compatibility-start-pipeline.py --config mapbox-maps-android=${CIRCLE_SHA1} --platform all --versions ${E2E_VERSION_CONFIG}
+                      name: Trigger E2E SDK test devel pipeline
+          - when:
+              condition: << parameters.validation >>
+              steps:
+                  - run:
+                      command: |
+                          export E2E_VERSION_CONFIG="latest"
+                          echo "Run E2E tests with ${E2E_VERSION_CONFIG} config."
+                          scripts/ci/ci-e2e-compatibility-start-pipeline.py --config mapbox-maps-android=${CIRCLE_SHA1} --platform all --versions ${E2E_VERSION_CONFIG}
+                      name: Trigger E2E SDK test validation pipeline
 
 executors:
   ubuntu:

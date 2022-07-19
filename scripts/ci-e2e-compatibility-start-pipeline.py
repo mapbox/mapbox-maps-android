@@ -1,4 +1,12 @@
 #!/usr/bin/env python3
+#
+# Implements https://circleci.com/docs/api/v2/#trigger-a-new-pipeline
+#
+# This script is used to trigger the end-to-end testing pipeline in https://github.com/mapbox/mapbox-sdk
+#
+# Example when using in `mapbox/mapbox-gl-native-internal` CircleCI environment:
+#   ci-e2e-compatibility-start-pipeline.py --config mapbox-sdk-common="vendor/common" mapbox-gl-native-internal=${CIRCLE_SHA1} --platform all --versions latest
+#
 
 import argparse
 import os
@@ -8,6 +16,7 @@ import datetime
 import yaml
 import git
 from os import path
+import subprocess
 
 
 class ParseConfig(argparse.Action):
@@ -20,6 +29,13 @@ class ParseConfig(argparse.Action):
 
 
 def parse_args():
+    target_slug = "mapbox/mapbox-sdk"
+
+    versions = [{'id':'default', 'name':'Default stable customer experience'},
+               {'id':'latest', 'name':'Latest releases'},
+               {'id':'trunk', 'name':'Latest commit of the default branch'}]
+    versions = dict({v['id'] : v['name']  for v in versions})
+
     """Parse script input parameters."""
     parser = argparse.ArgumentParser(
         description="Creates CircleCI jobs and waits for the result.")
@@ -27,8 +43,8 @@ def parse_args():
             help="CircleCI token, otherwise environment CIRCLE_API_TOKEN.")
     parser.add_argument("--origin-slug", default=f'{os.getenv("CIRCLE_PROJECT_USERNAME")}/{os.getenv("CIRCLE_PROJECT_REPONAME")}',
             help="Origin repository, otherwise CIRCLE_PROJECT_USERNAME/CIRCLE_PROJECT_REPONAME.")
-    parser.add_argument("--target-slug", required=True,
-            help="Repository to trigger the pipeline, example: mapbox/mapbox-gl-native-android.")
+    parser.add_argument("--target-slug", default=target_slug,
+            help="Repository to trigger the pipeline, example: mapbox/mapbox-sdk")
     parser.add_argument("--branch",
             help="Build a specific branch, otherwise it will build the default branch.")
     parser.add_argument("--current-branch", default=os.getenv("CIRCLE_BRANCH"),
@@ -40,6 +56,8 @@ def parse_args():
             pairs with dependeny name as key, value either a path to submodule
             or a branch, tag or commit SHA.""", required=True)
     parser.add_argument('--platform', default="all")
+    parser.add_argument('--versions', default="default", choices=versions,
+            help="SDK version configuration, otherwise using the default latest stable customer experience")
     return parser.parse_args()
 
 
@@ -53,6 +71,14 @@ def validate_args(args):
         print("Originating commit hash not set. Use --hash or set CIRCLE_SHA1")
         sys.exit(1)
 
+def execute_command(command):
+    popen = subprocess.Popen(f"{command}", stdout=subprocess.PIPE, universal_newlines=True, shell=True)
+    for stdout_line in iter(popen.stdout.readline, ""):
+        yield stdout_line
+    popen.stdout.close()
+    return_code = popen.wait()
+    if return_code:
+        raise subprocess.CalledProcessError(return_code, command)
 
 def resolve_config_to_yaml(config_args):
     '''Resolve configuration to a yaml format and return encoded as utf-8.
@@ -62,7 +88,17 @@ def resolve_config_to_yaml(config_args):
     config = {}
     for key in config_args:
         if(path.isdir(path.abspath(config_args[key]))):
-            pin = git.Repo(config_args[key]).head.object.hexsha
+            try:
+                pin = git.Repo(config_args[key]).head.object.hexsha
+            except:
+                print(f"Submodule {config_args[key]} is not cloned, trying another way")
+                command = "git submodule status | awk '/" + config_args[key].replace('/', '\/') + "/ {print substr($1, 2, length($1))}'"
+                ret = execute_command(command)
+                for output in ret:
+                    if (output != ''):
+                        pin = output.strip()
+                        break
+                print("Found pin: " + pin)
             config[key] = {"pin" : pin}
         else:
             config[key] = {"pin" : config_args[key]}
@@ -104,7 +140,7 @@ def trigger_pipeline(slug, token, branch, params):
 
     if response.status_code == 201:
         print(f'\nTriggered job can be found at:')
-        print_link(f'https://app.circleci.com/pipelines/github/{slug}/{response.json()["number"]}')
+        print(f'https://app.circleci.com/pipelines/github/{slug}/{response.json()["number"]}')
 
 
 def main():
@@ -117,8 +153,10 @@ def main():
         "mapbox_slug": args.origin_slug,
         "mapbox_hash": args.hash,
         "mapbox_config": config.decode("utf-8"),
-        "mapbox_platform": args.platform
+        "mapbox_platform": args.platform,
+        "mapbox_versions": args.versions
     }
+    print("Params: " + str(params))
 
     trigger_pipeline(args.target_slug, args.token, args.branch, params)
     return 0
