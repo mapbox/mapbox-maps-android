@@ -20,7 +20,7 @@ internal class LocationCompassEngine(context: Context) : SensorEventListener {
   private val sensorManager: SensorManager =
     context.applicationContext.getSystemService(Context.SENSOR_SERVICE) as SensorManager
   private val compassListeners = mutableSetOf<CompassListener>()
-  private val calibrationListeners = mutableListOf<LocationCompassCalibrationListener>()
+  private val calibrationListeners = mutableSetOf<LocationCompassCalibrationListener>()
 
   // Not all devices have a compassSensor
   private var compassSensor: Sensor? = null
@@ -70,10 +70,8 @@ internal class LocationCompassEngine(context: Context) : SensorEventListener {
   override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
     if (accuracy == SensorManager.SENSOR_STATUS_UNRELIABLE) {
       logD(TAG, "Compass sensor is unreliable, device calibration is needed.")
-      if (calibrationListeners.isNotEmpty()) {
-        for (calibrationListener in calibrationListeners) {
-          calibrationListener.onCompassCalibrationNeeded()
-        }
+      for (calibrationListener in calibrationListeners) {
+        calibrationListener.onCompassCalibrationNeeded()
       }
     }
   }
