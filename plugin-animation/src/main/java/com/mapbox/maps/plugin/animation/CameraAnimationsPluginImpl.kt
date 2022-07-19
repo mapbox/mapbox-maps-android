@@ -266,7 +266,7 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
   private fun registerInternalListener(animator: CameraAnimator<*>) {
     animator.addInternalListener(object : Animator.AnimatorListener {
 
-      override fun onAnimationStart(animation: Animator?) {
+      override fun onAnimationStart(animation: Animator) {
         (animation as? CameraAnimator<*>)?.apply {
           // check for a specific use-case when canceling an animation with start delay that
           // has not yet started - in that case onAnimationStart logic must be skipped
@@ -304,17 +304,17 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
         )
       }
 
-      override fun onAnimationEnd(animation: Animator?) {
+      override fun onAnimationEnd(animation: Animator) {
         finishAnimation(animation, AnimationFinishStatus.ENDED)
       }
 
-      override fun onAnimationCancel(animation: Animator?) {
+      override fun onAnimationCancel(animation: Animator) {
         finishAnimation(animation, AnimationFinishStatus.CANCELED)
       }
 
-      override fun onAnimationRepeat(animation: Animator?) {}
+      override fun onAnimationRepeat(animation: Animator) {}
 
-      private fun finishAnimation(animation: Animator?, finishStatus: AnimationFinishStatus) {
+      private fun finishAnimation(animation: Animator, finishStatus: AnimationFinishStatus) {
         (animation as? CameraAnimator<*>)?.apply {
           runningAnimatorsQueue.remove(animation)
           if (debugMode) {
@@ -844,7 +844,7 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
       }
       animationOptions?.animatorListener?.let {
         addListener(object : AnimatorListenerAdapter() {
-          override fun onAnimationEnd(animation: Animator?) {
+          override fun onAnimationEnd(animation: Animator) {
             commitChanges()
 
             if (highLevelAnimatorSet?.animatorSet === animation) {

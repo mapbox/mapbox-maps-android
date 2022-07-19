@@ -119,7 +119,7 @@ class CameraPredefinedAnimatorsActivity : AppCompatActivity() {
     }
   }
 
-  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+  override fun onCreateOptionsMenu(menu: Menu): Boolean {
     menuInflater.inflate(R.menu.menu_predefined_animators, menu)
     return true
   }
@@ -145,21 +145,21 @@ class CameraPredefinedAnimatorsActivity : AppCompatActivity() {
     duration(duration)
     animatorListener(object : AnimatorListenerAdapter() {
 
-      override fun onAnimationStart(animation: Animator?) {
+      override fun onAnimationStart(animation: Animator) {
         super.onAnimationStart(animation)
         runOnUiThread {
           binding.buttonCancel.visibility = View.VISIBLE
         }
       }
 
-      override fun onAnimationEnd(animation: Animator?) {
+      override fun onAnimationEnd(animation: Animator) {
         super.onAnimationEnd(animation)
         runOnUiThread {
           binding.buttonCancel.visibility = View.INVISIBLE
         }
       }
 
-      override fun onAnimationCancel(animation: Animator?) {
+      override fun onAnimationCancel(animation: Animator) {
         super.onAnimationCancel(animation)
         runOnUiThread {
           binding.buttonCancel.visibility = View.INVISIBLE

@@ -68,11 +68,11 @@ internal class DefaultViewportTransitionImpl(
             addListener(
               object : Animator.AnimatorListener {
                 private var isCanceled = false
-                override fun onAnimationStart(animation: Animator?) {
+                override fun onAnimationStart(animation: Animator) {
                   // no-ops
                 }
 
-                override fun onAnimationEnd(animation: Animator?) {
+                override fun onAnimationEnd(animation: Animator) {
                   keepObserving = false
                   if (!isCancelableCalled) {
                     completionListener.onComplete(!isCanceled)
@@ -80,11 +80,11 @@ internal class DefaultViewportTransitionImpl(
                   finishAnimation(this@apply)
                 }
 
-                override fun onAnimationCancel(animation: Animator?) {
+                override fun onAnimationCancel(animation: Animator) {
                   isCanceled = true
                 }
 
-                override fun onAnimationRepeat(animation: Animator?) {
+                override fun onAnimationRepeat(animation: Animator) {
                   // no-ops
                 }
               }
@@ -95,21 +95,21 @@ internal class DefaultViewportTransitionImpl(
           cameraAnimator.addListener(
             object : Animator.AnimatorListener {
               private var isCanceled = false
-              override fun onAnimationStart(p0: Animator?) {
+              override fun onAnimationStart(p0: Animator) {
                 // no-ops
               }
 
-              override fun onAnimationEnd(p0: Animator?) {
+              override fun onAnimationEnd(p0: Animator) {
                 if (!isCanceled) {
                   completedChildAnimators.add(cameraAnimator.type)
                 }
               }
 
-              override fun onAnimationCancel(p0: Animator?) {
+              override fun onAnimationCancel(p0: Animator) {
                 isCanceled = true
               }
 
-              override fun onAnimationRepeat(p0: Animator?) {
+              override fun onAnimationRepeat(p0: Animator) {
                 // no-ops
               }
             }

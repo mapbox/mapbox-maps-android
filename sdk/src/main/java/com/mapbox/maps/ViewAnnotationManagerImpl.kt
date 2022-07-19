@@ -275,11 +275,11 @@ internal class ViewAnnotationManagerImpl(
       }
     }
     viewAnnotation.attachStateListener = object : View.OnAttachStateChangeListener {
-      override fun onViewAttachedToWindow(v: View?) {
+      override fun onViewAttachedToWindow(v: View) {
         inflatedView.viewTreeObserver.addOnGlobalLayoutListener(globalLayoutListener)
       }
 
-      override fun onViewDetachedFromWindow(v: View?) {
+      override fun onViewDetachedFromWindow(v: View) {
         inflatedView.viewTreeObserver.removeOnGlobalLayoutListener(globalLayoutListener)
       }
     }

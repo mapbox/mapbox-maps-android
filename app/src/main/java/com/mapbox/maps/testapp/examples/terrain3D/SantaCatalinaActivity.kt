@@ -41,8 +41,8 @@ class SantaCatalinaActivity : AppCompatActivity() {
   private var timeAnimator: TimeAnimator? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
     requestWindowFeature(Window.FEATURE_NO_TITLE)
+    super.onCreate(savedInstanceState)
     val mapView = MapView(this)
     setContentView(mapView)
     mapView.disablePlugins()

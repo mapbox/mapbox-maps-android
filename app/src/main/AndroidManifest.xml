@@ -1190,6 +1190,5 @@
         <meta-data
             android:name="com.mapbox.maps.ThreadChecker"
             android:value="true" />
-
     </application>
 </manifest>

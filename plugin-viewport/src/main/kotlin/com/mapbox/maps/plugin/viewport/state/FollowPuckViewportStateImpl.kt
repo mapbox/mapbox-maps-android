@@ -203,20 +203,20 @@ internal class FollowPuckViewportStateImpl(
           addListener(
             object : Animator.AnimatorListener {
               private var isCanceled = false
-              override fun onAnimationStart(animation: Animator?) {
+              override fun onAnimationStart(animation: Animator) {
                 // no-ops
               }
 
-              override fun onAnimationEnd(animation: Animator?) {
+              override fun onAnimationEnd(animation: Animator) {
                 onComplete?.invoke(!isCanceled)
                 finishAnimation(this@apply)
               }
 
-              override fun onAnimationCancel(animation: Animator?) {
+              override fun onAnimationCancel(animation: Animator) {
                 isCanceled = true
               }
 
-              override fun onAnimationRepeat(animation: Animator?) {
+              override fun onAnimationRepeat(animation: Animator) {
                 // no-ops
               }
             }
