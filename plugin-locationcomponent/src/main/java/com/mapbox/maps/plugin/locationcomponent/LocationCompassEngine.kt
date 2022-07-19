@@ -8,7 +8,6 @@ import android.hardware.SensorManager
 import android.os.SystemClock
 import android.view.Surface
 import android.view.WindowManager
-import com.mapbox.maps.logD
 import com.mapbox.maps.logW
 
 /**
@@ -69,7 +68,7 @@ internal class LocationCompassEngine(context: Context) : SensorEventListener {
 
   override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
     if (accuracy == SensorManager.SENSOR_STATUS_UNRELIABLE) {
-      logD(TAG, "Compass sensor is unreliable, device calibration is needed.")
+      logW(TAG, "Compass sensor is unreliable, device calibration is needed.")
       for (calibrationListener in calibrationListeners) {
         calibrationListener.onCompassCalibrationNeeded()
       }
