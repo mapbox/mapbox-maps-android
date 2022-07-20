@@ -587,6 +587,64 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
+   * Enable/Disable shadow receiving for this layer
+   */
+  val modelReceiveShadows: Boolean?
+    /**
+     * Enable/Disable shadow receiving for this layer
+     *
+     * @return Boolean
+     */
+    get() {
+      return getPropertyValue("model-receive-shadows")
+    }
+
+  /**
+   * Enable/Disable shadow receiving for this layer
+   *
+   * @param modelReceiveShadows value of modelReceiveShadows
+   */
+  override fun modelReceiveShadows(modelReceiveShadows: Boolean) = apply {
+    val propertyValue = PropertyValue("model-receive-shadows", modelReceiveShadows)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Enable/Disable shadow receiving for this layer
+   *
+   * This is an Expression representation of "model-receive-shadows".
+   *
+   * Enable/Disable shadow receiving for this layer
+   */
+  val modelReceiveShadowsAsExpression: Expression?
+    /**
+     * Enable/Disable shadow receiving for this layer
+     *
+     * Get the ModelReceiveShadows property as an Expression
+     *
+     * @return Boolean
+     */
+    get() {
+      getPropertyValue<Expression>("model-receive-shadows")?.let {
+        return it
+      }
+      modelReceiveShadows?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * Enable/Disable shadow receiving for this layer
+   *
+   * @param modelReceiveShadows value of modelReceiveShadows as Expression
+   */
+  override fun modelReceiveShadows(modelReceiveShadows: Expression) = apply {
+    val propertyValue = PropertyValue("model-receive-shadows", modelReceiveShadows)
+    setProperty(propertyValue)
+  }
+
+  /**
    * The rotation of the model in euler angles [lon, lat, z].
    */
   val modelRotation: List<Double>?
@@ -1213,6 +1271,44 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       get() = StyleManager.getStyleLayerPropertyDefaultValue("model", "model-opacity-transition").silentUnwrap()
 
     /**
+     * Enable/Disable shadow receiving for this layer
+     */
+    val defaultModelReceiveShadows: Boolean?
+      /**
+       * Enable/Disable shadow receiving for this layer
+       *
+       * Get the default value of ModelReceiveShadows property
+       *
+       * @return Boolean
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("model", "model-receive-shadows").silentUnwrap()
+      }
+
+    /**
+     * Enable/Disable shadow receiving for this layer
+     *
+     * This is an Expression representation of "model-receive-shadows".
+     *
+     * Enable/Disable shadow receiving for this layer
+     */
+    val defaultModelReceiveShadowsAsExpression: Expression?
+      /**
+       * Get default value of the ModelReceiveShadows property as an Expression
+       *
+       * @return Boolean
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("model", "model-receive-shadows").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultModelReceiveShadows?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
+
+    /**
      * The rotation of the model in euler angles [lon, lat, z].
      */
     val defaultModelRotation: List<Double>?
@@ -1586,6 +1682,20 @@ interface ModelLayerDsl {
    * DSL for [modelOpacityTransition].
    */
   fun modelOpacityTransition(block: StyleTransition.Builder.() -> Unit): ModelLayer
+
+  /**
+   * Enable/Disable shadow receiving for this layer
+   *
+   * @param modelReceiveShadows value of modelReceiveShadows
+   */
+  fun modelReceiveShadows(modelReceiveShadows: Boolean = true): ModelLayer
+
+  /**
+   * Enable/Disable shadow receiving for this layer
+   *
+   * @param modelReceiveShadows value of modelReceiveShadows as Expression
+   */
+  fun modelReceiveShadows(modelReceiveShadows: Expression): ModelLayer
 
   /**
    * The rotation of the model in euler angles [lon, lat, z].

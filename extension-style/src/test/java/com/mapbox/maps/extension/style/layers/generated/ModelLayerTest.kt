@@ -655,6 +655,74 @@ class ModelLayerTest {
   }
 
   @Test
+  fun modelReceiveShadowsSet() {
+    val layer = modelLayer("id", "source") {}
+    val testValue = true
+    layer.bindTo(style)
+    layer.modelReceiveShadows(testValue)
+    verify { style.setStyleLayerProperty("id", "model-receive-shadows", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "true")
+  }
+
+  @Test
+  fun modelReceiveShadowsGet() {
+    val testValue = true
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = modelLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = true
+    assertEquals(expectedValue.toString(), layer.modelReceiveShadows?.toString())
+    verify { style.getStyleLayerProperty("id", "model-receive-shadows") }
+  }
+  // Expression Tests
+
+  @Test
+  fun modelReceiveShadowsAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = modelLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.modelReceiveShadows(expression)
+    verify { style.setStyleLayerProperty("id", "model-receive-shadows", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun modelReceiveShadowsAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = modelLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.modelReceiveShadowsAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "model-receive-shadows") }
+  }
+
+  @Test
+  fun modelReceiveShadowsAsExpressionGetNull() {
+    val layer = modelLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.modelReceiveShadowsAsExpression)
+    verify { style.getStyleLayerProperty("id", "model-receive-shadows") }
+  }
+
+  @Test
+  fun modelReceiveShadowsAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(true)
+    val layer = modelLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals("true", layer.modelReceiveShadowsAsExpression.toString())
+    val expectedValue = true
+    assertEquals(expectedValue, layer.modelReceiveShadows)
+    verify { style.getStyleLayerProperty("id", "model-receive-shadows") }
+  }
+
+  @Test
   fun modelRotationSet() {
     val layer = modelLayer("id", "source") {}
     val testValue = listOf(0.0, 1.0, 2.0)
@@ -1316,6 +1384,38 @@ class ModelLayerTest {
 
     assertEquals(transition.toValue().toString(), ModelLayer.defaultModelOpacityTransition?.toValue().toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("model", "model-opacity-transition") }
+  }
+
+  @Test
+  fun defaultModelReceiveShadowsTest() {
+    val testValue = true
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = true
+    assertEquals(expectedValue.toString(), ModelLayer.defaultModelReceiveShadows?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("model", "model-receive-shadows") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultModelReceiveShadowsAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), ModelLayer.defaultModelReceiveShadowsAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("model", "model-receive-shadows") }
+  }
+
+  @Test
+  fun defaultModelReceiveShadowsAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(true)
+    assertEquals("true", ModelLayer.defaultModelReceiveShadowsAsExpression.toString())
+    val expectedValue = true
+    assertEquals(expectedValue, ModelLayer.defaultModelReceiveShadows)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("model", "model-receive-shadows") }
   }
 
   @Test
