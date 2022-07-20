@@ -347,13 +347,27 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
   private fun applyGeoJsonData(
     data: GeoJson
   ): GeoJsonSource = apply {
+    var oldNanoTime = System.nanoTime()
+    println("perfTest applyGeoJsonData ${data.hashCode()} $oldNanoTime")
     // remove any events from queue before posting this task
     workerHandler.removeCallbacksAndMessages(null)
     workerHandler.post {
+      var newNanoTime = System.nanoTime()
+      println("perfTest applyGeoJsonData : convert geojson to property : $newNanoTime (delta ${(newNanoTime - oldNanoTime) / 1000_000} millis)")
+      oldNanoTime = newNanoTime
       val property = data.toPropertyValue()
+      newNanoTime = System.nanoTime()
+      println("perfTest applyGeoJsonData : convert geojson to property finish : $newNanoTime (delta ${(newNanoTime - oldNanoTime) / 1000_000} millis)")
+      oldNanoTime = newNanoTime
       mainHandler.post {
+        newNanoTime = System.nanoTime()
+        println("perfTest applyGeoJsonData set property : $newNanoTime (delta ${(newNanoTime - oldNanoTime) / 1000_000} millis)")
+        oldNanoTime = newNanoTime
         // we set parsed data when sync setter was not called during background work
         setProperty(property, throwRuntimeException = false)
+        newNanoTime = System.nanoTime()
+        println("perfTest applyGeoJsonData set property finish : $newNanoTime (delta ${(newNanoTime - oldNanoTime) / 1000_000} millis)")
+        oldNanoTime = newNanoTime
       }
     }
   }

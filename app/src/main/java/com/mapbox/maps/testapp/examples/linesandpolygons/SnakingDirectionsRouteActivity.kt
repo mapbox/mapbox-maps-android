@@ -52,6 +52,10 @@ class SnakingDirectionsRouteActivity : AppCompatActivity() {
     binding = ActivityJavaservicesSnakingDirectionsRouteBinding.inflate(layoutInflater)
     setContentView(binding.root)
 
+    binding.mapView.getMapboxMap().addOnSourceDataLoadedListener {
+      println("Source data loaded $it")
+    }
+
     binding.mapView.getMapboxMap().loadStyle(
       style(Style.LIGHT) {
         +image(ICON_ID) {
@@ -147,6 +151,7 @@ class SnakingDirectionsRouteActivity : AppCompatActivity() {
         }
         binding.mapView.getMapboxMap().getStyle {
           val source = it.getSource(DRIVING_ROUTE_POLYLINE_SOURCE_ID) as? GeoJsonSource
+          println("perfTest set feature collection (${drivingRoutePolyLineFeatureList.size}) : ${System.nanoTime()}")
           source?.featureCollection(FeatureCollection.fromFeatures(drivingRoutePolyLineFeatureList))
         }
         counterIndex++
