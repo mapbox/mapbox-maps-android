@@ -305,6 +305,30 @@ class ModelLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun modelReceiveShadowsTest() {
+    val testValue = true
+    val layer = modelLayer("id", "source") {
+      modelReceiveShadows(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(testValue.toString(), layer.modelReceiveShadows?.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun modelReceiveShadowsAsExpressionTest() {
+    val expression = literal(true)
+    val layer = modelLayer("id", "source") {
+      modelReceiveShadows(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(expression.toString(), layer.modelReceiveShadowsAsExpression.toString())
+    assertEquals(true, layer.modelReceiveShadows!!)
+  }
+
+  @Test
+  @UiThreadTest
   fun modelRotationTest() {
     val testValue = listOf(0.0, 1.0, 2.0)
     val layer = modelLayer("id", "source") {
@@ -541,6 +565,8 @@ class ModelLayerTest : BaseStyleTest() {
     assertNotNull("defaultModelOpacity should not be null", ModelLayer.defaultModelOpacity)
     assertNotNull("defaultModelOpacityAsExpression should not be null", ModelLayer.defaultModelOpacityAsExpression)
     assertNotNull("defaultModelOpacityTransition should not be null", ModelLayer.defaultModelOpacityTransition)
+    assertNotNull("defaultModelReceiveShadows should not be null", ModelLayer.defaultModelReceiveShadows)
+    assertNotNull("defaultModelReceiveShadowsAsExpression should not be null", ModelLayer.defaultModelReceiveShadowsAsExpression)
     assertNotNull("defaultModelRotation should not be null", ModelLayer.defaultModelRotation)
     assertNotNull("defaultModelRotationAsExpression should not be null", ModelLayer.defaultModelRotationAsExpression)
     assertNotNull("defaultModelRotationTransition should not be null", ModelLayer.defaultModelRotationTransition)
