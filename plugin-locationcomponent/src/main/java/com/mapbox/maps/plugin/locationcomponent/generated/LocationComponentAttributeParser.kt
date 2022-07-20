@@ -62,6 +62,7 @@ internal object LocationComponentAttributeParser {
               typedArray.getFloat(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck3DModelRotation_z, 90.0f),
             ),
             modelCastShadows = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck3DModelCastShadows, true),
+            modelReceiveShadows = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck3DModelReceiveShadows, true),
           )
           else -> LocationPuck2D(
             topImage = ResourcesCompat.getDrawable(context.resources, R.drawable.mapbox_user_icon, null),

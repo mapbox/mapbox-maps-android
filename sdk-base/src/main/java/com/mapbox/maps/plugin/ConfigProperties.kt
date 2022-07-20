@@ -105,6 +105,11 @@ data class LocationPuck3D @JvmOverloads constructor(
    */
   @MapboxExperimental
   var modelCastShadows: Boolean = true,
+  /**
+   * Enable/Disable shadow receiving for this layer
+   */
+  @MapboxExperimental
+  var modelReceiveShadows: Boolean = true,
 ) : LocationPuck()
 
 // End of generated file.
