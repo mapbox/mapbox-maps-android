@@ -148,7 +148,7 @@ class StyleExtensionImpl private constructor(
      * Extension function for [Projection] to overload Unary operations.
      *
      * Using [ProjectionName.GLOBE] requires OpenGL [GLES20.GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS] be more than zero.
-     * If [GLES20.GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS] is zero -
+     * If [GLES20.GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS] is zero (which may happen for low-end devices and old Android versions) -
      * [ProjectionName.GLOBE] will fallback to [ProjectionName.MERCATOR] with the log warning.
      *
      * Apply +[Projection] will add specific map projection to the [StyleExtensionImpl].

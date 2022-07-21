@@ -24,7 +24,7 @@ import com.mapbox.maps.extension.style.layers.properties.generated.ProjectionNam
  *  - location indicator
  *
  * Using [ProjectionName.GLOBE] requires OpenGL [GLES20.GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS] be more than zero.
- * If [GLES20.GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS] is zero -
+ * If [GLES20.GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS] is zero (which may happen for low-end devices and old Android versions) -
  * [ProjectionName.GLOBE] will fallback to [ProjectionName.MERCATOR] with the log warning.
  *
  * @see [The online documentation](https://docs.mapbox.com/mapbox-gl-js/style-spec/projection/)
