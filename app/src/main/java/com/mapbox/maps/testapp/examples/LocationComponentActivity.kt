@@ -200,11 +200,11 @@ class LocationComponentActivity : AppCompatActivity() {
         )
         is LocationPuck2D -> it.locationPuck = LocationPuck3D(
           modelUri = "asset://sportcar.glb",
-          modelScale = listOf(0.5f, 0.5f, 0.5f),
+          modelScale = listOf(0.1f, 0.1f, 0.1f),
           modelTranslation = listOf(0.1f, 0.1f, 0.1f),
           modelRotation = listOf(0.0f, 0.0f, 180.0f),
           modelCastShadows = false,
-          modelReceiveShadows = true
+          modelReceiveShadows = false
         )
       }
     }
