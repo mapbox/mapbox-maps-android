@@ -2300,6 +2300,8 @@ public final class com/mapbox/maps/extension/style/layers/generated/ModelLayer :
 	public final fun getModelOpacity ()Ljava/lang/Double;
 	public final fun getModelOpacityAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getModelOpacityTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
+	public final fun getModelReceiveShadows ()Ljava/lang/Boolean;
+	public final fun getModelReceiveShadowsAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getModelRotation ()Ljava/util/List;
 	public final fun getModelRotationAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getModelRotationTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
@@ -2335,6 +2337,8 @@ public final class com/mapbox/maps/extension/style/layers/generated/ModelLayer :
 	public fun modelOpacity (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public fun modelOpacityTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public fun modelOpacityTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public fun modelReceiveShadows (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public fun modelReceiveShadows (Z)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public fun modelRotation (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public fun modelRotation (Ljava/util/List;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public fun modelRotationTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
@@ -2371,6 +2375,8 @@ public final class com/mapbox/maps/extension/style/layers/generated/ModelLayer$C
 	public final fun getDefaultModelOpacity ()Ljava/lang/Double;
 	public final fun getDefaultModelOpacityAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultModelOpacityTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
+	public final fun getDefaultModelReceiveShadows ()Ljava/lang/Boolean;
+	public final fun getDefaultModelReceiveShadowsAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultModelRotation ()Ljava/util/List;
 	public final fun getDefaultModelRotationAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultModelRotationTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
@@ -2406,6 +2412,8 @@ public abstract interface class com/mapbox/maps/extension/style/layers/generated
 	public abstract fun modelOpacity (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public abstract fun modelOpacityTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public abstract fun modelOpacityTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public abstract fun modelReceiveShadows (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public abstract fun modelReceiveShadows (Z)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public abstract fun modelRotation (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public abstract fun modelRotation (Ljava/util/List;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public abstract fun modelRotationTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
@@ -2429,6 +2437,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/ModelLayerDs
 	public static synthetic fun modelColor$default (Lcom/mapbox/maps/extension/style/layers/generated/ModelLayerDsl;Ljava/lang/String;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public static synthetic fun modelColorMixIntensity$default (Lcom/mapbox/maps/extension/style/layers/generated/ModelLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public static synthetic fun modelOpacity$default (Lcom/mapbox/maps/extension/style/layers/generated/ModelLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public static synthetic fun modelReceiveShadows$default (Lcom/mapbox/maps/extension/style/layers/generated/ModelLayerDsl;ZILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public static synthetic fun modelRotation$default (Lcom/mapbox/maps/extension/style/layers/generated/ModelLayerDsl;Ljava/util/List;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public static synthetic fun modelScale$default (Lcom/mapbox/maps/extension/style/layers/generated/ModelLayerDsl;Ljava/util/List;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public static synthetic fun modelTranslation$default (Lcom/mapbox/maps/extension/style/layers/generated/ModelLayerDsl;Ljava/util/List;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
