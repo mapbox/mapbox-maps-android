@@ -64,6 +64,13 @@ Mapbox welcomes participation and contributions from everyone.
   Also bumps [WorkManager 2.7.1](https://developer.android.com/jetpack/androidx/releases/work#2.7.1) that enforces compileSdk 31 or newer.
 * Bump gl-native to v10.7.0, common to 22.1.0. ([1543](https://github.com/mapbox/mapbox-maps-android/pull/1543))
 
+# main
+## Features ✨ and improvements 🏁
+* Introduce experimental `ModelLayer.modelReceiveShadows` and `LocationPuck3D.modelReceiveShadows` property. ([1516](https://github.com/mapbox/mapbox-maps-android/pull/1516))
+
+## Bug fixes 🐞
+* Support altitude interpolation in location component, and pass through GPS altitude information from the DefaultLocationProvider. ([1478](https://github.com/mapbox/mapbox-maps-android/pull/1478))
+
 # 10.7.0-rc.1 July 14, 2022
 ## Features ✨ and improvements 🏁
 * Reuse single index buffer in symbol layer rendering. ([1497](https://github.com/mapbox/mapbox-maps-android/pull/1497))
