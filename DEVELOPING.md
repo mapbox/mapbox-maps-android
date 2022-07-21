@@ -345,7 +345,7 @@ separately from the main SDK.
 
 The CI is setup to publish new releases when new tag that follows the release tag pattern is created.
 
-* To publish a Maps SDK release with all the default plugins/extensions, create a release tag `android-v*`.
+* To publish a Maps SDK release with all the default plugins/extensions, create a release git tag `v*`.
 * To publish a Android Auto extension, create a release tag `extension-androidauto-v*`.
 
 
