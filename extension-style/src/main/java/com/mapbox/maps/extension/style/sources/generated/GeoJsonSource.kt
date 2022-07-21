@@ -348,25 +348,25 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
     data: GeoJson
   ): GeoJsonSource = apply {
     var oldNanoTime = System.nanoTime()
-    println("perfTest applyGeoJsonData ${data.hashCode()} $oldNanoTime")
+    println("[Mapbox] perfTest applyGeoJsonData : $oldNanoTime")
     // remove any events from queue before posting this task
     workerHandler.removeCallbacksAndMessages(null)
     workerHandler.post {
       var newNanoTime = System.nanoTime()
-      println("perfTest applyGeoJsonData : convert geojson to property : $newNanoTime (delta ${(newNanoTime - oldNanoTime) / 1000_000} millis)")
+      println("[Mapbox] perfTest applyGeoJsonData : convert geojson to property : $newNanoTime (millis delta : ${(newNanoTime - oldNanoTime) / 1000_000})")
       oldNanoTime = newNanoTime
       val property = data.toPropertyValue()
       newNanoTime = System.nanoTime()
-      println("perfTest applyGeoJsonData : convert geojson to property finish : $newNanoTime (delta ${(newNanoTime - oldNanoTime) / 1000_000} millis)")
+      println("[Mapbox] perfTest applyGeoJsonData : convert geojson to property finish : $newNanoTime (millis delta : ${(newNanoTime - oldNanoTime) / 1000_000})")
       oldNanoTime = newNanoTime
       mainHandler.post {
         newNanoTime = System.nanoTime()
-        println("perfTest applyGeoJsonData set property : $newNanoTime (delta ${(newNanoTime - oldNanoTime) / 1000_000} millis)")
+        println("[Mapbox] perfTest applyGeoJsonData set property : $newNanoTime (millis delta : ${(newNanoTime - oldNanoTime) / 1000_000})")
         oldNanoTime = newNanoTime
         // we set parsed data when sync setter was not called during background work
         setProperty(property, throwRuntimeException = false)
         newNanoTime = System.nanoTime()
-        println("perfTest applyGeoJsonData set property finish : $newNanoTime (delta ${(newNanoTime - oldNanoTime) / 1000_000} millis)")
+        println("[Mapbox] perfTest applyGeoJsonData set property finish : $newNanoTime (millis delta : ${(newNanoTime - oldNanoTime) / 1000_000})")
         oldNanoTime = newNanoTime
       }
     }
