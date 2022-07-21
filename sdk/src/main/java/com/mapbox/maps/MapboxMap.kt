@@ -568,7 +568,8 @@ class MapboxMap :
    * measured and inflated to have correct width and height values.
    * Calling this method in [Activity.onCreate] will lead to incorrect results.
    *
-   * This API isn't supported by Globe projection and will return a no-op result.
+   * This API isn't supported by Globe projection and will return a no-op result matching
+   * the world bounds.
    * See [com.mapbox.maps.extension.style.projection.generated.setProjection]
    * and [com.mapbox.maps.extension.style.projection.generated.getProjection]
    *
@@ -601,7 +602,8 @@ class MapboxMap :
    * measured and inflated to have correct width and height values.
    * Calling this method in [Activity.onCreate] will lead to incorrect results.
    *
-   * This API isn't supported by Globe projection and will return a no-op result.
+   * This API isn't supported by Globe projection and will return a no-op result matching
+   * the current camera center.
    * See [com.mapbox.maps.extension.style.projection.generated.setProjection]
    * and [com.mapbox.maps.extension.style.projection.generated.getProjection]
    *
@@ -633,7 +635,8 @@ class MapboxMap :
    * coordinates on the left, top and right of \p camera.center fit into \p box.
    * Returns the provided camera options object unchanged upon error.
    *
-   * This API isn't supported by Globe projection and will return a no-op result.
+   * This API isn't supported by Globe projection and will return a no-op result matching
+   * the current camera center.
    * See [com.mapbox.maps.extension.style.projection.generated.setProjection]
    * and [com.mapbox.maps.extension.style.projection.generated.getProjection]
    *
@@ -659,7 +662,8 @@ class MapboxMap :
    * measured and inflated to have correct width and height values.
    * Calling this method in [Activity.onCreate] will lead to incorrect results.
    *
-   * This API isn't supported by Globe projection and will return a no-op result.
+   * This API isn't supported by Globe projection and will return a no-op result matching
+   * the current camera center.
    * See [com.mapbox.maps.extension.style.projection.generated.setProjection]
    * and [com.mapbox.maps.extension.style.projection.generated.getProjection]
    *
@@ -686,7 +690,8 @@ class MapboxMap :
    * Note that if the given `camera` shows the antimeridian, the returned wrapped [CoordinateBounds]
    * might not represent the minimum bounding box.
    *
-   * This API isn't supported by Globe projection and will return a no-op result.
+   * This API isn't supported by Globe projection and will return a no-op result matching the world
+   * bounds.
    * See [com.mapbox.maps.extension.style.projection.generated.setProjection]
    * and [com.mapbox.maps.extension.style.projection.generated.getProjection]
    *
@@ -704,7 +709,8 @@ class MapboxMap :
    *
    * This method is useful if the `camera` shows the antimeridian.
    *
-   * This API isn't supported by Globe projection and will return a no-op result.
+   * This API isn't supported by Globe projection and will return a no-op result matching the world
+   * bounds.
    * See [com.mapbox.maps.extension.style.projection.generated.setProjection]
    * and [com.mapbox.maps.extension.style.projection.generated.getProjection]
    *
@@ -729,7 +735,8 @@ class MapboxMap :
    *
    * See also {@link #coordinateBoundsZoomForCameraUnwrapped}
    *
-   * This API isn't supported by Globe projection and will return a no-op result.
+   * This API isn't supported by Globe projection and will return a no-op result matching the world
+   * bounds
    * See [com.mapbox.maps.extension.style.projection.generated.setProjection]
    * and [com.mapbox.maps.extension.style.projection.generated.getProjection]
    *
@@ -749,7 +756,8 @@ class MapboxMap :
    *
    * This method is particularly useful, if the camera shows the antimeridian.
    *
-   * This API isn't supported by Globe projection and will return a no-op result.
+   * This API isn't supported by Globe projection and will return a no-op result matching the
+   * world bounds.
    * See [com.mapbox.maps.extension.style.projection.generated.setProjection]
    * and [com.mapbox.maps.extension.style.projection.generated.getProjection]
    *
@@ -772,7 +780,8 @@ class MapboxMap :
    * If the screen coordinate is outside of the bounds of [MapView] the returned screen coordinate
    * contains -1 for both coordinates.
    *
-   * This API isn't supported by Globe projection and will return a no-op result.
+   * This API isn't supported by Globe projection and will return a no-op result matching center of
+   * the screen.
    * See [com.mapbox.maps.extension.style.projection.generated.setProjection]
    * and [com.mapbox.maps.extension.style.projection.generated.getProjection]
    *
@@ -800,7 +809,8 @@ class MapboxMap :
    *
    * Map must be fully loaded for getting an altitude-compliant result if using 3D terrain.
    *
-   * This API isn't supported by Globe projection and will return a no-op result.
+   * This API isn't supported by Globe projection and will return a no-op result matching the center
+   * of the screen.
    * See [com.mapbox.maps.extension.style.projection.generated.setProjection]
    * and [com.mapbox.maps.extension.style.projection.generated.getProjection]
    *
@@ -822,7 +832,8 @@ class MapboxMap :
    *
    * Map must be fully loaded for getting an altitude-compliant result if using 3D terrain.
    *
-   * This API isn't supported by Globe projection and will return a no-op result.
+   * This API isn't supported by Globe projection and will return a no-op result matching the center
+   * of the screen.
    * See [com.mapbox.maps.extension.style.projection.generated.setProjection]
    * and [com.mapbox.maps.extension.style.projection.generated.getProjection]
    *
@@ -845,7 +856,8 @@ class MapboxMap :
    *
    * Map must be fully loaded for getting an altitude-compliant result if using 3D terrain.
    *
-   * This API isn't supported by Globe projection and will return a no-op result.
+   * This API isn't supported by Globe projection and will return a no-op result matching the center
+   * of the screen.
    * See [com.mapbox.maps.extension.style.projection.generated.setProjection]
    * and [com.mapbox.maps.extension.style.projection.generated.getProjection]
    *
