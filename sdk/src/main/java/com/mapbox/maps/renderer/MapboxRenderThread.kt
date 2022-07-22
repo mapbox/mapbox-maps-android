@@ -502,6 +502,8 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
         {
           if (renderThreadPrepared || renderEvent.eventType == EventType.DESTROY_RENDERER) {
             renderEvent.runnable?.run()
+          } else if (paused) {
+            nonRenderEventQueue.add(renderEvent)
           } else {
             logW(TAG, "Non-render event could not be run, retrying in $RETRY_DELAY_MS ms...")
             postNonRenderEvent(renderEvent, delayMillis = RETRY_DELAY_MS)
