@@ -105,9 +105,11 @@ internal class StyleObserver(
   }
 
   override fun onStyleDataLoaded(eventData: StyleDataLoadedEventData) {
+    println("Style data loaded $eventData")
     when (eventData.type) {
       StyleDataType.STYLE -> {
         preLoadedStyle = Style(nativeMap, pixelRatio).also {
+          println("Created style $it")
           styleDataStyleLoadedListener?.onStyleLoaded(it)
         }
         styleDataStyleLoadedListener = null
