@@ -1,11 +1,13 @@
 package com.mapbox.maps.extension.style
 
+import android.opengl.GLES20
 import com.mapbox.maps.LayerPosition
 import com.mapbox.maps.extension.style.StyleExtensionImpl.*
 import com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere
 import com.mapbox.maps.extension.style.image.ImageExtensionImpl
 import com.mapbox.maps.extension.style.image.ImageNinePatchExtensionImpl
 import com.mapbox.maps.extension.style.layers.*
+import com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName
 import com.mapbox.maps.extension.style.light.generated.Light
 import com.mapbox.maps.extension.style.model.ModelExtensionImpl
 import com.mapbox.maps.extension.style.projection.generated.Projection
@@ -144,6 +146,10 @@ class StyleExtensionImpl private constructor(
 
     /**
      * Extension function for [Projection] to overload Unary operations.
+     *
+     * Using [ProjectionName.GLOBE] requires OpenGL [GLES20.GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS] be more than zero.
+     * If [GLES20.GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS] is zero (which may happen for low-end devices and old Android versions) -
+     * [ProjectionName.GLOBE] will fallback to [ProjectionName.MERCATOR] with the log warning.
      *
      * Apply +[Projection] will add specific map projection to the [StyleExtensionImpl].
      */
