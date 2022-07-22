@@ -1,6 +1,7 @@
 package com.mapbox.maps.testapp.examples.terrain3D
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
@@ -26,6 +27,15 @@ class Terrain3DShowcaseActivity : AppCompatActivity() {
     val binding = ActivityTerrainShowcaseBinding.inflate(layoutInflater)
     setContentView(binding.root)
     mapboxMap = binding.mapView.getMapboxMap()
+    Log.d("DebugTerrain", "load Style onCreate!")
+    loadStyle()
+    binding.button.setOnClickListener {
+      Log.d("DebugTerrainq", "load Style again!")
+      loadStyle()
+    }
+  }
+
+  private fun loadStyle() {
     mapboxMap.loadStyle(
       styleExtension = style(Style.SATELLITE_STREETS) {
         +rasterDemSource(SOURCE) {
@@ -41,7 +51,7 @@ class Terrain3DShowcaseActivity : AppCompatActivity() {
         +atmosphere { }
         +projection(ProjectionName.GLOBE)
       }
-    )
+      )
   }
 
   companion object {
