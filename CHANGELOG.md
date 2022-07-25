@@ -4,8 +4,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 ## Features ✨ and improvements 🏁
-* Introduce experimental `ModelLayer.modelCastShadows` and `LocationPuck3D.modelCastShadows` property. ([1480](https://github.com/mapbox/mapbox-maps-android/pull/1480))
-* Introduce a callback to be invoked when the device compass sensors need to be re-calibrated. ([1514](https://github.com/mapbox/mapbox-maps-android/pull/1513))
+* Introduce a callback to be invoked when the device compass sensors need to be re-calibrated. ([1513](https://github.com/mapbox/mapbox-maps-android/pull/1513))
 
 ## Bug fixes 🐞
 * Support altitude interpolation in location component, and pass through GPS altitude information from the DefaultLocationProvider. ([1478](https://github.com/mapbox/mapbox-maps-android/pull/1478))
