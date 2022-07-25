@@ -1,7 +1,10 @@
 # Changelog for Mapbox Maps SDK v10 for Android
 
 Mapbox welcomes participation and contributions from everyone.
-# 10.7.0-rc.1
+# 10.7.0
+* Fix excessive logs appearing sometimes after `onStop` lifecycle event. ([1527](https://github.com/mapbox/mapbox-maps-android/pull/1527))
+
+# 10.7.0-rc.1 July 14, 2022
 ## Features ✨ and improvements 🏁
 * Introduce experimental `ModelLayer.modelCastShadows` and `LocationPuck3D.modelCastShadows` property. ([1480](https://github.com/mapbox/mapbox-maps-android/pull/1480))
 * Add model-cast-shadows paint property to model layer to allow turning off shadow casting per model layer. ([1497](https://github.com/mapbox/mapbox-maps-android/pull/1497))
