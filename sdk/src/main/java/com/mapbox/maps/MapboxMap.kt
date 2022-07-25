@@ -273,6 +273,10 @@ class MapboxMap :
     initializeStyleLoad(
       onStyleLoaded = onStyleLoaded,
       styleDataStyleLoadedListener = { style ->
+        println("styleDataStyleLoadedListener $style")
+        nativeMap.styleSources.forEach {
+          println(" : $it")
+        }
         styleExtension.light?.bindTo(style)
         styleExtension.terrain?.bindTo(style)
         styleExtension.atmosphere?.bindTo(style)
@@ -280,6 +284,10 @@ class MapboxMap :
         transitionOptions?.let(style::setStyleTransition)
       },
       styleDataSourcesLoadedListener = { style ->
+        println("styleDataSourcesLoadedListener $style")
+        style.styleSources.forEach {
+          println(" : $it")
+        }
         styleExtension.sources.forEach {
           it.bindTo(style)
         }
@@ -288,6 +296,10 @@ class MapboxMap :
         }
       },
       styleDataSpritesLoadedListener = { style ->
+        println("styleDataSpritesLoadedListener $style")
+        style.styleSources.forEach {
+          println(" : $it")
+        }
         styleExtension.images.forEach {
           it.bindTo(style)
         }

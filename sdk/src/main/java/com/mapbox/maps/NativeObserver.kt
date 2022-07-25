@@ -270,6 +270,7 @@ internal class NativeObserver(
   // that will notify STYLE_LOADED event for the first style after second style has already started
   // loading
   fun resubscribeStyleLoadListeners() {
+    println("Resubscribe style data loaded listeners")
     unsubscribeUnusedEvent(MapEvents.STYLE_LOADED)
     subscribeNewEvent(MapEvents.STYLE_LOADED)
     unsubscribeUnusedEvent(MapEvents.STYLE_DATA_LOADED)
