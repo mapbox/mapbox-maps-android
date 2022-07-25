@@ -537,7 +537,6 @@ class MapboxRenderThreadTest {
     verifyOnce { runnable.run() }
   }
 
-
   @Test
   fun surfaceCreatedCalledBeforeActivityStartTest() {
     initRenderThread()
