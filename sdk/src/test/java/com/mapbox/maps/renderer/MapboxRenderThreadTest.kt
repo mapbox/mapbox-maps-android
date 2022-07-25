@@ -507,6 +507,37 @@ class MapboxRenderThreadTest {
   }
 
   @Test
+  fun queueNonRenderEventAfterOnStop() {
+    initRenderThread()
+    provideValidSurface()
+    val runnable = mockk<Runnable>(relaxUnitFun = true)
+    mapboxRenderThread.awaitingNextVsync = false
+
+    // paused state
+    mapboxRenderThread.eglContextCreated = false
+    mapboxRenderThread.pause()
+    pauseHandler()
+    mapboxRenderThread.queueRenderEvent(
+      RenderEvent(
+        runnable,
+        false,
+        EventType.DEFAULT
+      )
+    )
+    idleHandler()
+    // event should be added to the queue and not executed until `resume`
+    assertEquals(1, mapboxRenderThread.nonRenderEventQueue.size)
+    verifyNo { runnable.run() }
+
+    // resumed state
+    mapboxRenderThread.eglContextCreated = true
+    mapboxRenderThread.resume()
+    idleHandler()
+    assertEquals(0, mapboxRenderThread.nonRenderEventQueue.size)
+    verifyOnce { runnable.run() }
+  }
+
+  @Test
   fun surfaceCreatedCalledBeforeActivityStartTest() {
     initRenderThread()
     mapboxRenderThread.paused = true

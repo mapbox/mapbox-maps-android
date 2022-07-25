@@ -8,6 +8,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Bug fixes 🐞
 * Support altitude interpolation in location component, and pass through GPS altitude information from the DefaultLocationProvider. ([1478](https://github.com/mapbox/mapbox-maps-android/pull/1478))
+* Fix excessive logs appearing sometimes after `onStop` lifecycle event. ([1527](https://github.com/mapbox/mapbox-maps-android/pull/1527))
 
 # 10.7.0-rc.1 July 14, 2022
 ## Features ✨ and improvements 🏁
