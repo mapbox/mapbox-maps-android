@@ -3,6 +3,9 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
+## Features ✨ and improvements 🏁
+* Introduce a callback to be invoked when the device compass sensors need to be re-calibrated. ([1513](https://github.com/mapbox/mapbox-maps-android/pull/1513))
+
 ## Bug fixes 🐞
 * Support altitude interpolation in location component, and pass through GPS altitude information from the DefaultLocationProvider. ([1478](https://github.com/mapbox/mapbox-maps-android/pull/1478))
 
@@ -40,7 +43,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Remove `MapboxExperimental` annotation from viewport plugin and promote viewport plugin as stable API. ([1425](https://github.com/mapbox/mapbox-maps-android/pull/1425))
 * Introduce `addRendererSetupErrorListener`/`removeRendererSetupErrorListener` methods for `MapView` and `MapSurface` to listen to renderer setup errors and give opportunity to control some edge cases. ([1427](https://github.com/mapbox/mapbox-maps-android/pull/1427))
 * Introduce transition properties for atmosphere and terrain. ([1451](https://github.com/mapbox/mapbox-maps-android/pull/1451))
-* Enable main thread checking on the map/style object when running applications in debug build. This utility class will crash the application if these objects are accessed from a worked thread. It's required to call these object functions on the main thread, otherwise you can hit edge case crashes. This configurations is advised but can be opted out with a Manifest metadata entry of `com.mapbox.maps.ThreadChecker` and corresponding false value. ([#1316](https://github.com/mapbox/mapbox-maps-android/pull/1316)). 
+* Enable main thread checking on the map/style object when running applications in debug build. This utility class will crash the application if these objects are accessed from a worked thread. It's required to call these object functions on the main thread, otherwise you can hit edge case crashes. This configurations is advised but can be opted out with a Manifest metadata entry of `com.mapbox.maps.ThreadChecker` and corresponding false value. ([#1316](https://github.com/mapbox/mapbox-maps-android/pull/1316)).
 * Introduce view annotation `ViewAnnotationManager.setViewAnnotationUpdateMode` / `ViewAnnotationManager.getViewAnnotationUpdateMode` API with following synchronization modes: MAP_SYNCHRONIZED (used by default) and MAP_FIXED_DELAY. ([1415](https://github.com/mapbox/mapbox-maps-android/pull/1415))
 * Reduce geometry on globe tile to increase rendering performance. ([#1462](https://github.com/mapbox/mapbox-maps-android/pull/1462))
 * Improve rendering performance with deleting layer render data on a worker thread. ([#1462](https://github.com/mapbox/mapbox-maps-android/pull/1462))

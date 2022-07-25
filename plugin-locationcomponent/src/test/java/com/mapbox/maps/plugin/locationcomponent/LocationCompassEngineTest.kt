@@ -100,4 +100,15 @@ class LocationCompassEngineTest {
     verify(exactly = 1) { sensorManager.unregisterListener(any(), gravitySensor) }
     verify(exactly = 1) { sensorManager.unregisterListener(any(), magneticFieldSensor) }
   }
+
+  @Test
+  fun calibrationListenerTest() {
+    val calibrationListener = mockk<LocationCompassCalibrationListener>(relaxed = true)
+    locationCompassEngine = LocationCompassEngine(context)
+    locationCompassEngine.addCalibrationListener(calibrationListener)
+    locationCompassEngine.onAccuracyChanged(mockk(), 100)
+    verify(exactly = 0) { calibrationListener.onCompassCalibrationNeeded() }
+    locationCompassEngine.onAccuracyChanged(mockk(), SensorManager.SENSOR_STATUS_UNRELIABLE)
+    verify(exactly = 1) { calibrationListener.onCompassCalibrationNeeded() }
+  }
 }

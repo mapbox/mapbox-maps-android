@@ -19,6 +19,7 @@ internal class LocationCompassEngine(context: Context) : SensorEventListener {
   private val sensorManager: SensorManager =
     context.applicationContext.getSystemService(Context.SENSOR_SERVICE) as SensorManager
   private val compassListeners = mutableSetOf<CompassListener>()
+  private val calibrationListeners = mutableSetOf<LocationCompassCalibrationListener>()
 
   // Not all devices have a compassSensor
   private var compassSensor: Sensor? = null
@@ -57,6 +58,23 @@ internal class LocationCompassEngine(context: Context) : SensorEventListener {
     }
   }
 
+  fun addCalibrationListener(compassCalibrationListener: LocationCompassCalibrationListener) {
+    calibrationListeners.add(compassCalibrationListener)
+  }
+
+  fun removeCalibrationListener(compassCalibrationListener: LocationCompassCalibrationListener) {
+    calibrationListeners.remove(compassCalibrationListener)
+  }
+
+  override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+    if (accuracy == SensorManager.SENSOR_STATUS_UNRELIABLE) {
+      logW(TAG, "Compass sensor is unreliable, device calibration is needed.")
+      for (calibrationListener in calibrationListeners) {
+        calibrationListener.onCompassCalibrationNeeded()
+      }
+    }
+  }
+
   override fun onSensorChanged(event: SensorEvent) {
     when (event.sensor.type) {
       Sensor.TYPE_ROTATION_VECTOR -> {
@@ -70,10 +88,6 @@ internal class LocationCompassEngine(context: Context) : SensorEventListener {
       }
     }
     updateOrientation()
-  }
-
-  override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
-    // no need
   }
 
   private fun updateOrientation() {
