@@ -251,44 +251,6 @@ class StyleObserverTest {
   }
 
   @Test
-  fun onStyleDataSourcesThrowsIfNoStyleData() {
-    val styleCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
-    val styleSpritesCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
-    val styleSourcesCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
-
-    styleObserver.setLoadStyleListener(
-      null,
-      styleCallback,
-      styleSpritesCallback,
-      styleSourcesCallback,
-      null
-    )
-
-    assertThrows(MapboxMapException::class.java) {
-      styleObserver.onStyleDataLoaded(StyleDataLoadedEventData(0, 0, StyleDataType.SOURCES))
-    }
-  }
-
-  @Test
-  fun onStyleDataSpritesThrowsIfNoStyleData() {
-    val styleCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
-    val styleSpritesCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
-    val styleSourcesCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
-
-    styleObserver.setLoadStyleListener(
-      null,
-      styleCallback,
-      styleSpritesCallback,
-      styleSourcesCallback,
-      null
-    )
-
-    assertThrows(MapboxMapException::class.java) {
-      styleObserver.onStyleDataLoaded(StyleDataLoadedEventData(0, 0, StyleDataType.SPRITE))
-    }
-  }
-
-  @Test
   fun onStyleLoadedThrowsIfNoStyleData() {
     val styleCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
     val styleSpritesCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
