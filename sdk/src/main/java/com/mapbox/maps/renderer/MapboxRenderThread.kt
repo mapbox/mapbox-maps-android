@@ -311,8 +311,8 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       EGL10.EGL_SUCCESS -> { }
       EGL11.EGL_CONTEXT_LOST -> {
         logW(TAG, "Context lost. Waiting for re-acquire")
-        // Android surface is still valid so we don't release it
-        // otherwise no more rendering will happen
+        // release all resources but not release Android surface if it's still valid -
+        // same surface may then be re-used to re-attach EGL.
         releaseAll(releaseAndroidSurface = false)
       }
       else -> {
@@ -320,14 +320,6 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
         releaseEglSurface()
       }
     }
-  }
-
-  private fun releaseEgl() {
-    releaseEglSurface()
-    if (eglPrepared) {
-      eglCore.release()
-    }
-    eglPrepared = false
   }
 
   private fun releaseEglSurface() {
@@ -346,8 +338,12 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     renderEventQueue.clear()
     nonRenderEventQueue.clear()
     renderCreated = false
-    releaseEgl()
-    if (releaseAndroidSurface) {
+    releaseEglSurface()
+    if (eglPrepared) {
+      eglCore.release()
+    }
+    eglPrepared = false
+    if (releaseAndroidSurface || surface?.isValid == false) {
       surface?.release()
     }
   }
@@ -441,10 +437,9 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
         logI(
           TAG,
           "Processing new android surface while current is not null, " +
-            "releasing current EGL"
+            "releasing current EGL and recreating native renderer."
         )
-        releaseEgl()
-        this.surface?.release()
+        releaseAll()
       }
       this.surface = surface
     }
