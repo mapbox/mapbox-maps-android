@@ -500,11 +500,17 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     } else {
       renderHandlerThread.postDelayed(
         {
-          if (renderThreadPrepared || renderEvent.eventType == EventType.DESTROY_RENDERER) {
-            renderEvent.runnable?.run()
-          } else {
-            logW(TAG, "Non-render event could not be run, retrying in $RETRY_DELAY_MS ms...")
-            postNonRenderEvent(renderEvent, delayMillis = RETRY_DELAY_MS)
+          when {
+            renderThreadPrepared || renderEvent.eventType == EventType.DESTROY_RENDERER -> {
+              renderEvent.runnable?.run()
+            }
+            paused -> {
+              nonRenderEventQueue.add(renderEvent)
+            }
+            else -> {
+              logW(TAG, "Non-render event could not be run, retrying in $RETRY_DELAY_MS ms...")
+              postNonRenderEvent(renderEvent, delayMillis = RETRY_DELAY_MS)
+            }
           }
         },
         delayMillis,
