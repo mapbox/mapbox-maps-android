@@ -311,7 +311,9 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       EGL10.EGL_SUCCESS -> { }
       EGL11.EGL_CONTEXT_LOST -> {
         logW(TAG, "Context lost. Waiting for re-acquire")
-        releaseEgl()
+        // Android surface is still valid so we don't release it
+        // otherwise no more rendering will happen
+        releaseAll(releaseAndroidSurface = false)
       }
       else -> {
         logW(TAG, "eglSwapBuffer error: $swapStatus. Waiting for new surface")
@@ -337,7 +339,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     widgetRenderer.release()
   }
 
-  private fun releaseAll() {
+  private fun releaseAll(releaseAndroidSurface: Boolean = true) {
     renderDestroyCallChain = true
     mapboxRenderer.destroyRenderer()
     renderDestroyCallChain = false
@@ -345,7 +347,9 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     nonRenderEventQueue.clear()
     renderCreated = false
     releaseEgl()
-    surface?.release()
+    if (releaseAndroidSurface) {
+      surface?.release()
+    }
   }
 
   private fun prepareRenderFrame(creatingSurface: Boolean = false) {
