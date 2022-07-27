@@ -808,17 +808,19 @@ class MapboxRenderThreadTest {
     every { eglCore.swapBuffers(any()) } returns EGL11.EGL_SUCCESS
     mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
     idleHandler()
-    // one swap buffer for surface creation, one for EGL_CONTEXT_LOST, one for EGL_SUCCESS
-    verify(exactly = 3) {
-      eglCore.swapBuffers(any())
-    }
-    // EGL and native renderer are recreated
     verifyOrder {
+      // swap buffers for surface creation
+      eglCore.swapBuffers(any())
+      // swap buffers for EGL_CONTEXT_LOST
+      eglCore.swapBuffers(any())
+      // EGL and native renderer are recreated
       mapboxRenderer.destroyRenderer()
       eglCore.releaseSurface(any())
       eglCore.release()
       eglCore.prepareEgl()
       mapboxRenderer.createRenderer()
+      // swap buffers for EGL_SUCCESS
+      eglCore.swapBuffers(any())
     }
     // however Android surface is not released
     verifyNo {
