@@ -3,6 +3,7 @@
 Mapbox welcomes participation and contributions from everyone.
 # 10.7.0
 * Fix excessive logs appearing sometimes after `onStop` lifecycle event. ([1527](https://github.com/mapbox/mapbox-maps-android/pull/1527))
+* Fix `com.mapbox.maps.MapboxMapException` crash on style load. ([1532](https://github.com/mapbox/mapbox-maps-android/pull/1532))
 
 # 10.7.0-rc.1 July 14, 2022
 ## Features ✨ and improvements 🏁
