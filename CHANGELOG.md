@@ -12,6 +12,44 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix `com.mapbox.maps.MapboxMapException` crash on style load. ([1532](https://github.com/mapbox/mapbox-maps-android/pull/1532))
 * Fix edge cases for renderer that could result in map not rendered. ([1538](https://github.com/mapbox/mapbox-maps-android/pull/1538))
 
+# 10.7.0 July 29, 2022
+# Features ✨ and improvements 🏁
+* cameraForLatLngs now allows to ignore edges of framing box dynamically depending on the position of the principal point of the camera
+* Synchronize volatile data (like traffic tiles) in multi-map environment. Decrease network traffic.
+* Make uploading of large graphics data asynchronous to improve rendering speed in particular on zooming in/out
+* Reuse single index buffer in symbol layer rendering
+* Use shared index buffers per tile to reduce the time spent in the upload pass
+* Reduce geometry on globe tile to increase rendering performance.
+* Improve rendering performance with deleting layer render data on a worker thread.
+* The deprecated `maps::Settings` API is using the same non-persistent storage as the SettingsService API from Common SDK so that all settings consolidated in a single place.
+* Support using 'line-trim-offset' property with pure line color.
+* Render cache and Terrain can now have mipmapping enabled to reduce aliasing.
+* Fast ambient occlusion support for fill extrusion layer.
+* Refactor view annotation implementation to align map and annotation movement better when camera changes.
+* Add API to create tileset descriptor from a tilesets list.
+
+## Bug fixes 🐞
+* Fixes a bug when map aligned symbol layers are placed on top of other layers if draping is active
+* Fix tile flickering with Globe on rapid zooming in/out
+* Fixed `cameraForCoordinateBounds` method returning different values for the same input
+* Fix setting 'exaggeration-transition' property via 'setStyleTerrain' API
+* Fix SDK fragment format in turnstile useragent
+* Fix view annotation occlusion issue when Terrain enabled
+* Fix symbol flickering issue when  'textAllowOverlap' or 'iconAllowOverlap' is true
+* Fixes rendering issues with the globe on unsupported hardware by falling back to mercator projection
+* Fixed feature states not being applied on new tiles when zoom doesn't change
+* Disable MapBuffer OpenGL extension on PowerVR SGX 544MP GPUs to fix incorrect usage of unimplemented methods
+* Fix incorrect image source rendering with terrain enabled.
+* Don't use timestamps for presenting Metal drawable, as it could introduce rendering delay.
+* Fix possible crash bug in image processing.
+* Fix some cpu-updated symbols being invisible in globe view.
+* Add support for terrain transition properties.
+* Fix zoom constraining issue when the input 'maxZoom' is smaller than the current 'minZoom' value.
+* Fix crash on calling Query Rendered Features API from renderer thread before initialising the renderer.
+* Fix tile pre-fetching for the globe map projection.
+* Relayout tiles after recovering from Metal rendering errors.
+* Fix a bug where changing size of the map would lead map center getting changed as well.
+
 # 10.7.0-rc.1 July 14, 2022
 ## Features ✨ and improvements 🏁
 * Introduce experimental `ModelLayer.modelCastShadows` and `LocationPuck3D.modelCastShadows` property. ([1480](https://github.com/mapbox/mapbox-maps-android/pull/1480))
