@@ -25,6 +25,7 @@ import org.robolectric.shadows.ShadowChoreographer
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import javax.microedition.khronos.egl.EGL10
+import javax.microedition.khronos.egl.EGL11
 import javax.microedition.khronos.egl.EGLContext
 
 @RunWith(RobolectricTestRunner::class)
@@ -794,5 +795,50 @@ class MapboxRenderThreadTest {
 
     verify { runnable.run() }
     verify { runnable2.run() }
+  }
+
+  @Test
+  fun contextLostTest() {
+    initRenderThread()
+    provideValidSurface()
+    pauseHandler()
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
+    idleHandler()
+    pauseHandler()
+    every { eglCore.swapBuffers(any()) } returns EGL11.EGL_CONTEXT_LOST
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
+    idleHandler()
+    // one swap buffer for surface creation, one for EGL_SUCCESS, one for EGL_CONTEXT_LOST
+    verify(exactly = 3) {
+      eglCore.swapBuffers(any())
+    }
+    // EGL is cleared, native renderer is destroyed
+    verifyOnce {
+      mapboxRenderer.destroyRenderer()
+      eglCore.releaseSurface(any())
+      eglCore.release()
+    }
+    // however Android surface is not released
+    verifyNo {
+      surface.release()
+    }
+  }
+
+  @Test
+  fun anotherAndroidSurfaceProvidedTest() {
+    initRenderThread()
+    provideValidSurface()
+    val oldSurface = surface
+    // simulate Android providing new surface
+    surface = mockk(relaxUnitFun = true)
+    provideValidSurface()
+    // EGL and native renderer are recreated
+    verifyOrder {
+      mapboxRenderer.destroyRenderer()
+      eglCore.release()
+      oldSurface.release()
+      eglCore.prepareEgl()
+      mapboxRenderer.createRenderer()
+    }
   }
 }
