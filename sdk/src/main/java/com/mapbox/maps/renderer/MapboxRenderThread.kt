@@ -311,21 +311,17 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       EGL10.EGL_SUCCESS -> { }
       EGL11.EGL_CONTEXT_LOST -> {
         logW(TAG, "Context lost. Waiting for re-acquire")
-        releaseEgl()
+        // release all resources but not release Android surface
+        // as it still potentially may be valid - then it could be re-used to recreate EGL;
+        // if it's not valid - system should shortly send us brand new surface and
+        // we will recreate EGL and native renderer anyway
+        releaseAll(tryRecreate = true)
       }
       else -> {
         logW(TAG, "eglSwapBuffer error: $swapStatus. Waiting for new surface")
         releaseEglSurface()
       }
     }
-  }
-
-  private fun releaseEgl() {
-    releaseEglSurface()
-    if (eglPrepared) {
-      eglCore.release()
-    }
-    eglPrepared = false
   }
 
   private fun releaseEglSurface() {
@@ -337,15 +333,23 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     widgetRenderer.release()
   }
 
-  private fun releaseAll() {
+  private fun releaseAll(tryRecreate: Boolean = false) {
     renderDestroyCallChain = true
     mapboxRenderer.destroyRenderer()
     renderDestroyCallChain = false
     renderEventQueue.clear()
     nonRenderEventQueue.clear()
     renderCreated = false
-    releaseEgl()
-    surface?.release()
+    releaseEglSurface()
+    if (eglPrepared) {
+      eglCore.release()
+    }
+    eglPrepared = false
+    if (tryRecreate) {
+      setUpRenderThread(creatingSurface = true)
+    } else {
+      surface?.release()
+    }
   }
 
   private fun prepareRenderFrame(creatingSurface: Boolean = false) {
@@ -437,10 +441,9 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
         logI(
           TAG,
           "Processing new android surface while current is not null, " +
-            "releasing current EGL"
+            "releasing current EGL and recreating native renderer."
         )
-        releaseEgl()
-        this.surface?.release()
+        releaseAll()
       }
       this.surface = surface
     }

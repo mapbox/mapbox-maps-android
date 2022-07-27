@@ -25,6 +25,7 @@ import org.robolectric.shadows.ShadowChoreographer
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import javax.microedition.khronos.egl.EGL10
+import javax.microedition.khronos.egl.EGL11
 import javax.microedition.khronos.egl.EGLContext
 
 @RunWith(RobolectricTestRunner::class)
@@ -794,5 +795,56 @@ class MapboxRenderThreadTest {
 
     verify { runnable.run() }
     verify { runnable2.run() }
+  }
+
+  @Test
+  fun contextLostTest() {
+    initRenderThread()
+    provideValidSurface()
+    pauseHandler()
+    every { eglCore.swapBuffers(any()) } returns EGL11.EGL_CONTEXT_LOST
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
+    idleHandler()
+    every { eglCore.swapBuffers(any()) } returns EGL11.EGL_SUCCESS
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
+    idleHandler()
+    verifyOrder {
+      // swap buffers for surface creation
+      eglCore.swapBuffers(any())
+      // swap buffers for EGL_CONTEXT_LOST
+      eglCore.swapBuffers(any())
+      // EGL and native renderer are recreated
+      mapboxRenderer.destroyRenderer()
+      eglCore.releaseSurface(any())
+      eglCore.release()
+      eglCore.prepareEgl()
+      mapboxRenderer.createRenderer()
+      // swap buffers for EGL_SUCCESS
+      eglCore.swapBuffers(any())
+    }
+    // however Android surface is not released
+    verifyNo {
+      surface.release()
+    }
+  }
+
+  @Test
+  fun anotherAndroidSurfaceProvidedTest() {
+    initRenderThread()
+    provideValidSurface()
+    val oldSurface = surface
+    // simulate Android providing new surface
+    surface = mockk(relaxUnitFun = true)
+    provideValidSurface()
+    // EGL and native renderer are recreated
+    verifyOrder {
+      mapboxRenderer.destroyRenderer()
+      eglCore.releaseSurface(any())
+      eglCore.release()
+      // old surface must be released to avoid memory leak
+      oldSurface.release()
+      eglCore.prepareEgl()
+      mapboxRenderer.createRenderer()
+    }
   }
 }
