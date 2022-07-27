@@ -802,21 +802,23 @@ class MapboxRenderThreadTest {
     initRenderThread()
     provideValidSurface()
     pauseHandler()
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
-    idleHandler()
-    pauseHandler()
     every { eglCore.swapBuffers(any()) } returns EGL11.EGL_CONTEXT_LOST
     mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
     idleHandler()
-    // one swap buffer for surface creation, one for EGL_SUCCESS, one for EGL_CONTEXT_LOST
+    every { eglCore.swapBuffers(any()) } returns EGL11.EGL_SUCCESS
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
+    idleHandler()
+    // one swap buffer for surface creation, one for EGL_CONTEXT_LOST, one for EGL_SUCCESS
     verify(exactly = 3) {
       eglCore.swapBuffers(any())
     }
-    // EGL is cleared, native renderer is destroyed
-    verifyOnce {
+    // EGL and native renderer are recreated
+    verifyOrder {
       mapboxRenderer.destroyRenderer()
       eglCore.releaseSurface(any())
       eglCore.release()
+      eglCore.prepareEgl()
+      mapboxRenderer.createRenderer()
     }
     // however Android surface is not released
     verifyNo {
@@ -835,7 +837,9 @@ class MapboxRenderThreadTest {
     // EGL and native renderer are recreated
     verifyOrder {
       mapboxRenderer.destroyRenderer()
+      eglCore.releaseSurface(any())
       eglCore.release()
+      // old surface must be released to avoid memory leak
       oldSurface.release()
       eglCore.prepareEgl()
       mapboxRenderer.createRenderer()

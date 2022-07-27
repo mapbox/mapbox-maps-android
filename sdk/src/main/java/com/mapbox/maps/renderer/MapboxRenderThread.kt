@@ -315,7 +315,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
         // as it still potentially may be valid - then it could be re-used to recreate EGL;
         // if it's not valid - system should shortly send us brand new surface and
         // we will recreate EGL and native renderer anyway
-        releaseAll(releaseAndroidSurface = false)
+        releaseAll(tryRecreate = true)
       }
       else -> {
         logW(TAG, "eglSwapBuffer error: $swapStatus. Waiting for new surface")
@@ -333,7 +333,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     widgetRenderer.release()
   }
 
-  private fun releaseAll(releaseAndroidSurface: Boolean = true) {
+  private fun releaseAll(tryRecreate: Boolean = false) {
     renderDestroyCallChain = true
     mapboxRenderer.destroyRenderer()
     renderDestroyCallChain = false
@@ -345,7 +345,9 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       eglCore.release()
     }
     eglPrepared = false
-    if (releaseAndroidSurface) {
+    if (tryRecreate) {
+      setUpRenderThread(creatingSurface = true)
+    } else {
       surface?.release()
     }
   }
