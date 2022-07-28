@@ -7,8 +7,7 @@ internal class ModelLayerWrapper(
   sourceId: String,
   modelScale: List<Double>,
   modelRotation: List<Double>,
-  modelTranslation: List<Double>,
-  modelCastShadows: Boolean
+  modelTranslation: List<Double>
 ) : LocationLayerWrapper(layerId) {
   init {
     layerProperties["id"] = Value(layerId)
@@ -18,7 +17,6 @@ internal class ModelLayerWrapper(
     layerProperties["model-scale"] = Value(modelScale.map(::Value))
     layerProperties["model-rotation"] = Value(modelRotation.map(::Value))
     layerProperties["model-translation"] = Value(modelTranslation.map(::Value))
-    layerProperties["model-cast-shadows"] = Value(modelCastShadows)
   }
 
   fun modelScale(scale: List<Double>) = updateProperty("model-scale", Value(scale.map(::Value)))

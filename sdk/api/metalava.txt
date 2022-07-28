@@ -168,7 +168,6 @@ package com.mapbox.maps {
     method public void addOnStyleImageMissingListener(com.mapbox.maps.plugin.delegates.listeners.OnStyleImageMissingListener onStyleImageMissingListener);
     method public void addOnStyleImageUnusedListener(com.mapbox.maps.plugin.delegates.listeners.OnStyleImageUnusedListener onStyleImageUnusedListener);
     method public void addOnStyleLoadedListener(com.mapbox.maps.plugin.delegates.listeners.OnStyleLoadedListener onStyleLoadedListener);
-    method @com.mapbox.maps.MapboxExperimental public void addStyleModel(String modelId, String modelUri);
     method public Object? cameraAnimationsPlugin(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.animation.CameraAnimationsPlugin,?> function);
     method public com.mapbox.maps.CameraOptions cameraForCoordinateBounds(com.mapbox.maps.CoordinateBounds bounds, com.mapbox.maps.EdgeInsets padding, Double? bearing, Double? pitch);
     method public com.mapbox.maps.CameraOptions cameraForCoordinates(java.util.List<com.mapbox.geojson.Point> coordinates, com.mapbox.maps.EdgeInsets padding, Double? bearing, Double? pitch);
@@ -209,7 +208,6 @@ package com.mapbox.maps {
     method public com.mapbox.maps.Size getSize();
     method public void getStyle(com.mapbox.maps.Style.OnStyleLoaded onStyleLoaded);
     method public com.mapbox.maps.Style? getStyle();
-    method @com.mapbox.maps.MapboxExperimental public boolean hasStyleModel(String modelId);
     method @Deprecated public boolean isFullyLoaded();
     method public boolean isGestureInProgress();
     method public boolean isUserAnimationInProgress();
@@ -253,7 +251,6 @@ package com.mapbox.maps {
     method public void removeOnStyleImageMissingListener(com.mapbox.maps.plugin.delegates.listeners.OnStyleImageMissingListener onStyleImageMissingListener);
     method public void removeOnStyleImageUnusedListener(com.mapbox.maps.plugin.delegates.listeners.OnStyleImageUnusedListener onStyleImageUnusedListener);
     method public void removeOnStyleLoadedListener(com.mapbox.maps.plugin.delegates.listeners.OnStyleLoadedListener onStyleLoadedListener);
-    method @com.mapbox.maps.MapboxExperimental public void removeStyleModel(String modelId);
     method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setBounds(com.mapbox.maps.CameraBoundsOptions options);
     method public void setCamera(com.mapbox.maps.CameraOptions cameraOptions);
     method public void setCamera(com.mapbox.maps.FreeCameraOptions freeCameraOptions);
