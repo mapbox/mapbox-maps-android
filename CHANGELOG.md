@@ -1,7 +1,6 @@
 # Changelog for Mapbox Maps SDK v10 for Android
 
 Mapbox welcomes participation and contributions from everyone.
-
 # main
 ## Features ✨ and improvements 🏁
 * Introduce a callback to be invoked when the device compass sensors need to be re-calibrated. ([1513](https://github.com/mapbox/mapbox-maps-android/pull/1513))
