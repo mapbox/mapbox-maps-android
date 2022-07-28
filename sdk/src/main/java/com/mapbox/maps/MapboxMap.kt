@@ -291,10 +291,6 @@ class MapboxMap :
         styleExtension.images.forEach {
           it.bindTo(style)
         }
-        // note - it is not strictly required to load models here, models can be loaded anytime during style load flow
-        styleExtension.models.forEach {
-          it.bindTo(style)
-        }
       },
       onMapLoadErrorListener = onMapLoadErrorListener,
     )

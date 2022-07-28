@@ -9,7 +9,6 @@ import com.mapbox.maps.extension.style.image.ImageNinePatchExtensionImpl
 import com.mapbox.maps.extension.style.layers.*
 import com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName
 import com.mapbox.maps.extension.style.light.generated.Light
-import com.mapbox.maps.extension.style.model.ModelExtensionImpl
 import com.mapbox.maps.extension.style.projection.generated.Projection
 import com.mapbox.maps.extension.style.sources.*
 import com.mapbox.maps.extension.style.terrain.generated.Terrain
@@ -35,11 +34,6 @@ class StyleExtensionImpl private constructor(
    * The images of the style.
    */
   override val images = builder.images.toList()
-
-  /**
-   * The models of the style.
-   */
-  override val models: List<StyleContract.StyleModelExtension> = builder.models.toList()
 
   /**
    * The layers of the style.
@@ -78,7 +72,6 @@ class StyleExtensionImpl private constructor(
     internal val layers = mutableListOf<Pair<Layer, LayerPosition>>()
     internal val sources = mutableListOf<Source>()
     internal val images = mutableListOf<StyleContract.StyleImageExtension>()
-    internal val models = mutableListOf<StyleContract.StyleModelExtension>()
     internal var light: Light? = null
     internal var terrain: Terrain? = null
     internal var atmosphere: Atmosphere? = null
@@ -166,16 +159,6 @@ class StyleExtensionImpl private constructor(
     @JvmName("addImage")
     operator fun ImageExtensionImpl.unaryPlus() {
       images.add(this)
-    }
-
-    /**
-     * Extension function for [ModelExtensionImpl] to overload Unary operations.
-     *
-     * Apply +[ModelExtensionImpl] will add the source to the [StyleExtensionImpl].
-     */
-    @JvmName("addModel")
-    operator fun ModelExtensionImpl.unaryPlus() {
-      models.add(this)
     }
 
     /**

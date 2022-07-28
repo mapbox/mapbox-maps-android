@@ -31,7 +31,6 @@ fun StyleManagerInterface.getLayer(layerId: String): Layer? {
       "line" -> LineLayer(layerId, this.getStyleLayerProperty(layerId, "source").unwrap()).also { it.delegate = this }
       "raster" -> RasterLayer(layerId, this.getStyleLayerProperty(layerId, "source").unwrap()).also { it.delegate = this }
       "symbol" -> SymbolLayer(layerId, this.getStyleLayerProperty(layerId, "source").unwrap()).also { it.delegate = this }
-      "model" -> ModelLayer(layerId, this.getStyleLayerProperty(layerId, "source").unwrap()).also { it.delegate = this }
       else -> {
         logE(TAG, "Layer type: $type unknown.")
         null
