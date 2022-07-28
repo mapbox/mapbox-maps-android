@@ -52,38 +52,27 @@ class LocationComponentActivity : AppCompatActivity() {
                   Toast.makeText(context, "Clicked on location puck", Toast.LENGTH_SHORT).show()
                 }
               }
-            // Disable scroll gesture, since we are updating the camera position based on the indicator location.
-            gestures.scrollEnabled = false
-            gestures.addOnMapClickListener { point ->
-              location
-                .isLocatedAt(point) { isPuckLocatedAtPoint ->
-                  if (isPuckLocatedAtPoint) {
-                    Toast.makeText(context, "Clicked on location puck", Toast.LENGTH_SHORT).show()
-                  }
-                }
-              true
-            }
-            gestures.addOnMapLongClickListener { point ->
-              location.isLocatedAt(point) { isPuckLocatedAtPoint ->
-                if (isPuckLocatedAtPoint) {
-                  Toast.makeText(context, "Long-clicked on location puck", Toast.LENGTH_SHORT)
-                    .show()
-                }
+            true
+          }
+          gestures.addOnMapLongClickListener { point ->
+            location.isLocatedAt(point) { isPuckLocatedAtPoint ->
+              if (isPuckLocatedAtPoint) {
+                Toast.makeText(context, "Long-clicked on location puck", Toast.LENGTH_SHORT)
+                  .show()
               }
-              true
-            }
-            val locationProvider = location.getLocationProvider() as DefaultLocationProvider
-            locationProvider.addOnCompassCalibrationListener {
-              Toast.makeText(context, "Compass needs to be calibrated", Toast.LENGTH_LONG).show()
             }
             true
+          }
+          val locationProvider = location.getLocationProvider() as DefaultLocationProvider
+          locationProvider.addOnCompassCalibrationListener {
+            Toast.makeText(context, "Compass needs to be calibrated", Toast.LENGTH_LONG).show()
           }
         }
       }
     }
   }
 
-  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+  override fun onCreateOptionsMenu(menu: Menu): Boolean {
     menuInflater.inflate(R.menu.menu_location_component, menu)
     return true
   }
@@ -183,7 +172,7 @@ class LocationComponentActivity : AppCompatActivity() {
           modelUri = "asset://sportcar.glb",
           modelScale = listOf(0.1f, 0.1f, 0.1f),
           modelTranslation = listOf(0.1f, 0.1f, 0.1f),
-          modelRotation = listOf(0.0f, 0.0f, 180.0f)
+          modelRotation = listOf(0.0f, 0.0f, 180.0f),
         )
       }
     }

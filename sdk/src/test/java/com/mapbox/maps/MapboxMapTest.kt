@@ -157,9 +157,6 @@ class MapboxMapTest {
     val projection = mockk<StyleContract.StyleProjectionExtension>(relaxed = true)
     every { styleExtension.projection } returns projection
 
-    val model = mockk<StyleContract.StyleModelExtension>(relaxed = true)
-    every { styleExtension.models } returns listOf(model)
-
     val styleLoadCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
 
     val userCallbackStyleSlots = mutableListOf<Style.OnStyleLoaded?>()
@@ -187,7 +184,6 @@ class MapboxMapTest {
     verifyNo { projection.bindTo(style) }
     verifyNo { atmosphere.bindTo(style) }
     verifyNo { styleLoadCallback.onStyleLoaded(style) }
-    verifyNo { model.bindTo(style) }
 
     callbackStyleSlots.first()!!.onStyleLoaded(style)
 
@@ -199,12 +195,10 @@ class MapboxMapTest {
     verifyNo { image.bindTo(style) }
     verifyNo { layer.bindTo(style, layerPosition) }
     verifyNo { styleLoadCallback.onStyleLoaded(style) }
-    verifyNo { model.bindTo(style) }
 
     callbackStyleSpritesSlots.first()!!.onStyleLoaded(style)
 
     verify { image.bindTo(style) }
-    verify { model.bindTo(style) }
     verifyNo { source.bindTo(style) }
     verifyNo { layer.bindTo(style, layerPosition) }
     verifyNo { styleLoadCallback.onStyleLoaded(style) }
@@ -1082,28 +1076,6 @@ class MapboxMapTest {
     userCallbackStyleSlot.captured.onStyleLoaded(style)
 
     verify { style.styleTransition = options }
-  }
-
-  @Test
-  fun addStyleModel() {
-    val modelId = "modelId"
-    val modelUri = "modelUri"
-    mapboxMap.addStyleModel(modelId, modelUri)
-    verify { nativeMap.addStyleModel(modelId, modelUri) }
-  }
-
-  @Test
-  fun removeStyleModel() {
-    val modelId = "modelId"
-    mapboxMap.removeStyleModel(modelId)
-    verify { nativeMap.removeStyleModel(modelId) }
-  }
-
-  @Test
-  fun hasStyleModel() {
-    val modelId = "modelId"
-    mapboxMap.hasStyleModel(modelId)
-    verify { nativeMap.hasStyleModel(modelId) }
   }
 }
 
