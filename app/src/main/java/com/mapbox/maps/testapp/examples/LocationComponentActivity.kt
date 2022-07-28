@@ -63,10 +63,6 @@ class LocationComponentActivity : AppCompatActivity() {
             }
             true
           }
-          val locationProvider = location.getLocationProvider() as DefaultLocationProvider
-          locationProvider.addOnCompassCalibrationListener {
-            Toast.makeText(context, "Compass needs to be calibrated", Toast.LENGTH_LONG).show()
-          }
         }
       }
     }
