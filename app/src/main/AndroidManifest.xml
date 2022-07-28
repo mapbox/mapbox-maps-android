@@ -1179,6 +1179,13 @@
             <meta-data
                 android:name="@string/category"
                 android:value="@string/category_3D" />
+            android:name=".examples.style.ThirdPartyVectorSourceActivity"
+            android:description="@string/description_third_party_source"
+            android:exported="true"
+            android:label="@string/activity_third_party_source">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_styles" />
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ExampleOverviewActivity" />

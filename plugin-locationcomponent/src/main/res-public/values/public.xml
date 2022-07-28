@@ -69,7 +69,5 @@
     <public name="mapbox_locationComponentLocationPuckLocationPuck3DModelRotation_x" type="attr" />
     <public name="mapbox_locationComponentLocationPuckLocationPuck3DModelRotation_y" type="attr" />
     <public name="mapbox_locationComponentLocationPuckLocationPuck3DModelRotation_z" type="attr" />
-    <!-- Enable/Disable shadow casting for this layer -->
-    <public name="mapbox_locationComponentLocationPuckLocationPuck3DModelCastShadows" type="attr" />
 </resources>
 <!-- End of generated file. -->

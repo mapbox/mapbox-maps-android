@@ -505,7 +505,6 @@ package com.mapbox.maps.extension.style {
     method public java.util.List<com.mapbox.maps.extension.style.StyleContract.StyleImageExtension> getImages();
     method public java.util.List<kotlin.Pair<com.mapbox.maps.extension.style.StyleContract.StyleLayerExtension,com.mapbox.maps.LayerPosition>> getLayers();
     method public com.mapbox.maps.extension.style.StyleContract.StyleLightExtension? getLight();
-    method public java.util.List<com.mapbox.maps.extension.style.StyleContract.StyleModelExtension> getModels();
     method public com.mapbox.maps.extension.style.StyleContract.StyleProjectionExtension? getProjection();
     method public java.util.List<com.mapbox.maps.extension.style.StyleContract.StyleSourceExtension> getSources();
     method public String getStyleUri();
@@ -514,7 +513,6 @@ package com.mapbox.maps.extension.style {
     property public abstract java.util.List<com.mapbox.maps.extension.style.StyleContract.StyleImageExtension> images;
     property public abstract java.util.List<kotlin.Pair<com.mapbox.maps.extension.style.StyleContract.StyleLayerExtension,com.mapbox.maps.LayerPosition>> layers;
     property public abstract com.mapbox.maps.extension.style.StyleContract.StyleLightExtension? light;
-    property public abstract java.util.List<com.mapbox.maps.extension.style.StyleContract.StyleModelExtension> models;
     property public abstract com.mapbox.maps.extension.style.StyleContract.StyleProjectionExtension? projection;
     property public abstract java.util.List<com.mapbox.maps.extension.style.StyleContract.StyleSourceExtension> sources;
     property public abstract String styleUri;
@@ -530,10 +528,6 @@ package com.mapbox.maps.extension.style {
   }
 
   public static fun interface StyleContract.StyleLightExtension {
-    method public void bindTo(com.mapbox.maps.extension.style.StyleInterface delegate);
-  }
-
-  @com.mapbox.maps.MapboxExperimental public static fun interface StyleContract.StyleModelExtension {
     method public void bindTo(com.mapbox.maps.extension.style.StyleInterface delegate);
   }
 
@@ -614,7 +608,6 @@ package com.mapbox.maps.plugin {
   }
 
   public final class LocationPuck3D extends com.mapbox.maps.plugin.LocationPuck {
-    ctor public LocationPuck3D(String modelUri, java.util.List<java.lang.Float> position = listOf(0.0, 0.0), float modelOpacity = 1f, java.util.List<java.lang.Float> modelScale = listOf(1.0, 1.0, 1.0), String? modelScaleExpression = null, java.util.List<java.lang.Float> modelTranslation = listOf(0.0, 0.0, 0.0), java.util.List<java.lang.Float> modelRotation = listOf(0.0, 0.0, 90.0), @com.mapbox.maps.MapboxExperimental boolean modelCastShadows = true);
     ctor public LocationPuck3D(String modelUri, java.util.List<java.lang.Float> position = listOf(0.0, 0.0), float modelOpacity = 1f, java.util.List<java.lang.Float> modelScale = listOf(1.0, 1.0, 1.0), String? modelScaleExpression = null, java.util.List<java.lang.Float> modelTranslation = listOf(0.0, 0.0, 0.0), java.util.List<java.lang.Float> modelRotation = listOf(0.0, 0.0, 90.0));
     ctor public LocationPuck3D(String modelUri, java.util.List<java.lang.Float> position = listOf(0.0, 0.0), float modelOpacity = 1f, java.util.List<java.lang.Float> modelScale = listOf(1.0, 1.0, 1.0), String? modelScaleExpression = null, java.util.List<java.lang.Float> modelTranslation = listOf(0.0, 0.0, 0.0));
     ctor public LocationPuck3D(String modelUri, java.util.List<java.lang.Float> position = listOf(0.0, 0.0), float modelOpacity = 1f, java.util.List<java.lang.Float> modelScale = listOf(1.0, 1.0, 1.0), String? modelScaleExpression = null);
@@ -629,9 +622,7 @@ package com.mapbox.maps.plugin {
     method public String? component5();
     method public java.util.List<java.lang.Float> component6();
     method public java.util.List<java.lang.Float> component7();
-    method public boolean component8();
-    method public com.mapbox.maps.plugin.LocationPuck3D copy(String modelUri, java.util.List<java.lang.Float> position, float modelOpacity, java.util.List<java.lang.Float> modelScale, String? modelScaleExpression, java.util.List<java.lang.Float> modelTranslation, java.util.List<java.lang.Float> modelRotation, boolean modelCastShadows);
-    method public boolean getModelCastShadows();
+    method public com.mapbox.maps.plugin.LocationPuck3D copy(String modelUri, java.util.List<java.lang.Float> position, float modelOpacity, java.util.List<java.lang.Float> modelScale, String? modelScaleExpression, java.util.List<java.lang.Float> modelTranslation, java.util.List<java.lang.Float> modelRotation);
     method public float getModelOpacity();
     method public java.util.List<java.lang.Float> getModelRotation();
     method public java.util.List<java.lang.Float> getModelScale();
@@ -639,7 +630,6 @@ package com.mapbox.maps.plugin {
     method public java.util.List<java.lang.Float> getModelTranslation();
     method public String getModelUri();
     method public java.util.List<java.lang.Float> getPosition();
-    method public void setModelCastShadows(boolean modelCastShadows);
     method public void setModelOpacity(float modelOpacity);
     method public void setModelRotation(java.util.List<java.lang.Float> modelRotation);
     method public void setModelScale(java.util.List<java.lang.Float> modelScale);
@@ -647,7 +637,6 @@ package com.mapbox.maps.plugin {
     method public void setModelTranslation(java.util.List<java.lang.Float> modelTranslation);
     method public void setModelUri(String modelUri);
     method public void setPosition(java.util.List<java.lang.Float> position);
-    property public final boolean modelCastShadows;
     property public final float modelOpacity;
     property public final java.util.List<java.lang.Float> modelRotation;
     property public final java.util.List<java.lang.Float> modelScale;

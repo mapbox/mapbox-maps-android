@@ -1,6 +1,5 @@
 package com.mapbox.maps.testapp.examples
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -10,13 +9,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.expressions.dsl.generated.interpolate
-import com.mapbox.maps.extension.style.expressions.generated.Expression
-import com.mapbox.maps.extension.style.layers.addLayer
-import com.mapbox.maps.extension.style.layers.generated.fillExtrusionLayer
-import com.mapbox.maps.extension.style.layers.properties.generated.Anchor
 import com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName
-import com.mapbox.maps.extension.style.light.generated.light
-import com.mapbox.maps.extension.style.light.generated.setLight
 import com.mapbox.maps.extension.style.projection.generated.getProjection
 import com.mapbox.maps.extension.style.projection.generated.projection
 import com.mapbox.maps.extension.style.projection.generated.setProjection
@@ -48,61 +41,38 @@ class LocationComponentActivity : AppCompatActivity() {
     setContentView(binding.root)
     locationPermissionHelper = LocationPermissionHelper(WeakReference(this))
     locationPermissionHelper.checkPermissions {
-      binding.mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS) {
-        setupBuildings(it)
-        it.setLight(
-          light {
-            anchor(Anchor.MAP)
-            color(Color.YELLOW)
-            position(
-              radialCoordinate = 10.0,
-              azimuthalAngle = 40.0,
-              polarAngle = 50.0
-            )
-            castShadows(true)
-            shadowIntensity(0.7)
+      binding.mapView.apply {
+        getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS) {
+          // Disable scroll gesture, since we are updating the camera position based on the indicator location.
+          gestures.scrollEnabled = false
+          gestures.addOnMapClickListener { point ->
+            location
+              .isLocatedAt(point) { isPuckLocatedAtPoint ->
+                if (isPuckLocatedAtPoint) {
+                  Toast.makeText(context, "Clicked on location puck", Toast.LENGTH_SHORT).show()
+                }
+              }
+            true
           }
-        )
-        // Disable scroll gesture, since we are updating the camera position based on the indicator location.
-        binding.mapView.gestures.scrollEnabled = false
-        binding.mapView.gestures.addOnMapClickListener { point ->
-          binding.mapView.location
-            .isLocatedAt(point) { isPuckLocatedAtPoint ->
+          gestures.addOnMapLongClickListener { point ->
+            location.isLocatedAt(point) { isPuckLocatedAtPoint ->
               if (isPuckLocatedAtPoint) {
-                Toast.makeText(this, "Clicked on location puck", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Long-clicked on location puck", Toast.LENGTH_SHORT)
+                  .show()
               }
             }
-          true
-        }
-        binding.mapView.gestures.addOnMapLongClickListener { point ->
-          binding.mapView.location
-            .isLocatedAt(point) { isPuckLocatedAtPoint ->
-              if (isPuckLocatedAtPoint) {
-                Toast.makeText(this, "Long-clicked on location puck", Toast.LENGTH_SHORT).show()
-              }
-            }
-          true
+            true
+          }
+          val locationProvider = location.getLocationProvider() as DefaultLocationProvider
+          locationProvider.addOnCompassCalibrationListener {
+            Toast.makeText(context, "Compass needs to be calibrated", Toast.LENGTH_LONG).show()
+          }
         }
       }
     }
   }
 
-  private fun setupBuildings(style: Style) {
-    val fillExtrusionLayer = fillExtrusionLayer("3d-buildings", "composite") {
-      sourceLayer("building")
-      filter(Expression.eq(Expression.get("extrude"), Expression.literal("true")))
-      minZoom(15.0)
-      fillExtrusionColor(Color.parseColor("#aaaaaa"))
-      fillExtrusionHeight(Expression.get("height"))
-      fillExtrusionBase(Expression.get("min_height"))
-      fillExtrusionOpacity(0.6)
-      fillExtrusionAmbientOcclusionIntensity(0.3)
-      fillExtrusionAmbientOcclusionRadius(3.0)
-    }
-    style.addLayer(fillExtrusionLayer)
-  }
-
-  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+  override fun onCreateOptionsMenu(menu: Menu): Boolean {
     menuInflater.inflate(R.menu.menu_location_component, menu)
     return true
   }
@@ -203,7 +173,6 @@ class LocationComponentActivity : AppCompatActivity() {
           modelScale = listOf(0.1f, 0.1f, 0.1f),
           modelTranslation = listOf(0.1f, 0.1f, 0.1f),
           modelRotation = listOf(0.0f, 0.0f, 180.0f),
-          modelCastShadows = false
         )
       }
     }
