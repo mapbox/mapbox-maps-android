@@ -1244,18 +1244,18 @@ class ExpressionTest : BaseStyleTest() {
         literal(4.0)
       }
       literal(0)
-      literal(listOf(0.0, 0.0, 0.0))
+      literal(listOf(0.0, 0.0))
       literal(1)
-      literal(listOf(0.0, 0.0, 20.0))
+      literal(listOf(0.0, 20.0))
       literal(2)
-      literal(listOf(3.0, 0.0, 40.0))
-      literal(listOf(-3.0, 0.0, 60.0))
+      literal(listOf(0.0, 40.0))
+      literal(listOf(0.0, 60.0))
     }
-    val layer = modelLayer("id", "source") {
-      modelRotation(expression)
+    val layer = symbolLayer("id", "source") {
+      this.iconOffset(expression)
     }
     setupLayer(layer)
-    assertEquals(expression.toJson(), layer.modelRotationAsExpression?.toJson())
+    assertEquals(expression.toJson(), layer.iconOffsetAsExpression?.toJson())
   }
 
   /**
