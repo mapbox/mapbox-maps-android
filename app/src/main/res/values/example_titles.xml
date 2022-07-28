@@ -18,7 +18,6 @@
     <string name="activity_map_multi">Multi map fragments</string>
     <string name="activity_debug_mode">Debug mode</string>
     <string name="activity_fill_extrusion">Display 3D buildings</string>
-    <string name="activity_model_layer">Display 3D model in a model layer</string>
     <string name="activity_icon_property">Display multiple icon images in a symbol layer</string>
     <string name="activity_snapshotter">Create a snapshot</string>
     <string name="activity_snapshotter_dds">DDS MapSnapshotter</string>

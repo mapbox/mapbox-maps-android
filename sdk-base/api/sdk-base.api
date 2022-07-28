@@ -498,7 +498,6 @@ public abstract interface class com/mapbox/maps/extension/style/StyleContract$St
 	public abstract fun getImages ()Ljava/util/List;
 	public abstract fun getLayers ()Ljava/util/List;
 	public abstract fun getLight ()Lcom/mapbox/maps/extension/style/StyleContract$StyleLightExtension;
-	public abstract fun getModels ()Ljava/util/List;
 	public abstract fun getProjection ()Lcom/mapbox/maps/extension/style/StyleContract$StyleProjectionExtension;
 	public abstract fun getSources ()Ljava/util/List;
 	public abstract fun getStyleUri ()Ljava/lang/String;
@@ -518,10 +517,6 @@ public final class com/mapbox/maps/extension/style/StyleContract$StyleLayerExten
 }
 
 public abstract interface class com/mapbox/maps/extension/style/StyleContract$StyleLightExtension {
-	public abstract fun bindTo (Lcom/mapbox/maps/extension/style/StyleInterface;)V
-}
-
-public abstract interface class com/mapbox/maps/extension/style/StyleContract$StyleModelExtension {
 	public abstract fun bindTo (Lcom/mapbox/maps/extension/style/StyleInterface;)V
 }
 
@@ -607,8 +602,7 @@ public final class com/mapbox/maps/plugin/LocationPuck3D : com/mapbox/maps/plugi
 	public fun <init> (Ljava/lang/String;Ljava/util/List;FLjava/util/List;Ljava/lang/String;)V
 	public fun <init> (Ljava/lang/String;Ljava/util/List;FLjava/util/List;Ljava/lang/String;Ljava/util/List;)V
 	public fun <init> (Ljava/lang/String;Ljava/util/List;FLjava/util/List;Ljava/lang/String;Ljava/util/List;Ljava/util/List;)V
-	public fun <init> (Ljava/lang/String;Ljava/util/List;FLjava/util/List;Ljava/lang/String;Ljava/util/List;Ljava/util/List;Z)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/util/List;FLjava/util/List;Ljava/lang/String;Ljava/util/List;Ljava/util/List;ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/util/List;FLjava/util/List;Ljava/lang/String;Ljava/util/List;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/util/List;
 	public final fun component3 ()F
@@ -616,11 +610,9 @@ public final class com/mapbox/maps/plugin/LocationPuck3D : com/mapbox/maps/plugi
 	public final fun component5 ()Ljava/lang/String;
 	public final fun component6 ()Ljava/util/List;
 	public final fun component7 ()Ljava/util/List;
-	public final fun component8 ()Z
-	public final fun copy (Ljava/lang/String;Ljava/util/List;FLjava/util/List;Ljava/lang/String;Ljava/util/List;Ljava/util/List;Z)Lcom/mapbox/maps/plugin/LocationPuck3D;
-	public static synthetic fun copy$default (Lcom/mapbox/maps/plugin/LocationPuck3D;Ljava/lang/String;Ljava/util/List;FLjava/util/List;Ljava/lang/String;Ljava/util/List;Ljava/util/List;ZILjava/lang/Object;)Lcom/mapbox/maps/plugin/LocationPuck3D;
+	public final fun copy (Ljava/lang/String;Ljava/util/List;FLjava/util/List;Ljava/lang/String;Ljava/util/List;Ljava/util/List;)Lcom/mapbox/maps/plugin/LocationPuck3D;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/plugin/LocationPuck3D;Ljava/lang/String;Ljava/util/List;FLjava/util/List;Ljava/lang/String;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Lcom/mapbox/maps/plugin/LocationPuck3D;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getModelCastShadows ()Z
 	public final fun getModelOpacity ()F
 	public final fun getModelRotation ()Ljava/util/List;
 	public final fun getModelScale ()Ljava/util/List;
@@ -629,7 +621,6 @@ public final class com/mapbox/maps/plugin/LocationPuck3D : com/mapbox/maps/plugi
 	public final fun getModelUri ()Ljava/lang/String;
 	public final fun getPosition ()Ljava/util/List;
 	public fun hashCode ()I
-	public final fun setModelCastShadows (Z)V
 	public final fun setModelOpacity (F)V
 	public final fun setModelRotation (Ljava/util/List;)V
 	public final fun setModelScale (Ljava/util/List;)V

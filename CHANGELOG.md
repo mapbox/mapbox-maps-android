@@ -1,8 +1,8 @@
 # Changelog for Mapbox Maps SDK v10 for Android
 
 Mapbox welcomes participation and contributions from everyone.
-
 # main
+
 ## Features ✨ and improvements 🏁
 * Introduce a callback to be invoked when the device compass sensors need to be re-calibrated. ([1513](https://github.com/mapbox/mapbox-maps-android/pull/1513))
 
@@ -14,6 +14,7 @@ Mapbox welcomes participation and contributions from everyone.
 [Changes](https://github.com/mapbox/mapbox-maps-android/compare/android-v10.6.0...android-v10.7.0) since [Mapbox Maps SDK for Android 10.6.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/android-v10.6.0)
 ## Breaking changes ⚠️
 * Remove deprecated `FollowPuckViewportStateOptions.animationDurationMs` from experimental viewport plugin. ([1421](https://github.com/mapbox/mapbox-maps-android/pull/1421))
+* Remove experimental ModelLayer APIs. ([1545](https://github.com/mapbox/mapbox-maps-android/pull/1545))
 
 # Features ✨ and improvements 🏁
 * Optimise the bearing update frequency for the location puck animator. ([1398](https://github.com/mapbox/mapbox-maps-android/pull/1398))
