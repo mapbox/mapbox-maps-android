@@ -19,6 +19,8 @@ interface MapCameraManagerDelegate {
   /**
    * Convenience method that returns the camera options object for given arguments
    *
+   * This API isn't supported by Globe projection.
+   *
    * @param bounds The coordinate bounds of the map
    * @param padding The edge padding of the map
    * @param bearing The bearing of the map
@@ -35,6 +37,8 @@ interface MapCameraManagerDelegate {
 
   /**
    * Convenience method that returns the camera options object for given arguments
+   *
+   * This API isn't supported by Globe projection.
    *
    * @param coordinates The coordinates representing the bounds of the map
    * @param padding The edge padding of the map
@@ -59,6 +63,8 @@ interface MapCameraManagerDelegate {
    * Note that this method may fail if the principal point of the projection is not inside \p box or
    * if there is no sufficient screen space, defined by principal point and box, to fit the geometry.
    *
+   * This API isn't supported by Globe projection.
+   *
    * @param coordinates The coordinates representing the bounds of the map
    * @param box The box into which \p coordinates should fit
    * @param camera The camera for which zoom should be adjusted. Note that \p camera.center is required.
@@ -73,6 +79,8 @@ interface MapCameraManagerDelegate {
 
   /**
    * Convenience method that returns the camera options object for given arguments
+   *
+   * This API isn't supported by Globe projection.
    *
    * @param geometry The geometry of the map
    * @param padding The edge padding of the map
@@ -94,6 +102,8 @@ interface MapCameraManagerDelegate {
    * Note that if the given `camera` shows the antimeridian, the returned wrapped [CoordinateBounds]
    * might not represent the minimum bounding box.
    *
+   * This API isn't supported by Globe projection.
+   *
    * @param camera The [CameraOptions] to use for calculating [CoordinateBounds].
    *
    * @return The [CoordinateBounds] object representing a given `camera`.
@@ -106,6 +116,8 @@ interface MapCameraManagerDelegate {
    *
    * This method is useful if the `camera` shows the antimeridian.
    *
+   * This API isn't supported by Globe projection.
+   *
    * @param camera The [CameraOptions] to use for calculating [CoordinateBounds].
    *
    * @return The [CoordinateBounds] object representing a given `camera`.
@@ -114,6 +126,8 @@ interface MapCameraManagerDelegate {
 
   /**
    * Returns the coordinate bounds and zoom for a given camera.
+   *
+   * This API isn't supported by Globe projection.
    *
    * @param camera The camera information to use
    *
@@ -127,6 +141,8 @@ interface MapCameraManagerDelegate {
 
   /**
    * Returns the unwrapped coordinate bounds and zoom for a given camera.
+   *
+   * This API isn't supported by Globe projection.
    *
    * @param camera The camera information to use
    *
@@ -143,6 +159,8 @@ interface MapCameraManagerDelegate {
    * The screen coordinate is in \link MapOptions#size platform pixels \endlink relative to the top left
    * of the map (not of the whole screen).
    *
+   * This API isn't supported by Globe projection.
+   *
    * @param coordinate A geographical coordinate on the map to convert to a screen coordinate.
    *
    * @return Returns a screen coordinate on the screen in \link MapOptions#size platform pixels \endlink.
@@ -155,6 +173,8 @@ interface MapCameraManagerDelegate {
    *
    * The screen coordinate is in \link MapOptions#size platform pixels \endlink relative to the top left
    * of the map (not of the whole screen).
+   *
+   * This API isn't supported by Globe projection.
    *
    * @param pixel A screen coordinate on the screen in \link MapOptions#size platform pixels \endlink.
    *
@@ -170,6 +190,8 @@ interface MapCameraManagerDelegate {
    * The screen coordinates are in \link MapOptions#size platform pixels \endlink relative to the top left
    * of the map (not of the whole screen).
    *
+   * This API isn't supported by Globe projection.
+   *
    * @param coordinates A batch of geographical coordinates on the map to convert to screen coordinates.
    *
    * @return Returns a batch of screen coordinates on the screen in \link MapOptions#size platform pixels \endlink.
@@ -182,6 +204,8 @@ interface MapCameraManagerDelegate {
    *
    * The screen coordinates are in \link MapOptions#size platform pixels \endlink relative to the top left
    * of the map (not of the whole screen).
+   *
+   * This API isn't supported by Globe projection.
    *
    * @param pixels A batch of screen coordinates on the screen in \link MapOptions#size platform pixels \endlink.
    *
