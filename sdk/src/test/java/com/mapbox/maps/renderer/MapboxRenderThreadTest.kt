@@ -109,6 +109,7 @@ class MapboxRenderThreadTest {
   fun cleanup() {
     renderHandlerThread.stop()
     unmockkStatic("com.mapbox.maps.MapboxLogger")
+    unmockkAll()
   }
 
   @Test
