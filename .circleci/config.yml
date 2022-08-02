@@ -128,7 +128,7 @@ commands:
     steps:
       - run:
           name: Run JVM unit tests & create jacoco code coverage report
-          no_output_timeout: 30m
+          no_output_timeout: 15m
           command: ./gradlew jacocoTestDebugUnitTestReport
 #      - run:
 #          name: Upload codecov
