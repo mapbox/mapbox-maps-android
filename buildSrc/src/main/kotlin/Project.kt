@@ -112,7 +112,7 @@ object Versions {
   const val mapboxCommon = "22.1.0"
   const val mapboxAndroidCore = "5.0.2"
   const val mapboxAndroidTelemetry = "8.1.5"
-  const val androidxCore = "1.8.0"
+  const val androidxCore = "1.7.0" // last version compatible with kotlin 1.5.31
   const val androidxFragmentTesting = "1.5.0"
   const val androidxAnnotation = "1.1.0"
   const val androidxAppcompat = "1.3.0"

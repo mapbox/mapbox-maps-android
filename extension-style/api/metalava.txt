@@ -4165,8 +4165,6 @@ package com.mapbox.maps.extension.style.light.generated {
     method public com.mapbox.maps.extension.style.light.generated.Light anchor(com.mapbox.maps.extension.style.layers.properties.generated.Anchor anchor);
     method public com.mapbox.maps.extension.style.light.generated.Light anchor(com.mapbox.maps.extension.style.expressions.generated.Expression anchor);
     method public void bindTo(com.mapbox.maps.extension.style.StyleInterface delegate);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.light.generated.Light castShadows(boolean castShadows);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.light.generated.Light castShadows(com.mapbox.maps.extension.style.expressions.generated.Expression castShadows);
     method public com.mapbox.maps.extension.style.light.generated.Light color(@ColorInt int color);
     method public com.mapbox.maps.extension.style.light.generated.Light color(String color);
     method public com.mapbox.maps.extension.style.light.generated.Light color(com.mapbox.maps.extension.style.expressions.generated.Expression color);
@@ -4174,8 +4172,6 @@ package com.mapbox.maps.extension.style.light.generated {
     method public com.mapbox.maps.extension.style.light.generated.Light colorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.properties.generated.Anchor? getAnchor();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getAnchorAsExpression();
-    method public Boolean? getCastShadows();
-    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getCastShadowsAsExpression();
     method public String? getColor();
     method @ColorInt public Integer? getColorAsColorInt();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getColorAsExpression();
@@ -4186,9 +4182,6 @@ package com.mapbox.maps.extension.style.light.generated {
     method public com.mapbox.maps.extension.style.light.LightPosition? getPosition();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getPositionAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getPositionTransition();
-    method public Double? getShadowIntensity();
-    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getShadowIntensityAsExpression();
-    method public com.mapbox.maps.extension.style.types.StyleTransition? getShadowIntensityTransition();
     method public com.mapbox.maps.extension.style.light.generated.Light intensity(double intensity);
     method public com.mapbox.maps.extension.style.light.generated.Light intensity(com.mapbox.maps.extension.style.expressions.generated.Expression intensity);
     method public com.mapbox.maps.extension.style.light.generated.Light intensityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -4198,14 +4191,8 @@ package com.mapbox.maps.extension.style.light.generated {
     method public com.mapbox.maps.extension.style.light.generated.Light position(com.mapbox.maps.extension.style.expressions.generated.Expression position);
     method public com.mapbox.maps.extension.style.light.generated.Light positionTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.light.generated.Light positionTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.light.generated.Light shadowIntensity(double shadowIntensity);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.light.generated.Light shadowIntensity(com.mapbox.maps.extension.style.expressions.generated.Expression shadowIntensity);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.light.generated.Light shadowIntensityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.light.generated.Light shadowIntensityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     property public final com.mapbox.maps.extension.style.layers.properties.generated.Anchor? anchor;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? anchorAsExpression;
-    property public final Boolean? castShadows;
-    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? castShadowsAsExpression;
     property public final String? color;
     property @ColorInt public final Integer? colorAsColorInt;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? colorAsExpression;
@@ -4216,9 +4203,6 @@ package com.mapbox.maps.extension.style.light.generated {
     property public final com.mapbox.maps.extension.style.light.LightPosition? position;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? positionAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? positionTransition;
-    property public final Double? shadowIntensity;
-    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? shadowIntensityAsExpression;
-    property public final com.mapbox.maps.extension.style.types.StyleTransition? shadowIntensityTransition;
     field public static final com.mapbox.maps.extension.style.light.generated.Light.Companion Companion;
   }
 
@@ -4228,8 +4212,6 @@ package com.mapbox.maps.extension.style.light.generated {
   @com.mapbox.maps.extension.style.types.LightDsl public interface LightDslReceiver {
     method public com.mapbox.maps.extension.style.light.generated.Light anchor(com.mapbox.maps.extension.style.layers.properties.generated.Anchor anchor = com.mapbox.maps.extension.style.layers.properties.generated.Anchor.VIEWPORT);
     method public com.mapbox.maps.extension.style.light.generated.Light anchor(com.mapbox.maps.extension.style.expressions.generated.Expression anchor);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.light.generated.Light castShadows(boolean castShadows = false);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.light.generated.Light castShadows(com.mapbox.maps.extension.style.expressions.generated.Expression castShadows);
     method public com.mapbox.maps.extension.style.light.generated.Light color(@ColorInt int color);
     method public com.mapbox.maps.extension.style.light.generated.Light color(String color = "#ffffff");
     method public com.mapbox.maps.extension.style.light.generated.Light color(com.mapbox.maps.extension.style.expressions.generated.Expression color);
@@ -4244,10 +4226,6 @@ package com.mapbox.maps.extension.style.light.generated {
     method public com.mapbox.maps.extension.style.light.generated.Light position(com.mapbox.maps.extension.style.expressions.generated.Expression position);
     method public com.mapbox.maps.extension.style.light.generated.Light positionTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.light.generated.Light positionTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.light.generated.Light shadowIntensity(double shadowIntensity = 0.2);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.light.generated.Light shadowIntensity(com.mapbox.maps.extension.style.expressions.generated.Expression shadowIntensity);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.light.generated.Light shadowIntensityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.light.generated.Light shadowIntensityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
   }
 
   public final class LightKt {

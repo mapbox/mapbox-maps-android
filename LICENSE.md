@@ -70,7 +70,7 @@ License: [The Apache Software License, Version 2.0](http://www.apache.org/licens
 
 Mapbox Maps Android uses portions of the Android Support Library compat.
 
-URL: [https://developer.android.com/jetpack/androidx/releases/core#1.8.0](https://developer.android.com/jetpack/androidx/releases/core#1.8.0)
+URL: [https://developer.android.com/jetpack/androidx/releases/core#1.7.0](https://developer.android.com/jetpack/androidx/releases/core#1.7.0)
 
 License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -94,7 +94,7 @@ License: [The Apache Software License, Version 2.0](http://www.apache.org/licens
 
 Mapbox Maps Android uses portions of the Core Kotlin Extensions.
 
-URL: [https://developer.android.com/jetpack/androidx/releases/core#1.8.0](https://developer.android.com/jetpack/androidx/releases/core#1.8.0)
+URL: [https://developer.android.com/jetpack/androidx/releases/core#1.7.0](https://developer.android.com/jetpack/androidx/releases/core#1.7.0)
 
 License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
