@@ -714,6 +714,9 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     }
 
     private fun startDragging(annotation: T): Boolean {
+      if (!annotation.isDraggable) {
+        return false
+      }
       dragListeners.forEach { it.onAnnotationDragStarted(annotation) }
       draggingAnnotation = annotation
       return true
