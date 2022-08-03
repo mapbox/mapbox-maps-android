@@ -562,6 +562,25 @@ class MapboxMap :
   }
 
   /**
+   * Get the Style of the map synchronously, even before style was initially loaded
+   * or when it is transitioning.
+   *
+   * This function should not be used in most cases as accessing and updating Style object
+   * before style loaded and when style is transitioning is not completely safe, please consider
+   * using async [getStyle] instead.
+   *
+   * @return same style as synchronous [getStyle] when Style is loaded and internal Style object otherwise
+   */
+  @MapboxExperimental
+  fun getInternalStyle(): StyleManagerInterface {
+    return if (style == null) {
+      nativeMap
+    } else {
+      style as Style
+    }
+  }
+
+  /**
    * Convert to a camera options from a given LatLngBounds, padding, bearing and pitch values.
    *
    * In order for this method to produce correct results [MapView] must be already

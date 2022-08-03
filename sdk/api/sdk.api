@@ -202,6 +202,7 @@ public final class com/mapbox/maps/MapboxMap : com/mapbox/maps/ObservableInterfa
 	public final fun getGeoJsonClusterLeaves (Ljava/lang/String;Lcom/mapbox/geojson/Feature;JLcom/mapbox/maps/QueryFeatureExtensionCallback;)V
 	public final fun getGeoJsonClusterLeaves (Ljava/lang/String;Lcom/mapbox/geojson/Feature;Lcom/mapbox/maps/QueryFeatureExtensionCallback;)V
 	public static synthetic fun getGeoJsonClusterLeaves$default (Lcom/mapbox/maps/MapboxMap;Ljava/lang/String;Lcom/mapbox/geojson/Feature;JJLcom/mapbox/maps/QueryFeatureExtensionCallback;ILjava/lang/Object;)V
+	public final fun getInternalStyle ()Lcom/mapbox/maps/StyleManagerInterface;
 	public fun getMapOptions ()Lcom/mapbox/maps/MapOptions;
 	public fun getMetersPerPixelAtLatitude (D)D
 	public fun getMetersPerPixelAtLatitude (DD)D
