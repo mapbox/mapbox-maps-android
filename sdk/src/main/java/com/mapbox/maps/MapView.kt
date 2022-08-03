@@ -113,7 +113,6 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   override fun onAttachedToWindow() {
     super.onAttachedToWindow()
     mapController.onAttachedToWindow(this)
-    mapController.setScreenRefreshRate(display.refreshRate.toInt())
   }
 
   @SuppressLint("CustomViewStyleable")
@@ -186,6 +185,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    * @see android.app.Fragment.onStart
    */
   override fun onStart() {
+    mapController.setScreenRefreshRate(display.refreshRate.toInt())
     mapController.onStart()
   }
 

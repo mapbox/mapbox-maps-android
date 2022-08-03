@@ -172,7 +172,7 @@ internal class FpsManager(
     private const val USER_DEFINED_REFRESH_RATE_NOT_SET = -1
     private const val USER_DEFINED_RATIO_NOT_SET = 0.0
     private const val SCREEN_METRICS_NOT_DEFINED = -1
-    private const val LOG_STATISTICS = true
+    private const val LOG_STATISTICS = false
     private const val IDLE_TIMEOUT_MS = 50L
 
     /**
