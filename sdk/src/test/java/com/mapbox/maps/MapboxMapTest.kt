@@ -237,6 +237,18 @@ class MapboxMapTest {
   }
 
   @Test
+  fun getInternalStyleWhenStyleLoaded() {
+    val style = mockk<Style>()
+    mapboxMap.style = style
+    assertEquals(style, mapboxMap.getInternalStyle())
+  }
+
+  @Test
+  fun getInternalStyleWhenStyleNotLoaded() {
+    assertEquals(nativeMap, mapboxMap.getInternalStyle())
+  }
+
+  @Test
   fun getResourceOptions() {
     mapboxMap.getResourceOptions()
     verify { nativeMap.resourceOptions }
