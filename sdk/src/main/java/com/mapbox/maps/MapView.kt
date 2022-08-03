@@ -113,7 +113,6 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   override fun onAttachedToWindow() {
     super.onAttachedToWindow()
     mapController.onAttachedToWindow(this)
-    mapController.setScreenRefreshRate(display.refreshRate.toInt())
   }
 
   @SuppressLint("CustomViewStyleable")
@@ -186,6 +185,9 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    * @see android.app.Fragment.onStart
    */
   override fun onStart() {
+    // display should not be null at this point but to be sure we will fallback to DEFAULT_FPS
+    val screenRefreshRate = display?.refreshRate?.toInt() ?: DEFAULT_FPS
+    mapController.setScreenRefreshRate(screenRefreshRate)
     mapController.onStart()
   }
 
@@ -364,6 +366,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   companion object {
     internal const val DEFAULT_ANTIALIASING_SAMPLE_COUNT = 1
     internal const val MAX_POSSIBLE_FPS = 1000L
+    internal const val DEFAULT_FPS = 60
     /**
      * Static method to check if [MapView] could properly render on this device.
      * This method may take some time on slow devices.

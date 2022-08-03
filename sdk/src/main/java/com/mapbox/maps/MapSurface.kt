@@ -50,11 +50,10 @@ class MapSurface @JvmOverloads constructor(
    */
   fun surfaceCreated() {
     renderer.surfaceCreated()
-    mapController.setScreenRefreshRate(
-      (context.getSystemService(Context.WINDOW_SERVICE) as WindowManager)
-        .defaultDisplay
-        .refreshRate.toInt()
-    )
+    // display should not be null at this point but to be sure we will fallback to DEFAULT_FPS
+    val screenRefreshRate = (context.getSystemService(Context.WINDOW_SERVICE) as WindowManager)
+      .defaultDisplay?.refreshRate?.toInt() ?: MapView.DEFAULT_FPS
+    mapController.setScreenRefreshRate(screenRefreshRate)
   }
 
   /**
