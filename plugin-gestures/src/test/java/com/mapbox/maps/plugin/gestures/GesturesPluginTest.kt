@@ -852,12 +852,17 @@ class GesturesPluginTest {
       0.0,
       1.0
     )
+    val centerScreen = ScreenCoordinate(50.0, 50.0)
+    presenter.centerScreen = centerScreen
     val listener: OnShoveListener = mockk(relaxed = true)
     val gestureDetector = mockk<ShoveGestureDetector>(relaxUnitFun = true)
     presenter.addOnShoveListener(listener)
-    val result = presenter.handleShove(gestureDetector, 15.0f)
+    val result = presenter.handleShove(gestureDetector, -15.0f)
+    val resultCameraOptions = slot<CameraOptions>()
     assert(result)
-    verify(exactly = 1) { cameraAnimationsPlugin.easeTo(any(), any()) }
+    verify(exactly = 1) { cameraAnimationsPlugin.easeTo(capture(resultCameraOptions), any()) }
+    assertEquals(resultCameraOptions.captured.pitch!!, 2.5, EPS)
+    assertEquals(resultCameraOptions.captured.anchor, centerScreen)
   }
 
   @Test
