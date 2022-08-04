@@ -12,11 +12,11 @@ internal class FpsManager(
   private val handler: Handler
 ) {
   private var userRefreshRate = USER_DEFINED_REFRESH_RATE_NOT_SET
-  private var userDefinedRatio = USER_DEFINED_RATIO_NOT_SET
+  private var userToScreenRefreshRateRatio = USER_TO_SCREEN_REFRESH_RATIO_NOT_SET
 
   private var screenRefreshRate = SCREEN_METRICS_NOT_DEFINED
   private var screenRefreshPeriodNs = -1L
-  private var previousRefreshNs = -1L
+  private var previousFrameTimeNs = -1L
   private var previousDrawnFrameIndex = 0
   private var frameRenderTimeAccumulatedNs = 0L
 
@@ -33,8 +33,8 @@ internal class FpsManager(
     this.screenRefreshRate = screenRefreshRate
     screenRefreshPeriodNs = ONE_SECOND_NS / screenRefreshRate
     if (userRefreshRate != USER_DEFINED_REFRESH_RATE_NOT_SET) {
-      userDefinedRatio = userRefreshRate.toDouble() / screenRefreshRate
-      logI(TAG, "User defined ratio is $userDefinedRatio")
+      userToScreenRefreshRateRatio = userRefreshRate.toDouble() / screenRefreshRate
+      logI(TAG, "User defined ratio is $userToScreenRefreshRateRatio")
     }
     if (LOG_STATISTICS) {
       logI(
@@ -50,8 +50,8 @@ internal class FpsManager(
       userRefreshRate = refreshRate
       logI(TAG, "User set max FPS to $userRefreshRate")
       if (screenRefreshRate != SCREEN_METRICS_NOT_DEFINED) {
-        userDefinedRatio = userRefreshRate.toDouble() / screenRefreshRate
-        logI(TAG, "User defined ratio is $userDefinedRatio")
+        userToScreenRefreshRateRatio = userRefreshRate.toDouble() / screenRefreshRate
+        logI(TAG, "User defined ratio is $userToScreenRefreshRateRatio")
       }
     }
   }
@@ -63,30 +63,14 @@ internal class FpsManager(
    */
   fun preRender(frameTimeNs: Long): Boolean {
     // no need to perform neither pacing nor FPS calculation when setMaxFps / setOnFpsChangedListener was not called by the user
-    if (userDefinedRatio == USER_DEFINED_RATIO_NOT_SET && fpsChangedListener == null) {
+    if (userToScreenRefreshRateRatio == USER_TO_SCREEN_REFRESH_RATIO_NOT_SET && fpsChangedListener == null) {
       return true
     }
     // clear any scheduled task as new render call is about to happen
     handler.removeCallbacksAndMessages(fpsManagerToken)
-    preRenderTimeNs = System.nanoTime()
-    var skippedNow = 0
-    // check if we did miss VSYNC deadline meaning too much work was done in previous doFrame
-    if (previousRefreshNs != -1L && frameTimeNs - previousRefreshNs > screenRefreshPeriodNs + ONE_MILLISECOND_NS) {
-      skippedNow =
-        ((frameTimeNs - previousRefreshNs) / (screenRefreshPeriodNs + ONE_MILLISECOND_NS)).toInt()
-      choreographerSkips += skippedNow
-    }
-    previousRefreshNs = frameTimeNs
-    // we always increase choreographer tick by one + add number of skipped frames for consistent results
-    choreographerTicks += skippedNow + 1
-    if (skippedNow > 0 && LOG_STATISTICS) {
-      logW(
-        TAG,
-        "Skipped $skippedNow VSYNC pulses since last actual render," +
-          " total skipped in measurement period $choreographerSkips / $choreographerTicks"
-      )
-    }
-    if (userDefinedRatio != USER_DEFINED_RATIO_NOT_SET) {
+    // update frame stats, count skipped / total VSYNC events
+    updateFrameStats(frameTimeNs)
+    if (userToScreenRefreshRateRatio != USER_TO_SCREEN_REFRESH_RATIO_NOT_SET) {
       return performPacing()
     }
     return true
@@ -122,14 +106,58 @@ internal class FpsManager(
     fpsChangedListener = null
   }
 
+  private fun updateFrameStats(frameTimeNs: Long) {
+    preRenderTimeNs = System.nanoTime()
+    var skippedNow = 0
+    // check if we did miss VSYNC deadline meaning too much work was done in previous doFrame
+    if (previousFrameTimeNs != -1L && frameTimeNs - previousFrameTimeNs > screenRefreshPeriodNs + ONE_MILLISECOND_NS) {
+      skippedNow =
+        ((frameTimeNs - previousFrameTimeNs) / (screenRefreshPeriodNs + ONE_MILLISECOND_NS)).toInt()
+      choreographerSkips += skippedNow
+    }
+    previousFrameTimeNs = frameTimeNs
+    // we always increase choreographer tick by one + add number of skipped frames for consistent results
+    choreographerTicks += skippedNow + 1
+    if (skippedNow > 0 && LOG_STATISTICS) {
+      logW(
+        TAG,
+        "Skipped $skippedNow VSYNC pulses since last actual render," +
+          " total skipped in measurement period $choreographerSkips / $choreographerTicks"
+      )
+    }
+  }
+
   private fun calculateFpsAndReset(listener: OnFpsChangedListener) {
     handler.removeCallbacksAndMessages(fpsManagerToken)
     calculateFps(listener)
-    previousRefreshNs = -1
+    previousFrameTimeNs = -1
   }
 
+  /**
+   * Pacing algorithm relies on current choreographer tick
+   * for the measuring interval in (0; screenRefreshRate] range (that also means one second time).
+   *
+   * We actually proceed with drawing only when we change integer part of the index we calculate.
+   *
+   * E.g. if we wish to have 24 FPS on a 60 FPS screen, the [userToScreenRefreshRateRatio] will be 0.4
+   * so that's how we will render them:
+   *
+   * --------------------------------------------------
+   * choreographerTicks | drawnFrameIndex | need render
+   * --------------------------------------------------
+   *        1           |       0.4       |   false
+   *        2           |       0.8       |   false
+   *        3           |       1.2       |   true
+   *        4           |       1.6       |   false
+   *        5           |       2.0       |   true
+   *                        ...
+   *       60           |       24        |   true
+   *                 // reset counters
+   *        1           |       0.4       |   false
+   *        2           |       0.8       |   false
+   */
   private fun performPacing(): Boolean {
-    val drawnFrameIndex = (choreographerTicks * userDefinedRatio).toInt()
+    val drawnFrameIndex = (choreographerTicks * userToScreenRefreshRateRatio).toInt()
     if (LOG_STATISTICS) {
       logI(
         TAG,
@@ -169,7 +197,7 @@ internal class FpsManager(
   private companion object {
     private const val TAG = "Mbgl-FpsManager"
     private const val USER_DEFINED_REFRESH_RATE_NOT_SET = -1
-    private const val USER_DEFINED_RATIO_NOT_SET = 0.0
+    private const val USER_TO_SCREEN_REFRESH_RATIO_NOT_SET = 0.0
     private const val SCREEN_METRICS_NOT_DEFINED = -1
     private const val LOG_STATISTICS = true
     private const val IDLE_TIMEOUT_MS = 50L

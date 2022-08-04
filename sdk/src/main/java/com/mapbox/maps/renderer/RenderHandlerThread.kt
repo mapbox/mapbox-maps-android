@@ -32,9 +32,8 @@ internal class RenderHandlerThread {
   fun start(): Handler {
     handlerThread = HandlerThread(HANDLE_THREAD_NAME, THREAD_PRIORITY_DISPLAY)
     handlerThread.start()
-    Handler(handlerThread.looper).also {
+    return Handler(handlerThread.looper).also {
       handler = it
-      return it
     }
   }
 
