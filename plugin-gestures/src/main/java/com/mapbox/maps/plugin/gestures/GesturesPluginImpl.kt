@@ -71,7 +71,8 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
 
   // FocalPoint
   private var doubleTapFocalPoint = ScreenCoordinate(0.0, 0.0)
-  private var centerScreen = doubleTapFocalPoint
+  @VisibleForTesting(otherwise = PRIVATE)
+  internal var centerScreen = doubleTapFocalPoint
 
   // Scale
   private var minimumGestureSpeed: Float = 0f
@@ -1047,8 +1048,9 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
       pitch - (SHOVE_PIXEL_CHANGE_FACTOR * (deltaPixelsSinceLast + deferredShove))
     deferredShove = 0.0
     pitch = clamp(optimizedPitch, MINIMUM_PITCH, MAXIMUM_PITCH)
+    // changing pitch always should happen relative to the screen center otherwise camera may fly away
     easeToImmediately(
-      CameraOptions.Builder().pitch(pitch).build(),
+      CameraOptions.Builder().anchor(centerScreen).pitch(pitch).build(),
       actionAfter = { notifyOnShoveListeners(detector) }
     )
     return true

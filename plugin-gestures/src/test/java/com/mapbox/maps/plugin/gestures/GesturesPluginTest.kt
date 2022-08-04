@@ -17,6 +17,7 @@ import com.mapbox.android.gestures.*
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
+import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.plugin.ScrollMode
@@ -852,12 +853,18 @@ class GesturesPluginTest {
       0.0,
       1.0
     )
+    val centerScreen = ScreenCoordinate(50.0, 50.0)
+    presenter.centerScreen = centerScreen
     val listener: OnShoveListener = mockk(relaxed = true)
     val gestureDetector = mockk<ShoveGestureDetector>(relaxUnitFun = true)
     presenter.addOnShoveListener(listener)
-    val result = presenter.handleShove(gestureDetector, 15.0f)
+    val result = presenter.handleShove(gestureDetector, -15.0f)
+    val expectedCameraOptions = cameraOptions {
+      pitch(2.500000022351742)
+      anchor(centerScreen)
+    }
     assert(result)
-    verify(exactly = 1) { cameraAnimationsPlugin.easeTo(any(), any()) }
+    verify(exactly = 1) { cameraAnimationsPlugin.easeTo(expectedCameraOptions, any()) }
   }
 
   @Test
