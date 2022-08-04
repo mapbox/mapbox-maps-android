@@ -26,6 +26,7 @@ public final class com/mapbox/maps/plugin/locationcomponent/LocationComponentCon
 	public static final field MAX_ANIMATION_DURATION_MS J
 	public static final field MODEL_LAYER Ljava/lang/String;
 	public static final field MODEL_SOURCE Ljava/lang/String;
+	public static final field PULSING_MAX_RADIUS_FOLLOW_ACCURACY F
 	public static final field SHADOW_ICON Ljava/lang/String;
 	public static final field TOP_ICON Ljava/lang/String;
 	public static final field TRANSITION_ANIMATION_DURATION_MS J

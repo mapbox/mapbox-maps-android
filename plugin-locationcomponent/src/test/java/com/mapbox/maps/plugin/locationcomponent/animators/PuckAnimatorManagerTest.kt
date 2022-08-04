@@ -33,7 +33,7 @@ class PuckAnimatorManagerTest {
   private val accuracyRadiusAnimator: PuckAccuracyRadiusAnimator =
     PuckAccuracyRadiusAnimator(mockk(relaxUnitFun = true))
   private val pulsingAnimator: PuckPulsingAnimator = mockk(relaxed = true)
-
+  private val pixelRatio: Float = 1.0f
   @Before
   fun setUp() {
     puckAnimatorManager = PuckAnimatorManager(
@@ -43,7 +43,8 @@ class PuckAnimatorManagerTest {
       bearingAnimator,
       positionAnimator,
       pulsingAnimator,
-      accuracyRadiusAnimator
+      accuracyRadiusAnimator,
+      pixelRatio
     )
   }
 
