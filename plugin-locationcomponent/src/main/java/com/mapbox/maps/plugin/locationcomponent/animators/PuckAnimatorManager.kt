@@ -13,14 +13,15 @@ import com.mapbox.maps.util.MathUtils
 internal class PuckAnimatorManager(
   indicatorPositionChangedListener: OnIndicatorPositionChangedListener,
   indicatorBearingChangedListener: OnIndicatorBearingChangedListener,
-  indicatorAccuracyRadiusChangedListener: OnIndicatorAccuracyRadiusChangedListener
+  indicatorAccuracyRadiusChangedListener: OnIndicatorAccuracyRadiusChangedListener,
+  pixelRatio: Float
 ) {
 
   private var bearingAnimator = PuckBearingAnimator(indicatorBearingChangedListener)
   private var positionAnimator = PuckPositionAnimator(indicatorPositionChangedListener)
   private var accuracyRadiusAnimator =
     PuckAccuracyRadiusAnimator(indicatorAccuracyRadiusChangedListener)
-  private var pulsingAnimator = PuckPulsingAnimator()
+  private var pulsingAnimator = PuckPulsingAnimator(pixelRatio)
 
   @VisibleForTesting(otherwise = PRIVATE)
   constructor(
@@ -30,11 +31,13 @@ internal class PuckAnimatorManager(
     bearingAnimator: PuckBearingAnimator,
     positionAnimator: PuckPositionAnimator,
     pulsingAnimator: PuckPulsingAnimator,
-    radiusAnimator: PuckAccuracyRadiusAnimator
+    radiusAnimator: PuckAccuracyRadiusAnimator,
+    pixelRatio: Float
   ) : this(
     indicatorPositionChangedListener,
     indicatorBearingChangedListener,
-    indicatorAccuracyRadiusChangedListener
+    indicatorAccuracyRadiusChangedListener,
+    pixelRatio
   ) {
     this.bearingAnimator = bearingAnimator
     this.positionAnimator = positionAnimator
@@ -94,6 +97,18 @@ internal class PuckAnimatorManager(
     options: (ValueAnimator.() -> Unit)?
   ) {
     accuracyRadiusAnimator.animate(*targets.toTypedArray(), options = options)
+  }
+
+  fun updatePulsingRadius(target: Double, settings: LocationComponentSettings) {
+    pulsingAnimator.apply {
+      enabled = settings.pulsingEnabled
+      if (settings.pulsingEnabled) {
+        maxRadius = target
+        animateInfinite()
+      } else {
+        cancelRunning()
+      }
+    }
   }
 
   fun applySettings2(settings2: LocationComponentSettings2) {

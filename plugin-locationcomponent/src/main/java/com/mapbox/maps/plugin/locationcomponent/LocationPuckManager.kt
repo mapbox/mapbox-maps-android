@@ -169,7 +169,11 @@ internal class LocationPuckManager(
     )
   }
 
-  fun updateCurrentBearing(vararg bearings: Double, options: (ValueAnimator.() -> Unit)? = null, forceUpdate: Boolean = false) {
+  fun updateCurrentBearing(
+    vararg bearings: Double,
+    options: (ValueAnimator.() -> Unit)? = null,
+    forceUpdate: Boolean = false
+  ) {
     // Skip bearing updates if the change from the lastBearing is too small, thus avoid unnecessary calls to gl-native.
     if (!forceUpdate && (abs(bearings.last() - lastBearing) < BEARING_UPDATE_THRESHOLD)) {
       return
@@ -187,6 +191,23 @@ internal class LocationPuckManager(
       *targets,
       options = options
     )
+    updateMaxPulsingRadiusToFollowAccuracyRing(*radius)
+  }
+
+  /**
+   * Update maximum radius for pulsing puck to follow location accuracy radius.
+   * since pulsing radius is in pixels and location accuracy is in meters, we convert meters to pixel using
+   * projection delegate.
+   */
+  private fun updateMaxPulsingRadiusToFollowAccuracyRing(vararg radius: Double) {
+    if (settings.pulsingMaxRadius.toInt() == LocationComponentConstants.PULSING_MAX_RADIUS_FOLLOW_ACCURACY.toInt()) {
+      val metersPerPixelAtLocation =
+        delegateProvider.mapProjectionDelegate.getMetersPerPixelAtLatitude(
+          delegateProvider.mapCameraManagerDelegate.cameraState.center.latitude(),
+          delegateProvider.mapCameraManagerDelegate.cameraState.zoom
+        )
+      animationManager.updatePulsingRadius(radius.last() / metersPerPixelAtLocation, settings)
+    }
   }
 
   fun updateLocationAnimator(block: ValueAnimator.() -> Unit) {

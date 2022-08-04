@@ -84,4 +84,9 @@ object LocationComponentConstants {
    * Image ID for the bearing icon of the location indicator layer.
    */
   const val BEARING_ICON = "mapbox-location-bearing-icon"
+
+  /**
+   * Control maximum radius for pulsing puck to follow location accuracy’s radius.
+   */
+  const val PULSING_MAX_RADIUS_FOLLOW_ACCURACY = -1f
 }

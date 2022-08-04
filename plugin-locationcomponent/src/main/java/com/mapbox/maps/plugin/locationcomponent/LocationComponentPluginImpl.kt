@@ -199,7 +199,8 @@ class LocationComponentPluginImpl : LocationComponentPlugin2, LocationConsumer2,
             animationManager = PuckAnimatorManager(
               indicatorPositionChangedListener,
               indicatorBearingChangedListener,
-              indicatorAccuracyRadiusChangedListener
+              indicatorAccuracyRadiusChangedListener,
+              style.pixelRatio
             )
           )
         }

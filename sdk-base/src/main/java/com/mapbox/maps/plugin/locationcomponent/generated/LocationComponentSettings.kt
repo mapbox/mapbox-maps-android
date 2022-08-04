@@ -26,6 +26,8 @@ data class LocationComponentSettings @JvmOverloads constructor(
 
   /**
    * The maximum radius of the pulsing circle. Works for 2D location puck only. This property is specified in pixels.
+   * Note: Setting pulsingMaxRadius to LocationComponentConstants.PULSING_MAX_RADIUS_FOLLOW_ACCURACY
+   * will set the pulsingMaxRadius to follow location accuracy radius.
    */
   var pulsingMaxRadius: Float = 10f,
 
