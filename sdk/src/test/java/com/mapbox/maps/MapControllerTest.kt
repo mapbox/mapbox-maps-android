@@ -11,7 +11,6 @@ import com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener
 import com.mapbox.maps.plugin.delegates.listeners.OnStyleDataLoadedListener
 import com.mapbox.maps.renderer.MapboxRenderer
 import com.mapbox.maps.renderer.OnFpsChangedListener
- import com.mapbox.verifyOnce
 import io.mockk.*
 import org.junit.After
 import org.junit.Assert.assertEquals
