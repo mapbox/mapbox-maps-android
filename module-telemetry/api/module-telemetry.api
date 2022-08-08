@@ -1,12 +1,16 @@
 public final class com/mapbox/maps/module/telemetry/MapTelemetryImpl : com/mapbox/maps/module/MapTelemetry {
+	public static final field Companion Lcom/mapbox/maps/module/telemetry/MapTelemetryImpl$Companion;
 	public fun <init> (Landroid/content/Context;Ljava/lang/String;)V
-	public fun <init> (Lcom/mapbox/android/telemetry/MapboxTelemetry;Landroid/content/Context;Ljava/lang/String;)V
+	public fun <init> (Lcom/mapbox/android/telemetry/MapboxTelemetry;Landroid/content/Context;Ljava/lang/String;Lcom/mapbox/common/EventsServiceInterface;)V
 	public fun disableTelemetrySession ()V
 	public fun onAppUserTurnstileEvent ()V
 	public fun onPerformanceEvent (Landroid/os/Bundle;)V
 	public fun setDebugLoggingEnabled (Z)V
 	public fun setSessionIdRotationInterval (I)Z
 	public fun setUserTelemetryRequestState (Z)V
+}
+
+public final class com/mapbox/maps/module/telemetry/MapTelemetryImpl$Companion {
 }
 
 public final class com/mapbox/module/Mapbox_MapTelemetryModuleConfiguration {
