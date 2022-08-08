@@ -405,6 +405,20 @@ class LocationPuckManagerTest {
     }
   }
 
+  @Test
+  fun testMaxPulsingRadiusToFollowAccuracyRing() {
+    every { settings.pulsingMaxRadius } returns -1f
+    locationPuckManager.updateMaxPulsingRadiusToFollowAccuracyRing(10.0)
+    verify { animationManager.updatePulsingRadius(any(), settings) }
+  }
+
+  @Test
+  fun testDefaultMaxPulsingRadiusBehaviour() {
+    every { settings.pulsingMaxRadius } returns 10.0f
+    locationPuckManager.updateMaxPulsingRadiusToFollowAccuracyRing(10.0)
+    verify(exactly = 0) { animationManager.updatePulsingRadius(any(), settings) }
+  }
+
   private companion object {
     const val MODEL_SCALE_CONSTANT = 2965820.800757861
   }

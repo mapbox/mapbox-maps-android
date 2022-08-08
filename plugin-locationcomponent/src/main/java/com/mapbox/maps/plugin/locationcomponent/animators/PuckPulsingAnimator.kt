@@ -8,7 +8,7 @@ import androidx.core.view.animation.PathInterpolatorCompat
 
 internal class PuckPulsingAnimator(private val pixelRatio: Float = 1.0f) :
   PuckAnimator<Double>(Evaluators.DOUBLE) {
-  var maxRadius: Double = DEFAULT_RADIUS * pixelRatio
+  var maxRadius: Double = DEFAULT_RADIUS_DP * pixelRatio
 
   @ColorInt
   var pulsingColor: Int = Color.BLUE
@@ -23,7 +23,7 @@ internal class PuckPulsingAnimator(private val pixelRatio: Float = 1.0f) :
 
   fun animateInfinite() {
     if (maxRadius <= 0.0) {
-      maxRadius = DEFAULT_RADIUS * pixelRatio
+      maxRadius = DEFAULT_RADIUS_DP * pixelRatio
     }
     if (!isRunning) {
       animate(0.0, maxRadius)
@@ -50,7 +50,7 @@ internal class PuckPulsingAnimator(private val pixelRatio: Float = 1.0f) :
 
   internal companion object {
     const val PULSING_DEFAULT_DURATION = 3_000L
-    const val DEFAULT_RADIUS = 10.0
+    const val DEFAULT_RADIUS_DP = 10.0
     private val PULSING_DEFAULT_INTERPOLATOR = PathInterpolatorCompat.create(
       0.0f,
       0.0f,

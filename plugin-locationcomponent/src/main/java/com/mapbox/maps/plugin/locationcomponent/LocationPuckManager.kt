@@ -68,7 +68,7 @@ internal class LocationPuckManager(
     lastAccuracyRadius = it
   }
 
-  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  @VisibleForTesting(otherwise = PRIVATE)
   internal var locationLayerRenderer =
     when (val puck = settings.locationPuck) {
       is LocationPuck2D -> {
@@ -191,7 +191,7 @@ internal class LocationPuckManager(
       *targets,
       options = options
     )
-    updateMaxPulsingRadiusToFollowAccuracyRing(*radius)
+    updateMaxPulsingRadiusToFollowAccuracyRing(radius.last())
   }
 
   /**
@@ -199,14 +199,15 @@ internal class LocationPuckManager(
    * since pulsing radius is in pixels and location accuracy is in meters, we convert meters to pixel using
    * projection delegate.
    */
-  private fun updateMaxPulsingRadiusToFollowAccuracyRing(vararg radius: Double) {
+  @VisibleForTesting(otherwise = PRIVATE)
+  internal fun updateMaxPulsingRadiusToFollowAccuracyRing(radius: Double) {
     if (settings.pulsingMaxRadius.toInt() == LocationComponentConstants.PULSING_MAX_RADIUS_FOLLOW_ACCURACY.toInt()) {
       val metersPerPixelAtLocation =
         delegateProvider.mapProjectionDelegate.getMetersPerPixelAtLatitude(
           delegateProvider.mapCameraManagerDelegate.cameraState.center.latitude(),
           delegateProvider.mapCameraManagerDelegate.cameraState.zoom
         )
-      animationManager.updatePulsingRadius(radius.last() / metersPerPixelAtLocation, settings)
+      animationManager.updatePulsingRadius(radius / metersPerPixelAtLocation, settings)
     }
   }
 
@@ -243,7 +244,7 @@ internal class LocationPuckManager(
    * current zoom level. MIN_ZOOM, MAX_ZOOM are used as two anchor points to calculate
    * the scale expression.
    */
-  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  @VisibleForTesting(otherwise = PRIVATE)
   internal fun styleScaling(settings: LocationComponentSettings) {
     when (val puck = settings.locationPuck) {
       is LocationPuck2D -> {
