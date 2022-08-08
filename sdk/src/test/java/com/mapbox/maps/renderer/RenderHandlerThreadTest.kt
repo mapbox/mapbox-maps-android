@@ -39,10 +39,33 @@ class RenderHandlerThreadTest {
   }
 
   @Test
-  fun stopTest() {
+  fun startStartTest() {
+    renderHandlerThread.start()
+    try {
+      renderHandlerThread.start()
+      assert(false) { "Should have thrown IllegalThreadStateException" }
+    } catch (e: Exception) {
+      assert(e is IllegalThreadStateException)
+    }
+  }
+
+  @Test
+  fun startStopTest() {
     renderHandlerThread.start()
     renderHandlerThread.stop()
     assert(renderHandlerThread.handler == null)
+  }
+
+  @Test
+  fun startStopStartTest() {
+    renderHandlerThread.start()
+    renderHandlerThread.stop()
+    try {
+      renderHandlerThread.start()
+      assert(false) { "Should have thrown IllegalThreadStateException" }
+    } catch (e: Exception) {
+      assert(e is IllegalThreadStateException)
+    }
   }
 
   @Test
