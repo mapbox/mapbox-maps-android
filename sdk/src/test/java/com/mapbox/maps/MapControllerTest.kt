@@ -382,27 +382,31 @@ class MapControllerTest {
 
   @Test
   fun setValidScreenRefreshRate() {
-    mockkStatic("com.mapbox.maps.MapboxLogger")
-    every { logE(any(), any()) } just Runs
-    val mockRenderThread = mockk<MapboxRenderThread>(relaxed = true)
-    every { mockRenderer.renderThread } returns mockRenderThread
-    val validScreenRefreshRate = 90
-    testMapController.setScreenRefreshRate(validScreenRefreshRate)
-    verify(exactly = 1) {
-      mockRenderThread.setScreenRefreshRate(validScreenRefreshRate)
-    }
-    unmockkStatic("com.mapbox.maps.MapboxLogger")
+    screenRefreshRateTest(1, 60)
   }
 
   @Test
-  fun setInvalidScreenRefreshRate() {
+  fun setZeroScreenRefreshRate() {
+    screenRefreshRateTest(0, 0)
+  }
+
+  @Test
+  fun setNegativeScreenRefreshRate() {
+    screenRefreshRateTest(0, -1)
+  }
+
+  @Test
+  fun setMoreThanMaxScreenRefreshRate() {
+    screenRefreshRateTest(0, MapView.MAX_POSSIBLE_FPS.toInt() + 1)
+  }
+
+  private fun screenRefreshRateTest(expectedCallCount: Int, actualRefreshRate: Int) {
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logE(any(), any()) } just Runs
     val mockRenderThread = mockk<MapboxRenderThread>(relaxed = true)
     every { mockRenderer.renderThread } returns mockRenderThread
-    testMapController.setScreenRefreshRate(-1)
-    testMapController.setScreenRefreshRate(MapView.MAX_POSSIBLE_FPS.toInt() + 1)
-    verify(exactly = 0) {
+    testMapController.setScreenRefreshRate(actualRefreshRate)
+    verify(exactly = expectedCallCount) {
       mockRenderThread.setScreenRefreshRate(any())
     }
     unmockkStatic("com.mapbox.maps.MapboxLogger")
