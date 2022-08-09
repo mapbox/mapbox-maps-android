@@ -51,7 +51,7 @@ internal class ViewAnnotationManagerImpl(
   ) {
     validateOptions(options)
     asyncInflater.inflate(resId, mapView) { view, _, _ ->
-      asyncInflateCallback.invoke(prepareViewAnnotation(view, options))
+      asyncInflateCallback.invoke(prepareViewAnnotation(view, null, options))
     }
   }
 
@@ -61,10 +61,28 @@ internal class ViewAnnotationManagerImpl(
   ): View {
     validateOptions(options)
     val view = LayoutInflater.from(mapView.context).inflate(resId, mapView, false)
-    return prepareViewAnnotation(view, options)
+    return prepareViewAnnotation(view, null, options)
+  }
+
+  override fun addViewAnnotation(
+    @LayoutRes resId: Int,
+    id: String?,
+    options: ViewAnnotationOptions
+  ): View {
+    validateOptions(options)
+    val view = LayoutInflater.from(mapView.context).inflate(resId, mapView, false)
+    return prepareViewAnnotation(view, id, options)
   }
 
   override fun addViewAnnotation(view: View, options: ViewAnnotationOptions) {
+    addViewAnnotation(view, null, options)
+  }
+
+  override fun addViewAnnotation(
+    view: View,
+    id: String?,
+    options: ViewAnnotationOptions
+  ) {
     if (idLookupMap.containsKey(view)) {
       throw MapboxViewAnnotationException(
         "Trying to add view annotation that was already added before! " +
@@ -72,11 +90,22 @@ internal class ViewAnnotationManagerImpl(
       )
     }
     validateOptions(options)
-    prepareViewAnnotation(view, options)
+    prepareViewAnnotation(view, id, options)
   }
 
   override fun removeViewAnnotation(view: View): Boolean {
     val id = idLookupMap.remove(view) ?: return false
+    val annotation = annotationMap.remove(id) ?: return false
+    remove(id, annotation)
+    return true
+  }
+
+  override fun removeViewAnnotation(id: String): Boolean {
+    if (idLookupMap.containsValue(id)) {
+      idLookupMap.entries.removeAll {
+        it.value == id
+      }
+    }
     val annotation = annotationMap.remove(id) ?: return false
     remove(id, annotation)
     return true
@@ -113,6 +142,14 @@ internal class ViewAnnotationManagerImpl(
   override fun getViewAnnotationByFeatureId(featureId: String): View? {
     val (view, _) = findByFeatureId(featureId)
     return view
+  }
+
+  override fun getViewAnnotationById(id: String): View? {
+    return if (annotationMap.containsKey(id)) {
+      annotationMap[id]?.view
+    } else {
+      null
+    }
   }
 
   override fun getViewAnnotationOptionsByFeatureId(featureId: String): ViewAnnotationOptions? {
@@ -199,8 +236,13 @@ internal class ViewAnnotationManagerImpl(
     }
   }
 
-  private fun prepareViewAnnotation(inflatedView: View, options: ViewAnnotationOptions): View {
+  private fun prepareViewAnnotation(
+    inflatedView: View,
+    id: String?,
+    options: ViewAnnotationOptions
+  ): View {
     checkAssociatedFeatureIdUniqueness(options)
+    checkIdUniqueness(id)
     val inflatedViewLayout = inflatedView.layoutParams as FrameLayout.LayoutParams
     val updatedOptions = options.toBuilder()
       .width(options.width ?: inflatedViewLayout.width)
@@ -213,6 +255,7 @@ internal class ViewAnnotationManagerImpl(
       viewLayoutParams = inflatedViewLayout,
       measuredWidth = if (options.width != null) USER_FIXED_DIMENSION else inflatedViewLayout.width,
       measuredHeight = if (options.height != null) USER_FIXED_DIMENSION else inflatedViewLayout.height,
+      userDefinedId = id
     )
     val globalLayoutListener = ViewTreeObserver.OnGlobalLayoutListener {
       if (viewAnnotation.measuredWidth != USER_FIXED_DIMENSION &&
@@ -288,6 +331,19 @@ internal class ViewAnnotationManagerImpl(
     idLookupMap[inflatedView] = viewAnnotation.id
     getValue(mapboxMap.addViewAnnotation(viewAnnotation.id, updatedOptions))
     return inflatedView
+  }
+
+  private fun checkIdUniqueness(annotationId: String?) {
+    annotationId?.let { id ->
+      if (annotationMap.containsKey(id)) {
+        throw MapboxViewAnnotationException(
+          String.format(
+            EXCEPTION_TEXT_ASSOCIATED_ID_ALREADY_EXISTS,
+            id
+          )
+        )
+      }
+    }
   }
 
   private fun findByFeatureId(featureId: String): Pair<View?, ViewAnnotationOptions?> {
@@ -432,5 +488,7 @@ internal class ViewAnnotationManagerImpl(
     internal const val EXCEPTION_TEXT_GEOMETRY_IS_NULL = "Geometry can not be null!"
     internal const val EXCEPTION_TEXT_ASSOCIATED_FEATURE_ID_ALREADY_EXISTS =
       "View annotation with associatedFeatureId=%s already exists!"
+    internal const val EXCEPTION_TEXT_ASSOCIATED_ID_ALREADY_EXISTS =
+      "View annotation with id=%s already exists!"
   }
 }

@@ -34,11 +34,16 @@ internal data class ViewAnnotation(
    * Cached value of last measured height. If user did specify height explicitly - will be set to [USER_FIXED_DIMENSION].
    */
   var measuredHeight: Int,
+
+  /**
+   * Id provided by users when adding view annotation.
+   */
+  val userDefinedId: String?,
 ) {
   /**
    * String id needed to call functions from gl-native
    */
-  val id: String = (VIEW_ANNOTATION_CURRENT_ID++).toString()
+  val id: String = userDefinedId ?: (VIEW_ANNOTATION_CURRENT_ID++).toString()
 
   /**
    * Helper function to understand if view is visible from Android visibility perspective.

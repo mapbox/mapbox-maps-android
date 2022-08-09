@@ -20,4 +20,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         tools:backgroundTint="@color/blue"/>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_annotation_update_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_paint"
+        app:layout_constraintBottom_toTopOf="@+id/fab_style_toggle"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:backgroundTint="@color/blue"/>
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

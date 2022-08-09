@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
@@ -17,6 +18,7 @@ import com.mapbox.maps.testapp.databinding.ItemCalloutViewBinding
 import com.mapbox.maps.viewannotation.ViewAnnotationManager
 import com.mapbox.maps.viewannotation.ViewAnnotationUpdateMode
 import com.mapbox.maps.viewannotation.viewAnnotationOptions
+import java.util.concurrent.ConcurrentHashMap
 
 /**
  * Example how to add view annotations by clicking on the map.
@@ -25,7 +27,9 @@ class ViewAnnotationBasicAddActivity : AppCompatActivity(), OnMapClickListener {
 
   private lateinit var mapboxMap: MapboxMap
   private lateinit var viewAnnotationManager: ViewAnnotationManager
-
+  private var counter = 0
+  private val annotationMap = ConcurrentHashMap<View, String>()
+  @SuppressLint("SetTextI18n")
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     val binding = ActivityViewAnnotationShowcaseBinding.inflate(layoutInflater)
@@ -73,17 +77,31 @@ class ViewAnnotationBasicAddActivity : AppCompatActivity(), OnMapClickListener {
 
   @SuppressLint("SetTextI18n")
   private fun addViewAnnotation(point: Point) {
+    counter++
+    val annotationId = "Point_$counter"
+
+    /**
+     * adding viewannotation based on user provided id that will be tracked by
+     * user as well.
+     */
     val viewAnnotation = viewAnnotationManager.addViewAnnotation(
       resId = R.layout.item_callout_view,
+      id = annotationId,
       options = viewAnnotationOptions {
         geometry(point)
         allowOverlap(true)
       }
     )
+    annotationMap[viewAnnotation] = annotationId
     ItemCalloutViewBinding.bind(viewAnnotation).apply {
       textNativeView.text = "lat=%.2f\nlon=%.2f".format(point.latitude(), point.longitude())
       closeNativeView.setOnClickListener {
         viewAnnotationManager.removeViewAnnotation(viewAnnotation)
+        /**
+         * users can remove view annotation using id
+         */
+        viewAnnotationManager.removeViewAnnotation(annotationId)
+        annotationMap.remove(viewAnnotation)
       }
       selectButton.setOnClickListener { b ->
         val button = b as Button
