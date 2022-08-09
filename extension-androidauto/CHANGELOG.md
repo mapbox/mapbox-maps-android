@@ -5,7 +5,15 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 ## Features ✨ and improvements 🏁
 ## Bug fixes 🐞
+
+# 0.2.0 August 9, 2022
+
+## Bug fixes 🐞
 * Destroy previous surface when new surface becomes available. This adds better support for `androidx.car.app:app-automotive`. ([#1509](https://github.com/mapbox/mapbox-maps-android/pull/1509))
+
+## Dependencies
+* Android Auto car library `androidx.car.app:app:1.1.+`
+* Supports any version of Mapbox Maps 10.+
 
 # 0.1.0 April 7, 2022
 
