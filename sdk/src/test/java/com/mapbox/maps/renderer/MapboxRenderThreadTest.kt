@@ -212,7 +212,7 @@ class MapboxRenderThreadTest {
     verifyOnce { eglCore.release() }
     verifyOnce { mapboxRenderer.destroyRenderer() }
     verifyOnce { fpsManager.destroy() }
-    assertFalse(renderHandlerThread.started)
+    assertFalse(renderHandlerThread.isRunning)
   }
 
   @Test
@@ -227,7 +227,7 @@ class MapboxRenderThreadTest {
     verifyOnce { eglCore.release() }
     verifyOnce { mapboxRenderer.destroyRenderer() }
     verifyOnce { fpsManager.destroy() }
-    assertFalse(renderHandlerThread.started)
+    assertFalse(renderHandlerThread.isRunning)
   }
 
   @Test
@@ -390,7 +390,7 @@ class MapboxRenderThreadTest {
   fun destroyTest() {
     initRenderThread()
     mapboxRenderThread.destroy()
-    assertFalse(renderHandlerThread.started)
+    assertFalse(renderHandlerThread.isRunning)
   }
 
   @Test

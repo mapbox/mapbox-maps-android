@@ -36,6 +36,7 @@ class RenderHandlerThreadTest {
     renderHandlerThread.start()
     assert(renderHandlerThread.handler != null)
     assert(renderHandlerThread.handlerThread.isAlive)
+    assert(renderHandlerThread.isRunning)
   }
 
   @Test
@@ -65,6 +66,17 @@ class RenderHandlerThreadTest {
       assert(false) { "Should have thrown IllegalThreadStateException" }
     } catch (e: Exception) {
       assert(e is IllegalThreadStateException)
+    }
+  }
+
+  @Test
+  fun isRunningTest() {
+    with(renderHandlerThread) {
+      assert(!isRunning)
+      start()
+      assert(isRunning)
+      stop()
+      assert(!isRunning)
     }
   }
 

@@ -403,7 +403,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     logI(TAG, "RenderThread : surface destroyed")
     lock.withLock {
       // in some situations `destroy` is called earlier than onSurfaceDestroyed - in that case no need to clean up
-      if (renderHandlerThread.started) {
+      if (renderHandlerThread.isRunning) {
         renderHandlerThread.post {
           awaitingNextVsync = false
           Choreographer.getInstance().removeFrameCallback(this)
@@ -545,7 +545,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   internal fun destroy() {
     lock.withLock {
       // do nothing if destroy for some reason called more than once to avoid deadlock
-      if (renderHandlerThread.started) {
+      if (renderHandlerThread.isRunning) {
         renderHandlerThread.post {
           lock.withLock {
             if (renderCreated) {

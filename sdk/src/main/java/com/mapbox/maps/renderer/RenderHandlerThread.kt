@@ -16,8 +16,8 @@ internal class RenderHandlerThread {
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal var handler: Handler? = null
 
-  internal val started
-    get() = handlerThread.isAlive
+  internal val isRunning
+    get() = handler != null && handlerThread.isAlive
 
   fun post(task: () -> Unit) {
     postDelayed(task, 0, EventType.DEFAULT)
