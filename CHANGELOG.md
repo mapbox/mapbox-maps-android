@@ -11,6 +11,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix edge cases for renderer that could result in map not rendered. ([1538](https://github.com/mapbox/mapbox-maps-android/pull/1538))
 * Fix onAnnotationDragStarted event is still fired when annotation is not draggable. ([1552](https://github.com/mapbox/mapbox-maps-android/pull/1552))
 * Fix camera flying away when pitching. ([1560](https://github.com/mapbox/mapbox-maps-android/pull/1560))
+* Deliver style to the plugin registry on map start if a new one was loaded after map stop. ([1558](https://github.com/mapbox/mapbox-maps-android/pull/1558))
 
 # 10.7.0 July 29, 2022
 [Changes](https://github.com/mapbox/mapbox-maps-android/compare/android-v10.6.0...android-v10.7.0) since [Mapbox Maps SDK for Android 10.6.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/android-v10.6.0)

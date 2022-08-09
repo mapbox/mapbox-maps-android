@@ -68,10 +68,12 @@ class MapControllerTest {
     every { mockRenderer.onStart() } just Runs
     every { mockMapboxMap.isStyleLoadInitiated } returns false
     every { mockMapInitOptions.styleUri } answers { Style.MAPBOX_STREETS }
+    every { mockMapboxMap.getStyle() } returns null
 
     testMapController.onStart()
 
     verifySequence {
+      mockMapboxMap.getStyle()
       mockNativeObserver.addOnCameraChangeListener(any())
       mockNativeObserver.addOnStyleDataLoadedListener(any())
       mockRenderer.onStart()
@@ -88,6 +90,8 @@ class MapControllerTest {
     every { mockRenderer.onStart() } just Runs
     every { mockNativeObserver.addOnCameraChangeListener(any()) } just Runs
     every { mockNativeObserver.addOnStyleDataLoadedListener(any()) } just Runs
+    every { mockMapboxMap.getStyle() } returns mockk()
+    every { mockPluginRegistry.onStyleChanged(any()) } just Runs
 
     testMapController.onStart()
 
@@ -113,6 +117,39 @@ class MapControllerTest {
   }
 
   @Test
+  fun onStartDeliversUpdatedStyle() {
+    every { mockPluginRegistry.onStyleChanged(any()) } just Runs
+    every { mockPluginRegistry.onStop() } just Runs
+    every { mockPluginRegistry.onStart() } just Runs
+    every { mockRenderer.onStop() } just Runs
+    every { mockRenderer.onStart() } just Runs
+    every { mockNativeObserver.addOnCameraChangeListener(any()) } just Runs
+    every { mockNativeObserver.addOnStyleDataLoadedListener(any()) } just Runs
+    every { mockNativeObserver.removeOnCameraChangeListener(any()) } just Runs
+    every { mockNativeObserver.removeOnStyleDataLoadedListener(any()) } just Runs
+    every { mockMapboxMap.isStyleLoadInitiated } returns false
+    every { mockMapboxMap.loadStyleUri(any()) } just Runs
+    every { mockMapInitOptions.styleUri } returns "uri"
+
+    val style1 = mockk<Style>()
+    every { mockMapboxMap.getStyle() } returns style1
+    testMapController.onStart()
+
+    testMapController.onStop()
+    val style2 = mockk<Style>()
+    every { mockMapboxMap.getStyle() } returns style2
+    testMapController.onStart()
+
+    verifySequence {
+      mockPluginRegistry.onStyleChanged(style1)
+      mockPluginRegistry.onStart()
+      mockPluginRegistry.onStop()
+      mockPluginRegistry.onStyleChanged(style2)
+      mockPluginRegistry.onStart()
+    }
+  }
+
+  @Test
   fun onReduceMemoryUse() {
     every { mockMapboxMap.reduceMemoryUse() } just Runs
 
@@ -124,14 +161,14 @@ class MapControllerTest {
   @Test
   fun onDestroy() {
     every { mockMapboxMap.onDestroy() } just Runs
-    every { mockPluginRegistry.cleanup() } just Runs
+    every { mockPluginRegistry.onDestroy() } just Runs
     every { mockNativeObserver.onDestroy() } just Runs
     every { mockRenderer.onDestroy() } just Runs
 
     testMapController.onDestroy()
 
     verifySequence {
-      mockPluginRegistry.cleanup()
+      mockPluginRegistry.onDestroy()
       mockNativeObserver.onDestroy()
       mockRenderer.onDestroy()
       mockMapboxMap.onDestroy()
@@ -184,12 +221,16 @@ class MapControllerTest {
     every { mockNativeMap.cameraState } returns mockCameraState
     every { mockMapboxMap.isStyleLoadInitiated } returns false
     every { mockMapInitOptions.styleUri } answers { Style.MAPBOX_STREETS }
+    every { mockMapboxMap.getStyle() } returns null
 
     testMapController.onStart()
     val onCameraChangeListener = onCameraChangeListenerSlot.captured
     onCameraChangeListener.onCameraChanged(mockk())
 
     verifySequence {
+      mockMapboxMap.getStyle()
+      mockMapboxMap.isStyleLoadInitiated
+      mockMapboxMap.loadStyleUri(Style.MAPBOX_STREETS)
       mockPluginRegistry.onStart()
       mockNativeMap.cameraState
       mockPluginRegistry.onCameraMove(mockCameraState)
@@ -290,6 +331,30 @@ class MapControllerTest {
 
   @Test
   fun initializePluginsCamera() {
+    every { mockMapboxMap.setCameraAnimationPlugin(any()) } just Runs
+    every { mockMapInitOptions.plugins } answers { listOf(Plugin.Mapbox(Plugin.MAPBOX_CAMERA_PLUGIN_ID)) }
+    val createPluginSlot = slot<Plugin>()
+    every {
+      mockPluginRegistry.createPlugin(
+        mockMapView,
+        mockMapInitOptions,
+        capture(createPluginSlot)
+      )
+    } just Runs
+
+    testMapController.initializePlugins(mockMapInitOptions, mockMapView)
+
+    val createdPlugin = createPluginSlot.captured
+    assertEquals(Plugin.MAPBOX_CAMERA_PLUGIN_ID, createdPlugin.id)
+    verifySequence {
+      mockMapInitOptions.plugins
+      mockPluginRegistry.createPlugin(mockMapView, mockMapInitOptions, createdPlugin)
+      mockMapboxMap.setCameraAnimationPlugin(createdPlugin.instance as CameraAnimationsPlugin)
+    }
+  }
+
+  @Test
+  fun deliversStyleOnStartIfChanged() {
     every { mockMapboxMap.setCameraAnimationPlugin(any()) } just Runs
     every { mockMapInitOptions.plugins } answers { listOf(Plugin.Mapbox(Plugin.MAPBOX_CAMERA_PLUGIN_ID)) }
     val createPluginSlot = slot<Plugin>()

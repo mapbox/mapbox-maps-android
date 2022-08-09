@@ -49,9 +49,11 @@ internal class MapPluginRegistry(
     mapInitOptions: MapInitOptions,
     plugin: Plugin
   ) {
-    plugin.instance?.let { mapPlugin ->
+    val mapPlugin = plugin.instance
+    if (mapPlugin == null) {
+      throw MapboxConfigurationException("MapPlugin instance is missing for ${plugin.id}!")
+    } else {
       if (!plugins.containsKey(plugin.id)) {
-
         if (plugin.instance is ViewPlugin && mapView == null) {
           // throw if view plugin if host is not a MapView (eg. MapSurface)
           throw InvalidViewPluginHostException("Cause: ${mapPlugin.javaClass}")
@@ -103,12 +105,11 @@ internal class MapPluginRegistry(
 
         if (mapState == State.STARTED && mapPlugin is LifecyclePlugin) {
           mapPlugin.onStart()
-        } else {
         }
       } else {
         plugins[plugin.id]?.initialize()
       }
-    } ?: throw MapboxConfigurationException("MapPlugin instance is missing for ${plugin.id}!")
+    }
   }
 
   @Suppress("UNCHECKED_CAST")
@@ -120,6 +121,12 @@ internal class MapPluginRegistry(
 
   fun onStop() {
     mapState = State.STOPPED
+  }
+
+  fun onDestroy() {
+    plugins.forEach {
+      it.value.cleanup()
+    }
   }
 
   fun onTouch(event: MotionEvent?): Boolean {
@@ -162,12 +169,6 @@ internal class MapPluginRegistry(
   fun onStyleChanged(style: Style) {
     styleObserverPlugins.forEach {
       it.onStyleChanged(style)
-    }
-  }
-
-  fun cleanup() {
-    plugins.forEach {
-      it.value.cleanup()
     }
   }
 

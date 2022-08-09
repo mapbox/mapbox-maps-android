@@ -55,6 +55,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   private val onCameraChangedListener: OnCameraChangeListener
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal var lifecycleState: LifecycleState = LifecycleState.STATE_STOPPED
+  private var style: Style? = null
 
   constructor(
     renderer: MapboxRenderer,
@@ -82,6 +83,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     this.onStyleDataLoadedListener = OnStyleDataLoadedListener { eventData ->
       if (eventData.type == StyleDataType.STYLE) {
         mapboxMap.getStyle { style ->
+          this.style = style
           pluginRegistry.onStyleChanged(style)
         }
       }
@@ -128,6 +130,12 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     }
     lifecycleState = LifecycleState.STATE_STARTED
 
+    mapboxMap.getStyle()?.let {
+      if (it != style) {
+        style = it
+        pluginRegistry.onStyleChanged(it)
+      }
+    }
     nativeObserver.apply {
       addOnCameraChangeListener(onCameraChangedListener)
       addOnStyleDataLoadedListener(onStyleDataLoadedListener)
@@ -161,10 +169,11 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
       return
     }
     lifecycleState = LifecycleState.STATE_DESTROYED
-    pluginRegistry.cleanup()
+    pluginRegistry.onDestroy()
     nativeObserver.onDestroy()
     renderer.onDestroy()
     mapboxMap.onDestroy()
+    this.style = null
   }
 
   override fun onLowMemory() {
