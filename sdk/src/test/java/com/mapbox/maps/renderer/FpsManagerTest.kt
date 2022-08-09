@@ -78,6 +78,40 @@ class FpsManagerTest {
   }
 
   @Test
+  fun userRefreshRate1Test() {
+    fpsManager.setUserRefreshRate(1)
+    pauseHandler()
+    val vsyncCount = 120
+    val frameRenderedPattern = mutableListOf<Boolean>()
+    val expectedRenderedPattern = BooleanArray(vsyncCount)
+    for (i in 0 until 120) {
+      expectedRenderedPattern[i] = i == 59 || i == 119
+    }
+    idleHandler(vsyncCount = vsyncCount) {
+      frameRenderedPattern.add(fpsManager.preRender(it))
+    }
+    Assert.assertArrayEquals(
+      expectedRenderedPattern.toTypedArray(),
+      frameRenderedPattern.toTypedArray()
+    )
+  }
+
+  @Test
+  fun userRefreshRateMaxIntTest() {
+    fpsManager.setUserRefreshRate(Int.MAX_VALUE)
+    pauseHandler()
+    val vsyncCount = 1000
+    val frameRenderedPattern = mutableListOf<Boolean>()
+    idleHandler(vsyncCount = vsyncCount) {
+      frameRenderedPattern.add(fpsManager.preRender(it))
+    }
+    Assert.assertArrayEquals(
+      Array(vsyncCount) { true },
+      frameRenderedPattern.toTypedArray()
+    )
+  }
+
+  @Test
   fun userFpsListenerTest() {
     val fpsValueArray = mutableListOf<Double>()
     val fpsChangedListener = OnFpsChangedListener {

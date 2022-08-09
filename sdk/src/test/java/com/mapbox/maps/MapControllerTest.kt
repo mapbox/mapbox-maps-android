@@ -396,8 +396,8 @@ class MapControllerTest {
   }
 
   @Test
-  fun setMoreThanMaxScreenRefreshRate() {
-    screenRefreshRateTest(0, MapView.MAX_POSSIBLE_FPS.toInt() + 1)
+  fun setMaxScreenRefreshRate() {
+    screenRefreshRateTest(1, Int.MAX_VALUE)
   }
 
   private fun screenRefreshRateTest(expectedCallCount: Int, actualRefreshRate: Int) {

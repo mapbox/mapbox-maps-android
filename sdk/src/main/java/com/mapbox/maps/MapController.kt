@@ -233,10 +233,10 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   }
 
   internal fun setScreenRefreshRate(refreshRate: Int) {
-    if (refreshRate <= 0 || refreshRate >= MapView.MAX_POSSIBLE_FPS) {
+    if (refreshRate <= 0) {
       logE(
         TAG,
-        "Screen refresh rate could not be <= 0 or >= ${MapView.MAX_POSSIBLE_FPS}! " +
+        "Screen refresh rate could not be <= 0! " +
           "Setting max fps and fps counter will not work properly."
       )
       return

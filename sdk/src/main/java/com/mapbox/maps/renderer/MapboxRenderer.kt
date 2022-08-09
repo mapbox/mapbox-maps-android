@@ -181,8 +181,8 @@ internal abstract class MapboxRenderer : MapClient {
 
   @AnyThread
   fun setMaximumFps(fps: Int) {
-    if (fps <= 0 || fps >= MapView.MAX_POSSIBLE_FPS) {
-      logE(TAG, "Maximum FPS could not be <= 0 or >= ${MapView.MAX_POSSIBLE_FPS}, ignoring $fps value.")
+    if (fps <= 0) {
+      logE(TAG, "Maximum FPS could not be <= 0, ignoring $fps value.")
       return
     }
     renderThread.setUserRefreshRate(fps)

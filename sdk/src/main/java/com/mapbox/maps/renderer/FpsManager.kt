@@ -33,7 +33,7 @@ internal class FpsManager(
     this.screenRefreshRate = screenRefreshRate
     screenRefreshPeriodNs = ONE_SECOND_NS / screenRefreshRate
     if (userRefreshRate != USER_DEFINED_REFRESH_RATE_NOT_SET) {
-      userToScreenRefreshRateRatio = userRefreshRate.toDouble() / screenRefreshRate
+      userToScreenRefreshRateRatio = (userRefreshRate.toDouble() / screenRefreshRate).coerceIn(0.0, 1.0)
       logI(TAG, "User defined ratio is $userToScreenRefreshRateRatio")
     }
     if (LOG_STATISTICS) {
@@ -50,7 +50,7 @@ internal class FpsManager(
       userRefreshRate = refreshRate
       logI(TAG, "User set max FPS to $userRefreshRate")
       if (screenRefreshRate != SCREEN_METRICS_NOT_DEFINED) {
-        userToScreenRefreshRateRatio = userRefreshRate.toDouble() / screenRefreshRate
+        userToScreenRefreshRateRatio = (userRefreshRate.toDouble() / screenRefreshRate).coerceIn(0.0, 1.0)
         logI(TAG, "User defined ratio is $userToScreenRefreshRateRatio")
       }
     }
@@ -87,7 +87,7 @@ internal class FpsManager(
       // otherwise when updating the map after it was IDLE first update will report
       // huge delta between new frame and last frame (as we're using dirty rendering)
       handler.postDelayed(
-        VSYNC_COUNT_TILL_IDLE * (screenRefreshPeriodNs / 10.0.pow(6.0)).toLong(),
+        VSYNC_COUNT_TILL_IDLE * (screenRefreshPeriodNs / ONE_MILLISECOND_NS),
         fpsManagerToken
       ) {
         onRenderingPaused()
@@ -184,7 +184,7 @@ internal class FpsManager(
       logI(
         TAG,
         "VSYNC based FPS is $fps," +
-          " average core rendering time is ${averageRenderTimeNs / 10.0.pow(6.0)} ms" +
+          " average core rendering time is ${averageRenderTimeNs / ONE_MILLISECOND_NS} ms" +
           " (or ${String.format("%.2f", screenRefreshPeriodNs / averageRenderTimeNs * screenRefreshRate)} FPS)," +
           " missed $choreographerSkips out of $choreographerTicks VSYNC pulses"
       )

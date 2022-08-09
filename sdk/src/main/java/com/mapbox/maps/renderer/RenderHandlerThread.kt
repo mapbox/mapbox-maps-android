@@ -11,7 +11,6 @@ internal class RenderHandlerThread {
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal lateinit var handlerThread: HandlerThread
-  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal var handler: Handler? = null
 
   internal val started

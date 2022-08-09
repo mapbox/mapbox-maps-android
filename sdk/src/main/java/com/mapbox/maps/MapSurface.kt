@@ -11,7 +11,6 @@ import com.mapbox.maps.renderer.MapboxSurfaceRenderer
 import com.mapbox.maps.renderer.OnFpsChangedListener
 import com.mapbox.maps.renderer.RendererSetupErrorListener
 import com.mapbox.maps.renderer.widget.Widget
-import java.lang.ref.WeakReference
 
 /**
  * A [MapSurface] provides an embeddable map interface.
@@ -30,14 +29,14 @@ import java.lang.ref.WeakReference
  * @param mapInitOptions the init options to for map
  */
 class MapSurface @JvmOverloads constructor(
-  context: Context,
+  // could use strong ref here as MapInitOptions have strong ref in any case
+  private val context: Context,
   val surface: Surface,
   mapInitOptions: MapInitOptions = MapInitOptions(context)
 ) : MapPluginProviderDelegate, MapControllable {
 
   private val mapController: MapController
   private val renderer: MapboxSurfaceRenderer = MapboxSurfaceRenderer(mapInitOptions.antialiasingSampleCount)
-  private val weakContext = WeakReference(context)
 
   init {
     this.mapController = MapController(
@@ -53,7 +52,7 @@ class MapSurface @JvmOverloads constructor(
   fun surfaceCreated() {
     renderer.surfaceCreated()
     // display should not be null at this point but to be sure we will fallback to DEFAULT_FPS
-    val screenRefreshRate = (weakContext.get()?.getSystemService(Context.WINDOW_SERVICE) as WindowManager)
+    val screenRefreshRate = (context.getSystemService(Context.WINDOW_SERVICE) as WindowManager)
       .defaultDisplay?.refreshRate?.toInt() ?: MapView.DEFAULT_FPS
     mapController.setScreenRefreshRate(screenRefreshRate)
   }
