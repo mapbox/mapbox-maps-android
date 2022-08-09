@@ -12,6 +12,11 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix onAnnotationDragStarted event is still fired when annotation is not draggable. ([1552](https://github.com/mapbox/mapbox-maps-android/pull/1552))
 * Fix camera flying away when pitching. ([1560](https://github.com/mapbox/mapbox-maps-android/pull/1560))
 * Deliver style to the plugin registry on map start if a new one was loaded after map stop. ([1558](https://github.com/mapbox/mapbox-maps-android/pull/1558))
+* Fix a bug in cameraForGeometry returning incorrect camera options when pitch > 0. ([1568](https://github.com/mapbox/mapbox-maps-android/pull/1568))
+* Fix Android memory leak when destroying platform view annotation manager. ([1568](https://github.com/mapbox/mapbox-maps-android/pull/1568))
+
+## Dependencies
+Bump gl-native to v10.8.0-beta.1, common to v23.0.0-beta.1. ([1568](https://github.com/mapbox/mapbox-maps-android/pull/1568))
 
 # 10.7.0 July 29, 2022
 [Changes](https://github.com/mapbox/mapbox-maps-android/compare/android-v10.6.0...android-v10.7.0) since [Mapbox Maps SDK for Android 10.6.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/android-v10.6.0)
