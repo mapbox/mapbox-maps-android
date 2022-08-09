@@ -15,7 +15,7 @@ internal class RenderHandlerThread {
   internal var handler: Handler? = null
 
   internal val started
-    get() = handler != null
+    get() = handlerThread.isAlive
 
   fun post(task: () -> Unit) {
     postDelayed(task, 0, EventType.DEFAULT)

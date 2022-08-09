@@ -20,7 +20,9 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows
+import org.robolectric.annotation.Config
 import org.robolectric.annotation.LooperMode
+import org.robolectric.shadow.api.Shadow
 import org.robolectric.shadows.ShadowChoreographer
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
@@ -29,6 +31,7 @@ import javax.microedition.khronos.egl.EGL11
 import javax.microedition.khronos.egl.EGLContext
 
 @RunWith(RobolectricTestRunner::class)
+@Config(shadows = [ShadowThread::class, ShadowHandlerThread::class])
 @LooperMode(LooperMode.Mode.PAUSED)
 class MapboxRenderThreadTest {
 
@@ -216,7 +219,9 @@ class MapboxRenderThreadTest {
     provideValidSurface()
     waitZeroCounter {
       countDownEvery { mapboxRenderer.destroyRenderer() }
+      val v = Shadow.extract<ShadowHandlerThread>(renderHandlerThread.handlerThread)
       mapboxRenderThread.destroy()
+      v.isAlive = true
       mapboxRenderThread.onSurfaceDestroyed()
     }
     verifyOnce { eglCore.release() }
