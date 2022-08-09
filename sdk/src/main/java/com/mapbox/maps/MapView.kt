@@ -264,7 +264,8 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   /**
    * Set new maximum FPS for map rendering.
    *
-   * @param fps new maximum FPS value that must be > 0 and less than [MAX_POSSIBLE_FPS].
+   * @param fps new maximum FPS value that must be > 0 and less than 1000.
+   * When setting this value higher than screen physically supports - max possible screen FPS rate will be used.
    */
   override fun setMaximumFps(@IntRange(from = 1L, to = MAX_POSSIBLE_FPS) fps: Int) {
     mapController.setMaximumFps(fps)
@@ -366,6 +367,11 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   companion object {
     internal const val DEFAULT_ANTIALIASING_SAMPLE_COUNT = 1
     internal const val MAX_POSSIBLE_FPS = 1000L
+
+    /**
+     * Fallback to this value if, for some reason, Android display is NULL.
+     * This will not affect rendering on displays with higher frame rate if [MapView.setMaximumFps] was not called.
+     */
     internal const val DEFAULT_FPS = 60
     /**
      * Static method to check if [MapView] could properly render on this device.

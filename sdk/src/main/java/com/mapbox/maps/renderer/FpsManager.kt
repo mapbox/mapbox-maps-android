@@ -1,8 +1,6 @@
 package com.mapbox.maps.renderer
 
 import android.os.Handler
-import android.os.Looper
-import androidx.annotation.VisibleForTesting
 import androidx.annotation.WorkerThread
 import androidx.core.os.postDelayed
 import com.mapbox.maps.logI
@@ -10,10 +8,11 @@ import com.mapbox.maps.logW
 import kotlin.math.pow
 
 @WorkerThread
-internal class FpsManager {
+internal class FpsManager(
   private val handler: Handler
+) {
   private var userRefreshRate = USER_DEFINED_REFRESH_RATE_NOT_SET
-  private var userToScreenRefreshRateRatio = USER_TO_SCREEN_REFRESH_RATIO_NOT_SET
+  private var userToScreenRefreshRateRatio: Double? = null
 
   private var screenRefreshRate = SCREEN_METRICS_NOT_DEFINED
   private var screenRefreshPeriodNs = -1L
@@ -26,15 +25,6 @@ internal class FpsManager {
   private var choreographerSkips = 0
 
   internal var fpsChangedListener: OnFpsChangedListener? = null
-
-  constructor(handler: Handler) {
-    this.handler = handler
-  }
-
-  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  constructor() {
-    this.handler = Handler(Looper.getMainLooper())
-  }
 
   fun setScreenRefreshRate(screenRefreshRate: Int) {
     if (this.screenRefreshRate == screenRefreshRate) {
@@ -73,15 +63,15 @@ internal class FpsManager {
    */
   fun preRender(frameTimeNs: Long): Boolean {
     // no need to perform neither pacing nor FPS calculation when setMaxFps / setOnFpsChangedListener was not called by the user
-    if (userToScreenRefreshRateRatio == USER_TO_SCREEN_REFRESH_RATIO_NOT_SET && fpsChangedListener == null) {
+    if (userToScreenRefreshRateRatio == null && fpsChangedListener == null) {
       return true
     }
     // clear any scheduled task as new render call is about to happen
     handler.removeCallbacksAndMessages(fpsManagerToken)
     // update frame stats, count skipped / total VSYNC events
     updateFrameStats(frameTimeNs)
-    if (userToScreenRefreshRateRatio != USER_TO_SCREEN_REFRESH_RATIO_NOT_SET) {
-      return performPacing()
+    userToScreenRefreshRateRatio?.let {
+      return performPacing(it)
     }
     return true
   }
@@ -96,7 +86,10 @@ internal class FpsManager {
       // however to produce correct values we also update FPS after IDLE_TIMEOUT_MS
       // otherwise when updating the map after it was IDLE first update will report
       // huge delta between new frame and last frame (as we're using dirty rendering)
-      handler.postDelayed(IDLE_TIMEOUT_MS, fpsManagerToken) {
+      handler.postDelayed(
+        VSYNC_COUNT_TILL_IDLE * (screenRefreshPeriodNs / 10.0.pow(6.0)).toLong(),
+        fpsManagerToken
+      ) {
         onRenderingPaused()
       }
     }
@@ -162,7 +155,7 @@ internal class FpsManager {
    *        1           |       0.4       |   false
    *        2           |       0.8       |   false
    */
-  private fun performPacing(): Boolean {
+  private fun performPacing(userToScreenRefreshRateRatio: Double): Boolean {
     val drawnFrameIndex = (choreographerTicks * userToScreenRefreshRateRatio).toInt()
     if (LOG_STATISTICS) {
       logI(
@@ -205,10 +198,14 @@ internal class FpsManager {
   internal companion object {
     private const val TAG = "Mbgl-FpsManager"
     private const val USER_DEFINED_REFRESH_RATE_NOT_SET = -1
-    private const val USER_TO_SCREEN_REFRESH_RATIO_NOT_SET = 0.0
     private const val SCREEN_METRICS_NOT_DEFINED = -1
     private const val LOG_STATISTICS = false
-    internal const val IDLE_TIMEOUT_MS = 50L
+
+    /**
+     * Empiric metric to understand how many VSYNC updates without [preRender] will happen
+     * after last [postRender] so that we assume map is IDLE.
+     */
+    internal const val VSYNC_COUNT_TILL_IDLE = 3
     private val fpsManagerToken = Any()
     private val ONE_SECOND_NS = 10.0.pow(9.0).toLong()
     private val ONE_MILLISECOND_NS = 10.0.pow(6.0).toLong()

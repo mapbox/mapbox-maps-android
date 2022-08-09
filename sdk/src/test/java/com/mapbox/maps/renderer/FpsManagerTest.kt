@@ -1,10 +1,11 @@
 package com.mapbox.maps.renderer
 
+import android.os.Handler
 import android.os.Looper
 import android.view.Choreographer
 import com.mapbox.maps.logI
 import com.mapbox.maps.logW
-import com.mapbox.maps.renderer.FpsManager.Companion.IDLE_TIMEOUT_MS
+import com.mapbox.maps.renderer.FpsManager.Companion.VSYNC_COUNT_TILL_IDLE
 import io.mockk.*
 import org.junit.After
 import org.junit.Assert
@@ -25,7 +26,7 @@ class FpsManagerTest {
 
   @Before
   fun setUp() {
-    fpsManager = FpsManager()
+    fpsManager = FpsManager(Handler(Looper.getMainLooper()))
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logI(any(), any()) } just Runs
     every { logW(any(), any()) } just Runs
@@ -37,30 +38,19 @@ class FpsManagerTest {
   @Test
   fun userRefreshRateNotSetTest() {
     pauseHandler()
-    val frameTotalNumber = 10
-    var frameRenderedCount = 0
-    for (i in 0 until frameTotalNumber) {
-      Choreographer.getInstance().postFrameCallback {
-        assert(fpsManager.preRender(it))
-        frameRenderedCount++
-      }
+    idleHandler(vsyncCount = 10) {
+      assert(fpsManager.preRender(it))
     }
-    idleHandler(vsyncCount = frameTotalNumber)
-    assert(frameRenderedCount == frameTotalNumber)
   }
 
   @Test
   fun userRefreshRate24Test() {
     fpsManager.setUserRefreshRate(24)
     pauseHandler()
-    val frameTotalNumber = 10
     val frameRenderedPattern = mutableListOf<Boolean>()
-    for (i in 0 until frameTotalNumber) {
-      Choreographer.getInstance().postFrameCallback {
-        frameRenderedPattern.add(fpsManager.preRender(it))
-      }
+    idleHandler(vsyncCount = 10) {
+      frameRenderedPattern.add(fpsManager.preRender(it))
     }
-    idleHandler(vsyncCount = frameTotalNumber)
     Assert.assertArrayEquals(
       arrayOf(
         false, false, true, false, true,
@@ -74,14 +64,10 @@ class FpsManagerTest {
   fun userRefreshRate7Test() {
     fpsManager.setUserRefreshRate(7)
     pauseHandler()
-    val frameTotalNumber = 18
     val frameRenderedPattern = mutableListOf<Boolean>()
-    for (i in 0 until frameTotalNumber) {
-      Choreographer.getInstance().postFrameCallback {
-        frameRenderedPattern.add(fpsManager.preRender(it))
-      }
+    idleHandler(vsyncCount = 18) {
+      frameRenderedPattern.add(fpsManager.preRender(it))
     }
-    idleHandler(vsyncCount = frameTotalNumber)
     Assert.assertArrayEquals(
       arrayOf(
         false, false, false, false, false, false, false, false, true,
@@ -100,14 +86,10 @@ class FpsManagerTest {
     fpsManager.fpsChangedListener = fpsChangedListener
     pauseHandler()
     // render a bit more frames than screen frequency
-    val frameTotalNumber = SCREEN_FPS + 10
-    for (i in 0 until frameTotalNumber) {
-      Choreographer.getInstance().postFrameCallback {
-        assert(fpsManager.preRender(it))
-        fpsManager.postRender()
-      }
+    idleHandler(vsyncCount = SCREEN_FPS + 10) {
+      assert(fpsManager.preRender(it))
+      fpsManager.postRender()
     }
-    idleHandler(vsyncCount = frameTotalNumber)
     assert(fpsValueArray.size == 1)
     Assert.assertEquals(SCREEN_FPS.toDouble(), fpsValueArray[0], EPS)
   }
@@ -132,29 +114,20 @@ class FpsManagerTest {
     // pattern is [0, 1, 1, 1, 1]
     fpsManager.setUserRefreshRate(48)
     pauseHandler()
-    // first we render 3 frames
-    val frameTotalNumberBefore = 3
     val frameRenderedBeforePattern = mutableListOf<Boolean>()
-    for (i in 0 until frameTotalNumberBefore) {
-      Choreographer.getInstance().postFrameCallback {
-        frameRenderedBeforePattern.add(fpsManager.preRender(it))
-        fpsManager.postRender()
-      }
+    // first we render 3 frames
+    idleHandler(vsyncCount = 3) {
+      frameRenderedBeforePattern.add(fpsManager.preRender(it))
+      fpsManager.postRender()
     }
-    idleHandler(vsyncCount = frameTotalNumberBefore)
     // then we simulate map being IDLE for several vsync ticks - counters should be reset, fps should be reported
-    val frameTotalNumberWhenIdle = (IDLE_TIMEOUT_MS / CHOREOGRAPHER_POST_FRAME_CALLBACK_DELAY_MS).toInt() + 1
-    idleHandler(vsyncCount = frameTotalNumberWhenIdle)
-    // and render 5 more frames
-    val frameTotalNumberAfter = 5
+    idleHandler(vsyncCount = VSYNC_COUNT_TILL_IDLE + 1) {}
     val frameRenderedAfterPattern = mutableListOf<Boolean>()
-    for (i in 0 until frameTotalNumberAfter) {
-      Choreographer.getInstance().postFrameCallback {
-        frameRenderedAfterPattern.add(fpsManager.preRender(it))
-        fpsManager.postRender()
-      }
+    // and render 5 more frames
+    idleHandler(vsyncCount = 5) {
+      frameRenderedAfterPattern.add(fpsManager.preRender(it))
+      fpsManager.postRender()
     }
-    idleHandler(vsyncCount = frameTotalNumberAfter)
     Assert.assertArrayEquals(
       arrayOf(
         false, true, true,
@@ -166,8 +139,15 @@ class FpsManagerTest {
 
   private fun pauseHandler() = Shadows.shadowOf(Looper.getMainLooper()).pause()
 
-  private fun idleHandler(vsyncCount: Int) = Shadows.shadowOf(Looper.getMainLooper())
-    .idleFor(CHOREOGRAPHER_POST_FRAME_CALLBACK_DELAY_MS.toLong() * vsyncCount, TimeUnit.MILLISECONDS)
+  private fun idleHandler(vsyncCount: Int, actionOnVsync: ((Long) -> Unit)) {
+    for (i in 0 until vsyncCount) {
+      Choreographer.getInstance().postFrameCallback { frameTimeNs ->
+        actionOnVsync.invoke(frameTimeNs)
+      }
+      Shadows.shadowOf(Looper.getMainLooper())
+        .idleFor(CHOREOGRAPHER_POST_FRAME_CALLBACK_DELAY_MS.toLong(), TimeUnit.MILLISECONDS)
+    }
+  }
 
   @After
   fun cleanUp() {

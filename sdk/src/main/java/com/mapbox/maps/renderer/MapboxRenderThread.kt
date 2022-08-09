@@ -79,21 +79,19 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
 
   // could not be volatile as setter method is synchronized
   internal var fpsChangedListener by Delegates.observable<OnFpsChangedListener?>(null) { _, old, new ->
-    new?.let {
-      if (old != it) {
-        /**
-         * Consider setting [OnFpsChangedListener] as non-render event to make sure that
-         * it does not get dropped if user has set it right after MapView creation before render thread
-         * is actually fully prepared for rendering.
-         */
-        postNonRenderEvent(
-          RenderEvent(
-            { fpsManager.fpsChangedListener = it },
-            false,
-            EventType.DEFAULT
-          )
+    if (old != new) {
+      /**
+       * Consider setting [OnFpsChangedListener] as non-render event to make sure that
+       * it does not get dropped if user has set it right after MapView creation before render thread
+       * is actually fully prepared for rendering.
+       */
+      postNonRenderEvent(
+        RenderEvent(
+          { fpsManager.fpsChangedListener = new },
+          false,
+          EventType.DEFAULT
         )
-      }
+      )
     }
   }
 
@@ -451,7 +449,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     prepareRenderFrame(creatingSurface = true)
   }
 
-  @MainThread
+  @UiThread
   fun setScreenRefreshRate(refreshRate: Int) {
     renderHandlerThread.post {
       fpsManager.setScreenRefreshRate(refreshRate)
