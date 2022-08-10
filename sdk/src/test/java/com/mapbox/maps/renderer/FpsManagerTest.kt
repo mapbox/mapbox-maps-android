@@ -64,15 +64,29 @@ class FpsManagerTest {
   fun userRefreshRate7Test() {
     fpsManager.setUserRefreshRate(7)
     pauseHandler()
+    val vsyncCount = 18
     val frameRenderedPattern = mutableListOf<Boolean>()
-    idleHandler(vsyncCount = 18) {
+    idleHandler(vsyncCount = vsyncCount) {
       frameRenderedPattern.add(fpsManager.preRender(it))
     }
     Assert.assertArrayEquals(
-      arrayOf(
-        false, false, false, false, false, false, false, false, true,
-        false, false, false, false, false, false, false, false, true,
-      ),
+      Array(vsyncCount) { it == 8 || it == 17 },
+      frameRenderedPattern.toTypedArray()
+    )
+  }
+
+  @Test
+  fun userRefreshRate3for2secondsTest() {
+    fpsManager.setUserRefreshRate(3)
+    pauseHandler()
+    val vsyncCount = 120
+    val frameRenderedPattern = mutableListOf<Boolean>()
+    idleHandler(vsyncCount = vsyncCount) {
+      frameRenderedPattern.add(fpsManager.preRender(it))
+    }
+    Assert.assertArrayEquals(
+      // 6 frames should be rendered in total during 2 seconds with 3 FPS
+      Array(vsyncCount) { it == 19 || it == 39 || it == 59 || it == 79 || it == 99 || it == 119 },
       frameRenderedPattern.toTypedArray()
     )
   }
@@ -83,15 +97,11 @@ class FpsManagerTest {
     pauseHandler()
     val vsyncCount = 120
     val frameRenderedPattern = mutableListOf<Boolean>()
-    val expectedRenderedPattern = BooleanArray(vsyncCount)
-    for (i in 0 until 120) {
-      expectedRenderedPattern[i] = i == 59 || i == 119
-    }
     idleHandler(vsyncCount = vsyncCount) {
       frameRenderedPattern.add(fpsManager.preRender(it))
     }
     Assert.assertArrayEquals(
-      expectedRenderedPattern.toTypedArray(),
+      Array(vsyncCount) { it == 59 || it == 119 },
       frameRenderedPattern.toTypedArray()
     )
   }
