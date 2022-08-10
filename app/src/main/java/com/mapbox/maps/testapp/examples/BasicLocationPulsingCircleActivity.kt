@@ -8,7 +8,10 @@ import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
+import com.mapbox.maps.plugin.gestures.gestures
+import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants
 import com.mapbox.maps.plugin.locationcomponent.location
+import com.mapbox.maps.plugin.locationcomponent.location2
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityLocationLayerBasicPulsingCircleBinding
 import com.mapbox.maps.testapp.utils.LocationPermissionHelper
@@ -30,8 +33,9 @@ class BasicLocationPulsingCircleActivity : AppCompatActivity() {
     binding = ActivityLocationLayerBasicPulsingCircleBinding.inflate(layoutInflater)
     setContentView(binding.root)
     mapboxMap = binding.mapView.getMapboxMap()
-    binding.mapView.location.addOnIndicatorPositionChangedListener() {
-      mapboxMap.setCamera(CameraOptions.Builder().center(it).zoom(12.0).build())
+    binding.mapView.location.addOnIndicatorPositionChangedListener {
+      mapboxMap.setCamera(CameraOptions.Builder().center(it).build())
+      binding.mapView.gestures.focalPoint = binding.mapView.getMapboxMap().pixelForCoordinate(it)
     }
     locationPermissionHelper = LocationPermissionHelper(WeakReference(this))
     locationPermissionHelper.checkPermissions {
@@ -72,7 +76,18 @@ class BasicLocationPulsingCircleActivity : AppCompatActivity() {
         return true
       }
       R.id.action_start_pulsing -> {
-        binding.mapView.location.pulsingEnabled = true
+        binding.mapView.location.apply {
+          pulsingEnabled = true
+          pulsingMaxRadius = 10f * resources.displayMetrics.density
+        }
+        return true
+      }
+      R.id.action_pulsing_follow_accuracy_radius -> {
+        binding.mapView.location2.showAccuracyRing = true
+        binding.mapView.location.apply {
+          pulsingEnabled = true
+          pulsingMaxRadius = LocationComponentConstants.PULSING_MAX_RADIUS_FOLLOW_ACCURACY
+        }
         return true
       }
       else -> return super.onOptionsItemSelected(item)

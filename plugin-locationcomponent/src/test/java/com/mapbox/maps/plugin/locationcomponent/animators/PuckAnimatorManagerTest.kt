@@ -33,6 +33,7 @@ class PuckAnimatorManagerTest {
   private val accuracyRadiusAnimator: PuckAccuracyRadiusAnimator =
     PuckAccuracyRadiusAnimator(mockk(relaxUnitFun = true))
   private val pulsingAnimator: PuckPulsingAnimator = mockk(relaxed = true)
+  private val pixelRatio: Float = 1.0f
 
   @Before
   fun setUp() {
@@ -43,7 +44,8 @@ class PuckAnimatorManagerTest {
       bearingAnimator,
       positionAnimator,
       pulsingAnimator,
-      accuracyRadiusAnimator
+      accuracyRadiusAnimator,
+      pixelRatio
     )
   }
 
@@ -94,9 +96,9 @@ class PuckAnimatorManagerTest {
       bearingUpdateListener,
       accuracyRadiusUpdateListener
     )
-    Assert.assertEquals(positionUpdateListener, positionAnimator.updateListener)
-    Assert.assertEquals(bearingUpdateListener, bearingAnimator.updateListener)
-    Assert.assertEquals(accuracyRadiusUpdateListener, accuracyRadiusAnimator.updateListener)
+    assertEquals(positionUpdateListener, positionAnimator.updateListener)
+    assertEquals(bearingUpdateListener, bearingAnimator.updateListener)
+    assertEquals(accuracyRadiusUpdateListener, accuracyRadiusAnimator.updateListener)
   }
 
   @Test
@@ -116,7 +118,7 @@ class PuckAnimatorManagerTest {
     }
     Shadows.shadowOf(Looper.getMainLooper()).idle()
     MatcherAssert.assertThat(counter, Matchers.greaterThan(0))
-    Assert.assertEquals(10.0, animatedValue, 0.0001)
+    assertEquals(10.0, animatedValue, 0.0001)
   }
 
   @Test
@@ -216,7 +218,37 @@ class PuckAnimatorManagerTest {
     Shadows.shadowOf(Looper.getMainLooper()).pause()
     puckAnimatorManager.updateAccuracyRadiusAnimator(options)
     Shadows.shadowOf(Looper.getMainLooper()).idle()
-    Assert.assertEquals(5000, accuracyRadiusAnimator.duration)
+    assertEquals(5000, accuracyRadiusAnimator.duration)
+  }
+
+  @Test
+  fun testUpdatePulsingPuckRadius() {
+    val updatedRadius = 50.0
+    val settings = mockk<LocationComponentSettings>(relaxed = true)
+    every { settings.pulsingEnabled } returns true
+    every { settings.pulsingMaxRadius } returns updatedRadius.toFloat()
+
+    puckAnimatorManager.updatePulsingRadius(updatedRadius, settings)
+    verify {
+      pulsingAnimator.enabled = true
+      pulsingAnimator.maxRadius = updatedRadius
+      pulsingAnimator.animateInfinite()
+    }
+  }
+
+  @Test
+  fun testUpdatePulsingPuckRadiusFalse() {
+    val updatedRadius = 50.0
+    val settings = mockk<LocationComponentSettings>(relaxed = true)
+    every { settings.pulsingEnabled } returns false
+    every { settings.pulsingMaxRadius } returns updatedRadius.toFloat()
+
+    puckAnimatorManager.updatePulsingRadius(updatedRadius, settings)
+    verify {
+      pulsingAnimator.enabled = false
+      pulsingAnimator.cancelRunning()
+    }
+    verify(exactly = 0) { pulsingAnimator.maxRadius = updatedRadius }
   }
 
   companion object {

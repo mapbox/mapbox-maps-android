@@ -38,7 +38,7 @@ interface LocationComponentSettingsInterface {
   var pulsingColor: Int
 
   /**
-   * The maximum radius of the pulsing circle. Works for 2D location puck only.
+   * The maximum radius of the pulsing circle. Works for 2D location puck only. Note: Setting [pulsingMaxRadius] to LocationComponentConstants.PULSING_MAX_RADIUS_FOLLOW_ACCURACY will set the pulsing circle to follow location accuracy circle.
    */
   var pulsingMaxRadius: Float
 

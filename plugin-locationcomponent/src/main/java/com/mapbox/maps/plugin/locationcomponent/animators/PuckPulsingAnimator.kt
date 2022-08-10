@@ -1,12 +1,15 @@
 package com.mapbox.maps.plugin.locationcomponent.animators
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.graphics.Color
 import androidx.annotation.ColorInt
 import androidx.core.view.animation.PathInterpolatorCompat
 
-internal class PuckPulsingAnimator : PuckAnimator<Double>(Evaluators.DOUBLE) {
+internal class PuckPulsingAnimator(private val pixelRatio: Float = 1.0f) :
+  PuckAnimator<Double>(Evaluators.DOUBLE) {
+  var maxRadius: Double = DEFAULT_RADIUS_DP * pixelRatio
 
-  var maxRadius: Double = 10.0
   @ColorInt
   var pulsingColor: Int = Color.BLUE
   var pulseFadeEnabled = true
@@ -19,19 +22,35 @@ internal class PuckPulsingAnimator : PuckAnimator<Double>(Evaluators.DOUBLE) {
   }
 
   fun animateInfinite() {
-    animate(0.0, maxRadius)
+    if (maxRadius <= 0.0) {
+      maxRadius = DEFAULT_RADIUS_DP * pixelRatio
+    }
+    if (!isRunning) {
+      animate(0.0, maxRadius)
+    }
+    addListener(object : AnimatorListenerAdapter() {
+      override fun onAnimationRepeat(animation: Animator?) {
+        super.onAnimationRepeat(animation)
+        setObjectValues(0.0, maxRadius)
+      }
+    })
   }
 
   override fun updateLayer(fraction: Float, value: Double) {
     var opacity = 1.0f
     if (pulseFadeEnabled) {
-      opacity = 1.0f - (value / maxRadius).toFloat()
+      opacity = (1.0f - (value / maxRadius).toFloat()).coerceIn(0.0f, 1.0f)
     }
-    locationRenderer?.updatePulsingUi(pulsingColor, value.toFloat(), if (fraction <= 0.1f) 0f else opacity)
+    locationRenderer?.updatePulsingUi(
+      pulsingColor,
+      value.toFloat(),
+      if (fraction <= 0.1f) 0f else opacity
+    )
   }
 
   internal companion object {
     const val PULSING_DEFAULT_DURATION = 3_000L
+    const val DEFAULT_RADIUS_DP = 10.0
     private val PULSING_DEFAULT_INTERPOLATOR = PathInterpolatorCompat.create(
       0.0f,
       0.0f,

@@ -68,7 +68,7 @@ internal class LocationPuckManager(
     lastAccuracyRadius = it
   }
 
-  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  @VisibleForTesting(otherwise = PRIVATE)
   internal var locationLayerRenderer =
     when (val puck = settings.locationPuck) {
       is LocationPuck2D -> {
@@ -169,7 +169,11 @@ internal class LocationPuckManager(
     )
   }
 
-  fun updateCurrentBearing(vararg bearings: Double, options: (ValueAnimator.() -> Unit)? = null, forceUpdate: Boolean = false) {
+  fun updateCurrentBearing(
+    vararg bearings: Double,
+    options: (ValueAnimator.() -> Unit)? = null,
+    forceUpdate: Boolean = false
+  ) {
     // Skip bearing updates if the change from the lastBearing is too small, thus avoid unnecessary calls to gl-native.
     if (!forceUpdate && (abs(bearings.last() - lastBearing) < BEARING_UPDATE_THRESHOLD)) {
       return
@@ -187,6 +191,24 @@ internal class LocationPuckManager(
       *targets,
       options = options
     )
+    updateMaxPulsingRadiusToFollowAccuracyRing(radius.last())
+  }
+
+  /**
+   * Update maximum radius for pulsing puck to follow location accuracy radius.
+   * since pulsing radius is in pixels and location accuracy is in meters, we convert meters to pixel using
+   * projection delegate.
+   */
+  @VisibleForTesting(otherwise = PRIVATE)
+  internal fun updateMaxPulsingRadiusToFollowAccuracyRing(radius: Double) {
+    if (settings.pulsingMaxRadius.toInt() == LocationComponentConstants.PULSING_MAX_RADIUS_FOLLOW_ACCURACY.toInt()) {
+      val metersPerPixelAtLocation =
+        delegateProvider.mapProjectionDelegate.getMetersPerPixelAtLatitude(
+          delegateProvider.mapCameraManagerDelegate.cameraState.center.latitude(),
+          delegateProvider.mapCameraManagerDelegate.cameraState.zoom
+        )
+      animationManager.updatePulsingRadius(radius / metersPerPixelAtLocation, settings)
+    }
   }
 
   fun updateLocationAnimator(block: ValueAnimator.() -> Unit) {
@@ -222,7 +244,7 @@ internal class LocationPuckManager(
    * current zoom level. MIN_ZOOM, MAX_ZOOM are used as two anchor points to calculate
    * the scale expression.
    */
-  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  @VisibleForTesting(otherwise = PRIVATE)
   internal fun styleScaling(settings: LocationComponentSettings) {
     when (val puck = settings.locationPuck) {
       is LocationPuck2D -> {

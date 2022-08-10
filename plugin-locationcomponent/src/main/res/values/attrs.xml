@@ -8,7 +8,7 @@
         <attr name="mapbox_locationComponentPulsingEnabled" format="boolean"/>
         <!-- The color of the pulsing circle. Works for 2D location puck only. -->
         <attr name="mapbox_locationComponentPulsingColor" format="color"/>
-        <!-- The maximum radius of the pulsing circle. Works for 2D location puck only. -->
+        <!-- The maximum radius of the pulsing circle. Works for 2D location puck only. Note: Setting [pulsingMaxRadius] to LocationComponentConstants.PULSING_MAX_RADIUS_FOLLOW_ACCURACY will set the pulsing circle to follow location accuracy circle. -->
         <attr name="mapbox_locationComponentPulsingMaxRadius" format="dimension"/>
         <!-- Whether show accuracy ring with location puck. Works for 2D location puck only. -->
         <attr name="mapbox_locationComponentShowAccuracyRing" format="boolean"/>

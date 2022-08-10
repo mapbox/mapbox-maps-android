@@ -22,4 +22,8 @@
         android:title="@string/location_start_pulsing"
         app:showAsAction="never"/>
 
+    <item android:id="@+id/action_pulsing_follow_accuracy_radius"
+        android:title="@string/location_pulsing_puck_follow_accuracy_radius"
+        app:showAsAction="never" />
+
 </menu>
