@@ -10,11 +10,14 @@ import com.mapbox.maps.logW
 internal class RenderHandlerThread {
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  internal lateinit var handlerThread: HandlerThread
+  internal val handlerThread: HandlerThread =
+    HandlerThread(HANDLE_THREAD_NAME, THREAD_PRIORITY_DISPLAY)
+
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal var handler: Handler? = null
 
-  internal val started
-    get() = handlerThread.isAlive
+  internal val isRunning
+    get() = handler != null && handlerThread.isAlive
 
   fun post(task: () -> Unit) {
     postDelayed(task, 0, EventType.DEFAULT)
@@ -29,7 +32,6 @@ internal class RenderHandlerThread {
   }
 
   fun start(): Handler {
-    handlerThread = HandlerThread(HANDLE_THREAD_NAME, THREAD_PRIORITY_DISPLAY)
     handlerThread.start()
     return Handler(handlerThread.looper).also {
       handler = it

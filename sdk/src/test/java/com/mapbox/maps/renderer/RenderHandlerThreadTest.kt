@@ -5,6 +5,7 @@ import com.mapbox.maps.logW
 import com.mapbox.verifyNo
 import io.mockk.*
 import org.junit.After
+import org.junit.Assert.assertThrows
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -36,13 +37,42 @@ class RenderHandlerThreadTest {
     renderHandlerThread.start()
     assert(renderHandlerThread.handler != null)
     assert(renderHandlerThread.handlerThread.isAlive)
+    assert(renderHandlerThread.isRunning)
   }
 
   @Test
-  fun stopTest() {
+  fun startStartTest() {
+    renderHandlerThread.start()
+    assertThrows(IllegalThreadStateException::class.java) {
+      renderHandlerThread.start()
+    }
+  }
+
+  @Test
+  fun startStopTest() {
     renderHandlerThread.start()
     renderHandlerThread.stop()
     assert(renderHandlerThread.handler == null)
+  }
+
+  @Test
+  fun startStopStartTest() {
+    renderHandlerThread.start()
+    renderHandlerThread.stop()
+    assertThrows(IllegalThreadStateException::class.java) {
+      renderHandlerThread.start()
+    }
+  }
+
+  @Test
+  fun isRunningTest() {
+    with(renderHandlerThread) {
+      assert(!isRunning)
+      start()
+      assert(isRunning)
+      stop()
+      assert(!isRunning)
+    }
   }
 
   @Test

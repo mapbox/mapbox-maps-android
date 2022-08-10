@@ -105,9 +105,10 @@ class MapboxRenderThreadTest {
     idleHandler()
   }
 
-  private fun mockCountdownRunnable(latch: CountDownLatch) = mockk<Runnable>(relaxUnitFun = true).also {
-    every { it.run() } answers { latch.countDown() }
-  }
+  private fun mockCountdownRunnable(latch: CountDownLatch) =
+    mockk<Runnable>(relaxUnitFun = true).also {
+      every { it.run() } answers { latch.countDown() }
+    }
 
   @After
   fun cleanup() {
@@ -212,7 +213,7 @@ class MapboxRenderThreadTest {
     verifyOnce { eglCore.release() }
     verifyOnce { mapboxRenderer.destroyRenderer() }
     verifyOnce { fpsManager.destroy() }
-    assertFalse(renderHandlerThread.started)
+    assertFalse(renderHandlerThread.isRunning)
   }
 
   @Test
@@ -227,7 +228,7 @@ class MapboxRenderThreadTest {
     verifyOnce { eglCore.release() }
     verifyOnce { mapboxRenderer.destroyRenderer() }
     verifyOnce { fpsManager.destroy() }
-    assertFalse(renderHandlerThread.started)
+    assertFalse(renderHandlerThread.isRunning)
   }
 
   @Test
@@ -390,7 +391,7 @@ class MapboxRenderThreadTest {
   fun destroyTest() {
     initRenderThread()
     mapboxRenderThread.destroy()
-    assertFalse(renderHandlerThread.started)
+    assertFalse(renderHandlerThread.isRunning)
   }
 
   @Test
@@ -875,5 +876,27 @@ class MapboxRenderThreadTest {
       eglCore.prepareEgl()
       mapboxRenderer.createRenderer()
     }
+  }
+
+  @Test(timeout = 10000) // Added timeout to ensure that if test fails, test does not hang forever.
+  fun onSurfaceWithActivityDestroyedBeforeSurfaceWithDestroyTaskInQueueTest() {
+    initRenderThread()
+    provideValidSurface()
+    waitZeroCounter {
+      val latch = this
+      // simulate real situation that `destroyRenderer` schedules some task in queue
+      // which was leading to a deadlock in `onSurfaceDestroyed`
+      every { mapboxRenderer.destroyRenderer() } answers {
+        renderHandlerThread.handler?.post {
+          Thread.sleep(500)
+          latch.countDown()
+        }
+      }
+      mapboxRenderThread.destroy()
+      mapboxRenderThread.onSurfaceDestroyed()
+    }
+    verifyOnce { eglCore.release() }
+    verifyOnce { mapboxRenderer.destroyRenderer() }
+    assertFalse(renderHandlerThread.isRunning)
   }
 }
