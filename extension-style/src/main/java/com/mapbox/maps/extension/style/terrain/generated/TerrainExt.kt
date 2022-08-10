@@ -13,7 +13,7 @@ import com.mapbox.maps.extension.style.StyleInterface
  * @return Terrain
  */
 fun StyleInterface.getTerrain(sourceId: String): Terrain {
-  return Terrain(sourceId).also { it.bindTo(this) }
+  return Terrain(sourceId).also { it.delegate = this }
 }
 
 /**

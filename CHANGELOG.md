@@ -15,6 +15,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Deliver style to the plugin registry on map start if a new one was loaded after map stop. ([1558](https://github.com/mapbox/mapbox-maps-android/pull/1558))
 * Fix a bug in cameraForGeometry returning incorrect camera options when pitch > 0. ([1568](https://github.com/mapbox/mapbox-maps-android/pull/1568))
 * Fix Android memory leak when destroying platform view annotation manager. ([1568](https://github.com/mapbox/mapbox-maps-android/pull/1568))
+* Fix style getters for terrain, light and atmosphere resetting properties. ([1573](https://github.com/mapbox/mapbox-maps-android/pull/1573))
 
 ## Dependencies
 Bump gl-native to v10.8.0-beta.1, common to v23.0.0-beta.1. ([1568](https://github.com/mapbox/mapbox-maps-android/pull/1568))

@@ -29,7 +29,7 @@ import kotlin.collections.HashMap
  */
 @UiThread
 class Light : LightDslReceiver, StyleContract.StyleLightExtension {
-  private var delegate: StyleInterface? = null
+  internal var delegate: StyleInterface? = null
   private val properties = HashMap<String, PropertyValue<*>>()
 
   /**

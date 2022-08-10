@@ -24,7 +24,7 @@ import com.mapbox.maps.extension.style.utils.unwrap
  */
 @UiThread
 class Atmosphere : AtmosphereDslReceiver, StyleContract.StyleAtmosphereExtension {
-  private var delegate: StyleInterface? = null
+  internal var delegate: StyleInterface? = null
   private val properties = HashMap<String, PropertyValue<*>>()
 
   /**

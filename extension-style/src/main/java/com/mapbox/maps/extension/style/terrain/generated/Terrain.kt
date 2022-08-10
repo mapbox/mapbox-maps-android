@@ -20,7 +20,7 @@ import com.mapbox.maps.extension.style.utils.unwrap
  */
 @UiThread
 class Terrain(private val sourceId: String) : TerrainDslReceiver, StyleContract.StyleTerrainExtension {
-  private var delegate: StyleInterface? = null
+  internal var delegate: StyleInterface? = null
   private val properties = HashMap<String, PropertyValue<*>>()
 
   /**

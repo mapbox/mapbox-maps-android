@@ -923,7 +923,7 @@ class AtmosphereTest {
   @Test
   fun getAtmosphereTest() {
     assertNotNull(style.getAtmosphere())
-    verify { style.setStyleAtmosphere(any()) }
+    verify(exactly = 0) { style.setStyleAtmosphere(any()) }
   }
 }
 
