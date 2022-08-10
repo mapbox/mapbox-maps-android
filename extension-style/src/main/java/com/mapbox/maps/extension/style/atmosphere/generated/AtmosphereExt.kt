@@ -12,7 +12,7 @@ import com.mapbox.maps.extension.style.StyleInterface
  * @return Atmosphere
  */
 fun StyleInterface.getAtmosphere(): Atmosphere {
-  return Atmosphere().also { it.bindTo(this) }
+  return Atmosphere().also { it.delegate = this }
 }
 
 /**

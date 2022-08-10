@@ -12,7 +12,7 @@ import com.mapbox.maps.extension.style.StyleInterface
  * @return Light
  */
 fun StyleInterface.getLight(): Light {
-  return Light().also { it.bindTo(this) }
+  return Light().also { it.delegate = this }
 }
 
 /**

@@ -716,7 +716,7 @@ class LightTest {
   @Test
   fun getLightTest() {
     assertNotNull(style.getLight())
-    verify { style.setStyleLight(any()) }
+    verify(exactly = 0) { style.setStyleLight(any()) }
   }
 }
 

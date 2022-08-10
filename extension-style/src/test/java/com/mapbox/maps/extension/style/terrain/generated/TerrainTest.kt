@@ -171,7 +171,7 @@ class TerrainTest {
   @Test
   fun getTerrainTest() {
     assertNotNull(style.getTerrain(sourceId))
-    verify { style.setStyleTerrain(any()) }
+    verify(exactly = 0) { style.setStyleTerrain(any()) }
   }
 
   @Test
