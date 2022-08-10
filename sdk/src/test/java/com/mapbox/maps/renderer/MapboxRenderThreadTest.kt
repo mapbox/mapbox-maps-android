@@ -877,7 +877,7 @@ class MapboxRenderThreadTest {
     }
   }
 
-  @Test
+  @Test(timeout=10000) // Added timeout to ensure that if test fails, test does not hang forever.
   fun onSurfaceWithActivityDestroyedBeforeSurfaceWithDestroyTaskInQueueTest() {
     initRenderThread()
     provideValidSurface()
