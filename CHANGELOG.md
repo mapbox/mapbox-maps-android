@@ -82,6 +82,8 @@ Bump gl-native to v10.8.0-beta.1, common to v23.0.0-beta.1. ([1568](https://gith
   Also bumps [WorkManager 2.7.1](https://developer.android.com/jetpack/androidx/releases/work#2.7.1) that enforces compileSdk 31 or newer.
 * Bump gl-native to v10.7.0, common to 22.1.0. ([1543](https://github.com/mapbox/mapbox-maps-android/pull/1543))
 * Fix default viewport bearing transition doesn't follow shortest path. ([1541](https://github.com/mapbox/mapbox-maps-android/pull/1541))
+* Fix `OnFpsChangedListener` listener to count number of frames rendered over the last second instead of immediate time for render call. ([1477](https://github.com/mapbox/mapbox-maps-android/pull/1477))
+* Fix `MapView.setMaximumFps` method to apply exact FPS value for rendering the map. ([1477](https://github.com/mapbox/mapbox-maps-android/pull/1477))
 
 # 10.7.0-rc.1 July 14, 2022
 ## Features ✨ and improvements 🏁

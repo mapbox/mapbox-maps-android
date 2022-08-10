@@ -20,7 +20,6 @@ internal abstract class MapboxRenderer : MapClient {
   internal lateinit var renderThread: MapboxRenderThread
   internal abstract val widgetRenderer: MapboxWidgetRenderer
 
-  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal var map: MapInterface? = null
 
   private var width: Int = 0
@@ -182,7 +181,11 @@ internal abstract class MapboxRenderer : MapClient {
 
   @AnyThread
   fun setMaximumFps(fps: Int) {
-    renderThread.setMaximumFps(fps)
+    if (fps <= 0) {
+      logE(TAG, "Maximum FPS could not be <= 0, ignoring $fps value.")
+      return
+    }
+    renderThread.setUserRefreshRate(fps)
   }
 
   @AnyThread

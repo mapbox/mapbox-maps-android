@@ -11,7 +11,6 @@ internal class RenderHandlerThread {
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal lateinit var handlerThread: HandlerThread
-  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal var handler: Handler? = null
 
   internal val started
@@ -29,10 +28,11 @@ internal class RenderHandlerThread {
     } ?: logW(TAG, "Thread $HANDLE_THREAD_NAME was not started, ignoring event")
   }
 
-  fun start() {
-    handlerThread = HandlerThread(HANDLE_THREAD_NAME, THREAD_PRIORITY_DISPLAY).apply {
-      start()
-      handler = Handler(this.looper)
+  fun start(): Handler {
+    handlerThread = HandlerThread(HANDLE_THREAD_NAME, THREAD_PRIORITY_DISPLAY)
+    handlerThread.start()
+    return Handler(handlerThread.looper).also {
+      handler = it
     }
   }
 

@@ -9,6 +9,7 @@ import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener
 import com.mapbox.maps.plugin.delegates.listeners.OnStyleDataLoadedListener
+import com.mapbox.maps.renderer.MapboxRenderThread
 import com.mapbox.maps.renderer.MapboxRenderer
 import com.mapbox.maps.renderer.OnFpsChangedListener
 import io.mockk.*
@@ -301,9 +302,12 @@ class MapControllerTest {
 
   @Test
   fun setMaximumFpsInvalid() {
+    every { mockRenderer.setMaximumFps(any()) } just Runs
+
     testMapController.setMaximumFps(-1)
 
-    verify(exactly = 0) { mockRenderer.setMaximumFps(any()) }
+    // range check is performed within MapboxRenderer
+    verify { mockRenderer.setMaximumFps(any()) }
   }
 
   @Test
@@ -321,7 +325,6 @@ class MapControllerTest {
     every { mockMapInitOptions.plugins } answers { emptyList() }
 
     testMapController.initializePlugins(mockMapInitOptions)
-
     verify(exactly = 0) {
       mockPluginRegistry.createPlugin(any(), mockMapInitOptions, any())
       mockMapboxMap.setCameraAnimationPlugin(any())
@@ -375,5 +378,37 @@ class MapControllerTest {
       mockPluginRegistry.createPlugin(mockMapView, mockMapInitOptions, createdPlugin)
       mockMapboxMap.setCameraAnimationPlugin(createdPlugin.instance as CameraAnimationsPlugin)
     }
+  }
+
+  @Test
+  fun setValidScreenRefreshRate() {
+    screenRefreshRateTest(1, 60)
+  }
+
+  @Test
+  fun setZeroScreenRefreshRate() {
+    screenRefreshRateTest(0, 0)
+  }
+
+  @Test
+  fun setNegativeScreenRefreshRate() {
+    screenRefreshRateTest(0, -1)
+  }
+
+  @Test
+  fun setMaxScreenRefreshRate() {
+    screenRefreshRateTest(1, Int.MAX_VALUE)
+  }
+
+  private fun screenRefreshRateTest(expectedCallCount: Int, actualRefreshRate: Int) {
+    mockkStatic("com.mapbox.maps.MapboxLogger")
+    every { logE(any(), any()) } just Runs
+    val mockRenderThread = mockk<MapboxRenderThread>(relaxed = true)
+    every { mockRenderer.renderThread } returns mockRenderThread
+    testMapController.setScreenRefreshRate(actualRefreshRate)
+    verify(exactly = expectedCallCount) {
+      mockRenderThread.setScreenRefreshRate(any())
+    }
+    unmockkStatic("com.mapbox.maps.MapboxLogger")
   }
 }

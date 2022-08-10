@@ -98,9 +98,27 @@ internal abstract class MapboxRendererTest {
   }
 
   @Test
-  fun setMaximumFpsTest() {
+  fun setValidMaximumFpsTest() {
     mapboxRenderer.setMaximumFps(10)
-    verify { renderThread.setMaximumFps(10) }
+    verify(exactly = 1) { renderThread.setUserRefreshRate(10) }
+  }
+
+  @Test
+  fun setMaximumFpsTest() {
+    mapboxRenderer.setMaximumFps(Int.MAX_VALUE)
+    verify(exactly = 1) { renderThread.setUserRefreshRate(Int.MAX_VALUE) }
+  }
+
+  @Test
+  fun setNegativeFpsTest() {
+    mapboxRenderer.setMaximumFps(-1)
+    verify(exactly = 0) { renderThread.setUserRefreshRate(any()) }
+  }
+
+  @Test
+  fun setZeroFpsTest() {
+    mapboxRenderer.setMaximumFps(0)
+    verify(exactly = 0) { renderThread.setUserRefreshRate(any()) }
   }
 
   @Test
