@@ -179,15 +179,22 @@ internal class FpsManager(
     fpsChangedListener?.let { listener ->
       val droppedFps = choreographerSkips.toDouble() / choreographerTicks
       val fps = (1.0 - droppedFps) * screenRefreshRate
-      val averageRenderTimeNs = frameRenderTimeAccumulatedNs.toDouble() / (choreographerTicks - choreographerSkips)
       listener.onFpsChanged(fps)
-      logI(
-        TAG,
-        "VSYNC based FPS is $fps," +
-          " average core rendering time is ${averageRenderTimeNs / ONE_MILLISECOND_NS} ms" +
-          " (or ${String.format("%.2f", screenRefreshPeriodNs / averageRenderTimeNs * screenRefreshRate)} FPS)," +
-          " missed $choreographerSkips out of $choreographerTicks VSYNC pulses"
-      )
+      if (choreographerTicks == choreographerSkips) {
+        logI(
+          TAG,
+          "VSYNC based FPS is $fps, missed $choreographerSkips out of $choreographerTicks VSYNC pulses"
+        )
+      } else {
+        val averageRenderTimeNs = frameRenderTimeAccumulatedNs.toDouble() / (choreographerTicks - choreographerSkips)
+        logI(
+          TAG,
+          "VSYNC based FPS is $fps," +
+            " average core rendering time is ${averageRenderTimeNs / ONE_MILLISECOND_NS} ms" +
+            " (or ${String.format("%.2f", screenRefreshPeriodNs / averageRenderTimeNs * screenRefreshRate)} FPS)," +
+            " missed $choreographerSkips out of $choreographerTicks VSYNC pulses"
+        )
+      }
     }
     previousDrawnFrameIndex = 0
     frameRenderTimeAccumulatedNs = 0L
