@@ -876,4 +876,26 @@ class MapboxRenderThreadTest {
       mapboxRenderer.createRenderer()
     }
   }
+
+  @Test
+  fun onSurfaceWithActivityDestroyedBeforeSurfaceWithDestroyTaskInQueueTest() {
+    initRenderThread()
+    provideValidSurface()
+    waitZeroCounter {
+      val latch = this
+      // simulate real situation that `destroyRenderer` schedules some task in queue
+      // which was leading to a deadlock in `onSurfaceDestroyed`
+      every { mapboxRenderer.destroyRenderer() } answers {
+        renderHandlerThread.handler?.post {
+          Thread.sleep(500)
+          latch.countDown()
+        }
+      }
+      mapboxRenderThread.destroy()
+      mapboxRenderThread.onSurfaceDestroyed()
+    }
+    verifyOnce { eglCore.release() }
+    verifyOnce { mapboxRenderer.destroyRenderer() }
+    assertFalse(renderHandlerThread.isRunning)
+  }
 }
