@@ -15,6 +15,7 @@ import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.viewport.CompletionListener
 import com.mapbox.maps.plugin.viewport.data.DefaultViewportTransitionOptions
 import com.mapbox.maps.plugin.viewport.state.ViewportState
+import com.mapbox.maps.util.MathUtils
 
 /**
  * The implementation of [DefaultViewportTransition] that transitions Viewport from one [ViewportState] to another.
@@ -192,7 +193,13 @@ internal class DefaultViewportTransitionImpl(
           if (completedChildAnimators.contains(CameraAnimatorType.BEARING)) {
             cameraDelegate.setCamera(cameraOptions { bearing(targetCamera.bearing) })
           } else {
-            cameraAnimator.setObjectValues(startCamera.bearing, targetCamera.bearing)
+            // calculate shortest rotation for bearing
+            targetCamera.bearing?.let { targetBearing ->
+              val targets = MathUtils.prepareOptimalBearingPath(
+                doubleArrayOf(startCamera.bearing, targetBearing)
+              ).toTypedArray()
+              cameraAnimator.setObjectValues(*targets)
+            }
           }
         CameraAnimatorType.CENTER ->
           if (completedChildAnimators.contains(CameraAnimatorType.CENTER)) {
