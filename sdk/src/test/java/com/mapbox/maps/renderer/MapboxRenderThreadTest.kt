@@ -105,9 +105,10 @@ class MapboxRenderThreadTest {
     idleHandler()
   }
 
-  private fun mockCountdownRunnable(latch: CountDownLatch) = mockk<Runnable>(relaxUnitFun = true).also {
-    every { it.run() } answers { latch.countDown() }
-  }
+  private fun mockCountdownRunnable(latch: CountDownLatch) =
+    mockk<Runnable>(relaxUnitFun = true).also {
+      every { it.run() } answers { latch.countDown() }
+    }
 
   @After
   fun cleanup() {
@@ -877,7 +878,7 @@ class MapboxRenderThreadTest {
     }
   }
 
-  @Test(timeout=10000) // Added timeout to ensure that if test fails, test does not hang forever.
+  @Test(timeout = 10000) // Added timeout to ensure that if test fails, test does not hang forever.
   fun onSurfaceWithActivityDestroyedBeforeSurfaceWithDestroyTaskInQueueTest() {
     initRenderThread()
     provideValidSurface()
