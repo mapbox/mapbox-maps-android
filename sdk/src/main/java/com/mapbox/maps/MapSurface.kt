@@ -65,6 +65,7 @@ class MapSurface @JvmOverloads constructor(
    */
   fun surfaceChanged(width: Int, height: Int) {
     renderer.surfaceChanged(surface, width, height)
+    onSizeChanged(width, height)
   }
 
   /**
