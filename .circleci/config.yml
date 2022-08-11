@@ -624,7 +624,7 @@ jobs:
               steps:
                   - run:
                       command: |
-                          E2E_TRIGGER=$(./scripts/ci/ci-e2e-job-trigger-checker.sh || echo -n "retval $?")
+                          E2E_TRIGGER=$(./scripts/ci-e2e-job-trigger-checker.sh || echo -n "retval $?")
                           if [[ $E2E_TRIGGER == *"retval 1"* ]]; then
                               echo "E2E tests not requested, skipping."
                               exit 0
@@ -639,7 +639,7 @@ jobs:
                               export E2E_VERSION_CONFIG="default"
                           fi
                           echo "Run E2E tests with ${E2E_VERSION_CONFIG} config."
-                          scripts/ci/ci-e2e-compatibility-start-pipeline.py --config mapbox-maps-android=${CIRCLE_SHA1} --platform all --versions ${E2E_VERSION_CONFIG}
+                          scripts/ci-e2e-compatibility-start-pipeline.py --config mapbox-maps-android=${CIRCLE_SHA1} --platform all --versions ${E2E_VERSION_CONFIG}
                       name: Trigger E2E SDK test devel pipeline
           - when:
               condition: << parameters.validation >>
@@ -648,7 +648,7 @@ jobs:
                       command: |
                           export E2E_VERSION_CONFIG="latest"
                           echo "Run E2E tests with ${E2E_VERSION_CONFIG} config."
-                          scripts/ci/ci-e2e-compatibility-start-pipeline.py --config mapbox-maps-android=${CIRCLE_SHA1} --platform all --versions ${E2E_VERSION_CONFIG}
+                          scripts/ci-e2e-compatibility-start-pipeline.py --config mapbox-maps-android=${CIRCLE_SHA1} --platform all --versions ${E2E_VERSION_CONFIG}
                       name: Trigger E2E SDK test validation pipeline
 
 executors:
