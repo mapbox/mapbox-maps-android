@@ -169,6 +169,8 @@ class MapControllerTest {
     testMapController.onDestroy()
 
     verifySequence {
+      mockMapboxMap.setCameraAnimationPlugin(null)
+      mockMapboxMap.setGesturesAnimationPlugin(null)
       mockPluginRegistry.onDestroy()
       mockNativeObserver.onDestroy()
       mockRenderer.onDestroy()
