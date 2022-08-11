@@ -209,7 +209,7 @@ commands:
           name: Start internal CI release flow
           command: |
             if [[ $CIRCLE_TAG =~ << pipeline.parameters.git_release_tag >> ]]; then
-              TARGET_BRANCH=$(echo $CIRCLE_TAG | awk -F\- '{print $2}' | cut -f1-2 -d".")
+              TARGET_BRANCH=$(echo $CIRCLE_TAG | awk -F\- '{print $1}' | cut -f1-2 -d".")
               python3 scripts/start-internal-release-pipeline.py --token ${MOBILE_METRICS_TOKEN} --origin-slug mapbox/mapbox-maps-android --target-slug mapbox/mapbox-maps-android-internal --release_tag $CIRCLE_TAG --branch $TARGET_BRANCH
             fi
   track-metrics:
