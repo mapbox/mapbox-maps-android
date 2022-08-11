@@ -278,11 +278,9 @@ commands:
                 name: Publish the SDK snapshot based on the keyword in commit message
                 command: |
                   COMMIT_SHA=$(git rev-parse --short HEAD)
-                  LAST_RELEASE=$(git describe --tags --abbrev=0)
+                  LAST_RELEASE=$(git describe --tags --abbrev=0 --match 'android-v[0-9]*.[0-9]*.[0-9]*' --match 'v[0-9]*.[0-9]*.[0-9]*')
                   if [[ $LAST_RELEASE == android-v* ]]; then
                     LAST_RELEASE=${LAST_RELEASE:9}
-                  elif [[ $LAST_RELEASE == extension-androidauto-v* ]]; then
-                    LAST_RELEASE=${LAST_RELEASE:23}
                   else
                     LAST_RELEASE=${LAST_RELEASE:1}
                   fi
