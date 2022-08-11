@@ -13,6 +13,9 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix onAnnotationDragStarted event is still fired when annotation is not draggable. ([1552](https://github.com/mapbox/mapbox-maps-android/pull/1552))
 * Fix camera flying away when pitching. ([1560](https://github.com/mapbox/mapbox-maps-android/pull/1560))
 * Deliver style to the plugin registry on map start if a new one was loaded after map stop. ([1558](https://github.com/mapbox/mapbox-maps-android/pull/1558))
+* Fix default viewport bearing transition doesn't follow shortest path. ([1541](https://github.com/mapbox/mapbox-maps-android/pull/1541))
+* Fix `OnFpsChangedListener` listener to count number of frames rendered over the last second instead of immediate time for render call. ([1477](https://github.com/mapbox/mapbox-maps-android/pull/1477))
+* Fix `MapView.setMaximumFps` method to apply exact FPS value for rendering the map. ([1477](https://github.com/mapbox/mapbox-maps-android/pull/1477))
 * Fix a bug in cameraForGeometry returning incorrect camera options when pitch > 0. ([1568](https://github.com/mapbox/mapbox-maps-android/pull/1568))
 * Fix Android memory leak when destroying platform view annotation manager. ([1568](https://github.com/mapbox/mapbox-maps-android/pull/1568))
 * Fix style getters for terrain, light and atmosphere resetting properties. ([1573](https://github.com/mapbox/mapbox-maps-android/pull/1573))
@@ -85,9 +88,6 @@ Bump gl-native to v10.8.0-beta.2 and common to v23.0.0-beta.1. ([1574](https://g
 * Bump telemetry to [v8.1.5](https://github.com/mapbox/mapbox-events-android/releases/tag/telem-8.1.5-core-5.0.2). ([1494](https://github.com/mapbox/mapbox-maps-android/pull/1494))
   Also bumps [WorkManager 2.7.1](https://developer.android.com/jetpack/androidx/releases/work#2.7.1) that enforces compileSdk 31 or newer.
 * Bump gl-native to v10.7.0, common to 22.1.0. ([1543](https://github.com/mapbox/mapbox-maps-android/pull/1543))
-* Fix default viewport bearing transition doesn't follow shortest path. ([1541](https://github.com/mapbox/mapbox-maps-android/pull/1541))
-* Fix `OnFpsChangedListener` listener to count number of frames rendered over the last second instead of immediate time for render call. ([1477](https://github.com/mapbox/mapbox-maps-android/pull/1477))
-* Fix `MapView.setMaximumFps` method to apply exact FPS value for rendering the map. ([1477](https://github.com/mapbox/mapbox-maps-android/pull/1477))
 
 # 10.7.0-rc.1 July 14, 2022
 ## Features ✨ and improvements 🏁

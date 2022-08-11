@@ -1291,11 +1291,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * The line trim-off percentage range based on the whole line gradinet range [0.0, 1.0]. The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. If either 'trim-start' or 'trim-end' offset is out of valid range, the default range will be set.
+   * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0].
    */
   val lineTrimOffset: List<Double>?
     /**
-     * The line trim-off percentage range based on the whole line gradinet range [0.0, 1.0]. The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. If either 'trim-start' or 'trim-end' offset is out of valid range, the default range will be set.
+     * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0].
      *
      * @return List<Double>
      */
@@ -1304,7 +1304,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * The line trim-off percentage range based on the whole line gradinet range [0.0, 1.0]. The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. If either 'trim-start' or 'trim-end' offset is out of valid range, the default range will be set.
+   * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0].
    *
    * @param lineTrimOffset value of lineTrimOffset
    */
@@ -1314,15 +1314,15 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * The line trim-off percentage range based on the whole line gradinet range [0.0, 1.0]. The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. If either 'trim-start' or 'trim-end' offset is out of valid range, the default range will be set.
+   * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0].
    *
    * This is an Expression representation of "line-trim-offset".
    *
-   * The line trim-off percentage range based on the whole line gradinet range [0.0, 1.0]. The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. If either 'trim-start' or 'trim-end' offset is out of valid range, the default range will be set.
+   * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0].
    */
   val lineTrimOffsetAsExpression: Expression?
     /**
-     * The line trim-off percentage range based on the whole line gradinet range [0.0, 1.0]. The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. If either 'trim-start' or 'trim-end' offset is out of valid range, the default range will be set.
+     * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0].
      *
      * Get the LineTrimOffset property as an Expression
      *
@@ -1339,7 +1339,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * The line trim-off percentage range based on the whole line gradinet range [0.0, 1.0]. The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. If either 'trim-start' or 'trim-end' offset is out of valid range, the default range will be set.
+   * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0].
    *
    * @param lineTrimOffset value of lineTrimOffset as Expression
    */
@@ -2144,11 +2144,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * The line trim-off percentage range based on the whole line gradinet range [0.0, 1.0]. The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. If either 'trim-start' or 'trim-end' offset is out of valid range, the default range will be set.
+     * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0].
      */
     val defaultLineTrimOffset: List<Double>?
       /**
-       * The line trim-off percentage range based on the whole line gradinet range [0.0, 1.0]. The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. If either 'trim-start' or 'trim-end' offset is out of valid range, the default range will be set.
+       * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0].
        *
        * Get the default value of LineTrimOffset property
        *
@@ -2159,11 +2159,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * The line trim-off percentage range based on the whole line gradinet range [0.0, 1.0]. The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. If either 'trim-start' or 'trim-end' offset is out of valid range, the default range will be set.
+     * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0].
      *
      * This is an Expression representation of "line-trim-offset".
      *
-     * The line trim-off percentage range based on the whole line gradinet range [0.0, 1.0]. The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. If either 'trim-start' or 'trim-end' offset is out of valid range, the default range will be set.
+     * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0].
      */
     val defaultLineTrimOffsetAsExpression: Expression?
       /**
@@ -2631,14 +2631,14 @@ interface LineLayerDsl {
   fun lineTranslateAnchor(lineTranslateAnchor: Expression): LineLayer
 
   /**
-   * The line trim-off percentage range based on the whole line gradinet range [0.0, 1.0]. The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. If either 'trim-start' or 'trim-end' offset is out of valid range, the default range will be set.
+   * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0].
    *
    * @param lineTrimOffset value of lineTrimOffset
    */
   fun lineTrimOffset(lineTrimOffset: List<Double> = listOf(0.0, 0.0)): LineLayer
 
   /**
-   * The line trim-off percentage range based on the whole line gradinet range [0.0, 1.0]. The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. If either 'trim-start' or 'trim-end' offset is out of valid range, the default range will be set.
+   * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0].
    *
    * @param lineTrimOffset value of lineTrimOffset as Expression
    */
