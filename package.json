@@ -15,7 +15,7 @@
     "@mapbox/cloudfriend": "^4.2.0"
   },
   "devDependencies": {
-    "ejs": "^2.7.4"
+    "ejs": "^3.1.7"
   },
   "engines": {
     "node": ">=6"
