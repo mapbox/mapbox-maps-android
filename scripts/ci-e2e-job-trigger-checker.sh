@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
 # Usage:
-#   ./scripts/ci/ci-e2e-job-trigger-checker.sh
+#   ./scripts/ci-e2e-job-trigger-checker.sh
 #
 # This script will query information about the current PR when used in CircleCI environment.
 # The information is used to decide whether the end-to-end compatibility testing pipeline needs to be launched.
