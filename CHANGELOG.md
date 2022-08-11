@@ -17,9 +17,10 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix Android memory leak when destroying platform view annotation manager. ([1568](https://github.com/mapbox/mapbox-maps-android/pull/1568))
 * Fix style getters for terrain, light and atmosphere resetting properties. ([1573](https://github.com/mapbox/mapbox-maps-android/pull/1573))
 * Fix possible ANR when destroying renderer. ([1567](https://github.com/mapbox/mapbox-maps-android/pull/1567))
+* Fix elevation of pole geometry when exaggerated terrain is used. ([1574](https://github.com/mapbox/mapbox-maps-android/pull/1574))
 
 ## Dependencies
-Bump gl-native to v10.8.0-beta.1, common to v23.0.0-beta.1. ([1568](https://github.com/mapbox/mapbox-maps-android/pull/1568))
+Bump gl-native to v10.8.0-beta.2 and common to v23.0.0-beta.1. ([1574](https://github.com/mapbox/mapbox-maps-android/pull/1574), [1568](https://github.com/mapbox/mapbox-maps-android/pull/1568))
 
 # 10.7.0 July 29, 2022
 [Changes](https://github.com/mapbox/mapbox-maps-android/compare/android-v10.6.0...android-v10.7.0) since [Mapbox Maps SDK for Android 10.6.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/android-v10.6.0)
