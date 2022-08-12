@@ -30,7 +30,7 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
   private val mapController: MapController
   private val mapInitOptions: MapInitOptions
   private val renderer: MapboxSurfaceRenderer
-  private val surface: Surface
+  val surface: Surface
 
   /**
    * @param context the application context to init the default [MapInitOptions]

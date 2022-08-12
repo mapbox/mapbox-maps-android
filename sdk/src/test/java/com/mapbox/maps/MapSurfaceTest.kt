@@ -3,6 +3,7 @@ package com.mapbox.maps
 import android.content.Context
 import android.graphics.Bitmap
 import android.view.MotionEvent
+import android.view.Surface
 import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.renderer.MapboxSurfaceRenderer
 import com.mapbox.maps.renderer.OnFpsChangedListener
@@ -25,6 +26,7 @@ class MapSurfaceTest {
   private lateinit var mapSurface: MapSurface
   private lateinit var mapInitOptions: MapInitOptions
   private lateinit var mapboxSurfaceRenderer: MapboxSurfaceRenderer
+  private lateinit var surface: Surface
 
   @Before
   fun setUp() {
@@ -32,10 +34,11 @@ class MapSurfaceTest {
     mapInitOptions = mockk(relaxUnitFun = true)
     mapController = mockk(relaxUnitFun = true)
     mapboxSurfaceRenderer = mockk(relaxUnitFun = true)
+    surface = mockk(relaxed = true)
 
     mapSurface = MapSurface(
       context,
-      mockk(relaxed = true),
+      surface,
       mapInitOptions,
       mapboxSurfaceRenderer,
       mapController
@@ -48,6 +51,11 @@ class MapSurfaceTest {
   @After
   fun cleanup() {
     unmockkStatic("com.mapbox.maps.MapboxLogger")
+  }
+
+  @Test
+  fun testGetSurface() {
+    assertEquals(surface, mapSurface.surface)
   }
 
   @Test
