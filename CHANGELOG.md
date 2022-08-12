@@ -3,6 +3,12 @@
 Mapbox welcomes participation and contributions from everyone.
 # main
 
+# 10.8.0-rc.1
+## Features ✨ and improvements 🏁
+
+## Bug fixes 🐞
+* Try recreate EGL surface when it throws exception. ([1589](https://github.com/mapbox/mapbox-maps-android/pull/1589))
+
 # 10.8.0-beta.1 August 11, 2022
 ## Features ✨ and improvements 🏁
 * Introduce a callback to be invoked when the device compass sensors need to be re-calibrated. ([1513](https://github.com/mapbox/mapbox-maps-android/pull/1513))
