@@ -5,11 +5,11 @@ import android.graphics.Bitmap
 import android.view.MotionEvent
 import android.view.Surface
 import android.view.WindowManager
+import androidx.annotation.VisibleForTesting
+import androidx.annotation.VisibleForTesting.PRIVATE
 import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
-import com.mapbox.maps.renderer.MapboxSurfaceRenderer
-import com.mapbox.maps.renderer.OnFpsChangedListener
-import com.mapbox.maps.renderer.RendererSetupErrorListener
+import com.mapbox.maps.renderer.*
 import com.mapbox.maps.renderer.widget.Widget
 
 /**
@@ -23,42 +23,62 @@ import com.mapbox.maps.renderer.widget.Widget
  *
  * <strong>Warning:</strong> Please note that you are responsible for getting permission to use the map data,
  * and for ensuring your use adheres to the relevant terms of use.
- *
- * @param context the application context to init the default [MapInitOptions]
- * @param surface the surface that will display map
- * @param mapInitOptions the init options to for map
  */
-class MapSurface @JvmOverloads constructor(
-  // could use strong ref here as MapInitOptions have strong ref in any case
-  private val context: Context,
-  val surface: Surface,
-  mapInitOptions: MapInitOptions = MapInitOptions(context)
-) : MapPluginProviderDelegate, MapControllable {
+class MapSurface : MapPluginProviderDelegate, MapControllable {
 
+  private val context: Context
   private val mapController: MapController
-  private val renderer: MapboxSurfaceRenderer = MapboxSurfaceRenderer(mapInitOptions.antialiasingSampleCount)
+  private val mapInitOptions: MapInitOptions
+  private val renderer: MapboxSurfaceRenderer
+  private val surface: Surface
 
-  init {
-    this.mapController = MapController(
-      renderer,
-      mapInitOptions
-    )
-    mapController.initializePlugins(mapInitOptions)
+  /**
+   * @param context the application context to init the default [MapInitOptions]
+   * @param surface the surface that will display map
+   * @param mapInitOptions the init options for map
+   */
+  @JvmOverloads constructor(
+    context: Context,
+    surface: Surface,
+    mapInitOptions: MapInitOptions = MapInitOptions(context) // could use strong ref here as MapInitOptions have strong ref in any case
+  ) {
+    this.context = context
+    this.surface = surface
+    this.mapInitOptions = mapInitOptions
+    this.renderer = MapboxSurfaceRenderer(mapInitOptions.antialiasingSampleCount)
+    this.mapController = MapController(renderer, mapInitOptions).apply {
+      initializePlugins(mapInitOptions)
+    }
+  }
+
+  @VisibleForTesting(otherwise = PRIVATE)
+  internal constructor(
+    context: Context,
+    surface: Surface,
+    mapInitOptions: MapInitOptions,
+    renderer: MapboxSurfaceRenderer,
+    mapController: MapController
+  ) {
+    this.context = context
+    this.surface = surface
+    this.mapInitOptions = mapInitOptions
+    this.renderer = renderer
+    this.mapController = mapController
   }
 
   /**
-   * Called when the surface has been created.
+   * Must be called when the surface has been created.
    */
   fun surfaceCreated() {
     renderer.surfaceCreated()
     // display should not be null at this point but to be sure we will fallback to DEFAULT_FPS
-    val screenRefreshRate = (context.getSystemService(Context.WINDOW_SERVICE) as WindowManager)
-      .defaultDisplay?.refreshRate?.toInt() ?: MapView.DEFAULT_FPS
+    val screenRefreshRate = (context.getSystemService(Context.WINDOW_SERVICE) as WindowManager?)
+      ?.defaultDisplay?.refreshRate?.toInt() ?: MapView.DEFAULT_FPS
     mapController.setScreenRefreshRate(screenRefreshRate)
   }
 
   /**
-   * Called when the surface dimensions have changed.
+   * Must be called when the surface dimensions have changed.
    *
    * @param width The width of the surface viewport
    * @param height The height of the surface viewport
@@ -69,7 +89,7 @@ class MapSurface @JvmOverloads constructor(
   }
 
   /**
-   * Called when the surface
+   * Must be called when the surface is destroyed.
    */
   fun surfaceDestroyed() {
     renderer.surfaceDestroyed()
