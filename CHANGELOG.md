@@ -8,6 +8,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Bug fixes 🐞
 * Try recreate EGL surface when it throws exception. ([1589](https://github.com/mapbox/mapbox-maps-android/pull/1589))
+* Fix `MapboxMap` extension plugin functions throwing exceptions. ([1591](https://github.com/mapbox/mapbox-maps-android/pull/1591))
 
 # 10.8.0-beta.1 August 11, 2022
 ## Features ✨ and improvements 🏁

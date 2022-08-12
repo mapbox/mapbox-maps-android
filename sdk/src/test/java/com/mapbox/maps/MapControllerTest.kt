@@ -165,6 +165,8 @@ class MapControllerTest {
     every { mockPluginRegistry.onDestroy() } just Runs
     every { mockNativeObserver.onDestroy() } just Runs
     every { mockRenderer.onDestroy() } just Runs
+    every { mockMapboxMap.setCameraAnimationPlugin(any()) } just Runs
+    every { mockMapboxMap.setGesturesAnimationPlugin(any()) } just Runs
 
     testMapController.onDestroy()
 
