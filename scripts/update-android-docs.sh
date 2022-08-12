@@ -55,8 +55,7 @@ if [ -z "$MAPS_SDK_VERSION" ]; then
 fi
 
 #Split version name to remove the "v" prefix
-array=(`echo $MAPS_SDK_VERSION | tr 'v' ' '` )
-MAPS_SDK_VERSION=${array[1]}
+MAPS_SDK_VERSION=${MAPS_SDK_VERSION:1}
 read GITHUB_TOKEN < gh_token.txt
 
 function prepare_branch_with_documentation() {
