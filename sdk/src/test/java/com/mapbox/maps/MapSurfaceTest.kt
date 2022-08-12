@@ -2,8 +2,10 @@ package com.mapbox.maps
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.view.Display
 import android.view.MotionEvent
 import android.view.Surface
+import android.view.WindowManager
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.renderer.MapboxSurfaceRenderer
@@ -52,6 +54,19 @@ class MapSurfaceTest {
 
   @Test
   fun testSurfaceCreated() {
+    val display: Display = mockk()
+    val windowManager: WindowManager = mockk()
+    val refreshRate = 100f
+    every { windowManager.defaultDisplay } returns display
+    every { display.refreshRate } returns refreshRate
+    every { context.getSystemService(Context.WINDOW_SERVICE) } returns windowManager
+    mapSurface.surfaceCreated()
+    verifyOnce { mapboxSurfaceRenderer.surfaceCreated() }
+    verifyOnce { mapController.setScreenRefreshRate(refreshRate.toInt()) }
+  }
+
+  @Test
+  fun testSurfaceCreatedWithNoWindowManager() {
     every { context.getSystemService(Context.WINDOW_SERVICE) } returns null
     mapSurface.surfaceCreated()
     verifyOnce { mapboxSurfaceRenderer.surfaceCreated() }
