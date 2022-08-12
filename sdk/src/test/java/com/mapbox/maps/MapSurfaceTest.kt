@@ -9,10 +9,10 @@ import com.mapbox.maps.renderer.MapboxSurfaceRenderer
 import com.mapbox.maps.renderer.OnFpsChangedListener
 import com.mapbox.maps.renderer.RendererSetupErrorListener
 import com.mapbox.maps.renderer.widget.BitmapWidget
+import com.mapbox.verifyOnce
 import io.mockk.*
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertNull
-import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -43,14 +43,6 @@ class MapSurfaceTest {
       mapboxSurfaceRenderer,
       mapController
     )
-
-    mockkStatic("com.mapbox.maps.MapboxLogger")
-    every { logI(any(), any()) } just Runs
-  }
-
-  @After
-  fun cleanup() {
-    unmockkStatic("com.mapbox.maps.MapboxLogger")
   }
 
   @Test
@@ -62,8 +54,8 @@ class MapSurfaceTest {
   fun testSurfaceCreated() {
     every { context.getSystemService(Context.WINDOW_SERVICE) } returns null
     mapSurface.surfaceCreated()
-    verify { mapboxSurfaceRenderer.surfaceCreated() }
-    verify { mapController.setScreenRefreshRate(MapView.DEFAULT_FPS) }
+    verifyOnce { mapboxSurfaceRenderer.surfaceCreated() }
+    verifyOnce { mapController.setScreenRefreshRate(MapView.DEFAULT_FPS) }
   }
 
   @Test
@@ -71,13 +63,14 @@ class MapSurfaceTest {
     val w = 100
     val h = 200
     mapSurface.surfaceChanged(w, h)
-    verify { mapSurface.onSizeChanged(w, h) }
+    verifyOnce { mapboxSurfaceRenderer.surfaceChanged(surface, w, h) }
+    verifyOnce { mapSurface.onSizeChanged(w, h) }
   }
 
   @Test
   fun testSurfaceDestroyed() {
     mapSurface.surfaceDestroyed()
-    verify { mapboxSurfaceRenderer.surfaceDestroyed() }
+    verifyOnce { mapboxSurfaceRenderer.surfaceDestroyed() }
   }
 
   @Test
@@ -88,7 +81,7 @@ class MapSurfaceTest {
     val mapboxMap = MapboxMap(nativeMap, nativeObserver, styleObserver)
     every { mapController.getMapboxMap() } returns mapboxMap
     val result = mapSurface.getMapboxMap()
-    verify { mapController.getMapboxMap() }
+    verifyOnce { mapController.getMapboxMap() }
     assertEquals(mapboxMap, result)
   }
 
@@ -97,7 +90,7 @@ class MapSurfaceTest {
     val event = MotionEvent.obtain(0, 0L, MotionEvent.ACTION_MOVE, 0f, 0f, 0)
     every { mapController.onTouchEvent(any()) } returns true
     mapSurface.onTouchEvent(event)
-    verify { mapController.onTouchEvent(event) }
+    verifyOnce { mapController.onTouchEvent(event) }
   }
 
   @Test
@@ -105,21 +98,21 @@ class MapSurfaceTest {
     val event = MotionEvent.obtain(0, 0L, MotionEvent.ACTION_MOVE, 0f, 0f, 0)
     every { mapController.onGenericMotionEvent(any()) } returns true
     mapSurface.onGenericMotionEvent(event)
-    verify { mapController.onGenericMotionEvent(event) }
+    verifyOnce { mapController.onGenericMotionEvent(event) }
   }
 
   @Test
   fun testQueueEvent() {
     val event = Runnable {}
     mapSurface.queueEvent(event)
-    verify { mapController.queueEvent(event) }
+    verifyOnce { mapController.queueEvent(event) }
   }
 
   @Test
   fun testSnapshot() {
     every { mapController.snapshot() } returns null
     val snapshot = mapSurface.snapshot()
-    verify { mapController.snapshot() }
+    verifyOnce { mapController.snapshot() }
     assertNull(snapshot)
   }
 
@@ -128,45 +121,45 @@ class MapSurfaceTest {
     every { mapController.snapshot(any()) } just runs
     val listener = MapView.OnSnapshotReady { }
     mapSurface.snapshot(listener)
-    verify { mapController.snapshot(listener) }
+    verifyOnce { mapController.snapshot(listener) }
   }
 
   @Test
   fun setMaximumFpsTest() {
     val fps = 160
     mapSurface.setMaximumFps(fps)
-    verify { mapboxSurfaceRenderer.setMaximumFps(fps) }
+    verifyOnce { mapboxSurfaceRenderer.setMaximumFps(fps) }
   }
 
   @Test
   fun setOnFpsChangedListenerTest() {
     val listener = OnFpsChangedListener { }
     mapSurface.setOnFpsChangedListener(listener)
-    verify { mapboxSurfaceRenderer.setOnFpsChangedListener(listener) }
+    verifyOnce { mapboxSurfaceRenderer.setOnFpsChangedListener(listener) }
   }
 
   @Test
   fun onStartTest() {
     mapSurface.onStart()
-    verify { mapController.onStart() }
+    verifyOnce { mapController.onStart() }
   }
 
   @Test
   fun onStopTest() {
     mapSurface.onStop()
-    verify { mapController.onStop() }
+    verifyOnce { mapController.onStop() }
   }
 
   @Test
   fun onDestroyTest() {
     mapSurface.onDestroy()
-    verify { mapController.onDestroy() }
+    verifyOnce { mapController.onDestroy() }
   }
 
   @Test
   fun onLowMemoryTest() {
     mapSurface.onLowMemory()
-    verify { mapController.onLowMemory() }
+    verifyOnce { mapController.onLowMemory() }
   }
 
   @MapboxExperimental
@@ -175,7 +168,7 @@ class MapSurfaceTest {
     val bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)
     val widget = BitmapWidget(bitmap)
     mapSurface.addWidget(widget)
-    verify { mapController.addWidget(widget) }
+    verifyOnce { mapController.addWidget(widget) }
     bitmap.recycle()
   }
 
@@ -186,7 +179,7 @@ class MapSurfaceTest {
     val widget = BitmapWidget(bitmap)
     every { mapController.removeWidget(any()) } returns true
     mapSurface.removeWidget(widget)
-    verify { mapController.removeWidget(widget) }
+    verifyOnce { mapController.removeWidget(widget) }
     bitmap.recycle()
   }
 
@@ -194,14 +187,14 @@ class MapSurfaceTest {
   fun addRendererSetupErrorListenerTest() {
     val listener = RendererSetupErrorListener { }
     mapSurface.addRendererSetupErrorListener(listener)
-    verify { mapController.addRendererSetupErrorListener(listener) }
+    verifyOnce { mapController.addRendererSetupErrorListener(listener) }
   }
 
   @Test
   fun removeRendererSetupErrorListenerTest() {
     val listener = RendererSetupErrorListener { }
     mapSurface.removeRendererSetupErrorListener(listener)
-    verify { mapController.removeRendererSetupErrorListener(listener) }
+    verifyOnce { mapController.removeRendererSetupErrorListener(listener) }
   }
 
   @Test
@@ -209,7 +202,7 @@ class MapSurfaceTest {
     val pluginId = "no_such_plugin"
     every { mapSurface.getPlugin<MapPlugin>(any()) } returns null
     val plugin: MapPlugin? = mapSurface.getPlugin(pluginId)
-    verify { mapController.getPlugin<MapPlugin>(pluginId) }
+    verifyOnce { mapController.getPlugin<MapPlugin>(pluginId) }
     assertNull(plugin)
   }
 }
