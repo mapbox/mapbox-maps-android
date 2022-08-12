@@ -119,19 +119,25 @@ internal class EGLCore(
    * Creates an EGL surface associated with a Surface.
    */
   fun createWindowSurface(surface: Surface): EGLSurface {
-    // Create a window surface, and attach it to the Surface we received.
-    val surfaceAttribs = intArrayOf(EGL10.EGL_NONE)
-    val eglSurface = egl.eglCreateWindowSurface(
-      eglDisplay,
-      eglConfig,
-      surface,
-      surfaceAttribs
-    )
-    val eglWindowCreatedError = checkEglErrorAndNotify("eglCreateWindowSurface")
-    if (eglWindowCreatedError != null || eglSurface == null) {
+    try {
+      // Create a window surface, and attach it to the Surface we received.
+      val surfaceAttribs = intArrayOf(EGL10.EGL_NONE)
+      // may throw java.lang.IllegalArgumentException even when surface is valid
+      val eglSurface = egl.eglCreateWindowSurface(
+        eglDisplay,
+        eglConfig,
+        surface,
+        surfaceAttribs
+      )
+      val eglWindowCreatedError = checkEglErrorAndNotify("eglCreateWindowSurface")
+      if (eglWindowCreatedError != null || eglSurface == null) {
+        return eglNoSurface
+      }
+      return eglSurface
+    } catch (e: Exception) {
+      logE(TAG, "eglCreateWindowSurface has thrown an exception:\n${e.localizedMessage}")
       return eglNoSurface
     }
-    return eglSurface
   }
 
   /**
