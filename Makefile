@@ -56,7 +56,7 @@ fix:
 
 .PHONY: sdkRegistryUpload
 sdkRegistryUpload:
-	./gradlew mapboxSDKRegistryUpload -x extension-androidauto:mapboxSDKRegistryUpload;
+	./gradlew mapboxSDKRegistryUpload -x extension-androidauto:mapboxSDKRegistryUpload --no-parallel --no-daemon;
 
 .PHONY: sdkRegistryPublish
 sdkRegistryPublish:
