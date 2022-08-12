@@ -30,6 +30,10 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
   private val mapController: MapController
   private val mapInitOptions: MapInitOptions
   private val renderer: MapboxSurfaceRenderer
+
+  /**
+   * The surface to be used, set from the constructor.
+   */
   val surface: Surface
 
   /**
@@ -51,6 +55,13 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
     }
   }
 
+  /**
+   * @param context the application context to init the default [MapInitOptions]
+   * @param surface the surface that will display map
+   * @param mapInitOptions the init options for map
+   * @param renderer the MapboxSurfaceRenderer instance to be used
+   * @param mapController the MapController instance to be used
+   */
   @VisibleForTesting(otherwise = PRIVATE)
   internal constructor(
     context: Context,
