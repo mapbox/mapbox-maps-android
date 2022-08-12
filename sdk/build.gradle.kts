@@ -82,6 +82,7 @@ dependencies {
   testImplementation(Dependencies.robolectricEgl)
   testImplementation(Dependencies.asyncInflater)
   testImplementation(Dependencies.equalsVerifier)
+  testImplementation(Dependencies.androidxTestJUnit)
   debugImplementation(Dependencies.androidxAppCompat)
   androidTestImplementation(Dependencies.androidxTestRunner)
   androidTestImplementation(Dependencies.androidxTestJUnit)
