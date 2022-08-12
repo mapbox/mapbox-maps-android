@@ -222,6 +222,11 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       eglSurface = eglCore.createWindowSurface(surface)
       if (eglSurface == eglCore.eglNoSurface) {
         // try recreate it in next iteration.
+        logW(
+          TAG,
+          "Could not create EGL surface although Android surface was valid," +
+            " retrying in $RETRY_DELAY_MS ms..."
+        )
         postPrepareRenderFrame(delayMillis = RETRY_DELAY_MS)
         return false
       }
