@@ -27,7 +27,7 @@ private val emptyCancelable = Cancelable { }
  * @param cameraOptions The camera options to ease to
  * @param animationOptions Transition options (animation duration, listeners etc)
  *
- * @return [Cancelable] animator set object or empty cancelable object if associated map object was garbage collected.
+ * @return [Cancelable] animator set object or empty cancelable object if associated `MapView` was destroyed.
  */
 @JvmOverloads
 fun MapPluginExtensionsDelegate.easeTo(
@@ -45,7 +45,7 @@ fun MapPluginExtensionsDelegate.easeTo(
  * @param cameraOptions The camera options to fly to
  * @param animationOptions Transition options (animation duration, listeners etc)
  *
- * @return [Cancelable] animator set object or empty cancelable object if associated map object was garbage collected.
+ * @return [Cancelable] animator set object or empty cancelable object if associated `MapView` was destroyed.
  */
 @JvmOverloads
 fun MapPluginExtensionsDelegate.flyTo(
@@ -63,7 +63,7 @@ fun MapPluginExtensionsDelegate.flyTo(
  * @param pitch The amount to pitch by
  * @param animationOptions Transition options (animation duration, listeners etc)
  *
- * @return [Cancelable] animator set object or empty cancelable object if associated map object was garbage collected.
+ * @return [Cancelable] animator set object or empty cancelable object if associated `MapView` was destroyed.
  */
 @JvmOverloads
 fun MapPluginExtensionsDelegate.pitchBy(
@@ -82,7 +82,7 @@ fun MapPluginExtensionsDelegate.pitchBy(
  * @param screenCoordinate The optional focal point to scale on
  * @param animationOptions Transition options (animation duration, listeners etc)
  *
- * @return [Cancelable] animator set object or empty cancelable object if associated map object was garbage collected.
+ * @return [Cancelable] animator set object or empty cancelable object if associated `MapView` was destroyed.
  */
 @JvmOverloads
 fun MapPluginExtensionsDelegate.scaleBy(
@@ -101,7 +101,7 @@ fun MapPluginExtensionsDelegate.scaleBy(
  * @param screenCoordinate The screen coordinate distance to move by
  * @param animationOptions Transition options (animation duration, listeners etc)
  *
- * @return [Cancelable] animator set object or empty cancelable object if associated map object was garbage collected.
+ * @return [Cancelable] animator set object or empty cancelable object if associated `MapView` was destroyed.
  */
 @JvmOverloads
 fun MapPluginExtensionsDelegate.moveBy(
@@ -120,7 +120,7 @@ fun MapPluginExtensionsDelegate.moveBy(
  * @param second The second pointer to rotate on
  * @param animationOptions Transition options (animation duration, listeners etc)
  *
- * @return [Cancelable] animator set object or empty cancelable object if associated map object was garbage collected.
+ * @return [Cancelable] animator set object or empty cancelable object if associated `MapView` was destroyed.
  */
 @JvmOverloads
 fun MapPluginExtensionsDelegate.rotateBy(

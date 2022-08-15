@@ -169,8 +169,6 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
       return
     }
     lifecycleState = LifecycleState.STATE_DESTROYED
-    mapboxMap.setCameraAnimationPlugin(null)
-    mapboxMap.setGesturesAnimationPlugin(null)
     pluginRegistry.onDestroy()
     nativeObserver.onDestroy()
     renderer.onDestroy()
