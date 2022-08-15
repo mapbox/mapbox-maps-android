@@ -18,7 +18,6 @@ import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.plugin.delegates.listeners.*
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import com.mapbox.maps.plugin.gestures.GesturesPluginImpl
-import java.lang.ref.WeakReference
 import java.util.*
 import java.util.concurrent.CopyOnWriteArraySet
 
@@ -78,10 +77,10 @@ class MapboxMap :
     }
 
   @VisibleForTesting(otherwise = PRIVATE)
-  internal var cameraAnimationsPlugin: WeakReference<CameraAnimationsPlugin>? = null
+  internal var cameraAnimationsPlugin: CameraAnimationsPlugin? = null
 
   @VisibleForTesting(otherwise = PRIVATE)
-  internal var gesturesPlugin: WeakReference<GesturesPlugin>? = null
+  internal var gesturesPlugin: GesturesPlugin? = null
 
   @VisibleForTesting(otherwise = PRIVATE)
   internal constructor(
@@ -1698,10 +1697,11 @@ class MapboxMap :
     return nativeMap.getDragCameraOptions(fromPoint, toPoint)
   }
 
-  internal fun setCameraAnimationPlugin(cameraAnimationsPlugin: CameraAnimationsPlugin?) {
-    cameraAnimationsPlugin?.let {
-      if (it is CameraAnimationsPluginImpl)
-        this.cameraAnimationsPlugin = WeakReference(it)
+  internal fun setCameraAnimationPlugin(cameraAnimationsPlugin: CameraAnimationsPlugin) {
+    if (cameraAnimationsPlugin is CameraAnimationsPluginImpl) {
+      this.cameraAnimationsPlugin = cameraAnimationsPlugin
+    } else {
+      logW(TAG, "MapboxMap camera extension functions could work only with Mapbox developed plugin!")
     }
   }
 
@@ -1710,17 +1710,22 @@ class MapboxMap :
    * In most cases should not be called directly.
    */
   override fun cameraAnimationsPlugin(function: (CameraAnimationsPlugin.() -> Any?)): Any? {
-    checkNotNull(cameraAnimationsPlugin?.get()) {
-      "Camera plugin is not added as the part of MapInitOptions for given MapView."
-    }.let {
+    cameraAnimationsPlugin?.let {
       return function.invoke(it)
     }
+    logW(
+      TAG,
+      "Either camera plugin is not added to the MapView or MapView has already been destroyed;" +
+        " MapboxMap camera extension functions are no-op."
+    )
+    return null
   }
 
-  internal fun setGesturesAnimationPlugin(gesturesPlugin: GesturesPlugin?) {
-    gesturesPlugin?.let {
-      if (it is GesturesPluginImpl)
-        this.gesturesPlugin = WeakReference(it)
+  internal fun setGesturesAnimationPlugin(gesturesPlugin: GesturesPlugin) {
+    if (gesturesPlugin is GesturesPluginImpl) {
+      this.gesturesPlugin = gesturesPlugin
+    } else {
+      logW(TAG, "MapboxMap gestures extension functions could work only with Mapbox developed plugin!")
     }
   }
 
@@ -1729,14 +1734,20 @@ class MapboxMap :
    * In most cases should not be called directly.
    */
   override fun gesturesPlugin(function: (GesturesPlugin.() -> Any?)): Any? {
-    checkNotNull(gesturesPlugin?.get()) {
-      "Gesture plugin is not added as the part of MapInitOptions for given MapView."
-    }.let {
+    gesturesPlugin?.let {
       return function.invoke(it)
     }
+    logW(
+      TAG,
+      "Either gestures plugin is not added to the MapView or MapView has already been destroyed;" +
+        " MapboxMap gestures extension functions are no-op."
+    )
+    return null
   }
 
   internal fun onDestroy() {
+    cameraAnimationsPlugin = null
+    gesturesPlugin = null
     observers.forEach {
       nativeMap.unsubscribe(it)
     }
