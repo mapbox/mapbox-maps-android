@@ -7,14 +7,15 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
+import com.mapbox.maps.plugin.animation.CameraAnimationsPluginImpl
 import com.mapbox.maps.plugin.delegates.listeners.*
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
+import com.mapbox.maps.plugin.gestures.GesturesPluginImpl
 import com.mapbox.maps.plugin.gestures.OnMoveListener
 import com.mapbox.verifyNo
 import io.mockk.*
 import junit.framework.Assert.*
 import org.junit.After
-import org.junit.Assert.assertThrows
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -23,7 +24,6 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.LooperMode
-import java.lang.ref.WeakReference
 
 @RunWith(RobolectricTestRunner::class)
 @LooperMode(LooperMode.Mode.PAUSED)
@@ -53,6 +53,15 @@ class MapboxMapTest {
     assertTrue(mapboxMap.isValid())
     mapboxMap.onDestroy()
     assertFalse(mapboxMap.isValid())
+  }
+
+  @Test
+  fun onDestroyWithPlugins() {
+    mapboxMap.cameraAnimationsPlugin = mockk<CameraAnimationsPluginImpl>()
+    mapboxMap.gesturesPlugin = mockk<GesturesPluginImpl>()
+    mapboxMap.onDestroy()
+    assertTrue(mapboxMap.cameraAnimationsPlugin == null)
+    assertTrue(mapboxMap.gesturesPlugin == null)
   }
 
   @Test
@@ -969,20 +978,26 @@ class MapboxMapTest {
 
   @Test
   fun setCameraAnimationsPluginInvalid() {
+    mockkStatic("com.mapbox.maps.MapboxLogger")
+    every { logW(any(), any()) } just Runs
     mapboxMap.setCameraAnimationPlugin(mockk())
     assertNull(mapboxMap.cameraAnimationsPlugin)
+    unmockkStatic("com.mapbox.maps.MapboxLogger")
   }
 
   @Test
   fun setGesturesPluginInvalid() {
+    mockkStatic("com.mapbox.maps.MapboxLogger")
+    every { logW(any(), any()) } just Runs
     mapboxMap.setGesturesAnimationPlugin(mockk())
     assertNull(mapboxMap.gesturesPlugin)
+    unmockkStatic("com.mapbox.maps.MapboxLogger")
   }
 
   @Test
   fun cameraAnimationsPluginValid() {
     val animations = mockk<CameraAnimationsPlugin>(relaxed = true)
-    mapboxMap.cameraAnimationsPlugin = WeakReference(animations)
+    mapboxMap.cameraAnimationsPlugin = animations
     val options = CameraOptions.Builder().build()
     mapboxMap.cameraAnimationsPlugin { easeTo(options) }
     verify {
@@ -992,26 +1007,18 @@ class MapboxMapTest {
 
   @Test
   fun cameraAnimationsPluginInvalid() {
-    val animations = mockk<CameraAnimationsPlugin>(relaxed = true)
-    mapboxMap.cameraAnimationsPlugin = WeakReference(animations)
+    mockkStatic("com.mapbox.maps.MapboxLogger")
+    every { logW(any(), any()) } just Runs
+    mapboxMap.cameraAnimationsPlugin = null
     val options = CameraOptions.Builder().build()
-    mapboxMap.cameraAnimationsPlugin?.clear()
-    val exception = assertThrows(IllegalStateException::class.java) {
-      mapboxMap.cameraAnimationsPlugin { easeTo(options) }
-    }
-    assertEquals(
-      "Camera plugin is not added as the part of MapInitOptions for given MapView.",
-      exception.message
-    )
-    verify(exactly = 0) {
-      animations.easeTo(options, null)
-    }
+    assertNull(mapboxMap.cameraAnimationsPlugin { easeTo(options) })
+    unmockkStatic("com.mapbox.maps.MapboxLogger")
   }
 
   @Test
   fun gesturesPluginValid() {
     val gestures = mockk<GesturesPlugin>(relaxed = true)
-    mapboxMap.gesturesPlugin = WeakReference(gestures)
+    mapboxMap.gesturesPlugin = gestures
     val moveListener = mockk<OnMoveListener>(relaxed = true)
     mapboxMap.gesturesPlugin { addOnMoveListener(moveListener) }
     verify {
@@ -1021,20 +1028,12 @@ class MapboxMapTest {
 
   @Test
   fun gesturesPluginInvalid() {
-    val gestures = mockk<GesturesPlugin>(relaxed = true)
-    mapboxMap.gesturesPlugin = WeakReference(gestures)
+    mockkStatic("com.mapbox.maps.MapboxLogger")
+    every { logW(any(), any()) } just Runs
+    mapboxMap.gesturesPlugin = null
     val moveListener = mockk<OnMoveListener>(relaxed = true)
-    mapboxMap.gesturesPlugin?.clear()
-    val exception = assertThrows(IllegalStateException::class.java) {
-      mapboxMap.gesturesPlugin { addOnMoveListener(moveListener) }
-    }
-    assertEquals(
-      "Gesture plugin is not added as the part of MapInitOptions for given MapView.",
-      exception.message
-    )
-    verify(exactly = 0) {
-      gestures.addOnMoveListener(moveListener)
-    }
+    assertNull(mapboxMap.gesturesPlugin { addOnMoveListener(moveListener) })
+    unmockkStatic("com.mapbox.maps.MapboxLogger")
   }
 
   @Test
