@@ -56,6 +56,15 @@ class MapboxMapTest {
   }
 
   @Test
+  fun onDestroyWithPlugins() {
+    mapboxMap.cameraAnimationsPlugin = mockk<CameraAnimationsPluginImpl>()
+    mapboxMap.gesturesPlugin = mockk<GesturesPluginImpl>()
+    mapboxMap.onDestroy()
+    assertTrue(mapboxMap.cameraAnimationsPlugin == null)
+    assertTrue(mapboxMap.gesturesPlugin == null)
+  }
+
+  @Test
   fun loadStyleUri() {
     Shadows.shadowOf(Looper.getMainLooper()).pause()
     assertFalse(mapboxMap.isStyleLoadInitiated)
@@ -977,26 +986,12 @@ class MapboxMapTest {
   }
 
   @Test
-  fun setCameraAnimationsPluginNull() {
-    mapboxMap.setCameraAnimationPlugin(mockk<CameraAnimationsPluginImpl>())
-    mapboxMap.setCameraAnimationPlugin(null)
-    assertNull(mapboxMap.cameraAnimationsPlugin)
-  }
-
-  @Test
   fun setGesturesPluginInvalid() {
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logW(any(), any()) } just Runs
     mapboxMap.setGesturesAnimationPlugin(mockk())
     assertNull(mapboxMap.gesturesPlugin)
     unmockkStatic("com.mapbox.maps.MapboxLogger")
-  }
-
-  @Test
-  fun setGesturesPluginNull() {
-    mapboxMap.setGesturesAnimationPlugin(mockk<GesturesPluginImpl>())
-    mapboxMap.setGesturesAnimationPlugin(null)
-    assertNull(mapboxMap.gesturesPlugin)
   }
 
   @Test

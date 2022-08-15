@@ -1697,8 +1697,8 @@ class MapboxMap :
     return nativeMap.getDragCameraOptions(fromPoint, toPoint)
   }
 
-  internal fun setCameraAnimationPlugin(cameraAnimationsPlugin: CameraAnimationsPlugin?) {
-    if (cameraAnimationsPlugin == null || cameraAnimationsPlugin is CameraAnimationsPluginImpl) {
+  internal fun setCameraAnimationPlugin(cameraAnimationsPlugin: CameraAnimationsPlugin) {
+    if (cameraAnimationsPlugin is CameraAnimationsPluginImpl) {
       this.cameraAnimationsPlugin = cameraAnimationsPlugin
     } else {
       logW(TAG, "MapboxMap camera extension functions could work only with Mapbox developed plugin!")
@@ -1721,8 +1721,8 @@ class MapboxMap :
     return null
   }
 
-  internal fun setGesturesAnimationPlugin(gesturesPlugin: GesturesPlugin?) {
-    if (gesturesPlugin == null || gesturesPlugin is GesturesPluginImpl) {
+  internal fun setGesturesAnimationPlugin(gesturesPlugin: GesturesPlugin) {
+    if (gesturesPlugin is GesturesPluginImpl) {
       this.gesturesPlugin = gesturesPlugin
     } else {
       logW(TAG, "MapboxMap gestures extension functions could work only with Mapbox developed plugin!")
@@ -1746,6 +1746,8 @@ class MapboxMap :
   }
 
   internal fun onDestroy() {
+    cameraAnimationsPlugin = null
+    gesturesPlugin = null
     observers.forEach {
       nativeMap.unsubscribe(it)
     }
