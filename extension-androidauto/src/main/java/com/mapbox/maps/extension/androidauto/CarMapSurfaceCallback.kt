@@ -67,6 +67,11 @@ internal class CarMapSurfaceCallback internal constructor(
     carMapSurfaceOwner.scale(focusX, focusY, scaleFactor)
   }
 
+  override fun onClick(x: Float, y: Float) {
+    logI(TAG, "onClick $x, $y")
+    carMapSurfaceOwner.click(x, y)
+  }
+
   override fun onSurfaceDestroyed(surfaceContainer: SurfaceContainer) {
     logI(TAG, "onSurfaceDestroyed")
     carMapSurfaceOwner.surfaceDestroyed()

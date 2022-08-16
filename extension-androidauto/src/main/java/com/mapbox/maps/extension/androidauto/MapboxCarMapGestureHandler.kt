@@ -68,4 +68,15 @@ interface MapboxCarMapGestureHandler {
   ) {
     // Optional override
   }
+
+  /**
+   * TODO docs
+   */
+  fun onClick(
+    mapboxCarMapSurface: MapboxCarMapSurface,
+    x: Float,
+    y: Float
+  ) {
+    // Optional override
+  }
 }

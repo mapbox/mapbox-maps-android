@@ -94,6 +94,18 @@ open class DefaultMapboxCarMapGestureHandler : MapboxCarMapGestureHandler {
     }
   }
 
+  /**
+   * TODO docs
+   */
+  override fun onClick(
+    mapboxCarMapSurface: MapboxCarMapSurface,
+    x: Float,
+    y: Float
+  ) {
+    logI(TAG, "click $x, $y")
+    // TODO figure out who should handle this event
+  }
+
   private companion object {
     private const val TAG = "DefaultMapboxCarMapGestureHandler"
 

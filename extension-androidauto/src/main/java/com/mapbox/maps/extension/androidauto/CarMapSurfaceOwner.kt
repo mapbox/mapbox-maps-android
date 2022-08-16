@@ -138,6 +138,11 @@ internal class CarMapSurfaceOwner(
     gestureHandler?.onScale(carMapSurface, focusX, focusY, scaleFactor)
   }
 
+  fun click(x: Float, y: Float) {
+    val carMapSurface = mapboxCarMapSurface ?: return
+    gestureHandler?.onClick(carMapSurface, x, y)
+  }
+
   private companion object {
     private const val TAG = "CarMapSurfaceOwner"
 
