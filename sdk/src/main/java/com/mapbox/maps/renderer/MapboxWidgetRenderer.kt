@@ -4,6 +4,7 @@ import android.opengl.GLES20
 import com.mapbox.maps.logE
 import com.mapbox.maps.renderer.egl.EGLCore
 import com.mapbox.maps.renderer.widget.Widget
+import java.util.concurrent.CopyOnWriteArraySet
 import javax.microedition.khronos.egl.EGLContext
 import javax.microedition.khronos.egl.EGLSurface
 
@@ -18,7 +19,7 @@ internal class MapboxWidgetRenderer(
   private val textures = intArrayOf(0)
   private val framebuffers = intArrayOf(0)
 
-  private val widgets = mutableListOf<Widget>()
+  private val widgets = CopyOnWriteArraySet<Widget>()
 
   private var width = 0
   private var height = 0
