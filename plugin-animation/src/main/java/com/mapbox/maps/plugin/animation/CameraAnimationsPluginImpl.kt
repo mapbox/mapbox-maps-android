@@ -31,7 +31,6 @@ import kotlin.properties.Delegates
  * [CameraAnimationsPluginImpl] is NOT thread-safe meaning all animations must be started from one thread.
  * However, it doesn't have to be the UI thread.
  */
-
 class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
 
   @VisibleForTesting(otherwise = PRIVATE)
@@ -143,9 +142,15 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
    */
   lateinit var cameraAnimationsFactory: CameraAnimatorsFactory
 
+  private val animatorThread: MapboxAnimatorThread = MapboxAnimatorThread()
+
   private enum class AnimationFinishStatus {
     CANCELED,
     ENDED
+  }
+
+  override fun initialize() {
+    animatorThread.onAttached()
   }
 
   /**
@@ -164,6 +169,7 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
    * Cancel all running animations and cleanup all resources (registered animations, listeners).
    */
   override fun cleanup() {
+    animatorThread.onDetached()
     unregisterAnimators(*animators.toTypedArray())
     cancelAnimatorSet()
     centerListeners.clear()
@@ -791,9 +797,10 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
       }
     }
     registerAnimators(*cameraAnimators.toTypedArray())
-    AnimatorSet().apply {
-      playTogether(*cameraAnimators.toTypedArray())
-      start()
+    animatorThread.post {
+      AnimatorSet().apply {
+        playTogether(*cameraAnimators.toTypedArray())
+      }.start()
     }
   }
 
@@ -816,10 +823,16 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
       }
     }
     registerAnimators(*cameraAnimators.toTypedArray())
-    AnimatorSet().apply {
-      playSequentially(*cameraAnimators.toTypedArray())
-      start()
+    animatorThread.post {
+      AnimatorSet().apply {
+        playSequentially(*cameraAnimators.toTypedArray())
+      }.start()
     }
+  }
+
+  @MapboxExperimental
+  override fun post(runnable: Runnable): Boolean {
+    return animatorThread.post(runnable)
   }
 
   private fun startHighLevelAnimation(
@@ -858,7 +871,7 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     }
     return HighLevelAnimatorSet(animationOptions?.owner, animatorSet).also {
       highLevelAnimatorSet = it
-      it.animatorSet.start()
+      animatorThread.post { it.animatorSet.start() }
     }
   }
 

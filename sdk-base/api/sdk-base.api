@@ -772,6 +772,7 @@ public abstract interface class com/mapbox/maps/plugin/animation/CameraAnimation
 	public abstract fun pitchBy (DLcom/mapbox/maps/plugin/animation/MapAnimationOptions;)Lcom/mapbox/maps/plugin/animation/Cancelable;
 	public abstract fun playAnimatorsSequentially ([Landroid/animation/ValueAnimator;)V
 	public abstract fun playAnimatorsTogether ([Landroid/animation/ValueAnimator;)V
+	public abstract fun post (Ljava/lang/Runnable;)Z
 	public abstract fun registerAnimators ([Landroid/animation/ValueAnimator;)V
 	public abstract fun removeCameraAnchorChangeListener (Lcom/mapbox/maps/plugin/animation/CameraAnimatorNullableChangeListener;)V
 	public abstract fun removeCameraAnimationsLifecycleListener (Lcom/mapbox/maps/plugin/animation/CameraAnimationsLifecycleListener;)V
@@ -885,6 +886,13 @@ public final class com/mapbox/maps/plugin/animation/MapAnimationOwnerRegistry {
 	public static final field INSTANCE Lcom/mapbox/maps/plugin/animation/MapAnimationOwnerRegistry;
 	public static final field INTERNAL Ljava/lang/String;
 	public static final field LOCATION Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/plugin/animation/MapboxAnimatorThread {
+	public fun <init> ()V
+	public final fun onAttached ()V
+	public final fun onDetached ()V
+	public final fun post (Ljava/lang/Runnable;)Z
 }
 
 public abstract class com/mapbox/maps/plugin/annotation/Annotation {

@@ -15,6 +15,7 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 * Introduce a callback to be invoked when the device compass sensors need to be re-calibrated. ([1513](https://github.com/mapbox/mapbox-maps-android/pull/1513))
 * Add support for `LocationComponentSettingsInterface.pulsingMaxRadius` to follow location's accuracy radius. ([1561](https://github.com/mapbox/mapbox-maps-android/pull/1561))
+* Add experimental api to start animations from a background thread. Start animations with the `CameraAnimationsPlugin.post` function. Background thread animations is enabled with a Manifest metadata entry of `com.mapbox.maps.BackgroundAnimatorThread` and corresponding true value. This is needed for Xiaomi devices to process animations when using Android Auto. ([1605](https://github.com/mapbox/mapbox-maps-android/pull/1605)).
  
 ## Bug fixes 🐞
 * Support altitude interpolation in location component, and pass through GPS altitude information from the DefaultLocationProvider. ([1478](https://github.com/mapbox/mapbox-maps-android/pull/1478))

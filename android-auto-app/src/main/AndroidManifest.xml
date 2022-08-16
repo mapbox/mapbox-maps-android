@@ -38,6 +38,14 @@
             android:value="1"
             tools:ignore="MetadataTagInsideApplicationTag" />
 
+        <meta-data
+            android:name="com.mapbox.maps.ThreadChecker"
+            android:value="false" />
+
+        <meta-data
+            android:name="com.mapbox.maps.BackgroundAnimatorThread"
+            android:value="true" />
+
         <service
             android:name=".service.MapboxCarAppService"
             android:exported="true"

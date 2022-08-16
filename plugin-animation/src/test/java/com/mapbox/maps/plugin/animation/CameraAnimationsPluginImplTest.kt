@@ -85,6 +85,7 @@ class CameraAnimationsPluginImplTest {
     every { delegateProvider.mapTransformDelegate } returns mapTransformDelegate
     cameraAnimationsPluginImpl = CameraAnimationsPluginImpl().apply {
       onDelegateProvider(delegateProvider)
+      initialize()
     }
   }
 

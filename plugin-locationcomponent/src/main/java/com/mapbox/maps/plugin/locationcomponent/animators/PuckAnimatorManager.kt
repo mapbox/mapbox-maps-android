@@ -4,8 +4,8 @@ import android.animation.ValueAnimator
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
 import com.mapbox.geojson.Point
+import com.mapbox.maps.plugin.animation.MapboxAnimatorThread
 import com.mapbox.maps.plugin.locationcomponent.*
-import com.mapbox.maps.plugin.locationcomponent.LocationLayerRenderer
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings2
 import com.mapbox.maps.util.MathUtils
@@ -22,6 +22,7 @@ internal class PuckAnimatorManager(
   private var accuracyRadiusAnimator =
     PuckAccuracyRadiusAnimator(indicatorAccuracyRadiusChangedListener)
   private var pulsingAnimator = PuckPulsingAnimator(pixelRatio)
+  private var animatorThread: MapboxAnimatorThread = MapboxAnimatorThread()
 
   @VisibleForTesting(otherwise = PRIVATE)
   constructor(
@@ -32,7 +33,8 @@ internal class PuckAnimatorManager(
     positionAnimator: PuckPositionAnimator,
     pulsingAnimator: PuckPulsingAnimator,
     radiusAnimator: PuckAccuracyRadiusAnimator,
-    pixelRatio: Float
+    pixelRatio: Float,
+    animatorThread: MapboxAnimatorThread
   ) : this(
     indicatorPositionChangedListener,
     indicatorBearingChangedListener,
@@ -43,6 +45,7 @@ internal class PuckAnimatorManager(
     this.positionAnimator = positionAnimator
     this.pulsingAnimator = pulsingAnimator
     this.accuracyRadiusAnimator = radiusAnimator
+    this.animatorThread = animatorThread
   }
 
   fun setLocationLayerRenderer(renderer: LocationLayerRenderer) {
@@ -63,12 +66,14 @@ internal class PuckAnimatorManager(
   }
 
   fun onStart() {
+    animatorThread.onAttached()
     if (pulsingAnimator.enabled) {
       pulsingAnimator.animateInfinite()
     }
   }
 
   fun onStop() {
+    animatorThread.onDetached()
     bearingAnimator.cancelRunning()
     positionAnimator.cancelRunning()
     pulsingAnimator.cancelRunning()
@@ -79,24 +84,30 @@ internal class PuckAnimatorManager(
     vararg targets: Double,
     options: (ValueAnimator.() -> Unit)?
   ) {
-    bearingAnimator.animate(
-      *MathUtils.prepareOptimalBearingPath(targets).toTypedArray(),
-      options = options
-    )
+    animatorThread.post {
+      bearingAnimator.animate(
+        *MathUtils.prepareOptimalBearingPath(targets).toTypedArray(),
+        options = options
+      )
+    }
   }
 
   fun animatePosition(
     vararg targets: Point,
     options: (ValueAnimator.() -> Unit)?
   ) {
-    positionAnimator.animate(*targets, options = options)
+    animatorThread.post {
+      positionAnimator.animate(*targets, options = options)
+    }
   }
 
   fun animateAccuracyRadius(
     vararg targets: Double,
     options: (ValueAnimator.() -> Unit)?
   ) {
-    accuracyRadiusAnimator.animate(*targets.toTypedArray(), options = options)
+    animatorThread.post {
+      accuracyRadiusAnimator.animate(*targets.toTypedArray(), options = options)
+    }
   }
 
   fun updatePulsingRadius(target: Double, settings: LocationComponentSettings) {

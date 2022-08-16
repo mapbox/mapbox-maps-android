@@ -4,6 +4,7 @@ import android.animation.ValueAnimator
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.EdgeInsets
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.MapPlugin
 
@@ -325,4 +326,18 @@ interface CameraAnimationsPlugin : MapPlugin {
    * @param animators Variable number of [ValueAnimator]'s
    */
   fun playAnimatorsSequentially(vararg animators: ValueAnimator)
+
+  /**
+   * Animations may need to run on a background thread. Use this to call [Animator.start] to
+   * ensure the animations are called on the animation thread.
+   *
+   * The thread for animations can be specified in the AndroidManifest.xml.
+   * ``` xml
+   *  <meta-data
+   *    android:name="com.mapbox.maps.BackgroundAnimatorThread"
+   *    android:value="true" />
+   * ```
+   */
+  @MapboxExperimental
+  fun post(runnable: Runnable): Boolean
 }

@@ -763,6 +763,7 @@ package com.mapbox.maps.plugin.animation {
     method public com.mapbox.maps.plugin.animation.Cancelable pitchBy(double pitch, com.mapbox.maps.plugin.animation.MapAnimationOptions? animationOptions = null);
     method public void playAnimatorsSequentially(android.animation.ValueAnimator... animators);
     method public void playAnimatorsTogether(android.animation.ValueAnimator... animators);
+    method @com.mapbox.maps.MapboxExperimental public boolean post(Runnable runnable);
     method public void registerAnimators(android.animation.ValueAnimator... cameraAnimators);
     method public void removeCameraAnchorChangeListener(com.mapbox.maps.plugin.animation.CameraAnimatorNullableChangeListener<com.mapbox.maps.ScreenCoordinate> listener);
     method public void removeCameraAnimationsLifecycleListener(com.mapbox.maps.plugin.animation.CameraAnimationsLifecycleListener listener);
@@ -858,6 +859,13 @@ package com.mapbox.maps.plugin.animation {
     field public static final com.mapbox.maps.plugin.animation.MapAnimationOwnerRegistry INSTANCE;
     field public static final String INTERNAL = "Maps-CameraInternal";
     field public static final String LOCATION = "Maps-Location";
+  }
+
+  @com.mapbox.maps.MapboxExperimental public final class MapboxAnimatorThread {
+    ctor public MapboxAnimatorThread();
+    method public void onAttached();
+    method public void onDetached();
+    method public boolean post(Runnable runnable);
   }
 
 }

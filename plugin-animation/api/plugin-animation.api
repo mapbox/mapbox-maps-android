@@ -29,6 +29,7 @@ public final class com/mapbox/maps/plugin/animation/CameraAnimationsPluginImpl :
 	public fun pitchBy (DLcom/mapbox/maps/plugin/animation/MapAnimationOptions;)Lcom/mapbox/maps/plugin/animation/Cancelable;
 	public fun playAnimatorsSequentially ([Landroid/animation/ValueAnimator;)V
 	public fun playAnimatorsTogether ([Landroid/animation/ValueAnimator;)V
+	public fun post (Ljava/lang/Runnable;)Z
 	public fun registerAnimators ([Landroid/animation/ValueAnimator;)V
 	public fun removeCameraAnchorChangeListener (Lcom/mapbox/maps/plugin/animation/CameraAnimatorNullableChangeListener;)V
 	public fun removeCameraAnimationsLifecycleListener (Lcom/mapbox/maps/plugin/animation/CameraAnimationsLifecycleListener;)V

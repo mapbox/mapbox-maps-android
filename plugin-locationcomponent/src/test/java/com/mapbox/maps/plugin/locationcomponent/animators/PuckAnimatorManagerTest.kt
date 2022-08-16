@@ -4,6 +4,7 @@ import android.animation.ValueAnimator
 import android.graphics.Color
 import android.os.Looper
 import com.mapbox.geojson.Point
+import com.mapbox.maps.plugin.animation.MapboxAnimatorThread
 import com.mapbox.maps.plugin.locationcomponent.LocationLayerRenderer
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings2
@@ -34,6 +35,12 @@ class PuckAnimatorManagerTest {
     PuckAccuracyRadiusAnimator(mockk(relaxUnitFun = true))
   private val pulsingAnimator: PuckPulsingAnimator = mockk(relaxed = true)
   private val pixelRatio: Float = 1.0f
+  private val animatorThread: MapboxAnimatorThread = mockk(relaxed = true) {
+    every { post(any()) } answers {
+      firstArg<Runnable>().run()
+      true
+    }
+  }
 
   @Before
   fun setUp() {
@@ -45,7 +52,8 @@ class PuckAnimatorManagerTest {
       positionAnimator,
       pulsingAnimator,
       accuracyRadiusAnimator,
-      pixelRatio
+      pixelRatio,
+      animatorThread
     )
   }
 

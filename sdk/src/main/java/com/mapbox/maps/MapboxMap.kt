@@ -405,7 +405,17 @@ class MapboxMap :
    */
   override fun setCamera(cameraOptions: CameraOptions) {
     checkNativeMap("setCamera")
-    nativeMap.setCamera(cameraOptions)
+    try {
+      nativeMap.setCamera(cameraOptions)
+    } catch (thr: Throwable) {
+      logW(
+        TAG,
+        """
+          setCamera failed: ${thr.message}
+          This will happen when using com.mapbox.maps.BackgroundAnimatorThread 
+        """.trimIndent()
+      )
+    }
   }
 
   /**
