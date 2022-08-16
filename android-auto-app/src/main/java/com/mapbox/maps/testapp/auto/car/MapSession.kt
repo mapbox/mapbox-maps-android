@@ -19,13 +19,13 @@ import com.mapbox.maps.extension.androidauto.MapboxCarMap
 @OptIn(MapboxExperimental::class)
 class MapSession : Session() {
   private val carMapShowcase = CarMapShowcase()
-  private var mapboxCarMap: MapboxCarMap? = null
+  private var mapboxCarMap: MapboxCarMap = MapboxCarMap()
 
   override fun onCreateScreen(intent: Intent): Screen {
     // The onCreate is guaranteed to be called before onCreateScreen. You can pass the
     // mapboxCarMap to other screens. Each screen can register and unregister observers.
     // This allows you to scope behaviors to sessions, screens, or events.
-    val mapScreen = MapScreen(mapboxCarMap!!)
+    val mapScreen = MapScreen(mapboxCarMap)
 
     return if (carContext.checkSelfPermission(ACCESS_FINE_LOCATION) != PERMISSION_GRANTED) {
       carContext.getCarService(ScreenManager::class.java)
@@ -44,14 +44,13 @@ class MapSession : Session() {
         // The carContext is not initialized until onCreate. Initialize your object here
         // and then register any observers that should have a lifecycle for the entire
         // car session.
-        mapboxCarMap = MapboxCarMap(MapInitOptions(carContext))
+        mapboxCarMap = mapboxCarMap.setup(carContext)
           .registerObserver(carMapShowcase)
           .registerObserver(CarMapWidgets())
       }
 
       override fun onDestroy(owner: LifecycleOwner) {
-        mapboxCarMap?.clearObservers()
-        mapboxCarMap = null
+        mapboxCarMap.clearObservers()
       }
     })
   }

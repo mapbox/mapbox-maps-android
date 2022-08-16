@@ -21,7 +21,7 @@ import com.mapbox.maps.extension.androidauto.MapboxCarMapSurface;
 class CarJavaInterfaceChecker {
 
   void constructors(MapInitOptions mapInitOptions) {
-    MapboxCarMap mapboxCarMap = new MapboxCarMap(mapInitOptions);
+    MapboxCarMap mapboxCarMap = new MapboxCarMap();
   }
 
   void getters(MapboxCarMap mapboxCarMap) {

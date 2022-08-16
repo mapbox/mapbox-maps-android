@@ -46,7 +46,7 @@ class MapboxCarMapTest {
       every { context } returns mockk()
     }
 
-    MapboxCarMap(mapInitOptions)
+    MapboxCarMap().setup(mockk(), mapInitOptions)
   }
 
   @Test
@@ -60,7 +60,7 @@ class MapboxCarMapTest {
       }
     }
 
-    MapboxCarMap(mapInitOptions)
+    MapboxCarMap().setup(mockk(), mapInitOptions)
 
     assertTrue(surfaceCallbackSlot.isCaptured)
   }
@@ -76,7 +76,7 @@ class MapboxCarMapTest {
       }
     }
 
-    val mapboxCarMap = MapboxCarMap(mapInitOptions)
+    val mapboxCarMap = MapboxCarMap().setup(mockk(), mapInitOptions)
     assertNull(mapboxCarMap.carMapSurface)
     surfaceCallbackSlot.captured.onSurfaceAvailable(mockk(relaxed = true))
 
@@ -94,7 +94,7 @@ class MapboxCarMapTest {
       }
     }
 
-    val mapboxCarMap = MapboxCarMap(mapInitOptions)
+    val mapboxCarMap = MapboxCarMap().setup(mockk(), mapInitOptions)
     assertNull(mapboxCarMap.visibleArea)
     surfaceCallbackSlot.captured.onSurfaceAvailable(mockk(relaxed = true))
     surfaceCallbackSlot.captured.onVisibleAreaChanged(mockk(relaxed = true))
@@ -113,7 +113,7 @@ class MapboxCarMapTest {
       }
     }
 
-    val mapboxCarMap = MapboxCarMap(mapInitOptions)
+    val mapboxCarMap = MapboxCarMap().setup(mockk(), mapInitOptions)
     assertNull(mapboxCarMap.edgeInsets)
     surfaceCallbackSlot.captured.onSurfaceAvailable(mockk(relaxed = true))
     surfaceCallbackSlot.captured.onVisibleAreaChanged(mockk(relaxed = true))
@@ -132,7 +132,7 @@ class MapboxCarMapTest {
       }
     }
 
-    val mapboxCarMap = MapboxCarMap(mapInitOptions)
+    val mapboxCarMap = MapboxCarMap().setup(mockk(), mapInitOptions)
     val observer = mockk<MapboxCarMapObserver>(relaxed = true)
     mapboxCarMap.registerObserver(observer)
     surfaceCallbackSlot.captured.onSurfaceAvailable(mockk(relaxed = true))
@@ -155,7 +155,7 @@ class MapboxCarMapTest {
       }
     }
 
-    val mapboxCarMap = MapboxCarMap(mapInitOptions)
+    val mapboxCarMap = MapboxCarMap().setup(mockk(), mapInitOptions)
     surfaceCallbackSlot.captured.onSurfaceAvailable(mockk(relaxed = true))
     surfaceCallbackSlot.captured.onVisibleAreaChanged(mockk(relaxed = true))
 
@@ -179,7 +179,7 @@ class MapboxCarMapTest {
       }
     }
 
-    val mapboxCarMap = MapboxCarMap(mapInitOptions)
+    val mapboxCarMap = MapboxCarMap().setup(mockk(), mapInitOptions)
     val observer = mockk<MapboxCarMapObserver>(relaxed = true)
     mapboxCarMap.registerObserver(observer)
     mapboxCarMap.unregisterObserver(observer)
@@ -203,7 +203,7 @@ class MapboxCarMapTest {
       }
     }
 
-    val mapboxCarMap = MapboxCarMap(mapInitOptions)
+    val mapboxCarMap = MapboxCarMap().setup(mockk(), mapInitOptions)
     val observer = mockk<MapboxCarMapObserver>(relaxed = true)
     mapboxCarMap.registerObserver(observer)
     mapboxCarMap.clearObservers()
@@ -227,7 +227,7 @@ class MapboxCarMapTest {
       }
     }
 
-    val mapboxCarMap = MapboxCarMap(mapInitOptions)
+    val mapboxCarMap = MapboxCarMap().setup(mockk(), mapInitOptions)
     val testGestures = TestMapboxCarMapGestures()
     mapboxCarMap.setGestureHandler(testGestures)
 
@@ -253,7 +253,7 @@ class MapboxCarMapTest {
       }
     }
 
-    val mapboxCarMap = MapboxCarMap(mapInitOptions)
+    val mapboxCarMap = MapboxCarMap().setup(mockk(), mapInitOptions)
     val testGestures = TestMapboxCarMapGestures()
     mapboxCarMap.setGestureHandler(testGestures)
 

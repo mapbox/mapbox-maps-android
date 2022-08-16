@@ -4,6 +4,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 ## Features ✨ and improvements 🏁
+* Allow `MapboxCarMap` to be initialized before the `CarContext` is created.
+
 ## Bug fixes 🐞
 
 # 0.2.0 August 9, 2022
