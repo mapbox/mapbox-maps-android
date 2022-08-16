@@ -8,8 +8,6 @@ import androidx.lifecycle.Lifecycle
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapInitOptions
 import com.mapbox.maps.MapboxExperimental
-import com.mapbox.maps.extension.androidauto.internal.defaultMapInitOptions
-import com.mapbox.maps.extension.androidauto.internal.verifyCarContext
 
 /**
  * This is the main entry point for controlling the Mapbox car map surface.
@@ -33,12 +31,14 @@ import com.mapbox.maps.extension.androidauto.internal.verifyCarContext
  */
 @MapboxExperimental
 class MapboxCarMap {
+  private val carMapSurfaceOwner = CarMapSurfaceOwner()
 
   /**
-   * The initial set of options used to [setup] the map.
+   * The initial options used to [setup] the map.
    */
-  lateinit var mapInitOptions: MapInitOptions
-    private set
+  val mapInitOptions: MapInitOptions by lazy {
+    carMapSurfaceOwner.mapInitOptions
+  }
 
   /**
    * Accessor for the carContext provided to the MapInitOptions. This makes it easier to create
@@ -50,22 +50,24 @@ class MapboxCarMap {
    * The carContext can also be found in the [MapboxCarMapObserver] callbacks. Make sure to
    * call [MapboxCarMap.clearObservers] when your car session is destroyed.
    */
-  lateinit var carContext: CarContext
-    private set
-
-  private val carMapSurfaceOwner = CarMapSurfaceOwner()
+  val carContext: CarContext by lazy {
+    carMapSurfaceOwner.carContext
+  }
 
   /**
-   * @param session Android Auto session that will show the Mapbox Map
-   * @param mapInitOptions optional parameter to initialize the [MapboxCarMapSurface]
+   * Calls [AppManager.setSurfaceCallback] to give Mapbox access to render the map onto Android
+   * Auto head units. You should only call this once per [CarContext] in a [Session].
+   *
+   * @param carContext Android Auto CarContext
+   * @param mapInitOptions parameter to initialize the head unit map
    */
   fun setup(
-    session: Session,
-    mapInitOptions: MapInitOptions = session.carContext.defaultMapInitOptions()
+    carContext: CarContext,
+    mapInitOptions: MapInitOptions,
   ) = apply {
     mapInitOptions.verifyCarContext()
-    this.mapInitOptions = mapInitOptions
     carMapSurfaceOwner.setup(carContext, mapInitOptions)
+    carContext.getCarService(AppManager::class.java).setSurfaceCallback(carMapSurfaceOwner)
   }
 
   /**

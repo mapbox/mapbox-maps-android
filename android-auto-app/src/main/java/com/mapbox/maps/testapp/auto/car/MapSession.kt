@@ -7,11 +7,9 @@ import android.content.res.Configuration
 import androidx.car.app.Screen
 import androidx.car.app.ScreenManager
 import androidx.car.app.Session
-import androidx.lifecycle.DefaultLifecycleObserver
-import androidx.lifecycle.LifecycleOwner
 import com.mapbox.maps.MapInitOptions
 import com.mapbox.maps.MapboxExperimental
-import com.mapbox.maps.extension.androidauto.MapboxCarMap
+import com.mapbox.maps.extension.androidauto.mapboxMapInstaller
 
 /**
  * Session class for the Mapbox Map sample app for Android Auto.
@@ -19,7 +17,13 @@ import com.mapbox.maps.extension.androidauto.MapboxCarMap
 @OptIn(MapboxExperimental::class)
 class MapSession : Session() {
   private val carMapShowcase = CarMapShowcase()
-  private var mapboxCarMap: MapboxCarMap = MapboxCarMap()
+  private val mapboxCarMap = mapboxMapInstaller()
+    .created(CarMapWidgets(), carMapShowcase)
+    .install { carContext ->
+      // Callback is triggered when the Session calls onCreate. This allows you to specify
+      // custom MapInitOptions.
+      MapInitOptions(carContext)
+    }
 
   override fun onCreateScreen(intent: Intent): Screen {
     // The onCreate is guaranteed to be called before onCreateScreen. You can pass the
@@ -36,22 +40,5 @@ class MapSession : Session() {
 
   override fun onCarConfigurationChanged(newConfiguration: Configuration) {
     carMapShowcase.loadMapStyle(carContext)
-  }
-
-  init {
-    lifecycle.addObserver(object : DefaultLifecycleObserver {
-      override fun onCreate(owner: LifecycleOwner) {
-        // The carContext is not initialized until onCreate. Initialize your object here
-        // and then register any observers that should have a lifecycle for the entire
-        // car session.
-        mapboxCarMap = mapboxCarMap.setup(carContext)
-          .registerObserver(carMapShowcase)
-          .registerObserver(CarMapWidgets())
-      }
-
-      override fun onDestroy(owner: LifecycleOwner) {
-        mapboxCarMap.clearObservers()
-      }
-    })
   }
 }

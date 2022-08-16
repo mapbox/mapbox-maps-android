@@ -1,7 +1,6 @@
 package com.mapbox.maps.extension.androidauto
 
 import android.graphics.Rect
-import androidx.car.app.AppManager
 import androidx.car.app.CarContext
 import androidx.car.app.SurfaceCallback
 import androidx.car.app.SurfaceContainer
@@ -31,15 +30,14 @@ internal class CarMapSurfaceOwner(
   internal var visibleCenter: ScreenCoordinate = visibleCenter()
     private set
 
-  private lateinit var carContext: CarContext
-  private lateinit var mapInitOptions: MapInitOptions
+  internal lateinit var carContext: CarContext
+  internal lateinit var mapInitOptions: MapInitOptions
 
   private val carMapObservers = CopyOnWriteArraySet<MapboxCarMapObserver>()
 
   fun setup(carContext: CarContext, mapInitOptions: MapInitOptions) = apply {
     this.carContext = carContext
     this.mapInitOptions = mapInitOptions
-    carContext.getCarService(AppManager::class.java).setSurfaceCallback(this)
   }
 
   fun registerObserver(mapboxCarMapObserver: MapboxCarMapObserver) {

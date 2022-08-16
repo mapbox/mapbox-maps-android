@@ -20,7 +20,6 @@ import io.mockk.mockkObject
 import io.mockk.mockkStatic
 import io.mockk.slot
 import io.mockk.unmockkAll
-import io.mockk.unmockkStatic
 import io.mockk.verify
 import io.mockk.verifyOrder
 import org.junit.After
@@ -58,11 +57,6 @@ class CarMapSurfaceOwnerTest {
   @After
   fun teardown() {
     unmockkAll()
-  }
-
-  @After
-  fun cleanup() {
-    unmockkStatic("com.mapbox.maps.MapboxLogger")
   }
 
   @Test
@@ -340,8 +334,8 @@ class CarMapSurfaceOwnerTest {
       observer.onVisibleAreaChanged(capture(visibleAreaSlot), capture(edgeInsets))
     } just Runs
     val surfaceContainer: SurfaceContainer = mockk {
-      every { width } returns 800
-      every { height } returns 400
+      every { width } returns 805
+      every { height } returns 405
       every { surface } returns testSurface
     }
 

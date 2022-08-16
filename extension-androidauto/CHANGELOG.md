@@ -4,7 +4,9 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 ## Features ✨ and improvements 🏁
-* Allow `MapboxCarMap` to be initialized before the `CarContext` is created.
+* Allow `MapboxCarMap` to be initialized before the `CarContext` is created. ([#1603](https://github.com/mapbox/mapbox-maps-android/pull/1603))
+* Add `MapboxCarMapSessionInstaller` and `MapboxCarMapScreenInstaller` for simpler setup. ([#1603](https://github.com/mapbox/mapbox-maps-android/pull/1603))
+* Add `Session.mapboxMapInstaller` and `Screen.mapboxMapInstaller` extension functions to create the installers. ([#1603](https://github.com/mapbox/mapbox-maps-android/pull/1603))
 
 ## Bug fixes 🐞
 
