@@ -626,6 +626,7 @@ jobs:
                       command: |
                           E2E_TRIGGER=$(./scripts/ci/ci-e2e-job-trigger-checker.sh || echo -n "retval $?")
                           if [[ $E2E_TRIGGER == *"retval 1"* ]]; then
+                              echo $E2E_TRIGGER
                               echo "E2E tests not requested, skipping."
                               exit 0
                           fi
