@@ -50,6 +50,8 @@ dependencies {
   implementation(Dependencies.kotlin)
   implementation(Dependencies.androidxAppCompat)
   implementation(Dependencies.androidxCoreKtx)
+  implementation(Dependencies.googleMaterialDesign)
+  implementation(Dependencies.androidxConstraintLayout)
 
   // By default, the Maps SDK uses the Android Location Provider to obtain raw location updates.
   // And with Android 11, the raw location updates might suffer from precision issue.
