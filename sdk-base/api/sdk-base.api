@@ -893,6 +893,7 @@ public final class com/mapbox/maps/plugin/animation/MapboxAnimatorThread {
 	public final fun onAttached ()V
 	public final fun onDetached ()V
 	public final fun post (Ljava/lang/Runnable;)Z
+	public final fun postMain (Ljava/lang/Runnable;)Z
 }
 
 public abstract class com/mapbox/maps/plugin/annotation/Annotation {

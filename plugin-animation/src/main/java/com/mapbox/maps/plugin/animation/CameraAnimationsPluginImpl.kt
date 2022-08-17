@@ -282,7 +282,9 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
           lifecycleListeners.forEach {
             it.onAnimatorStarting(type, this, owner)
           }
-          mapTransformDelegate.setUserAnimationInProgress(true)
+          animatorThread.postMain {
+            mapTransformDelegate.setUserAnimationInProgress(true)
+          }
           // check if such animation is not running already
           // if it is - then cancel it
           // Safely iterate over new set because of the possible changes of "this.animators" in Animator callbacks
@@ -337,7 +339,9 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
             unregisterAnimators(this, cancelAnimators = false)
           }
           if (runningAnimatorsQueue.isEmpty()) {
-            mapTransformDelegate.setUserAnimationInProgress(false)
+            animatorThread.postMain {
+              mapTransformDelegate.setUserAnimationInProgress(true)
+            }
           }
           lifecycleListeners.forEach {
             when (finishStatus) {

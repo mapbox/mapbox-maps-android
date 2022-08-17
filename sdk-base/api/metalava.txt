@@ -866,6 +866,7 @@ package com.mapbox.maps.plugin.animation {
     method public void onAttached();
     method public void onDetached();
     method public boolean post(Runnable runnable);
+    method public boolean postMain(Runnable runnable);
   }
 
 }

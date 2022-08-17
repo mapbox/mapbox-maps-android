@@ -37,6 +37,7 @@ dependencies {
   testImplementation(Dependencies.mockk)
   testImplementation(Dependencies.androidxTestCore)
   testImplementation(Dependencies.equalsVerifier)
+  testImplementation(Dependencies.robolectric)
   detektPlugins(Dependencies.detektFormatting)
 }
 
