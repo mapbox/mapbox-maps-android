@@ -416,7 +416,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
    * but with nullable MotionEvents since it adds NonNull annotations while its parent
    * [android.view.GestureDetector.OnGestureListener] does not have those annotations in the released
    * Android versions. Added just recently at https://android.googlesource.com/platform/frameworks/base/+/68c65e58b4f4daf79c9ffab518a826a506799db2/core/java/android/view/GestureDetector.java).
-    */
+   */
   private open class SimpleStandardOnGestureListener : StandardOnGestureListener {
     override fun onSingleTapConfirmed(motionEvent: MotionEvent?): Boolean {
       return false
@@ -523,10 +523,10 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
       velocityX: Float,
       velocityY: Float
     ): Boolean {
-      if (e1 == null || e2 == null) {
+      if (e2 == null) {
         return false
       }
-      return handleFlingEvent(e1, e2, velocityX, velocityY)
+      return handleFlingEvent(e2, velocityX, velocityY)
     }
   }
 
@@ -1334,7 +1334,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
   }
 
   internal fun handleFlingEvent(
-    e1: MotionEvent,
     e2: MotionEvent,
     velocityX: Float,
     velocityY: Float
