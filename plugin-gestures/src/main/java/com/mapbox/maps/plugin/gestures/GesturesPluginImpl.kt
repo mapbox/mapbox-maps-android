@@ -15,6 +15,7 @@ import androidx.annotation.VisibleForTesting.PRIVATE
 import androidx.core.animation.addListener
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import com.mapbox.android.gestures.*
+import com.mapbox.android.gestures.StandardGestureDetector.StandardOnGestureListener
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.StylePropertyValueKind
@@ -29,15 +30,10 @@ import com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Companion.cameraAn
 import com.mapbox.maps.plugin.animation.MapAnimationOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOwnerRegistry
-import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
-import com.mapbox.maps.plugin.delegates.MapDelegateProvider
-import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
-import com.mapbox.maps.plugin.delegates.MapProjectionDelegate
-import com.mapbox.maps.plugin.delegates.MapTransformDelegate
+import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.plugin.gestures.generated.GesturesAttributeParser
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettings
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettingsBase
-import java.util.*
 import java.util.concurrent.CopyOnWriteArraySet
 import kotlin.math.*
 
@@ -416,36 +412,93 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
   }
 
   /**
+   * Used instead of [com.mapbox.android.gestures.StandardGestureDetector.SimpleStandardOnGestureListener]
+   * but with nullable MotionEvents since it adds NonNull annotations while its parent
+   * [android.view.GestureDetector.OnGestureListener] does not have those annotations in the released
+   * Android versions. Added just recently at https://android.googlesource.com/platform/frameworks/base/+/68c65e58b4f4daf79c9ffab518a826a506799db2/core/java/android/view/GestureDetector.java).
+    */
+  private open class SimpleStandardOnGestureListener : StandardOnGestureListener {
+    override fun onSingleTapConfirmed(motionEvent: MotionEvent?): Boolean {
+      return false
+    }
+
+    override fun onDoubleTap(motionEvent: MotionEvent?): Boolean {
+      return false
+    }
+
+    override fun onDoubleTapEvent(motionEvent: MotionEvent?): Boolean {
+      return false
+    }
+
+    override fun onDown(motionEvent: MotionEvent?): Boolean {
+      return false
+    }
+
+    override fun onShowPress(motionEvent: MotionEvent?) {}
+
+    override fun onSingleTapUp(motionEvent: MotionEvent?): Boolean {
+      return false
+    }
+
+    override fun onScroll(
+      e1: MotionEvent?,
+      e2: MotionEvent?,
+      distanceX: Float,
+      distanceY: Float
+    ): Boolean {
+      return false
+    }
+
+    override fun onLongPress(motionEvent: MotionEvent?) {}
+
+    override fun onFling(
+      e1: MotionEvent?,
+      e2: MotionEvent?,
+      velocityX: Float,
+      velocityY: Float
+    ): Boolean {
+      return false
+    }
+  }
+
+  /**
    * Standard gesture listener, receives callbacks for gestures detected by AndroidGesturesManager.
    */
-  private inner class StandardGestureListener internal constructor(private val doubleTapMovementThreshold: Float) :
-    StandardGestureDetector.SimpleStandardOnGestureListener() {
+  private inner class StandardGestureListener(private val doubleTapMovementThreshold: Float) :
+    SimpleStandardOnGestureListener() {
 
     /**
      * Called when an on down gesture was detected.
      */
-    override fun onDown(motionEvent: MotionEvent): Boolean {
+    override fun onDown(motionEvent: MotionEvent?): Boolean {
       return true
     }
 
     /**
      * Called when an on single tap up gesture was detected.
      */
-    override fun onSingleTapUp(motionEvent: MotionEvent): Boolean {
+    override fun onSingleTapUp(motionEvent: MotionEvent?): Boolean {
       return handleSingleTapUpEvent()
     }
 
     /**
      * Called when an on single tap up confirmed gesture was detected.
      */
-    override fun onSingleTapConfirmed(motionEvent: MotionEvent): Boolean {
+    override fun onSingleTapConfirmed(motionEvent: MotionEvent?): Boolean {
+      if (motionEvent == null) {
+        return false
+      }
       return handleClickEvent(motionEvent.toScreenCoordinate())
     }
 
     /**
      * Called when an on double tap gesture was detected.
      */
-    override fun onDoubleTapEvent(motionEvent: MotionEvent): Boolean {
+    override fun onDoubleTapEvent(motionEvent: MotionEvent?): Boolean {
+      if (motionEvent == null) {
+        return false
+      }
+
       return if (handleDoubleTapEvent(motionEvent, doubleTapMovementThreshold)) {
         true
       } else super.onDoubleTapEvent(motionEvent)
@@ -454,7 +507,10 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
     /**
      * Called when an on long press gesture was detected.
      */
-    override fun onLongPress(motionEvent: MotionEvent) {
+    override fun onLongPress(motionEvent: MotionEvent?) {
+      if (motionEvent == null) {
+        return
+      }
       handleLongPressEvent(motionEvent.toScreenCoordinate())
     }
 
@@ -462,11 +518,14 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
      * Called when an on fling gesture was detected.
      */
     override fun onFling(
-      e1: MotionEvent,
-      e2: MotionEvent,
+      e1: MotionEvent?,
+      e2: MotionEvent?,
       velocityX: Float,
       velocityY: Float
     ): Boolean {
+      if (e1 == null || e2 == null) {
+        return false
+      }
       return handleFlingEvent(e1, e2, velocityX, velocityY)
     }
   }
