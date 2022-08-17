@@ -86,6 +86,13 @@ workflows:
           requires:
               - verify-code
           validation: true
+      - sync-internal-ci:
+          filters:
+            branches:
+              only:
+                - main
+          requires:
+            - verify-code
 
   validation:
     when: << pipeline.parameters.mapbox_upstream >>
@@ -651,6 +658,22 @@ jobs:
                           echo "Run E2E tests with ${E2E_VERSION_CONFIG} config."
                           scripts/ci-e2e-compatibility-start-pipeline.py --token ${MOBILE_METRICS_TOKEN} --config mapbox-maps-android=${CIRCLE_SHA1} --platform all --versions ${E2E_VERSION_CONFIG}
                       name: Trigger E2E SDK test validation pipeline
+
+  sync-internal-ci:
+    executor:
+      name: ubuntu
+      machine: small
+    steps:
+      - checkout
+      - run:
+          name: Notify maps internal CI about main branch update
+          command: |
+            if [[ $CIRCLE_BRANCH == main ]]; then
+              python3 scripts/ci-circleci-start-pipeline.py --token ${MOBILE_METRICS_TOKEN} \
+                --origin-slug mapbox/mapbox-maps-android \
+                --current-branch $CIRCLE_BRANCH \
+                --target-slug mapbox/mapbox-maps-android-private
+            fi
 
 executors:
   ubuntu:
