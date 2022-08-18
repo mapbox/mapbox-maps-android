@@ -25,6 +25,7 @@ class MapTelemetryImpl : MapTelemetry {
   private val telemetry: MapboxTelemetry
   // EventsService
   private val eventsService: EventsServiceInterface
+  private val telemetryService: TelemetryService
 
   /**
    * Creates a map telemetry instance using appplication context and access token
@@ -53,6 +54,8 @@ class MapTelemetryImpl : MapTelemetry {
     val eventsServiceOptions = EventsServerOptions(eventsToken, BuildConfig.MAPBOX_EVENTS_USER_AGENT)
     this.eventsService = EventsService.getOrCreate(eventsServiceOptions)
 
+    this.telemetryService = TelemetryService(eventsServiceOptions)
+
     val coreTelemetryState = TelemetryUtils.getEventsCollectionState()
     if (coreTelemetryState == true) {
       enableTelemetryCollection(true)
@@ -67,11 +70,12 @@ class MapTelemetryImpl : MapTelemetry {
    * @param accessToken the mapbox access token
    */
   @VisibleForTesting
-  constructor(telemetry: MapboxTelemetry, appContext: Context, accessToken: String, eventsService: EventsServiceInterface) {
+  constructor(telemetry: MapboxTelemetry, appContext: Context, accessToken: String, eventsService: EventsServiceInterface, telemetryService: TelemetryService) {
     this.appContext = appContext
     this.accessToken = accessToken
     this.telemetry = telemetry
     this.eventsService = eventsService
+    this.telemetryService = telemetryService
   }
 
   /**
