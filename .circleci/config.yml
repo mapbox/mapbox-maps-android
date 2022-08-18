@@ -123,10 +123,15 @@ commands:
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "./tmp/checksum.txt" }}
+
+  save-gradle-cache:
+    steps:
       - run:
-          name: Download dependencies
-          command: ./gradlew dependencies
+          name: Generate cache key
+          command: ./scripts/checksum.sh ./tmp/checksum.txt
+          when: always
       - save_cache:
+          when: always
           paths:
             - ~/.gradle
           key: v1-dependencies-{{ checksum "./tmp/checksum.txt" }}
@@ -401,7 +406,9 @@ commands:
 
 jobs:
   verify-code:
-    executor: ubuntu
+    executor:
+      name: ubuntu
+      machine: xlarge
     steps:
       - checkout
       - add_ssh_keys:
@@ -422,6 +429,7 @@ jobs:
               echo "$(./mbx-ci github reader token)" > gh_token.txt
               ./scripts/check-changelog.sh
             fi
+      - save-gradle-cache
       - store-results
 
   verify-docs:
