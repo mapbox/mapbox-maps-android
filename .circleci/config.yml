@@ -129,7 +129,9 @@ commands:
       - run:
           name: Generate cache key
           command: ./scripts/checksum.sh ./tmp/checksum.txt
+          when: always
       - save_cache:
+          when: always
           paths:
             - ~/.gradle
           key: v1-dependencies-{{ checksum "./tmp/checksum.txt" }}
@@ -425,8 +427,7 @@ jobs:
               echo "$(./mbx-ci github reader token)" > gh_token.txt
               ./scripts/check-changelog.sh
             fi
-      - save-gradle-cache:
-          when: always
+      - save-gradle-cache
       - store-results
 
   verify-docs:
