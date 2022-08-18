@@ -406,7 +406,9 @@ commands:
 
 jobs:
   verify-code:
-    executor: ubuntu
+    executor:
+      name: ubuntu
+      machine: xlarge
     steps:
       - checkout
       - add_ssh_keys:
