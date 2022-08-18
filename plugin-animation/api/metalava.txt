@@ -138,3 +138,15 @@ package com.mapbox.maps.plugin.animation.animator {
 
 }
 
+package com.mapbox.maps.plugin.animation.threads {
+
+  @com.mapbox.maps.MapboxExperimental public final class MapboxAnimatorThread {
+    ctor public MapboxAnimatorThread();
+    method public void onAttached();
+    method public void onDetached();
+    method public boolean post(Runnable runnable);
+    method public boolean postMain(Runnable runnable);
+  }
+
+}
+

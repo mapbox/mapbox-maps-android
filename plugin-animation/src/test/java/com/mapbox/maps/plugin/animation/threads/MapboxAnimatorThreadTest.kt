@@ -1,4 +1,4 @@
-package com.mapbox.maps.plugin.animation
+package com.mapbox.maps.plugin.animation.threads
 
 import android.os.Build
 import android.os.Looper

@@ -861,14 +861,6 @@ package com.mapbox.maps.plugin.animation {
     field public static final String LOCATION = "Maps-Location";
   }
 
-  @com.mapbox.maps.MapboxExperimental public final class MapboxAnimatorThread {
-    ctor public MapboxAnimatorThread();
-    method public void onAttached();
-    method public void onDetached();
-    method public boolean post(Runnable runnable);
-    method public boolean postMain(Runnable runnable);
-  }
-
 }
 
 package com.mapbox.maps.plugin.annotation {

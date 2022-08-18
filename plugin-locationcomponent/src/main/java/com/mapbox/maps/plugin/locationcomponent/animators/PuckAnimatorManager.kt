@@ -4,7 +4,7 @@ import android.animation.ValueAnimator
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
 import com.mapbox.geojson.Point
-import com.mapbox.maps.plugin.animation.MapboxAnimatorThread
+import com.mapbox.maps.plugin.animation.threads.MapboxAnimatorThread
 import com.mapbox.maps.plugin.locationcomponent.*
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings2

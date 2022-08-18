@@ -25,6 +25,7 @@ android {
 dependencies {
   api(Dependencies.mapboxAndroidCore)
   implementation(project(":sdk-base"))
+  implementation(project(":plugin-animation"))
   implementation(Dependencies.mapboxBase)
   implementation(Dependencies.kotlin)
   implementation(Dependencies.androidxAppCompat)
