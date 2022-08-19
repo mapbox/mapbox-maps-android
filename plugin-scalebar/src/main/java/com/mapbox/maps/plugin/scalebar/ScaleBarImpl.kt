@@ -246,9 +246,9 @@ class ScaleBarImpl : ScaleBar, View {
           break
         }
       }
-      val distance = pair.first
+      val distance = pair.first.toFloat()
       var rectCount = pair.second
-      var unitDistance = (distance / rectCount).toFloat()
+      var unitDistance = distance / rectCount
       // When maxDistance is small (i.e. high zoom levels near the poles) then
       // the `distance` might be bigger than maxDistance. This loop will keep removing
       // bar divisions (rectCount) until it fits
