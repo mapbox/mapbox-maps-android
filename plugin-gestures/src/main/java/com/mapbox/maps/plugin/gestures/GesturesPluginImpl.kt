@@ -412,60 +412,10 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
   }
 
   /**
-   * Used instead of [com.mapbox.android.gestures.StandardGestureDetector.SimpleStandardOnGestureListener]
-   * but with nullable MotionEvents since it adds NonNull annotations while its parent
-   * [android.view.GestureDetector.OnGestureListener] does not have those annotations in the released
-   * Android versions. Added just recently at https://android.googlesource.com/platform/frameworks/base/+/68c65e58b4f4daf79c9ffab518a826a506799db2/core/java/android/view/GestureDetector.java).
-   */
-  private open class SimpleStandardOnGestureListener : StandardOnGestureListener {
-    override fun onSingleTapConfirmed(motionEvent: MotionEvent?): Boolean {
-      return false
-    }
-
-    override fun onDoubleTap(motionEvent: MotionEvent?): Boolean {
-      return false
-    }
-
-    override fun onDoubleTapEvent(motionEvent: MotionEvent?): Boolean {
-      return false
-    }
-
-    override fun onDown(motionEvent: MotionEvent?): Boolean {
-      return false
-    }
-
-    override fun onShowPress(motionEvent: MotionEvent?) {}
-
-    override fun onSingleTapUp(motionEvent: MotionEvent?): Boolean {
-      return false
-    }
-
-    override fun onScroll(
-      e1: MotionEvent?,
-      e2: MotionEvent?,
-      distanceX: Float,
-      distanceY: Float
-    ): Boolean {
-      return false
-    }
-
-    override fun onLongPress(motionEvent: MotionEvent?) {}
-
-    override fun onFling(
-      e1: MotionEvent?,
-      e2: MotionEvent?,
-      velocityX: Float,
-      velocityY: Float
-    ): Boolean {
-      return false
-    }
-  }
-
-  /**
    * Standard gesture listener, receives callbacks for gestures detected by AndroidGesturesManager.
    */
   private inner class StandardGestureListener(private val doubleTapMovementThreshold: Float) :
-    SimpleStandardOnGestureListener() {
+    StandardGestureDetector.SimpleStandardOnGestureListener() {
 
     /**
      * Called when an on down gesture was detected.
