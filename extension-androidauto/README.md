@@ -97,7 +97,7 @@ In this example, the Session manages an instance of `MapboxCarMap` and then each
 class MySession : Session() {
 
   private val mapboxCarMap = mapboxMapInstaller()
-      .created(CarMapWidgets())
+      .onCreated(CarMapWidgets())
       .install { carContext ->
         // Callback is triggered when the Session calls onCreate. This allows you to specify
         // custom MapInitOptions.
@@ -116,9 +116,9 @@ class MyMapScreen(
 
   init {
     mapboxMapInstaller(mapboxCarMap)
-        .created(carCameraController)
-        .gestures(carCameraController.gestureHandler)
-        .resumed(myCustomExperience)
+        .onCreated(carCameraController)
+        .gestureHandler(carCameraController.gestureHandler)
+        .onResumed(myCustomExperience)
         .install()
   }
 
