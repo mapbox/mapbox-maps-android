@@ -111,7 +111,7 @@ class MarkerManager(
         offsetX(0)
       }
     )
-    view.visibility = View.INVISIBLE
+    view.visibility = View.GONE
   }
 
   // if info window view is shown near screen edge - we adjust offsetX so that it fully appears on the screen
