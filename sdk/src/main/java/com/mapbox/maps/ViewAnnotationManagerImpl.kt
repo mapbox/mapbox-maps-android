@@ -214,7 +214,7 @@ internal class ViewAnnotationManagerImpl(
       measuredWidth = if (options.width != null) USER_FIXED_DIMENSION else inflatedViewLayout.width,
       measuredHeight = if (options.height != null) USER_FIXED_DIMENSION else inflatedViewLayout.height,
     )
-    val globalLayoutListener = ViewTreeObserver.OnGlobalLayoutListener {
+    val onDrawListener = ViewTreeObserver.OnDrawListener {
       if (viewAnnotation.measuredWidth != USER_FIXED_DIMENSION &&
         inflatedView.measuredWidth > 0 &&
         inflatedView.measuredWidth != viewAnnotation.measuredWidth
@@ -248,7 +248,7 @@ internal class ViewAnnotationManagerImpl(
         if ((isAndroidViewVisible && viewAnnotation.isVisible) ||
           (!isAndroidViewVisible && viewAnnotation.visibility == ViewAnnotationVisibility.INVISIBLE)
         ) {
-          return@OnGlobalLayoutListener
+          return@OnDrawListener
         }
         // hide view below map surface and pull it back when new position from core will arrive
         if (isAndroidViewVisible) {
@@ -276,11 +276,11 @@ internal class ViewAnnotationManagerImpl(
     }
     viewAnnotation.attachStateListener = object : View.OnAttachStateChangeListener {
       override fun onViewAttachedToWindow(v: View) {
-        inflatedView.viewTreeObserver.addOnGlobalLayoutListener(globalLayoutListener)
+        inflatedView.viewTreeObserver.addOnDrawListener(onDrawListener)
       }
 
       override fun onViewDetachedFromWindow(v: View) {
-        inflatedView.viewTreeObserver.removeOnGlobalLayoutListener(globalLayoutListener)
+        inflatedView.viewTreeObserver.removeOnDrawListener(onDrawListener)
       }
     }
     inflatedView.addOnAttachStateChangeListener(viewAnnotation.attachStateListener)
