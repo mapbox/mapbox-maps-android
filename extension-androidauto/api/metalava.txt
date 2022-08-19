@@ -35,7 +35,7 @@ package com.mapbox.maps.extension.androidauto {
     method public default void onScroll(com.mapbox.maps.extension.androidauto.MapboxCarMapSurface mapboxCarMapSurface, com.mapbox.maps.ScreenCoordinate visibleCenter, float distanceX, float distanceY);
   }
 
-  public fun interface MapboxCarMapInitializer {
+  @com.mapbox.maps.MapboxExperimental public fun interface MapboxCarMapInitializer {
     method public com.mapbox.maps.MapInitOptions onCreate(androidx.car.app.CarContext carContext);
   }
 

@@ -18,7 +18,6 @@ import com.mapbox.maps.MapboxExperimental
  * @param session Android Auto Session.
  * @param mapboxCarMap instance that can be also be found from the [install] function.
  */
-
 @MapboxExperimental
 class MapboxCarMapSessionInstaller(
   private val session: Session,
