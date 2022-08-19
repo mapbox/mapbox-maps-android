@@ -88,9 +88,9 @@ class CarJavaInterfaceChecker {
     MapboxCarMapObserver observer1 = createObserver();
     MapboxCarMapObserver observer2 = createObserver();
     MapboxCarMapEx.mapboxMapInstaller(session)
-            .created(observer1, observer2)
-            .started(observer1, observer2)
-            .resumed(observer1, observer2)
+            .onCreated(observer1, observer2)
+            .onStarted(observer1, observer2)
+            .onResumed(observer1, observer2)
             .install();
   }
 
@@ -98,9 +98,9 @@ class CarJavaInterfaceChecker {
     MapboxCarMapObserver observer1 = createObserver();
     MapboxCarMapObserver observer2 = createObserver();
     MapboxCarMapEx.mapboxMapInstaller(session)
-            .created(observer1, observer2)
-            .started(observer1, observer2)
-            .resumed(observer1, observer2)
+            .onCreated(observer1, observer2)
+            .onStarted(observer1, observer2)
+            .onResumed(observer1, observer2)
             .install(carContext1 -> new MapInitOptions(
                     carContext1,
                     new ResourceOptions.Builder()
@@ -112,9 +112,9 @@ class CarJavaInterfaceChecker {
     MapboxCarMapObserver observer1 = createObserver();
     MapboxCarMapObserver observer2 = createObserver();
     MapboxCarMapEx.mapboxMapInstaller(screen, mapboxCarMap)
-            .created(observer1, observer2)
-            .started(observer1, observer2)
-            .resumed(observer1, observer2)
+            .onCreated(observer1, observer2)
+            .onStarted(observer1, observer2)
+            .onResumed(observer1, observer2)
             .install();
   }
 }

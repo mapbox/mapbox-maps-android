@@ -26,8 +26,8 @@ class MapScreen(
 
   init {
     mapboxMapInstaller(mapboxCarMap)
-      .created(carCameraController)
-      .gestures(carCameraController.gestureHandler)
+      .onCreated(carCameraController)
+      .gestureHandler(carCameraController.gestureHandler)
       .install()
   }
 

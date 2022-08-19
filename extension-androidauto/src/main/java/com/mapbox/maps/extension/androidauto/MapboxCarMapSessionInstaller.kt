@@ -24,32 +24,32 @@ class MapboxCarMapSessionInstaller(
   private val session: Session,
   private val mapboxCarMap: MapboxCarMap = MapboxCarMap()
 ) {
-  private val created = mutableSetOf<MapboxCarMapObserver>()
-  private val started = mutableSetOf<MapboxCarMapObserver>()
-  private val resumed = mutableSetOf<MapboxCarMapObserver>()
+  private val onCreated = mutableSetOf<MapboxCarMapObserver>()
+  private val onStarted = mutableSetOf<MapboxCarMapObserver>()
+  private val onResumed = mutableSetOf<MapboxCarMapObserver>()
 
   /**
    * @param observers observers that will be attached while the [Session] is in the
    * [Lifecycle.State.CREATED] state.
    */
-  fun created(vararg observers: MapboxCarMapObserver) = apply {
-    created.addAll(observers)
+  fun onCreated(vararg observers: MapboxCarMapObserver) = apply {
+    onCreated.addAll(observers)
   }
 
   /**
    * @param observers observers that will be attached while the [Session] is in the
    * [Lifecycle.State.STARTED] state.
    */
-  fun started(vararg observers: MapboxCarMapObserver) = apply {
-    started.addAll(observers)
+  fun onStarted(vararg observers: MapboxCarMapObserver) = apply {
+    onStarted.addAll(observers)
   }
 
   /**
    * @param observers observers that will be attached while the [Session] is in the
    * [Lifecycle.State.RESUMED] state.
    */
-  fun resumed(vararg observers: MapboxCarMapObserver) = apply {
-    resumed.addAll(observers)
+  fun onResumed(vararg observers: MapboxCarMapObserver) = apply {
+    onResumed.addAll(observers)
   }
 
   /**
@@ -68,23 +68,23 @@ class MapboxCarMapSessionInstaller(
         val carContext = session.carContext
         val mapInitOptions = initializer.onCreate(carContext)
         mapboxCarMap.setup(carContext, mapInitOptions)
-        created.forEach { mapboxCarMap.registerObserver(it) }
+        onCreated.forEach { mapboxCarMap.registerObserver(it) }
       }
 
       override fun onStart(owner: LifecycleOwner) {
-        started.forEach { mapboxCarMap.registerObserver(it) }
+        onStarted.forEach { mapboxCarMap.registerObserver(it) }
       }
 
       override fun onResume(owner: LifecycleOwner) {
-        resumed.forEach { mapboxCarMap.registerObserver(it) }
+        onResumed.forEach { mapboxCarMap.registerObserver(it) }
       }
 
       override fun onPause(owner: LifecycleOwner) {
-        resumed.reversed().forEach { mapboxCarMap.unregisterObserver(it) }
+        onResumed.reversed().forEach { mapboxCarMap.unregisterObserver(it) }
       }
 
       override fun onStop(owner: LifecycleOwner) {
-        started.reversed().forEach { mapboxCarMap.unregisterObserver(it) }
+        onStarted.reversed().forEach { mapboxCarMap.unregisterObserver(it) }
       }
 
       override fun onDestroy(owner: LifecycleOwner) {
@@ -96,7 +96,7 @@ class MapboxCarMapSessionInstaller(
 
   private companion object {
     private val defaultInitializer = MapboxCarMapInitializer { carContext ->
-      carContext.defaultMapInitOptions()
+      MapInitOptions(context = carContext)
     }
   }
 }

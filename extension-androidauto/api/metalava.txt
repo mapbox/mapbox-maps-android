@@ -25,8 +25,8 @@ package com.mapbox.maps.extension.androidauto {
   }
 
   public final class MapboxCarMapEx {
-    method public static com.mapbox.maps.extension.androidauto.MapboxCarMapSessionInstaller mapboxMapInstaller(androidx.car.app.Session);
-    method public static com.mapbox.maps.extension.androidauto.MapboxCarMapScreenInstaller mapboxMapInstaller(androidx.car.app.Screen, com.mapbox.maps.extension.androidauto.MapboxCarMap mapboxCarMap);
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.androidauto.MapboxCarMapSessionInstaller mapboxMapInstaller(androidx.car.app.Session);
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.androidauto.MapboxCarMapScreenInstaller mapboxMapInstaller(androidx.car.app.Screen, com.mapbox.maps.extension.androidauto.MapboxCarMap mapboxCarMap);
   }
 
   @com.mapbox.maps.MapboxExperimental public interface MapboxCarMapGestureHandler {
@@ -47,20 +47,20 @@ package com.mapbox.maps.extension.androidauto {
 
   @com.mapbox.maps.MapboxExperimental public final class MapboxCarMapScreenInstaller {
     ctor public MapboxCarMapScreenInstaller(androidx.car.app.Screen screen, com.mapbox.maps.extension.androidauto.MapboxCarMap mapboxCarMap);
-    method public com.mapbox.maps.extension.androidauto.MapboxCarMapScreenInstaller created(com.mapbox.maps.extension.androidauto.MapboxCarMapObserver... observers);
-    method public com.mapbox.maps.extension.androidauto.MapboxCarMapScreenInstaller gestures(com.mapbox.maps.extension.androidauto.MapboxCarMapGestureHandler? handler);
+    method public com.mapbox.maps.extension.androidauto.MapboxCarMapScreenInstaller gestureHandler(com.mapbox.maps.extension.androidauto.MapboxCarMapGestureHandler? handler);
     method public com.mapbox.maps.extension.androidauto.MapboxCarMap install();
-    method public com.mapbox.maps.extension.androidauto.MapboxCarMapScreenInstaller resumed(com.mapbox.maps.extension.androidauto.MapboxCarMapObserver... observers);
-    method public com.mapbox.maps.extension.androidauto.MapboxCarMapScreenInstaller started(com.mapbox.maps.extension.androidauto.MapboxCarMapObserver... observers);
+    method public com.mapbox.maps.extension.androidauto.MapboxCarMapScreenInstaller onCreated(com.mapbox.maps.extension.androidauto.MapboxCarMapObserver... observers);
+    method public com.mapbox.maps.extension.androidauto.MapboxCarMapScreenInstaller onResumed(com.mapbox.maps.extension.androidauto.MapboxCarMapObserver... observers);
+    method public com.mapbox.maps.extension.androidauto.MapboxCarMapScreenInstaller onStarted(com.mapbox.maps.extension.androidauto.MapboxCarMapObserver... observers);
   }
 
   @com.mapbox.maps.MapboxExperimental public final class MapboxCarMapSessionInstaller {
     ctor public MapboxCarMapSessionInstaller(androidx.car.app.Session session, com.mapbox.maps.extension.androidauto.MapboxCarMap mapboxCarMap = com.mapbox.maps.extension.androidauto.MapboxCarMap());
-    method public com.mapbox.maps.extension.androidauto.MapboxCarMapSessionInstaller created(com.mapbox.maps.extension.androidauto.MapboxCarMapObserver... observers);
     method public com.mapbox.maps.extension.androidauto.MapboxCarMap install(com.mapbox.maps.extension.androidauto.MapboxCarMapInitializer initializer = com.mapbox.maps.extension.androidauto.MapboxCarMapSessionInstaller.defaultInitializer);
     method public com.mapbox.maps.extension.androidauto.MapboxCarMap install();
-    method public com.mapbox.maps.extension.androidauto.MapboxCarMapSessionInstaller resumed(com.mapbox.maps.extension.androidauto.MapboxCarMapObserver... observers);
-    method public com.mapbox.maps.extension.androidauto.MapboxCarMapSessionInstaller started(com.mapbox.maps.extension.androidauto.MapboxCarMapObserver... observers);
+    method public com.mapbox.maps.extension.androidauto.MapboxCarMapSessionInstaller onCreated(com.mapbox.maps.extension.androidauto.MapboxCarMapObserver... observers);
+    method public com.mapbox.maps.extension.androidauto.MapboxCarMapSessionInstaller onResumed(com.mapbox.maps.extension.androidauto.MapboxCarMapObserver... observers);
+    method public com.mapbox.maps.extension.androidauto.MapboxCarMapSessionInstaller onStarted(com.mapbox.maps.extension.androidauto.MapboxCarMapObserver... observers);
   }
 
   @com.mapbox.maps.MapboxExperimental public final class MapboxCarMapSurface {

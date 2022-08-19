@@ -37,6 +37,9 @@ class MapboxCarMap {
    * The initial options used to [setup] the map.
    */
   val mapInitOptions: MapInitOptions by lazy {
+    check(carMapSurfaceOwner.isSetup()) {
+      "You must call MapboxCarMap.setup before you can access the MapboxCarMap.mapInitOptions"
+    }
     carMapSurfaceOwner.mapInitOptions
   }
 
@@ -51,6 +54,9 @@ class MapboxCarMap {
    * call [MapboxCarMap.clearObservers] when your car session is destroyed.
    */
   val carContext: CarContext by lazy {
+    check(carMapSurfaceOwner.isSetup()) {
+      "You must call MapboxCarMap.setup before you can access the MapboxCarMap.carContext"
+    }
     carMapSurfaceOwner.carContext
   }
 
@@ -65,7 +71,9 @@ class MapboxCarMap {
     carContext: CarContext,
     mapInitOptions: MapInitOptions,
   ) = apply {
-    mapInitOptions.verifyCarContext()
+    check(mapInitOptions.context is CarContext) {
+      "You must setup the MapboxCarMap MapInitOptions with a CarContext"
+    }
     carMapSurfaceOwner.setup(carContext, mapInitOptions)
     carContext.getCarService(AppManager::class.java).setSurfaceCallback(carMapSurfaceOwner)
   }

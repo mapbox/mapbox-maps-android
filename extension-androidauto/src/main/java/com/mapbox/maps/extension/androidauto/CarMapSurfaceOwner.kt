@@ -40,6 +40,8 @@ internal class CarMapSurfaceOwner(
     this.mapInitOptions = mapInitOptions
   }
 
+  fun isSetup(): Boolean = this::carContext.isInitialized && this::mapInitOptions.isInitialized
+
   fun registerObserver(mapboxCarMapObserver: MapboxCarMapObserver) {
     carMapObservers.add(mapboxCarMapObserver)
     logI(TAG, "registerObserver + 1 = ${carMapObservers.size}")
