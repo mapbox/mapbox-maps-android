@@ -35,7 +35,7 @@ import com.mapbox.maps.testapp.examples.fragment.MapFragment
 class InsetMapActivity : AppCompatActivity(), OnCameraChangeListener {
 
   private lateinit var mainMapboxMap: MapboxMap
-  private lateinit var insetMapboxMap: MapboxMap
+  private var insetMapboxMap: MapboxMap? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -51,52 +51,54 @@ class InsetMapActivity : AppCompatActivity(), OnCameraChangeListener {
     if (insetMapFragment == null) {
       // Create fragment transaction for the inset fragment
       val transaction = supportFragmentManager.beginTransaction()
-
       insetMapFragment = MapFragment()
-      insetMapFragment.getMapAsync {
-        insetMapboxMap = it
-        insetMapboxMap.loadStyleUri(
-          styleUri = STYLE_URL
-        ) { style ->
-          val source = geoJsonSource(BOUNDS_LINE_LAYER_SOURCE_ID) {
-            feature(Feature.fromGeometry(LineString.fromLngLats(getRectanglePoints())))
-          }
-          style.addSource(source)
-
-          // The layer properties for our line. This is where we make the line dotted, set the color, etc.
-          val layer = lineLayer(BOUNDS_LINE_LAYER_LAYER_ID, BOUNDS_LINE_LAYER_SOURCE_ID) {
-            lineCap(LineCap.ROUND)
-            lineJoin(LineJoin.ROUND)
-            lineWidth(3.0)
-            lineColor(Color.YELLOW)
-            visibility(Visibility.VISIBLE)
-          }
-          style.addLayer(layer)
-          updateInsetMapLineLayerBounds(style)
-        }
-        insetMapFragment.getMapView()?.apply {
-          logo.enabled = false
-          scalebar.enabled = false
-          attribution.enabled = false
-          compass.enabled = false
-
-          gestures.updateSettings {
-            scrollEnabled = false
-            pinchToZoomEnabled = false
-          }
-        }
-      }
-
       // Add fragmentMap fragment to parent container
       transaction.add(R.id.mini_map_fragment_container, insetMapFragment, INSET_FRAGMENT_TAG)
       transaction.commit()
     }
+    setInsetMapStyle(insetMapFragment)
 
     binding.showBoundsToggleFab.setOnClickListener {
       // Toggle the visibility of the camera bounds LineLayer
-      insetMapboxMap.getStyle { style ->
+      insetMapboxMap?.getStyle { style ->
         style.getLayer(BOUNDS_LINE_LAYER_LAYER_ID)?.apply {
           visibility(if (visibility == Visibility.VISIBLE) Visibility.NONE else Visibility.VISIBLE)
+        }
+      }
+    }
+  }
+
+  private fun setInsetMapStyle(insetMapFragment: MapFragment) {
+    insetMapFragment.getMapAsync {
+      insetMapboxMap = it
+      insetMapboxMap?.loadStyleUri(
+        styleUri = STYLE_URL
+      ) { style ->
+        val source = geoJsonSource(BOUNDS_LINE_LAYER_SOURCE_ID) {
+          feature(Feature.fromGeometry(LineString.fromLngLats(getRectanglePoints())))
+        }
+        style.addSource(source)
+
+        // The layer properties for our line. This is where we make the line dotted, set the color, etc.
+        val layer = lineLayer(BOUNDS_LINE_LAYER_LAYER_ID, BOUNDS_LINE_LAYER_SOURCE_ID) {
+          lineCap(LineCap.ROUND)
+          lineJoin(LineJoin.ROUND)
+          lineWidth(3.0)
+          lineColor(Color.YELLOW)
+          visibility(Visibility.VISIBLE)
+        }
+        style.addLayer(layer)
+        updateInsetMapLineLayerBounds(style)
+      }
+      insetMapFragment.getMapView()?.apply {
+        logo.enabled = false
+        scalebar.enabled = false
+        attribution.enabled = false
+        compass.enabled = false
+
+        gestures.updateSettings {
+          scrollEnabled = false
+          pinchToZoomEnabled = false
         }
       }
     }
@@ -110,8 +112,8 @@ class InsetMapActivity : AppCompatActivity(), OnCameraChangeListener {
       .bearing(mainCameraPosition.bearing)
       .center(mainCameraPosition.center)
       .build()
-    insetMapboxMap.setCamera(insetCameraPosition)
-    insetMapboxMap.getStyle { style -> updateInsetMapLineLayerBounds(style) }
+    insetMapboxMap?.setCamera(insetCameraPosition)
+    insetMapboxMap?.getStyle { style -> updateInsetMapLineLayerBounds(style) }
   }
 
   private fun updateInsetMapLineLayerBounds(fullyLoadedStyle: Style) {
