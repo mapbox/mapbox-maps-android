@@ -98,25 +98,29 @@ class ScaleBarImplTest {
 
   @Test
   fun getDistanceText() {
-    assertEquals("0", scaleBarView.getDistanceText(0))
-    assertEquals("100 m", scaleBarView.getDistanceText(100))
-    assertEquals("999 m", scaleBarView.getDistanceText(999))
-    assertEquals("1 km", scaleBarView.getDistanceText(1000))
-    assertEquals("1 km", scaleBarView.getDistanceText(1001))
-    assertEquals("4.4 km", scaleBarView.getDistanceText(4444))
-    assertEquals("5.6 km", scaleBarView.getDistanceText(5555))
-    assertEquals("10 km", scaleBarView.getDistanceText(10000))
+    assertEquals("0", scaleBarView.getDistanceText(0F))
+    assertEquals("0.1 m", scaleBarView.getDistanceText(0.1F))
+    assertEquals("0.5 m", scaleBarView.getDistanceText(0.5F))
+    assertEquals("100 m", scaleBarView.getDistanceText(100F))
+    assertEquals("999 m", scaleBarView.getDistanceText(999F))
+    assertEquals("1 km", scaleBarView.getDistanceText(1000F))
+    assertEquals("1 km", scaleBarView.getDistanceText(1001F))
+    assertEquals("4.4 km", scaleBarView.getDistanceText(4444F))
+    assertEquals("5.6 km", scaleBarView.getDistanceText(5555F))
+    assertEquals("10 km", scaleBarView.getDistanceText(10000F))
 
     scaleBarSettings.isMetricUnits = false
     scaleBarView.settings = scaleBarSettings
-    assertEquals("0", scaleBarView.getDistanceText(0))
-    assertEquals("100 ft", scaleBarView.getDistanceText(100))
-    assertEquals("5279 ft", scaleBarView.getDistanceText(5279))
-    assertEquals("1 mi", scaleBarView.getDistanceText(5280))
-    assertEquals("1.1 mi", scaleBarView.getDistanceText(6000))
-    assertEquals("1.9 mi", scaleBarView.getDistanceText(10000))
-    assertEquals("2 mi", scaleBarView.getDistanceText(10560))
-    assertEquals("10 mi", scaleBarView.getDistanceText(52800))
+    assertEquals("0", scaleBarView.getDistanceText(0F))
+    assertEquals("0.1 ft", scaleBarView.getDistanceText(0.1F))
+    assertEquals("0.5 ft", scaleBarView.getDistanceText(0.5F))
+    assertEquals("100 ft", scaleBarView.getDistanceText(100F))
+    assertEquals("5279 ft", scaleBarView.getDistanceText(5279F))
+    assertEquals("1 mi", scaleBarView.getDistanceText(5280F))
+    assertEquals("1.1 mi", scaleBarView.getDistanceText(6000F))
+    assertEquals("1.9 mi", scaleBarView.getDistanceText(10000F))
+    assertEquals("2 mi", scaleBarView.getDistanceText(10560F))
+    assertEquals("10 mi", scaleBarView.getDistanceText(52800F))
   }
 
   @Test
