@@ -236,31 +236,7 @@ class ScaleBarImpl : ScaleBar, View {
         canvas.drawARGB(0, 0, 0, 0)
         return
       }
-      var pair = scaleTable[0]
-      for (i in 1 until scaleTable.size) {
-        pair = scaleTable[i]
-        val distance = pair.first
-        if (distance > maxDistance) {
-          // use the last scale here, otherwise the scale will be too large
-          pair = scaleTable[i - 1]
-          break
-        }
-      }
-      val distance = pair.first.toFloat()
-      var rectCount = pair.second
-      var unitDistance = distance / rectCount
-      // When maxDistance is small (i.e. high zoom levels near the poles) then
-      // the `distance` might be bigger than maxDistance. This loop will keep removing
-      // bar divisions (rectCount) until it fits
-      while (unitDistance * rectCount > maxDistance && rectCount > 0) {
-        rectCount--
-      }
-      // In case the unitDistance doesn't fit at all we fallback to maxDistance (rounded to 1
-      // decimal) with 1 division
-      if (rectCount == 0) {
-        unitDistance = (maxDistance * 10).toInt() / 10.0F
-        rectCount = 1
-      }
+      val (unitDistance, rectCount) = findSuitableScaleBarSegments(maxDistance)
 
       val unitBarWidth = (unitDistance / distancePerPixel)
       // Drawing the surrounding borders
@@ -323,6 +299,39 @@ class ScaleBarImpl : ScaleBar, View {
       canvas.drawText(text, x, y, strokePaint)
     }
     canvas.drawText(text, x, y, textPaint)
+  }
+
+  /**
+   * @return A tuple with the scale bar segment distance and the amount of bar segments
+   */
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal fun findSuitableScaleBarSegments(maxDistance: Float): Pair<Float, Int> {
+    var pair: Pair<Int, Int> = scaleTable[0]
+    for (i in 1 until scaleTable.size) {
+      pair = scaleTable[i]
+      val distance = pair.first
+      if (distance > maxDistance) {
+        // use the last scale here, otherwise the scale will be too large
+        pair = scaleTable[i - 1]
+        break
+      }
+    }
+    val distance = pair.first.toFloat()
+    var rectCount = pair.second
+    var unitDistance = distance / rectCount
+    // When maxDistance is small (i.e. high zoom levels near the poles) then
+    // the `distance` might be bigger than maxDistance. This loop will keep removing
+    // bar divisions (rectCount) until it fits
+    while (unitDistance * rectCount > maxDistance && rectCount > 0) {
+      rectCount--
+    }
+    // In case the unitDistance doesn't fit at all we fallback to maxDistance (rounded to 1
+    // decimal) with 1 division
+    if (rectCount == 0) {
+      unitDistance = (maxDistance * 10).toInt() / 10.0F
+      rectCount = 1
+    }
+    return Pair(unitDistance, rectCount)
   }
 
   /**

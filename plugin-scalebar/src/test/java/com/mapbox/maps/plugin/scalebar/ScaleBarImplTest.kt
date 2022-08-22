@@ -3,6 +3,7 @@ package com.mapbox.maps.plugin.scalebar
 import android.content.Context
 import android.graphics.Color
 import android.os.Looper
+import android.util.Pair
 import android.view.Gravity
 import android.widget.FrameLayout
 import com.mapbox.maps.plugin.scalebar.ScaleBarImpl.Companion.MSG_RENDER_CONTINUOUS
@@ -143,5 +144,45 @@ class ScaleBarImplTest {
     assertFalse(scaleBarView.refreshHandler.hasMessages(MSG_RENDER_ON_DEMAND))
     assertTrue(scaleBarView.refreshHandler.hasMessages(MSG_RENDER_CONTINUOUS))
     Shadows.shadowOf(Looper.getMainLooper()).idle()
+  }
+
+  @Test
+  fun `verify correct scale bar segments returned`() {
+    // First verify for metric
+    scaleBarSettings.isMetricUnits = true
+    scaleBarView.settings = scaleBarSettings
+    `verify below and above scale bar segments`(metricTable)
+    // Then verify for imperial units
+    scaleBarSettings.isMetricUnits = false
+    scaleBarView.settings = scaleBarSettings
+    `verify below and above scale bar segments`(imperialTable)
+  }
+
+  private fun `verify below and above scale bar segments`(scaleTable: List<Pair<Int, Int>>) {
+    // Special case where max distance is smaller than the first entry segment in the table
+    val belowFirstUnitBarDistance = scaleTable[0].first.toFloat() / scaleTable[0].second - 0.1F
+    val result =
+      scaleBarView.findSuitableScaleBarSegments(belowFirstUnitBarDistance)
+    assertEquals(belowFirstUnitBarDistance, result.first, 0.01F)
+    assertEquals(1, result.second)
+
+    for (index in 1 until scaleTable.size) {
+      val pair: Pair<Int, Int> = scaleTable[index]
+      val distance = pair.first.toFloat()
+      val rectCount = pair.second
+
+      val maxDistanceBelowCurrent = distance - if (distance < 100) 0.1F else 10F
+      val resultBelow = scaleBarView.findSuitableScaleBarSegments(maxDistanceBelowCurrent)
+      val previousEntry = scaleTable[index - 1]
+      val expectedUnitDistance = previousEntry.first.toFloat() / previousEntry.second
+      assertEquals(expectedUnitDistance, resultBelow.first, 0.01F)
+      val expectedSegments = previousEntry.second
+      assertEquals(expectedSegments, resultBelow.second)
+
+      val maxDistanceAboveCurrent = distance + if (distance < 100) 0.1F else 10F
+      val resultAbove = scaleBarView.findSuitableScaleBarSegments(maxDistanceAboveCurrent)
+      assertEquals(distance / rectCount, resultAbove.first, 0.01F)
+      assertEquals(rectCount, resultAbove.second)
+      }
   }
 }
