@@ -4,15 +4,19 @@ import android.graphics.Rect;
 
 import androidx.annotation.NonNull;
 import androidx.car.app.CarContext;
+import androidx.car.app.Screen;
+import androidx.car.app.Session;
 import androidx.car.app.SurfaceContainer;
 
 import com.mapbox.maps.EdgeInsets;
 import com.mapbox.maps.MapInitOptions;
 import com.mapbox.maps.MapSurface;
 import com.mapbox.maps.MapboxExperimental;
+import com.mapbox.maps.ResourceOptions;
 import com.mapbox.maps.ScreenCoordinate;
 import com.mapbox.maps.extension.androidauto.MapboxCarMap;
 import com.mapbox.maps.extension.androidauto.DefaultMapboxCarMapGestureHandler;
+import com.mapbox.maps.extension.androidauto.MapboxCarMapEx;
 import com.mapbox.maps.extension.androidauto.MapboxCarMapGestureHandler;
 import com.mapbox.maps.extension.androidauto.MapboxCarMapObserver;
 import com.mapbox.maps.extension.androidauto.MapboxCarMapSurface;
@@ -21,7 +25,7 @@ import com.mapbox.maps.extension.androidauto.MapboxCarMapSurface;
 class CarJavaInterfaceChecker {
 
   void constructors(MapInitOptions mapInitOptions) {
-    MapboxCarMap mapboxCarMap = new MapboxCarMap(mapInitOptions);
+    MapboxCarMap mapboxCarMap = new MapboxCarMap();
   }
 
   void getters(MapboxCarMap mapboxCarMap) {
@@ -37,8 +41,8 @@ class CarJavaInterfaceChecker {
     SurfaceContainer surfaceContainer = mapboxCarMapSurface.getSurfaceContainer();
   }
 
-  private void observers(MapboxCarMap mapboxCarMap) {
-    MapboxCarMapObserver observer = new MapboxCarMapObserver() {
+  private MapboxCarMapObserver createObserver() {
+    return new MapboxCarMapObserver() {
 
       @Override
       public void onVisibleAreaChanged(@NonNull Rect visibleArea, @NonNull EdgeInsets edgeInsets) {
@@ -55,6 +59,10 @@ class CarJavaInterfaceChecker {
 
       }
     };
+  }
+
+  private void observers(MapboxCarMap mapboxCarMap) {
+    MapboxCarMapObserver observer = createObserver();
     mapboxCarMap.registerObserver(observer);
     mapboxCarMap.unregisterObserver(observer);
     mapboxCarMap.clearObservers();
@@ -74,5 +82,39 @@ class CarJavaInterfaceChecker {
     mapboxCarMap.setGestureHandler(gestures);
     mapboxCarMap.setGestureHandler(new DefaultMapboxCarMapGestureHandler());
     mapboxCarMap.setGestureHandler(null);
+  }
+
+  private void sessionDefaultInstaller(Session session) {
+    MapboxCarMapObserver observer1 = createObserver();
+    MapboxCarMapObserver observer2 = createObserver();
+    MapboxCarMapEx.mapboxMapInstaller(session)
+            .onCreated(observer1, observer2)
+            .onStarted(observer1, observer2)
+            .onResumed(observer1, observer2)
+            .install();
+  }
+
+  private void sessionInstaller(Session session) {
+    MapboxCarMapObserver observer1 = createObserver();
+    MapboxCarMapObserver observer2 = createObserver();
+    MapboxCarMapEx.mapboxMapInstaller(session)
+            .onCreated(observer1, observer2)
+            .onStarted(observer1, observer2)
+            .onResumed(observer1, observer2)
+            .install(carContext1 -> new MapInitOptions(
+                    carContext1,
+                    new ResourceOptions.Builder()
+                            .build())
+            );
+  }
+
+  private void screenInstaller(Screen screen, MapboxCarMap mapboxCarMap) {
+    MapboxCarMapObserver observer1 = createObserver();
+    MapboxCarMapObserver observer2 = createObserver();
+    MapboxCarMapEx.mapboxMapInstaller(screen, mapboxCarMap)
+            .onCreated(observer1, observer2)
+            .onStarted(observer1, observer2)
+            .onResumed(observer1, observer2)
+            .install();
   }
 }

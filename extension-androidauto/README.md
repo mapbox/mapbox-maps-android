@@ -95,34 +95,36 @@ In this example, the Session manages an instance of `MapboxCarMap` and then each
 
 ```kotlin
 class MySession : Session() {
-  override fun onCreateScreen(intent: Intent): Screen {
-    // You must create the MapInitOptions with the CarContext.
-    val mapInitOptions = MapInitOptions(carContext)
-    val mapboxCarMap = MapboxCarMap(mapInitOptions)
-    return MapScreen(mapboxCarMap)
-  }
+
+  private val mapboxCarMap = mapboxMapInstaller()
+      .onCreated(CarMapWidgets())
+      .install { carContext ->
+        // Callback is triggered when the Session calls onCreate. This allows you to specify
+        // custom MapInitOptions.
+        MapInitOptions(carContext)
+      }
+
+  override fun onCreateScreen(intent: Intent): Screen = MapScreen(mapboxCarMap)
 }
 
 class MyMapScreen(
-  val mapboxCarMap: MapboxCarMap
+  mapboxCarMap: MapboxCarMap
 ) : Screen(mapboxCarMap.carContext) {
+
+  private val carCameraController = CarCameraController()
+  private val myCustomExperience = MyCustomMapExperience()
+
+  init {
+    mapboxMapInstaller(mapboxCarMap)
+        .onCreated(carCameraController)
+        .gestureHandler(carCameraController.gestureHandler)
+        .onResumed(myCustomExperience)
+        .install()
+  }
 
   override fun onGetTemplate(): Template {
     val builder = NavigationTemplate.Builder()
       --snip--
-
-  init {
-    val myCustomMapExperience = MyCustomMapExperience()
-    lifecycle.addObserver(object : DefaultLifecycleObserver {
-      override fun onCreate(owner: LifecycleOwner) {
-        mapboxCarMap.registerObserver(myCustomMapExperience)
-      }
-
-      override fun onDestroy(owner: LifecycleOwner) {
-        mapboxCarMap.unregisterObserver(myCustomMapExperience)
-      }
-    })
-  }
 
 class MyCustomMapExperience : MapboxCarMapObserver {
   override fun onAttached(mapboxCarMapSurface: MapboxCarMapSurface) {

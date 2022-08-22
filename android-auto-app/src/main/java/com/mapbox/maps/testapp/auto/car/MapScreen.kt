@@ -9,11 +9,9 @@ import androidx.car.app.model.CarIcon
 import androidx.car.app.model.Template
 import androidx.car.app.navigation.model.NavigationTemplate
 import androidx.core.graphics.drawable.IconCompat
-import androidx.lifecycle.DefaultLifecycleObserver
-import androidx.lifecycle.LifecycleOwner
 import com.mapbox.maps.MapboxExperimental
-import com.mapbox.maps.extension.androidauto.DefaultMapboxCarMapGestureHandler
 import com.mapbox.maps.extension.androidauto.MapboxCarMap
+import com.mapbox.maps.extension.androidauto.mapboxMapInstaller
 import com.mapbox.maps.testapp.auto.R
 
 /**
@@ -21,10 +19,17 @@ import com.mapbox.maps.testapp.auto.R
  */
 @OptIn(MapboxExperimental::class)
 class MapScreen(
-  val mapboxCarMap: MapboxCarMap
+  mapboxCarMap: MapboxCarMap
 ) : Screen(mapboxCarMap.carContext) {
   private var isInPanMode: Boolean = false
   private val carCameraController = CarCameraController()
+
+  init {
+    mapboxMapInstaller(mapboxCarMap)
+      .onCreated(carCameraController)
+      .gestureHandler(carCameraController.gestureHandler)
+      .install()
+  }
 
   override fun onGetTemplate(): Template {
     val builder = NavigationTemplate.Builder()
@@ -130,19 +135,5 @@ class MapScreen(
     }
 
     return builder.build()
-  }
-
-  init {
-    lifecycle.addObserver(object : DefaultLifecycleObserver {
-      override fun onCreate(owner: LifecycleOwner) {
-        mapboxCarMap.registerObserver(carCameraController)
-        mapboxCarMap.setGestureHandler(carCameraController.gestureHandler)
-      }
-
-      override fun onDestroy(owner: LifecycleOwner) {
-        mapboxCarMap.setGestureHandler(DefaultMapboxCarMapGestureHandler())
-        mapboxCarMap.unregisterObserver(carCameraController)
-      }
-    })
   }
 }

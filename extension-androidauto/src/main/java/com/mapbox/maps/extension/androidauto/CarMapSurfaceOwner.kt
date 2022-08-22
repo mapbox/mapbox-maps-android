@@ -1,7 +1,11 @@
 package com.mapbox.maps.extension.androidauto
 
 import android.graphics.Rect
+import androidx.car.app.CarContext
+import androidx.car.app.SurfaceCallback
+import androidx.car.app.SurfaceContainer
 import com.mapbox.maps.EdgeInsets
+import com.mapbox.maps.MapInitOptions
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.logI
@@ -15,7 +19,7 @@ import java.util.concurrent.CopyOnWriteArraySet
 @MapboxExperimental
 internal class CarMapSurfaceOwner(
   var gestureHandler: MapboxCarMapGestureHandler? = DefaultMapboxCarMapGestureHandler()
-) {
+) : SurfaceCallback {
 
   internal var mapboxCarMapSurface: MapboxCarMapSurface? = null
     private set
@@ -26,7 +30,17 @@ internal class CarMapSurfaceOwner(
   internal var visibleCenter: ScreenCoordinate = visibleCenter()
     private set
 
+  internal lateinit var carContext: CarContext
+  internal lateinit var mapInitOptions: MapInitOptions
+
   private val carMapObservers = CopyOnWriteArraySet<MapboxCarMapObserver>()
+
+  fun setup(carContext: CarContext, mapInitOptions: MapInitOptions) = apply {
+    this.carContext = carContext
+    this.mapInitOptions = mapInitOptions
+  }
+
+  fun isSetup(): Boolean = this::carContext.isInitialized && this::mapInitOptions.isInitialized
 
   fun registerObserver(mapboxCarMapObserver: MapboxCarMapObserver) {
     carMapObservers.add(mapboxCarMapObserver)
@@ -52,25 +66,36 @@ internal class CarMapSurfaceOwner(
     carMapObservers.clear()
   }
 
-  fun surfaceAvailable(mapboxCarMapSurface: MapboxCarMapSurface) {
-    logI(TAG, "surfaceAvailable")
-    val oldCarMapSurface = this.mapboxCarMapSurface
-    this.mapboxCarMapSurface = mapboxCarMapSurface
-    oldCarMapSurface?.let {
-      carMapObservers.forEach { it.onDetached(oldCarMapSurface) }
-      // The surface can become available without a call to surfaceDestroyed
-      // https://issuetracker.google.com/issues/235121269
-      oldCarMapSurface.mapSurface.onStop()
-      oldCarMapSurface.mapSurface.surfaceDestroyed()
-      oldCarMapSurface.mapSurface.onDestroy()
-    }
-    carMapObservers.forEach { it.onAttached(mapboxCarMapSurface) }
+  override fun onSurfaceAvailable(surfaceContainer: SurfaceContainer) {
+    logI(TAG, "onSurfaceAvailable $surfaceContainer")
+    surfaceContainer.surface?.let { surface ->
+      val mapSurface = MapSurfaceProvider.create(
+        carContext,
+        surface,
+        mapInitOptions
+      )
+      mapSurface.onStart()
+      mapSurface.surfaceCreated()
+      mapSurface.surfaceChanged(surfaceContainer.width, surfaceContainer.height)
+      val carMapSurface = MapboxCarMapSurface(carContext, mapSurface, surfaceContainer)
+      val oldCarMapSurface = this.mapboxCarMapSurface
+      this.mapboxCarMapSurface = carMapSurface
+      oldCarMapSurface?.mapSurface?.let { mapSurface ->
+        carMapObservers.forEach { it.onDetached(oldCarMapSurface) }
+        // The surface can become available without a call to surfaceDestroyed
+        // https://issuetracker.google.com/issues/235121269
+        mapSurface.onStop()
+        mapSurface.surfaceDestroyed()
+        mapSurface.onDestroy()
+      }
+      carMapObservers.forEach { it.onAttached(carMapSurface) }
 
-    notifyVisibleAreaChanged()
+      notifyVisibleAreaChanged()
+    }
   }
 
-  fun surfaceDestroyed() {
-    logI(TAG, "surfaceDestroyed")
+  override fun onSurfaceDestroyed(surfaceContainer: SurfaceContainer) {
+    logI(TAG, "onSurfaceDestroyed")
     val detachSurface = this.mapboxCarMapSurface
     detachSurface?.mapSurface?.onStop()
     detachSurface?.mapSurface?.surfaceDestroyed()
@@ -79,8 +104,8 @@ internal class CarMapSurfaceOwner(
     detachSurface?.let { carMapObservers.forEach { it.onDetached(detachSurface) } }
   }
 
-  fun surfaceVisibleAreaChanged(visibleArea: Rect) {
-    logI(TAG, "surfaceVisibleAreaChanged")
+  override fun onVisibleAreaChanged(visibleArea: Rect) {
+    logI(TAG, "onVisibleAreaChanged visibleArea:$visibleArea")
     this.visibleArea = visibleArea
     notifyVisibleAreaChanged()
   }
@@ -94,6 +119,28 @@ internal class CarMapSurfaceOwner(
         it.onVisibleAreaChanged(area, edge)
       }
     }
+  }
+
+  override fun onStableAreaChanged(stableArea: Rect) {
+    // Have not found a need for this.
+  }
+
+  override fun onScroll(distanceX: Float, distanceY: Float) {
+    logI(TAG, "onScroll $distanceX, $distanceY")
+    val carMapSurface = mapboxCarMapSurface ?: return
+    gestureHandler?.onScroll(carMapSurface, visibleCenter, distanceX, distanceY)
+  }
+
+  override fun onFling(velocityX: Float, velocityY: Float) {
+    logI(TAG, "onFling $velocityX, $velocityY")
+    val carMapSurface = mapboxCarMapSurface ?: return
+    gestureHandler?.onFling(carMapSurface, velocityX, velocityY)
+  }
+
+  override fun onScale(focusX: Float, focusY: Float, scaleFactor: Float) {
+    logI(TAG, "onScroll $focusX, $focusY, $scaleFactor")
+    val carMapSurface = mapboxCarMapSurface ?: return
+    gestureHandler?.onScale(carMapSurface, focusX, focusY, scaleFactor)
   }
 
   private inline fun <R1, R2, R3, T> ifNonNull(
@@ -121,21 +168,6 @@ internal class CarMapSurfaceOwner(
     return visibleArea?.run(rectCenterMapper)
       ?: mapboxCarMapSurface?.run(surfaceContainerCenterMapper)
       ?: ScreenCoordinate(0.0, 0.0)
-  }
-
-  fun scroll(distanceX: Float, distanceY: Float) {
-    val carMapSurface = mapboxCarMapSurface ?: return
-    gestureHandler?.onScroll(carMapSurface, visibleCenter, distanceX, distanceY)
-  }
-
-  fun fling(velocityX: Float, velocityY: Float) {
-    val carMapSurface = mapboxCarMapSurface ?: return
-    gestureHandler?.onFling(carMapSurface, velocityX, velocityY)
-  }
-
-  fun scale(focusX: Float, focusY: Float, scaleFactor: Float) {
-    val carMapSurface = mapboxCarMapSurface ?: return
-    gestureHandler?.onScale(carMapSurface, focusX, focusY, scaleFactor)
   }
 
   private companion object {

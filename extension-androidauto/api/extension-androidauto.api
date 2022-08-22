@@ -6,15 +6,22 @@ public class com/mapbox/maps/extension/androidauto/DefaultMapboxCarMapGestureHan
 }
 
 public final class com/mapbox/maps/extension/androidauto/MapboxCarMap {
-	public fun <init> (Lcom/mapbox/maps/MapInitOptions;)V
+	public fun <init> ()V
 	public final fun clearObservers ()V
 	public final fun getCarContext ()Landroidx/car/app/CarContext;
 	public final fun getCarMapSurface ()Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;
 	public final fun getEdgeInsets ()Lcom/mapbox/maps/EdgeInsets;
+	public final fun getMapInitOptions ()Lcom/mapbox/maps/MapInitOptions;
 	public final fun getVisibleArea ()Landroid/graphics/Rect;
 	public final fun registerObserver (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapObserver;)Lcom/mapbox/maps/extension/androidauto/MapboxCarMap;
 	public final fun setGestureHandler (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapGestureHandler;)V
+	public final fun setup (Landroidx/car/app/CarContext;Lcom/mapbox/maps/MapInitOptions;)Lcom/mapbox/maps/extension/androidauto/MapboxCarMap;
 	public final fun unregisterObserver (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapObserver;)V
+}
+
+public final class com/mapbox/maps/extension/androidauto/MapboxCarMapEx {
+	public static final fun mapboxMapInstaller (Landroidx/car/app/Screen;Lcom/mapbox/maps/extension/androidauto/MapboxCarMap;)Lcom/mapbox/maps/extension/androidauto/MapboxCarMapScreenInstaller;
+	public static final fun mapboxMapInstaller (Landroidx/car/app/Session;)Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSessionInstaller;
 }
 
 public abstract interface class com/mapbox/maps/extension/androidauto/MapboxCarMapGestureHandler {
@@ -29,6 +36,10 @@ public final class com/mapbox/maps/extension/androidauto/MapboxCarMapGestureHand
 	public static fun onScroll (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapGestureHandler;Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;Lcom/mapbox/maps/ScreenCoordinate;FF)V
 }
 
+public abstract interface class com/mapbox/maps/extension/androidauto/MapboxCarMapInitializer {
+	public abstract fun onCreate (Landroidx/car/app/CarContext;)Lcom/mapbox/maps/MapInitOptions;
+}
+
 public abstract interface class com/mapbox/maps/extension/androidauto/MapboxCarMapObserver {
 	public abstract fun onAttached (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;)V
 	public abstract fun onDetached (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;)V
@@ -39,6 +50,26 @@ public final class com/mapbox/maps/extension/androidauto/MapboxCarMapObserver$De
 	public static fun onAttached (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapObserver;Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;)V
 	public static fun onDetached (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapObserver;Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;)V
 	public static fun onVisibleAreaChanged (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapObserver;Landroid/graphics/Rect;Lcom/mapbox/maps/EdgeInsets;)V
+}
+
+public final class com/mapbox/maps/extension/androidauto/MapboxCarMapScreenInstaller {
+	public fun <init> (Landroidx/car/app/Screen;Lcom/mapbox/maps/extension/androidauto/MapboxCarMap;)V
+	public final fun gestureHandler (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapGestureHandler;)Lcom/mapbox/maps/extension/androidauto/MapboxCarMapScreenInstaller;
+	public final fun install ()Lcom/mapbox/maps/extension/androidauto/MapboxCarMap;
+	public final fun onCreated ([Lcom/mapbox/maps/extension/androidauto/MapboxCarMapObserver;)Lcom/mapbox/maps/extension/androidauto/MapboxCarMapScreenInstaller;
+	public final fun onResumed ([Lcom/mapbox/maps/extension/androidauto/MapboxCarMapObserver;)Lcom/mapbox/maps/extension/androidauto/MapboxCarMapScreenInstaller;
+	public final fun onStarted ([Lcom/mapbox/maps/extension/androidauto/MapboxCarMapObserver;)Lcom/mapbox/maps/extension/androidauto/MapboxCarMapScreenInstaller;
+}
+
+public final class com/mapbox/maps/extension/androidauto/MapboxCarMapSessionInstaller {
+	public fun <init> (Landroidx/car/app/Session;Lcom/mapbox/maps/extension/androidauto/MapboxCarMap;)V
+	public synthetic fun <init> (Landroidx/car/app/Session;Lcom/mapbox/maps/extension/androidauto/MapboxCarMap;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun install ()Lcom/mapbox/maps/extension/androidauto/MapboxCarMap;
+	public final fun install (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapInitializer;)Lcom/mapbox/maps/extension/androidauto/MapboxCarMap;
+	public static synthetic fun install$default (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSessionInstaller;Lcom/mapbox/maps/extension/androidauto/MapboxCarMapInitializer;ILjava/lang/Object;)Lcom/mapbox/maps/extension/androidauto/MapboxCarMap;
+	public final fun onCreated ([Lcom/mapbox/maps/extension/androidauto/MapboxCarMapObserver;)Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSessionInstaller;
+	public final fun onResumed ([Lcom/mapbox/maps/extension/androidauto/MapboxCarMapObserver;)Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSessionInstaller;
+	public final fun onStarted ([Lcom/mapbox/maps/extension/androidauto/MapboxCarMapObserver;)Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSessionInstaller;
 }
 
 public final class com/mapbox/maps/extension/androidauto/MapboxCarMapSurface {

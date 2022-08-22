@@ -25,6 +25,16 @@ import org.junit.Test
 @OptIn(MapboxExperimental::class)
 class MapboxCarMapTest {
 
+  private val surfaceCallbackSlot = slot<SurfaceCallback>()
+  private val carContext = mockk<CarContext> {
+    every { getCarService(AppManager::class.java) } returns mockk {
+      every { setSurfaceCallback(capture(surfaceCallbackSlot)) } just Runs
+    }
+  }
+  private val mapInitOptions = mockk<MapInitOptions> {
+    every { context } returns carContext
+  }
+
   private val testMapSurface: MapSurface = mockk(relaxed = true)
 
   @Before
@@ -40,43 +50,35 @@ class MapboxCarMapTest {
     unmockkAll()
   }
 
-  @Test(expected = RuntimeException::class)
-  fun `MapboxCarMap constructor crashes when context is not a CarContext`() {
+  @Test(expected = IllegalStateException::class)
+  fun `MapboxCarMap crashes when context is not a CarContext`() {
     val mapInitOptions = mockk<MapInitOptions> {
       every { context } returns mockk()
     }
 
-    MapboxCarMap(mapInitOptions)
+    MapboxCarMap().setup(mockk(), mapInitOptions)
+  }
+
+  @Test(expected = IllegalStateException::class)
+  fun `MapboxCarMap crashes when carContext is accessed before setup`() {
+    MapboxCarMap().carContext
+  }
+
+  @Test(expected = IllegalStateException::class)
+  fun `MapboxCarMap crashes when mapInitOptions is accessed before setup`() {
+    MapboxCarMap().mapInitOptions
   }
 
   @Test
   fun `MapboxCarMap constructor requests the surface callback`() {
-    val surfaceCallbackSlot = slot<SurfaceCallback>()
-    val mapInitOptions = mockk<MapInitOptions> {
-      every { context } returns mockk<CarContext> {
-        every { getCarService(AppManager::class.java) } returns mockk {
-          every { setSurfaceCallback(capture(surfaceCallbackSlot)) } just Runs
-        }
-      }
-    }
-
-    MapboxCarMap(mapInitOptions)
+    MapboxCarMap().setup(carContext, mapInitOptions)
 
     assertTrue(surfaceCallbackSlot.isCaptured)
   }
 
   @Test
   fun `carMapSurface is valid after onSurfaceAvailable`() {
-    val surfaceCallbackSlot = slot<SurfaceCallback>()
-    val mapInitOptions = mockk<MapInitOptions> {
-      every { context } returns mockk<CarContext> {
-        every { getCarService(AppManager::class.java) } returns mockk {
-          every { setSurfaceCallback(capture(surfaceCallbackSlot)) } just Runs
-        }
-      }
-    }
-
-    val mapboxCarMap = MapboxCarMap(mapInitOptions)
+    val mapboxCarMap = MapboxCarMap().setup(carContext, mapInitOptions)
     assertNull(mapboxCarMap.carMapSurface)
     surfaceCallbackSlot.captured.onSurfaceAvailable(mockk(relaxed = true))
 
@@ -85,16 +87,7 @@ class MapboxCarMapTest {
 
   @Test
   fun `visibleArea is valid after onVisibleAreaChanged`() {
-    val surfaceCallbackSlot = slot<SurfaceCallback>()
-    val mapInitOptions = mockk<MapInitOptions> {
-      every { context } returns mockk<CarContext> {
-        every { getCarService(AppManager::class.java) } returns mockk {
-          every { setSurfaceCallback(capture(surfaceCallbackSlot)) } just Runs
-        }
-      }
-    }
-
-    val mapboxCarMap = MapboxCarMap(mapInitOptions)
+    val mapboxCarMap = MapboxCarMap().setup(carContext, mapInitOptions)
     assertNull(mapboxCarMap.visibleArea)
     surfaceCallbackSlot.captured.onSurfaceAvailable(mockk(relaxed = true))
     surfaceCallbackSlot.captured.onVisibleAreaChanged(mockk(relaxed = true))
@@ -104,16 +97,7 @@ class MapboxCarMapTest {
 
   @Test
   fun `edgeInsets is valid after onVisibleAreaChanged`() {
-    val surfaceCallbackSlot = slot<SurfaceCallback>()
-    val mapInitOptions = mockk<MapInitOptions> {
-      every { context } returns mockk<CarContext> {
-        every { getCarService(AppManager::class.java) } returns mockk {
-          every { setSurfaceCallback(capture(surfaceCallbackSlot)) } just Runs
-        }
-      }
-    }
-
-    val mapboxCarMap = MapboxCarMap(mapInitOptions)
+    val mapboxCarMap = MapboxCarMap().setup(carContext, mapInitOptions)
     assertNull(mapboxCarMap.edgeInsets)
     surfaceCallbackSlot.captured.onSurfaceAvailable(mockk(relaxed = true))
     surfaceCallbackSlot.captured.onVisibleAreaChanged(mockk(relaxed = true))
@@ -123,16 +107,7 @@ class MapboxCarMapTest {
 
   @Test
   fun `registerObserver includes onAttached and onVisibleAreaChanged`() {
-    val surfaceCallbackSlot = slot<SurfaceCallback>()
-    val mapInitOptions = mockk<MapInitOptions> {
-      every { context } returns mockk<CarContext> {
-        every { getCarService(AppManager::class.java) } returns mockk {
-          every { setSurfaceCallback(capture(surfaceCallbackSlot)) } just Runs
-        }
-      }
-    }
-
-    val mapboxCarMap = MapboxCarMap(mapInitOptions)
+    val mapboxCarMap = MapboxCarMap().setup(carContext, mapInitOptions)
     val observer = mockk<MapboxCarMapObserver>(relaxed = true)
     mapboxCarMap.registerObserver(observer)
     surfaceCallbackSlot.captured.onSurfaceAvailable(mockk(relaxed = true))
@@ -146,16 +121,7 @@ class MapboxCarMapTest {
 
   @Test
   fun `registerObserver receives callbacks if registered after onVisibleAreaChanged`() {
-    val surfaceCallbackSlot = slot<SurfaceCallback>()
-    val mapInitOptions = mockk<MapInitOptions> {
-      every { context } returns mockk<CarContext> {
-        every { getCarService(AppManager::class.java) } returns mockk {
-          every { setSurfaceCallback(capture(surfaceCallbackSlot)) } just Runs
-        }
-      }
-    }
-
-    val mapboxCarMap = MapboxCarMap(mapInitOptions)
+    val mapboxCarMap = MapboxCarMap().setup(carContext, mapInitOptions)
     surfaceCallbackSlot.captured.onSurfaceAvailable(mockk(relaxed = true))
     surfaceCallbackSlot.captured.onVisibleAreaChanged(mockk(relaxed = true))
 
@@ -170,16 +136,7 @@ class MapboxCarMapTest {
 
   @Test
   fun `unregisterObserver will prevent callbacks`() {
-    val surfaceCallbackSlot = slot<SurfaceCallback>()
-    val mapInitOptions = mockk<MapInitOptions> {
-      every { context } returns mockk<CarContext> {
-        every { getCarService(AppManager::class.java) } returns mockk {
-          every { setSurfaceCallback(capture(surfaceCallbackSlot)) } just Runs
-        }
-      }
-    }
-
-    val mapboxCarMap = MapboxCarMap(mapInitOptions)
+    val mapboxCarMap = MapboxCarMap().setup(carContext, mapInitOptions)
     val observer = mockk<MapboxCarMapObserver>(relaxed = true)
     mapboxCarMap.registerObserver(observer)
     mapboxCarMap.unregisterObserver(observer)
@@ -194,16 +151,7 @@ class MapboxCarMapTest {
 
   @Test
   fun `clearObservers will prevent callbacks`() {
-    val surfaceCallbackSlot = slot<SurfaceCallback>()
-    val mapInitOptions = mockk<MapInitOptions> {
-      every { context } returns mockk<CarContext> {
-        every { getCarService(AppManager::class.java) } returns mockk {
-          every { setSurfaceCallback(capture(surfaceCallbackSlot)) } just Runs
-        }
-      }
-    }
-
-    val mapboxCarMap = MapboxCarMap(mapInitOptions)
+    val mapboxCarMap = MapboxCarMap().setup(carContext, mapInitOptions)
     val observer = mockk<MapboxCarMapObserver>(relaxed = true)
     mapboxCarMap.registerObserver(observer)
     mapboxCarMap.clearObservers()
@@ -218,16 +166,7 @@ class MapboxCarMapTest {
 
   @Test
   fun `setGestures allows you to provide custom gestures`() {
-    val surfaceCallbackSlot = slot<SurfaceCallback>()
-    val mapInitOptions = mockk<MapInitOptions> {
-      every { context } returns mockk<CarContext> {
-        every { getCarService(AppManager::class.java) } returns mockk {
-          every { setSurfaceCallback(capture(surfaceCallbackSlot)) } just Runs
-        }
-      }
-    }
-
-    val mapboxCarMap = MapboxCarMap(mapInitOptions)
+    val mapboxCarMap = MapboxCarMap().setup(carContext, mapInitOptions)
     val testGestures = TestMapboxCarMapGestures()
     mapboxCarMap.setGestureHandler(testGestures)
 
@@ -244,16 +183,7 @@ class MapboxCarMapTest {
 
   @Test
   fun `setGestures is not called before surface is available`() {
-    val surfaceCallbackSlot = slot<SurfaceCallback>()
-    val mapInitOptions = mockk<MapInitOptions> {
-      every { context } returns mockk<CarContext> {
-        every { getCarService(AppManager::class.java) } returns mockk {
-          every { setSurfaceCallback(capture(surfaceCallbackSlot)) } just Runs
-        }
-      }
-    }
-
-    val mapboxCarMap = MapboxCarMap(mapInitOptions)
+    val mapboxCarMap = MapboxCarMap().setup(carContext, mapInitOptions)
     val testGestures = TestMapboxCarMapGestures()
     mapboxCarMap.setGestureHandler(testGestures)
 
@@ -268,7 +198,7 @@ class MapboxCarMapTest {
     assertFalse(testGestures.capturedOnScale)
   }
 
-  class TestMapboxCarMapGestures : MapboxCarMapGestureHandler {
+  private class TestMapboxCarMapGestures : MapboxCarMapGestureHandler {
     var capturedOnScroll = false
     var capturedOnScale = false
     var capturedOnFling = false
