@@ -2,6 +2,10 @@
 
 Mapbox welcomes participation and contributions from everyone.
 # main
+## Bug fixes 🐞
+* Fix broken view annotation positioning when marking them `View.INVISIBLE` and then making `View.VISIBLE`. ([1616](https://github.com/mapbox/mapbox-maps-android/pull/1616))
+
+# 10.8.0-rc.1
 ## Features ✨ and improvements 🏁
 
 ## Bug fixes 🐞
