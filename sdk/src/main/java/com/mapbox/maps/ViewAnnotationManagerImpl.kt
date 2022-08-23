@@ -214,7 +214,8 @@ internal class ViewAnnotationManagerImpl(
       measuredWidth = if (options.width != null) USER_FIXED_DIMENSION else inflatedViewLayout.width,
       measuredHeight = if (options.height != null) USER_FIXED_DIMENSION else inflatedViewLayout.height,
     )
-    val onDrawListener = ViewTreeObserver.OnDrawListener {
+    // triggered not so often and needed to control view's width and height when WRAP_CONTENT is used
+    val onGlobalLayoutListener = ViewTreeObserver.OnGlobalLayoutListener {
       if (viewAnnotation.measuredWidth != USER_FIXED_DIMENSION &&
         inflatedView.measuredWidth > 0 &&
         inflatedView.measuredWidth != viewAnnotation.measuredWidth
@@ -243,6 +244,10 @@ internal class ViewAnnotationManagerImpl(
           )
         )
       }
+    }
+    // triggered on every frame and needed to check if visibility changed
+    // as OnGlobalLayoutListener does not cover cases for View.INVISIBLE properly
+    val onDrawListener = ViewTreeObserver.OnDrawListener {
       if (viewAnnotation.handleVisibilityAutomatically) {
         val isAndroidViewVisible = (inflatedView.visibility == View.VISIBLE)
         if ((isAndroidViewVisible && viewAnnotation.isVisible) ||
@@ -277,10 +282,12 @@ internal class ViewAnnotationManagerImpl(
     viewAnnotation.attachStateListener = object : View.OnAttachStateChangeListener {
       override fun onViewAttachedToWindow(v: View) {
         inflatedView.viewTreeObserver.addOnDrawListener(onDrawListener)
+        inflatedView.viewTreeObserver.addOnGlobalLayoutListener(onGlobalLayoutListener)
       }
 
       override fun onViewDetachedFromWindow(v: View) {
         inflatedView.viewTreeObserver.removeOnDrawListener(onDrawListener)
+        inflatedView.viewTreeObserver.removeOnGlobalLayoutListener(onGlobalLayoutListener)
       }
     }
     inflatedView.addOnAttachStateChangeListener(viewAnnotation.attachStateListener)
