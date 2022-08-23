@@ -183,6 +183,6 @@ class ScaleBarImplTest {
       val resultAbove = scaleBarView.findSuitableScaleBarSegments(maxDistanceAboveCurrent)
       assertEquals(distance / rectCount, resultAbove.first, 0.01F)
       assertEquals(rectCount, resultAbove.second)
-      }
+    }
   }
 }
