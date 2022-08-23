@@ -160,7 +160,7 @@ class ScaleBarImplTest {
 
   private fun `verify below and above scale bar segments`(scaleTable: List<Pair<Int, Int>>) {
     // Special case where max distance is smaller than the first entry segment in the table
-    val belowFirstUnitBarDistance = scaleTable[0].first.toFloat() / scaleTable[0].second - 0.1F
+    val belowFirstUnitBarDistance = (scaleTable[0].first.toFloat() / scaleTable[0].second) - 0.1F
     val result =
       scaleBarView.findSuitableScaleBarSegments(belowFirstUnitBarDistance)
     assertEquals(belowFirstUnitBarDistance, result.first, 0.01F)
