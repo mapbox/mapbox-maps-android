@@ -14,6 +14,7 @@ import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.ParameterizedRobolectricTestRunner
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows
 import org.robolectric.annotation.Config
@@ -98,33 +99,6 @@ class ScaleBarImplTest {
   }
 
   @Test
-  fun getDistanceText() {
-    assertEquals("0", scaleBarView.getDistanceText(0F))
-    assertEquals("0.1 m", scaleBarView.getDistanceText(0.1F))
-    assertEquals("0.5 m", scaleBarView.getDistanceText(0.5F))
-    assertEquals("100 m", scaleBarView.getDistanceText(100F))
-    assertEquals("999 m", scaleBarView.getDistanceText(999F))
-    assertEquals("1 km", scaleBarView.getDistanceText(1000F))
-    assertEquals("1 km", scaleBarView.getDistanceText(1001F))
-    assertEquals("4.4 km", scaleBarView.getDistanceText(4444F))
-    assertEquals("5.6 km", scaleBarView.getDistanceText(5555F))
-    assertEquals("10 km", scaleBarView.getDistanceText(10000F))
-
-    scaleBarSettings.isMetricUnits = false
-    scaleBarView.settings = scaleBarSettings
-    assertEquals("0", scaleBarView.getDistanceText(0F))
-    assertEquals("0.1 ft", scaleBarView.getDistanceText(0.1F))
-    assertEquals("0.5 ft", scaleBarView.getDistanceText(0.5F))
-    assertEquals("100 ft", scaleBarView.getDistanceText(100F))
-    assertEquals("5279 ft", scaleBarView.getDistanceText(5279F))
-    assertEquals("1 mi", scaleBarView.getDistanceText(5280F))
-    assertEquals("1.1 mi", scaleBarView.getDistanceText(6000F))
-    assertEquals("1.9 mi", scaleBarView.getDistanceText(10000F))
-    assertEquals("2 mi", scaleBarView.getDistanceText(10560F))
-    assertEquals("10 mi", scaleBarView.getDistanceText(52800F))
-  }
-
-  @Test
   @LooperMode(LooperMode.Mode.PAUSED)
   fun renderingOnDemandTest() {
     scaleBarView.useContinuousRendering = false
@@ -185,4 +159,55 @@ class ScaleBarImplTest {
       assertEquals(rectCount, resultAbove.second)
     }
   }
+}
+
+@RunWith(ParameterizedRobolectricTestRunner::class)
+class ScaleBarImplGetDistanceTextTest(
+  private val isMetricUnits: Boolean,
+  private val distance: Float,
+  private val expectedDistanceText: String
+) {
+  private lateinit var scaleBarView: ScaleBarImpl
+  private val context: Context = mockk(relaxed = true)
+
+  @Before
+  fun setUp() {
+    scaleBarView = ScaleBarImpl(context)
+    val layoutParams = mockk<FrameLayout.LayoutParams>(relaxed = true)
+    scaleBarView.layoutParams = layoutParams
+  }
+
+  private companion object {
+    @JvmStatic
+    @ParameterizedRobolectricTestRunner.Parameters(name = "isMetric: {0}, distance: {1}")
+    fun data() = listOf(
+      arrayOf(true, 0F, "0"),
+      arrayOf(true, 0.1F, "0.1 m"),
+      arrayOf(true, 0.5F, "0.5 m"),
+      arrayOf(true, 100F, "100 m"),
+      arrayOf(true, 999F, "999 m"),
+      arrayOf(true, 1000F, "1 km"),
+      arrayOf(true, 1001F, "1 km"),
+      arrayOf(true, 4444F, "4.4 km"),
+      arrayOf(true, 5555F, "5.6 km"),
+      arrayOf(true, 10000F, "10 km"),
+      arrayOf(false, 0F, "0"),
+      arrayOf(false, 0.1F, "0.1 ft"),
+      arrayOf(false, 0.5F, "0.5 ft"),
+      arrayOf(false, 100F, "100 ft"),
+      arrayOf(false, 5279F, "5279 ft"),
+      arrayOf(false, 5280F, "1 mi"),
+      arrayOf(false, 6000F, "1.1 mi"),
+      arrayOf(false, 10000F, "1.9 mi"),
+      arrayOf(false, 10560F, "2 mi"),
+      arrayOf(false, 52800F, "10 mi"),
+    )
+  }
+
+  @Test
+  fun getDistanceText() {
+    scaleBarView.settings = scaleBarView.settings.copy(isMetricUnits = isMetricUnits)
+    assertEquals(expectedDistanceText, scaleBarView.getDistanceText(distance))
+  }
+
 }
