@@ -2,6 +2,7 @@
 
 Mapbox welcomes participation and contributions from everyone.
 # main
+* Fix scale bar truncated at high zoom levels near the poles. ([1620](https://github.com/mapbox/mapbox-maps-android/pull/1620))
 
 # 10.8.0-rc.1
 ## Features ✨ and improvements 🏁
