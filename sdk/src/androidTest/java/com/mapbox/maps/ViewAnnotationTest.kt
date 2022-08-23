@@ -893,6 +893,7 @@ class ViewAnnotationTest(
             anchor(ViewAnnotationAnchor.TOP_LEFT)
           }
         )
+        firstView.visibility = View.VISIBLE
       },
       makeChecks = {
         val initialTranslation = firstView.translationX.toDouble()
@@ -902,18 +903,29 @@ class ViewAnnotationTest(
           ADMISSIBLE_ERROR_PX
         )
         firstView.visibility = resultVisibility
+        val shiftX = 50.0
+        // trigger map movement while view annotation is not visible to trigger several core updates
+        mapboxMap.moveBy(
+          ScreenCoordinate(
+            shiftX,
+            0.0
+          ),
+          mapAnimationOptions {
+            duration(100L)
+          }
+        )
         mainHandler.postDelayed(
           {
             // make visible and move the map to make sure position is updated after view is visible
             firstView.visibility = View.VISIBLE
-            val shiftX = 100.0
+            val additionalShiftX = 50.0
             mapboxMap.moveBy(
               ScreenCoordinate(
-                shiftX,
+                additionalShiftX,
                 0.0
               ),
               mapAnimationOptions {
-                duration(1_000L)
+                duration(100L)
               }
             )
             mainHandler.postDelayed(
@@ -927,16 +939,16 @@ class ViewAnnotationTest(
                   actualVisibilityUpdateList.toTypedArray()
                 )
                 assertEquals(
-                  initialTranslation + shiftX,
+                  initialTranslation + shiftX + additionalShiftX,
                   firstView.translationX.toDouble(),
                   ADMISSIBLE_ERROR_PX
                 )
                 it.countDown()
               },
-              VIEW_PLACEMENT_DELAY_MS
+              VIEW_PLACEMENT_DELAY_MS / 3
             )
           },
-          VIEW_PLACEMENT_DELAY_MS
+          VIEW_PLACEMENT_DELAY_MS / 3
         )
       }
     )
