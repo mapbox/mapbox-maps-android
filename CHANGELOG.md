@@ -7,7 +7,7 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * Fix scale bar truncated at high zoom levels near the poles. ([1620](https://github.com/mapbox/mapbox-maps-android/pull/1620))
 
-# 10.8.0-rc.1
+# 10.8.0-rc.1 August 24, 2022
 ## Bug fixes 🐞
 * Try recreate EGL surface when it throws exception. ([1589](https://github.com/mapbox/mapbox-maps-android/pull/1589))
 * Fix `MapboxMap` extension plugin functions throwing exceptions. ([1591](https://github.com/mapbox/mapbox-maps-android/pull/1591))
