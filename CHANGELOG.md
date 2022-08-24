@@ -8,12 +8,16 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix scale bar truncated at high zoom levels near the poles. ([1620](https://github.com/mapbox/mapbox-maps-android/pull/1620))
 
 # 10.8.0-rc.1
-## Features ✨ and improvements 🏁
-
 ## Bug fixes 🐞
 * Try recreate EGL surface when it throws exception. ([1589](https://github.com/mapbox/mapbox-maps-android/pull/1589))
 * Fix `MapboxMap` extension plugin functions throwing exceptions. ([1591](https://github.com/mapbox/mapbox-maps-android/pull/1591))
 * Fix concurrent modification exception when using widgets. ([1597](https://github.com/mapbox/mapbox-maps-android/pull/1597))
+* Relax LOD requirements for maps with insets and zero terrain exaggeration, leading to more content shown in easily readable map areas. ([1623](https://github.com/mapbox/mapbox-maps-android/pull/1623))
+* Make CameraManager.setCamera method exception free. In cases when incorrect CameraOptions are provided, error would be logged. ([1623](https://github.com/mapbox/mapbox-maps-android/pull/1623))
+* Fix black holes in the globe view when edge insets are used. ([1623](https://github.com/mapbox/mapbox-maps-android/pull/1623))
+
+## Dependencies
+Bump gl-native to v10.8.0-rc.1 and common to v23.0.0-rc.2. ([1623](https://github.com/mapbox/mapbox-maps-android/pull/1623))
 
 # 10.8.0-beta.1 August 11, 2022
 ## Features ✨ and improvements 🏁
