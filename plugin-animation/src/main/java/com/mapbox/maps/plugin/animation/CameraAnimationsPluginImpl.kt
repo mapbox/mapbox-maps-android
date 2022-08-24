@@ -133,7 +133,8 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     }
   }
 
-  private var lastCameraOptions: CameraOptions? = null
+  @VisibleForTesting(otherwise = PRIVATE)
+  internal var lastCameraOptions: CameraOptions? = null
   private var cameraOptionsBuilder = CameraOptions.Builder()
 
   private lateinit var mapDelegateProvider: MapDelegateProvider
@@ -180,15 +181,23 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     handler.removeCallbacks(commitChangesRunnable)
   }
 
-  private fun performMapJump(cameraOptions: CameraOptions) {
+  @VisibleForTesting(otherwise = PRIVATE)
+  internal fun performMapJump(cameraOptions: CameraOptions) {
     if (lastCameraOptions == cameraOptions) {
       return
     }
     // move native map to new position
-    mapCameraManagerDelegate.setCamera(cameraOptions)
-    // notify listeners with actual values
-    notifyListeners(mapCameraManagerDelegate.cameraState)
-    lastCameraOptions = cameraOptions
+    try {
+      mapCameraManagerDelegate.setCamera(cameraOptions)
+      // notify listeners with actual values
+      notifyListeners(mapCameraManagerDelegate.cameraState)
+      lastCameraOptions = cameraOptions
+    } catch (e: Exception) {
+      logE(
+        TAG,
+        "Exception while setting camera options : ${e.message} CameraOptions = $cameraOptions"
+      )
+    }
   }
 
   private fun updateAnimatorValues(cameraAnimator: CameraAnimator<*>): Boolean {

@@ -1009,6 +1009,30 @@ class CameraAnimationsPluginImplTest {
     verify(exactly = 0) { logD(TAG, any()) }
   }
 
+  @Test
+  fun catchExceptionOnSetCameraTest() {
+    executeSetCameraTest(Exception("Invalid camera options"))
+  }
+
+  private fun executeSetCameraTest(error: Throwable) {
+    val lastCameraOptions = cameraState.toCameraOptions()
+    val targetCameraOptions = CameraOptions.Builder().center(
+      Point.fromLngLat(50.0, 50.0)
+    ).pitch(50.0)
+      .bearing(50.0)
+      .zoom(5.0).build()
+    cameraAnimationsPluginImpl.lastCameraOptions = lastCameraOptions
+    every { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) } throws error
+
+    cameraAnimationsPluginImpl.performMapJump(targetCameraOptions)
+    // assert camera options did not change
+    assertNotEquals(targetCameraOptions, cameraAnimationsPluginImpl.lastCameraOptions)
+
+    // assert camera states
+    assertNotNull(cameraAnimationsPluginImpl.lastCameraOptions)
+    assertEquals(lastCameraOptions, cameraAnimationsPluginImpl.lastCameraOptions)
+  }
+
   class LifecycleListener : CameraAnimationsLifecycleListener {
     var starting = false
     var interrupting = false
