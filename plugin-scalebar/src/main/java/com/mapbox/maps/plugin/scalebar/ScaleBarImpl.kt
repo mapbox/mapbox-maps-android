@@ -231,25 +231,14 @@ class ScaleBarImpl : ScaleBar, View {
     }
     settings.run {
       val maxDistance = mapViewWidth * distancePerPixel * ratio
-      var pair = scaleTable[0]
-      for (i in 1 until scaleTable.size) {
-        pair = scaleTable[i]
-        val distance = pair.first
-        if (distance > maxDistance) {
-          // use the last scale here, otherwise the scale will be too large
-          pair = scaleTable[i - 1]
-          break
-        }
+      if (maxDistance <= 0.1F) {
+        // There's no space to render the smallest distance. Don't render anything.
+        canvas.drawARGB(0, 0, 0, 0)
+        return
       }
-      val distance = pair.first
-      val rectCount = pair.second
-      var unitDistance = distance / rectCount
-      var unitBarWidth = (width / rectCount).toFloat()
-      if (unitDistance == 0) {
-        unitDistance = 1
-      } else {
-        unitBarWidth = (unitDistance / distancePerPixel)
-      }
+      val (unitDistance, rectCount) = findSuitableScaleBarSegments(maxDistance)
+
+      val unitBarWidth = (unitDistance / distancePerPixel)
       // Drawing the surrounding borders
       barPaint.style = Paint.Style.FILL_AND_STROKE
       barPaint.color = secondaryColor
@@ -313,19 +302,52 @@ class ScaleBarImpl : ScaleBar, View {
   }
 
   /**
+   * @return A tuple with the scale bar segment distance and the amount of bar segments
+   */
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal fun findSuitableScaleBarSegments(maxDistance: Float): Pair<Float, Int> {
+    var pair: Pair<Int, Int> = scaleTable[0]
+    for (i in 1 until scaleTable.size) {
+      pair = scaleTable[i]
+      val distance = pair.first
+      if (distance > maxDistance) {
+        // use the last scale here, otherwise the scale will be too large
+        pair = scaleTable[i - 1]
+        break
+      }
+    }
+    val distance = pair.first.toFloat()
+    var rectCount = pair.second
+    var unitDistance = distance / rectCount
+    // When maxDistance is small (i.e. high zoom levels near the poles) then
+    // the `distance` might be bigger than maxDistance. This loop will keep removing
+    // bar divisions (rectCount) until it fits
+    while (unitDistance * rectCount > maxDistance && rectCount > 0) {
+      rectCount--
+    }
+    // In case the unitDistance doesn't fit at all we fallback to maxDistance (rounded to 1
+    // decimal) with 1 division
+    if (rectCount == 0) {
+      unitDistance = (maxDistance * 10).toInt() / 10.0F
+      rectCount = 1
+    }
+    return Pair(unitDistance, rectCount)
+  }
+
+  /**
    * Get the formatted distance text according unit and distance
    *
    * @param distance original distance
    * @return Formatted distance text
    */
-  internal fun getDistanceText(distance: Int): String {
-    return if (distance == 0) {
+  internal fun getDistanceText(distance: Float): String {
+    return if (distance == 0F) {
       "0"
     } else if (METER_UNIT == unit) {
-      if (distance < KILOMETER) distance.toString() + unit
+      if (distance < KILOMETER) decimalFormat.format(distance) + unit
       else decimalFormat.format(distance * 1.0 / KILOMETER) + KILOMETER_UNIT
     } else {
-      if (distance < FEET_PER_MILE) distance.toString() + unit
+      if (distance < FEET_PER_MILE) decimalFormat.format(distance) + unit
       else decimalFormat.format(distance * 1.0 / FEET_PER_MILE) + MILE_UNIT
     }
   }

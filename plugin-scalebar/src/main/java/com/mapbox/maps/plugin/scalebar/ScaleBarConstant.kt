@@ -49,6 +49,7 @@ internal val metricTable = listOf(
   Pair(15000000, 2)
 )
 internal val imperialTable = listOf(
+  Pair(1, 1),
   Pair(4, 2),
   Pair(6, 2),
   Pair(10, 2),
