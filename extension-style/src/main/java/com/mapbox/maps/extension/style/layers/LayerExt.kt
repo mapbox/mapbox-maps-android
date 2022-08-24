@@ -39,11 +39,7 @@ fun StyleManagerInterface.getLayer(layerId: String): Layer? {
     }
   }?.also { result ->
     result.delegate = this
-    try {
-      result.cachedLayerPropertiesValue = getStyleLayerProperties(layerId).value
-    } catch (e: ClassCastException) {
-      // Exception can be thrown during unit tests (impossible to mock getStyleLayerProperties)
-    }
+    result.cachedLayerPropertiesValue = getStyleLayerProperties(layerId).value
   }
 }
 

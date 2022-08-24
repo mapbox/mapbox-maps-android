@@ -367,19 +367,19 @@ class SkyLayerTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun getLayerTest() {
-    val filterTestValue = eq {
+    val expression = eq {
       get {
         literal("undefined")
       }
       literal(1.0)
     }
-    val minZoomTestValue = 10.0
-    val maxZoomTestValue = 20.0
-    val skyAtmosphereColorTestValue = "rgba(0, 0, 0, 1)"
-    val skyAtmosphereHaloColorTestValue = "rgba(0, 0, 0, 1)"
-    val skyAtmosphereSunTestValue = listOf(0.0, 1.0)
-    val skyAtmosphereSunIntensityTestValue = 1.0
-    val skyGradientTestValue = interpolate {
+    val layer = skyLayer("id") {
+      filter(expression)
+      skyAtmosphereColor("rgba(0, 0, 0, 1)")
+      skyAtmosphereHaloColor("rgba(0, 0, 0, 1)")
+      skyAtmosphereSun(listOf(0.0, 1.0))
+      skyAtmosphereSunIntensity(1.0)
+      skyGradient(interpolate {
       linear()
       heatmapDensity()
       stop {
@@ -400,42 +400,51 @@ class SkyLayerTest : BaseStyleTest() {
           literal(1.0)
         }
       }
-    }
-    val skyGradientCenterTestValue = listOf(0.0, 1.0)
-    val skyGradientRadiusTestValue = 1.0
-    val skyOpacityTestValue = 1.0
-    val skyTypeTestValue = SkyType.GRADIENT
-
-    val layer = skyLayer("id") {
-      filter(filterTestValue)
-      skyAtmosphereColor(skyAtmosphereColorTestValue)
-      skyAtmosphereHaloColor(skyAtmosphereHaloColorTestValue)
-      skyAtmosphereSun(skyAtmosphereSunTestValue)
-      skyAtmosphereSunIntensity(skyAtmosphereSunIntensityTestValue)
-      skyGradient(skyGradientTestValue)
-      skyGradientCenter(skyGradientCenterTestValue)
-      skyGradientRadius(skyGradientRadiusTestValue)
-      skyOpacity(skyOpacityTestValue)
-      skyType(skyTypeTestValue)
+    })
+      skyGradientCenter(listOf(0.0, 1.0))
+      skyGradientRadius(1.0)
+      skyOpacity(1.0)
+      skyType(SkyType.GRADIENT)
     }
 
     setupLayer(layer)
 
-    val cachedLayer = getLayer("id") as SkyLayer
+    val layer2 = getLayer("id") as SkyLayer
 
-    removeLayer(layer)
-    setupLayer(cachedLayer)
+    removeLayer(layer2)
+    setupLayer(layer2)
 
-    assertEquals(filterTestValue.toString(), cachedLayer.filter.toString())
-    assertEquals(skyAtmosphereColorTestValue, cachedLayer.skyAtmosphereColor)
-    assertEquals(skyAtmosphereHaloColorTestValue, cachedLayer.skyAtmosphereHaloColor)
-    assertEquals(skyAtmosphereSunTestValue, cachedLayer.skyAtmosphereSun)
-    assertEquals(skyAtmosphereSunIntensityTestValue, cachedLayer.skyAtmosphereSunIntensity)
-    assertEquals(skyGradientTestValue, cachedLayer.skyGradient)
-    assertEquals(skyGradientCenterTestValue, cachedLayer.skyGradientCenter)
-    assertEquals(skyGradientRadiusTestValue, cachedLayer.skyGradientRadius)
-    assertEquals(skyOpacityTestValue, cachedLayer.skyOpacity)
-    assertEquals(skyTypeTestValue, cachedLayer.skyType)
+    assertEquals(expression.toString(), layer2.filter.toString())
+    assertEquals("rgba(0, 0, 0, 1)", layer.skyAtmosphereColor)
+    assertEquals("rgba(0, 0, 0, 1)", layer.skyAtmosphereHaloColor)
+    assertEquals(listOf(0.0, 1.0), layer.skyAtmosphereSun)
+    assertEquals(1.0, layer.skyAtmosphereSunIntensity)
+    assertEquals(interpolate {
+      linear()
+      heatmapDensity()
+      stop {
+        literal(0.0)
+        rgba {
+          literal(0.0)
+          literal(0.0)
+          literal(0.0)
+          literal(0.0)
+        }
+      }
+      stop {
+        literal(1.0)
+        rgba {
+          literal(0.0)
+          literal(255.0)
+          literal(0.0)
+          literal(1.0)
+        }
+      }
+    }, layer.skyGradient)
+    assertEquals(listOf(0.0, 1.0), layer.skyGradientCenter)
+    assertEquals(1.0, layer.skyGradientRadius)
+    assertEquals(1.0, layer.skyOpacity)
+    assertEquals(SkyType.GRADIENT, layer.skyType)
   }
 }
 

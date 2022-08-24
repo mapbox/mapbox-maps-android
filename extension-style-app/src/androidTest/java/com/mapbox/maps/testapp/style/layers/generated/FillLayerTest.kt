@@ -502,57 +502,46 @@ class FillLayerTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun getLayerTest() {
-    val filterTestValue = eq {
+    val expression = eq {
       get {
         literal("undefined")
       }
       literal(1.0)
     }
-    val minZoomTestValue = 10.0
-    val maxZoomTestValue = 20.0
-    val fillSortKeyTestValue = 1.0
-    val fillAntialiasTestValue = true
-    val fillColorTestValue = "rgba(0, 0, 0, 1)"
-    val fillOpacityTestValue = 1.0
-    val fillOutlineColorTestValue = "rgba(0, 0, 0, 1)"
-    val fillPatternTestValue = "abc"
-    val fillTranslateTestValue = listOf(0.0, 1.0)
-    val fillTranslateAnchorTestValue = FillTranslateAnchor.MAP
-
     val layer = fillLayer("id", "source") {
       sourceLayer("test")
-      minZoom(minZoomTestValue)
-      maxZoom(maxZoomTestValue)
-      filter(filterTestValue)
-      fillSortKey(fillSortKeyTestValue)
-      fillAntialias(fillAntialiasTestValue)
-      fillColor(fillColorTestValue)
-      fillOpacity(fillOpacityTestValue)
-      fillOutlineColor(fillOutlineColorTestValue)
-      fillPattern(fillPatternTestValue)
-      fillTranslate(fillTranslateTestValue)
-      fillTranslateAnchor(fillTranslateAnchorTestValue)
+      minZoom(10.0)
+      maxZoom(10.0)
+      filter(expression)
+      fillSortKey(1.0)
+      fillAntialias(true)
+      fillColor("rgba(0, 0, 0, 1)")
+      fillOpacity(1.0)
+      fillOutlineColor("rgba(0, 0, 0, 1)")
+      fillPattern("abc")
+      fillTranslate(listOf(0.0, 1.0))
+      fillTranslateAnchor(FillTranslateAnchor.MAP)
     }
 
     setupLayer(layer)
 
-    val cachedLayer = getLayer("id") as FillLayer
+    val layer2 = getLayer("id") as FillLayer
 
-    removeLayer(layer)
-    setupLayer(cachedLayer)
+    removeLayer(layer2)
+    setupLayer(layer2)
 
-    assertEquals("test", cachedLayer.sourceLayer)
-    assertEquals(minZoomTestValue, cachedLayer.minZoom)
-    assertEquals(maxZoomTestValue, cachedLayer.maxZoom)
-    assertEquals(filterTestValue.toString(), cachedLayer.filter.toString())
-    assertEquals(fillSortKeyTestValue, cachedLayer.fillSortKey)
-    assertEquals(fillAntialiasTestValue, cachedLayer.fillAntialias)
-    assertEquals(fillColorTestValue, cachedLayer.fillColor)
-    assertEquals(fillOpacityTestValue, cachedLayer.fillOpacity)
-    assertEquals(fillOutlineColorTestValue, cachedLayer.fillOutlineColor)
-    assertEquals(fillPatternTestValue, cachedLayer.fillPattern)
-    assertEquals(fillTranslateTestValue, cachedLayer.fillTranslate)
-    assertEquals(fillTranslateAnchorTestValue, cachedLayer.fillTranslateAnchor)
+    assertEquals("test", layer2.sourceLayer)
+    assertEquals(10.0, layer2.minZoom)
+    assertEquals(10.0, layer2.maxZoom)
+    assertEquals(expression.toString(), layer2.filter.toString())
+    assertEquals(1.0, layer.fillSortKey)
+    assertEquals(true, layer.fillAntialias)
+    assertEquals("rgba(0, 0, 0, 1)", layer.fillColor)
+    assertEquals(1.0, layer.fillOpacity)
+    assertEquals("rgba(0, 0, 0, 1)", layer.fillOutlineColor)
+    assertEquals("abc", layer.fillPattern)
+    assertEquals(listOf(0.0, 1.0), layer.fillTranslate)
+    assertEquals(FillTranslateAnchor.MAP, layer.fillTranslateAnchor)
   }
 }
 

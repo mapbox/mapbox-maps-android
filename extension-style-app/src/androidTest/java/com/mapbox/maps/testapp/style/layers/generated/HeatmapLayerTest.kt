@@ -331,15 +331,18 @@ class HeatmapLayerTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun getLayerTest() {
-    val filterTestValue = eq {
+    val expression = eq {
       get {
         literal("undefined")
       }
       literal(1.0)
     }
-    val minZoomTestValue = 10.0
-    val maxZoomTestValue = 20.0
-    val heatmapColorTestValue = interpolate {
+    val layer = heatmapLayer("id", "source") {
+      sourceLayer("test")
+      minZoom(10.0)
+      maxZoom(10.0)
+      filter(expression)
+      heatmapColor(interpolate {
       linear()
       heatmapDensity()
       stop {
@@ -360,40 +363,50 @@ class HeatmapLayerTest : BaseStyleTest() {
           literal(1.0)
         }
       }
-    }
-    val heatmapIntensityTestValue = 1.0
-    val heatmapOpacityTestValue = 1.0
-    val heatmapRadiusTestValue = 1.0
-    val heatmapWeightTestValue = 1.0
-
-    val layer = heatmapLayer("id", "source") {
-      sourceLayer("test")
-      minZoom(minZoomTestValue)
-      maxZoom(maxZoomTestValue)
-      filter(filterTestValue)
-      heatmapColor(heatmapColorTestValue)
-      heatmapIntensity(heatmapIntensityTestValue)
-      heatmapOpacity(heatmapOpacityTestValue)
-      heatmapRadius(heatmapRadiusTestValue)
-      heatmapWeight(heatmapWeightTestValue)
+    })
+      heatmapIntensity(1.0)
+      heatmapOpacity(1.0)
+      heatmapRadius(1.0)
+      heatmapWeight(1.0)
     }
 
     setupLayer(layer)
 
-    val cachedLayer = getLayer("id") as HeatmapLayer
+    val layer2 = getLayer("id") as HeatmapLayer
 
-    removeLayer(layer)
-    setupLayer(cachedLayer)
+    removeLayer(layer2)
+    setupLayer(layer2)
 
-    assertEquals("test", cachedLayer.sourceLayer)
-    assertEquals(minZoomTestValue, cachedLayer.minZoom)
-    assertEquals(maxZoomTestValue, cachedLayer.maxZoom)
-    assertEquals(filterTestValue.toString(), cachedLayer.filter.toString())
-    assertEquals(heatmapColorTestValue, cachedLayer.heatmapColor)
-    assertEquals(heatmapIntensityTestValue, cachedLayer.heatmapIntensity)
-    assertEquals(heatmapOpacityTestValue, cachedLayer.heatmapOpacity)
-    assertEquals(heatmapRadiusTestValue, cachedLayer.heatmapRadius)
-    assertEquals(heatmapWeightTestValue, cachedLayer.heatmapWeight)
+    assertEquals("test", layer2.sourceLayer)
+    assertEquals(10.0, layer2.minZoom)
+    assertEquals(10.0, layer2.maxZoom)
+    assertEquals(expression.toString(), layer2.filter.toString())
+    assertEquals(interpolate {
+      linear()
+      heatmapDensity()
+      stop {
+        literal(0.0)
+        rgba {
+          literal(0.0)
+          literal(0.0)
+          literal(0.0)
+          literal(0.0)
+        }
+      }
+      stop {
+        literal(1.0)
+        rgba {
+          literal(0.0)
+          literal(255.0)
+          literal(0.0)
+          literal(1.0)
+        }
+      }
+    }, layer.heatmapColor)
+    assertEquals(1.0, layer.heatmapIntensity)
+    assertEquals(1.0, layer.heatmapOpacity)
+    assertEquals(1.0, layer.heatmapRadius)
+    assertEquals(1.0, layer.heatmapWeight)
   }
 }
 

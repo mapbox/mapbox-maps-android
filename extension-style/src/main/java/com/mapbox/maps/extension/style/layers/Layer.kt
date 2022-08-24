@@ -102,6 +102,11 @@ abstract class Layer : StyleContract.StyleLayerExtension {
    */
   fun bindTo(delegate: StyleInterface) {
     bindTo(delegate, null)
+    (this.getCachedLayerProperties().contents as? Value?)?.let { value ->
+      (value.contents as HashMap<String, Value>).forEach {
+        delegate.addStyleLayer(it.value, null)
+      }
+    }
   }
 
   /**
@@ -122,6 +127,12 @@ abstract class Layer : StyleContract.StyleLayerExtension {
   }
 
   // Layer Properties
+
+  internal fun setCachedLayerProperties(properties: HashMap<String, Value>) {
+    properties.forEach {
+      layerProperties[it.key] = PropertyValue(it.key, it.value)
+    }
+  }
 
   internal fun getCachedLayerProperties(): Value {
     val properties = HashMap<String, Value>()

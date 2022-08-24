@@ -408,41 +408,34 @@ class HillshadeLayerTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun getLayerTest() {
-    val hillshadeAccentColorTestValue = "rgba(0, 0, 0, 1)"
-    val hillshadeExaggerationTestValue = 1.0
-    val hillshadeHighlightColorTestValue = "rgba(0, 0, 0, 1)"
-    val hillshadeIlluminationAnchorTestValue = HillshadeIlluminationAnchor.MAP
-    val hillshadeIlluminationDirectionTestValue = 1.0
-    val hillshadeShadowColorTestValue = "rgba(0, 0, 0, 1)"
-
     val layer = hillshadeLayer("id", "source") {
       sourceLayer("test")
-      minZoom(minZoomTestValue)
-      maxZoom(maxZoomTestValue)
-      hillshadeAccentColor(hillshadeAccentColorTestValue)
-      hillshadeExaggeration(hillshadeExaggerationTestValue)
-      hillshadeHighlightColor(hillshadeHighlightColorTestValue)
-      hillshadeIlluminationAnchor(hillshadeIlluminationAnchorTestValue)
-      hillshadeIlluminationDirection(hillshadeIlluminationDirectionTestValue)
-      hillshadeShadowColor(hillshadeShadowColorTestValue)
+      minZoom(10.0)
+      maxZoom(10.0)
+      hillshadeAccentColor("rgba(0, 0, 0, 1)")
+      hillshadeExaggeration(1.0)
+      hillshadeHighlightColor("rgba(0, 0, 0, 1)")
+      hillshadeIlluminationAnchor(HillshadeIlluminationAnchor.MAP)
+      hillshadeIlluminationDirection(1.0)
+      hillshadeShadowColor("rgba(0, 0, 0, 1)")
     }
 
     setupLayer(layer)
 
-    val cachedLayer = getLayer("id") as HillshadeLayer
+    val layer2 = getLayer("id") as HillshadeLayer
 
-    removeLayer(layer)
-    setupLayer(cachedLayer)
+    removeLayer(layer2)
+    setupLayer(layer2)
 
-    assertEquals("test", cachedLayer.sourceLayer)
-    assertEquals(minZoomTestValue, cachedLayer.minZoom)
-    assertEquals(maxZoomTestValue, cachedLayer.maxZoom)
-    assertEquals(hillshadeAccentColorTestValue, cachedLayer.hillshadeAccentColor)
-    assertEquals(hillshadeExaggerationTestValue, cachedLayer.hillshadeExaggeration)
-    assertEquals(hillshadeHighlightColorTestValue, cachedLayer.hillshadeHighlightColor)
-    assertEquals(hillshadeIlluminationAnchorTestValue, cachedLayer.hillshadeIlluminationAnchor)
-    assertEquals(hillshadeIlluminationDirectionTestValue, cachedLayer.hillshadeIlluminationDirection)
-    assertEquals(hillshadeShadowColorTestValue, cachedLayer.hillshadeShadowColor)
+    assertEquals("test", layer2.sourceLayer)
+    assertEquals(10.0, layer2.minZoom)
+    assertEquals(10.0, layer2.maxZoom)
+    assertEquals("rgba(0, 0, 0, 1)", layer.hillshadeAccentColor)
+    assertEquals(1.0, layer.hillshadeExaggeration)
+    assertEquals("rgba(0, 0, 0, 1)", layer.hillshadeHighlightColor)
+    assertEquals(HillshadeIlluminationAnchor.MAP, layer.hillshadeIlluminationAnchor)
+    assertEquals(1.0, layer.hillshadeIlluminationDirection)
+    assertEquals("rgba(0, 0, 0, 1)", layer.hillshadeShadowColor)
   }
 }
 

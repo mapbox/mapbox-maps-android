@@ -2133,36 +2133,39 @@ class SymbolLayerTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun getLayerTest() {
-    val filterTestValue = eq {
+    val expression = eq {
       get {
         literal("undefined")
       }
       literal(1.0)
     }
-    val minZoomTestValue = 10.0
-    val maxZoomTestValue = 20.0
-    val iconAllowOverlapTestValue = true
-    val iconAnchorTestValue = IconAnchor.CENTER
-    val iconIgnorePlacementTestValue = true
-    val iconImageTestValue = "abc"
-    val iconKeepUprightTestValue = true
-    val iconOffsetTestValue = listOf(0.0, 1.0)
-    val iconOptionalTestValue = true
-    val iconPaddingTestValue = 1.0
-    val iconPitchAlignmentTestValue = IconPitchAlignment.MAP
-    val iconRotateTestValue = 1.0
-    val iconRotationAlignmentTestValue = IconRotationAlignment.MAP
-    val iconSizeTestValue = 1.0
-    val iconTextFitTestValue = IconTextFit.NONE
-    val iconTextFitPaddingTestValue = listOf(0.0, 1.0, 2.0, 3.0)
-    val symbolAvoidEdgesTestValue = true
-    val symbolPlacementTestValue = SymbolPlacement.POINT
-    val symbolSortKeyTestValue = 1.0
-    val symbolSpacingTestValue = 1.0
-    val symbolZOrderTestValue = SymbolZOrder.AUTO
-    val textAllowOverlapTestValue = true
-    val textAnchorTestValue = TextAnchor.CENTER
-    val textFieldTestValue = formatted {
+    val layer = symbolLayer("id", "source") {
+      sourceLayer("test")
+      minZoom(10.0)
+      maxZoom(10.0)
+      filter(expression)
+      iconAllowOverlap(true)
+      iconAnchor(IconAnchor.CENTER)
+      iconIgnorePlacement(true)
+      iconImage("abc")
+      iconKeepUpright(true)
+      iconOffset(listOf(0.0, 1.0))
+      iconOptional(true)
+      iconPadding(1.0)
+      iconPitchAlignment(IconPitchAlignment.MAP)
+      iconRotate(1.0)
+      iconRotationAlignment(IconRotationAlignment.MAP)
+      iconSize(1.0)
+      iconTextFit(IconTextFit.NONE)
+      iconTextFitPadding(listOf(0.0, 1.0, 2.0, 3.0))
+      symbolAvoidEdges(true)
+      symbolPlacement(SymbolPlacement.POINT)
+      symbolSortKey(1.0)
+      symbolSpacing(1.0)
+      symbolZOrder(SymbolZOrder.AUTO)
+      textAllowOverlap(true)
+      textAnchor(TextAnchor.CENTER)
+      textField(formatted {
       formattedSection("cyan") {
         fontScale = 0.9
         fontStack = listOf(
@@ -2179,169 +2182,125 @@ class SymbolLayerTest : BaseStyleTest() {
         )
         textColor = "rgba(0, 0, 0, 1)"
       }
-    }
-    val textFontTestValue = listOf("a", "b", "c")
-    val textIgnorePlacementTestValue = true
-    val textJustifyTestValue = TextJustify.AUTO
-    val textKeepUprightTestValue = true
-    val textLetterSpacingTestValue = 1.0
-    val textLineHeightTestValue = 1.0
-    val textMaxAngleTestValue = 1.0
-    val textMaxWidthTestValue = 1.0
-    val textOffsetTestValue = listOf(0.0, 1.0)
-    val textOptionalTestValue = true
-    val textPaddingTestValue = 1.0
-    val textPitchAlignmentTestValue = TextPitchAlignment.MAP
-    val textRadialOffsetTestValue = 1.0
-    val textRotateTestValue = 1.0
-    val textRotationAlignmentTestValue = TextRotationAlignment.MAP
-    val textSizeTestValue = 1.0
-    val textTransformTestValue = TextTransform.NONE
-    val textVariableAnchorTestValue = listOf("center", "left")
-    val textWritingModeTestValue = listOf("horizontal", "vertical")
-    val iconColorTestValue = "rgba(0, 0, 0, 1)"
-    val iconHaloBlurTestValue = 1.0
-    val iconHaloColorTestValue = "rgba(0, 0, 0, 1)"
-    val iconHaloWidthTestValue = 1.0
-    val iconOpacityTestValue = 1.0
-    val iconTranslateTestValue = listOf(0.0, 1.0)
-    val iconTranslateAnchorTestValue = IconTranslateAnchor.MAP
-    val textColorTestValue = "rgba(0, 0, 0, 1)"
-    val textHaloBlurTestValue = 1.0
-    val textHaloColorTestValue = "rgba(0, 0, 0, 1)"
-    val textHaloWidthTestValue = 1.0
-    val textOpacityTestValue = 1.0
-    val textTranslateTestValue = listOf(0.0, 1.0)
-    val textTranslateAnchorTestValue = TextTranslateAnchor.MAP
-
-    val layer = symbolLayer("id", "source") {
-      sourceLayer("test")
-      minZoom(minZoomTestValue)
-      maxZoom(maxZoomTestValue)
-      filter(filterTestValue)
-      iconAllowOverlap(iconAllowOverlapTestValue)
-      iconAnchor(iconAnchorTestValue)
-      iconIgnorePlacement(iconIgnorePlacementTestValue)
-      iconImage(iconImageTestValue)
-      iconKeepUpright(iconKeepUprightTestValue)
-      iconOffset(iconOffsetTestValue)
-      iconOptional(iconOptionalTestValue)
-      iconPadding(iconPaddingTestValue)
-      iconPitchAlignment(iconPitchAlignmentTestValue)
-      iconRotate(iconRotateTestValue)
-      iconRotationAlignment(iconRotationAlignmentTestValue)
-      iconSize(iconSizeTestValue)
-      iconTextFit(iconTextFitTestValue)
-      iconTextFitPadding(iconTextFitPaddingTestValue)
-      symbolAvoidEdges(symbolAvoidEdgesTestValue)
-      symbolPlacement(symbolPlacementTestValue)
-      symbolSortKey(symbolSortKeyTestValue)
-      symbolSpacing(symbolSpacingTestValue)
-      symbolZOrder(symbolZOrderTestValue)
-      textAllowOverlap(textAllowOverlapTestValue)
-      textAnchor(textAnchorTestValue)
-      textField(textFieldTestValue)
-      textFont(textFontTestValue)
-      textIgnorePlacement(textIgnorePlacementTestValue)
-      textJustify(textJustifyTestValue)
-      textKeepUpright(textKeepUprightTestValue)
-      textLetterSpacing(textLetterSpacingTestValue)
-      textLineHeight(textLineHeightTestValue)
-      textMaxAngle(textMaxAngleTestValue)
-      textMaxWidth(textMaxWidthTestValue)
-      textOffset(textOffsetTestValue)
-      textOptional(textOptionalTestValue)
-      textPadding(textPaddingTestValue)
-      textPitchAlignment(textPitchAlignmentTestValue)
-      textRadialOffset(textRadialOffsetTestValue)
-      textRotate(textRotateTestValue)
-      textRotationAlignment(textRotationAlignmentTestValue)
-      textSize(textSizeTestValue)
-      textTransform(textTransformTestValue)
-      textVariableAnchor(textVariableAnchorTestValue)
-      textWritingMode(textWritingModeTestValue)
-      iconColor(iconColorTestValue)
-      iconHaloBlur(iconHaloBlurTestValue)
-      iconHaloColor(iconHaloColorTestValue)
-      iconHaloWidth(iconHaloWidthTestValue)
-      iconOpacity(iconOpacityTestValue)
-      iconTranslate(iconTranslateTestValue)
-      iconTranslateAnchor(iconTranslateAnchorTestValue)
-      textColor(textColorTestValue)
-      textHaloBlur(textHaloBlurTestValue)
-      textHaloColor(textHaloColorTestValue)
-      textHaloWidth(textHaloWidthTestValue)
-      textOpacity(textOpacityTestValue)
-      textTranslate(textTranslateTestValue)
-      textTranslateAnchor(textTranslateAnchorTestValue)
+    })
+      textFont(listOf("a", "b", "c"))
+      textIgnorePlacement(true)
+      textJustify(TextJustify.AUTO)
+      textKeepUpright(true)
+      textLetterSpacing(1.0)
+      textLineHeight(1.0)
+      textMaxAngle(1.0)
+      textMaxWidth(1.0)
+      textOffset(listOf(0.0, 1.0))
+      textOptional(true)
+      textPadding(1.0)
+      textPitchAlignment(TextPitchAlignment.MAP)
+      textRadialOffset(1.0)
+      textRotate(1.0)
+      textRotationAlignment(TextRotationAlignment.MAP)
+      textSize(1.0)
+      textTransform(TextTransform.NONE)
+      textVariableAnchor(listOf("center", "left"))
+      textWritingMode(listOf("horizontal", "vertical"))
+      iconColor("rgba(0, 0, 0, 1)")
+      iconHaloBlur(1.0)
+      iconHaloColor("rgba(0, 0, 0, 1)")
+      iconHaloWidth(1.0)
+      iconOpacity(1.0)
+      iconTranslate(listOf(0.0, 1.0))
+      iconTranslateAnchor(IconTranslateAnchor.MAP)
+      textColor("rgba(0, 0, 0, 1)")
+      textHaloBlur(1.0)
+      textHaloColor("rgba(0, 0, 0, 1)")
+      textHaloWidth(1.0)
+      textOpacity(1.0)
+      textTranslate(listOf(0.0, 1.0))
+      textTranslateAnchor(TextTranslateAnchor.MAP)
     }
 
     setupLayer(layer)
 
-    val cachedLayer = getLayer("id") as SymbolLayer
+    val layer2 = getLayer("id") as SymbolLayer
 
-    removeLayer(layer)
-    setupLayer(cachedLayer)
+    removeLayer(layer2)
+    setupLayer(layer2)
 
-    assertEquals("test", cachedLayer.sourceLayer)
-    assertEquals(minZoomTestValue, cachedLayer.minZoom)
-    assertEquals(maxZoomTestValue, cachedLayer.maxZoom)
-    assertEquals(filterTestValue.toString(), cachedLayer.filter.toString())
-    assertEquals(iconAllowOverlapTestValue, cachedLayer.iconAllowOverlap)
-    assertEquals(iconAnchorTestValue, cachedLayer.iconAnchor)
-    assertEquals(iconIgnorePlacementTestValue, cachedLayer.iconIgnorePlacement)
-    assertEquals(iconImageTestValue, cachedLayer.iconImage)
-    assertEquals(iconKeepUprightTestValue, cachedLayer.iconKeepUpright)
-    assertEquals(iconOffsetTestValue, cachedLayer.iconOffset)
-    assertEquals(iconOptionalTestValue, cachedLayer.iconOptional)
-    assertEquals(iconPaddingTestValue, cachedLayer.iconPadding)
-    assertEquals(iconPitchAlignmentTestValue, cachedLayer.iconPitchAlignment)
-    assertEquals(iconRotateTestValue, cachedLayer.iconRotate)
-    assertEquals(iconRotationAlignmentTestValue, cachedLayer.iconRotationAlignment)
-    assertEquals(iconSizeTestValue, cachedLayer.iconSize)
-    assertEquals(iconTextFitTestValue, cachedLayer.iconTextFit)
-    assertEquals(iconTextFitPaddingTestValue, cachedLayer.iconTextFitPadding)
-    assertEquals(symbolAvoidEdgesTestValue, cachedLayer.symbolAvoidEdges)
-    assertEquals(symbolPlacementTestValue, cachedLayer.symbolPlacement)
-    assertEquals(symbolSortKeyTestValue, cachedLayer.symbolSortKey)
-    assertEquals(symbolSpacingTestValue, cachedLayer.symbolSpacing)
-    assertEquals(symbolZOrderTestValue, cachedLayer.symbolZOrder)
-    assertEquals(textAllowOverlapTestValue, cachedLayer.textAllowOverlap)
-    assertEquals(textAnchorTestValue, cachedLayer.textAnchor)
-    assertEquals(textFieldTestValue, cachedLayer.textField)
-    assertEquals(textFontTestValue, cachedLayer.textFont)
-    assertEquals(textIgnorePlacementTestValue, cachedLayer.textIgnorePlacement)
-    assertEquals(textJustifyTestValue, cachedLayer.textJustify)
-    assertEquals(textKeepUprightTestValue, cachedLayer.textKeepUpright)
-    assertEquals(textLetterSpacingTestValue, cachedLayer.textLetterSpacing)
-    assertEquals(textLineHeightTestValue, cachedLayer.textLineHeight)
-    assertEquals(textMaxAngleTestValue, cachedLayer.textMaxAngle)
-    assertEquals(textMaxWidthTestValue, cachedLayer.textMaxWidth)
-    assertEquals(textOffsetTestValue, cachedLayer.textOffset)
-    assertEquals(textOptionalTestValue, cachedLayer.textOptional)
-    assertEquals(textPaddingTestValue, cachedLayer.textPadding)
-    assertEquals(textPitchAlignmentTestValue, cachedLayer.textPitchAlignment)
-    assertEquals(textRadialOffsetTestValue, cachedLayer.textRadialOffset)
-    assertEquals(textRotateTestValue, cachedLayer.textRotate)
-    assertEquals(textRotationAlignmentTestValue, cachedLayer.textRotationAlignment)
-    assertEquals(textSizeTestValue, cachedLayer.textSize)
-    assertEquals(textTransformTestValue, cachedLayer.textTransform)
-    assertEquals(textVariableAnchorTestValue, cachedLayer.textVariableAnchor)
-    assertEquals(textWritingModeTestValue, cachedLayer.textWritingMode)
-    assertEquals(iconColorTestValue, cachedLayer.iconColor)
-    assertEquals(iconHaloBlurTestValue, cachedLayer.iconHaloBlur)
-    assertEquals(iconHaloColorTestValue, cachedLayer.iconHaloColor)
-    assertEquals(iconHaloWidthTestValue, cachedLayer.iconHaloWidth)
-    assertEquals(iconOpacityTestValue, cachedLayer.iconOpacity)
-    assertEquals(iconTranslateTestValue, cachedLayer.iconTranslate)
-    assertEquals(iconTranslateAnchorTestValue, cachedLayer.iconTranslateAnchor)
-    assertEquals(textColorTestValue, cachedLayer.textColor)
-    assertEquals(textHaloBlurTestValue, cachedLayer.textHaloBlur)
-    assertEquals(textHaloColorTestValue, cachedLayer.textHaloColor)
-    assertEquals(textHaloWidthTestValue, cachedLayer.textHaloWidth)
-    assertEquals(textOpacityTestValue, cachedLayer.textOpacity)
-    assertEquals(textTranslateTestValue, cachedLayer.textTranslate)
-    assertEquals(textTranslateAnchorTestValue, cachedLayer.textTranslateAnchor)
+    assertEquals("test", layer2.sourceLayer)
+    assertEquals(10.0, layer2.minZoom)
+    assertEquals(10.0, layer2.maxZoom)
+    assertEquals(expression.toString(), layer2.filter.toString())
+    assertEquals(true, layer.iconAllowOverlap)
+    assertEquals(IconAnchor.CENTER, layer.iconAnchor)
+    assertEquals(true, layer.iconIgnorePlacement)
+    assertEquals("abc", layer.iconImage)
+    assertEquals(true, layer.iconKeepUpright)
+    assertEquals(listOf(0.0, 1.0), layer.iconOffset)
+    assertEquals(true, layer.iconOptional)
+    assertEquals(1.0, layer.iconPadding)
+    assertEquals(IconPitchAlignment.MAP, layer.iconPitchAlignment)
+    assertEquals(1.0, layer.iconRotate)
+    assertEquals(IconRotationAlignment.MAP, layer.iconRotationAlignment)
+    assertEquals(1.0, layer.iconSize)
+    assertEquals(IconTextFit.NONE, layer.iconTextFit)
+    assertEquals(listOf(0.0, 1.0, 2.0, 3.0), layer.iconTextFitPadding)
+    assertEquals(true, layer.symbolAvoidEdges)
+    assertEquals(SymbolPlacement.POINT, layer.symbolPlacement)
+    assertEquals(1.0, layer.symbolSortKey)
+    assertEquals(1.0, layer.symbolSpacing)
+    assertEquals(SymbolZOrder.AUTO, layer.symbolZOrder)
+    assertEquals(true, layer.textAllowOverlap)
+    assertEquals(TextAnchor.CENTER, layer.textAnchor)
+    assertEquals(formatted {
+      formattedSection("cyan") {
+        fontScale = 0.9
+        fontStack = listOf(
+          "Open Sans Regular",
+          "Arial Unicode MS Regular"
+        )
+        textColorAsInt = Color.CYAN
+      }
+      formattedSection("black") {
+        fontScale = 2.0
+        fontStack = listOf(
+          "Open Sans Regular",
+          "Arial Unicode MS Regular"
+        )
+        textColor = "rgba(0, 0, 0, 1)"
+      }
+    }, layer.textField)
+    assertEquals(listOf("a", "b", "c"), layer.textFont)
+    assertEquals(true, layer.textIgnorePlacement)
+    assertEquals(TextJustify.AUTO, layer.textJustify)
+    assertEquals(true, layer.textKeepUpright)
+    assertEquals(1.0, layer.textLetterSpacing)
+    assertEquals(1.0, layer.textLineHeight)
+    assertEquals(1.0, layer.textMaxAngle)
+    assertEquals(1.0, layer.textMaxWidth)
+    assertEquals(listOf(0.0, 1.0), layer.textOffset)
+    assertEquals(true, layer.textOptional)
+    assertEquals(1.0, layer.textPadding)
+    assertEquals(TextPitchAlignment.MAP, layer.textPitchAlignment)
+    assertEquals(1.0, layer.textRadialOffset)
+    assertEquals(1.0, layer.textRotate)
+    assertEquals(TextRotationAlignment.MAP, layer.textRotationAlignment)
+    assertEquals(1.0, layer.textSize)
+    assertEquals(TextTransform.NONE, layer.textTransform)
+    assertEquals(listOf("center", "left"), layer.textVariableAnchor)
+    assertEquals(listOf("horizontal", "vertical"), layer.textWritingMode)
+    assertEquals("rgba(0, 0, 0, 1)", layer.iconColor)
+    assertEquals(1.0, layer.iconHaloBlur)
+    assertEquals("rgba(0, 0, 0, 1)", layer.iconHaloColor)
+    assertEquals(1.0, layer.iconHaloWidth)
+    assertEquals(1.0, layer.iconOpacity)
+    assertEquals(listOf(0.0, 1.0), layer.iconTranslate)
+    assertEquals(IconTranslateAnchor.MAP, layer.iconTranslateAnchor)
+    assertEquals("rgba(0, 0, 0, 1)", layer.textColor)
+    assertEquals(1.0, layer.textHaloBlur)
+    assertEquals("rgba(0, 0, 0, 1)", layer.textHaloColor)
+    assertEquals(1.0, layer.textHaloWidth)
+    assertEquals(1.0, layer.textOpacity)
+    assertEquals(listOf(0.0, 1.0), layer.textTranslate)
+    assertEquals(TextTranslateAnchor.MAP, layer.textTranslateAnchor)
   }
 }
 

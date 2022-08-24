@@ -710,69 +710,54 @@ class CircleLayerTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun getLayerTest() {
-    val filterTestValue = eq {
+    val expression = eq {
       get {
         literal("undefined")
       }
       literal(1.0)
     }
-    val minZoomTestValue = 10.0
-    val maxZoomTestValue = 20.0
-    val circleSortKeyTestValue = 1.0
-    val circleBlurTestValue = 1.0
-    val circleColorTestValue = "rgba(0, 0, 0, 1)"
-    val circleOpacityTestValue = 1.0
-    val circlePitchAlignmentTestValue = CirclePitchAlignment.MAP
-    val circlePitchScaleTestValue = CirclePitchScale.MAP
-    val circleRadiusTestValue = 1.0
-    val circleStrokeColorTestValue = "rgba(0, 0, 0, 1)"
-    val circleStrokeOpacityTestValue = 1.0
-    val circleStrokeWidthTestValue = 1.0
-    val circleTranslateTestValue = listOf(0.0, 1.0)
-    val circleTranslateAnchorTestValue = CircleTranslateAnchor.MAP
-
     val layer = circleLayer("id", "source") {
       sourceLayer("test")
-      minZoom(minZoomTestValue)
-      maxZoom(maxZoomTestValue)
-      filter(filterTestValue)
-      circleSortKey(circleSortKeyTestValue)
-      circleBlur(circleBlurTestValue)
-      circleColor(circleColorTestValue)
-      circleOpacity(circleOpacityTestValue)
-      circlePitchAlignment(circlePitchAlignmentTestValue)
-      circlePitchScale(circlePitchScaleTestValue)
-      circleRadius(circleRadiusTestValue)
-      circleStrokeColor(circleStrokeColorTestValue)
-      circleStrokeOpacity(circleStrokeOpacityTestValue)
-      circleStrokeWidth(circleStrokeWidthTestValue)
-      circleTranslate(circleTranslateTestValue)
-      circleTranslateAnchor(circleTranslateAnchorTestValue)
+      minZoom(10.0)
+      maxZoom(10.0)
+      filter(expression)
+      circleSortKey(1.0)
+      circleBlur(1.0)
+      circleColor("rgba(0, 0, 0, 1)")
+      circleOpacity(1.0)
+      circlePitchAlignment(CirclePitchAlignment.MAP)
+      circlePitchScale(CirclePitchScale.MAP)
+      circleRadius(1.0)
+      circleStrokeColor("rgba(0, 0, 0, 1)")
+      circleStrokeOpacity(1.0)
+      circleStrokeWidth(1.0)
+      circleTranslate(listOf(0.0, 1.0))
+      circleTranslateAnchor(CircleTranslateAnchor.MAP)
     }
 
     setupLayer(layer)
 
-    val cachedLayer = getLayer("id") as CircleLayer
+    val layer2 = getLayer("id") as CircleLayer
 
-    removeLayer(layer)
-    setupLayer(cachedLayer)
+    removeLayer(layer2)
+    setupLayer(layer2)
 
-    assertEquals("test", cachedLayer.sourceLayer)
-    assertEquals(minZoomTestValue, cachedLayer.minZoom)
-    assertEquals(maxZoomTestValue, cachedLayer.maxZoom)
-    assertEquals(filterTestValue.toString(), cachedLayer.filter.toString())
-    assertEquals(circleSortKeyTestValue, cachedLayer.circleSortKey)
-    assertEquals(circleBlurTestValue, cachedLayer.circleBlur)
-    assertEquals(circleColorTestValue, cachedLayer.circleColor)
-    assertEquals(circleOpacityTestValue, cachedLayer.circleOpacity)
-    assertEquals(circlePitchAlignmentTestValue, cachedLayer.circlePitchAlignment)
-    assertEquals(circlePitchScaleTestValue, cachedLayer.circlePitchScale)
-    assertEquals(circleRadiusTestValue, cachedLayer.circleRadius)
-    assertEquals(circleStrokeColorTestValue, cachedLayer.circleStrokeColor)
-    assertEquals(circleStrokeOpacityTestValue, cachedLayer.circleStrokeOpacity)
-    assertEquals(circleStrokeWidthTestValue, cachedLayer.circleStrokeWidth)
-    assertEquals(circleTranslateTestValue, cachedLayer.circleTranslate)
-    assertEquals(circleTranslateAnchorTestValue, cachedLayer.circleTranslateAnchor)
+    assertEquals("test", layer2.sourceLayer)
+    assertEquals(10.0, layer2.minZoom)
+    assertEquals(10.0, layer2.maxZoom)
+    assertEquals(expression.toString(), layer2.filter.toString())
+    assertEquals(1.0, layer.circleSortKey)
+    assertEquals(1.0, layer.circleBlur)
+    assertEquals("rgba(0, 0, 0, 1)", layer.circleColor)
+    assertEquals(1.0, layer.circleOpacity)
+    assertEquals(CirclePitchAlignment.MAP, layer.circlePitchAlignment)
+    assertEquals(CirclePitchScale.MAP, layer.circlePitchScale)
+    assertEquals(1.0, layer.circleRadius)
+    assertEquals("rgba(0, 0, 0, 1)", layer.circleStrokeColor)
+    assertEquals(1.0, layer.circleStrokeOpacity)
+    assertEquals(1.0, layer.circleStrokeWidth)
+    assertEquals(listOf(0.0, 1.0), layer.circleTranslate)
+    assertEquals(CircleTranslateAnchor.MAP, layer.circleTranslateAnchor)
   }
 }
 
