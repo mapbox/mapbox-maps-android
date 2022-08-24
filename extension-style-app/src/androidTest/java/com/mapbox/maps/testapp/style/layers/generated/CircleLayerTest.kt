@@ -706,6 +706,72 @@ class CircleLayerTest : BaseStyleTest() {
     assertNotNull("defaultCircleTranslateAnchor should not be null", CircleLayer.defaultCircleTranslateAnchor)
     assertNotNull("defaultCircleTranslateAnchorAsExpression should not be null", CircleLayer.defaultCircleTranslateAnchorAsExpression)
   }
+
+  @Test
+  @UiThreadTest
+  fun getLayerTest() {
+    val filterTestValue = eq {
+      get {
+        literal("undefined")
+      }
+      literal(1.0)
+    }
+    val circleSortKeyTestValue = 1.0
+    val circleBlurTestValue = 1.0
+    val circleColorTestValue = "rgba(0, 0, 0, 1)"
+    val circleOpacityTestValue = 1.0
+    val circlePitchAlignmentTestValue = CirclePitchAlignment.MAP
+    val circlePitchScaleTestValue = CirclePitchScale.MAP
+    val circleRadiusTestValue = 1.0
+    val circleStrokeColorTestValue = "rgba(0, 0, 0, 1)"
+    val circleStrokeOpacityTestValue = 1.0
+    val circleStrokeWidthTestValue = 1.0
+    val circleTranslateTestValue = listOf(0.0, 1.0)
+    val circleTranslateAnchorTestValue = CircleTranslateAnchor.MAP
+
+    val layer = circleLayer("id", "source") {
+      sourceLayer("test")
+      minZoom(10.0)
+      maxZoom(10.0)
+      filter(filterTestValue)
+      circleSortKey(circleSortKeyTestValue)
+      circleBlur(circleBlurTestValue)
+      circleColor(circleColorTestValue)
+      circleOpacity(circleOpacityTestValue)
+      circlePitchAlignment(circlePitchAlignmentTestValue)
+      circlePitchScale(circlePitchScaleTestValue)
+      circleRadius(circleRadiusTestValue)
+      circleStrokeColor(circleStrokeColorTestValue)
+      circleStrokeOpacity(circleStrokeOpacityTestValue)
+      circleStrokeWidth(circleStrokeWidthTestValue)
+      circleTranslate(circleTranslateTestValue)
+      circleTranslateAnchor(circleTranslateAnchorTestValue)
+    }
+
+    setupLayer(layer)
+
+    val layer2 = getLayer("id") as CircleLayer
+
+    removeLayer(layer2)
+    setupLayer(layer2)
+
+    assertEquals("test", layer2.sourceLayer)
+    assertEquals(10.0, layer2.minZoom)
+    assertEquals(10.0, layer2.maxZoom)
+    assertEquals(filterTestValue.toString(), layer2.filter.toString())
+    assertEquals(circleSortKeyTestValue, layer.circleSortKey)
+    assertEquals(circleBlurTestValue, layer.circleBlur)
+    assertEquals(circleColorTestValue, layer.circleColor)
+    assertEquals(circleOpacityTestValue, layer.circleOpacity)
+    assertEquals(circlePitchAlignmentTestValue, layer.circlePitchAlignment)
+    assertEquals(circlePitchScaleTestValue, layer.circlePitchScale)
+    assertEquals(circleRadiusTestValue, layer.circleRadius)
+    assertEquals(circleStrokeColorTestValue, layer.circleStrokeColor)
+    assertEquals(circleStrokeOpacityTestValue, layer.circleStrokeOpacity)
+    assertEquals(circleStrokeWidthTestValue, layer.circleStrokeWidth)
+    assertEquals(circleTranslateTestValue, layer.circleTranslate)
+    assertEquals(circleTranslateAnchorTestValue, layer.circleTranslateAnchor)
+  }
 }
 
 // End of generated file.

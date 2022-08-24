@@ -363,6 +363,78 @@ class SkyLayerTest : BaseStyleTest() {
     assertNotNull("defaultSkyType should not be null", SkyLayer.defaultSkyType)
     assertNotNull("defaultSkyTypeAsExpression should not be null", SkyLayer.defaultSkyTypeAsExpression)
   }
+
+  @Test
+  @UiThreadTest
+  fun getLayerTest() {
+    val filterTestValue = eq {
+      get {
+        literal("undefined")
+      }
+      literal(1.0)
+    }
+    val skyAtmosphereColorTestValue = "rgba(0, 0, 0, 1)"
+    val skyAtmosphereHaloColorTestValue = "rgba(0, 0, 0, 1)"
+    val skyAtmosphereSunTestValue = listOf(0.0, 1.0)
+    val skyAtmosphereSunIntensityTestValue = 1.0
+    val skyGradientTestValue = interpolate {
+      linear()
+      heatmapDensity()
+      stop {
+        literal(0.0)
+        rgba {
+          literal(0.0)
+          literal(0.0)
+          literal(0.0)
+          literal(0.0)
+        }
+      }
+      stop {
+        literal(1.0)
+        rgba {
+          literal(0.0)
+          literal(255.0)
+          literal(0.0)
+          literal(1.0)
+        }
+      }
+    }
+    val skyGradientCenterTestValue = listOf(0.0, 1.0)
+    val skyGradientRadiusTestValue = 1.0
+    val skyOpacityTestValue = 1.0
+    val skyTypeTestValue = SkyType.GRADIENT
+
+    val layer = skyLayer("id") {
+      filter(filterTestValue)
+      skyAtmosphereColor(skyAtmosphereColorTestValue)
+      skyAtmosphereHaloColor(skyAtmosphereHaloColorTestValue)
+      skyAtmosphereSun(skyAtmosphereSunTestValue)
+      skyAtmosphereSunIntensity(skyAtmosphereSunIntensityTestValue)
+      skyGradient(skyGradientTestValue)
+      skyGradientCenter(skyGradientCenterTestValue)
+      skyGradientRadius(skyGradientRadiusTestValue)
+      skyOpacity(skyOpacityTestValue)
+      skyType(skyTypeTestValue)
+    }
+
+    setupLayer(layer)
+
+    val layer2 = getLayer("id") as SkyLayer
+
+    removeLayer(layer2)
+    setupLayer(layer2)
+
+    assertEquals(filterTestValue.toString(), layer2.filter.toString())
+    assertEquals(skyAtmosphereColorTestValue, layer.skyAtmosphereColor)
+    assertEquals(skyAtmosphereHaloColorTestValue, layer.skyAtmosphereHaloColor)
+    assertEquals(skyAtmosphereSunTestValue, layer.skyAtmosphereSun)
+    assertEquals(skyAtmosphereSunIntensityTestValue, layer.skyAtmosphereSunIntensity)
+    assertEquals(skyGradientTestValue, layer.skyGradient)
+    assertEquals(skyGradientCenterTestValue, layer.skyGradientCenter)
+    assertEquals(skyGradientRadiusTestValue, layer.skyGradientRadius)
+    assertEquals(skyOpacityTestValue, layer.skyOpacity)
+    assertEquals(skyTypeTestValue, layer.skyType)
+  }
 }
 
 // End of generated file.

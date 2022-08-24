@@ -404,6 +404,46 @@ class HillshadeLayerTest : BaseStyleTest() {
     assertNotNull("defaultHillshadeShadowColorAsColorInt should not be null", HillshadeLayer.defaultHillshadeShadowColorAsColorInt)
     assertNotNull("defaultHillshadeShadowColorTransition should not be null", HillshadeLayer.defaultHillshadeShadowColorTransition)
   }
+
+  @Test
+  @UiThreadTest
+  fun getLayerTest() {
+    val hillshadeAccentColorTestValue = "rgba(0, 0, 0, 1)"
+    val hillshadeExaggerationTestValue = 1.0
+    val hillshadeHighlightColorTestValue = "rgba(0, 0, 0, 1)"
+    val hillshadeIlluminationAnchorTestValue = HillshadeIlluminationAnchor.MAP
+    val hillshadeIlluminationDirectionTestValue = 1.0
+    val hillshadeShadowColorTestValue = "rgba(0, 0, 0, 1)"
+
+    val layer = hillshadeLayer("id", "source") {
+      sourceLayer("test")
+      minZoom(10.0)
+      maxZoom(10.0)
+      hillshadeAccentColor(hillshadeAccentColorTestValue)
+      hillshadeExaggeration(hillshadeExaggerationTestValue)
+      hillshadeHighlightColor(hillshadeHighlightColorTestValue)
+      hillshadeIlluminationAnchor(hillshadeIlluminationAnchorTestValue)
+      hillshadeIlluminationDirection(hillshadeIlluminationDirectionTestValue)
+      hillshadeShadowColor(hillshadeShadowColorTestValue)
+    }
+
+    setupLayer(layer)
+
+    val layer2 = getLayer("id") as HillshadeLayer
+
+    removeLayer(layer2)
+    setupLayer(layer2)
+
+    assertEquals("test", layer2.sourceLayer)
+    assertEquals(10.0, layer2.minZoom)
+    assertEquals(10.0, layer2.maxZoom)
+    assertEquals(hillshadeAccentColorTestValue, layer.hillshadeAccentColor)
+    assertEquals(hillshadeExaggerationTestValue, layer.hillshadeExaggeration)
+    assertEquals(hillshadeHighlightColorTestValue, layer.hillshadeHighlightColor)
+    assertEquals(hillshadeIlluminationAnchorTestValue, layer.hillshadeIlluminationAnchor)
+    assertEquals(hillshadeIlluminationDirectionTestValue, layer.hillshadeIlluminationDirection)
+    assertEquals(hillshadeShadowColorTestValue, layer.hillshadeShadowColor)
+  }
 }
 
 // End of generated file.

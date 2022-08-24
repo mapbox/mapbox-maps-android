@@ -468,6 +468,52 @@ class RasterLayerTest : BaseStyleTest() {
     assertNotNull("defaultRasterSaturationAsExpression should not be null", RasterLayer.defaultRasterSaturationAsExpression)
     assertNotNull("defaultRasterSaturationTransition should not be null", RasterLayer.defaultRasterSaturationTransition)
   }
+
+  @Test
+  @UiThreadTest
+  fun getLayerTest() {
+    val rasterBrightnessMaxTestValue = 1.0
+    val rasterBrightnessMinTestValue = 1.0
+    val rasterContrastTestValue = 1.0
+    val rasterFadeDurationTestValue = 1.0
+    val rasterHueRotateTestValue = 1.0
+    val rasterOpacityTestValue = 1.0
+    val rasterResamplingTestValue = RasterResampling.LINEAR
+    val rasterSaturationTestValue = 1.0
+
+    val layer = rasterLayer("id", "source") {
+      sourceLayer("test")
+      minZoom(10.0)
+      maxZoom(10.0)
+      rasterBrightnessMax(rasterBrightnessMaxTestValue)
+      rasterBrightnessMin(rasterBrightnessMinTestValue)
+      rasterContrast(rasterContrastTestValue)
+      rasterFadeDuration(rasterFadeDurationTestValue)
+      rasterHueRotate(rasterHueRotateTestValue)
+      rasterOpacity(rasterOpacityTestValue)
+      rasterResampling(rasterResamplingTestValue)
+      rasterSaturation(rasterSaturationTestValue)
+    }
+
+    setupLayer(layer)
+
+    val layer2 = getLayer("id") as RasterLayer
+
+    removeLayer(layer2)
+    setupLayer(layer2)
+
+    assertEquals("test", layer2.sourceLayer)
+    assertEquals(10.0, layer2.minZoom)
+    assertEquals(10.0, layer2.maxZoom)
+    assertEquals(rasterBrightnessMaxTestValue, layer.rasterBrightnessMax)
+    assertEquals(rasterBrightnessMinTestValue, layer.rasterBrightnessMin)
+    assertEquals(rasterContrastTestValue, layer.rasterContrast)
+    assertEquals(rasterFadeDurationTestValue, layer.rasterFadeDuration)
+    assertEquals(rasterHueRotateTestValue, layer.rasterHueRotate)
+    assertEquals(rasterOpacityTestValue, layer.rasterOpacity)
+    assertEquals(rasterResamplingTestValue, layer.rasterResampling)
+    assertEquals(rasterSaturationTestValue, layer.rasterSaturation)
+  }
 }
 
 // End of generated file.

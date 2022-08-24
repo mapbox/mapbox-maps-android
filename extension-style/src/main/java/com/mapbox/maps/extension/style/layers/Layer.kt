@@ -28,6 +28,8 @@ abstract class Layer : StyleContract.StyleLayerExtension {
 
   internal var delegate: StyleManagerInterface? = null
 
+  internal var cachedLayerPropertiesValue: Value? = null
+
   /**
    * Properties of this layer.
    */
@@ -111,7 +113,9 @@ abstract class Layer : StyleContract.StyleLayerExtension {
   override fun bindTo(delegate: StyleInterface, position: LayerPosition?) {
     this.delegate = delegate
 
-    val expected = delegate.addStyleLayer(getCachedLayerProperties(), position)
+    val expected = cachedLayerPropertiesValue?.let {
+      delegate.addStyleLayer(it, position)
+    } ?: delegate.addStyleLayer(getCachedLayerProperties(), position)
     expected.error?.let {
       throw MapboxStyleException("Add layer failed: $it")
     }

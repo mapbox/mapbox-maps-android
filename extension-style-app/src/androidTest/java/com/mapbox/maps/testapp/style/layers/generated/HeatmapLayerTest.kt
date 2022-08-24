@@ -327,6 +327,72 @@ class HeatmapLayerTest : BaseStyleTest() {
     assertNotNull("defaultHeatmapWeight should not be null", HeatmapLayer.defaultHeatmapWeight)
     assertNotNull("defaultHeatmapWeightAsExpression should not be null", HeatmapLayer.defaultHeatmapWeightAsExpression)
   }
+
+  @Test
+  @UiThreadTest
+  fun getLayerTest() {
+    val filterTestValue = eq {
+      get {
+        literal("undefined")
+      }
+      literal(1.0)
+    }
+    val heatmapColorTestValue = interpolate {
+      linear()
+      heatmapDensity()
+      stop {
+        literal(0.0)
+        rgba {
+          literal(0.0)
+          literal(0.0)
+          literal(0.0)
+          literal(0.0)
+        }
+      }
+      stop {
+        literal(1.0)
+        rgba {
+          literal(0.0)
+          literal(255.0)
+          literal(0.0)
+          literal(1.0)
+        }
+      }
+    }
+    val heatmapIntensityTestValue = 1.0
+    val heatmapOpacityTestValue = 1.0
+    val heatmapRadiusTestValue = 1.0
+    val heatmapWeightTestValue = 1.0
+
+    val layer = heatmapLayer("id", "source") {
+      sourceLayer("test")
+      minZoom(10.0)
+      maxZoom(10.0)
+      filter(filterTestValue)
+      heatmapColor(heatmapColorTestValue)
+      heatmapIntensity(heatmapIntensityTestValue)
+      heatmapOpacity(heatmapOpacityTestValue)
+      heatmapRadius(heatmapRadiusTestValue)
+      heatmapWeight(heatmapWeightTestValue)
+    }
+
+    setupLayer(layer)
+
+    val layer2 = getLayer("id") as HeatmapLayer
+
+    removeLayer(layer2)
+    setupLayer(layer2)
+
+    assertEquals("test", layer2.sourceLayer)
+    assertEquals(10.0, layer2.minZoom)
+    assertEquals(10.0, layer2.maxZoom)
+    assertEquals(filterTestValue.toString(), layer2.filter.toString())
+    assertEquals(heatmapColorTestValue, layer.heatmapColor)
+    assertEquals(heatmapIntensityTestValue, layer.heatmapIntensity)
+    assertEquals(heatmapOpacityTestValue, layer.heatmapOpacity)
+    assertEquals(heatmapRadiusTestValue, layer.heatmapRadius)
+    assertEquals(heatmapWeightTestValue, layer.heatmapWeight)
+  }
 }
 
 // End of generated file.

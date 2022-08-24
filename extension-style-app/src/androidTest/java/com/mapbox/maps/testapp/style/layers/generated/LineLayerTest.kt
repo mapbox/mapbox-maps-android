@@ -869,6 +869,108 @@ class LineLayerTest : BaseStyleTest() {
     assertNotNull("defaultLineWidthAsExpression should not be null", LineLayer.defaultLineWidthAsExpression)
     assertNotNull("defaultLineWidthTransition should not be null", LineLayer.defaultLineWidthTransition)
   }
+
+  @Test
+  @UiThreadTest
+  fun getLayerTest() {
+    val filterTestValue = eq {
+      get {
+        literal("undefined")
+      }
+      literal(1.0)
+    }
+    val lineCapTestValue = LineCap.BUTT
+    val lineJoinTestValue = LineJoin.BEVEL
+    val lineMiterLimitTestValue = 1.0
+    val lineRoundLimitTestValue = 1.0
+    val lineSortKeyTestValue = 1.0
+    val lineBlurTestValue = 1.0
+    val lineColorTestValue = "rgba(0, 0, 0, 1)"
+    val lineDasharrayTestValue = listOf(1.0, 2.0)
+    val lineGapWidthTestValue = 1.0
+    val lineGradientTestValue = interpolate {
+      linear()
+      heatmapDensity()
+      stop {
+        literal(0.0)
+        rgba {
+          literal(0.0)
+          literal(0.0)
+          literal(0.0)
+          literal(0.0)
+        }
+      }
+      stop {
+        literal(1.0)
+        rgba {
+          literal(0.0)
+          literal(255.0)
+          literal(0.0)
+          literal(1.0)
+        }
+      }
+    }
+    val lineOffsetTestValue = 1.0
+    val lineOpacityTestValue = 1.0
+    val linePatternTestValue = "abc"
+    val lineTranslateTestValue = listOf(0.0, 1.0)
+    val lineTranslateAnchorTestValue = LineTranslateAnchor.MAP
+    val lineTrimOffsetTestValue = listOf(0.0, 1.0)
+    val lineWidthTestValue = 1.0
+
+    val layer = lineLayer("id", "source") {
+      sourceLayer("test")
+      minZoom(10.0)
+      maxZoom(10.0)
+      filter(filterTestValue)
+      lineCap(lineCapTestValue)
+      lineJoin(lineJoinTestValue)
+      lineMiterLimit(lineMiterLimitTestValue)
+      lineRoundLimit(lineRoundLimitTestValue)
+      lineSortKey(lineSortKeyTestValue)
+      lineBlur(lineBlurTestValue)
+      lineColor(lineColorTestValue)
+      lineDasharray(lineDasharrayTestValue)
+      lineGapWidth(lineGapWidthTestValue)
+      lineGradient(lineGradientTestValue)
+      lineOffset(lineOffsetTestValue)
+      lineOpacity(lineOpacityTestValue)
+      linePattern(linePatternTestValue)
+      lineTranslate(lineTranslateTestValue)
+      lineTranslateAnchor(lineTranslateAnchorTestValue)
+      lineTrimOffset(lineTrimOffsetTestValue)
+      lineWidth(lineWidthTestValue)
+    }
+
+    setupLayer(layer)
+
+    val layer2 = getLayer("id") as LineLayer
+
+    removeLayer(layer2)
+    setupLayer(layer2)
+
+    assertEquals("test", layer2.sourceLayer)
+    assertEquals(10.0, layer2.minZoom)
+    assertEquals(10.0, layer2.maxZoom)
+    assertEquals(filterTestValue.toString(), layer2.filter.toString())
+    assertEquals(lineCapTestValue, layer.lineCap)
+    assertEquals(lineJoinTestValue, layer.lineJoin)
+    assertEquals(lineMiterLimitTestValue, layer.lineMiterLimit)
+    assertEquals(lineRoundLimitTestValue, layer.lineRoundLimit)
+    assertEquals(lineSortKeyTestValue, layer.lineSortKey)
+    assertEquals(lineBlurTestValue, layer.lineBlur)
+    assertEquals(lineColorTestValue, layer.lineColor)
+    assertEquals(lineDasharrayTestValue, layer.lineDasharray)
+    assertEquals(lineGapWidthTestValue, layer.lineGapWidth)
+    assertEquals(lineGradientTestValue, layer.lineGradient)
+    assertEquals(lineOffsetTestValue, layer.lineOffset)
+    assertEquals(lineOpacityTestValue, layer.lineOpacity)
+    assertEquals(linePatternTestValue, layer.linePattern)
+    assertEquals(lineTranslateTestValue, layer.lineTranslate)
+    assertEquals(lineTranslateAnchorTestValue, layer.lineTranslateAnchor)
+    assertEquals(lineTrimOffsetTestValue, layer.lineTrimOffset)
+    assertEquals(lineWidthTestValue, layer.lineWidth)
+  }
 }
 
 // End of generated file.
