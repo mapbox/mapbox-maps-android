@@ -235,10 +235,14 @@ class BackgroundLayerTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun getLayerTest() {
+    val backgroundColorTestValue = "rgba(0, 0, 0, 1)"
+    val backgroundOpacityTestValue = 1.0
+    val backgroundPatternTestValue = "abc"
+
     val layer = backgroundLayer("id") {
-      backgroundColor("rgba(0, 0, 0, 1)")
-      backgroundOpacity(1.0)
-      backgroundPattern("abc")
+      backgroundColor(backgroundColorTestValue)
+      backgroundOpacity(backgroundOpacityTestValue)
+      backgroundPattern(backgroundPatternTestValue)
     }
 
     setupLayer(layer)
@@ -248,9 +252,9 @@ class BackgroundLayerTest : BaseStyleTest() {
     removeLayer(layer2)
     setupLayer(layer2)
 
-    assertEquals("rgba(0, 0, 0, 1)", layer.backgroundColor)
-    assertEquals(1.0, layer.backgroundOpacity)
-    assertEquals("abc", layer.backgroundPattern)
+    assertEquals(backgroundColorTestValue, layer.backgroundColor)
+    assertEquals(backgroundOpacityTestValue, layer.backgroundOpacity)
+    assertEquals(backgroundPatternTestValue, layer.backgroundPattern)
   }
 }
 

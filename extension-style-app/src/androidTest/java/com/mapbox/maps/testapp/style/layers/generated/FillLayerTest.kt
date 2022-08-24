@@ -502,25 +502,34 @@ class FillLayerTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun getLayerTest() {
-    val expression = eq {
+    val filterTestValue = eq {
       get {
         literal("undefined")
       }
       literal(1.0)
     }
+    val fillSortKeyTestValue = 1.0
+    val fillAntialiasTestValue = true
+    val fillColorTestValue = "rgba(0, 0, 0, 1)"
+    val fillOpacityTestValue = 1.0
+    val fillOutlineColorTestValue = "rgba(0, 0, 0, 1)"
+    val fillPatternTestValue = "abc"
+    val fillTranslateTestValue = listOf(0.0, 1.0)
+    val fillTranslateAnchorTestValue = FillTranslateAnchor.MAP
+
     val layer = fillLayer("id", "source") {
       sourceLayer("test")
       minZoom(10.0)
       maxZoom(10.0)
-      filter(expression)
-      fillSortKey(1.0)
-      fillAntialias(true)
-      fillColor("rgba(0, 0, 0, 1)")
-      fillOpacity(1.0)
-      fillOutlineColor("rgba(0, 0, 0, 1)")
-      fillPattern("abc")
-      fillTranslate(listOf(0.0, 1.0))
-      fillTranslateAnchor(FillTranslateAnchor.MAP)
+      filter(filterTestValue)
+      fillSortKey(fillSortKeyTestValue)
+      fillAntialias(fillAntialiasTestValue)
+      fillColor(fillColorTestValue)
+      fillOpacity(fillOpacityTestValue)
+      fillOutlineColor(fillOutlineColorTestValue)
+      fillPattern(fillPatternTestValue)
+      fillTranslate(fillTranslateTestValue)
+      fillTranslateAnchor(fillTranslateAnchorTestValue)
     }
 
     setupLayer(layer)
@@ -533,15 +542,15 @@ class FillLayerTest : BaseStyleTest() {
     assertEquals("test", layer2.sourceLayer)
     assertEquals(10.0, layer2.minZoom)
     assertEquals(10.0, layer2.maxZoom)
-    assertEquals(expression.toString(), layer2.filter.toString())
-    assertEquals(1.0, layer.fillSortKey)
-    assertEquals(true, layer.fillAntialias)
-    assertEquals("rgba(0, 0, 0, 1)", layer.fillColor)
-    assertEquals(1.0, layer.fillOpacity)
-    assertEquals("rgba(0, 0, 0, 1)", layer.fillOutlineColor)
-    assertEquals("abc", layer.fillPattern)
-    assertEquals(listOf(0.0, 1.0), layer.fillTranslate)
-    assertEquals(FillTranslateAnchor.MAP, layer.fillTranslateAnchor)
+    assertEquals(filterTestValue.toString(), layer2.filter.toString())
+    assertEquals(fillSortKeyTestValue, layer.fillSortKey)
+    assertEquals(fillAntialiasTestValue, layer.fillAntialias)
+    assertEquals(fillColorTestValue, layer.fillColor)
+    assertEquals(fillOpacityTestValue, layer.fillOpacity)
+    assertEquals(fillOutlineColorTestValue, layer.fillOutlineColor)
+    assertEquals(fillPatternTestValue, layer.fillPattern)
+    assertEquals(fillTranslateTestValue, layer.fillTranslate)
+    assertEquals(fillTranslateAnchorTestValue, layer.fillTranslateAnchor)
   }
 }
 

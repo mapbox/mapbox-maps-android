@@ -805,22 +805,38 @@ class LocationIndicatorLayerTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun getLayerTest() {
+    val bearingImageTestValue = "abc"
+    val shadowImageTestValue = "abc"
+    val topImageTestValue = "abc"
+    val accuracyRadiusTestValue = 1.0
+    val accuracyRadiusBorderColorTestValue = "rgba(0, 0, 0, 1)"
+    val accuracyRadiusColorTestValue = "rgba(0, 0, 0, 1)"
+    val bearingTestValue = 1.0
+    val bearingImageSizeTestValue = 1.0
+    val emphasisCircleColorTestValue = "rgba(0, 0, 0, 1)"
+    val emphasisCircleRadiusTestValue = 1.0
+    val imagePitchDisplacementTestValue = 1.0
+    val locationTestValue = listOf(0.0, 1.0, 2.0)
+    val perspectiveCompensationTestValue = 1.0
+    val shadowImageSizeTestValue = 1.0
+    val topImageSizeTestValue = 1.0
+
     val layer = locationIndicatorLayer("id") {
-      bearingImage("abc")
-      shadowImage("abc")
-      topImage("abc")
-      accuracyRadius(1.0)
-      accuracyRadiusBorderColor("rgba(0, 0, 0, 1)")
-      accuracyRadiusColor("rgba(0, 0, 0, 1)")
-      bearing(1.0)
-      bearingImageSize(1.0)
-      emphasisCircleColor("rgba(0, 0, 0, 1)")
-      emphasisCircleRadius(1.0)
-      imagePitchDisplacement(1.0)
-      location(listOf(0.0, 1.0, 2.0))
-      perspectiveCompensation(1.0)
-      shadowImageSize(1.0)
-      topImageSize(1.0)
+      bearingImage(bearingImageTestValue)
+      shadowImage(shadowImageTestValue)
+      topImage(topImageTestValue)
+      accuracyRadius(accuracyRadiusTestValue)
+      accuracyRadiusBorderColor(accuracyRadiusBorderColorTestValue)
+      accuracyRadiusColor(accuracyRadiusColorTestValue)
+      bearing(bearingTestValue)
+      bearingImageSize(bearingImageSizeTestValue)
+      emphasisCircleColor(emphasisCircleColorTestValue)
+      emphasisCircleRadius(emphasisCircleRadiusTestValue)
+      imagePitchDisplacement(imagePitchDisplacementTestValue)
+      location(locationTestValue)
+      perspectiveCompensation(perspectiveCompensationTestValue)
+      shadowImageSize(shadowImageSizeTestValue)
+      topImageSize(topImageSizeTestValue)
     }
 
     setupLayer(layer)
@@ -830,21 +846,21 @@ class LocationIndicatorLayerTest : BaseStyleTest() {
     removeLayer(layer2)
     setupLayer(layer2)
 
-    assertEquals("abc", layer.bearingImage)
-    assertEquals("abc", layer.shadowImage)
-    assertEquals("abc", layer.topImage)
-    assertEquals(1.0, layer.accuracyRadius)
-    assertEquals("rgba(0, 0, 0, 1)", layer.accuracyRadiusBorderColor)
-    assertEquals("rgba(0, 0, 0, 1)", layer.accuracyRadiusColor)
-    assertEquals(1.0, layer.bearing)
-    assertEquals(1.0, layer.bearingImageSize)
-    assertEquals("rgba(0, 0, 0, 1)", layer.emphasisCircleColor)
-    assertEquals(1.0, layer.emphasisCircleRadius)
-    assertEquals(1.0, layer.imagePitchDisplacement)
-    assertEquals(listOf(0.0, 1.0, 2.0), layer.location)
-    assertEquals(1.0, layer.perspectiveCompensation)
-    assertEquals(1.0, layer.shadowImageSize)
-    assertEquals(1.0, layer.topImageSize)
+    assertEquals(bearingImageTestValue, layer.bearingImage)
+    assertEquals(shadowImageTestValue, layer.shadowImage)
+    assertEquals(topImageTestValue, layer.topImage)
+    assertEquals(accuracyRadiusTestValue, layer.accuracyRadius)
+    assertEquals(accuracyRadiusBorderColorTestValue, layer.accuracyRadiusBorderColor)
+    assertEquals(accuracyRadiusColorTestValue, layer.accuracyRadiusColor)
+    assertEquals(bearingTestValue, layer.bearing)
+    assertEquals(bearingImageSizeTestValue, layer.bearingImageSize)
+    assertEquals(emphasisCircleColorTestValue, layer.emphasisCircleColor)
+    assertEquals(emphasisCircleRadiusTestValue, layer.emphasisCircleRadius)
+    assertEquals(imagePitchDisplacementTestValue, layer.imagePitchDisplacement)
+    assertEquals(locationTestValue, layer.location)
+    assertEquals(perspectiveCompensationTestValue, layer.perspectiveCompensation)
+    assertEquals(shadowImageSizeTestValue, layer.shadowImageSize)
+    assertEquals(topImageSizeTestValue, layer.topImageSize)
   }
 }
 

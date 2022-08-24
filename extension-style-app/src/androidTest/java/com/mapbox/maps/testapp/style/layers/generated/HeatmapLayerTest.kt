@@ -331,18 +331,13 @@ class HeatmapLayerTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun getLayerTest() {
-    val expression = eq {
+    val filterTestValue = eq {
       get {
         literal("undefined")
       }
       literal(1.0)
     }
-    val layer = heatmapLayer("id", "source") {
-      sourceLayer("test")
-      minZoom(10.0)
-      maxZoom(10.0)
-      filter(expression)
-      heatmapColor(interpolate {
+    val heatmapColorTestValue = interpolate {
       linear()
       heatmapDensity()
       stop {
@@ -363,11 +358,22 @@ class HeatmapLayerTest : BaseStyleTest() {
           literal(1.0)
         }
       }
-    })
-      heatmapIntensity(1.0)
-      heatmapOpacity(1.0)
-      heatmapRadius(1.0)
-      heatmapWeight(1.0)
+    }
+    val heatmapIntensityTestValue = 1.0
+    val heatmapOpacityTestValue = 1.0
+    val heatmapRadiusTestValue = 1.0
+    val heatmapWeightTestValue = 1.0
+
+    val layer = heatmapLayer("id", "source") {
+      sourceLayer("test")
+      minZoom(10.0)
+      maxZoom(10.0)
+      filter(filterTestValue)
+      heatmapColor(heatmapColorTestValue)
+      heatmapIntensity(heatmapIntensityTestValue)
+      heatmapOpacity(heatmapOpacityTestValue)
+      heatmapRadius(heatmapRadiusTestValue)
+      heatmapWeight(heatmapWeightTestValue)
     }
 
     setupLayer(layer)
@@ -380,33 +386,12 @@ class HeatmapLayerTest : BaseStyleTest() {
     assertEquals("test", layer2.sourceLayer)
     assertEquals(10.0, layer2.minZoom)
     assertEquals(10.0, layer2.maxZoom)
-    assertEquals(expression.toString(), layer2.filter.toString())
-    assertEquals(interpolate {
-      linear()
-      heatmapDensity()
-      stop {
-        literal(0.0)
-        rgba {
-          literal(0.0)
-          literal(0.0)
-          literal(0.0)
-          literal(0.0)
-        }
-      }
-      stop {
-        literal(1.0)
-        rgba {
-          literal(0.0)
-          literal(255.0)
-          literal(0.0)
-          literal(1.0)
-        }
-      }
-    }, layer.heatmapColor)
-    assertEquals(1.0, layer.heatmapIntensity)
-    assertEquals(1.0, layer.heatmapOpacity)
-    assertEquals(1.0, layer.heatmapRadius)
-    assertEquals(1.0, layer.heatmapWeight)
+    assertEquals(filterTestValue.toString(), layer2.filter.toString())
+    assertEquals(heatmapColorTestValue, layer.heatmapColor)
+    assertEquals(heatmapIntensityTestValue, layer.heatmapIntensity)
+    assertEquals(heatmapOpacityTestValue, layer.heatmapOpacity)
+    assertEquals(heatmapRadiusTestValue, layer.heatmapRadius)
+    assertEquals(heatmapWeightTestValue, layer.heatmapWeight)
   }
 }
 

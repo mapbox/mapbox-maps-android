@@ -635,27 +635,38 @@ class FillExtrusionLayerTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun getLayerTest() {
-    val expression = eq {
+    val filterTestValue = eq {
       get {
         literal("undefined")
       }
       literal(1.0)
     }
+    val fillExtrusionAmbientOcclusionIntensityTestValue = 1.0
+    val fillExtrusionAmbientOcclusionRadiusTestValue = 1.0
+    val fillExtrusionBaseTestValue = 1.0
+    val fillExtrusionColorTestValue = "rgba(0, 0, 0, 1)"
+    val fillExtrusionHeightTestValue = 1.0
+    val fillExtrusionOpacityTestValue = 1.0
+    val fillExtrusionPatternTestValue = "abc"
+    val fillExtrusionTranslateTestValue = listOf(0.0, 1.0)
+    val fillExtrusionTranslateAnchorTestValue = FillExtrusionTranslateAnchor.MAP
+    val fillExtrusionVerticalGradientTestValue = true
+
     val layer = fillExtrusionLayer("id", "source") {
       sourceLayer("test")
       minZoom(10.0)
       maxZoom(10.0)
-      filter(expression)
-      fillExtrusionAmbientOcclusionIntensity(1.0)
-      fillExtrusionAmbientOcclusionRadius(1.0)
-      fillExtrusionBase(1.0)
-      fillExtrusionColor("rgba(0, 0, 0, 1)")
-      fillExtrusionHeight(1.0)
-      fillExtrusionOpacity(1.0)
-      fillExtrusionPattern("abc")
-      fillExtrusionTranslate(listOf(0.0, 1.0))
-      fillExtrusionTranslateAnchor(FillExtrusionTranslateAnchor.MAP)
-      fillExtrusionVerticalGradient(true)
+      filter(filterTestValue)
+      fillExtrusionAmbientOcclusionIntensity(fillExtrusionAmbientOcclusionIntensityTestValue)
+      fillExtrusionAmbientOcclusionRadius(fillExtrusionAmbientOcclusionRadiusTestValue)
+      fillExtrusionBase(fillExtrusionBaseTestValue)
+      fillExtrusionColor(fillExtrusionColorTestValue)
+      fillExtrusionHeight(fillExtrusionHeightTestValue)
+      fillExtrusionOpacity(fillExtrusionOpacityTestValue)
+      fillExtrusionPattern(fillExtrusionPatternTestValue)
+      fillExtrusionTranslate(fillExtrusionTranslateTestValue)
+      fillExtrusionTranslateAnchor(fillExtrusionTranslateAnchorTestValue)
+      fillExtrusionVerticalGradient(fillExtrusionVerticalGradientTestValue)
     }
 
     setupLayer(layer)
@@ -668,17 +679,17 @@ class FillExtrusionLayerTest : BaseStyleTest() {
     assertEquals("test", layer2.sourceLayer)
     assertEquals(10.0, layer2.minZoom)
     assertEquals(10.0, layer2.maxZoom)
-    assertEquals(expression.toString(), layer2.filter.toString())
-    assertEquals(1.0, layer.fillExtrusionAmbientOcclusionIntensity)
-    assertEquals(1.0, layer.fillExtrusionAmbientOcclusionRadius)
-    assertEquals(1.0, layer.fillExtrusionBase)
-    assertEquals("rgba(0, 0, 0, 1)", layer.fillExtrusionColor)
-    assertEquals(1.0, layer.fillExtrusionHeight)
-    assertEquals(1.0, layer.fillExtrusionOpacity)
-    assertEquals("abc", layer.fillExtrusionPattern)
-    assertEquals(listOf(0.0, 1.0), layer.fillExtrusionTranslate)
-    assertEquals(FillExtrusionTranslateAnchor.MAP, layer.fillExtrusionTranslateAnchor)
-    assertEquals(true, layer.fillExtrusionVerticalGradient)
+    assertEquals(filterTestValue.toString(), layer2.filter.toString())
+    assertEquals(fillExtrusionAmbientOcclusionIntensityTestValue, layer.fillExtrusionAmbientOcclusionIntensity)
+    assertEquals(fillExtrusionAmbientOcclusionRadiusTestValue, layer.fillExtrusionAmbientOcclusionRadius)
+    assertEquals(fillExtrusionBaseTestValue, layer.fillExtrusionBase)
+    assertEquals(fillExtrusionColorTestValue, layer.fillExtrusionColor)
+    assertEquals(fillExtrusionHeightTestValue, layer.fillExtrusionHeight)
+    assertEquals(fillExtrusionOpacityTestValue, layer.fillExtrusionOpacity)
+    assertEquals(fillExtrusionPatternTestValue, layer.fillExtrusionPattern)
+    assertEquals(fillExtrusionTranslateTestValue, layer.fillExtrusionTranslate)
+    assertEquals(fillExtrusionTranslateAnchorTestValue, layer.fillExtrusionTranslateAnchor)
+    assertEquals(fillExtrusionVerticalGradientTestValue, layer.fillExtrusionVerticalGradient)
   }
 }
 

@@ -873,27 +873,22 @@ class LineLayerTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun getLayerTest() {
-    val expression = eq {
+    val filterTestValue = eq {
       get {
         literal("undefined")
       }
       literal(1.0)
     }
-    val layer = lineLayer("id", "source") {
-      sourceLayer("test")
-      minZoom(10.0)
-      maxZoom(10.0)
-      filter(expression)
-      lineCap(LineCap.BUTT)
-      lineJoin(LineJoin.BEVEL)
-      lineMiterLimit(1.0)
-      lineRoundLimit(1.0)
-      lineSortKey(1.0)
-      lineBlur(1.0)
-      lineColor("rgba(0, 0, 0, 1)")
-      lineDasharray(listOf(1.0, 2.0))
-      lineGapWidth(1.0)
-      lineGradient(interpolate {
+    val lineCapTestValue = LineCap.BUTT
+    val lineJoinTestValue = LineJoin.BEVEL
+    val lineMiterLimitTestValue = 1.0
+    val lineRoundLimitTestValue = 1.0
+    val lineSortKeyTestValue = 1.0
+    val lineBlurTestValue = 1.0
+    val lineColorTestValue = "rgba(0, 0, 0, 1)"
+    val lineDasharrayTestValue = listOf(1.0, 2.0)
+    val lineGapWidthTestValue = 1.0
+    val lineGradientTestValue = interpolate {
       linear()
       heatmapDensity()
       stop {
@@ -914,14 +909,37 @@ class LineLayerTest : BaseStyleTest() {
           literal(1.0)
         }
       }
-    })
-      lineOffset(1.0)
-      lineOpacity(1.0)
-      linePattern("abc")
-      lineTranslate(listOf(0.0, 1.0))
-      lineTranslateAnchor(LineTranslateAnchor.MAP)
-      lineTrimOffset(listOf(0.0, 1.0))
-      lineWidth(1.0)
+    }
+    val lineOffsetTestValue = 1.0
+    val lineOpacityTestValue = 1.0
+    val linePatternTestValue = "abc"
+    val lineTranslateTestValue = listOf(0.0, 1.0)
+    val lineTranslateAnchorTestValue = LineTranslateAnchor.MAP
+    val lineTrimOffsetTestValue = listOf(0.0, 1.0)
+    val lineWidthTestValue = 1.0
+
+    val layer = lineLayer("id", "source") {
+      sourceLayer("test")
+      minZoom(10.0)
+      maxZoom(10.0)
+      filter(filterTestValue)
+      lineCap(lineCapTestValue)
+      lineJoin(lineJoinTestValue)
+      lineMiterLimit(lineMiterLimitTestValue)
+      lineRoundLimit(lineRoundLimitTestValue)
+      lineSortKey(lineSortKeyTestValue)
+      lineBlur(lineBlurTestValue)
+      lineColor(lineColorTestValue)
+      lineDasharray(lineDasharrayTestValue)
+      lineGapWidth(lineGapWidthTestValue)
+      lineGradient(lineGradientTestValue)
+      lineOffset(lineOffsetTestValue)
+      lineOpacity(lineOpacityTestValue)
+      linePattern(linePatternTestValue)
+      lineTranslate(lineTranslateTestValue)
+      lineTranslateAnchor(lineTranslateAnchorTestValue)
+      lineTrimOffset(lineTrimOffsetTestValue)
+      lineWidth(lineWidthTestValue)
     }
 
     setupLayer(layer)
@@ -934,45 +952,24 @@ class LineLayerTest : BaseStyleTest() {
     assertEquals("test", layer2.sourceLayer)
     assertEquals(10.0, layer2.minZoom)
     assertEquals(10.0, layer2.maxZoom)
-    assertEquals(expression.toString(), layer2.filter.toString())
-    assertEquals(LineCap.BUTT, layer.lineCap)
-    assertEquals(LineJoin.BEVEL, layer.lineJoin)
-    assertEquals(1.0, layer.lineMiterLimit)
-    assertEquals(1.0, layer.lineRoundLimit)
-    assertEquals(1.0, layer.lineSortKey)
-    assertEquals(1.0, layer.lineBlur)
-    assertEquals("rgba(0, 0, 0, 1)", layer.lineColor)
-    assertEquals(listOf(1.0, 2.0), layer.lineDasharray)
-    assertEquals(1.0, layer.lineGapWidth)
-    assertEquals(interpolate {
-      linear()
-      heatmapDensity()
-      stop {
-        literal(0.0)
-        rgba {
-          literal(0.0)
-          literal(0.0)
-          literal(0.0)
-          literal(0.0)
-        }
-      }
-      stop {
-        literal(1.0)
-        rgba {
-          literal(0.0)
-          literal(255.0)
-          literal(0.0)
-          literal(1.0)
-        }
-      }
-    }, layer.lineGradient)
-    assertEquals(1.0, layer.lineOffset)
-    assertEquals(1.0, layer.lineOpacity)
-    assertEquals("abc", layer.linePattern)
-    assertEquals(listOf(0.0, 1.0), layer.lineTranslate)
-    assertEquals(LineTranslateAnchor.MAP, layer.lineTranslateAnchor)
-    assertEquals(listOf(0.0, 1.0), layer.lineTrimOffset)
-    assertEquals(1.0, layer.lineWidth)
+    assertEquals(filterTestValue.toString(), layer2.filter.toString())
+    assertEquals(lineCapTestValue, layer.lineCap)
+    assertEquals(lineJoinTestValue, layer.lineJoin)
+    assertEquals(lineMiterLimitTestValue, layer.lineMiterLimit)
+    assertEquals(lineRoundLimitTestValue, layer.lineRoundLimit)
+    assertEquals(lineSortKeyTestValue, layer.lineSortKey)
+    assertEquals(lineBlurTestValue, layer.lineBlur)
+    assertEquals(lineColorTestValue, layer.lineColor)
+    assertEquals(lineDasharrayTestValue, layer.lineDasharray)
+    assertEquals(lineGapWidthTestValue, layer.lineGapWidth)
+    assertEquals(lineGradientTestValue, layer.lineGradient)
+    assertEquals(lineOffsetTestValue, layer.lineOffset)
+    assertEquals(lineOpacityTestValue, layer.lineOpacity)
+    assertEquals(linePatternTestValue, layer.linePattern)
+    assertEquals(lineTranslateTestValue, layer.lineTranslate)
+    assertEquals(lineTranslateAnchorTestValue, layer.lineTranslateAnchor)
+    assertEquals(lineTrimOffsetTestValue, layer.lineTrimOffset)
+    assertEquals(lineWidthTestValue, layer.lineWidth)
   }
 }
 

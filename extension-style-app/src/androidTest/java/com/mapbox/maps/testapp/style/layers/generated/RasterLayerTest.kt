@@ -472,18 +472,27 @@ class RasterLayerTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun getLayerTest() {
+    val rasterBrightnessMaxTestValue = 1.0
+    val rasterBrightnessMinTestValue = 1.0
+    val rasterContrastTestValue = 1.0
+    val rasterFadeDurationTestValue = 1.0
+    val rasterHueRotateTestValue = 1.0
+    val rasterOpacityTestValue = 1.0
+    val rasterResamplingTestValue = RasterResampling.LINEAR
+    val rasterSaturationTestValue = 1.0
+
     val layer = rasterLayer("id", "source") {
       sourceLayer("test")
       minZoom(10.0)
       maxZoom(10.0)
-      rasterBrightnessMax(1.0)
-      rasterBrightnessMin(1.0)
-      rasterContrast(1.0)
-      rasterFadeDuration(1.0)
-      rasterHueRotate(1.0)
-      rasterOpacity(1.0)
-      rasterResampling(RasterResampling.LINEAR)
-      rasterSaturation(1.0)
+      rasterBrightnessMax(rasterBrightnessMaxTestValue)
+      rasterBrightnessMin(rasterBrightnessMinTestValue)
+      rasterContrast(rasterContrastTestValue)
+      rasterFadeDuration(rasterFadeDurationTestValue)
+      rasterHueRotate(rasterHueRotateTestValue)
+      rasterOpacity(rasterOpacityTestValue)
+      rasterResampling(rasterResamplingTestValue)
+      rasterSaturation(rasterSaturationTestValue)
     }
 
     setupLayer(layer)
@@ -496,14 +505,14 @@ class RasterLayerTest : BaseStyleTest() {
     assertEquals("test", layer2.sourceLayer)
     assertEquals(10.0, layer2.minZoom)
     assertEquals(10.0, layer2.maxZoom)
-    assertEquals(1.0, layer.rasterBrightnessMax)
-    assertEquals(1.0, layer.rasterBrightnessMin)
-    assertEquals(1.0, layer.rasterContrast)
-    assertEquals(1.0, layer.rasterFadeDuration)
-    assertEquals(1.0, layer.rasterHueRotate)
-    assertEquals(1.0, layer.rasterOpacity)
-    assertEquals(RasterResampling.LINEAR, layer.rasterResampling)
-    assertEquals(1.0, layer.rasterSaturation)
+    assertEquals(rasterBrightnessMaxTestValue, layer.rasterBrightnessMax)
+    assertEquals(rasterBrightnessMinTestValue, layer.rasterBrightnessMin)
+    assertEquals(rasterContrastTestValue, layer.rasterContrast)
+    assertEquals(rasterFadeDurationTestValue, layer.rasterFadeDuration)
+    assertEquals(rasterHueRotateTestValue, layer.rasterHueRotate)
+    assertEquals(rasterOpacityTestValue, layer.rasterOpacity)
+    assertEquals(rasterResamplingTestValue, layer.rasterResampling)
+    assertEquals(rasterSaturationTestValue, layer.rasterSaturation)
   }
 }
 
