@@ -12,7 +12,7 @@ import java.nio.ByteBuffer
  * The general class to interact with Styles in the Modular Mapbox Maps SDK for Android.
  * It exposes the entry point for all methods related to the Style.
  * You cannot instantiate [Style] object directly, rather, you must obtain one
- * from the getStyleAsync() method on [MapboxMap].
+ * from the [getStyle(onStyleLoaded)][MapboxMap.getStyle] method on [MapboxMap].
  *
  * Note: Similar to a View object, a [Style] should only be read and modified
  * from the main thread.
