@@ -12,7 +12,7 @@ import java.nio.ByteBuffer
  * The general class to interact with Styles in the Modular Mapbox Maps SDK for Android.
  * It exposes the entry point for all methods related to the Style.
  * You cannot instantiate [Style] object directly, rather, you must obtain one
- * from the getStyleAsync() method on [MapboxMap].
+ * from the [getStyle(onStyleLoaded)][MapboxMap.getStyle] method on [MapboxMap].
  *
  * Note: Similar to a View object, a [Style] should only be read and modified
  * from the main thread.
@@ -45,7 +45,7 @@ class Style internal constructor(
   }
 
   /**
-   * Subscribes an Observer to a provided list of event types.
+   * Subscribes an [Observer] to a provided list of event types.
    * Observable will hold a strong reference to an Observer instance, therefore,
    * in order to stop receiving notifications, caller must call unsubscribe with an
    * Observer instance used for an initial subscription.
@@ -59,7 +59,7 @@ class Style internal constructor(
   }
 
   /**
-   * Unsubscribes an Observer from a provided list of event types.
+   * Unsubscribes an [Observer] from a provided list of event types.
    *
    * @param observer an Observer
    * @param events an array of event types to be unsubscribed from.
@@ -70,7 +70,7 @@ class Style internal constructor(
   }
 
   /**
-   * Unsubscribes an Observer from all events.
+   * Unsubscribes an [Observer] from all events.
    *
    * @param observer an Observer
    */
@@ -89,7 +89,7 @@ class Style internal constructor(
    *
    * The style default camera is re-evaluated when a new style is loaded.
    *
-   * @return Returns the map style default camera.
+   * @return Returns the map style default [camera][CameraOptions].
    */
   override fun getStyleDefaultCamera(): CameraOptions {
     checkNativeStyle("getStyleDefaultCamera")
@@ -99,12 +99,12 @@ class Style internal constructor(
   /**
    * Returns the map style's transition options. By default, the style parser will attempt
    * to read the style default transition options, if any, fallbacking to an immediate transition
-   * otherwise. Transition options can be overriden via setStyleTransition, but the options are
+   * otherwise. Transition options can be overridden via [setStyleTransition], but the options are
    * reset once a new style has been loaded.
    *
    * The style transition is re-evaluated when a new style is loaded.
    *
-   * @return Returns the map style transition options.
+   * @return Returns the map style [transition options][TransitionOptions].
    */
   override fun getStyleTransition(): TransitionOptions {
     checkNativeStyle("getStyleTransition")
@@ -116,7 +116,7 @@ class Style internal constructor(
    *
    * The style transition is re-evaluated when a new style is loaded.
    *
-   * @param transitionOptions Map style transition options.
+   * @param transitionOptions Map style [transition options][TransitionOptions].
    */
   override fun setStyleTransition(transitionOptions: TransitionOptions) {
     checkNativeStyle("setStyleTransition")
@@ -129,7 +129,7 @@ class Style internal constructor(
    * @return A string containing a Mapbox style URI.
    */
   override fun getStyleURI(): String {
-    checkNativeStyle("setStyleTransition")
+    checkNativeStyle("getStyleURI")
     return styleManager.styleURI
   }
 
@@ -146,11 +146,11 @@ class Style internal constructor(
   /**
    * Adds a new style layer.
    *
-   * See [https://docs.mapbox.com/mapbox-gl-js/style-spec/#layers](https://docs.mapbox.com/mapbox-gl-js/style-spec/#layers)
+   * See [Style Specification - Layers](https://docs.mapbox.com/mapbox-gl-js/style-spec/#layers)
    *
    * Runtime style layers are valid until they are either removed or a new style is loaded.
    *
-   * @param parameters A map of style layer parameters.
+   * @param parameters A [map][Value] of style layer parameters.
    * @param position If not empty, the new layer will be added immediately below the layer with this id.
    *
    * @return A string describing an error if the operation was not successful, or empty otherwise.
@@ -178,7 +178,7 @@ class Style internal constructor(
    * Moves an existing style layer.
    *
    * @param layerId – Identifier of the style layer to move.
-   * @param layerPosition – The layer will be positioned according to the LayerPosition parameters. If an empty LayerPosition is provided then the layer is moved to the top of the layerstack.
+   * @param layerPosition – The layer will be positioned according to the [LayerPosition] parameters. If an empty LayerPosition is provided then the layer is moved to the top of the layerstack.
    *
    * @return A string describing an error if the operation was not successful, or empty otherwise.
    */
@@ -204,9 +204,10 @@ class Style internal constructor(
   /**
    * Load style from provided URI.
    *
-   * This is an asynchronous call. In order to get result of this operation please use [OnStyleLoadedListener],
-   * [OnStyleDataLoadedListener] or [OnMapLoadErrorListener]. In case of successful style load you should
-   * get notified by [OnStyleLoadedListener].
+   * This is an asynchronous call. In order to get result of this operation please use
+   * [MapboxMap.addOnStyleLoadedListener], [MapboxMap.addOnStyleDataLoadedListener] or
+   * [MapboxMap.addOnMapLoadErrorListener]. In case of successful style load you should get notified
+   * by [MapboxMap.addOnStyleLoadedListener].
    *
    * And in case of error @see MapLoadError#StyleLoadError will be generated.
    *
@@ -220,11 +221,11 @@ class Style internal constructor(
   }
 
   /**
-   * Gets the value of style layer \p property.
+   * Gets the value of [style layer property][StylePropertyValue].
    *
-   * @param layerId Style layer identified.
+   * @param layerId Style layer identifier.
    * @param property Style layer property name.
-   * @return The value of \p property in the layer with \p layerId.
+   * @return The property value in the layer with layerId.
    */
   override fun getStyleLayerProperty(layerId: String, property: String): StylePropertyValue {
     checkNativeStyle("getStyleLayerProperty")
@@ -252,7 +253,7 @@ class Style internal constructor(
   /**
    * Adds a new style source.
    *
-   * See [https://docs.mapbox.com/mapbox-gl-js/style-spec/#sources](https://docs.mapbox.com/mapbox-gl-js/style-spec/#sources)
+   * See [Style Specification - Sources](https://docs.mapbox.com/mapbox-gl-js/style-spec/#sources)
    *
    * @param sourceId An identifier for the style source.
    * @param properties A map of style source parameters.
@@ -292,14 +293,14 @@ class Style internal constructor(
     sourceId: String,
     tileId: CanonicalTileID
   ): Expected<String, None> {
-    checkNativeStyle("invalidateStyleCustomGeometrySourceRegion")
+    checkNativeStyle("invalidateStyleCustomGeometrySourceTile")
     return styleManager.invalidateStyleCustomGeometrySourceTile(sourceId, tileId)
   }
 
   /**
    * Updates the image of an image style source.
    *
-   * See [https://docs.mapbox.com/mapbox-gl-js/style-spec/#sources-image](https://docs.mapbox.com/mapbox-gl-js/style-spec/#sources-image)
+   * See [Style Specification - Sources Image](https://docs.mapbox.com/mapbox-gl-js/style-spec/#sources-image)
    *
    * @param sourceId Style source identifier.
    * @param image Pixel data of the image.
@@ -315,6 +316,8 @@ class Style internal constructor(
    * Removes an existing style source.
    *
    * @param sourceId Identifier of the style source to remove.
+   *
+   * @return A string describing an error if the operation was not successful, empty otherwise.
    */
   override fun removeStyleSource(sourceId: String): Expected<String, None> {
     checkNativeStyle("removeStyleSource")
@@ -352,7 +355,7 @@ class Style internal constructor(
   /**
    * Sets the style global light source properties.
    *
-   * See [https://docs.mapbox.com/mapbox-gl-js/style-spec/#light](https://docs.mapbox.com/mapbox-gl-js/style-spec/#light)
+   * See [Style Specification - Light](https://docs.mapbox.com/mapbox-gl-js/style-spec/#light)
    *
    * @param parameters A map of style light properties values, with their names as key.
    *
@@ -377,7 +380,7 @@ class Style internal constructor(
   }
 
   /**
-   * Sets the style global [atmosphere](https://docs.mapbox.com/mapbox-gl-js/style-spec/#fog) properties.
+   * Sets the style global [atmosphere](https://docs.mapbox.com/mapbox-gl-js/style-spec/fog/) properties.
    *
    * @param properties A map of style atmosphere properties values, with their names as a key.
    *
@@ -415,7 +418,7 @@ class Style internal constructor(
   /**
    * Sets the style global terrain source properties.
    *
-   * @see [Mapbox Style Specification: Terrrain](https://docs.mapbox.com/mapbox-gl-js/style-spec/#terrain)
+   * See [Mapbox Style Specification: Terrain](https://docs.mapbox.com/mapbox-gl-js/style-spec/terrain/).
    *
    * @param properties A map of style terrain properties values, with their names as key.
    *
@@ -438,10 +441,12 @@ class Style internal constructor(
   }
 
   /**
-   * Gets the value of a style terrain property.
+   * Sets the value of a style terrain property.
    *
    * @param property Style terrain property name.
-   * @return Style terrain property value.
+   * @param value Style terrain property value.
+   *
+   * @return A string describing an error if the operation was not successful, empty otherwise.
    */
   override fun setStyleTerrainProperty(property: String, value: Value): Expected<String, None> {
     checkNativeStyle("setStyleTerrainProperty")
@@ -449,7 +454,8 @@ class Style internal constructor(
   }
 
   /**
-   * Sets the map's [projection](https://docs.mapbox.com/mapbox-gl-js/style-spec/projection/). If called with `null`, the map will reset to Mercator.
+   * Sets the map's [projection](https://docs.mapbox.com/mapbox-gl-js/style-spec/projection/).
+   * If called with `null`, the map will reset to Mercator.
    *
    * @param properties A map of style projection values, with their names as a key.
    * Supported projections are:
@@ -718,7 +724,7 @@ class Style internal constructor(
   /**
    * Gets style layer properties.
    *
-   * @param layerId Optional filter to specify specific layer type for query.
+   * @param layerId A style layer identifier.
    * @return Style layer metadata or a string describing an error if the operation was not successful.
    */
   override fun getStyleLayerProperties(layerId: String): Expected<String, Value> {
@@ -741,7 +747,7 @@ class Style internal constructor(
   /**
    * Sets style layer metadata.
    *
-   * @param layerId Optional filter to specify specific layer type for query.
+   * @param layerId A style layer identifier.
    * @param properties the value wrapper around layer metadata
    * @return a string describing an error if the operation was not successful.
    */
@@ -753,9 +759,9 @@ class Style internal constructor(
   /**
    * Gets the value of style source property.
    *
-   * @param sourceId Style source identified.
+   * @param sourceId Style source identifier.
    * @param property Style source property name.
-   * @return The value of \p property in the source with \p sourceId.
+   * @return The value of property in the source with sourceId.
    */
   override fun getStyleSourceProperty(sourceId: String, property: String): StylePropertyValue {
     // TODO see #1105 issue in internal repo
@@ -845,7 +851,7 @@ class Style internal constructor(
    * used instead and `MapLoadingError` event will be emitted.
    *
    * @param layerId A style layer identifier.
-   * @param layerHost The `custom layer host`.
+   * @param layerHost The custom layer host.
    * @param layerPosition If not empty, the new layer will be positioned according to `layer position` parameters.
    *
    * @return A string describing an error if the operation was not successful, or empty otherwise.
@@ -871,7 +877,8 @@ class Style internal constructor(
   }
 
   /**
-   * Adds a custom geometry to be used in the style. To add the data, implement the fetchTileFunction callback in the options and call setStyleCustomGeometrySourceTileData()
+   * Adds a custom geometry to be used in the style. To add the data, implement the [CustomGeometrySourceOptions.fetchTileFunction]
+   * callback in the options and call [setStyleCustomGeometrySourceTileData]
    *
    * @param sourceId Style source identifier
    * @param options Settings for the custom geometry
@@ -925,7 +932,7 @@ class Style internal constructor(
 
   /**
    * Gets style source parameters.
-   * In order to convert returned value to a json string please take a look at mapbox::common::Value.
+   * In order to convert returned value to a json string please take a look at [Value.toJson].
    *
    * @param sourceId Style source identifier.
    *
@@ -939,7 +946,7 @@ class Style internal constructor(
   /**
    * Sets style source parameters.
    * This method can be used to perform batch update for a style source parameters. The structure of a
-   * provided `parameters` value must conform to \sa https://docs.mapbox.com/mapbox-gl-js/style-spec/sources/
+   * provided `parameters` value must conform to [Style Specification - Sources](https://docs.mapbox.com/mapbox-gl-js/style-spec/sources/)
    * format for a corresponding source type. Modification of a source type
    * https://docs.mapbox.com/mapbox-gl-js/style-spec/sources/#type is not allowed.
    *
@@ -1020,19 +1027,16 @@ class Style internal constructor(
 
     /**
      * Traffic Day: Color-coded roads based on live traffic congestion data. Traffic data is currently
-     * available in
-     * [these select
- * countries](https://www.mapbox.com/help/how-directions-work/#traffic-data). Using this constant means your map style will always use the latest version and
-     * may change as we improve the style.
+     * available in [these select countries](https://www.mapbox.com/help/how-directions-work/#traffic-data).
+     * Using this constant means your map style will always use the latest version and may change as we improve the style.
      */
     const val TRAFFIC_DAY = "mapbox://styles/mapbox/traffic-day-v2"
 
     /**
      * Traffic Night: Color-coded roads based on live traffic congestion data, designed to maximize
      * legibility in low-light situations. Traffic data is currently available in
-     * [these select
- * countries](https://www.mapbox.com/help/how-directions-work/#traffic-data). Using this constant means your map style will always use the latest version and
-     * may change as we improve the style.
+     * [these select countries](https://www.mapbox.com/help/how-directions-work/#traffic-data).
+     * Using this constant means your map style will always use the latest version and may change as we improve the style.
      */
     const val TRAFFIC_NIGHT = "mapbox://styles/mapbox/traffic-night-v2"
   }
