@@ -9,6 +9,7 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
+import com.mapbox.maps.extension.style.expressions.dsl.generated.interpolate
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.locationcomponent.LocationConsumer
 import com.mapbox.maps.plugin.locationcomponent.LocationProvider
@@ -44,7 +45,7 @@ class LocationComponentAnimationActivity : AppCompatActivity() {
           it.onPuckBearingAnimatorDefaultOptionsUpdated {
             // set duration bigger than our location emit frequency -
             // this will result in cancelling ongoing animation and starting new one with a visible non-smooth `jump`
-            duration = 5000
+            duration = 4000
           }
         }
       }
@@ -74,7 +75,7 @@ class LocationComponentAnimationActivity : AppCompatActivity() {
               )
             }
           }
-          locationConsumer?.onBearingUpdated(BEARING + delta * 10000.0 * 5)
+//          locationConsumer?.onBearingUpdated(BEARING + delta * 10000.0 * 5)
           delta += 0.001f
           emitCount++
           emitFakeLocations()
@@ -98,6 +99,16 @@ class LocationComponentAnimationActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     val binding = ActivityLocationComponentAmimationBinding.inflate(layoutInflater)
     setContentView(binding.root)
+    val frame0 = AppCompatResources.getDrawable(this, R.drawable.frame_00)!!
+    val frame1 = AppCompatResources.getDrawable(this, R.drawable.frame_01)!!
+    val frame2 = AppCompatResources.getDrawable(this, R.drawable.frame_02)!!
+    val frame3 = AppCompatResources.getDrawable(this, R.drawable.frame_03)!!
+    val frame4 = AppCompatResources.getDrawable(this, R.drawable.frame_04)!!
+    val frame5 = AppCompatResources.getDrawable(this, R.drawable.frame_05)!!
+    val frame6 = AppCompatResources.getDrawable(this, R.drawable.frame_06)!!
+    val frame7 = AppCompatResources.getDrawable(this, R.drawable.frame_07)!!
+    val frames = listOf(frame0, frame1, frame2, frame3, frame4, frame5, frame6, frame7)
+
     mapboxMap = binding.mapView.getMapboxMap().apply {
       loadStyleUri(
         Style.MAPBOX_STREETS
@@ -108,14 +119,24 @@ class LocationComponentAnimationActivity : AppCompatActivity() {
             .center(Point.fromLngLat(POINT_LNG, POINT_LAT))
             .build()
         )
+
         binding.mapView.location.apply {
           setLocationProvider(FakeLocationProvider())
           updateSettings {
             locationPuck = LocationPuck2D(
-              bearingImage = AppCompatResources.getDrawable(
-                this@LocationComponentAnimationActivity,
-                R.drawable.mapbox_mylocation_icon_bearing,
-              ),
+              topImages = frames,
+              scaleExpression = interpolate {
+                linear()
+                zoom()
+                stop {
+                  literal(0.0)
+                  literal(0.1)
+                }
+                stop {
+                  literal(20.0)
+                  literal(0.5)
+                }
+              }.toJson()
             )
           }
         }

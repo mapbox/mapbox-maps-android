@@ -115,7 +115,7 @@ dependencies {
   // The Maps SDK also comes pre-compiled with support for the [Google's Fused Location Provider](https://developers.google.com/location-context/fused-location-provider)
   // if that dependency is available. This means, that if your target devices support Google Play
   // Services, [we recommend adding the Google Play Location Services dependency to your project](https://developers.google.com/android/guides/setup).
-  implementation(Dependencies.googlePlayServicesLocation)
+//  implementation(Dependencies.googlePlayServicesLocation)
 
   // Maps SDK does not provide this dependency so adding explicitly to make use of
   // async view inflation for view annotation manager example

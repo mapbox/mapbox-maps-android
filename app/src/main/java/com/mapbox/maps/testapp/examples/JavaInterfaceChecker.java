@@ -330,9 +330,9 @@ public class JavaInterfaceChecker {
     private void locationPuck(Drawable image, List<Float> floatList) {
         LocationPuck2D locationPuck2D = new LocationPuck2D();
         locationPuck2D = new LocationPuck2D(image);
-        locationPuck2D = new LocationPuck2D(image, image);
-        locationPuck2D = new LocationPuck2D(image, image, image);
-        locationPuck2D = new LocationPuck2D(image, image, image, "scale");
+//        locationPuck2D = new LocationPuck2D(image, image);
+//        locationPuck2D = new LocationPuck2D(image, image, image);
+//        locationPuck2D = new LocationPuck2D(image, image, image, "scale");
 
         LocationPuck3D locationPuck3D = new LocationPuck3D("uri");
         locationPuck3D = new LocationPuck3D("uri", floatList);

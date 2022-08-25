@@ -56,8 +56,18 @@ internal class LocationIndicatorLayerRenderer(
     layer.accuracyRadiusBorderColor(borderRgbaExpression)
   }
 
+  private var index = 0
+  private var lastUpdate = 0L
+  private val ANIMATE_PUCK_THRESHOLD = 50
   override fun setLatLng(latLng: Point) {
     setLayerLocation(latLng)
+    val currentTime = System.currentTimeMillis()
+    if(currentTime - lastUpdate > ANIMATE_PUCK_THRESHOLD) {
+      lastUpdate = currentTime
+      puckOptions.topImages?.let {
+        layer.topImage(TOP_ICON + ((index++) % it.size))
+      }
+    }
   }
 
   override fun setBearing(bearing: Double) {
@@ -77,12 +87,17 @@ internal class LocationIndicatorLayerRenderer(
   private fun setupBitmaps() {
     puckOptions.topImage?.let { BitmapUtils.getBitmapFromDrawable(it) }
       ?.let { style?.addImage(TOP_ICON, it) }
+    puckOptions.topImages?.forEachIndexed { index, drawable ->
+      BitmapUtils.getBitmapFromDrawable(drawable)?.let {
+        style?.addImage(TOP_ICON+index, it)
+      }
+    }
     puckOptions.bearingImage?.let { BitmapUtils.getBitmapFromDrawable(it) }
       ?.let { style?.addImage(BEARING_ICON, it) }
 
     puckOptions.shadowImage?.let { BitmapUtils.getBitmapFromDrawable(it) }
       ?.let { style?.addImage(SHADOW_ICON, it) }
-    layer.topImage(TOP_ICON)
+//    layer.topImage(TOP_ICON)
     layer.bearingImage(BEARING_ICON)
     layer.shadowImage(SHADOW_ICON)
   }
