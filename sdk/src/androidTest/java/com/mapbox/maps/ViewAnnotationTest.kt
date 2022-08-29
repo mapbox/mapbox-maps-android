@@ -16,6 +16,8 @@ import com.mapbox.maps.extension.style.layers.getLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.Visibility
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
+import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
+import com.mapbox.maps.plugin.animation.moveBy
 import com.mapbox.maps.test.R
 import com.mapbox.maps.viewannotation.OnViewAnnotationUpdatedListener
 import com.mapbox.maps.viewannotation.ViewAnnotationManager
@@ -825,10 +827,8 @@ class ViewAnnotationTest(
     )
   }
 
-  // checking automatic view visibility handling
-
   @Test
-  fun automaticViewVisibilityHandling() {
+  fun automaticViewVisibilityHandlingViewsOverlap() {
     viewAnnotationTestHelper(
       additionalLatchCount = 1,
       performAction = {
@@ -867,6 +867,88 @@ class ViewAnnotationTest(
             it.countDown()
           },
           VIEW_PLACEMENT_DELAY_MS
+        )
+      }
+    )
+  }
+
+  @Test
+  fun automaticViewVisibilityHandlingInvisibleCase() {
+    automaticViewVisibilityTest(View.INVISIBLE)
+  }
+
+  @Test
+  fun automaticViewVisibilityHandlingGoneCase() {
+    automaticViewVisibilityTest(View.GONE)
+  }
+
+  private fun automaticViewVisibilityTest(resultVisibility: Int) {
+    viewAnnotationTestHelper(
+      additionalLatchCount = 1,
+      performAction = {
+        firstView = viewAnnotationManager.addViewAnnotation(
+          resId = layoutResId,
+          options = viewAnnotationOptions {
+            geometry(CAMERA_CENTER)
+            anchor(ViewAnnotationAnchor.TOP_LEFT)
+          }
+        )
+        firstView.visibility = View.VISIBLE
+      },
+      makeChecks = {
+        val initialTranslation = firstView.translationX.toDouble()
+        assertEquals(
+          mapboxMap.pixelForCoordinate(CAMERA_CENTER).x,
+          initialTranslation,
+          ADMISSIBLE_ERROR_PX
+        )
+        firstView.visibility = resultVisibility
+        val shiftX = 50.0
+        // trigger map movement while view annotation is not visible to trigger several core updates
+        mapboxMap.moveBy(
+          ScreenCoordinate(
+            shiftX,
+            0.0
+          ),
+          mapAnimationOptions {
+            duration(100L)
+          }
+        )
+        mainHandler.postDelayed(
+          {
+            // make visible and move the map to make sure position is updated after view is visible
+            firstView.visibility = View.VISIBLE
+            val additionalShiftX = 50.0
+            mapboxMap.moveBy(
+              ScreenCoordinate(
+                additionalShiftX,
+                0.0
+              ),
+              mapAnimationOptions {
+                duration(100L)
+              }
+            )
+            mainHandler.postDelayed(
+              {
+                assertArrayEquals(
+                  arrayOf(
+                    Pair(firstView, true),
+                    Pair(firstView, false),
+                    Pair(firstView, true)
+                  ),
+                  actualVisibilityUpdateList.toTypedArray()
+                )
+                assertEquals(
+                  initialTranslation + shiftX + additionalShiftX,
+                  firstView.translationX.toDouble(),
+                  ADMISSIBLE_ERROR_PX
+                )
+                it.countDown()
+              },
+              VIEW_PLACEMENT_DELAY_MS / 3
+            )
+          },
+          VIEW_PLACEMENT_DELAY_MS / 3
         )
       }
     )
