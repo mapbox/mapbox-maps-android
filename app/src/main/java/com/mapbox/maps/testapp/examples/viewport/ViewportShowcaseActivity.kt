@@ -12,6 +12,7 @@ import com.mapbox.core.constants.Constants
 import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
+import com.mapbox.maps.extension.style.expressions.dsl.generated.interpolate
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.plugin.viewport.ViewportPlugin
@@ -93,6 +94,15 @@ class ViewportShowcaseActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     val binding = ActivityViewportAnimationBinding.inflate(layoutInflater)
     setContentView(binding.root)
+    val frame0 = AppCompatResources.getDrawable(this, R.drawable.frame_00)!!
+    val frame1 = AppCompatResources.getDrawable(this, R.drawable.frame_01)!!
+    val frame2 = AppCompatResources.getDrawable(this, R.drawable.frame_02)!!
+    val frame3 = AppCompatResources.getDrawable(this, R.drawable.frame_03)!!
+    val frame4 = AppCompatResources.getDrawable(this, R.drawable.frame_04)!!
+    val frame5 = AppCompatResources.getDrawable(this, R.drawable.frame_05)!!
+    val frame6 = AppCompatResources.getDrawable(this, R.drawable.frame_06)!!
+    val frame7 = AppCompatResources.getDrawable(this, R.drawable.frame_07)!!
+    val frames = listOf(frame0, frame1, frame2, frame3, frame4, frame5, frame6, frame7)
     viewportButton = binding.switchButton
     mapView = binding.mapView
     mapboxMap = binding.mapView.getMapboxMap().apply {
@@ -107,10 +117,19 @@ class ViewportShowcaseActivity : AppCompatActivity() {
           setLocationProvider(simulateRouteLocationProvider)
           updateSettings {
             locationPuck = LocationPuck2D(
-              bearingImage = AppCompatResources.getDrawable(
-                this@ViewportShowcaseActivity,
-                R.drawable.mapbox_mylocation_icon_bearing,
-              )
+              topImages = frames,
+              scaleExpression = interpolate {
+                linear()
+                zoom()
+                stop {
+                  literal(0.0)
+                  literal(0.1)
+                }
+                stop {
+                  literal(20.0)
+                  literal(0.5)
+                }
+              }.toJson()
             )
           }
         }
