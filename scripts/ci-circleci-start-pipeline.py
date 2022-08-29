@@ -55,6 +55,7 @@ def Main():
     parser.add_argument("--current-branch",
             help="Current branch name.")
     parser.add_argument('--created', help="Provide a date string in ISO 8601 format (eg. 2030-12-30T09:10:20.304050)")
+    parser.add_argument("--pixel_match_public", default=True)
 
     args = parser.parse_args()
 
@@ -71,7 +72,8 @@ def Main():
         "mapbox_slug": args.origin_slug,
         "mapbox_android_hash": args.hash,
         "mapbox_merge_main": args.current_branch == MAIN_BRANCH_NAME,
-        "benchmark_date": created
+        "benchmark_date": created,
+        "pixel_match_public": args.pixel_match_public
     }
 
     TriggerPipeline(args.target_slug, args.token, args.branch, params)
