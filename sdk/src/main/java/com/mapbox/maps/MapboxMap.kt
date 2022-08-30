@@ -18,6 +18,7 @@ import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.plugin.delegates.listeners.*
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import com.mapbox.maps.plugin.gestures.GesturesPluginImpl
+import com.mapbox.maps.threading.AnimationThreadController
 import java.util.*
 import java.util.concurrent.CopyOnWriteArraySet
 
@@ -947,7 +948,9 @@ class MapboxMap :
    * @return Returns a coordinate.
    */
   override fun unproject(coordinate: MercatorCoordinate, zoomScale: Double): Point {
-    checkNativeMap("unproject")
+    if (!AnimationThreadController.usingBackgroundThread) {
+      checkNativeMap("unproject")
+    }
     return Projection.unproject(coordinate, zoomScale)
   }
 

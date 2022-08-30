@@ -37,6 +37,7 @@ import com.mapbox.maps.plugin.delegates.MapTransformDelegate
 import com.mapbox.maps.plugin.gestures.generated.GesturesAttributeParser
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettings
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettingsBase
+import com.mapbox.maps.threading.AnimationThreadController.postOnMainThread
 import java.util.*
 import java.util.concurrent.CopyOnWriteArraySet
 import kotlin.math.*
@@ -137,7 +138,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
   /**
    * Cancels scheduled velocity animations if user doesn't lift fingers within [SCHEDULED_ANIMATION_TIMEOUT]
    */
-  private val animationsTimeoutHandler = Handler()
+  private val animationsTimeoutHandler = Handler(Looper.getMainLooper())
   private var mainHandler: Handler? = null
   internal var doubleTapRegistered: Boolean = false
 
@@ -1351,7 +1352,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
 
           override fun onAnimationEnd(animation: Animator) {
             super.onAnimationEnd(animation)
-            mapCameraManagerDelegate.dragEnd()
+            postOnMainThread { mapCameraManagerDelegate.dragEnd() }
           }
         })
       }

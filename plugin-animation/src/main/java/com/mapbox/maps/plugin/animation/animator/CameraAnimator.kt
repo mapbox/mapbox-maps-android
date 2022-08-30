@@ -7,6 +7,7 @@ import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.logW
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions
 import com.mapbox.maps.plugin.animation.CameraAnimatorType
+import com.mapbox.maps.threading.AnimationThreadController.postOnAnimatorThread
 
 /**
  * Base generic class for all camera animators.
@@ -79,14 +80,16 @@ abstract class CameraAnimator<out T> (
    * Start the animator
    */
   final override fun start() {
-    if (registered) {
-      canceled = false
-      super.start()
-    } else {
-      logW(
-        TAG,
-        "Animation $type was not registered and will not run. Register it with registerAnimation() method."
-      )
+    postOnAnimatorThread {
+      if (registered) {
+        canceled = false
+        super.start()
+      } else {
+        logW(
+          TAG,
+          "Animation $type was not registered and will not run. Register it with registerAnimation() method."
+        )
+      }
     }
   }
 
@@ -96,10 +99,12 @@ abstract class CameraAnimator<out T> (
    * @param listener the listener to be invoked when animation state changes
    */
   final override fun addListener(listener: AnimatorListener?) {
-    if (internalListener != null) {
-      super.addListener(listener)
+    postOnAnimatorThread {
+      if (internalListener != null) {
+        super.addListener(listener)
+      }
+      userListeners.add(listener)
     }
-    userListeners.add(listener)
   }
 
   /**
@@ -108,10 +113,12 @@ abstract class CameraAnimator<out T> (
    * @param listener the listener to be invoked when animation update changes
    */
   final override fun addUpdateListener(listener: AnimatorUpdateListener?) {
-    if (internalUpdateListener != null) {
-      super.addUpdateListener(listener)
+    postOnAnimatorThread {
+      if (internalUpdateListener != null) {
+        super.addUpdateListener(listener)
+      }
+      userUpdateListeners.add(listener)
     }
-    userUpdateListeners.add(listener)
   }
 
   /**
@@ -120,11 +127,13 @@ abstract class CameraAnimator<out T> (
    * @param listener the listener to be removed
    */
   final override fun removeUpdateListener(listener: AnimatorUpdateListener?) {
-    if (listener != internalUpdateListener) {
-      super.removeUpdateListener(listener)
-    }
-    if (userUpdateListeners.contains(listener)) {
-      userUpdateListeners.remove(listener)
+    postOnAnimatorThread {
+      if (listener != internalUpdateListener) {
+        super.removeUpdateListener(listener)
+      }
+      if (userUpdateListeners.contains(listener)) {
+        userUpdateListeners.remove(listener)
+      }
     }
   }
 
@@ -132,11 +141,13 @@ abstract class CameraAnimator<out T> (
    * Remove all update listeners
    */
   final override fun removeAllUpdateListeners() {
-    super.removeAllUpdateListeners()
-    if (internalUpdateListener != null) {
-      super.addUpdateListener(internalUpdateListener)
+    postOnAnimatorThread {
+      super.removeAllUpdateListeners()
+      if (internalUpdateListener != null) {
+        super.addUpdateListener(internalUpdateListener)
+      }
+      userUpdateListeners.clear()
     }
-    userUpdateListeners.clear()
   }
 
   /**
@@ -145,11 +156,13 @@ abstract class CameraAnimator<out T> (
    * @param listener the listener to be removed
    */
   final override fun removeListener(listener: AnimatorListener?) {
-    if (listener != internalListener) {
-      super.removeListener(listener)
-    }
-    if (userListeners.contains(listener)) {
-      userListeners.remove(listener)
+    postOnAnimatorThread {
+      if (listener != internalListener) {
+        super.removeListener(listener)
+      }
+      if (userListeners.contains(listener)) {
+        userListeners.remove(listener)
+      }
     }
   }
 
@@ -157,11 +170,13 @@ abstract class CameraAnimator<out T> (
    * Remove all animator listeners
    */
   final override fun removeAllListeners() {
-    super.removeAllListeners()
-    if (internalListener != null) {
-      super.addListener(internalListener)
+    postOnAnimatorThread {
+      super.removeAllListeners()
+      if (internalListener != null) {
+        super.addListener(internalListener)
+      }
+      userListeners.clear()
     }
-    userListeners.clear()
   }
 
   /**
@@ -172,8 +187,10 @@ abstract class CameraAnimator<out T> (
    * This method must be called on the thread that is running the animation.
    */
   final override fun cancel() {
-    canceled = true
-    super.cancel()
+    postOnAnimatorThread {
+      canceled = true
+      super.cancel()
+    }
   }
 
   /**

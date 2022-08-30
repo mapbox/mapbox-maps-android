@@ -18,6 +18,7 @@ import com.mapbox.maps.plugin.viewport.DEFAULT_STATE_ANIMATION_DURATION_MS
 import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateBearing
 import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions
 import com.mapbox.maps.plugin.viewport.transition.MapboxViewportTransitionFactory
+import com.mapbox.maps.threading.AnimationThreadController
 import java.util.concurrent.*
 
 /**
@@ -159,13 +160,15 @@ internal class FollowPuckViewportStateImpl(
   }
 
   private fun cancelAnimation() {
-    runningAnimation?.apply {
-      cancel()
-      childAnimations.forEach {
-        cameraPlugin.unregisterAnimators(it as ValueAnimator)
+    AnimationThreadController.postOnAnimatorThread {
+      runningAnimation?.apply {
+        cancel()
+        childAnimations.forEach {
+          cameraPlugin.unregisterAnimators(it as ValueAnimator)
+        }
       }
+      runningAnimation = null
     }
-    runningAnimation = null
   }
 
   private fun startAnimation(
@@ -179,8 +182,10 @@ internal class FollowPuckViewportStateImpl(
     if (instant) {
       animatorSet.duration = 0
     }
-    animatorSet.start()
-    runningAnimation = animatorSet
+    AnimationThreadController.postOnAnimatorThread {
+      animatorSet.start()
+      runningAnimation = animatorSet
+    }
   }
 
   private fun finishAnimation(animatorSet: AnimatorSet?) {

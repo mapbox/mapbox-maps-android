@@ -4,12 +4,14 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.postDelayed
 import com.mapbox.api.directions.v5.models.DirectionsResponse
 import com.mapbox.core.constants.Constants
 import com.mapbox.geojson.LineString
 import com.mapbox.maps.MapView
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
 import com.mapbox.maps.testapp.utils.NavigationSimulator
+import com.mapbox.maps.threading.AnimationThreadController
 
 /**
  * Simulate a navigation route with pre-defined route (from LA to San Francisco) with location puck,
@@ -23,8 +25,24 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+
     val mapView = MapView(this)
     setContentView(mapView)
+
+    AnimationThreadController.useBackgroundThread()
+
+    mapView.postDelayed(4000L) {
+      AnimationThreadController.useMainThread()
+    }
+
+    mapView.postDelayed(8000L) {
+      AnimationThreadController.useBackgroundThread()
+    }
+
+    mapView.postDelayed(12_000L) {
+      AnimationThreadController.useMainThread()
+    }
+
     val routePoints = LineString.fromPolyline(
       DirectionsResponse.fromJson(
         AnnotationUtils.loadStringFromAssets(
