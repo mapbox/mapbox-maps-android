@@ -132,9 +132,9 @@ compatibility of the APIs we ship.
 * When doing code changes that do not imply any changes in public API, no additional actions need to
 be performed. The bots named `check-api-*` will validate if there's any API breaking changes.
 * When doing code changes that imply changes in public API, whether it is a new API or adjustments to
-the existing one, `check-api-*`` tasks will start to fail. `make update-api` should be executed manually,
+the existing one, `check-api-*` tasks will start to fail. `make update-api` should be executed manually,
 the resulting diff in `.api` file should be verified: only signatures you expected to change should be changed.
-* Commit the resulting .api diff along with code changes.
+* Commit the resulting `.api` diff along with code changes.
 
 ## Code
 
