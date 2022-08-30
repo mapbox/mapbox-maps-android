@@ -419,6 +419,25 @@ class LocationPuckManagerTest {
     verify(exactly = 0) { animationManager.updatePulsingRadius(any(), settings) }
   }
 
+  @Test
+  fun testDisablePuckBearingRestoresCameraBearing() {
+    val cameraStateBearing = 180.0
+    val puckBearing = 90.0
+    val settings2 = LocationComponentSettings2().apply { puckBearingEnabled = false }
+    val bearingResults = mutableListOf<Double>()
+
+    every { mapCameraDelegate.cameraState.bearing } returns cameraStateBearing
+    every { accuracyRadiusSettings.puckBearingEnabled } returns true
+    every { animationManager.animateBearing(*varargAllDouble { bearingResults.add(it) }, options = null) } returns Unit
+
+    locationPuckManager.lastBearing = puckBearing
+    locationPuckManager.updateSettings2(settings2)
+    verify(exactly = 1) { locationPuckManager.updateCurrentBearing(cameraStateBearing) }
+    verify(exactly = 1) { animationManager.animateBearing(*anyDoubleVararg(), options = null) }
+    verify(exactly = 1) { animationManager.applySettings2(settings2) }
+    assertEquals(listOf(puckBearing, cameraStateBearing), bearingResults)
+  }
+
   private companion object {
     const val MODEL_SCALE_CONSTANT = 2965820.800757861
   }

@@ -58,7 +58,8 @@ internal class LocationPuckManager(
     }
   }
 
-  private var lastBearing: Double = delegateProvider.mapCameraManagerDelegate.cameraState.bearing
+  @VisibleForTesting(otherwise = PRIVATE)
+  internal var lastBearing: Double = delegateProvider.mapCameraManagerDelegate.cameraState.bearing
   private val onBearingUpdated: ((Double) -> Unit) = {
     lastBearing = it
   }
@@ -140,6 +141,10 @@ internal class LocationPuckManager(
   }
 
   fun updateSettings2(settings2: LocationComponentSettings2) {
+    if (!settings2.puckBearingEnabled && this.settings2.puckBearingEnabled) {
+      // Restore camera bearing if puck bearing is disabled.
+      updateCurrentBearing(delegateProvider.mapCameraManagerDelegate.cameraState.bearing)
+    }
     this.settings2 = settings2
     animationManager.applySettings2(settings2)
   }
