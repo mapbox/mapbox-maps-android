@@ -100,7 +100,10 @@ class LocationPuckManagerTest {
 
     verifyOrder {
       animationManager.animatePosition(targets = captureVararg(locations), options = null)
-      animationManager.animateBearing(targets = captureVararg(bearings).toDoubleArray(), options = null)
+      animationManager.animateBearing(
+        targets = captureVararg(bearings).toDoubleArray(),
+        options = null
+      )
       locationLayerRenderer.initializeComponents(style)
       locationLayerRenderer.show()
     }
@@ -215,7 +218,12 @@ class LocationPuckManagerTest {
   @Test
   fun testUpdateCurrentBearingWithinThreshold() {
     locationPuckManager.updateCurrentBearing(0.005)
-    verify(exactly = 0) { animationManager.animateBearing(targets = anyDoubleVararg(), options = null) }
+    verify(exactly = 0) {
+      animationManager.animateBearing(
+        targets = anyDoubleVararg(),
+        options = null
+      )
+    }
   }
 
   @Test
@@ -371,12 +379,18 @@ class LocationPuckManagerTest {
     assertTrue(value.endsWith("]], 22.0, [literal, [$expectedLastMercatorScaleString, $expectedLastMercatorScaleString, $expectedLastMercatorScaleString]]]"))
     value
       .replace("[interpolate, [exponential, 0.5], [zoom], 0.5, [literal, [", "")
-      .replace("]], 22.0, [literal, [$expectedLastMercatorScaleString, $expectedLastMercatorScaleString, $expectedLastMercatorScaleString]]]", "")
+      .replace(
+        "]], 22.0, [literal, [$expectedLastMercatorScaleString, $expectedLastMercatorScaleString, $expectedLastMercatorScaleString]]]",
+        ""
+      )
       .split(", ")
       .map { it.toDouble() }
       .forEach {
-        val absoluteDifference: Float = abs(it - MODEL_SCALE_CONSTANT * expectedLastMercatorScale).toFloat()
-        val maxUlp = Math.ulp(it).coerceAtLeast(Math.ulp(MODEL_SCALE_CONSTANT * expectedLastMercatorScale)).toFloat()
+        val absoluteDifference: Float =
+          abs(it - MODEL_SCALE_CONSTANT * expectedLastMercatorScale).toFloat()
+        val maxUlp =
+          Math.ulp(it).coerceAtLeast(Math.ulp(MODEL_SCALE_CONSTANT * expectedLastMercatorScale))
+            .toFloat()
         assert(absoluteDifference < 2 * maxUlp)
       }
   }
@@ -420,22 +434,29 @@ class LocationPuckManagerTest {
   }
 
   @Test
-  fun testDisablePuckBearingRestoresCameraBearing() {
-    val cameraStateBearing = 180.0
-    val puckBearing = 90.0
+  fun testDisablePuckBearingSnapsToNorth() {
+    val lastBearing = 180.0
+    val newBearing = 90.0
     val settings2 = LocationComponentSettings2().apply { puckBearingEnabled = false }
-    val bearingResults = mutableListOf<Double>()
+    val bearings = mutableListOf<Double>()
 
-    every { mapCameraDelegate.cameraState.bearing } returns cameraStateBearing
     every { accuracyRadiusSettings.puckBearingEnabled } returns true
-    every { animationManager.animateBearing(*varargAllDouble { bearingResults.add(it) }, options = null) } returns Unit
 
-    locationPuckManager.lastBearing = puckBearing
+    locationPuckManager.lastBearing = lastBearing
     locationPuckManager.updateSettings2(settings2)
-    verify(exactly = 1) { locationPuckManager.updateCurrentBearing(cameraStateBearing) }
-    verify(exactly = 1) { animationManager.animateBearing(*anyDoubleVararg(), options = null) }
-    verify(exactly = 1) { animationManager.applySettings2(settings2) }
-    assertEquals(listOf(puckBearing, cameraStateBearing), bearingResults)
+    locationPuckManager.updateCurrentBearing(newBearing)
+
+    verify {
+      animationManager.animateBearing(
+        targets = captureVararg(bearings).toDoubleArray(),
+        options = any()
+      )
+    }
+
+    assertArrayEquals(
+      bearings.toTypedArray(),
+      arrayOf(180.0, 0.0)
+    )
   }
 
   private companion object {

@@ -117,9 +117,14 @@ internal class PuckAnimatorManager(
       accuracyCircleColor = settings2.accuracyRingColor
       accuracyCircleBorderColor = settings2.accuracyRingBorderColor
     }
-    bearingAnimator.apply {
-      enabled = settings2.puckBearingEnabled
-    }
+  }
+
+  internal fun setDisabled() {
+    bearingAnimator.enabled = false
+  }
+
+  internal fun setEnabled() {
+    bearingAnimator.enabled = true
   }
 
   fun applyPulsingAnimationSettings(settings: LocationComponentSettings) {

@@ -3,6 +3,7 @@ package com.mapbox.maps.plugin.locationcomponent
 import android.animation.ValueAnimator
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
+import androidx.core.animation.doOnEnd
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
@@ -141,10 +142,6 @@ internal class LocationPuckManager(
   }
 
   fun updateSettings2(settings2: LocationComponentSettings2) {
-    if (!settings2.puckBearingEnabled && this.settings2.puckBearingEnabled) {
-      // Restore camera bearing if puck bearing is disabled.
-      updateCurrentBearing(delegateProvider.mapCameraManagerDelegate.cameraState.bearing)
-    }
     this.settings2 = settings2
     animationManager.applySettings2(settings2)
   }
@@ -179,11 +176,52 @@ internal class LocationPuckManager(
     options: (ValueAnimator.() -> Unit)? = null,
     forceUpdate: Boolean = false
   ) {
+    when (settings2.puckBearingEnabled) {
+      false -> {
+        // Puck bearing is disabled, snap back to north.
+        snapToNorth(options, false)
+      }
+      true -> {
+        // Puck bearing is enabled, animate to new bearing.
+        animateToBearing(bearings, options, forceUpdate)
+      }
+    }
+  }
+
+  @VisibleForTesting(otherwise = PRIVATE)
+  fun snapToNorth(
+    options: (ValueAnimator.() -> Unit)? = null,
+    forceUpdate: Boolean
+  ) {
     // Skip bearing updates if the change from the lastBearing is too small, thus avoid unnecessary calls to gl-native.
-    if (!forceUpdate && (abs(bearings.last() - lastBearing) < BEARING_UPDATE_THRESHOLD)) {
+    if (!forceUpdate && lastBearing < BEARING_UPDATE_THRESHOLD) {
+      return
+    }
+    val targets = doubleArrayOf(lastBearing, 0.0)
+    animationManager.animateBearing(
+      *targets,
+      options = {
+        options?.invoke(this)
+        duration = 0
+        doOnEnd {
+          animationManager.setDisabled()
+        }
+      }
+    )
+  }
+
+  @VisibleForTesting(otherwise = PRIVATE)
+  fun animateToBearing(
+    bearings: DoubleArray,
+    options: (ValueAnimator.() -> Unit)? = null,
+    forceUpdate: Boolean
+  ) {
+    // Skip bearing updates if the change from the lastBearing is too small, thus avoid unnecessary calls to gl-native.
+    if (!forceUpdate && abs(bearings.last() - lastBearing) < BEARING_UPDATE_THRESHOLD) {
       return
     }
     val targets = doubleArrayOf(lastBearing, *bearings)
+    animationManager.setEnabled()
     animationManager.animateBearing(
       *targets,
       options = options
