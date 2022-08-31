@@ -183,7 +183,6 @@ internal class LocationPuckManager(
       animateToBearing(
         doubleArrayOf(0.0),
         options = {
-          options?.invoke(this)
           duration = 0
           doOnEnd {
             animationManager.setEnabled(false)
