@@ -177,7 +177,7 @@ internal class LocationPuckManager(
     forceUpdate: Boolean = false
   ) {
     if (settings2.puckBearingEnabled) {
-      animationManager.setEnabled(true)
+      animationManager.setPuckAnimationEnabled(true)
       animateToBearing(bearings, options, forceUpdate)
     } else {
       animateToBearing(
@@ -185,7 +185,7 @@ internal class LocationPuckManager(
         options = {
           duration = 0
           doOnEnd {
-            animationManager.setEnabled(false)
+            animationManager.setPuckAnimationEnabled(false)
           }
         },
         forceUpdate

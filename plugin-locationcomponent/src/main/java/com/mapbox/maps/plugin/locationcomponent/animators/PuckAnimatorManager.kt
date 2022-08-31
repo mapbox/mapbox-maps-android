@@ -119,7 +119,7 @@ internal class PuckAnimatorManager(
     }
   }
 
-  internal fun setEnabled(enabled: Boolean) {
+  internal fun setPuckAnimationEnabled(enabled: Boolean) {
     bearingAnimator.enabled = enabled
   }
 
