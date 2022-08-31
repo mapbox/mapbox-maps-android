@@ -1839,7 +1839,7 @@ package com.mapbox.maps.plugin.gestures.generated {
     method public boolean getDoubleTouchToZoomOutEnabled();
     method public com.mapbox.maps.ScreenCoordinate? getFocalPoint();
     method public boolean getIncreasePinchToZoomThresholdWhenRotating();
-    method public boolean getIncreaseRotateThresholdWhenPinchingToZoom();
+    method @Deprecated public boolean getIncreaseRotateThresholdWhenPinchingToZoom();
     method public boolean getPinchScrollEnabled();
     method public boolean getPinchToZoomDecelerationEnabled();
     method public boolean getPinchToZoomEnabled();
@@ -1857,7 +1857,7 @@ package com.mapbox.maps.plugin.gestures.generated {
     method public void setDoubleTouchToZoomOutEnabled(boolean doubleTouchToZoomOutEnabled);
     method public void setFocalPoint(com.mapbox.maps.ScreenCoordinate? focalPoint);
     method public void setIncreasePinchToZoomThresholdWhenRotating(boolean increasePinchToZoomThresholdWhenRotating);
-    method public void setIncreaseRotateThresholdWhenPinchingToZoom(boolean increaseRotateThresholdWhenPinchingToZoom);
+    method @Deprecated public void setIncreaseRotateThresholdWhenPinchingToZoom(boolean increaseRotateThresholdWhenPinchingToZoom);
     method public void setPinchScrollEnabled(boolean pinchScrollEnabled);
     method public void setPinchToZoomDecelerationEnabled(boolean pinchToZoomDecelerationEnabled);
     method public void setPinchToZoomEnabled(boolean pinchToZoomEnabled);
@@ -1875,7 +1875,7 @@ package com.mapbox.maps.plugin.gestures.generated {
     property public abstract boolean doubleTouchToZoomOutEnabled;
     property public abstract com.mapbox.maps.ScreenCoordinate? focalPoint;
     property public abstract boolean increasePinchToZoomThresholdWhenRotating;
-    property public abstract boolean increaseRotateThresholdWhenPinchingToZoom;
+    property @Deprecated public abstract boolean increaseRotateThresholdWhenPinchingToZoom;
     property public abstract boolean pinchScrollEnabled;
     property public abstract boolean pinchToZoomDecelerationEnabled;
     property public abstract boolean pinchToZoomEnabled;

@@ -91,6 +91,7 @@ interface GesturesSettingsInterface {
   /**
    * Whether rotate threshold increases when pinching to zoom. true by default.
    */
+  @Deprecated(message = "This property has no effect")
   var increaseRotateThresholdWhenPinchingToZoom: Boolean
 
   /**

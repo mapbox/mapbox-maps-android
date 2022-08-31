@@ -3,6 +3,7 @@
 Mapbox welcomes participation and contributions from everyone.
 # main
 ## Features ✨ and improvements 🏁
+* Deprecated gesture settings `increaseRotateThresholdWhenPinchingToZoom` property. ([1632](https://github.com/mapbox/mapbox-maps-android/pull/1632))
 
 ## Bug fixes 🐞
 * Fix scale bar truncated at high zoom levels near the poles. ([1620](https://github.com/mapbox/mapbox-maps-android/pull/1620))
