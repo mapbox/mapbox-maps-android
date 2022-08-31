@@ -180,13 +180,17 @@ internal class LocationPuckManager(
       animationManager.setEnabled(true)
       animateToBearing(bearings, options, forceUpdate)
     } else {
-      animateToBearing(doubleArrayOf(0.0), options = {
-        options?.invoke(this)
-        duration = 0
-        doOnEnd {
-          animationManager.setEnabled(false)
-        }
-      }, forceUpdate)
+      animateToBearing(
+        doubleArrayOf(0.0),
+        options = {
+          options?.invoke(this)
+          duration = 0
+          doOnEnd {
+            animationManager.setEnabled(false)
+          }
+        },
+        forceUpdate
+      )
     }
   }
 
