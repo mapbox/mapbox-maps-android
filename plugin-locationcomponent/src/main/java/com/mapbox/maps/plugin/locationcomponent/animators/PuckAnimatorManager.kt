@@ -119,12 +119,8 @@ internal class PuckAnimatorManager(
     }
   }
 
-  internal fun setDisabled() {
-    bearingAnimator.enabled = false
-  }
-
-  internal fun setEnabled() {
-    bearingAnimator.enabled = true
+  internal fun setEnabled(enabled: Boolean) {
+    bearingAnimator.enabled = enabled
   }
 
   fun applyPulsingAnimationSettings(settings: LocationComponentSettings) {

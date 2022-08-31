@@ -176,38 +176,18 @@ internal class LocationPuckManager(
     options: (ValueAnimator.() -> Unit)? = null,
     forceUpdate: Boolean = false
   ) {
-    when (settings2.puckBearingEnabled) {
-      false -> {
-        // Puck bearing is disabled, snap back to north.
-        snapToNorth(options, false)
-      }
-      true -> {
-        // Puck bearing is enabled, animate to new bearing.
-        animateToBearing(bearings, options, forceUpdate)
-      }
-    }
-  }
-
-  @VisibleForTesting(otherwise = PRIVATE)
-  fun snapToNorth(
-    options: (ValueAnimator.() -> Unit)? = null,
-    forceUpdate: Boolean
-  ) {
-    // Skip bearing updates if the change from the lastBearing is too small, thus avoid unnecessary calls to gl-native.
-    if (!forceUpdate && lastBearing < BEARING_UPDATE_THRESHOLD) {
-      return
-    }
-    val targets = doubleArrayOf(lastBearing, 0.0)
-    animationManager.animateBearing(
-      *targets,
-      options = {
+    if (settings2.puckBearingEnabled) {
+      animationManager.setEnabled(true)
+      animateToBearing(bearings, options, forceUpdate)
+    } else {
+      animateToBearing(doubleArrayOf(0.0), options = {
         options?.invoke(this)
         duration = 0
         doOnEnd {
-          animationManager.setDisabled()
+          animationManager.setEnabled(false)
         }
-      }
-    )
+      }, forceUpdate)
+    }
   }
 
   @VisibleForTesting(otherwise = PRIVATE)
@@ -221,7 +201,6 @@ internal class LocationPuckManager(
       return
     }
     val targets = doubleArrayOf(lastBearing, *bearings)
-    animationManager.setEnabled()
     animationManager.animateBearing(
       *targets,
       options = options
