@@ -1,5 +1,6 @@
 package com.mapbox.maps.testapp.auto.car
 
+import android.os.Build
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.androidauto.MapboxCarMapObserver
 import com.mapbox.maps.extension.androidauto.MapboxCarMapSurface
@@ -14,10 +15,20 @@ import com.mapbox.maps.threading.AnimationThreadController
 @OptIn(MapboxExperimental::class)
 class CarAnimationThreadController : MapboxCarMapObserver {
   override fun onAttached(mapboxCarMapSurface: MapboxCarMapSurface) {
-    AnimationThreadController.useBackgroundThread()
+    if (deviceRequiresBackgroundThreadAnimations()) {
+      AnimationThreadController.useBackgroundThread()
+    }
   }
 
   override fun onDetached(mapboxCarMapSurface: MapboxCarMapSurface) {
     AnimationThreadController.useMainThread()
+  }
+
+  private fun deviceRequiresBackgroundThreadAnimations(): Boolean {
+      return impactedManufacturer.contains(Build.MANUFACTURER)
+  }
+
+  private companion object {
+    val impactedManufacturer = setOf("Xiaomi")
   }
 }
