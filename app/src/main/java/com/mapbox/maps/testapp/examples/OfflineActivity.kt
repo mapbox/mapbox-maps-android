@@ -18,6 +18,11 @@ import com.mapbox.bindgen.Value
 import com.mapbox.common.*
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
+import com.mapbox.maps.extension.style.layers.addLayer
+import com.mapbox.maps.extension.style.layers.generated.RasterLayer
+import com.mapbox.maps.extension.style.sources.addSource
+import com.mapbox.maps.extension.style.sources.generated.RasterSource
+import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions
 import com.mapbox.maps.plugin.annotation.generated.createCircleAnnotationManager
@@ -102,7 +107,21 @@ class OfflineActivity : AppCompatActivity() {
         mapView = MapView(this@OfflineActivity).also { mapview ->
           val mapboxMap = mapview.getMapboxMap()
           mapboxMap.setCamera(CameraOptions.Builder().zoom(ZOOM).center(TOKYO).build())
-          mapboxMap.loadStyleUri(Style.OUTDOORS) {
+          mapboxMap.loadStyle(style() {}) { style ->
+
+            val tiles = listOf(
+              "https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.jpg90?access_token=${
+                getString(R.string.mapbox_access_token)}")
+
+            val satSource = RasterSource.Builder(sourceId)
+              .tiles(tiles)
+              .tileSize(256L) // loading large amounts of raster tiles can cause performance
+                                    // issues on some devices with higher resolution screens
+              .build()
+
+            style.addSource(satSource)
+            style.addLayer(RasterLayer(layerId, sourceId))
+
             // Add a circle annotation to the offline geometry.
             mapview.annotations.createCircleAnnotationManager().create(
               CircleAnnotationOptions()
@@ -158,7 +177,7 @@ class OfflineActivity : AppCompatActivity() {
     // Style packs are stored in the disk cache database, but their resources are not subject to
     // the data eviction algorithm and are not considered when calculating the disk cache size.
     stylePackCancelable = offlineManager.loadStylePack(
-      Style.OUTDOORS,
+      Style.SATELLITE,
       // Build Style pack load options
       StylePackLoadOptions.Builder()
         .glyphsRasterizationMode(GlyphsRasterizationMode.IDEOGRAPHS_RASTERIZED_LOCALLY)
@@ -210,7 +229,7 @@ class OfflineActivity : AppCompatActivity() {
     // The OfflineManager is responsible for creating tileset descriptors for the given style and zoom range.
     val tilesetDescriptor = offlineManager.createTilesetDescriptor(
       TilesetDescriptorOptions.Builder()
-        .styleURI(Style.OUTDOORS)
+        .styleURI(Style.SATELLITE)
         .minZoom(0)
         .maxZoom(16)
         .build()
@@ -296,7 +315,7 @@ class OfflineActivity : AppCompatActivity() {
     // Remove the style pack with the style url.
     // Note this will not remove the downloaded style pack, instead, it will just mark the resources
     // not a part of the existing style pack. The resources still exists as disk cache.
-    offlineManager.removeStylePack(Style.OUTDOORS)
+    offlineManager.removeStylePack(Style.SATELLITE)
 
     MapboxMap.clearData(resourceOptions) {
       it.error?.let { error ->
@@ -415,6 +434,8 @@ class OfflineActivity : AppCompatActivity() {
   }
 
   companion object {
+    private const val sourceId = "sat-source"
+    private const val layerId = "sat-layer"
     private const val TAG = "OfflineActivity"
     private const val ZOOM = 12.0
     private val TOKYO: Point = Point.fromLngLat(139.769305, 35.682027)
