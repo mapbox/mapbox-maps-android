@@ -678,8 +678,11 @@ jobs:
           name: Run dependency check
           no_output_timeout: 15m
           command: ./gradlew dependencyUpdates --stacktrace
+      - run:
+          name: Merge all reports
+          command: python3 scripts/merge-gradle-denendency-output.py
       - store_artifacts:
-          path: "*/build/dependencyUpdates/report.txt"
+          path: merged_report.txt
           destination: .
 
 executors:
