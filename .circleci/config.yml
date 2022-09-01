@@ -19,6 +19,7 @@ workflows:
     when:
       not: << pipeline.parameters.mapbox_upstream >>
     jobs:
+      - check-gradle-denendencies
       - verify-code:
           filters:
             tags:
@@ -665,6 +666,21 @@ jobs:
               --current-branch $CIRCLE_BRANCH \
               --target-slug mapbox/mapbox-maps-android-private \
               --sync-internal True
+
+  check-gradle-denendencies:
+    executor:
+      name: ubuntu
+      machine: small
+    steps:
+      - checkout
+      - restore-gradle-cache
+      - run:
+          name: Run dependency check
+          no_output_timeout: 15m
+          command: ./gradlew dependencyUpdates --stacktrace
+      - store_artifacts:
+          path: "*/build/dependencyUpdates/report.txt"
+          destination: .
 
 executors:
   ubuntu:

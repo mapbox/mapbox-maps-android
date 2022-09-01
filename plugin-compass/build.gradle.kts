@@ -61,6 +61,7 @@ project.apply {
   from("$rootDir/gradle/track-public-apis.gradle")
   from("$rootDir/gradle/pitest.gradle")
   from("$rootDir/gradle/detekt.gradle")
+  from("$rootDir/gradle/dependency-updates.gradle")
 }
 
 configure<pl.droidsonroids.gradle.pitest.PitestPluginExtension> {
