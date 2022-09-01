@@ -681,8 +681,12 @@ jobs:
       - run:
           name: Merge all reports
           command: python3 scripts/merge-gradle-dependency-output.py
+      - run:
+          name: Zip artifacts
+          command: zip -r results.zip merged_report.txt
+          when: always
       - store_artifacts:
-          path: merged_report.txt
+          path: results.zip
           destination: .
 
 executors:
