@@ -440,6 +440,7 @@ class LocationPuckManagerTest {
     val newBearing = 90.0
     val settings2 = LocationComponentSettings2().apply { puckBearingEnabled = false }
     val bearings = mutableListOf<Double>()
+    every { animationManager.puckAnimationEnabled } returns true
 
     locationPuckManager.lastBearing = lastBearing
     locationPuckManager.updateSettings2(settings2)
