@@ -19,11 +19,13 @@ workflows:
     when:
       not: << pipeline.parameters.mapbox_upstream >>
     jobs:
-      - check-gradle-denendencies
       - verify-code:
           filters:
             tags:
               only: /(v.*|extension-androidauto-v.*)/
+      - check-gradle-denendencies:
+          requires:
+            - verify-code
       - verify-docs:
           requires:
             - verify-code
