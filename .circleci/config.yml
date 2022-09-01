@@ -680,7 +680,7 @@ jobs:
           command: ./gradlew dependencyUpdates --stacktrace
       - run:
           name: Merge all reports
-          command: python3 scripts/merge-gradle-denendency-output.py
+          command: python3 scripts/merge-gradle-dependency-output.py
       - store_artifacts:
           path: merged_report.txt
           destination: .
