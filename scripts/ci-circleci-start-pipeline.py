@@ -10,6 +10,16 @@ import datetime
 
 MAIN_BRANCH_NAME = "main"
 
+def str2bool(v):
+    if isinstance(v, bool):
+        return v
+    if v.lower() in ('yes', 'true', 't', 'y', '1'):
+        return True
+    elif v.lower() in ('no', 'false', 'f', 'n', '0'):
+        return False
+    else:
+        raise argparse.ArgumentTypeError('Boolean value expected.')
+
 
 def TriggerPipeline(slug, token, branch, params):
     url = "https://circleci.com/api/v2/project/github/%s/pipeline" % (slug)
@@ -73,7 +83,7 @@ def Main():
         "mapbox_android_hash": args.hash,
         "mapbox_merge_main": args.current_branch == MAIN_BRANCH_NAME,
         "benchmark_date": created,
-        "pixel_match_public": args.pixel_match_public
+        "pixel_match_public": str2bool(args.pixel_match_public)
     }
 
     TriggerPipeline(args.target_slug, args.token, args.branch, params)
