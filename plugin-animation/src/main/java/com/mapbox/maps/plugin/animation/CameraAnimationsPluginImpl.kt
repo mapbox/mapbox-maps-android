@@ -830,7 +830,7 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     registerAnimators(*cameraAnimators.toTypedArray())
     AnimatorSet().apply {
       playTogether(*cameraAnimators.toTypedArray())
-      start()
+      postOnAnimatorThread { start() }
     }
   }
 
