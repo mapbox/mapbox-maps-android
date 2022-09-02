@@ -15,6 +15,17 @@ parameters:
 
 workflows:
   version: 2
+  nightly:
+    triggers:
+      - schedule:
+          # at 7:00 on Monday
+          cron: 0 7 * * 1
+          filters:
+            branches:
+              only:
+                - main
+    jobs:
+      - check-gradle-denendencies
   build:
     when:
       not: << pipeline.parameters.mapbox_upstream >>
@@ -23,9 +34,6 @@ workflows:
           filters:
             tags:
               only: /(v.*|extension-androidauto-v.*)/
-      - check-gradle-denendencies:
-          requires:
-            - verify-code
       - verify-docs:
           requires:
             - verify-code
