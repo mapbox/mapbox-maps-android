@@ -1,6 +1,7 @@
 package com.mapbox.maps.plugin.animation
 
 import android.animation.AnimatorSet
+import com.mapbox.maps.threading.AnimationThreadController
 
 internal data class HighLevelAnimatorSet(
   val owner: String?,
@@ -10,6 +11,8 @@ internal data class HighLevelAnimatorSet(
   var started = false
 
   override fun cancel() {
-    animatorSet.cancel()
+    AnimationThreadController.postOnAnimatorThread {
+      animatorSet.cancel()
+    }
   }
 }
