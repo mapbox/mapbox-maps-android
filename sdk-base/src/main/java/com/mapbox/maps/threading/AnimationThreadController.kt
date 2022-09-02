@@ -42,6 +42,7 @@ object AnimationThreadController {
    *
    * Behaviour is undefined if any animators are running when this method is called.
    */
+  @Synchronized
   fun useBackgroundThread() {
     if (usingBackgroundThread) {
       return
@@ -60,6 +61,7 @@ object AnimationThreadController {
    * If called from Android Main thread - will be executed immediately in the same callchain
    * otherwise will be posted on Android Main thread explicitly.
    */
+  @Synchronized
   fun postOnMainThread(function: () -> Unit) {
     if (Looper.myLooper() != Looper.getMainLooper()) {
       mainHandler.post {
@@ -81,6 +83,7 @@ object AnimationThreadController {
    *
    * @throws RuntimeException when called from non Android Main thread and [useBackgroundThread] was not called beforehand.
    */
+  @Synchronized
   fun postOnAnimatorThread(function: () -> Unit) {
     if (usingBackgroundThread && Looper.myLooper() != backgroundAnimationThread?.looper) {
       backgroundAnimationHandler?.post { function.invoke() }
@@ -101,8 +104,10 @@ object AnimationThreadController {
    *
    * Behaviour is undefined if any animators are running when this method is called.
    */
+  @Synchronized
   fun useMainThread() {
     if (usingBackgroundThread) {
+      backgroundAnimationHandler?.removeCallbacksAndMessages(null)
       backgroundAnimationThread?.quit()
       usingBackgroundThread = false
       backgroundAnimationThread = null
