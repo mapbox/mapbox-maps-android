@@ -25,7 +25,7 @@ class CarAnimationThreadController : MapboxCarMapObserver {
   }
 
   private fun deviceRequiresBackgroundThreadAnimations(): Boolean {
-      return impactedManufacturer.contains(Build.MANUFACTURER)
+    return impactedManufacturer.contains(Build.MANUFACTURER)
   }
 
   private companion object {
