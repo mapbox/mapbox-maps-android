@@ -25,7 +25,7 @@ workflows:
               only:
                 - main
     jobs:
-      - check-gradle-denendencies
+      - check-gradle-dependencies
   build:
     when:
       not: << pipeline.parameters.mapbox_upstream >>
@@ -677,7 +677,7 @@ jobs:
               --target-slug mapbox/mapbox-maps-android-private \
               --sync-internal True
 
-  check-gradle-denendencies:
+  check-gradle-dependencies:
     executor:
       name: ubuntu
       machine: small
@@ -687,7 +687,7 @@ jobs:
       - run:
           name: Run dependency check
           no_output_timeout: 15m
-          command: ./gradlew dependencyUpdates --stacktrace
+          command: ./gradlew dependencyUpdates
       - run:
           name: Merge all reports
           command: python3 scripts/merge-gradle-dependency-output.py
