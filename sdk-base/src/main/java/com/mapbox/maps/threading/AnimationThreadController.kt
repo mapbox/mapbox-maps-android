@@ -4,7 +4,6 @@ import android.os.Handler
 import android.os.HandlerThread
 import android.os.Looper
 import com.mapbox.maps.MapboxExperimental
-import com.mapbox.maps.logE
 
 /**
  * Experimental controller singleton allowing to use background thread for all Mapbox animations.
@@ -79,22 +78,22 @@ object AnimationThreadController {
    * otherwise will be posted on background animator thread explicitly.
    *
    * If called after [useMainThread] from Android Main thread - will be executed immediately in the same callchain
-   * and throw exception otherwise.
-   *
-   * @throws RuntimeException when called from non Android Main thread and [useBackgroundThread] was not called beforehand.
+   * otherwise will be posted on Android Main thread explicitly.
    */
   @Synchronized
   fun postOnAnimatorThread(function: () -> Unit) {
-    if (usingBackgroundThread && Looper.myLooper() != backgroundAnimationThread?.looper) {
-      backgroundAnimationHandler?.post { function.invoke() }
-    } else if (Looper.myLooper() == Looper.getMainLooper()) {
-      function.invoke()
+    if (usingBackgroundThread) {
+      if (Looper.myLooper() == backgroundAnimationThread?.looper) {
+        function.invoke()
+      } else {
+        backgroundAnimationHandler?.post { function.invoke() }
+      }
     } else {
-      logE(
-        TAG,
-        "Function 'postOnAnimatorThread' could not be used from non-main thread" +
-          " when 'useBackgroundThread()' was not called beforehand!"
-      )
+      if (Looper.myLooper() == Looper.getMainLooper()) {
+        function.invoke()
+      } else {
+        mainHandler.post { function.invoke() }
+      }
     }
   }
 
@@ -116,5 +115,4 @@ object AnimationThreadController {
   }
 
   private const val BACKGROUND_ANIMATION_THREAD_NAME = "MapboxAnimThread"
-  private const val TAG = "AnimThreadController"
 }
