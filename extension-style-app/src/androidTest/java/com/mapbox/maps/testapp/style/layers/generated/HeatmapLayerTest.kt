@@ -378,20 +378,20 @@ class HeatmapLayerTest : BaseStyleTest() {
 
     setupLayer(layer)
 
-    val layer2 = getLayer("id") as HeatmapLayer
+    val cachedLayer = getLayer("id") as HeatmapLayer
 
-    removeLayer(layer2)
-    setupLayer(layer2)
+    removeLayer(layer)
+    setupLayer(cachedLayer)
 
-    assertEquals("test", layer2.sourceLayer)
-    assertEquals(10.0, layer2.minZoom)
-    assertEquals(10.0, layer2.maxZoom)
-    assertEquals(filterTestValue.toString(), layer2.filter.toString())
-    assertEquals(heatmapColorTestValue, layer.heatmapColor)
-    assertEquals(heatmapIntensityTestValue, layer.heatmapIntensity)
-    assertEquals(heatmapOpacityTestValue, layer.heatmapOpacity)
-    assertEquals(heatmapRadiusTestValue, layer.heatmapRadius)
-    assertEquals(heatmapWeightTestValue, layer.heatmapWeight)
+    assertEquals("test", cachedLayer.sourceLayer)
+    assertEquals(10.0, cachedLayer.minZoom)
+    assertEquals(10.0, cachedLayer.maxZoom)
+    assertEquals(filterTestValue.toString(), cachedLayer.filter.toString())
+    assertEquals(heatmapColorTestValue, cachedLayer.heatmapColor)
+    assertEquals(heatmapIntensityTestValue, cachedLayer.heatmapIntensity)
+    assertEquals(heatmapOpacityTestValue, cachedLayer.heatmapOpacity)
+    assertEquals(heatmapRadiusTestValue, cachedLayer.heatmapRadius)
+    assertEquals(heatmapWeightTestValue, cachedLayer.heatmapWeight)
   }
 }
 

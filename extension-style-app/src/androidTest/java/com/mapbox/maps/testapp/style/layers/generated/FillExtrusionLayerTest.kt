@@ -671,25 +671,25 @@ class FillExtrusionLayerTest : BaseStyleTest() {
 
     setupLayer(layer)
 
-    val layer2 = getLayer("id") as FillExtrusionLayer
+    val cachedLayer = getLayer("id") as FillExtrusionLayer
 
-    removeLayer(layer2)
-    setupLayer(layer2)
+    removeLayer(layer)
+    setupLayer(cachedLayer)
 
-    assertEquals("test", layer2.sourceLayer)
-    assertEquals(10.0, layer2.minZoom)
-    assertEquals(10.0, layer2.maxZoom)
-    assertEquals(filterTestValue.toString(), layer2.filter.toString())
-    assertEquals(fillExtrusionAmbientOcclusionIntensityTestValue, layer.fillExtrusionAmbientOcclusionIntensity)
-    assertEquals(fillExtrusionAmbientOcclusionRadiusTestValue, layer.fillExtrusionAmbientOcclusionRadius)
-    assertEquals(fillExtrusionBaseTestValue, layer.fillExtrusionBase)
-    assertEquals(fillExtrusionColorTestValue, layer.fillExtrusionColor)
-    assertEquals(fillExtrusionHeightTestValue, layer.fillExtrusionHeight)
-    assertEquals(fillExtrusionOpacityTestValue, layer.fillExtrusionOpacity)
-    assertEquals(fillExtrusionPatternTestValue, layer.fillExtrusionPattern)
-    assertEquals(fillExtrusionTranslateTestValue, layer.fillExtrusionTranslate)
-    assertEquals(fillExtrusionTranslateAnchorTestValue, layer.fillExtrusionTranslateAnchor)
-    assertEquals(fillExtrusionVerticalGradientTestValue, layer.fillExtrusionVerticalGradient)
+    assertEquals("test", cachedLayer.sourceLayer)
+    assertEquals(10.0, cachedLayer.minZoom)
+    assertEquals(10.0, cachedLayer.maxZoom)
+    assertEquals(filterTestValue.toString(), cachedLayer.filter.toString())
+    assertEquals(fillExtrusionAmbientOcclusionIntensityTestValue, cachedLayer.fillExtrusionAmbientOcclusionIntensity)
+    assertEquals(fillExtrusionAmbientOcclusionRadiusTestValue, cachedLayer.fillExtrusionAmbientOcclusionRadius)
+    assertEquals(fillExtrusionBaseTestValue, cachedLayer.fillExtrusionBase)
+    assertEquals(fillExtrusionColorTestValue, cachedLayer.fillExtrusionColor)
+    assertEquals(fillExtrusionHeightTestValue, cachedLayer.fillExtrusionHeight)
+    assertEquals(fillExtrusionOpacityTestValue, cachedLayer.fillExtrusionOpacity)
+    assertEquals(fillExtrusionPatternTestValue, cachedLayer.fillExtrusionPattern)
+    assertEquals(fillExtrusionTranslateTestValue, cachedLayer.fillExtrusionTranslate)
+    assertEquals(fillExtrusionTranslateAnchorTestValue, cachedLayer.fillExtrusionTranslateAnchor)
+    assertEquals(fillExtrusionVerticalGradientTestValue, cachedLayer.fillExtrusionVerticalGradient)
   }
 }
 

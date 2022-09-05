@@ -750,27 +750,27 @@ class CircleLayerTest : BaseStyleTest() {
 
     setupLayer(layer)
 
-    val layer2 = getLayer("id") as CircleLayer
+    val cachedLayer = getLayer("id") as CircleLayer
 
-    removeLayer(layer2)
-    setupLayer(layer2)
+    removeLayer(layer)
+    setupLayer(cachedLayer)
 
-    assertEquals("test", layer2.sourceLayer)
-    assertEquals(10.0, layer2.minZoom)
-    assertEquals(10.0, layer2.maxZoom)
-    assertEquals(filterTestValue.toString(), layer2.filter.toString())
-    assertEquals(circleSortKeyTestValue, layer.circleSortKey)
-    assertEquals(circleBlurTestValue, layer.circleBlur)
-    assertEquals(circleColorTestValue, layer.circleColor)
-    assertEquals(circleOpacityTestValue, layer.circleOpacity)
-    assertEquals(circlePitchAlignmentTestValue, layer.circlePitchAlignment)
-    assertEquals(circlePitchScaleTestValue, layer.circlePitchScale)
-    assertEquals(circleRadiusTestValue, layer.circleRadius)
-    assertEquals(circleStrokeColorTestValue, layer.circleStrokeColor)
-    assertEquals(circleStrokeOpacityTestValue, layer.circleStrokeOpacity)
-    assertEquals(circleStrokeWidthTestValue, layer.circleStrokeWidth)
-    assertEquals(circleTranslateTestValue, layer.circleTranslate)
-    assertEquals(circleTranslateAnchorTestValue, layer.circleTranslateAnchor)
+    assertEquals("test", cachedLayer.sourceLayer)
+    assertEquals(10.0, cachedLayer.minZoom)
+    assertEquals(10.0, cachedLayer.maxZoom)
+    assertEquals(filterTestValue.toString(), cachedLayer.filter.toString())
+    assertEquals(circleSortKeyTestValue, cachedLayer.circleSortKey)
+    assertEquals(circleBlurTestValue, cachedLayer.circleBlur)
+    assertEquals(circleColorTestValue, cachedLayer.circleColor)
+    assertEquals(circleOpacityTestValue, cachedLayer.circleOpacity)
+    assertEquals(circlePitchAlignmentTestValue, cachedLayer.circlePitchAlignment)
+    assertEquals(circlePitchScaleTestValue, cachedLayer.circlePitchScale)
+    assertEquals(circleRadiusTestValue, cachedLayer.circleRadius)
+    assertEquals(circleStrokeColorTestValue, cachedLayer.circleStrokeColor)
+    assertEquals(circleStrokeOpacityTestValue, cachedLayer.circleStrokeOpacity)
+    assertEquals(circleStrokeWidthTestValue, cachedLayer.circleStrokeWidth)
+    assertEquals(circleTranslateTestValue, cachedLayer.circleTranslate)
+    assertEquals(circleTranslateAnchorTestValue, cachedLayer.circleTranslateAnchor)
   }
 }
 

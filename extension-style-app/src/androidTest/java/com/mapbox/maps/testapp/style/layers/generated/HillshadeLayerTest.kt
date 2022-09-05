@@ -429,20 +429,20 @@ class HillshadeLayerTest : BaseStyleTest() {
 
     setupLayer(layer)
 
-    val layer2 = getLayer("id") as HillshadeLayer
+    val cachedLayer = getLayer("id") as HillshadeLayer
 
-    removeLayer(layer2)
-    setupLayer(layer2)
+    removeLayer(layer)
+    setupLayer(cachedLayer)
 
-    assertEquals("test", layer2.sourceLayer)
-    assertEquals(10.0, layer2.minZoom)
-    assertEquals(10.0, layer2.maxZoom)
-    assertEquals(hillshadeAccentColorTestValue, layer.hillshadeAccentColor)
-    assertEquals(hillshadeExaggerationTestValue, layer.hillshadeExaggeration)
-    assertEquals(hillshadeHighlightColorTestValue, layer.hillshadeHighlightColor)
-    assertEquals(hillshadeIlluminationAnchorTestValue, layer.hillshadeIlluminationAnchor)
-    assertEquals(hillshadeIlluminationDirectionTestValue, layer.hillshadeIlluminationDirection)
-    assertEquals(hillshadeShadowColorTestValue, layer.hillshadeShadowColor)
+    assertEquals("test", cachedLayer.sourceLayer)
+    assertEquals(10.0, cachedLayer.minZoom)
+    assertEquals(10.0, cachedLayer.maxZoom)
+    assertEquals(hillshadeAccentColorTestValue, cachedLayer.hillshadeAccentColor)
+    assertEquals(hillshadeExaggerationTestValue, cachedLayer.hillshadeExaggeration)
+    assertEquals(hillshadeHighlightColorTestValue, cachedLayer.hillshadeHighlightColor)
+    assertEquals(hillshadeIlluminationAnchorTestValue, cachedLayer.hillshadeIlluminationAnchor)
+    assertEquals(hillshadeIlluminationDirectionTestValue, cachedLayer.hillshadeIlluminationDirection)
+    assertEquals(hillshadeShadowColorTestValue, cachedLayer.hillshadeShadowColor)
   }
 }
 

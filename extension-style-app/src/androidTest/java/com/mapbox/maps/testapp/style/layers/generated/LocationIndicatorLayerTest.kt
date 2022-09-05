@@ -841,26 +841,26 @@ class LocationIndicatorLayerTest : BaseStyleTest() {
 
     setupLayer(layer)
 
-    val layer2 = getLayer("id") as LocationIndicatorLayer
+    val cachedLayer = getLayer("id") as LocationIndicatorLayer
 
-    removeLayer(layer2)
-    setupLayer(layer2)
+    removeLayer(layer)
+    setupLayer(cachedLayer)
 
-    assertEquals(bearingImageTestValue, layer.bearingImage)
-    assertEquals(shadowImageTestValue, layer.shadowImage)
-    assertEquals(topImageTestValue, layer.topImage)
-    assertEquals(accuracyRadiusTestValue, layer.accuracyRadius)
-    assertEquals(accuracyRadiusBorderColorTestValue, layer.accuracyRadiusBorderColor)
-    assertEquals(accuracyRadiusColorTestValue, layer.accuracyRadiusColor)
-    assertEquals(bearingTestValue, layer.bearing)
-    assertEquals(bearingImageSizeTestValue, layer.bearingImageSize)
-    assertEquals(emphasisCircleColorTestValue, layer.emphasisCircleColor)
-    assertEquals(emphasisCircleRadiusTestValue, layer.emphasisCircleRadius)
-    assertEquals(imagePitchDisplacementTestValue, layer.imagePitchDisplacement)
-    assertEquals(locationTestValue, layer.location)
-    assertEquals(perspectiveCompensationTestValue, layer.perspectiveCompensation)
-    assertEquals(shadowImageSizeTestValue, layer.shadowImageSize)
-    assertEquals(topImageSizeTestValue, layer.topImageSize)
+    assertEquals(bearingImageTestValue, cachedLayer.bearingImage)
+    assertEquals(shadowImageTestValue, cachedLayer.shadowImage)
+    assertEquals(topImageTestValue, cachedLayer.topImage)
+    assertEquals(accuracyRadiusTestValue, cachedLayer.accuracyRadius)
+    assertEquals(accuracyRadiusBorderColorTestValue, cachedLayer.accuracyRadiusBorderColor)
+    assertEquals(accuracyRadiusColorTestValue, cachedLayer.accuracyRadiusColor)
+    assertEquals(bearingTestValue, cachedLayer.bearing)
+    assertEquals(bearingImageSizeTestValue, cachedLayer.bearingImageSize)
+    assertEquals(emphasisCircleColorTestValue, cachedLayer.emphasisCircleColor)
+    assertEquals(emphasisCircleRadiusTestValue, cachedLayer.emphasisCircleRadius)
+    assertEquals(imagePitchDisplacementTestValue, cachedLayer.imagePitchDisplacement)
+    assertEquals(locationTestValue, cachedLayer.location)
+    assertEquals(perspectiveCompensationTestValue, cachedLayer.perspectiveCompensation)
+    assertEquals(shadowImageSizeTestValue, cachedLayer.shadowImageSize)
+    assertEquals(topImageSizeTestValue, cachedLayer.topImageSize)
   }
 }
 
