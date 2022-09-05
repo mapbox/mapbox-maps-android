@@ -27,7 +27,7 @@ buildscript {
     classpath(Plugins.mapboxSdkVersionsPlugin)
     classpath(Plugins.pitestPlugin)
     classpath(Plugins.playPublisher)
-    classpath("com.github.ben-manes:gradle-versions-plugin:0.42.0")
+    classpath(Plugins.gradleVersions)
   }
 }
 
