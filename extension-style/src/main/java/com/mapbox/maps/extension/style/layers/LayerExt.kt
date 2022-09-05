@@ -19,20 +19,19 @@ import com.mapbox.maps.logE
  * @return StyleLayerPlugin
  */
 fun StyleManagerInterface.getLayer(layerId: String): Layer? {
-  fun source(): String = getStyleLayerProperty(layerId, "source").unwrap()
-  val type = getStyleLayerProperty(layerId, "type").silentUnwrap<String>()
-  return when (type) {
+  val source by lazy { getStyleLayerProperty(layerId, "source").unwrap<String>() }
+  return when (val type = getStyleLayerProperty(layerId, "type").silentUnwrap<String>()) {
     "background" -> BackgroundLayer(layerId)
     "location-indicator" -> LocationIndicatorLayer(layerId)
     "sky" -> SkyLayer(layerId)
-    "circle" -> CircleLayer(layerId, source())
-    "fill-extrusion" -> FillExtrusionLayer(layerId, source())
-    "fill" -> FillLayer(layerId, source())
-    "heatmap" -> HeatmapLayer(layerId, source())
-    "hillshade" -> HillshadeLayer(layerId, source())
-    "line" -> LineLayer(layerId, source())
-    "raster" -> RasterLayer(layerId, source())
-    "symbol" -> SymbolLayer(layerId, source())
+    "circle" -> CircleLayer(layerId, source)
+    "fill-extrusion" -> FillExtrusionLayer(layerId, source)
+    "fill" -> FillLayer(layerId, source)
+    "heatmap" -> HeatmapLayer(layerId, source)
+    "hillshade" -> HillshadeLayer(layerId, source)
+    "line" -> LineLayer(layerId, source)
+    "raster" -> RasterLayer(layerId, source)
+    "symbol" -> SymbolLayer(layerId, source)
     else -> {
       logE(TAG, "Layer type: $type unknown.")
       null
