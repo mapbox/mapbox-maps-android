@@ -337,6 +337,8 @@ class HeatmapLayerTest : BaseStyleTest() {
       }
       literal(1.0)
     }
+    val minZoomTestValue = 10.0
+    val maxZoomTestValue = 20.0
     val heatmapColorTestValue = interpolate {
       linear()
       heatmapDensity()
@@ -366,8 +368,8 @@ class HeatmapLayerTest : BaseStyleTest() {
 
     val layer = heatmapLayer("id", "source") {
       sourceLayer("test")
-      minZoom(10.0)
-      maxZoom(10.0)
+      minZoom(minZoomTestValue)
+      maxZoom(maxZoomTestValue)
       filter(filterTestValue)
       heatmapColor(heatmapColorTestValue)
       heatmapIntensity(heatmapIntensityTestValue)
@@ -384,8 +386,8 @@ class HeatmapLayerTest : BaseStyleTest() {
     setupLayer(cachedLayer)
 
     assertEquals("test", cachedLayer.sourceLayer)
-    assertEquals(10.0, cachedLayer.minZoom)
-    assertEquals(10.0, cachedLayer.maxZoom)
+    assertEquals(minZoomTestValue, cachedLayer.minZoom)
+    assertEquals(maxZoomTestValue, cachedLayer.maxZoom)
     assertEquals(filterTestValue.toString(), cachedLayer.filter.toString())
     assertEquals(heatmapColorTestValue, cachedLayer.heatmapColor)
     assertEquals(heatmapIntensityTestValue, cachedLayer.heatmapIntensity)

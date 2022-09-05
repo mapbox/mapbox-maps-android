@@ -716,6 +716,8 @@ class CircleLayerTest : BaseStyleTest() {
       }
       literal(1.0)
     }
+    val minZoomTestValue = 10.0
+    val maxZoomTestValue = 20.0
     val circleSortKeyTestValue = 1.0
     val circleBlurTestValue = 1.0
     val circleColorTestValue = "rgba(0, 0, 0, 1)"
@@ -731,8 +733,8 @@ class CircleLayerTest : BaseStyleTest() {
 
     val layer = circleLayer("id", "source") {
       sourceLayer("test")
-      minZoom(10.0)
-      maxZoom(10.0)
+      minZoom(minZoomTestValue)
+      maxZoom(maxZoomTestValue)
       filter(filterTestValue)
       circleSortKey(circleSortKeyTestValue)
       circleBlur(circleBlurTestValue)
@@ -756,8 +758,8 @@ class CircleLayerTest : BaseStyleTest() {
     setupLayer(cachedLayer)
 
     assertEquals("test", cachedLayer.sourceLayer)
-    assertEquals(10.0, cachedLayer.minZoom)
-    assertEquals(10.0, cachedLayer.maxZoom)
+    assertEquals(minZoomTestValue, cachedLayer.minZoom)
+    assertEquals(maxZoomTestValue, cachedLayer.maxZoom)
     assertEquals(filterTestValue.toString(), cachedLayer.filter.toString())
     assertEquals(circleSortKeyTestValue, cachedLayer.circleSortKey)
     assertEquals(circleBlurTestValue, cachedLayer.circleBlur)

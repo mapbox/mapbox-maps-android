@@ -373,6 +373,8 @@ class SkyLayerTest : BaseStyleTest() {
       }
       literal(1.0)
     }
+    val minZoomTestValue = 10.0
+    val maxZoomTestValue = 20.0
     val skyAtmosphereColorTestValue = "rgba(0, 0, 0, 1)"
     val skyAtmosphereHaloColorTestValue = "rgba(0, 0, 0, 1)"
     val skyAtmosphereSunTestValue = listOf(0.0, 1.0)

@@ -417,8 +417,8 @@ class HillshadeLayerTest : BaseStyleTest() {
 
     val layer = hillshadeLayer("id", "source") {
       sourceLayer("test")
-      minZoom(10.0)
-      maxZoom(10.0)
+      minZoom(minZoomTestValue)
+      maxZoom(maxZoomTestValue)
       hillshadeAccentColor(hillshadeAccentColorTestValue)
       hillshadeExaggeration(hillshadeExaggerationTestValue)
       hillshadeHighlightColor(hillshadeHighlightColorTestValue)
@@ -435,8 +435,8 @@ class HillshadeLayerTest : BaseStyleTest() {
     setupLayer(cachedLayer)
 
     assertEquals("test", cachedLayer.sourceLayer)
-    assertEquals(10.0, cachedLayer.minZoom)
-    assertEquals(10.0, cachedLayer.maxZoom)
+    assertEquals(minZoomTestValue, cachedLayer.minZoom)
+    assertEquals(maxZoomTestValue, cachedLayer.maxZoom)
     assertEquals(hillshadeAccentColorTestValue, cachedLayer.hillshadeAccentColor)
     assertEquals(hillshadeExaggerationTestValue, cachedLayer.hillshadeExaggeration)
     assertEquals(hillshadeHighlightColorTestValue, cachedLayer.hillshadeHighlightColor)

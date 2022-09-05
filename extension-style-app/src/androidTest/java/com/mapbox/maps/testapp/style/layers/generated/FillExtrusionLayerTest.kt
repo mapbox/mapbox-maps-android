@@ -641,6 +641,8 @@ class FillExtrusionLayerTest : BaseStyleTest() {
       }
       literal(1.0)
     }
+    val minZoomTestValue = 10.0
+    val maxZoomTestValue = 20.0
     val fillExtrusionAmbientOcclusionIntensityTestValue = 1.0
     val fillExtrusionAmbientOcclusionRadiusTestValue = 1.0
     val fillExtrusionBaseTestValue = 1.0
@@ -654,8 +656,8 @@ class FillExtrusionLayerTest : BaseStyleTest() {
 
     val layer = fillExtrusionLayer("id", "source") {
       sourceLayer("test")
-      minZoom(10.0)
-      maxZoom(10.0)
+      minZoom(minZoomTestValue)
+      maxZoom(maxZoomTestValue)
       filter(filterTestValue)
       fillExtrusionAmbientOcclusionIntensity(fillExtrusionAmbientOcclusionIntensityTestValue)
       fillExtrusionAmbientOcclusionRadius(fillExtrusionAmbientOcclusionRadiusTestValue)
@@ -677,8 +679,8 @@ class FillExtrusionLayerTest : BaseStyleTest() {
     setupLayer(cachedLayer)
 
     assertEquals("test", cachedLayer.sourceLayer)
-    assertEquals(10.0, cachedLayer.minZoom)
-    assertEquals(10.0, cachedLayer.maxZoom)
+    assertEquals(minZoomTestValue, cachedLayer.minZoom)
+    assertEquals(maxZoomTestValue, cachedLayer.maxZoom)
     assertEquals(filterTestValue.toString(), cachedLayer.filter.toString())
     assertEquals(fillExtrusionAmbientOcclusionIntensityTestValue, cachedLayer.fillExtrusionAmbientOcclusionIntensity)
     assertEquals(fillExtrusionAmbientOcclusionRadiusTestValue, cachedLayer.fillExtrusionAmbientOcclusionRadius)

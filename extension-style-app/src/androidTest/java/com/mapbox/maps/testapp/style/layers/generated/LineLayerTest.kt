@@ -879,6 +879,8 @@ class LineLayerTest : BaseStyleTest() {
       }
       literal(1.0)
     }
+    val minZoomTestValue = 10.0
+    val maxZoomTestValue = 20.0
     val lineCapTestValue = LineCap.BUTT
     val lineJoinTestValue = LineJoin.BEVEL
     val lineMiterLimitTestValue = 1.0
@@ -920,8 +922,8 @@ class LineLayerTest : BaseStyleTest() {
 
     val layer = lineLayer("id", "source") {
       sourceLayer("test")
-      minZoom(10.0)
-      maxZoom(10.0)
+      minZoom(minZoomTestValue)
+      maxZoom(maxZoomTestValue)
       filter(filterTestValue)
       lineCap(lineCapTestValue)
       lineJoin(lineJoinTestValue)
@@ -950,8 +952,8 @@ class LineLayerTest : BaseStyleTest() {
     setupLayer(cachedLayer)
 
     assertEquals("test", cachedLayer.sourceLayer)
-    assertEquals(10.0, cachedLayer.minZoom)
-    assertEquals(10.0, cachedLayer.maxZoom)
+    assertEquals(minZoomTestValue, cachedLayer.minZoom)
+    assertEquals(maxZoomTestValue, cachedLayer.maxZoom)
     assertEquals(filterTestValue.toString(), cachedLayer.filter.toString())
     assertEquals(lineCapTestValue, cachedLayer.lineCap)
     assertEquals(lineJoinTestValue, cachedLayer.lineJoin)

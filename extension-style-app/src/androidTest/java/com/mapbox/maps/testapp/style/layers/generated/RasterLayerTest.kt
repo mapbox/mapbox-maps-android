@@ -483,8 +483,8 @@ class RasterLayerTest : BaseStyleTest() {
 
     val layer = rasterLayer("id", "source") {
       sourceLayer("test")
-      minZoom(10.0)
-      maxZoom(10.0)
+      minZoom(minZoomTestValue)
+      maxZoom(maxZoomTestValue)
       rasterBrightnessMax(rasterBrightnessMaxTestValue)
       rasterBrightnessMin(rasterBrightnessMinTestValue)
       rasterContrast(rasterContrastTestValue)
@@ -503,8 +503,8 @@ class RasterLayerTest : BaseStyleTest() {
     setupLayer(cachedLayer)
 
     assertEquals("test", cachedLayer.sourceLayer)
-    assertEquals(10.0, cachedLayer.minZoom)
-    assertEquals(10.0, cachedLayer.maxZoom)
+    assertEquals(minZoomTestValue, cachedLayer.minZoom)
+    assertEquals(maxZoomTestValue, cachedLayer.maxZoom)
     assertEquals(rasterBrightnessMaxTestValue, cachedLayer.rasterBrightnessMax)
     assertEquals(rasterBrightnessMinTestValue, cachedLayer.rasterBrightnessMin)
     assertEquals(rasterContrastTestValue, cachedLayer.rasterContrast)

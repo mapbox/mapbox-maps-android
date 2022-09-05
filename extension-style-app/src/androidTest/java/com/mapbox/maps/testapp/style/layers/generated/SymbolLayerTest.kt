@@ -2139,6 +2139,8 @@ class SymbolLayerTest : BaseStyleTest() {
       }
       literal(1.0)
     }
+    val minZoomTestValue = 10.0
+    val maxZoomTestValue = 20.0
     val iconAllowOverlapTestValue = true
     val iconAnchorTestValue = IconAnchor.CENTER
     val iconIgnorePlacementTestValue = true
@@ -2214,8 +2216,8 @@ class SymbolLayerTest : BaseStyleTest() {
 
     val layer = symbolLayer("id", "source") {
       sourceLayer("test")
-      minZoom(10.0)
-      maxZoom(10.0)
+      minZoom(minZoomTestValue)
+      maxZoom(maxZoomTestValue)
       filter(filterTestValue)
       iconAllowOverlap(iconAllowOverlapTestValue)
       iconAnchor(iconAnchorTestValue)
@@ -2282,8 +2284,8 @@ class SymbolLayerTest : BaseStyleTest() {
     setupLayer(cachedLayer)
 
     assertEquals("test", cachedLayer.sourceLayer)
-    assertEquals(10.0, cachedLayer.minZoom)
-    assertEquals(10.0, cachedLayer.maxZoom)
+    assertEquals(minZoomTestValue, cachedLayer.minZoom)
+    assertEquals(maxZoomTestValue, cachedLayer.maxZoom)
     assertEquals(filterTestValue.toString(), cachedLayer.filter.toString())
     assertEquals(iconAllowOverlapTestValue, cachedLayer.iconAllowOverlap)
     assertEquals(iconAnchorTestValue, cachedLayer.iconAnchor)
