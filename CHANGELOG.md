@@ -3,10 +3,6 @@
 Mapbox welcomes participation and contributions from everyone.
 # main
 
-## Bug fixes 🐞
-* Preserve cached layer properties during the getLayer call. ([1622](https://github.com/mapbox/mapbox-maps-android/pull/1622))
-
-# 10.8.0-rc.1
 ## Features ✨ and improvements 🏁
 * Deprecated gesture settings `increaseRotateThresholdWhenPinchingToZoom` property. ([1632](https://github.com/mapbox/mapbox-maps-android/pull/1632))
 
