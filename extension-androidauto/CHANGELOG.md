@@ -9,6 +9,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Add `Session.mapboxMapInstaller` and `Screen.mapboxMapInstaller` extension functions to create the installers. ([#1603](https://github.com/mapbox/mapbox-maps-android/pull/1603))
 
 ## Bug fixes 🐞
+* Fix map being stuck when app goes to background on Xiaomi devices. ([1638](https://github.com/mapbox/mapbox-maps-android/pull/1638))
 
 # 0.2.0 August 9, 2022
 
