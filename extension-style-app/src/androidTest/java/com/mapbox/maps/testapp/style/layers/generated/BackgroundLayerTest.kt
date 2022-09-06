@@ -231,6 +231,31 @@ class BackgroundLayerTest : BaseStyleTest() {
     assertNotNull("defaultBackgroundPatternAsExpression should not be null", BackgroundLayer.defaultBackgroundPatternAsExpression)
     assertNotNull("defaultBackgroundPatternTransition should not be null", BackgroundLayer.defaultBackgroundPatternTransition)
   }
+
+  @Test
+  @UiThreadTest
+  fun getLayerTest() {
+    val backgroundColorTestValue = "rgba(0, 0, 0, 1)"
+    val backgroundOpacityTestValue = 1.0
+    val backgroundPatternTestValue = "abc"
+
+    val layer = backgroundLayer("id") {
+      backgroundColor(backgroundColorTestValue)
+      backgroundOpacity(backgroundOpacityTestValue)
+      backgroundPattern(backgroundPatternTestValue)
+    }
+
+    setupLayer(layer)
+
+    val cachedLayer = getLayer("id") as BackgroundLayer
+
+    removeLayer(layer)
+    setupLayer(cachedLayer)
+
+    assertEquals(backgroundColorTestValue, cachedLayer.backgroundColor)
+    assertEquals(backgroundOpacityTestValue, cachedLayer.backgroundOpacity)
+    assertEquals(backgroundPatternTestValue, cachedLayer.backgroundPattern)
+  }
 }
 
 // End of generated file.

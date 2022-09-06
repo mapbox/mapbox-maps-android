@@ -468,6 +468,54 @@ class RasterLayerTest : BaseStyleTest() {
     assertNotNull("defaultRasterSaturationAsExpression should not be null", RasterLayer.defaultRasterSaturationAsExpression)
     assertNotNull("defaultRasterSaturationTransition should not be null", RasterLayer.defaultRasterSaturationTransition)
   }
+
+  @Test
+  @UiThreadTest
+  fun getLayerTest() {
+    val rasterBrightnessMaxTestValue = 1.0
+    val rasterBrightnessMinTestValue = 1.0
+    val rasterContrastTestValue = 1.0
+    val rasterFadeDurationTestValue = 1.0
+    val rasterHueRotateTestValue = 1.0
+    val rasterOpacityTestValue = 1.0
+    val rasterResamplingTestValue = RasterResampling.LINEAR
+    val rasterSaturationTestValue = 1.0
+
+    val minZoomTestValue = 10.0
+    val maxZoomTestValue = 20.0
+    val layer = rasterLayer("id", "source") {
+      sourceLayer("test")
+      minZoom(minZoomTestValue)
+      maxZoom(maxZoomTestValue)
+      rasterBrightnessMax(rasterBrightnessMaxTestValue)
+      rasterBrightnessMin(rasterBrightnessMinTestValue)
+      rasterContrast(rasterContrastTestValue)
+      rasterFadeDuration(rasterFadeDurationTestValue)
+      rasterHueRotate(rasterHueRotateTestValue)
+      rasterOpacity(rasterOpacityTestValue)
+      rasterResampling(rasterResamplingTestValue)
+      rasterSaturation(rasterSaturationTestValue)
+    }
+
+    setupLayer(layer)
+
+    val cachedLayer = getLayer("id") as RasterLayer
+
+    removeLayer(layer)
+    setupLayer(cachedLayer)
+
+    assertEquals("test", cachedLayer.sourceLayer)
+    assertEquals(minZoomTestValue, cachedLayer.minZoom)
+    assertEquals(maxZoomTestValue, cachedLayer.maxZoom)
+    assertEquals(rasterBrightnessMaxTestValue, cachedLayer.rasterBrightnessMax)
+    assertEquals(rasterBrightnessMinTestValue, cachedLayer.rasterBrightnessMin)
+    assertEquals(rasterContrastTestValue, cachedLayer.rasterContrast)
+    assertEquals(rasterFadeDurationTestValue, cachedLayer.rasterFadeDuration)
+    assertEquals(rasterHueRotateTestValue, cachedLayer.rasterHueRotate)
+    assertEquals(rasterOpacityTestValue, cachedLayer.rasterOpacity)
+    assertEquals(rasterResamplingTestValue, cachedLayer.rasterResampling)
+    assertEquals(rasterSaturationTestValue, cachedLayer.rasterSaturation)
+  }
 }
 
 // End of generated file.

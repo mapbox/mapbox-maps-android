@@ -404,6 +404,48 @@ class HillshadeLayerTest : BaseStyleTest() {
     assertNotNull("defaultHillshadeShadowColorAsColorInt should not be null", HillshadeLayer.defaultHillshadeShadowColorAsColorInt)
     assertNotNull("defaultHillshadeShadowColorTransition should not be null", HillshadeLayer.defaultHillshadeShadowColorTransition)
   }
+
+  @Test
+  @UiThreadTest
+  fun getLayerTest() {
+    val hillshadeAccentColorTestValue = "rgba(0, 0, 0, 1)"
+    val hillshadeExaggerationTestValue = 1.0
+    val hillshadeHighlightColorTestValue = "rgba(0, 0, 0, 1)"
+    val hillshadeIlluminationAnchorTestValue = HillshadeIlluminationAnchor.MAP
+    val hillshadeIlluminationDirectionTestValue = 1.0
+    val hillshadeShadowColorTestValue = "rgba(0, 0, 0, 1)"
+
+    val minZoomTestValue = 10.0
+    val maxZoomTestValue = 20.0
+    val layer = hillshadeLayer("id", "source") {
+      sourceLayer("test")
+      minZoom(minZoomTestValue)
+      maxZoom(maxZoomTestValue)
+      hillshadeAccentColor(hillshadeAccentColorTestValue)
+      hillshadeExaggeration(hillshadeExaggerationTestValue)
+      hillshadeHighlightColor(hillshadeHighlightColorTestValue)
+      hillshadeIlluminationAnchor(hillshadeIlluminationAnchorTestValue)
+      hillshadeIlluminationDirection(hillshadeIlluminationDirectionTestValue)
+      hillshadeShadowColor(hillshadeShadowColorTestValue)
+    }
+
+    setupLayer(layer)
+
+    val cachedLayer = getLayer("id") as HillshadeLayer
+
+    removeLayer(layer)
+    setupLayer(cachedLayer)
+
+    assertEquals("test", cachedLayer.sourceLayer)
+    assertEquals(minZoomTestValue, cachedLayer.minZoom)
+    assertEquals(maxZoomTestValue, cachedLayer.maxZoom)
+    assertEquals(hillshadeAccentColorTestValue, cachedLayer.hillshadeAccentColor)
+    assertEquals(hillshadeExaggerationTestValue, cachedLayer.hillshadeExaggeration)
+    assertEquals(hillshadeHighlightColorTestValue, cachedLayer.hillshadeHighlightColor)
+    assertEquals(hillshadeIlluminationAnchorTestValue, cachedLayer.hillshadeIlluminationAnchor)
+    assertEquals(hillshadeIlluminationDirectionTestValue, cachedLayer.hillshadeIlluminationDirection)
+    assertEquals(hillshadeShadowColorTestValue, cachedLayer.hillshadeShadowColor)
+  }
 }
 
 // End of generated file.

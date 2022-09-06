@@ -631,6 +631,68 @@ class FillExtrusionLayerTest : BaseStyleTest() {
     assertNotNull("defaultFillExtrusionVerticalGradient should not be null", FillExtrusionLayer.defaultFillExtrusionVerticalGradient)
     assertNotNull("defaultFillExtrusionVerticalGradientAsExpression should not be null", FillExtrusionLayer.defaultFillExtrusionVerticalGradientAsExpression)
   }
+
+  @Test
+  @UiThreadTest
+  fun getLayerTest() {
+    val filterTestValue = eq {
+      get {
+        literal("undefined")
+      }
+      literal(1.0)
+    }
+    val fillExtrusionAmbientOcclusionIntensityTestValue = 1.0
+    val fillExtrusionAmbientOcclusionRadiusTestValue = 1.0
+    val fillExtrusionBaseTestValue = 1.0
+    val fillExtrusionColorTestValue = "rgba(0, 0, 0, 1)"
+    val fillExtrusionHeightTestValue = 1.0
+    val fillExtrusionOpacityTestValue = 1.0
+    val fillExtrusionPatternTestValue = "abc"
+    val fillExtrusionTranslateTestValue = listOf(0.0, 1.0)
+    val fillExtrusionTranslateAnchorTestValue = FillExtrusionTranslateAnchor.MAP
+    val fillExtrusionVerticalGradientTestValue = true
+
+    val minZoomTestValue = 10.0
+    val maxZoomTestValue = 20.0
+    val layer = fillExtrusionLayer("id", "source") {
+      sourceLayer("test")
+      minZoom(minZoomTestValue)
+      maxZoom(maxZoomTestValue)
+      filter(filterTestValue)
+      fillExtrusionAmbientOcclusionIntensity(fillExtrusionAmbientOcclusionIntensityTestValue)
+      fillExtrusionAmbientOcclusionRadius(fillExtrusionAmbientOcclusionRadiusTestValue)
+      fillExtrusionBase(fillExtrusionBaseTestValue)
+      fillExtrusionColor(fillExtrusionColorTestValue)
+      fillExtrusionHeight(fillExtrusionHeightTestValue)
+      fillExtrusionOpacity(fillExtrusionOpacityTestValue)
+      fillExtrusionPattern(fillExtrusionPatternTestValue)
+      fillExtrusionTranslate(fillExtrusionTranslateTestValue)
+      fillExtrusionTranslateAnchor(fillExtrusionTranslateAnchorTestValue)
+      fillExtrusionVerticalGradient(fillExtrusionVerticalGradientTestValue)
+    }
+
+    setupLayer(layer)
+
+    val cachedLayer = getLayer("id") as FillExtrusionLayer
+
+    removeLayer(layer)
+    setupLayer(cachedLayer)
+
+    assertEquals("test", cachedLayer.sourceLayer)
+    assertEquals(minZoomTestValue, cachedLayer.minZoom)
+    assertEquals(maxZoomTestValue, cachedLayer.maxZoom)
+    assertEquals(filterTestValue.toString(), cachedLayer.filter.toString())
+    assertEquals(fillExtrusionAmbientOcclusionIntensityTestValue, cachedLayer.fillExtrusionAmbientOcclusionIntensity)
+    assertEquals(fillExtrusionAmbientOcclusionRadiusTestValue, cachedLayer.fillExtrusionAmbientOcclusionRadius)
+    assertEquals(fillExtrusionBaseTestValue, cachedLayer.fillExtrusionBase)
+    assertEquals(fillExtrusionColorTestValue, cachedLayer.fillExtrusionColor)
+    assertEquals(fillExtrusionHeightTestValue, cachedLayer.fillExtrusionHeight)
+    assertEquals(fillExtrusionOpacityTestValue, cachedLayer.fillExtrusionOpacity)
+    assertEquals(fillExtrusionPatternTestValue, cachedLayer.fillExtrusionPattern)
+    assertEquals(fillExtrusionTranslateTestValue, cachedLayer.fillExtrusionTranslate)
+    assertEquals(fillExtrusionTranslateAnchorTestValue, cachedLayer.fillExtrusionTranslateAnchor)
+    assertEquals(fillExtrusionVerticalGradientTestValue, cachedLayer.fillExtrusionVerticalGradient)
+  }
 }
 
 // End of generated file.

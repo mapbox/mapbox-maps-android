@@ -801,6 +801,67 @@ class LocationIndicatorLayerTest : BaseStyleTest() {
     assertNotNull("defaultTopImageSizeAsExpression should not be null", LocationIndicatorLayer.defaultTopImageSizeAsExpression)
     assertNotNull("defaultTopImageSizeTransition should not be null", LocationIndicatorLayer.defaultTopImageSizeTransition)
   }
+
+  @Test
+  @UiThreadTest
+  fun getLayerTest() {
+    val bearingImageTestValue = "abc"
+    val shadowImageTestValue = "abc"
+    val topImageTestValue = "abc"
+    val accuracyRadiusTestValue = 1.0
+    val accuracyRadiusBorderColorTestValue = "rgba(0, 0, 0, 1)"
+    val accuracyRadiusColorTestValue = "rgba(0, 0, 0, 1)"
+    val bearingTestValue = 1.0
+    val bearingImageSizeTestValue = 1.0
+    val emphasisCircleColorTestValue = "rgba(0, 0, 0, 1)"
+    val emphasisCircleRadiusTestValue = 1.0
+    val imagePitchDisplacementTestValue = 1.0
+    val locationTestValue = listOf(0.0, 1.0, 2.0)
+    val perspectiveCompensationTestValue = 1.0
+    val shadowImageSizeTestValue = 1.0
+    val topImageSizeTestValue = 1.0
+
+    val layer = locationIndicatorLayer("id") {
+      bearingImage(bearingImageTestValue)
+      shadowImage(shadowImageTestValue)
+      topImage(topImageTestValue)
+      accuracyRadius(accuracyRadiusTestValue)
+      accuracyRadiusBorderColor(accuracyRadiusBorderColorTestValue)
+      accuracyRadiusColor(accuracyRadiusColorTestValue)
+      bearing(bearingTestValue)
+      bearingImageSize(bearingImageSizeTestValue)
+      emphasisCircleColor(emphasisCircleColorTestValue)
+      emphasisCircleRadius(emphasisCircleRadiusTestValue)
+      imagePitchDisplacement(imagePitchDisplacementTestValue)
+      location(locationTestValue)
+      perspectiveCompensation(perspectiveCompensationTestValue)
+      shadowImageSize(shadowImageSizeTestValue)
+      topImageSize(topImageSizeTestValue)
+    }
+
+    setupLayer(layer)
+
+    val cachedLayer = getLayer("id") as LocationIndicatorLayer
+
+    removeLayer(layer)
+    setupLayer(cachedLayer)
+
+    assertEquals(bearingImageTestValue, cachedLayer.bearingImage)
+    assertEquals(shadowImageTestValue, cachedLayer.shadowImage)
+    assertEquals(topImageTestValue, cachedLayer.topImage)
+    assertEquals(accuracyRadiusTestValue, cachedLayer.accuracyRadius)
+    assertEquals(accuracyRadiusBorderColorTestValue, cachedLayer.accuracyRadiusBorderColor)
+    assertEquals(accuracyRadiusColorTestValue, cachedLayer.accuracyRadiusColor)
+    assertEquals(bearingTestValue, cachedLayer.bearing)
+    assertEquals(bearingImageSizeTestValue, cachedLayer.bearingImageSize)
+    assertEquals(emphasisCircleColorTestValue, cachedLayer.emphasisCircleColor)
+    assertEquals(emphasisCircleRadiusTestValue, cachedLayer.emphasisCircleRadius)
+    assertEquals(imagePitchDisplacementTestValue, cachedLayer.imagePitchDisplacement)
+    assertEquals(locationTestValue, cachedLayer.location)
+    assertEquals(perspectiveCompensationTestValue, cachedLayer.perspectiveCompensation)
+    assertEquals(shadowImageSizeTestValue, cachedLayer.shadowImageSize)
+    assertEquals(topImageSizeTestValue, cachedLayer.topImageSize)
+  }
 }
 
 // End of generated file.

@@ -1,4 +1,5 @@
 @file:JvmName("LayerUtils")
+
 package com.mapbox.maps.extension.style.layers
 
 import com.mapbox.maps.LayerPosition
@@ -18,24 +19,26 @@ import com.mapbox.maps.logE
  * @return StyleLayerPlugin
  */
 fun StyleManagerInterface.getLayer(layerId: String): Layer? {
-  return this.getStyleLayerProperty(layerId, "type").silentUnwrap<String>()?.let { type ->
-    when (type) {
-      "background" -> BackgroundLayer(layerId).also { it.delegate = this }
-      "location-indicator" -> LocationIndicatorLayer(layerId).also { it.delegate = this }
-      "sky" -> SkyLayer(layerId).also { it.delegate = this }
-      "circle" -> CircleLayer(layerId, this.getStyleLayerProperty(layerId, "source").unwrap()).also { it.delegate = this }
-      "fill-extrusion" -> FillExtrusionLayer(layerId, this.getStyleLayerProperty(layerId, "source").unwrap()).also { it.delegate = this }
-      "fill" -> FillLayer(layerId, this.getStyleLayerProperty(layerId, "source").unwrap()).also { it.delegate = this }
-      "heatmap" -> HeatmapLayer(layerId, this.getStyleLayerProperty(layerId, "source").unwrap()).also { it.delegate = this }
-      "hillshade" -> HillshadeLayer(layerId, this.getStyleLayerProperty(layerId, "source").unwrap()).also { it.delegate = this }
-      "line" -> LineLayer(layerId, this.getStyleLayerProperty(layerId, "source").unwrap()).also { it.delegate = this }
-      "raster" -> RasterLayer(layerId, this.getStyleLayerProperty(layerId, "source").unwrap()).also { it.delegate = this }
-      "symbol" -> SymbolLayer(layerId, this.getStyleLayerProperty(layerId, "source").unwrap()).also { it.delegate = this }
-      else -> {
-        logE(TAG, "Layer type: $type unknown.")
-        null
-      }
+  val source by lazy { getStyleLayerProperty(layerId, "source").unwrap<String>() }
+  return when (val type = getStyleLayerProperty(layerId, "type").silentUnwrap<String>()) {
+    "background" -> BackgroundLayer(layerId)
+    "location-indicator" -> LocationIndicatorLayer(layerId)
+    "sky" -> SkyLayer(layerId)
+    "circle" -> CircleLayer(layerId, source)
+    "fill-extrusion" -> FillExtrusionLayer(layerId, source)
+    "fill" -> FillLayer(layerId, source)
+    "heatmap" -> HeatmapLayer(layerId, source)
+    "hillshade" -> HillshadeLayer(layerId, source)
+    "line" -> LineLayer(layerId, source)
+    "raster" -> RasterLayer(layerId, source)
+    "symbol" -> SymbolLayer(layerId, source)
+    else -> {
+      logE(TAG, "Layer type: $type unknown.")
+      null
     }
+  }?.also { result ->
+    result.delegate = this
+    result.appliedLayerPropertiesValue = getStyleLayerProperties(layerId).value
   }
 }
 

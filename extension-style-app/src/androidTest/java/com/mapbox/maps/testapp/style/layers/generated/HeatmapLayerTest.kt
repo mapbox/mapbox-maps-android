@@ -327,6 +327,74 @@ class HeatmapLayerTest : BaseStyleTest() {
     assertNotNull("defaultHeatmapWeight should not be null", HeatmapLayer.defaultHeatmapWeight)
     assertNotNull("defaultHeatmapWeightAsExpression should not be null", HeatmapLayer.defaultHeatmapWeightAsExpression)
   }
+
+  @Test
+  @UiThreadTest
+  fun getLayerTest() {
+    val filterTestValue = eq {
+      get {
+        literal("undefined")
+      }
+      literal(1.0)
+    }
+    val heatmapColorTestValue = interpolate {
+      linear()
+      heatmapDensity()
+      stop {
+        literal(0.0)
+        rgba {
+          literal(0.0)
+          literal(0.0)
+          literal(0.0)
+          literal(0.0)
+        }
+      }
+      stop {
+        literal(1.0)
+        rgba {
+          literal(0.0)
+          literal(255.0)
+          literal(0.0)
+          literal(1.0)
+        }
+      }
+    }
+    val heatmapIntensityTestValue = 1.0
+    val heatmapOpacityTestValue = 1.0
+    val heatmapRadiusTestValue = 1.0
+    val heatmapWeightTestValue = 1.0
+
+    val minZoomTestValue = 10.0
+    val maxZoomTestValue = 20.0
+    val layer = heatmapLayer("id", "source") {
+      sourceLayer("test")
+      minZoom(minZoomTestValue)
+      maxZoom(maxZoomTestValue)
+      filter(filterTestValue)
+      heatmapColor(heatmapColorTestValue)
+      heatmapIntensity(heatmapIntensityTestValue)
+      heatmapOpacity(heatmapOpacityTestValue)
+      heatmapRadius(heatmapRadiusTestValue)
+      heatmapWeight(heatmapWeightTestValue)
+    }
+
+    setupLayer(layer)
+
+    val cachedLayer = getLayer("id") as HeatmapLayer
+
+    removeLayer(layer)
+    setupLayer(cachedLayer)
+
+    assertEquals("test", cachedLayer.sourceLayer)
+    assertEquals(minZoomTestValue, cachedLayer.minZoom)
+    assertEquals(maxZoomTestValue, cachedLayer.maxZoom)
+    assertEquals(filterTestValue.toString(), cachedLayer.filter.toString())
+    assertEquals(heatmapColorTestValue, cachedLayer.heatmapColor)
+    assertEquals(heatmapIntensityTestValue, cachedLayer.heatmapIntensity)
+    assertEquals(heatmapOpacityTestValue, cachedLayer.heatmapOpacity)
+    assertEquals(heatmapRadiusTestValue, cachedLayer.heatmapRadius)
+    assertEquals(heatmapWeightTestValue, cachedLayer.heatmapWeight)
+  }
 }
 
 // End of generated file.

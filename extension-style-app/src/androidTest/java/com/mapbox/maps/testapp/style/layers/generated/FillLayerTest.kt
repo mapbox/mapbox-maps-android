@@ -498,6 +498,62 @@ class FillLayerTest : BaseStyleTest() {
     assertNotNull("defaultFillTranslateAnchor should not be null", FillLayer.defaultFillTranslateAnchor)
     assertNotNull("defaultFillTranslateAnchorAsExpression should not be null", FillLayer.defaultFillTranslateAnchorAsExpression)
   }
+
+  @Test
+  @UiThreadTest
+  fun getLayerTest() {
+    val filterTestValue = eq {
+      get {
+        literal("undefined")
+      }
+      literal(1.0)
+    }
+    val fillSortKeyTestValue = 1.0
+    val fillAntialiasTestValue = true
+    val fillColorTestValue = "rgba(0, 0, 0, 1)"
+    val fillOpacityTestValue = 1.0
+    val fillOutlineColorTestValue = "rgba(0, 0, 0, 1)"
+    val fillPatternTestValue = "abc"
+    val fillTranslateTestValue = listOf(0.0, 1.0)
+    val fillTranslateAnchorTestValue = FillTranslateAnchor.MAP
+
+    val minZoomTestValue = 10.0
+    val maxZoomTestValue = 20.0
+    val layer = fillLayer("id", "source") {
+      sourceLayer("test")
+      minZoom(minZoomTestValue)
+      maxZoom(maxZoomTestValue)
+      filter(filterTestValue)
+      fillSortKey(fillSortKeyTestValue)
+      fillAntialias(fillAntialiasTestValue)
+      fillColor(fillColorTestValue)
+      fillOpacity(fillOpacityTestValue)
+      fillOutlineColor(fillOutlineColorTestValue)
+      fillPattern(fillPatternTestValue)
+      fillTranslate(fillTranslateTestValue)
+      fillTranslateAnchor(fillTranslateAnchorTestValue)
+    }
+
+    setupLayer(layer)
+
+    val cachedLayer = getLayer("id") as FillLayer
+
+    removeLayer(layer)
+    setupLayer(cachedLayer)
+
+    assertEquals("test", cachedLayer.sourceLayer)
+    assertEquals(minZoomTestValue, cachedLayer.minZoom)
+    assertEquals(maxZoomTestValue, cachedLayer.maxZoom)
+    assertEquals(filterTestValue.toString(), cachedLayer.filter.toString())
+    assertEquals(fillSortKeyTestValue, cachedLayer.fillSortKey)
+    assertEquals(fillAntialiasTestValue, cachedLayer.fillAntialias)
+    assertEquals(fillColorTestValue, cachedLayer.fillColor)
+    assertEquals(fillOpacityTestValue, cachedLayer.fillOpacity)
+    assertEquals(fillOutlineColorTestValue, cachedLayer.fillOutlineColor)
+    assertEquals(fillPatternTestValue, cachedLayer.fillPattern)
+    assertEquals(fillTranslateTestValue, cachedLayer.fillTranslate)
+    assertEquals(fillTranslateAnchorTestValue, cachedLayer.fillTranslateAnchor)
+  }
 }
 
 // End of generated file.

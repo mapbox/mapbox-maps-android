@@ -41,7 +41,9 @@ class FillLayerTest {
     every { style.setStyleLayerProperty(any(), any(), any()) } returns expected
     every { style.addStyleLayer(any(), any()) } returns expected
     every { style.setStyleLayerProperties(any(), any()) } returns expected
+    every { style.getStyleLayerProperties(any()) } returns valueExpected
     every { expected.error } returns null
+    every { valueExpected.value } returns null
 
     // For default property getters
     mockkStatic(StyleManager::class)
