@@ -29,6 +29,9 @@ internal class CarMapSurfaceOwner(
     private set
   internal var visibleCenter: ScreenCoordinate = visibleCenter()
     private set
+  internal var stableArea: Rect? = null
+    private set
+  internal var stableEdgeInsets: EdgeInsets? = null
 
   internal lateinit var carContext: CarContext
   internal lateinit var mapInitOptions: MapInitOptions
@@ -122,7 +125,15 @@ internal class CarMapSurfaceOwner(
   }
 
   override fun onStableAreaChanged(stableArea: Rect) {
-    // Have not found a need for this.
+    logI(TAG, "onStableAreaChanged stableArea:$stableArea")
+    this.stableEdgeInsets = stableArea.edgeInsets()
+    this.stableArea = stableArea
+    ifNonNull(mapboxCarMapSurface, stableArea, stableEdgeInsets) { _, area, edge ->
+      logI(TAG, "notifyStableAreaChanged $area $edge")
+      carMapObservers.forEach {
+        it.onStableAreaChanged(area, edge)
+      }
+    }
   }
 
   override fun onScroll(distanceX: Float, distanceY: Float) {

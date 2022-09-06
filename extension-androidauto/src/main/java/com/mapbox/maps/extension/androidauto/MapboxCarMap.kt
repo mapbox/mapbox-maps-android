@@ -100,6 +100,20 @@ class MapboxCarMap {
     get() { return carMapSurfaceOwner.edgeInsets }
 
   /**
+   * Accessor to the stable area calculated by the car library. It is recommended to
+   * use the values returned by [MapboxCarMapObserver.onStableAreaChanged].
+   */
+  val stableArea: Rect?
+    get() { return carMapSurfaceOwner.stableArea }
+
+  /**
+   * Accessor to the stableEdgeInsets calculated by the car library. It is recommended to
+   * use the values returned by [MapboxCarMapObserver.onStableAreaChanged].
+   */
+  val stableEdgeInsets: EdgeInsets?
+    get() { return carMapSurfaceOwner.stableEdgeInsets }
+
+  /**
    * @param mapboxCarMapObserver implements the desired mapbox car experiences
    */
   fun registerObserver(mapboxCarMapObserver: MapboxCarMapObserver) = apply {

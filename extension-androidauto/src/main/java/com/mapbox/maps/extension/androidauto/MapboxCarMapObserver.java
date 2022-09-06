@@ -1,8 +1,9 @@
-package com.mapbox.maps.extension.androidauto
+package com.mapbox.maps.extension.androidauto;
 
-import android.graphics.Rect
-import com.mapbox.maps.EdgeInsets
-import com.mapbox.maps.MapboxExperimental
+import android.graphics.Rect;
+
+import com.mapbox.maps.EdgeInsets;
+import com.mapbox.maps.MapboxExperimental;
 
 /**
  * Many downstream services will not work until the surface has been created and the map has
@@ -19,7 +20,7 @@ interface MapboxCarMapObserver {
    *
    * @param mapboxCarMapSurface loaded and ready to use car map surface
    */
-  fun onAttached(mapboxCarMapSurface: MapboxCarMapSurface) {
+  default void onAttached(MapboxCarMapSurface mapboxCarMapSurface) {
     // No op by default
   }
 
@@ -34,7 +35,7 @@ interface MapboxCarMapObserver {
    *
    * @param mapboxCarMapSurface loaded and ready car map surface
    */
-  fun onDetached(mapboxCarMapSurface: MapboxCarMapSurface) {
+  default void onDetached(MapboxCarMapSurface mapboxCarMapSurface) {
     // No op by default
   }
 
@@ -46,7 +47,18 @@ interface MapboxCarMapObserver {
    * @param visibleArea the visible area provided by the host
    * @param edgeInsets distance from each side of the screen that creates the [visibleArea]
    */
-  fun onVisibleAreaChanged(visibleArea: Rect, edgeInsets: EdgeInsets) {
+  default void onVisibleAreaChanged(Rect visibleArea, EdgeInsets edgeInsets) {
+    // No op by default
+  }
+
+  /**
+   * Called when the car library updates the stable region for the surface. This area will remain
+   * constant while the visible area changes when views come in and out of view.
+   *
+   * @param stableArea the stable area provided by the host
+   * @param edgeInsets distance from each side of the screen that creates the [stableArea]
+   */
+  default void onStableAreaChanged(Rect stableArea, EdgeInsets edgeInsets) {
     // No op by default
   }
 }

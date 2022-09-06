@@ -12,6 +12,8 @@ package com.mapbox.maps.extension.androidauto {
     method public com.mapbox.maps.extension.androidauto.MapboxCarMapSurface? getCarMapSurface();
     method public com.mapbox.maps.EdgeInsets? getEdgeInsets();
     method public com.mapbox.maps.MapInitOptions getMapInitOptions();
+    method public android.graphics.Rect? getStableArea();
+    method public com.mapbox.maps.EdgeInsets? getStableEdgeInsets();
     method public android.graphics.Rect? getVisibleArea();
     method public com.mapbox.maps.extension.androidauto.MapboxCarMap registerObserver(com.mapbox.maps.extension.androidauto.MapboxCarMapObserver mapboxCarMapObserver);
     method public void setGestureHandler(com.mapbox.maps.extension.androidauto.MapboxCarMapGestureHandler? gestureHandler);
@@ -21,6 +23,8 @@ package com.mapbox.maps.extension.androidauto {
     property public final com.mapbox.maps.extension.androidauto.MapboxCarMapSurface? carMapSurface;
     property public final com.mapbox.maps.EdgeInsets? edgeInsets;
     property public final com.mapbox.maps.MapInitOptions mapInitOptions;
+    property public final android.graphics.Rect? stableArea;
+    property public final com.mapbox.maps.EdgeInsets? stableEdgeInsets;
     property public final android.graphics.Rect? visibleArea;
   }
 
@@ -42,6 +46,7 @@ package com.mapbox.maps.extension.androidauto {
   @com.mapbox.maps.MapboxExperimental public interface MapboxCarMapObserver {
     method public default void onAttached(com.mapbox.maps.extension.androidauto.MapboxCarMapSurface mapboxCarMapSurface);
     method public default void onDetached(com.mapbox.maps.extension.androidauto.MapboxCarMapSurface mapboxCarMapSurface);
+    method public default void onStableAreaChanged(android.graphics.Rect stableArea, com.mapbox.maps.EdgeInsets edgeInsets);
     method public default void onVisibleAreaChanged(android.graphics.Rect visibleArea, com.mapbox.maps.EdgeInsets edgeInsets);
   }
 
