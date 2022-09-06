@@ -607,6 +607,61 @@ class LocationIndicatorLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun locationIndicatorOpacityTest() {
+    val testValue = 1.0
+    val layer = locationIndicatorLayer("id") {
+      locationIndicatorOpacity(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(testValue, layer.locationIndicatorOpacity!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun locationIndicatorOpacityAsExpressionTest() {
+    val expression = literal(1.0)
+    val layer = locationIndicatorLayer("id") {
+      locationIndicatorOpacity(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(1.0, layer.locationIndicatorOpacityAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.locationIndicatorOpacity!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun locationIndicatorOpacityTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = locationIndicatorLayer("id") {
+      locationIndicatorOpacityTransition(transition)
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.locationIndicatorOpacityTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun locationIndicatorOpacityTransitionSetDslTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = locationIndicatorLayer("id") {
+      locationIndicatorOpacityTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.locationIndicatorOpacityTransition)
+  }
+
+  @Test
+  @UiThreadTest
   fun perspectiveCompensationTest() {
     val testValue = 1.0
     val layer = locationIndicatorLayer("id") {
@@ -792,6 +847,9 @@ class LocationIndicatorLayerTest : BaseStyleTest() {
     assertNotNull("defaultLocation should not be null", LocationIndicatorLayer.defaultLocation)
     assertNotNull("defaultLocationAsExpression should not be null", LocationIndicatorLayer.defaultLocationAsExpression)
     assertNotNull("defaultLocationTransition should not be null", LocationIndicatorLayer.defaultLocationTransition)
+    assertNotNull("defaultLocationIndicatorOpacity should not be null", LocationIndicatorLayer.defaultLocationIndicatorOpacity)
+    assertNotNull("defaultLocationIndicatorOpacityAsExpression should not be null", LocationIndicatorLayer.defaultLocationIndicatorOpacityAsExpression)
+    assertNotNull("defaultLocationIndicatorOpacityTransition should not be null", LocationIndicatorLayer.defaultLocationIndicatorOpacityTransition)
     assertNotNull("defaultPerspectiveCompensation should not be null", LocationIndicatorLayer.defaultPerspectiveCompensation)
     assertNotNull("defaultPerspectiveCompensationAsExpression should not be null", LocationIndicatorLayer.defaultPerspectiveCompensationAsExpression)
     assertNotNull("defaultShadowImageSize should not be null", LocationIndicatorLayer.defaultShadowImageSize)
