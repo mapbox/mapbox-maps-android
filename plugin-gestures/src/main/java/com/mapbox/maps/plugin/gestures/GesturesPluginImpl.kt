@@ -138,7 +138,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
   /**
    * Cancels scheduled velocity animations if user doesn't lift fingers within [SCHEDULED_ANIMATION_TIMEOUT]
    */
-  private val animationsTimeoutHandler = Handler(Looper.getMainLooper())
+  private val animationsTimeoutHandler: Handler
   private var mainHandler: Handler? = null
   internal var doubleTapRegistered: Boolean = false
 
@@ -152,6 +152,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
     this.pixelRatio = pixelRatio
     internalSettings = GesturesAttributeParser.parseGesturesSettings(context, null, pixelRatio)
     mainHandler = Handler(Looper.getMainLooper())
+    animationsTimeoutHandler = Handler(Looper.getMainLooper())
   }
 
   constructor(
@@ -164,6 +165,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
     internalSettings =
       GesturesAttributeParser.parseGesturesSettings(context, attributeSet, pixelRatio)
     mainHandler = Handler(Looper.getMainLooper())
+    animationsTimeoutHandler = Handler(Looper.getMainLooper())
   }
 
   @VisibleForTesting
@@ -177,22 +179,24 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
     internalSettings =
       GesturesAttributeParser.parseGesturesSettings(context, attributeSet, pixelRatio)
     mainHandler = Handler(Looper.getMainLooper())
+    animationsTimeoutHandler = Handler(Looper.getMainLooper())
     this.style = style
   }
 
   @VisibleForTesting
   internal constructor(
-
     context: Context,
     attributeSet: AttributeSet,
     pixelRatio: Float,
-    handler: Handler
+    mainHandler: Handler,
+    animationsTimeoutHandler: Handler
   ) {
     this.context = context
     this.pixelRatio = pixelRatio
-    internalSettings =
+    this.internalSettings =
       GesturesAttributeParser.parseGesturesSettings(context, attributeSet, pixelRatio)
-    mainHandler = handler
+    this.mainHandler = mainHandler
+    this.animationsTimeoutHandler = animationsTimeoutHandler
   }
 
   override fun applySettings() {

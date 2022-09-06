@@ -4,6 +4,7 @@ import android.os.Handler
 import android.os.HandlerThread
 import android.os.Looper
 import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.logW
 
 /**
  * Experimental controller singleton allowing to use background thread for all Mapbox animations.
@@ -85,9 +86,9 @@ object AnimationThreadController {
     if (usingBackgroundThread) {
       if (Looper.myLooper() == backgroundAnimationThread?.looper) {
         function.invoke()
-      } else {
-        backgroundAnimationHandler?.post { function.invoke() }
-      }
+      } else backgroundAnimationHandler?.let { backgroundHandler ->
+        backgroundHandler.post { function.invoke() }
+      } ?: logW(TAG, "useBackgroundThread was called but handler is null, animator event is skipped!")
     } else {
       if (Looper.myLooper() == Looper.getMainLooper()) {
         function.invoke()
@@ -114,5 +115,6 @@ object AnimationThreadController {
     }
   }
 
+  private const val TAG = "AnimThreadController"
   private const val BACKGROUND_ANIMATION_THREAD_NAME = "MapboxAnimThread"
 }

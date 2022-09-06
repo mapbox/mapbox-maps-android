@@ -43,10 +43,12 @@ class GestureOptionsTest {
 
   private val mainHandler = mockk<Handler>()
 
+  private val animationsTimeoutHandler = mockk<Handler>()
+
   private val runnableSlot = slot<Runnable>()
 
   private val gesturePlugin =
-    GesturesPluginImpl(context, mockk(relaxed = true), mockk(relaxed = true), mainHandler)
+    GesturesPluginImpl(context, mockk(relaxed = true), mockk(relaxed = true), mainHandler, animationsTimeoutHandler)
 
   @Before
   fun setUp() {
