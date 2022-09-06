@@ -91,6 +91,7 @@ workflows:
             branches:
               only:
                 - main
+                - /^v.*/
           requires:
             - verify-code
 
@@ -674,14 +675,13 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Notify maps internal CI about main branch update
+          name: Notify maps internal CI about $CIRCLE_BRANCH branch update
           command: |
-            if [[ $CIRCLE_BRANCH == main ]]; then
-              python3 scripts/ci-circleci-start-pipeline.py --token ${MOBILE_METRICS_TOKEN} \
-                --origin-slug mapbox/mapbox-maps-android \
-                --current-branch $CIRCLE_BRANCH \
-                --target-slug mapbox/mapbox-maps-android-private
-            fi
+            python3 scripts/ci-circleci-start-pipeline.py --token ${MOBILE_METRICS_TOKEN} \
+              --origin-slug mapbox/mapbox-maps-android \
+              --current-branch $CIRCLE_BRANCH \
+              --target-slug mapbox/mapbox-maps-android-private \
+              --sync-internal True
 
 executors:
   ubuntu:

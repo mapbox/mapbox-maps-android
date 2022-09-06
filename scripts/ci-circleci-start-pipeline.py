@@ -66,6 +66,7 @@ def Main():
             help="Current branch name.")
     parser.add_argument('--created', help="Provide a date string in ISO 8601 format (eg. 2030-12-30T09:10:20.304050)")
     parser.add_argument("--pixel_match_public", default=True)
+    parser.add_argument('--sync-internal', default=False, help="Sync internal CI on merge")
 
     args = parser.parse_args()
 
@@ -77,19 +78,22 @@ def Main():
     if not created:
         created = datetime.datetime.utcnow().isoformat()
 
-    params = {
-        "mapbox_android_upstream": True,
-        "mapbox_slug": args.origin_slug,
-        "mapbox_android_hash": args.hash,
-        "mapbox_merge_main": args.current_branch == MAIN_BRANCH_NAME,
-        "benchmark_date": created,
-        "pixel_match_public": str2bool(args.pixel_match_public)
-    }
+    if args.sync_internal:
+        params = {
+            "mapbox_sync_branch": args.current_branch
+        }
+    else:
+        params = {
+            "mapbox_android_upstream": True,
+            "mapbox_android_hash": args.hash,
+            "mapbox_merge_main": args.current_branch == MAIN_BRANCH_NAME,
+            "benchmark_date": created,
+            "pixel_match_public": str2bool(args.pixel_match_public)
+        }
+    params["mapbox_slug"] = args.origin_slug
 
     TriggerPipeline(args.target_slug, args.token, args.branch, params)
-
     return 0
-
 
 if __name__ == "__main__":
     Main()
