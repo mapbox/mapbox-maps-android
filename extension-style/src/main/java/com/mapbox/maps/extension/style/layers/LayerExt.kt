@@ -38,7 +38,7 @@ fun StyleManagerInterface.getLayer(layerId: String): Layer? {
     }
   }?.also { result ->
     result.delegate = this
-    result.cachedLayerPropertiesValue = getStyleLayerProperties(layerId).value
+    result.appliedLayerPropertiesValue = getStyleLayerProperties(layerId).value
   }
 }
 
