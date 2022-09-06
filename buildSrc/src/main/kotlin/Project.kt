@@ -105,7 +105,7 @@ object Versions {
   const val pluginTaskTree = "2.1.0"
   const val mapboxAccessToken="0.4.0"
   const val mapboxSdkRegistry="0.8.0"
-  const val mapboxGestures = "0.7.0"
+  const val mapboxGestures = "0.8.0"
   const val mapboxJavaServices = "5.4.1"
   const val mapboxBase = "0.8.0"
   const val mapboxGlNative = "10.8.0-rc.1"
