@@ -121,6 +121,12 @@ class LocationComponentAttributeParser2Test {
     val settings = LocationComponentAttributeParser2.parseLocationComponentSettings2(context, attrs, 1.2f)
     assertEquals(PuckBearingSource.COURSE, settings.puckBearingSource)
   }
+  @Test
+  fun opacityTest() {
+    every { typedArray.getFloat(any(), any()) } returns 1f
+    val settings = LocationComponentAttributeParser2.parseLocationComponentSettings2(context, attrs, 1.2f)
+    assertEquals(1f, settings.opacity)
+  }
 }
 
 // End of generated file.

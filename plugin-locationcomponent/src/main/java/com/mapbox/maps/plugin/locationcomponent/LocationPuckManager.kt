@@ -144,6 +144,7 @@ internal class LocationPuckManager(
   fun updateSettings2(settings2: LocationComponentSettings2) {
     this.settings2 = settings2
     animationManager.applySettings2(settings2)
+    locationLayerRenderer.setOpacity(settings2.opacity.toDouble())
   }
 
   //

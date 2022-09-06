@@ -135,6 +135,10 @@ internal class LocationIndicatorLayerRenderer(
     layer.emphasisCircleColor(buildRGBAExpression(rgbaArray))
   }
 
+  override fun setOpacity(opacity: Double) {
+    layer.opacity(opacity)
+  }
+
   companion object {
 
     fun buildRGBAExpression(colorArray: FloatArray): List<Value> {

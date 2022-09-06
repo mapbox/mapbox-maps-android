@@ -57,6 +57,11 @@ class LocationComponentAttributeParser2Test : BaseMapTest() {
       PuckBearingSource.HEADING,
       mapView.location2.getSettings2().puckBearingSource
     )
+    assertEquals(
+      "opacity test failed..",
+      0.9f,
+      mapView.location2.getSettings2().opacity
+    )
   }
 }
 

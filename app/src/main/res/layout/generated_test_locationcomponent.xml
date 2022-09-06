@@ -14,6 +14,7 @@
     mapbox:mapbox_locationComponentLayerBelow = "testString"
     mapbox:mapbox_locationComponentPuckBearingEnabled = "false"
     mapbox:mapbox_locationComponentPuckBearingSource = "heading"
+    mapbox:mapbox_locationComponentOpacity = "0.9"
     android:layout_width="match_parent"
     android:layout_height="match_parent" />
 <!-- End of generated file. -->

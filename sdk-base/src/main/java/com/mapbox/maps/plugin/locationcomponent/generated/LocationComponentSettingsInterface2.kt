@@ -46,6 +46,11 @@ interface LocationComponentSettingsInterface2 : LocationComponentSettingsInterfa
    * The enum controls how the puck is oriented
    */
   var puckBearingSource: PuckBearingSource
+
+  /**
+   * The opacity of the entire location indicator layer
+   */
+  var opacity: Float
 }
 
 // End of generated file.

@@ -69,5 +69,8 @@
     <public name="mapbox_locationComponentLocationPuckLocationPuck3DModelRotation_x" type="attr" />
     <public name="mapbox_locationComponentLocationPuckLocationPuck3DModelRotation_y" type="attr" />
     <public name="mapbox_locationComponentLocationPuckLocationPuck3DModelRotation_z" type="attr" />
+
+    <!-- The opacity of the entire location indicator layer -->
+    <public name="mapbox_locationComponentOpacity" type="attr" />
 </resources>
 <!-- End of generated file. -->

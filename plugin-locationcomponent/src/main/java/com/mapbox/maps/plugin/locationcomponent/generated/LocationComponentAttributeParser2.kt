@@ -27,6 +27,7 @@ internal object LocationComponentAttributeParser2 {
         accuracyRingBorderColor = typedArray.getColor(R.styleable.mapbox_MapView_mapbox_locationComponentAccuracyRingBorderColor, Color.parseColor("#4d89cff0")),
         puckBearingEnabled = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_locationComponentPuckBearingEnabled, true),
         puckBearingSource = PuckBearingSource.values()[typedArray.getInt(R.styleable.mapbox_MapView_mapbox_locationComponentPuckBearingSource, 0)],
+        opacity = typedArray.getFloat(R.styleable.mapbox_MapView_mapbox_locationComponentOpacity, 1f),
       )
     } finally {
       typedArray.recycle()

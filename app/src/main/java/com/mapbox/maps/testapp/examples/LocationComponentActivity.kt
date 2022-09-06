@@ -9,6 +9,8 @@ import androidx.appcompat.content.res.AppCompatResources
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.expressions.dsl.generated.interpolate
+import com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer
+import com.mapbox.maps.extension.style.layers.getLayerAs
 import com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName
 import com.mapbox.maps.extension.style.projection.generated.getProjection
 import com.mapbox.maps.extension.style.projection.generated.projection
@@ -133,6 +135,26 @@ class LocationComponentActivity : AppCompatActivity() {
       R.id.action_accuracy_disable -> {
         binding.mapView.location2.showAccuracyRing = false
         item.isChecked = true
+        return true
+      }
+      R.id.toggle_opacity -> {
+        val location2 = binding.mapView.location2
+        if (location2.opacity == 1.0F) {
+          location2.opacity = 0.5F
+        } else {
+          location2.opacity = 1F
+        }
+/*
+        binding.mapView.getMapboxMap().getStyle { style ->
+          style.getLayerAs<LocationIndicatorLayer>("location-indicator")!!.apply {
+            if (locationIndicatorOpacity == 0.5) {
+              locationIndicatorOpacity(1.0)
+            }else {
+              locationIndicatorOpacity(0.5)
+            }
+          }
+        }
+*/
         return true
       }
       else -> return super.onOptionsItemSelected(item)
