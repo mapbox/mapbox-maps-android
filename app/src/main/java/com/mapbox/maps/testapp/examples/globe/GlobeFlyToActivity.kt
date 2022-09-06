@@ -20,7 +20,6 @@ import com.mapbox.maps.plugin.animation.flyTo
 import com.mapbox.maps.plugin.gestures.OnMapClickListener
 import com.mapbox.maps.plugin.gestures.addOnMapClickListener
 import com.mapbox.maps.testapp.R
-import com.mapbox.maps.threading.AnimationThreadController
 
 /**
  * Use [MapboxMap.flyTo] on a map with globe projection to slowly zoom to a location.
@@ -32,9 +31,6 @@ class GlobeFlyToActivity : AppCompatActivity(), OnMapClickListener {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-
-    AnimationThreadController.useBackgroundThread()
-
     val mapView = MapView(this)
     setContentView(mapView)
     mapboxMap = mapView.getMapboxMap()
