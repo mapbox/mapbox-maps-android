@@ -11,6 +11,10 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix broken view annotation positioning when marking them `View.INVISIBLE` and then making `View.VISIBLE`. ([1616](https://github.com/mapbox/mapbox-maps-android/pull/1616))
 * Snap puck to north if puckBearingEnabled is set to false. ([1635] (https://github.com/mapbox/mapbox-maps-android/pull/1635))
 * Preserve cached properties if applied to the layer before during the `Style#getLayer` call. ([1622](https://github.com/mapbox/mapbox-maps-android/pull/1622))
+* Fix a `NullPointerException` in `StandardGestureListener`, where `MotionEvent` should be nullable. ([1645] (https://github.com/mapbox/mapbox-maps-android/pull/1645))
+
+## Dependencies
+* Update mapbox-gestures-android dependency to [v0.8.0](https://github.com/mapbox/mapbox-gestures-android/releases/tag/v0.8.0). ([1645] (https://github.com/mapbox/mapbox-maps-android/pull/1645))
 
 # 10.8.0-rc.1 August 24, 2022
 ## Bug fixes 🐞
