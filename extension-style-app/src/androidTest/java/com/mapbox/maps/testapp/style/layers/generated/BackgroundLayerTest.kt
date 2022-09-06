@@ -247,14 +247,14 @@ class BackgroundLayerTest : BaseStyleTest() {
 
     setupLayer(layer)
 
-    val layer2 = getLayer("id") as BackgroundLayer
+    val cachedLayer = getLayer("id") as BackgroundLayer
 
-    removeLayer(layer2)
-    setupLayer(layer2)
+    removeLayer(layer)
+    setupLayer(cachedLayer)
 
-    assertEquals(backgroundColorTestValue, layer.backgroundColor)
-    assertEquals(backgroundOpacityTestValue, layer.backgroundOpacity)
-    assertEquals(backgroundPatternTestValue, layer.backgroundPattern)
+    assertEquals(backgroundColorTestValue, cachedLayer.backgroundColor)
+    assertEquals(backgroundOpacityTestValue, cachedLayer.backgroundOpacity)
+    assertEquals(backgroundPatternTestValue, cachedLayer.backgroundPattern)
   }
 }
 

@@ -641,6 +641,8 @@ class FillExtrusionLayerTest : BaseStyleTest() {
       }
       literal(1.0)
     }
+    val minZoomTestValue = 10.0
+    val maxZoomTestValue = 20.0
     val fillExtrusionAmbientOcclusionIntensityTestValue = 1.0
     val fillExtrusionAmbientOcclusionRadiusTestValue = 1.0
     val fillExtrusionBaseTestValue = 1.0
@@ -654,8 +656,8 @@ class FillExtrusionLayerTest : BaseStyleTest() {
 
     val layer = fillExtrusionLayer("id", "source") {
       sourceLayer("test")
-      minZoom(10.0)
-      maxZoom(10.0)
+      minZoom(minZoomTestValue)
+      maxZoom(maxZoomTestValue)
       filter(filterTestValue)
       fillExtrusionAmbientOcclusionIntensity(fillExtrusionAmbientOcclusionIntensityTestValue)
       fillExtrusionAmbientOcclusionRadius(fillExtrusionAmbientOcclusionRadiusTestValue)
@@ -671,25 +673,25 @@ class FillExtrusionLayerTest : BaseStyleTest() {
 
     setupLayer(layer)
 
-    val layer2 = getLayer("id") as FillExtrusionLayer
+    val cachedLayer = getLayer("id") as FillExtrusionLayer
 
-    removeLayer(layer2)
-    setupLayer(layer2)
+    removeLayer(layer)
+    setupLayer(cachedLayer)
 
-    assertEquals("test", layer2.sourceLayer)
-    assertEquals(10.0, layer2.minZoom)
-    assertEquals(10.0, layer2.maxZoom)
-    assertEquals(filterTestValue.toString(), layer2.filter.toString())
-    assertEquals(fillExtrusionAmbientOcclusionIntensityTestValue, layer.fillExtrusionAmbientOcclusionIntensity)
-    assertEquals(fillExtrusionAmbientOcclusionRadiusTestValue, layer.fillExtrusionAmbientOcclusionRadius)
-    assertEquals(fillExtrusionBaseTestValue, layer.fillExtrusionBase)
-    assertEquals(fillExtrusionColorTestValue, layer.fillExtrusionColor)
-    assertEquals(fillExtrusionHeightTestValue, layer.fillExtrusionHeight)
-    assertEquals(fillExtrusionOpacityTestValue, layer.fillExtrusionOpacity)
-    assertEquals(fillExtrusionPatternTestValue, layer.fillExtrusionPattern)
-    assertEquals(fillExtrusionTranslateTestValue, layer.fillExtrusionTranslate)
-    assertEquals(fillExtrusionTranslateAnchorTestValue, layer.fillExtrusionTranslateAnchor)
-    assertEquals(fillExtrusionVerticalGradientTestValue, layer.fillExtrusionVerticalGradient)
+    assertEquals("test", cachedLayer.sourceLayer)
+    assertEquals(minZoomTestValue, cachedLayer.minZoom)
+    assertEquals(maxZoomTestValue, cachedLayer.maxZoom)
+    assertEquals(filterTestValue.toString(), cachedLayer.filter.toString())
+    assertEquals(fillExtrusionAmbientOcclusionIntensityTestValue, cachedLayer.fillExtrusionAmbientOcclusionIntensity)
+    assertEquals(fillExtrusionAmbientOcclusionRadiusTestValue, cachedLayer.fillExtrusionAmbientOcclusionRadius)
+    assertEquals(fillExtrusionBaseTestValue, cachedLayer.fillExtrusionBase)
+    assertEquals(fillExtrusionColorTestValue, cachedLayer.fillExtrusionColor)
+    assertEquals(fillExtrusionHeightTestValue, cachedLayer.fillExtrusionHeight)
+    assertEquals(fillExtrusionOpacityTestValue, cachedLayer.fillExtrusionOpacity)
+    assertEquals(fillExtrusionPatternTestValue, cachedLayer.fillExtrusionPattern)
+    assertEquals(fillExtrusionTranslateTestValue, cachedLayer.fillExtrusionTranslate)
+    assertEquals(fillExtrusionTranslateAnchorTestValue, cachedLayer.fillExtrusionTranslateAnchor)
+    assertEquals(fillExtrusionVerticalGradientTestValue, cachedLayer.fillExtrusionVerticalGradient)
   }
 }
 

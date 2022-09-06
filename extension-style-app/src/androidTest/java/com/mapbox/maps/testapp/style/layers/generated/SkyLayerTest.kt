@@ -373,6 +373,8 @@ class SkyLayerTest : BaseStyleTest() {
       }
       literal(1.0)
     }
+    val minZoomTestValue = 10.0
+    val maxZoomTestValue = 20.0
     val skyAtmosphereColorTestValue = "rgba(0, 0, 0, 1)"
     val skyAtmosphereHaloColorTestValue = "rgba(0, 0, 0, 1)"
     val skyAtmosphereSunTestValue = listOf(0.0, 1.0)
@@ -419,21 +421,21 @@ class SkyLayerTest : BaseStyleTest() {
 
     setupLayer(layer)
 
-    val layer2 = getLayer("id") as SkyLayer
+    val cachedLayer = getLayer("id") as SkyLayer
 
-    removeLayer(layer2)
-    setupLayer(layer2)
+    removeLayer(layer)
+    setupLayer(cachedLayer)
 
-    assertEquals(filterTestValue.toString(), layer2.filter.toString())
-    assertEquals(skyAtmosphereColorTestValue, layer.skyAtmosphereColor)
-    assertEquals(skyAtmosphereHaloColorTestValue, layer.skyAtmosphereHaloColor)
-    assertEquals(skyAtmosphereSunTestValue, layer.skyAtmosphereSun)
-    assertEquals(skyAtmosphereSunIntensityTestValue, layer.skyAtmosphereSunIntensity)
-    assertEquals(skyGradientTestValue, layer.skyGradient)
-    assertEquals(skyGradientCenterTestValue, layer.skyGradientCenter)
-    assertEquals(skyGradientRadiusTestValue, layer.skyGradientRadius)
-    assertEquals(skyOpacityTestValue, layer.skyOpacity)
-    assertEquals(skyTypeTestValue, layer.skyType)
+    assertEquals(filterTestValue.toString(), cachedLayer.filter.toString())
+    assertEquals(skyAtmosphereColorTestValue, cachedLayer.skyAtmosphereColor)
+    assertEquals(skyAtmosphereHaloColorTestValue, cachedLayer.skyAtmosphereHaloColor)
+    assertEquals(skyAtmosphereSunTestValue, cachedLayer.skyAtmosphereSun)
+    assertEquals(skyAtmosphereSunIntensityTestValue, cachedLayer.skyAtmosphereSunIntensity)
+    assertEquals(skyGradientTestValue, cachedLayer.skyGradient)
+    assertEquals(skyGradientCenterTestValue, cachedLayer.skyGradientCenter)
+    assertEquals(skyGradientRadiusTestValue, cachedLayer.skyGradientRadius)
+    assertEquals(skyOpacityTestValue, cachedLayer.skyOpacity)
+    assertEquals(skyTypeTestValue, cachedLayer.skyType)
   }
 }
 
