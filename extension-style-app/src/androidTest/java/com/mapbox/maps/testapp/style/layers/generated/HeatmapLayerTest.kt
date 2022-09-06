@@ -337,8 +337,6 @@ class HeatmapLayerTest : BaseStyleTest() {
       }
       literal(1.0)
     }
-    val minZoomTestValue = 10.0
-    val maxZoomTestValue = 20.0
     val heatmapColorTestValue = interpolate {
       linear()
       heatmapDensity()
@@ -366,6 +364,8 @@ class HeatmapLayerTest : BaseStyleTest() {
     val heatmapRadiusTestValue = 1.0
     val heatmapWeightTestValue = 1.0
 
+    val minZoomTestValue = 10.0
+    val maxZoomTestValue = 20.0
     val layer = heatmapLayer("id", "source") {
       sourceLayer("test")
       minZoom(minZoomTestValue)

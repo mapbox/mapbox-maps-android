@@ -2139,8 +2139,6 @@ class SymbolLayerTest : BaseStyleTest() {
       }
       literal(1.0)
     }
-    val minZoomTestValue = 10.0
-    val maxZoomTestValue = 20.0
     val iconAllowOverlapTestValue = true
     val iconAnchorTestValue = IconAnchor.CENTER
     val iconIgnorePlacementTestValue = true
@@ -2214,6 +2212,8 @@ class SymbolLayerTest : BaseStyleTest() {
     val textTranslateTestValue = listOf(0.0, 1.0)
     val textTranslateAnchorTestValue = TextTranslateAnchor.MAP
 
+    val minZoomTestValue = 10.0
+    val maxZoomTestValue = 20.0
     val layer = symbolLayer("id", "source") {
       sourceLayer("test")
       minZoom(minZoomTestValue)

@@ -716,8 +716,6 @@ class CircleLayerTest : BaseStyleTest() {
       }
       literal(1.0)
     }
-    val minZoomTestValue = 10.0
-    val maxZoomTestValue = 20.0
     val circleSortKeyTestValue = 1.0
     val circleBlurTestValue = 1.0
     val circleColorTestValue = "rgba(0, 0, 0, 1)"
@@ -731,6 +729,8 @@ class CircleLayerTest : BaseStyleTest() {
     val circleTranslateTestValue = listOf(0.0, 1.0)
     val circleTranslateAnchorTestValue = CircleTranslateAnchor.MAP
 
+    val minZoomTestValue = 10.0
+    val maxZoomTestValue = 20.0
     val layer = circleLayer("id", "source") {
       sourceLayer("test")
       minZoom(minZoomTestValue)

@@ -481,6 +481,8 @@ class RasterLayerTest : BaseStyleTest() {
     val rasterResamplingTestValue = RasterResampling.LINEAR
     val rasterSaturationTestValue = 1.0
 
+    val minZoomTestValue = 10.0
+    val maxZoomTestValue = 20.0
     val layer = rasterLayer("id", "source") {
       sourceLayer("test")
       minZoom(minZoomTestValue)

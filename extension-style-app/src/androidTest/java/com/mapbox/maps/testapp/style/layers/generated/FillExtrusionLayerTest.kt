@@ -641,8 +641,6 @@ class FillExtrusionLayerTest : BaseStyleTest() {
       }
       literal(1.0)
     }
-    val minZoomTestValue = 10.0
-    val maxZoomTestValue = 20.0
     val fillExtrusionAmbientOcclusionIntensityTestValue = 1.0
     val fillExtrusionAmbientOcclusionRadiusTestValue = 1.0
     val fillExtrusionBaseTestValue = 1.0
@@ -654,6 +652,8 @@ class FillExtrusionLayerTest : BaseStyleTest() {
     val fillExtrusionTranslateAnchorTestValue = FillExtrusionTranslateAnchor.MAP
     val fillExtrusionVerticalGradientTestValue = true
 
+    val minZoomTestValue = 10.0
+    val maxZoomTestValue = 20.0
     val layer = fillExtrusionLayer("id", "source") {
       sourceLayer("test")
       minZoom(minZoomTestValue)

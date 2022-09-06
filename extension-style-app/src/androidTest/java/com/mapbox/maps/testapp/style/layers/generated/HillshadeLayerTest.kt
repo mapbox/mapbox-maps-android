@@ -415,6 +415,8 @@ class HillshadeLayerTest : BaseStyleTest() {
     val hillshadeIlluminationDirectionTestValue = 1.0
     val hillshadeShadowColorTestValue = "rgba(0, 0, 0, 1)"
 
+    val minZoomTestValue = 10.0
+    val maxZoomTestValue = 20.0
     val layer = hillshadeLayer("id", "source") {
       sourceLayer("test")
       minZoom(minZoomTestValue)

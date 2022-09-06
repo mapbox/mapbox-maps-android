@@ -879,8 +879,6 @@ class LineLayerTest : BaseStyleTest() {
       }
       literal(1.0)
     }
-    val minZoomTestValue = 10.0
-    val maxZoomTestValue = 20.0
     val lineCapTestValue = LineCap.BUTT
     val lineJoinTestValue = LineJoin.BEVEL
     val lineMiterLimitTestValue = 1.0
@@ -920,6 +918,8 @@ class LineLayerTest : BaseStyleTest() {
     val lineTrimOffsetTestValue = listOf(0.0, 1.0)
     val lineWidthTestValue = 1.0
 
+    val minZoomTestValue = 10.0
+    val maxZoomTestValue = 20.0
     val layer = lineLayer("id", "source") {
       sourceLayer("test")
       minZoom(minZoomTestValue)

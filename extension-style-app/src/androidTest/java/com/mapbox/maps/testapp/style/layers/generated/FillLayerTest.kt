@@ -508,8 +508,6 @@ class FillLayerTest : BaseStyleTest() {
       }
       literal(1.0)
     }
-    val minZoomTestValue = 10.0
-    val maxZoomTestValue = 20.0
     val fillSortKeyTestValue = 1.0
     val fillAntialiasTestValue = true
     val fillColorTestValue = "rgba(0, 0, 0, 1)"
@@ -519,6 +517,8 @@ class FillLayerTest : BaseStyleTest() {
     val fillTranslateTestValue = listOf(0.0, 1.0)
     val fillTranslateAnchorTestValue = FillTranslateAnchor.MAP
 
+    val minZoomTestValue = 10.0
+    val maxZoomTestValue = 20.0
     val layer = fillLayer("id", "source") {
       sourceLayer("test")
       minZoom(minZoomTestValue)
