@@ -3,6 +3,7 @@ package com.mapbox.maps.plugin.locationcomponent
 import android.animation.ValueAnimator
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
+import androidx.core.animation.doOnEnd
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
@@ -58,7 +59,8 @@ internal class LocationPuckManager(
     }
   }
 
-  private var lastBearing: Double = delegateProvider.mapCameraManagerDelegate.cameraState.bearing
+  @VisibleForTesting(otherwise = PRIVATE)
+  internal var lastBearing: Double = delegateProvider.mapCameraManagerDelegate.cameraState.bearing
   private val onBearingUpdated: ((Double) -> Unit) = {
     lastBearing = it
   }
@@ -174,8 +176,31 @@ internal class LocationPuckManager(
     options: (ValueAnimator.() -> Unit)? = null,
     forceUpdate: Boolean = false
   ) {
+    if (settings2.puckBearingEnabled) {
+      animationManager.puckAnimationEnabled = true
+      animateToBearing(bearings, options, forceUpdate)
+    } else if (animationManager.puckAnimationEnabled) {
+      animateToBearing(
+        doubleArrayOf(0.0),
+        options = {
+          duration = 0
+          doOnEnd {
+            animationManager.puckAnimationEnabled = false
+          }
+        },
+        forceUpdate
+      )
+    }
+  }
+
+  @VisibleForTesting(otherwise = PRIVATE)
+  fun animateToBearing(
+    bearings: DoubleArray,
+    options: (ValueAnimator.() -> Unit)? = null,
+    forceUpdate: Boolean
+  ) {
     // Skip bearing updates if the change from the lastBearing is too small, thus avoid unnecessary calls to gl-native.
-    if (!forceUpdate && (abs(bearings.last() - lastBearing) < BEARING_UPDATE_THRESHOLD)) {
+    if (!forceUpdate && abs(bearings.last() - lastBearing) < BEARING_UPDATE_THRESHOLD) {
       return
     }
     val targets = doubleArrayOf(lastBearing, *bearings)

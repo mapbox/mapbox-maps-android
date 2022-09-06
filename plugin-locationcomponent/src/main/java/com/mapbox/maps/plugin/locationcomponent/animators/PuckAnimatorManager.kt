@@ -16,12 +16,17 @@ internal class PuckAnimatorManager(
   indicatorAccuracyRadiusChangedListener: OnIndicatorAccuracyRadiusChangedListener,
   pixelRatio: Float
 ) {
-
   private var bearingAnimator = PuckBearingAnimator(indicatorBearingChangedListener)
   private var positionAnimator = PuckPositionAnimator(indicatorPositionChangedListener)
   private var accuracyRadiusAnimator =
     PuckAccuracyRadiusAnimator(indicatorAccuracyRadiusChangedListener)
   private var pulsingAnimator = PuckPulsingAnimator(pixelRatio)
+
+  internal var puckAnimationEnabled: Boolean
+    get() = bearingAnimator.enabled
+    set(value) {
+      bearingAnimator.enabled = value
+    }
 
   @VisibleForTesting(otherwise = PRIVATE)
   constructor(
@@ -116,9 +121,6 @@ internal class PuckAnimatorManager(
       enabled = settings2.showAccuracyRing
       accuracyCircleColor = settings2.accuracyRingColor
       accuracyCircleBorderColor = settings2.accuracyRingBorderColor
-    }
-    bearingAnimator.apply {
-      enabled = settings2.puckBearingEnabled
     }
   }
 
