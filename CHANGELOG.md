@@ -10,7 +10,6 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix scale bar truncated at high zoom levels near the poles. ([1620](https://github.com/mapbox/mapbox-maps-android/pull/1620))
 * Fix broken view annotation positioning when marking them `View.INVISIBLE` and then making `View.VISIBLE`. ([1616](https://github.com/mapbox/mapbox-maps-android/pull/1616))
 * Snap puck to north if puckBearingEnabled is set to false. ([1635] (https://github.com/mapbox/mapbox-maps-android/pull/1635))
-* Preserve cached layer properties during the getLayer call. ([1622](https://github.com/mapbox/mapbox-maps-android/pull/1622))
 * Preserve cached properties if applied to the layer before during the `Style#getLayer` call. ([1622](https://github.com/mapbox/mapbox-maps-android/pull/1622))
 
 # 10.8.0-rc.1 August 24, 2022
