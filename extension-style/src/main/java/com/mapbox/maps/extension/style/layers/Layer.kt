@@ -118,10 +118,16 @@ abstract class Layer : StyleContract.StyleLayerExtension {
     expected.error?.let {
       throw MapboxStyleException("Add layer failed: $it")
     }
+
+    if (appliedLayerPropertiesValue != null) {
+      layerProperties.values.filter { it.propertyName != "id" && it.propertyName != "type" && it.propertyName != "source" }
+        .forEach {
+          delegate.setStyleLayerProperty(layerId, it.propertyName, it.value)
+        }
+    }
   }
 
   // Layer Properties
-
   internal fun getCachedLayerProperties(): Value {
     val properties = HashMap<String, Value>()
     layerProperties.values.forEach {
