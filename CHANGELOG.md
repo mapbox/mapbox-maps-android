@@ -16,7 +16,8 @@ Mapbox welcomes participation and contributions from everyone.
 ## Dependencies
 * Update mapbox-gestures-android dependency to [v0.8.0](https://github.com/mapbox/mapbox-gestures-android/releases/tag/v0.8.0). ([1645] (https://github.com/mapbox/mapbox-maps-android/pull/1645))
 
-# 10.8.0
+
+# 10.8.0 September 7, 2022
 ## Features ✨ and improvements 🏁
 * Introduce a callback to be invoked when the device compass sensors need to be re-calibrated. ([1513](https://github.com/mapbox/mapbox-maps-android/pull/1513))
 * Add support for `LocationComponentSettingsInterface.pulsingMaxRadius` to follow location's accuracy radius. ([1561](https://github.com/mapbox/mapbox-maps-android/pull/1561))
@@ -53,6 +54,7 @@ Mapbox welcomes participation and contributions from everyone.
 ## Dependencies
 
 * Bump gl-native to v10.8.0, common to v23.0.0. ([1650](https://github.com/mapbox/mapbox-maps-android/pull/1650))
+
 
 # 10.8.0-rc.1 August 24, 2022
 ## Bug fixes 🐞
