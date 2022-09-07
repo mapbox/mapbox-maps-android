@@ -80,12 +80,22 @@ internal class BitmapWidgetRenderer(
 
   private fun updateVertexBuffer() {
     // in pixels, (-bitmapWidth / 2, -bitmapHeight/2) - (bitmapWidth / 2, bitmapHeight/2)
-    vertexPositionBuffer.put(
-      -bitmapWidth / 2f, -bitmapHeight / 2f,
-      -bitmapWidth / 2f, bitmapHeight / 2f,
-      bitmapWidth / 2f, -bitmapHeight / 2f,
-      bitmapWidth / 2f, bitmapHeight / 2f,
-    )
+    // TODO do we need to specially handle other WidgetPosition.Horizontal values?
+    // TODO does Vertical have any similar issue?
+    when (position.horizontal) {
+      WidgetPosition.Horizontal.CENTER -> vertexPositionBuffer.put(
+        0f, 0f,
+        0f, bitmapHeight.toFloat(),
+        bitmapWidth.toFloat(), 0f,
+        bitmapWidth.toFloat(), bitmapHeight.toFloat()
+      )
+      else -> vertexPositionBuffer.put(
+        -bitmapWidth / 2f, -bitmapHeight / 2f,
+        -bitmapWidth / 2f, bitmapHeight / 2f,
+        bitmapWidth / 2f, -bitmapHeight / 2f,
+        bitmapWidth / 2f, bitmapHeight / 2f
+      )
+    }
   }
 
   private fun topY() = when (position.vertical) {
