@@ -2,6 +2,7 @@
 
 Mapbox welcomes participation and contributions from everyone.
 # main
+* Wrong BitmapWidget position when using WidgetPosition.Horizontal.CENTER. ([1651](https://github.com/mapbox/mapbox-maps-android/pull/1651))
 
 ## Features ✨ and improvements 🏁
 * Deprecated gesture settings `increaseRotateThresholdWhenPinchingToZoom` property. ([1632](https://github.com/mapbox/mapbox-maps-android/pull/1632))
