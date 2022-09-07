@@ -119,5 +119,6 @@ internal class ModelLayerRenderer(
   }
 
   override fun setOpacity(opacity: Double) {
+    modelLayer.modelOpacity(opacity)
   }
 }

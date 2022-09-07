@@ -17,6 +17,7 @@ internal class ModelLayerWrapper(
     layerProperties["model-scale"] = Value(modelScale.map(::Value))
     layerProperties["model-rotation"] = Value(modelRotation.map(::Value))
     layerProperties["model-translation"] = Value(modelTranslation.map(::Value))
+    layerProperties["model-opacity"] = Value(1.0)
   }
 
   fun modelScale(scale: List<Double>) = updateProperty("model-scale", Value(scale.map(::Value)))
@@ -26,4 +27,6 @@ internal class ModelLayerWrapper(
   fun modelRotation(rotation: List<Double>) = updateProperty("model-rotation", Value(rotation.map(::Value)))
 
   fun modelTranslation(translation: List<Double>) = updateProperty("model-translation", Value(translation.map(::Value)))
+
+  fun modelOpacity(opacity: Double) = updateProperty("model-opacity", Value(opacity))
 }
