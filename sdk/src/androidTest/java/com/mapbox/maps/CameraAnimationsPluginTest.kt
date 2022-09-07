@@ -8,39 +8,25 @@ import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import androidx.core.os.postDelayed
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.mapbox.geojson.Point
 import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.plugin.animation.*
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Companion.cameraAnimatorOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
-import com.mapbox.maps.threading.AnimationThreadController
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
 import org.junit.Assert.*
-import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.junit.runners.Parameterized
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
 
-@RunWith(Parameterized::class)
+@RunWith(AndroidJUnit4::class)
 @LargeTest
-class CameraAnimationsPluginTest(
-  private val useBackgroundThread: Boolean
-) : BaseAnimationMapTest() {
-
-  @Before
-  fun setUp() {
-    if (useBackgroundThread) {
-      AnimationThreadController.useBackgroundThread()
-    } else {
-      AnimationThreadController.useMainThread()
-    }
-    super.before()
-  }
+class CameraAnimationsPluginTest : BaseAnimationMapTest() {
 
   @Test
   fun testAnimatorListener() {
@@ -372,9 +358,7 @@ class CameraAnimationsPluginTest(
 
   @Test
   fun testRegisterExistedAnimatorTypeAndStart() {
-    // visually tests works as expected however latches are triggered in wrong order
-    // and major refactor needed that overcomplicates the test
-    if (ignoreTestForGivenAbi() || useBackgroundThread) {
+    if (ignoreTestForGivenAbi()) {
       return
     }
     val duration = 2000L
@@ -545,9 +529,7 @@ class CameraAnimationsPluginTest(
 
   @Test
   fun testEaseToStartDelayCanceled() {
-    // very little start delays for animators on background thread behave slightly different
-    // ignoring for background thread in order not to overcomplicate the test
-    if (ignoreTestForGivenAbi() || useBackgroundThread) {
+    if (ignoreTestForGivenAbi()) {
       return
     }
     val targetBearing1 = 5.0
@@ -784,9 +766,7 @@ class CameraAnimationsPluginTest(
 
   @Test
   fun testPostDelayedAndStartDelayedAnimators() {
-    // visually tests works as expected however latches are triggered in wrong order
-    // and major refactor needed that overcomplicates the test
-    if (ignoreTestForGivenAbi() || useBackgroundThread) {
+    if (ignoreTestForGivenAbi()) {
       return
     }
     val pitchAnimatorOne = createPitchAnimator(cameraAnimationPlugin, 10.0, 0, 1000L)
@@ -1050,9 +1030,5 @@ class CameraAnimationsPluginTest(
     private const val TAG = "Mbgl-CameraManager"
     private const val EPS = 0.000001
     private const val LATCH_MAX_TIME = 6_000L
-
-    @JvmStatic
-    @Parameterized.Parameters
-    fun data() = listOf(false, true)
   }
 }
