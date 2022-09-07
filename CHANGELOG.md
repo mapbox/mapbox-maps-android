@@ -21,7 +21,6 @@ Mapbox welcomes participation and contributions from everyone.
 * Introduce a callback to be invoked when the device compass sensors need to be re-calibrated. ([1513](https://github.com/mapbox/mapbox-maps-android/pull/1513))
 * Add support for `LocationComponentSettingsInterface.pulsingMaxRadius` to follow location's accuracy radius. ([1561](https://github.com/mapbox/mapbox-maps-android/pull/1561))
 * Avoid map content disappearing on the sides of the screen when LOD is enabled. ([1650](https://github.com/mapbox/mapbox-maps-android/pull/1650))
-* Enable ambient occlusion for 3D buildings and provide paint property in model layer to control it. ([1650](https://github.com/mapbox/mapbox-maps-android/pull/1650))
 
 ## Bug fixes 🐞
 * Support altitude interpolation in location component, and pass through GPS altitude information from the DefaultLocationProvider. ([1478](https://github.com/mapbox/mapbox-maps-android/pull/1478))
@@ -47,11 +46,9 @@ Mapbox welcomes participation and contributions from everyone.
 * Fixes an issue which prevents the usage of tile cache when changing zoom levels. ([1650](https://github.com/mapbox/mapbox-maps-android/pull/1650))
 * Relax LOD requirements for maps with insets and zero terrain exaggeration. ([1650](https://github.com/mapbox/mapbox-maps-android/pull/1650))
 * Make CameraManager.setCamera method exception free. ([1650](https://github.com/mapbox/mapbox-maps-android/pull/1650))
-* Fix atmosphere rotation direction on metal rendering backend. ([1650](https://github.com/mapbox/mapbox-maps-android/pull/1650))
 * Fix black holes in the globe view when edge insets are used. ([1650](https://github.com/mapbox/mapbox-maps-android/pull/1650))
 * Fix elevation of pole geometry when exaggerated terrain is used. ([1650](https://github.com/mapbox/mapbox-maps-android/pull/1650))
 * Fix a bug in cameraForGeometry returning incorrect camera options when pitch  > 0. ([1650](https://github.com/mapbox/mapbox-maps-android/pull/1650))
-* Disable model rendering when layer opacity is zero. ([1650](https://github.com/mapbox/mapbox-maps-android/pull/1650))
 
 ## Dependencies
 
