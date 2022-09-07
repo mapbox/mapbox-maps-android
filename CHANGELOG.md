@@ -15,6 +15,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update mapbox-gestures-android dependency to [v0.8.0](https://github.com/mapbox/mapbox-gestures-android/releases/tag/v0.8.0). ([1645] (https://github.com/mapbox/mapbox-maps-android/pull/1645))
+* Bump gl-native to v10.8.0, common to 23.0.0. ([1650](https://github.com/mapbox/mapbox-maps-android/pull/1650))
 
 # 10.8.0-rc.1 August 24, 2022
 ## Bug fixes 🐞
