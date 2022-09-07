@@ -61,7 +61,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 
-* Bump gl-native to v10.8.0, common to 23.0.0. ([1650](https://github.com/mapbox/mapbox-maps-android/pull/1650))
+* Bump gl-native to v10.8.0, common to v23.0.0. ([1650](https://github.com/mapbox/mapbox-maps-android/pull/1650))
 
 # 10.8.0-rc.1 August 24, 2022
 ## Bug fixes 🐞
