@@ -16,6 +16,44 @@ Mapbox welcomes participation and contributions from everyone.
 ## Dependencies
 * Update mapbox-gestures-android dependency to [v0.8.0](https://github.com/mapbox/mapbox-gestures-android/releases/tag/v0.8.0). ([1645] (https://github.com/mapbox/mapbox-maps-android/pull/1645))
 
+# 10.8.0
+## Features ✨ and improvements 🏁
+* Introduce a callback to be invoked when the device compass sensors need to be re-calibrated. ([1513](https://github.com/mapbox/mapbox-maps-android/pull/1513))
+* Add support for `LocationComponentSettingsInterface.pulsingMaxRadius` to follow location's accuracy radius. ([1561](https://github.com/mapbox/mapbox-maps-android/pull/1561))
+* Avoid map content disappearing on the sides of the screen when LOD is enabled. ([1650](https://github.com/mapbox/mapbox-maps-android/pull/1650))
+
+## Bug fixes 🐞
+* Support altitude interpolation in location component, and pass through GPS altitude information from the DefaultLocationProvider. ([1478](https://github.com/mapbox/mapbox-maps-android/pull/1478))
+* Fix edge cases for renderer that could result in map not rendered. ([1538](https://github.com/mapbox/mapbox-maps-android/pull/1538))
+* Fix onAnnotationDragStarted event is still fired when annotation is not draggable. ([1552](https://github.com/mapbox/mapbox-maps-android/pull/1552))
+* Fix camera flying away when pitching. ([1560](https://github.com/mapbox/mapbox-maps-android/pull/1560))
+* Deliver style to the plugin registry on map start if a new one was loaded after map stop. ([1558](https://github.com/mapbox/mapbox-maps-android/pull/1558))
+* Fix default viewport bearing transition doesn't follow shortest path. ([1541](https://github.com/mapbox/mapbox-maps-android/pull/1541))
+* Fix `OnFpsChangedListener` listener to count number of frames rendered over the last second instead of immediate time for render call. ([1477](https://github.com/mapbox/mapbox-maps-android/pull/1477))
+* Fix `MapView.setMaximumFps` method to apply exact FPS value for rendering the map. ([1477](https://github.com/mapbox/mapbox-maps-android/pull/1477))
+* Fix Android memory leak when destroying platform view annotation manager. ([1568](https://github.com/mapbox/mapbox-maps-android/pull/1568))
+* Fix style getters for terrain, light and atmosphere resetting properties. ([1573](https://github.com/mapbox/mapbox-maps-android/pull/1573))
+* Fix possible ANR when destroying renderer. ([1567](https://github.com/mapbox/mapbox-maps-android/pull/1567))
+* Fix `MapSurface#surfaceChanged` to update dimensions for plugins. ([1575](https://github.com/mapbox/mapbox-maps-android/pull/1575))
+* Try recreate EGL surface when it throws exception. ([1589](https://github.com/mapbox/mapbox-maps-android/pull/1589))
+* Fix `MapboxMap` extension plugin functions throwing exceptions. ([1591](https://github.com/mapbox/mapbox-maps-android/pull/1591))
+* Fix concurrent modification exception when using widgets. ([1597](https://github.com/mapbox/mapbox-maps-android/pull/1597))
+* User-specified minimum and maximum zoom now correctly adjusted for map size. ([1650](https://github.com/mapbox/mapbox-maps-android/pull/1650))
+* Avoid placement of line labels with overlapping glyphs. Fix collision algorithm for the line labels with vertical shift. ([1650](https://github.com/mapbox/mapbox-maps-android/pull/1650))
+* Fix flickering when a vector layer is added on top of a raster layer. ([1650](https://github.com/mapbox/mapbox-maps-android/pull/1650))
+* Fix a rare case when black rectangles appear instead of the images of symbol layers. ([1650](https://github.com/mapbox/mapbox-maps-android/pull/1650))
+* Fix tiles disappearing when high pitch is used and atmosphere is turned on and off. ([1650](https://github.com/mapbox/mapbox-maps-android/pull/1650))
+* Fixes an issue which prevents the usage of tile cache when changing zoom levels. ([1650](https://github.com/mapbox/mapbox-maps-android/pull/1650))
+* Relax LOD requirements for maps with insets and zero terrain exaggeration. ([1650](https://github.com/mapbox/mapbox-maps-android/pull/1650))
+* Make CameraManager.setCamera method exception free. ([1650](https://github.com/mapbox/mapbox-maps-android/pull/1650))
+* Fix black holes in the globe view when edge insets are used. ([1650](https://github.com/mapbox/mapbox-maps-android/pull/1650))
+* Fix elevation of pole geometry when exaggerated terrain is used. ([1650](https://github.com/mapbox/mapbox-maps-android/pull/1650))
+* Fix a bug in cameraForGeometry returning incorrect camera options when pitch  > 0. ([1650](https://github.com/mapbox/mapbox-maps-android/pull/1650))
+
+## Dependencies
+
+* Bump gl-native to v10.8.0, common to v23.0.0. ([1650](https://github.com/mapbox/mapbox-maps-android/pull/1650))
+
 # 10.8.0-rc.1 August 24, 2022
 ## Bug fixes 🐞
 * Try recreate EGL surface when it throws exception. ([1589](https://github.com/mapbox/mapbox-maps-android/pull/1589))
