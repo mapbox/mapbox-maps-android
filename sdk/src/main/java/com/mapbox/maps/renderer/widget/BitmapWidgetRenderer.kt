@@ -80,8 +80,6 @@ internal class BitmapWidgetRenderer(
 
   private fun updateVertexBuffer() {
     // in pixels, (-bitmapWidth / 2, -bitmapHeight/2) - (bitmapWidth / 2, bitmapHeight/2)
-    // TODO do we need to specially handle other WidgetPosition.Horizontal values?
-    // TODO does Vertical have any similar issue?
     when (position.horizontal) {
       WidgetPosition.Horizontal.CENTER -> vertexPositionBuffer.put(
         0f, 0f,
