@@ -9,8 +9,6 @@ import androidx.appcompat.content.res.AppCompatResources
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.expressions.dsl.generated.interpolate
-import com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer
-import com.mapbox.maps.extension.style.layers.getLayerAs
 import com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName
 import com.mapbox.maps.extension.style.projection.generated.getProjection
 import com.mapbox.maps.extension.style.projection.generated.projection
@@ -19,7 +17,11 @@ import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.LocationPuck3D
 import com.mapbox.maps.plugin.PuckBearingSource
 import com.mapbox.maps.plugin.gestures.gestures
-import com.mapbox.maps.plugin.locationcomponent.*
+import com.mapbox.maps.plugin.locationcomponent.DefaultLocationProvider
+import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener
+import com.mapbox.maps.plugin.locationcomponent.createDefault2DPuck
+import com.mapbox.maps.plugin.locationcomponent.location
+import com.mapbox.maps.plugin.locationcomponent.location2
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityLocationComponentBinding
 import com.mapbox.maps.testapp.utils.LocationPermissionHelper
