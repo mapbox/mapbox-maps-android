@@ -18,6 +18,8 @@ internal class BitmapWidgetRenderer(
 
   private var bitmapWidth = bitmap?.width ?: 0
   private var bitmapHeight = bitmap?.height ?: 0
+  private var halfBitmapWidth = bitmapWidth / 2f
+  private var halfBitmapHeight = bitmapHeight / 2f
 
   private var surfaceWidth = 0
   private var surfaceHeight = 0
@@ -80,32 +82,24 @@ internal class BitmapWidgetRenderer(
 
   private fun updateVertexBuffer() {
     // in pixels, (-bitmapWidth / 2, -bitmapHeight/2) - (bitmapWidth / 2, bitmapHeight/2)
-    when (position.horizontal) {
-      WidgetPosition.Horizontal.CENTER -> vertexPositionBuffer.put(
-        0f, 0f,
-        0f, bitmapHeight.toFloat(),
-        bitmapWidth.toFloat(), 0f,
-        bitmapWidth.toFloat(), bitmapHeight.toFloat()
-      )
-      else -> vertexPositionBuffer.put(
-        -bitmapWidth / 2f, -bitmapHeight / 2f,
-        -bitmapWidth / 2f, bitmapHeight / 2f,
-        bitmapWidth / 2f, -bitmapHeight / 2f,
-        bitmapWidth / 2f, bitmapHeight / 2f
-      )
-    }
+    vertexPositionBuffer.put(
+      -halfBitmapWidth, -halfBitmapHeight,
+      -halfBitmapWidth, halfBitmapHeight,
+      halfBitmapWidth, -halfBitmapHeight,
+      halfBitmapWidth, halfBitmapHeight
+    )
   }
 
   private fun topY() = when (position.vertical) {
-    WidgetPosition.Vertical.BOTTOM -> surfaceHeight.toFloat() - bitmapHeight.toFloat() / 2f - marginY
-    WidgetPosition.Vertical.CENTER -> surfaceHeight.toFloat() / 2 - bitmapHeight.toFloat() / 2f + marginY
-    WidgetPosition.Vertical.TOP -> marginY + bitmapHeight.toFloat() / 2f
+    WidgetPosition.Vertical.BOTTOM -> surfaceHeight.toFloat() - halfBitmapHeight - marginY
+    WidgetPosition.Vertical.CENTER -> surfaceHeight.toFloat() / 2 + marginY
+    WidgetPosition.Vertical.TOP -> marginY + halfBitmapHeight
   }
 
   private fun leftX() = when (position.horizontal) {
-    WidgetPosition.Horizontal.LEFT -> marginX + bitmapWidth.toFloat() / 2f
-    WidgetPosition.Horizontal.CENTER -> surfaceWidth.toFloat() / 2 - bitmapWidth.toFloat() / 2f + marginX
-    WidgetPosition.Horizontal.RIGHT -> surfaceWidth.toFloat() - bitmapWidth.toFloat() / 2f - marginX
+    WidgetPosition.Horizontal.LEFT -> marginX + halfBitmapWidth
+    WidgetPosition.Horizontal.CENTER -> surfaceWidth.toFloat() / 2 + marginX
+    WidgetPosition.Horizontal.RIGHT -> surfaceWidth.toFloat() - halfBitmapWidth - marginX
   }
 
   override fun prepare() {
@@ -270,6 +264,9 @@ internal class BitmapWidgetRenderer(
     this.bitmap = bitmap
     this.bitmapWidth = bitmap.width
     this.bitmapHeight = bitmap.height
+    this.halfBitmapWidth = bitmapWidth / 2f
+    this.halfBitmapHeight = bitmapHeight / 2f
+
     updateVertexBuffer()
     updateMatrix = true
     needRender = true
