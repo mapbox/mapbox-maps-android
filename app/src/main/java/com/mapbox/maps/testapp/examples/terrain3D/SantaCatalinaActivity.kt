@@ -122,7 +122,7 @@ class SantaCatalinaActivity : AppCompatActivity() {
           accuracyRadius(1.0)
           accuracyRadiusTransition { duration(10_000L) }
 
-//          locationIndicatorOpacity(0.0)
+          locationIndicatorOpacity(0.0)
           locationIndicatorOpacityTransition {
             duration(30_000L)
           }

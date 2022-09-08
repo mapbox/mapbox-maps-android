@@ -117,8 +117,4 @@ internal class ModelLayerRenderer(
     modelLayer.updateStyle(style)
     source.updateStyle(style)
   }
-
-  override fun setOpacity(opacity: Double) {
-    modelLayer.modelOpacity(opacity)
-  }
 }

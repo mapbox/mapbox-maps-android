@@ -33,11 +33,6 @@ data class LocationComponentSettings2 @JvmOverloads constructor(
    * The enum controls how the puck is oriented
    */
   var puckBearingSource: PuckBearingSource = PuckBearingSource.HEADING,
-
-  /**
-   * The opacity of the entire location indicator layer
-   */
-  var opacity: Float = 1f,
 )
 
 // End of generated file.

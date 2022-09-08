@@ -25,6 +25,7 @@ internal class LocationIndicatorLayerRenderer(
   override fun initializeComponents(style: StyleInterface) {
     this.style = style
     setupBitmaps()
+    setOpacity(puckOptions.opacity.toDouble())
   }
 
   override fun isRendererInitialised(): Boolean {
@@ -135,7 +136,7 @@ internal class LocationIndicatorLayerRenderer(
     layer.emphasisCircleColor(buildRGBAExpression(rgbaArray))
   }
 
-  override fun setOpacity(opacity: Double) {
+  private fun setOpacity(opacity: Double) {
     layer.opacity(opacity)
   }
 

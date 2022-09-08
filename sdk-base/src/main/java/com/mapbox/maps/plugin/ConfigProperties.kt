@@ -52,19 +52,23 @@ data class LocationPuck2D @JvmOverloads constructor(
   /**
    * Name of image in sprite to use as the top of the location indicator.
    */
-  var topImage: Drawable? = null,
+  val topImage: Drawable? = null,
   /**
    * Name of image in sprite to use as the middle of the location indicator.
    */
-  var bearingImage: Drawable? = null,
+  val bearingImage: Drawable? = null,
   /**
    * Name of image in sprite to use as the background of the location indicator.
    */
-  var shadowImage: Drawable? = null,
+  val shadowImage: Drawable? = null,
   /**
    * The scale expression of the images. If defined, it will be applied to all the three images.
    */
-  var scaleExpression: String? = null,
+  val scaleExpression: String? = null,
+  /**
+   * The opacity of the entire location puck
+   */
+  val opacity: Float = 1f,
 ) : LocationPuck()
 
 /**
@@ -74,31 +78,31 @@ data class LocationPuck3D @JvmOverloads constructor(
   /**
    * An URL for the model file in gltf format.
    */
-  var modelUri: String,
+  val modelUri: String,
   /**
    * The position of the model.
    */
-  var position: List<Float> = listOf(0f, 0f),
+  val position: List<Float> = listOf(0f, 0f),
   /**
    * The opacity of the model.
    */
-  var modelOpacity: Float = 1f,
+  val modelOpacity: Float = 1f,
   /**
    * The scale of the model.
    */
-  var modelScale: List<Float> = listOf(1f, 1f, 1f),
+  val modelScale: List<Float> = listOf(1f, 1f, 1f),
   /**
    * The scale expression of the model, which will overwrite the default scale expression that keeps the model size constant during zoom.
    */
-  var modelScaleExpression: String? = null,
+  val modelScaleExpression: String? = null,
   /**
    * The translation of the model [lon, lat, z]
    */
-  var modelTranslation: List<Float> = listOf(0f, 0f, 0f),
+  val modelTranslation: List<Float> = listOf(0f, 0f, 0f),
   /**
    * The rotation of the model.
    */
-  var modelRotation: List<Float> = listOf(0f, 0f, 90f),
+  val modelRotation: List<Float> = listOf(0f, 0f, 90f),
 ) : LocationPuck()
 
 // End of generated file.

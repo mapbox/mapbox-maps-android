@@ -107,20 +107,6 @@ abstract class LocationComponentSettingsBase2 : LocationComponentSettingsInterfa
         applySettings2()
       }
     }
-
-  /**
-   * The opacity of the entire location indicator layer
-   */
-  override var opacity: Float
-    get() {
-      return this.internalSettings2.opacity
-    }
-    set(value) {
-      if (this.internalSettings2.opacity != value) {
-        this.internalSettings2.opacity = value
-        applySettings2()
-      }
-    }
 }
 
 // End of generated file.

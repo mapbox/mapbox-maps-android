@@ -138,23 +138,13 @@ class LocationComponentActivity : AppCompatActivity() {
         return true
       }
       R.id.toggle_opacity -> {
-        val location2 = binding.mapView.location2
-        if (location2.opacity == 1.0F) {
-          location2.opacity = 0.5F
-        } else {
-          location2.opacity = 1F
-        }
-/*
-        binding.mapView.getMapboxMap().getStyle { style ->
-          style.getLayerAs<LocationIndicatorLayer>("location-indicator")!!.apply {
-            if (locationIndicatorOpacity == 0.5) {
-              locationIndicatorOpacity(1.0)
-            }else {
-              locationIndicatorOpacity(0.5)
-            }
+        val location = binding.mapView.location
+        location.locationPuck = location.locationPuck.run {
+          when (this) {
+            is LocationPuck3D -> copy(modelOpacity = if (modelOpacity == 1.0F) 0.5F else 1.0F)
+            is LocationPuck2D -> copy(opacity = if (opacity == 1.0F) 0.5F else 1.0F)
           }
         }
-*/
         return true
       }
       else -> return super.onOptionsItemSelected(item)
