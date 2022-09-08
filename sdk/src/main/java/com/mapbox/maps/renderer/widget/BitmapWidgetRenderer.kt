@@ -20,6 +20,8 @@ internal class BitmapWidgetRenderer(
   private var bitmapHeight = bitmap?.height ?: 0
   private var halfBitmapWidth = bitmapWidth / 2f
   private var halfBitmapHeight = bitmapHeight / 2f
+  private var translationX = 0f
+  private var translationY = 0f
 
   private var surfaceWidth = 0
   private var surfaceHeight = 0
@@ -66,18 +68,8 @@ internal class BitmapWidgetRenderer(
       -1f, 1f, 0f, 1f
     )
 
-    Matrix.translateM(
-      translateMatrix,
-      0,
-      leftX(),
-      topY(),
-      0f
-    )
-
     updateVertexBuffer()
-
-    updateMatrix = true
-    needRender = true
+    setTranslation(this.translationX, this.translationY)
   }
 
   private fun updateVertexBuffer() {
@@ -280,6 +272,8 @@ internal class BitmapWidgetRenderer(
   }
 
   override fun setTranslation(translationX: Float, translationY: Float) {
+    this.translationX = translationX
+    this.translationY = translationY
     Matrix.setIdentityM(translateMatrix, 0)
     Matrix.translateM(
       translateMatrix,
