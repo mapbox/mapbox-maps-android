@@ -25,6 +25,7 @@ internal class ModelLayerRenderer(
   override fun initializeComponents(style: StyleInterface) {
     this.style = style
     source.bindTo(style)
+    setModelOpacity(locationModelLayerOptions.modelOpacity)
   }
 
   override fun isRendererInitialised(): Boolean {
@@ -87,6 +88,10 @@ internal class ModelLayerRenderer(
   private fun setLayerBearing(bearing: Double) {
     lastBearing = bearing
     updateLocationOrBearing()
+  }
+
+  private fun setModelOpacity(opacity: Float) {
+    modelLayer.modelOpacity(opacity.toDouble())
   }
 
   private fun updateLocationOrBearing() {
