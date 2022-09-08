@@ -189,6 +189,9 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   }
 
   override fun onSizeChanged(w: Int, h: Int) {
+    renderer.queueNonRenderEvent {
+      renderer.onSurfaceChanged(w, h)
+    }
     pluginRegistry.onSizeChanged(w, h)
   }
 
