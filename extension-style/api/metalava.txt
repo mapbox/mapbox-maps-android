@@ -2455,6 +2455,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public String getLayerId();
     method public java.util.List<java.lang.Double>? getLocation();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getLocationAsExpression();
+    method public Double? getLocationIndicatorOpacity();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getLocationIndicatorOpacityAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getLocationIndicatorOpacityTransition();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getLocationTransition();
     method public Double? getMaxZoom();
     method public Double? getMinZoom();
@@ -2476,6 +2479,10 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer imagePitchDisplacement(com.mapbox.maps.extension.style.expressions.generated.Expression imagePitchDisplacement);
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer location(java.util.List<java.lang.Double> location);
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer location(com.mapbox.maps.extension.style.expressions.generated.Expression location);
+    method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer locationIndicatorOpacity(double locationIndicatorOpacity);
+    method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer locationIndicatorOpacity(com.mapbox.maps.extension.style.expressions.generated.Expression locationIndicatorOpacity);
+    method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer locationIndicatorOpacityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer locationIndicatorOpacityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer locationTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer locationTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer maxZoom(double maxZoom);
@@ -2526,6 +2533,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public String layerId;
     property public final java.util.List<java.lang.Double>? location;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? locationAsExpression;
+    property public final Double? locationIndicatorOpacity;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? locationIndicatorOpacityAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? locationIndicatorOpacityTransition;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? locationTransition;
     property public Double? maxZoom;
     property public Double? minZoom;
@@ -2576,6 +2586,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultImagePitchDisplacementAsExpression();
     method public java.util.List<java.lang.Double>? getDefaultLocation();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultLocationAsExpression();
+    method public Double? getDefaultLocationIndicatorOpacity();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultLocationIndicatorOpacityAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultLocationIndicatorOpacityTransition();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultLocationTransition();
     method public Double? getDefaultMaxZoom();
     method public Double? getDefaultMinZoom();
@@ -2622,6 +2635,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultImagePitchDisplacementAsExpression;
     property public final java.util.List<java.lang.Double>? defaultLocation;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultLocationAsExpression;
+    property public final Double? defaultLocationIndicatorOpacity;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultLocationIndicatorOpacityAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultLocationIndicatorOpacityTransition;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultLocationTransition;
     property public final Double? defaultMaxZoom;
     property public final Double? defaultMinZoom;
@@ -2678,6 +2694,10 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer imagePitchDisplacement(com.mapbox.maps.extension.style.expressions.generated.Expression imagePitchDisplacement);
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer location(java.util.List<java.lang.Double> location = listOf(0.0, 0.0, 0.0));
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer location(com.mapbox.maps.extension.style.expressions.generated.Expression location);
+    method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer locationIndicatorOpacity(double locationIndicatorOpacity = 1.0);
+    method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer locationIndicatorOpacity(com.mapbox.maps.extension.style.expressions.generated.Expression locationIndicatorOpacity);
+    method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer locationIndicatorOpacityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer locationIndicatorOpacityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer locationTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer locationTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer maxZoom(double maxZoom);

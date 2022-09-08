@@ -584,6 +584,7 @@ package com.mapbox.maps.plugin {
   }
 
   public final class LocationPuck2D extends com.mapbox.maps.plugin.LocationPuck {
+    ctor public LocationPuck2D(android.graphics.drawable.Drawable? topImage = null, android.graphics.drawable.Drawable? bearingImage = null, android.graphics.drawable.Drawable? shadowImage = null, String? scaleExpression = null, float opacity = 1f);
     ctor public LocationPuck2D(android.graphics.drawable.Drawable? topImage = null, android.graphics.drawable.Drawable? bearingImage = null, android.graphics.drawable.Drawable? shadowImage = null, String? scaleExpression = null);
     ctor public LocationPuck2D(android.graphics.drawable.Drawable? topImage = null, android.graphics.drawable.Drawable? bearingImage = null, android.graphics.drawable.Drawable? shadowImage = null);
     ctor public LocationPuck2D(android.graphics.drawable.Drawable? topImage = null, android.graphics.drawable.Drawable? bearingImage = null);
@@ -592,16 +593,20 @@ package com.mapbox.maps.plugin {
     method public android.graphics.drawable.Drawable? component2();
     method public android.graphics.drawable.Drawable? component3();
     method public String? component4();
-    method public com.mapbox.maps.plugin.LocationPuck2D copy(android.graphics.drawable.Drawable? topImage, android.graphics.drawable.Drawable? bearingImage, android.graphics.drawable.Drawable? shadowImage, String? scaleExpression);
+    method public float component5();
+    method public com.mapbox.maps.plugin.LocationPuck2D copy(android.graphics.drawable.Drawable? topImage, android.graphics.drawable.Drawable? bearingImage, android.graphics.drawable.Drawable? shadowImage, String? scaleExpression, float opacity);
     method public android.graphics.drawable.Drawable? getBearingImage();
+    method public float getOpacity();
     method public String? getScaleExpression();
     method public android.graphics.drawable.Drawable? getShadowImage();
     method public android.graphics.drawable.Drawable? getTopImage();
     method public void setBearingImage(android.graphics.drawable.Drawable? bearingImage);
+    method public void setOpacity(float opacity);
     method public void setScaleExpression(String? scaleExpression);
     method public void setShadowImage(android.graphics.drawable.Drawable? shadowImage);
     method public void setTopImage(android.graphics.drawable.Drawable? topImage);
     property public final android.graphics.drawable.Drawable? bearingImage;
+    property public final float opacity;
     property public final String? scaleExpression;
     property public final android.graphics.drawable.Drawable? shadowImage;
     property public final android.graphics.drawable.Drawable? topImage;
