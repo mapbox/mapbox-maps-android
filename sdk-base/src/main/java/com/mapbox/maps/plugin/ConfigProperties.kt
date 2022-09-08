@@ -52,23 +52,23 @@ data class LocationPuck2D @JvmOverloads constructor(
   /**
    * Name of image in sprite to use as the top of the location indicator.
    */
-  val topImage: Drawable? = null,
+  var topImage: Drawable? = null,
   /**
    * Name of image in sprite to use as the middle of the location indicator.
    */
-  val bearingImage: Drawable? = null,
+  var bearingImage: Drawable? = null,
   /**
    * Name of image in sprite to use as the background of the location indicator.
    */
-  val shadowImage: Drawable? = null,
+  var shadowImage: Drawable? = null,
   /**
    * The scale expression of the images. If defined, it will be applied to all the three images.
    */
-  val scaleExpression: String? = null,
+  var scaleExpression: String? = null,
   /**
    * The opacity of the entire location puck
    */
-  val opacity: Float = 1f,
+  var opacity: Float = 1f,
 ) : LocationPuck()
 
 /**
@@ -78,31 +78,31 @@ data class LocationPuck3D @JvmOverloads constructor(
   /**
    * An URL for the model file in gltf format.
    */
-  val modelUri: String,
+  var modelUri: String,
   /**
    * The position of the model.
    */
-  val position: List<Float> = listOf(0f, 0f),
+  var position: List<Float> = listOf(0f, 0f),
   /**
    * The opacity of the model.
    */
-  val modelOpacity: Float = 1f,
+  var modelOpacity: Float = 1f,
   /**
    * The scale of the model.
    */
-  val modelScale: List<Float> = listOf(1f, 1f, 1f),
+  var modelScale: List<Float> = listOf(1f, 1f, 1f),
   /**
    * The scale expression of the model, which will overwrite the default scale expression that keeps the model size constant during zoom.
    */
-  val modelScaleExpression: String? = null,
+  var modelScaleExpression: String? = null,
   /**
    * The translation of the model [lon, lat, z]
    */
-  val modelTranslation: List<Float> = listOf(0f, 0f, 0f),
+  var modelTranslation: List<Float> = listOf(0f, 0f, 0f),
   /**
    * The rotation of the model.
    */
-  val modelRotation: List<Float> = listOf(0f, 0f, 90f),
+  var modelRotation: List<Float> = listOf(0f, 0f, 90f),
 ) : LocationPuck()
 
 // End of generated file.
