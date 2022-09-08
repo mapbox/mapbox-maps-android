@@ -83,15 +83,15 @@ internal class BitmapWidgetRenderer(
   }
 
   private fun topY() = when (position.vertical) {
-    WidgetPosition.Vertical.BOTTOM -> surfaceHeight.toFloat() - halfBitmapHeight - marginY
-    WidgetPosition.Vertical.CENTER -> surfaceHeight.toFloat() / 2 + marginY
     WidgetPosition.Vertical.TOP -> marginY + halfBitmapHeight
+    WidgetPosition.Vertical.CENTER -> surfaceHeight.toFloat() / 2 + marginY
+    WidgetPosition.Vertical.BOTTOM -> surfaceHeight.toFloat() - (halfBitmapHeight + marginY)
   }
 
   private fun leftX() = when (position.horizontal) {
     WidgetPosition.Horizontal.LEFT -> marginX + halfBitmapWidth
     WidgetPosition.Horizontal.CENTER -> surfaceWidth.toFloat() / 2 + marginX
-    WidgetPosition.Horizontal.RIGHT -> surfaceWidth.toFloat() - halfBitmapWidth - marginX
+    WidgetPosition.Horizontal.RIGHT -> surfaceWidth.toFloat() - (halfBitmapWidth + marginX)
   }
 
   override fun prepare() {
