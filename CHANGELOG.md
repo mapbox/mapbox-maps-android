@@ -2,7 +2,6 @@
 
 Mapbox welcomes participation and contributions from everyone.
 # main
-* Wrong BitmapWidget position when using WidgetPosition.Horizontal.CENTER. ([1651](https://github.com/mapbox/mapbox-maps-android/pull/1651))
 
 ## Features ✨ and improvements 🏁
 * Deprecated gesture settings `increaseRotateThresholdWhenPinchingToZoom` property. ([1632](https://github.com/mapbox/mapbox-maps-android/pull/1632))
@@ -14,6 +13,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Preserve cached properties if applied to the layer before during the `Style#getLayer` call. ([1622](https://github.com/mapbox/mapbox-maps-android/pull/1622))
 * Fix a `NullPointerException` in `StandardGestureListener`, where `MotionEvent` should be nullable. ([1645] (https://github.com/mapbox/mapbox-maps-android/pull/1645))
 * Fix incorrect `MapView` dimensions after background orientation change. ([1658](https://github.com/mapbox/mapbox-maps-android/pull/1658))
+* Wrong BitmapWidget position when using WidgetPosition.Horizontal.CENTER. ([1651](https://github.com/mapbox/mapbox-maps-android/pull/1651))
 
 ## Dependencies
 * Update mapbox-gestures-android dependency to [v0.8.0](https://github.com/mapbox/mapbox-gestures-android/releases/tag/v0.8.0). ([1645] (https://github.com/mapbox/mapbox-maps-android/pull/1645))
