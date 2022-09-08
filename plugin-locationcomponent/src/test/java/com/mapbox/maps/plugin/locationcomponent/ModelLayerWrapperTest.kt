@@ -7,7 +7,13 @@ import com.mapbox.maps.StyleManagerInterface
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.logW
 import com.mapbox.maps.plugin.delegates.MapStyleStateDelegate
-import io.mockk.*
+import io.mockk.Runs
+import io.mockk.every
+import io.mockk.just
+import io.mockk.mockk
+import io.mockk.mockkStatic
+import io.mockk.unmockkStatic
+import io.mockk.verify
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -19,7 +25,14 @@ import org.robolectric.RobolectricTestRunner
 class ModelLayerWrapperTest {
 
   private val style: StyleManagerInterface = mockk(relaxed = true)
-  private val layer = ModelLayerWrapper(MODEL_LAYER_ID, MODEL_SOURCE_ID, INITIAL_SCALE, INITIAL_ROTATION, INITIAL_TRANSLATION)
+  private val layer = ModelLayerWrapper(
+      MODEL_LAYER_ID,
+      MODEL_SOURCE_ID,
+      INITIAL_SCALE,
+      INITIAL_ROTATION,
+      INITIAL_TRANSLATION,
+      INITIAL_OPACITY
+  )
   private val expected: Expected<String, None> = mockk(relaxed = true)
 
   @Before
@@ -93,5 +106,6 @@ class ModelLayerWrapperTest {
     private val INITIAL_SCALE = arrayListOf(6.0)
     private val INITIAL_ROTATION = arrayListOf(8.0)
     private val INITIAL_TRANSLATION = arrayListOf(0.0)
+    private const val INITIAL_OPACITY = 1.0
   }
 }
