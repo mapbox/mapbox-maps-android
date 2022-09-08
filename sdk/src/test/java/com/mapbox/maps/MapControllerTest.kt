@@ -200,8 +200,13 @@ class MapControllerTest {
   fun onSizeChanged() {
     every { mockPluginRegistry.onSizeChanged(0, 0) } just Runs
 
+    val slotRunnable = slot<Runnable>()
+    every { mockRenderer.queueRenderEvent(capture(slotRunnable)) } answers { slotRunnable.captured.run() }
+    every { mockRenderer.onSurfaceChanged(any(), any()) } just Runs
+
     testMapController.onSizeChanged(0, 0)
 
+    verify { mockRenderer.onSurfaceChanged(0, 0) }
     verify { mockPluginRegistry.onSizeChanged(0, 0) }
   }
 
