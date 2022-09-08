@@ -201,7 +201,7 @@ class MapControllerTest {
     every { mockPluginRegistry.onSizeChanged(0, 0) } just Runs
 
     val slotRunnable = slot<Runnable>()
-    every { mockRenderer.queueNonRenderEvent(capture(slotRunnable)) } answers { slotRunnable.captured.run() }
+    every { mockRenderer.queueRenderEvent(capture(slotRunnable)) } answers { slotRunnable.captured.run() }
     every { mockRenderer.onSurfaceChanged(any(), any()) } just Runs
 
     testMapController.onSizeChanged(0, 0)
