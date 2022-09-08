@@ -1,9 +1,8 @@
 package com.mapbox.maps.testapp.examples.terrain3D
 
-import android.animation.TimeAnimator
+import android.animation.*
 import android.graphics.Color.rgb
 import android.os.Bundle
-import android.util.Log
 import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.api.directions.v5.DirectionsCriteria
@@ -12,17 +11,9 @@ import com.mapbox.api.directions.v5.models.DirectionsResponse
 import com.mapbox.core.constants.Constants.PRECISION_6
 import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
-import com.mapbox.maps.CameraOptions
-import com.mapbox.maps.MapView
-import com.mapbox.maps.MapboxMap
-import com.mapbox.maps.Style
+import com.mapbox.maps.*
 import com.mapbox.maps.extension.style.image.image
-import com.mapbox.maps.extension.style.layers.generated.LineLayer
-import com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer
-import com.mapbox.maps.extension.style.layers.generated.SymbolLayer
-import com.mapbox.maps.extension.style.layers.generated.lineLayer
-import com.mapbox.maps.extension.style.layers.generated.locationIndicatorLayer
-import com.mapbox.maps.extension.style.layers.getLayer
+import com.mapbox.maps.extension.style.layers.generated.*
 import com.mapbox.maps.extension.style.layers.getLayerAs
 import com.mapbox.maps.extension.style.layers.properties.generated.Visibility
 import com.mapbox.maps.extension.style.sources.addSource
@@ -65,36 +56,7 @@ class SantaCatalinaActivity : AppCompatActivity() {
         .bearing(215.0)
         .build()
     )
-    mapView.postDelayed(
-      {
-        mapboxMap.getStyle { style ->
-          val layer = style.getLayer(LOCATION_LAYER_ID) as LocationIndicatorLayer
-          layer.locationIndicatorOpacity(1.0)
-          layer.accuracyRadius(15.0)
-          val lineLayer: LineLayer = style.getLayerAs(LINE_LAYER_ID)!!
-          lineLayer.lineOpacity(0.0)
-          style.getStyleLayerProperties(LOCATION_LAYER_ID).value!!.apply {
-            Log.d("LocationIndicatorLayer", toJson())
-          }
-          mapView.postDelayed(
-            {
-              mapboxMap.getStyle { style ->
-                style.getStyleLayerProperties(LOCATION_LAYER_ID).value!!.apply {
-                  Log.d("LocationIndicatorLayer", toJson())
-                }
-                val layer = style.getLayer(LOCATION_LAYER_ID) as LocationIndicatorLayer
-                layer.locationIndicatorOpacity(0.0)
-                layer.locationIndicatorOpacityTransition {
-                  duration(0L)
-                }
-              }
-            },
-            3_000L
-          )
-        }
-      },
-      100L
-    )
+
     // load satellite style and add terrain with a line layer to visualize the route
     mapboxMap.loadStyle(
       style(styleUri = Style.SATELLITE_STREETS) {
@@ -110,26 +72,15 @@ class SantaCatalinaActivity : AppCompatActivity() {
           lineLayer(LINE_LAYER_ID, GEOJSON_SOURCE_ID) {
             lineColor(rgb(255, 79, 60))
             lineWidth(5.0)
-            lineOpacityTransition {
-              duration(10_000L)
-            }
           },
           above = LAYER_ABOVE_ID
         )
         +locationIndicatorLayer(LOCATION_LAYER_ID) {
           topImage(FOREGROUND_ICON)
-          topImageSize(5.0)
-          accuracyRadius(1.0)
-          accuracyRadiusTransition { duration(10_000L) }
-
-          locationIndicatorOpacity(0.0)
-          locationIndicatorOpacityTransition {
-            duration(30_000L)
-          }
-//          locationIndicatorOpacity(0.5)
-//          bearingImage(BACKGROUND_ICON)
-//          imagePitchDisplacement(5.0)
-//          bearingImageSize(1.5)
+          bearingImage(BACKGROUND_ICON)
+          imagePitchDisplacement(5.0)
+          topImageSize(1.5)
+          bearingImageSize(1.5)
         }
         +image(FOREGROUND_ICON) {
           bitmap(
