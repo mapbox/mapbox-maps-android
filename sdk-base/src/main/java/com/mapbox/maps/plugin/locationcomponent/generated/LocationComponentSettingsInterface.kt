@@ -53,7 +53,7 @@ interface LocationComponentSettingsInterface {
   var layerBelow: String?
 
   /**
-   * Defines what the customised look of the location puck.
+   * Defines what the customised look of the location puck. Note that direct changes to the puck variables won't have any effect, a new puck needs to be set every time.
    */
   var locationPuck: LocationPuck
 }
