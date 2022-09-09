@@ -43,8 +43,6 @@ class ModelLayerRendererTest {
   @Test
   fun initializeComponents() {
     verify(exactly = 1) { sourceWrapper.bindTo(style) }
-    verify(exactly = 1) { option.modelOpacity }
-    verify(exactly = 1) { layerWrapper.modelOpacity(0.5) }
   }
 
   @Test
@@ -67,6 +65,9 @@ class ModelLayerRendererTest {
     locationLayerRenderer.addLayers(positionManager)
 
     verify { positionManager.addLayerToMap(layerWrapper) }
+    verify(exactly = 1) { option.modelOpacity }
+    verify(exactly = 1) { layerWrapper.modelOpacity(0.5) }
+    verify(exactly = 1) { layerWrapper.modelRotation(listOf(0.0, 0.0, 0.0)) }
   }
 
   @Test

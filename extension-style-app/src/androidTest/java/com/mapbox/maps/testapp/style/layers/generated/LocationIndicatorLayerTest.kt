@@ -875,6 +875,7 @@ class LocationIndicatorLayerTest : BaseStyleTest() {
     val emphasisCircleRadiusTestValue = 1.0
     val imagePitchDisplacementTestValue = 1.0
     val locationTestValue = listOf(0.0, 1.0, 2.0)
+    val locationIndicatorOpacityTestValue = 1.0
     val perspectiveCompensationTestValue = 1.0
     val shadowImageSizeTestValue = 1.0
     val topImageSizeTestValue = 1.0
@@ -892,6 +893,7 @@ class LocationIndicatorLayerTest : BaseStyleTest() {
       emphasisCircleRadius(emphasisCircleRadiusTestValue)
       imagePitchDisplacement(imagePitchDisplacementTestValue)
       location(locationTestValue)
+      locationIndicatorOpacity(locationIndicatorOpacityTestValue)
       perspectiveCompensation(perspectiveCompensationTestValue)
       shadowImageSize(shadowImageSizeTestValue)
       topImageSize(topImageSizeTestValue)
@@ -916,6 +918,7 @@ class LocationIndicatorLayerTest : BaseStyleTest() {
     assertEquals(emphasisCircleRadiusTestValue, cachedLayer.emphasisCircleRadius)
     assertEquals(imagePitchDisplacementTestValue, cachedLayer.imagePitchDisplacement)
     assertEquals(locationTestValue, cachedLayer.location)
+    assertEquals(locationIndicatorOpacityTestValue, cachedLayer.locationIndicatorOpacity)
     assertEquals(perspectiveCompensationTestValue, cachedLayer.perspectiveCompensation)
     assertEquals(shadowImageSizeTestValue, cachedLayer.shadowImageSize)
     assertEquals(topImageSizeTestValue, cachedLayer.topImageSize)
