@@ -10,6 +10,7 @@ import com.mapbox.bindgen.Value
 import com.mapbox.common.*
 import com.mapbox.common.Event
 import com.mapbox.common.TelemetryUtils
+import com.mapbox.maps.logE
 import com.mapbox.maps.module.MapTelemetry
 import java.util.*
 
@@ -117,12 +118,10 @@ class MapTelemetryImpl : MapTelemetry {
 
   // EventsService
   private fun enableTelemetryCollection(enabled: Boolean) {
-    if (enabled) {
-      // TODO
-//      eventsService.resumeEventsCollection()
-    } else {
-      // TODO
-//      eventsService.pauseEventsCollection()
+    TelemetryUtils.setEventsCollectionState(enabled) { eventsServiceError ->
+      eventsServiceError?.let {
+        logE(TAG, "EventsServiceError: $it")
+      }
     }
   }
 
@@ -132,8 +131,6 @@ class MapTelemetryImpl : MapTelemetry {
    * @param enabled true if enabled, false otherwise
    */
   override fun setUserTelemetryRequestState(enabled: Boolean) {
-    // TODO
-    // EventsService
     enableTelemetryCollection(enabled)
   }
 
@@ -141,10 +138,7 @@ class MapTelemetryImpl : MapTelemetry {
    * Disables a started telemetry service for this session only.
    */
   override fun disableTelemetrySession() {
-//    telemetry.disable()
-    // TODO
-    // EventsService
-//    eventsService.pauseEventsCollection()
+    enableTelemetryCollection(false)
   }
 
   /**
