@@ -1,11 +1,11 @@
 package com.mapbox.maps.module.telemetry
 
 import android.os.Bundle
-import com.mapbox.android.telemetry.TelemetryUtils
+import com.mapbox.common.TelemetrySystemUtils
 
 internal object MapEventFactory {
   fun buildMapLoadEvent(phoneState: PhoneState): MapLoadEvent {
-    val userId = TelemetryUtils.retrieveVendorId()
+    val userId = TelemetrySystemUtils.obtainUniversalUniqueIdentifier()
     return MapLoadEvent(userId, phoneState)
   }
 
