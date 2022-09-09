@@ -25,7 +25,6 @@ internal class LocationIndicatorLayerRenderer(
   override fun initializeComponents(style: StyleInterface) {
     this.style = style
     setupBitmaps()
-    layer.opacity(puckOptions.opacity.toDouble())
   }
 
   override fun isRendererInitialised(): Boolean {
@@ -86,6 +85,7 @@ internal class LocationIndicatorLayerRenderer(
     layer.topImage(TOP_ICON)
     layer.bearingImage(BEARING_ICON)
     layer.shadowImage(SHADOW_ICON)
+    layer.opacity(puckOptions.opacity.toDouble())
   }
 
   override fun clearBitmaps() {
