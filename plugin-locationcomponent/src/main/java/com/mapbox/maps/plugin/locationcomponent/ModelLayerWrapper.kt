@@ -8,7 +8,7 @@ internal class ModelLayerWrapper(
   modelScale: List<Double>,
   modelRotation: List<Double>,
   modelTranslation: List<Double>,
-  modelOpacity: Double
+  modelOpacity: Double,
 ) : LocationLayerWrapper(layerId) {
   init {
     layerProperties["id"] = Value(layerId)

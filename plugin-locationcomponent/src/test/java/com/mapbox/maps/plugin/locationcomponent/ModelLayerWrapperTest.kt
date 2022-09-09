@@ -26,12 +26,12 @@ class ModelLayerWrapperTest {
 
   private val style: StyleManagerInterface = mockk(relaxed = true)
   private val layer = ModelLayerWrapper(
-      MODEL_LAYER_ID,
-      MODEL_SOURCE_ID,
-      INITIAL_SCALE,
-      INITIAL_ROTATION,
-      INITIAL_TRANSLATION,
-      INITIAL_OPACITY
+    MODEL_LAYER_ID,
+    MODEL_SOURCE_ID,
+    INITIAL_SCALE,
+    INITIAL_ROTATION,
+    INITIAL_TRANSLATION,
+    INITIAL_OPACITY,
   )
   private val expected: Expected<String, None> = mockk(relaxed = true)
 
@@ -103,7 +103,7 @@ class ModelLayerWrapperTest {
   @Test
   fun testModelOpacity() {
     layer.modelOpacity(0.8)
-    verify{ style.setStyleLayerProperty(MODEL_LAYER_ID, "model-opacity", Value(0.8)) }
+    verify { style.setStyleLayerProperty(MODEL_LAYER_ID, "model-opacity", Value(0.8)) }
   }
 
   companion object {
