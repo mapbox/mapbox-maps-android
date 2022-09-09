@@ -25,7 +25,6 @@ internal class ModelLayerRenderer(
   override fun initializeComponents(style: StyleInterface) {
     this.style = style
     source.bindTo(style)
-    modelLayer.modelOpacity(locationModelLayerOptions.modelOpacity.toDouble())
   }
 
   override fun isRendererInitialised(): Boolean {
@@ -42,6 +41,7 @@ internal class ModelLayerRenderer(
 
   override fun addLayers(positionManager: LocationComponentPositionManager) {
     modelLayer.modelRotation(locationModelLayerOptions.modelRotation.map { it.toDouble() })
+    modelLayer.modelOpacity(locationModelLayerOptions.modelOpacity.toDouble())
     positionManager.addLayerToMap(modelLayer)
   }
 
