@@ -56,7 +56,7 @@ class ModelLayerWrapperTest {
   @Test
   fun testInitialProperties() {
     val value = layer.toValue()
-    assertEquals("{model-type=location-indicator, model-rotation=[8.0], id=modelLayerId, source=modelSourceId, type=model, model-scale=[6.0], model-translation=[0.0]}", value.toString())
+    assertEquals("{model-type=location-indicator, model-rotation=[8.0], id=modelLayerId, source=modelSourceId, type=model, model-opacity=1.0, model-scale=[6.0], model-translation=[0.0]}", value.toString())
   }
 
   @Test
@@ -98,6 +98,12 @@ class ModelLayerWrapperTest {
     layer.modelScale(scale)
     verify(exactly = 0) { style.setStyleLayerProperty(MODEL_LAYER_ID, "model-scale", Value(scale.map(::Value))) }
     verify(exactly = 1) { newStyle.setStyleLayerProperty(MODEL_LAYER_ID, "model-scale", Value(scale.map(::Value))) }
+  }
+
+  @Test
+  fun testModelOpacity() {
+    layer.modelOpacity(0.8)
+    verify{ style.setStyleLayerProperty(MODEL_LAYER_ID, "model-opacity", Value(0.8)) }
   }
 
   companion object {

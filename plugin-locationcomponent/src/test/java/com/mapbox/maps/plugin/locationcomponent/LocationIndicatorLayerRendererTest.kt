@@ -44,6 +44,7 @@ class LocationIndicatorLayerRendererTest {
     every { puckOptions.topImage } returns drawable
     every { puckOptions.bearingImage } returns drawable
     every { puckOptions.shadowImage } returns drawable
+    every { puckOptions.opacity } returns 0.5f
     every { BitmapUtils.getBitmapFromDrawable(drawable) } returns bitmap
     every { style.removeStyleLayer(any()) } returns expected
     every { style.styleLayerExists(any()) } returns true
@@ -58,6 +59,24 @@ class LocationIndicatorLayerRendererTest {
   @Test
   fun sanity() {
     Assert.assertNotNull(locationLayerRenderer)
+  }
+
+  /**
+   * Verify that [LocationLayerRenderer.initializeComponents] in above [setup] calls the right
+   * methods.
+   */
+  @Test
+  fun initializeComponents() {
+    verify(exactly = 1) { layerWrapper.topImage(TOP_ICON) }
+    verify(exactly = 1) { style.addImage(TOP_ICON, bitmap) }
+
+    verify(exactly = 1) { layerWrapper.bearingImage(BEARING_ICON) }
+    verify(exactly = 1) { style.addImage(BEARING_ICON, bitmap) }
+
+    verify(exactly = 1) { layerWrapper.shadowImage(SHADOW_ICON) }
+    verify(exactly = 1) { style.addImage(SHADOW_ICON, bitmap) }
+
+    verify(exactly = 1) { layerWrapper.opacity(eq(0.5)) }
   }
 
   @Test
