@@ -486,6 +486,21 @@ class ExpressionTest {
   }
 
   @Test
+  fun dsl_expression_distanceFromCenter() {
+    val expression = distanceFromCenter {
+      // test builder function
+      distanceFromCenter {}
+    }
+    assertEquals("assert distance-from-center expression", "[distance-from-center, [distance-from-center]]", expression.toString())
+  }
+
+  @Test
+  fun expression_distanceFromCenter() {
+    val expression = Expression.distanceFromCenter(Expression.literal("abc"))
+    assertEquals("assert distance-from-center expression", "[distance-from-center, abc]", expression.toString())
+  }
+
+  @Test
   fun dsl_expression_downcase() {
     val expression = downcase {
       // test builder function
@@ -1114,6 +1129,21 @@ class ExpressionTest {
   fun expression_pi() {
     val expression = pi()
     assertEquals("assert pi expression", "[pi]", expression.toString())
+  }
+
+  @Test
+  fun dsl_expression_pitch() {
+    val expression = pitch {
+      // test builder function
+      pitch {}
+    }
+    assertEquals("assert pitch expression", "[pitch, [pitch]]", expression.toString())
+  }
+
+  @Test
+  fun expression_pitch() {
+    val expression = Expression.pitch(Expression.literal("abc"))
+    assertEquals("assert pitch expression", "[pitch, abc]", expression.toString())
   }
 
   @Test
