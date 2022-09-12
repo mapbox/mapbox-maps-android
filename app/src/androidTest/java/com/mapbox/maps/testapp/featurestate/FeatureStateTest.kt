@@ -28,7 +28,7 @@ class FeatureStateTest : BaseMapTest() {
     val countDownLatch = CountDownLatch(1)
     rule.scenario.onActivity {
       it.runOnUiThread {
-        mapboxMap = mapView.getMapboxMap()
+        mapboxMap = mapView.getMapboxMapWithoutActivityCheck()
         mapboxMap.loadStyle(
           style(Style.MAPBOX_STREETS) {
             +geoJsonSource("source") {

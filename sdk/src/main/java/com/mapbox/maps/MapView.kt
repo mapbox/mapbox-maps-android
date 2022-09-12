@@ -1,7 +1,9 @@
 package com.mapbox.maps
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
+import android.content.ContextWrapper
 import android.graphics.Bitmap
 import android.opengl.GLES20
 import android.util.AttributeSet
@@ -115,6 +117,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
     mapController.onAttachedToWindow(this)
   }
 
+
   @SuppressLint("CustomViewStyleable")
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal fun parseTypedArray(context: Context, attrs: AttributeSet?): MapInitOptions {
@@ -227,7 +230,21 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    *
    * @return [MapboxMap] object to interact with the map.
    */
-  override fun getMapboxMap(): MapboxMap = mapController.getMapboxMap()
+  override fun getMapboxMap(): MapboxMap {
+    val activity = context.getActivity()
+    if (activity == null || activity.isFinishing || activity.isDestroyed) {
+      if (viewAnnotationManagerDelegate.isInitialized()) {
+        (viewAnnotationManager as ViewAnnotationManagerImpl).destroy()
+      }
+      mapController.onDestroy()
+    }
+    return mapController.getMapboxMap()
+  }
+
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  fun getMapboxMapWithoutActivityCheck(): MapboxMap {
+    return mapController.getMapboxMap()
+  }
 
   /**
    * Queue a runnable to be executed on the map renderer thread.
@@ -372,6 +389,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
      * This will not affect rendering on displays with higher frame rate if [MapView.setMaximumFps] was not called.
      */
     internal const val DEFAULT_FPS = 60
+
     /**
      * Static method to check if [MapView] could properly render on this device.
      * This method may take some time on slow devices.
@@ -411,3 +429,6 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
     }
   }
 }
+
+private tailrec fun Context.getActivity(): Activity? = this as? Activity
+  ?: (this as? ContextWrapper)?.baseContext?.getActivity()

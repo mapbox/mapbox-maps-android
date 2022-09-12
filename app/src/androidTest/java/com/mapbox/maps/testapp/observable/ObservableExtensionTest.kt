@@ -48,7 +48,7 @@ class ObservableExtensionTest : BaseMapTest() {
   override fun loadMap() {
     rule.scenario.onActivity {
       it.runOnUiThread {
-        mapboxMap = mapView.getMapboxMap()
+        mapboxMap = mapView.getMapboxMapWithoutActivityCheck()
       }
     }
   }

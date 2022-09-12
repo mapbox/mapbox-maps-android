@@ -56,7 +56,7 @@ abstract class BaseMapTest {
     val latch = CountDownLatch(1)
     rule.scenario.onActivity {
       it.runOnUiThread {
-        mapboxMap = mapView.getMapboxMap()
+        mapboxMap = mapView.getMapboxMapWithoutActivityCheck()
         mapboxMap.loadStyleUri(
           Style.MAPBOX_STREETS
         ) { style ->

@@ -67,6 +67,13 @@ class MapViewTest {
   @Test
   fun getMapboxMap() {
     mapView.getMapboxMap()
+    verify { mapController.onDestroy() }
+    verify { mapController.getMapboxMap() }
+  }
+
+  @Test
+  fun getMapboxMapWithoutActivityCheck() {
+    mapView.getMapboxMapWithoutActivityCheck()
     verify { mapController.getMapboxMap() }
   }
 
