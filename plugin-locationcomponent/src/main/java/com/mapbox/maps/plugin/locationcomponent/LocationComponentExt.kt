@@ -32,7 +32,7 @@ private fun Context.getCompatDrawable(@DrawableRes resId: Int) = ResourcesCompat
 /**
  * Create a [LocationPuck2D] instance with or without an arrow bearing image.
  * @param context the context of application
- * @param withBearing if ture, the location puck will show an arrow bearing image, default is false.
+ * @param withBearing if true, the location puck will show an arrow bearing image, default is false.
  */
 @JvmOverloads
 fun LocationComponentPlugin.createDefault2DPuck(
