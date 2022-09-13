@@ -225,22 +225,6 @@ commands:
               TARGET_BRANCH=$(echo $CIRCLE_TAG | awk -F\- '{print $1}' | cut -f1-2 -d".")
               python3 scripts/start-internal-release-pipeline.py --token ${MOBILE_METRICS_TOKEN} --origin-slug mapbox/mapbox-maps-android --target-slug mapbox/mapbox-maps-android-internal --release_tag $CIRCLE_TAG --branch $TARGET_BRANCH
             fi
-  track-metrics:
-    steps:
-      - unless:
-          condition: << pipeline.parameters.mapbox_upstream >>
-          steps:
-            - run:
-                name: Track performance of the sdk
-                command: |
-                  if [ -n "${MOBILE_METRICS_TOKEN}" ]; then
-                    pip3 install requests
-                    if [[ $CIRCLE_BRANCH == main ]]; then
-                      python3 scripts/mobile-metrics-start-pipeline.py --token ${MOBILE_METRICS_TOKEN} --target-slug mapbox/mobile-metrics --branch master
-                    else
-                      python3 scripts/mobile-metrics-start-pipeline.py --token ${MOBILE_METRICS_TOKEN} --target-slug mapbox/mobile-metrics --mapbox_upstream True
-                    fi
-                  fi
 
   validate-internal-ci:
     steps:
@@ -600,7 +584,6 @@ jobs:
           path: app/build/outputs/apk
           destination: .
       - update-version-name
-      - track-metrics
       - init-aws
       - generate-docs
       - publish-sdk-registry
