@@ -79,5 +79,28 @@ package com.mapbox.maps.plugin.locationcomponent {
   public final class LocationPuckManagerKt {
   }
 
+  public interface PermissionsListener {
+    method public void onExplanationNeeded(java.util.List<java.lang.String!>!);
+    method public void onPermissionResult(boolean);
+  }
+
+  public class PermissionsManager {
+    ctor public PermissionsManager(com.mapbox.maps.plugin.locationcomponent.PermissionsListener!);
+    method public static com.mapbox.maps.plugin.locationcomponent.PermissionsManager.AccuracyAuthorization! accuracyAuthorization(android.content.Context!);
+    method public static boolean areLocationPermissionsGranted(android.content.Context!);
+    method public static boolean areRuntimePermissionsRequired();
+    method public com.mapbox.maps.plugin.locationcomponent.PermissionsListener! getListener();
+    method public static boolean isBackgroundLocationPermissionGranted(android.content.Context!);
+    method public void onRequestPermissionsResult(int, String![]!, int[]!);
+    method public void requestLocationPermissions(android.app.Activity!);
+    method public void setListener(com.mapbox.maps.plugin.locationcomponent.PermissionsListener!);
+  }
+
+  public enum PermissionsManager.AccuracyAuthorization {
+    enum_constant public static final com.mapbox.maps.plugin.locationcomponent.PermissionsManager.AccuracyAuthorization APPROXIMATE;
+    enum_constant public static final com.mapbox.maps.plugin.locationcomponent.PermissionsManager.AccuracyAuthorization NONE;
+    enum_constant public static final com.mapbox.maps.plugin.locationcomponent.PermissionsManager.AccuracyAuthorization PRECISE;
+  }
+
 }
 

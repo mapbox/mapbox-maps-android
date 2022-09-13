@@ -9,8 +9,7 @@ import com.mapbox.common.Event
  * Base event class for telemetry events.
  */
 @SuppressLint("ParcelCreator")
-internal abstract class MapBaseEvent(phoneState: PhoneState) :
-  Event(Value.nullValue()) {
+internal abstract class MapBaseEvent(phoneState: PhoneState) {
   @SerializedName("event")
   val event: String
 
