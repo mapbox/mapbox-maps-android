@@ -31,6 +31,7 @@ object AnimationThreadController {
    * Indicates if background thread is used now to run Mapbox animators.
    */
   var usingBackgroundThread = false
+    private set
   private val mainHandler = Handler(Looper.getMainLooper())
 
   private var backgroundAnimationThread: HandlerThread? = null
@@ -63,12 +64,10 @@ object AnimationThreadController {
    */
   @Synchronized
   fun postOnMainThread(function: () -> Unit) {
-    if (Looper.myLooper() != Looper.getMainLooper()) {
-      mainHandler.post {
-        function.invoke()
-      }
-    } else {
+    if (Looper.myLooper() == Looper.getMainLooper()) {
       function.invoke()
+    } else {
+      mainHandler.post { function.invoke() }
     }
   }
 
@@ -90,11 +89,7 @@ object AnimationThreadController {
         backgroundHandler.post { function.invoke() }
       } ?: logW(TAG, "useBackgroundThread was called but handler is null, animator event is skipped!")
     } else {
-      if (Looper.myLooper() == Looper.getMainLooper()) {
-        function.invoke()
-      } else {
-        mainHandler.post { function.invoke() }
-      }
+      postOnMainThread(function)
     }
   }
 

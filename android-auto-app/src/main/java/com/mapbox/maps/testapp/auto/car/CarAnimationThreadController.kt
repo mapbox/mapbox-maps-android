@@ -29,6 +29,6 @@ class CarAnimationThreadController : MapboxCarMapObserver {
   }
 
   private companion object {
-    val impactedManufacturer = setOf("Xiaomi")
+    private val impactedManufacturer = setOf("Xiaomi")
   }
 }

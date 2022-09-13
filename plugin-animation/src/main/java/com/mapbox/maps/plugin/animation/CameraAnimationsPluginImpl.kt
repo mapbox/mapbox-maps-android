@@ -285,40 +285,46 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
         }
 
         private fun onAnimationStartInternal(animation: Animator) {
-          (animation as? CameraAnimator<*>)?.apply {
+          (animation as? CameraAnimator<*>)?.let { startingAnimator ->
             // check for a specific use-case when canceling an animation with start delay that
             // has not yet started - in that case onAnimationStart logic must be skipped
-            if (canceled) {
+            if (startingAnimator.canceled) {
               return
             }
             lifecycleListeners.forEach {
-              it.onAnimatorStarting(type, this, owner)
+              it.onAnimatorStarting(startingAnimator.type, startingAnimator, startingAnimator.owner)
             }
             mapTransformDelegate.setUserAnimationInProgress(true)
             // check if such animation is not running already
             // if it is - then cancel it
             // Safely iterate over new set because of the possible changes of "this.animators" in Animator callbacks
-            HashSet(animators).forEach {
-              if (it.type == type && it.isRunning && it != this) {
+            HashSet(animators).forEach { existingAnimator ->
+              if (existingAnimator.type == startingAnimator.type && existingAnimator.isRunning && existingAnimator != startingAnimator) {
                 lifecycleListeners.forEach { listener ->
-                  listener.onAnimatorInterrupting(type, it, it.owner, this, this.owner)
+                  listener.onAnimatorInterrupting(
+                    startingAnimator.type,
+                    existingAnimator,
+                    existingAnimator.owner,
+                    startingAnimator,
+                    startingAnimator.owner
+                  )
                 }
                 postOnAnimatorThread {
-                  it.cancel()
+                  existingAnimator.cancel()
                 }
               }
             }
             // Prepare animator values
             // Some animators might not have initial values and should be skipped from internal update
-            val isUpdated = updateAnimatorValues(this)
+            val isUpdated = updateAnimatorValues(startingAnimator)
             if (isUpdated) {
               // finally register update listener in order to update map properly -
               // if it's not specific use-case using 0-duration animations with background thread
-              if (!usingBackgroundThread || animation.duration != 0L) {
-                registerInternalUpdateListener(this)
+              if (!usingBackgroundThread || startingAnimator.duration != 0L) {
+                registerInternalUpdateListener(startingAnimator)
               }
               if (debugMode) {
-                logD(TAG, "Animation ${type.name}(${hashCode()}) started.")
+                logD(TAG, "Animation ${startingAnimator.type.name}(${hashCode()}) started.")
               }
             }
           } ?: throw MapboxCameraAnimationException(
@@ -348,7 +354,7 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
             }
             if (isInternal) {
               if (debugMode) {
-                logD(TAG, "Internal Animator ${type.name} was unregistered")
+                logD(TAG, "Internal Animator ${type.name}(${hashCode()}) was unregistered")
               }
               unregisterAnimators(this, cancelAnimators = false)
             }
