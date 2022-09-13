@@ -39,4 +39,4 @@ org.ow2.asm:asm-tree:8.0
 // Metalava isn't released yet. Check in its jar and explicitly track its transitive deps.
 ```
 
-- Copy and paste (update) the new deps into [`gradle/metalava-dependencies.gradle`](../gradle/metalava-dependencies.gradle)
+- Copy and paste (update) the new deps into [`gradle/metalava.gradle`](../gradle/metalava.gradle)
