@@ -166,6 +166,7 @@ public final class com/mapbox/maps/extension/style/expressions/dsl/generated/Exp
 	public static final fun cos (D)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public static final fun cos (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public static final fun distance (Lcom/mapbox/geojson/GeoJson;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public static final fun distanceFromCenter ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public static final fun division (DD)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public static final fun division (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public static final fun downcase (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
@@ -228,6 +229,7 @@ public final class com/mapbox/maps/extension/style/expressions/dsl/generated/Exp
 	public static final fun numberFormat (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public static final fun objectExpression (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public static final fun pi ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public static final fun pitch ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public static final fun pow (DD)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public static final fun pow (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public static final fun product (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
@@ -305,6 +307,7 @@ public final class com/mapbox/maps/extension/style/expressions/generated/Express
 	public static final fun cos ([Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public static final fun cubicBezier (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public static final fun distance (Lcom/mapbox/geojson/GeoJson;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public static final fun distanceFromCenter ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public static final fun division (DD)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public static final fun division ([Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public static final fun downcase (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
@@ -373,6 +376,7 @@ public final class com/mapbox/maps/extension/style/expressions/generated/Express
 	public static final fun numberFormat (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public static final fun objectExpression ([Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public static final fun pi ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public static final fun pitch ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public static final fun pow (DD)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public static final fun pow ([Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public static final fun product ([D)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
@@ -483,6 +487,7 @@ public final class com/mapbox/maps/extension/style/expressions/generated/Express
 	public final fun cubicBezier (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun cubicBezier (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun distance (Lcom/mapbox/geojson/GeoJson;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun distanceFromCenter ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun division (DD)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun division (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun division ([Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
@@ -580,6 +585,7 @@ public final class com/mapbox/maps/extension/style/expressions/generated/Express
 	public final fun objectExpression (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun objectExpression ([Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun pi ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun pitch ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun pow (DD)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun pow (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun pow ([Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
@@ -673,6 +679,7 @@ public class com/mapbox/maps/extension/style/expressions/generated/Expression$Ex
 	public final fun cos (D)V
 	public final fun cos (Lkotlin/jvm/functions/Function1;)V
 	public final fun distance (Lcom/mapbox/geojson/GeoJson;)V
+	public final fun distanceFromCenter ()V
 	public final fun division (DD)V
 	public final fun division (Lkotlin/jvm/functions/Function1;)V
 	public final fun downcase (Ljava/lang/String;)V
@@ -736,6 +743,7 @@ public class com/mapbox/maps/extension/style/expressions/generated/Expression$Ex
 	public final fun numberFormat (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Lkotlin/jvm/functions/Function1;)V
 	public final fun objectExpression (Lkotlin/jvm/functions/Function1;)V
 	public final fun pi ()V
+	public final fun pitch ()V
 	public final fun pow (DD)V
 	public final fun pow (Lkotlin/jvm/functions/Function1;)V
 	public final fun product (Lkotlin/jvm/functions/Function1;)V
