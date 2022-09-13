@@ -2723,7 +2723,6 @@ package com.mapbox.maps.threading {
     method public boolean getUsingBackgroundThread();
     method @kotlin.jvm.Synchronized public void postOnAnimatorThread(kotlin.jvm.functions.Function0<kotlin.Unit> function);
     method @kotlin.jvm.Synchronized public void postOnMainThread(kotlin.jvm.functions.Function0<kotlin.Unit> function);
-    method public void setUsingBackgroundThread(boolean usingBackgroundThread);
     method @kotlin.jvm.Synchronized public void useBackgroundThread();
     method @kotlin.jvm.Synchronized public void useMainThread();
     property public final boolean usingBackgroundThread;

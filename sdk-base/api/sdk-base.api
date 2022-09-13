@@ -2560,7 +2560,6 @@ public final class com/mapbox/maps/threading/AnimationThreadController {
 	public final fun getUsingBackgroundThread ()Z
 	public final fun postOnAnimatorThread (Lkotlin/jvm/functions/Function0;)V
 	public final fun postOnMainThread (Lkotlin/jvm/functions/Function0;)V
-	public final fun setUsingBackgroundThread (Z)V
 	public final fun useBackgroundThread ()V
 	public final fun useMainThread ()V
 }
