@@ -66,3 +66,28 @@ public final class com/mapbox/maps/plugin/locationcomponent/LocationComponentUti
 	public static final fun getLocationComponent2 (Lcom/mapbox/maps/plugin/delegates/MapPluginProviderDelegate;)Lcom/mapbox/maps/plugin/locationcomponent/LocationComponentPlugin2;
 }
 
+public abstract interface class com/mapbox/maps/plugin/locationcomponent/PermissionsListener {
+	public abstract fun onExplanationNeeded (Ljava/util/List;)V
+	public abstract fun onPermissionResult (Z)V
+}
+
+public class com/mapbox/maps/plugin/locationcomponent/PermissionsManager {
+	public fun <init> (Lcom/mapbox/maps/plugin/locationcomponent/PermissionsListener;)V
+	public static fun accuracyAuthorization (Landroid/content/Context;)Lcom/mapbox/maps/plugin/locationcomponent/PermissionsManager$AccuracyAuthorization;
+	public static fun areLocationPermissionsGranted (Landroid/content/Context;)Z
+	public static fun areRuntimePermissionsRequired ()Z
+	public fun getListener ()Lcom/mapbox/maps/plugin/locationcomponent/PermissionsListener;
+	public static fun isBackgroundLocationPermissionGranted (Landroid/content/Context;)Z
+	public fun onRequestPermissionsResult (I[Ljava/lang/String;[I)V
+	public fun requestLocationPermissions (Landroid/app/Activity;)V
+	public fun setListener (Lcom/mapbox/maps/plugin/locationcomponent/PermissionsListener;)V
+}
+
+public final class com/mapbox/maps/plugin/locationcomponent/PermissionsManager$AccuracyAuthorization : java/lang/Enum {
+	public static final field APPROXIMATE Lcom/mapbox/maps/plugin/locationcomponent/PermissionsManager$AccuracyAuthorization;
+	public static final field NONE Lcom/mapbox/maps/plugin/locationcomponent/PermissionsManager$AccuracyAuthorization;
+	public static final field PRECISE Lcom/mapbox/maps/plugin/locationcomponent/PermissionsManager$AccuracyAuthorization;
+	public static fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/plugin/locationcomponent/PermissionsManager$AccuracyAuthorization;
+	public static fun values ()[Lcom/mapbox/maps/plugin/locationcomponent/PermissionsManager$AccuracyAuthorization;
+}
+
