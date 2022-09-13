@@ -429,8 +429,8 @@ class Expression : Value {
      * the camera, and a value of 1 means a distance of 1000px away from the camera
      * from the center. `["distance-from-center"]` may only be used in the `filter` expression for a `symbol` layer.
      */
-    fun distanceFromCenter(block: ExpressionBuilder.() -> Unit) {
-      this@ExpressionBuilder.arguments.add(Expression.distanceFromCenter(block))
+    fun distanceFromCenter() {
+      this@ExpressionBuilder.arguments.add(Expression.distanceFromCenter())
     }
 
     /**
@@ -738,8 +738,8 @@ class Expression : Value {
      * Returns the current pitch in degrees. `["pitch"]` may only be used in the `filter` expression for
      * a `symbol` layer.
      */
-    fun pitch(block: ExpressionBuilder.() -> Unit) {
-      this@ExpressionBuilder.arguments.add(Expression.pitch(block))
+    fun pitch() {
+      this@ExpressionBuilder.arguments.add(Expression.pitch())
     }
 
     /**
@@ -2328,19 +2328,7 @@ class Expression : Value {
      * from the center. `["distance-from-center"]` may only be used in the `filter` expression for a `symbol` layer.
      */
     @JvmStatic
-    fun distanceFromCenter(vararg expressions: Expression): Expression {
-      val builder = ExpressionBuilder("distance-from-center")
-      expressions.forEach {
-        builder.addArgument(it)
-      }
-      return builder.build()
-    }
-
-    /**
-     * DSL function for "distance-from-center".
-     */
-    fun distanceFromCenter(block: ExpressionBuilder.() -> Unit): Expression =
-      ExpressionBuilder("distance-from-center").apply(block).build()
+    fun distanceFromCenter() = ExpressionBuilder("distance-from-center").build()
 
     /**
      * Returns the input string converted to lowercase. Follows the Unicode Default Case Conversion algorithm and the
@@ -2904,19 +2892,7 @@ class Expression : Value {
      * a `symbol` layer.
      */
     @JvmStatic
-    fun pitch(vararg expressions: Expression): Expression {
-      val builder = ExpressionBuilder("pitch")
-      expressions.forEach {
-        builder.addArgument(it)
-      }
-      return builder.build()
-    }
-
-    /**
-     * DSL function for "pitch".
-     */
-    fun pitch(block: ExpressionBuilder.() -> Unit): Expression =
-      ExpressionBuilder("pitch").apply(block).build()
+    fun pitch() = ExpressionBuilder("pitch").build()
 
     /**
      * Returns the feature properties object.  Note that in some cases, it may be more efficient
