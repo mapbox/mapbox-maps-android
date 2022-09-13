@@ -8,6 +8,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Enable asynchronous tile uploader by default to improve animation performance. ([1679](https://github.com/mapbox/mapbox-maps-android/pull/1679))
 * Vector tiles without symbols are not hold for fade-out animation so that less amount of vector tiles are managed at a time. ([1679](https://github.com/mapbox/mapbox-maps-android/pull/1679))
 * Add support to set location puck opacity. ([1659](https://github.com/mapbox/mapbox-maps-android/pull/1659))
+* Support `pitch` and `distanceFromCenter` filters in symbol layers. ([1662](https://github.com/mapbox/mapbox-maps-android/pull/1662))
 
 ## Bug fixes 🐞
 * Fix scale bar truncated at high zoom levels near the poles. ([1620](https://github.com/mapbox/mapbox-maps-android/pull/1620))
