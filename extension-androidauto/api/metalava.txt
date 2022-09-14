@@ -1,7 +1,7 @@
 // Signature format: 3.0
 package com.mapbox.maps.extension.androidauto {
 
-  @com.mapbox.maps.MapboxExperimental public class DefaultMapboxCarMapGestureHandler implements com.mapbox.maps.extension.androidauto.MapboxCarMapGestureHandler {
+  @com.mapbox.maps.MapboxExperimental public class DefaultMapboxCarMapGestureHandler extends com.mapbox.maps.extension.androidauto.MapboxCarMapGestureHandler {
     ctor public DefaultMapboxCarMapGestureHandler();
   }
 
@@ -29,10 +29,11 @@ package com.mapbox.maps.extension.androidauto {
     method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.androidauto.MapboxCarMapScreenInstaller mapboxMapInstaller(androidx.car.app.Screen, com.mapbox.maps.extension.androidauto.MapboxCarMap mapboxCarMap);
   }
 
-  @com.mapbox.maps.MapboxExperimental public interface MapboxCarMapGestureHandler {
-    method public default void onFling(com.mapbox.maps.extension.androidauto.MapboxCarMapSurface mapboxCarMapSurface, float velocityX, float velocityY);
-    method public default void onScale(com.mapbox.maps.extension.androidauto.MapboxCarMapSurface mapboxCarMapSurface, float focusX, float focusY, float scaleFactor);
-    method public default void onScroll(com.mapbox.maps.extension.androidauto.MapboxCarMapSurface mapboxCarMapSurface, com.mapbox.maps.ScreenCoordinate visibleCenter, float distanceX, float distanceY);
+  @com.mapbox.maps.MapboxExperimental public abstract class MapboxCarMapGestureHandler {
+    ctor public MapboxCarMapGestureHandler();
+    method public void onFling(com.mapbox.maps.extension.androidauto.MapboxCarMapSurface mapboxCarMapSurface, float velocityX, float velocityY);
+    method public void onScale(com.mapbox.maps.extension.androidauto.MapboxCarMapSurface mapboxCarMapSurface, float focusX, float focusY, float scaleFactor);
+    method public void onScroll(com.mapbox.maps.extension.androidauto.MapboxCarMapSurface mapboxCarMapSurface, com.mapbox.maps.ScreenCoordinate visibleCenter, float distanceX, float distanceY);
   }
 
   @com.mapbox.maps.MapboxExperimental public fun interface MapboxCarMapInitializer {

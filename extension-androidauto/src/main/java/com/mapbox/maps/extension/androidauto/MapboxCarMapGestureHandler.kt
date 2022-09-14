@@ -10,7 +10,7 @@ import com.mapbox.maps.ScreenCoordinate
  * with [MapboxCarMap.setGestureHandler].
  */
 @MapboxExperimental
-interface MapboxCarMapGestureHandler {
+abstract class MapboxCarMapGestureHandler {
 
   /**
    * Allows you to implement or observe the map scroll gesture handler. The surface is
@@ -22,7 +22,7 @@ interface MapboxCarMapGestureHandler {
    * @param distanceX the distance in pixels along the X axis
    * @param distanceY the distance in pixels along the Y axis
    */
-  fun onScroll(
+  open fun onScroll(
     mapboxCarMapSurface: MapboxCarMapSurface,
     visibleCenter: ScreenCoordinate,
     distanceX: Float,
@@ -41,7 +41,7 @@ interface MapboxCarMapGestureHandler {
    * @param velocityX the velocity of this fling measured in pixels per second along the x axis
    * @param velocityY the velocity of this fling measured in pixels per second along the y axis
    */
-  fun onFling(
+  open fun onFling(
     mapboxCarMapSurface: MapboxCarMapSurface,
     velocityX: Float,
     velocityY: Float
@@ -60,7 +60,7 @@ interface MapboxCarMapGestureHandler {
    * @param focusY y coordinate of the focal point in pixels. A negative value indicates that the focal point is unavailable.
    * @param scaleFactor the scaling factor from the previous state to the current state during the scale event. This value is defined as (current state) / (previous state)
    */
-  fun onScale(
+  open fun onScale(
     mapboxCarMapSurface: MapboxCarMapSurface,
     focusX: Float,
     focusY: Float,
