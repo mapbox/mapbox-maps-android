@@ -2721,10 +2721,10 @@ package com.mapbox.maps.threading {
 
   @com.mapbox.maps.MapboxExperimental public final class AnimationThreadController {
     method public boolean getUsingBackgroundThread();
-    method @kotlin.jvm.Synchronized public void postOnAnimatorThread(kotlin.jvm.functions.Function0<kotlin.Unit> function);
-    method @kotlin.jvm.Synchronized public void postOnMainThread(kotlin.jvm.functions.Function0<kotlin.Unit> function);
-    method @kotlin.jvm.Synchronized public void useBackgroundThread();
-    method @kotlin.jvm.Synchronized public void useMainThread();
+    method public void postOnAnimatorThread(kotlin.jvm.functions.Function0<kotlin.Unit> function);
+    method public void postOnMainThread(kotlin.jvm.functions.Function0<kotlin.Unit> function);
+    method public void useBackgroundThread();
+    method public void useMainThread();
     property public final boolean usingBackgroundThread;
     field public static final com.mapbox.maps.threading.AnimationThreadController INSTANCE;
   }
