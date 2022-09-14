@@ -3,11 +3,7 @@ package com.mapbox.maps.testapp.examples
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.mapbox.api.directions.v5.models.DirectionsResponse
-import com.mapbox.core.constants.Constants
 import com.mapbox.geojson.Feature
-import com.mapbox.geojson.FeatureCollection
-import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapView
@@ -31,24 +27,17 @@ import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
  */
 class LargeGeojsonPerformanceActivity : AppCompatActivity() {
 
-  private lateinit var routePoints: FeatureCollection
+  private lateinit var routePoints: Feature
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     val mapView = MapView(this)
     setContentView(mapView)
 
-    routePoints = FeatureCollection.fromFeature(
-      Feature.fromGeometry(
-        LineString.fromPolyline(
-          DirectionsResponse.fromJson(
-            AnnotationUtils.loadStringFromAssets(
-              this@LargeGeojsonPerformanceActivity, LARGE_GEOJSON_ASSET_NAME
-            )
-          ).routes()[0].geometry()!!,
-          Constants.PRECISION_6
-        )
-      )
+    routePoints = Feature.fromJson(
+      AnnotationUtils.loadStringFromAssets(
+        this@LargeGeojsonPerformanceActivity, LARGE_GEOJSON_ASSET_NAME
+      )!!
     )
 
     mapView.getMapboxMap()
@@ -73,7 +62,7 @@ class LargeGeojsonPerformanceActivity : AppCompatActivity() {
           style(Style.MAPBOX_STREETS) {
             for (i in 0 until LARGE_SOURCE_COUNT) {
               +geoJsonSource("${SOURCE}_$i") {
-                featureCollection(routePoints)
+                feature(routePoints)
               }
               +lineLayer("${LAYER}_$i", "${SOURCE}_$i") {
                 lineColor("blue")
@@ -102,7 +91,7 @@ class LargeGeojsonPerformanceActivity : AppCompatActivity() {
   private fun loadAdditionalGeoJsonAfter(style: Style) {
     style.addSource(
       geoJsonSource("${SOURCE}_$LARGE_SOURCE_COUNT") {
-        featureCollection(routePoints)
+        feature(routePoints)
       }
     )
     style.addLayer(
