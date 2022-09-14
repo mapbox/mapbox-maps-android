@@ -10,6 +10,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants
 import com.mapbox.maps.plugin.locationcomponent.LocationLayerRenderer
+import com.mapbox.maps.threading.AnimationThreadController
 
 @SuppressLint("Recycle")
 internal abstract class PuckAnimator<T>(
@@ -29,10 +30,12 @@ internal abstract class PuckAnimator<T>(
     setObjectValues(emptyArray<Any>())
     setEvaluator(evaluator)
     addUpdateListener {
-      @Suppress("UNCHECKED_CAST")
-      val updatedValue = it.animatedValue as T
-      updateLayer(it.animatedFraction, updatedValue)
-      updateListener?.invoke(updatedValue)
+      AnimationThreadController.postOnMainThread {
+        @Suppress("UNCHECKED_CAST")
+        val updatedValue = it.animatedValue as T
+        updateLayer(it.animatedFraction, updatedValue)
+        updateListener?.invoke(updatedValue)
+      }
     }
     duration = LocationComponentConstants.DEFAULT_INTERVAL_MILLIS
     interpolator = DEFAULT_INTERPOLATOR
@@ -89,11 +92,15 @@ internal abstract class PuckAnimator<T>(
     cancelRunning()
     if (options == null) {
       setObjectValues(*targets)
-      start()
+      AnimationThreadController.postOnAnimatorThread {
+        start()
+      }
     } else {
       options.invoke(userConfiguredAnimator)
       userConfiguredAnimator.setObjectValues(*targets)
-      userConfiguredAnimator.start()
+      AnimationThreadController.postOnAnimatorThread {
+        userConfiguredAnimator.start()
+      }
     }
   }
 
@@ -113,11 +120,13 @@ internal abstract class PuckAnimator<T>(
   }
 
   fun cancelRunning() {
-    if (isRunning) {
-      cancel()
-    }
-    if (userConfiguredAnimator.isRunning) {
-      userConfiguredAnimator.cancel()
+    AnimationThreadController.postOnAnimatorThread {
+      if (isRunning) {
+        cancel()
+      }
+      if (userConfiguredAnimator.isRunning) {
+        userConfiguredAnimator.cancel()
+      }
     }
   }
 

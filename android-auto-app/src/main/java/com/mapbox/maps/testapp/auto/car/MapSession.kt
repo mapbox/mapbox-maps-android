@@ -16,9 +16,10 @@ import com.mapbox.maps.extension.androidauto.mapboxMapInstaller
  */
 @OptIn(MapboxExperimental::class)
 class MapSession : Session() {
+
   private val carMapShowcase = CarMapShowcase()
   private val mapboxCarMap = mapboxMapInstaller()
-    .onCreated(CarMapWidgets(), carMapShowcase)
+    .onCreated(CarAnimationThreadController(), CarMapWidgets(), carMapShowcase)
     .install { carContext ->
       // Callback is triggered when the Session calls onCreate. This allows you to specify
       // custom MapInitOptions.

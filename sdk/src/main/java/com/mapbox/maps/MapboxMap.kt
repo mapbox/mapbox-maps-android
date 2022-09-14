@@ -876,7 +876,6 @@ class MapboxMap :
    * @return Returns the distance measured in meters.
    */
   override fun getMetersPerPixelAtLatitude(latitude: Double, zoom: Double): Double {
-    checkNativeMap("getMetersPerPixelAtLatitude")
     return Projection.getMetersPerPixelAtLatitude(latitude, zoom)
   }
 
@@ -889,7 +888,6 @@ class MapboxMap :
    * @return Returns the distance measured in meters.
    */
   override fun getMetersPerPixelAtLatitude(latitude: Double): Double {
-    checkNativeMap("getMetersPerPixelAtLatitude")
     return Projection.getMetersPerPixelAtLatitude(latitude, cameraState.zoom)
   }
 
@@ -902,7 +900,6 @@ class MapboxMap :
    * @return Returns Spherical Mercator ProjectedMeters coordinates
    */
   override fun projectedMetersForCoordinate(point: Point): ProjectedMeters {
-    checkNativeMap("projectedMetersForCoordinate")
     return Projection.projectedMetersForCoordinate(point)
   }
 
@@ -916,7 +913,6 @@ class MapboxMap :
    * @return Returns a longitude-latitude pair.
    */
   override fun coordinateForProjectedMeters(projectedMeters: ProjectedMeters): Point {
-    checkNativeMap("coordinateForProjectedMeters")
     return Projection.coordinateForProjectedMeters(projectedMeters)
   }
 
@@ -932,7 +928,6 @@ class MapboxMap :
    * @return Returns a point on the map in Mercator projection.
    */
   override fun project(point: Point, zoomScale: Double): MercatorCoordinate {
-    checkNativeMap("project")
     return Projection.project(point, zoomScale)
   }
 
@@ -947,7 +942,6 @@ class MapboxMap :
    * @return Returns a coordinate.
    */
   override fun unproject(coordinate: MercatorCoordinate, zoomScale: Double): Point {
-    checkNativeMap("unproject")
     return Projection.unproject(coordinate, zoomScale)
   }
 

@@ -134,6 +134,25 @@ class MyCustomMapExperience : MapboxCarMapObserver {
 }
 ```
 
+### Xiaomi animations
+
+There is a known [issue](https://github.com/mapbox/mapbox-maps-android/issues/1413) related to Xiaomi devices used with the Mapbox Android Auto extension and the map is running in background on the device.
+Workaround has been introduced in Maps SDK v10.9.0 allowing to execute all Mapbox animators on the background thread instead of the main thread fixing the map being stuck.
+
+Following method will move all subsequent animator calls on the background thread:
+```kotlin
+if (deviceRequiresBackgroundThreadAnimations()) {
+    AnimationThreadController.useBackgroundThread()
+}
+```
+
+When running animators should be switched back to the main thread following method should be called:
+```kotlin
+AnimationThreadController.useMainThread()
+```
+
+It is highly recommended to use background thread for animators just when it is absolutely necessary - when Xiaomi device is used and the map is running in background. You could refer to our official [example](../android-auto-app/src/main/java/com/mapbox/maps/testapp/auto/car/CarAnimationThreadController.kt) how to implement that.
+
 ## Compatibility with Maps SDK v10
 The Android Auto extension is released separately from the Android Maps SDK v10 and has a compileOnly dependency. When using the Android Auto extension you need to include a compatible Maps SDK. The feature compatibility checklist can be found below.
 
@@ -141,6 +160,7 @@ Below is the full feature compatibility table:
 
 Features  | Supported? | Compatible Maps SDK version
 ------------- | ------------- | -------------
+Xiaomi animations | ✅ | v10.9+
 Map rendering  | ✅ | v10.0+
 Runtime styling  | ✅ | v10.0+
 Camera animation | ✅ | v10.0+

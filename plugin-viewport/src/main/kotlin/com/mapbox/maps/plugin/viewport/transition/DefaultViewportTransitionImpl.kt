@@ -15,6 +15,7 @@ import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.viewport.CompletionListener
 import com.mapbox.maps.plugin.viewport.data.DefaultViewportTransitionOptions
 import com.mapbox.maps.plugin.viewport.state.ViewportState
+import com.mapbox.maps.threading.AnimationThreadController
 import com.mapbox.maps.util.MathUtils
 
 /**
@@ -142,12 +143,14 @@ internal class DefaultViewportTransitionImpl(
 
   private fun cancelAnimation() {
     runningAnimation?.apply {
-      cancel()
-      childAnimations.forEach {
-        cameraPlugin.unregisterAnimators(it as ValueAnimator)
+      AnimationThreadController.postOnAnimatorThread {
+        cancel()
+        childAnimations.forEach {
+          cameraPlugin.unregisterAnimators(it as ValueAnimator)
+        }
       }
+      runningAnimation = null
     }
-    runningAnimation = null
   }
 
   private fun startAnimation(
@@ -166,8 +169,10 @@ internal class DefaultViewportTransitionImpl(
     if (instant) {
       animatorSet.duration = 0
     }
-    animatorSet.start()
-    runningAnimation = animatorSet
+    AnimationThreadController.postOnAnimatorThread {
+      animatorSet.start()
+      runningAnimation = animatorSet
+    }
   }
 
   private fun finishAnimation(animatorSet: AnimatorSet?) {

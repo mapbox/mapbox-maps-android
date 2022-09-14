@@ -2555,6 +2555,15 @@ public abstract interface class com/mapbox/maps/plugin/viewport/transition/Viewp
 	public abstract fun run (Lcom/mapbox/maps/plugin/viewport/state/ViewportState;Lcom/mapbox/maps/plugin/viewport/CompletionListener;)Lcom/mapbox/maps/plugin/animation/Cancelable;
 }
 
+public final class com/mapbox/maps/threading/AnimationThreadController {
+	public static final field INSTANCE Lcom/mapbox/maps/threading/AnimationThreadController;
+	public final fun getUsingBackgroundThread ()Z
+	public final fun postOnAnimatorThread (Lkotlin/jvm/functions/Function0;)V
+	public final fun postOnMainThread (Lkotlin/jvm/functions/Function0;)V
+	public final fun useBackgroundThread ()V
+	public final fun useMainThread ()V
+}
+
 public final class com/mapbox/maps/util/MathUtils {
 	public static final field INSTANCE Lcom/mapbox/maps/util/MathUtils;
 	public final fun prepareOptimalBearingPath ([D)[D

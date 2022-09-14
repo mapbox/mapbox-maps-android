@@ -37,6 +37,7 @@ import com.mapbox.maps.plugin.delegates.MapTransformDelegate
 import com.mapbox.maps.plugin.gestures.generated.GesturesAttributeParser
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettings
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettingsBase
+import com.mapbox.maps.threading.AnimationThreadController.postOnMainThread
 import java.util.*
 import java.util.concurrent.CopyOnWriteArraySet
 import kotlin.math.*
@@ -137,7 +138,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
   /**
    * Cancels scheduled velocity animations if user doesn't lift fingers within [SCHEDULED_ANIMATION_TIMEOUT]
    */
-  private val animationsTimeoutHandler = Handler()
+  private val animationsTimeoutHandler: Handler
   private var mainHandler: Handler? = null
   internal var doubleTapRegistered: Boolean = false
 
@@ -151,6 +152,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
     this.pixelRatio = pixelRatio
     internalSettings = GesturesAttributeParser.parseGesturesSettings(context, null, pixelRatio)
     mainHandler = Handler(Looper.getMainLooper())
+    animationsTimeoutHandler = Handler(Looper.getMainLooper())
   }
 
   constructor(
@@ -163,6 +165,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
     internalSettings =
       GesturesAttributeParser.parseGesturesSettings(context, attributeSet, pixelRatio)
     mainHandler = Handler(Looper.getMainLooper())
+    animationsTimeoutHandler = Handler(Looper.getMainLooper())
   }
 
   @VisibleForTesting
@@ -176,22 +179,24 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
     internalSettings =
       GesturesAttributeParser.parseGesturesSettings(context, attributeSet, pixelRatio)
     mainHandler = Handler(Looper.getMainLooper())
+    animationsTimeoutHandler = Handler(Looper.getMainLooper())
     this.style = style
   }
 
   @VisibleForTesting
   internal constructor(
-
     context: Context,
     attributeSet: AttributeSet,
     pixelRatio: Float,
-    handler: Handler
+    mainHandler: Handler,
+    animationsTimeoutHandler: Handler
   ) {
     this.context = context
     this.pixelRatio = pixelRatio
-    internalSettings =
+    this.internalSettings =
       GesturesAttributeParser.parseGesturesSettings(context, attributeSet, pixelRatio)
-    mainHandler = handler
+    this.mainHandler = mainHandler
+    this.animationsTimeoutHandler = animationsTimeoutHandler
   }
 
   override fun applySettings() {
@@ -1351,7 +1356,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
 
           override fun onAnimationEnd(animation: Animator) {
             super.onAnimationEnd(animation)
-            mapCameraManagerDelegate.dragEnd()
+            postOnMainThread { mapCameraManagerDelegate.dragEnd() }
           }
         })
       }

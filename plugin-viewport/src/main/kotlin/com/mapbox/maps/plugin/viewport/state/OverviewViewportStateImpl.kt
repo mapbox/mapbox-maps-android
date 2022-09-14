@@ -10,6 +10,7 @@ import com.mapbox.maps.plugin.animation.camera
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions
 import com.mapbox.maps.plugin.viewport.transition.MapboxViewportTransitionFactory
+import com.mapbox.maps.threading.AnimationThreadController
 import java.util.concurrent.*
 
 /**
@@ -95,12 +96,14 @@ internal class OverviewViewportStateImpl(
 
   private fun cancelAnimation() {
     runningAnimation?.apply {
-      cancel()
-      childAnimations.forEach {
-        cameraPlugin.unregisterAnimators(it as ValueAnimator)
+      AnimationThreadController.postOnAnimatorThread {
+        cancel()
+        childAnimations.forEach {
+          cameraPlugin.unregisterAnimators(it as ValueAnimator)
+        }
       }
+      runningAnimation = null
     }
-    runningAnimation = null
   }
 
   private fun startAnimation(
@@ -114,8 +117,10 @@ internal class OverviewViewportStateImpl(
     if (instant) {
       animatorSet.duration = 0
     }
-    animatorSet.start()
-    runningAnimation = animatorSet
+    AnimationThreadController.postOnAnimatorThread {
+      animatorSet.start()
+      runningAnimation = animatorSet
+    }
   }
 
   private fun finishAnimation(animatorSet: AnimatorSet?) {

@@ -12,6 +12,9 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.plugin.animation.animator.*
 import com.mapbox.maps.plugin.delegates.*
+import com.mapbox.maps.threading.AnimationThreadController.postOnAnimatorThread
+import com.mapbox.maps.threading.AnimationThreadController.postOnMainThread
+import com.mapbox.maps.threading.AnimationThreadController.usingBackgroundThread
 import com.mapbox.maps.util.MathUtils
 import java.util.concurrent.CopyOnWriteArraySet
 import kotlin.properties.Delegates
@@ -56,6 +59,7 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
   private val lifecycleListeners = CopyOnWriteArraySet<CameraAnimationsLifecycleListener>()
 
   private val handler = Handler(Looper.getMainLooper())
+
   private var commitScheduled = false
   private val commitChangesRunnable = Runnable {
     performMapJump(cameraOptionsBuilder.anchor(anchor).build())
@@ -264,114 +268,143 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
   }
 
   private fun registerInternalListener(animator: CameraAnimator<*>) {
-    animator.addInternalListener(object : Animator.AnimatorListener {
+    postOnAnimatorThread {
+      animator.addInternalListener(object : Animator.AnimatorListener {
 
-      override fun onAnimationStart(animation: Animator) {
-        (animation as? CameraAnimator<*>)?.apply {
-          // check for a specific use-case when canceling an animation with start delay that
-          // has not yet started - in that case onAnimationStart logic must be skipped
-          if (canceled) {
-            return
+        override fun onAnimationStart(animation: Animator) {
+          // Hack needed to register update listener earlier for 0 duration animators
+          // when using background thread. Due to series of rescheduling in this case and
+          // taking into account that Android will trigger `onAnimationEnd` in the same callchain -
+          // update logic will simply get skipped resulting in no map movement.
+          if (usingBackgroundThread && animation.duration == 0L) {
+            registerInternalUpdateListener(animation as CameraAnimator<*>)
           }
-          lifecycleListeners.forEach {
-            it.onAnimatorStarting(type, this, owner)
+          postOnMainThread {
+            onAnimationStartInternal(animation)
           }
-          mapTransformDelegate.setUserAnimationInProgress(true)
-          // check if such animation is not running already
-          // if it is - then cancel it
-          // Safely iterate over new set because of the possible changes of "this.animators" in Animator callbacks
-          HashSet(animators).forEach {
-            if (it.type == type && it.isRunning && it != this) {
-              lifecycleListeners.forEach { listener ->
-                listener.onAnimatorInterrupting(type, it, it.owner, this, this.owner)
+        }
+
+        private fun onAnimationStartInternal(animation: Animator) {
+          (animation as? CameraAnimator<*>)?.let { startingAnimator ->
+            // check for a specific use-case when canceling an animation with start delay that
+            // has not yet started - in that case onAnimationStart logic must be skipped
+            if (startingAnimator.canceled) {
+              return
+            }
+            lifecycleListeners.forEach {
+              it.onAnimatorStarting(startingAnimator.type, startingAnimator, startingAnimator.owner)
+            }
+            mapTransformDelegate.setUserAnimationInProgress(true)
+            // check if such animation is not running already
+            // if it is - then cancel it
+            // Safely iterate over new set because of the possible changes of "this.animators" in Animator callbacks
+            HashSet(animators).forEach { existingAnimator ->
+              if (existingAnimator.type == startingAnimator.type && existingAnimator.isRunning && existingAnimator != startingAnimator) {
+                lifecycleListeners.forEach { listener ->
+                  listener.onAnimatorInterrupting(
+                    startingAnimator.type,
+                    existingAnimator,
+                    existingAnimator.owner,
+                    startingAnimator,
+                    startingAnimator.owner
+                  )
+                }
+                postOnAnimatorThread {
+                  existingAnimator.cancel()
+                }
               }
-              it.cancel()
             }
-          }
+            // Prepare animator values
+            // Some animators might not have initial values and should be skipped from internal update
+            val isUpdated = updateAnimatorValues(startingAnimator)
+            if (isUpdated) {
+              // finally register update listener in order to update map properly -
+              // if it's not specific use-case using 0-duration animations with background thread
+              if (!usingBackgroundThread || startingAnimator.duration != 0L) {
+                registerInternalUpdateListener(startingAnimator)
+              }
+              if (debugMode) {
+                logD(TAG, "Animation ${startingAnimator.type.name}(${hashCode()}) started.")
+              }
+            }
+          } ?: throw MapboxCameraAnimationException(
+            "Could not start animation as it must be an instance of CameraAnimator and not null!"
+          )
+        }
 
-          // Prepare animator values
-          // Some animators might not have initial values and should be skipped from internal update
-          val isUpdated = updateAnimatorValues(this)
-          if (isUpdated) {
-            // finally register update listener in order to update map properly
-            registerInternalUpdateListener(this)
+        override fun onAnimationEnd(animation: Animator) {
+          postOnMainThread { finishAnimation(animation, AnimationFinishStatus.ENDED) }
+        }
+
+        override fun onAnimationCancel(animation: Animator) {
+          postOnMainThread { finishAnimation(animation, AnimationFinishStatus.CANCELED) }
+        }
+
+        override fun onAnimationRepeat(animation: Animator) {}
+
+        private fun finishAnimation(animation: Animator, finishStatus: AnimationFinishStatus) {
+          (animation as? CameraAnimator<*>)?.apply {
+            runningAnimatorsQueue.remove(animation)
             if (debugMode) {
-              logD(TAG, "Animation ${type.name}(${hashCode()}) started.")
+              val logText = when (finishStatus) {
+                AnimationFinishStatus.CANCELED -> "was canceled."
+                AnimationFinishStatus.ENDED -> "ended."
+              }
+              logD(TAG, "Animation ${type.name}(${hashCode()}) $logText")
             }
-          }
-        } ?: throw MapboxCameraAnimationException(
-          "Could not start animation as it must be an instance of CameraAnimator and not null!"
-        )
-      }
-
-      override fun onAnimationEnd(animation: Animator) {
-        finishAnimation(animation, AnimationFinishStatus.ENDED)
-      }
-
-      override fun onAnimationCancel(animation: Animator) {
-        finishAnimation(animation, AnimationFinishStatus.CANCELED)
-      }
-
-      override fun onAnimationRepeat(animation: Animator) {}
-
-      private fun finishAnimation(animation: Animator, finishStatus: AnimationFinishStatus) {
-        (animation as? CameraAnimator<*>)?.apply {
-          runningAnimatorsQueue.remove(animation)
-          if (debugMode) {
-            val logText = when (finishStatus) {
-              AnimationFinishStatus.CANCELED -> "was canceled."
-              AnimationFinishStatus.ENDED -> "ended."
+            if (isInternal) {
+              if (debugMode) {
+                logD(TAG, "Internal Animator ${type.name}(${hashCode()}) was unregistered")
+              }
+              unregisterAnimators(this, cancelAnimators = false)
             }
-            logD(TAG, "Animation ${type.name}(${hashCode()}) $logText")
-          }
-          if (isInternal) {
-            if (debugMode) {
-              logD(TAG, "Internal Animator ${type.name} was unregistered")
+            if (runningAnimatorsQueue.isEmpty()) {
+              mapTransformDelegate.setUserAnimationInProgress(false)
             }
-            unregisterAnimators(this, cancelAnimators = false)
-          }
-          if (runningAnimatorsQueue.isEmpty()) {
-            mapTransformDelegate.setUserAnimationInProgress(false)
-          }
-          lifecycleListeners.forEach {
-            when (finishStatus) {
-              AnimationFinishStatus.CANCELED -> it.onAnimatorCancelling(type, this, owner)
-              AnimationFinishStatus.ENDED -> it.onAnimatorEnding(type, this, owner)
+            lifecycleListeners.forEach {
+              when (finishStatus) {
+                AnimationFinishStatus.CANCELED -> it.onAnimatorCancelling(type, this, owner)
+                AnimationFinishStatus.ENDED -> it.onAnimatorEnding(type, this, owner)
+              }
             }
-          }
-          if (runningAnimatorsQueue.isEmpty()) {
-            commitChanges()
-          }
-        } ?: throw MapboxCameraAnimationException(
-          "Could not start animation as it must be an instance of CameraAnimator and not null!"
-        )
-      }
-    })
+            if (runningAnimatorsQueue.isEmpty()) {
+              commitChanges()
+            }
+          } ?: throw MapboxCameraAnimationException(
+            "Could not start animation as it must be an instance of CameraAnimator and not null!"
+          )
+        }
+      })
+    }
   }
 
   private fun registerInternalUpdateListener(animator: CameraAnimator<*>) {
     animator.addInternalUpdateListener {
-      // add current animator to queue-set if was not present
-      runningAnimatorsQueue.add(animator)
+      postOnMainThread { onAnimationUpdateInternal(animator, it) }
+    }
+  }
 
-      // set current animator value in any case
-      updateCameraValue(animator)
+  private fun onAnimationUpdateInternal(animator: CameraAnimator<*>, valueAnimator: ValueAnimator) {
+    // add current animator to queue-set if was not present
+    runningAnimatorsQueue.add(animator)
 
-      if (animator.type == CameraAnimatorType.ANCHOR) {
-        anchor = it.animatedValue as ScreenCoordinate
-      }
+    // set current animator value in any case
+    updateCameraValue(animator)
 
-      if (animator.hasUserListeners) {
-        // If the animator have third-party listeners camera changes must be applied immediately
-        // to be seen from the listeners.
-        commitChanges()
-      } else {
-        // main idea here is not to update map on each option change.
-        // the runnable posted here will be executed right after all the animators are applied.
-        if (!commitScheduled) {
-          handler.postAtFrontOfQueue(commitChangesRunnable)
-          commitScheduled = true
-        }
+    if (animator.type == CameraAnimatorType.ANCHOR) {
+      anchor = valueAnimator.animatedValue as ScreenCoordinate
+    }
+
+    if (animator.hasUserListeners) {
+      // If the animator have third-party listeners camera changes must be applied immediately
+      // to be seen from the listeners.
+      commitChanges()
+    } else {
+      // main idea here is not to update map on each option change.
+      // the runnable posted here will be executed right after all the animators are applied.
+      if (!commitScheduled) {
+        handler.postAtFrontOfQueue(commitChangesRunnable)
+        commitScheduled = true
       }
     }
   }
@@ -385,8 +418,10 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
 
   private fun cancelAnimatorSet() {
     highLevelAnimatorSet?.let {
-      it.animatorSet.cancel()
-      it.animatorSet.removeAllListeners()
+      postOnAnimatorThread {
+        it.animatorSet.cancel()
+        it.animatorSet.removeAllListeners()
+      }
     }
   }
 
@@ -400,15 +435,17 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
   override fun registerAnimators(
     vararg cameraAnimators: ValueAnimator
   ) {
-    for (animator in cameraAnimators) {
-      if (animator is CameraAnimator<*>) {
-        registerInternalListener(animator)
-      } else {
-        logE(TAG, "All animators must be CameraAnimator's to be registered!")
-        return
+    postOnMainThread {
+      for (animator in cameraAnimators) {
+        if (animator is CameraAnimator<*>) {
+          registerInternalListener(animator)
+        } else {
+          logE(TAG, "All animators must be CameraAnimator's to be registered!")
+          return@postOnMainThread
+        }
       }
+      animators.addAll(cameraAnimators.map { it as CameraAnimator<*> })
     }
-    animators.addAll(cameraAnimators.map { it as CameraAnimator<*> })
   }
 
   /**
@@ -421,19 +458,23 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     vararg cameraAnimators: ValueAnimator,
     cancelAnimators: Boolean
   ) {
-    for (animator in cameraAnimators) {
-      if (animator is CameraAnimator<*>) {
-        if (cancelAnimators) {
-          animator.cancel()
+    postOnMainThread {
+      for (animator in cameraAnimators) {
+        if (animator is CameraAnimator<*>) {
+          postOnAnimatorThread {
+            if (cancelAnimators) {
+              animator.cancel()
+            }
+            animator.removeInternalListener()
+            animator.removeInternalUpdateListener()
+          }
+        } else {
+          logE(TAG, "All animators must be CameraAnimator's to be unregistered!")
+          return@postOnMainThread
         }
-        animator.removeInternalListener()
-        animator.removeInternalUpdateListener()
-      } else {
-        logE(TAG, "All animators must be CameraAnimator's to be unregistered!")
-        return
       }
+      animators.removeAll(cameraAnimators.map { it as CameraAnimator<*> })
     }
-    animators.removeAll(cameraAnimators.map { it as CameraAnimator<*> })
   }
 
   /**
@@ -450,7 +491,9 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     // Safely iterate over new set because of the possible changes of "this.animators" in Animator callbacks
     HashSet(animators).forEach {
       if (!exceptOwnerList.contains(it.owner)) {
-        it.cancel()
+        postOnAnimatorThread {
+          it.cancel()
+        }
       }
     }
     if (!exceptOwnerList.contains(highLevelAnimatorSet?.owner)) {
@@ -793,7 +836,7 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     registerAnimators(*cameraAnimators.toTypedArray())
     AnimatorSet().apply {
       playTogether(*cameraAnimators.toTypedArray())
-      start()
+      postOnAnimatorThread { start() }
     }
   }
 
@@ -818,7 +861,7 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     registerAnimators(*cameraAnimators.toTypedArray())
     AnimatorSet().apply {
       playSequentially(*cameraAnimators.toTypedArray())
-      start()
+      postOnAnimatorThread { start() }
     }
   }
 
@@ -843,22 +886,27 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
         interpolator = it
       }
       animationOptions?.animatorListener?.let {
-        addListener(object : AnimatorListenerAdapter() {
-          override fun onAnimationEnd(animation: Animator) {
-            commitChanges()
+        // listeners in Android SDK use non thread safe lists
+        postOnAnimatorThread {
+          addListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator) {
+              postOnMainThread {
+                commitChanges()
+              }
 
-            if (highLevelAnimatorSet?.animatorSet === animation) {
-              highLevelAnimatorSet = null
+              if (highLevelAnimatorSet?.animatorSet === animation) {
+                highLevelAnimatorSet = null
+              }
             }
-          }
-        })
-        addListener(it)
+          })
+          addListener(it)
+        }
       }
       playTogether(*animators)
     }
     return HighLevelAnimatorSet(animationOptions?.owner, animatorSet).also {
       highLevelAnimatorSet = it
-      it.animatorSet.start()
+      postOnAnimatorThread { it.animatorSet.start() }
     }
   }
 
