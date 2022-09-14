@@ -10,7 +10,7 @@ import com.mapbox.maps.plugin.animation.camera
  * the map gestures, use [MapboxCarMap.setGestureHandler].
  */
 @MapboxExperimental
-open class DefaultMapboxCarMapGestureHandler : MapboxCarMapGestureHandler {
+open class DefaultMapboxCarMapGestureHandler : MapboxCarMapGestureHandler() {
 
   /**
    * @see [MapboxCarMapGestureHandler.onScroll]
