@@ -24,8 +24,7 @@ public final class com/mapbox/maps/extension/androidauto/MapboxCarMapEx {
 	public static final fun mapboxMapInstaller (Landroidx/car/app/Session;)Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSessionInstaller;
 }
 
-public abstract class com/mapbox/maps/extension/androidauto/MapboxCarMapGestureHandler {
-	public fun <init> ()V
+public abstract interface class com/mapbox/maps/extension/androidauto/MapboxCarMapGestureHandler {
 	public fun onFling (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;FF)V
 	public fun onScale (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;FFF)V
 	public fun onScroll (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;Lcom/mapbox/maps/ScreenCoordinate;FF)V
