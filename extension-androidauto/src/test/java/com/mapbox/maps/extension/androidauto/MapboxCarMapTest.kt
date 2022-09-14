@@ -198,7 +198,7 @@ class MapboxCarMapTest {
     assertFalse(testGestures.capturedOnScale)
   }
 
-  private class TestMapboxCarMapGestures : MapboxCarMapGestureHandler() {
+  private class TestMapboxCarMapGestures : MapboxCarMapGestureHandler {
     var capturedOnScroll = false
     var capturedOnScale = false
     var capturedOnFling = false
