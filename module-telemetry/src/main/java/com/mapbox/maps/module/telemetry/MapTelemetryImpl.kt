@@ -160,7 +160,7 @@ class MapTelemetryImpl : MapTelemetry {
   /**
    * Static variables and methods.
    */
-  companion object {
+  private companion object {
     private const val TAG = "MapTelemetryImpl"
     private const val EVENTS_ACCESS_TOKEN_RESOURCE_NAME = "mapbox_events_access_token"
   }

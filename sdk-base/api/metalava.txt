@@ -558,8 +558,8 @@ package com.mapbox.maps.module {
     method public void disableTelemetrySession();
     method public void onAppUserTurnstileEvent();
     method public void onPerformanceEvent(android.os.Bundle? data);
-    method public void setDebugLoggingEnabled(boolean debugLoggingEnabled);
-    method public boolean setSessionIdRotationInterval(int interval);
+    method @Deprecated public void setDebugLoggingEnabled(boolean debugLoggingEnabled);
+    method @Deprecated public boolean setSessionIdRotationInterval(int interval);
     method public void setUserTelemetryRequestState(boolean enabled);
   }
 
