@@ -2,8 +2,8 @@ package com.mapbox.maps.testapp.utils
 
 import android.app.Activity
 import android.widget.Toast
-import com.mapbox.maps.plugin.locationcomponent.PermissionsListener
-import com.mapbox.maps.plugin.locationcomponent.PermissionsManager
+import com.mapbox.common.location.compat.permissions.PermissionsListener
+import com.mapbox.common.location.compat.permissions.PermissionsManager
 import java.lang.ref.WeakReference
 
 class LocationPermissionHelper(val activity: WeakReference<Activity>) {
