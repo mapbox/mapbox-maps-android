@@ -2,8 +2,6 @@ package com.mapbox.maps.module.telemetry
 
 import android.annotation.SuppressLint
 import com.google.gson.annotations.SerializedName
-import com.mapbox.bindgen.Value
-import com.mapbox.common.Event
 
 /**
  * Base event class for telemetry events.
