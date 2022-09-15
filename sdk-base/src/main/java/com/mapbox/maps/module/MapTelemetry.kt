@@ -23,8 +23,11 @@ interface MapTelemetry {
   fun disableTelemetrySession()
 
   /**
-   * Set the end-user selected state to participate or opt-out in telemetry collection.
+   * Set the debug logging enabled states.
+   *
+   * @param debugLoggingEnabled whether to enable the debug logging for telemetry.
    */
+  @Deprecated("setDebugLoggingEnabled has been deprecated and will do no operations")
   fun setDebugLoggingEnabled(debugLoggingEnabled: Boolean)
 
   /**
@@ -33,6 +36,7 @@ interface MapTelemetry {
    * @param interval the selected session interval
    * @return true if rotation session id was updated
    */
+  @Deprecated("setSessionIdRotationInterval has been deprecated and will do no operations")
   fun setSessionIdRotationInterval(interval: Int): Boolean
 
   /**
