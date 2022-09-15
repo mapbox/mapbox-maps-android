@@ -1,8 +1,7 @@
 package com.mapbox.maps.module.telemetry
 
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import androidx.test.runner.AndroidJUnit4
-import com.mapbox.android.telemetry.MapboxTelemetry
 import com.mapbox.bindgen.Value
 import com.mapbox.common.*
 import org.junit.Assert
@@ -16,7 +15,6 @@ import java.util.concurrent.TimeoutException
 @RunWith(AndroidJUnit4::class)
 class MapTelemetryEventsServiceTest {
   private lateinit var eventsService: EventsService
-  private lateinit var mapboxTelemetry: MapboxTelemetry
   private lateinit var telemetry: MapTelemetryImpl
 
   @Before
@@ -26,9 +24,9 @@ class MapTelemetryEventsServiceTest {
 
     val options = EventsServerOptions("empty", "empty")
     eventsService = EventsService.getOrCreate(options)
-    mapboxTelemetry = MapboxTelemetry(context, "empty", "empty")
+    val telemetryService = TelemetryService(options)
 
-    telemetry = MapTelemetryImpl(mapboxTelemetry, context, "sk.foobar", eventsService)
+    telemetry = MapTelemetryImpl(context, "sk.foobar", eventsService, telemetryService)
   }
 
   @Test
@@ -39,7 +37,6 @@ class MapTelemetryEventsServiceTest {
 
   @Test
   fun testSetUserTelemetryRequestStateEnabled() {
-    fun testSetUserTelemetryRequestStateEnabled() {}
     telemetry.setUserTelemetryRequestState(true)
     Assert.assertTrue(TelemetryUtils.getEventsCollectionState())
   }
@@ -67,7 +64,7 @@ class MapTelemetryEventsServiceTest {
     }
 
     eventsService.unregisterObserver(eventsServiceObserver)
-    eventsService.resumeEventsCollection()
+    TelemetryUtils.setEventsCollectionState(true) { }
   }
 
   @Test

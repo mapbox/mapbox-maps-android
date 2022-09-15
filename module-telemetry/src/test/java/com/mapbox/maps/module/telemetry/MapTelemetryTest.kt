@@ -4,14 +4,14 @@ import android.content.Context
 import android.telephony.TelephonyManager
 import android.view.Display
 import android.view.WindowManager
-import com.mapbox.android.telemetry.Event
-import com.mapbox.android.telemetry.MapboxTelemetry
 import com.mapbox.common.*
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.verify
+import org.junit.Assert.assertFalse
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -25,7 +25,8 @@ object ShadowEventsService {
   open fun setEventsCollectionState(
     enableCollection: Boolean,
     callback: EventsServiceResponseCallback?
-  ) {}
+  ) {
+  }
 
   @Implementation
   open fun getEventsCollectionState(): Boolean {
@@ -33,13 +34,34 @@ object ShadowEventsService {
   }
 }
 
-@Config(shadows = [ShadowEventsService::class])
+@Implements(TelemetryService::class)
+object ShadowTelemetryService
+
+@Implements(TelemetryUtils::class)
+object ShadowTelemetryUtils {
+  @Implementation
+  fun setEventsCollectionState(
+    enableCollection: Boolean,
+    callback: TelemetryUtilsResponseCallback?
+  ) {
+  }
+
+  @Implementation
+  fun getEventsCollectionState(): Boolean {
+    return true
+  }
+
+  @Implementation
+  fun getUserID(): String = ""
+}
+
+@Config(shadows = [ShadowEventsService::class, ShadowTelemetryService::class, ShadowTelemetryUtils::class])
 @RunWith(RobolectricTestRunner::class)
 class MapTelemetryTest {
 
-  private lateinit var mapboxTelemetry: MapboxTelemetry
   private lateinit var telemetry: MapTelemetryImpl
   private lateinit var eventsService: EventsServiceInterface
+  private lateinit var telemetryService: TelemetryService
 
   @Before
   fun setUp() {
@@ -54,77 +76,53 @@ class MapTelemetryTest {
     val display = mockk<Display>(relaxUnitFun = true)
     every { windowManager.defaultDisplay } returns display
 
-    mapboxTelemetry = mockk(relaxed = true)
-    eventsService = mockk<EventsServiceInterface>()
-
-    val eventsService: EventsServiceInterface = mockk()
-    telemetry = MapTelemetryImpl(mapboxTelemetry, context, "sk.foobar", eventsService)
+    eventsService = mockk()
+    telemetryService = mockk()
+    telemetry = MapTelemetryImpl(context, "sk.foobar", eventsService, telemetryService)
     every { eventsService.sendEvent(any(), any()) } returns Unit
-    every { eventsService.pauseEventsCollection() } returns Unit
     mockkStatic(EventsService::class)
-    every { eventsService.resumeEventsCollection() } returns Unit
-    every { eventsService.pauseEventsCollection() } returns Unit
-  }
-
-  private var eventsServiceMock = object : EventsServiceInterface {
-    override fun registerObserver(observer: EventsServiceObserver) {}
-
-    override fun unregisterObserver(observer: EventsServiceObserver) {}
-
-    override fun sendTurnstileEvent(
-      turnstileEvent: TurnstileEvent,
-      callback: EventsServiceResponseCallback?
-    ) {}
-
-    override fun sendEvent(
-      event: com.mapbox.common.Event,
-      callback: EventsServiceResponseCallback?
-    ) {}
-
-    override fun pauseEventsCollection() {}
-
-    override fun resumeEventsCollection() {}
+    mockkStatic(TelemetryUtils::class)
+    every { TelemetryUtils.setEventsCollectionState(any(), any()) } returns Unit
   }
 
   @Test
   fun testSetUserTelemetryRequestStateEnabled() {
     telemetry.setUserTelemetryRequestState(true)
-    verify { mapboxTelemetry.enable() }
+    verify { TelemetryUtils.setEventsCollectionState(true, any()) }
   }
 
   @Test
   fun testSetUserTelemetryRequestStateDisabled() {
     telemetry.setUserTelemetryRequestState(false)
-    verify { mapboxTelemetry.disable() }
+    verify { TelemetryUtils.setEventsCollectionState(false, any()) }
   }
 
   @Test
   fun testDisableTelemetrySession() {
     telemetry.disableTelemetrySession()
-    verify { mapboxTelemetry.disable() }
+    verify { TelemetryUtils.setEventsCollectionState(false, any()) }
   }
 
   @Test
   fun testSetSessionIdRotationInterval() {
-    telemetry.setSessionIdRotationInterval(22)
-    verify { mapboxTelemetry.updateSessionIdRotationInterval(any()) }
+    assertFalse(telemetry.setSessionIdRotationInterval(22))
   }
 
   @Test
+  @Ignore("testSetDebugLoggingEnabled has been deprecated")
   fun testSetDebugLoggingEnabled() {
-    telemetry.setDebugLoggingEnabled(true)
-    verify { mapboxTelemetry.updateDebugLoggingEnabled(true) }
+    // no-ops
   }
 
   @Test
+  @Ignore("testSetDebugLoggingEnabled has been deprecated")
   fun testSetDebugLoggingDisabled() {
-    telemetry.setDebugLoggingEnabled(false)
-    verify { mapboxTelemetry.updateDebugLoggingEnabled(false) }
+    // no-ops
   }
 
   @Test
   fun testPerformanceEvent() {
     telemetry.onPerformanceEvent(null)
-    verify { mapboxTelemetry.push(any()) }
+    verify { eventsService.sendEvent(any(), any()) }
   }
 }
