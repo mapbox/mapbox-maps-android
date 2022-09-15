@@ -32,6 +32,10 @@ android {
     }
   }
 
+  kotlinOptions {
+    freeCompilerArgs = freeCompilerArgs + "-Xjvm-default=all"
+  }
+
   packagingOptions {
     if (buildFromSource.toBoolean()) {
       jniLibs.pickFirsts.add("**/libc++_shared.so")

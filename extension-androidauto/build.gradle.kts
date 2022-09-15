@@ -20,6 +20,10 @@ android {
       isIncludeAndroidResources = true
     }
   }
+
+  kotlinOptions {
+    freeCompilerArgs = freeCompilerArgs + "-Xjvm-default=all"
+  }
 }
 
 dependencies {

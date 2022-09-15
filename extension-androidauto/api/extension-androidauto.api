@@ -35,15 +35,9 @@ public abstract interface class com/mapbox/maps/extension/androidauto/MapboxCarM
 }
 
 public abstract interface class com/mapbox/maps/extension/androidauto/MapboxCarMapObserver {
-	public abstract fun onAttached (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;)V
-	public abstract fun onDetached (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;)V
-	public abstract fun onVisibleAreaChanged (Landroid/graphics/Rect;Lcom/mapbox/maps/EdgeInsets;)V
-}
-
-public final class com/mapbox/maps/extension/androidauto/MapboxCarMapObserver$DefaultImpls {
-	public static fun onAttached (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapObserver;Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;)V
-	public static fun onDetached (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapObserver;Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;)V
-	public static fun onVisibleAreaChanged (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapObserver;Landroid/graphics/Rect;Lcom/mapbox/maps/EdgeInsets;)V
+	public fun onAttached (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;)V
+	public fun onDetached (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;)V
+	public fun onVisibleAreaChanged (Landroid/graphics/Rect;Lcom/mapbox/maps/EdgeInsets;)V
 }
 
 public final class com/mapbox/maps/extension/androidauto/MapboxCarMapScreenInstaller {
