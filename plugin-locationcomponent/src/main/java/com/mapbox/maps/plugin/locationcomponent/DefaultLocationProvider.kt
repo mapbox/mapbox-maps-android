@@ -11,6 +11,7 @@ import com.mapbox.common.location.compat.LocationEngineCallback
 import com.mapbox.common.location.compat.LocationEngineProvider
 import com.mapbox.common.location.compat.LocationEngineRequest
 import com.mapbox.common.location.compat.LocationEngineResult
+import com.mapbox.common.location.compat.permissions.PermissionsManager
 import com.mapbox.geojson.Point
 import com.mapbox.maps.logE
 import com.mapbox.maps.logW
@@ -190,8 +191,8 @@ class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal c
     private val locationProviderWeakReference: WeakReference<DefaultLocationProvider> =
       WeakReference(locationProvider)
 
-    override fun onSuccess(result: LocationEngineResult?) {
-      result!!.lastLocation?.let { location ->
+    override fun onSuccess(result: LocationEngineResult) {
+      result.lastLocation?.let { location ->
         locationProviderWeakReference.get()?.let {
           it.notifyLocationUpdates(location)
         }

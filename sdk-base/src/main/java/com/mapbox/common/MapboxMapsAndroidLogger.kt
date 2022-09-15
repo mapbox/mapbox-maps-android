@@ -1,6 +1,6 @@
 package com.mapbox.common
 
-internal object MapboxCommonLogger {
+internal object MapboxMapsAndroidLogger {
 
   internal fun internalLogE(tag: String, message: String) = Log.error(message, "$SDK_IDENTIFIER\\$tag")
 
