@@ -16,10 +16,8 @@ internal class BitmapWidgetRenderer(
   private val marginY: Float,
 ) : WidgetRenderer {
 
-  private var bitmapWidth = bitmap?.width ?: 0
-  private var bitmapHeight = bitmap?.height ?: 0
-  private var halfBitmapWidth = bitmapWidth / 2f
-  private var halfBitmapHeight = bitmapHeight / 2f
+  private var halfBitmapWidth = (bitmap?.width ?: 0) / 2f
+  private var halfBitmapHeight = (bitmap?.height ?: 0) / 2f
   private var translationX = 0f
   private var translationY = 0f
 
@@ -69,7 +67,7 @@ internal class BitmapWidgetRenderer(
     )
 
     updateVertexBuffer()
-    setTranslation(this.translationX, this.translationY)
+    setTranslation(translationX, translationY)
   }
 
   private fun updateVertexBuffer() {
@@ -254,11 +252,8 @@ internal class BitmapWidgetRenderer(
 
   fun updateBitmap(bitmap: Bitmap) {
     this.bitmap = bitmap
-    this.bitmapWidth = bitmap.width
-    this.bitmapHeight = bitmap.height
-    this.halfBitmapWidth = bitmapWidth / 2f
-    this.halfBitmapHeight = bitmapHeight / 2f
-
+    this.halfBitmapWidth = bitmap.width / 2f
+    this.halfBitmapHeight = bitmap.height / 2f
     updateVertexBuffer()
     updateMatrix = true
     needRender = true
