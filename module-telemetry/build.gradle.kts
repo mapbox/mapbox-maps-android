@@ -37,6 +37,7 @@ dependencies {
   androidTestImplementation(Dependencies.androidxTestRunner)
   androidTestImplementation(Dependencies.androidxJUnitTestRules)
   androidTestImplementation(Dependencies.androidxEspresso)
+  androidTestImplementation(Dependencies.androidxTestJUnit)
   detektPlugins(Dependencies.detektFormatting)
 }
 
