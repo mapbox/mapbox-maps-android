@@ -1,6 +1,5 @@
 package com.mapbox.maps.plugin.locationcomponent
 
-import android.util.Log
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.LayerPosition
 import com.mapbox.maps.MapboxLocationComponentException
@@ -20,7 +19,6 @@ internal open class LocationLayerWrapper(val layerId: String) {
   fun bindTo(mapStyleDelegate: StyleManagerInterface, position: LayerPosition? = null) {
     this.mapStyleDelegate = mapStyleDelegate
     val expected = mapStyleDelegate.addPersistentStyleLayer(toValue(), position)
-    Log.e(TAG, toValue().toJson())
     expected.error?.let {
       throw MapboxLocationComponentException("Add layer failed: $it")
     }
