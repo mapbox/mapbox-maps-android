@@ -197,11 +197,6 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
         TAG,
         "Exception while setting camera options : ${e.message} CameraOptions = $cameraOptions"
       )
-    } catch (error: Error) {
-      logE(
-        TAG,
-        "Error while setting camera options : ${error.message} CameraOptions = $cameraOptions"
-      )
     }
   }
 

@@ -30,8 +30,6 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.LooperMode
 import org.robolectric.shadows.ShadowLog
-import java.lang.Error
-import java.lang.Exception
 import java.time.Duration
 
 @RunWith(RobolectricTestRunner::class)
@@ -1009,11 +1007,6 @@ class CameraAnimationsPluginImplTest {
     cameraAnimationsPluginImpl.easeTo(cameraState.toCameraOptions(), mapAnimationOptions { duration(DURATION) })
     shadowOf(getMainLooper()).idle()
     verify(exactly = 0) { logD(TAG, any()) }
-  }
-
-  @Test
-  fun catchErrorOnSetCameraTest() {
-    executeSetCameraTest(Error("Invalid camera options"))
   }
 
   @Test
