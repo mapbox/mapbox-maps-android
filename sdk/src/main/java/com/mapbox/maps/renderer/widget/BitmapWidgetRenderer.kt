@@ -254,6 +254,7 @@ internal class BitmapWidgetRenderer(
     this.bitmap = bitmap
     this.halfBitmapWidth = bitmap.width / 2f
     this.halfBitmapHeight = bitmap.height / 2f
+    setTranslation(this.translationX, this.translationY)
     updateVertexBuffer()
     updateMatrix = true
     needRender = true
