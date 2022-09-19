@@ -65,6 +65,8 @@ class GesturesPluginTest {
   private val typedArray: TypedArray = mockk(relaxed = true)
   private val pack = "com.mapbox.maps"
 
+  private val gestureListener = slot<StandardGestureDetector.StandardOnGestureListener>()
+
   private lateinit var presenter: GesturesPluginImpl
 
   @MapboxExperimental
@@ -115,6 +117,9 @@ class GesturesPluginTest {
 
     presenter.bind(context, gesturesManager, attrs, 1f)
     presenter.onDelegateProvider(mapDelegateProvider)
+    every {
+      gesturesManager.setStandardGestureListener(capture(gestureListener))
+    } just Runs
     presenter.initialize()
 
     every { gesturesManager.rotateGestureDetector } returns rotateGestureDetector
@@ -1119,6 +1124,19 @@ class GesturesPluginTest {
     }
     // all the 3 last scales are animated together
     assertEquals(cameraOptionsSlot.captured.zoom!!, startZoom + expectedZoomDelta * 3, EPS)
+  }
+
+  @Test
+  fun verifyDoesNotCrashIfNullMotionEventPassed() {
+    gestureListener.captured.onSingleTapConfirmed(null)
+    gestureListener.captured.onDoubleTap(null)
+    gestureListener.captured.onDoubleTapEvent(null)
+    gestureListener.captured.onDown(null)
+    gestureListener.captured.onShowPress(null)
+    gestureListener.captured.onSingleTapUp(null)
+    gestureListener.captured.onLongPress(null)
+    gestureListener.captured.onScroll(null, null, 0f, 0f)
+    gestureListener.captured.onFling(null, null, 0f, 0f)
   }
 
   private companion object {
