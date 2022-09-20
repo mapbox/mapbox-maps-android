@@ -32,9 +32,10 @@ android {
     }
   }
 
-  kotlinOptions {
-    freeCompilerArgs = freeCompilerArgs + "-Xjvm-default=all"
-  }
+  // THIS IS REQUIRED or else it will not compile
+//  kotlinOptions {
+//    freeCompilerArgs = freeCompilerArgs + "-Xjvm-default=all"
+//  }
 
   packagingOptions {
     if (buildFromSource.toBoolean()) {
@@ -48,7 +49,7 @@ androidExtensions {
 }
 
 dependencies {
-  implementation(project(":extension-androidauto"))
+  implementation("com.mapbox.extension:maps-androidauto:0.3.0-km-using-jvm-default-SNAPSHOT")
   implementation(project(":sdk"))
   implementation(Dependencies.googleCarAppLibrary)
   implementation(Dependencies.kotlin)

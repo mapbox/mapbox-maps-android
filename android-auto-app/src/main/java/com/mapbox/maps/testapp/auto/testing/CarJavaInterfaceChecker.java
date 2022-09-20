@@ -61,9 +61,16 @@ class CarJavaInterfaceChecker {
     };
   }
 
+  private MapboxCarMapObserver createEmptyObserver() {
+    return new MapboxCarMapObserver() { };
+  }
+
   private void observers(MapboxCarMap mapboxCarMap) {
+    MapboxCarMapObserver emptyObserver = createObserver();
     MapboxCarMapObserver observer = createObserver();
     mapboxCarMap.registerObserver(observer);
+    mapboxCarMap.registerObserver(emptyObserver);
+    mapboxCarMap.unregisterObserver(emptyObserver);
     mapboxCarMap.unregisterObserver(observer);
     mapboxCarMap.clearObservers();
   }
