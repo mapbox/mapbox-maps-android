@@ -104,18 +104,34 @@ class DSLStylingActivity : AppCompatActivity(), OnMapClickListener {
         layerId = "earthquakeText",
         sourceId = "earthquakes"
       ) {
-        // Only show the magnitude scale if the value is >5.0 and the map pitch is < 70º
+        // Only show the magnitude scale if the value is >4.0 and:
+        // - the map pitch is < 70º or
+        // - objects are close to the camera
         filter(
           all {
             gt {
               get {
                 literal("mag")
               }
-              literal(5.0)
+              literal(4.0)
             }
-            lt {
-              pitch()
-              literal(70.0)
+            switchCase {
+              // 1st case: return true if pitch <70º
+              lt {
+                pitch()
+                literal(70.0)
+              }
+              literal(true)
+
+              // 2nd case: return true if close to camera
+              lte {
+                distanceFromCenter()
+                literal(-0.5)
+              }
+              literal(true)
+
+              // otherwise: return false
+              literal(false)
             }
           }
         )
