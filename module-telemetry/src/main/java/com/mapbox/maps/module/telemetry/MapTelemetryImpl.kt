@@ -72,25 +72,26 @@ class MapTelemetryImpl : MapTelemetry {
         UserSKUIdentifier.MAPS_MAUS,
         BuildConfig.MAPBOX_SDK_IDENTIFIER,
         BuildConfig.MAPBOX_SDK_VERSION
-      ),
-      null
-    )
+      )
+    ) { eventsServiceError ->
+      eventsServiceError?.let {
+        logE(TAG, "EventsServiceError: $it")
+      }
+    }
 
     val mapLoadEvent = MapEventFactory.buildMapLoadEvent(PhoneState(appContext))
     sendEvent(Gson().toJson(mapLoadEvent))
   }
 
-  private fun getEventsResId(context: Context, resourceName: String): Int = context.resources.getIdentifier(
-    resourceName,
-    "string",
-    context.packageName
-  )
-
   private fun sendEvent(event: String) {
     val eventAttributes = Value.fromJson(event)
     val mapEvent = eventAttributes.value?.let { Event(EventPriority.IMMEDIATE, it, null) }
     if (mapEvent != null) {
-      eventsService.sendEvent(mapEvent, null)
+      eventsService.sendEvent(mapEvent) { eventsServiceError ->
+        eventsServiceError?.let {
+          logE(TAG, "EventsServiceError: $it")
+        }
+      }
     }
   }
 
