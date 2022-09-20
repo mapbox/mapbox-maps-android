@@ -7,6 +7,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Allow `MapboxCarMap` to be initialized before the `CarContext` is created. ([#1603](https://github.com/mapbox/mapbox-maps-android/pull/1603))
 * Add `MapboxCarMapSessionInstaller` and `MapboxCarMapScreenInstaller` for simpler setup. ([#1603](https://github.com/mapbox/mapbox-maps-android/pull/1603))
 * Add `Session.mapboxMapInstaller` and `Screen.mapboxMapInstaller` extension functions to create the installers. ([#1603](https://github.com/mapbox/mapbox-maps-android/pull/1603))
+* Change `MapboxCarMapGestureHandler` to an java interface so default methods can be added without breaking java backwards compatibility. ([#1670](https://github.com/mapbox/mapbox-maps-android/pull/1670))
 
 ## Bug fixes 🐞
 

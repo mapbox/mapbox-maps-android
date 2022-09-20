@@ -25,15 +25,9 @@ public final class com/mapbox/maps/extension/androidauto/MapboxCarMapEx {
 }
 
 public abstract interface class com/mapbox/maps/extension/androidauto/MapboxCarMapGestureHandler {
-	public abstract fun onFling (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;FF)V
-	public abstract fun onScale (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;FFF)V
-	public abstract fun onScroll (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;Lcom/mapbox/maps/ScreenCoordinate;FF)V
-}
-
-public final class com/mapbox/maps/extension/androidauto/MapboxCarMapGestureHandler$DefaultImpls {
-	public static fun onFling (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapGestureHandler;Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;FF)V
-	public static fun onScale (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapGestureHandler;Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;FFF)V
-	public static fun onScroll (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapGestureHandler;Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;Lcom/mapbox/maps/ScreenCoordinate;FF)V
+	public fun onFling (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;FF)V
+	public fun onScale (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;FFF)V
+	public fun onScroll (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;Lcom/mapbox/maps/ScreenCoordinate;FF)V
 }
 
 public abstract interface class com/mapbox/maps/extension/androidauto/MapboxCarMapInitializer {

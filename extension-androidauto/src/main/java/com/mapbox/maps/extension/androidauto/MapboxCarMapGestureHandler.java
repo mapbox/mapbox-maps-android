@@ -1,8 +1,9 @@
-package com.mapbox.maps.extension.androidauto
+package com.mapbox.maps.extension.androidauto;
 
-import androidx.car.app.SurfaceCallback
-import com.mapbox.maps.MapboxExperimental
-import com.mapbox.maps.ScreenCoordinate
+import androidx.annotation.NonNull;
+
+import com.mapbox.maps.MapboxExperimental;
+import com.mapbox.maps.ScreenCoordinate;
 
 /**
  * This interface captures gesture events from Android Auto's SurfaceCallback. If you would like
@@ -10,7 +11,7 @@ import com.mapbox.maps.ScreenCoordinate
  * with [MapboxCarMap.setGestureHandler].
  */
 @MapboxExperimental
-interface MapboxCarMapGestureHandler {
+public interface MapboxCarMapGestureHandler {
 
   /**
    * Allows you to implement or observe the map scroll gesture handler. The surface is
@@ -22,11 +23,11 @@ interface MapboxCarMapGestureHandler {
    * @param distanceX the distance in pixels along the X axis
    * @param distanceY the distance in pixels along the Y axis
    */
-  fun onScroll(
-    mapboxCarMapSurface: MapboxCarMapSurface,
-    visibleCenter: ScreenCoordinate,
-    distanceX: Float,
-    distanceY: Float
+  default void onScroll(
+    @NonNull MapboxCarMapSurface mapboxCarMapSurface,
+    @NonNull ScreenCoordinate visibleCenter,
+    float distanceX,
+    float distanceY
   ) {
     // Optional override
   }
@@ -41,10 +42,10 @@ interface MapboxCarMapGestureHandler {
    * @param velocityX the velocity of this fling measured in pixels per second along the x axis
    * @param velocityY the velocity of this fling measured in pixels per second along the y axis
    */
-  fun onFling(
-    mapboxCarMapSurface: MapboxCarMapSurface,
-    velocityX: Float,
-    velocityY: Float
+  default void onFling(
+    @NonNull MapboxCarMapSurface mapboxCarMapSurface,
+    float velocityX,
+    float velocityY
   ) {
     // Optional override
   }
@@ -60,11 +61,11 @@ interface MapboxCarMapGestureHandler {
    * @param focusY y coordinate of the focal point in pixels. A negative value indicates that the focal point is unavailable.
    * @param scaleFactor the scaling factor from the previous state to the current state during the scale event. This value is defined as (current state) / (previous state)
    */
-  fun onScale(
-    mapboxCarMapSurface: MapboxCarMapSurface,
-    focusX: Float,
-    focusY: Float,
-    scaleFactor: Float
+  default void onScale(
+    @NonNull MapboxCarMapSurface mapboxCarMapSurface,
+    float focusX,
+    float focusY,
+    float scaleFactor
   ) {
     // Optional override
   }

@@ -30,9 +30,9 @@ package com.mapbox.maps.extension.androidauto {
   }
 
   @com.mapbox.maps.MapboxExperimental public interface MapboxCarMapGestureHandler {
-    method public default void onFling(com.mapbox.maps.extension.androidauto.MapboxCarMapSurface mapboxCarMapSurface, float velocityX, float velocityY);
-    method public default void onScale(com.mapbox.maps.extension.androidauto.MapboxCarMapSurface mapboxCarMapSurface, float focusX, float focusY, float scaleFactor);
-    method public default void onScroll(com.mapbox.maps.extension.androidauto.MapboxCarMapSurface mapboxCarMapSurface, com.mapbox.maps.ScreenCoordinate visibleCenter, float distanceX, float distanceY);
+    method public default void onFling(com.mapbox.maps.extension.androidauto.MapboxCarMapSurface, float, float);
+    method public default void onScale(com.mapbox.maps.extension.androidauto.MapboxCarMapSurface, float, float, float);
+    method public default void onScroll(com.mapbox.maps.extension.androidauto.MapboxCarMapSurface, com.mapbox.maps.ScreenCoordinate, float, float);
   }
 
   @com.mapbox.maps.MapboxExperimental public fun interface MapboxCarMapInitializer {
