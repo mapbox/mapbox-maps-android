@@ -36,8 +36,13 @@ class MapTelemetryImpl : MapTelemetry {
    */
   constructor(appContext: Context, accessToken: String) {
     this.appContext = appContext
-    this.accessToken = accessToken
-    this.telemetry = MapboxTelemetry(appContext, accessToken, BuildConfig.MAPBOX_EVENTS_USER_AGENT)
+
+    val oldEventsTokenResId = getEventsResId(appContext, OLD_EVENTS_ACCESS_TOKEN_RESOURCE_NAME)
+    val oldEventsToken =
+      if (oldEventsTokenResId != 0) appContext.getString(oldEventsTokenResId) else accessToken
+    this.accessToken = oldEventsToken
+
+    this.telemetry = MapboxTelemetry(appContext, this.accessToken, BuildConfig.MAPBOX_EVENTS_USER_AGENT)
     val telemetryState: TelemetryEnabler.State =
       TelemetryEnabler.retrieveTelemetryStateFromPreferences()
     if (TelemetryEnabler.State.ENABLED == telemetryState) {
@@ -201,6 +206,7 @@ class MapTelemetryImpl : MapTelemetry {
   companion object {
     private const val TAG = "MapTelemetryImpl"
     private const val EVENTS_ACCESS_TOKEN_RESOURCE_NAME = "mapbox_events_access_token"
+    private const val OLD_EVENTS_ACCESS_TOKEN_RESOURCE_NAME = "old_mapbox_events_access_token"
     private val EVENTS_URL_RESOURCE_NAME = "mapbox_events_url"
   }
 }
