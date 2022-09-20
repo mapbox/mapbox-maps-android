@@ -429,28 +429,34 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
     /**
      * Called when an on down gesture was detected.
      */
-    override fun onDown(motionEvent: MotionEvent): Boolean {
+    override fun onDown(motionEvent: MotionEvent?): Boolean {
       return true
     }
 
     /**
      * Called when an on single tap up gesture was detected.
      */
-    override fun onSingleTapUp(motionEvent: MotionEvent): Boolean {
+    override fun onSingleTapUp(motionEvent: MotionEvent?): Boolean {
       return handleSingleTapUpEvent()
     }
 
     /**
      * Called when an on single tap up confirmed gesture was detected.
      */
-    override fun onSingleTapConfirmed(motionEvent: MotionEvent): Boolean {
+    override fun onSingleTapConfirmed(motionEvent: MotionEvent?): Boolean {
+      if (motionEvent == null) {
+        return false
+      }
       return handleClickEvent(motionEvent.toScreenCoordinate())
     }
 
     /**
      * Called when an on double tap gesture was detected.
      */
-    override fun onDoubleTapEvent(motionEvent: MotionEvent): Boolean {
+    override fun onDoubleTapEvent(motionEvent: MotionEvent?): Boolean {
+      if (motionEvent == null) {
+        return false
+      }
       return if (handleDoubleTapEvent(motionEvent, doubleTapMovementThreshold)) {
         true
       } else super.onDoubleTapEvent(motionEvent)
@@ -459,7 +465,11 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
     /**
      * Called when an on long press gesture was detected.
      */
-    override fun onLongPress(motionEvent: MotionEvent) {
+    override fun onLongPress(motionEvent: MotionEvent?) {
+      if (motionEvent == null) {
+        return
+      }
+
       handleLongPressEvent(motionEvent.toScreenCoordinate())
     }
 
@@ -467,12 +477,16 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
      * Called when an on fling gesture was detected.
      */
     override fun onFling(
-      e1: MotionEvent,
-      e2: MotionEvent,
+      e1: MotionEvent?,
+      e2: MotionEvent?,
       velocityX: Float,
       velocityY: Float
     ): Boolean {
-      return handleFlingEvent(e1, e2, velocityX, velocityY)
+      if (e1 == null || e2 == null) {
+        return false
+      }
+
+      return handleFlingEvent(e2, velocityX, velocityY)
     }
   }
 
@@ -1280,7 +1294,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
   }
 
   internal fun handleFlingEvent(
-    e1: MotionEvent,
     e2: MotionEvent,
     velocityX: Float,
     velocityY: Float

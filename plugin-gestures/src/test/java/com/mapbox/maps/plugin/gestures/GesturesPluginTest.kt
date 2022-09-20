@@ -12,7 +12,6 @@ import android.view.MotionEvent
 import android.view.MotionEvent.*
 import androidx.test.core.view.PointerCoordsBuilder
 import androidx.test.core.view.PointerPropertiesBuilder
-import com.google.common.base.CharMatcher.any
 import com.mapbox.android.gestures.*
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
@@ -65,6 +64,8 @@ class GesturesPluginTest {
   private val typedArray: TypedArray = mockk(relaxed = true)
   private val pack = "com.mapbox.maps"
 
+  private val gestureListener = slot<StandardGestureDetector.StandardOnGestureListener>()
+
   private lateinit var presenter: GesturesPluginImpl
 
   @MapboxExperimental
@@ -115,6 +116,9 @@ class GesturesPluginTest {
 
     presenter.bind(context, gesturesManager, attrs, 1f)
     presenter.onDelegateProvider(mapDelegateProvider)
+    every {
+      gesturesManager.setStandardGestureListener(capture(gestureListener))
+    } just Runs
     presenter.initialize()
 
     every { gesturesManager.rotateGestureDetector } returns rotateGestureDetector
@@ -331,16 +335,16 @@ class GesturesPluginTest {
   fun verifyFlingListener() {
     val listener: OnFlingListener = mockk(relaxed = true)
     presenter.addOnFlingListener(listener)
-    presenter.handleFlingEvent(motionEvent1, motionEvent2, 0.0f, 0.0f)
+    presenter.handleFlingEvent(motionEvent2, 0.0f, 0.0f)
     verify(exactly = 1) { listener.onFling() }
     presenter.removeOnFlingListener(listener)
-    presenter.handleFlingEvent(motionEvent1, motionEvent2, 0.0f, 0.0f)
+    presenter.handleFlingEvent(motionEvent2, 0.0f, 0.0f)
     verify(exactly = 1) { listener.onFling() }
   }
 
   @Test
   fun verifyFlingIgnoreSmallDisplacement() {
-    val result = presenter.handleFlingEvent(motionEvent1, motionEvent2, 0.1f, 0.1f)
+    val result = presenter.handleFlingEvent(motionEvent2, 0.1f, 0.1f)
     assertFalse(result)
   }
 
@@ -349,7 +353,7 @@ class GesturesPluginTest {
     val listener: OnFlingListener = mockk(relaxed = true)
     presenter.addOnFlingListener(listener)
     presenter.scrollEnabled = false
-    val result = presenter.handleFlingEvent(motionEvent1, motionEvent2, 0.1f, 0.1f)
+    val result = presenter.handleFlingEvent(motionEvent2, 0.1f, 0.1f)
     assertFalse(result)
     verify(exactly = 0) { listener.onFling() }
   }
@@ -1121,6 +1125,19 @@ class GesturesPluginTest {
     assertEquals(cameraOptionsSlot.captured.zoom!!, startZoom + expectedZoomDelta * 3, EPS)
   }
 
+  @Test
+  fun verifyDoesNotCrashIfNullMotionEventPassed() {
+    gestureListener.captured.onSingleTapConfirmed(null)
+    gestureListener.captured.onDoubleTap(null)
+    gestureListener.captured.onDoubleTapEvent(null)
+    gestureListener.captured.onDown(null)
+    gestureListener.captured.onShowPress(null)
+    gestureListener.captured.onSingleTapUp(null)
+    gestureListener.captured.onLongPress(null)
+    gestureListener.captured.onScroll(null, null, 0f, 0f)
+    gestureListener.captured.onFling(null, null, 0f, 0f)
+  }
+
   private companion object {
     const val ROTATION_ANGLE_THRESHOLD = 3.0f
     const val MAX_SHOVE_ANGLE = 45.0f
@@ -1280,7 +1297,7 @@ class IsPointAboveHorizonTest(
 
     val listener: OnFlingListener = mockk(relaxed = true)
     presenter.addOnFlingListener(listener)
-    presenter.handleFlingEvent(motionEvent1, motionEvent2, 1000.0f, 1000.0f)
+    presenter.handleFlingEvent(motionEvent2, 1000.0f, 1000.0f)
     verify(exactly = if (expectedResult) 0 else 1) { listener.onFling() }
     verify(exactly = if (expectedResult) 0 else 1) {
       cameraAnimationsPlugin.easeTo(
@@ -1497,7 +1514,6 @@ class FlingGestureTest(
   fun testFling() {
     val result =
       presenter.handleFlingEvent(
-        motionEvent1,
         motionEvent2,
         targetVelocity.first,
         targetVelocity.second
