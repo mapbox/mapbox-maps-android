@@ -3,7 +3,6 @@ package com.mapbox.maps.module.telemetry {
 
   @com.mapbox.annotation.module.MapboxModule(type=com.mapbox.annotation.module.MapboxModuleType) public final class MapTelemetryImpl implements com.mapbox.maps.module.MapTelemetry {
     ctor public MapTelemetryImpl(android.content.Context appContext, String accessToken);
-    ctor @VisibleForTesting public MapTelemetryImpl(android.content.Context appContext, String accessToken, com.mapbox.common.EventsServiceInterface eventsService, com.mapbox.common.TelemetryService telemetryService);
     method public void disableTelemetrySession();
     method public void onAppUserTurnstileEvent();
     method public void onPerformanceEvent(android.os.Bundle? data);
