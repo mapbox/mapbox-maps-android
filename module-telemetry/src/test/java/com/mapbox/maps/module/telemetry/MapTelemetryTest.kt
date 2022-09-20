@@ -8,6 +8,7 @@ import com.mapbox.common.*
 import io.mockk.*
 import org.junit.After
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
@@ -75,6 +76,7 @@ class MapTelemetryTest {
 
     every { EventsService.getOrCreate(any()) } returns eventsService
     every { eventsService.sendEvent(any(), any()) } returns Unit
+    every { eventsService.sendTurnstileEvent(any(), any()) } returns Unit
 
     every { TelemetryService.getOrCreate(any()) } returns telemetryService
 
@@ -116,6 +118,26 @@ class MapTelemetryTest {
     verify { TelemetryService.getOrCreate(any()) }
 
     verify(exactly = 0) { TelemetryUtils.setEventsCollectionState(any(), any()) }
+  }
+
+  @Test
+  fun testOnAppUserTurnstileEvent() {
+    telemetry = MapTelemetryImpl(context, "sk.foobar")
+    telemetry.onAppUserTurnstileEvent()
+    verify {
+      eventsService.sendTurnstileEvent(
+        TurnstileEvent(
+          UserSKUIdentifier.MAPS_MAUS,
+          BuildConfig.MAPBOX_SDK_IDENTIFIER,
+          BuildConfig.MAPBOX_SDK_VERSION
+        ),
+        any()
+      )
+    }
+    val slot = slot<Event>()
+    verify { eventsService.sendEvent(capture(slot), any()) }
+    assertTrue(slot.captured.attributes.toJson().contains("\"event\":\"map.load\""))
+    assertTrue(slot.captured.attributes.toJson().contains("\"sdkIdentifier\":\"mapbox-maps-android\""))
   }
 
   @Test
@@ -161,6 +183,8 @@ class MapTelemetryTest {
   fun testPerformanceEvent() {
     telemetry = MapTelemetryImpl(context, "sk.foobar")
     telemetry.onPerformanceEvent(null)
-    verify { eventsService.sendEvent(any(), any()) }
+    val slot = slot<Event>()
+    verify { eventsService.sendEvent(capture(slot), any()) }
+    assertTrue(slot.captured.attributes.toJson().contains("\"event\":\"mobile.performance_trace\""))
   }
 }
