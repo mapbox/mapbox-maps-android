@@ -22,9 +22,9 @@ class MapTelemetryEventsServiceTest {
     HttpServiceFactory.setUserDefined(DummyHttpClient())
     val context = InstrumentationRegistry.getInstrumentation().context
 
-    val options = EventsServerOptions("empty", "empty")
+    val options = EventsServerOptions("empty", "empty", null)
     eventsService = EventsService.getOrCreate(options)
-    val telemetryService = TelemetryService(options)
+    val telemetryService = TelemetryService.getOrCreate(options)
 
     telemetry = MapTelemetryImpl(context, "sk.foobar", eventsService, telemetryService)
   }
