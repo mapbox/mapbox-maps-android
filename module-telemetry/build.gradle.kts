@@ -26,7 +26,6 @@ android {
 dependencies {
   implementation(project(":sdk-base"))
   implementation(Dependencies.mapboxBase)
-//  implementation(Dependencies.mapboxAndroidTelemetry)
   compileOnly(Dependencies.mapboxAnnotations)
   kapt(Dependencies.mapboxAnnotationsProcessor)
   implementation(Dependencies.kotlin)
