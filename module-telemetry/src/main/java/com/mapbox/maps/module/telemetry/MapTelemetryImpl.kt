@@ -36,7 +36,6 @@ class MapTelemetryImpl : MapTelemetry {
     this.appContext = appContext
     this.accessToken = accessToken
 
-    // TODO deferredDeliveryServiceOptions?
     val eventsServiceOptions = EventsServerOptions(accessToken, BuildConfig.MAPBOX_EVENTS_USER_AGENT, null)
     this.eventsService = EventsService.getOrCreate(eventsServiceOptions)
 
@@ -88,7 +87,6 @@ class MapTelemetryImpl : MapTelemetry {
 
   private fun sendEvent(event: String) {
     val eventAttributes = Value.fromJson(event)
-    // TODO: deferredOptions?
     val mapEvent = eventAttributes.value?.let { Event(EventPriority.IMMEDIATE, it, null) }
     if (mapEvent != null) {
       eventsService.sendEvent(mapEvent, null)
