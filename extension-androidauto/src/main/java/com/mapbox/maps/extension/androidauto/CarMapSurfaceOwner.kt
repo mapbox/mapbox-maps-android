@@ -25,7 +25,7 @@ internal class CarMapSurfaceOwner(
     private set
   internal var visibleArea: Rect? = null
     private set
-  internal var edgeInsets: EdgeInsets? = null
+  internal var visibleEdgeInsets: EdgeInsets? = null
     private set
   internal var visibleCenter: ScreenCoordinate = visibleCenter()
     private set
@@ -52,9 +52,13 @@ internal class CarMapSurfaceOwner(
     mapboxCarMapSurface?.let { carMapSurface ->
       mapboxCarMapObserver.onAttached(carMapSurface)
     }
-    ifNonNull(mapboxCarMapSurface, visibleArea, edgeInsets) { _, area, edge ->
+    ifNonNull(mapboxCarMapSurface, visibleArea, visibleEdgeInsets) { _, area, edge ->
       logI(TAG, "registerObserver visibleAreaChanged")
       mapboxCarMapObserver.onVisibleAreaChanged(area, edge)
+    }
+    ifNonNull(mapboxCarMapSurface, stableArea, stableEdgeInsets) { _, area, edge ->
+      logI(TAG, "registerObserver stableAreaChanged")
+      mapboxCarMapObserver.onStableAreaChanged(area, edge)
     }
   }
 
@@ -114,9 +118,9 @@ internal class CarMapSurfaceOwner(
   }
 
   private fun notifyVisibleAreaChanged() {
-    this.edgeInsets = visibleArea?.edgeInsets()
+    this.visibleEdgeInsets = visibleArea?.edgeInsets()
     this.visibleCenter = visibleCenter()
-    ifNonNull(mapboxCarMapSurface, visibleArea, edgeInsets) { _, area, edge ->
+    ifNonNull(mapboxCarMapSurface, visibleArea, visibleEdgeInsets) { _, area, edge ->
       logI(TAG, "notifyVisibleAreaChanged $area $edge")
       carMapObservers.forEach {
         it.onVisibleAreaChanged(area, edge)

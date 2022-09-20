@@ -3,6 +3,7 @@ package com.mapbox.maps.extension.androidauto;
 import android.graphics.Rect;
 
 import androidx.annotation.NonNull;
+import androidx.car.app.SurfaceCallback;
 
 import com.mapbox.maps.EdgeInsets;
 import com.mapbox.maps.MapboxExperimental;
@@ -46,6 +47,8 @@ public interface MapboxCarMapObserver {
    * is triggered when the action buttons come in and out of visibility.
    * You can assume this will be called after {@link #onAttached}.
    *
+   * @see SurfaceCallback#onVisibleAreaChanged(Rect) for more details.
+   *
    * @param visibleArea the visible area provided by the host
    * @param edgeInsets distance from each side of the screen that creates the visibleArea
    */
@@ -56,6 +59,8 @@ public interface MapboxCarMapObserver {
   /**
    * Called when the car library updates the stable region for the surface. This area will remain
    * constant while the visible area changes when views come in and out of view.
+   *
+   * @see SurfaceCallback#onStableAreaChanged(Rect) for more details.
    *
    * @param stableArea the stable area provided by the host
    * @param edgeInsets distance from each side of the screen that creates the stableArea

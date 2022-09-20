@@ -97,7 +97,7 @@ class MapboxCarMap {
    * use the values returned by [MapboxCarMapObserver.onVisibleAreaChanged].
    */
   val visibleEdgeInsets: EdgeInsets?
-    get() { return carMapSurfaceOwner.edgeInsets }
+    get() { return carMapSurfaceOwner.visibleEdgeInsets }
 
   /**
    * Accessor to the stable area calculated by the car library. It is recommended to
