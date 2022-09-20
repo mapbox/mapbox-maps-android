@@ -2,8 +2,8 @@ package com.mapbox.maps.plugin.locationcomponent
 
 import android.content.Context
 import android.location.Location
-import com.mapbox.android.core.location.*
-import com.mapbox.android.core.permissions.PermissionsManager
+import com.mapbox.common.location.compat.*
+import com.mapbox.common.location.compat.permissions.PermissionsManager
 import com.mapbox.geojson.Point
 import com.mapbox.maps.logW
 import com.mapbox.maps.plugin.PuckBearingSource
