@@ -5,10 +5,8 @@ import android.telephony.TelephonyManager
 import android.view.Display
 import android.view.WindowManager
 import com.mapbox.common.*
-import io.mockk.every
-import io.mockk.mockk
-import io.mockk.mockkStatic
-import io.mockk.verify
+import io.mockk.*
+import org.junit.After
 import org.junit.Assert.assertFalse
 import org.junit.Before
 import org.junit.Ignore
@@ -60,51 +58,90 @@ object ShadowTelemetryUtils {
 class MapTelemetryTest {
 
   private lateinit var telemetry: MapTelemetryImpl
-  private lateinit var eventsService: EventsServiceInterface
-  private lateinit var telemetryService: TelemetryService
+  private val eventsService: EventsService = mockk()
+  private val telemetryService: TelemetryService = mockk()
+  private val context = mockk<Context>(relaxed = true)
+  private val telephonyManager = mockk<TelephonyManager>()
+  private val windowManager = mockk<WindowManager>(relaxUnitFun = true)
+  private val display = mockk<Display>(relaxUnitFun = true)
 
   @Before
   fun setUp() {
-    val context = mockk<Context>(relaxed = true)
-    val telephonyManager = mockk<TelephonyManager>()
+    mockkStatic(EventsService::class)
+    mockkStatic(TelemetryService::class)
+    mockkStatic(TelemetryUtils::class)
+    every { TelemetryUtils.setEventsCollectionState(any(), any()) } returns Unit
+    every { TelemetryUtils.getEventsCollectionState() } returns true
+
+    every { EventsService.getOrCreate(any()) } returns eventsService
+    every { eventsService.sendEvent(any(), any()) } returns Unit
+
+    every { TelemetryService.getOrCreate(any()) } returns telemetryService
+
     every { context.getSystemService(Context.TELEPHONY_SERVICE) } returns telephonyManager
     every { telephonyManager.networkType } returns TelephonyManager.NETWORK_TYPE_GPRS
     every { telephonyManager.networkOperatorName } returns "foobar"
 
-    val windowManager = mockk<WindowManager>(relaxUnitFun = true)
     every { context.getSystemService(Context.WINDOW_SERVICE) } returns windowManager
-    val display = mockk<Display>(relaxUnitFun = true)
     every { windowManager.defaultDisplay } returns display
+  }
 
-    eventsService = mockk()
-    telemetryService = mockk()
-    telemetry = MapTelemetryImpl(context, "sk.foobar", eventsService, telemetryService)
-    every { eventsService.sendEvent(any(), any()) } returns Unit
-    mockkStatic(EventsService::class)
-    mockkStatic(TelemetryUtils::class)
-    every { TelemetryUtils.setEventsCollectionState(any(), any()) } returns Unit
+  @After
+  fun cleanUp() {
+    unmockkStatic(EventsService::class)
+    unmockkStatic(TelemetryService::class)
+    unmockkStatic(TelemetryUtils::class)
+    unmockkAll()
+  }
+
+  @Test
+  fun testConstructorWithTelemetryEnabled() {
+    every { TelemetryUtils.getEventsCollectionState() } returns true
+    telemetry = MapTelemetryImpl(context, "sk.foobar")
+    // validate the event service is initialised
+    verify { EventsService.getOrCreate(any()) }
+    // validate the telemetry service is initialised
+    verify { TelemetryService.getOrCreate(any()) }
+
+    verify { TelemetryUtils.setEventsCollectionState(true, any()) }
+  }
+
+  @Test
+  fun testConstructorWithTelemetryDisabled() {
+    every { TelemetryUtils.getEventsCollectionState() } returns false
+    telemetry = MapTelemetryImpl(context, "sk.foobar")
+    // validate the event service is initialised
+    verify { EventsService.getOrCreate(any()) }
+    // validate the telemetry service is initialised
+    verify { TelemetryService.getOrCreate(any()) }
+
+    verify(exactly = 0) { TelemetryUtils.setEventsCollectionState(any(), any()) }
   }
 
   @Test
   fun testSetUserTelemetryRequestStateEnabled() {
+    telemetry = MapTelemetryImpl(context, "sk.foobar")
     telemetry.setUserTelemetryRequestState(true)
     verify { TelemetryUtils.setEventsCollectionState(true, any()) }
   }
 
   @Test
   fun testSetUserTelemetryRequestStateDisabled() {
+    telemetry = MapTelemetryImpl(context, "sk.foobar")
     telemetry.setUserTelemetryRequestState(false)
     verify { TelemetryUtils.setEventsCollectionState(false, any()) }
   }
 
   @Test
   fun testDisableTelemetrySession() {
+    telemetry = MapTelemetryImpl(context, "sk.foobar")
     telemetry.disableTelemetrySession()
     verify { TelemetryUtils.setEventsCollectionState(false, any()) }
   }
 
   @Test
   fun testSetSessionIdRotationInterval() {
+    telemetry = MapTelemetryImpl(context, "sk.foobar")
     assertFalse(telemetry.setSessionIdRotationInterval(22))
   }
 
@@ -122,6 +159,7 @@ class MapTelemetryTest {
 
   @Test
   fun testPerformanceEvent() {
+    telemetry = MapTelemetryImpl(context, "sk.foobar")
     telemetry.onPerformanceEvent(null)
     verify { eventsService.sendEvent(any(), any()) }
   }
