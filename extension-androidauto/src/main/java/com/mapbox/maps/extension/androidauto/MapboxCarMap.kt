@@ -96,7 +96,7 @@ class MapboxCarMap {
    * Accessor to the edgeInsets calculated by the car library. It is recommended to
    * use the values returned by [MapboxCarMapObserver.onVisibleAreaChanged].
    */
-  val edgeInsets: EdgeInsets?
+  val visibleEdgeInsets: EdgeInsets?
     get() { return carMapSurfaceOwner.edgeInsets }
 
   /**

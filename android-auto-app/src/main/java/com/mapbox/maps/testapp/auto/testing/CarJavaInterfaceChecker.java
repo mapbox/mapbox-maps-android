@@ -31,7 +31,7 @@ class CarJavaInterfaceChecker {
   void getters(MapboxCarMap mapboxCarMap) {
     CarContext carContext = mapboxCarMap.getCarContext();
     Rect visibleArea = mapboxCarMap.getVisibleArea();
-    EdgeInsets edgeInsets = mapboxCarMap.getEdgeInsets();
+    EdgeInsets edgeInsets = mapboxCarMap.getVisibleEdgeInsets();
     Rect stableArea = mapboxCarMap.getStableArea();
     EdgeInsets stableEdgeInsets = mapboxCarMap.getStableEdgeInsets();
     MapboxCarMapSurface mapboxCarMapSurface = mapboxCarMap.getCarMapSurface();

@@ -98,11 +98,11 @@ class MapboxCarMapTest {
   @Test
   fun `edgeInsets is valid after onVisibleAreaChanged`() {
     val mapboxCarMap = MapboxCarMap().setup(carContext, mapInitOptions)
-    assertNull(mapboxCarMap.edgeInsets)
+    assertNull(mapboxCarMap.visibleEdgeInsets)
     surfaceCallbackSlot.captured.onSurfaceAvailable(mockk(relaxed = true))
     surfaceCallbackSlot.captured.onVisibleAreaChanged(mockk(relaxed = true))
 
-    assertNotNull(mapboxCarMap.edgeInsets)
+    assertNotNull(mapboxCarMap.visibleEdgeInsets)
   }
 
   @Test
