@@ -486,7 +486,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
         return false
       }
 
-      return handleFlingEvent(e1, e2, velocityX, velocityY)
+      return handleFlingEvent(e2, velocityX, velocityY)
     }
   }
 
@@ -1294,7 +1294,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
   }
 
   internal fun handleFlingEvent(
-    e1: MotionEvent,
     e2: MotionEvent,
     velocityX: Float,
     velocityY: Float

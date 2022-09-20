@@ -12,7 +12,6 @@ import android.view.MotionEvent
 import android.view.MotionEvent.*
 import androidx.test.core.view.PointerCoordsBuilder
 import androidx.test.core.view.PointerPropertiesBuilder
-import com.google.common.base.CharMatcher.any
 import com.mapbox.android.gestures.*
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
@@ -336,16 +335,16 @@ class GesturesPluginTest {
   fun verifyFlingListener() {
     val listener: OnFlingListener = mockk(relaxed = true)
     presenter.addOnFlingListener(listener)
-    presenter.handleFlingEvent(motionEvent1, motionEvent2, 0.0f, 0.0f)
+    presenter.handleFlingEvent(motionEvent2, 0.0f, 0.0f)
     verify(exactly = 1) { listener.onFling() }
     presenter.removeOnFlingListener(listener)
-    presenter.handleFlingEvent(motionEvent1, motionEvent2, 0.0f, 0.0f)
+    presenter.handleFlingEvent(motionEvent2, 0.0f, 0.0f)
     verify(exactly = 1) { listener.onFling() }
   }
 
   @Test
   fun verifyFlingIgnoreSmallDisplacement() {
-    val result = presenter.handleFlingEvent(motionEvent1, motionEvent2, 0.1f, 0.1f)
+    val result = presenter.handleFlingEvent(motionEvent2, 0.1f, 0.1f)
     assertFalse(result)
   }
 
@@ -354,7 +353,7 @@ class GesturesPluginTest {
     val listener: OnFlingListener = mockk(relaxed = true)
     presenter.addOnFlingListener(listener)
     presenter.scrollEnabled = false
-    val result = presenter.handleFlingEvent(motionEvent1, motionEvent2, 0.1f, 0.1f)
+    val result = presenter.handleFlingEvent(motionEvent2, 0.1f, 0.1f)
     assertFalse(result)
     verify(exactly = 0) { listener.onFling() }
   }
@@ -1298,7 +1297,7 @@ class IsPointAboveHorizonTest(
 
     val listener: OnFlingListener = mockk(relaxed = true)
     presenter.addOnFlingListener(listener)
-    presenter.handleFlingEvent(motionEvent1, motionEvent2, 1000.0f, 1000.0f)
+    presenter.handleFlingEvent(motionEvent2, 1000.0f, 1000.0f)
     verify(exactly = if (expectedResult) 0 else 1) { listener.onFling() }
     verify(exactly = if (expectedResult) 0 else 1) {
       cameraAnimationsPlugin.easeTo(
@@ -1515,7 +1514,6 @@ class FlingGestureTest(
   fun testFling() {
     val result =
       presenter.handleFlingEvent(
-        motionEvent1,
         motionEvent2,
         targetVelocity.first,
         targetVelocity.second
