@@ -36,13 +36,8 @@ class MapTelemetryImpl : MapTelemetry {
     this.appContext = appContext
     this.accessToken = accessToken
 
-    // check in the resources
-    val eventsTokenResId = getEventsResId(appContext, EVENTS_ACCESS_TOKEN_RESOURCE_NAME)
-    val eventsToken =
-      if (eventsTokenResId != 0) appContext.getString(eventsTokenResId) else accessToken
-
     // TODO deferredDeliveryServiceOptions?
-    val eventsServiceOptions = EventsServerOptions(eventsToken, BuildConfig.MAPBOX_EVENTS_USER_AGENT, null)
+    val eventsServiceOptions = EventsServerOptions(accessToken, BuildConfig.MAPBOX_EVENTS_USER_AGENT, null)
     this.eventsService = EventsService.getOrCreate(eventsServiceOptions)
 
     this.telemetryService = TelemetryService.getOrCreate(eventsServiceOptions)
@@ -164,6 +159,5 @@ class MapTelemetryImpl : MapTelemetry {
    */
   private companion object {
     private const val TAG = "MapTelemetryImpl"
-    private const val EVENTS_ACCESS_TOKEN_RESOURCE_NAME = "mapbox_events_access_token"
   }
 }
