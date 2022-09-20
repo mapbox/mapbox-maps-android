@@ -23,10 +23,11 @@ class MapTelemetryImpl : MapTelemetry {
   private val appContext: Context
   private val accessToken: String
   private val eventsService: EventsServiceInterface
+  // We need telemetryService for location and metrics event which will be sent automatically if telemetryService is initialized.
   private val telemetryService: TelemetryService
 
   /**
-   * Creates a map telemetry instance using appplication context and access token
+   * Creates a map telemetry instance using application context and access token
    *
    * @param appContext the application context
    * @param accessToken the mapbox access token
@@ -46,8 +47,7 @@ class MapTelemetryImpl : MapTelemetry {
 
     this.telemetryService = TelemetryService.getOrCreate(eventsServiceOptions)
 
-    val coreTelemetryState = TelemetryUtils.getEventsCollectionState()
-    if (coreTelemetryState) {
+    if (TelemetryUtils.getEventsCollectionState()) {
       enableTelemetryCollection(true)
     }
   }
