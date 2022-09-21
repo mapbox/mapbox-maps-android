@@ -7,7 +7,7 @@ public class com/mapbox/maps/extension/androidauto/DefaultMapboxCarMapGestureHan
 
 public final class com/mapbox/maps/extension/androidauto/MapboxCarMap {
 	public fun <init> ()V
-	public final fun clearObservers ()V
+	public final fun clearObservers ()Lcom/mapbox/maps/extension/androidauto/MapboxCarMap;
 	public final fun getCarContext ()Landroidx/car/app/CarContext;
 	public final fun getCarMapSurface ()Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;
 	public final fun getMapInitOptions ()Lcom/mapbox/maps/MapInitOptions;
@@ -15,10 +15,11 @@ public final class com/mapbox/maps/extension/androidauto/MapboxCarMap {
 	public final fun getStableEdgeInsets ()Lcom/mapbox/maps/EdgeInsets;
 	public final fun getVisibleArea ()Landroid/graphics/Rect;
 	public final fun getVisibleEdgeInsets ()Lcom/mapbox/maps/EdgeInsets;
+	public final fun prepareSurfaceCallback (Landroidx/car/app/CarContext;Lcom/mapbox/maps/MapInitOptions;)Landroidx/car/app/SurfaceCallback;
 	public final fun registerObserver (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapObserver;)Lcom/mapbox/maps/extension/androidauto/MapboxCarMap;
-	public final fun setGestureHandler (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapGestureHandler;)V
+	public final fun setGestureHandler (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapGestureHandler;)Lcom/mapbox/maps/extension/androidauto/MapboxCarMap;
 	public final fun setup (Landroidx/car/app/CarContext;Lcom/mapbox/maps/MapInitOptions;)Lcom/mapbox/maps/extension/androidauto/MapboxCarMap;
-	public final fun unregisterObserver (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapObserver;)V
+	public final fun unregisterObserver (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapObserver;)Lcom/mapbox/maps/extension/androidauto/MapboxCarMap;
 }
 
 public final class com/mapbox/maps/extension/androidauto/MapboxCarMapEx {

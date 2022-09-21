@@ -11,6 +11,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Change `MapboxCarMapObserver` to an java interface so default methods can be added without breaking java backwards compatibility. ([#1670](https://github.com/mapbox/mapbox-maps-android/pull/1648))
 * Change `MapboxCarMap#getEdgeInsets()` to `mapboxCarMap.getVisibleEdgeInsets()` with the addition of `mapboxCarMap.getStableEdgeInsets()`. ([#1670](https://github.com/mapbox/mapbox-maps-android/pull/1648))
 * Add `MapboxCarMapObserver#onStableAreaChanged` to support all the available functions from the SurfaceCallback. ([#1670](https://github.com/mapbox/mapbox-maps-android/pull/1648))
+* Add support for intercepting the `SurfaceCallback#onClick` when using `MapboxCarMap.prepareSurfaceCallback`. ([#1683](https://github.com/mapbox/mapbox-maps-android/pull/1683)])
 
 ## Bug fixes 🐞
 
