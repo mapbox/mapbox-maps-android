@@ -46,7 +46,7 @@ class LayerSourceProviderTest {
     val modelLayer = layerSourceProvider.getModelLayer(locationPuck3D)
     assertEquals(MODEL_LAYER, modelLayer.layerId)
     assertEquals(
-      "{model-type=location-indicator, model-rotation=[3.0, 2.0, 1.0], id=mapbox-location-model-layer, source=mapbox-location-model-source, type=model, model-scale=[1.0, 2.0, 3.0], model-translation=[0.0, 0.0, 0.0]}",
+      "{model-type=location-indicator, model-rotation=[3.0, 2.0, 1.0], id=mapbox-location-model-layer, source=mapbox-location-model-source, type=model, model-opacity=1.0, model-scale=[1.0, 2.0, 3.0], model-translation=[0.0, 0.0, 0.0]}",
       modelLayer.toValue().toString()
     )
   }

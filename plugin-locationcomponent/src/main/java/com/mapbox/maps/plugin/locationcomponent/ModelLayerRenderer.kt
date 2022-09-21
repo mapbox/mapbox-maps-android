@@ -41,6 +41,7 @@ internal class ModelLayerRenderer(
 
   override fun addLayers(positionManager: LocationComponentPositionManager) {
     modelLayer.modelRotation(locationModelLayerOptions.modelRotation.map { it.toDouble() })
+    modelLayer.modelOpacity(locationModelLayerOptions.modelOpacity.toDouble())
     positionManager.addLayerToMap(modelLayer)
   }
 

@@ -45,6 +45,8 @@
     <public name="mapbox_locationComponentLocationPuckLocationPuck2DShadowImage" type="attr" />
     <!-- The scale expression of the images. If defined, it will be applied to all the three images. -->
     <public name="mapbox_locationComponentLocationPuckLocationPuck2DScaleExpression" type="attr" />
+    <!-- The opacity of the entire location puck -->
+    <public name="mapbox_locationComponentLocationPuckLocationPuck2DOpacity" type="attr" />
 
     <!-- Location puck definitions for location_puck_3_d.  -->
 

@@ -38,6 +38,7 @@
     <string name="location_start_pulsing">Start pulsing</string>
     <string name="location_disable_accuracy">Disable Accuracy Ring</string>
     <string name="location_enable_accuracy">Enable Accuracy Ring</string>
+    <string name="toggle_opacity">Toggle opacity</string>
     <string name="location_pulsing_puck_follow_accuracy_radius">Pulsing follow accuracy Ring</string>
     <!--RestrictBounds-->
     <string name="restrict_san_francisco">Restrict San Francisco</string>

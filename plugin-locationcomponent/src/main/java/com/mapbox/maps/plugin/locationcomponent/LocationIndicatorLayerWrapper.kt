@@ -50,4 +50,6 @@ internal class LocationIndicatorLayerWrapper(layerId: String) : LocationLayerWra
   fun bearingImage(bearingImage: String) = updateProperty("bearing-image", Value(bearingImage))
 
   fun shadowImage(shadowImage: String) = updateProperty("shadow-image", Value(shadowImage))
+
+  fun opacity(opacity: Double) = updateProperty("location-indicator-opacity", Value(opacity))
 }

@@ -17,7 +17,11 @@ import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.LocationPuck3D
 import com.mapbox.maps.plugin.PuckBearingSource
 import com.mapbox.maps.plugin.gestures.gestures
-import com.mapbox.maps.plugin.locationcomponent.*
+import com.mapbox.maps.plugin.locationcomponent.DefaultLocationProvider
+import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener
+import com.mapbox.maps.plugin.locationcomponent.createDefault2DPuck
+import com.mapbox.maps.plugin.locationcomponent.location
+import com.mapbox.maps.plugin.locationcomponent.location2
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityLocationComponentBinding
 import com.mapbox.maps.testapp.utils.LocationPermissionHelper
@@ -133,6 +137,16 @@ class LocationComponentActivity : AppCompatActivity() {
       R.id.action_accuracy_disable -> {
         binding.mapView.location2.showAccuracyRing = false
         item.isChecked = true
+        return true
+      }
+      R.id.toggle_opacity -> {
+        val location = binding.mapView.location
+        location.locationPuck = location.locationPuck.run {
+          when (this) {
+            is LocationPuck3D -> copy(modelOpacity = if (modelOpacity == 1.0F) 0.5F else 1.0F)
+            is LocationPuck2D -> copy(opacity = if (opacity == 1.0F) 0.5F else 1.0F)
+          }
+        }
         return true
       }
       else -> return super.onOptionsItemSelected(item)

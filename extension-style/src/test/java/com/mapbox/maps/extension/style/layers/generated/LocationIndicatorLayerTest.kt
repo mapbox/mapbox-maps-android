@@ -1304,6 +1304,113 @@ class LocationIndicatorLayerTest {
   }
 
   @Test
+  fun locationIndicatorOpacitySet() {
+    val layer = locationIndicatorLayer("id") {}
+    val testValue = 1.0
+    layer.bindTo(style)
+    layer.locationIndicatorOpacity(testValue)
+    verify { style.setStyleLayerProperty("id", "location-indicator-opacity", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "1.0")
+  }
+
+  @Test
+  fun locationIndicatorOpacityGet() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = locationIndicatorLayer("id") { }
+    layer.bindTo(style)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), layer.locationIndicatorOpacity?.toString())
+    verify { style.getStyleLayerProperty("id", "location-indicator-opacity") }
+  }
+  // Expression Tests
+
+  @Test
+  fun locationIndicatorOpacityAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = locationIndicatorLayer("id") {}
+    layer.bindTo(style)
+    layer.locationIndicatorOpacity(expression)
+    verify { style.setStyleLayerProperty("id", "location-indicator-opacity", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun locationIndicatorOpacityAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = locationIndicatorLayer("id") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.locationIndicatorOpacityAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "location-indicator-opacity") }
+  }
+
+  @Test
+  fun locationIndicatorOpacityAsExpressionGetNull() {
+    val layer = locationIndicatorLayer("id") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.locationIndicatorOpacityAsExpression)
+    verify { style.getStyleLayerProperty("id", "location-indicator-opacity") }
+  }
+
+  @Test
+  fun locationIndicatorOpacityAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    val layer = locationIndicatorLayer("id") { }
+    layer.bindTo(style)
+    assertEquals(1.0, layer.locationIndicatorOpacityAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.locationIndicatorOpacity!!, 1E-5)
+    verify { style.getStyleLayerProperty("id", "location-indicator-opacity") }
+  }
+
+  @Test
+  fun locationIndicatorOpacityTransitionSet() {
+    val layer = locationIndicatorLayer("id") {}
+    layer.bindTo(style)
+    layer.locationIndicatorOpacityTransition(
+      transitionOptions {
+        duration(100)
+        delay(200)
+      }
+    )
+    verify { style.setStyleLayerProperty("id", "location-indicator-opacity-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
+  fun locationIndicatorOpacityTransitionGet() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+    val layer = locationIndicatorLayer("id") {}
+    layer.bindTo(style)
+    assertEquals(transition.toValue().toString(), layer.locationIndicatorOpacityTransition?.toValue().toString())
+    verify { style.getStyleLayerProperty("id", "location-indicator-opacity-transition") }
+  }
+
+  @Test
+  fun locationIndicatorOpacityTransitionSetDsl() {
+    val layer = locationIndicatorLayer("id") {}
+    layer.bindTo(style)
+    layer.locationIndicatorOpacityTransition {
+      duration(100)
+      delay(200)
+    }
+    verify { style.setStyleLayerProperty("id", "location-indicator-opacity-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
   fun perspectiveCompensationSet() {
     val layer = locationIndicatorLayer("id") {}
     val testValue = 1.0
@@ -2197,6 +2304,50 @@ class LocationIndicatorLayerTest {
 
     assertEquals(transition.toValue().toString(), LocationIndicatorLayer.defaultLocationTransition?.toValue().toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "location-transition") }
+  }
+
+  @Test
+  fun defaultLocationIndicatorOpacityTest() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), LocationIndicatorLayer.defaultLocationIndicatorOpacity?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "location-indicator-opacity") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultLocationIndicatorOpacityAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), LocationIndicatorLayer.defaultLocationIndicatorOpacityAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "location-indicator-opacity") }
+  }
+
+  @Test
+  fun defaultLocationIndicatorOpacityAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    assertEquals(1.0, LocationIndicatorLayer.defaultLocationIndicatorOpacityAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, LocationIndicatorLayer.defaultLocationIndicatorOpacity!!, 1E-5)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "location-indicator-opacity") }
+  }
+
+  @Test
+  fun defaultLocationIndicatorOpacityTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+
+    assertEquals(transition.toValue().toString(), LocationIndicatorLayer.defaultLocationIndicatorOpacityTransition?.toValue().toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "location-indicator-opacity-transition") }
   }
 
   @Test

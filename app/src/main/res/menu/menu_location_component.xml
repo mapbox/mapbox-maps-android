@@ -37,6 +37,10 @@
         android:title="@string/location_enable_accuracy"
         app:showAsAction="never"/>
 
+    <item android:id="@+id/toggle_opacity"
+        android:title="@string/toggle_opacity"
+        app:showAsAction="never"/>
+
     <group
         android:id="@+id/group"
         android:checkableBehavior="single">

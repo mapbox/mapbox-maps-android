@@ -7,7 +7,13 @@ import com.mapbox.maps.StyleManagerInterface
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.logW
 import com.mapbox.maps.plugin.delegates.MapStyleStateDelegate
-import io.mockk.*
+import io.mockk.Runs
+import io.mockk.every
+import io.mockk.just
+import io.mockk.mockk
+import io.mockk.mockkStatic
+import io.mockk.unmockkStatic
+import io.mockk.verify
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -19,7 +25,14 @@ import org.robolectric.RobolectricTestRunner
 class ModelLayerWrapperTest {
 
   private val style: StyleManagerInterface = mockk(relaxed = true)
-  private val layer = ModelLayerWrapper(MODEL_LAYER_ID, MODEL_SOURCE_ID, INITIAL_SCALE, INITIAL_ROTATION, INITIAL_TRANSLATION)
+  private val layer = ModelLayerWrapper(
+    MODEL_LAYER_ID,
+    MODEL_SOURCE_ID,
+    INITIAL_SCALE,
+    INITIAL_ROTATION,
+    INITIAL_TRANSLATION,
+    INITIAL_OPACITY,
+  )
   private val expected: Expected<String, None> = mockk(relaxed = true)
 
   @Before
@@ -43,7 +56,7 @@ class ModelLayerWrapperTest {
   @Test
   fun testInitialProperties() {
     val value = layer.toValue()
-    assertEquals("{model-type=location-indicator, model-rotation=[8.0], id=modelLayerId, source=modelSourceId, type=model, model-scale=[6.0], model-translation=[0.0]}", value.toString())
+    assertEquals("{model-type=location-indicator, model-rotation=[8.0], id=modelLayerId, source=modelSourceId, type=model, model-opacity=1.0, model-scale=[6.0], model-translation=[0.0]}", value.toString())
   }
 
   @Test
@@ -87,11 +100,18 @@ class ModelLayerWrapperTest {
     verify(exactly = 1) { newStyle.setStyleLayerProperty(MODEL_LAYER_ID, "model-scale", Value(scale.map(::Value))) }
   }
 
+  @Test
+  fun testModelOpacity() {
+    layer.modelOpacity(0.8)
+    verify { style.setStyleLayerProperty(MODEL_LAYER_ID, "model-opacity", Value(0.8)) }
+  }
+
   companion object {
     private const val MODEL_LAYER_ID = "modelLayerId"
     private const val MODEL_SOURCE_ID = "modelSourceId"
     private val INITIAL_SCALE = arrayListOf(6.0)
     private val INITIAL_ROTATION = arrayListOf(8.0)
     private val INITIAL_TRANSLATION = arrayListOf(0.0)
+    private const val INITIAL_OPACITY = 1.0
   }
 }

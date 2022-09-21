@@ -2105,6 +2105,9 @@ public final class com/mapbox/maps/extension/style/layers/generated/LocationIndi
 	public fun getLayerId ()Ljava/lang/String;
 	public final fun getLocation ()Ljava/util/List;
 	public final fun getLocationAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getLocationIndicatorOpacity ()Ljava/lang/Double;
+	public final fun getLocationIndicatorOpacityAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getLocationIndicatorOpacityTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getLocationTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public fun getMaxZoom ()Ljava/lang/Double;
 	public fun getMinZoom ()Ljava/lang/Double;
@@ -2125,6 +2128,10 @@ public final class com/mapbox/maps/extension/style/layers/generated/LocationIndi
 	public fun imagePitchDisplacement (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public fun location (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public fun location (Ljava/util/List;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
+	public fun locationIndicatorOpacity (D)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
+	public fun locationIndicatorOpacity (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
+	public fun locationIndicatorOpacityTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
+	public fun locationIndicatorOpacityTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public fun locationTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public fun locationTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public synthetic fun maxZoom (D)Lcom/mapbox/maps/extension/style/layers/Layer;
@@ -2180,6 +2187,9 @@ public final class com/mapbox/maps/extension/style/layers/generated/LocationIndi
 	public final fun getDefaultImagePitchDisplacementAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultLocation ()Ljava/util/List;
 	public final fun getDefaultLocationAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getDefaultLocationIndicatorOpacity ()Ljava/lang/Double;
+	public final fun getDefaultLocationIndicatorOpacityAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getDefaultLocationIndicatorOpacityTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getDefaultLocationTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getDefaultMaxZoom ()Ljava/lang/Double;
 	public final fun getDefaultMinZoom ()Ljava/lang/Double;
@@ -2236,6 +2246,10 @@ public abstract interface class com/mapbox/maps/extension/style/layers/generated
 	public abstract fun imagePitchDisplacement (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public abstract fun location (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public abstract fun location (Ljava/util/List;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
+	public abstract fun locationIndicatorOpacity (D)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
+	public abstract fun locationIndicatorOpacity (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
+	public abstract fun locationIndicatorOpacityTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
+	public abstract fun locationIndicatorOpacityTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public abstract fun locationTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public abstract fun locationTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public abstract fun maxZoom (D)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
@@ -2267,6 +2281,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/LocationIndi
 	public static synthetic fun emphasisCircleRadius$default (Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public static synthetic fun imagePitchDisplacement$default (Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public static synthetic fun location$default (Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayerDsl;Ljava/util/List;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
+	public static synthetic fun locationIndicatorOpacity$default (Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public static synthetic fun perspectiveCompensation$default (Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public static synthetic fun shadowImageSize$default (Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public static synthetic fun topImageSize$default (Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;

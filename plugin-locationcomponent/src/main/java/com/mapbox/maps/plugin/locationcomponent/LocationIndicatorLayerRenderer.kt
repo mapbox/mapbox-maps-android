@@ -85,6 +85,7 @@ internal class LocationIndicatorLayerRenderer(
     layer.topImage(TOP_ICON)
     layer.bearingImage(BEARING_ICON)
     layer.shadowImage(SHADOW_ICON)
+    layer.opacity(puckOptions.opacity.toDouble())
   }
 
   override fun clearBitmaps() {

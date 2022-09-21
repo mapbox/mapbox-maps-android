@@ -607,6 +607,61 @@ class LocationIndicatorLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun locationIndicatorOpacityTest() {
+    val testValue = 1.0
+    val layer = locationIndicatorLayer("id") {
+      locationIndicatorOpacity(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(testValue, layer.locationIndicatorOpacity!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun locationIndicatorOpacityAsExpressionTest() {
+    val expression = literal(1.0)
+    val layer = locationIndicatorLayer("id") {
+      locationIndicatorOpacity(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(1.0, layer.locationIndicatorOpacityAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.locationIndicatorOpacity!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun locationIndicatorOpacityTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = locationIndicatorLayer("id") {
+      locationIndicatorOpacityTransition(transition)
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.locationIndicatorOpacityTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun locationIndicatorOpacityTransitionSetDslTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = locationIndicatorLayer("id") {
+      locationIndicatorOpacityTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.locationIndicatorOpacityTransition)
+  }
+
+  @Test
+  @UiThreadTest
   fun perspectiveCompensationTest() {
     val testValue = 1.0
     val layer = locationIndicatorLayer("id") {
@@ -792,6 +847,9 @@ class LocationIndicatorLayerTest : BaseStyleTest() {
     assertNotNull("defaultLocation should not be null", LocationIndicatorLayer.defaultLocation)
     assertNotNull("defaultLocationAsExpression should not be null", LocationIndicatorLayer.defaultLocationAsExpression)
     assertNotNull("defaultLocationTransition should not be null", LocationIndicatorLayer.defaultLocationTransition)
+    assertNotNull("defaultLocationIndicatorOpacity should not be null", LocationIndicatorLayer.defaultLocationIndicatorOpacity)
+    assertNotNull("defaultLocationIndicatorOpacityAsExpression should not be null", LocationIndicatorLayer.defaultLocationIndicatorOpacityAsExpression)
+    assertNotNull("defaultLocationIndicatorOpacityTransition should not be null", LocationIndicatorLayer.defaultLocationIndicatorOpacityTransition)
     assertNotNull("defaultPerspectiveCompensation should not be null", LocationIndicatorLayer.defaultPerspectiveCompensation)
     assertNotNull("defaultPerspectiveCompensationAsExpression should not be null", LocationIndicatorLayer.defaultPerspectiveCompensationAsExpression)
     assertNotNull("defaultShadowImageSize should not be null", LocationIndicatorLayer.defaultShadowImageSize)
@@ -817,6 +875,7 @@ class LocationIndicatorLayerTest : BaseStyleTest() {
     val emphasisCircleRadiusTestValue = 1.0
     val imagePitchDisplacementTestValue = 1.0
     val locationTestValue = listOf(0.0, 1.0, 2.0)
+    val locationIndicatorOpacityTestValue = 1.0
     val perspectiveCompensationTestValue = 1.0
     val shadowImageSizeTestValue = 1.0
     val topImageSizeTestValue = 1.0
@@ -834,6 +893,7 @@ class LocationIndicatorLayerTest : BaseStyleTest() {
       emphasisCircleRadius(emphasisCircleRadiusTestValue)
       imagePitchDisplacement(imagePitchDisplacementTestValue)
       location(locationTestValue)
+      locationIndicatorOpacity(locationIndicatorOpacityTestValue)
       perspectiveCompensation(perspectiveCompensationTestValue)
       shadowImageSize(shadowImageSizeTestValue)
       topImageSize(topImageSizeTestValue)
@@ -858,6 +918,7 @@ class LocationIndicatorLayerTest : BaseStyleTest() {
     assertEquals(emphasisCircleRadiusTestValue, cachedLayer.emphasisCircleRadius)
     assertEquals(imagePitchDisplacementTestValue, cachedLayer.imagePitchDisplacement)
     assertEquals(locationTestValue, cachedLayer.location)
+    assertEquals(locationIndicatorOpacityTestValue, cachedLayer.locationIndicatorOpacity)
     assertEquals(perspectiveCompensationTestValue, cachedLayer.perspectiveCompensation)
     assertEquals(shadowImageSizeTestValue, cachedLayer.shadowImageSize)
     assertEquals(topImageSizeTestValue, cachedLayer.topImageSize)

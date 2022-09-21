@@ -31,8 +31,18 @@ class ModelLayerRendererTest {
     every { layerSourceProvider.getModelSource(any()) } returns sourceWrapper
     every { layerWrapper.layerId } returns "id"
     every { option.modelRotation } returns listOf(0.0f, 0.0f, 0.0f)
+    every { option.modelOpacity } returns 0.5f
     locationLayerRenderer = ModelLayerRenderer(layerSourceProvider, option)
     locationLayerRenderer.initializeComponents(style)
+  }
+
+  /**
+   * Verify that [LocationLayerRenderer.initializeComponents] in above [setup] calls the right
+   * methods.
+   */
+  @Test
+  fun initializeComponents() {
+    verify(exactly = 1) { sourceWrapper.bindTo(style) }
   }
 
   @Test
@@ -55,6 +65,9 @@ class ModelLayerRendererTest {
     locationLayerRenderer.addLayers(positionManager)
 
     verify { positionManager.addLayerToMap(layerWrapper) }
+    verify(exactly = 1) { option.modelOpacity }
+    verify(exactly = 1) { layerWrapper.modelOpacity(0.5) }
+    verify(exactly = 1) { layerWrapper.modelRotation(listOf(0.0, 0.0, 0.0)) }
   }
 
   @Test

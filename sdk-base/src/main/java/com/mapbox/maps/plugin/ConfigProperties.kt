@@ -65,6 +65,10 @@ data class LocationPuck2D @JvmOverloads constructor(
    * The scale expression of the images. If defined, it will be applied to all the three images.
    */
   var scaleExpression: String? = null,
+  /**
+   * The opacity of the entire location puck
+   */
+  var opacity: Float = 1f,
 ) : LocationPuck()
 
 /**

@@ -574,20 +574,24 @@ public final class com/mapbox/maps/plugin/LocationPuck2D : com/mapbox/maps/plugi
 	public fun <init> (Landroid/graphics/drawable/Drawable;Landroid/graphics/drawable/Drawable;)V
 	public fun <init> (Landroid/graphics/drawable/Drawable;Landroid/graphics/drawable/Drawable;Landroid/graphics/drawable/Drawable;)V
 	public fun <init> (Landroid/graphics/drawable/Drawable;Landroid/graphics/drawable/Drawable;Landroid/graphics/drawable/Drawable;Ljava/lang/String;)V
-	public synthetic fun <init> (Landroid/graphics/drawable/Drawable;Landroid/graphics/drawable/Drawable;Landroid/graphics/drawable/Drawable;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Landroid/graphics/drawable/Drawable;Landroid/graphics/drawable/Drawable;Landroid/graphics/drawable/Drawable;Ljava/lang/String;F)V
+	public synthetic fun <init> (Landroid/graphics/drawable/Drawable;Landroid/graphics/drawable/Drawable;Landroid/graphics/drawable/Drawable;Ljava/lang/String;FILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Landroid/graphics/drawable/Drawable;
 	public final fun component2 ()Landroid/graphics/drawable/Drawable;
 	public final fun component3 ()Landroid/graphics/drawable/Drawable;
 	public final fun component4 ()Ljava/lang/String;
-	public final fun copy (Landroid/graphics/drawable/Drawable;Landroid/graphics/drawable/Drawable;Landroid/graphics/drawable/Drawable;Ljava/lang/String;)Lcom/mapbox/maps/plugin/LocationPuck2D;
-	public static synthetic fun copy$default (Lcom/mapbox/maps/plugin/LocationPuck2D;Landroid/graphics/drawable/Drawable;Landroid/graphics/drawable/Drawable;Landroid/graphics/drawable/Drawable;Ljava/lang/String;ILjava/lang/Object;)Lcom/mapbox/maps/plugin/LocationPuck2D;
+	public final fun component5 ()F
+	public final fun copy (Landroid/graphics/drawable/Drawable;Landroid/graphics/drawable/Drawable;Landroid/graphics/drawable/Drawable;Ljava/lang/String;F)Lcom/mapbox/maps/plugin/LocationPuck2D;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/plugin/LocationPuck2D;Landroid/graphics/drawable/Drawable;Landroid/graphics/drawable/Drawable;Landroid/graphics/drawable/Drawable;Ljava/lang/String;FILjava/lang/Object;)Lcom/mapbox/maps/plugin/LocationPuck2D;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getBearingImage ()Landroid/graphics/drawable/Drawable;
+	public final fun getOpacity ()F
 	public final fun getScaleExpression ()Ljava/lang/String;
 	public final fun getShadowImage ()Landroid/graphics/drawable/Drawable;
 	public final fun getTopImage ()Landroid/graphics/drawable/Drawable;
 	public fun hashCode ()I
 	public final fun setBearingImage (Landroid/graphics/drawable/Drawable;)V
+	public final fun setOpacity (F)V
 	public final fun setScaleExpression (Ljava/lang/String;)V
 	public final fun setShadowImage (Landroid/graphics/drawable/Drawable;)V
 	public final fun setTopImage (Landroid/graphics/drawable/Drawable;)V

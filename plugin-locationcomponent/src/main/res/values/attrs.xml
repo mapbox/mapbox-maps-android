@@ -29,7 +29,7 @@
           <!-- Orients the puck to match the direction in which the device is moving. -->
           <enum name="course" value="1"/>
         </attr>
-        <!-- Defines what the customised look of the location puck. -->
+        <!-- Defines what the customised look of the location puck. Note that direct changes to the puck variables won't have any effect, a new puck needs to be set every time. -->
         <attr name="mapbox_locationComponentLocationPuck" format="enum">
           <!--  -->
           <enum name="location_puck_2_d" value="0"/>
@@ -47,6 +47,8 @@
         <attr name="mapbox_locationComponentLocationPuckLocationPuck2DShadowImage" format="reference"/>
         <!-- The scale expression of the images. If defined, it will be applied to all the three images. -->
         <attr name="mapbox_locationComponentLocationPuckLocationPuck2DScaleExpression" format="string"/>
+        <!-- The opacity of the entire location puck -->
+        <attr name="mapbox_locationComponentLocationPuckLocationPuck2DOpacity" format="float"/>
 
         <!-- Location puck definitions for location_puck_3_d.  -->
 

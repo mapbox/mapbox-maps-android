@@ -1135,6 +1135,94 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
   }
 
   /**
+   * The opacity of the entire location indicator layer.
+   */
+  val locationIndicatorOpacity: Double?
+    /**
+     * The opacity of the entire location indicator layer.
+     *
+     * @return Double
+     */
+    get() {
+      return getPropertyValue("location-indicator-opacity")
+    }
+
+  /**
+   * The opacity of the entire location indicator layer.
+   *
+   * @param locationIndicatorOpacity value of locationIndicatorOpacity
+   */
+  override fun locationIndicatorOpacity(locationIndicatorOpacity: Double) = apply {
+    val propertyValue = PropertyValue("location-indicator-opacity", locationIndicatorOpacity)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * The opacity of the entire location indicator layer.
+   *
+   * This is an Expression representation of "location-indicator-opacity".
+   *
+   * The opacity of the entire location indicator layer.
+   */
+  val locationIndicatorOpacityAsExpression: Expression?
+    /**
+     * The opacity of the entire location indicator layer.
+     *
+     * Get the LocationIndicatorOpacity property as an Expression
+     *
+     * @return Double
+     */
+    get() {
+      getPropertyValue<Expression>("location-indicator-opacity")?.let {
+        return it
+      }
+      locationIndicatorOpacity?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * The opacity of the entire location indicator layer.
+   *
+   * @param locationIndicatorOpacity value of locationIndicatorOpacity as Expression
+   */
+  override fun locationIndicatorOpacity(locationIndicatorOpacity: Expression) = apply {
+    val propertyValue = PropertyValue("location-indicator-opacity", locationIndicatorOpacity)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Transition options for LocationIndicatorOpacity.
+   */
+  val locationIndicatorOpacityTransition: StyleTransition?
+    /**
+     * Get the LocationIndicatorOpacity property transition options
+     *
+     * @return transition options for Double
+     */
+    get() {
+      return getPropertyValue("location-indicator-opacity-transition")
+    }
+
+  /**
+   * Set the LocationIndicatorOpacity property transition options
+   *
+   * @param options transition options for Double
+   */
+  override fun locationIndicatorOpacityTransition(options: StyleTransition) = apply {
+    val propertyValue = PropertyValue("location-indicator-opacity-transition", options)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * DSL for [locationIndicatorOpacityTransition].
+   */
+  override fun locationIndicatorOpacityTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+    locationIndicatorOpacityTransition(StyleTransition.Builder().apply(block).build())
+  }
+
+  /**
    * The amount of the perspective compensation, between 0 and 1. A value of 1 produces a location indicator of constant width across the screen. A value of 0 makes it scale naturally according to the viewing projection.
    */
   val perspectiveCompensation: Double?
@@ -2029,6 +2117,55 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "location-transition").silentUnwrap()
 
     /**
+     * The opacity of the entire location indicator layer.
+     */
+    val defaultLocationIndicatorOpacity: Double?
+      /**
+       * The opacity of the entire location indicator layer.
+       *
+       * Get the default value of LocationIndicatorOpacity property
+       *
+       * @return Double
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "location-indicator-opacity").silentUnwrap()
+      }
+
+    /**
+     * The opacity of the entire location indicator layer.
+     *
+     * This is an Expression representation of "location-indicator-opacity".
+     *
+     * The opacity of the entire location indicator layer.
+     */
+    val defaultLocationIndicatorOpacityAsExpression: Expression?
+      /**
+       * Get default value of the LocationIndicatorOpacity property as an Expression
+       *
+       * @return Double
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "location-indicator-opacity").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultLocationIndicatorOpacity?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
+
+    /**
+     * Transition options for LocationIndicatorOpacity.
+     */
+    val defaultLocationIndicatorOpacityTransition: StyleTransition?
+      /**
+       * Get the LocationIndicatorOpacity property transition options
+       *
+       * @return transition options for Double
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "location-indicator-opacity-transition").silentUnwrap()
+
+    /**
      * The amount of the perspective compensation, between 0 and 1. A value of 1 produces a location indicator of constant width across the screen. A value of 0 makes it scale naturally according to the viewing projection.
      */
     val defaultPerspectiveCompensation: Double?
@@ -2522,6 +2659,36 @@ interface LocationIndicatorLayerDsl {
    * DSL for [locationTransition].
    */
   fun locationTransition(block: StyleTransition.Builder.() -> Unit): LocationIndicatorLayer
+
+  /**
+   * The opacity of the entire location indicator layer.
+   *
+   * @param locationIndicatorOpacity value of locationIndicatorOpacity
+   */
+  fun locationIndicatorOpacity(locationIndicatorOpacity: Double = 1.0): LocationIndicatorLayer
+
+  /**
+   * The opacity of the entire location indicator layer.
+   *
+   * @param locationIndicatorOpacity value of locationIndicatorOpacity as Expression
+   */
+  fun locationIndicatorOpacity(locationIndicatorOpacity: Expression): LocationIndicatorLayer
+
+  /**
+   * The opacity of the entire location indicator layer.
+   *
+   * Set the LocationIndicatorOpacity property transition options
+   *
+   * @param options transition options for Double
+   */
+  fun locationIndicatorOpacityTransition(options: StyleTransition): LocationIndicatorLayer
+
+  /**
+   * The opacity of the entire location indicator layer.
+   *
+   * DSL for [locationIndicatorOpacityTransition].
+   */
+  fun locationIndicatorOpacityTransition(block: StyleTransition.Builder.() -> Unit): LocationIndicatorLayer
 
   /**
    * The amount of the perspective compensation, between 0 and 1. A value of 1 produces a location indicator of constant width across the screen. A value of 0 makes it scale naturally according to the viewing projection.
