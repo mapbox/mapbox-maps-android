@@ -78,41 +78,6 @@ function prepare_branch_with_empty() {
   git push --set-upstream origin $INTERIM_BRANCH_WITH_DOCUMENTATION --force
 }
 
-function clone_android_docs_repo() {
-   if [ ! -d $ANDROID_DOCS_DIRECTORY ]; then
-    git clone https://x-access-token:"$GITHUB_TOKEN"@github.com/mapbox/android-docs.git $ANDROID_DOCS_DIRECTORY
-   fi
-}
-
-function update_constants_and_map_version_numbers() {
-  cd $ANDROID_DOCS_DIRECTORY
-  git remote set-url origin https://x-access-token:"$GITHUB_TOKEN"@github.com/mapbox/android-docs.git
-
-  MAP_VERSION_NUMBERS_FILE_TMP="${MAP_VERSION_NUMBERS_FILE}.tmp"
-
-  # Append new version to the end of file
-  jq --arg version $1 '. += [$version]' $MAP_VERSION_NUMBERS_FILE >$MAP_VERSION_NUMBERS_FILE_TMP
-
-  # Update version in constants for stable release
-  if [[ $1 != *alpha* ]] && [[ $1 != *beta* ]] && [[ $1 != *rc* ]]; then
-    CONSTANTS_FILE_TMP="${CONSTANTS_FILE}.tmp"
-    jq --arg version $1 '.MAP_SDK_VERSION=$version' $CONSTANTS_FILE >$CONSTANTS_FILE_TMP
-    mv $CONSTANTS_FILE_TMP $CONSTANTS_FILE
-  fi
-  mv $MAP_VERSION_NUMBERS_FILE_TMP $MAP_VERSION_NUMBERS_FILE
-  cd -
-}
-
-function prepare_android_docs_branch() {
-  cd $ANDROID_DOCS_DIRECTORY
-  BRANCH_NAME="maps_android_sdk_v$1"
-  git checkout -b $BRANCH_NAME origin/$BRANCH_WITH_DOCUMENTATION
-  git add -A
-  git commit -m "Maps SDK bump to $1"
-  git push --set-upstream origin $BRANCH_NAME --force
-  cd -
-}
-
 function create_pull_request() {
   CMD="gh pr create --title \"${1}\" --body \"cc: @mapbox/maps-android\""
 
@@ -135,16 +100,6 @@ create_pull_request "Add ${MAPS_SDK_VERSION} API documentation." $BRANCH_WITH_DO
 # Create a pr with empty commit to trigger dos deploy
 prepare_branch_with_empty $MAPS_SDK_VERSION
 create_pull_request "Trigger ${MAPS_SDK_VERSION} deploy." $BRANCH_WITH_DOCUMENTATION
-
-# Update config files in Android Docs Repo for stable release.
-clone_android_docs_repo
-update_constants_and_map_version_numbers $MAPS_SDK_VERSION
-prepare_android_docs_branch $MAPS_SDK_VERSION
-cd $ANDROID_DOCS_DIRECTORY
-create_pull_request "Maps SDK bump to ${MAPS_SDK_VERSION}" $BRANCH_WITH_DOCUMENTATION
-# Rollback the remote url when run the script locally
-git remote set-url origin git@github.com:mapbox/android-docs.git
-cd -
 
 # Rollback the remote url when run the script locally
 git remote set-url origin git@github.com:mapbox/mapbox-maps-android.git
