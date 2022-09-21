@@ -16,8 +16,10 @@ internal class BitmapWidgetRenderer(
   private val marginY: Float,
 ) : WidgetRenderer {
 
-  private var bitmapWidth = bitmap?.width ?: 0
-  private var bitmapHeight = bitmap?.height ?: 0
+  private var halfBitmapWidth = (bitmap?.width ?: 0) / 2f
+  private var halfBitmapHeight = (bitmap?.height ?: 0) / 2f
+  private var translationX = 0f
+  private var translationY = 0f
 
   private var surfaceWidth = 0
   private var surfaceHeight = 0
@@ -64,40 +66,30 @@ internal class BitmapWidgetRenderer(
       -1f, 1f, 0f, 1f
     )
 
-    Matrix.translateM(
-      translateMatrix,
-      0,
-      leftX(),
-      topY(),
-      0f
-    )
-
     updateVertexBuffer()
-
-    updateMatrix = true
-    needRender = true
+    setTranslation(translationX, translationY)
   }
 
   private fun updateVertexBuffer() {
     // in pixels, (-bitmapWidth / 2, -bitmapHeight/2) - (bitmapWidth / 2, bitmapHeight/2)
     vertexPositionBuffer.put(
-      -bitmapWidth / 2f, -bitmapHeight / 2f,
-      -bitmapWidth / 2f, bitmapHeight / 2f,
-      bitmapWidth / 2f, -bitmapHeight / 2f,
-      bitmapWidth / 2f, bitmapHeight / 2f,
+      -halfBitmapWidth, -halfBitmapHeight,
+      -halfBitmapWidth, halfBitmapHeight,
+      halfBitmapWidth, -halfBitmapHeight,
+      halfBitmapWidth, halfBitmapHeight
     )
   }
 
   private fun topY() = when (position.vertical) {
-    WidgetPosition.Vertical.BOTTOM -> surfaceHeight.toFloat() - bitmapHeight.toFloat() / 2f - marginY
-    WidgetPosition.Vertical.CENTER -> surfaceHeight.toFloat() / 2 - bitmapHeight.toFloat() / 2f + marginY
-    WidgetPosition.Vertical.TOP -> marginY + bitmapHeight.toFloat() / 2f
+    WidgetPosition.Vertical.TOP -> marginY + halfBitmapHeight
+    WidgetPosition.Vertical.CENTER -> surfaceHeight.toFloat() / 2 + marginY
+    WidgetPosition.Vertical.BOTTOM -> surfaceHeight.toFloat() - (halfBitmapHeight + marginY)
   }
 
   private fun leftX() = when (position.horizontal) {
-    WidgetPosition.Horizontal.LEFT -> marginX + bitmapWidth.toFloat() / 2f
-    WidgetPosition.Horizontal.CENTER -> surfaceWidth.toFloat() / 2 - bitmapWidth.toFloat() / 2f + marginX
-    WidgetPosition.Horizontal.RIGHT -> surfaceWidth.toFloat() - bitmapWidth.toFloat() / 2f - marginX
+    WidgetPosition.Horizontal.LEFT -> marginX + halfBitmapWidth
+    WidgetPosition.Horizontal.CENTER -> surfaceWidth.toFloat() / 2 + marginX
+    WidgetPosition.Horizontal.RIGHT -> surfaceWidth.toFloat() - (halfBitmapWidth + marginX)
   }
 
   override fun prepare() {
@@ -260,8 +252,9 @@ internal class BitmapWidgetRenderer(
 
   fun updateBitmap(bitmap: Bitmap) {
     this.bitmap = bitmap
-    this.bitmapWidth = bitmap.width
-    this.bitmapHeight = bitmap.height
+    this.halfBitmapWidth = bitmap.width / 2f
+    this.halfBitmapHeight = bitmap.height / 2f
+    setTranslation(this.translationX, this.translationY)
     updateVertexBuffer()
     updateMatrix = true
     needRender = true
@@ -275,6 +268,8 @@ internal class BitmapWidgetRenderer(
   }
 
   override fun setTranslation(translationX: Float, translationY: Float) {
+    this.translationX = translationX
+    this.translationY = translationY
     Matrix.setIdentityM(translateMatrix, 0)
     Matrix.translateM(
       translateMatrix,
