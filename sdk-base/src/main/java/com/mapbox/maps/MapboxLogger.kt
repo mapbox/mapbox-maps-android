@@ -2,11 +2,11 @@
 
 package com.mapbox.maps
 
-import com.mapbox.common.MapboxCommonLogger.SDK_IDENTIFIER
-import com.mapbox.common.MapboxCommonLogger.internalLogD
-import com.mapbox.common.MapboxCommonLogger.internalLogE
-import com.mapbox.common.MapboxCommonLogger.internalLogI
-import com.mapbox.common.MapboxCommonLogger.internalLogW
+import com.mapbox.common.MapboxMapsAndroidLogger.SDK_IDENTIFIER
+import com.mapbox.common.MapboxMapsAndroidLogger.internalLogD
+import com.mapbox.common.MapboxMapsAndroidLogger.internalLogE
+import com.mapbox.common.MapboxMapsAndroidLogger.internalLogI
+import com.mapbox.common.MapboxMapsAndroidLogger.internalLogW
 
 /**
  * Log Android error entry in the following format: E/Mapbox: [[SDK_IDENTIFIER]\ [tag]] [message]
