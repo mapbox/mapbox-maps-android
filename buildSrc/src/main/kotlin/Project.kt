@@ -5,7 +5,7 @@ object AndroidVersions {
   object AndroidAuto {
     const val minSdkVersion = 23
     const val targetSdkVersion = 30
-    const val compileSdkVersion = 31
+    const val compileSdkVersion = 33
   }
   object Compose {
     const val minSdkVersion = 23
@@ -98,7 +98,7 @@ object Dependencies {
 
 object Versions {
   const val pluginAndroidGradle = "7.0.4"
-  const val pluginKotlin = "1.5.31"
+  const val pluginKotlin = "1.7.10"
   const val pluginLicense = "0.8.80"
   const val pluginDokka =  "1.5.31"
   const val pluginJacoco = "0.2"
