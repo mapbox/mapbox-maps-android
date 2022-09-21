@@ -8,9 +8,15 @@ import com.google.gson.Gson
 import com.mapbox.annotation.module.MapboxModule
 import com.mapbox.annotation.module.MapboxModuleType
 import com.mapbox.bindgen.Value
-import com.mapbox.common.*
 import com.mapbox.common.Event
+import com.mapbox.common.EventPriority
+import com.mapbox.common.EventsServerOptions
+import com.mapbox.common.EventsService
+import com.mapbox.common.EventsServiceInterface
+import com.mapbox.common.TelemetryService
 import com.mapbox.common.TelemetryUtils
+import com.mapbox.common.TurnstileEvent
+import com.mapbox.common.UserSKUIdentifier
 import com.mapbox.maps.logE
 import com.mapbox.maps.module.MapTelemetry
 import java.util.*
