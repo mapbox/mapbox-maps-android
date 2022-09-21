@@ -1903,4 +1903,44 @@ class ExpressionTest : BaseStyleTest() {
       layer.filter.toString()
     )
   }
+
+  /**
+   * Verify that symbol layers can be filtered using distance-from-center
+   */
+  @Test
+  @UiThreadTest
+  fun symbolLayerDistanceFromCenterFilterTest() {
+    val expression = lt {
+      distanceFromCenter()
+      literal(1.0)
+    }
+    val layer = symbolLayer("id", "source") {
+      filter(expression)
+    }
+    setupLayer(layer)
+    assertEquals(
+      "[<, [distance-from-center], 1.0]",
+      layer.filter.toString()
+    )
+  }
+
+  /**
+   * Verify that symbol layers can be filtered using pitch
+   */
+  @Test
+  @UiThreadTest
+  fun symbolLayerPitchFilterTest() {
+    val expression = lt {
+      pitch()
+      literal(20.0)
+    }
+    val layer = symbolLayer("id", "source") {
+      filter(expression)
+    }
+    setupLayer(layer)
+    assertEquals(
+      "[<, [pitch], 20.0]",
+      layer.filter.toString()
+    )
+  }
 }

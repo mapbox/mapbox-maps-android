@@ -422,6 +422,18 @@ class Expression : Value {
     }
 
     /**
+     * Returns the distance of a `symbol` instance from the center of the map. The distance is
+     * measured in pixels divided by the height of the map container. It measures 0 at the
+     * center, decreases towards the camera and increase away from the camera. For example, if the height
+     * of the map is 1000px, a value of -1 means 1000px away from the center towards
+     * the camera, and a value of 1 means a distance of 1000px away from the camera
+     * from the center. `["distance-from-center"]` may only be used in the `filter` expression for a `symbol` layer.
+     */
+    fun distanceFromCenter() {
+      this@ExpressionBuilder.arguments.add(Expression.distanceFromCenter())
+    }
+
+    /**
      * Returns the input string converted to lowercase. Follows the Unicode Default Case Conversion algorithm and the
      * locale-insensitive case mappings in the Unicode Character Database.
      */
@@ -720,6 +732,14 @@ class Expression : Value {
      */
     fun pi() {
       this@ExpressionBuilder.arguments.add(Expression.pi())
+    }
+
+    /**
+     * Returns the current pitch in degrees. `["pitch"]` may only be used in the `filter` expression for
+     * a `symbol` layer.
+     */
+    fun pitch() {
+      this@ExpressionBuilder.arguments.add(Expression.pitch())
     }
 
     /**
@@ -2300,6 +2320,17 @@ class Expression : Value {
     }
 
     /**
+     * Returns the distance of a `symbol` instance from the center of the map. The distance is
+     * measured in pixels divided by the height of the map container. It measures 0 at the
+     * center, decreases towards the camera and increase away from the camera. For example, if the height
+     * of the map is 1000px, a value of -1 means 1000px away from the center towards
+     * the camera, and a value of 1 means a distance of 1000px away from the camera
+     * from the center. `["distance-from-center"]` may only be used in the `filter` expression for a `symbol` layer.
+     */
+    @JvmStatic
+    fun distanceFromCenter() = ExpressionBuilder("distance-from-center").build()
+
+    /**
      * Returns the input string converted to lowercase. Follows the Unicode Default Case Conversion algorithm and the
      * locale-insensitive case mappings in the Unicode Character Database.
      */
@@ -2855,6 +2886,13 @@ class Expression : Value {
      */
     @JvmStatic
     fun pi() = ExpressionBuilder("pi").build()
+
+    /**
+     * Returns the current pitch in degrees. `["pitch"]` may only be used in the `filter` expression for
+     * a `symbol` layer.
+     */
+    @JvmStatic
+    fun pitch() = ExpressionBuilder("pitch").build()
 
     /**
      * Returns the feature properties object.  Note that in some cases, it may be more efficient

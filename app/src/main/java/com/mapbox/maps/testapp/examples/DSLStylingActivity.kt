@@ -6,8 +6,21 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.bindgen.Expected
 import com.mapbox.geojson.Point
-import com.mapbox.maps.*
-import com.mapbox.maps.extension.style.expressions.dsl.generated.*
+import com.mapbox.maps.MapView
+import com.mapbox.maps.MapboxMap
+import com.mapbox.maps.QueriedFeature
+import com.mapbox.maps.RenderedQueryGeometry
+import com.mapbox.maps.RenderedQueryOptions
+import com.mapbox.maps.ScreenBox
+import com.mapbox.maps.ScreenCoordinate
+import com.mapbox.maps.Style
+import com.mapbox.maps.extension.style.expressions.dsl.generated.concat
+import com.mapbox.maps.extension.style.expressions.dsl.generated.format
+import com.mapbox.maps.extension.style.expressions.dsl.generated.get
+import com.mapbox.maps.extension.style.expressions.dsl.generated.literal
+import com.mapbox.maps.extension.style.expressions.dsl.generated.rgb
+import com.mapbox.maps.extension.style.expressions.dsl.generated.subtract
+import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.all
 import com.mapbox.maps.extension.style.layers.generated.circleLayer
 import com.mapbox.maps.extension.style.layers.generated.rasterLayer
 import com.mapbox.maps.extension.style.layers.generated.symbolLayer
@@ -18,13 +31,12 @@ import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.plugin.gestures.OnMapClickListener
 import com.mapbox.maps.plugin.gestures.addOnMapClickListener
 import java.text.DateFormat.getDateTimeInstance
-import java.util.*
+import java.util.Date
 
 /**
  * Example showcasing usage of style extension.
  */
 class DSLStylingActivity : AppCompatActivity(), OnMapClickListener {
-
   private lateinit var mapboxMap: MapboxMap
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -92,12 +104,35 @@ class DSLStylingActivity : AppCompatActivity(), OnMapClickListener {
         layerId = "earthquakeText",
         sourceId = "earthquakes"
       ) {
+        // Only show the magnitude scale if the value is >4.0 and:
+        // - the map pitch is < 70º or
+        // - objects are close to the camera
         filter(
-          gt {
-            get {
-              literal("mag")
+          all {
+            gt {
+              get {
+                literal("mag")
+              }
+              literal(4.0)
             }
-            literal(5.0)
+            switchCase {
+              // 1st case: return true if pitch <70º
+              lt {
+                pitch()
+                literal(70.0)
+              }
+              literal(true)
+
+              // 2nd case: return true if close to camera
+              lte {
+                distanceFromCenter()
+                literal(-0.5)
+              }
+              literal(true)
+
+              // otherwise: return false
+              literal(false)
+            }
           }
         )
         textField(

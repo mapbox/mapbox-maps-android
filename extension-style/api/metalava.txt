@@ -191,6 +191,7 @@ package com.mapbox.maps.extension.style.expressions.dsl.generated {
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression cos(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression cos(double value);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression distance(com.mapbox.geojson.GeoJson geojson);
+    method public static com.mapbox.maps.extension.style.expressions.generated.Expression distanceFromCenter();
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression division(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression division(double first, double second);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression downcase(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
@@ -253,6 +254,7 @@ package com.mapbox.maps.extension.style.expressions.dsl.generated {
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression numberFormat(com.mapbox.maps.extension.style.expressions.generated.Expression input, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.NumberFormatBuilder,kotlin.Unit> block);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression objectExpression(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression pi();
+    method public static com.mapbox.maps.extension.style.expressions.generated.Expression pitch();
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression pow(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression pow(double first, double second);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression product(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
@@ -328,6 +330,7 @@ package com.mapbox.maps.extension.style.expressions.generated {
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression cos(double value);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression cubicBezier(com.mapbox.maps.extension.style.expressions.generated.Expression x1, com.mapbox.maps.extension.style.expressions.generated.Expression x2, com.mapbox.maps.extension.style.expressions.generated.Expression x3, com.mapbox.maps.extension.style.expressions.generated.Expression x4);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression distance(com.mapbox.geojson.GeoJson geojson);
+    method public static com.mapbox.maps.extension.style.expressions.generated.Expression distanceFromCenter();
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression division(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression division(double first, double second);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression downcase(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
@@ -395,6 +398,7 @@ package com.mapbox.maps.extension.style.expressions.generated {
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression numberFormat(double value, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.NumberFormatBuilder,kotlin.Unit> block);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression objectExpression(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression pi();
+    method public static com.mapbox.maps.extension.style.expressions.generated.Expression pitch();
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression pow(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression pow(double first, double second);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression product(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
@@ -502,6 +506,7 @@ package com.mapbox.maps.extension.style.expressions.generated {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression cubicBezier(com.mapbox.maps.extension.style.expressions.generated.Expression x1, com.mapbox.maps.extension.style.expressions.generated.Expression x2, com.mapbox.maps.extension.style.expressions.generated.Expression x3, com.mapbox.maps.extension.style.expressions.generated.Expression x4);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression cubicBezier(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression distance(com.mapbox.geojson.GeoJson geojson);
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression distanceFromCenter();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression division(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression division(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression division(double first, double second);
@@ -598,6 +603,7 @@ package com.mapbox.maps.extension.style.expressions.generated {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression objectExpression(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression objectExpression(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression pi();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression pitch();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression pow(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression pow(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression pow(double first, double second);
@@ -691,6 +697,7 @@ package com.mapbox.maps.extension.style.expressions.generated {
     method public final void cos(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public final void cos(double value);
     method public final void distance(com.mapbox.geojson.GeoJson geojson);
+    method public final void distanceFromCenter();
     method public final void division(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public final void division(double first, double second);
     method public final void downcase(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
@@ -754,6 +761,7 @@ package com.mapbox.maps.extension.style.expressions.generated {
     method public final void numberFormat(double value, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.NumberFormatBuilder,kotlin.Unit> block);
     method public final void objectExpression(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public final void pi();
+    method public final void pitch();
     method public final void pow(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public final void pow(double first, double second);
     method public final void product(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
