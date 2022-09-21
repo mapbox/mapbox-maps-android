@@ -1,16 +1,13 @@
 package com.mapbox.maps.module.telemetry
 
 import android.annotation.SuppressLint
-import android.os.Parcel
 import com.google.gson.annotations.SerializedName
-import com.mapbox.android.telemetry.Event
 
 /**
  * Base event class for telemetry events.
  */
 @SuppressLint("ParcelCreator")
-internal abstract class MapBaseEvent(phoneState: PhoneState) :
-  Event() {
+internal abstract class MapBaseEvent(phoneState: PhoneState) {
   @SerializedName("event")
   val event: String
 
@@ -23,10 +20,4 @@ internal abstract class MapBaseEvent(phoneState: PhoneState) :
   }
 
   abstract fun getEventName(): String
-
-  override fun describeContents(): Int {
-    return 0
-  }
-
-  override fun writeToParcel(dest: Parcel, flags: Int) {}
 }

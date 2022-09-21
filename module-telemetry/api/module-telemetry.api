@@ -1,6 +1,5 @@
 public final class com/mapbox/maps/module/telemetry/MapTelemetryImpl : com/mapbox/maps/module/MapTelemetry {
 	public fun <init> (Landroid/content/Context;Ljava/lang/String;)V
-	public fun <init> (Lcom/mapbox/android/telemetry/MapboxTelemetry;Landroid/content/Context;Ljava/lang/String;)V
 	public fun disableTelemetrySession ()V
 	public fun onAppUserTurnstileEvent ()V
 	public fun onPerformanceEvent (Landroid/os/Bundle;)V

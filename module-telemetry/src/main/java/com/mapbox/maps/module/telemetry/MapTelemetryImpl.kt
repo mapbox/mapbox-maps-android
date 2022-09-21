@@ -3,9 +3,21 @@ package com.mapbox.maps.module.telemetry
 import android.content.Context
 import android.os.Bundle
 import androidx.annotation.VisibleForTesting
-import com.mapbox.android.telemetry.*
+import androidx.annotation.VisibleForTesting.PRIVATE
+import com.google.gson.Gson
 import com.mapbox.annotation.module.MapboxModule
 import com.mapbox.annotation.module.MapboxModuleType
+import com.mapbox.bindgen.Value
+import com.mapbox.common.Event
+import com.mapbox.common.EventPriority
+import com.mapbox.common.EventsServerOptions
+import com.mapbox.common.EventsService
+import com.mapbox.common.EventsServiceInterface
+import com.mapbox.common.TelemetryService
+import com.mapbox.common.TelemetryUtils
+import com.mapbox.common.TurnstileEvent
+import com.mapbox.common.UserSKUIdentifier
+import com.mapbox.maps.logE
 import com.mapbox.maps.module.MapTelemetry
 import java.util.*
 
@@ -17,10 +29,12 @@ class MapTelemetryImpl : MapTelemetry {
 
   private val appContext: Context
   private val accessToken: String
-  private val telemetry: MapboxTelemetry
+  private val eventsService: EventsServiceInterface
+  // We need telemetryService for location and metrics events which will be sent automatically if telemetryService is initialized.
+  private val telemetryService: TelemetryService
 
   /**
-   * Creates a map telemetry instance using appplication context and access token
+   * Creates a map telemetry instance using application context and access token
    *
    * @param appContext the application context
    * @param accessToken the mapbox access token
@@ -28,39 +42,66 @@ class MapTelemetryImpl : MapTelemetry {
   constructor(appContext: Context, accessToken: String) {
     this.appContext = appContext
     this.accessToken = accessToken
-    this.telemetry = MapboxTelemetry(appContext, accessToken, BuildConfig.MAPBOX_EVENTS_USER_AGENT)
-    val telemetryState: TelemetryEnabler.State =
-      TelemetryEnabler.retrieveTelemetryStateFromPreferences()
-    if (TelemetryEnabler.State.ENABLED == telemetryState) {
-      telemetry.enable()
-    }
+
+    val eventsServiceOptions = EventsServerOptions(accessToken, BuildConfig.MAPBOX_EVENTS_USER_AGENT, null)
+    this.eventsService = EventsService.getOrCreate(eventsServiceOptions)
+    this.telemetryService = TelemetryService.getOrCreate(eventsServiceOptions)
   }
 
   /**
-   * Creates a map telemetry instance using telemetry, appplication context and access token
+   * Creates a map telemetry instance using telemetry, application context and access token
    *
-   * @param telemetry the mapbox telemetry
    * @param appContext the application context
    * @param accessToken the mapbox access token
+   * @param eventsService the mapbox EventsServiceInterface
+   * @param telemetryService the mapbox TelemetryService
    */
-  @VisibleForTesting
-  constructor(telemetry: MapboxTelemetry, appContext: Context, accessToken: String) {
+  @VisibleForTesting(otherwise = PRIVATE)
+  internal constructor(appContext: Context, accessToken: String, eventsService: EventsServiceInterface, telemetryService: TelemetryService) {
     this.appContext = appContext
     this.accessToken = accessToken
-    this.telemetry = telemetry
+    this.eventsService = eventsService
+    this.telemetryService = telemetryService
   }
 
   /**
    * Register the app user turnstile event
    */
   override fun onAppUserTurnstileEvent() {
-    val turnstileEvent = AppUserTurnstile(
-      BuildConfig.MAPBOX_SDK_IDENTIFIER,
-      BuildConfig.MAPBOX_SDK_VERSION
-    )
-    turnstileEvent.setSkuId("00") // id MAUS MAPS
-    telemetry.push(turnstileEvent)
-    telemetry.push(MapEventFactory.buildMapLoadEvent(PhoneState(appContext)))
+    eventsService.sendTurnstileEvent(
+      TurnstileEvent(
+        UserSKUIdentifier.MAPS_MAUS,
+        BuildConfig.MAPBOX_SDK_IDENTIFIER,
+        BuildConfig.MAPBOX_SDK_VERSION
+      )
+    ) { eventsServiceError ->
+      eventsServiceError?.let {
+        logE(TAG, "EventsServiceError: $it")
+      }
+    }
+
+    val mapLoadEvent = MapEventFactory.buildMapLoadEvent(PhoneState(appContext))
+    sendEvent(Gson().toJson(mapLoadEvent))
+  }
+
+  private fun sendEvent(event: String) {
+    val eventAttributes = Value.fromJson(event)
+    val mapEvent = eventAttributes.value?.let { Event(EventPriority.IMMEDIATE, it, null) }
+    if (mapEvent != null) {
+      eventsService.sendEvent(mapEvent) { eventsServiceError ->
+        eventsServiceError?.let {
+          logE(TAG, "EventsServiceError: $it")
+        }
+      }
+    }
+  }
+
+  private fun enableTelemetryCollection(enabled: Boolean) {
+    TelemetryUtils.setEventsCollectionState(enabled) { eventsServiceError ->
+      eventsServiceError?.let {
+        logE(TAG, "EventsServiceError: $it")
+      }
+    }
   }
 
   /**
@@ -69,39 +110,40 @@ class MapTelemetryImpl : MapTelemetry {
    * @param enabled true if enabled, false otherwise
    */
   override fun setUserTelemetryRequestState(enabled: Boolean) {
-    if (enabled) {
-      TelemetryEnabler.updateTelemetryState(TelemetryEnabler.State.ENABLED)
-      telemetry.enable()
-    } else {
-      telemetry.disable()
-      TelemetryEnabler.updateTelemetryState(TelemetryEnabler.State.DISABLED)
-    }
+    enableTelemetryCollection(enabled)
   }
 
   /**
    * Disables a started telemetry service for this session only.
    */
   override fun disableTelemetrySession() {
-    telemetry.disable()
+    enableTelemetryCollection(false)
   }
 
   /**
-   * Set the debug logging state of telemetry.
+   * Set the debug logging enabled states.
    *
-   * @param debugLoggingEnabled true to enable logging
+   * Note this method is deprecated, there will be no operations when it is called.
+   *
+   * @param debugLoggingEnabled whether to enable the debug logging for telemetry.
    */
+  @Deprecated("setDebugLoggingEnabled has been deprecated and will do no operations")
   override fun setDebugLoggingEnabled(debugLoggingEnabled: Boolean) {
-    telemetry.updateDebugLoggingEnabled(debugLoggingEnabled)
+    // no-ops
   }
 
   /**
-   * Set the telemetry rotation session id interval
+   * Set the telemetry rotation session id interval.
+   *
+   * Note this method is deprecated, there will be no operations when it is called.
    *
    * @param interval the selected session interval
    * @return true if rotation session id was updated
    */
+  @Deprecated("setSessionIdRotationInterval has been deprecated and will do no operations")
   override fun setSessionIdRotationInterval(interval: Int): Boolean {
-    return telemetry.updateSessionIdRotationInterval(SessionInterval(interval))
+    // no-ops
+    return false
   }
 
   /**
@@ -110,11 +152,17 @@ class MapTelemetryImpl : MapTelemetry {
    * @param data performance event data
    */
   override fun onPerformanceEvent(data: Bundle?) {
-    telemetry.push(
-      MapEventFactory.buildPerformanceEvent(
-        PhoneState(appContext),
-        UUID.randomUUID().toString(), data ?: Bundle()
-      )
+    val performanceEvent = MapEventFactory.buildPerformanceEvent(
+      PhoneState(appContext),
+      UUID.randomUUID().toString(), data ?: Bundle()
     )
+    sendEvent(Gson().toJson(performanceEvent))
+  }
+
+  /**
+   * Static variables and methods.
+   */
+  private companion object {
+    private const val TAG = "MapTelemetryImpl"
   }
 }

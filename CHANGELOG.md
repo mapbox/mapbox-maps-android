@@ -9,6 +9,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Vector tiles without symbols are not hold for fade-out animation so that less amount of vector tiles are managed at a time. ([1679](https://github.com/mapbox/mapbox-maps-android/pull/1679))
 * Add support to set location puck opacity. ([1659](https://github.com/mapbox/mapbox-maps-android/pull/1659))
 * Support `pitch` and `distanceFromCenter` filters in symbol layers. ([1662](https://github.com/mapbox/mapbox-maps-android/pull/1662))
+* Migrated telemetry APIs from [mobile-events-android](https://github.com/mapbox/mapbox-events-android) to common SDK implementation. ([1672](https://github.com/mapbox/mapbox-maps-android/pull/1672))
 
 ## Bug fixes 🐞
 * Fix scale bar truncated at high zoom levels near the poles. ([1620](https://github.com/mapbox/mapbox-maps-android/pull/1620))

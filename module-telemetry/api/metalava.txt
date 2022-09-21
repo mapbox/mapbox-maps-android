@@ -3,12 +3,11 @@ package com.mapbox.maps.module.telemetry {
 
   @com.mapbox.annotation.module.MapboxModule(type=com.mapbox.annotation.module.MapboxModuleType) public final class MapTelemetryImpl implements com.mapbox.maps.module.MapTelemetry {
     ctor public MapTelemetryImpl(android.content.Context appContext, String accessToken);
-    ctor @VisibleForTesting public MapTelemetryImpl(com.mapbox.android.telemetry.MapboxTelemetry telemetry, android.content.Context appContext, String accessToken);
     method public void disableTelemetrySession();
     method public void onAppUserTurnstileEvent();
     method public void onPerformanceEvent(android.os.Bundle? data);
-    method public void setDebugLoggingEnabled(boolean debugLoggingEnabled);
-    method public boolean setSessionIdRotationInterval(int interval);
+    method @Deprecated public void setDebugLoggingEnabled(boolean debugLoggingEnabled);
+    method @Deprecated public boolean setSessionIdRotationInterval(int interval);
     method public void setUserTelemetryRequestState(boolean enabled);
   }
 

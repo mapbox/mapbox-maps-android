@@ -40,7 +40,6 @@ object Dependencies {
   const val mapboxCoreCommon = "com.mapbox.common:common:${Versions.mapboxCommon}"
   const val mapboxOkHttp = "com.mapbox.common:okhttp:${Versions.mapboxCommon}"
   const val mapboxAndroidCore = "com.mapbox.mapboxsdk:mapbox-android-core:${Versions.mapboxAndroidCore}"
-  const val mapboxAndroidTelemetry = "com.mapbox.mapboxsdk:mapbox-android-telemetry:${Versions.mapboxAndroidTelemetry}"
   const val mapboxJavaTurf = "com.mapbox.mapboxsdk:mapbox-sdk-turf:${Versions.mapboxJavaServices}"
   const val mapboxGestures = "com.mapbox.mapboxsdk:mapbox-android-gestures:${Versions.mapboxGestures}"
   const val androidxAppCompat = "androidx.appcompat:appcompat:${Versions.androidxAppcompat}"
@@ -111,7 +110,6 @@ object Versions {
   const val mapboxGlNative = "10.9.0-beta.1"
   const val mapboxCommon = "23.1.0-beta.1"
   const val mapboxAndroidCore = "5.0.2"
-  const val mapboxAndroidTelemetry = "8.1.5"
   const val androidxCore = "1.7.0" // last version compatible with kotlin 1.5.31
   const val androidxFragmentTesting = "1.5.0"
   const val androidxAnnotation = "1.1.0"

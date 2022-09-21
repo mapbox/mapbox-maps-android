@@ -26,7 +26,6 @@ android {
 dependencies {
   implementation(project(":sdk-base"))
   implementation(Dependencies.mapboxBase)
-  implementation(Dependencies.mapboxAndroidTelemetry)
   compileOnly(Dependencies.mapboxAnnotations)
   kapt(Dependencies.mapboxAnnotationsProcessor)
   implementation(Dependencies.kotlin)
@@ -37,6 +36,7 @@ dependencies {
   androidTestImplementation(Dependencies.androidxTestRunner)
   androidTestImplementation(Dependencies.androidxJUnitTestRules)
   androidTestImplementation(Dependencies.androidxEspresso)
+  androidTestImplementation(Dependencies.androidxTestJUnit)
   detektPlugins(Dependencies.detektFormatting)
 }
 

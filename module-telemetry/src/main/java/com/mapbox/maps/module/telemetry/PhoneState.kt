@@ -9,7 +9,7 @@ import android.util.DisplayMetrics
 import android.view.WindowManager
 import androidx.annotation.VisibleForTesting
 import com.google.gson.annotations.SerializedName
-import com.mapbox.android.telemetry.TelemetryUtils
+import com.mapbox.common.TelemetrySystemUtils
 
 /**
  * Class that holds kinds of states of the current phone.
@@ -49,10 +49,10 @@ internal class PhoneState {
   }
 
   constructor(context: Context) {
-    created = TelemetryUtils.obtainCurrentDate()
-    batteryLevel = TelemetryUtils.obtainBatteryLevel(context)
-    isPluggedIn = TelemetryUtils.isPluggedIn(context)
-    cellularNetworkType = TelemetryUtils.obtainCellularNetworkType(context)
+    created = TelemetrySystemUtils.obtainCurrentDate()
+    batteryLevel = TelemetrySystemUtils.obtainBatteryLevel(context)
+    isPluggedIn = TelemetrySystemUtils.isPluggedIn(context)
+    cellularNetworkType = TelemetrySystemUtils.obtainCellularNetworkType(context)
     orientation =
       Orientation.getOrientation(
         context.resources.configuration.orientation
