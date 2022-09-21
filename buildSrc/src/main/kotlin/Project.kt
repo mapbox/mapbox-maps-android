@@ -39,7 +39,7 @@ object Dependencies {
   const val mapboxGlNative = "com.mapbox.maps:android-core:${Versions.mapboxGlNative}"
   const val mapboxCoreCommon = "com.mapbox.common:common:${Versions.mapboxCommon}"
   const val mapboxOkHttp = "com.mapbox.common:okhttp:${Versions.mapboxCommon}"
-//  const val mapboxAndroidCore = "com.mapbox.mapboxsdk:mapbox-android-core:${Versions.mapboxAndroidCore}"
+  const val mapboxAndroidCore = "com.mapbox.mapboxsdk:mapbox-android-core:${Versions.mapboxAndroidCore}"
   const val mapboxJavaTurf = "com.mapbox.mapboxsdk:mapbox-sdk-turf:${Versions.mapboxJavaServices}"
   const val mapboxGestures = "com.mapbox.mapboxsdk:mapbox-android-gestures:${Versions.mapboxGestures}"
   const val androidxAppCompat = "androidx.appcompat:appcompat:${Versions.androidxAppcompat}"
