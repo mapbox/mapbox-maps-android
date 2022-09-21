@@ -45,12 +45,7 @@ class MapTelemetryImpl : MapTelemetry {
 
     val eventsServiceOptions = EventsServerOptions(accessToken, BuildConfig.MAPBOX_EVENTS_USER_AGENT, null)
     this.eventsService = EventsService.getOrCreate(eventsServiceOptions)
-
     this.telemetryService = TelemetryService.getOrCreate(eventsServiceOptions)
-
-    if (TelemetryUtils.getEventsCollectionState()) {
-      enableTelemetryCollection(true)
-    }
   }
 
   /**

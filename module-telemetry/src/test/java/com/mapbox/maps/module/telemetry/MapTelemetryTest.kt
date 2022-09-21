@@ -97,27 +97,12 @@ class MapTelemetryTest {
   }
 
   @Test
-  fun testConstructorWithTelemetryEnabled() {
-    every { TelemetryUtils.getEventsCollectionState() } returns true
+  fun testConstructorInitialisation() {
     telemetry = MapTelemetryImpl(context, "sk.foobar")
     // validate the event service is initialised
     verify { EventsService.getOrCreate(any()) }
     // validate the telemetry service is initialised
     verify { TelemetryService.getOrCreate(any()) }
-
-    verify { TelemetryUtils.setEventsCollectionState(true, any()) }
-  }
-
-  @Test
-  fun testConstructorWithTelemetryDisabled() {
-    every { TelemetryUtils.getEventsCollectionState() } returns false
-    telemetry = MapTelemetryImpl(context, "sk.foobar")
-    // validate the event service is initialised
-    verify { EventsService.getOrCreate(any()) }
-    // validate the telemetry service is initialised
-    verify { TelemetryService.getOrCreate(any()) }
-
-    verify(exactly = 0) { TelemetryUtils.setEventsCollectionState(any(), any()) }
   }
 
   @Test
