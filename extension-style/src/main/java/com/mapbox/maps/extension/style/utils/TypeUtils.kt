@@ -44,6 +44,7 @@ internal object TypeUtils {
         Value(value)
       }
       is Double -> {
+        require(!value.isNaN()) { "Value can not be Double.NaN" }
         Value(value)
       }
       is Float -> {

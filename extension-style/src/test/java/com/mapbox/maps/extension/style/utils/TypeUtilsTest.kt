@@ -58,6 +58,11 @@ class TypeUtilsTest {
     testwrapToValue(0.01)
   }
 
+  @Test(expected = IllegalArgumentException::class)
+  fun wrapToValue_Double_NaN() {
+    testwrapToValue(Double.NaN)
+  }
+
   @Test
   fun wrapToValue_Float() {
     val result = TypeUtils.wrapToValue(0.01f)

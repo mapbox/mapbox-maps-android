@@ -335,8 +335,12 @@ class NavigationSimulator(
   override fun onIndicatorPositionChanged(point: Point) {
     // use altitude to pass through interpolated progress data, reduce the overhead to
     // calculate the progress on each frame.
-    routeLayer.lineTrimOffset(listOf(0.0, point.altitude()))
-    casingLayer.lineTrimOffset(listOf(0.0, point.altitude()))
+    if (point.hasAltitude()) {
+      with(point.altitude()) {
+        routeLayer.lineTrimOffset(listOf(0.0, this))
+        casingLayer.lineTrimOffset(listOf(0.0, this))
+      }
+    }
   }
 
   fun onDestroy() {
