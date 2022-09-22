@@ -44,10 +44,11 @@ internal object TypeUtils {
         Value(value)
       }
       is Double -> {
-        require(!value.isNaN()) { "Value can not be Double.NaN" }
+        require(value.isFinite()) { "Value can not be Double.NaN, Double.POSITIVE_INFINITY or Double.NEGATIVE_INFINITY" }
         Value(value)
       }
       is Float -> {
+        require(value.isFinite()) { "Value can not be Float.NaN, Float.POSITIVE_INFINITY or Float.NEGATIVE_INFINITY" }
         Value(value.toDouble())
       }
       is Long -> {
