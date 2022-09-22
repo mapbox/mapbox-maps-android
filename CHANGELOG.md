@@ -13,6 +13,15 @@ Mapbox welcomes participation and contributions from everyone.
 * Preserve cached properties if applied to the layer before during the `Style#getLayer` call. ([1622](https://github.com/mapbox/mapbox-maps-android/pull/1622))
 * Fix a `NullPointerException` in `StandardGestureListener`, where `MotionEvent` should be nullable. ([1645] (https://github.com/mapbox/mapbox-maps-android/pull/1645))
 * Fix incorrect `MapView` dimensions after background orientation change. ([1658](https://github.com/mapbox/mapbox-maps-android/pull/1658))
+* Fix wrong `BitmapWidget` position when using `WidgetPosition.Horizontal.CENTER` property. ([1651](https://github.com/mapbox/mapbox-maps-android/pull/1651))
+* Fix pixel flickering between tiles on darker styles in globe view. ([1679](https://github.com/mapbox/mapbox-maps-android/pull/1679))
+* Fix incorrect shading of rounded corners in fill extrusions when ambient occlusion and/or shadow is enabled. ([1679](https://github.com/mapbox/mapbox-maps-android/pull/1679))
+* Fix shadows when the light radial coordinate is zero. ([1679](https://github.com/mapbox/mapbox-maps-android/pull/1679))
+* Location indicator layer is occluded by terrain to align rendering behavior with other location indicator rendering types. ([1679](https://github.com/mapbox/mapbox-maps-android/pull/1679))
+* Symbol flickering after runtime styling caused by using outdated symbol placement on updated symbol buckets. ([1679](https://github.com/mapbox/mapbox-maps-android/pull/1679))
+* Allow Light intensity and Light shadow intensity to accept expressions when using setStyleLight API call. ([1679](https://github.com/mapbox/mapbox-maps-android/pull/1679))
+* Fix a bug in cameraForGeometry when called on a map with padding set. ([1679](https://github.com/mapbox/mapbox-maps-android/pull/1679))
+* Throw an exception with the meaningful stacktrace when constructing `Value` from an infinite or NaN number. ([1681](https://github.com/mapbox/mapbox-maps-android/pull/1681))
 
 ## Dependencies
 * Update mapbox-gestures-android dependency to [v0.8.0](https://github.com/mapbox/mapbox-gestures-android/releases/tag/v0.8.0). ([1645] (https://github.com/mapbox/mapbox-maps-android/pull/1645))

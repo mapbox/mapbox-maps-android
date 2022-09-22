@@ -44,32 +44,34 @@ internal object TypeUtils {
         Value(value)
       }
       is Double -> {
+        require(value.isFinite()) { "Value can not be Double.NaN, Double.POSITIVE_INFINITY or Double.NEGATIVE_INFINITY" }
         Value(value)
       }
       is Float -> {
+        require(value.isFinite()) { "Value can not be Float.NaN, Float.POSITIVE_INFINITY or Float.NEGATIVE_INFINITY" }
         Value(value.toDouble())
       }
       is Long -> {
         Value(value)
       }
       is IntArray -> {
-        val valueArray = value.map { Value(it.toLong()) }
+        val valueArray = value.map { wrapToValue(it.toLong()) }
         Value(valueArray)
       }
       is BooleanArray -> {
-        val valueArray = value.map(::Value)
+        val valueArray = value.map(::wrapToValue)
         Value(valueArray)
       }
       is DoubleArray -> {
-        val valueArray = value.map(::Value)
+        val valueArray = value.map(::wrapToValue)
         Value(valueArray)
       }
       is FloatArray -> {
-        val valueArray = value.map { Value(it.toDouble()) }
+        val valueArray = value.map { wrapToValue(it.toDouble()) }
         Value(valueArray)
       }
       is LongArray -> {
-        val valueArray = value.map(::Value)
+        val valueArray = value.map(::wrapToValue)
         Value(valueArray)
       }
       is Array<*> -> {
