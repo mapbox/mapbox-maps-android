@@ -35,42 +35,42 @@ class TypeUtilsTest {
 
   @Test
   fun wrapToValue_Int() {
-    testwrapToValue(123)
+    testWrapToValue(123)
   }
 
   @Test
   fun wrapToValue_Long() {
-    testwrapToValue(123L)
+    testWrapToValue(123L)
   }
 
   @Test
   fun wrapToValue_String() {
-    testwrapToValue("abc")
+    testWrapToValue("abc")
   }
 
   @Test
   fun wrapToValue_Boolean() {
-    testwrapToValue(true)
+    testWrapToValue(true)
   }
 
   @Test
   fun wrapToValue_Double() {
-    testwrapToValue(0.01)
+    testWrapToValue(0.01)
   }
 
   @Test(expected = IllegalArgumentException::class)
   fun wrapToValue_Double_NaN() {
-    testwrapToValue(Double.NaN)
+    testWrapToValue(Double.NaN)
   }
 
   @Test(expected = IllegalArgumentException::class)
   fun wrapToValue_Double_POSITIVE_INFINITY() {
-    testwrapToValue(Double.POSITIVE_INFINITY)
+    testWrapToValue(Double.POSITIVE_INFINITY)
   }
 
   @Test(expected = IllegalArgumentException::class)
   fun wrapToValue_Double_NEGATIVE_INFINITY() {
-    testwrapToValue(Double.NEGATIVE_INFINITY)
+    testWrapToValue(Double.NEGATIVE_INFINITY)
   }
 
   @Test
@@ -81,20 +81,20 @@ class TypeUtilsTest {
 
   @Test(expected = IllegalArgumentException::class)
   fun wrapToValue_Float_NaN() {
-    testwrapToValue(Float.NaN)
+    testWrapToValue(Float.NaN)
   }
 
   @Test(expected = IllegalArgumentException::class)
   fun wrapToValue_Float_POSITIVE_INFINITY() {
-    testwrapToValue(Float.POSITIVE_INFINITY)
+    testWrapToValue(Float.POSITIVE_INFINITY)
   }
 
   @Test(expected = IllegalArgumentException::class)
   fun wrapToValue_Float_NEGATIVE_INFINITY() {
-    testwrapToValue(Float.NEGATIVE_INFINITY)
+    testWrapToValue(Float.NEGATIVE_INFINITY)
   }
 
-  private fun testwrapToValue(value: Any) {
+  private fun testWrapToValue(value: Any) {
     val result = TypeUtils.wrapToValue(value)
     assertEquals(value.toString(), result.toString())
   }
