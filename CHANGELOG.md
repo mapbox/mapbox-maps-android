@@ -26,6 +26,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Symbol flickering after runtime styling caused by using outdated symbol placement on updated symbol buckets. ([1679](https://github.com/mapbox/mapbox-maps-android/pull/1679))
 * Allow Light intensity and Light shadow intensity to accept expressions when using setStyleLight API call. ([1679](https://github.com/mapbox/mapbox-maps-android/pull/1679))
 * Fix a bug in cameraForGeometry when called on a map with padding set. ([1679](https://github.com/mapbox/mapbox-maps-android/pull/1679))
+* Throw an exception with the meaningful stacktrace when constructing `Value` from an infinite or NaN number. ([1681](https://github.com/mapbox/mapbox-maps-android/pull/1681))
 
 ## Dependencies
 * Update mapbox-gestures-android dependency to [v0.8.0](https://github.com/mapbox/mapbox-gestures-android/releases/tag/v0.8.0). ([1645] (https://github.com/mapbox/mapbox-maps-android/pull/1645))
