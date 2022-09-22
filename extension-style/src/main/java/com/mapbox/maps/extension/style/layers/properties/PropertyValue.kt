@@ -19,7 +19,11 @@ open class PropertyValue<T> internal constructor(val propertyName: String, val p
   /**
    * The [Value] representation of the property.
    */
-  val value: Value = TypeUtils.wrapToValue(propertyValue as Any)
+  val value: Value = try {
+    TypeUtils.wrapToValue(propertyValue as Any)
+  } catch (e: IllegalArgumentException) {
+    throw IllegalArgumentException("Incorrect property value for $propertyName: ${e.message}", e.cause)
+  }
 
   /**
    * Returns if this is a expression.

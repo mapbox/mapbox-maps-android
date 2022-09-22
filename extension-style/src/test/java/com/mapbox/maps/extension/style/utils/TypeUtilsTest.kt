@@ -35,27 +35,42 @@ class TypeUtilsTest {
 
   @Test
   fun wrapToValue_Int() {
-    testwrapToValue(123)
+    testWrapToValue(123)
   }
 
   @Test
   fun wrapToValue_Long() {
-    testwrapToValue(123L)
+    testWrapToValue(123L)
   }
 
   @Test
   fun wrapToValue_String() {
-    testwrapToValue("abc")
+    testWrapToValue("abc")
   }
 
   @Test
   fun wrapToValue_Boolean() {
-    testwrapToValue(true)
+    testWrapToValue(true)
   }
 
   @Test
   fun wrapToValue_Double() {
-    testwrapToValue(0.01)
+    testWrapToValue(0.01)
+  }
+
+  @Test(expected = IllegalArgumentException::class)
+  fun wrapToValue_Double_NaN() {
+    testWrapToValue(Double.NaN)
+  }
+
+  @Test(expected = IllegalArgumentException::class)
+  fun wrapToValue_Double_POSITIVE_INFINITY() {
+    testWrapToValue(Double.POSITIVE_INFINITY)
+  }
+
+  @Test(expected = IllegalArgumentException::class)
+  fun wrapToValue_Double_NEGATIVE_INFINITY() {
+    testWrapToValue(Double.NEGATIVE_INFINITY)
   }
 
   @Test
@@ -64,7 +79,22 @@ class TypeUtilsTest {
     assertEquals(0.01f.toDouble(), result.contents)
   }
 
-  private fun testwrapToValue(value: Any) {
+  @Test(expected = IllegalArgumentException::class)
+  fun wrapToValue_Float_NaN() {
+    testWrapToValue(Float.NaN)
+  }
+
+  @Test(expected = IllegalArgumentException::class)
+  fun wrapToValue_Float_POSITIVE_INFINITY() {
+    testWrapToValue(Float.POSITIVE_INFINITY)
+  }
+
+  @Test(expected = IllegalArgumentException::class)
+  fun wrapToValue_Float_NEGATIVE_INFINITY() {
+    testWrapToValue(Float.NEGATIVE_INFINITY)
+  }
+
+  private fun testWrapToValue(value: Any) {
     val result = TypeUtils.wrapToValue(value)
     assertEquals(value.toString(), result.toString())
   }
@@ -87,10 +117,40 @@ class TypeUtilsTest {
     assertEquals("[0.01, 0.02, 0.03]", result.toString())
   }
 
+  @Test(expected = IllegalArgumentException::class)
+  fun wrapToValue_DoubleArray_contains_NaN() {
+    TypeUtils.wrapToValue(doubleArrayOf(0.01, 0.02, Double.NaN))
+  }
+
+  @Test(expected = IllegalArgumentException::class)
+  fun wrapToValue_DoubleArray_contains_POSITIVE_INFINITY() {
+    TypeUtils.wrapToValue(doubleArrayOf(0.01, 0.02, Double.POSITIVE_INFINITY))
+  }
+
+  @Test(expected = IllegalArgumentException::class)
+  fun wrapToValue_DoubleArray_contains_NEGATIVE_INFINITY() {
+    TypeUtils.wrapToValue(doubleArrayOf(0.01, 0.02, Double.NEGATIVE_INFINITY))
+  }
+
   @Test
   fun wrapToValue_FloatArray() {
     val result = TypeUtils.wrapToValue(floatArrayOf(1.0f, 2.0f, 3.0f))
     assertEquals("[1.0, 2.0, 3.0]", result.toString())
+  }
+
+  @Test(expected = IllegalArgumentException::class)
+  fun wrapToValue_FloatArray_contains_NaN() {
+    TypeUtils.wrapToValue(floatArrayOf(0.01f, 0.02f, Float.NaN))
+  }
+
+  @Test(expected = IllegalArgumentException::class)
+  fun wrapToValue_FloatArray_contains_POSITIVE_INFINITY() {
+    TypeUtils.wrapToValue(floatArrayOf(0.01f, 0.02f, Float.POSITIVE_INFINITY))
+  }
+
+  @Test(expected = IllegalArgumentException::class)
+  fun wrapToValue_FloatArray_contains_NEGATIVE_INFINITY() {
+    TypeUtils.wrapToValue(floatArrayOf(0.01f, 0.02f, Float.NEGATIVE_INFINITY))
   }
 
   @Test
