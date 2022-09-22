@@ -10,9 +10,11 @@ public final class com/mapbox/maps/extension/androidauto/MapboxCarMap {
 	public final fun clearObservers ()V
 	public final fun getCarContext ()Landroidx/car/app/CarContext;
 	public final fun getCarMapSurface ()Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;
-	public final fun getEdgeInsets ()Lcom/mapbox/maps/EdgeInsets;
 	public final fun getMapInitOptions ()Lcom/mapbox/maps/MapInitOptions;
+	public final fun getStableArea ()Landroid/graphics/Rect;
+	public final fun getStableEdgeInsets ()Lcom/mapbox/maps/EdgeInsets;
 	public final fun getVisibleArea ()Landroid/graphics/Rect;
+	public final fun getVisibleEdgeInsets ()Lcom/mapbox/maps/EdgeInsets;
 	public final fun registerObserver (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapObserver;)Lcom/mapbox/maps/extension/androidauto/MapboxCarMap;
 	public final fun setGestureHandler (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapGestureHandler;)V
 	public final fun setup (Landroidx/car/app/CarContext;Lcom/mapbox/maps/MapInitOptions;)Lcom/mapbox/maps/extension/androidauto/MapboxCarMap;
@@ -35,15 +37,10 @@ public abstract interface class com/mapbox/maps/extension/androidauto/MapboxCarM
 }
 
 public abstract interface class com/mapbox/maps/extension/androidauto/MapboxCarMapObserver {
-	public abstract fun onAttached (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;)V
-	public abstract fun onDetached (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;)V
-	public abstract fun onVisibleAreaChanged (Landroid/graphics/Rect;Lcom/mapbox/maps/EdgeInsets;)V
-}
-
-public final class com/mapbox/maps/extension/androidauto/MapboxCarMapObserver$DefaultImpls {
-	public static fun onAttached (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapObserver;Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;)V
-	public static fun onDetached (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapObserver;Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;)V
-	public static fun onVisibleAreaChanged (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapObserver;Landroid/graphics/Rect;Lcom/mapbox/maps/EdgeInsets;)V
+	public fun onAttached (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;)V
+	public fun onDetached (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;)V
+	public fun onStableAreaChanged (Landroid/graphics/Rect;Lcom/mapbox/maps/EdgeInsets;)V
+	public fun onVisibleAreaChanged (Landroid/graphics/Rect;Lcom/mapbox/maps/EdgeInsets;)V
 }
 
 public final class com/mapbox/maps/extension/androidauto/MapboxCarMapScreenInstaller {

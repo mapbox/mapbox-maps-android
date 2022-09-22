@@ -31,7 +31,9 @@ class CarJavaInterfaceChecker {
   void getters(MapboxCarMap mapboxCarMap) {
     CarContext carContext = mapboxCarMap.getCarContext();
     Rect visibleArea = mapboxCarMap.getVisibleArea();
-    EdgeInsets edgeInsets = mapboxCarMap.getEdgeInsets();
+    EdgeInsets edgeInsets = mapboxCarMap.getVisibleEdgeInsets();
+    Rect stableArea = mapboxCarMap.getStableArea();
+    EdgeInsets stableEdgeInsets = mapboxCarMap.getStableEdgeInsets();
     MapboxCarMapSurface mapboxCarMapSurface = mapboxCarMap.getCarMapSurface();
   }
 
@@ -50,6 +52,11 @@ class CarJavaInterfaceChecker {
       }
 
       @Override
+      public void onStableAreaChanged(@NonNull Rect stableArea, @NonNull EdgeInsets edgeInsets) {
+
+      }
+
+      @Override
       public void onDetached(@NonNull MapboxCarMapSurface mapboxCarMapSurface) {
 
       }
@@ -62,9 +69,12 @@ class CarJavaInterfaceChecker {
   }
 
   private void observers(MapboxCarMap mapboxCarMap) {
+    MapboxCarMapObserver emptyObserver = new MapboxCarMapObserver() { };
     MapboxCarMapObserver observer = createObserver();
+    mapboxCarMap.registerObserver(emptyObserver);
     mapboxCarMap.registerObserver(observer);
     mapboxCarMap.unregisterObserver(observer);
+    mapboxCarMap.unregisterObserver(emptyObserver);
     mapboxCarMap.clearObservers();
   }
 

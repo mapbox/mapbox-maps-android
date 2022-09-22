@@ -96,13 +96,13 @@ class MapboxCarMapTest {
   }
 
   @Test
-  fun `edgeInsets is valid after onVisibleAreaChanged`() {
+  fun `visibleEdgeInsets is valid after onVisibleAreaChanged`() {
     val mapboxCarMap = MapboxCarMap().setup(carContext, mapInitOptions)
-    assertNull(mapboxCarMap.edgeInsets)
+    assertNull(mapboxCarMap.visibleEdgeInsets)
     surfaceCallbackSlot.captured.onSurfaceAvailable(mockk(relaxed = true))
     surfaceCallbackSlot.captured.onVisibleAreaChanged(mockk(relaxed = true))
 
-    assertNotNull(mapboxCarMap.edgeInsets)
+    assertNotNull(mapboxCarMap.visibleEdgeInsets)
   }
 
   @Test
@@ -135,6 +135,55 @@ class MapboxCarMapTest {
   }
 
   @Test
+  fun `visibleArea is valid after onStableAreaChanged`() {
+    val mapboxCarMap = MapboxCarMap().setup(carContext, mapInitOptions)
+    assertNull(mapboxCarMap.stableArea)
+    surfaceCallbackSlot.captured.onSurfaceAvailable(mockk(relaxed = true))
+    surfaceCallbackSlot.captured.onStableAreaChanged(mockk(relaxed = true))
+
+    assertNotNull(mapboxCarMap.stableArea)
+  }
+
+  @Test
+  fun `stableEdgeInsets is valid after onStableAreaChanged`() {
+    val mapboxCarMap = MapboxCarMap().setup(carContext, mapInitOptions)
+    assertNull(mapboxCarMap.stableEdgeInsets)
+    surfaceCallbackSlot.captured.onSurfaceAvailable(mockk(relaxed = true))
+    surfaceCallbackSlot.captured.onStableAreaChanged(mockk(relaxed = true))
+
+    assertNotNull(mapboxCarMap.stableEdgeInsets)
+  }
+
+  @Test
+  fun `registerObserver includes onAttached and onStableAreaChanged`() {
+    val mapboxCarMap = MapboxCarMap().setup(carContext, mapInitOptions)
+    val observer = mockk<MapboxCarMapObserver>(relaxed = true)
+    mapboxCarMap.registerObserver(observer)
+    surfaceCallbackSlot.captured.onSurfaceAvailable(mockk(relaxed = true))
+    surfaceCallbackSlot.captured.onStableAreaChanged(mockk(relaxed = true))
+
+    verifyOrder {
+      observer.onAttached(any())
+      observer.onStableAreaChanged(any(), any())
+    }
+  }
+
+  @Test
+  fun `registerObserver receives callbacks if registered after onStableAreaChanged`() {
+    val mapboxCarMap = MapboxCarMap().setup(carContext, mapInitOptions)
+    surfaceCallbackSlot.captured.onSurfaceAvailable(mockk(relaxed = true))
+    surfaceCallbackSlot.captured.onStableAreaChanged(mockk(relaxed = true))
+
+    val observer = mockk<MapboxCarMapObserver>(relaxed = true)
+    mapboxCarMap.registerObserver(observer)
+
+    verifyOrder {
+      observer.onAttached(any())
+      observer.onStableAreaChanged(any(), any())
+    }
+  }
+
+  @Test
   fun `unregisterObserver will prevent callbacks`() {
     val mapboxCarMap = MapboxCarMap().setup(carContext, mapInitOptions)
     val observer = mockk<MapboxCarMapObserver>(relaxed = true)
@@ -146,6 +195,7 @@ class MapboxCarMapTest {
 
     verify(exactly = 0) { observer.onAttached(any()) }
     verify(exactly = 0) { observer.onVisibleAreaChanged(any(), any()) }
+    verify(exactly = 0) { observer.onStableAreaChanged(any(), any()) }
     verify(exactly = 0) { observer.onDetached(any()) }
   }
 
@@ -161,6 +211,7 @@ class MapboxCarMapTest {
 
     verify(exactly = 0) { observer.onAttached(any()) }
     verify(exactly = 0) { observer.onVisibleAreaChanged(any(), any()) }
+    verify(exactly = 0) { observer.onStableAreaChanged(any(), any()) }
     verify(exactly = 0) { observer.onDetached(any()) }
   }
 
@@ -172,6 +223,7 @@ class MapboxCarMapTest {
 
     surfaceCallbackSlot.captured.onSurfaceAvailable(mockk(relaxed = true))
     surfaceCallbackSlot.captured.onVisibleAreaChanged(mockk(relaxed = true))
+    surfaceCallbackSlot.captured.onStableAreaChanged(mockk(relaxed = true))
     surfaceCallbackSlot.captured.onScroll(0.0f, 0.0f)
     surfaceCallbackSlot.captured.onFling(0.0f, 0.0f)
     surfaceCallbackSlot.captured.onScale(0.0f, 0.0f, 0.0f)
@@ -192,6 +244,7 @@ class MapboxCarMapTest {
     surfaceCallbackSlot.captured.onScale(0.0f, 0.0f, 0.0f)
     surfaceCallbackSlot.captured.onSurfaceAvailable(mockk(relaxed = true))
     surfaceCallbackSlot.captured.onVisibleAreaChanged(mockk(relaxed = true))
+    surfaceCallbackSlot.captured.onStableAreaChanged(mockk(relaxed = true))
 
     assertFalse(testGestures.capturedOnScroll)
     assertFalse(testGestures.capturedOnFling)
