@@ -4,14 +4,17 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 ## Features ✨ and improvements 🏁
+
+# 0.3.0 September 23, 2022
+## Features ✨ and improvements 🏁
 * Allow `MapboxCarMap` to be initialized before the `CarContext` is created. ([#1603](https://github.com/mapbox/mapbox-maps-android/pull/1603))
 * Add `MapboxCarMapSessionInstaller` and `MapboxCarMapScreenInstaller` for simpler setup. ([#1603](https://github.com/mapbox/mapbox-maps-android/pull/1603))
 * Add `Session.mapboxMapInstaller` and `Screen.mapboxMapInstaller` extension functions to create the installers. ([#1603](https://github.com/mapbox/mapbox-maps-android/pull/1603))
-* Change `MapboxCarMapGestureHandler` to an java interface so default methods can be added without breaking java backwards compatibility. ([#1670](https://github.com/mapbox/mapbox-maps-android/pull/1670))
-* Change `MapboxCarMapObserver` to an java interface so default methods can be added without breaking java backwards compatibility. ([#1670](https://github.com/mapbox/mapbox-maps-android/pull/1648))
+* Change `MapboxCarMapGestureHandler` to a java interface so default methods can be added without breaking java backwards compatibility. ([#1670](https://github.com/mapbox/mapbox-maps-android/pull/1670))
+* Change `MapboxCarMapObserver` to a java interface so default methods can be added without breaking java backwards compatibility. ([#1670](https://github.com/mapbox/mapbox-maps-android/pull/1648))
 * Change `MapboxCarMap#getEdgeInsets()` to `mapboxCarMap.getVisibleEdgeInsets()` with the addition of `mapboxCarMap.getStableEdgeInsets()`. ([#1670](https://github.com/mapbox/mapbox-maps-android/pull/1648))
 * Add `MapboxCarMapObserver#onStableAreaChanged` to support all the available functions from the SurfaceCallback. ([#1670](https://github.com/mapbox/mapbox-maps-android/pull/1648))
-* Add support for intercepting the `SurfaceCallback#onClick` when using `MapboxCarMap.prepareSurfaceCallback`. ([#1683](https://github.com/mapbox/mapbox-maps-android/pull/1683)])
+* Add support for intercepting the `SurfaceCallback#onClick` when using `MapboxCarMap.prepareSurfaceCallback`. ([#1683](https://github.com/mapbox/mapbox-maps-android/pull/1683))
 
 ## Bug fixes 🐞
 
