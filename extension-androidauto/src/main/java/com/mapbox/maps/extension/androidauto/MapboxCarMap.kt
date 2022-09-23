@@ -4,6 +4,7 @@ import android.graphics.Rect
 import androidx.car.app.AppManager
 import androidx.car.app.CarContext
 import androidx.car.app.Session
+import androidx.car.app.SurfaceCallback
 import androidx.lifecycle.Lifecycle
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapInitOptions
@@ -71,11 +72,29 @@ class MapboxCarMap {
     carContext: CarContext,
     mapInitOptions: MapInitOptions,
   ) = apply {
+    val surfaceCallback = prepareSurfaceCallback(carContext, mapInitOptions)
+    carContext.getCarService(AppManager::class.java).setSurfaceCallback(surfaceCallback)
+  }
+
+  /**
+   * Instead of using [setup], this function allows you to create your own [SurfaceCallback] and
+   * forward the calls to the returned [SurfaceCallback]. This makes it possible for you to adopt
+   * new api versions or intercept the calls and continue to use the [MapboxCarMap] as designed.
+   *
+   * This may be a temporary solution, while androidx.car.app:app:1.3.0 is rolling out
+   * [SurfaceCallback.onClick]. If there is no use for this function in the future, it will be
+   * removed.
+   */
+  @MapboxExperimental
+  fun prepareSurfaceCallback(
+    carContext: CarContext,
+    mapInitOptions: MapInitOptions
+  ): SurfaceCallback {
     check(mapInitOptions.context is CarContext) {
-      "You must setup the MapboxCarMap MapInitOptions with a CarContext"
+      "You must set up the MapboxCarMap MapInitOptions with a CarContext"
     }
     carMapSurfaceOwner.setup(carContext, mapInitOptions)
-    carContext.getCarService(AppManager::class.java).setSurfaceCallback(carMapSurfaceOwner)
+    return carMapSurfaceOwner
   }
 
   /**
@@ -123,14 +142,14 @@ class MapboxCarMap {
   /**
    * @param mapboxCarMapObserver the instance used in [registerObserver]
    */
-  fun unregisterObserver(mapboxCarMapObserver: MapboxCarMapObserver) {
+  fun unregisterObserver(mapboxCarMapObserver: MapboxCarMapObserver) = apply {
     carMapSurfaceOwner.unregisterObserver(mapboxCarMapObserver)
   }
 
   /**
    * Optional function to clear all observers registered through [registerObserver]
    */
-  fun clearObservers() {
+  fun clearObservers() = apply {
     carMapSurfaceOwner.clearObservers()
   }
 
@@ -140,7 +159,7 @@ class MapboxCarMap {
    * interface, or override the [DefaultMapboxCarMapGestureHandler], or set to null to disable
    * gesture handling.
    */
-  fun setGestureHandler(gestureHandler: MapboxCarMapGestureHandler?) {
+  fun setGestureHandler(gestureHandler: MapboxCarMapGestureHandler?) = apply {
     carMapSurfaceOwner.gestureHandler = gestureHandler
   }
 }

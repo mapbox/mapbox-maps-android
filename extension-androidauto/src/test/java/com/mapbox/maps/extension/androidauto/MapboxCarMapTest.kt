@@ -77,6 +77,26 @@ class MapboxCarMapTest {
   }
 
   @Test
+  fun `setup will call setSurfaceCallback`() {
+    MapboxCarMap().setup(carContext, mapInitOptions)
+
+    val appManager = carContext.getCarService(AppManager::class.java)
+    verify(exactly = 1) {
+      appManager.setSurfaceCallback(any())
+    }
+  }
+
+  @Test
+  fun `prepareSurfaceCallback does not call setSurfaceCallback`() {
+    MapboxCarMap().prepareSurfaceCallback(carContext, mapInitOptions)
+
+    val appManager = carContext.getCarService(AppManager::class.java)
+    verify(exactly = 0) {
+      appManager.setSurfaceCallback(any())
+    }
+  }
+
+  @Test
   fun `carMapSurface is valid after onSurfaceAvailable`() {
     val mapboxCarMap = MapboxCarMap().setup(carContext, mapInitOptions)
     assertNull(mapboxCarMap.carMapSurface)

@@ -14,6 +14,7 @@ import com.mapbox.maps.MapSurface;
 import com.mapbox.maps.MapboxExperimental;
 import com.mapbox.maps.ResourceOptions;
 import com.mapbox.maps.ScreenCoordinate;
+import com.mapbox.maps.extension.androidauto.CarMapSurfaceOwner;
 import com.mapbox.maps.extension.androidauto.MapboxCarMap;
 import com.mapbox.maps.extension.androidauto.DefaultMapboxCarMapGestureHandler;
 import com.mapbox.maps.extension.androidauto.MapboxCarMapEx;
@@ -24,8 +25,13 @@ import com.mapbox.maps.extension.androidauto.MapboxCarMapSurface;
 @MapboxExperimental
 class CarJavaInterfaceChecker {
 
-  void constructors(MapInitOptions mapInitOptions) {
-    MapboxCarMap mapboxCarMap = new MapboxCarMap();
+  void constructorMapboxCarMap(MapInitOptions mapInitOptions) {
+    new MapboxCarMap();
+  }
+
+  void constructorsCarMapSurfaceOwner(MapboxCarMapGestureHandler gestures) {
+    new CarMapSurfaceOwner();
+    new CarMapSurfaceOwner(gestures);
   }
 
   void getters(MapboxCarMap mapboxCarMap) {
