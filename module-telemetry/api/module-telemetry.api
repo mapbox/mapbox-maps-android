@@ -8,9 +8,3 @@ public final class com/mapbox/maps/module/telemetry/MapTelemetryImpl : com/mapbo
 	public fun setUserTelemetryRequestState (Z)V
 }
 
-public final class com/mapbox/module/Mapbox_MapTelemetryModuleConfiguration {
-	public static final field INSTANCE Lcom/mapbox/module/Mapbox_MapTelemetryModuleConfiguration;
-	public static final fun getEnableConfiguration ()Z
-	public static final fun getImplClass ()Ljava/lang/Class;
-}
-
