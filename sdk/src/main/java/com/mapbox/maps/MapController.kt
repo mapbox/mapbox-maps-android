@@ -1,11 +1,7 @@
 package com.mapbox.maps
 
-import android.content.Context
 import android.view.MotionEvent
 import androidx.annotation.VisibleForTesting
-import com.mapbox.annotation.module.MapboxModuleType
-import com.mapbox.common.module.provider.MapboxModuleProvider
-import com.mapbox.common.module.provider.ModuleProviderArgument
 import com.mapbox.maps.assets.AssetManagerProvider
 import com.mapbox.maps.extension.observable.model.StyleDataType
 import com.mapbox.maps.module.MapTelemetry
