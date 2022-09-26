@@ -2,6 +2,7 @@
 
 Mapbox welcomes participation and contributions from everyone.
 # main
+* Remove module setup driven by the mapbox-base modularization using annotations. The SDK depends directly on the MapTelemetryImpl versus the MapTelemetry interface module. ([#1693](https://github.com/mapbox/mapbox-maps-android/pull/1693))
 
 # 10.9.0-beta.1 September 22, 2022
 
@@ -91,7 +92,7 @@ Bump gl-native to v10.8.0-rc.1 and common to v23.0.0-rc.2. ([1623](https://githu
 ## Features ✨ and improvements 🏁
 * Introduce a callback to be invoked when the device compass sensors need to be re-calibrated. ([1513](https://github.com/mapbox/mapbox-maps-android/pull/1513))
 * Add support for `LocationComponentSettingsInterface.pulsingMaxRadius` to follow location's accuracy radius. ([1561](https://github.com/mapbox/mapbox-maps-android/pull/1561))
- 
+
 ## Bug fixes 🐞
 * Support altitude interpolation in location component, and pass through GPS altitude information from the DefaultLocationProvider. ([1478](https://github.com/mapbox/mapbox-maps-android/pull/1478))
 * Fix edge cases for renderer that could result in map not rendered. ([1538](https://github.com/mapbox/mapbox-maps-android/pull/1538))

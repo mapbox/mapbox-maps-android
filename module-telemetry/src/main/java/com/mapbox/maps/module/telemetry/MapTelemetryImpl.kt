@@ -24,7 +24,6 @@ import java.util.*
 /**
  * Concrete implementation of map telemetry.
  */
-@MapboxModule(MapboxModuleType.MapTelemetry)
 class MapTelemetryImpl : MapTelemetry {
 
   private val appContext: Context

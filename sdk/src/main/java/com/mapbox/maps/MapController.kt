@@ -9,6 +9,7 @@ import com.mapbox.common.module.provider.ModuleProviderArgument
 import com.mapbox.maps.assets.AssetManagerProvider
 import com.mapbox.maps.extension.observable.model.StyleDataType
 import com.mapbox.maps.module.MapTelemetry
+import com.mapbox.maps.module.telemetry.MapTelemetryImpl
 import com.mapbox.maps.plugin.InvalidViewPluginHostException
 import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.MapPluginRegistry
@@ -53,6 +54,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   internal val pluginRegistry: MapPluginRegistry
   private val onStyleDataLoadedListener: OnStyleDataLoadedListener
   private val onCameraChangedListener: OnCameraChangeListener
+
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal var lifecycleState: LifecycleState = LifecycleState.STATE_STOPPED
   private var style: Style? = null
@@ -72,10 +74,18 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     this.mapboxMap =
       MapProvider.getMapboxMap(nativeMap, nativeObserver, mapInitOptions.mapOptions.pixelRatio)
     this.mapboxMap.renderHandler = renderer.renderThread.renderHandlerThread.handler
+
+    // telemetry
+    val telemetry: MapTelemetry = MapTelemetryImpl(
+      mapInitOptions.context,
+      mapInitOptions.resourceOptions.accessToken
+    )
+    telemetry.onAppUserTurnstileEvent()
+
     this.pluginRegistry = MapProvider.getMapPluginRegistry(
       mapboxMap,
       this,
-      dispatchTelemetryTurnstileEvent()
+      telemetry
     )
     this.onCameraChangedListener = OnCameraChangeListener {
       pluginRegistry.onCameraMove(nativeMap.cameraState)
@@ -248,44 +258,6 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   }
 
   //
-  // Telemetry
-  //
-
-  private fun dispatchTelemetryTurnstileEvent(): MapTelemetry {
-    val telemetry: MapTelemetry =
-      MapboxModuleProvider.createModule(MapboxModuleType.MapTelemetry) {
-        paramsProvider(MapboxModuleType.MapTelemetry)
-      }
-    telemetry.onAppUserTurnstileEvent()
-    return telemetry
-  }
-
-  /**
-   * Provides parameters for Mapbox default modules, recursively if a module depends on other Mapbox modules.
-   */
-  private fun paramsProvider(type: MapboxModuleType): Array<ModuleProviderArgument> {
-    val context = mapInitOptions.context
-    return when (type) {
-      MapboxModuleType.CommonLibraryLoader -> arrayOf(
-        ModuleProviderArgument(
-          Context::class.java,
-          context.applicationContext
-        )
-      )
-      MapboxModuleType.CommonHttpClient -> arrayOf()
-      MapboxModuleType.CommonLogger -> arrayOf()
-      MapboxModuleType.MapTelemetry -> arrayOf(
-        ModuleProviderArgument(
-          Context::class.java,
-          context.applicationContext
-        ),
-        ModuleProviderArgument(String::class.java, mapInitOptions.resourceOptions.accessToken)
-      )
-      else -> throw IllegalArgumentException("${type.name} module is not supported by the Maps SDK")
-    }
-  }
-
-  //
   // Plugin API
   //
 
@@ -342,7 +314,8 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
             ViewportPluginImpl()
           }
           else -> {
-            plugin.instance ?: throw MapboxConfigurationException("Custom non Mapbox plugins must have non-null `instance` parameter!")
+            plugin.instance
+              ?: throw MapboxConfigurationException("Custom non Mapbox plugins must have non-null `instance` parameter!")
           }
         }
         createPlugin(mapView, Plugin.Custom(plugin.id, pluginObject))
