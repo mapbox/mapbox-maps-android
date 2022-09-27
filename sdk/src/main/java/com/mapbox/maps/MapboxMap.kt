@@ -1786,9 +1786,9 @@ class MapboxMap :
       ThreadChecker.throwIfNotMainThread()
     }
     if (!isMapValid) {
-      logE(
+      logW(
         TAG,
-        "Mapbox SDK memory leak detected! MapboxMap object (accessing $methodName) should not be stored and used after MapView is destroyed."
+        "MapboxMap object (accessing $methodName) should not be stored and used after MapView is destroyed."
       )
     }
   }
