@@ -54,18 +54,11 @@ class MapTelemetryImpl : MapTelemetry {
     val eventsTokenResId = getEventsResId(appContext, EVENTS_ACCESS_TOKEN_RESOURCE_NAME)
     val eventsToken =
       if (eventsTokenResId != 0) appContext.getString(eventsTokenResId) else accessToken
-    // val eventsUrlResId = getEventsResId(appContext, EVENTS_URL_RESOURCE_NAME)
-    // val eventsUrl = if (eventsUrlResId != 0) appContext.getString(eventsUrlResId) else null
 
-    val eventsServiceOptions = EventsServerOptions(eventsToken, BuildConfig.MAPBOX_EVENTS_USER_AGENT)
+    val eventsServiceOptions = EventsServerOptions(eventsToken, BuildConfig.MAPBOX_EVENTS_USER_AGENT, null)
     this.eventsService = EventsService.getOrCreate(eventsServiceOptions)
 
-    this.telemetryService = TelemetryService(eventsServiceOptions)
-
-    val coreTelemetryState = TelemetryUtils.getEventsCollectionState()
-    if (coreTelemetryState == true) {
-      enableTelemetryCollection(true)
-    }
+    this.telemetryService = TelemetryService.getOrCreate(eventsServiceOptions)
   }
 
   /**
@@ -121,7 +114,7 @@ class MapTelemetryImpl : MapTelemetry {
   // EventsService
   private fun sendEvent(event: String) {
     val eventAttributes = Value.fromJson(event)
-    val mapEvent = eventAttributes.value?.let { Event(EventPriority.IMMEDIATE, it) }
+    val mapEvent = eventAttributes.value?.let { Event(EventPriority.IMMEDIATE, it, null) }
     if (mapEvent != null) {
       eventsService.sendEvent(mapEvent, null)
     }
