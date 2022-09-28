@@ -3,7 +3,8 @@
 Mapbox welcomes participation and contributions from everyone.
 # main
 
-# 10.9.0-beta.2
+
+# 10.9.0-beta.2 September 28, 2022
 
 ## Bug fixes 🐞
 * Make telemetry a single instance. Avoids module recreation when coming from background. ([#1695](https://github.com/mapbox/mapbox-maps-android/pull/1695))
@@ -11,6 +12,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Bump common sdk to v23.1.0-beta.2. ([1696](https://github.com/mapbox/mapbox-maps-android/pull/1696))
+
 
 # 10.9.0-beta.1 September 22, 2022
 
