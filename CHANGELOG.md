@@ -3,39 +3,12 @@
 Mapbox welcomes participation and contributions from everyone.
 # main
 
-# 10.9.0-beta.2
-## Bug fixes 🐞
-* Make telemetry a single instance. Avoids module recreation when coming from background. ([#1695](https://github.com/mapbox/mapbox-maps-android/pull/1695))
-* Fix an issue where location engine doesn't produce bearing/accuracy/speed information with the location updates. ([1696](https://github.com/mapbox/mapbox-maps-android/pull/1696)) 
-
-## Dependencies
-* Bump common sdk to v23.1.0-beta.2. ([1696](https://github.com/mapbox/mapbox-maps-android/pull/1696))
-
-# 10.9.0-beta.1 September 22, 2022
-
-## Features ✨ and improvements 🏁
-* Deprecated gesture settings `increaseRotateThresholdWhenPinchingToZoom` property. ([1632](https://github.com/mapbox/mapbox-maps-android/pull/1632))
+# 10.8.1
 
 ## Bug fixes 🐞
-* Fix scale bar truncated at high zoom levels near the poles. ([1620](https://github.com/mapbox/mapbox-maps-android/pull/1620))
-* Fix broken view annotation positioning when marking them `View.INVISIBLE` and then making `View.VISIBLE`. ([1616](https://github.com/mapbox/mapbox-maps-android/pull/1616))
-* Snap puck to north if puckBearingEnabled is set to false. ([1635] (https://github.com/mapbox/mapbox-maps-android/pull/1635))
-* Preserve cached properties if applied to the layer before during the `Style#getLayer` call. ([1622](https://github.com/mapbox/mapbox-maps-android/pull/1622))
-* Fix a `NullPointerException` in `StandardGestureListener`, where `MotionEvent` should be nullable. ([1645] (https://github.com/mapbox/mapbox-maps-android/pull/1645))
 * Fix incorrect `MapView` dimensions after background orientation change. ([1658](https://github.com/mapbox/mapbox-maps-android/pull/1658))
-* Fix wrong `BitmapWidget` position when using `WidgetPosition.Horizontal.CENTER` property. ([1651](https://github.com/mapbox/mapbox-maps-android/pull/1651))
-* Fix pixel flickering between tiles on darker styles in globe view. ([1679](https://github.com/mapbox/mapbox-maps-android/pull/1679))
-* Fix incorrect shading of rounded corners in fill extrusions when ambient occlusion and/or shadow is enabled. ([1679](https://github.com/mapbox/mapbox-maps-android/pull/1679))
-* Fix shadows when the light radial coordinate is zero. ([1679](https://github.com/mapbox/mapbox-maps-android/pull/1679))
-* Location indicator layer is occluded by terrain to align rendering behavior with other location indicator rendering types. ([1679](https://github.com/mapbox/mapbox-maps-android/pull/1679))
-* Symbol flickering after runtime styling caused by using outdated symbol placement on updated symbol buckets. ([1679](https://github.com/mapbox/mapbox-maps-android/pull/1679))
-* Allow Light intensity and Light shadow intensity to accept expressions when using setStyleLight API call. ([1679](https://github.com/mapbox/mapbox-maps-android/pull/1679))
-* Fix a bug in cameraForGeometry when called on a map with padding set. ([1679](https://github.com/mapbox/mapbox-maps-android/pull/1679))
 * Throw an exception with the meaningful stacktrace when constructing `Value` from an infinite or NaN number. ([1681](https://github.com/mapbox/mapbox-maps-android/pull/1681))
-
-## Dependencies
-* Update mapbox-gestures-android dependency to [v0.8.0](https://github.com/mapbox/mapbox-gestures-android/releases/tag/v0.8.0). ([1645] (https://github.com/mapbox/mapbox-maps-android/pull/1645))
-
+* Make telemetry a single instance. Avoids module recreation when coming from background. ([#1695](https://github.com/mapbox/mapbox-maps-android/pull/1695))
 
 # 10.8.0 September 7, 2022
 ## Features ✨ and improvements 🏁
