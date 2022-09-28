@@ -19,7 +19,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Android Auto car library `androidx.car.app:app:1.1.+`
-* Supports any version of Mapbox Maps 10.+
+* Supports any version of [Mapbox Maps 10.+](https://github.com/mapbox/mapbox-maps-android/tree/main/extension-androidauto#compatibility-with-maps-sdk-v10)
 
 ## Bug fixes 🐞
 
