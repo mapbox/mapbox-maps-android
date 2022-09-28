@@ -59,14 +59,6 @@ internal object MapProvider {
     type: MapboxModuleType
   ): Array<ModuleProviderArgument> {
     return when (type) {
-      MapboxModuleType.CommonLibraryLoader -> arrayOf(
-        ModuleProviderArgument(
-          Context::class.java,
-          context.applicationContext
-        )
-      )
-      MapboxModuleType.CommonHttpClient -> arrayOf()
-      MapboxModuleType.CommonLogger -> arrayOf()
       MapboxModuleType.MapTelemetry -> arrayOf(
         ModuleProviderArgument(
           Context::class.java,
