@@ -10,7 +10,7 @@ import com.mapbox.maps.MapboxExperimental
  * @param position position of widget
  * @param marginX horizontal margin in pixels
  * @param marginY vertical margin in pixels
- * @param onRender callback when widget is first rendered, the Bitmap may be recycled if desired.
+ * @param onBitmapLoaded callback when widget is first rendered, the Bitmap may be recycled if desired.
  */
 @MapboxExperimental
 open class BitmapWidget @JvmOverloads constructor(
@@ -21,14 +21,14 @@ open class BitmapWidget @JvmOverloads constructor(
   ),
   marginX: Float = 0f,
   marginY: Float = 0f,
-  onRender: (Bitmap) -> Unit = {},
+  onBitmapLoaded: (Bitmap) -> Unit = {},
 ) : Widget() {
   override val renderer = BitmapWidgetRenderer(
     bitmap = bitmap,
     position = position,
     marginX = marginX,
     marginY = marginY,
-    onRender,
+    onBitmapLoaded,
   )
 
   /**

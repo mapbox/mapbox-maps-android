@@ -32,5 +32,5 @@ class CompassWidget(
   position = position,
   marginX = marginX,
   marginY = marginY,
-  onRender = { it.recycle() }
+  onBitmapLoaded = { it.recycle() }
 )
