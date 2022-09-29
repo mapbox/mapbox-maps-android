@@ -40,7 +40,6 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
     private set
 
   private val viewAnnotationManagerDelegate = lazy { ViewAnnotationManagerImpl(this) }
-
   /**
    * Get view annotation manager instance to add / update / remove view annotations
    * represented as Android views.
@@ -373,7 +372,6 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
      * This will not affect rendering on displays with higher frame rate if [MapView.setMaximumFps] was not called.
      */
     internal const val DEFAULT_FPS = 60
-
     /**
      * Static method to check if [MapView] could properly render on this device.
      * This method may take some time on slow devices.
