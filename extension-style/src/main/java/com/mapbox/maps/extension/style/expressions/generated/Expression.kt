@@ -4,13 +4,13 @@ package com.mapbox.maps.extension.style.expressions.generated
 
 import androidx.annotation.ColorInt
 import com.mapbox.bindgen.Value
-import com.mapbox.geojson.GeoJson
-import com.mapbox.geojson.Geometry
+import com.mapbox.geojson.*
 import com.mapbox.maps.MapboxStyleException
 import com.mapbox.maps.extension.style.expressions.types.FormatSection
 import com.mapbox.maps.extension.style.types.ExpressionDsl
 import com.mapbox.maps.extension.style.utils.ColorUtils
 import com.mapbox.maps.extension.style.utils.TypeUtils
+import com.mapbox.maps.extension.style.utils.TypeUtils.wrapToValue
 import com.mapbox.maps.extension.style.utils.take
 import com.mapbox.maps.extension.style.utils.unwrapFromLiteralArray
 import com.mapbox.maps.extension.style.utils.unwrapToExpression
@@ -73,7 +73,7 @@ class Expression : Value {
     this.literalValue = value
   }
 
-  internal constructor(value: List<Any>) : super(value.map { TypeUtils.wrapToValue(it) }) {
+  internal constructor(value: List<Any>) : super(value.map { wrapToValue(it) }) {
     this.literalValue = value
   }
 
@@ -419,6 +419,10 @@ class Expression : Value {
      */
     fun distance(geojson: GeoJson) {
       this@ExpressionBuilder.arguments.add(Expression.distance(geojson))
+    }
+
+    fun distanceFast(geojson: GeoJson) {
+      this@ExpressionBuilder.arguments.add(Expression.distanceFast(geojson))
     }
 
     /**
@@ -2301,6 +2305,139 @@ class Expression : Value {
     fun cos(block: ExpressionBuilder.() -> Unit): Expression =
       ExpressionBuilder("cos").apply(block).build()
 
+    fun BoundingBox.toValue(): Value {
+      return wrapToValue(
+        if (southwest().hasAltitude() && northeast().hasAltitude()) {
+          listOf(
+            west(),
+            south(),
+            southwest().altitude(),
+            east(),
+            north(),
+            northeast().altitude(),
+          )
+        } else {
+          listOf(
+            west(),
+            south(),
+            east(),
+            north(),
+          )
+        }
+      )
+    }
+
+    fun Point.toValue(): Value {
+      return wrapToValue(
+        hashMapOf(
+          "type" to this.type(),
+          "bbox" to (this.bbox()?.toValue() ?: nullValue()),
+          "coordinates" to wrapToValue(this.coordinates())
+        )
+      )
+    }
+
+    fun MultiPoint.toValue(): Value {
+      return wrapToValue(
+        hashMapOf(
+          "type" to this.type(),
+          "bbox" to (this.bbox()?.toValue() ?: nullValue()),
+          "coordinates" to this.coordinates().map { it.toValue() }
+        )
+      )
+    }
+
+    fun Polygon.toValue(): Value {
+      return wrapToValue(
+        hashMapOf(
+          "type" to this.type(),
+          "bbox" to (this.bbox()?.toValue() ?: nullValue()),
+          "coordinates" to Value(this.coordinates().map { Value(it.map { it.toValue() })}),
+        )
+      )
+    }
+
+    fun MultiPolygon.toValue(): Value {
+      return wrapToValue(
+        hashMapOf(
+          "type" to this.type(),
+          "bbox" to (this.bbox()?.toValue() ?: nullValue()),
+          "coordinates" to Value(this.coordinates().map { Value(it.map { Value(it.map { it.toValue() }) }) }),
+        )
+      )
+    }
+
+    fun LineString.toValue(): Value {
+      return wrapToValue(
+        hashMapOf(
+          "type" to this.type(),
+          "bbox" to (this.bbox()?.toValue() ?: nullValue()),
+          "coordinates" to Value(this.coordinates().map { it.toValue() }),
+        )
+      )
+    }
+
+    fun MultiLineString.toValue(): Value {
+      return wrapToValue(
+        hashMapOf(
+          "type" to this.type(),
+          "bbox" to (this.bbox()?.toValue() ?: nullValue()),
+          "coordinates" to Value(this.coordinates().map { Value(it.map { it.toValue() })}),
+        )
+      )
+    }
+
+    fun Geometry?.toValue(): Value {
+      return when (this) {
+        is Polygon -> toValue()
+        is MultiPolygon -> toValue()
+        is Point -> toValue()
+        is MultiPoint -> toValue()
+        is LineString -> toValue()
+        is MultiLineString -> toValue()
+        else -> nullValue()
+      }
+    }
+
+    fun Feature.toValue(): Value {
+      return wrapToValue(
+        hashMapOf(
+          "type" to this.type(),
+          "bbox" to (this.bbox()?.toValue() ?: nullValue()),
+          "id" to this.id(),
+          "geometry" to this.geometry().toValue(),
+          "properties" to (this.properties() ?: nullValue()), //TODO
+        )
+      )
+    }
+
+    fun FeatureCollection.toValue(): Value {
+      return wrapToValue(
+        hashMapOf(
+          "type" to this.type(),
+          "bbox" to (this.bbox()?.toValue() ?: nullValue()),
+          "features" to (this.features()?.map { it.toValue() }?.let(::Value) ?: nullValue())
+        )
+      )
+    }
+
+    fun GeoJson.toValue(): Value {
+      return when (this) {
+        is Feature -> this.toValue()
+        is FeatureCollection -> this.toValue()
+        is Point -> this.toValue()
+        is MultiPoint -> this.toValue()
+        is MultiLineString -> this.toValue()
+        is LineString -> this.toValue()
+        is Polygon -> this.toValue()
+        is MultiPolygon -> this.toValue()
+        else -> {
+          println("Cant map ${this.javaClass} geojson to value!")
+          nullValue()
+        }
+      }
+    }
+
     /**
      * Returns the shortest distance in meters between the evaluated feature and the input geometry. The input
      * value can be a valid GeoJSON of type `Point`, `MultiPoint`, `LineString`, `MultiLineString`, `Polygon`, `MultiPolygon`, `Feature`, or
@@ -2317,6 +2454,14 @@ class Expression : Value {
         return builder.build()
       }
       throw MapboxStyleException(expected.error)
+    }
+
+    @JvmStatic
+    fun distanceFast(geojson: GeoJson): Expression {
+      val builder = ExpressionBuilder("distance")
+      val value = geojson.toValue()
+      builder.addArgument(Expression(value.contents as HashMap<String, Value>))
+      return builder.build()
     }
 
     /**
@@ -2683,7 +2828,7 @@ class Expression : Value {
     internal fun literal(value: HashMap<String, Any>): Expression {
       val map = HashMap<String, Value>()
       for ((k, v) in value) {
-        map[k] = TypeUtils.wrapToValue(v)
+        map[k] = wrapToValue(v)
       }
       return ExpressionBuilder("literal").addArgument(Expression(map)).build()
     }
