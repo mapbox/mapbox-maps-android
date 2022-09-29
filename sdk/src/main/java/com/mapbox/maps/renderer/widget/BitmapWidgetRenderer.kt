@@ -14,6 +14,7 @@ internal class BitmapWidgetRenderer(
   private val position: WidgetPosition,
   private val marginX: Float,
   private val marginY: Float,
+  internal val onRendered: (Bitmap) -> Unit,
 ) : WidgetRenderer {
 
   private var halfBitmapWidth = (bitmap?.width ?: 0) / 2f
@@ -246,6 +247,7 @@ internal class BitmapWidgetRenderer(
       GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, it, 0)
       GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, 0)
 
+      onRendered(it)
       bitmap = null
     }
   }

@@ -198,6 +198,6 @@ internal class MapboxWidgetRenderer(
   fun removeWidget(widget: Widget) = widgets.remove(widget)
 
   private companion object {
-    const val TAG: String = "MapboxWidgetRenderer"
+    private const val TAG: String = "MapboxWidgetRenderer"
   }
 }

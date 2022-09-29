@@ -32,4 +32,5 @@ class LogoWidget constructor(
   position = position,
   marginX = marginX,
   marginY = marginY,
+  onRender = { it.recycle() }
 )

@@ -218,6 +218,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
 
   override fun addWidget(widget: Widget) {
     renderer.renderThread.addWidget(widget)
+    renderer.scheduleRepaint()
   }
 
   override fun removeWidget(widget: Widget) = renderer.renderThread.removeWidget(widget)
