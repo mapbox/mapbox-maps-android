@@ -15,7 +15,7 @@ parameters:
 
 workflows:
   version: 2
-  nightly:
+  weekly:
     triggers:
       - schedule:
           # at 7:00 on Monday
