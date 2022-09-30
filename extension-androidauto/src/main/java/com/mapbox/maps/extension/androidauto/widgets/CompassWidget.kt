@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.androidauto.R
 import com.mapbox.maps.renderer.widget.BitmapWidget
+import com.mapbox.maps.renderer.widget.BitmapWidgetListener
 import com.mapbox.maps.renderer.widget.WidgetPosition
 
 /**
@@ -32,5 +33,5 @@ class CompassWidget(
   position = position,
   marginX = marginX,
   marginY = marginY,
-  onBitmapLoaded = { it.recycle() }
+  listener = BitmapWidgetListener { it.recycle() }
 )
