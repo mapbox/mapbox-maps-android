@@ -534,6 +534,7 @@ package com.mapbox.maps.renderer {
 package com.mapbox.maps.renderer.widget {
 
   @com.mapbox.maps.MapboxExperimental public class BitmapWidget extends com.mapbox.maps.renderer.widget.Widget {
+    ctor public BitmapWidget(android.graphics.Bitmap bitmap, com.mapbox.maps.renderer.widget.WidgetPosition position = com.mapbox.maps.renderer.widget.WidgetPosition(com.mapbox.maps.renderer.widget.WidgetPosition.Vertical.TOP, com.mapbox.maps.renderer.widget.WidgetPosition.Horizontal.LEFT), float marginX = 0f, float marginY = 0f, kotlin.jvm.functions.Function1<? super android.graphics.Bitmap,kotlin.Unit> onBitmapLoaded = { it ->  });
     ctor public BitmapWidget(android.graphics.Bitmap bitmap, com.mapbox.maps.renderer.widget.WidgetPosition position = com.mapbox.maps.renderer.widget.WidgetPosition(com.mapbox.maps.renderer.widget.WidgetPosition.Vertical.TOP, com.mapbox.maps.renderer.widget.WidgetPosition.Horizontal.LEFT), float marginX = 0f, float marginY = 0f);
     ctor public BitmapWidget(android.graphics.Bitmap bitmap, com.mapbox.maps.renderer.widget.WidgetPosition position = com.mapbox.maps.renderer.widget.WidgetPosition(com.mapbox.maps.renderer.widget.WidgetPosition.Vertical.TOP, com.mapbox.maps.renderer.widget.WidgetPosition.Horizontal.LEFT), float marginX = 0f);
     ctor public BitmapWidget(android.graphics.Bitmap bitmap, com.mapbox.maps.renderer.widget.WidgetPosition position = com.mapbox.maps.renderer.widget.WidgetPosition(com.mapbox.maps.renderer.widget.WidgetPosition.Vertical.TOP, com.mapbox.maps.renderer.widget.WidgetPosition.Horizontal.LEFT));
