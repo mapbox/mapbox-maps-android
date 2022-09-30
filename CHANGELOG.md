@@ -3,8 +3,7 @@
 Mapbox welcomes participation and contributions from everyone.
 # main
 
-# 10.8.1
-
+# 10.8.1 September 30, 2022
 ## Bug fixes 🐞
 * Fix incorrect `MapView` dimensions after background orientation change. ([1658](https://github.com/mapbox/mapbox-maps-android/pull/1658))
 * Throw an exception with the meaningful stacktrace when constructing `Value` from an infinite or NaN number. ([1681](https://github.com/mapbox/mapbox-maps-android/pull/1681))
