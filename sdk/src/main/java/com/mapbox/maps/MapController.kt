@@ -221,10 +221,13 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     renderer.scheduleRepaint()
   }
 
-  override fun removeWidget(widget: Widget): Boolean =
-    renderer.renderThread.removeWidget(widget).also {
+  override fun removeWidget(widget: Widget): Boolean {
+    val wasRemoved = renderer.renderThread.removeWidget(widget)
+    if (wasRemoved) {
       renderer.scheduleRepaint()
     }
+    return wasRemoved
+  }
 
   override fun addRendererSetupErrorListener(rendererSetupErrorListener: RendererSetupErrorListener) {
     renderer.renderThread.renderHandlerThread.post {
