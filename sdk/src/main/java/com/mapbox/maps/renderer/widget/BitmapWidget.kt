@@ -28,7 +28,7 @@ open class BitmapWidget @JvmOverloads constructor(
     position = position,
     marginX = marginX,
     marginY = marginY,
-    onBitmapLoaded,
+    onBitmapLoaded = onBitmapLoaded,
   )
 
   /**

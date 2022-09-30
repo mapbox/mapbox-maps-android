@@ -14,7 +14,7 @@ internal class BitmapWidgetRenderer(
   private val position: WidgetPosition,
   private val marginX: Float,
   private val marginY: Float,
-  internal val onBitmapLoaded: (Bitmap) -> Unit,
+  private val onBitmapLoaded: (Bitmap) -> Unit,
 ) : WidgetRenderer {
 
   private var halfBitmapWidth = (bitmap?.width ?: 0) / 2f
