@@ -79,6 +79,7 @@ class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal c
   }
 
   private fun notifyLocationUpdates(location: Location) {
+    logE(TAG, "notifyLocationUpdates: $location")
     val locationPoint = if (location.hasAltitude()) {
       Point.fromLngLat(location.longitude, location.latitude, location.altitude)
     } else {
