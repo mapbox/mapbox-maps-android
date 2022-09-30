@@ -443,7 +443,7 @@ class MapControllerTest {
   }
 
   @OptIn(MapboxExperimental::class)
-  private fun createTestWidget() : Widget {
+  private fun createTestWidget(): Widget {
     val bitmap = mockk<Bitmap>()
     every { bitmap.width } returns 0
     every { bitmap.height } returns 0
