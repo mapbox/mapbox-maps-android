@@ -9,6 +9,8 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 
 * Fix scale bar text being cut ([1716](https://github.com/mapbox/mapbox-maps-android/pull/1716))
+## Bug fixes 🐞
+* Fix possible crash adding terrain using Style DSL after consecutive style changes ([1717](https://github.com/mapbox/mapbox-maps-android/pull/1717))
 
 # 10.8.1 September 30, 2022
 
