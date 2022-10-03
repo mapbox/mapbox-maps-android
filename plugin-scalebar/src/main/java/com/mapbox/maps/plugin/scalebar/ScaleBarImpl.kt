@@ -320,8 +320,8 @@ class ScaleBarImpl : ScaleBar, View {
     }
 
     // Check if it goes beyond the left margin of the view
-    if (x - strokePaint.strokeWidth / 2 < 0) {
-      safeX += strokePaint.strokeWidth / 2
+    if (safeX - (strokePaint.strokeWidth / 2) < 0) {
+      safeX += (strokePaint.strokeWidth / 2)
     }
 
     if (settings.showTextBorder) {
