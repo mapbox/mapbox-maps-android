@@ -1,11 +1,19 @@
 # Changelog for Mapbox Maps SDK v10 for Android
 
 Mapbox welcomes participation and contributions from everyone.
+
 # main
+
+# 10.9.0-rc.1
+
+## Bug fixes 🐞
+
+* Fix scale bar text being cut ([1716](https://github.com/mapbox/mapbox-maps-android/pull/1716))
 
 # 10.8.1 September 30, 2022
 
 ## Bug fixes 🐞
+
 * Fix incorrect `MapView` dimensions after background orientation change. ([1658](https://github.com/mapbox/mapbox-maps-android/pull/1658))
 * Throw an exception with the meaningful stacktrace when constructing `Value` from an infinite or NaN number. ([1681](https://github.com/mapbox/mapbox-maps-android/pull/1681))
 * Make telemetry a single instance. Avoids module recreation when coming from background. ([1695](https://github.com/mapbox/mapbox-maps-android/pull/1695))
