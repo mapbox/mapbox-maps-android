@@ -20,7 +20,7 @@ class ScaleBarActivity : AppCompatActivity() {
     mapView = findViewById(R.id.mapView)
     with(mapView.getMapboxMap()) {
       //mapView.attribution.position = Gravity.END or Gravity.BOTTOM
-      setCamera(CUT_RIGHT)
+      //setCamera(CUT_RIGHT)
       addOnCameraChangeListener {
         println("Camera\n\tzoom: ${cameraState.zoom}\n\tcenter: ${cameraState.center}")
       }
@@ -33,8 +33,8 @@ private val OVERLAPPED = cameraOptions {
   center(Point.fromLngLat(23.743161580668357, 61.48698499984082))
 }
 private val CUT_RIGHT = cameraOptions {
-  zoom(15.94939008251874)
-  center(Point.fromLngLat(23.7353680151742, 61.48971099434846))
+  zoom(14.940602577615023)
+  center(Point.fromLngLat(23.735379149896005, 61.489557808394814))
 }
 private val CUT_RIGHT_OVERLAPPED = cameraOptions {
   zoom(0.411417980720449)
