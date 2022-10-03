@@ -3,8 +3,8 @@ package com.mapbox.maps.testapp.examples
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Point
-import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapView
+import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.testapp.R
 
 /**
@@ -20,15 +20,23 @@ class ScaleBarActivity : AppCompatActivity() {
     mapView = findViewById(R.id.mapView)
     with(mapView.getMapboxMap()) {
       //mapView.attribution.position = Gravity.END or Gravity.BOTTOM
-      setCamera(
-        CameraOptions.Builder()
-          .center(Point.fromLngLat(23.735390592527207, 61.48924433618418))
-          .zoom(13.954639815373357)
-          .build()
-      )
+      setCamera(CUT_RIGHT)
       addOnCameraChangeListener {
         println("Camera\n\tzoom: ${cameraState.zoom}\n\tcenter: ${cameraState.center}")
       }
     }
   }
+}
+
+private val OVERLAPPED = cameraOptions {
+  zoom(12.70239810098114)
+  center(Point.fromLngLat(23.743161580668357, 61.48698499984082))
+}
+private val CUT_RIGHT = cameraOptions {
+  zoom(15.94939008251874)
+  center(Point.fromLngLat(23.7353680151742, 61.48971099434846))
+}
+private val CUT_RIGHT_OVERLAPPED = cameraOptions {
+  zoom(0.411417980720449)
+  center(Point.fromLngLat(25.14249889895251, 53.1200907283227))
 }
