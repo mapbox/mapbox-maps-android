@@ -3,6 +3,9 @@
 Mapbox welcomes participation and contributions from everyone.
 # main
 
+## Bug fixes 🐞
+* Fix scale bar text being cut ([1716](https://github.com/mapbox/mapbox-maps-android/pull/1716))
+
 # 10.8.1 September 30, 2022
 
 ## Bug fixes 🐞
