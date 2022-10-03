@@ -282,7 +282,7 @@ class ScaleBarImpl : ScaleBar, View {
           text = distanceText,
           x = (unitBarWidth * rectIndex),
           y = textSize,
-          lastUnitBarText = rectIndex == rectCount
+          lastUnitBarText = (rectIndex == rectCount)
         )
 
         if (rectIndex != rectCount) {
@@ -315,7 +315,7 @@ class ScaleBarImpl : ScaleBar, View {
       }
       if (textMaxRightPx > width) {
         // Move it away from right margin enough to fit
-        safeX -= textMaxRightPx - width
+        safeX -= (textMaxRightPx - width)
       }
     }
 
