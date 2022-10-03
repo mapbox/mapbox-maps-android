@@ -177,7 +177,7 @@ class StyleLoadTest {
     fun loadStyleWithTerrain(
       uri: String = Style.DARK,
       terrainSource: String = "TERRAIN_SOURCE",
-      demSourceUri : String= "mapbox://mapbox.mapbox-terrain-dem-v1"
+      demSourceUri: String = "mapbox://mapbox.mapbox-terrain-dem-v1"
     ) {
       mapboxMap.loadStyle(
         styleExtension = style(uri) {
