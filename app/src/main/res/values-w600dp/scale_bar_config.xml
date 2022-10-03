@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <item name="scaleBarRatio" format="float" type="fraction">0.2</item>
-    <dimen name="scaleBarMarginRight">60dp</dimen>
-    <dimen name="scaleBarMarginBottom">8dp</dimen>
-    <!-- "bottom | right" See plugin-scalebar/src/main/res/values/attrs.xml -->
-    <integer name="scaleBarGravity">0x55</integer>
-</resources>
