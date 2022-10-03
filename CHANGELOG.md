@@ -3,6 +3,16 @@
 Mapbox welcomes participation and contributions from everyone.
 # main
 
+# 10.8.1 September 30, 2022
+
+## Bug fixes 🐞
+* Fix incorrect `MapView` dimensions after background orientation change. ([1658](https://github.com/mapbox/mapbox-maps-android/pull/1658))
+* Throw an exception with the meaningful stacktrace when constructing `Value` from an infinite or NaN number. ([1681](https://github.com/mapbox/mapbox-maps-android/pull/1681))
+* Make telemetry a single instance. Avoids module recreation when coming from background. ([1695](https://github.com/mapbox/mapbox-maps-android/pull/1695))
+* Fix a potential style load error when non-ASCII characters are used in the version name, by escaping non US ASCII characters in user-agent header. ([1709](https://github.com/mapbox/mapbox-maps-android/pull/1709))
+
+## Dependencies
+* Bump common to v23.0.1. ([1709](https://github.com/mapbox/mapbox-maps-android/pull/1709))
 
 # 10.9.0-beta.2 September 28, 2022
 
