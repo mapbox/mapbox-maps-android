@@ -270,7 +270,6 @@ class ScaleBarImpl : ScaleBar, View {
             textPaint.textAlign = Paint.Align.LEFT
             strokePaint.textAlign = Paint.Align.LEFT
           }
-
           else -> {
             textPaint.textAlign = Paint.Align.CENTER
             strokePaint.textAlign = Paint.Align.CENTER
