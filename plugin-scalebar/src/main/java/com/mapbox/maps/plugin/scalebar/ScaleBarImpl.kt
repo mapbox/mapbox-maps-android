@@ -281,7 +281,8 @@ class ScaleBarImpl : ScaleBar, View {
           canvas = canvas,
           text = distanceText,
           x = (unitBarWidth * rectIndex),
-          y = textSize
+          y = textSize,
+          lastUnitBarText = rectIndex == rectCount
         )
 
         if (rectIndex != rectCount) {
@@ -300,24 +301,27 @@ class ScaleBarImpl : ScaleBar, View {
     }
   }
 
-  private fun drawText(canvas: Canvas, text: String, x: Float, y: Float) {
+  private fun drawText(canvas: Canvas, text: String, x: Float, y: Float, lastUnitBarText: Boolean) {
     var safeX = x
-    // Check if it goes beyond the right margin of the view
-    // TODO: Should we optimize it by only measuring if it's the right-most text in the scale bar? Assuming the rest will always fit?
-    val textWidthPx = textPaint.measureText(text)
-    val textMaxRightPx = x + strokePaint.strokeWidth + when (textPaint.textAlign) {
-      Paint.Align.LEFT -> textWidthPx
-      Paint.Align.CENTER -> textWidthPx / 2
-      Paint.Align.RIGHT, null -> 0F
-    }
-    if (textMaxRightPx > width) {
-      // Move it away from right margin enough to fit
-      safeX -= textMaxRightPx - width
+
+    // As an optimization only check if it goes beyond right view for the last unit bar text
+    if (lastUnitBarText) {
+      // Check if it goes beyond the right margin of the view
+      val textWidthPx = textPaint.measureText(text)
+      val textMaxRightPx = x + strokePaint.strokeWidth + when (textPaint.textAlign) {
+        Paint.Align.LEFT -> textWidthPx
+        Paint.Align.CENTER -> textWidthPx / 2
+        Paint.Align.RIGHT, null -> 0F
+      }
+      if (textMaxRightPx > width) {
+        // Move it away from right margin enough to fit
+        safeX -= textMaxRightPx - width
+      }
     }
 
     // Check if it goes beyond the left margin of the view
-    if (x - strokePaint.strokeWidth < 0) {
-      safeX += strokePaint.strokeWidth
+    if (x - strokePaint.strokeWidth / 2 < 0) {
+      safeX += strokePaint.strokeWidth / 2
     }
 
     if (settings.showTextBorder) {
