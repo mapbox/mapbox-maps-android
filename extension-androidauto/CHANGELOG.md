@@ -5,7 +5,8 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 ## Features ✨ and improvements 🏁
 
-# 0.3.0 September 23, 2022
+# 0.3.0 September 26, 2022
+
 ## Features ✨ and improvements 🏁
 * Allow `MapboxCarMap` to be initialized before the `CarContext` is created. ([#1603](https://github.com/mapbox/mapbox-maps-android/pull/1603))
 * Add `MapboxCarMapSessionInstaller` and `MapboxCarMapScreenInstaller` for simpler setup. ([#1603](https://github.com/mapbox/mapbox-maps-android/pull/1603))
@@ -16,7 +17,9 @@ Mapbox welcomes participation and contributions from everyone.
 * Add `MapboxCarMapObserver#onStableAreaChanged` to support all the available functions from the SurfaceCallback. ([#1670](https://github.com/mapbox/mapbox-maps-android/pull/1648))
 * Add support for intercepting the `SurfaceCallback#onClick` when using `MapboxCarMap.prepareSurfaceCallback`. ([#1683](https://github.com/mapbox/mapbox-maps-android/pull/1683))
 
-## Bug fixes 🐞
+## Dependencies
+* Android Auto car library `androidx.car.app:app:1.1.+`
+* Supports any version of [Mapbox Maps 10.5.+](https://github.com/mapbox/mapbox-maps-android/tree/main/extension-androidauto#compatibility-with-maps-sdk-v10)
 
 # 0.2.0 August 9, 2022
 
