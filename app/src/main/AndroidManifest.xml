@@ -1028,6 +1028,18 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
+            android:name=".examples.ScaleBarActivity"
+            android:description="@string/description_scale_bar"
+            android:exported="true"
+            android:label="@string/activity_scale_bar">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_config" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ExampleOverviewActivity" />
+        </activity>
+        <activity
             android:name=".examples.LargeGeojsonPerformanceActivity"
             android:description="@string/description_large_geojson"
             android:exported="true"

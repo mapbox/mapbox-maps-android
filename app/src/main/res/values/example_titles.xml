@@ -80,6 +80,7 @@
     <string name="activity_multiple_display">Multi display</string>
     <string name="activity_map_view_customization">Creating a map view</string>
     <string name="activity_ornaments">Ornaments</string>
+    <string name="activity_scale_bar">Scale Bar</string>
     <string name="activity_large_geojson">Geojson performance</string>
     <string name="activity_nine_patch">9-patch image</string>
     <string name="activity_feature_state">Feature state</string>
