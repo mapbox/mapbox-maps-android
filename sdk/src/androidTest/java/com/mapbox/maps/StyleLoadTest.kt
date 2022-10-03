@@ -4,7 +4,10 @@ import androidx.test.annotation.UiThreadTest
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
+import com.mapbox.maps.extension.style.expressions.dsl.generated.literal
+import com.mapbox.maps.extension.style.sources.generated.rasterDemSource
 import com.mapbox.maps.extension.style.style
+import com.mapbox.maps.extension.style.terrain.generated.terrain
 import junit.framework.TestCase.*
 import org.junit.*
 import org.junit.runner.RunWith
@@ -167,6 +170,53 @@ class StyleLoadTest {
     }
     countDownLatch.throwExceptionOnTimeoutMs()
     assertEquals(loadedStyles, 1)
+  }
+
+  @Test
+  fun testTerrainDoesNotCrashOnMultipleStyleLoad() {
+    fun loadStyleWithTerrain(
+      uri: String = Style.DARK,
+      terrainSource: String = "TERRAIN_SOURCE",
+      demSourceUri : String= "mapbox://mapbox.mapbox-terrain-dem-v1"
+    ) {
+      mapboxMap.loadStyle(
+        styleExtension = style(uri) {
+          // we need terrain for the drape-mipmap parameter to be effective to reduce flickering
+          +rasterDemSource(terrainSource) {
+            url(demSourceUri)
+            // 514 specifies padded DEM tile and provides better performance than 512 tiles.
+            tileSize(514)
+            maxzoom(3)
+          }
+          +terrain(terrainSource) {
+            exaggeration(literal(0))
+          }
+        }
+      )
+    }
+
+    countDownLatch = CountDownLatch(1)
+    rule.scenario.onActivity {
+      it.runOnUiThread {
+        for (i in 0..100) {
+          loadStyleWithTerrain()
+        }
+
+        var i = 0
+        val runnable = object : Runnable {
+          override fun run() {
+            if (i++ < 100) {
+              loadStyleWithTerrain()
+              mapView.postDelayed(this, 1)
+            }
+          }
+        }
+        mapView.post(runnable)
+
+        mapView.onStart()
+      }
+    }
+    countDownLatch.throwExceptionOnTimeoutMs()
   }
 
   @After

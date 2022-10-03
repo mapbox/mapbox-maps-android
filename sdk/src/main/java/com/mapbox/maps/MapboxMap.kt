@@ -326,7 +326,7 @@ class MapboxMap :
 
   private fun initializeStyleLoad(
     onStyleLoaded: Style.OnStyleLoaded? = null,
-    styleDataStyleLoadedListener: Style.OnStyleLoaded? = null,
+    styleDataStyleLoadedListener: Style.OnStyleLoaded,
     styleDataSpritesLoadedListener: Style.OnStyleLoaded? = null,
     styleDataSourcesLoadedListener: Style.OnStyleLoaded? = null,
     onMapLoadErrorListener: OnMapLoadErrorListener? = null,
