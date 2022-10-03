@@ -270,13 +270,19 @@ class ScaleBarImpl : ScaleBar, View {
             textPaint.textAlign = Paint.Align.LEFT
             strokePaint.textAlign = Paint.Align.LEFT
           }
+
           else -> {
             textPaint.textAlign = Paint.Align.CENTER
             strokePaint.textAlign = Paint.Align.CENTER
           }
         }
 
-        drawText(canvas, distanceText, (unitBarWidth * rectIndex), textSize)
+        drawText(
+          canvas = canvas,
+          text = distanceText,
+          x = (unitBarWidth * rectIndex),
+          y = textSize
+        )
 
         if (rectIndex != rectCount) {
           canvas.drawRect(
@@ -295,10 +301,24 @@ class ScaleBarImpl : ScaleBar, View {
   }
 
   private fun drawText(canvas: Canvas, text: String, x: Float, y: Float) {
+    var safeX = x
     if (settings.showTextBorder) {
-      canvas.drawText(text, x, y, strokePaint)
+      canvas.drawText(text, safeX, y, strokePaint)
     }
-    canvas.drawText(text, x, y, textPaint)
+
+    // Check if it goes beyond the right margin of the view
+    // TODO: Should we optimize it by only measuring if it's the right-most text in the scale bar? Assuming the rest will always fit?
+    val textWidthPx = textPaint.measureText(text)
+    val textMaxRightPx = x + when (textPaint.textAlign) {
+      Paint.Align.LEFT -> textWidthPx
+      Paint.Align.CENTER -> textWidthPx / 2
+      Paint.Align.RIGHT, null -> 0F
+    }
+    if (textMaxRightPx > width) {
+      // Move it away from right margin enough to fit
+      safeX -= textMaxRightPx - width
+    }
+    canvas.drawText(text, safeX, y, textPaint)
   }
 
   /**
