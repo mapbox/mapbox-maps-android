@@ -177,7 +177,8 @@ class StyleLoadTest {
     fun loadStyleWithTerrain(
       uri: String = Style.DARK,
       terrainSource: String = "TERRAIN_SOURCE",
-      demSourceUri: String = "mapbox://mapbox.mapbox-terrain-dem-v1"
+      demSourceUri: String = "mapbox://mapbox.mapbox-terrain-dem-v1",
+      counter: CountDownLatch
     ) {
       mapboxMap.loadStyle(
         styleExtension = style(uri) {
@@ -193,27 +194,28 @@ class StyleLoadTest {
           }
         }
       )
+      counter.countDown()
     }
 
-    countDownLatch = CountDownLatch(1)
     rule.scenario.onActivity {
       it.runOnUiThread {
+        mapView.onStart()
+
+        countDownLatch = CountDownLatch(200)
         for (i in 0..100) {
-          loadStyleWithTerrain()
+          loadStyleWithTerrain(counter = countDownLatch)
         }
 
         var i = 0
         val runnable = object : Runnable {
           override fun run() {
             if (i++ < 100) {
-              loadStyleWithTerrain()
+              loadStyleWithTerrain(counter = countDownLatch)
               mapView.postDelayed(this, 1)
             }
           }
         }
         mapView.post(runnable)
-
-        mapView.onStart()
       }
     }
     countDownLatch.throwExceptionOnTimeoutMs()
