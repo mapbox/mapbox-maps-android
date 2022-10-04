@@ -15,7 +15,7 @@
     app:mapbox_scaleBarMarginBottom="50dp"
     app:mapbox_scaleBarMarginRight="0dp"
     app:mapbox_scaleBarPrimaryColor="@android:color/black"
-    app:mapbox_scaleBarRatio="1.0"
+    app:mapbox_scaleBarRatio="0.8"
     app:mapbox_scaleBarSecondaryColor="@android:color/white"
     app:mapbox_scaleBarShowTextBorder="true"
     app:mapbox_scaleBarTextBarMargin="10dp"
