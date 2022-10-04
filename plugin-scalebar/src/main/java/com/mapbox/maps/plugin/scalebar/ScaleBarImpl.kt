@@ -363,7 +363,7 @@ class ScaleBarImpl : ScaleBar, View {
           break
         }
       }
-      val distance = pair.first.toFloat()
+      var distance = pair.first.toFloat()
       var rectCount = pair.second
       var unitDistance = distance / rectCount
       // When maxDistance is small (i.e. high zoom levels near the poles) then
@@ -371,22 +371,16 @@ class ScaleBarImpl : ScaleBar, View {
       // bar divisions (rectCount) until it fits
       while (unitDistance * rectCount > maxDistance && rectCount > 0) {
         rectCount--
+        distance = unitDistance * rectCount
       }
       // In case the unitDistance doesn't fit at all we fallback to maxDistance (rounded to 1
       // decimal) with 1 division
       if (rectCount == 0) {
         unitDistance = (maxDistance * 10).toInt() / 10.0F
         rectCount = 1
-        return ScaleBarUiConfiguration().apply {
-          this.rectCount = rectCount
-          this.unitDistance = unitDistance
-          unitBarWidth = this.unitDistance / distancePerPixel
-          labelTexts.add(0, getDistanceText(0F))
-          labelMarginsAndAnchor.add(0, calculateTextPositions(labelTexts[0], 0F))
-          labelTexts.add(1, getDistanceText(this.unitDistance))
-          labelMarginsAndAnchor.add(1, calculateTextPositions(labelTexts[1], this.unitDistance))
-        }
+        distance = unitDistance
       }
+
       with(ScaleBarUiConfiguration()) {
         var overlapDetected = true
         this.rectCount = rectCount
@@ -400,12 +394,22 @@ class ScaleBarImpl : ScaleBar, View {
             labelTexts.add(idx, getDistanceText(this.unitDistance * idx))
             labelMarginsAndAnchor.add(
               idx,
-              calculateTextPositions(labelTexts[idx], unitBarWidth * idx)
+              calculateTextPositions(
+                labelTexts[idx],
+                unitBarWidth * idx,
+                if (idx == 0) Paint.Align.LEFT else Paint.Align.CENTER
+              )
             )
           }
           overlapDetected = false
           for (idx in 0 until labelMarginsAndAnchor.size - 1) {
             if (labelMarginsAndAnchor[idx].second >= labelMarginsAndAnchor[idx + 1].first) {
+              if (this.rectCount == 1) {
+                // There is a collision and we can't reduce the count, let's hide the `0` label
+                labelTexts[0] = ""
+                return this
+              }
+              // TODO: Instead of decreasing the rect count should we find next one in the scale table?
               this.rectCount--
               overlapDetected = true
               break
@@ -422,6 +426,7 @@ class ScaleBarImpl : ScaleBar, View {
   private fun calculateTextPositions(
     text: String,
     x: Float,
+    alignment: Paint.Align,
   ): Triple<Float, Float, Float> {
     var safeX = x
 
@@ -429,18 +434,18 @@ class ScaleBarImpl : ScaleBar, View {
     // if (lastUnitBarText) {
     // Check if it goes beyond the right margin of the view
     val textWidthPx = textPaint.measureText(text)
-    val textRightPosPx = x + strokePaint.strokeWidth / 2F + when (textPaint.textAlign) {
+    val textRightPosPx = x + strokePaint.strokeWidth / 2F + when (alignment) {
       Paint.Align.LEFT -> textWidthPx
       Paint.Align.CENTER -> textWidthPx / 2
-      Paint.Align.RIGHT, null -> 0F
+      Paint.Align.RIGHT -> 0F
     }
 
     if (textRightPosPx > width) {
       // Move it away from right margin enough to fit
       safeX -= (textRightPosPx - width)
     }
-    var textLeftPosPx = safeX - strokePaint.strokeWidth / 2F - when (textPaint.textAlign) {
-      Paint.Align.LEFT, null -> 0F
+    var textLeftPosPx = safeX - strokePaint.strokeWidth / 2F - when (alignment) {
+      Paint.Align.LEFT -> 0F
       Paint.Align.CENTER -> textWidthPx / 2
       Paint.Align.RIGHT -> textWidthPx
     }
