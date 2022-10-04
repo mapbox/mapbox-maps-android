@@ -7,7 +7,7 @@ import com.mapbox.maps.MapboxExperimental
  * Listener for BitmapWidget events.
  */
 @MapboxExperimental
-fun interface BitmapWidgetListener {
+internal fun interface BitmapWidgetListener {
   /**
    * Invoked when the supplied Bitmap has been loaded.
    * The Bitmap object is no longer required by the BitmapWidget,

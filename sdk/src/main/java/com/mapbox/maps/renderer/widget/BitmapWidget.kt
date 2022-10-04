@@ -10,7 +10,6 @@ import com.mapbox.maps.MapboxExperimental
  * @param position position of widget
  * @param marginX horizontal margin in pixels
  * @param marginY vertical margin in pixels
- * @param listener optional listener for BitmapWidget events, defaults to null.
  */
 @MapboxExperimental
 open class BitmapWidget @JvmOverloads constructor(
@@ -20,15 +19,14 @@ open class BitmapWidget @JvmOverloads constructor(
     horizontal = WidgetPosition.Horizontal.LEFT,
   ),
   marginX: Float = 0f,
-  marginY: Float = 0f,
-  listener: BitmapWidgetListener? = null,
+  marginY: Float = 0f
 ) : Widget() {
   override val renderer = BitmapWidgetRenderer(
     bitmap = bitmap,
     position = position,
     marginX = marginX,
     marginY = marginY,
-    listener = listener,
+    listener = { onLoaded(it) },
   )
 
   /**
@@ -46,5 +44,11 @@ open class BitmapWidget @JvmOverloads constructor(
 
   override fun setRotation(angleDegrees: Float) {
     renderer.setRotation(angleDegrees = angleDegrees)
+  }
+
+  /**
+   * Called when the Bitmap has been loaded, and could now be recycled.
+   */
+  open fun onLoaded(bitmap: Bitmap) {
   }
 }
