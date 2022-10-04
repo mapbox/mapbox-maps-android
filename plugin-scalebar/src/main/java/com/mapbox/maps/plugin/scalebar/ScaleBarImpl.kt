@@ -291,9 +291,6 @@ class ScaleBarImpl : ScaleBar, View {
         // Drawing texts
         Trace.beginSection("ScaleBarImpl.onDraw.BarsAndText")
 
-
-
-
         for (rectIndex in 0..scaleBarUiConfiguration.rectCount) {
           barPaint.color = if (rectIndex % 2 == 0) primaryColor else secondaryColor
           val distanceText =
@@ -303,7 +300,6 @@ class ScaleBarImpl : ScaleBar, View {
               textPaint.textAlign = Paint.Align.LEFT
               strokePaint.textAlign = Paint.Align.LEFT
             }
-
             else -> {
               textPaint.textAlign = Paint.Align.CENTER
               strokePaint.textAlign = Paint.Align.CENTER
@@ -381,6 +377,15 @@ class ScaleBarImpl : ScaleBar, View {
       if (rectCount == 0) {
         unitDistance = (maxDistance * 10).toInt() / 10.0F
         rectCount = 1
+        return ScaleBarUiConfiguration().apply {
+          this.rectCount = rectCount
+          this.unitDistance = unitDistance
+          unitBarWidth = this.unitDistance / distancePerPixel
+          labelTexts.add(0, getDistanceText(0F))
+          labelMarginsAndAnchor.add(0, calculateTextPositions(labelTexts[0], 0F))
+          labelTexts.add(1, getDistanceText(this.unitDistance))
+          labelMarginsAndAnchor.add(1, calculateTextPositions(labelTexts[1], this.unitDistance))
+        }
       }
       with(ScaleBarUiConfiguration()) {
         var overlapDetected = true
