@@ -6,7 +6,9 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.os.Handler
 import android.os.Message
+import android.os.Trace
 import android.util.AttributeSet
+import android.util.Log
 import android.util.Pair
 import android.view.View
 import android.widget.FrameLayout
@@ -109,33 +111,39 @@ class ScaleBarImpl : ScaleBar, View {
    */
   override var settings: ScaleBarSettings = ScaleBarSettings()
     set(value) {
-      textPaint.color = value.textColor
-      textPaint.textSize = value.textSize
-      strokePaint.textSize = value.textSize
-      scaleTable = if (value.isMetricUnits) metricTable else imperialTable
-      unit = if (value.isMetricUnits) METER_UNIT else FEET_UNIT
-      strokePaint.strokeWidth = if (value.showTextBorder) value.textBorderWidth else 0F
-      enable = value.enabled
-      if (useContinuousRendering) {
-        reusableCanvas = null
-      } else {
-        if (!refreshHandler.hasMessages(MSG_RENDER_ON_DEMAND)) {
-          refreshHandler.sendEmptyMessageDelayed(MSG_RENDER_ON_DEMAND, value.refreshInterval)
-        }
-      }
+      Trace.beginSection("ScaleBarImpl.settings.set")
 
-      field = value
-      (layoutParams as FrameLayout.LayoutParams).apply {
-        gravity = value.position
-        setMargins(
-          value.marginLeft.toInt(),
-          value.marginTop.toInt(),
-          value.marginRight.toInt(),
-          value.marginBottom.toInt()
-        )
+      try {
+        textPaint.color = value.textColor
+        textPaint.textSize = value.textSize
+        strokePaint.textSize = value.textSize
+        scaleTable = if (value.isMetricUnits) metricTable else imperialTable
+        unit = if (value.isMetricUnits) METER_UNIT else FEET_UNIT
+        strokePaint.strokeWidth = if (value.showTextBorder) value.textBorderWidth else 0F
+        enable = value.enabled
+        if (useContinuousRendering) {
+          reusableCanvas = null
+        } else {
+          if (!refreshHandler.hasMessages(MSG_RENDER_ON_DEMAND)) {
+            refreshHandler.sendEmptyMessageDelayed(MSG_RENDER_ON_DEMAND, value.refreshInterval)
+          }
+        }
+
+        field = value
+        (layoutParams as FrameLayout.LayoutParams).apply {
+          gravity = value.position
+          setMargins(
+            value.marginLeft.toInt(),
+            value.marginTop.toInt(),
+            value.marginRight.toInt(),
+            value.marginBottom.toInt()
+          )
+        }
+        // Refresh mapViewWidth
+        mapViewWidth = mapViewWidth
+      } finally {
+        Trace.endSection() // "ScaleBarImpl.settings.set"
       }
-      // Refresh mapViewWidth
-      mapViewWidth = mapViewWidth
     }
 
   /**
@@ -143,15 +151,20 @@ class ScaleBarImpl : ScaleBar, View {
    */
   override var distancePerPixel = 0F
     set(value) {
+      Log.d("ScaleBarImpl", "distancePerPixel: field: $field, value: $value")
       if (field != value) {
+        Trace.beginSection("ScaleBarImpl.distancePerPixel.set")
         if (useContinuousRendering) {
           reusableCanvas = null
         } else {
           if (!refreshHandler.hasMessages(MSG_RENDER_ON_DEMAND)) {
+            Log.d("ScaleBarImpl", "sendEmptyMessageDelayed")
             refreshHandler.sendEmptyMessageDelayed(MSG_RENDER_ON_DEMAND, settings.refreshInterval)
           }
         }
+        // TODO: Check the value is always different than field for Imperial units due to this conversion
         field = if (settings.isMetricUnits) value else value * FEET_PER_METER
+        Trace.endSection() // "ScaleBarImpl.distancePerPixel.set")
       }
     }
 
@@ -213,90 +226,107 @@ class ScaleBarImpl : ScaleBar, View {
     }
   }
 
+  override fun invalidate() {
+    Trace.beginSection("ScaleBarImpl.invalidate")
+    super.invalidate()
+    Trace.endSection() // "ScaleBarImpl.invalidate"
+  }
+
   /**
    * Draw ScaleBar with current settings
    */
   override fun onDraw(canvas: Canvas) {
-    if (useContinuousRendering) {
-      if (!isScaleBarVisible) {
-        canvas.drawARGB(0, 0, 0, 0)
-        return
-      }
-      if (reusableCanvas != null) {
-        return
-      }
-    }
-    if (distancePerPixel <= 0 || mapViewWidth <= 0 || width <= 0) {
-      return
-    }
-    settings.run {
-      val maxDistance = mapViewWidth * distancePerPixel * ratio
-      if (maxDistance <= 0.1F) {
-        // There's no space to render the smallest distance. Don't render anything.
-        canvas.drawARGB(0, 0, 0, 0)
-        return
-      }
-      val (unitDistance, rectCount) = findSuitableScaleBarSegments(maxDistance)
+    Trace.beginSection("ScaleBarImpl.onDraw")
 
-      val unitBarWidth = (unitDistance / distancePerPixel)
-      // Drawing the surrounding borders
-      barPaint.style = Paint.Style.FILL_AND_STROKE
-      barPaint.color = secondaryColor
-      canvas.drawRect(
-        0f,
-        textBarMargin + textSize - (borderWidth * 2),
-        (unitBarWidth * rectCount) + (borderWidth * 2),
-        textBarMargin + textSize + height + (borderWidth * 2),
-        barPaint
-      )
-      barPaint.color = primaryColor
-      canvas.drawRect(
-        borderWidth,
-        textBarMargin + textSize - borderWidth,
-        (unitBarWidth * rectCount) + borderWidth,
-        textBarMargin + textSize + height + borderWidth,
-        barPaint
-      )
-
-      // Drawing the fill
-      barPaint.style = Paint.Style.FILL
-
-      // Drawing texts
-      for (rectIndex in 0..rectCount) {
-        barPaint.color = if (rectIndex % 2 == 0) primaryColor else secondaryColor
-        val distanceText = getDistanceText(unitDistance * rectIndex)
-        when (rectIndex) {
-          0 -> {
-            textPaint.textAlign = Paint.Align.LEFT
-            strokePaint.textAlign = Paint.Align.LEFT
-          }
-          else -> {
-            textPaint.textAlign = Paint.Align.CENTER
-            strokePaint.textAlign = Paint.Align.CENTER
-          }
+    try {
+      if (useContinuousRendering) {
+        if (!isScaleBarVisible) {
+          canvas.drawARGB(0, 0, 0, 0)
+          return
         }
+        if (reusableCanvas != null) {
+          return
+        }
+      }
+      if (distancePerPixel <= 0 || mapViewWidth <= 0 || width <= 0) {
+        return
+      }
+      settings.run {
+        val maxDistance = mapViewWidth * distancePerPixel * ratio
+        if (maxDistance <= 0.1F) {
+          // There's no space to render the smallest distance. Don't render anything.
+          canvas.drawARGB(0, 0, 0, 0)
+          return
+        }
+        val (unitDistance, rectCount) = findSuitableScaleBarSegments(maxDistance)
 
-        drawText(
-          canvas = canvas,
-          text = distanceText,
-          x = (unitBarWidth * rectIndex),
-          y = textSize,
-          lastUnitBarText = (rectIndex == rectCount)
+        Trace.beginSection("ScaleBarImpl.onDraw.Borders")
+        val unitBarWidth = (unitDistance / distancePerPixel)
+        // Drawing the surrounding borders
+        barPaint.style = Paint.Style.FILL_AND_STROKE
+        barPaint.color = secondaryColor
+        canvas.drawRect(
+          0f,
+          textBarMargin + textSize - (borderWidth * 2),
+          (unitBarWidth * rectCount) + (borderWidth * 2),
+          textBarMargin + textSize + height + (borderWidth * 2),
+          barPaint
         )
+        barPaint.color = primaryColor
+        canvas.drawRect(
+          borderWidth,
+          textBarMargin + textSize - borderWidth,
+          (unitBarWidth * rectCount) + borderWidth,
+          textBarMargin + textSize + height + borderWidth,
+          barPaint
+        )
+        Trace.endSection() // "ScaleBarImpl.onDraw.Borders"
 
-        if (rectIndex != rectCount) {
-          canvas.drawRect(
-            (borderWidth * 2) + (unitBarWidth * rectIndex),
-            textBarMargin + textSize,
-            unitBarWidth * (1 + rectIndex),
-            textBarMargin + textSize + height,
-            barPaint
+        // Drawing the fill
+        barPaint.style = Paint.Style.FILL
+
+        // Drawing texts
+        Trace.beginSection("ScaleBarImpl.onDraw.BarsAndText")
+        for (rectIndex in 0..rectCount) {
+          barPaint.color = if (rectIndex % 2 == 0) primaryColor else secondaryColor
+          val distanceText = getDistanceText(unitDistance * rectIndex)
+          when (rectIndex) {
+            0 -> {
+              textPaint.textAlign = Paint.Align.LEFT
+              strokePaint.textAlign = Paint.Align.LEFT
+            }
+
+            else -> {
+              textPaint.textAlign = Paint.Align.CENTER
+              strokePaint.textAlign = Paint.Align.CENTER
+            }
+          }
+
+          drawText(
+            canvas = canvas,
+            text = distanceText,
+            x = (unitBarWidth * rectIndex),
+            y = textSize,
+            lastUnitBarText = (rectIndex == rectCount)
           )
+
+          if (rectIndex != rectCount) {
+            canvas.drawRect(
+              (borderWidth * 2) + (unitBarWidth * rectIndex),
+              textBarMargin + textSize,
+              unitBarWidth * (1 + rectIndex),
+              textBarMargin + textSize + height,
+              barPaint
+            )
+          }
         }
+        Trace.endSection() // "ScaleBarImpl.onDraw.BarsAndText"
       }
-    }
-    if (useContinuousRendering) {
-      reusableCanvas = canvas
+      if (useContinuousRendering) {
+        reusableCanvas = canvas
+      }
+    } finally {
+      Trace.endSection() // "ScaleBarImpl.onDraw"
     }
   }
 
@@ -334,32 +364,38 @@ class ScaleBarImpl : ScaleBar, View {
    */
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal fun findSuitableScaleBarSegments(maxDistance: Float): Pair<Float, Int> {
-    var pair: Pair<Int, Int> = scaleTable[0]
-    for (i in 1 until scaleTable.size) {
-      pair = scaleTable[i]
-      val distance = pair.first
-      if (distance > maxDistance) {
-        // use the last scale here, otherwise the scale will be too large
-        pair = scaleTable[i - 1]
-        break
+    Trace.beginSection("ScaleBarImpl.findSuitableScaleBarSegments")
+
+    try {
+      var pair: Pair<Int, Int> = scaleTable[0]
+      for (i in 1 until scaleTable.size) {
+        pair = scaleTable[i]
+        val distance = pair.first
+        if (distance > maxDistance) {
+          // use the last scale here, otherwise the scale will be too large
+          pair = scaleTable[i - 1]
+          break
+        }
       }
+      val distance = pair.first.toFloat()
+      var rectCount = pair.second
+      var unitDistance = distance / rectCount
+      // When maxDistance is small (i.e. high zoom levels near the poles) then
+      // the `distance` might be bigger than maxDistance. This loop will keep removing
+      // bar divisions (rectCount) until it fits
+      while (unitDistance * rectCount > maxDistance && rectCount > 0) {
+        rectCount--
+      }
+      // In case the unitDistance doesn't fit at all we fallback to maxDistance (rounded to 1
+      // decimal) with 1 division
+      if (rectCount == 0) {
+        unitDistance = (maxDistance * 10).toInt() / 10.0F
+        rectCount = 1
+      }
+      return Pair(unitDistance, rectCount)
+    } finally {
+      Trace.endSection()
     }
-    val distance = pair.first.toFloat()
-    var rectCount = pair.second
-    var unitDistance = distance / rectCount
-    // When maxDistance is small (i.e. high zoom levels near the poles) then
-    // the `distance` might be bigger than maxDistance. This loop will keep removing
-    // bar divisions (rectCount) until it fits
-    while (unitDistance * rectCount > maxDistance && rectCount > 0) {
-      rectCount--
-    }
-    // In case the unitDistance doesn't fit at all we fallback to maxDistance (rounded to 1
-    // decimal) with 1 division
-    if (rectCount == 0) {
-      unitDistance = (maxDistance * 10).toInt() / 10.0F
-      rectCount = 1
-    }
-    return Pair(unitDistance, rectCount)
   }
 
   /**
@@ -399,7 +435,9 @@ class ScaleBarImpl : ScaleBar, View {
             sendEmptyMessageDelayed(MSG_RENDER_CONTINUOUS, it.settings.refreshInterval)
           }
           MSG_RENDER_ON_DEMAND -> {
+            Trace.beginAsyncSection("MSG_RENDER_ON_DEMAND.invalidate", 0)
             it.invalidate()
+            Trace.endAsyncSection("MSG_RENDER_ON_DEMAND.invalidate", 0)
           }
           else -> return
         }

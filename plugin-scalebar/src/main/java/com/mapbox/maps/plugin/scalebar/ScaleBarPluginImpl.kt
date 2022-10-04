@@ -1,6 +1,7 @@
 package com.mapbox.maps.plugin.scalebar
 
 import android.content.Context
+import android.os.Trace
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
@@ -85,6 +86,7 @@ open class ScaleBarPluginImpl(
    * Invalid scale bar
    */
   private fun invalidateScaleBar() {
+    Trace.beginSection("ScaleBarPluginImpl.invalidateScaleBar")
     val cameraState: CameraState = mapCameraManagerDelegate.cameraState
     val metersPerPixelAtLatitude = getMetersPerPixelAtLatitude(
       cameraState.center.latitude(),
@@ -92,6 +94,7 @@ open class ScaleBarPluginImpl(
     )
     val pixelRatio = mapTransformDelegate.getMapOptions().pixelRatio
     scaleBar.distancePerPixel = (metersPerPixelAtLatitude / pixelRatio).toFloat()
+    Trace.endSection() //"ScaleBarPluginImpl.invalidateScaleBar"
   }
 
   /**
@@ -135,7 +138,9 @@ open class ScaleBarPluginImpl(
   override var distancePerPixel: Float
     get() = scaleBar.distancePerPixel
     set(value) {
+      Trace.beginSection("ScaleBarPluginImpl.distancePerPixel.set")
       scaleBar.distancePerPixel = value
+      Trace.endSection() // "ScaleBarPluginImpl.distancePerPixel.set"
     }
 
   /**
