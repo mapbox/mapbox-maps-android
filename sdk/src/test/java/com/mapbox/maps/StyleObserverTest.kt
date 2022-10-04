@@ -317,7 +317,7 @@ class StyleObserverTest {
   }
 
   @Test
-  fun onStyleDataSourcesAndSpritesEventsAreIgnoredUntilStyleDataLoadedNotCalledOnStyleChange() {
+  fun `StyleDataType - Sources and Sprites events are ignored until StyleDataType - Style is not received on style change`() {
     val styleCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
     val styleSourcesCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
     val styleSpritesCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
