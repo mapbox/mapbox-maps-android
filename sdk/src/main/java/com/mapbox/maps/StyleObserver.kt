@@ -24,7 +24,7 @@ internal class StyleObserver(
 
   // fired when [StyleDataType.STYLE] arrives, first of all style data loaded events
   private var styleDataStyleLoadedListener: Style.OnStyleLoaded? = null
-  // it the listener is not null - style load has been started
+  // if the listener is not null - style load has been started
   // but the initial event has NOT arrived yet
   private val isWaitingStyleDataStyleEvent
     get() = styleDataStyleLoadedListener != null
