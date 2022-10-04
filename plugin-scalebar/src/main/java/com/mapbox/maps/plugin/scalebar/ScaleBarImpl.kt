@@ -114,7 +114,7 @@ class ScaleBarImpl : ScaleBar, View {
       strokePaint.textSize = value.textSize
       scaleTable = if (value.isMetricUnits) metricTable else imperialTable
       unit = if (value.isMetricUnits) METER_UNIT else FEET_UNIT
-      strokePaint.strokeWidth = value.textBorderWidth
+      strokePaint.strokeWidth = if (value.showTextBorder) value.textBorderWidth else 0F
       enable = value.enabled
       if (useContinuousRendering) {
         reusableCanvas = null
@@ -276,7 +276,13 @@ class ScaleBarImpl : ScaleBar, View {
           }
         }
 
-        drawText(canvas, distanceText, (unitBarWidth * rectIndex), textSize)
+        drawText(
+          canvas = canvas,
+          text = distanceText,
+          x = (unitBarWidth * rectIndex),
+          y = textSize,
+          lastUnitBarText = (rectIndex == rectCount)
+        )
 
         if (rectIndex != rectCount) {
           canvas.drawRect(
@@ -294,11 +300,33 @@ class ScaleBarImpl : ScaleBar, View {
     }
   }
 
-  private fun drawText(canvas: Canvas, text: String, x: Float, y: Float) {
-    if (settings.showTextBorder) {
-      canvas.drawText(text, x, y, strokePaint)
+  private fun drawText(canvas: Canvas, text: String, x: Float, y: Float, lastUnitBarText: Boolean) {
+    var safeX = x
+
+    // As an optimization only check if it goes beyond right view for the last unit bar text
+    if (lastUnitBarText) {
+      // Check if it goes beyond the right margin of the view
+      val textWidthPx = textPaint.measureText(text)
+      val textMaxRightPx = x + strokePaint.strokeWidth + when (textPaint.textAlign) {
+        Paint.Align.LEFT -> textWidthPx
+        Paint.Align.CENTER -> textWidthPx / 2
+        Paint.Align.RIGHT, null -> 0F
+      }
+      if (textMaxRightPx > width) {
+        // Move it away from right margin enough to fit
+        safeX -= (textMaxRightPx - width)
+      }
     }
-    canvas.drawText(text, x, y, textPaint)
+
+    // Check if it goes beyond the left margin of the view
+    if (safeX - (strokePaint.strokeWidth / 2) < 0) {
+      safeX += (strokePaint.strokeWidth / 2)
+    }
+
+    if (settings.showTextBorder) {
+      canvas.drawText(text, safeX, y, strokePaint)
+    }
+    canvas.drawText(text, safeX, y, textPaint)
   }
 
   /**
