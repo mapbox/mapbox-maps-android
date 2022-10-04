@@ -261,26 +261,17 @@ class ScaleBarImpl : ScaleBar, View {
           canvas.drawARGB(0, 0, 0, 0)
           return
         }
-        val (unitDistance, rectCount) = findSuitableScaleBarSegments(maxDistance)
-
-        val unitBarWidth = (unitDistance / distancePerPixel)
-
-        val distanceTexts: Array<String?> = Array(rectCount + 1) {
-          getDistanceText(unitDistance * it)
-        }
-        for (rectIndex in 0..rectCount) {
-
-        }
-
+        val scaleBarUiConfiguration = findSuitableScaleBarSegments(maxDistance)
 
         // Drawing the surrounding borders
         Trace.beginSection("ScaleBarImpl.onDraw.Borders")
         barPaint.style = Paint.Style.FILL_AND_STROKE
         barPaint.color = secondaryColor
+        val barWidth = scaleBarUiConfiguration.unitBarWidth * scaleBarUiConfiguration.rectCount
         canvas.drawRect(
           0f,
           textBarMargin + textSize - (borderWidth * 2),
-          (unitBarWidth * rectCount) + (borderWidth * 2),
+          barWidth + (borderWidth * 2),
           textBarMargin + textSize + height + (borderWidth * 2),
           barPaint
         )
@@ -288,7 +279,7 @@ class ScaleBarImpl : ScaleBar, View {
         canvas.drawRect(
           borderWidth,
           textBarMargin + textSize - borderWidth,
-          (unitBarWidth * rectCount) + borderWidth,
+          barWidth + borderWidth,
           textBarMargin + textSize + height + borderWidth,
           barPaint
         )
@@ -303,9 +294,10 @@ class ScaleBarImpl : ScaleBar, View {
 
 
 
-        for (rectIndex in 0..rectCount) {
+        for (rectIndex in 0..scaleBarUiConfiguration.rectCount) {
           barPaint.color = if (rectIndex % 2 == 0) primaryColor else secondaryColor
-          val distanceText = getDistanceText(unitDistance * rectIndex)
+          val distanceText =
+            scaleBarUiConfiguration.labelTexts[rectIndex]//getDistanceText(unitDistance * rectIndex)
           when (rectIndex) {
             0 -> {
               textPaint.textAlign = Paint.Align.LEFT
@@ -321,16 +313,15 @@ class ScaleBarImpl : ScaleBar, View {
           drawText(
             canvas = canvas,
             text = distanceText,
-            x = (unitBarWidth * rectIndex),
+            x = scaleBarUiConfiguration.labelMarginsAndAnchor[rectIndex].third,
             y = textSize,
-            lastUnitBarText = (rectIndex == rectCount),
           )
 
-          if (rectIndex != rectCount) {
+          if (rectIndex != scaleBarUiConfiguration.rectCount) {
             canvas.drawRect(
-              (borderWidth * 2) + (unitBarWidth * rectIndex),
+              (borderWidth * 2) + (scaleBarUiConfiguration.unitBarWidth * rectIndex),
               textBarMargin + textSize,
-              unitBarWidth * (1 + rectIndex),
+              scaleBarUiConfiguration.unitBarWidth * (1 + rectIndex),
               textBarMargin + textSize + height,
               barPaint
             )
@@ -351,41 +342,18 @@ class ScaleBarImpl : ScaleBar, View {
     text: String,
     x: Float,
     y: Float,
-    lastUnitBarText: Boolean,
   ) {
-    var safeX = x
-
-    // As an optimization only check if it goes beyond right view for the last unit bar text
-    if (lastUnitBarText) {
-      // Check if it goes beyond the right margin of the view
-      val textWidthPx = textPaint.measureText(text)
-      val textMaxRightPx = x + strokePaint.strokeWidth + when (textPaint.textAlign) {
-        Paint.Align.LEFT -> textWidthPx
-        Paint.Align.CENTER -> textWidthPx / 2
-        Paint.Align.RIGHT, null -> 0F
-      }
-      if (textMaxRightPx > width) {
-        // Move it away from right margin enough to fit
-        safeX -= (textMaxRightPx - width)
-      }
-    }
-
-    // Check if it goes beyond the left margin of the view
-    if (safeX - (strokePaint.strokeWidth / 2) < 0) {
-      safeX += (strokePaint.strokeWidth / 2)
-    }
-
     if (settings.showTextBorder) {
-      canvas.drawText(text, safeX, y, strokePaint)
+      canvas.drawText(text, x, y, strokePaint)
     }
-    canvas.drawText(text, safeX, y, textPaint)
+    canvas.drawText(text, x, y, textPaint)
   }
 
   /**
    * @return A tuple with the scale bar segment distance and the amount of bar segments
    */
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  internal fun findSuitableScaleBarSegments(maxDistance: Float): Pair<Float, Int> {
+  internal fun findSuitableScaleBarSegments(maxDistance: Float): ScaleBarUiConfiguration {
     Trace.beginSection("ScaleBarImpl.findSuitableScaleBarSegments")
 
     try {
@@ -414,32 +382,33 @@ class ScaleBarImpl : ScaleBar, View {
         unitDistance = (maxDistance * 10).toInt() / 10.0F
         rectCount = 1
       }
-      with(ScaleBarUiConfiguration) {
+      with(ScaleBarUiConfiguration()) {
         var overlapDetected = true
         this.rectCount = rectCount
+        this.unitDistance = unitDistance
         while (overlapDetected) {
           this.unitDistance = distance / this.rectCount
-          labelTexts = arrayOfNulls(this.rectCount + 1)
-          labelTextPositions = FloatArray(this.rectCount + 1)
-          labelTextMargins = arrayOfNulls(this.rectCount + 1)
+          labelTexts.clear()
+          labelMarginsAndAnchor.clear()
           unitBarWidth = this.unitDistance / distancePerPixel
           for (idx in 0..this.rectCount) {
-            labelTexts[idx] = getDistanceText(this.unitDistance * idx)
-            labelTextPositions[idx] = unitBarWidth * idx
-            labelTextMargins[idx] =
-              calculateTextPositions(labelTexts[idx]!!, labelTextPositions[idx])
+            labelTexts.add(idx, getDistanceText(this.unitDistance * idx))
+            labelMarginsAndAnchor.add(
+              idx,
+              calculateTextPositions(labelTexts[idx], unitBarWidth * idx)
+            )
           }
           overlapDetected = false
-          for (idx in 0 until labelTextMargins.size - 1) {
-            if (labelTextMargins[idx]!!.second >= labelTextMargins[idx + 1]!!.first) {
+          for (idx in 0 until labelMarginsAndAnchor.size - 1) {
+            if (labelMarginsAndAnchor[idx].second >= labelMarginsAndAnchor[idx + 1].first) {
               this.rectCount--
               overlapDetected = true
               break
             }
           }
         }
+        return this
       }
-      return Pair(ScaleBarUiConfiguration.unitDistance, ScaleBarUiConfiguration.rectCount)
     } finally {
       Trace.endSection()
     }
@@ -448,7 +417,7 @@ class ScaleBarImpl : ScaleBar, View {
   private fun calculateTextPositions(
     text: String,
     x: Float,
-  ): Pair<Float, Float> {
+  ): Triple<Float, Float, Float> {
     var safeX = x
 
     // As an optimization only check if it goes beyond right view for the last unit bar text
@@ -470,13 +439,13 @@ class ScaleBarImpl : ScaleBar, View {
       Paint.Align.CENTER -> textWidthPx / 2
       Paint.Align.RIGHT -> textWidthPx
     }
-    //}
 
     // Check if if the text would fall beyond the left margin
     if (textLeftPosPx < 0) {
       textLeftPosPx += strokePaint.strokeWidth / 2
+      safeX += strokePaint.strokeWidth / 2
     }
-    return Pair(textLeftPosPx, textRightPosPx)
+    return Triple(textLeftPosPx, textRightPosPx, safeX)
   }
 
   /**
@@ -540,11 +509,16 @@ class ScaleBarImpl : ScaleBar, View {
   }
 }
 
-private object ScaleBarUiConfiguration {
-  var unitDistance: Float = 0F
-  var unitBarWidth: Float = 0F
-  var rectCount: Int = 0
-  var labelTexts: Array<String?> = emptyArray()
-  var labelTextPositions: FloatArray = floatArrayOf()
-  var labelTextMargins: Array<Pair<Float, Float>?> = emptyArray()
-}
+internal data class ScaleBarUiConfiguration(
+  var unitDistance: Float = 0F,
+  var unitBarWidth: Float = 0F,
+  var rectCount: Int = 0,
+  var labelTexts: MutableList<String> = mutableListOf(),
+  /**
+   * A [Triple] that contains per each label:
+   * 1. left margin in pixels
+   * 2. right margin in pixels
+   * 3. anchor X in pixels
+   */
+  var labelMarginsAndAnchor: MutableList<Triple<Float, Float, Float>> = mutableListOf(),
+)
