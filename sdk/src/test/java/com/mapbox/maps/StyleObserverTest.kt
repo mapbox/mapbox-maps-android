@@ -340,6 +340,7 @@ class StyleObserverTest {
     styleObserver.onStyleDataLoaded(StyleDataLoadedEventData(0, 0, StyleDataType.SOURCES))
     styleObserver.onStyleDataLoaded(StyleDataLoadedEventData(0, 0, StyleDataType.SPRITE))
 
+    verifyOnce { styleCallback.onStyleLoaded(any()) }
     verifyOnce { styleSourcesCallback.onStyleLoaded(any()) }
     verifyOnce { styleSpritesCallback.onStyleLoaded(any()) }
   }
