@@ -252,6 +252,7 @@ class ScaleBarImpl : ScaleBar, View {
         return
       }
       settings.run {
+        canvas.drawARGB(255, 0, 0, 0)
         val maxDistance = mapViewWidth * distancePerPixel * ratio
         if (maxDistance <= 0.1F) {
           // There's no space to render the smallest distance. Don't render anything.
@@ -287,6 +288,21 @@ class ScaleBarImpl : ScaleBar, View {
 
         // Drawing texts
         Trace.beginSection("ScaleBarImpl.onDraw.BarsAndText")
+
+        /*
+        val distanceTexts: Array<String?> = Array(rectCount + 1) {
+          getDistanceText(unitDistance * it)
+        }
+
+
+        for (rectIndex in 0..rectCount) {
+
+        }
+*/
+
+
+        var leftMargin = -1F
+
         for (rectIndex in 0..rectCount) {
           barPaint.color = if (rectIndex % 2 == 0) primaryColor else secondaryColor
           val distanceText = getDistanceText(unitDistance * rectIndex)
@@ -302,12 +318,13 @@ class ScaleBarImpl : ScaleBar, View {
             }
           }
 
-          drawText(
+          leftMargin = drawText(
             canvas = canvas,
             text = distanceText,
             x = (unitBarWidth * rectIndex),
             y = textSize,
-            lastUnitBarText = (rectIndex == rectCount)
+            lastUnitBarText = (rectIndex == rectCount),
+            leftMargin,
           )
 
           if (rectIndex != rectCount) {
@@ -330,33 +347,53 @@ class ScaleBarImpl : ScaleBar, View {
     }
   }
 
-  private fun drawText(canvas: Canvas, text: String, x: Float, y: Float, lastUnitBarText: Boolean) {
+  private fun drawText(
+    canvas: Canvas,
+    text: String,
+    x: Float,
+    y: Float,
+    lastUnitBarText: Boolean,
+    leftMargin: Float,
+  ): Float {
     var safeX = x
 
     // As an optimization only check if it goes beyond right view for the last unit bar text
-    if (lastUnitBarText) {
-      // Check if it goes beyond the right margin of the view
-      val textWidthPx = textPaint.measureText(text)
-      val textMaxRightPx = x + strokePaint.strokeWidth + when (textPaint.textAlign) {
-        Paint.Align.LEFT -> textWidthPx
-        Paint.Align.CENTER -> textWidthPx / 2
-        Paint.Align.RIGHT, null -> 0F
-      }
-      if (textMaxRightPx > width) {
-        // Move it away from right margin enough to fit
-        safeX -= (textMaxRightPx - width)
-      }
+    // if (lastUnitBarText) {
+    // Check if it goes beyond the right margin of the view
+    val textWidthPx = textPaint.measureText(text)
+    val textRightPosPx = x + strokePaint.strokeWidth / 2F + when (textPaint.textAlign) {
+      Paint.Align.LEFT -> textWidthPx
+      Paint.Align.CENTER -> textWidthPx / 2
+      Paint.Align.RIGHT, null -> 0F
     }
 
-    // Check if it goes beyond the left margin of the view
-    if (safeX - (strokePaint.strokeWidth / 2) < 0) {
-      safeX += (strokePaint.strokeWidth / 2)
+    if (textRightPosPx > width) {
+      // Move it away from right margin enough to fit
+      safeX -= (textRightPosPx - width)
+    }
+    val textLeftPosPx = safeX - strokePaint.strokeWidth / 2F - when (textPaint.textAlign) {
+      Paint.Align.LEFT, null -> 0F
+      Paint.Align.CENTER -> textWidthPx / 2
+      Paint.Align.RIGHT -> textWidthPx
+    }
+    //}
+
+    // Check if if the text would fall beyond the left margin
+    if (textLeftPosPx < leftMargin) {
+      if (leftMargin < 0) {
+        safeX += strokePaint.strokeWidth / 2
+      } else {
+        Log.w("ScaleBarImpl", "Skipping drawing text [$text]. Would overlap with $leftMargin")
+        // If it would overlap with the left margin then we don't render anything
+        return leftMargin
+      }
     }
 
     if (settings.showTextBorder) {
       canvas.drawText(text, safeX, y, strokePaint)
     }
     canvas.drawText(text, safeX, y, textPaint)
+    return textRightPosPx
   }
 
   /**
@@ -434,11 +471,13 @@ class ScaleBarImpl : ScaleBar, View {
             }
             sendEmptyMessageDelayed(MSG_RENDER_CONTINUOUS, it.settings.refreshInterval)
           }
+
           MSG_RENDER_ON_DEMAND -> {
             Trace.beginAsyncSection("MSG_RENDER_ON_DEMAND.invalidate", 0)
             it.invalidate()
             Trace.endAsyncSection("MSG_RENDER_ON_DEMAND.invalidate", 0)
           }
+
           else -> return
         }
       }
