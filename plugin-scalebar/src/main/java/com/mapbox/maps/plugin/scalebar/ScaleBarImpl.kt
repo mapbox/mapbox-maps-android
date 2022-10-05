@@ -149,11 +149,12 @@ class ScaleBarImpl : ScaleBar, View {
             rightMarginPx = width
           )
           // Only force a re-draw if the bar UI has changed enough by checking current
-          // segmentsConfiguration against new ones
-          if (newSegmentsConfiguration != currentSegmentsConfiguration) {
-            if (!refreshHandler.hasMessages(MSG_RENDER_ON_DEMAND)) {
-              refreshHandler.sendEmptyMessageDelayed(MSG_RENDER_ON_DEMAND, settings.refreshInterval)
-            }
+          // `segmentsConfiguration` against new one and in case there isn't the same message
+          // already queued
+          if (newSegmentsConfiguration != currentSegmentsConfiguration &&
+            !refreshHandler.hasMessages(MSG_RENDER_ON_DEMAND)
+          ) {
+            refreshHandler.sendEmptyMessageDelayed(MSG_RENDER_ON_DEMAND, settings.refreshInterval)
           }
         }
       }
