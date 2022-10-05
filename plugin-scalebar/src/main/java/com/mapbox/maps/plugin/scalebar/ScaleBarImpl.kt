@@ -98,6 +98,7 @@ class ScaleBarImpl : ScaleBar, View {
    */
   override var settings: ScaleBarSettings = ScaleBarSettings()
     set(value) {
+      Log.d("ScaleBarImpl", "settings.set() called")
       Trace.beginSection("ScaleBarImpl.settings.set")
 
       try {
@@ -160,6 +161,8 @@ class ScaleBarImpl : ScaleBar, View {
             strokeWidth = strokePaint.strokeWidth,
             unit = unit
           )
+          // Only force a re-draw if the bar UI has changed enough by checking current
+          // segmentsConfiguration against new ones
           if (newSegmentsConfiguration != currentSegmentsConfiguration) {
             if (!refreshHandler.hasMessages(MSG_RENDER_ON_DEMAND)) {
               Log.d("ScaleBarImpl", "sendEmptyMessageDelayed after $counter")
@@ -401,7 +404,7 @@ class ScaleBarImpl : ScaleBar, View {
       // In case the unitDistance doesn't fit at all we fallback to maxDistance (rounded to 1
       // decimal) with 1 division
       if (rectCount == 0) {
-        unitDistance = (maxDistance * 10).toInt() / 10.0F
+        unitDistance = maxDistance.toOneDecimal()
         rectCount = 1
         distance = unitDistance
       }
@@ -409,16 +412,10 @@ class ScaleBarImpl : ScaleBar, View {
       var overlapDetected = true
       val labelTexts: MutableList<String> = mutableListOf()
       val labelMarginsAndAnchor: MutableList<Triple<Float, Float, Float>> = mutableListOf()
-      var unitBarWidth: Float = 0F
+      var unitBarWidth = 0F
       while (overlapDetected) {
         unitDistance = distance / rectCount
         unitBarWidth = (unitDistance / distancePerPixel).toOneDecimal()
-        if (unitBarWidth * distancePerPixel != unitDistance) {
-          Log.e(
-            "ScaleBarImpl",
-            "unitBarWidth*distancePerPixel: ${unitBarWidth * distancePerPixel}, unitDistance: $unitDistance"
-          )
-        }
         labelTexts.clear()
         labelMarginsAndAnchor.clear()
         for (idx in 0..rectCount) {
