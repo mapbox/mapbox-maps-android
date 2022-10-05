@@ -201,7 +201,11 @@ class ScaleBarImplScaleBarSegmentsTest(
     // Special case where max distance is smaller than the first entry segment in the table
     val belowFirstUnitBarDistance = (scaleTable[0].first.toFloat() / scaleTable[0].second) - 0.1F
     val result =
-      scaleBarView.findSuitableScaleBarSegments(belowFirstUnitBarDistance)
+      scaleBarView.findSuitableScaleBarSegments(
+        belowFirstUnitBarDistance,
+        scaleBarView.distancePerPixel,
+        scaleBarView.scaleTable
+      )
     assertEquals(belowFirstUnitBarDistance, result.first, 0.01F)
     assertEquals(1, result.second)
 
@@ -211,7 +215,11 @@ class ScaleBarImplScaleBarSegmentsTest(
       val rectCount = pair.second
 
       val maxDistanceBelowCurrent = distance - if (distance < 100) 0.1F else 10F
-      val resultBelow = scaleBarView.findSuitableScaleBarSegments(maxDistanceBelowCurrent)
+      val resultBelow = scaleBarView.findSuitableScaleBarSegments(
+        maxDistanceBelowCurrent,
+        scaleBarView.distancePerPixel,
+        scaleBarView.scaleTable
+      )
       val previousEntry = scaleTable[index - 1]
       val expectedUnitDistance = previousEntry.first.toFloat() / previousEntry.second
       assertEquals(expectedUnitDistance, resultBelow.first, 0.01F)
@@ -219,7 +227,11 @@ class ScaleBarImplScaleBarSegmentsTest(
       assertEquals(expectedSegments, resultBelow.second)
 
       val maxDistanceAboveCurrent = distance + if (distance < 100) 0.1F else 10F
-      val resultAbove = scaleBarView.findSuitableScaleBarSegments(maxDistanceAboveCurrent)
+      val resultAbove = scaleBarView.findSuitableScaleBarSegments(
+        maxDistanceAboveCurrent,
+        scaleBarView.distancePerPixel,
+        scaleBarView.scaleTable
+      )
       assertEquals(distance / rectCount, resultAbove.first, 0.01F)
       assertEquals(rectCount, resultAbove.second)
     }
