@@ -12,6 +12,9 @@ parameters:
   git_release_tag:
     type: string
     default: ^v[0-9]+\.[0-9]+\.[0-9]+.*$
+  git_release_branch:
+    type: string
+    default: ^v[0-9]+\.[0-9]+$
 
 workflows:
   version: 2
@@ -92,7 +95,7 @@ workflows:
                   only:
                       - main
               tags:
-                  only: /^v.*/
+                  only: << pipeline.parameters.git_release_branch >>
           name: run-sdk-e2e-test-validation
           requires:
               - verify-code
@@ -102,7 +105,7 @@ workflows:
             branches:
               only:
                 - main
-                - /^v.*/
+                - << pipeline.parameters.git_release_branch >>
           requires:
             - verify-code
 
