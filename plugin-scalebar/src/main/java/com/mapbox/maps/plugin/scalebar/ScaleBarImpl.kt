@@ -132,9 +132,11 @@ class ScaleBarImpl : ScaleBar, View {
    */
   override var distancePerPixel = 0F
     set(value) {
-      if (field != value) {
-        // TODO: Check the value is always different than field for Imperial units due to this conversion
-        field = if (settings.isMetricUnits) value else value * FEET_PER_METER
+      // We want to store imperial value but we're getting meters so transform it before checking
+      // if it's different
+      val valueCandidate = if (settings.isMetricUnits) value else value * FEET_PER_METER
+      if (field != valueCandidate) {
+        field = valueCandidate
         if (useContinuousRendering) {
           reusableCanvas = null
         } else {
