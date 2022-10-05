@@ -88,6 +88,8 @@ class ImageSource(builder: Builder) : Source(builder.sourceId) {
     /**
      * Get the PrefetchZoomDelta property
      *
+     * Use static method [ImageSource.defaultPrefetchZoomDelta] to get the default property.
+     *
      * @return Long
      */
     get() = getPropertyValue("prefetch-zoom-delta")

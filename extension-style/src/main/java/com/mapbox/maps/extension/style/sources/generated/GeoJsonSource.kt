@@ -103,6 +103,8 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
     /**
      * Get the Maxzoom property
      *
+     * Use static method [GeoJsonSource.defaultMaxzoom] to get the default property.
+     *
      * @return Long
      */
     get() = getPropertyValue("maxzoom")
@@ -127,6 +129,8 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
     /**
      * Get the Buffer property
      *
+     * Use static method [GeoJsonSource.defaultBuffer] to get the default property.
+     *
      * @return Long
      */
     get() = getPropertyValue("buffer")
@@ -137,6 +141,8 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
   val tolerance: Double?
     /**
      * Get the Tolerance property
+     *
+     * Use static method [GeoJsonSource.defaultTolerance] to get the default property.
      *
      * @return Double
      */
@@ -155,6 +161,8 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
     /**
      * Get the Cluster property
      *
+     * Use static method [GeoJsonSource.defaultCluster] to get the default property.
+     *
      * @return Boolean
      */
     get() = getPropertyValue("cluster")
@@ -166,6 +174,8 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
   val clusterRadius: Long?
     /**
      * Get the ClusterRadius property
+     *
+     * Use static method [GeoJsonSource.defaultClusterRadius] to get the default property.
      *
      * @return Long
      */
@@ -179,6 +189,8 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
   val clusterMaxZoom: Long?
     /**
      * Get the ClusterMaxZoom property
+     *
+     * Use static method [GeoJsonSource.defaultClusterMaxZoom] to get the default property.
      *
      * @return Long
      */
@@ -211,6 +223,8 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
     /**
      * Get the LineMetrics property
      *
+     * Use static method [GeoJsonSource.defaultLineMetrics] to get the default property.
+     *
      * @return Boolean
      */
     get() = getPropertyValue("lineMetrics")
@@ -222,6 +236,8 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
   val generateId: Boolean?
     /**
      * Get the GenerateId property
+     *
+     * Use static method [GeoJsonSource.defaultGenerateId] to get the default property.
      *
      * @return Boolean
      */
@@ -266,6 +282,8 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
   val prefetchZoomDelta: Long?
     /**
      * Get the PrefetchZoomDelta property
+     *
+     * Use static method [GeoJsonSource.defaultPrefetchZoomDelta] to get the default property.
      *
      * @return Long
      */
