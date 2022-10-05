@@ -12,6 +12,7 @@ import junit.framework.TestCase.*
 import org.junit.*
 import org.junit.runner.RunWith
 import java.util.concurrent.CountDownLatch
+import kotlin.random.Random
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest
@@ -201,21 +202,25 @@ class StyleLoadTest {
       it.runOnUiThread {
         mapView.onStart()
 
-        countDownLatch = CountDownLatch(200)
-        for (i in 0..100) {
+        countDownLatch = CountDownLatch(300)
+        for (i in 0 until 100) {
           loadStyleWithTerrain(counter = countDownLatch)
         }
 
-        var i = 0
-        val runnable = object : Runnable {
-          override fun run() {
-            if (i++ < 100) {
-              loadStyleWithTerrain(counter = countDownLatch)
-              mapView.postDelayed(this, 1)
-            }
-          }
+        val random = Random(0)
+        for (i in 0 until 100) {
+          loadStyleWithTerrain(counter = countDownLatch)
+          Thread.sleep(random.nextLong(from = 0, until = 5))
         }
-        mapView.post(runnable)
+
+        for (i in 0 until 100) {
+          mapView.postDelayed(
+            {
+              loadStyleWithTerrain(counter = countDownLatch)
+            },
+            i.toLong()
+          )
+        }
       }
     }
     countDownLatch.throwExceptionOnTimeoutMs()
