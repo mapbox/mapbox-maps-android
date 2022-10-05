@@ -4,7 +4,7 @@ import android.content.Context
 import android.graphics.BitmapFactory
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.androidauto.R
-import com.mapbox.maps.renderer.widget.RecyclingBitmapWidget
+import com.mapbox.maps.renderer.widget.BitmapWidget
 import com.mapbox.maps.renderer.widget.WidgetPosition
 
 /**
@@ -27,7 +27,7 @@ class LogoWidget constructor(
   ),
   marginX: Float = 20f,
   marginY: Float = 20f,
-) : RecyclingBitmapWidget(
+) : BitmapWidget(
   bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.mapbox_logo_icon),
   position = position,
   marginX = marginX,

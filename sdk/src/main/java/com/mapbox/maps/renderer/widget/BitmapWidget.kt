@@ -26,7 +26,6 @@ open class BitmapWidget @JvmOverloads constructor(
     position = position,
     marginX = marginX,
     marginY = marginY,
-    listener = { onLoaded(it) },
   )
 
   /**

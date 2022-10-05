@@ -548,15 +548,6 @@ public class com/mapbox/maps/renderer/widget/BitmapWidget : com/mapbox/maps/rend
 	public final fun updateBitmap (Landroid/graphics/Bitmap;)V
 }
 
-public class com/mapbox/maps/renderer/widget/RecyclingBitmapWidget : com/mapbox/maps/renderer/widget/BitmapWidget {
-	public fun <init> (Landroid/graphics/Bitmap;)V
-	public fun <init> (Landroid/graphics/Bitmap;Lcom/mapbox/maps/renderer/widget/WidgetPosition;)V
-	public fun <init> (Landroid/graphics/Bitmap;Lcom/mapbox/maps/renderer/widget/WidgetPosition;F)V
-	public fun <init> (Landroid/graphics/Bitmap;Lcom/mapbox/maps/renderer/widget/WidgetPosition;FF)V
-	public synthetic fun <init> (Landroid/graphics/Bitmap;Lcom/mapbox/maps/renderer/widget/WidgetPosition;FFILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun onLoaded (Landroid/graphics/Bitmap;)V
-}
-
 public abstract class com/mapbox/maps/renderer/widget/Widget {
 	public abstract fun setRotation (F)V
 	public abstract fun setTranslation (FF)V

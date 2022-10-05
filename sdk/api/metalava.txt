@@ -546,13 +546,6 @@ package com.mapbox.maps.renderer.widget {
     property public com.mapbox.maps.renderer.widget.BitmapWidgetRenderer renderer;
   }
 
-  @com.mapbox.maps.MapboxExperimental public class RecyclingBitmapWidget extends com.mapbox.maps.renderer.widget.BitmapWidget {
-    ctor public RecyclingBitmapWidget(android.graphics.Bitmap bitmap, com.mapbox.maps.renderer.widget.WidgetPosition position = com.mapbox.maps.renderer.widget.WidgetPosition(com.mapbox.maps.renderer.widget.WidgetPosition.Vertical.TOP, com.mapbox.maps.renderer.widget.WidgetPosition.Horizontal.LEFT), float marginX = 0f, float marginY = 0f);
-    ctor public RecyclingBitmapWidget(android.graphics.Bitmap bitmap, com.mapbox.maps.renderer.widget.WidgetPosition position = com.mapbox.maps.renderer.widget.WidgetPosition(com.mapbox.maps.renderer.widget.WidgetPosition.Vertical.TOP, com.mapbox.maps.renderer.widget.WidgetPosition.Horizontal.LEFT), float marginX = 0f);
-    ctor public RecyclingBitmapWidget(android.graphics.Bitmap bitmap, com.mapbox.maps.renderer.widget.WidgetPosition position = com.mapbox.maps.renderer.widget.WidgetPosition(com.mapbox.maps.renderer.widget.WidgetPosition.Vertical.TOP, com.mapbox.maps.renderer.widget.WidgetPosition.Horizontal.LEFT));
-    ctor public RecyclingBitmapWidget(android.graphics.Bitmap bitmap);
-  }
-
   @com.mapbox.maps.MapboxExperimental public abstract class Widget {
     method public abstract void setRotation(float angleDegrees);
     method public abstract void setTranslation(float translateX, float translateY);
