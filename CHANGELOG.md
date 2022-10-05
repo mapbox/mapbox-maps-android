@@ -4,6 +4,9 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+## Bug fixes 🐞
+* Fixed issue where `Widget` is not immediately rendered when added to the `MapView`. ([1708](https://github.com/mapbox/mapbox-maps-android/pull/1708))
+
 # 10.9.0-rc.1
 
 ## Bug fixes 🐞
@@ -21,8 +24,6 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Bump common to v23.0.1. ([1709](https://github.com/mapbox/mapbox-maps-android/pull/1709))
-## Bug fixes 🐞
-* Fixed issue where `Widget` is not immediately rendered when added to the `MapView`. ([1708](https://github.com/mapbox/mapbox-maps-android/pull/1708))
 
 # 10.9.0-beta.2 September 28, 2022
 
