@@ -261,7 +261,11 @@ class ScaleBarImpl : ScaleBar, View {
           canvas.drawARGB(0, 0, 0, 0)
           return
         }
-        val scaleBarUiConfiguration = findSuitableScaleBarSegments(maxDistance)
+        val scaleBarUiConfiguration = findSuitableScaleBarSegments(
+          maxDistance,
+          distancePerPixel,
+          scaleTable,
+        )
 
         // Drawing the surrounding borders
         Trace.beginSection("ScaleBarImpl.onDraw.Borders")
@@ -349,9 +353,12 @@ class ScaleBarImpl : ScaleBar, View {
    * @return A tuple with the scale bar segment distance and the amount of bar segments
    */
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  internal fun findSuitableScaleBarSegments(maxDistance: Float): ScaleBarUiConfiguration {
+  internal fun findSuitableScaleBarSegments(
+    maxDistance: Float,
+    distancePerPixel: Float,
+    scaleTable: List<Pair<Int, Int>>,
+  ): ScaleBarUiConfiguration {
     Trace.beginSection("ScaleBarImpl.findSuitableScaleBarSegments")
-
     try {
       // Find the entry where the distance just fits in the given `maxDistance`
       val pair =
@@ -376,43 +383,47 @@ class ScaleBarImpl : ScaleBar, View {
         distance = unitDistance
       }
 
-      with(ScaleBarUiConfiguration()) {
-        var overlapDetected = true
-        this.rectCount = rectCount
-        this.unitDistance = unitDistance
-        while (overlapDetected) {
-          this.unitDistance = distance / this.rectCount
-          labelTexts.clear()
-          labelMarginsAndAnchor.clear()
-          unitBarWidth = this.unitDistance / distancePerPixel
-          for (idx in 0..this.rectCount) {
-            labelTexts.add(idx, getDistanceText(this.unitDistance * idx))
-            labelMarginsAndAnchor.add(
-              idx,
-              calculateTextPositions(
-                labelTexts[idx],
-                unitBarWidth * idx,
-                if (idx == 0) Paint.Align.LEFT else Paint.Align.CENTER
-              )
+      var overlapDetected = true
+      val labelTexts: MutableList<String> = mutableListOf()
+      val labelMarginsAndAnchor: MutableList<Triple<Float, Float, Float>> = mutableListOf()
+      var unitBarWidth = 0F
+      while (overlapDetected) {
+        unitDistance = distance / rectCount
+        unitBarWidth = unitDistance / distancePerPixel
+        labelTexts.clear()
+        labelMarginsAndAnchor.clear()
+        for (idx in 0..rectCount) {
+          labelTexts.add(idx, getDistanceText(unitDistance * idx))
+          labelMarginsAndAnchor.add(
+            idx,
+            calculateTextPositions(
+              labelTexts[idx],
+              unitBarWidth * idx,
+              if (idx == 0) Paint.Align.LEFT else Paint.Align.CENTER
             )
-          }
-          overlapDetected = false
-          for (idx in 0 until labelMarginsAndAnchor.size - 1) {
-            if (labelMarginsAndAnchor[idx].second >= labelMarginsAndAnchor[idx + 1].first) {
-              if (this.rectCount == 1) {
-                // There is a collision and we can't reduce the count, let's hide the `0` label
-                labelTexts[0] = ""
-                return this
-              }
-              // TODO: Instead of decreasing the rect count should we find next one in the scale table?
-              this.rectCount--
-              overlapDetected = true
+          )
+        }
+        overlapDetected = false
+        for (idx in 0 until labelMarginsAndAnchor.size - 1) {
+          if (labelMarginsAndAnchor[idx].second >= labelMarginsAndAnchor[idx + 1].first) {
+            if (rectCount == 1) {
+              // There is a collision and we can't reduce the count, let's hide the `0` label
+              labelTexts[0] = ""
               break
             }
+            rectCount--
+            overlapDetected = true
+            break
           }
         }
-        return this
       }
+      return ScaleBarUiConfiguration(
+        unitDistance = unitDistance,
+        unitBarWidth = unitBarWidth,
+        rectCount = rectCount,
+        labelTexts = labelTexts.toList(),
+        labelMarginsAndAnchor = labelMarginsAndAnchor.toList()
+      )
     } finally {
       Trace.endSection()
     }
@@ -515,15 +526,15 @@ class ScaleBarImpl : ScaleBar, View {
 }
 
 internal data class ScaleBarUiConfiguration(
-  var unitDistance: Float = 0F,
-  var unitBarWidth: Float = 0F,
-  var rectCount: Int = 0,
-  var labelTexts: MutableList<String> = mutableListOf(),
+  var unitDistance: Float,
+  var unitBarWidth: Float,
+  var rectCount: Int,
+  var labelTexts: List<String>,
   /**
    * A [Triple] that contains per each label:
    * 1. left margin in pixels
    * 2. right margin in pixels
    * 3. anchor X in pixels
    */
-  var labelMarginsAndAnchor: MutableList<Triple<Float, Float, Float>> = mutableListOf(),
+  var labelMarginsAndAnchor: List<Triple<Float, Float, Float>>,
 )
