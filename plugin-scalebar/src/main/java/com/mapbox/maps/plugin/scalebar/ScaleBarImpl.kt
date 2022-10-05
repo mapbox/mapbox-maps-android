@@ -288,7 +288,7 @@ class ScaleBarImpl : ScaleBar, View {
       for (rectIndex in 0..scaleBarUiConfiguration.rectCount) {
         barPaint.color = if (rectIndex % 2 == 0) primaryColor else secondaryColor
         val distanceText =
-          scaleBarUiConfiguration.labelTexts[rectIndex]//getDistanceText(unitDistance * rectIndex)
+          scaleBarUiConfiguration.labelTexts[rectIndex]
         when (rectIndex) {
           0 -> {
             textPaint.textAlign = Paint.Align.LEFT
