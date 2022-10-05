@@ -169,7 +169,7 @@ class MapboxMapTest {
     val styleLoadCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
 
     val userCallbackStyleSlots = mutableListOf<Style.OnStyleLoaded?>()
-    val callbackStyleSlots = mutableListOf<Style.OnStyleLoaded?>()
+    val callbackStyleSlots = mutableListOf<Style.OnStyleLoaded>()
     val callbackStyleSpritesSlots = mutableListOf<Style.OnStyleLoaded?>()
     val callbackStyleSourcesSlots = mutableListOf<Style.OnStyleLoaded?>()
 
@@ -178,7 +178,7 @@ class MapboxMapTest {
     verify {
       styleObserver.setLoadStyleListener(
         captureNullable(userCallbackStyleSlots),
-        captureNullable(callbackStyleSlots),
+        capture(callbackStyleSlots),
         captureNullable(callbackStyleSpritesSlots),
         captureNullable(callbackStyleSourcesSlots),
         any(),
@@ -194,7 +194,7 @@ class MapboxMapTest {
     verifyNo { atmosphere.bindTo(style) }
     verifyNo { styleLoadCallback.onStyleLoaded(style) }
 
-    callbackStyleSlots.first()!!.onStyleLoaded(style)
+    callbackStyleSlots.first().onStyleLoaded(style)
 
     verify { light.bindTo(style) }
     verify { terrain.bindTo(style) }
