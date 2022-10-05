@@ -353,16 +353,11 @@ class ScaleBarImpl : ScaleBar, View {
     Trace.beginSection("ScaleBarImpl.findSuitableScaleBarSegments")
 
     try {
-      var pair: Pair<Int, Int> = scaleTable[0]
-      for (i in 1 until scaleTable.size) {
-        pair = scaleTable[i]
-        val distance = pair.first
-        if (distance > maxDistance) {
-          // use the previous scale here, otherwise the scale will be too large
-          pair = scaleTable[i - 1]
-          break
-        }
-      }
+      // Find the entry where the distance just fits in the given `maxDistance`
+      val pair =
+        scaleTable.lastOrNull { (distance: Int, _: Int) -> distance <= maxDistance }
+          ?: scaleTable[0]
+
       var distance = pair.first.toFloat()
       var rectCount = pair.second
       var unitDistance = distance / rectCount
