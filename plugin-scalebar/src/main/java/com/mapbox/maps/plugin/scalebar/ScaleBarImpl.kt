@@ -1,15 +1,12 @@
 package com.mapbox.maps.plugin.scalebar
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.os.Handler
 import android.os.Message
-import android.os.Trace
 import android.util.AttributeSet
-import android.util.Log
 import android.util.Pair
 import android.view.View
 import android.widget.FrameLayout
@@ -93,62 +90,51 @@ class ScaleBarImpl : ScaleBar, View {
   private val decimalFormat = DecimalFormat("0.#")
   private var isScaleBarVisible = false
   private var reusableCanvas: Canvas? = null
+
   /**
    * Current settings will be used to draw ScaleBar
    */
   override var settings: ScaleBarSettings = ScaleBarSettings()
     set(value) {
-      Log.d("ScaleBarImpl", "settings.set() called")
-      Trace.beginSection("ScaleBarImpl.settings.set")
-
-      try {
-        textPaint.color = value.textColor
-        textPaint.textSize = value.textSize
-        strokePaint.textSize = value.textSize
-        scaleTable = if (value.isMetricUnits) metricTable else imperialTable
-        unit = if (value.isMetricUnits) METER_UNIT else FEET_UNIT
-        strokePaint.strokeWidth = if (value.showTextBorder) value.textBorderWidth else 0F
-        enable = value.enabled
-        if (useContinuousRendering) {
-          reusableCanvas = null
-        } else {
-          if (!refreshHandler.hasMessages(MSG_RENDER_ON_DEMAND)) {
-            refreshHandler.sendEmptyMessageDelayed(MSG_RENDER_ON_DEMAND, value.refreshInterval)
-          }
+      textPaint.color = value.textColor
+      textPaint.textSize = value.textSize
+      strokePaint.textSize = value.textSize
+      scaleTable = if (value.isMetricUnits) metricTable else imperialTable
+      unit = if (value.isMetricUnits) METER_UNIT else FEET_UNIT
+      strokePaint.strokeWidth = if (value.showTextBorder) value.textBorderWidth else 0F
+      enable = value.enabled
+      if (useContinuousRendering) {
+        reusableCanvas = null
+      } else {
+        if (!refreshHandler.hasMessages(MSG_RENDER_ON_DEMAND)) {
+          refreshHandler.sendEmptyMessageDelayed(MSG_RENDER_ON_DEMAND, value.refreshInterval)
         }
-
-        field = value
-        (layoutParams as FrameLayout.LayoutParams).apply {
-          gravity = value.position
-          setMargins(
-            value.marginLeft.toInt(),
-            value.marginTop.toInt(),
-            value.marginRight.toInt(),
-            value.marginBottom.toInt()
-          )
-        }
-        // Refresh mapViewWidth
-        mapViewWidth = mapViewWidth
-      } finally {
-        Trace.endSection() // "ScaleBarImpl.settings.set"
       }
+
+      field = value
+      (layoutParams as FrameLayout.LayoutParams).apply {
+        gravity = value.position
+        setMargins(
+          value.marginLeft.toInt(),
+          value.marginTop.toInt(),
+          value.marginRight.toInt(),
+          value.marginBottom.toInt()
+        )
+      }
+      // Refresh mapViewWidth
+      mapViewWidth = mapViewWidth
     }
 
   private var currentSegmentsConfiguration: SegmentsConfiguration? = null
-
-  private var counter = 0
 
   /**
    * distancePerPixel in current location latitude
    */
   override var distancePerPixel = 0F
     set(value) {
-      Log.d("ScaleBarImpl", "distancePerPixel: field: $field, value: $value")
       if (field != value) {
-        counter++
         // TODO: Check the value is always different than field for Imperial units due to this conversion
         field = if (settings.isMetricUnits) value else value * FEET_PER_METER
-        Trace.beginSection("ScaleBarImpl.distancePerPixel.set")
         if (useContinuousRendering) {
           reusableCanvas = null
         } else {
@@ -159,19 +145,17 @@ class ScaleBarImpl : ScaleBar, View {
             scaleTable = scaleTable,
             textPaint = textPaint,
             strokeWidth = strokePaint.strokeWidth,
-            unit = unit
+            unit = unit,
+            rightMarginPx = width
           )
           // Only force a re-draw if the bar UI has changed enough by checking current
           // segmentsConfiguration against new ones
           if (newSegmentsConfiguration != currentSegmentsConfiguration) {
             if (!refreshHandler.hasMessages(MSG_RENDER_ON_DEMAND)) {
-              Log.d("ScaleBarImpl", "sendEmptyMessageDelayed after $counter")
-              counter = 0
               refreshHandler.sendEmptyMessageDelayed(MSG_RENDER_ON_DEMAND, settings.refreshInterval)
             }
           }
         }
-        Trace.endSection() // "ScaleBarImpl.distancePerPixel.set")
       }
     }
 
@@ -211,9 +195,7 @@ class ScaleBarImpl : ScaleBar, View {
    *  resource that supplies defaults values for the StyledAttributes. Can be 0 to not look for defaults.
    */
   constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(
-    context,
-    attrs,
-    defStyleAttr
+    context, attrs, defStyleAttr
   )
 
   init {
@@ -233,12 +215,6 @@ class ScaleBarImpl : ScaleBar, View {
     }
   }
 
-  override fun invalidate() {
-    Trace.beginSection("ScaleBarImpl.invalidate")
-    super.invalidate()
-    Trace.endSection() // "ScaleBarImpl.invalidate"
-  }
-
   override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
     val (viewWidth, viewHeight) = calculateWidthAndHeight()
     setMeasuredDimension(viewWidth.toInt(), viewHeight.toInt())
@@ -255,108 +231,95 @@ class ScaleBarImpl : ScaleBar, View {
   /**
    * Draw ScaleBar with current settings
    */
-  @SuppressLint("DrawAllocation")
   override fun onDraw(canvas: Canvas) {
-    Trace.beginSection("ScaleBarImpl.onDraw")
-
-    try {
-      if (useContinuousRendering) {
-        if (!isScaleBarVisible) {
-          canvas.drawARGB(0, 0, 0, 0)
-          return
-        }
-        if (reusableCanvas != null) {
-          return
-        }
-      }
-      if (distancePerPixel <= 0 || mapViewWidth <= 0 || width <= 0) {
+    if (useContinuousRendering) {
+      if (!isScaleBarVisible) {
+        canvas.drawARGB(0, 0, 0, 0)
         return
       }
-      settings.run {
-        canvas.drawARGB(255, 0, 0, 0)
-        val maxDistance = mapViewWidth * distancePerPixel * ratio
-        if (maxDistance <= 0.1F) {
-          // There's no space to render the smallest distance. Don't render anything.
-          canvas.drawARGB(0, 0, 0, 0)
-          return
-        }
-        val scaleBarUiConfiguration = calculateSegmentsConfiguration(
-          maxDistance,
-          distancePerPixel,
-          scaleTable,
-          textPaint,
-          strokePaint.strokeWidth,
-          unit = unit
-        )
-        currentSegmentsConfiguration = scaleBarUiConfiguration
+      if (reusableCanvas != null) {
+        return
+      }
+    }
+    if (distancePerPixel <= 0 || mapViewWidth <= 0 || width <= 0) {
+      return
+    }
+    settings.run {
+      val maxDistance = mapViewWidth * distancePerPixel * ratio
+      if (maxDistance <= 0.1F) {
+        // There's no space to render the smallest distance. Don't render anything.
+        canvas.drawARGB(0, 0, 0, 0)
+        return
+      }
+      val scaleBarUiConfiguration = calculateSegmentsConfiguration(
+        maxDistance = maxDistance,
+        distancePerPixel = distancePerPixel,
+        scaleTable = scaleTable,
+        textPaint = textPaint,
+        strokeWidth = strokePaint.strokeWidth,
+        unit = unit,
+        rightMarginPx = width
+      )
+      currentSegmentsConfiguration = scaleBarUiConfiguration
 
-        // Drawing the surrounding borders
-        Trace.beginSection("ScaleBarImpl.onDraw.Borders")
-        barPaint.style = Paint.Style.FILL_AND_STROKE
-        barPaint.color = secondaryColor
-        val barWidth = scaleBarUiConfiguration.unitBarWidth * scaleBarUiConfiguration.rectCount
-        canvas.drawRect(
-          0f,
-          textBarMargin + textSize - (borderWidth * 2),
-          barWidth + (borderWidth * 2),
-          textBarMargin + textSize + height + (borderWidth * 2),
-          barPaint
-        )
-        barPaint.color = primaryColor
-        canvas.drawRect(
-          borderWidth,
-          textBarMargin + textSize - borderWidth,
-          barWidth + borderWidth,
-          textBarMargin + textSize + height + borderWidth,
-          barPaint
-        )
-        Trace.endSection() // "ScaleBarImpl.onDraw.Borders"
+      // Drawing the surrounding borders
+      barPaint.style = Paint.Style.FILL_AND_STROKE
+      barPaint.color = secondaryColor
+      val barWidth = scaleBarUiConfiguration.unitBarWidth * scaleBarUiConfiguration.rectCount
+      canvas.drawRect(
+        0f,
+        textBarMargin + textSize - (borderWidth * 2),
+        barWidth + (borderWidth * 2),
+        textBarMargin + textSize + height + (borderWidth * 2),
+        barPaint
+      )
+      barPaint.color = primaryColor
+      canvas.drawRect(
+        borderWidth,
+        textBarMargin + textSize - borderWidth,
+        barWidth + borderWidth,
+        textBarMargin + textSize + height + borderWidth,
+        barPaint
+      )
 
-        // Drawing the fill
-        barPaint.style = Paint.Style.FILL
+      // Drawing the fill
+      barPaint.style = Paint.Style.FILL
 
-        // Drawing texts
-        Trace.beginSection("ScaleBarImpl.onDraw.BarsAndText")
-
-        for (rectIndex in 0..scaleBarUiConfiguration.rectCount) {
-          barPaint.color = if (rectIndex % 2 == 0) primaryColor else secondaryColor
-          val distanceText =
-            scaleBarUiConfiguration.labelTexts[rectIndex]//getDistanceText(unitDistance * rectIndex)
-          when (rectIndex) {
-            0 -> {
-              textPaint.textAlign = Paint.Align.LEFT
-              strokePaint.textAlign = Paint.Align.LEFT
-            }
-            else -> {
-              textPaint.textAlign = Paint.Align.CENTER
-              strokePaint.textAlign = Paint.Align.CENTER
-            }
+      for (rectIndex in 0..scaleBarUiConfiguration.rectCount) {
+        barPaint.color = if (rectIndex % 2 == 0) primaryColor else secondaryColor
+        val distanceText =
+          scaleBarUiConfiguration.labelTexts[rectIndex]//getDistanceText(unitDistance * rectIndex)
+        when (rectIndex) {
+          0 -> {
+            textPaint.textAlign = Paint.Align.LEFT
+            strokePaint.textAlign = Paint.Align.LEFT
           }
+          else -> {
+            textPaint.textAlign = Paint.Align.CENTER
+            strokePaint.textAlign = Paint.Align.CENTER
+          }
+        }
 
-          drawText(
-            canvas = canvas,
-            text = distanceText,
-            x = scaleBarUiConfiguration.labelMarginsAndAnchor[rectIndex].third.toFloat(),
-            y = textSize,
+        drawText(
+          canvas = canvas,
+          text = distanceText,
+          x = scaleBarUiConfiguration.labelMarginsAndAnchor[rectIndex].third,
+          y = textSize,
+        )
+
+        if (rectIndex != scaleBarUiConfiguration.rectCount) {
+          canvas.drawRect(
+            (borderWidth * 2) + (scaleBarUiConfiguration.unitBarWidth * rectIndex),
+            textBarMargin + textSize,
+            scaleBarUiConfiguration.unitBarWidth * (1 + rectIndex),
+            textBarMargin + textSize + height,
+            barPaint
           )
-
-          if (rectIndex != scaleBarUiConfiguration.rectCount) {
-            canvas.drawRect(
-              (borderWidth * 2) + (scaleBarUiConfiguration.unitBarWidth * rectIndex),
-              textBarMargin + textSize,
-              scaleBarUiConfiguration.unitBarWidth.toFloat() * (1 + rectIndex),
-              textBarMargin + textSize + height,
-              barPaint
-            )
-          }
         }
-        Trace.endSection() // "ScaleBarImpl.onDraw.BarsAndText"
       }
-      if (useContinuousRendering) {
-        reusableCanvas = canvas
-      }
-    } finally {
-      Trace.endSection() // "ScaleBarImpl.onDraw"
+    }
+    if (useContinuousRendering) {
+      reusableCanvas = canvas
     }
   }
 
@@ -373,7 +336,7 @@ class ScaleBarImpl : ScaleBar, View {
   }
 
   /**
-   * @return A tuple with the scale bar segment distance and the amount of bar segments
+   * @return a new configuration holding the values to be able to render the scale bar
    */
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal fun calculateSegmentsConfiguration(
@@ -382,129 +345,134 @@ class ScaleBarImpl : ScaleBar, View {
     scaleTable: List<Pair<Int, Int>>,
     textPaint: Paint,
     strokeWidth: Float,
-    unit: String
+    unit: String,
+    rightMarginPx: Int
   ): SegmentsConfiguration {
-    Trace.beginSection("ScaleBarImpl.findSuitableScaleBarSegments")
-    try {
-      // Find the entry where the distance just fits in the given `maxDistance`
-      val pair =
-        scaleTable.lastOrNull { (distance: Int, _: Int) -> distance <= maxDistance }
-          ?: scaleTable[0]
+    // Find the entry where the distance just fits in the given `maxDistance`
+    val pair =
+      scaleTable.lastOrNull { (distance: Int, _: Int) -> distance <= maxDistance } ?: scaleTable[0]
 
-      var distance: Float = pair.first.toFloat()
-      var rectCount: Int = pair.second
-      var unitDistance: Float = distance / rectCount
-      // When maxDistance is small (i.e. high zoom levels near the poles) then
-      // the `distance` might be bigger than maxDistance. This loop will keep removing
-      // bar divisions (rectCount) until it fits
-      while (unitDistance * rectCount > maxDistance && rectCount > 0) {
-        rectCount--
-        distance = unitDistance * rectCount
-      }
-      // In case the unitDistance doesn't fit at all we fallback to maxDistance (rounded to 1
-      // decimal) with 1 division
-      if (rectCount == 0) {
-        unitDistance = maxDistance.toOneDecimal()
-        rectCount = 1
-        distance = unitDistance
-      }
+    var distance: Float = pair.first.toFloat()
+    var rectCount: Int = pair.second
+    var unitDistance: Float = distance / rectCount
 
-      var overlapDetected = true
-      val labelTexts: MutableList<String> = mutableListOf()
-      val labelMarginsAndAnchor: MutableList<Triple<Float, Float, Float>> = mutableListOf()
-      var unitBarWidth = 0F
-      while (overlapDetected) {
-        unitDistance = distance / rectCount
-        unitBarWidth = (unitDistance / distancePerPixel).toOneDecimal()
-        labelTexts.clear()
-        labelMarginsAndAnchor.clear()
-        for (idx in 0..rectCount) {
-          labelTexts.add(idx, getDistanceText(unitDistance * idx, unit))
-          labelMarginsAndAnchor.add(
-            idx,
-            calculateTextPositions(
-              labelTexts[idx],
-              unitBarWidth * idx,
-              if (idx == 0) Paint.Align.LEFT else Paint.Align.CENTER,
-              textPaint,
-              strokeWidth
-            )
+    // When maxDistance is small (i.e. high zoom levels near the poles) then
+    // the `distance` might be bigger than maxDistance. This loop will keep removing
+    // bar divisions (rectCount) until it fits
+    while (unitDistance * rectCount > maxDistance && rectCount > 0) {
+      rectCount--
+      distance = unitDistance * rectCount
+    }
+    // In case the unitDistance doesn't fit at all we fallback to maxDistance (rounded to 1
+    // decimal) with 1 division
+    if (rectCount == 0) {
+      unitDistance = maxDistance.toOneDecimal()
+      rectCount = 1
+      distance = unitDistance
+    }
+
+    var overlapDetected = true
+    val labelTexts: MutableList<String> = mutableListOf()
+    val labelMarginsAndAnchor: MutableList<Triple<Float, Float, Float>> = mutableListOf()
+    var unitBarWidth = 0F
+    while (overlapDetected) {
+      unitDistance = distance / rectCount
+      unitBarWidth = (unitDistance / distancePerPixel).toOneDecimal()
+      labelTexts.clear()
+      labelMarginsAndAnchor.clear()
+
+      // Let's create the text label and calculate the position per each one
+      for (idx in 0..rectCount) {
+        labelTexts.add(idx, getDistanceText(unitDistance * idx, unit))
+        labelMarginsAndAnchor.add(
+          idx, calculateTextPositions(
+            labelTexts[idx],
+            unitBarWidth * idx,
+            if (idx == 0) Paint.Align.LEFT else Paint.Align.CENTER,
+            textPaint,
+            strokeWidth,
+            rightMarginPx
           )
-        }
-        overlapDetected = false
-        for (idx in 0 until labelMarginsAndAnchor.size - 1) {
-          if (labelMarginsAndAnchor[idx].second >= labelMarginsAndAnchor[idx + 1].first) {
-            if (rectCount == 1) {
-              // There is a collision and we can't reduce the count, let's hide the `0` label
-              labelTexts[0] = ""
-              break
-            }
-            rectCount--
-            overlapDetected = true
+        )
+      }
+
+      // Figure out if there's an overlap, by comparing each label right position with the next
+      // one left position
+      overlapDetected = false
+      for (idx in 0 until labelMarginsAndAnchor.size - 1) {
+        // `second` is the label right margin, `first` is the left margin
+        if (labelMarginsAndAnchor[idx].second >= labelMarginsAndAnchor[idx + 1].first) {
+          if (rectCount == 1) {
+            // There is a collision and we can't reduce the count, let's hide the `0` label
+            labelTexts[0] = ""
             break
           }
+          // There's is a collision so reduce the `rectCount` and start all over again
+          rectCount--
+          overlapDetected = true
+          break
         }
       }
-      return SegmentsConfiguration(
-        unitDistance = unitDistance,
-        unitBarWidth = unitBarWidth,
-        rectCount = rectCount,
-        labelTexts = labelTexts.toList(),
-        labelMarginsAndAnchor = labelMarginsAndAnchor.toList()
-      )
-    } finally {
-      Trace.endSection()
     }
+    return SegmentsConfiguration(
+      unitDistance = unitDistance,
+      unitBarWidth = unitBarWidth,
+      rectCount = rectCount,
+      labelTexts = labelTexts.toList(),
+      labelMarginsAndAnchor = labelMarginsAndAnchor.toList()
+    )
   }
 
   private fun calculateTextPositions(
     text: String,
-    x: Float,
+    anchorXPx: Float,
     alignment: Paint.Align,
     textPaint: Paint,
     strokeWidth: Float,
+    rightMarginPx: Int,
   ): Triple<Float, Float, Float> {
-    var safeX = x
+    var safeAnchorX = anchorXPx
 
-    // Check if it goes beyond the right margin of the view
     val textWidthPx = textPaint.measureText(text)
-    val textRightPosPx = x + strokeWidth / 2F + when (alignment) {
+    val textRightPx = anchorXPx + strokeWidth / 2F + when (alignment) {
       Paint.Align.LEFT -> textWidthPx
       Paint.Align.CENTER -> textWidthPx / 2
       Paint.Align.RIGHT -> 0F
     }
 
-    if (textRightPosPx > width) {
+    // Check if it goes beyond the right margin of the view
+    if (textRightPx > rightMarginPx) {
       // Move it away from right margin enough to fit
-      safeX -= (textRightPosPx - width)
+      safeAnchorX -= (textRightPx - rightMarginPx)
     }
-    var textLeftPosPx = safeX - strokeWidth / 2F - when (alignment) {
+    var textLeftPx = safeAnchorX - strokeWidth / 2F - when (alignment) {
       Paint.Align.LEFT -> 0F
       Paint.Align.CENTER -> textWidthPx / 2
       Paint.Align.RIGHT -> textWidthPx
     }
 
     // Check if if the text would fall beyond the left margin
-    if (textLeftPosPx < 0) {
-      textLeftPosPx += strokeWidth / 2
-      safeX += strokeWidth / 2
+    if (textLeftPx < 0) {
+      textLeftPx += strokeWidth / 2
+      safeAnchorX += strokeWidth / 2
     }
-    return Triple(textLeftPosPx.toOneDecimal(), textRightPosPx.toOneDecimal(), safeX.toOneDecimal())
+    return Triple(textLeftPx.toOneDecimal(), textRightPx.toOneDecimal(), safeAnchorX.toOneDecimal())
   }
 
   /**
    * Get the formatted distance text according unit and distance
    *
    * @param distance original distance
+   * @param unit the unit to use, either [METER_UNIT] or [FEET_UNIT]
    * @return Formatted distance text
    */
-  internal fun getDistanceText(distance: Float, unit: String): String {
-    return if (distance == 0F) {
-      "0"
-    } else if (METER_UNIT == unit) {
+  internal fun getDistanceText(distance: Float, unit: String): String = when {
+    distance == 0F -> "0"
+    METER_UNIT == unit -> {
       if (distance < KILOMETER) decimalFormat.format(distance) + unit
       else decimalFormat.format(distance * 1.0 / KILOMETER) + KILOMETER_UNIT
-    } else {
+    }
+    else -> {
       if (distance < FEET_PER_MILE) decimalFormat.format(distance) + unit
       else decimalFormat.format(distance * 1.0 / FEET_PER_MILE) + MILE_UNIT
     }
@@ -528,13 +496,7 @@ class ScaleBarImpl : ScaleBar, View {
             }
             sendEmptyMessageDelayed(MSG_RENDER_CONTINUOUS, it.settings.refreshInterval)
           }
-
-          MSG_RENDER_ON_DEMAND -> {
-            Trace.beginAsyncSection("MSG_RENDER_ON_DEMAND.invalidate", 0)
-            it.invalidate()
-            Trace.endAsyncSection("MSG_RENDER_ON_DEMAND.invalidate", 0)
-          }
-
+          MSG_RENDER_ON_DEMAND -> it.invalidate()
           else -> return
         }
       }
