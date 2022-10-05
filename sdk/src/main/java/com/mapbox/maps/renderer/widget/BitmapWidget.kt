@@ -19,7 +19,7 @@ open class BitmapWidget @JvmOverloads constructor(
     horizontal = WidgetPosition.Horizontal.LEFT,
   ),
   marginX: Float = 0f,
-  marginY: Float = 0f
+  marginY: Float = 0f,
 ) : Widget() {
   override val renderer = BitmapWidgetRenderer(
     bitmap = bitmap,
