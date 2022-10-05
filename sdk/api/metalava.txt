@@ -539,7 +539,6 @@ package com.mapbox.maps.renderer.widget {
     ctor public BitmapWidget(android.graphics.Bitmap bitmap, com.mapbox.maps.renderer.widget.WidgetPosition position = com.mapbox.maps.renderer.widget.WidgetPosition(com.mapbox.maps.renderer.widget.WidgetPosition.Vertical.TOP, com.mapbox.maps.renderer.widget.WidgetPosition.Horizontal.LEFT));
     ctor public BitmapWidget(android.graphics.Bitmap bitmap);
     method public com.mapbox.maps.renderer.widget.BitmapWidgetRenderer getRenderer$metalava_module();
-    method public void onLoaded(android.graphics.Bitmap bitmap);
     method public void setRotation(float angleDegrees);
     method public void setTranslation(float translationX, float translationY);
     method public final void updateBitmap(android.graphics.Bitmap bitmap);

@@ -44,10 +44,4 @@ open class BitmapWidget @JvmOverloads constructor(
   override fun setRotation(angleDegrees: Float) {
     renderer.setRotation(angleDegrees = angleDegrees)
   }
-
-  /**
-   * Called when the Bitmap has been loaded, and could now be recycled.
-   */
-  open fun onLoaded(bitmap: Bitmap) {
-  }
 }

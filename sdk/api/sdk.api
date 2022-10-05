@@ -542,7 +542,6 @@ public class com/mapbox/maps/renderer/widget/BitmapWidget : com/mapbox/maps/rend
 	public fun <init> (Landroid/graphics/Bitmap;Lcom/mapbox/maps/renderer/widget/WidgetPosition;FF)V
 	public synthetic fun <init> (Landroid/graphics/Bitmap;Lcom/mapbox/maps/renderer/widget/WidgetPosition;FFILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun getRenderer$sdk_release ()Lcom/mapbox/maps/renderer/widget/WidgetRenderer;
-	public fun onLoaded (Landroid/graphics/Bitmap;)V
 	public fun setRotation (F)V
 	public fun setTranslation (FF)V
 	public final fun updateBitmap (Landroid/graphics/Bitmap;)V
