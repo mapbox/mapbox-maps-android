@@ -47,7 +47,7 @@ class ScaleBarImpl : ScaleBar, View {
   /**
    * The unit for distance
    */
-  internal var unit: String? = null
+  internal var unit: String = METER_UNIT
 
   /**
    * Defines the width of mapView
@@ -62,19 +62,6 @@ class ScaleBarImpl : ScaleBar, View {
    * Defines the pixel ratio in the current display.
    */
   override var pixelRatio = DEFAULT_PIXEL_RATIO
-
-  override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-    val (viewWidth, viewHeight) = calculateWidthAndHeight()
-    setMeasuredDimension(viewWidth.toInt(), viewHeight.toInt())
-  }
-
-  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  internal fun calculateWidthAndHeight(): Pair<Float, Float> {
-    // Add padding the width to avoid texts being cut off and the end of scalebar.
-    val width = mapViewWidth * settings.ratio + INTERNAL_PADDING_DP * pixelRatio
-    val height = settings.run { textBarMargin + textSize + height + (borderWidth * 2) }
-    return Pair(width, height)
-  }
 
   /**
    * If set to True scale bar will be triggering onDraw depending on [ScaleBarSettings.refreshInterval]
@@ -106,7 +93,6 @@ class ScaleBarImpl : ScaleBar, View {
   private val decimalFormat = DecimalFormat("0.#")
   private var isScaleBarVisible = false
   private var reusableCanvas: Canvas? = null
-
   /**
    * Current settings will be used to draw ScaleBar
    */
@@ -147,6 +133,10 @@ class ScaleBarImpl : ScaleBar, View {
       }
     }
 
+  private var currentSegmentsConfiguration: SegmentsConfiguration? = null
+
+  private var counter = 0
+
   /**
    * distancePerPixel in current location latitude
    */
@@ -154,17 +144,30 @@ class ScaleBarImpl : ScaleBar, View {
     set(value) {
       Log.d("ScaleBarImpl", "distancePerPixel: field: $field, value: $value")
       if (field != value) {
+        counter++
+        // TODO: Check the value is always different than field for Imperial units due to this conversion
+        field = if (settings.isMetricUnits) value else value * FEET_PER_METER
         Trace.beginSection("ScaleBarImpl.distancePerPixel.set")
         if (useContinuousRendering) {
           reusableCanvas = null
         } else {
-          if (!refreshHandler.hasMessages(MSG_RENDER_ON_DEMAND)) {
-            Log.d("ScaleBarImpl", "sendEmptyMessageDelayed")
-            refreshHandler.sendEmptyMessageDelayed(MSG_RENDER_ON_DEMAND, settings.refreshInterval)
+          val maxDistance = mapViewWidth * distancePerPixel * settings.ratio
+          val newSegmentsConfiguration = calculateSegmentsConfiguration(
+            maxDistance = maxDistance,
+            distancePerPixel = field,
+            scaleTable = scaleTable,
+            textPaint = textPaint,
+            strokeWidth = strokePaint.strokeWidth,
+            unit = unit
+          )
+          if (newSegmentsConfiguration != currentSegmentsConfiguration) {
+            if (!refreshHandler.hasMessages(MSG_RENDER_ON_DEMAND)) {
+              Log.d("ScaleBarImpl", "sendEmptyMessageDelayed after $counter")
+              counter = 0
+              refreshHandler.sendEmptyMessageDelayed(MSG_RENDER_ON_DEMAND, settings.refreshInterval)
+            }
           }
         }
-        // TODO: Check the value is always different than field for Imperial units due to this conversion
-        field = if (settings.isMetricUnits) value else value * FEET_PER_METER
         Trace.endSection() // "ScaleBarImpl.distancePerPixel.set")
       }
     }
@@ -233,6 +236,19 @@ class ScaleBarImpl : ScaleBar, View {
     Trace.endSection() // "ScaleBarImpl.invalidate"
   }
 
+  override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+    val (viewWidth, viewHeight) = calculateWidthAndHeight()
+    setMeasuredDimension(viewWidth.toInt(), viewHeight.toInt())
+  }
+
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal fun calculateWidthAndHeight(): Pair<Float, Float> {
+    // Add padding the width to avoid texts being cut off and the end of scalebar.
+    val width = mapViewWidth * settings.ratio + INTERNAL_PADDING_DP * pixelRatio
+    val height = settings.run { textBarMargin + textSize + height + (borderWidth * 2) }
+    return Pair(width, height)
+  }
+
   /**
    * Draw ScaleBar with current settings
    */
@@ -261,11 +277,15 @@ class ScaleBarImpl : ScaleBar, View {
           canvas.drawARGB(0, 0, 0, 0)
           return
         }
-        val scaleBarUiConfiguration = findSuitableScaleBarSegments(
+        val scaleBarUiConfiguration = calculateSegmentsConfiguration(
           maxDistance,
           distancePerPixel,
           scaleTable,
+          textPaint,
+          strokePaint.strokeWidth,
+          unit = unit
         )
+        currentSegmentsConfiguration = scaleBarUiConfiguration
 
         // Drawing the surrounding borders
         Trace.beginSection("ScaleBarImpl.onDraw.Borders")
@@ -313,7 +333,7 @@ class ScaleBarImpl : ScaleBar, View {
           drawText(
             canvas = canvas,
             text = distanceText,
-            x = scaleBarUiConfiguration.labelMarginsAndAnchor[rectIndex].third,
+            x = scaleBarUiConfiguration.labelMarginsAndAnchor[rectIndex].third.toFloat(),
             y = textSize,
           )
 
@@ -321,7 +341,7 @@ class ScaleBarImpl : ScaleBar, View {
             canvas.drawRect(
               (borderWidth * 2) + (scaleBarUiConfiguration.unitBarWidth * rectIndex),
               textBarMargin + textSize,
-              scaleBarUiConfiguration.unitBarWidth * (1 + rectIndex),
+              scaleBarUiConfiguration.unitBarWidth.toFloat() * (1 + rectIndex),
               textBarMargin + textSize + height,
               barPaint
             )
@@ -353,11 +373,14 @@ class ScaleBarImpl : ScaleBar, View {
    * @return A tuple with the scale bar segment distance and the amount of bar segments
    */
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  internal fun findSuitableScaleBarSegments(
+  internal fun calculateSegmentsConfiguration(
     maxDistance: Float,
     distancePerPixel: Float,
     scaleTable: List<Pair<Int, Int>>,
-  ): ScaleBarUiConfiguration {
+    textPaint: Paint,
+    strokeWidth: Float,
+    unit: String
+  ): SegmentsConfiguration {
     Trace.beginSection("ScaleBarImpl.findSuitableScaleBarSegments")
     try {
       // Find the entry where the distance just fits in the given `maxDistance`
@@ -365,9 +388,9 @@ class ScaleBarImpl : ScaleBar, View {
         scaleTable.lastOrNull { (distance: Int, _: Int) -> distance <= maxDistance }
           ?: scaleTable[0]
 
-      var distance = pair.first.toFloat()
-      var rectCount = pair.second
-      var unitDistance = distance / rectCount
+      var distance: Float = pair.first.toFloat()
+      var rectCount: Int = pair.second
+      var unitDistance: Float = distance / rectCount
       // When maxDistance is small (i.e. high zoom levels near the poles) then
       // the `distance` might be bigger than maxDistance. This loop will keep removing
       // bar divisions (rectCount) until it fits
@@ -386,20 +409,28 @@ class ScaleBarImpl : ScaleBar, View {
       var overlapDetected = true
       val labelTexts: MutableList<String> = mutableListOf()
       val labelMarginsAndAnchor: MutableList<Triple<Float, Float, Float>> = mutableListOf()
-      var unitBarWidth = 0F
+      var unitBarWidth: Float = 0F
       while (overlapDetected) {
         unitDistance = distance / rectCount
-        unitBarWidth = unitDistance / distancePerPixel
+        unitBarWidth = (unitDistance / distancePerPixel).toOneDecimal()
+        if (unitBarWidth * distancePerPixel != unitDistance) {
+          Log.e(
+            "ScaleBarImpl",
+            "unitBarWidth*distancePerPixel: ${unitBarWidth * distancePerPixel}, unitDistance: $unitDistance"
+          )
+        }
         labelTexts.clear()
         labelMarginsAndAnchor.clear()
         for (idx in 0..rectCount) {
-          labelTexts.add(idx, getDistanceText(unitDistance * idx))
+          labelTexts.add(idx, getDistanceText(unitDistance * idx, unit))
           labelMarginsAndAnchor.add(
             idx,
             calculateTextPositions(
               labelTexts[idx],
               unitBarWidth * idx,
-              if (idx == 0) Paint.Align.LEFT else Paint.Align.CENTER
+              if (idx == 0) Paint.Align.LEFT else Paint.Align.CENTER,
+              textPaint,
+              strokeWidth
             )
           )
         }
@@ -417,7 +448,7 @@ class ScaleBarImpl : ScaleBar, View {
           }
         }
       }
-      return ScaleBarUiConfiguration(
+      return SegmentsConfiguration(
         unitDistance = unitDistance,
         unitBarWidth = unitBarWidth,
         rectCount = rectCount,
@@ -433,14 +464,14 @@ class ScaleBarImpl : ScaleBar, View {
     text: String,
     x: Float,
     alignment: Paint.Align,
+    textPaint: Paint,
+    strokeWidth: Float,
   ): Triple<Float, Float, Float> {
     var safeX = x
 
-    // As an optimization only check if it goes beyond right view for the last unit bar text
-    // if (lastUnitBarText) {
     // Check if it goes beyond the right margin of the view
     val textWidthPx = textPaint.measureText(text)
-    val textRightPosPx = x + strokePaint.strokeWidth / 2F + when (alignment) {
+    val textRightPosPx = x + strokeWidth / 2F + when (alignment) {
       Paint.Align.LEFT -> textWidthPx
       Paint.Align.CENTER -> textWidthPx / 2
       Paint.Align.RIGHT -> 0F
@@ -450,7 +481,7 @@ class ScaleBarImpl : ScaleBar, View {
       // Move it away from right margin enough to fit
       safeX -= (textRightPosPx - width)
     }
-    var textLeftPosPx = safeX - strokePaint.strokeWidth / 2F - when (alignment) {
+    var textLeftPosPx = safeX - strokeWidth / 2F - when (alignment) {
       Paint.Align.LEFT -> 0F
       Paint.Align.CENTER -> textWidthPx / 2
       Paint.Align.RIGHT -> textWidthPx
@@ -458,10 +489,10 @@ class ScaleBarImpl : ScaleBar, View {
 
     // Check if if the text would fall beyond the left margin
     if (textLeftPosPx < 0) {
-      textLeftPosPx += strokePaint.strokeWidth / 2
-      safeX += strokePaint.strokeWidth / 2
+      textLeftPosPx += strokeWidth / 2
+      safeX += strokeWidth / 2
     }
-    return Triple(textLeftPosPx, textRightPosPx, safeX)
+    return Triple(textLeftPosPx.toOneDecimal(), textRightPosPx.toOneDecimal(), safeX.toOneDecimal())
   }
 
   /**
@@ -470,7 +501,7 @@ class ScaleBarImpl : ScaleBar, View {
    * @param distance original distance
    * @return Formatted distance text
    */
-  internal fun getDistanceText(distance: Float): String {
+  internal fun getDistanceText(distance: Float, unit: String): String {
     return if (distance == 0F) {
       "0"
     } else if (METER_UNIT == unit) {
@@ -525,7 +556,7 @@ class ScaleBarImpl : ScaleBar, View {
   }
 }
 
-internal data class ScaleBarUiConfiguration(
+internal data class SegmentsConfiguration(
   var unitDistance: Float,
   var unitBarWidth: Float,
   var rectCount: Int,
@@ -538,3 +569,5 @@ internal data class ScaleBarUiConfiguration(
    */
   var labelMarginsAndAnchor: List<Triple<Float, Float, Float>>,
 )
+
+private fun Float.toOneDecimal(): Float = (this * 10).toInt() / 10.0F
