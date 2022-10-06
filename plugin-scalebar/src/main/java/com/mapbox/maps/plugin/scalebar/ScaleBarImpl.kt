@@ -522,6 +522,7 @@ class ScaleBarImpl : ScaleBar, View {
     internal const val DEFAULT_PIXEL_RATIO = 1.0F
     internal const val INTERNAL_PADDING_DP = 10
   }
+  private fun Float.toOneDecimal(): Float = (this * 10).toInt() / 10.0F
 }
 
 internal data class SegmentsConfiguration(
@@ -537,5 +538,3 @@ internal data class SegmentsConfiguration(
    */
   var labelMarginsAndAnchor: List<Triple<Float, Float, Float>>,
 )
-
-private fun Float.toOneDecimal(): Float = (this * 10).toInt() / 10.0F
