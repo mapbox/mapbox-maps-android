@@ -30,6 +30,8 @@ open class BitmapWidget @JvmOverloads constructor(
 
   /**
    * Update bitmap widget uses.
+   *
+   * @param bitmap the new Bitmap to render in the Widget.
    */
   fun updateBitmap(bitmap: Bitmap) {
     renderer.updateBitmap(bitmap)
