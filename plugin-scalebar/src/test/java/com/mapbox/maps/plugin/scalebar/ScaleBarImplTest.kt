@@ -10,7 +10,9 @@ import com.mapbox.maps.plugin.scalebar.ScaleBarImpl.Companion.MSG_RENDER_CONTINU
 import com.mapbox.maps.plugin.scalebar.ScaleBarImpl.Companion.MSG_RENDER_ON_DEMAND
 import com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings
 import io.mockk.mockk
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -166,8 +168,8 @@ class ScaleBarImplGetDistanceTextTest(
 
   @Test
   fun getDistanceText() {
-    scaleBarView.settings = scaleBarView.settings.copy(isMetricUnits = isMetricUnits)
-    assertEquals(expectedDistanceText, scaleBarView.getDistanceText(distance))
+    val unit = if (isMetricUnits) METER_UNIT else FEET_UNIT
+    assertEquals(expectedDistanceText, scaleBarView.getDistanceText(distance, unit))
   }
 }
 
@@ -198,6 +200,8 @@ class ScaleBarImplScaleBarSegmentsTest(
   @Test
   fun `verify below and above scale bar segments`() {
     scaleBarView.settings = scaleBarView.settings.copy(isMetricUnits = isMetricUnits)
+    scaleBarView.distancePerPixel = 0.01F
+    val unit = if (isMetricUnits) METER_UNIT else FEET_UNIT
     // Special case where max distance is smaller than the first entry segment in the table
     val belowFirstUnitBarDistance = (scaleTable[0].first.toFloat() / scaleTable[0].second) - 0.1F
     val result =
@@ -206,11 +210,16 @@ class ScaleBarImplScaleBarSegmentsTest(
         scaleBarView.distancePerPixel,
         scaleBarView.scaleTable,
         scaleBarView.textPaint,
+        scaleBarView.strokePaint.strokeWidth,
+        METER_UNIT,
+        Int.MAX_VALUE
       )
-    assertEquals(belowFirstUnitBarDistance, result.first, 0.01F)
-    assertEquals(1, result.second)
+    assertEquals(belowFirstUnitBarDistance, result.unitDistance, 0.01F)
+    assertEquals(1, result.rectCount)
 
     for (index in 1 until scaleTable.size) {
+      // We need to adapt the distancePerPixel to the scale entry we're targeting
+      if (index > 20) scaleBarView.distancePerPixel = 10.0F
       val pair: Pair<Int, Int> = scaleTable[index]
       val distance = pair.first.toFloat()
       val rectCount = pair.second
@@ -221,12 +230,15 @@ class ScaleBarImplScaleBarSegmentsTest(
         scaleBarView.distancePerPixel,
         scaleBarView.scaleTable,
         scaleBarView.textPaint,
+        scaleBarView.strokePaint.strokeWidth,
+        unit,
+        Int.MAX_VALUE
       )
       val previousEntry = scaleTable[index - 1]
       val expectedUnitDistance = previousEntry.first.toFloat() / previousEntry.second
-      assertEquals(expectedUnitDistance, resultBelow.first, 0.01F)
+      assertEquals(expectedUnitDistance, resultBelow.unitDistance, 0.01F)
       val expectedSegments = previousEntry.second
-      assertEquals(expectedSegments, resultBelow.second)
+      assertEquals(expectedSegments, resultBelow.rectCount)
 
       val maxDistanceAboveCurrent = distance + if (distance < 100) 0.1F else 10F
       val resultAbove = scaleBarView.calculateSegmentsConfiguration(
@@ -234,9 +246,12 @@ class ScaleBarImplScaleBarSegmentsTest(
         scaleBarView.distancePerPixel,
         scaleBarView.scaleTable,
         scaleBarView.textPaint,
+        scaleBarView.strokePaint.strokeWidth,
+        unit,
+        Int.MAX_VALUE
       )
-      assertEquals(distance / rectCount, resultAbove.first, 0.01F)
-      assertEquals(rectCount, resultAbove.second)
+      assertEquals("Failed for entry $index", distance / rectCount, resultAbove.unitDistance, 0.01F)
+      assertEquals(rectCount, resultAbove.rectCount)
     }
   }
 }
