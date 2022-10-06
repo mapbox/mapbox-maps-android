@@ -23,8 +23,8 @@ android {
 }
 
 dependencies {
-  compileOnly(project(":sdk"))
-  testImplementation(project(":sdk"))
+  api(Dependencies.androidAutoMapboxMapSdk)
+  testImplementation(Dependencies.androidAutoMapboxMapSdk)
 
   api(Dependencies.googleCarAppLibrary)
   implementation(Dependencies.kotlin)

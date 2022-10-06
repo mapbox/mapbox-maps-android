@@ -4,6 +4,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 ## Features ✨ and improvements 🏁
+* Make the SDK compatible with any version of Mapbox Maps `v10.5.+`. ([#1706](https://github.com/mapbox/mapbox-maps-android/pull/1706))
 
 # 0.3.0 September 26, 2022
 
