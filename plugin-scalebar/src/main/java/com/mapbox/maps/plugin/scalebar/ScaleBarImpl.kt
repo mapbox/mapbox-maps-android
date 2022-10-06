@@ -388,7 +388,8 @@ class ScaleBarImpl : ScaleBar, View {
       for (idx in 0..rectCount) {
         labelTexts.add(idx, getDistanceText(unitDistance * idx, unit))
         labelMarginsAndAnchor.add(
-          idx, calculateTextPositions(
+          idx,
+          calculateTextPositions(
             labelTexts[idx],
             unitBarWidth * idx,
             if (idx == 0) Paint.Align.LEFT else Paint.Align.CENTER,
