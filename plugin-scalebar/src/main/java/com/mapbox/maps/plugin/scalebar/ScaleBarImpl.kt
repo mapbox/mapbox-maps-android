@@ -438,7 +438,7 @@ class ScaleBarImpl : ScaleBar, View {
     var safeAnchorX = anchorXPx
 
     val textWidthPx = textPaint.measureText(text)
-    val textRightPx = anchorXPx + strokeWidth / 2F + when (alignment) {
+    var textRightPx = anchorXPx + strokeWidth / 2F + when (alignment) {
       Paint.Align.LEFT -> textWidthPx
       Paint.Align.CENTER -> textWidthPx / 2
       Paint.Align.RIGHT -> 0F
@@ -457,8 +457,13 @@ class ScaleBarImpl : ScaleBar, View {
 
     // Check if if the text would fall beyond the left margin
     if (textLeftPx < 0) {
+      // Shift everything to the right so it fits
       textLeftPx += strokeWidth / 2
       safeAnchorX += strokeWidth / 2
+      textRightPx += strokeWidth / 2
+      // At this point it can happen that textRightPx is beyond the rightMarginPx
+      // that means that the text doesn't fit! We can't solve it so we let the text be cut on
+      // the right
     }
     return Triple(textLeftPx.toOneDecimal(), textRightPx.toOneDecimal(), safeAnchorX.toOneDecimal())
   }
