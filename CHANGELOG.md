@@ -4,9 +4,6 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-## Bug fixes 🐞
-* Fixed issue where `Widget` is not immediately rendered when added to the `MapView`. ([1708](https://github.com/mapbox/mapbox-maps-android/pull/1708))
-
 # 10.9.0-rc.1
 
 ## Features ✨ and improvements 🏁
@@ -16,6 +13,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix scale bar text being cut ([1716](https://github.com/mapbox/mapbox-maps-android/pull/1716))
 * Fix possible crash when adding terrain using Style DSL after consecutive style changes. ([1717](https://github.com/mapbox/mapbox-maps-android/pull/1717))
 * Fix scale bar text overlapping. ([1728](https://github.com/mapbox/mapbox-maps-android/pull/1728))
+* Fix issue where `Widget` is not immediately rendered when added to the `MapView`. ([1708](https://github.com/mapbox/mapbox-maps-android/pull/1708))
 * Fix "phantom tiles" artefacts after GeoJSON source update when asynchronous tile loading is enabled. ([1729](https://github.com/mapbox/mapbox-maps-android/pull/1729))
 * Mitigate symbol flickering on zooming out globe map. ([1729](https://github.com/mapbox/mapbox-maps-android/pull/1729))
 * Fix random crash on tiles update when asynchronous uploading is enabled. ([1729](https://github.com/mapbox/mapbox-maps-android/pull/1729))
