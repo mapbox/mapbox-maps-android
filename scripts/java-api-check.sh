@@ -3,7 +3,12 @@
 set -Eeuo pipefail
 
 # Usage:
-#   ./java-api-check.sh <current release tag (empty for branches)> <path to current aar> <module name> <last stable release> <optional, path to previously released aar>
+#   ./java-api-check.sh
+#     <current release tag (empty for branches)>
+#     <path to current aar>
+#     <module name>
+#     <last stable release>
+#     <optional, path to previously released aar>
 #
 echo "\$1:$1"
 echo "\$2:$2"
@@ -50,27 +55,30 @@ PREVIOUS_RELEASE_DIR=$(dirname "${PREVIOUS_RELEASE}")
 
 LAST_STABLE_VERSION_TAG=$4 #v10.3.0
 LAST_STABLE_VERSION_TAG_ARRAY=($LAST_STABLE_VERSION_TAG)
-LAST_STABLE_VERSION=${LAST_STABLE_VERSION_TAG_ARRAY[0]:9}
+LAST_STABLE_VERSION=${LAST_STABLE_VERSION_TAG_ARRAY[0]:1}
 
 RELEASE_TAG=${5-""}
 if [[ -z $RELEASE_TAG ]]; then
-  echo "Path to previous version of aar is not set, using ${LAST_STABLE_VERSION}"
+  echo "Downloading ${LAST_STABLE_VERSION} release from the SDK Registry to check api compatibility with revapi."
   AAR_PATH="s3://mapbox-api-downloads-production/v2/mobile-maps-android-"${MODULE_NAME}"/releases/android/"${LAST_STABLE_VERSION}"/maven/maps-"${MODULE_NAME}"-"${LAST_STABLE_VERSION}".aar"
   if [[ $MODULE_NAME == sdk ]]; then
     AAR_PATH="s3://mapbox-api-downloads-production/v2/mobile-maps-android/releases/android/"${LAST_STABLE_VERSION}"/maven/android-"${LAST_STABLE_VERSION}".aar"
   elif [[ $MODULE_NAME == sdk-base ]]; then
     AAR_PATH="s3://mapbox-api-downloads-production/v2/mobile-maps-android-base/releases/android/"${LAST_STABLE_VERSION}"/maven/base-"${LAST_STABLE_VERSION}".aar"
+  elif [[ $MODULE_NAME == androidauto ]]; then
+    echo "Android auto module is not yet released, skip the check."
+    exit 0
   fi
   echo "aar path is: $AAR_PATH, checking file"
   if [[ -z $(aws s3 ls "$AAR_PATH") ]]; then
-    echo "$AAR_PATH doesn't exist on s3, skipping the check"
-    exit 0
+    echo "$AAR_PATH doesn't exist on s3!"
+    exit 1
   fi
   echo "Downloading file from s3"
   aws s3 cp "$AAR_PATH" "${PREVIOUS_RELEASE}"
 else
-    echo "Using the set path for previous release"
-  cp "$RELEASE_TAG" "${TMPDIR}"/previous/sdk-release.aar
+  echo "Using the prebuilt ${RELEASE_TAG} to check api compatibility with revapi."
+  cp "$RELEASE_TAG" "$PREVIOUS_RELEASE"
 fi
 
 extract_classess_jar() {
