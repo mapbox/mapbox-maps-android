@@ -17,6 +17,8 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix "phantom tiles" artefacts after GeoJSON source update when asynchronous tile loading is enabled. ([1729](https://github.com/mapbox/mapbox-maps-android/pull/1729))
 * Mitigate symbol flickering on zooming out globe map. ([1729](https://github.com/mapbox/mapbox-maps-android/pull/1729))
 * Fix random crash on tiles update when asynchronous uploading is enabled. ([1729](https://github.com/mapbox/mapbox-maps-android/pull/1729))
+* Fix a crash when Google location service is started in background but stopped in foreground. ([1729](https://github.com/mapbox/mapbox-maps-android/pull/1729))
+* Fix an issue where mock field is missing from the LocationEngine updates. ([1729](https://github.com/mapbox/mapbox-maps-android/pull/1729))
 
 ## Dependencies
 * Update gl-native to v10.9.0-rc.1 and common to v23.1.0-rc.2. ([1729](https://github.com/mapbox/mapbox-maps-android/pull/1729))
