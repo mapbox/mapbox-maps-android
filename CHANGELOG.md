@@ -4,13 +4,14 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-# 10.9.0-rc.1
+
+# 10.9.0-rc.1 October 07, 2022
 
 ## Features ✨ and improvements 🏁
 * Eliminate tiles re-creation and re-layout on zooming map with globe, when the camera is trespassing the zoom projection border. ([1729](https://github.com/mapbox/mapbox-maps-android/pull/1729))
 
 ## Bug fixes 🐞
-* Fix scale bar text being cut ([1716](https://github.com/mapbox/mapbox-maps-android/pull/1716))
+* Fix scale bar text being cut. ([1716](https://github.com/mapbox/mapbox-maps-android/pull/1716))
 * Fix possible crash when adding terrain using Style DSL after consecutive style changes. ([1717](https://github.com/mapbox/mapbox-maps-android/pull/1717))
 * Fix scale bar text overlapping. ([1728](https://github.com/mapbox/mapbox-maps-android/pull/1728))
 * Fix issue where `Widget` is not immediately rendered when added to the `MapView`. ([1708](https://github.com/mapbox/mapbox-maps-android/pull/1708))
@@ -22,6 +23,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v10.9.0-rc.1 and common to v23.1.0-rc.2. ([1729](https://github.com/mapbox/mapbox-maps-android/pull/1729))
+
 
 # 10.8.1 September 30, 2022
 
