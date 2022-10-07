@@ -38,21 +38,26 @@ CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 TARGET_BRANCH=$(gh pr view "$CURRENT_BRANCH" --json baseRefName --jq '.baseRefName')
 echo "CURRENT_BRANCH: $CURRENT_BRANCH"
 echo "TARGET_BRANCH: $TARGET_BRANCH"
-readonly RELEASE_TAG_PATTERN="v10\.[0-9]*\.[0-9]*$"
 readonly STABLE_RELEASE_TAG_PATTERN="v10\.[0-9]*\.0$"
 
-if ! [ "$TARGET_BRANCH" = "main" ]; then # Release branches
-  LATEST_RELEASE_TAG_IN_THIS_BRANCH=$(git tag --merged "$CURRENT_BRANCH" --sort=-creatordate | grep $RELEASE_TAG_PATTERN | head -n 1)
-  if [ "$LATEST_RELEASE_TAG_IN_THIS_BRANCH" = "*beta*" ] || [ "$LATEST_RELEASE_TAG_IN_THIS_BRANCH" = "*rc*" ]; then
-    # Use the latest stable minor release tag during rc and beta release
-    LAST_STABLE_RELEASE_TAG=$(git tag --list --sort=-creatordate | grep $STABLE_RELEASE_TAG_PATTERN | head -n 1)
-  else
-    # Use the latest stable minor release tag in this branch
-    LAST_STABLE_RELEASE_TAG=$(git tag --merged "$CURRENT_BRANCH" --sort=-creatordate | grep $STABLE_RELEASE_TAG_PATTERN | head -n 1)
-  fi
-else
-  # Use the latest stable minor release tag for main branch
+if [ "$TARGET_BRANCH" = "main" ]; then
+  # use the latest stable minor release tag for main branch
   LAST_STABLE_RELEASE_TAG=$(git tag --list --sort=-creatordate | grep $STABLE_RELEASE_TAG_PATTERN | head -n 1)
+else
+  LATEST_MINOR_THIS_BRANCH=$(git tag --sort=-creatordate | { grep "^$TARGET_BRANCH\.0$" || test $? = 1; } | head -n 1) # grep sets error if result is empty, so `test` is needed
+  if [ -z "$LATEST_MINOR_THIS_BRANCH" ]; then
+    # no minor releases found in this release branch - means we're in the beta/rc stage
+    # then compare with the previous stable minor release
+    readonly MINOR_VERSION=${TARGET_BRANCH:4}
+    readonly PREVIOUS_MINOR=$(($MINOR_VERSION - 1))
+    readonly PREVIOUS_VERSION="v10\.${PREVIOUS_MINOR}\.0$"
+    # use minor release from the previous branch
+    # during rc/beta release compare with the latest previous minor release
+    LAST_STABLE_RELEASE_TAG=$(git tag --list --sort=-creatordate | grep ${PREVIOUS_VERSION} | head -n 1)
+  else
+    # during patch release compare with the previous release in this branch
+    LAST_STABLE_RELEASE_TAG=$LATEST_MINOR_THIS_BRANCH
+  fi
 fi
 echo "LAST_STABLE_RELEASE_TAG: $LAST_STABLE_RELEASE_TAG"
 echo "Release tag: $RELEASE_TAG"
