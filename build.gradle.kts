@@ -39,20 +39,25 @@ allprojects {
       url = uri("https://api.mapbox.com/downloads/v2/releases/maven")
       credentials {
         username = "mapbox"
-        password = System.getenv("SDK_REGISTRY_TOKEN") ?: project.property("SDK_REGISTRY_TOKEN") as String
+        password =
+          System.getenv("SDK_REGISTRY_TOKEN") ?: project.property("SDK_REGISTRY_TOKEN") as String
       }
       authentication {
         create<BasicAuthentication>("basic")
       }
     }
-    maven {
-      url = uri("https://api.mapbox.com/downloads/v2/snapshots/maven")
-      credentials {
-        username = "mapbox"
-        password = System.getenv("SDK_REGISTRY_TOKEN") ?: project.property("SDK_REGISTRY_TOKEN") as String
-      }
-      authentication {
-        create<BasicAuthentication>("basic")
+    // Do not add snapshot maven if a release is being built
+    if (!System.getenv("BUILD_RELEASE_TAG").toBoolean()) {
+      maven {
+        url = uri("https://api.mapbox.com/downloads/v2/snapshots/maven")
+        credentials {
+          username = "mapbox"
+          password =
+            System.getenv("SDK_REGISTRY_TOKEN") ?: project.property("SDK_REGISTRY_TOKEN") as String
+        }
+        authentication {
+          create<BasicAuthentication>("basic")
+        }
       }
     }
     maven {
@@ -60,6 +65,9 @@ allprojects {
     }
   }
 }
+
+println("Circle environment: " + System.getenv("CIRCLECI"))
+println("Circle tag: " + System.getenv("CIRCLE_TAG"))
 
 plugins {
   id(Plugins.dokkaId) version Versions.pluginDokka
