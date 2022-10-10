@@ -12,6 +12,9 @@ parameters:
   git_release_tag:
     type: string
     default: ^v[0-9]+\.[0-9]+\.[0-9]+.*$
+  changelog_branch:
+    type: string
+    default: "^add-changelog.*"
   git_release_branch:
     type: string
     default: ^v[0-9]+\.[0-9]+$
@@ -404,212 +407,337 @@ commands:
                  scripts/ci-github-set-commit-status.py --slug << pipeline.parameters.mapbox_slug >> --hash << pipeline.parameters.mapbox_hash >>
 
 jobs:
+#  Use this construction to skip jobs for the changelog branch
+#  steps:
+#    - when:
+#        condition:
+#          not:
+#            matches:
+#              pattern: << pipeline.parameters.changelog_branch >>
+#              value: << pipeline.git.branch >>
+#        steps:
+#          - step1
+#          - step2
+#          - ...
+#    - run: exit 0
   verify-code:
     executor:
       name: ubuntu
       machine: xlarge
     steps:
-      - checkout
-      - add_ssh_keys:
-          fingerprints:
-            - "3b:cd:47:bf:57:9c:e5:36:b0:4d:5f:12:5e:d3:b3:3e"
-      - restore-gradle-cache
-      - init-aws
-      - run:
-          name: ktlint
-          command: ./gradlew ktlint
-      - run:
-          name: license
-          command: python scripts/license-validate.py
-      - run:
-          name: check changelog
-          command: |
-            if [[ ! -z "${CIRCLE_PULL_REQUEST}" ]]; then
-              echo "$(./mbx-ci github reader token)" > gh_token.txt
-              ./scripts/check-changelog.sh
-            fi
-      - save-gradle-cache
-      - store-results
+      - when:
+          condition:
+            not:
+              matches:
+                pattern: << pipeline.parameters.changelog_branch >>
+                value: << pipeline.git.branch >>
+          steps:
+            - checkout
+            - add_ssh_keys:
+                fingerprints:
+                  - "3b:cd:47:bf:57:9c:e5:36:b0:4d:5f:12:5e:d3:b3:3e"
+            - restore-gradle-cache
+            - init-aws
+            - run:
+                name: ktlint
+                command: ./gradlew ktlint
+            - run:
+                name: license
+                command: python scripts/license-validate.py
+            - run:
+                name: check changelog
+                command: |
+                  if [[ ! -z "${CIRCLE_PULL_REQUEST}" ]]; then
+                    echo "$(./mbx-ci github reader token)" > gh_token.txt
+                    ./scripts/check-changelog.sh
+                  fi
+            - save-gradle-cache
+            - store-results
+      - run: exit 0
 
   verify-docs:
     executor:
       name: ubuntu
       machine: xlarge
     steps:
-      - checkout
-      - restore-gradle-cache
-      - run:
-          no_output_timeout: 30m
-          name: docs
-          command: bash scripts/kdoc-validate.sh
+      - when:
+          condition:
+            not:
+              matches:
+                pattern: << pipeline.parameters.changelog_branch >>
+                value: << pipeline.git.branch >>
+          steps:
+            - checkout
+            - restore-gradle-cache
+            - run:
+                no_output_timeout: 30m
+                name: docs
+                command: bash scripts/kdoc-validate.sh
+      - run: exit 0
 
   verify-api-metalava:
     executor:
       name: ubuntu
       machine: xlarge
     steps:
-      - checkout
-      - restore-gradle-cache
-      - run:
-          no_output_timeout: 30m
-          name: verify-api-metalava
-          command: |
-            ./gradlew checkApiMetalava
+      - when:
+          condition:
+            not:
+              matches:
+                pattern: << pipeline.parameters.changelog_branch >>
+                value: << pipeline.git.branch >>
+          steps:
+            - checkout
+            - restore-gradle-cache
+            - run:
+                no_output_timeout: 30m
+                name: verify-api-metalava
+                command: |
+                  ./gradlew checkApiMetalava
+      - run: exit 0
 
   verify-api-kotlin-binary-compatibility:
     executor: ubuntu
     steps:
-      - checkout
-      - restore-gradle-cache
-      - run:
-          no_output_timeout: 30m
-          name: verify-api-kotlin-binary-compatibility
-          command: |
-            ./gradlew checkApiKotlinValidator
+      - when:
+          condition:
+            not:
+              matches:
+                pattern: << pipeline.parameters.changelog_branch >>
+                value: << pipeline.git.branch >>
+          steps:
+            - checkout
+            - restore-gradle-cache
+            - run:
+                no_output_timeout: 30m
+                name: verify-api-kotlin-binary-compatibility
+                command: |
+                  ./gradlew checkApiKotlinValidator
+      - run: exit 0
 
   verify-api-revapi:
     executor: ubuntu
     steps:
-      - checkout
-      - restore-gradle-cache
-      - init-aws
-      - run:
-          no_output_timeout: 30m
-          name: verify-api-revapi
-          command: |
-            make build
-            echo "$(./mbx-ci github reader token)" > gh_token.txt
-            if [[ $CIRCLE_TAG =~ << pipeline.parameters.git_release_tag >> ]]; then
-              ./scripts/java-api-check-all.sh "${CIRCLE_TAG}"
-            else
-              ./scripts/java-api-check-all.sh ""
-            fi
-      - store_artifacts:
-          path: api_compat_report
+      - when:
+          condition:
+            not:
+              matches:
+                pattern: << pipeline.parameters.changelog_branch >>
+                value: << pipeline.git.branch >>
+          steps:
+            - checkout
+            - restore-gradle-cache
+            - init-aws
+            - run:
+                no_output_timeout: 30m
+                name: verify-api-revapi
+                command: |
+                  make build
+                  echo "$(./mbx-ci github reader token)" > gh_token.txt
+                  if [[ $CIRCLE_TAG =~ << pipeline.parameters.git_release_tag >> ]]; then
+                    ./scripts/java-api-check-all.sh "${CIRCLE_TAG}"
+                  else
+                    ./scripts/java-api-check-all.sh ""
+                  fi
+            - store_artifacts:
+                path: api_compat_report
+      - run: exit 0
 
   verify-internal:
     executor:
       name: ubuntu
       machine: small
     steps:
-      - checkout
-      - add_ssh_keys:
-          fingerprints:
-            - "3b:cd:47:bf:57:9c:e5:36:b0:4d:5f:12:5e:d3:b3:3e"
-      - validate-internal-ci
+      - when:
+          condition:
+            not:
+              matches:
+                pattern: << pipeline.parameters.changelog_branch >>
+                value: << pipeline.git.branch >>
+          steps:
+            - checkout
+            - add_ssh_keys:
+                fingerprints:
+                  - "3b:cd:47:bf:57:9c:e5:36:b0:4d:5f:12:5e:d3:b3:3e"
+            - validate-internal-ci
+      - run: exit 0
 
   run-unit-test:
     executor:
       name: ubuntu
       machine: xlarge
     steps:
-      - checkout
-      - restore-gradle-cache
-      - jvm-unit-tests
+      - when:
+          condition:
+            not:
+              matches:
+                pattern: << pipeline.parameters.changelog_branch >>
+                value: << pipeline.git.branch >>
+          steps:
+            - checkout
+            - restore-gradle-cache
+            - jvm-unit-tests
+      - run: exit 0
 
   run-lint:
     executor:
       name: ubuntu
       machine: xlarge
     steps:
-      - checkout
-      - restore-gradle-cache
-      - run:
-          name: lintRelease
-          command: ./gradlew lintRelease
+      - when:
+          condition:
+            not:
+              matches:
+                pattern: << pipeline.parameters.changelog_branch >>
+                value: << pipeline.git.branch >>
+          steps:
+            - checkout
+            - restore-gradle-cache
+            - run:
+                name: lintRelease
+                command: ./gradlew lintRelease
+      - run: exit 0
 
   run-robo-test:
     executor:
       name: ubuntu
       machine: small
     steps:
-      - read-from-workspace
-      - login-google-cloud-platform
-      - run-firebase-robo
+      - when:
+          condition:
+            not:
+              matches:
+                pattern: << pipeline.parameters.changelog_branch >>
+                value: << pipeline.git.branch >>
+          steps:
+            - read-from-workspace
+            - login-google-cloud-platform
+            - run-firebase-robo
+      - run: exit 0
 
   run-app-instrumentation-test:
     executor:
       name: ubuntu
       machine: small
     steps:
-      - read-from-workspace
-      - login-google-cloud-platform
-      - run-firebase-instrumentation:
-          module_target: "app"
+      - when:
+          condition:
+            not:
+              matches:
+                pattern: << pipeline.parameters.changelog_branch >>
+                value: << pipeline.git.branch >>
+          steps:
+            - read-from-workspace
+            - login-google-cloud-platform
+            - run-firebase-instrumentation:
+                module_target: "app"
+      - run: exit 0
 
   run-sdk-instrumentation-test:
     executor:
       name: ubuntu
       machine: small
     steps:
-      - read-from-workspace
-      - mapbox-gl-native-begin
-      - login-google-cloud-platform
-      - run-firebase-instrumentation:
-          module_target: "sdk"
-      - mapbox-gl-native-end
+      - when:
+          condition:
+            not:
+              matches:
+                pattern: << pipeline.parameters.changelog_branch >>
+                value: << pipeline.git.branch >>
+          steps:
+            - read-from-workspace
+            - mapbox-gl-native-begin
+            - login-google-cloud-platform
+            - run-firebase-instrumentation:
+                module_target: "sdk"
+            - mapbox-gl-native-end
+      - run: exit 0
 
   run-style-test:
     executor: ubuntu
     steps:
-      - checkout
-      - restore-gradle-cache
-      - build-instrumentation-test:
-          module_target: "extension-style-app"
-      - build-module:
-          module_target: "extension-style-app"
-          variant: "Debug"
-      - store_artifacts:
-          path: extension-style-app/build/outputs/apk
-          destination: .
-      - login-google-cloud-platform
-      - run-firebase-instrumentation:
-          module_target: "extension-style-app"
-          app_target: "extension-style-app"
+      - when:
+          condition:
+            not:
+              matches:
+                pattern: << pipeline.parameters.changelog_branch >>
+                value: << pipeline.git.branch >>
+          steps:
+            - checkout
+            - restore-gradle-cache
+            - build-instrumentation-test:
+                module_target: "extension-style-app"
+            - build-module:
+                module_target: "extension-style-app"
+                variant: "Debug"
+            - store_artifacts:
+                path: extension-style-app/build/outputs/apk
+                destination: .
+            - login-google-cloud-platform
+            - run-firebase-instrumentation:
+                module_target: "extension-style-app"
+                app_target: "extension-style-app"
+      - run: exit 0
 
   build-android-auto-app:
     executor: ubuntu
     steps:
-      - checkout
-      - restore-gradle-cache
-      - build-module:
-          module_target: "android-auto-app"
-          variant: "Release"
+      - when:
+          condition:
+            not:
+              matches:
+                pattern: << pipeline.parameters.changelog_branch >>
+                value: << pipeline.git.branch >>
+          steps:
+            - checkout
+            - restore-gradle-cache
+            - build-module:
+                module_target: "android-auto-app"
+                variant: "Release"
+      - run: exit 0
 
   build-modules-and-instrumentation-tests:
     executor:
       name: ubuntu
       machine: xlarge
     steps:
-      - checkout
-      - add_ssh_keys:
-          fingerprints:
-            - "3b:cd:47:bf:57:9c:e5:36:b0:4d:5f:12:5e:d3:b3:3e"
-      - restore-gradle-cache
-      - generate-sanity-test
-      - build-module:
-          module_target: "app"
-          variant: "All"
-      - build-instrumentation-test:
-          module_target: "app"
-      - build-instrumentation-test:
-          module_target: "sdk"
-      - store_artifacts:
-          path: app/build/outputs/apk
-          destination: .
-      - update-version-name
-      - init-aws
-      - generate-docs
-      - publish-sdk-registry
-      - publish-sdk-registry-named-snapshot
-      - save-to-workspace:
-          path: "app/build/outputs/apk/release/app-release.apk"
-      - save-to-workspace:
-          path: "app/build/outputs/apk/debug/app-debug.apk"
-      - save-to-workspace:
-          path: "app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk"
-      - save-to-workspace:
-          path: "sdk/build/outputs/apk/androidTest/debug/sdk-debug-androidTest.apk"
+      - when:
+          condition:
+            not:
+              matches:
+                pattern: << pipeline.parameters.changelog_branch >>
+                value: << pipeline.git.branch >>
+          steps:
+            - checkout
+            - add_ssh_keys:
+                fingerprints:
+                  - "3b:cd:47:bf:57:9c:e5:36:b0:4d:5f:12:5e:d3:b3:3e"
+            - restore-gradle-cache
+            - generate-sanity-test
+            - build-module:
+                module_target: "app"
+                variant: "All"
+            - build-instrumentation-test:
+                module_target: "app"
+            - build-instrumentation-test:
+                module_target: "sdk"
+            - store_artifacts:
+                path: app/build/outputs/apk
+                destination: .
+            - update-version-name
+            - init-aws
+            - generate-docs
+            - publish-sdk-registry
+            - publish-sdk-registry-named-snapshot
+            - save-to-workspace:
+                path: "app/build/outputs/apk/release/app-release.apk"
+            - save-to-workspace:
+                path: "app/build/outputs/apk/debug/app-debug.apk"
+            - save-to-workspace:
+                path: "app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk"
+            - save-to-workspace:
+                path: "sdk/build/outputs/apk/androidTest/debug/sdk-debug-androidTest.apk"
+      - run: exit 0
 
   sdk-e2e-test:
       executor: ubuntu
@@ -618,67 +746,83 @@ jobs:
               default: false
               type: boolean
       steps:
-          - add_ssh_keys:
-              fingerprints:
-                  - 3b:cd:47:bf:57:9c:e5:36:b0:4d:5f:12:5e:d3:b3:3e
-          - checkout
-          - init-aws
-          - run:
-              command: |
-                  curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
-                  echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
-                  sudo apt update && sudo apt install gh -y
-                  sudo pip3 install gitpython
-                  sudo cp ./mbx-ci /usr/local/bin/
-              name: Install dependency
-          - when:
-              condition:
-                  not: << parameters.validation >>
-              steps:
-                  - run:
-                      command: |
-                          E2E_TRIGGER=$(./scripts/ci-e2e-job-trigger-checker.sh || echo -n "retval $?")
-                          echo $E2E_TRIGGER
-                          if [[ $E2E_TRIGGER == *"retval 1"* ]]; then
-                              echo "E2E tests not requested, skipping."
-                              exit 0
-                          fi
-                          export GITHUB_TOKEN=$(mbx-ci github reader token)
-                          LABELS=$(gh pr view --repo $CIRCLE_REPOSITORY_URL $CIRCLE_PULL_REQUEST --json labels)
-                          if [[ $LABELS == *"e2e_trunk"* ]]; then
-                              export E2E_VERSION_CONFIG="trunk"
-                          elif [[ $LABELS == *"e2e_latest"* ]]; then
+        - when:
+            condition:
+              not:
+                matches:
+                  pattern: << pipeline.parameters.changelog_branch >>
+                  value: << pipeline.git.branch >>
+            steps:
+              - add_ssh_keys:
+                  fingerprints:
+                      - 3b:cd:47:bf:57:9c:e5:36:b0:4d:5f:12:5e:d3:b3:3e
+              - checkout
+              - init-aws
+              - run:
+                  command: |
+                      curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+                      echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+                      sudo apt update && sudo apt install gh -y
+                      sudo pip3 install gitpython
+                      sudo cp ./mbx-ci /usr/local/bin/
+                  name: Install dependency
+              - when:
+                  condition:
+                      not: << parameters.validation >>
+                  steps:
+                      - run:
+                          command: |
+                              E2E_TRIGGER=$(./scripts/ci-e2e-job-trigger-checker.sh || echo -n "retval $?")
+                              echo $E2E_TRIGGER
+                              if [[ $E2E_TRIGGER == *"retval 1"* ]]; then
+                                  echo "E2E tests not requested, skipping."
+                                  exit 0
+                              fi
+                              export GITHUB_TOKEN=$(mbx-ci github reader token)
+                              LABELS=$(gh pr view --repo $CIRCLE_REPOSITORY_URL $CIRCLE_PULL_REQUEST --json labels)
+                              if [[ $LABELS == *"e2e_trunk"* ]]; then
+                                  export E2E_VERSION_CONFIG="trunk"
+                              elif [[ $LABELS == *"e2e_latest"* ]]; then
+                                  export E2E_VERSION_CONFIG="latest"
+                              else
+                                  export E2E_VERSION_CONFIG="default"
+                              fi
+                              echo "Run E2E tests with ${E2E_VERSION_CONFIG} config."
+                              scripts/ci-e2e-compatibility-start-pipeline.py --token ${MOBILE_METRICS_TOKEN} --config mapbox-maps-android=${CIRCLE_SHA1} --platform all --versions ${E2E_VERSION_CONFIG}
+                          name: Trigger E2E SDK test devel pipeline
+              - when:
+                  condition: << parameters.validation >>
+                  steps:
+                      - run:
+                          command: |
                               export E2E_VERSION_CONFIG="latest"
-                          else
-                              export E2E_VERSION_CONFIG="default"
-                          fi
-                          echo "Run E2E tests with ${E2E_VERSION_CONFIG} config."
-                          scripts/ci-e2e-compatibility-start-pipeline.py --token ${MOBILE_METRICS_TOKEN} --config mapbox-maps-android=${CIRCLE_SHA1} --platform all --versions ${E2E_VERSION_CONFIG}
-                      name: Trigger E2E SDK test devel pipeline
-          - when:
-              condition: << parameters.validation >>
-              steps:
-                  - run:
-                      command: |
-                          export E2E_VERSION_CONFIG="latest"
-                          echo "Run E2E tests with ${E2E_VERSION_CONFIG} config."
-                          scripts/ci-e2e-compatibility-start-pipeline.py --token ${MOBILE_METRICS_TOKEN} --config mapbox-maps-android=${CIRCLE_SHA1} --platform all --versions ${E2E_VERSION_CONFIG}
-                      name: Trigger E2E SDK test validation pipeline
+                              echo "Run E2E tests with ${E2E_VERSION_CONFIG} config."
+                              scripts/ci-e2e-compatibility-start-pipeline.py --token ${MOBILE_METRICS_TOKEN} --config mapbox-maps-android=${CIRCLE_SHA1} --platform all --versions ${E2E_VERSION_CONFIG}
+                          name: Trigger E2E SDK test validation pipeline
+        - run: exit 0
 
   sync-internal-ci:
     executor:
       name: ubuntu
       machine: small
     steps:
-      - checkout
-      - run:
-          name: Notify maps internal CI about $CIRCLE_BRANCH branch update
-          command: |
-            python3 scripts/ci-circleci-start-pipeline.py --token ${MOBILE_METRICS_TOKEN} \
-              --origin-slug mapbox/mapbox-maps-android \
-              --current-branch $CIRCLE_BRANCH \
-              --target-slug mapbox/mapbox-maps-android-private \
-              --sync-internal True
+      - when:
+          condition:
+            not:
+              matches:
+                pattern: << pipeline.parameters.changelog_branch >>
+                value: << pipeline.git.branch >>
+          steps:
+            - checkout
+            - run:
+                name: Notify maps internal CI about $CIRCLE_BRANCH branch update
+                command: |
+                  python3 scripts/ci-circleci-start-pipeline.py --token ${MOBILE_METRICS_TOKEN} \
+                    --origin-slug mapbox/mapbox-maps-android \
+                    --current-branch $CIRCLE_BRANCH \
+                    --target-slug mapbox/mapbox-maps-android-private \
+                    --sync-internal True
+      - run: exit 0
 
   check-gradle-dependencies:
     executor:
