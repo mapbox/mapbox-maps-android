@@ -75,6 +75,7 @@ dependencies {
   implementation(Dependencies.kotlin)
   implementation(Dependencies.androidxCoreKtx)
   implementation(Dependencies.androidxAnnotations)
+  implementation(Dependencies.androidxRecyclerView)
   testImplementation(Dependencies.junit)
   testImplementation(Dependencies.mockk)
   testImplementation(Dependencies.androidxTestCore)
