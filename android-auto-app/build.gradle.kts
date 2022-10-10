@@ -45,8 +45,12 @@ androidExtensions {
 
 dependencies {
   implementation(project(":extension-androidauto"))
-  implementation(project(":sdk"))
   implementation(Dependencies.googleCarAppLibrary)
+
+  // Please review the compatibility guide. This app is showcasing the latest features.
+  // https://github.com/mapbox/mapbox-maps-android/tree/main/extension-androidauto#compatibility-with-maps-sdk-v10
+  implementation("com.mapbox.maps:android:10.9.0-beta.2")
+
   implementation(Dependencies.kotlin)
   implementation(Dependencies.androidxAppCompat)
   implementation(Dependencies.androidxCoreKtx)
@@ -75,6 +79,7 @@ project.apply {
   from("$rootDir/gradle/ktlint.gradle")
   from("$rootDir/gradle/lint.gradle")
   from("$rootDir/gradle/detekt.gradle")
+  from("$rootDir/gradle/dependency-updates.gradle")
 }
 
 val localPath:String = org.apache.commons.io.FilenameUtils.getFullPathNoEndSeparator(project.buildscript.sourceFile.toString())

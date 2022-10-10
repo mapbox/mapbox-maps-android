@@ -161,6 +161,8 @@ Below is the full feature compatibility table:
 Features  | Supported? | Compatible Maps SDK version
 ------------- | ------------- | -------------
 Xiaomi animations | ✅ | v10.9+
+Logo Widget | ✅ | v10.4+
+Compass Widget | ✅ | v10.4+
 Map rendering  | ✅ | v10.0+
 Runtime styling  | ✅ | v10.0+
 Camera animation | ✅ | v10.0+
@@ -168,8 +170,6 @@ Viewport plugin | ✅ | v10.0+
 Location Component plugin | ✅ | v10.0+
 Gestures(scroll and scale) | ✅ | v10.0+
 Annotation plugin | ✅ | v10.0+
-Logo Widget | ✅ | v10.4+
-Compass Widget | ✅ | v10.4+
 View annotation plugin | ❌ | -
 Scale bar plugin | ❌ | -
 Attribution | ❌ | -

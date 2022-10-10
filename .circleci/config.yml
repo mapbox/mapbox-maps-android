@@ -15,9 +15,23 @@ parameters:
   changelog_branch:
     type: string
     default: "^add-changelog.*"
+  git_release_branch:
+    type: string
+    default: ^v[0-9]+\.[0-9]+$
 
 workflows:
   version: 2
+  weekly:
+    triggers:
+      - schedule:
+          # at 7:00 on Monday
+          cron: 0 7 * * 1
+          filters:
+            branches:
+              only:
+                - main
+    jobs:
+      - check-gradle-dependencies
   build:
     when:
       not: << pipeline.parameters.mapbox_upstream >>
@@ -84,7 +98,7 @@ workflows:
                   only:
                       - main
               tags:
-                  only: /^v.*/
+                  only: << pipeline.parameters.git_release_branch >>
           name: run-sdk-e2e-test-validation
           requires:
               - verify-code
@@ -94,7 +108,7 @@ workflows:
             branches:
               only:
                 - main
-                - /^v.*/
+                - << pipeline.parameters.git_release_branch >>
           requires:
             - verify-code
 
@@ -809,6 +823,28 @@ jobs:
                     --target-slug mapbox/mapbox-maps-android-private \
                     --sync-internal True
       - run: exit 0
+
+  check-gradle-dependencies:
+    executor:
+      name: ubuntu
+      machine: small
+    steps:
+      - checkout
+      - restore-gradle-cache
+      - run:
+          name: Run dependency check
+          no_output_timeout: 15m
+          command: ./gradlew dependencyUpdates
+      - run:
+          name: Merge all reports
+          command: python3 scripts/merge-gradle-dependency-output.py
+      - run:
+          name: Zip artifacts
+          command: zip -r results.zip merged_report.txt
+          when: always
+      - store_artifacts:
+          path: results.zip
+          destination: .
 
 executors:
   ubuntu:

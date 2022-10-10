@@ -4,11 +4,15 @@ import androidx.test.annotation.UiThreadTest
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
+import com.mapbox.maps.extension.style.expressions.dsl.generated.literal
+import com.mapbox.maps.extension.style.sources.generated.rasterDemSource
 import com.mapbox.maps.extension.style.style
+import com.mapbox.maps.extension.style.terrain.generated.terrain
 import junit.framework.TestCase.*
 import org.junit.*
 import org.junit.runner.RunWith
 import java.util.concurrent.CountDownLatch
+import kotlin.random.Random
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest
@@ -167,6 +171,59 @@ class StyleLoadTest {
     }
     countDownLatch.throwExceptionOnTimeoutMs()
     assertEquals(loadedStyles, 1)
+  }
+
+  @Test
+  fun testTerrainDoesNotCrashOnMultipleStyleLoad() {
+    fun loadStyleWithTerrain(
+      uri: String = Style.DARK,
+      terrainSource: String = "TERRAIN_SOURCE",
+      demSourceUri: String = "mapbox://mapbox.mapbox-terrain-dem-v1",
+      counter: CountDownLatch
+    ) {
+      mapboxMap.loadStyle(
+        styleExtension = style(uri) {
+          // we need terrain for the drape-mipmap parameter to be effective to reduce flickering
+          +rasterDemSource(terrainSource) {
+            url(demSourceUri)
+            // 514 specifies padded DEM tile and provides better performance than 512 tiles.
+            tileSize(514)
+            maxzoom(3)
+          }
+          +terrain(terrainSource) {
+            exaggeration(literal(0))
+          }
+        }
+      )
+      counter.countDown()
+    }
+
+    rule.scenario.onActivity {
+      it.runOnUiThread {
+        mapView.onStart()
+
+        countDownLatch = CountDownLatch(300)
+        for (i in 0 until 100) {
+          loadStyleWithTerrain(counter = countDownLatch)
+        }
+
+        val random = Random(0)
+        for (i in 0 until 100) {
+          loadStyleWithTerrain(counter = countDownLatch)
+          Thread.sleep(random.nextLong(from = 0, until = 5))
+        }
+
+        for (i in 0 until 100) {
+          mapView.postDelayed(
+            {
+              loadStyleWithTerrain(counter = countDownLatch)
+            },
+            i.toLong()
+          )
+        }
+      }
+    }
+    countDownLatch.throwExceptionOnTimeoutMs()
   }
 
   @After

@@ -28,6 +28,7 @@ object Plugins {
   const val pitestPlugin = "pl.droidsonroids.gradle:gradle-pitest-plugin:${Versions.pitest}"
   const val detekt = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:${Versions.detekt}"
   const val playPublisher = "com.github.triplet.gradle:play-publisher:${Versions.pluginPlayPublisher}"
+  const val gradleVersions = "com.github.ben-manes:gradle-versions-plugin:${Versions.gradleVersionsPlugin}"
 }
 
 object Dependencies {
@@ -66,6 +67,7 @@ object Dependencies {
   const val googleMaterialDesign = "com.google.android.material:material:${Versions.materialDesign}"
   const val googlePlayServicesLocation = "com.google.android.gms:play-services-location:${Versions.googlePlayServicesLocation}"
   const val googleCarAppLibrary = "androidx.car.app:app:${Versions.googleCarAppLibrary}"
+  const val androidAutoMapboxMapSdk = "com.mapbox.maps:android:${Versions.androidAutoMapboxMapSdk}"
   const val squareLeakCanary = "com.squareup.leakcanary:leakcanary-android:${Versions.squareLeakCanary}"
   const val squareRetrofit = "com.squareup.retrofit2:retrofit:${Versions.squareRetrofit}"
   const val squareRetrofitGsonConverter = "com.squareup.retrofit2:converter-gson:${Versions.squareRetrofit}"
@@ -107,8 +109,8 @@ object Versions {
   const val mapboxGestures = "0.8.0"
   const val mapboxJavaServices = "5.4.1"
   const val mapboxBase = "0.8.0"
-  const val mapboxGlNative = "10.9.0-beta.1"
-  const val mapboxCommon = "23.1.0-beta.2"
+  const val mapboxGlNative = "10.9.0-rc.1"
+  const val mapboxCommon = "23.1.0-rc.2"
   const val mapboxAndroidCore = "5.0.2"
   const val androidxCore = "1.7.0" // last version compatible with kotlin 1.5.31
   const val androidxFragmentTesting = "1.5.0"
@@ -130,6 +132,7 @@ object Versions {
   const val materialDesign = "1.2.0"
   const val googlePlayServicesLocation = "18.0.0"
   const val googleCarAppLibrary= "1.1.0"
+  const val androidAutoMapboxMapSdk = "10.5.0"
   const val kotlinCoroutines = "1.3.9"
   const val junit = "4.13.2"
   const val mockk = "1.12.3"
@@ -144,4 +147,5 @@ object Versions {
   const val detekt = "1.20.0"
   const val compose = "1.1.0-beta03"
   const val pluginPlayPublisher = "3.7.0"
+  const val gradleVersionsPlugin = "0.42.0"
 }

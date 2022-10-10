@@ -22,8 +22,15 @@ internal class StyleObserver(
 
   private var userStyleLoadedListener: Style.OnStyleLoaded? = null
 
+  // fired when [StyleDataType.STYLE] arrives, first of all style data loaded events
   private var styleDataStyleLoadedListener: Style.OnStyleLoaded? = null
+  // if the listener is not null - style load has been started
+  // but the initial event has NOT arrived yet
+  private val isWaitingStyleDataStyleEvent
+    get() = styleDataStyleLoadedListener != null
+  // fired when [StyleDataType.SPRITE] arrives
   private var styleDataSpritesLoadedListener: Style.OnStyleLoaded? = null
+  // fired when [StyleDataType.SOURCES] arrives
   private var styleDataSourcesLoadedListener: Style.OnStyleLoaded? = null
 
   private var loadStyleErrorListener: OnMapLoadErrorListener? = null
@@ -50,7 +57,7 @@ internal class StyleObserver(
    */
   fun setLoadStyleListener(
     userOnStyleLoaded: Style.OnStyleLoaded?,
-    styleDataStyleLoadedListener: Style.OnStyleLoaded? = null,
+    styleDataStyleLoadedListener: Style.OnStyleLoaded,
     styleDataSpritesLoadedListener: Style.OnStyleLoaded? = null,
     styleDataSourcesLoadedListener: Style.OnStyleLoaded? = null,
     onMapLoadErrorListener: OnMapLoadErrorListener?
@@ -115,10 +122,18 @@ internal class StyleObserver(
         styleDataStyleLoadedListener = null
       }
       StyleDataType.SPRITE -> {
-        onStyleSpritesReady()
+        // if we're waiting for the [StyleDataType.STYLE] event - then this [StyleDataType.SPRITE]
+        // is related to the previously loaded style, don't notify style extension DSL about it
+        if (!isWaitingStyleDataStyleEvent) {
+          onStyleSpritesReady()
+        }
       }
       StyleDataType.SOURCES -> {
-        onStyleSourcesReady()
+        // if we're waiting for the [StyleDataType.STYLE] event - then this [StyleDataType.SOURCES]
+        // is related to the previously loaded style, don't notify style extension DSL about it
+        if (!isWaitingStyleDataStyleEvent) {
+          onStyleSourcesReady()
+        }
       }
     }
   }

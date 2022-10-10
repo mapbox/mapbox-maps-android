@@ -12,9 +12,12 @@ import com.mapbox.maps.plugin.delegates.listeners.OnStyleDataLoadedListener
 import com.mapbox.maps.renderer.MapboxRenderThread
 import com.mapbox.maps.renderer.MapboxRenderer
 import com.mapbox.maps.renderer.OnFpsChangedListener
+import com.mapbox.maps.renderer.widget.BitmapWidget
+import com.mapbox.maps.renderer.widget.Widget
+import com.mapbox.verifyOnce
 import io.mockk.*
 import org.junit.After
-import org.junit.Assert.assertEquals
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -403,6 +406,48 @@ class MapControllerTest {
   @Test
   fun setMaxScreenRefreshRate() {
     screenRefreshRateTest(1, Int.MAX_VALUE)
+  }
+
+  @OptIn(MapboxExperimental::class)
+  @Test
+  fun addWidgetTest() {
+    val widget = createTestWidget()
+    val mockRenderThread = mockk<MapboxRenderThread>(relaxed = true)
+    every { mockRenderer.renderThread } returns mockRenderThread
+    every { mockRenderer.scheduleRepaint() } just runs
+    testMapController.addWidget(widget)
+    verifyOnce { mockRenderThread.addWidget(widget) }
+    verifyOnce { mockRenderer.scheduleRepaint() }
+  }
+
+  @OptIn(MapboxExperimental::class)
+  @Test
+  fun removeWidgetTest() {
+    val widget = createTestWidget()
+    val mockRenderThread = mockk<MapboxRenderThread>(relaxed = true)
+    every { mockRenderer.renderThread } returns mockRenderThread
+    every { mockRenderer.scheduleRepaint() } just runs
+    every { mockRenderThread.removeWidget(widget) } returns true
+    assertTrue(testMapController.removeWidget(widget))
+    verifyOnce { mockRenderThread.removeWidget(widget) }
+    verifyOnce { mockRenderer.scheduleRepaint() }
+  }
+
+  @OptIn(MapboxExperimental::class)
+  @Test
+  fun removeWidgetWithoutAddTest() {
+    val widget = createTestWidget()
+    val mockRenderThread = mockk<MapboxRenderThread>(relaxed = true)
+    every { mockRenderer.renderThread } returns mockRenderThread
+    assertFalse(testMapController.removeWidget(widget))
+  }
+
+  @OptIn(MapboxExperimental::class)
+  private fun createTestWidget(): Widget {
+    val bitmap = mockk<Bitmap>()
+    every { bitmap.width } returns 0
+    every { bitmap.height } returns 0
+    return BitmapWidget(bitmap)
   }
 
   private fun screenRefreshRateTest(expectedCallCount: Int, actualRefreshRate: Int) {
