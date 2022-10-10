@@ -6,6 +6,8 @@ import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.FrameLayout
 import androidx.annotation.*
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListUpdateCallback
 import com.mapbox.bindgen.Expected
 import com.mapbox.maps.viewannotation.*
 import com.mapbox.maps.viewannotation.ViewAnnotation
@@ -13,17 +15,23 @@ import com.mapbox.maps.viewannotation.ViewAnnotation.Companion.USER_FIXED_DIMENS
 import com.mapbox.maps.viewannotation.ViewAnnotationVisibility
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.CopyOnWriteArraySet
-import kotlin.collections.HashMap
 
 internal class ViewAnnotationManagerImpl(
-  private val mapView: MapView
+  mapView: MapView
 ) : ViewAnnotationManager, ViewAnnotationPositionsUpdateListener {
 
+  private val annotationsRootView: FrameLayout = FrameLayout(mapView.context).also {
+    it.layoutParams = FrameLayout.LayoutParams(
+      ViewGroup.LayoutParams.MATCH_PARENT,
+      ViewGroup.LayoutParams.MATCH_PARENT,
+    )
+  }
   private val mapboxMap: MapboxMap = mapView.getMapboxMap()
-  private val viewPlugins = mapView.mapController.pluginRegistry.viewPlugins
   private val renderThread = mapView.mapController.renderer.renderThread
 
   init {
+    // place the view annotations above the map (index 0) but below the compass, ruler and other plugin views
+    mapView.addView(annotationsRootView, 1)
     mapView.requestDisallowInterceptTouchEvent(false)
     mapboxMap.setViewAnnotationPositionsUpdateListener(this)
   }
@@ -31,10 +39,7 @@ internal class ViewAnnotationManagerImpl(
   private val annotationMap = ConcurrentHashMap<String, ViewAnnotation>()
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal val idLookupMap = ConcurrentHashMap<View, String>()
-  private val hiddenViewMap = ConcurrentHashMap<View, Float>()
-
-  // struct needed for drawing, declare it only once
-  private val currentViewsDrawnMap = HashMap<String, ScreenCoordinate>()
+  private val currentlyDrawnViewIdSet = mutableSetOf<String>()
 
   // using copy on write as user could remove listener while callback is invoked
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
@@ -50,7 +55,7 @@ internal class ViewAnnotationManagerImpl(
     asyncInflateCallback: (View) -> Unit
   ) {
     validateOptions(options)
-    asyncInflater.inflate(resId, mapView) { view, _, _ ->
+    asyncInflater.inflate(resId, annotationsRootView) { view, _, _ ->
       asyncInflateCallback.invoke(prepareViewAnnotation(view, options))
     }
   }
@@ -60,7 +65,7 @@ internal class ViewAnnotationManagerImpl(
     options: ViewAnnotationOptions
   ): View {
     validateOptions(options)
-    val view = LayoutInflater.from(mapView.context).inflate(resId, mapView, false)
+    val view = LayoutInflater.from(annotationsRootView.context).inflate(resId, annotationsRootView, false)
     return prepareViewAnnotation(view, options)
   }
 
@@ -86,7 +91,7 @@ internal class ViewAnnotationManagerImpl(
     annotationMap.forEach { (id, annotation) ->
       remove(id, annotation)
     }
-    currentViewsDrawnMap.clear()
+    currentlyDrawnViewIdSet.clear()
     annotationMap.clear()
     idLookupMap.clear()
   }
@@ -256,10 +261,6 @@ internal class ViewAnnotationManagerImpl(
           return@OnDrawListener
         }
         // hide view below map surface and pull it back when new position from core will arrive
-        if (isAndroidViewVisible) {
-          hiddenViewMap[inflatedView] = inflatedView.translationZ
-          inflatedView.translationZ = mapView.translationZ - 1f
-        }
         updateVisibilityAndNotifyUpdateListeners(
           viewAnnotation,
           if (isAndroidViewVisible)
@@ -308,23 +309,80 @@ internal class ViewAnnotationManagerImpl(
     return null to null
   }
 
+  private class PositionDiffCallback(
+    val oldList: List<ViewAnnotationPositionDescriptor>,
+    val newList: List<ViewAnnotationPositionDescriptor>,
+  ) : DiffUtil.Callback() {
+    override fun getOldListSize() = oldList.size
+    override fun getNewListSize() = newList.size
+    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) = oldList[oldItemPosition].identifier == newList[newItemPosition].identifier
+    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) = oldList[oldItemPosition].identifier == newList[newItemPosition].identifier
+  }
+
+  private var positionDiffCallback = PositionDiffCallback(emptyList(), emptyList())
+
   private fun positionAnnotationViews(
     positionDescriptorCoreList: List<ViewAnnotationPositionDescriptor>
   ) {
+    val positionDiffCallback = PositionDiffCallback(
+      oldList = positionDiffCallback.newList,
+      newList = positionDescriptorCoreList
+    )
+
+    var needToReorderZ = false
+    DiffUtil.calculateDiff(positionDiffCallback).dispatchUpdatesTo(
+      object : ListUpdateCallback {
+        override fun onInserted(position: Int, count: Int) {
+          // reorder only inserted in the middle of the list
+          if (position != positionDescriptorCoreList.lastIndex) {
+            needToReorderZ = true
+          }
+        }
+
+        override fun onRemoved(position: Int, count: Int) {
+          // item removal does not affect order of annotations
+        }
+
+        override fun onMoved(fromPosition: Int, toPosition: Int) {
+          needToReorderZ = true
+        }
+
+        override fun onChanged(position: Int, count: Int, payload: Any?) {
+          // don't care about the contents
+        }
+      }
+    )
+
     // as per current implementation when view annotation was added with WRAP_CONTENT dimension AND
     // allowOverlap = false - core will notify only about this particular view and thus we will remove
     // all the others and then restore later resulting in a quick blink
+
+    // FIXME - other bugs are possible, this does not cover all cases, e.g. 3 annotations and the last one blinks :
+    // Positions : 3
+    //   pos : [identifier: 44, width: 282, height: 196, leftTopCoordinate: [x: 148.00000000000566, y: 616.9999999999659]]
+    //   pos : [identifier: 45, width: 282, height: 196, leftTopCoordinate: [x: 483.0000000000149, y: 566.9999999999759]]
+    //   pos : [identifier: 48, width: -2, height: -2, leftTopCoordinate: [x: -2.147483218E9, y: -4.2949667920000005E9]]
+    // Positions : 3
+    //   pos : [identifier: 42, width: 282, height: 196, leftTopCoordinate: [x: 99.99999999998583, y: 368.9999999999887]]
+    //   pos : [identifier: 44, width: 282, height: 196, leftTopCoordinate: [x: 148.00000000000566, y: 616.9999999999659]]
+    //   pos : [identifier: 45, width: 282, height: 196, leftTopCoordinate: [x: 483.0000000000149, y: 566.9999999999759]]
+    // Positions : 1
+    //   pos : [identifier: 49, width: -2, height: -2, leftTopCoordinate: [x: -2.147483362E9, y: -4.2949661230000005E9]]
+    // Positions : 3
+    //   pos : [identifier: 42, width: 282, height: 196, leftTopCoordinate: [x: 99.99999999998583, y: 368.9999999999887]]
+    //   pos : [identifier: 44, width: 282, height: 196, leftTopCoordinate: [x: 148.00000000000566, y: 616.9999999999659]]
+    //   pos : [identifier: 45, width: 282, height: 196, leftTopCoordinate: [x: 483.0000000000149, y: 566.9999999999759]]
     val wrapContentWithAllowOverlapFalseViewAdded = positionDescriptorCoreList.size == 1 &&
       (positionDescriptorCoreList[0].width == WRAP_CONTENT || positionDescriptorCoreList[0].height == WRAP_CONTENT)
     // firstly delete views that do not belong to the viewport if it's not specific use-case from above
     if (!wrapContentWithAllowOverlapFalseViewAdded) {
-      currentViewsDrawnMap.keys.forEach { id ->
+      currentlyDrawnViewIdSet.forEach { id ->
         if (positionDescriptorCoreList.indexOfFirst { it.identifier == id } == -1) {
           annotationMap[id]?.let { annotation ->
             // if view is invisible / gone we don't remove it so that visibility logic could
             // still be handled by OnGlobalLayoutListener
             if (annotation.view.visibility == View.VISIBLE) {
-              mapView.removeView(annotation.view)
+              annotationsRootView.removeView(annotation.view)
               updateVisibilityAndNotifyUpdateListeners(annotation, ViewAnnotationVisibility.INVISIBLE)
             }
           }
@@ -348,8 +406,9 @@ internal class ViewAnnotationManagerImpl(
             height = descriptor.height
           }
         }
-        if (!currentViewsDrawnMap.keys.contains(descriptor.identifier) && mapView.indexOfChild(annotation.view) == -1) {
-          mapView.addView(annotation.view, annotation.viewLayoutParams)
+        if (!currentlyDrawnViewIdSet.contains(descriptor.identifier)
+          && annotationsRootView.indexOfChild(annotation.view) == -1) {
+          annotationsRootView.addView(annotation.view, annotation.viewLayoutParams)
           updateVisibilityAndNotifyUpdateListeners(
             annotation,
             if (annotation.view.visibility == View.VISIBLE)
@@ -372,24 +431,17 @@ internal class ViewAnnotationManagerImpl(
             }
           }
         }
-        hiddenViewMap[annotation.view]?.let { zIndex ->
-          annotation.view.translationZ = zIndex
-          hiddenViewMap.remove(annotation.view)
-          updateVisibilityAndNotifyUpdateListeners(annotation, ViewAnnotationVisibility.VISIBLE_AND_POSITIONED)
+        // reorder Z index with the iteration order to keep selected annotations on top of others
+        if (needToReorderZ) {
+          annotation.view.bringToFront()
         }
-        // as we preserve correct order we bring each view to the front and correct order will be preserved
-        annotation.view.bringToFront()
       }
-    }
-    // bring to front map view plugins so that they are drawn on top of view annotations
-    viewPlugins.forEach {
-      it.value.bringToFront()
     }
     // all the views should stay as is for that use-case, otherwise we update current view map
     if (!wrapContentWithAllowOverlapFalseViewAdded) {
-      currentViewsDrawnMap.clear()
+      currentlyDrawnViewIdSet.clear()
       positionDescriptorCoreList.forEach {
-        currentViewsDrawnMap[it.identifier] = it.leftTopCoordinate
+        currentlyDrawnViewIdSet.add(it.identifier)
       }
     }
   }
@@ -428,7 +480,7 @@ internal class ViewAnnotationManagerImpl(
   }
 
   private fun remove(internalId: String, annotation: ViewAnnotation) {
-    mapView.removeView(annotation.view)
+    annotationsRootView.removeView(annotation.view)
     updateVisibilityAndNotifyUpdateListeners(annotation, ViewAnnotationVisibility.INVISIBLE)
     annotation.view.removeOnAttachStateChangeListener(annotation.attachStateListener)
     annotation.attachStateListener = null
