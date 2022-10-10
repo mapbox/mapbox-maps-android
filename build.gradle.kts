@@ -47,7 +47,9 @@ allprojects {
       }
     }
     // Do not add snapshot maven if a release is being built
-    if (!System.getenv("BUILD_RELEASE_TAG").toBoolean()) {
+    val releaseTagRegex = "^v[0-9]+\\.[0-9]+\\.[0-9]+.*\$".toRegex()
+    val circleTag = System.getenv("CIRCLE_TAG") ?: ""
+    if (!releaseTagRegex.matches(circleTag)) {
       maven {
         url = uri("https://api.mapbox.com/downloads/v2/snapshots/maven")
         credentials {
