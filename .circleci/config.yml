@@ -443,10 +443,10 @@ jobs:
             - run:
                 name: ktlint
                 command: ./gradlew ktlint
-      - run:
-          name: check release runtime Mapbox dependencies
-          command: |
-            ./gradlew sdk:dependencyInsight --configuration releaseRuntimeClasspath --dependency com.mapbox.maps --no-daemon --no-parallel | grep -vzq 'FAILED'
+            - run:
+                name: check release runtime Mapbox dependencies
+                command: |
+                  ./gradlew sdk:dependencyInsight --configuration releaseRuntimeClasspath --dependency com.mapbox.maps --no-daemon --no-parallel | grep -vzq 'FAILED'
             - run:
                 name: license
                 command: python scripts/license-validate.py
