@@ -39,14 +39,13 @@ allprojects {
       url = uri("https://api.mapbox.com/downloads/v2/releases/maven")
       credentials {
         username = "mapbox"
-        password =
-          System.getenv("SDK_REGISTRY_TOKEN") ?: project.property("SDK_REGISTRY_TOKEN") as String
+        password = System.getenv("SDK_REGISTRY_TOKEN") ?: project.property("SDK_REGISTRY_TOKEN") as String
       }
       authentication {
         create<BasicAuthentication>("basic")
       }
     }
-    // Do not add snapshot maven if a release is being built
+    // Allow Mapbox snapshot maven if a release is **not** being built
     val releaseTagRegex = "^v[0-9]+\\.[0-9]+\\.[0-9]+.*\$".toRegex()
     val circleTag = System.getenv("CIRCLE_TAG") ?: ""
     if (!releaseTagRegex.matches(circleTag)) {
@@ -67,9 +66,6 @@ allprojects {
     }
   }
 }
-
-println("Circle environment: " + System.getenv("CIRCLECI"))
-println("Circle tag: " + System.getenv("CIRCLE_TAG"))
 
 plugins {
   id(Plugins.dokkaId) version Versions.pluginDokka
