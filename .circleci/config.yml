@@ -393,6 +393,19 @@ commands:
                  scripts/ci-github-set-commit-status.py --slug << pipeline.parameters.mapbox_slug >> --hash << pipeline.parameters.mapbox_hash >>
 
 jobs:
+#  Use this construction to skip jobs for the changelog branch
+#  steps:
+#    - when:
+#        condition:
+#          not:
+#            matches:
+#              pattern: << pipeline.parameters.changelog_branch >>
+#              value: << pipeline.git.branch >>
+#        steps:
+#          - step1
+#          - step2
+#          - ...
+#    - run: exit 0
   verify-code:
     executor:
       name: ubuntu
