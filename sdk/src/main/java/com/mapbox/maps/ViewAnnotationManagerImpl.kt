@@ -6,8 +6,6 @@ import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.FrameLayout
 import androidx.annotation.*
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListUpdateCallback
 import com.mapbox.bindgen.Expected
 import com.mapbox.maps.viewannotation.*
 import com.mapbox.maps.viewannotation.ViewAnnotation
@@ -309,49 +307,15 @@ internal class ViewAnnotationManagerImpl(
     return null to null
   }
 
-  private class PositionDiffCallback(
-    val oldList: List<ViewAnnotationPositionDescriptor>,
-    val newList: List<ViewAnnotationPositionDescriptor>,
-  ) : DiffUtil.Callback() {
-    override fun getOldListSize() = oldList.size
-    override fun getNewListSize() = newList.size
-    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) = oldList[oldItemPosition].identifier == newList[newItemPosition].identifier
-    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) = oldList[oldItemPosition].identifier == newList[newItemPosition].identifier
-  }
-
-  private var positionDiffCallback = PositionDiffCallback(emptyList(), emptyList())
-
+  private var positionDescriptorCurrentList = emptyList<ViewAnnotationPositionDescriptor>()
   private fun positionAnnotationViews(
-    positionDescriptorCoreList: List<ViewAnnotationPositionDescriptor>
+    positionDescriptorUpdatedList: List<ViewAnnotationPositionDescriptor>
   ) {
-    val positionDiffCallback = PositionDiffCallback(
-      oldList = positionDiffCallback.newList,
-      newList = positionDescriptorCoreList
+    val needToReorderZ = needToReorderZ(
+      positionDescriptorCurrentList,
+      positionDescriptorUpdatedList,
     )
-
-    var needToReorderZ = false
-    DiffUtil.calculateDiff(positionDiffCallback).dispatchUpdatesTo(
-      object : ListUpdateCallback {
-        override fun onInserted(position: Int, count: Int) {
-          // reorder only inserted in the middle of the list
-          if (position != positionDescriptorCoreList.lastIndex) {
-            needToReorderZ = true
-          }
-        }
-
-        override fun onRemoved(position: Int, count: Int) {
-          // item removal does not affect order of annotations
-        }
-
-        override fun onMoved(fromPosition: Int, toPosition: Int) {
-          needToReorderZ = true
-        }
-
-        override fun onChanged(position: Int, count: Int, payload: Any?) {
-          // don't care about the contents
-        }
-      }
-    )
+    positionDescriptorCurrentList = positionDescriptorUpdatedList
 
     // as per current implementation when view annotation was added with WRAP_CONTENT dimension AND
     // allowOverlap = false - core will notify only about this particular view and thus we will remove
@@ -372,12 +336,12 @@ internal class ViewAnnotationManagerImpl(
     //   pos : [identifier: 42, width: 282, height: 196, leftTopCoordinate: [x: 99.99999999998583, y: 368.9999999999887]]
     //   pos : [identifier: 44, width: 282, height: 196, leftTopCoordinate: [x: 148.00000000000566, y: 616.9999999999659]]
     //   pos : [identifier: 45, width: 282, height: 196, leftTopCoordinate: [x: 483.0000000000149, y: 566.9999999999759]]
-    val wrapContentWithAllowOverlapFalseViewAdded = positionDescriptorCoreList.size == 1 &&
-      (positionDescriptorCoreList[0].width == WRAP_CONTENT || positionDescriptorCoreList[0].height == WRAP_CONTENT)
+    val wrapContentWithAllowOverlapFalseViewAdded = positionDescriptorUpdatedList.size == 1 &&
+      (positionDescriptorUpdatedList[0].width == WRAP_CONTENT || positionDescriptorUpdatedList[0].height == WRAP_CONTENT)
     // firstly delete views that do not belong to the viewport if it's not specific use-case from above
     if (!wrapContentWithAllowOverlapFalseViewAdded) {
       currentlyDrawnViewIdSet.forEach { id ->
-        if (positionDescriptorCoreList.indexOfFirst { it.identifier == id } == -1) {
+        if (positionDescriptorUpdatedList.indexOfFirst { it.identifier == id } == -1) {
           annotationMap[id]?.let { annotation ->
             // if view is invisible / gone we don't remove it so that visibility logic could
             // still be handled by OnGlobalLayoutListener
@@ -390,7 +354,7 @@ internal class ViewAnnotationManagerImpl(
       }
     }
     // add and reposition new and existed views
-    positionDescriptorCoreList.forEach { descriptor ->
+    positionDescriptorUpdatedList.forEach { descriptor ->
       annotationMap[descriptor.identifier]?.let { annotation ->
         // update translation first - notify Android render node to schedule updates
         annotation.view.apply {
@@ -440,7 +404,7 @@ internal class ViewAnnotationManagerImpl(
     // all the views should stay as is for that use-case, otherwise we update current view map
     if (!wrapContentWithAllowOverlapFalseViewAdded) {
       currentlyDrawnViewIdSet.clear()
-      positionDescriptorCoreList.forEach {
+      positionDescriptorUpdatedList.forEach {
         currentlyDrawnViewIdSet.add(it.identifier)
       }
     }
@@ -491,5 +455,57 @@ internal class ViewAnnotationManagerImpl(
     internal const val EXCEPTION_TEXT_GEOMETRY_IS_NULL = "Geometry can not be null!"
     internal const val EXCEPTION_TEXT_ASSOCIATED_FEATURE_ID_ALREADY_EXISTS =
       "View annotation with associatedFeatureId=%s already exists!"
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    internal fun needToReorderZ(
+      positionDescriptorCurrentList: List<ViewAnnotationPositionDescriptor>,
+      positionDescriptorUpdatedList: List<ViewAnnotationPositionDescriptor>
+    ): Boolean {
+      when {
+        // new annotations will be added to layout and trigger on measure anyway
+        positionDescriptorCurrentList.size < positionDescriptorUpdatedList.size -> {
+          return true
+        }
+        positionDescriptorCurrentList.isEmpty() || positionDescriptorUpdatedList.isEmpty() -> {
+          return false
+        }
+        else -> {
+          var currentIndex = 0
+          var updatedIndex = 0
+          // descriptor of items removed from the new list
+          val removedDescriptors = mutableSetOf<String>()
+          while (currentIndex < positionDescriptorCurrentList.size
+            && updatedIndex < positionDescriptorUpdatedList.size) {
+            // skip equal items
+            if (positionDescriptorCurrentList[currentIndex] == positionDescriptorUpdatedList[updatedIndex]) {
+              currentIndex++
+              updatedIndex++
+              continue
+            }
+
+            // if removed descriptors list contains the item from the new list - it means
+            // the element was not removed but moved, need to invalidate Z order
+            if (removedDescriptors.contains(positionDescriptorUpdatedList[currentIndex].identifier)) {
+              return true
+            }
+
+            // find the elements removed from the old list, add them to set
+            while (currentIndex < positionDescriptorCurrentList.size
+              && positionDescriptorCurrentList[currentIndex] != positionDescriptorUpdatedList[updatedIndex]) {
+              removedDescriptors.add(positionDescriptorCurrentList[currentIndex].identifier)
+              currentIndex++
+            }
+          }
+          // iterate to the end of updated list
+          while (updatedIndex < positionDescriptorUpdatedList.size) {
+            if (removedDescriptors.contains(positionDescriptorUpdatedList[updatedIndex].identifier)) {
+              return true
+            }
+            updatedIndex++
+          }
+        }
+      }
+      return false
+    }
   }
 }
