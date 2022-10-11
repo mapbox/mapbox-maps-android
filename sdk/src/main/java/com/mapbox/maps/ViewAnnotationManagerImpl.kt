@@ -370,8 +370,9 @@ internal class ViewAnnotationManagerImpl(
             height = descriptor.height
           }
         }
-        if (!currentlyDrawnViewIdSet.contains(descriptor.identifier)
-          && annotationsRootView.indexOfChild(annotation.view) == -1) {
+        if (!currentlyDrawnViewIdSet.contains(descriptor.identifier) &&
+          annotationsRootView.indexOfChild(annotation.view) == -1
+        ) {
           annotationsRootView.addView(annotation.view, annotation.viewLayoutParams)
           updateVisibilityAndNotifyUpdateListeners(
             annotation,
@@ -474,8 +475,9 @@ internal class ViewAnnotationManagerImpl(
           var updatedIndex = 0
           // descriptor of items removed from the new list
           val removedDescriptors = mutableSetOf<String>()
-          while (currentIndex < positionDescriptorCurrentList.size
-            && updatedIndex < positionDescriptorUpdatedList.size) {
+          while (currentIndex < positionDescriptorCurrentList.size &&
+            updatedIndex < positionDescriptorUpdatedList.size
+          ) {
             // skip equal items
             if (positionDescriptorCurrentList[currentIndex] == positionDescriptorUpdatedList[updatedIndex]) {
               currentIndex++
@@ -490,8 +492,9 @@ internal class ViewAnnotationManagerImpl(
             }
 
             // find the elements removed from the old list, add them to set
-            while (currentIndex < positionDescriptorCurrentList.size
-              && positionDescriptorCurrentList[currentIndex] != positionDescriptorUpdatedList[updatedIndex]) {
+            while (currentIndex < positionDescriptorCurrentList.size &&
+              positionDescriptorCurrentList[currentIndex] != positionDescriptorUpdatedList[updatedIndex]
+            ) {
               removedDescriptors.add(positionDescriptorCurrentList[currentIndex].identifier)
               currentIndex++
             }
