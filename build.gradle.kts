@@ -39,16 +39,16 @@ allprojects {
       url = uri("https://api.mapbox.com/downloads/v2/releases/maven")
       credentials {
         username = "mapbox"
-        password = System.getenv("SDK_REGISTRY_TOKEN") ?: project.property("SDK_REGISTRY_TOKEN") as String
+        password =
+          System.getenv("SDK_REGISTRY_TOKEN") ?: project.property("SDK_REGISTRY_TOKEN") as String
       }
       authentication {
         create<BasicAuthentication>("basic")
       }
     }
-    // Allow Mapbox snapshot maven if a release is **not** being built
     val releaseTagRegex = "^v[0-9]+\\.[0-9]+\\.[0-9]+.*\$".toRegex()
-    val circleTag = System.getenv("CIRCLE_TAG") ?: ""
-    if (!releaseTagRegex.matches(circleTag)) {
+    val buildingRelease = releaseTagRegex.matches(System.getenv("CIRCLE_TAG") ?: "")
+    if (!buildingRelease) {
       maven {
         url = uri("https://api.mapbox.com/downloads/v2/snapshots/maven")
         credentials {
