@@ -35,6 +35,14 @@ internal class ViewAnnotationManagerZOrderingTest(
     fun data() = listOf(
       arrayOf(
         /* old descriptors */
+        descriptors(),
+        /* new descriptors */
+        descriptors(),
+        /* change z order */
+        false,
+      ),
+      arrayOf(
+        /* old descriptors */
         descriptors(
           "1",
           "2",
@@ -44,6 +52,55 @@ internal class ViewAnnotationManagerZOrderingTest(
         descriptors(
           "1",
           "2",
+          "3",
+        ),
+        /* change z order */
+        false,
+      ),
+      arrayOf(
+        /* old descriptors */
+        descriptors(
+          "1",
+          "2",
+          "3",
+        ),
+        /* new descriptors */
+        descriptors(
+          "2",
+          "4",
+        ),
+        /* change z order */
+        false,
+      ),
+      arrayOf(
+        /* old descriptors */
+        descriptors(
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+        ),
+        /* new descriptors */
+        descriptors(
+          "1",
+          "4",
+        ),
+        /* change z order */
+        false,
+      ),
+      arrayOf(
+        /* old descriptors */
+        descriptors(
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+        ),
+        /* new descriptors */
+        descriptors(
+          "1",
         ),
         /* change z order */
         false,
