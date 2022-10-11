@@ -38,6 +38,7 @@ internal class ViewAnnotationManagerImpl(
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal val idLookupMap = ConcurrentHashMap<View, String>()
   private val currentlyDrawnViewIdSet = mutableSetOf<String>()
+  private val unpositionedViews = mutableSetOf<View>()
 
   // using copy on write as user could remove listener while callback is invoked
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
@@ -253,12 +254,20 @@ internal class ViewAnnotationManagerImpl(
     val onDrawListener = ViewTreeObserver.OnDrawListener {
       if (viewAnnotation.handleVisibilityAutomatically) {
         val isAndroidViewVisible = (inflatedView.visibility == View.VISIBLE)
-        if ((isAndroidViewVisible && viewAnnotation.isVisible) ||
-          (!isAndroidViewVisible && viewAnnotation.visibility == ViewAnnotationVisibility.INVISIBLE)
+        if (
+          (isAndroidViewVisible && viewAnnotation.isVisible) ||
+          (!isAndroidViewVisible && viewAnnotation.visibility == ViewAnnotationVisibility.INVISIBLE) ||
+          (!isAndroidViewVisible && viewAnnotation.visibility == ViewAnnotationVisibility.VISIBLE_AND_NOT_POSITIONED)
         ) {
           return@OnDrawListener
         }
-        // hide view below map surface and pull it back when new position from core will arrive
+
+        // hide view until it will be positioned in [positionAnnotationViews]
+        if (isAndroidViewVisible) {
+          unpositionedViews.add(inflatedView)
+          inflatedView.visibility = View.INVISIBLE
+        }
+
         updateVisibilityAndNotifyUpdateListeners(
           viewAnnotation,
           if (isAndroidViewVisible)
@@ -396,6 +405,12 @@ internal class ViewAnnotationManagerImpl(
             }
           }
         }
+
+        if (unpositionedViews.remove(annotation.view)) {
+          annotation.view.visibility = View.VISIBLE
+          updateVisibilityAndNotifyUpdateListeners(annotation, ViewAnnotationVisibility.VISIBLE_AND_POSITIONED)
+        }
+
         // reorder Z index with the iteration order to keep selected annotations on top of others
         if (needToReorderZ) {
           annotation.view.bringToFront()
@@ -429,10 +444,9 @@ internal class ViewAnnotationManagerImpl(
       return
     }
     val wasVisibleBefore = annotation.isVisible
-    val isVisibleNow = (
+    val isVisibleNow =
       currentVisibility == ViewAnnotationVisibility.VISIBLE_AND_POSITIONED ||
         currentVisibility == ViewAnnotationVisibility.VISIBLE_AND_NOT_POSITIONED
-      )
     annotation.visibility = currentVisibility
     if (viewUpdatedListenerSet.isNotEmpty() && isVisibleNow != wasVisibleBefore) {
       viewUpdatedListenerSet.forEach {
@@ -487,7 +501,7 @@ internal class ViewAnnotationManagerImpl(
 
             // if removed descriptors list contains the item from the new list - it means
             // the element was not removed but moved, need to invalidate Z order
-            if (removedDescriptors.contains(positionDescriptorUpdatedList[currentIndex].identifier)) {
+            if (removedDescriptors.contains(positionDescriptorUpdatedList[updatedIndex].identifier)) {
               return true
             }
 
