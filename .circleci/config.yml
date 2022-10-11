@@ -444,7 +444,7 @@ jobs:
                 name: ktlint
                 command: ./gradlew ktlint
             - run:
-                name: check release runtime Mapbox dependencies
+                name: check release runtime Mapbox dependencies to fail fast
                 command: |
                   ./gradlew sdk:dependencyInsight --configuration releaseRuntimeClasspath --dependency com.mapbox.maps --no-daemon --no-parallel | grep -vzq 'FAILED'
             - run:
