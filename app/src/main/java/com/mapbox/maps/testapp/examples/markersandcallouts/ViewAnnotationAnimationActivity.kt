@@ -37,8 +37,8 @@ class ViewAnnotationAnimationActivity : AppCompatActivity() {
   private lateinit var annotationView: View
   private lateinit var textView: TextView
   private var routeCoordinateList = mutableListOf<Point>()
+  private var currentRouteCoordinate = 0
   private var totalLength = 0.0
-  private var count = 0
   private var currentAnimator: Animator? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -107,20 +107,19 @@ class ViewAnnotationAnimationActivity : AppCompatActivity() {
   }
 
   private fun animateNextStep() {
-    if (count == routeCoordinateList.size - 1) {
-      count = 0
-    }
-    val currentPoint = routeCoordinateList[count]
-    val nextPoint = routeCoordinateList[count + 1]
+    currentRouteCoordinate %= (routeCoordinateList.size - 1)
+    val currentPoint = routeCoordinateList[currentRouteCoordinate]
+    val nextPoint = routeCoordinateList[currentRouteCoordinate + 1]
+
     val progress = TurfMeasurement.distance(currentPoint, nextPoint) / totalLength
-    val animateDuration = progress * ANIMATION_DURATION_TOTAL
+    val animateDuration = progress * ANIMATION_DURATION_TOTAL_MS
     currentAnimator = ValueAnimator.ofObject(pointEvaluator, currentPoint, nextPoint).apply {
       duration = animateDuration.roundToLong()
       addUpdateListener(animatorUpdateListener)
       addListener(object : AnimatorListenerAdapter() {
         override fun onAnimationEnd(animation: Animator?) {
           super.onAnimationEnd(animation)
-          count++
+          currentRouteCoordinate++
           animateNextStep()
         }
       })
@@ -157,7 +156,7 @@ class ViewAnnotationAnimationActivity : AppCompatActivity() {
     const val LINE_ID = "line"
     const val SOURCE_ID = "source"
     const val COLOR_PINK_HEX = "#F13C6E"
-    const val ANIMATION_DURATION_TOTAL = 50000
+    const val ANIMATION_DURATION_TOTAL_MS = 50000
     const val ROUTE_FILE_NAME = "sf_airport_route.geojson"
   }
 }
