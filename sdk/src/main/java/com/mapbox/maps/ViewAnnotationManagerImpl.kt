@@ -15,21 +15,20 @@ import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.CopyOnWriteArraySet
 
 internal class ViewAnnotationManagerImpl(
-  mapView: MapView
+  mapView: MapView,
+  private val viewAnnotationsLayout: FrameLayout = FrameLayout(mapView.context),
 ) : ViewAnnotationManager, ViewAnnotationPositionsUpdateListener {
 
-  private val annotationsRootView: FrameLayout = FrameLayout(mapView.context).also {
-    it.layoutParams = FrameLayout.LayoutParams(
-      ViewGroup.LayoutParams.MATCH_PARENT,
-      ViewGroup.LayoutParams.MATCH_PARENT,
-    )
-  }
   private val mapboxMap: MapboxMap = mapView.getMapboxMap()
   private val renderThread = mapView.mapController.renderer.renderThread
 
   init {
+    mapView.layoutParams = FrameLayout.LayoutParams(
+      ViewGroup.LayoutParams.MATCH_PARENT,
+      ViewGroup.LayoutParams.MATCH_PARENT,
+    )
     // place the view annotations above the map (index 0) but below the compass, ruler and other plugin views
-    mapView.addView(annotationsRootView, 1)
+    mapView.addView(viewAnnotationsLayout, 1)
     mapView.requestDisallowInterceptTouchEvent(false)
     mapboxMap.setViewAnnotationPositionsUpdateListener(this)
   }
@@ -54,7 +53,7 @@ internal class ViewAnnotationManagerImpl(
     asyncInflateCallback: (View) -> Unit
   ) {
     validateOptions(options)
-    asyncInflater.inflate(resId, annotationsRootView) { view, _, _ ->
+    asyncInflater.inflate(resId, viewAnnotationsLayout) { view, _, _ ->
       asyncInflateCallback.invoke(prepareViewAnnotation(view, options))
     }
   }
@@ -64,7 +63,7 @@ internal class ViewAnnotationManagerImpl(
     options: ViewAnnotationOptions
   ): View {
     validateOptions(options)
-    val view = LayoutInflater.from(annotationsRootView.context).inflate(resId, annotationsRootView, false)
+    val view = LayoutInflater.from(viewAnnotationsLayout.context).inflate(resId, viewAnnotationsLayout, false)
     return prepareViewAnnotation(view, options)
   }
 
@@ -253,7 +252,7 @@ internal class ViewAnnotationManagerImpl(
     // as OnGlobalLayoutListener does not cover cases for View.INVISIBLE properly
     val onDrawListener = ViewTreeObserver.OnDrawListener {
       if (viewAnnotation.handleVisibilityAutomatically) {
-        val isAndroidViewVisible = (inflatedView.visibility == View.VISIBLE)
+        val isAndroidViewVisible = inflatedView.visibility == View.VISIBLE
         if (
           (isAndroidViewVisible && viewAnnotation.isVisible) ||
           (!isAndroidViewVisible && viewAnnotation.visibility == ViewAnnotationVisibility.INVISIBLE) ||
@@ -329,22 +328,7 @@ internal class ViewAnnotationManagerImpl(
     // as per current implementation when view annotation was added with WRAP_CONTENT dimension AND
     // allowOverlap = false - core will notify only about this particular view and thus we will remove
     // all the others and then restore later resulting in a quick blink
-
-    // FIXME - other bugs are possible, this does not cover all cases, e.g. 3 annotations and the last one blinks :
-    // Positions : 3
-    //   pos : [identifier: 44, width: 282, height: 196, leftTopCoordinate: [x: 148.00000000000566, y: 616.9999999999659]]
-    //   pos : [identifier: 45, width: 282, height: 196, leftTopCoordinate: [x: 483.0000000000149, y: 566.9999999999759]]
-    //   pos : [identifier: 48, width: -2, height: -2, leftTopCoordinate: [x: -2.147483218E9, y: -4.2949667920000005E9]]
-    // Positions : 3
-    //   pos : [identifier: 42, width: 282, height: 196, leftTopCoordinate: [x: 99.99999999998583, y: 368.9999999999887]]
-    //   pos : [identifier: 44, width: 282, height: 196, leftTopCoordinate: [x: 148.00000000000566, y: 616.9999999999659]]
-    //   pos : [identifier: 45, width: 282, height: 196, leftTopCoordinate: [x: 483.0000000000149, y: 566.9999999999759]]
-    // Positions : 1
-    //   pos : [identifier: 49, width: -2, height: -2, leftTopCoordinate: [x: -2.147483362E9, y: -4.2949661230000005E9]]
-    // Positions : 3
-    //   pos : [identifier: 42, width: 282, height: 196, leftTopCoordinate: [x: 99.99999999998583, y: 368.9999999999887]]
-    //   pos : [identifier: 44, width: 282, height: 196, leftTopCoordinate: [x: 148.00000000000566, y: 616.9999999999659]]
-    //   pos : [identifier: 45, width: 282, height: 196, leftTopCoordinate: [x: 483.0000000000149, y: 566.9999999999759]]
+    // FIXME - other bugs are possible, this does not cover all cases
     val wrapContentWithAllowOverlapFalseViewAdded = positionDescriptorUpdatedList.size == 1 &&
       (positionDescriptorUpdatedList[0].width == WRAP_CONTENT || positionDescriptorUpdatedList[0].height == WRAP_CONTENT)
     // firstly delete views that do not belong to the viewport if it's not specific use-case from above
@@ -355,7 +339,7 @@ internal class ViewAnnotationManagerImpl(
             // if view is invisible / gone we don't remove it so that visibility logic could
             // still be handled by OnGlobalLayoutListener
             if (annotation.view.visibility == View.VISIBLE) {
-              annotationsRootView.removeView(annotation.view)
+              viewAnnotationsLayout.removeView(annotation.view)
               updateVisibilityAndNotifyUpdateListeners(annotation, ViewAnnotationVisibility.INVISIBLE)
             }
           }
@@ -380,9 +364,9 @@ internal class ViewAnnotationManagerImpl(
           }
         }
         if (!currentlyDrawnViewIdSet.contains(descriptor.identifier) &&
-          annotationsRootView.indexOfChild(annotation.view) == -1
+          viewAnnotationsLayout.indexOfChild(annotation.view) == -1
         ) {
-          annotationsRootView.addView(annotation.view, annotation.viewLayoutParams)
+          viewAnnotationsLayout.addView(annotation.view, annotation.viewLayoutParams)
           updateVisibilityAndNotifyUpdateListeners(
             annotation,
             if (annotation.view.visibility == View.VISIBLE)
@@ -459,7 +443,7 @@ internal class ViewAnnotationManagerImpl(
   }
 
   private fun remove(internalId: String, annotation: ViewAnnotation) {
-    annotationsRootView.removeView(annotation.view)
+    viewAnnotationsLayout.removeView(annotation.view)
     updateVisibilityAndNotifyUpdateListeners(annotation, ViewAnnotationVisibility.INVISIBLE)
     annotation.view.removeOnAttachStateChangeListener(annotation.attachStateListener)
     annotation.attachStateListener = null

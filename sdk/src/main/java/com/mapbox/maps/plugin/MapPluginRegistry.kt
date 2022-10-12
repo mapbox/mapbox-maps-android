@@ -37,7 +37,6 @@ internal class MapPluginRegistry(
     }
 
   private val plugins = mutableMapOf<String, MapPlugin>()
-  internal val viewPlugins = mutableMapOf<ViewPlugin, View>()
   private val cameraPlugins = CopyOnWriteArraySet<MapCameraPlugin>()
   private val gesturePlugins = CopyOnWriteArraySet<GesturesPlugin>()
   private val styleObserverPlugins = CopyOnWriteArraySet<MapStyleObserverPlugin>()
@@ -70,7 +69,6 @@ internal class MapPluginRegistry(
           )
           mapView.addView(pluginView)
           mapPlugin.onPluginView(pluginView)
-          viewPlugins[mapPlugin] = pluginView
         }
 
         if (mapPlugin is ContextBinder) {
