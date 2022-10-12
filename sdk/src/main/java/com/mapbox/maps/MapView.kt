@@ -8,6 +8,7 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.SurfaceView
 import android.view.TextureView
+import android.view.ViewConfiguration
 import android.widget.FrameLayout
 import androidx.annotation.IntRange
 import androidx.annotation.VisibleForTesting
@@ -22,6 +23,7 @@ import com.mapbox.maps.renderer.egl.EGLCore
 import com.mapbox.maps.renderer.widget.Widget
 import com.mapbox.maps.viewannotation.ViewAnnotationManager
 import java.nio.IntBuffer
+import kotlin.math.hypot
 
 /**
  * A [MapView] provides an embeddable map interface.
@@ -39,6 +41,9 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   internal var mapController: MapController
     private set
 
+  private var interceptedActionDownEvent: MotionEvent? = null
+  private var interceptedActionPointerDownEvent: MotionEvent? = null
+  private val touchSlop: Int by lazy { ViewConfiguration.get(context).scaledTouchSlop }
   private val viewAnnotationManagerDelegate = lazy { ViewAnnotationManagerImpl(this) }
   /**
    * Get view annotation manager instance to add / update / remove view annotations
@@ -296,7 +301,52 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    */
   @SuppressLint("ClickableViewAccessibility")
   override fun onTouchEvent(event: MotionEvent): Boolean {
+    interceptedActionDownEvent?.let {
+      try {
+        return mapController.onTouchEvent(it)
+      } finally {
+        it.recycle()
+        interceptedActionDownEvent = null
+      }
+    }
+    interceptedActionPointerDownEvent?.let {
+      try {
+        return mapController.onTouchEvent(it)
+      } finally {
+        it.recycle()
+        interceptedActionPointerDownEvent = null
+      }
+    }
     return mapController.onTouchEvent(event)
+  }
+
+  override fun onInterceptTouchEvent(event: MotionEvent): Boolean {
+    return when (event.actionMasked) {
+      MotionEvent.ACTION_DOWN -> {
+        interceptedActionDownEvent = MotionEvent.obtain(event)
+        false
+      }
+      MotionEvent.ACTION_POINTER_DOWN -> {
+        interceptedActionPointerDownEvent = MotionEvent.obtain(event)
+        false
+      }
+      MotionEvent.ACTION_MOVE -> {
+        interceptedActionDownEvent.hypot(event) > touchSlop ||
+          interceptedActionPointerDownEvent.hypot(event) > touchSlop
+      }
+      else -> {
+        // In general, we don't want to intercept touch events. They should be
+        // handled by the child view.
+        false
+      }
+    }
+  }
+
+  private fun MotionEvent?.hypot(event: MotionEvent): Int {
+    return hypot(
+      x = (this?.x ?: event.x) - event.x,
+      y = (this?.y ?: event.y) - event.y
+    ).toInt()
   }
 
   /**
