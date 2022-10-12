@@ -3,6 +3,7 @@ package com.mapbox.maps
 import android.os.Handler
 import android.os.Looper
 import android.view.View
+import android.widget.FrameLayout
 import androidx.annotation.LayoutRes
 import androidx.test.annotation.UiThreadTest
 import androidx.test.ext.junit.rules.ActivityScenarioRule
@@ -41,6 +42,7 @@ class ViewAnnotationTest(
 ) {
   private lateinit var mapboxMap: MapboxMap
   private lateinit var mapView: MapView
+  private lateinit var viewAnnotationsLayout: FrameLayout
   private lateinit var viewAnnotationManager: ViewAnnotationManager
   private val mainHandler = Handler(Looper.getMainLooper())
 
@@ -79,6 +81,7 @@ class ViewAnnotationTest(
           }
         })
       }
+      viewAnnotationsLayout = mapView.getChildAt(1) as FrameLayout
       mapboxMap = mapView.getMapboxMap().apply {
         loadStyleUri(
           Style.MAPBOX_STREETS
@@ -144,7 +147,7 @@ class ViewAnnotationTest(
         )
       },
       makeChecks = {
-        assertTrue(mapView.hasChildView(firstView))
+        assertTrue(viewAnnotationsLayout.hasChildView(firstView))
         assertEquals(
           mapboxMap.pixelForCoordinate(CAMERA_CENTER).x - firstView.width / 2.0,
           firstView.translationX.toDouble(),
@@ -178,7 +181,7 @@ class ViewAnnotationTest(
         )
       },
       makeChecks = {
-        assertTrue(mapView.hasChildView(firstView))
+        assertTrue(viewAnnotationsLayout.hasChildView(firstView))
         assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).x, firstView.translationX.toDouble(), ADMISSIBLE_ERROR_PX)
         assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).y, firstView.translationY.toDouble(), ADMISSIBLE_ERROR_PX)
         assertArrayEquals(
@@ -208,7 +211,7 @@ class ViewAnnotationTest(
         )
       },
       makeChecks = {
-        assertTrue(mapView.hasChildView(firstView))
+        assertTrue(viewAnnotationsLayout.hasChildView(firstView))
         assertEquals(
           mapboxMap.pixelForCoordinate(CAMERA_CENTER).x + offsetX,
           firstView.translationX.toDouble(),
@@ -242,7 +245,7 @@ class ViewAnnotationTest(
         )
       },
       makeChecks = {
-        assertFalse(mapView.hasChildView(firstView))
+        assertFalse(viewAnnotationsLayout.hasChildView(firstView))
         assertArrayEquals(
           arrayOf(),
           actualVisibilityUpdateList.toTypedArray()
@@ -273,15 +276,15 @@ class ViewAnnotationTest(
         )
       },
       makeChecks = {
-        assertTrue(mapView.hasChildView(firstView))
+        assertTrue(viewAnnotationsLayout.hasChildView(firstView))
         assertEquals(mapboxMap.pixelForCoordinate(SHIFTED_CENTER).x, firstView.translationX.toDouble(), ADMISSIBLE_ERROR_PX)
         assertEquals(mapboxMap.pixelForCoordinate(SHIFTED_CENTER).y, firstView.translationY.toDouble(), ADMISSIBLE_ERROR_PX)
-        assertTrue(mapView.hasChildView(secondView))
+        assertTrue(viewAnnotationsLayout.hasChildView(secondView))
         assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).x, secondView.translationX.toDouble(), ADMISSIBLE_ERROR_PX)
         assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).y, secondView.translationY.toDouble(), ADMISSIBLE_ERROR_PX)
         MatcherAssert.assertThat(
-          mapView.getChildViewIndex(secondView),
-          Matchers.greaterThan(mapView.getChildViewIndex(firstView))
+          viewAnnotationsLayout.getChildViewIndex(secondView),
+          Matchers.greaterThan(viewAnnotationsLayout.getChildViewIndex(firstView))
         )
         assertArrayEquals(
           arrayOf(
@@ -316,8 +319,8 @@ class ViewAnnotationTest(
         )
       },
       makeChecks = {
-        assertFalse(mapView.hasChildView(firstView))
-        assertTrue(mapView.hasChildView(secondView))
+        assertFalse(viewAnnotationsLayout.hasChildView(firstView))
+        assertTrue(viewAnnotationsLayout.hasChildView(secondView))
         assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).x, secondView.translationX.toDouble(), ADMISSIBLE_ERROR_PX)
         assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).y, secondView.translationY.toDouble(), ADMISSIBLE_ERROR_PX)
         assertArrayEquals(
@@ -353,15 +356,15 @@ class ViewAnnotationTest(
         )
       },
       makeChecks = {
-        assertTrue(mapView.hasChildView(firstView))
+        assertTrue(viewAnnotationsLayout.hasChildView(firstView))
         assertEquals(mapboxMap.pixelForCoordinate(SHIFTED_CENTER).x, firstView.translationX.toDouble(), ADMISSIBLE_ERROR_PX)
         assertEquals(mapboxMap.pixelForCoordinate(SHIFTED_CENTER).y, firstView.translationY.toDouble(), ADMISSIBLE_ERROR_PX)
-        assertTrue(mapView.hasChildView(secondView))
+        assertTrue(viewAnnotationsLayout.hasChildView(secondView))
         assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).x, secondView.translationX.toDouble(), ADMISSIBLE_ERROR_PX)
         assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).y, secondView.translationY.toDouble(), ADMISSIBLE_ERROR_PX)
         MatcherAssert.assertThat(
-          mapView.getChildViewIndex(secondView),
-          Matchers.lessThan(mapView.getChildViewIndex(firstView))
+          viewAnnotationsLayout.getChildViewIndex(secondView),
+          Matchers.lessThan(viewAnnotationsLayout.getChildViewIndex(firstView))
         )
         // although first view is selected - we still respect addition order
         assertArrayEquals(
@@ -397,15 +400,15 @@ class ViewAnnotationTest(
         )
       },
       makeChecks = {
-        assertTrue(mapView.hasChildView(firstView))
+        assertTrue(viewAnnotationsLayout.hasChildView(firstView))
         assertEquals(mapboxMap.pixelForCoordinate(SHIFTED_CENTER).x, firstView.translationX.toDouble(), ADMISSIBLE_ERROR_PX)
         assertEquals(mapboxMap.pixelForCoordinate(SHIFTED_CENTER).y, firstView.translationY.toDouble(), ADMISSIBLE_ERROR_PX)
-        assertTrue(mapView.hasChildView(secondView))
+        assertTrue(viewAnnotationsLayout.hasChildView(secondView))
         assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).x, secondView.translationX.toDouble(), ADMISSIBLE_ERROR_PX)
         assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).y, secondView.translationY.toDouble(), ADMISSIBLE_ERROR_PX)
         MatcherAssert.assertThat(
-          mapView.getChildViewIndex(secondView),
-          Matchers.greaterThan(mapView.getChildViewIndex(firstView))
+          viewAnnotationsLayout.getChildViewIndex(secondView),
+          Matchers.greaterThan(viewAnnotationsLayout.getChildViewIndex(firstView))
         )
         assertArrayEquals(
           arrayOf(
@@ -440,8 +443,8 @@ class ViewAnnotationTest(
         )
       },
       makeChecks = {
-        assertFalse(mapView.hasChildView(firstView))
-        assertTrue(mapView.hasChildView(secondView))
+        assertFalse(viewAnnotationsLayout.hasChildView(firstView))
+        assertTrue(viewAnnotationsLayout.hasChildView(secondView))
         assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).x, secondView.translationX.toDouble(), ADMISSIBLE_ERROR_PX)
         assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).y, secondView.translationY.toDouble(), ADMISSIBLE_ERROR_PX)
         assertArrayEquals(
@@ -477,10 +480,10 @@ class ViewAnnotationTest(
         )
       },
       makeChecks = {
-        assertTrue(mapView.hasChildView(firstView))
+        assertTrue(viewAnnotationsLayout.hasChildView(firstView))
         assertEquals(mapboxMap.pixelForCoordinate(SHIFTED_CENTER).x, firstView.translationX.toDouble(), ADMISSIBLE_ERROR_PX)
         assertEquals(mapboxMap.pixelForCoordinate(SHIFTED_CENTER).y, firstView.translationY.toDouble(), ADMISSIBLE_ERROR_PX)
-        assertFalse(mapView.hasChildView(secondView))
+        assertFalse(viewAnnotationsLayout.hasChildView(secondView))
         assertArrayEquals(
           arrayOf(
             Pair(firstView, true),
@@ -515,8 +518,8 @@ class ViewAnnotationTest(
         )
       },
       makeChecks = {
-        assertFalse(mapView.hasChildView(firstView))
-        assertTrue(mapView.hasChildView(secondView))
+        assertFalse(viewAnnotationsLayout.hasChildView(firstView))
+        assertTrue(viewAnnotationsLayout.hasChildView(secondView))
         assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).x, secondView.translationX.toDouble(), ADMISSIBLE_ERROR_PX)
         assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).y, secondView.translationY.toDouble(), ADMISSIBLE_ERROR_PX)
         assertArrayEquals(
@@ -551,7 +554,7 @@ class ViewAnnotationTest(
         )
       },
       makeChecks = {
-        assertTrue(mapView.hasChildView(firstView))
+        assertTrue(viewAnnotationsLayout.hasChildView(firstView))
         assertEquals(
           mapboxMap.pixelForCoordinate(SHIFTED_CENTER).x - firstView.width / 2.0,
           firstView.translationX.toDouble(),
@@ -593,7 +596,7 @@ class ViewAnnotationTest(
         )
       },
       makeChecks = {
-        assertTrue(mapView.hasChildView(firstView))
+        assertTrue(viewAnnotationsLayout.hasChildView(firstView))
         assertEquals(updatedWidthPx, firstView.width)
         assertEquals(updatedHeightPx, firstView.height)
         assertEquals(
@@ -637,8 +640,8 @@ class ViewAnnotationTest(
         )
       },
       makeChecks = {
-        assertFalse(mapView.hasChildView(firstView))
-        assertTrue(mapView.hasChildView(secondView))
+        assertFalse(viewAnnotationsLayout.hasChildView(firstView))
+        assertTrue(viewAnnotationsLayout.hasChildView(secondView))
         // update allowOverlap only for underlying view annotation
         viewAnnotationManager.updateViewAnnotation(
           firstView,
@@ -648,8 +651,8 @@ class ViewAnnotationTest(
         )
         mainHandler.postDelayed(
           {
-            assertTrue(mapView.hasChildView(firstView))
-            assertTrue(mapView.hasChildView(secondView))
+            assertTrue(viewAnnotationsLayout.hasChildView(firstView))
+            assertTrue(viewAnnotationsLayout.hasChildView(secondView))
             assertArrayEquals(
               arrayOf(
                 Pair(secondView, true),
@@ -680,7 +683,7 @@ class ViewAnnotationTest(
         viewAnnotationManager.removeViewAnnotation(firstView)
       },
       makeChecks = {
-        assertFalse(mapView.hasChildView(firstView))
+        assertFalse(viewAnnotationsLayout.hasChildView(firstView))
         assertArrayEquals(
           arrayOf(),
           actualVisibilityUpdateList.toTypedArray()
@@ -710,13 +713,13 @@ class ViewAnnotationTest(
         )
       },
       makeChecks = {
-        assertFalse(mapView.hasChildView(firstView))
-        assertTrue(mapView.hasChildView(secondView))
+        assertFalse(viewAnnotationsLayout.hasChildView(firstView))
+        assertTrue(viewAnnotationsLayout.hasChildView(secondView))
         viewAnnotationManager.removeViewAnnotation(secondView)
         mainHandler.postDelayed(
           {
-            assertTrue(mapView.hasChildView(firstView))
-            assertFalse(mapView.hasChildView(secondView))
+            assertTrue(viewAnnotationsLayout.hasChildView(firstView))
+            assertFalse(viewAnnotationsLayout.hasChildView(secondView))
             assertArrayEquals(
               arrayOf(
                 Pair(secondView, true),
@@ -752,7 +755,7 @@ class ViewAnnotationTest(
         )
       },
       makeChecks = {
-        assertTrue(mapView.hasChildView(firstView))
+        assertTrue(viewAnnotationsLayout.hasChildView(firstView))
         assertArrayEquals(
           arrayOf(
             Pair(firstView, true),
@@ -780,7 +783,7 @@ class ViewAnnotationTest(
         )
       },
       makeChecks = {
-        assertFalse(mapView.hasChildView(firstView))
+        assertFalse(viewAnnotationsLayout.hasChildView(firstView))
         // view does not even appear so update listener should not be triggered
         assertArrayEquals(
           arrayOf(),
@@ -848,14 +851,14 @@ class ViewAnnotationTest(
         )
       },
       makeChecks = {
-        assertFalse(mapView.hasChildView(firstView))
-        assertTrue(mapView.hasChildView(secondView))
+        assertFalse(viewAnnotationsLayout.hasChildView(firstView))
+        assertTrue(viewAnnotationsLayout.hasChildView(secondView))
         secondView.visibility = View.GONE
         mainHandler.postDelayed(
           {
-            // second view is not removed from parent MapView but as it's gone first view should appear now
-            assertTrue(mapView.hasChildView(secondView))
-            assertTrue(mapView.hasChildView(firstView))
+            // second view is not removed from parent viewAnnotationsLayout but as it's gone first view should appear now
+            assertTrue(viewAnnotationsLayout.hasChildView(secondView))
+            assertTrue(viewAnnotationsLayout.hasChildView(firstView))
             assertArrayEquals(
               arrayOf(
                 Pair(secondView, true),
