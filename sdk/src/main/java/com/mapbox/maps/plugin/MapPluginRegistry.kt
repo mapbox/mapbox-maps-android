@@ -1,7 +1,6 @@
 package com.mapbox.maps.plugin
 
 import android.view.MotionEvent
-import android.view.View
 import com.mapbox.maps.*
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
