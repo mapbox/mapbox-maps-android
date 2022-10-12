@@ -4,7 +4,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 ## Bug fixes 🐞
-* Fix frequent layout invalidation caused by view annotations calling View.bringToFront(). ([1744](https://github.com/mapbox/mapbox-maps-android/pull/1744))
+* Fix frequent layout invalidation caused by view annotations calling `View.bringToFront()`. ([1744](https://github.com/mapbox/mapbox-maps-android/pull/1744))
 
 # 10.9.0-rc.1 October 07, 2022
 
