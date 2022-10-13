@@ -26,7 +26,14 @@ internal class ViewAnnotationManagerZOrderingTest(
   companion object {
     private fun descriptors(vararg identifiers: String) = identifiers.map {
       ViewAnnotationPositionDescriptor(
-        it, 0, 0, ScreenCoordinate(0.0, 0.0)
+        it,
+        0,
+        0,
+        // different identifiers should have different screen coordinates
+        ScreenCoordinate(
+          (identifiers.hashCode() % 500).toDouble(),
+          (identifiers.hashCode() % 300).toDouble()
+        )
       )
     }
 
@@ -38,6 +45,22 @@ internal class ViewAnnotationManagerZOrderingTest(
         descriptors(),
         /* new descriptors */
         descriptors(),
+        /* change z order */
+        false,
+      ),
+      arrayOf(
+        /* old descriptors */
+        descriptors("1"),
+        /* new descriptors */
+        descriptors("1"),
+        /* change z order */
+        false,
+      ),
+      arrayOf(
+        /* old descriptors */
+        descriptors("1", "2", "3"),
+        /* new descriptors */
+        descriptors("1", "2", "3"),
         /* change z order */
         false,
       ),

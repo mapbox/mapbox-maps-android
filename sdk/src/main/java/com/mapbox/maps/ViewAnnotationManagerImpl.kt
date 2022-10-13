@@ -477,7 +477,7 @@ internal class ViewAnnotationManagerImpl(
             updatedIndex < positionDescriptorUpdatedList.size
           ) {
             // skip equal items
-            if (positionDescriptorCurrentList[currentIndex] == positionDescriptorUpdatedList[updatedIndex]) {
+            if (positionDescriptorCurrentList[currentIndex].identifier == positionDescriptorUpdatedList[updatedIndex].identifier) {
               currentIndex++
               updatedIndex++
               continue
@@ -491,7 +491,7 @@ internal class ViewAnnotationManagerImpl(
 
             // find the elements removed from the old list, add them to set
             while (currentIndex < positionDescriptorCurrentList.size &&
-              positionDescriptorCurrentList[currentIndex] != positionDescriptorUpdatedList[updatedIndex]
+              positionDescriptorCurrentList[currentIndex].identifier != positionDescriptorUpdatedList[updatedIndex].identifier
             ) {
               removedDescriptors.add(positionDescriptorCurrentList[currentIndex].identifier)
               currentIndex++
