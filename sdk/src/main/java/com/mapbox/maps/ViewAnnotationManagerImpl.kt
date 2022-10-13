@@ -23,7 +23,7 @@ internal class ViewAnnotationManagerImpl(
   private val renderThread = mapView.mapController.renderer.renderThread
 
   init {
-    mapView.layoutParams = FrameLayout.LayoutParams(
+    viewAnnotationsLayout.layoutParams = FrameLayout.LayoutParams(
       ViewGroup.LayoutParams.MATCH_PARENT,
       ViewGroup.LayoutParams.MATCH_PARENT,
     )
