@@ -2,8 +2,6 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# main
-
 # 10.9.0
 
 ## Bug fixes 🐞
