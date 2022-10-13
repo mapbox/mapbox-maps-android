@@ -13,17 +13,22 @@ import com.mapbox.maps.viewannotation.ViewAnnotation.Companion.USER_FIXED_DIMENS
 import com.mapbox.maps.viewannotation.ViewAnnotationVisibility
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.CopyOnWriteArraySet
-import kotlin.collections.HashMap
 
 internal class ViewAnnotationManagerImpl(
-  private val mapView: MapView
+  mapView: MapView,
+  private val viewAnnotationsLayout: FrameLayout = FrameLayout(mapView.context),
 ) : ViewAnnotationManager, ViewAnnotationPositionsUpdateListener {
 
   private val mapboxMap: MapboxMap = mapView.getMapboxMap()
-  private val viewPlugins = mapView.mapController.pluginRegistry.viewPlugins
   private val renderThread = mapView.mapController.renderer.renderThread
 
   init {
+    viewAnnotationsLayout.layoutParams = FrameLayout.LayoutParams(
+      ViewGroup.LayoutParams.MATCH_PARENT,
+      ViewGroup.LayoutParams.MATCH_PARENT,
+    )
+    // place the view annotations above the map (index 0) but below the compass, ruler and other plugin views
+    mapView.addView(viewAnnotationsLayout, 1)
     mapView.requestDisallowInterceptTouchEvent(false)
     mapboxMap.setViewAnnotationPositionsUpdateListener(this)
   }
@@ -31,10 +36,8 @@ internal class ViewAnnotationManagerImpl(
   private val annotationMap = ConcurrentHashMap<String, ViewAnnotation>()
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal val idLookupMap = ConcurrentHashMap<View, String>()
-  private val hiddenViewMap = ConcurrentHashMap<View, Float>()
-
-  // struct needed for drawing, declare it only once
-  private val currentViewsDrawnMap = HashMap<String, ScreenCoordinate>()
+  private val currentlyDrawnViewIdSet = mutableSetOf<String>()
+  private val unpositionedViews = mutableSetOf<View>()
 
   // using copy on write as user could remove listener while callback is invoked
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
@@ -50,7 +53,7 @@ internal class ViewAnnotationManagerImpl(
     asyncInflateCallback: (View) -> Unit
   ) {
     validateOptions(options)
-    asyncInflater.inflate(resId, mapView) { view, _, _ ->
+    asyncInflater.inflate(resId, viewAnnotationsLayout) { view, _, _ ->
       asyncInflateCallback.invoke(prepareViewAnnotation(view, options))
     }
   }
@@ -60,7 +63,7 @@ internal class ViewAnnotationManagerImpl(
     options: ViewAnnotationOptions
   ): View {
     validateOptions(options)
-    val view = LayoutInflater.from(mapView.context).inflate(resId, mapView, false)
+    val view = LayoutInflater.from(viewAnnotationsLayout.context).inflate(resId, viewAnnotationsLayout, false)
     return prepareViewAnnotation(view, options)
   }
 
@@ -86,7 +89,7 @@ internal class ViewAnnotationManagerImpl(
     annotationMap.forEach { (id, annotation) ->
       remove(id, annotation)
     }
-    currentViewsDrawnMap.clear()
+    currentlyDrawnViewIdSet.clear()
     annotationMap.clear()
     idLookupMap.clear()
   }
@@ -249,17 +252,21 @@ internal class ViewAnnotationManagerImpl(
     // as OnGlobalLayoutListener does not cover cases for View.INVISIBLE properly
     val onDrawListener = ViewTreeObserver.OnDrawListener {
       if (viewAnnotation.handleVisibilityAutomatically) {
-        val isAndroidViewVisible = (inflatedView.visibility == View.VISIBLE)
-        if ((isAndroidViewVisible && viewAnnotation.isVisible) ||
-          (!isAndroidViewVisible && viewAnnotation.visibility == ViewAnnotationVisibility.INVISIBLE)
+        val isAndroidViewVisible = inflatedView.visibility == View.VISIBLE
+        if (
+          (isAndroidViewVisible && viewAnnotation.isVisible) ||
+          (!isAndroidViewVisible && viewAnnotation.visibility == ViewAnnotationVisibility.INVISIBLE) ||
+          (!isAndroidViewVisible && viewAnnotation.visibility == ViewAnnotationVisibility.VISIBLE_AND_NOT_POSITIONED)
         ) {
           return@OnDrawListener
         }
-        // hide view below map surface and pull it back when new position from core will arrive
+
+        // hide view until it will be positioned in [positionAnnotationViews]
         if (isAndroidViewVisible) {
-          hiddenViewMap[inflatedView] = inflatedView.translationZ
-          inflatedView.translationZ = mapView.translationZ - 1f
+          unpositionedViews.add(inflatedView)
+          inflatedView.visibility = View.INVISIBLE
         }
+
         updateVisibilityAndNotifyUpdateListeners(
           viewAnnotation,
           if (isAndroidViewVisible)
@@ -308,23 +315,31 @@ internal class ViewAnnotationManagerImpl(
     return null to null
   }
 
+  private var positionDescriptorCurrentList = emptyList<ViewAnnotationPositionDescriptor>()
   private fun positionAnnotationViews(
-    positionDescriptorCoreList: List<ViewAnnotationPositionDescriptor>
+    positionDescriptorUpdatedList: List<ViewAnnotationPositionDescriptor>
   ) {
+    val needToReorderZ = needToReorderZ(
+      positionDescriptorCurrentList,
+      positionDescriptorUpdatedList,
+    )
+    positionDescriptorCurrentList = positionDescriptorUpdatedList
+
     // as per current implementation when view annotation was added with WRAP_CONTENT dimension AND
     // allowOverlap = false - core will notify only about this particular view and thus we will remove
     // all the others and then restore later resulting in a quick blink
-    val wrapContentWithAllowOverlapFalseViewAdded = positionDescriptorCoreList.size == 1 &&
-      (positionDescriptorCoreList[0].width == WRAP_CONTENT || positionDescriptorCoreList[0].height == WRAP_CONTENT)
+    // FIXME - other bugs are possible, this does not cover all cases
+    val wrapContentWithAllowOverlapFalseViewAdded = positionDescriptorUpdatedList.size == 1 &&
+      (positionDescriptorUpdatedList[0].width == WRAP_CONTENT || positionDescriptorUpdatedList[0].height == WRAP_CONTENT)
     // firstly delete views that do not belong to the viewport if it's not specific use-case from above
     if (!wrapContentWithAllowOverlapFalseViewAdded) {
-      currentViewsDrawnMap.keys.forEach { id ->
-        if (positionDescriptorCoreList.indexOfFirst { it.identifier == id } == -1) {
+      currentlyDrawnViewIdSet.forEach { id ->
+        if (positionDescriptorUpdatedList.indexOfFirst { it.identifier == id } == -1) {
           annotationMap[id]?.let { annotation ->
             // if view is invisible / gone we don't remove it so that visibility logic could
             // still be handled by OnGlobalLayoutListener
             if (annotation.view.visibility == View.VISIBLE) {
-              mapView.removeView(annotation.view)
+              viewAnnotationsLayout.removeView(annotation.view)
               updateVisibilityAndNotifyUpdateListeners(annotation, ViewAnnotationVisibility.INVISIBLE)
             }
           }
@@ -332,7 +347,7 @@ internal class ViewAnnotationManagerImpl(
       }
     }
     // add and reposition new and existed views
-    positionDescriptorCoreList.forEach { descriptor ->
+    positionDescriptorUpdatedList.forEach { descriptor ->
       annotationMap[descriptor.identifier]?.let { annotation ->
         // update translation first - notify Android render node to schedule updates
         annotation.view.apply {
@@ -348,8 +363,10 @@ internal class ViewAnnotationManagerImpl(
             height = descriptor.height
           }
         }
-        if (!currentViewsDrawnMap.keys.contains(descriptor.identifier) && mapView.indexOfChild(annotation.view) == -1) {
-          mapView.addView(annotation.view, annotation.viewLayoutParams)
+        if (!currentlyDrawnViewIdSet.contains(descriptor.identifier) &&
+          viewAnnotationsLayout.indexOfChild(annotation.view) == -1
+        ) {
+          viewAnnotationsLayout.addView(annotation.view, annotation.viewLayoutParams)
           updateVisibilityAndNotifyUpdateListeners(
             annotation,
             if (annotation.view.visibility == View.VISIBLE)
@@ -372,24 +389,23 @@ internal class ViewAnnotationManagerImpl(
             }
           }
         }
-        hiddenViewMap[annotation.view]?.let { zIndex ->
-          annotation.view.translationZ = zIndex
-          hiddenViewMap.remove(annotation.view)
+
+        if (unpositionedViews.remove(annotation.view)) {
+          annotation.view.visibility = View.VISIBLE
           updateVisibilityAndNotifyUpdateListeners(annotation, ViewAnnotationVisibility.VISIBLE_AND_POSITIONED)
         }
-        // as we preserve correct order we bring each view to the front and correct order will be preserved
-        annotation.view.bringToFront()
+
+        // reorder Z index with the iteration order to keep selected annotations on top of others
+        if (needToReorderZ) {
+          annotation.view.bringToFront()
+        }
       }
-    }
-    // bring to front map view plugins so that they are drawn on top of view annotations
-    viewPlugins.forEach {
-      it.value.bringToFront()
     }
     // all the views should stay as is for that use-case, otherwise we update current view map
     if (!wrapContentWithAllowOverlapFalseViewAdded) {
-      currentViewsDrawnMap.clear()
-      positionDescriptorCoreList.forEach {
-        currentViewsDrawnMap[it.identifier] = it.leftTopCoordinate
+      currentlyDrawnViewIdSet.clear()
+      positionDescriptorUpdatedList.forEach {
+        currentlyDrawnViewIdSet.add(it.identifier)
       }
     }
   }
@@ -412,10 +428,9 @@ internal class ViewAnnotationManagerImpl(
       return
     }
     val wasVisibleBefore = annotation.isVisible
-    val isVisibleNow = (
+    val isVisibleNow =
       currentVisibility == ViewAnnotationVisibility.VISIBLE_AND_POSITIONED ||
         currentVisibility == ViewAnnotationVisibility.VISIBLE_AND_NOT_POSITIONED
-      )
     annotation.visibility = currentVisibility
     if (viewUpdatedListenerSet.isNotEmpty() && isVisibleNow != wasVisibleBefore) {
       viewUpdatedListenerSet.forEach {
@@ -428,7 +443,7 @@ internal class ViewAnnotationManagerImpl(
   }
 
   private fun remove(internalId: String, annotation: ViewAnnotation) {
-    mapView.removeView(annotation.view)
+    viewAnnotationsLayout.removeView(annotation.view)
     updateVisibilityAndNotifyUpdateListeners(annotation, ViewAnnotationVisibility.INVISIBLE)
     annotation.view.removeOnAttachStateChangeListener(annotation.attachStateListener)
     annotation.attachStateListener = null
@@ -439,5 +454,59 @@ internal class ViewAnnotationManagerImpl(
     internal const val EXCEPTION_TEXT_GEOMETRY_IS_NULL = "Geometry can not be null!"
     internal const val EXCEPTION_TEXT_ASSOCIATED_FEATURE_ID_ALREADY_EXISTS =
       "View annotation with associatedFeatureId=%s already exists!"
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    internal fun needToReorderZ(
+      positionDescriptorCurrentList: List<ViewAnnotationPositionDescriptor>,
+      positionDescriptorUpdatedList: List<ViewAnnotationPositionDescriptor>
+    ): Boolean {
+      when {
+        // new annotations will be added to layout and trigger on measure anyway
+        positionDescriptorCurrentList.size < positionDescriptorUpdatedList.size -> {
+          return true
+        }
+        positionDescriptorCurrentList.isEmpty() || positionDescriptorUpdatedList.isEmpty() -> {
+          return false
+        }
+        else -> {
+          var currentIndex = 0
+          var updatedIndex = 0
+          // descriptor of items removed from the new list
+          val removedDescriptors = mutableSetOf<String>()
+          while (currentIndex < positionDescriptorCurrentList.size &&
+            updatedIndex < positionDescriptorUpdatedList.size
+          ) {
+            // skip equal items
+            if (positionDescriptorCurrentList[currentIndex].identifier == positionDescriptorUpdatedList[updatedIndex].identifier) {
+              currentIndex++
+              updatedIndex++
+              continue
+            }
+
+            // if removed descriptors list contains the item from the new list - it means
+            // the element was not removed but moved, need to invalidate Z order
+            if (removedDescriptors.contains(positionDescriptorUpdatedList[updatedIndex].identifier)) {
+              return true
+            }
+
+            // find the elements removed from the old list, add them to set
+            while (currentIndex < positionDescriptorCurrentList.size &&
+              positionDescriptorCurrentList[currentIndex].identifier != positionDescriptorUpdatedList[updatedIndex].identifier
+            ) {
+              removedDescriptors.add(positionDescriptorCurrentList[currentIndex].identifier)
+              currentIndex++
+            }
+          }
+          // iterate to the end of updated list
+          while (updatedIndex < positionDescriptorUpdatedList.size) {
+            if (removedDescriptors.contains(positionDescriptorUpdatedList[updatedIndex].identifier)) {
+              return true
+            }
+            updatedIndex++
+          }
+        }
+      }
+      return false
+    }
   }
 }

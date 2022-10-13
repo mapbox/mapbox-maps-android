@@ -28,7 +28,7 @@ class ViewAnnotationManagerAddTest(
   private val runtimeExceptionThrown: Boolean,
 ) {
   private val mapboxMap: MapboxMap = mockk(relaxUnitFun = true)
-  private val mapView: MapView = mockk(relaxUnitFun = true)
+  private lateinit var viewAnnotationsLayout: FrameLayout
   private lateinit var renderer: MapboxRenderThread
 
   private lateinit var viewAnnotationManager: ViewAnnotationManagerImpl
@@ -37,18 +37,25 @@ class ViewAnnotationManagerAddTest(
 
   @Before
   fun setUp() {
+    val mapView: MapView = mockk(relaxUnitFun = true)
     every { mapView.getMapboxMap() } returns mapboxMap
-    every { mapView.mapController.pluginRegistry.viewPlugins } returns mutableMapOf()
+    every { mapView.layoutParams = any() } just Runs
+    every { mapView.context } returns mockk()
     renderer = mockk(relaxUnitFun = true)
     every { mapView.mapController.renderer.renderThread } returns renderer
-    viewAnnotationManager = ViewAnnotationManagerImpl(mapView)
-    expectedView = mockk(relaxed = true)
-    frameLayoutParams = mockk()
+    frameLayoutParams = FrameLayout.LayoutParams(0, 0)
     frameLayoutParams.width = layoutParamsWidthActual
     frameLayoutParams.height = layoutParamsHeightActual
-    every { mapView.context } returns mockk()
+    expectedView = mockk(relaxed = true)
     every { expectedView.layoutParams } returns frameLayoutParams
     every { mapboxMap.addViewAnnotation(any(), any()) } returns ExpectedFactory.createNone()
+    viewAnnotationsLayout = mockk()
+    every { viewAnnotationsLayout.layoutParams = any() } just Runs
+    every { viewAnnotationsLayout.addView(any()) } just Runs
+    every { viewAnnotationsLayout.removeView(any()) } just Runs
+    every { viewAnnotationsLayout.context } returns mockk()
+
+    viewAnnotationManager = ViewAnnotationManagerImpl(mapView, viewAnnotationsLayout)
   }
 
   @After
@@ -60,7 +67,7 @@ class ViewAnnotationManagerAddTest(
   @Test
   fun addViewAnnotationWithSyncResId() {
     mockkStatic(LayoutInflater::class)
-    every { LayoutInflater.from(any()).inflate(resIdActual, mapView, false) } returns expectedView
+    every { LayoutInflater.from(any()).inflate(resIdActual, viewAnnotationsLayout, false) } returns expectedView
     if (runtimeExceptionThrown) {
       val exception = assertThrows(RuntimeException::class.java) {
         viewAnnotationManager.addViewAnnotation(
@@ -89,8 +96,8 @@ class ViewAnnotationManagerAddTest(
   fun addViewAnnotationWithAsyncResId() {
     val asyncInflater = mockk<AsyncLayoutInflater>()
     val callback = slot<AsyncLayoutInflater.OnInflateFinishedListener>()
-    every { asyncInflater.inflate(resIdActual, mapView, capture(callback)) } answers {
-      callback.captured.onInflateFinished(expectedView, resIdActual, mapView)
+    every { asyncInflater.inflate(resIdActual, viewAnnotationsLayout, capture(callback)) } answers {
+      callback.captured.onInflateFinished(expectedView, resIdActual, viewAnnotationsLayout)
     }
     if (runtimeExceptionThrown) {
       val exception = assertThrows(RuntimeException::class.java) {
