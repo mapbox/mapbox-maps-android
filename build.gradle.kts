@@ -46,7 +46,6 @@ allprojects {
         create<BasicAuthentication>("basic")
       }
     }
-    println("PR_TARGET_BRANCH: ${System.getenv("PR_TARGET_BRANCH")}")
     if (!isBuildingReleaseTag && !isTargettingReleaseBranch) {
       maven {
         url = uri("https://api.mapbox.com/downloads/v2/snapshots/maven")
