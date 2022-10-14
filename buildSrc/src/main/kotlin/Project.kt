@@ -154,3 +154,8 @@ object Versions {
  * @return True if this build is part of Circleci job triggered from a release tag
  */
 public val isBuildingReleaseTag by lazy { "^v[0-9]+\\.[0-9]+\\.[0-9]+.*\$".toRegex().matches(System.getenv("CIRCLE_TAG") ?: "")}
+
+/**
+ * @return True if this build is part of Circleci job triggered from a PR that targets a release branch
+ */
+public val isTargettingReleaseBranch by lazy { "^v[0-9]+\\.[0-9]+\$".toRegex().matches(System.getenv("PR_TARGET_BRANCH") ?: "")}
