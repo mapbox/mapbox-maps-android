@@ -46,9 +46,7 @@ allprojects {
         create<BasicAuthentication>("basic")
       }
     }
-    val releaseTagRegex = "^v[0-9]+\\.[0-9]+\\.[0-9]+.*\$".toRegex()
-    val buildingRelease = releaseTagRegex.matches(System.getenv("CIRCLE_TAG") ?: "")
-    if (!buildingRelease) {
+    if (!isBuildingReleaseTag) {
       maven {
         url = uri("https://api.mapbox.com/downloads/v2/snapshots/maven")
         credentials {

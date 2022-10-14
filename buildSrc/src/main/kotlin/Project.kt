@@ -149,3 +149,8 @@ object Versions {
   const val pluginPlayPublisher = "3.7.0"
   const val gradleVersionsPlugin = "0.42.0"
 }
+
+/**
+ * @return True if this build is part of Circleci job triggered from a release tag
+ */
+public val isBuildingReleaseTag by lazy { "^v[0-9]+\\.[0-9]+\\.[0-9]+.*\$".toRegex().matches(System.getenv("CIRCLE_TAG") ?: "")}
