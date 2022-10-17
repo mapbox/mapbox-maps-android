@@ -69,6 +69,13 @@ tasks.withType<Test> {
   maxParallelForks = (Runtime.getRuntime().availableProcessors() / 2).takeIf { it > 0 } ?: 1
 }
 
+val stdout = java.io.ByteArrayOutputStream()
+exec {
+  commandLine("jps", "-v")
+  standardOutput = stdout;
+}
+println("Output:\n$stdout")
+
 apiValidation {
   /**
    * Packages that are excluded from public API dumps even if they
