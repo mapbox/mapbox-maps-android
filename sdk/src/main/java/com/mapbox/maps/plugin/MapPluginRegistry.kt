@@ -1,7 +1,6 @@
 package com.mapbox.maps.plugin
 
 import android.view.MotionEvent
-import android.view.View
 import com.mapbox.maps.*
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
@@ -37,7 +36,6 @@ internal class MapPluginRegistry(
     }
 
   private val plugins = mutableMapOf<String, MapPlugin>()
-  internal val viewPlugins = mutableMapOf<ViewPlugin, View>()
   private val cameraPlugins = CopyOnWriteArraySet<MapCameraPlugin>()
   private val gesturePlugins = CopyOnWriteArraySet<GesturesPlugin>()
   private val styleObserverPlugins = CopyOnWriteArraySet<MapStyleObserverPlugin>()
@@ -70,7 +68,6 @@ internal class MapPluginRegistry(
           )
           mapView.addView(pluginView)
           mapPlugin.onPluginView(pluginView)
-          viewPlugins[mapPlugin] = pluginView
         }
 
         if (mapPlugin is ContextBinder) {

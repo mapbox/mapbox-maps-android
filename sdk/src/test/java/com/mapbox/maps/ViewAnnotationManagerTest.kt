@@ -24,35 +24,40 @@ class ViewAnnotationManagerTest {
   private lateinit var viewAnnotationManager: ViewAnnotationManagerImpl
   private lateinit var frameLayoutParams: FrameLayout.LayoutParams
   private lateinit var view: View
+  private lateinit var viewAnnotationsLayout: FrameLayout
   private lateinit var renderer: MapboxRenderThread
 
   @Before
   fun setUp() {
     every { mapView.getMapboxMap() } returns mapboxMap
-    every { mapView.mapController.pluginRegistry.viewPlugins } returns mutableMapOf()
+    every { mapView.layoutParams = any() } just Runs
+    every { mapView.context } returns mockk()
     renderer = mockk(relaxUnitFun = true)
     every { mapView.mapController.renderer.renderThread } returns renderer
-    viewAnnotationManager = ViewAnnotationManagerImpl(mapView)
-    frameLayoutParams = mockk()
+    frameLayoutParams = FrameLayout.LayoutParams(0, 0)
     frameLayoutParams.width = 20
     frameLayoutParams.height = 20
-    every { mapView.context } returns mockk()
-    view = mockk()
-    mockView(view)
+    view = mockView()
+    viewAnnotationsLayout = mockk()
+    every { viewAnnotationsLayout.layoutParams = any() } just Runs
+    every { viewAnnotationsLayout.removeView(any()) } just Runs
+
     every { mapboxMap.addViewAnnotation(any(), any()) } returns ExpectedFactory.createNone()
+
+    viewAnnotationManager = ViewAnnotationManagerImpl(mapView, viewAnnotationsLayout)
   }
 
-  private fun mockView(view: View) {
-    every { view.layoutParams } returns frameLayoutParams
-    every { view.visibility } returns View.VISIBLE
-    every { view.viewTreeObserver } returns mockk(relaxed = true)
-    every { view.addOnAttachStateChangeListener(any()) } just Runs
+  private fun mockView(): View = mockk<View>().also {
+    every { it.layoutParams } returns frameLayoutParams
+    every { it.visibility } returns View.VISIBLE
+    every { it.viewTreeObserver } returns mockk(relaxed = true)
+    every { it.addOnAttachStateChangeListener(any()) } just Runs
+    every { it.removeOnAttachStateChangeListener(any()) } just Runs
   }
 
   @After
   fun tearDown() {
     every { mapboxMap.removeViewAnnotation(any()) } returns ExpectedFactory.createNone()
-    every { view.removeOnAttachStateChangeListener(any()) } just Runs
     viewAnnotationManager.destroy()
   }
 
@@ -173,7 +178,6 @@ class ViewAnnotationManagerTest {
   @Test
   fun removeViewAnnotationSuccess() {
     every { mapboxMap.removeViewAnnotation(any()) } returns ExpectedFactory.createNone()
-    every { view.removeOnAttachStateChangeListener(any()) } just Runs
     viewAnnotationManager.addViewAnnotation(
       view,
       viewAnnotationOptions {
@@ -186,7 +190,7 @@ class ViewAnnotationManagerTest {
     assertNull(viewAnnotationManager.idLookupMap[view])
     verify(exactly = 1) { view.removeOnAttachStateChangeListener(any()) }
     verify(exactly = 1) { mapboxMap.removeViewAnnotation(id!!) }
-    verify(exactly = 1) { mapView.removeView(view) }
+    verify(exactly = 1) { viewAnnotationsLayout.removeView(view) }
   }
 
   @Test
@@ -200,7 +204,6 @@ class ViewAnnotationManagerTest {
   @Test
   fun removeAllViewAnnotations() {
     every { mapboxMap.removeViewAnnotation(any()) } returns ExpectedFactory.createNone()
-    every { view.removeOnAttachStateChangeListener(any()) } just Runs
     // add first view
     viewAnnotationManager.addViewAnnotation(
       view,
@@ -208,9 +211,7 @@ class ViewAnnotationManagerTest {
         geometry(DEFAULT_GEOMETRY)
       }
     )
-    val anotherView = mockk<View>()
-    every { anotherView.removeOnAttachStateChangeListener(any()) } just Runs
-    mockView(anotherView)
+    val anotherView = mockView()
     // add another view
     viewAnnotationManager.addViewAnnotation(
       anotherView,
@@ -221,8 +222,8 @@ class ViewAnnotationManagerTest {
     viewAnnotationManager.removeAllViewAnnotations()
     assert(viewAnnotationManager.idLookupMap.isEmpty())
     verify(exactly = 2) { mapboxMap.removeViewAnnotation(any()) }
-    verify(exactly = 1) { mapView.removeView(view) }
-    verify(exactly = 1) { mapView.removeView(anotherView) }
+    verify(exactly = 1) { viewAnnotationsLayout.removeView(view) }
+    verify(exactly = 1) { viewAnnotationsLayout.removeView(anotherView) }
   }
 
   @Test
