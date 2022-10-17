@@ -829,7 +829,7 @@ jobs:
   check-gradle-dependencies:
     executor:
       name: ubuntu
-      machine: small
+      machine: xlarge
     steps:
       - checkout
       - restore-gradle-cache
