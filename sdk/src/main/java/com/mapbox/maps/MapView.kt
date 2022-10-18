@@ -41,8 +41,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   internal var mapController: MapController
     private set
 
-  private var interceptedActionDownEvent: MotionEvent? = null
-  private var interceptedActionPointerDownEvent: MotionEvent? = null
+  private var interceptedActionList: MutableList<MotionEvent> = mutableListOf()
   private val touchSlop: Int by lazy { ViewConfiguration.get(context).scaledTouchSlop }
   private val viewAnnotationManagerDelegate = lazy { ViewAnnotationManagerImpl(this) }
   /**
@@ -301,20 +300,12 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    */
   @SuppressLint("ClickableViewAccessibility")
   override fun onTouchEvent(event: MotionEvent): Boolean {
-    interceptedActionDownEvent?.let {
+    interceptedActionList.firstOrNull()?.let {
       try {
         return mapController.onTouchEvent(it)
       } finally {
         it.recycle()
-        interceptedActionDownEvent = null
-      }
-    }
-    interceptedActionPointerDownEvent?.let {
-      try {
-        return mapController.onTouchEvent(it)
-      } finally {
-        it.recycle()
-        interceptedActionPointerDownEvent = null
+        interceptedActionList.removeFirst()
       }
     }
     return mapController.onTouchEvent(event)
@@ -323,16 +314,15 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   override fun onInterceptTouchEvent(event: MotionEvent): Boolean {
     return when (event.actionMasked) {
       MotionEvent.ACTION_DOWN -> {
-        interceptedActionDownEvent = MotionEvent.obtain(event)
+        interceptedActionList.add(MotionEvent.obtain(event))
         false
       }
       MotionEvent.ACTION_POINTER_DOWN -> {
-        interceptedActionPointerDownEvent = MotionEvent.obtain(event)
+        interceptedActionList.add(MotionEvent.obtain(event))
         false
       }
       MotionEvent.ACTION_MOVE -> {
-        interceptedActionDownEvent.hypot(event) > touchSlop ||
-          interceptedActionPointerDownEvent.hypot(event) > touchSlop
+        interceptedActionList.any { it.hypot(event) > touchSlop }
       }
       else -> {
         // In general, we don't want to intercept touch events. They should be
@@ -342,7 +332,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
     }
   }
 
-  private fun MotionEvent?.hypot(event: MotionEvent): Int {
+  private fun MotionEvent.hypot(event: MotionEvent): Int {
     return hypot(
       x = (this?.x ?: event.x) - event.x,
       y = (this?.y ?: event.y) - event.y
