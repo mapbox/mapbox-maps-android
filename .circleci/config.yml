@@ -378,13 +378,13 @@ commands:
             if [[ -n "${GCLOUD_SERVICE_ACCOUNT_JSON}" ]]; then
               gcloud firebase test android models list
               ### We use following devices to run robo tests:
-              ### * 1 old API (the lower the better)
-              ### * 1 new API (the higher the better)
-              ### * 1 x86-64 emulator(Pixel2)
-              ### * API level 23 which is known to work weird sometimes
+              ### * 1 old API 21, virtual Nexus 5
+              ### * 1 new API 31, physical Pixel 6
+              ### * 1 x86-64, virtual Pixel2
+              ### * 1 API 23, physical Moto G Play, API known to work weird sometimes
               gcloud firebase test android run --type robo \
                 --app app/build/outputs/apk/release/app-release.apk \
-                --device model=hwALE-H,version=21,locale=en,orientation=portrait \
+                --device model=Nexus5,version=21,locale=en,orientation=portrait \
                 --device model=harpia,version=23,locale=en,orientation=portrait \
                 --device model=Pixel2,version=29,locale=en,orientation=portrait \
                 --device model=oriole,version=31,locale=en,orientation=portrait \
