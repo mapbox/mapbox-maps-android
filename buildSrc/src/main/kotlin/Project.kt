@@ -109,7 +109,7 @@ object Versions {
   const val mapboxGestures = "0.8.0"
   const val mapboxJavaServices = "5.4.1"
   const val mapboxBase = "0.8.0"
-  const val mapboxGlNative = "10.9.0-rc.1"
+  const val mapboxGlNative = "10.9.0-rc.1-internal-ea606ebd95-SNAPSHOT"
   const val mapboxCommon = "23.1.0-rc.2"
   const val mapboxAndroidCore = "5.0.2"
   const val androidxCore = "1.7.0" // last version compatible with kotlin 1.5.31
@@ -149,3 +149,13 @@ object Versions {
   const val pluginPlayPublisher = "3.7.0"
   const val gradleVersionsPlugin = "0.42.0"
 }
+
+/**
+ * @return True if this build is part of Circleci job triggered from a release tag
+ */
+public val isBuildingReleaseTag by lazy { "^v[0-9]+\\.[0-9]+\\.[0-9]+.*\$".toRegex().matches(System.getenv("CIRCLE_TAG") ?: "")}
+
+/**
+ * @return True if this build is part of Circleci job triggered from a PR that targets a release branch
+ */
+public val isTargettingReleaseBranch by lazy { "^v[0-9]+\\.[0-9]+\$".toRegex().matches(System.getenv("PR_TARGET_BRANCH") ?: "")}
