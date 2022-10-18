@@ -156,15 +156,27 @@ commands:
             - ~/.gradle
           key: v1-dependencies-{{ checksum "./tmp/checksum.txt" }}
 
+  set-pr-target-branch:
+    steps:
+      - run:
+          name: Save PR target branch at $PR_TARGET_BRANCH environment var
+          command: |
+            export GITHUB_TOKEN=$(./mbx-ci github reader token)
+            # Let's figure out the branch this PR is targeting
+            export PR_TARGET_BRANCH=$(gh pr view --repo $CIRCLE_REPOSITORY_URL $CIRCLE_PULL_REQUEST --json baseRefName -q ".baseRefName")
+            echo "PR Target branch: $PR_TARGET_BRANCH"
+            # Make it available to next steps
+            echo "export PR_TARGET_BRANCH=$PR_TARGET_BRANCH" >> "$BASH_ENV"
+
   jvm-unit-tests:
     steps:
       - run:
           name: Run JVM unit tests & create jacoco code coverage report
           no_output_timeout: 15m
           command: ./gradlew jacocoTestDebugUnitTestReport
-#      - run:
-#          name: Upload codecov
-#          command: bash <(curl -sSfL https://codecov.io/bash)
+  #      - run:
+  #          name: Upload codecov
+  #          command: bash <(curl -sSfL https://codecov.io/bash)
 
   store-results:
     steps:
@@ -440,17 +452,14 @@ jobs:
                   - "3b:cd:47:bf:57:9c:e5:36:b0:4d:5f:12:5e:d3:b3:3e"
             - restore-gradle-cache
             - init-aws
+            - set-pr-target-branch
             - run:
                 name: ktlint
                 command: ./gradlew ktlint
             - run:
                 name: check release runtime Mapbox dependencies to fail fast
                 command: |
-                  export GITHUB_TOKEN=$(./mbx-ci github reader token)
-                  # Let's figure out the branch this PR is targeting
-                  export PR_TARGET_BRANCH=$(gh pr view --repo $CIRCLE_REPOSITORY_URL $CIRCLE_PULL_REQUEST --json baseRefName -q ".baseRefName")
                   echo "PR Target branch: $PR_TARGET_BRANCH"
-                  ./gradlew sdk:dependencyInsight --configuration releaseRuntimeClasspath --dependency com.mapbox.maps
                   ./gradlew sdk:dependencyInsight --configuration releaseRuntimeClasspath --dependency com.mapbox.maps | grep -vzq 'FAILED'
             - run:
                 name: license
