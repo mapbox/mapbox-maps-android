@@ -174,9 +174,9 @@ commands:
           name: Run JVM unit tests & create jacoco code coverage report
           no_output_timeout: 15m
           command: ./gradlew jacocoTestDebugUnitTestReport
-  #      - run:
-  #          name: Upload codecov
-  #          command: bash <(curl -sSfL https://codecov.io/bash)
+#      - run:
+#          name: Upload codecov
+#          command: bash <(curl -sSfL https://codecov.io/bash)
 
   store-results:
     steps:
@@ -780,9 +780,6 @@ jobs:
               - init-aws
               - run:
                   command: |
-                      curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
-                      echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
-                      sudo apt update && sudo apt install gh -y
                       sudo pip3 install gitpython
                       sudo cp ./mbx-ci /usr/local/bin/
                   name: Install dependency
