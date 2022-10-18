@@ -119,6 +119,7 @@ public class com/mapbox/maps/MapView : android/widget/FrameLayout, com/mapbox/ma
 	protected fun onAttachedToWindow ()V
 	public fun onDestroy ()V
 	public fun onGenericMotionEvent (Landroid/view/MotionEvent;)Z
+	public fun onInterceptTouchEvent (Landroid/view/MotionEvent;)Z
 	public fun onLowMemory ()V
 	public fun onSizeChanged (II)V
 	public fun onSizeChanged (IIII)V
