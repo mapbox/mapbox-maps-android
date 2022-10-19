@@ -1,11 +1,11 @@
 // Signature format: 3.0
 package com.mapbox.maps.extension.androidauto {
 
-  @com.mapbox.maps.MapboxExperimental public class DefaultMapboxCarMapGestureHandler implements com.mapbox.maps.extension.androidauto.MapboxCarMapGestureHandler {
+  public class DefaultMapboxCarMapGestureHandler implements com.mapbox.maps.extension.androidauto.MapboxCarMapGestureHandler {
     ctor public DefaultMapboxCarMapGestureHandler();
   }
 
-  @com.mapbox.maps.MapboxExperimental public final class MapboxCarMap {
+  public final class MapboxCarMap {
     ctor public MapboxCarMap();
     method public com.mapbox.maps.extension.androidauto.MapboxCarMap clearObservers();
     method public androidx.car.app.CarContext getCarContext();
@@ -34,7 +34,7 @@ package com.mapbox.maps.extension.androidauto {
     method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.androidauto.MapboxCarMapScreenInstaller mapboxMapInstaller(androidx.car.app.Screen, com.mapbox.maps.extension.androidauto.MapboxCarMap mapboxCarMap);
   }
 
-  @com.mapbox.maps.MapboxExperimental public interface MapboxCarMapGestureHandler {
+  public interface MapboxCarMapGestureHandler {
     method public default void onFling(com.mapbox.maps.extension.androidauto.MapboxCarMapSurface, float, float);
     method public default void onScale(com.mapbox.maps.extension.androidauto.MapboxCarMapSurface, float, float, float);
     method public default void onScroll(com.mapbox.maps.extension.androidauto.MapboxCarMapSurface, com.mapbox.maps.ScreenCoordinate, float, float);
@@ -44,7 +44,7 @@ package com.mapbox.maps.extension.androidauto {
     method public com.mapbox.maps.MapInitOptions onCreate(androidx.car.app.CarContext carContext);
   }
 
-  @com.mapbox.maps.MapboxExperimental public interface MapboxCarMapObserver {
+  public interface MapboxCarMapObserver {
     method public default void onAttached(com.mapbox.maps.extension.androidauto.MapboxCarMapSurface);
     method public default void onDetached(com.mapbox.maps.extension.androidauto.MapboxCarMapSurface);
     method public default void onStableAreaChanged(android.graphics.Rect, com.mapbox.maps.EdgeInsets);
@@ -69,7 +69,7 @@ package com.mapbox.maps.extension.androidauto {
     method public com.mapbox.maps.extension.androidauto.MapboxCarMapSessionInstaller onStarted(com.mapbox.maps.extension.androidauto.MapboxCarMapObserver... observers);
   }
 
-  @com.mapbox.maps.MapboxExperimental public final class MapboxCarMapSurface {
+  public final class MapboxCarMapSurface {
     method public androidx.car.app.CarContext getCarContext();
     method public com.mapbox.maps.MapSurface getMapSurface();
     method public androidx.car.app.SurfaceContainer getSurfaceContainer();

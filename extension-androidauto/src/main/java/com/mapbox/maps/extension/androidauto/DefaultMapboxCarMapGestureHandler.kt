@@ -9,7 +9,6 @@ import com.mapbox.maps.plugin.animation.camera
  * [SurfaceCallback] and applies them to the [MapboxMap] camera. If you would like to customize
  * the map gestures, use [MapboxCarMap.setGestureHandler].
  */
-@MapboxExperimental
 open class DefaultMapboxCarMapGestureHandler : MapboxCarMapGestureHandler {
 
   /**

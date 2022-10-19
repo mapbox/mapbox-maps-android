@@ -30,7 +30,6 @@ import com.mapbox.maps.MapboxExperimental
  * surface callback. Do not use setSurfaceCallback, and do not create multiple instances of
  * [MapboxCarMap].
  */
-@MapboxExperimental
 class MapboxCarMap {
   private val carMapSurfaceOwner = CarMapSurfaceOwner()
 

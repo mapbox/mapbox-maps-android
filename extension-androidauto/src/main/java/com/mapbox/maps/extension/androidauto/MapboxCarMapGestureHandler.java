@@ -3,7 +3,6 @@ package com.mapbox.maps.extension.androidauto;
 import androidx.annotation.NonNull;
 import androidx.car.app.SurfaceCallback;
 
-import com.mapbox.maps.MapboxExperimental;
 import com.mapbox.maps.ScreenCoordinate;
 
 /**
@@ -11,7 +10,6 @@ import com.mapbox.maps.ScreenCoordinate;
  * customize the map gestures provided, you can set your own gestures
  * with {@link MapboxCarMap#setGestureHandler}.
  */
-@MapboxExperimental
 public interface MapboxCarMapGestureHandler {
 
   /**

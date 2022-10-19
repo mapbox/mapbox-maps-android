@@ -7,7 +7,6 @@ import androidx.car.app.SurfaceContainer
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapInitOptions
 import com.mapbox.maps.MapSurface
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.logI
 import java.util.concurrent.CopyOnWriteArraySet
@@ -17,7 +16,6 @@ import java.util.concurrent.CopyOnWriteArraySet
  *
  * Maintains the surface state for [MapboxCarMap].
  */
-@MapboxExperimental
 internal class CarMapSurfaceOwner @JvmOverloads constructor(
   internal var gestureHandler: MapboxCarMapGestureHandler? = DefaultMapboxCarMapGestureHandler()
 ) : SurfaceCallback {

@@ -1,7 +1,6 @@
 package com.mapbox.maps.testapp.auto.car
 
 import androidx.car.app.CarContext
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.androidauto.MapboxCarMapObserver
 import com.mapbox.maps.extension.androidauto.MapboxCarMapSurface
@@ -15,7 +14,6 @@ import com.mapbox.maps.extension.style.terrain.generated.terrain
  * Example showing how you can add a sky layer that has a sun direction,
  * and adding a terrain layer to show mountains.
  */
-@OptIn(MapboxExperimental::class)
 class CarMapShowcase : MapboxCarMapObserver {
 
   private var mapboxCarMapSurface: MapboxCarMapSurface? = null

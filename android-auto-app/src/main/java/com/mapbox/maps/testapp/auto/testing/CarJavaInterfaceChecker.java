@@ -29,11 +29,6 @@ class CarJavaInterfaceChecker {
     new MapboxCarMap();
   }
 
-  void constructorsCarMapSurfaceOwner(MapboxCarMapGestureHandler gestures) {
-    new CarMapSurfaceOwner();
-    new CarMapSurfaceOwner(gestures);
-  }
-
   void getters(MapboxCarMap mapboxCarMap) {
     CarContext carContext = mapboxCarMap.getCarContext();
     Rect visibleArea = mapboxCarMap.getVisibleArea();

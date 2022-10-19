@@ -4,7 +4,6 @@ import android.graphics.Rect
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraState
 import com.mapbox.maps.EdgeInsets
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.extension.androidauto.DefaultMapboxCarMapGestureHandler
@@ -18,7 +17,6 @@ import com.mapbox.maps.plugin.locationcomponent.location
 /**
  * Controller class to handle map camera changes.
  */
-@OptIn(MapboxExperimental::class)
 class CarCameraController : MapboxCarMapObserver {
 
   private var lastGpsLocation: Point = HELSINKI
