@@ -3,6 +3,7 @@ package com.mapbox.maps.module.telemetry
 import android.content.Context
 import android.content.res.Configuration
 import android.net.wifi.WifiManager
+import android.os.Build
 import android.telephony.TelephonyManager
 import android.text.TextUtils
 import android.util.DisplayMetrics
@@ -52,7 +53,11 @@ internal class PhoneState {
     created = TelemetrySystemUtils.obtainCurrentDate()
     batteryLevel = TelemetrySystemUtils.obtainBatteryLevel(context)
     isPluggedIn = TelemetrySystemUtils.isPluggedIn(context)
-    cellularNetworkType = TelemetrySystemUtils.obtainCellularNetworkType(context)
+    cellularNetworkType = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+      TelemetrySystemUtils.obtainCellularNetworkType(context)
+    } else {
+      "Unknown"
+    }
     orientation =
       Orientation.getOrientation(
         context.resources.configuration.orientation
