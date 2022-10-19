@@ -88,6 +88,8 @@ class VectorSource(builder: Builder) : Source(builder.sourceId) {
     /**
      * Get the Scheme property
      *
+     * Use static method [VectorSource.defaultScheme] to get the default property.
+     *
      * @return Scheme
      */
     get() {
@@ -111,6 +113,8 @@ class VectorSource(builder: Builder) : Source(builder.sourceId) {
     /**
      * Get the Minzoom property
      *
+     * Use static method [VectorSource.defaultMinzoom] to get the default property.
+     *
      * @return Long
      */
     get() = getPropertyValue("minzoom")
@@ -130,6 +134,8 @@ class VectorSource(builder: Builder) : Source(builder.sourceId) {
   val maxzoom: Long?
     /**
      * Get the Maxzoom property
+     *
+     * Use static method [VectorSource.defaultMaxzoom] to get the default property.
      *
      * @return Long
      */
@@ -179,6 +185,8 @@ class VectorSource(builder: Builder) : Source(builder.sourceId) {
     /**
      * Get the Volatile property
      *
+     * Use static method [VectorSource.defaultVolatile] to get the default property.
+     *
      * @return Boolean
      */
     get() = getPropertyValue("volatile")
@@ -205,6 +213,8 @@ class VectorSource(builder: Builder) : Source(builder.sourceId) {
     /**
      * Get the PrefetchZoomDelta property
      *
+     * Use static method [VectorSource.defaultPrefetchZoomDelta] to get the default property.
+     *
      * @return Long
      */
     get() = getPropertyValue("prefetch-zoom-delta")
@@ -226,6 +236,8 @@ class VectorSource(builder: Builder) : Source(builder.sourceId) {
   val minimumTileUpdateInterval: Double?
     /**
      * Get the MinimumTileUpdateInterval property
+     *
+     * Use static method [VectorSource.defaultMinimumTileUpdateInterval] to get the default property.
      *
      * @return Double
      */
@@ -273,6 +285,8 @@ class VectorSource(builder: Builder) : Source(builder.sourceId) {
     /**
      * Get the TileRequestsDelay property
      *
+     * Use static method [VectorSource.defaultTileRequestsDelay] to get the default property.
+     *
      * @return Double
      */
     get() = getPropertyValue("tile-requests-delay")
@@ -296,6 +310,8 @@ class VectorSource(builder: Builder) : Source(builder.sourceId) {
   val tileNetworkRequestsDelay: Double?
     /**
      * Get the TileNetworkRequestsDelay property
+     *
+     * Use static method [VectorSource.defaultTileNetworkRequestsDelay] to get the default property.
      *
      * @return Double
      */

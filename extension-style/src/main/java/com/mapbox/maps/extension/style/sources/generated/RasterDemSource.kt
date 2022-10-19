@@ -94,6 +94,8 @@ class RasterDemSource(builder: Builder) : Source(builder.sourceId) {
     /**
      * Get the Minzoom property
      *
+     * Use static method [RasterDemSource.defaultMinzoom] to get the default property.
+     *
      * @return Long
      */
     get() = getPropertyValue("minzoom")
@@ -113,6 +115,8 @@ class RasterDemSource(builder: Builder) : Source(builder.sourceId) {
   val maxzoom: Long?
     /**
      * Get the Maxzoom property
+     *
+     * Use static method [RasterDemSource.defaultMaxzoom] to get the default property.
      *
      * @return Long
      */
@@ -147,6 +151,8 @@ class RasterDemSource(builder: Builder) : Source(builder.sourceId) {
     /**
      * Get the Encoding property
      *
+     * Use static method [RasterDemSource.defaultEncoding] to get the default property.
+     *
      * @return Encoding
      */
     get() {
@@ -169,6 +175,8 @@ class RasterDemSource(builder: Builder) : Source(builder.sourceId) {
   val volatile: Boolean?
     /**
      * Get the Volatile property
+     *
+     * Use static method [RasterDemSource.defaultVolatile] to get the default property.
      *
      * @return Boolean
      */
@@ -196,6 +204,8 @@ class RasterDemSource(builder: Builder) : Source(builder.sourceId) {
     /**
      * Get the PrefetchZoomDelta property
      *
+     * Use static method [RasterDemSource.defaultPrefetchZoomDelta] to get the default property.
+     *
      * @return Long
      */
     get() = getPropertyValue("prefetch-zoom-delta")
@@ -217,6 +227,8 @@ class RasterDemSource(builder: Builder) : Source(builder.sourceId) {
   val minimumTileUpdateInterval: Double?
     /**
      * Get the MinimumTileUpdateInterval property
+     *
+     * Use static method [RasterDemSource.defaultMinimumTileUpdateInterval] to get the default property.
      *
      * @return Double
      */
@@ -264,6 +276,8 @@ class RasterDemSource(builder: Builder) : Source(builder.sourceId) {
     /**
      * Get the TileRequestsDelay property
      *
+     * Use static method [RasterDemSource.defaultTileRequestsDelay] to get the default property.
+     *
      * @return Double
      */
     get() = getPropertyValue("tile-requests-delay")
@@ -287,6 +301,8 @@ class RasterDemSource(builder: Builder) : Source(builder.sourceId) {
   val tileNetworkRequestsDelay: Double?
     /**
      * Get the TileNetworkRequestsDelay property
+     *
+     * Use static method [RasterDemSource.defaultTileNetworkRequestsDelay] to get the default property.
      *
      * @return Double
      */

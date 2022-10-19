@@ -95,6 +95,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     /**
      * Whether this layer is displayed.
      *
+     * Use static method [LineLayer.defaultVisibility] to get the default property value.
+     *
      * @return VISIBILITY
      */
     get() {
@@ -107,6 +109,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
 
   /**
    * Whether this layer is displayed.
+   *
+   * Use static method [LineLayer.defaultVisibility] to get the default property value.
    *
    * @param visibility value of Visibility
    */
@@ -126,6 +130,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     /**
      * Get the minzoom property
      *
+     * Use static method [LineLayer.defaultMinZoom] to get the default property value.
+     *
      * @return minzoom
      */
     get() {
@@ -138,6 +144,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    * Range:
    *       minimum: 0
    *       maximum: 24
+   *
+   * Use static method [LineLayer.defaultMinZoom] to get the default property value.
    *
    * @param value value of minzoom
    */
@@ -157,6 +165,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     /**
      * Get the maxzoom property
      *
+     * Use static method [LineLayer.defaultMaxZoom] to get the default property value.
+     *
      * @return maxzoom
      */
     get() {
@@ -169,6 +179,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    * Range:
    *       minimum: 0
    *       maximum: 24
+   *
+   * Use static method [LineLayer.defaultMaxZoom] to get the default property value.
    *
    * @param value value of maxzoom
    */
@@ -186,6 +198,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     /**
      * The display of line endings.
      *
+     * Use static method [LineLayer.defaultLineCap] to get the default property.
+     *
      * @return LineCap
      */
     get() {
@@ -197,6 +211,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
 
   /**
    * The display of line endings.
+   *
+   * Use static method [LineLayer.defaultLineCap] to set the default property.
    *
    * @param lineCap value of lineCap
    */
@@ -210,13 +226,14 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * This is an Expression representation of "line-cap".
    *
-   * The display of line endings.
    */
   val lineCapAsExpression: Expression?
     /**
      * The display of line endings.
      *
      * Get the LineCap property as an Expression
+     *
+     * Use static method [LineLayer.defaultLineCapAsExpression] to get the default property.
      *
      * @return LineCap
      */
@@ -233,6 +250,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   /**
    * The display of line endings.
    *
+   * Use static method [LineLayer.defaultLineCapAsExpression] to set the default property.
+   *
    * @param lineCap value of lineCap as Expression
    */
   override fun lineCap(lineCap: Expression) = apply {
@@ -247,6 +266,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     /**
      * The display of lines when joining.
      *
+     * Use static method [LineLayer.defaultLineJoin] to get the default property.
+     *
      * @return LineJoin
      */
     get() {
@@ -258,6 +279,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
 
   /**
    * The display of lines when joining.
+   *
+   * Use static method [LineLayer.defaultLineJoin] to set the default property.
    *
    * @param lineJoin value of lineJoin
    */
@@ -271,13 +294,14 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * This is an Expression representation of "line-join".
    *
-   * The display of lines when joining.
    */
   val lineJoinAsExpression: Expression?
     /**
      * The display of lines when joining.
      *
      * Get the LineJoin property as an Expression
+     *
+     * Use static method [LineLayer.defaultLineJoinAsExpression] to get the default property.
      *
      * @return LineJoin
      */
@@ -294,6 +318,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   /**
    * The display of lines when joining.
    *
+   * Use static method [LineLayer.defaultLineJoinAsExpression] to set the default property.
+   *
    * @param lineJoin value of lineJoin as Expression
    */
   override fun lineJoin(lineJoin: Expression) = apply {
@@ -308,6 +334,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     /**
      * Used to automatically convert miter joins to bevel joins for sharp angles.
      *
+     * Use static method [LineLayer.defaultLineMiterLimit] to get the default property.
+     *
      * @return Double
      */
     get() {
@@ -316,6 +344,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
 
   /**
    * Used to automatically convert miter joins to bevel joins for sharp angles.
+   *
+   * Use static method [LineLayer.defaultLineMiterLimit] to set the default property.
    *
    * @param lineMiterLimit value of lineMiterLimit
    */
@@ -329,13 +359,14 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * This is an Expression representation of "line-miter-limit".
    *
-   * Used to automatically convert miter joins to bevel joins for sharp angles.
    */
   val lineMiterLimitAsExpression: Expression?
     /**
      * Used to automatically convert miter joins to bevel joins for sharp angles.
      *
      * Get the LineMiterLimit property as an Expression
+     *
+     * Use static method [LineLayer.defaultLineMiterLimitAsExpression] to get the default property.
      *
      * @return Double
      */
@@ -352,6 +383,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   /**
    * Used to automatically convert miter joins to bevel joins for sharp angles.
    *
+   * Use static method [LineLayer.defaultLineMiterLimitAsExpression] to set the default property.
+   *
    * @param lineMiterLimit value of lineMiterLimit as Expression
    */
   override fun lineMiterLimit(lineMiterLimit: Expression) = apply {
@@ -366,6 +399,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     /**
      * Used to automatically convert round joins to miter joins for shallow angles.
      *
+     * Use static method [LineLayer.defaultLineRoundLimit] to get the default property.
+     *
      * @return Double
      */
     get() {
@@ -374,6 +409,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
 
   /**
    * Used to automatically convert round joins to miter joins for shallow angles.
+   *
+   * Use static method [LineLayer.defaultLineRoundLimit] to set the default property.
    *
    * @param lineRoundLimit value of lineRoundLimit
    */
@@ -387,13 +424,14 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * This is an Expression representation of "line-round-limit".
    *
-   * Used to automatically convert round joins to miter joins for shallow angles.
    */
   val lineRoundLimitAsExpression: Expression?
     /**
      * Used to automatically convert round joins to miter joins for shallow angles.
      *
      * Get the LineRoundLimit property as an Expression
+     *
+     * Use static method [LineLayer.defaultLineRoundLimitAsExpression] to get the default property.
      *
      * @return Double
      */
@@ -410,6 +448,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   /**
    * Used to automatically convert round joins to miter joins for shallow angles.
    *
+   * Use static method [LineLayer.defaultLineRoundLimitAsExpression] to set the default property.
+   *
    * @param lineRoundLimit value of lineRoundLimit as Expression
    */
   override fun lineRoundLimit(lineRoundLimit: Expression) = apply {
@@ -424,6 +464,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     /**
      * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
      *
+     * Use static method [LineLayer.defaultLineSortKey] to get the default property.
+     *
      * @return Double
      */
     get() {
@@ -432,6 +474,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
 
   /**
    * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
+   *
+   * Use static method [LineLayer.defaultLineSortKey] to set the default property.
    *
    * @param lineSortKey value of lineSortKey
    */
@@ -445,13 +489,14 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * This is an Expression representation of "line-sort-key".
    *
-   * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
    */
   val lineSortKeyAsExpression: Expression?
     /**
      * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
      *
      * Get the LineSortKey property as an Expression
+     *
+     * Use static method [LineLayer.defaultLineSortKeyAsExpression] to get the default property.
      *
      * @return Double
      */
@@ -468,6 +513,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   /**
    * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
    *
+   * Use static method [LineLayer.defaultLineSortKeyAsExpression] to set the default property.
+   *
    * @param lineSortKey value of lineSortKey as Expression
    */
   override fun lineSortKey(lineSortKey: Expression) = apply {
@@ -482,6 +529,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     /**
      * Blur applied to the line, in pixels.
      *
+     * Use static method [LineLayer.defaultLineBlur] to get the default property.
+     *
      * @return Double
      */
     get() {
@@ -490,6 +539,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
 
   /**
    * Blur applied to the line, in pixels.
+   *
+   * Use static method [LineLayer.defaultLineBlur] to set the default property.
    *
    * @param lineBlur value of lineBlur
    */
@@ -503,13 +554,14 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * This is an Expression representation of "line-blur".
    *
-   * Blur applied to the line, in pixels.
    */
   val lineBlurAsExpression: Expression?
     /**
      * Blur applied to the line, in pixels.
      *
      * Get the LineBlur property as an Expression
+     *
+     * Use static method [LineLayer.defaultLineBlurAsExpression] to get the default property.
      *
      * @return Double
      */
@@ -526,6 +578,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   /**
    * Blur applied to the line, in pixels.
    *
+   * Use static method [LineLayer.defaultLineBlurAsExpression] to set the default property.
+   *
    * @param lineBlur value of lineBlur as Expression
    */
   override fun lineBlur(lineBlur: Expression) = apply {
@@ -540,6 +594,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     /**
      * Get the LineBlur property transition options
      *
+     * Use static method [LineLayer.defaultLineBlurTransition] to get the default property.
+     *
      * @return transition options for Double
      */
     get() {
@@ -548,6 +604,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
 
   /**
    * Set the LineBlur property transition options
+   *
+   * Use static method [LineLayer.defaultLineBlurTransition] to set the default property.
    *
    * @param options transition options for Double
    */
@@ -570,6 +628,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     /**
      * The color with which the line will be drawn.
      *
+     * Use static method [LineLayer.defaultLineColor] to get the default property.
+     *
      * @return String
      */
     get() {
@@ -581,6 +641,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
 
   /**
    * The color with which the line will be drawn.
+   *
+   * Use static method [LineLayer.defaultLineColor] to set the default property.
    *
    * @param lineColor value of lineColor
    */
@@ -594,13 +656,14 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * This is an Expression representation of "line-color".
    *
-   * The color with which the line will be drawn.
    */
   val lineColorAsExpression: Expression?
     /**
      * The color with which the line will be drawn.
      *
      * Get the LineColor property as an Expression
+     *
+     * Use static method [LineLayer.defaultLineColorAsExpression] to get the default property.
      *
      * @return String
      */
@@ -613,6 +676,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
 
   /**
    * The color with which the line will be drawn.
+   *
+   * Use static method [LineLayer.defaultLineColorAsExpression] to set the default property.
    *
    * @param lineColor value of lineColor as Expression
    */
@@ -628,6 +693,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     /**
      * The color with which the line will be drawn.
      *
+     * Use static method [LineLayer.defaultLineColorAsColorInt] to get the default property.
+     *
      * @return int representation of a rgba string color
      */
     @ColorInt
@@ -640,6 +707,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
 
   /**
    * The color with which the line will be drawn.
+   *
+   * Use static method [LineLayer.defaultLineColorAsColorInt] to set the default property.
    *
    * @param lineColor value of lineColor
    */
@@ -655,6 +724,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     /**
      * Get the LineColor property transition options
      *
+     * Use static method [LineLayer.defaultLineColorTransition] to get the default property.
+     *
      * @return transition options for String
      */
     get() {
@@ -663,6 +734,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
 
   /**
    * Set the LineColor property transition options
+   *
+   * Use static method [LineLayer.defaultLineColorTransition] to set the default property.
    *
    * @param options transition options for String
    */
@@ -685,6 +758,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     /**
      * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels.
      *
+     * Use static method [LineLayer.defaultLineDasharray] to get the default property.
+     *
      * @return List<Double>
      */
     get() {
@@ -693,6 +768,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
 
   /**
    * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels.
+   *
+   * Use static method [LineLayer.defaultLineDasharray] to set the default property.
    *
    * @param lineDasharray value of lineDasharray
    */
@@ -706,13 +783,14 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * This is an Expression representation of "line-dasharray".
    *
-   * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels.
    */
   val lineDasharrayAsExpression: Expression?
     /**
      * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels.
      *
      * Get the LineDasharray property as an Expression
+     *
+     * Use static method [LineLayer.defaultLineDasharrayAsExpression] to get the default property.
      *
      * @return List<Double>
      */
@@ -729,6 +807,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   /**
    * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels.
    *
+   * Use static method [LineLayer.defaultLineDasharrayAsExpression] to set the default property.
+   *
    * @param lineDasharray value of lineDasharray as Expression
    */
   override fun lineDasharray(lineDasharray: Expression) = apply {
@@ -743,6 +823,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     /**
      * Get the LineDasharray property transition options
      *
+     * Use static method [LineLayer.defaultLineDasharrayTransition] to get the default property.
+     *
      * @return transition options for List<Double>
      */
     get() {
@@ -751,6 +833,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
 
   /**
    * Set the LineDasharray property transition options
+   *
+   * Use static method [LineLayer.defaultLineDasharrayTransition] to set the default property.
    *
    * @param options transition options for List<Double>
    */
@@ -773,6 +857,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     /**
      * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap.
      *
+     * Use static method [LineLayer.defaultLineGapWidth] to get the default property.
+     *
      * @return Double
      */
     get() {
@@ -781,6 +867,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
 
   /**
    * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap.
+   *
+   * Use static method [LineLayer.defaultLineGapWidth] to set the default property.
    *
    * @param lineGapWidth value of lineGapWidth
    */
@@ -794,13 +882,14 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * This is an Expression representation of "line-gap-width".
    *
-   * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap.
    */
   val lineGapWidthAsExpression: Expression?
     /**
      * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap.
      *
      * Get the LineGapWidth property as an Expression
+     *
+     * Use static method [LineLayer.defaultLineGapWidthAsExpression] to get the default property.
      *
      * @return Double
      */
@@ -817,6 +906,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   /**
    * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap.
    *
+   * Use static method [LineLayer.defaultLineGapWidthAsExpression] to set the default property.
+   *
    * @param lineGapWidth value of lineGapWidth as Expression
    */
   override fun lineGapWidth(lineGapWidth: Expression) = apply {
@@ -831,6 +922,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     /**
      * Get the LineGapWidth property transition options
      *
+     * Use static method [LineLayer.defaultLineGapWidthTransition] to get the default property.
+     *
      * @return transition options for Double
      */
     get() {
@@ -839,6 +932,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
 
   /**
    * Set the LineGapWidth property transition options
+   *
+   * Use static method [LineLayer.defaultLineGapWidthTransition] to set the default property.
    *
    * @param options transition options for Double
    */
@@ -861,6 +956,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     /**
      * Defines a gradient with which to color a line feature. Can only be used with GeoJSON sources that specify `"lineMetrics": true`.
      *
+     * Use static method [LineLayer.defaultLineGradient] to get the default property.
+     *
      * @return Expression
      */
     get() {
@@ -869,6 +966,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
 
   /**
    * Defines a gradient with which to color a line feature. Can only be used with GeoJSON sources that specify `"lineMetrics": true`.
+   *
+   * Use static method [LineLayer.defaultLineGradient] to set the default property.
    *
    * @param lineGradient value of lineGradient
    */
@@ -884,6 +983,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     /**
      * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset.
      *
+     * Use static method [LineLayer.defaultLineOffset] to get the default property.
+     *
      * @return Double
      */
     get() {
@@ -892,6 +993,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
 
   /**
    * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset.
+   *
+   * Use static method [LineLayer.defaultLineOffset] to set the default property.
    *
    * @param lineOffset value of lineOffset
    */
@@ -905,13 +1008,14 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * This is an Expression representation of "line-offset".
    *
-   * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset.
    */
   val lineOffsetAsExpression: Expression?
     /**
      * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset.
      *
      * Get the LineOffset property as an Expression
+     *
+     * Use static method [LineLayer.defaultLineOffsetAsExpression] to get the default property.
      *
      * @return Double
      */
@@ -928,6 +1032,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   /**
    * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset.
    *
+   * Use static method [LineLayer.defaultLineOffsetAsExpression] to set the default property.
+   *
    * @param lineOffset value of lineOffset as Expression
    */
   override fun lineOffset(lineOffset: Expression) = apply {
@@ -942,6 +1048,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     /**
      * Get the LineOffset property transition options
      *
+     * Use static method [LineLayer.defaultLineOffsetTransition] to get the default property.
+     *
      * @return transition options for Double
      */
     get() {
@@ -950,6 +1058,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
 
   /**
    * Set the LineOffset property transition options
+   *
+   * Use static method [LineLayer.defaultLineOffsetTransition] to set the default property.
    *
    * @param options transition options for Double
    */
@@ -972,6 +1082,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     /**
      * The opacity at which the line will be drawn.
      *
+     * Use static method [LineLayer.defaultLineOpacity] to get the default property.
+     *
      * @return Double
      */
     get() {
@@ -980,6 +1092,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
 
   /**
    * The opacity at which the line will be drawn.
+   *
+   * Use static method [LineLayer.defaultLineOpacity] to set the default property.
    *
    * @param lineOpacity value of lineOpacity
    */
@@ -993,13 +1107,14 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * This is an Expression representation of "line-opacity".
    *
-   * The opacity at which the line will be drawn.
    */
   val lineOpacityAsExpression: Expression?
     /**
      * The opacity at which the line will be drawn.
      *
      * Get the LineOpacity property as an Expression
+     *
+     * Use static method [LineLayer.defaultLineOpacityAsExpression] to get the default property.
      *
      * @return Double
      */
@@ -1016,6 +1131,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   /**
    * The opacity at which the line will be drawn.
    *
+   * Use static method [LineLayer.defaultLineOpacityAsExpression] to set the default property.
+   *
    * @param lineOpacity value of lineOpacity as Expression
    */
   override fun lineOpacity(lineOpacity: Expression) = apply {
@@ -1030,6 +1147,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     /**
      * Get the LineOpacity property transition options
      *
+     * Use static method [LineLayer.defaultLineOpacityTransition] to get the default property.
+     *
      * @return transition options for Double
      */
     get() {
@@ -1038,6 +1157,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
 
   /**
    * Set the LineOpacity property transition options
+   *
+   * Use static method [LineLayer.defaultLineOpacityTransition] to set the default property.
    *
    * @param options transition options for Double
    */
@@ -1060,6 +1181,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     /**
      * Name of image in sprite to use for drawing image lines. For seamless patterns, image width must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
      *
+     * Use static method [LineLayer.defaultLinePattern] to get the default property.
+     *
      * @return String
      */
     get() {
@@ -1068,6 +1191,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
 
   /**
    * Name of image in sprite to use for drawing image lines. For seamless patterns, image width must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
+   *
+   * Use static method [LineLayer.defaultLinePattern] to set the default property.
    *
    * @param linePattern value of linePattern
    */
@@ -1081,13 +1206,14 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * This is an Expression representation of "line-pattern".
    *
-   * Name of image in sprite to use for drawing image lines. For seamless patterns, image width must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
    */
   val linePatternAsExpression: Expression?
     /**
      * Name of image in sprite to use for drawing image lines. For seamless patterns, image width must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
      *
      * Get the LinePattern property as an Expression
+     *
+     * Use static method [LineLayer.defaultLinePatternAsExpression] to get the default property.
      *
      * @return String
      */
@@ -1104,6 +1230,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   /**
    * Name of image in sprite to use for drawing image lines. For seamless patterns, image width must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
    *
+   * Use static method [LineLayer.defaultLinePatternAsExpression] to set the default property.
+   *
    * @param linePattern value of linePattern as Expression
    */
   override fun linePattern(linePattern: Expression) = apply {
@@ -1118,6 +1246,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     /**
      * Get the LinePattern property transition options
      *
+     * Use static method [LineLayer.defaultLinePatternTransition] to get the default property.
+     *
      * @return transition options for String
      */
     get() {
@@ -1126,6 +1256,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
 
   /**
    * Set the LinePattern property transition options
+   *
+   * Use static method [LineLayer.defaultLinePatternTransition] to set the default property.
    *
    * @param options transition options for String
    */
@@ -1148,6 +1280,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     /**
      * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
      *
+     * Use static method [LineLayer.defaultLineTranslate] to get the default property.
+     *
      * @return List<Double>
      */
     get() {
@@ -1156,6 +1290,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
 
   /**
    * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
+   *
+   * Use static method [LineLayer.defaultLineTranslate] to set the default property.
    *
    * @param lineTranslate value of lineTranslate
    */
@@ -1169,13 +1305,14 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * This is an Expression representation of "line-translate".
    *
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
    */
   val lineTranslateAsExpression: Expression?
     /**
      * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
      *
      * Get the LineTranslate property as an Expression
+     *
+     * Use static method [LineLayer.defaultLineTranslateAsExpression] to get the default property.
      *
      * @return List<Double>
      */
@@ -1192,6 +1329,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   /**
    * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
    *
+   * Use static method [LineLayer.defaultLineTranslateAsExpression] to set the default property.
+   *
    * @param lineTranslate value of lineTranslate as Expression
    */
   override fun lineTranslate(lineTranslate: Expression) = apply {
@@ -1206,6 +1345,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     /**
      * Get the LineTranslate property transition options
      *
+     * Use static method [LineLayer.defaultLineTranslateTransition] to get the default property.
+     *
      * @return transition options for List<Double>
      */
     get() {
@@ -1214,6 +1355,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
 
   /**
    * Set the LineTranslate property transition options
+   *
+   * Use static method [LineLayer.defaultLineTranslateTransition] to set the default property.
    *
    * @param options transition options for List<Double>
    */
@@ -1236,6 +1379,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     /**
      * Controls the frame of reference for `line-translate`.
      *
+     * Use static method [LineLayer.defaultLineTranslateAnchor] to get the default property.
+     *
      * @return LineTranslateAnchor
      */
     get() {
@@ -1247,6 +1392,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
 
   /**
    * Controls the frame of reference for `line-translate`.
+   *
+   * Use static method [LineLayer.defaultLineTranslateAnchor] to set the default property.
    *
    * @param lineTranslateAnchor value of lineTranslateAnchor
    */
@@ -1260,13 +1407,14 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * This is an Expression representation of "line-translate-anchor".
    *
-   * Controls the frame of reference for `line-translate`.
    */
   val lineTranslateAnchorAsExpression: Expression?
     /**
      * Controls the frame of reference for `line-translate`.
      *
      * Get the LineTranslateAnchor property as an Expression
+     *
+     * Use static method [LineLayer.defaultLineTranslateAnchorAsExpression] to get the default property.
      *
      * @return LineTranslateAnchor
      */
@@ -1283,6 +1431,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   /**
    * Controls the frame of reference for `line-translate`.
    *
+   * Use static method [LineLayer.defaultLineTranslateAnchorAsExpression] to set the default property.
+   *
    * @param lineTranslateAnchor value of lineTranslateAnchor as Expression
    */
   override fun lineTranslateAnchor(lineTranslateAnchor: Expression) = apply {
@@ -1297,6 +1447,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     /**
      * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0].
      *
+     * Use static method [LineLayer.defaultLineTrimOffset] to get the default property.
+     *
      * @return List<Double>
      */
     get() {
@@ -1305,6 +1457,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
 
   /**
    * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0].
+   *
+   * Use static method [LineLayer.defaultLineTrimOffset] to set the default property.
    *
    * @param lineTrimOffset value of lineTrimOffset
    */
@@ -1318,13 +1472,14 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * This is an Expression representation of "line-trim-offset".
    *
-   * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0].
    */
   val lineTrimOffsetAsExpression: Expression?
     /**
      * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0].
      *
      * Get the LineTrimOffset property as an Expression
+     *
+     * Use static method [LineLayer.defaultLineTrimOffsetAsExpression] to get the default property.
      *
      * @return List<Double>
      */
@@ -1341,6 +1496,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   /**
    * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0].
    *
+   * Use static method [LineLayer.defaultLineTrimOffsetAsExpression] to set the default property.
+   *
    * @param lineTrimOffset value of lineTrimOffset as Expression
    */
   override fun lineTrimOffset(lineTrimOffset: Expression) = apply {
@@ -1355,6 +1512,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     /**
      * Stroke thickness.
      *
+     * Use static method [LineLayer.defaultLineWidth] to get the default property.
+     *
      * @return Double
      */
     get() {
@@ -1363,6 +1522,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
 
   /**
    * Stroke thickness.
+   *
+   * Use static method [LineLayer.defaultLineWidth] to set the default property.
    *
    * @param lineWidth value of lineWidth
    */
@@ -1376,13 +1537,14 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * This is an Expression representation of "line-width".
    *
-   * Stroke thickness.
    */
   val lineWidthAsExpression: Expression?
     /**
      * Stroke thickness.
      *
      * Get the LineWidth property as an Expression
+     *
+     * Use static method [LineLayer.defaultLineWidthAsExpression] to get the default property.
      *
      * @return Double
      */
@@ -1399,6 +1561,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   /**
    * Stroke thickness.
    *
+   * Use static method [LineLayer.defaultLineWidthAsExpression] to set the default property.
+   *
    * @param lineWidth value of lineWidth as Expression
    */
   override fun lineWidth(lineWidth: Expression) = apply {
@@ -1413,6 +1577,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     /**
      * Get the LineWidth property transition options
      *
+     * Use static method [LineLayer.defaultLineWidthTransition] to get the default property.
+     *
      * @return transition options for Double
      */
     get() {
@@ -1421,6 +1587,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
 
   /**
    * Set the LineWidth property transition options
+   *
+   * Use static method [LineLayer.defaultLineWidthTransition] to set the default property.
    *
    * @param options transition options for Double
    */
@@ -1518,7 +1686,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      *
      * This is an Expression representation of "line-cap".
      *
-     * The display of line endings.
      */
     val defaultLineCapAsExpression: Expression?
       /**
@@ -1559,7 +1726,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      *
      * This is an Expression representation of "line-join".
      *
-     * The display of lines when joining.
      */
     val defaultLineJoinAsExpression: Expression?
       /**
@@ -1597,7 +1763,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      *
      * This is an Expression representation of "line-miter-limit".
      *
-     * Used to automatically convert miter joins to bevel joins for sharp angles.
      */
     val defaultLineMiterLimitAsExpression: Expression?
       /**
@@ -1635,7 +1800,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      *
      * This is an Expression representation of "line-round-limit".
      *
-     * Used to automatically convert round joins to miter joins for shallow angles.
      */
     val defaultLineRoundLimitAsExpression: Expression?
       /**
@@ -1673,7 +1837,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      *
      * This is an Expression representation of "line-sort-key".
      *
-     * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
      */
     val defaultLineSortKeyAsExpression: Expression?
       /**
@@ -1711,7 +1874,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      *
      * This is an Expression representation of "line-blur".
      *
-     * Blur applied to the line, in pixels.
      */
     val defaultLineBlurAsExpression: Expression?
       /**
@@ -1763,7 +1925,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      *
      * This is an Expression representation of "line-color".
      *
-     * The color with which the line will be drawn.
      */
     val defaultLineColorAsExpression: Expression?
       /**
@@ -1828,7 +1989,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      *
      * This is an Expression representation of "line-dasharray".
      *
-     * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels.
      */
     val defaultLineDasharrayAsExpression: Expression?
       /**
@@ -1877,7 +2037,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      *
      * This is an Expression representation of "line-gap-width".
      *
-     * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap.
      */
     val defaultLineGapWidthAsExpression: Expression?
       /**
@@ -1926,7 +2085,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      *
      * This is an Expression representation of "line-offset".
      *
-     * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset.
      */
     val defaultLineOffsetAsExpression: Expression?
       /**
@@ -1975,7 +2133,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      *
      * This is an Expression representation of "line-opacity".
      *
-     * The opacity at which the line will be drawn.
      */
     val defaultLineOpacityAsExpression: Expression?
       /**
@@ -2024,7 +2181,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      *
      * This is an Expression representation of "line-pattern".
      *
-     * Name of image in sprite to use for drawing image lines. For seamless patterns, image width must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
      */
     val defaultLinePatternAsExpression: Expression?
       /**
@@ -2073,7 +2229,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      *
      * This is an Expression representation of "line-translate".
      *
-     * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
      */
     val defaultLineTranslateAsExpression: Expression?
       /**
@@ -2125,7 +2280,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      *
      * This is an Expression representation of "line-translate-anchor".
      *
-     * Controls the frame of reference for `line-translate`.
      */
     val defaultLineTranslateAnchorAsExpression: Expression?
       /**
@@ -2163,7 +2317,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      *
      * This is an Expression representation of "line-trim-offset".
      *
-     * The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0].
      */
     val defaultLineTrimOffsetAsExpression: Expression?
       /**
@@ -2201,7 +2354,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      *
      * This is an Expression representation of "line-width".
      *
-     * Stroke thickness.
      */
     val defaultLineWidthAsExpression: Expression?
       /**
