@@ -35,8 +35,8 @@ class ViewAnnotationManagerTest {
     renderer = mockk(relaxUnitFun = true)
     every { mapView.mapController.renderer.renderThread } returns renderer
     frameLayoutParams = FrameLayout.LayoutParams(0, 0)
-    frameLayoutParams.width = 20
-    frameLayoutParams.height = 20
+    frameLayoutParams.width = DEFAULT_WIDTH
+    frameLayoutParams.height = DEFAULT_HEIGHT
     view = mockView()
     viewAnnotationsLayout = mockk()
     every { viewAnnotationsLayout.layoutParams = any() } just Runs
@@ -262,8 +262,13 @@ class ViewAnnotationManagerTest {
     }
     viewAnnotationManager.addViewAnnotation(view, viewAnnotationOptions)
     val viewId = viewAnnotationManager.idLookupMap[view]
-    every { mapboxMap.getViewAnnotationOptions(viewId!!) } returns ExpectedFactory.createValue(viewAnnotationOptions)
-    assertEquals(viewAnnotationOptions, viewAnnotationManager.getViewAnnotationOptionsByFeatureId(FEATURE_ID))
+    every { mapboxMap.getViewAnnotationOptions(viewId!!) } returns ExpectedFactory.createValue(
+      viewAnnotationOptions
+    )
+    assertEquals(
+      viewAnnotationOptions,
+      viewAnnotationManager.getViewAnnotationOptionsByFeatureId(FEATURE_ID)
+    )
   }
 
   @Test
@@ -333,8 +338,7 @@ class ViewAnnotationManagerTest {
     }
     viewAnnotationManager.addViewAnnotation(view, viewAnnotationOptions)
 
-    val anotherView = mockk<View>()
-    mockView(anotherView)
+    val anotherView = mockView()
     viewAnnotationManager.addViewAnnotation(
       anotherView,
       viewAnnotationOptions {
@@ -342,7 +346,6 @@ class ViewAnnotationManagerTest {
       }
     )
     every { anotherView.removeOnAttachStateChangeListener(any()) } just Runs
-    assertNotNull(viewAnnotationManager.annotations)
     assertEquals(2, viewAnnotationManager.annotations.size)
   }
 
@@ -350,22 +353,92 @@ class ViewAnnotationManagerTest {
   fun getViewAnnotationOptionsFromAnnotationsMap() {
     val viewAnnotationOptions = viewAnnotationOptions {
       geometry(DEFAULT_GEOMETRY)
+      width(DEFAULT_WIDTH)
+      height(DEFAULT_HEIGHT)
     }
     viewAnnotationManager.addViewAnnotation(view, viewAnnotationOptions)
     assertEquals(viewAnnotationOptions, viewAnnotationManager.annotations[view])
   }
 
   @Test
+  fun getViewAnnotationsAfterRemoveAnnotation() {
+    every { mapboxMap.removeViewAnnotation(any()) } returns ExpectedFactory.createNone()
+    viewAnnotationManager.addViewAnnotation(
+      view,
+      viewAnnotationOptions {
+        geometry(DEFAULT_GEOMETRY)
+      }
+    )
+    assertEquals(1, viewAnnotationManager.annotations.size)
+    viewAnnotationManager.removeViewAnnotation(view)
+    assert(viewAnnotationManager.annotations.isEmpty())
+  }
+
+  @Test
   fun getViewAnnotationsAfterRemoveAllAnnotations() {
     every { mapboxMap.removeViewAnnotation(any()) } returns ExpectedFactory.createNone()
     every { view.removeOnAttachStateChangeListener(any()) } just Runs
-
+    viewAnnotationManager.addViewAnnotation(
+      view,
+      viewAnnotationOptions {
+        geometry(DEFAULT_GEOMETRY)
+      }
+    )
     viewAnnotationManager.removeAllViewAnnotations()
     assert(viewAnnotationManager.annotations.isEmpty())
   }
 
+  @Test
+  fun validateUpdateOptionsFromAnnotationsMap() {
+    every { mapboxMap.updateViewAnnotation(any(), any()) } returns ExpectedFactory.createNone()
+    val expectedOptions = viewAnnotationOptions {
+      offsetX(10)
+    }
+    viewAnnotationManager.addViewAnnotation(
+      view,
+      viewAnnotationOptions {
+        geometry(DEFAULT_GEOMETRY)
+      }
+    )
+    // check annotations size
+    assertEquals(1, viewAnnotationManager.annotations.size)
+    // update annotation options
+    val result = viewAnnotationManager.updateViewAnnotation(view, expectedOptions)
+    assertTrue(result)
+
+    // validate annotation options from annotations map
+    val actualOptions = viewAnnotationManager.annotations[view]
+    assertEquals(expectedOptions, actualOptions)
+
+    // validate annotation size after update options
+    assertEquals(1, viewAnnotationManager.annotations.size)
+  }
+
+  @Test
+  fun validateViewAnnotationSizeAfterAddingDuplicateView() {
+    viewAnnotationManager.addViewAnnotation(
+      view,
+      viewAnnotationOptions {
+        geometry(DEFAULT_GEOMETRY)
+      }
+    )
+    assertEquals(1, viewAnnotationManager.annotations.size)
+
+    assertThrows(RuntimeException::class.java) {
+      viewAnnotationManager.addViewAnnotation(
+        view,
+        viewAnnotationOptions {
+          geometry(DEFAULT_GEOMETRY)
+        }
+      )
+    }
+    assertEquals(1, viewAnnotationManager.annotations.size)
+  }
+
   private companion object {
-    const val FEATURE_ID = "featureId"
+    private const val FEATURE_ID = "featureId"
     val DEFAULT_GEOMETRY: Geometry = Point.fromLngLat(0.0, 0.0)
+    private const val DEFAULT_WIDTH = 20
+    private const val DEFAULT_HEIGHT = 20
   }
 }
