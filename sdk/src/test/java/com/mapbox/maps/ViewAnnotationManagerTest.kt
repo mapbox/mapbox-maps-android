@@ -326,6 +326,44 @@ class ViewAnnotationManagerTest {
     assertEquals(ViewAnnotationUpdateMode.MAP_FIXED_DELAY, viewAnnotationManager.getViewAnnotationUpdateMode())
   }
 
+  @Test
+  fun getViewAnnotationsSize() {
+    val viewAnnotationOptions = viewAnnotationOptions {
+      geometry(DEFAULT_GEOMETRY)
+    }
+    viewAnnotationManager.addViewAnnotation(view, viewAnnotationOptions)
+
+    val anotherView = mockk<View>()
+    mockView(anotherView)
+    viewAnnotationManager.addViewAnnotation(
+      anotherView,
+      viewAnnotationOptions {
+        geometry(Point.fromLngLat(90.0, 90.0))
+      }
+    )
+    every { anotherView.removeOnAttachStateChangeListener(any()) } just Runs
+    assertNotNull(viewAnnotationManager.annotations)
+    assertEquals(2, viewAnnotationManager.annotations.size)
+  }
+
+  @Test
+  fun getViewAnnotationOptionsFromAnnotationsMap() {
+    val viewAnnotationOptions = viewAnnotationOptions {
+      geometry(DEFAULT_GEOMETRY)
+    }
+    viewAnnotationManager.addViewAnnotation(view, viewAnnotationOptions)
+    assertEquals(viewAnnotationOptions, viewAnnotationManager.annotations[view])
+  }
+
+  @Test
+  fun getViewAnnotationsAfterRemoveAllAnnotations() {
+    every { mapboxMap.removeViewAnnotation(any()) } returns ExpectedFactory.createNone()
+    every { view.removeOnAttachStateChangeListener(any()) } just Runs
+
+    viewAnnotationManager.removeAllViewAnnotations()
+    assert(viewAnnotationManager.annotations.isEmpty())
+  }
+
   private companion object {
     const val FEATURE_ID = "featureId"
     val DEFAULT_GEOMETRY: Geometry = Point.fromLngLat(0.0, 0.0)

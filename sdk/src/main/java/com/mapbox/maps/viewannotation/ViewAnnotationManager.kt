@@ -156,6 +156,13 @@ interface ViewAnnotationManager {
   fun getViewAnnotationUpdateMode(): ViewAnnotationUpdateMode
 
   /**
+   * Get all added [View] with their [ViewAnnotationOptions].
+   *
+   * @return Map of [View] and associated [ViewAnnotationOptions].
+   */
+  val annotations: HashMap<View, ViewAnnotationOptions>
+
+  /**
    * Static methods and variables.
    */
   companion object {

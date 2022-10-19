@@ -38,6 +38,7 @@ internal class ViewAnnotationManagerImpl(
   internal val idLookupMap = ConcurrentHashMap<View, String>()
   private val currentlyDrawnViewIdSet = mutableSetOf<String>()
   private val unpositionedViews = mutableSetOf<View>()
+  private val annotationsMap = ConcurrentHashMap<View, ViewAnnotationOptions>()
 
   // using copy on write as user could remove listener while callback is invoked
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
@@ -92,6 +93,7 @@ internal class ViewAnnotationManagerImpl(
     currentlyDrawnViewIdSet.clear()
     annotationMap.clear()
     idLookupMap.clear()
+    annotationsMap.clear()
   }
 
   override fun updateViewAnnotation(
@@ -109,6 +111,7 @@ internal class ViewAnnotationManagerImpl(
         it.measuredHeight = USER_FIXED_DIMENSION
       }
       getValue(mapboxMap.updateViewAnnotation(id, options))
+      annotationsMap[view] = options
       return true
     } ?: return false
   }
@@ -145,6 +148,11 @@ internal class ViewAnnotationManagerImpl(
   override fun getViewAnnotationUpdateMode(): ViewAnnotationUpdateMode {
     return renderThread.viewAnnotationMode
   }
+
+  override val annotations: HashMap<View, ViewAnnotationOptions>
+    get() = HashMap<View, ViewAnnotationOptions>().apply {
+      this.putAll(annotationsMap)
+    }
 
   /**
    * We will have two calls of this callback:
@@ -300,6 +308,7 @@ internal class ViewAnnotationManagerImpl(
     inflatedView.addOnAttachStateChangeListener(viewAnnotation.attachStateListener)
     annotationMap[viewAnnotation.id] = viewAnnotation
     idLookupMap[inflatedView] = viewAnnotation.id
+    annotationsMap[inflatedView] = updatedOptions
     getValue(mapboxMap.addViewAnnotation(viewAnnotation.id, updatedOptions))
     return inflatedView
   }
