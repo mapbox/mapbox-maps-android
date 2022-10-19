@@ -28,4 +28,5 @@ dependencies {
 }
 project.apply {
     from("$rootDir/gradle/ktlint.gradle")
+    from("$rootDir/gradle/dependency-updates.gradle")
 }

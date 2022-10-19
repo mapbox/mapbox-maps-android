@@ -62,6 +62,7 @@ project.apply {
   from("$rootDir/gradle/ktlint.gradle")
   from("$rootDir/gradle/lint.gradle")
   from("$rootDir/gradle/detekt.gradle")
+  from("$rootDir/gradle/dependency-updates.gradle")
 }
 
 val localPath:String = org.apache.commons.io.FilenameUtils.getFullPathNoEndSeparator(project.buildscript.sourceFile.toString())
