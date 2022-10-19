@@ -33,6 +33,8 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
     /**
      * Whether this layer is displayed.
      *
+     * Use static method [BackgroundLayer.defaultVisibility] to get the default property value.
+     *
      * @return VISIBILITY
      */
     get() {
@@ -45,6 +47,8 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
 
   /**
    * Whether this layer is displayed.
+   *
+   * Use static method [BackgroundLayer.defaultVisibility] to get the default property value.
    *
    * @param visibility value of Visibility
    */
@@ -64,6 +68,8 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
     /**
      * Get the minzoom property
      *
+     * Use static method [BackgroundLayer.defaultMinZoom] to get the default property value.
+     *
      * @return minzoom
      */
     get() {
@@ -76,6 +82,8 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
    * Range:
    *       minimum: 0
    *       maximum: 24
+   *
+   * Use static method [BackgroundLayer.defaultMinZoom] to get the default property value.
    *
    * @param value value of minzoom
    */
@@ -95,6 +103,8 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
     /**
      * Get the maxzoom property
      *
+     * Use static method [BackgroundLayer.defaultMaxZoom] to get the default property value.
+     *
      * @return maxzoom
      */
     get() {
@@ -107,6 +117,8 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
    * Range:
    *       minimum: 0
    *       maximum: 24
+   *
+   * Use static method [BackgroundLayer.defaultMaxZoom] to get the default property value.
    *
    * @param value value of maxzoom
    */
@@ -124,6 +136,8 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
     /**
      * The color with which the background will be drawn.
      *
+     * Use static method [BackgroundLayer.defaultBackgroundColor] to get the default property.
+     *
      * @return String
      */
     get() {
@@ -135,6 +149,8 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
 
   /**
    * The color with which the background will be drawn.
+   *
+   * Use static method [BackgroundLayer.defaultBackgroundColor] to set the default property.
    *
    * @param backgroundColor value of backgroundColor
    */
@@ -148,13 +164,14 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
    *
    * This is an Expression representation of "background-color".
    *
-   * The color with which the background will be drawn.
    */
   val backgroundColorAsExpression: Expression?
     /**
      * The color with which the background will be drawn.
      *
      * Get the BackgroundColor property as an Expression
+     *
+     * Use static method [BackgroundLayer.defaultBackgroundColorAsExpression] to get the default property.
      *
      * @return String
      */
@@ -167,6 +184,8 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
 
   /**
    * The color with which the background will be drawn.
+   *
+   * Use static method [BackgroundLayer.defaultBackgroundColorAsExpression] to set the default property.
    *
    * @param backgroundColor value of backgroundColor as Expression
    */
@@ -182,6 +201,8 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
     /**
      * The color with which the background will be drawn.
      *
+     * Use static method [BackgroundLayer.defaultBackgroundColorAsColorInt] to get the default property.
+     *
      * @return int representation of a rgba string color
      */
     @ColorInt
@@ -194,6 +215,8 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
 
   /**
    * The color with which the background will be drawn.
+   *
+   * Use static method [BackgroundLayer.defaultBackgroundColorAsColorInt] to set the default property.
    *
    * @param backgroundColor value of backgroundColor
    */
@@ -209,6 +232,8 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
     /**
      * Get the BackgroundColor property transition options
      *
+     * Use static method [BackgroundLayer.defaultBackgroundColorTransition] to get the default property.
+     *
      * @return transition options for String
      */
     get() {
@@ -217,6 +242,8 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
 
   /**
    * Set the BackgroundColor property transition options
+   *
+   * Use static method [BackgroundLayer.defaultBackgroundColorTransition] to set the default property.
    *
    * @param options transition options for String
    */
@@ -239,6 +266,8 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
     /**
      * The opacity at which the background will be drawn.
      *
+     * Use static method [BackgroundLayer.defaultBackgroundOpacity] to get the default property.
+     *
      * @return Double
      */
     get() {
@@ -247,6 +276,8 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
 
   /**
    * The opacity at which the background will be drawn.
+   *
+   * Use static method [BackgroundLayer.defaultBackgroundOpacity] to set the default property.
    *
    * @param backgroundOpacity value of backgroundOpacity
    */
@@ -260,13 +291,14 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
    *
    * This is an Expression representation of "background-opacity".
    *
-   * The opacity at which the background will be drawn.
    */
   val backgroundOpacityAsExpression: Expression?
     /**
      * The opacity at which the background will be drawn.
      *
      * Get the BackgroundOpacity property as an Expression
+     *
+     * Use static method [BackgroundLayer.defaultBackgroundOpacityAsExpression] to get the default property.
      *
      * @return Double
      */
@@ -283,6 +315,8 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
   /**
    * The opacity at which the background will be drawn.
    *
+   * Use static method [BackgroundLayer.defaultBackgroundOpacityAsExpression] to set the default property.
+   *
    * @param backgroundOpacity value of backgroundOpacity as Expression
    */
   override fun backgroundOpacity(backgroundOpacity: Expression) = apply {
@@ -297,6 +331,8 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
     /**
      * Get the BackgroundOpacity property transition options
      *
+     * Use static method [BackgroundLayer.defaultBackgroundOpacityTransition] to get the default property.
+     *
      * @return transition options for Double
      */
     get() {
@@ -305,6 +341,8 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
 
   /**
    * Set the BackgroundOpacity property transition options
+   *
+   * Use static method [BackgroundLayer.defaultBackgroundOpacityTransition] to set the default property.
    *
    * @param options transition options for Double
    */
@@ -327,6 +365,8 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
     /**
      * Name of image in sprite to use for drawing an image background. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
      *
+     * Use static method [BackgroundLayer.defaultBackgroundPattern] to get the default property.
+     *
      * @return String
      */
     get() {
@@ -335,6 +375,8 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
 
   /**
    * Name of image in sprite to use for drawing an image background. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
+   *
+   * Use static method [BackgroundLayer.defaultBackgroundPattern] to set the default property.
    *
    * @param backgroundPattern value of backgroundPattern
    */
@@ -348,13 +390,14 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
    *
    * This is an Expression representation of "background-pattern".
    *
-   * Name of image in sprite to use for drawing an image background. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
    */
   val backgroundPatternAsExpression: Expression?
     /**
      * Name of image in sprite to use for drawing an image background. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
      *
      * Get the BackgroundPattern property as an Expression
+     *
+     * Use static method [BackgroundLayer.defaultBackgroundPatternAsExpression] to get the default property.
      *
      * @return String
      */
@@ -371,6 +414,8 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
   /**
    * Name of image in sprite to use for drawing an image background. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
    *
+   * Use static method [BackgroundLayer.defaultBackgroundPatternAsExpression] to set the default property.
+   *
    * @param backgroundPattern value of backgroundPattern as Expression
    */
   override fun backgroundPattern(backgroundPattern: Expression) = apply {
@@ -385,6 +430,8 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
     /**
      * Get the BackgroundPattern property transition options
      *
+     * Use static method [BackgroundLayer.defaultBackgroundPatternTransition] to get the default property.
+     *
      * @return transition options for String
      */
     get() {
@@ -393,6 +440,8 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
 
   /**
    * Set the BackgroundPattern property transition options
+   *
+   * Use static method [BackgroundLayer.defaultBackgroundPatternTransition] to set the default property.
    *
    * @param options transition options for String
    */
@@ -490,7 +539,6 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
      *
      * This is an Expression representation of "background-color".
      *
-     * The color with which the background will be drawn.
      */
     val defaultBackgroundColorAsExpression: Expression?
       /**
@@ -555,7 +603,6 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
      *
      * This is an Expression representation of "background-opacity".
      *
-     * The opacity at which the background will be drawn.
      */
     val defaultBackgroundOpacityAsExpression: Expression?
       /**
@@ -604,7 +651,6 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
      *
      * This is an Expression representation of "background-pattern".
      *
-     * Name of image in sprite to use for drawing an image background. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
      */
     val defaultBackgroundPatternAsExpression: Expression?
       /**

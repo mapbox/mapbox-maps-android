@@ -91,6 +91,8 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
     /**
      * Whether this layer is displayed.
      *
+     * Use static method [HeatmapLayer.defaultVisibility] to get the default property value.
+     *
      * @return VISIBILITY
      */
     get() {
@@ -103,6 +105,8 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
 
   /**
    * Whether this layer is displayed.
+   *
+   * Use static method [HeatmapLayer.defaultVisibility] to get the default property value.
    *
    * @param visibility value of Visibility
    */
@@ -122,6 +126,8 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
     /**
      * Get the minzoom property
      *
+     * Use static method [HeatmapLayer.defaultMinZoom] to get the default property value.
+     *
      * @return minzoom
      */
     get() {
@@ -134,6 +140,8 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
    * Range:
    *       minimum: 0
    *       maximum: 24
+   *
+   * Use static method [HeatmapLayer.defaultMinZoom] to get the default property value.
    *
    * @param value value of minzoom
    */
@@ -153,6 +161,8 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
     /**
      * Get the maxzoom property
      *
+     * Use static method [HeatmapLayer.defaultMaxZoom] to get the default property value.
+     *
      * @return maxzoom
      */
     get() {
@@ -165,6 +175,8 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
    * Range:
    *       minimum: 0
    *       maximum: 24
+   *
+   * Use static method [HeatmapLayer.defaultMaxZoom] to get the default property value.
    *
    * @param value value of maxzoom
    */
@@ -182,6 +194,8 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
     /**
      * Defines the color of each pixel based on its density value in a heatmap.  Should be an expression that uses `["heatmap-density"]` as input.
      *
+     * Use static method [HeatmapLayer.defaultHeatmapColor] to get the default property.
+     *
      * @return Expression
      */
     get() {
@@ -190,6 +204,8 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
 
   /**
    * Defines the color of each pixel based on its density value in a heatmap.  Should be an expression that uses `["heatmap-density"]` as input.
+   *
+   * Use static method [HeatmapLayer.defaultHeatmapColor] to set the default property.
    *
    * @param heatmapColor value of heatmapColor
    */
@@ -205,6 +221,8 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
     /**
      * Similar to `heatmap-weight` but controls the intensity of the heatmap globally. Primarily used for adjusting the heatmap based on zoom level.
      *
+     * Use static method [HeatmapLayer.defaultHeatmapIntensity] to get the default property.
+     *
      * @return Double
      */
     get() {
@@ -213,6 +231,8 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
 
   /**
    * Similar to `heatmap-weight` but controls the intensity of the heatmap globally. Primarily used for adjusting the heatmap based on zoom level.
+   *
+   * Use static method [HeatmapLayer.defaultHeatmapIntensity] to set the default property.
    *
    * @param heatmapIntensity value of heatmapIntensity
    */
@@ -226,13 +246,14 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
    *
    * This is an Expression representation of "heatmap-intensity".
    *
-   * Similar to `heatmap-weight` but controls the intensity of the heatmap globally. Primarily used for adjusting the heatmap based on zoom level.
    */
   val heatmapIntensityAsExpression: Expression?
     /**
      * Similar to `heatmap-weight` but controls the intensity of the heatmap globally. Primarily used for adjusting the heatmap based on zoom level.
      *
      * Get the HeatmapIntensity property as an Expression
+     *
+     * Use static method [HeatmapLayer.defaultHeatmapIntensityAsExpression] to get the default property.
      *
      * @return Double
      */
@@ -249,6 +270,8 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
   /**
    * Similar to `heatmap-weight` but controls the intensity of the heatmap globally. Primarily used for adjusting the heatmap based on zoom level.
    *
+   * Use static method [HeatmapLayer.defaultHeatmapIntensityAsExpression] to set the default property.
+   *
    * @param heatmapIntensity value of heatmapIntensity as Expression
    */
   override fun heatmapIntensity(heatmapIntensity: Expression) = apply {
@@ -263,6 +286,8 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
     /**
      * Get the HeatmapIntensity property transition options
      *
+     * Use static method [HeatmapLayer.defaultHeatmapIntensityTransition] to get the default property.
+     *
      * @return transition options for Double
      */
     get() {
@@ -271,6 +296,8 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
 
   /**
    * Set the HeatmapIntensity property transition options
+   *
+   * Use static method [HeatmapLayer.defaultHeatmapIntensityTransition] to set the default property.
    *
    * @param options transition options for Double
    */
@@ -293,6 +320,8 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
     /**
      * The global opacity at which the heatmap layer will be drawn.
      *
+     * Use static method [HeatmapLayer.defaultHeatmapOpacity] to get the default property.
+     *
      * @return Double
      */
     get() {
@@ -301,6 +330,8 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
 
   /**
    * The global opacity at which the heatmap layer will be drawn.
+   *
+   * Use static method [HeatmapLayer.defaultHeatmapOpacity] to set the default property.
    *
    * @param heatmapOpacity value of heatmapOpacity
    */
@@ -314,13 +345,14 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
    *
    * This is an Expression representation of "heatmap-opacity".
    *
-   * The global opacity at which the heatmap layer will be drawn.
    */
   val heatmapOpacityAsExpression: Expression?
     /**
      * The global opacity at which the heatmap layer will be drawn.
      *
      * Get the HeatmapOpacity property as an Expression
+     *
+     * Use static method [HeatmapLayer.defaultHeatmapOpacityAsExpression] to get the default property.
      *
      * @return Double
      */
@@ -337,6 +369,8 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
   /**
    * The global opacity at which the heatmap layer will be drawn.
    *
+   * Use static method [HeatmapLayer.defaultHeatmapOpacityAsExpression] to set the default property.
+   *
    * @param heatmapOpacity value of heatmapOpacity as Expression
    */
   override fun heatmapOpacity(heatmapOpacity: Expression) = apply {
@@ -351,6 +385,8 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
     /**
      * Get the HeatmapOpacity property transition options
      *
+     * Use static method [HeatmapLayer.defaultHeatmapOpacityTransition] to get the default property.
+     *
      * @return transition options for Double
      */
     get() {
@@ -359,6 +395,8 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
 
   /**
    * Set the HeatmapOpacity property transition options
+   *
+   * Use static method [HeatmapLayer.defaultHeatmapOpacityTransition] to set the default property.
    *
    * @param options transition options for Double
    */
@@ -381,6 +419,8 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
     /**
      * Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed. `queryRenderedFeatures` on heatmap layers will return points within this radius.
      *
+     * Use static method [HeatmapLayer.defaultHeatmapRadius] to get the default property.
+     *
      * @return Double
      */
     get() {
@@ -389,6 +429,8 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
 
   /**
    * Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed. `queryRenderedFeatures` on heatmap layers will return points within this radius.
+   *
+   * Use static method [HeatmapLayer.defaultHeatmapRadius] to set the default property.
    *
    * @param heatmapRadius value of heatmapRadius
    */
@@ -402,13 +444,14 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
    *
    * This is an Expression representation of "heatmap-radius".
    *
-   * Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed. `queryRenderedFeatures` on heatmap layers will return points within this radius.
    */
   val heatmapRadiusAsExpression: Expression?
     /**
      * Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed. `queryRenderedFeatures` on heatmap layers will return points within this radius.
      *
      * Get the HeatmapRadius property as an Expression
+     *
+     * Use static method [HeatmapLayer.defaultHeatmapRadiusAsExpression] to get the default property.
      *
      * @return Double
      */
@@ -425,6 +468,8 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
   /**
    * Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed. `queryRenderedFeatures` on heatmap layers will return points within this radius.
    *
+   * Use static method [HeatmapLayer.defaultHeatmapRadiusAsExpression] to set the default property.
+   *
    * @param heatmapRadius value of heatmapRadius as Expression
    */
   override fun heatmapRadius(heatmapRadius: Expression) = apply {
@@ -439,6 +484,8 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
     /**
      * Get the HeatmapRadius property transition options
      *
+     * Use static method [HeatmapLayer.defaultHeatmapRadiusTransition] to get the default property.
+     *
      * @return transition options for Double
      */
     get() {
@@ -447,6 +494,8 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
 
   /**
    * Set the HeatmapRadius property transition options
+   *
+   * Use static method [HeatmapLayer.defaultHeatmapRadiusTransition] to set the default property.
    *
    * @param options transition options for Double
    */
@@ -469,6 +518,8 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
     /**
      * A measure of how much an individual point contributes to the heatmap. A value of 10 would be equivalent to having 10 points of weight 1 in the same spot. Especially useful when combined with clustering.
      *
+     * Use static method [HeatmapLayer.defaultHeatmapWeight] to get the default property.
+     *
      * @return Double
      */
     get() {
@@ -477,6 +528,8 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
 
   /**
    * A measure of how much an individual point contributes to the heatmap. A value of 10 would be equivalent to having 10 points of weight 1 in the same spot. Especially useful when combined with clustering.
+   *
+   * Use static method [HeatmapLayer.defaultHeatmapWeight] to set the default property.
    *
    * @param heatmapWeight value of heatmapWeight
    */
@@ -490,13 +543,14 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
    *
    * This is an Expression representation of "heatmap-weight".
    *
-   * A measure of how much an individual point contributes to the heatmap. A value of 10 would be equivalent to having 10 points of weight 1 in the same spot. Especially useful when combined with clustering.
    */
   val heatmapWeightAsExpression: Expression?
     /**
      * A measure of how much an individual point contributes to the heatmap. A value of 10 would be equivalent to having 10 points of weight 1 in the same spot. Especially useful when combined with clustering.
      *
      * Get the HeatmapWeight property as an Expression
+     *
+     * Use static method [HeatmapLayer.defaultHeatmapWeightAsExpression] to get the default property.
      *
      * @return Double
      */
@@ -512,6 +566,8 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
 
   /**
    * A measure of how much an individual point contributes to the heatmap. A value of 10 would be equivalent to having 10 points of weight 1 in the same spot. Especially useful when combined with clustering.
+   *
+   * Use static method [HeatmapLayer.defaultHeatmapWeightAsExpression] to set the default property.
    *
    * @param heatmapWeight value of heatmapWeight as Expression
    */
@@ -614,7 +670,6 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
      *
      * This is an Expression representation of "heatmap-intensity".
      *
-     * Similar to `heatmap-weight` but controls the intensity of the heatmap globally. Primarily used for adjusting the heatmap based on zoom level.
      */
     val defaultHeatmapIntensityAsExpression: Expression?
       /**
@@ -663,7 +718,6 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
      *
      * This is an Expression representation of "heatmap-opacity".
      *
-     * The global opacity at which the heatmap layer will be drawn.
      */
     val defaultHeatmapOpacityAsExpression: Expression?
       /**
@@ -712,7 +766,6 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
      *
      * This is an Expression representation of "heatmap-radius".
      *
-     * Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed. `queryRenderedFeatures` on heatmap layers will return points within this radius.
      */
     val defaultHeatmapRadiusAsExpression: Expression?
       /**
@@ -761,7 +814,6 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
      *
      * This is an Expression representation of "heatmap-weight".
      *
-     * A measure of how much an individual point contributes to the heatmap. A value of 10 would be equivalent to having 10 points of weight 1 in the same spot. Especially useful when combined with clustering.
      */
     val defaultHeatmapWeightAsExpression: Expression?
       /**

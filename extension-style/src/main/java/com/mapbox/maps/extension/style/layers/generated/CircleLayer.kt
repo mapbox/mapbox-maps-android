@@ -95,6 +95,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
     /**
      * Whether this layer is displayed.
      *
+     * Use static method [CircleLayer.defaultVisibility] to get the default property value.
+     *
      * @return VISIBILITY
      */
     get() {
@@ -107,6 +109,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
 
   /**
    * Whether this layer is displayed.
+   *
+   * Use static method [CircleLayer.defaultVisibility] to get the default property value.
    *
    * @param visibility value of Visibility
    */
@@ -126,6 +130,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
     /**
      * Get the minzoom property
      *
+     * Use static method [CircleLayer.defaultMinZoom] to get the default property value.
+     *
      * @return minzoom
      */
     get() {
@@ -138,6 +144,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    * Range:
    *       minimum: 0
    *       maximum: 24
+   *
+   * Use static method [CircleLayer.defaultMinZoom] to get the default property value.
    *
    * @param value value of minzoom
    */
@@ -157,6 +165,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
     /**
      * Get the maxzoom property
      *
+     * Use static method [CircleLayer.defaultMaxZoom] to get the default property value.
+     *
      * @return maxzoom
      */
     get() {
@@ -169,6 +179,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    * Range:
    *       minimum: 0
    *       maximum: 24
+   *
+   * Use static method [CircleLayer.defaultMaxZoom] to get the default property value.
    *
    * @param value value of maxzoom
    */
@@ -186,6 +198,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
     /**
      * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
      *
+     * Use static method [CircleLayer.defaultCircleSortKey] to get the default property.
+     *
      * @return Double
      */
     get() {
@@ -194,6 +208,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
 
   /**
    * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
+   *
+   * Use static method [CircleLayer.defaultCircleSortKey] to set the default property.
    *
    * @param circleSortKey value of circleSortKey
    */
@@ -207,13 +223,14 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * This is an Expression representation of "circle-sort-key".
    *
-   * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
    */
   val circleSortKeyAsExpression: Expression?
     /**
      * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
      *
      * Get the CircleSortKey property as an Expression
+     *
+     * Use static method [CircleLayer.defaultCircleSortKeyAsExpression] to get the default property.
      *
      * @return Double
      */
@@ -230,6 +247,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
   /**
    * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
    *
+   * Use static method [CircleLayer.defaultCircleSortKeyAsExpression] to set the default property.
+   *
    * @param circleSortKey value of circleSortKey as Expression
    */
   override fun circleSortKey(circleSortKey: Expression) = apply {
@@ -244,6 +263,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
     /**
      * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity.
      *
+     * Use static method [CircleLayer.defaultCircleBlur] to get the default property.
+     *
      * @return Double
      */
     get() {
@@ -252,6 +273,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
 
   /**
    * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity.
+   *
+   * Use static method [CircleLayer.defaultCircleBlur] to set the default property.
    *
    * @param circleBlur value of circleBlur
    */
@@ -265,13 +288,14 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * This is an Expression representation of "circle-blur".
    *
-   * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity.
    */
   val circleBlurAsExpression: Expression?
     /**
      * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity.
      *
      * Get the CircleBlur property as an Expression
+     *
+     * Use static method [CircleLayer.defaultCircleBlurAsExpression] to get the default property.
      *
      * @return Double
      */
@@ -288,6 +312,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
   /**
    * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity.
    *
+   * Use static method [CircleLayer.defaultCircleBlurAsExpression] to set the default property.
+   *
    * @param circleBlur value of circleBlur as Expression
    */
   override fun circleBlur(circleBlur: Expression) = apply {
@@ -302,6 +328,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
     /**
      * Get the CircleBlur property transition options
      *
+     * Use static method [CircleLayer.defaultCircleBlurTransition] to get the default property.
+     *
      * @return transition options for Double
      */
     get() {
@@ -310,6 +338,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
 
   /**
    * Set the CircleBlur property transition options
+   *
+   * Use static method [CircleLayer.defaultCircleBlurTransition] to set the default property.
    *
    * @param options transition options for Double
    */
@@ -332,6 +362,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
     /**
      * The fill color of the circle.
      *
+     * Use static method [CircleLayer.defaultCircleColor] to get the default property.
+     *
      * @return String
      */
     get() {
@@ -343,6 +375,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
 
   /**
    * The fill color of the circle.
+   *
+   * Use static method [CircleLayer.defaultCircleColor] to set the default property.
    *
    * @param circleColor value of circleColor
    */
@@ -356,13 +390,14 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * This is an Expression representation of "circle-color".
    *
-   * The fill color of the circle.
    */
   val circleColorAsExpression: Expression?
     /**
      * The fill color of the circle.
      *
      * Get the CircleColor property as an Expression
+     *
+     * Use static method [CircleLayer.defaultCircleColorAsExpression] to get the default property.
      *
      * @return String
      */
@@ -375,6 +410,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
 
   /**
    * The fill color of the circle.
+   *
+   * Use static method [CircleLayer.defaultCircleColorAsExpression] to set the default property.
    *
    * @param circleColor value of circleColor as Expression
    */
@@ -390,6 +427,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
     /**
      * The fill color of the circle.
      *
+     * Use static method [CircleLayer.defaultCircleColorAsColorInt] to get the default property.
+     *
      * @return int representation of a rgba string color
      */
     @ColorInt
@@ -402,6 +441,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
 
   /**
    * The fill color of the circle.
+   *
+   * Use static method [CircleLayer.defaultCircleColorAsColorInt] to set the default property.
    *
    * @param circleColor value of circleColor
    */
@@ -417,6 +458,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
     /**
      * Get the CircleColor property transition options
      *
+     * Use static method [CircleLayer.defaultCircleColorTransition] to get the default property.
+     *
      * @return transition options for String
      */
     get() {
@@ -425,6 +468,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
 
   /**
    * Set the CircleColor property transition options
+   *
+   * Use static method [CircleLayer.defaultCircleColorTransition] to set the default property.
    *
    * @param options transition options for String
    */
@@ -447,6 +492,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
     /**
      * The opacity at which the circle will be drawn.
      *
+     * Use static method [CircleLayer.defaultCircleOpacity] to get the default property.
+     *
      * @return Double
      */
     get() {
@@ -455,6 +502,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
 
   /**
    * The opacity at which the circle will be drawn.
+   *
+   * Use static method [CircleLayer.defaultCircleOpacity] to set the default property.
    *
    * @param circleOpacity value of circleOpacity
    */
@@ -468,13 +517,14 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * This is an Expression representation of "circle-opacity".
    *
-   * The opacity at which the circle will be drawn.
    */
   val circleOpacityAsExpression: Expression?
     /**
      * The opacity at which the circle will be drawn.
      *
      * Get the CircleOpacity property as an Expression
+     *
+     * Use static method [CircleLayer.defaultCircleOpacityAsExpression] to get the default property.
      *
      * @return Double
      */
@@ -491,6 +541,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
   /**
    * The opacity at which the circle will be drawn.
    *
+   * Use static method [CircleLayer.defaultCircleOpacityAsExpression] to set the default property.
+   *
    * @param circleOpacity value of circleOpacity as Expression
    */
   override fun circleOpacity(circleOpacity: Expression) = apply {
@@ -505,6 +557,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
     /**
      * Get the CircleOpacity property transition options
      *
+     * Use static method [CircleLayer.defaultCircleOpacityTransition] to get the default property.
+     *
      * @return transition options for Double
      */
     get() {
@@ -513,6 +567,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
 
   /**
    * Set the CircleOpacity property transition options
+   *
+   * Use static method [CircleLayer.defaultCircleOpacityTransition] to set the default property.
    *
    * @param options transition options for Double
    */
@@ -535,6 +591,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
     /**
      * Orientation of circle when map is pitched.
      *
+     * Use static method [CircleLayer.defaultCirclePitchAlignment] to get the default property.
+     *
      * @return CirclePitchAlignment
      */
     get() {
@@ -546,6 +604,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
 
   /**
    * Orientation of circle when map is pitched.
+   *
+   * Use static method [CircleLayer.defaultCirclePitchAlignment] to set the default property.
    *
    * @param circlePitchAlignment value of circlePitchAlignment
    */
@@ -559,13 +619,14 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * This is an Expression representation of "circle-pitch-alignment".
    *
-   * Orientation of circle when map is pitched.
    */
   val circlePitchAlignmentAsExpression: Expression?
     /**
      * Orientation of circle when map is pitched.
      *
      * Get the CirclePitchAlignment property as an Expression
+     *
+     * Use static method [CircleLayer.defaultCirclePitchAlignmentAsExpression] to get the default property.
      *
      * @return CirclePitchAlignment
      */
@@ -582,6 +643,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
   /**
    * Orientation of circle when map is pitched.
    *
+   * Use static method [CircleLayer.defaultCirclePitchAlignmentAsExpression] to set the default property.
+   *
    * @param circlePitchAlignment value of circlePitchAlignment as Expression
    */
   override fun circlePitchAlignment(circlePitchAlignment: Expression) = apply {
@@ -596,6 +659,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
     /**
      * Controls the scaling behavior of the circle when the map is pitched.
      *
+     * Use static method [CircleLayer.defaultCirclePitchScale] to get the default property.
+     *
      * @return CirclePitchScale
      */
     get() {
@@ -607,6 +672,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
 
   /**
    * Controls the scaling behavior of the circle when the map is pitched.
+   *
+   * Use static method [CircleLayer.defaultCirclePitchScale] to set the default property.
    *
    * @param circlePitchScale value of circlePitchScale
    */
@@ -620,13 +687,14 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * This is an Expression representation of "circle-pitch-scale".
    *
-   * Controls the scaling behavior of the circle when the map is pitched.
    */
   val circlePitchScaleAsExpression: Expression?
     /**
      * Controls the scaling behavior of the circle when the map is pitched.
      *
      * Get the CirclePitchScale property as an Expression
+     *
+     * Use static method [CircleLayer.defaultCirclePitchScaleAsExpression] to get the default property.
      *
      * @return CirclePitchScale
      */
@@ -643,6 +711,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
   /**
    * Controls the scaling behavior of the circle when the map is pitched.
    *
+   * Use static method [CircleLayer.defaultCirclePitchScaleAsExpression] to set the default property.
+   *
    * @param circlePitchScale value of circlePitchScale as Expression
    */
   override fun circlePitchScale(circlePitchScale: Expression) = apply {
@@ -657,6 +727,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
     /**
      * Circle radius.
      *
+     * Use static method [CircleLayer.defaultCircleRadius] to get the default property.
+     *
      * @return Double
      */
     get() {
@@ -665,6 +737,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
 
   /**
    * Circle radius.
+   *
+   * Use static method [CircleLayer.defaultCircleRadius] to set the default property.
    *
    * @param circleRadius value of circleRadius
    */
@@ -678,13 +752,14 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * This is an Expression representation of "circle-radius".
    *
-   * Circle radius.
    */
   val circleRadiusAsExpression: Expression?
     /**
      * Circle radius.
      *
      * Get the CircleRadius property as an Expression
+     *
+     * Use static method [CircleLayer.defaultCircleRadiusAsExpression] to get the default property.
      *
      * @return Double
      */
@@ -701,6 +776,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
   /**
    * Circle radius.
    *
+   * Use static method [CircleLayer.defaultCircleRadiusAsExpression] to set the default property.
+   *
    * @param circleRadius value of circleRadius as Expression
    */
   override fun circleRadius(circleRadius: Expression) = apply {
@@ -715,6 +792,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
     /**
      * Get the CircleRadius property transition options
      *
+     * Use static method [CircleLayer.defaultCircleRadiusTransition] to get the default property.
+     *
      * @return transition options for Double
      */
     get() {
@@ -723,6 +802,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
 
   /**
    * Set the CircleRadius property transition options
+   *
+   * Use static method [CircleLayer.defaultCircleRadiusTransition] to set the default property.
    *
    * @param options transition options for Double
    */
@@ -745,6 +826,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
     /**
      * The stroke color of the circle.
      *
+     * Use static method [CircleLayer.defaultCircleStrokeColor] to get the default property.
+     *
      * @return String
      */
     get() {
@@ -756,6 +839,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
 
   /**
    * The stroke color of the circle.
+   *
+   * Use static method [CircleLayer.defaultCircleStrokeColor] to set the default property.
    *
    * @param circleStrokeColor value of circleStrokeColor
    */
@@ -769,13 +854,14 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * This is an Expression representation of "circle-stroke-color".
    *
-   * The stroke color of the circle.
    */
   val circleStrokeColorAsExpression: Expression?
     /**
      * The stroke color of the circle.
      *
      * Get the CircleStrokeColor property as an Expression
+     *
+     * Use static method [CircleLayer.defaultCircleStrokeColorAsExpression] to get the default property.
      *
      * @return String
      */
@@ -788,6 +874,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
 
   /**
    * The stroke color of the circle.
+   *
+   * Use static method [CircleLayer.defaultCircleStrokeColorAsExpression] to set the default property.
    *
    * @param circleStrokeColor value of circleStrokeColor as Expression
    */
@@ -803,6 +891,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
     /**
      * The stroke color of the circle.
      *
+     * Use static method [CircleLayer.defaultCircleStrokeColorAsColorInt] to get the default property.
+     *
      * @return int representation of a rgba string color
      */
     @ColorInt
@@ -815,6 +905,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
 
   /**
    * The stroke color of the circle.
+   *
+   * Use static method [CircleLayer.defaultCircleStrokeColorAsColorInt] to set the default property.
    *
    * @param circleStrokeColor value of circleStrokeColor
    */
@@ -830,6 +922,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
     /**
      * Get the CircleStrokeColor property transition options
      *
+     * Use static method [CircleLayer.defaultCircleStrokeColorTransition] to get the default property.
+     *
      * @return transition options for String
      */
     get() {
@@ -838,6 +932,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
 
   /**
    * Set the CircleStrokeColor property transition options
+   *
+   * Use static method [CircleLayer.defaultCircleStrokeColorTransition] to set the default property.
    *
    * @param options transition options for String
    */
@@ -860,6 +956,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
     /**
      * The opacity of the circle's stroke.
      *
+     * Use static method [CircleLayer.defaultCircleStrokeOpacity] to get the default property.
+     *
      * @return Double
      */
     get() {
@@ -868,6 +966,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
 
   /**
    * The opacity of the circle's stroke.
+   *
+   * Use static method [CircleLayer.defaultCircleStrokeOpacity] to set the default property.
    *
    * @param circleStrokeOpacity value of circleStrokeOpacity
    */
@@ -881,13 +981,14 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * This is an Expression representation of "circle-stroke-opacity".
    *
-   * The opacity of the circle's stroke.
    */
   val circleStrokeOpacityAsExpression: Expression?
     /**
      * The opacity of the circle's stroke.
      *
      * Get the CircleStrokeOpacity property as an Expression
+     *
+     * Use static method [CircleLayer.defaultCircleStrokeOpacityAsExpression] to get the default property.
      *
      * @return Double
      */
@@ -904,6 +1005,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
   /**
    * The opacity of the circle's stroke.
    *
+   * Use static method [CircleLayer.defaultCircleStrokeOpacityAsExpression] to set the default property.
+   *
    * @param circleStrokeOpacity value of circleStrokeOpacity as Expression
    */
   override fun circleStrokeOpacity(circleStrokeOpacity: Expression) = apply {
@@ -918,6 +1021,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
     /**
      * Get the CircleStrokeOpacity property transition options
      *
+     * Use static method [CircleLayer.defaultCircleStrokeOpacityTransition] to get the default property.
+     *
      * @return transition options for Double
      */
     get() {
@@ -926,6 +1031,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
 
   /**
    * Set the CircleStrokeOpacity property transition options
+   *
+   * Use static method [CircleLayer.defaultCircleStrokeOpacityTransition] to set the default property.
    *
    * @param options transition options for Double
    */
@@ -948,6 +1055,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
     /**
      * The width of the circle's stroke. Strokes are placed outside of the `circle-radius`.
      *
+     * Use static method [CircleLayer.defaultCircleStrokeWidth] to get the default property.
+     *
      * @return Double
      */
     get() {
@@ -956,6 +1065,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
 
   /**
    * The width of the circle's stroke. Strokes are placed outside of the `circle-radius`.
+   *
+   * Use static method [CircleLayer.defaultCircleStrokeWidth] to set the default property.
    *
    * @param circleStrokeWidth value of circleStrokeWidth
    */
@@ -969,13 +1080,14 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * This is an Expression representation of "circle-stroke-width".
    *
-   * The width of the circle's stroke. Strokes are placed outside of the `circle-radius`.
    */
   val circleStrokeWidthAsExpression: Expression?
     /**
      * The width of the circle's stroke. Strokes are placed outside of the `circle-radius`.
      *
      * Get the CircleStrokeWidth property as an Expression
+     *
+     * Use static method [CircleLayer.defaultCircleStrokeWidthAsExpression] to get the default property.
      *
      * @return Double
      */
@@ -992,6 +1104,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
   /**
    * The width of the circle's stroke. Strokes are placed outside of the `circle-radius`.
    *
+   * Use static method [CircleLayer.defaultCircleStrokeWidthAsExpression] to set the default property.
+   *
    * @param circleStrokeWidth value of circleStrokeWidth as Expression
    */
   override fun circleStrokeWidth(circleStrokeWidth: Expression) = apply {
@@ -1006,6 +1120,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
     /**
      * Get the CircleStrokeWidth property transition options
      *
+     * Use static method [CircleLayer.defaultCircleStrokeWidthTransition] to get the default property.
+     *
      * @return transition options for Double
      */
     get() {
@@ -1014,6 +1130,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
 
   /**
    * Set the CircleStrokeWidth property transition options
+   *
+   * Use static method [CircleLayer.defaultCircleStrokeWidthTransition] to set the default property.
    *
    * @param options transition options for Double
    */
@@ -1036,6 +1154,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
     /**
      * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
      *
+     * Use static method [CircleLayer.defaultCircleTranslate] to get the default property.
+     *
      * @return List<Double>
      */
     get() {
@@ -1044,6 +1164,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
 
   /**
    * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
+   *
+   * Use static method [CircleLayer.defaultCircleTranslate] to set the default property.
    *
    * @param circleTranslate value of circleTranslate
    */
@@ -1057,13 +1179,14 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * This is an Expression representation of "circle-translate".
    *
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
    */
   val circleTranslateAsExpression: Expression?
     /**
      * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
      *
      * Get the CircleTranslate property as an Expression
+     *
+     * Use static method [CircleLayer.defaultCircleTranslateAsExpression] to get the default property.
      *
      * @return List<Double>
      */
@@ -1080,6 +1203,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
   /**
    * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
    *
+   * Use static method [CircleLayer.defaultCircleTranslateAsExpression] to set the default property.
+   *
    * @param circleTranslate value of circleTranslate as Expression
    */
   override fun circleTranslate(circleTranslate: Expression) = apply {
@@ -1094,6 +1219,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
     /**
      * Get the CircleTranslate property transition options
      *
+     * Use static method [CircleLayer.defaultCircleTranslateTransition] to get the default property.
+     *
      * @return transition options for List<Double>
      */
     get() {
@@ -1102,6 +1229,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
 
   /**
    * Set the CircleTranslate property transition options
+   *
+   * Use static method [CircleLayer.defaultCircleTranslateTransition] to set the default property.
    *
    * @param options transition options for List<Double>
    */
@@ -1124,6 +1253,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
     /**
      * Controls the frame of reference for `circle-translate`.
      *
+     * Use static method [CircleLayer.defaultCircleTranslateAnchor] to get the default property.
+     *
      * @return CircleTranslateAnchor
      */
     get() {
@@ -1135,6 +1266,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
 
   /**
    * Controls the frame of reference for `circle-translate`.
+   *
+   * Use static method [CircleLayer.defaultCircleTranslateAnchor] to set the default property.
    *
    * @param circleTranslateAnchor value of circleTranslateAnchor
    */
@@ -1148,13 +1281,14 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * This is an Expression representation of "circle-translate-anchor".
    *
-   * Controls the frame of reference for `circle-translate`.
    */
   val circleTranslateAnchorAsExpression: Expression?
     /**
      * Controls the frame of reference for `circle-translate`.
      *
      * Get the CircleTranslateAnchor property as an Expression
+     *
+     * Use static method [CircleLayer.defaultCircleTranslateAnchorAsExpression] to get the default property.
      *
      * @return CircleTranslateAnchor
      */
@@ -1170,6 +1304,8 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
 
   /**
    * Controls the frame of reference for `circle-translate`.
+   *
+   * Use static method [CircleLayer.defaultCircleTranslateAnchorAsExpression] to set the default property.
    *
    * @param circleTranslateAnchor value of circleTranslateAnchor as Expression
    */
@@ -1257,7 +1393,6 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
      *
      * This is an Expression representation of "circle-sort-key".
      *
-     * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
      */
     val defaultCircleSortKeyAsExpression: Expression?
       /**
@@ -1295,7 +1430,6 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
      *
      * This is an Expression representation of "circle-blur".
      *
-     * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity.
      */
     val defaultCircleBlurAsExpression: Expression?
       /**
@@ -1347,7 +1481,6 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
      *
      * This is an Expression representation of "circle-color".
      *
-     * The fill color of the circle.
      */
     val defaultCircleColorAsExpression: Expression?
       /**
@@ -1412,7 +1545,6 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
      *
      * This is an Expression representation of "circle-opacity".
      *
-     * The opacity at which the circle will be drawn.
      */
     val defaultCircleOpacityAsExpression: Expression?
       /**
@@ -1464,7 +1596,6 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
      *
      * This is an Expression representation of "circle-pitch-alignment".
      *
-     * Orientation of circle when map is pitched.
      */
     val defaultCirclePitchAlignmentAsExpression: Expression?
       /**
@@ -1505,7 +1636,6 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
      *
      * This is an Expression representation of "circle-pitch-scale".
      *
-     * Controls the scaling behavior of the circle when the map is pitched.
      */
     val defaultCirclePitchScaleAsExpression: Expression?
       /**
@@ -1543,7 +1673,6 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
      *
      * This is an Expression representation of "circle-radius".
      *
-     * Circle radius.
      */
     val defaultCircleRadiusAsExpression: Expression?
       /**
@@ -1595,7 +1724,6 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
      *
      * This is an Expression representation of "circle-stroke-color".
      *
-     * The stroke color of the circle.
      */
     val defaultCircleStrokeColorAsExpression: Expression?
       /**
@@ -1660,7 +1788,6 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
      *
      * This is an Expression representation of "circle-stroke-opacity".
      *
-     * The opacity of the circle's stroke.
      */
     val defaultCircleStrokeOpacityAsExpression: Expression?
       /**
@@ -1709,7 +1836,6 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
      *
      * This is an Expression representation of "circle-stroke-width".
      *
-     * The width of the circle's stroke. Strokes are placed outside of the `circle-radius`.
      */
     val defaultCircleStrokeWidthAsExpression: Expression?
       /**
@@ -1758,7 +1884,6 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
      *
      * This is an Expression representation of "circle-translate".
      *
-     * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
      */
     val defaultCircleTranslateAsExpression: Expression?
       /**
@@ -1810,7 +1935,6 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
      *
      * This is an Expression representation of "circle-translate-anchor".
      *
-     * Controls the frame of reference for `circle-translate`.
      */
     val defaultCircleTranslateAnchorAsExpression: Expression?
       /**
