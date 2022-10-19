@@ -4,9 +4,26 @@ Mapbox welcomes participation and contributions from everyone.
 
 # 10.9.0
 
+## Features ✨ and improvements 🏁
+* Introduce `location-indicator-opacity` to location indicator layer that allows to control layer opacity. ([1760](https://github.com/mapbox/mapbox-maps-android/pull/1760))
+* Rendering performance improvements for fast paced camera changes. ([1760](https://github.com/mapbox/mapbox-maps-android/pull/1760))
+
 ## Bug fixes 🐞
 * Fix frequent layout invalidation caused by view annotations calling `View.bringToFront()`. ([1744](https://github.com/mapbox/mapbox-maps-android/pull/1744))
+* Fix flickering of vertically shifted line labels on style change, caused by the wrong initial placement. ([1760](https://github.com/mapbox/mapbox-maps-android/pull/1760))
+* Fix location indicator rendering as a rectangle on low zoom levels. ([1760](https://github.com/mapbox/mapbox-maps-android/pull/1760))
+* Fix crash caused by using of invalid paint property binders. ([1760](https://github.com/mapbox/mapbox-maps-android/pull/1760))
+* Fix "phantom tiles" artefacts after GeoJSON source update when asynchronous tile loading is enabled. ([1760](https://github.com/mapbox/mapbox-maps-android/pull/1760))
+* Mitigate symbol flickering on zooming out globe map. ([1760](https://github.com/mapbox/mapbox-maps-android/pull/1760))
+* Fix random crash on tiles update when asynchronous uploading is enabled. ([1760](https://github.com/mapbox/mapbox-maps-android/pull/1760))
+* Fix pixel flickering between tiles with darker styles in globe view. ([1760](https://github.com/mapbox/mapbox-maps-android/pull/1760))
+* Location indicator layer now occluded by terrain to align rendering behavior with other location indicator rendering types. ([1760](https://github.com/mapbox/mapbox-maps-android/pull/1760))
+* Fix symbol flickering after runtime styling caused by using outdated symbol placement on updated symbol buckets. ([1760](https://github.com/mapbox/mapbox-maps-android/pull/1760))
+* Allow Light intensity and Light shadow intensity to accept expressions when using setStyleLight API call. ([1760](https://github.com/mapbox/mapbox-maps-android/pull/1760))
+* Fix a bug in cameraForGeometry when called on a map with padding set. ([1760](https://github.com/mapbox/mapbox-maps-android/pull/1760))
 
+## Dependencies
+* Update gl-native to v10.9.0 and common to v23.1.0. ([1760](https://github.com/mapbox/mapbox-maps-android/pull/1760))
 
 # 10.9.0-rc.1 October 07, 2022
 
