@@ -28,6 +28,7 @@ object Plugins {
   const val pitestPlugin = "pl.droidsonroids.gradle:gradle-pitest-plugin:${Versions.pitest}"
   const val detekt = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:${Versions.detekt}"
   const val playPublisher = "com.github.triplet.gradle:play-publisher:${Versions.pluginPlayPublisher}"
+  const val gradleVersions = "com.github.ben-manes:gradle-versions-plugin:${Versions.gradleVersionsPlugin}"
 }
 
 object Dependencies {
@@ -144,4 +145,5 @@ object Versions {
   const val detekt = "1.20.0"
   const val compose = "1.1.0-beta03"
   const val pluginPlayPublisher = "3.7.0"
+  const val gradleVersionsPlugin = "0.42.0"
 }

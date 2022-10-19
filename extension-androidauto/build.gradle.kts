@@ -57,4 +57,5 @@ project.apply {
   from("$rootDir/gradle/sdk-registry.gradle")
   from("$rootDir/gradle/track-public-apis.gradle")
   from("$rootDir/gradle/detekt.gradle")
+  from("$rootDir/gradle/dependency-updates.gradle")
 }
