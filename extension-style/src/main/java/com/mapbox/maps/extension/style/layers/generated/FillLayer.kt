@@ -95,6 +95,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     /**
      * Whether this layer is displayed.
      *
+     * Use static method [FillLayer.defaultVisibility] to get the default property value.
+     *
      * @return VISIBILITY
      */
     get() {
@@ -107,6 +109,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
 
   /**
    * Whether this layer is displayed.
+   *
+   * Use static method [FillLayer.defaultVisibility] to get the default property value.
    *
    * @param visibility value of Visibility
    */
@@ -126,6 +130,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     /**
      * Get the minzoom property
      *
+     * Use static method [FillLayer.defaultMinZoom] to get the default property value.
+     *
      * @return minzoom
      */
     get() {
@@ -138,6 +144,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    * Range:
    *       minimum: 0
    *       maximum: 24
+   *
+   * Use static method [FillLayer.defaultMinZoom] to get the default property value.
    *
    * @param value value of minzoom
    */
@@ -157,6 +165,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     /**
      * Get the maxzoom property
      *
+     * Use static method [FillLayer.defaultMaxZoom] to get the default property value.
+     *
      * @return maxzoom
      */
     get() {
@@ -169,6 +179,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    * Range:
    *       minimum: 0
    *       maximum: 24
+   *
+   * Use static method [FillLayer.defaultMaxZoom] to get the default property value.
    *
    * @param value value of maxzoom
    */
@@ -186,6 +198,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     /**
      * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
      *
+     * Use static method [FillLayer.defaultFillSortKey] to get the default property.
+     *
      * @return Double
      */
     get() {
@@ -194,6 +208,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
 
   /**
    * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
+   *
+   * Use static method [FillLayer.defaultFillSortKey] to set the default property.
    *
    * @param fillSortKey value of fillSortKey
    */
@@ -207,13 +223,14 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    *
    * This is an Expression representation of "fill-sort-key".
    *
-   * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
    */
   val fillSortKeyAsExpression: Expression?
     /**
      * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
      *
      * Get the FillSortKey property as an Expression
+     *
+     * Use static method [FillLayer.defaultFillSortKeyAsExpression] to get the default property.
      *
      * @return Double
      */
@@ -230,6 +247,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   /**
    * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
    *
+   * Use static method [FillLayer.defaultFillSortKeyAsExpression] to set the default property.
+   *
    * @param fillSortKey value of fillSortKey as Expression
    */
   override fun fillSortKey(fillSortKey: Expression) = apply {
@@ -244,6 +263,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     /**
      * Whether or not the fill should be antialiased.
      *
+     * Use static method [FillLayer.defaultFillAntialias] to get the default property.
+     *
      * @return Boolean
      */
     get() {
@@ -252,6 +273,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
 
   /**
    * Whether or not the fill should be antialiased.
+   *
+   * Use static method [FillLayer.defaultFillAntialias] to set the default property.
    *
    * @param fillAntialias value of fillAntialias
    */
@@ -265,13 +288,14 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    *
    * This is an Expression representation of "fill-antialias".
    *
-   * Whether or not the fill should be antialiased.
    */
   val fillAntialiasAsExpression: Expression?
     /**
      * Whether or not the fill should be antialiased.
      *
      * Get the FillAntialias property as an Expression
+     *
+     * Use static method [FillLayer.defaultFillAntialiasAsExpression] to get the default property.
      *
      * @return Boolean
      */
@@ -288,6 +312,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   /**
    * Whether or not the fill should be antialiased.
    *
+   * Use static method [FillLayer.defaultFillAntialiasAsExpression] to set the default property.
+   *
    * @param fillAntialias value of fillAntialias as Expression
    */
   override fun fillAntialias(fillAntialias: Expression) = apply {
@@ -302,6 +328,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     /**
      * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
      *
+     * Use static method [FillLayer.defaultFillColor] to get the default property.
+     *
      * @return String
      */
     get() {
@@ -313,6 +341,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
 
   /**
    * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
+   *
+   * Use static method [FillLayer.defaultFillColor] to set the default property.
    *
    * @param fillColor value of fillColor
    */
@@ -326,13 +356,14 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    *
    * This is an Expression representation of "fill-color".
    *
-   * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
    */
   val fillColorAsExpression: Expression?
     /**
      * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
      *
      * Get the FillColor property as an Expression
+     *
+     * Use static method [FillLayer.defaultFillColorAsExpression] to get the default property.
      *
      * @return String
      */
@@ -345,6 +376,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
 
   /**
    * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
+   *
+   * Use static method [FillLayer.defaultFillColorAsExpression] to set the default property.
    *
    * @param fillColor value of fillColor as Expression
    */
@@ -360,6 +393,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     /**
      * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
      *
+     * Use static method [FillLayer.defaultFillColorAsColorInt] to get the default property.
+     *
      * @return int representation of a rgba string color
      */
     @ColorInt
@@ -372,6 +407,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
 
   /**
    * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
+   *
+   * Use static method [FillLayer.defaultFillColorAsColorInt] to set the default property.
    *
    * @param fillColor value of fillColor
    */
@@ -387,6 +424,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     /**
      * Get the FillColor property transition options
      *
+     * Use static method [FillLayer.defaultFillColorTransition] to get the default property.
+     *
      * @return transition options for String
      */
     get() {
@@ -395,6 +434,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
 
   /**
    * Set the FillColor property transition options
+   *
+   * Use static method [FillLayer.defaultFillColorTransition] to set the default property.
    *
    * @param options transition options for String
    */
@@ -417,6 +458,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     /**
      * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used.
      *
+     * Use static method [FillLayer.defaultFillOpacity] to get the default property.
+     *
      * @return Double
      */
     get() {
@@ -425,6 +468,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
 
   /**
    * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used.
+   *
+   * Use static method [FillLayer.defaultFillOpacity] to set the default property.
    *
    * @param fillOpacity value of fillOpacity
    */
@@ -438,13 +483,14 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    *
    * This is an Expression representation of "fill-opacity".
    *
-   * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used.
    */
   val fillOpacityAsExpression: Expression?
     /**
      * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used.
      *
      * Get the FillOpacity property as an Expression
+     *
+     * Use static method [FillLayer.defaultFillOpacityAsExpression] to get the default property.
      *
      * @return Double
      */
@@ -461,6 +507,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   /**
    * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used.
    *
+   * Use static method [FillLayer.defaultFillOpacityAsExpression] to set the default property.
+   *
    * @param fillOpacity value of fillOpacity as Expression
    */
   override fun fillOpacity(fillOpacity: Expression) = apply {
@@ -475,6 +523,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     /**
      * Get the FillOpacity property transition options
      *
+     * Use static method [FillLayer.defaultFillOpacityTransition] to get the default property.
+     *
      * @return transition options for Double
      */
     get() {
@@ -483,6 +533,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
 
   /**
    * Set the FillOpacity property transition options
+   *
+   * Use static method [FillLayer.defaultFillOpacityTransition] to set the default property.
    *
    * @param options transition options for Double
    */
@@ -505,6 +557,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     /**
      * The outline color of the fill. Matches the value of `fill-color` if unspecified.
      *
+     * Use static method [FillLayer.defaultFillOutlineColor] to get the default property.
+     *
      * @return String
      */
     get() {
@@ -516,6 +570,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
 
   /**
    * The outline color of the fill. Matches the value of `fill-color` if unspecified.
+   *
+   * Use static method [FillLayer.defaultFillOutlineColor] to set the default property.
    *
    * @param fillOutlineColor value of fillOutlineColor
    */
@@ -529,13 +585,14 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    *
    * This is an Expression representation of "fill-outline-color".
    *
-   * The outline color of the fill. Matches the value of `fill-color` if unspecified.
    */
   val fillOutlineColorAsExpression: Expression?
     /**
      * The outline color of the fill. Matches the value of `fill-color` if unspecified.
      *
      * Get the FillOutlineColor property as an Expression
+     *
+     * Use static method [FillLayer.defaultFillOutlineColorAsExpression] to get the default property.
      *
      * @return String
      */
@@ -548,6 +605,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
 
   /**
    * The outline color of the fill. Matches the value of `fill-color` if unspecified.
+   *
+   * Use static method [FillLayer.defaultFillOutlineColorAsExpression] to set the default property.
    *
    * @param fillOutlineColor value of fillOutlineColor as Expression
    */
@@ -563,6 +622,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     /**
      * The outline color of the fill. Matches the value of `fill-color` if unspecified.
      *
+     * Use static method [FillLayer.defaultFillOutlineColorAsColorInt] to get the default property.
+     *
      * @return int representation of a rgba string color
      */
     @ColorInt
@@ -575,6 +636,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
 
   /**
    * The outline color of the fill. Matches the value of `fill-color` if unspecified.
+   *
+   * Use static method [FillLayer.defaultFillOutlineColorAsColorInt] to set the default property.
    *
    * @param fillOutlineColor value of fillOutlineColor
    */
@@ -590,6 +653,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     /**
      * Get the FillOutlineColor property transition options
      *
+     * Use static method [FillLayer.defaultFillOutlineColorTransition] to get the default property.
+     *
      * @return transition options for String
      */
     get() {
@@ -598,6 +663,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
 
   /**
    * Set the FillOutlineColor property transition options
+   *
+   * Use static method [FillLayer.defaultFillOutlineColorTransition] to set the default property.
    *
    * @param options transition options for String
    */
@@ -620,6 +687,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     /**
      * Name of image in sprite to use for drawing image fills. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
      *
+     * Use static method [FillLayer.defaultFillPattern] to get the default property.
+     *
      * @return String
      */
     get() {
@@ -628,6 +697,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
 
   /**
    * Name of image in sprite to use for drawing image fills. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
+   *
+   * Use static method [FillLayer.defaultFillPattern] to set the default property.
    *
    * @param fillPattern value of fillPattern
    */
@@ -641,13 +712,14 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    *
    * This is an Expression representation of "fill-pattern".
    *
-   * Name of image in sprite to use for drawing image fills. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
    */
   val fillPatternAsExpression: Expression?
     /**
      * Name of image in sprite to use for drawing image fills. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
      *
      * Get the FillPattern property as an Expression
+     *
+     * Use static method [FillLayer.defaultFillPatternAsExpression] to get the default property.
      *
      * @return String
      */
@@ -664,6 +736,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   /**
    * Name of image in sprite to use for drawing image fills. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
    *
+   * Use static method [FillLayer.defaultFillPatternAsExpression] to set the default property.
+   *
    * @param fillPattern value of fillPattern as Expression
    */
   override fun fillPattern(fillPattern: Expression) = apply {
@@ -678,6 +752,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     /**
      * Get the FillPattern property transition options
      *
+     * Use static method [FillLayer.defaultFillPatternTransition] to get the default property.
+     *
      * @return transition options for String
      */
     get() {
@@ -686,6 +762,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
 
   /**
    * Set the FillPattern property transition options
+   *
+   * Use static method [FillLayer.defaultFillPatternTransition] to set the default property.
    *
    * @param options transition options for String
    */
@@ -708,6 +786,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     /**
      * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
      *
+     * Use static method [FillLayer.defaultFillTranslate] to get the default property.
+     *
      * @return List<Double>
      */
     get() {
@@ -716,6 +796,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
 
   /**
    * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
+   *
+   * Use static method [FillLayer.defaultFillTranslate] to set the default property.
    *
    * @param fillTranslate value of fillTranslate
    */
@@ -729,13 +811,14 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    *
    * This is an Expression representation of "fill-translate".
    *
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
    */
   val fillTranslateAsExpression: Expression?
     /**
      * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
      *
      * Get the FillTranslate property as an Expression
+     *
+     * Use static method [FillLayer.defaultFillTranslateAsExpression] to get the default property.
      *
      * @return List<Double>
      */
@@ -752,6 +835,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   /**
    * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
    *
+   * Use static method [FillLayer.defaultFillTranslateAsExpression] to set the default property.
+   *
    * @param fillTranslate value of fillTranslate as Expression
    */
   override fun fillTranslate(fillTranslate: Expression) = apply {
@@ -766,6 +851,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     /**
      * Get the FillTranslate property transition options
      *
+     * Use static method [FillLayer.defaultFillTranslateTransition] to get the default property.
+     *
      * @return transition options for List<Double>
      */
     get() {
@@ -774,6 +861,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
 
   /**
    * Set the FillTranslate property transition options
+   *
+   * Use static method [FillLayer.defaultFillTranslateTransition] to set the default property.
    *
    * @param options transition options for List<Double>
    */
@@ -796,6 +885,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     /**
      * Controls the frame of reference for `fill-translate`.
      *
+     * Use static method [FillLayer.defaultFillTranslateAnchor] to get the default property.
+     *
      * @return FillTranslateAnchor
      */
     get() {
@@ -807,6 +898,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
 
   /**
    * Controls the frame of reference for `fill-translate`.
+   *
+   * Use static method [FillLayer.defaultFillTranslateAnchor] to set the default property.
    *
    * @param fillTranslateAnchor value of fillTranslateAnchor
    */
@@ -820,13 +913,14 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    *
    * This is an Expression representation of "fill-translate-anchor".
    *
-   * Controls the frame of reference for `fill-translate`.
    */
   val fillTranslateAnchorAsExpression: Expression?
     /**
      * Controls the frame of reference for `fill-translate`.
      *
      * Get the FillTranslateAnchor property as an Expression
+     *
+     * Use static method [FillLayer.defaultFillTranslateAnchorAsExpression] to get the default property.
      *
      * @return FillTranslateAnchor
      */
@@ -842,6 +936,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
 
   /**
    * Controls the frame of reference for `fill-translate`.
+   *
+   * Use static method [FillLayer.defaultFillTranslateAnchorAsExpression] to set the default property.
    *
    * @param fillTranslateAnchor value of fillTranslateAnchor as Expression
    */
@@ -929,7 +1025,6 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
      *
      * This is an Expression representation of "fill-sort-key".
      *
-     * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
      */
     val defaultFillSortKeyAsExpression: Expression?
       /**
@@ -967,7 +1062,6 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
      *
      * This is an Expression representation of "fill-antialias".
      *
-     * Whether or not the fill should be antialiased.
      */
     val defaultFillAntialiasAsExpression: Expression?
       /**
@@ -1008,7 +1102,6 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
      *
      * This is an Expression representation of "fill-color".
      *
-     * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
      */
     val defaultFillColorAsExpression: Expression?
       /**
@@ -1073,7 +1166,6 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
      *
      * This is an Expression representation of "fill-opacity".
      *
-     * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used.
      */
     val defaultFillOpacityAsExpression: Expression?
       /**
@@ -1125,7 +1217,6 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
      *
      * This is an Expression representation of "fill-outline-color".
      *
-     * The outline color of the fill. Matches the value of `fill-color` if unspecified.
      */
     val defaultFillOutlineColorAsExpression: Expression?
       /**
@@ -1190,7 +1281,6 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
      *
      * This is an Expression representation of "fill-pattern".
      *
-     * Name of image in sprite to use for drawing image fills. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
      */
     val defaultFillPatternAsExpression: Expression?
       /**
@@ -1239,7 +1329,6 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
      *
      * This is an Expression representation of "fill-translate".
      *
-     * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
      */
     val defaultFillTranslateAsExpression: Expression?
       /**
@@ -1291,7 +1380,6 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
      *
      * This is an Expression representation of "fill-translate-anchor".
      *
-     * Controls the frame of reference for `fill-translate`.
      */
     val defaultFillTranslateAnchorAsExpression: Expression?
       /**
