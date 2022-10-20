@@ -191,7 +191,7 @@ internal abstract class MapboxRenderer : MapClient {
 
   @AnyThread
   @Synchronized
-  fun setOnFpsChangedListener(listener: OnFpsChangedListener) {
+  fun setOnFpsChangedListener(listener: OnFpsChangedListener?) {
     renderThread.fpsChangedListener = listener
   }
 

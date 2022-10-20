@@ -214,7 +214,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     renderer.setMaximumFps(fps)
   }
 
-  override fun setOnFpsChangedListener(listener: OnFpsChangedListener) {
+  override fun setOnFpsChangedListener(listener: OnFpsChangedListener?) {
     renderer.setOnFpsChangedListener(listener)
   }
 

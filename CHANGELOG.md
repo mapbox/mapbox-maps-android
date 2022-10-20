@@ -3,6 +3,9 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
+## Bug fixes 🐞
+* Allow resetting `OnFpsChangedListener` by making it nullable in `setOnFpsChangedListener` methods. ([1770](https://github.com/mapbox/mapbox-maps-android/pull/1770))
+
 
 # 10.10.0-rc.1
 ## Bug fixes 🐞
@@ -34,8 +37,6 @@ Mapbox welcomes participation and contributions from everyone.
 ## Dependencies
 * Update gl-native to v10.10.0-beta.1 and common to v23.2.0-beta.1. ([1791](https://github.com/mapbox/mapbox-maps-android/pull/1791))
 
-
-
 # 10.9.0 October 21, 2022
 
 ## Features ✨ and improvements 🏁
@@ -47,6 +48,9 @@ Mapbox welcomes participation and contributions from everyone.
 * Add support to set location puck opacity. ([1659](https://github.com/mapbox/mapbox-maps-android/pull/1659))
 * Support `pitch` and `distanceFromCenter` filters in symbol layers. ([1662](https://github.com/mapbox/mapbox-maps-android/pull/1662))
 * Migrate telemetry APIs from [mobile-events-android](https://github.com/mapbox/mapbox-events-android) to common SDK implementation. ([1672](https://github.com/mapbox/mapbox-maps-android/pull/1672))
+## Bug fixes 🐞
+
+# 10.9.0
 
 ## Bug fixes 🐞
 * Fix frequent layout invalidation caused by view annotations calling `View.bringToFront()`. ([1744](https://github.com/mapbox/mapbox-maps-android/pull/1744))
@@ -120,7 +124,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Bug fixes 🐞
 * Make telemetry a single instance. Avoids module recreation when coming from background. ([#1695](https://github.com/mapbox/mapbox-maps-android/pull/1695))
-* Fix an issue where location engine doesn't produce bearing/accuracy/speed information with the location updates. ([1696](https://github.com/mapbox/mapbox-maps-android/pull/1696)) 
+* Fix an issue where location engine doesn't produce bearing/accuracy/speed information with the location updates. ([1696](https://github.com/mapbox/mapbox-maps-android/pull/1696))
 
 ## Dependencies
 * Bump common sdk to v23.1.0-beta.2. ([1696](https://github.com/mapbox/mapbox-maps-android/pull/1696))
@@ -214,7 +218,7 @@ Bump gl-native to v10.8.0-rc.1 and common to v23.0.0-rc.2. ([1623](https://githu
 ## Features ✨ and improvements 🏁
 * Introduce a callback to be invoked when the device compass sensors need to be re-calibrated. ([1513](https://github.com/mapbox/mapbox-maps-android/pull/1513))
 * Add support for `LocationComponentSettingsInterface.pulsingMaxRadius` to follow location's accuracy radius. ([1561](https://github.com/mapbox/mapbox-maps-android/pull/1561))
- 
+
 ## Bug fixes 🐞
 * Support altitude interpolation in location component, and pass through GPS altitude information from the DefaultLocationProvider. ([1478](https://github.com/mapbox/mapbox-maps-android/pull/1478))
 * Fix edge cases for renderer that could result in map not rendered. ([1538](https://github.com/mapbox/mapbox-maps-android/pull/1538))

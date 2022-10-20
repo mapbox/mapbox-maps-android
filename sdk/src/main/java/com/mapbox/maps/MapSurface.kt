@@ -182,8 +182,11 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
 
   /**
    * Set [OnFpsChangedListener] to get map rendering FPS.
+   * Passing null resets the listener, listener is cleaned up automatically as part of onDestroy.
+   *
+   * @param listener The listener to be invoked when FPS data is reported
    */
-  override fun setOnFpsChangedListener(listener: OnFpsChangedListener) {
+  override fun setOnFpsChangedListener(listener: OnFpsChangedListener?) {
     renderer.setOnFpsChangedListener(listener)
   }
 
