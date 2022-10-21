@@ -538,7 +538,7 @@ jobs:
   verify-api-revapi:
     executor:
       name: ubuntu
-      machine: xlarge
+      machine: large
     steps:
       - when:
           condition:
