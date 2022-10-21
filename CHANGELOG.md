@@ -4,7 +4,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-# 10.9.0
+
+# 10.9.0 October 21, 2022
 
 ## Features ✨ and improvements 🏁
 * Rendering performance improvements for fast paced camera changes. ([1760](https://github.com/mapbox/mapbox-maps-android/pull/1760))
@@ -49,6 +50,7 @@ Mapbox welcomes participation and contributions from everyone.
 ## Dependencies
 * Update mapbox-gestures-android dependency to [v0.8.0](https://github.com/mapbox/mapbox-gestures-android/releases/tag/v0.8.0). ([1645](https://github.com/mapbox/mapbox-maps-android/pull/1645))
 * Update gl-native to v10.9.0 and common to v23.1.1. ([1760](https://github.com/mapbox/mapbox-maps-android/pull/1760))
+
 
 
 # 10.9.0-rc.1 October 07, 2022
