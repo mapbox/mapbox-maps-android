@@ -10,6 +10,8 @@ import com.mapbox.maps.EdgeInsets;
 /**
  * Many downstream services will not work until the surface has been created and the map has
  * loaded. This interface allows you to create custom Mapbox experiences for the car.
+ *
+ * @since 1.0.0
  */
 public interface MapboxCarMapObserver {
 

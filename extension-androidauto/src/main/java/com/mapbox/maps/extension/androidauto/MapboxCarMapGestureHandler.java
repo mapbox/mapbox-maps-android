@@ -9,6 +9,8 @@ import com.mapbox.maps.ScreenCoordinate;
  * This interface captures gesture events from Android Auto's {@link SurfaceCallback}. In order to
  * customize the map gestures provided, you can set your own gestures
  * with {@link MapboxCarMap#setGestureHandler}.
+ *
+ * @since 1.0.0
  */
 public interface MapboxCarMapGestureHandler {
 
