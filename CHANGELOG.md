@@ -6,8 +6,49 @@ Mapbox welcomes participation and contributions from everyone.
 
 # 10.9.0
 
+## Features ✨ and improvements 🏁
+* Rendering performance improvements for fast paced camera changes. ([1760](https://github.com/mapbox/mapbox-maps-android/pull/1760))
+* Eliminate tiles re-creation and re-layout on zooming map with globe, when the camera is trespassing the zoom projection border. ([1729](https://github.com/mapbox/mapbox-maps-android/pull/1729))
+* Deprecate gesture settings `increaseRotateThresholdWhenPinchingToZoom` property. ([1632](https://github.com/mapbox/mapbox-maps-android/pull/1632))
+* Enable asynchronous tile uploader by default to improve animation performance. ([1679](https://github.com/mapbox/mapbox-maps-android/pull/1679))
+* Vector tiles without symbols are not hold for fade-out animation so that less amount of vector tiles are managed at a time. ([1679](https://github.com/mapbox/mapbox-maps-android/pull/1679))
+* Add support to set location puck opacity. ([1659](https://github.com/mapbox/mapbox-maps-android/pull/1659))
+* Support `pitch` and `distanceFromCenter` filters in symbol layers. ([1662](https://github.com/mapbox/mapbox-maps-android/pull/1662))
+* Migrate telemetry APIs from [mobile-events-android](https://github.com/mapbox/mapbox-events-android) to common SDK implementation. ([1672](https://github.com/mapbox/mapbox-maps-android/pull/1672))
+
 ## Bug fixes 🐞
 * Fix frequent layout invalidation caused by view annotations calling `View.bringToFront()`. ([1744](https://github.com/mapbox/mapbox-maps-android/pull/1744))
+* Fix flickering of vertically shifted line labels on style change, caused by the wrong initial placement. ([1760](https://github.com/mapbox/mapbox-maps-android/pull/1760))
+* Fix location indicator rendering as a rectangle on low zoom levels. ([1760](https://github.com/mapbox/mapbox-maps-android/pull/1760))
+* Fix crash caused by using of invalid paint property binders. ([1760](https://github.com/mapbox/mapbox-maps-android/pull/1760))
+* Fix "phantom tiles" artefacts after GeoJSON source update when asynchronous tile loading is enabled. ([1760](https://github.com/mapbox/mapbox-maps-android/pull/1760))
+* Fix a bug in cameraForGeometry when called on a map with padding set. ([1760](https://github.com/mapbox/mapbox-maps-android/pull/1760))
+* Fix scale bar text being cut. ([1716](https://github.com/mapbox/mapbox-maps-android/pull/1716))
+* Fix possible crash when adding terrain using Style DSL after consecutive style changes. ([1717](https://github.com/mapbox/mapbox-maps-android/pull/1717))
+* Fix scale bar text overlapping. ([1728](https://github.com/mapbox/mapbox-maps-android/pull/1728))
+* Fix issue where `Widget` is not immediately rendered when added to the `MapView`. ([1708](https://github.com/mapbox/mapbox-maps-android/pull/1708))
+* Mitigate symbol flickering on zooming out globe map. ([1729](https://github.com/mapbox/mapbox-maps-android/pull/1729))
+* Fix random crash on tiles update when asynchronous uploading is enabled. ([1729](https://github.com/mapbox/mapbox-maps-android/pull/1729))
+* Make telemetry a single instance. Avoids module recreation when coming from background. ([#1695](https://github.com/mapbox/mapbox-maps-android/pull/1695))
+* Fix scale bar truncated at high zoom levels near the poles. ([1620](https://github.com/mapbox/mapbox-maps-android/pull/1620))
+* Fix broken view annotation positioning when marking them `View.INVISIBLE` and then making `View.VISIBLE`. ([1616](https://github.com/mapbox/mapbox-maps-android/pull/1616))
+* Snap puck to north if `puckBearingEnabled` is set to false. ([1635](https://github.com/mapbox/mapbox-maps-android/pull/1635))
+* Preserve cached properties if applied to the layer before during the `Style#getLayer` call. ([1622](https://github.com/mapbox/mapbox-maps-android/pull/1622))
+* Fix a `NullPointerException` in `StandardGestureListener`, where `MotionEvent` should be nullable. ([1645](https://github.com/mapbox/mapbox-maps-android/pull/1645)), ([1677](https://github.com/mapbox/mapbox-maps-android/pull/1677))
+* Fix incorrect `MapView` dimensions after background orientation change. ([1658](https://github.com/mapbox/mapbox-maps-android/pull/1658))
+* Fix wrong `BitmapWidget` position when using `WidgetPosition.Horizontal.CENTER` or `WidgetPosition.Vertical.CENTER` property. ([1651](https://github.com/mapbox/mapbox-maps-android/pull/1651))
+* Fix pixel flickering between tiles on darker styles in globe view. ([1679](https://github.com/mapbox/mapbox-maps-android/pull/1679))
+* Fix incorrect shading of rounded corners in fill extrusions when ambient occlusion and/or shadow is enabled. ([1679](https://github.com/mapbox/mapbox-maps-android/pull/1679))
+* Fix shadows when the light radial coordinate is zero. ([1679](https://github.com/mapbox/mapbox-maps-android/pull/1679))
+* Location indicator layer is occluded by terrain to align rendering behavior with other location indicator rendering types. ([1679](https://github.com/mapbox/mapbox-maps-android/pull/1679))
+* Symbol flickering after runtime styling caused by using outdated symbol placement on updated symbol buckets. ([1679](https://github.com/mapbox/mapbox-maps-android/pull/1679))
+* Allow Light intensity and Light shadow intensity to accept expressions when using setStyleLight API call. ([1679](https://github.com/mapbox/mapbox-maps-android/pull/1679))
+* Fix a bug in `cameraForGeometry` when called on a map with padding set. ([1679](https://github.com/mapbox/mapbox-maps-android/pull/1679))
+* Throw an exception with the meaningful stack trace when constructing `Value` from an infinite or NaN number. ([1681](https://github.com/mapbox/mapbox-maps-android/pull/1681))
+
+## Dependencies
+* Update mapbox-gestures-android dependency to [v0.8.0](https://github.com/mapbox/mapbox-gestures-android/releases/tag/v0.8.0). ([1645](https://github.com/mapbox/mapbox-maps-android/pull/1645))
+* Update gl-native to v10.9.0 and common to v23.1.1. ([1760](https://github.com/mapbox/mapbox-maps-android/pull/1760))
 
 
 # 10.9.0-rc.1 October 07, 2022
