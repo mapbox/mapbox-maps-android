@@ -2,18 +2,15 @@ package com.mapbox.maps.plugin.locationcomponent
 
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.LocationPuck3D
-import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.LOCATION_INDICATOR_LAYER
-import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.MODEL_LAYER
-import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.MODEL_SOURCE
 
-internal class LayerSourceProvider {
+internal class LayerSourceProvider(private val locationComponentInitOptions: LocationComponentInitOptions) {
 
   fun getModelSource(locationModelLayerOptions: LocationPuck3D): ModelSourceWrapper {
     if (locationModelLayerOptions.modelUri.isEmpty()) {
       throw IllegalArgumentException("Model Url must not be empty!")
     }
     return ModelSourceWrapper(
-      MODEL_SOURCE,
+      locationComponentInitOptions.puck3DSourceId,
       locationModelLayerOptions.modelUri,
       locationModelLayerOptions.position.map { it.toDouble() }
     )
@@ -21,19 +18,19 @@ internal class LayerSourceProvider {
 
   fun getModelLayer(locationModelLayerOptions: LocationPuck3D) =
     ModelLayerWrapper(
-      MODEL_LAYER,
-      MODEL_SOURCE,
+      locationComponentInitOptions.puck3DLayerId,
+      locationComponentInitOptions.puck3DSourceId,
       locationModelLayerOptions.modelScale.map { it.toDouble() },
       locationModelLayerOptions.modelRotation.map { it.toDouble() },
       locationModelLayerOptions.modelTranslation.map { it.toDouble() },
       locationModelLayerOptions.modelOpacity.toDouble()
     )
 
-  fun getLocationIndicatorLayer() = LocationIndicatorLayerWrapper(LOCATION_INDICATOR_LAYER)
+  fun getLocationIndicatorLayer() = LocationIndicatorLayerWrapper(locationComponentInitOptions.puck2DLayerId)
 
   fun getLocationIndicatorLayerRenderer(puckOptions: LocationPuck2D) =
-    LocationIndicatorLayerRenderer(puckOptions, this)
+    LocationIndicatorLayerRenderer(locationComponentInitOptions, puckOptions, this)
 
   fun getModelLayerRenderer(locationModelLayerOptions: LocationPuck3D) =
-    ModelLayerRenderer(this, locationModelLayerOptions)
+    ModelLayerRenderer(locationComponentInitOptions, this, locationModelLayerOptions)
 }
