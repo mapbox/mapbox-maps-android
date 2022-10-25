@@ -311,6 +311,13 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
     return mapController.onTouchEvent(event)
   }
 
+  /**
+   * Called whenever a touch event is detected on the surface of a ViewGroup,
+   * including on the surface of its children
+   *
+   * @param event the motion event that has occurred
+   * @return True if event was intercepted, false otherwise
+   */
   override fun onInterceptTouchEvent(event: MotionEvent): Boolean {
     return when (event.actionMasked) {
       MotionEvent.ACTION_DOWN -> {

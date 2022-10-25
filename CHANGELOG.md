@@ -17,7 +17,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Support `pitch` and `distanceFromCenter` filters in symbol layers. ([1662](https://github.com/mapbox/mapbox-maps-android/pull/1662))
 * Migrate telemetry APIs from [mobile-events-android](https://github.com/mapbox/mapbox-events-android) to common SDK implementation. ([1672](https://github.com/mapbox/mapbox-maps-android/pull/1672))
 ## Bug fixes 🐞
-Fix an issue when touch events didn't pass through the view annotation. ([1745](https://github.com/mapbox/mapbox-maps-android/pull/1745))
+Fix an issue when touch events didn't pass through clickable view annotations. ([1745](https://github.com/mapbox/mapbox-maps-android/pull/1745))
 
 # 10.9.0
 
