@@ -22,6 +22,7 @@ then
   exit 1
 fi
 
+AAR_PATH=$2
 MODULE_NAME=$3
 
 if [ -z "$MODULE_NAME" ]
@@ -47,8 +48,8 @@ TAGGED_RELEASE_VERSION=$1
 TAGGED_RELEASE_VERSION=${TAGGED_RELEASE_VERSION:8}
 
 mkdir "${TMPDIR}"/current "${TMPDIR}"/previous
-cp "$2" "${TMPDIR}"/current/sdk-release.aar
 CURRENT_RELEASE=${TMPDIR}/current/sdk-release.aar
+cp "$2" "${CURRENT_RELEASE}"
 PREVIOUS_RELEASE=${TMPDIR}/previous/sdk-release.aar
 CURRENT_RELEASE_DIR=$(dirname "${CURRENT_RELEASE}")
 PREVIOUS_RELEASE_DIR=$(dirname "${PREVIOUS_RELEASE}")
@@ -59,23 +60,41 @@ LAST_STABLE_VERSION=${LAST_STABLE_VERSION_TAG_ARRAY[0]:1}
 
 RELEASE_TAG=${5-""}
 if [[ -z $RELEASE_TAG ]]; then
-  echo "Downloading ${LAST_STABLE_VERSION} release from the SDK Registry to check api compatibility with revapi."
-  AAR_PATH="s3://mapbox-api-downloads-production/v2/mobile-maps-android-"${MODULE_NAME}"/releases/android/"${LAST_STABLE_VERSION}"/maven/maps-"${MODULE_NAME}"-"${LAST_STABLE_VERSION}".aar"
+  echo "Using the ${LAST_STABLE_VERSION} release from the SDK Registry to check api compatibility with revapi."
+
+  AAR_GROUP_NAME=""
+  AAR_MODULE_NAME=""
   if [[ $MODULE_NAME == sdk ]]; then
-    AAR_PATH="s3://mapbox-api-downloads-production/v2/mobile-maps-android/releases/android/"${LAST_STABLE_VERSION}"/maven/android-"${LAST_STABLE_VERSION}".aar"
+    AAR_MODULE_NAME="android"
+    AAR_GROUP_NAME="maps"
   elif [[ $MODULE_NAME == sdk-base ]]; then
-    AAR_PATH="s3://mapbox-api-downloads-production/v2/mobile-maps-android-base/releases/android/"${LAST_STABLE_VERSION}"/maven/base-"${LAST_STABLE_VERSION}".aar"
+    AAR_MODULE_NAME="base"
+    AAR_GROUP_NAME="maps"
   elif [[ $MODULE_NAME == androidauto ]]; then
     echo "Android auto module is not yet released, skip the check."
     exit 0
+  elif [[ $AAR_PATH == *"extension"* ]]; then
+    AAR_GROUP_NAME="extension"
+    AAR_MODULE_NAME="maps-$MODULE_NAME"
+  elif [[ $AAR_PATH == *"plugin"* ]]; then
+    AAR_GROUP_NAME="plugin"
+    AAR_MODULE_NAME="maps-$MODULE_NAME"
   fi
-  echo "aar path is: $AAR_PATH, checking file"
-  if [[ -z $(aws s3 ls "$AAR_PATH") ]]; then
-    echo "$AAR_PATH doesn't exist on s3!"
-    exit 1
+
+  if [[ -z $AAR_GROUP_NAME ]]; then
+    echo "Invalid aar group name for the module $MODULE_NAME"
+    exit 1;
   fi
-  echo "Downloading file from s3"
-  aws s3 cp "$AAR_PATH" "${PREVIOUS_RELEASE}"
+
+  if [[ -z $AAR_MODULE_NAME ]]; then
+    echo "Invalid aar module name for the module $MODULE_NAME"
+    exit 1;
+  fi
+
+  AAR_PATH="https://api.mapbox.com/downloads/v2/releases/maven/com/mapbox/${AAR_GROUP_NAME}/"${AAR_MODULE_NAME}"/"${LAST_STABLE_VERSION}"/"${AAR_MODULE_NAME}"-"${LAST_STABLE_VERSION}".aar"
+
+  # -fL0 will fail if aar is not present on the sdk registry
+  curl -fL0 --user mapbox:${SDK_REGISTRY_TOKEN} ${AAR_PATH} --output "${PREVIOUS_RELEASE}"
 else
   echo "Using the prebuilt ${RELEASE_TAG} to check api compatibility with revapi."
   cp "$RELEASE_TAG" "$PREVIOUS_RELEASE"
