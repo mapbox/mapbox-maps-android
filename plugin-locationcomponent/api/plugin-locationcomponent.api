@@ -1,3 +1,10 @@
+public final class com/mapbox/maps/plugin/locationcomponent/CustomJourneyLocationProvider : com/mapbox/maps/plugin/locationcomponent/LocationProvider {
+	public fun <init> ()V
+	public final fun loadJourney (Lcom/mapbox/maps/plugin/locationcomponent/Journey;)V
+	public fun registerLocationConsumer (Lcom/mapbox/maps/plugin/locationcomponent/LocationConsumer;)V
+	public fun unRegisterLocationConsumer (Lcom/mapbox/maps/plugin/locationcomponent/LocationConsumer;)V
+}
+
 public final class com/mapbox/maps/plugin/locationcomponent/DefaultLocationProvider : com/mapbox/maps/plugin/locationcomponent/LocationProvider {
 	public fun <init> (Landroid/content/Context;)V
 	public final fun addOnCompassCalibrationListener (Lcom/mapbox/maps/plugin/locationcomponent/LocationCompassCalibrationListener;)V
@@ -5,6 +12,26 @@ public final class com/mapbox/maps/plugin/locationcomponent/DefaultLocationProvi
 	public final fun removeCompassCalibrationListener (Lcom/mapbox/maps/plugin/locationcomponent/LocationCompassCalibrationListener;)V
 	public fun unRegisterLocationConsumer (Lcom/mapbox/maps/plugin/locationcomponent/LocationConsumer;)V
 	public final fun updatePuckBearingSource (Lcom/mapbox/maps/plugin/PuckBearingSource;)V
+}
+
+public final class com/mapbox/maps/plugin/locationcomponent/Journey {
+	public fun <init> ()V
+	public fun <init> (DD)V
+	public synthetic fun <init> (DDILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getAngularSpeed ()D
+	public final fun getRemainingLocationsInQueue ()Ljava/util/List;
+	public final fun getSpeed ()D
+	public final fun observeJourneyUpdates (Lcom/mapbox/maps/plugin/locationcomponent/JourneyDataObserver;)V
+	public final fun pause ()V
+	public final fun queueLocationUpdate (Lcom/mapbox/geojson/Point;)V
+	public final fun queueLocationUpdates (Ljava/util/List;)V
+	public final fun restart ()V
+	public final fun resume ()V
+	public final fun start ()V
+}
+
+public abstract interface class com/mapbox/maps/plugin/locationcomponent/JourneyDataObserver {
+	public abstract fun onNewData (Lcom/mapbox/geojson/Point;DJJ)Z
 }
 
 public abstract interface class com/mapbox/maps/plugin/locationcomponent/LocationCompassCalibrationListener {
@@ -32,13 +59,56 @@ public final class com/mapbox/maps/plugin/locationcomponent/LocationComponentCon
 	public static final field TRANSITION_ANIMATION_DURATION_MS J
 }
 
+public final class com/mapbox/maps/plugin/locationcomponent/LocationComponentInitOptions {
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBearingIconImageId ()Ljava/lang/String;
+	public final fun getPuck2DLayerId ()Ljava/lang/String;
+	public final fun getPuck3DLayerId ()Ljava/lang/String;
+	public final fun getPuck3DSourceId ()Ljava/lang/String;
+	public final fun getShadowIconImageId ()Ljava/lang/String;
+	public final fun getTopIconImageId ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/plugin/locationcomponent/LocationComponentInitOptions$Builder {
+	public fun <init> ()V
+	public final fun build ()Lcom/mapbox/maps/plugin/locationcomponent/LocationComponentInitOptions;
+	public final fun getBearingIconImageId ()Ljava/lang/String;
+	public final fun getPuck2DLayerId ()Ljava/lang/String;
+	public final fun getPuck3DLayerId ()Ljava/lang/String;
+	public final fun getPuck3DSourceId ()Ljava/lang/String;
+	public final fun getShadowIconImageId ()Ljava/lang/String;
+	public final fun getTopIconImageId ()Ljava/lang/String;
+	public final fun setBearingIconImageId (Ljava/lang/String;)Lcom/mapbox/maps/plugin/locationcomponent/LocationComponentInitOptions$Builder;
+	public final synthetic fun setBearingIconImageId (Ljava/lang/String;)V
+	public final fun setPuck2DLayerId (Ljava/lang/String;)Lcom/mapbox/maps/plugin/locationcomponent/LocationComponentInitOptions$Builder;
+	public final synthetic fun setPuck2DLayerId (Ljava/lang/String;)V
+	public final fun setPuck3DLayerId (Ljava/lang/String;)Lcom/mapbox/maps/plugin/locationcomponent/LocationComponentInitOptions$Builder;
+	public final synthetic fun setPuck3DLayerId (Ljava/lang/String;)V
+	public final fun setPuck3DSourceId (Ljava/lang/String;)Lcom/mapbox/maps/plugin/locationcomponent/LocationComponentInitOptions$Builder;
+	public final synthetic fun setPuck3DSourceId (Ljava/lang/String;)V
+	public final fun setShadowIconImageId (Ljava/lang/String;)Lcom/mapbox/maps/plugin/locationcomponent/LocationComponentInitOptions$Builder;
+	public final synthetic fun setShadowIconImageId (Ljava/lang/String;)V
+	public final fun setTopIconImageId (Ljava/lang/String;)Lcom/mapbox/maps/plugin/locationcomponent/LocationComponentInitOptions$Builder;
+	public final synthetic fun setTopIconImageId (Ljava/lang/String;)V
+}
+
+public final class com/mapbox/maps/plugin/locationcomponent/LocationComponentInitOptionsKt {
+	public static final synthetic fun LocationComponentInitOptions (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/plugin/locationcomponent/LocationComponentInitOptions;
+}
+
 public final class com/mapbox/maps/plugin/locationcomponent/LocationComponentPluginImpl : com/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettingsBase2, com/mapbox/maps/plugin/locationcomponent/LocationComponentPlugin2, com/mapbox/maps/plugin/locationcomponent/LocationConsumer2 {
 	public fun <init> ()V
+	public fun <init> (Lcom/mapbox/maps/plugin/locationcomponent/LocationComponentInitOptions;)V
+	public synthetic fun <init> (Lcom/mapbox/maps/plugin/locationcomponent/LocationComponentInitOptions;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun addOnIndicatorAccuracyRadiusChangedListener (Lcom/mapbox/maps/plugin/locationcomponent/OnIndicatorAccuracyRadiusChangedListener;)V
 	public fun addOnIndicatorBearingChangedListener (Lcom/mapbox/maps/plugin/locationcomponent/OnIndicatorBearingChangedListener;)V
 	public fun addOnIndicatorPositionChangedListener (Lcom/mapbox/maps/plugin/locationcomponent/OnIndicatorPositionChangedListener;)V
 	public fun bind (Landroid/content/Context;Landroid/util/AttributeSet;F)V
 	public fun cleanup ()V
+	public final fun getLocationComponentInitOptions ()Lcom/mapbox/maps/plugin/locationcomponent/LocationComponentInitOptions;
 	public fun getLocationProvider ()Lcom/mapbox/maps/plugin/locationcomponent/LocationProvider;
 	public fun initialize ()V
 	public fun isLocatedAt (Lcom/mapbox/geojson/Point;Lcom/mapbox/maps/plugin/locationcomponent/PuckLocatedAtPointListener;)V

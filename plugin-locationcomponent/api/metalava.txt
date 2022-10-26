@@ -1,6 +1,13 @@
 // Signature format: 3.0
 package com.mapbox.maps.plugin.locationcomponent {
 
+  @com.mapbox.maps.MapboxExperimental public final class CustomJourneyLocationProvider implements com.mapbox.maps.plugin.locationcomponent.LocationProvider {
+    ctor public CustomJourneyLocationProvider();
+    method public void loadJourney(com.mapbox.maps.plugin.locationcomponent.Journey journey);
+    method public void registerLocationConsumer(com.mapbox.maps.plugin.locationcomponent.LocationConsumer locationConsumer);
+    method public void unRegisterLocationConsumer(com.mapbox.maps.plugin.locationcomponent.LocationConsumer locationConsumer);
+  }
+
   public final class DefaultLocationProvider implements com.mapbox.maps.plugin.locationcomponent.LocationProvider {
     ctor public DefaultLocationProvider(android.content.Context context);
     method public void addOnCompassCalibrationListener(com.mapbox.maps.plugin.locationcomponent.LocationCompassCalibrationListener listener);
@@ -8,6 +15,27 @@ package com.mapbox.maps.plugin.locationcomponent {
     method public void removeCompassCalibrationListener(com.mapbox.maps.plugin.locationcomponent.LocationCompassCalibrationListener listener);
     method public void unRegisterLocationConsumer(com.mapbox.maps.plugin.locationcomponent.LocationConsumer locationConsumer);
     method public void updatePuckBearingSource(com.mapbox.maps.plugin.PuckBearingSource source);
+  }
+
+  @com.mapbox.maps.MapboxExperimental public final class Journey {
+    ctor public Journey(double speed = 100.0, double angularSpeed = 100.0);
+    method public double getAngularSpeed();
+    method public java.util.List<com.mapbox.geojson.Point> getRemainingLocationsInQueue();
+    method public double getSpeed();
+    method public void observeJourneyUpdates(com.mapbox.maps.plugin.locationcomponent.JourneyDataObserver observer);
+    method public void pause();
+    method public void queueLocationUpdate(com.mapbox.geojson.Point location);
+    method public void queueLocationUpdates(java.util.List<com.mapbox.geojson.Point> locations);
+    method public void restart();
+    method public void resume();
+    method public void start();
+    property public final double angularSpeed;
+    property public final java.util.List<com.mapbox.geojson.Point> remainingLocationsInQueue;
+    property public final double speed;
+  }
+
+  public fun interface JourneyDataObserver {
+    method public boolean onNewData(com.mapbox.geojson.Point location, double bearing, long locationAnimationDurationMs, long bearingAnimateDurationMs);
   }
 
   public fun interface LocationCompassCalibrationListener {
@@ -35,8 +63,49 @@ package com.mapbox.maps.plugin.locationcomponent {
     field public static final long TRANSITION_ANIMATION_DURATION_MS = 750L; // 0x2eeL
   }
 
+  public final class LocationComponentInitOptions {
+    method public String! getBearingIconImageId();
+    method public String! getPuck2DLayerId();
+    method public String! getPuck3DLayerId();
+    method public String! getPuck3DSourceId();
+    method public String! getShadowIconImageId();
+    method public String! getTopIconImageId();
+    property public final String! bearingIconImageId;
+    property public final String! puck2DLayerId;
+    property public final String! puck3DLayerId;
+    property public final String! puck3DSourceId;
+    property public final String! shadowIconImageId;
+    property public final String! topIconImageId;
+  }
+
+  public static final class LocationComponentInitOptions.Builder {
+    ctor public LocationComponentInitOptions.Builder();
+    method public com.mapbox.maps.plugin.locationcomponent.LocationComponentInitOptions build();
+    method public String getBearingIconImageId();
+    method public String getPuck2DLayerId();
+    method public String getPuck3DLayerId();
+    method public String getPuck3DSourceId();
+    method public String getShadowIconImageId();
+    method public String getTopIconImageId();
+    method public com.mapbox.maps.plugin.locationcomponent.LocationComponentInitOptions.Builder setBearingIconImageId(String bearingIconImageId);
+    method public com.mapbox.maps.plugin.locationcomponent.LocationComponentInitOptions.Builder setPuck2DLayerId(String puck2DLayerId);
+    method public com.mapbox.maps.plugin.locationcomponent.LocationComponentInitOptions.Builder setPuck3DLayerId(String puck3DLayerId);
+    method public com.mapbox.maps.plugin.locationcomponent.LocationComponentInitOptions.Builder setPuck3DSourceId(String puck3DSourceId);
+    method public com.mapbox.maps.plugin.locationcomponent.LocationComponentInitOptions.Builder setShadowIconImageId(String shadowIconImageId);
+    method public com.mapbox.maps.plugin.locationcomponent.LocationComponentInitOptions.Builder setTopIconImageId(String topIconImageId);
+    property public final String bearingIconImageId;
+    property public final String puck2DLayerId;
+    property public final String puck3DLayerId;
+    property public final String puck3DSourceId;
+    property public final String shadowIconImageId;
+    property public final String topIconImageId;
+  }
+
+  public final class LocationComponentInitOptionsKt {
+  }
+
   public final class LocationComponentPluginImpl extends com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettingsBase2 implements com.mapbox.maps.plugin.locationcomponent.LocationComponentPlugin2 com.mapbox.maps.plugin.locationcomponent.LocationConsumer2 {
-    ctor public LocationComponentPluginImpl();
+    ctor public LocationComponentPluginImpl(com.mapbox.maps.plugin.locationcomponent.LocationComponentInitOptions locationComponentInitOptions = LocationComponentInitOptions.<init>().build());
     method public void addOnIndicatorAccuracyRadiusChangedListener(com.mapbox.maps.plugin.locationcomponent.OnIndicatorAccuracyRadiusChangedListener listener);
     method public void addOnIndicatorBearingChangedListener(com.mapbox.maps.plugin.locationcomponent.OnIndicatorBearingChangedListener listener);
     method public void addOnIndicatorPositionChangedListener(com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener listener);
@@ -45,6 +114,7 @@ package com.mapbox.maps.plugin.locationcomponent {
     method public void bind(android.content.Context context, android.util.AttributeSet? attrs, float pixelRatio);
     method protected com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings getInternalSettings();
     method protected com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings2 getInternalSettings2();
+    method public com.mapbox.maps.plugin.locationcomponent.LocationComponentInitOptions getLocationComponentInitOptions();
     method public com.mapbox.maps.plugin.locationcomponent.LocationProvider? getLocationProvider();
     method public void isLocatedAt(com.mapbox.geojson.Point point, com.mapbox.maps.plugin.locationcomponent.PuckLocatedAtPointListener listener);
     method public void onAccuracyRadiusUpdated(double[] radius, kotlin.jvm.functions.Function1<? super android.animation.ValueAnimator,kotlin.Unit>? options);
@@ -65,6 +135,7 @@ package com.mapbox.maps.plugin.locationcomponent {
     method public void setLocationProvider(com.mapbox.maps.plugin.locationcomponent.LocationProvider locationProvider);
     property protected com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings internalSettings;
     property protected com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings2 internalSettings2;
+    property public final com.mapbox.maps.plugin.locationcomponent.LocationComponentInitOptions locationComponentInitOptions;
     field public com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings internalSettings;
     field public com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings2 internalSettings2;
   }
