@@ -41,7 +41,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   internal var mapController: MapController
     private set
 
-  private var interceptedActionList: MutableList<MotionEvent> = mutableListOf()
+  private var interceptedViewAnnotationEvents: MutableList<MotionEvent> = mutableListOf()
   private val touchSlop: Int by lazy { ViewConfiguration.get(context).scaledTouchSlop }
   private val viewAnnotationManagerDelegate = lazy { ViewAnnotationManagerImpl(this) }
   /**
@@ -300,13 +300,12 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    */
   @SuppressLint("ClickableViewAccessibility")
   override fun onTouchEvent(event: MotionEvent): Boolean {
-    interceptedActionList.firstOrNull()?.let {
-      try {
-        return mapController.onTouchEvent(it)
-      } finally {
-        it.recycle()
-        interceptedActionList.removeFirst()
+    if (interceptedViewAnnotationEvents.isNotEmpty()) {
+      interceptedViewAnnotationEvents.forEach { event ->
+        mapController.onTouchEvent(event)
+        event.recycle()
       }
+      interceptedViewAnnotationEvents.clear()
     }
     return mapController.onTouchEvent(event)
   }
@@ -321,15 +320,15 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   override fun onInterceptTouchEvent(event: MotionEvent): Boolean {
     return when (event.actionMasked) {
       MotionEvent.ACTION_DOWN -> {
-        interceptedActionList.add(MotionEvent.obtain(event))
+        interceptedViewAnnotationEvents.add(MotionEvent.obtain(event))
         false
       }
       MotionEvent.ACTION_POINTER_DOWN -> {
-        interceptedActionList.add(MotionEvent.obtain(event))
+        interceptedViewAnnotationEvents.add(MotionEvent.obtain(event))
         false
       }
       MotionEvent.ACTION_MOVE -> {
-        interceptedActionList.any { it.hypot(event, touchSlop) }
+        interceptedViewAnnotationEvents.any { it.hypot(event, touchSlop) }
       }
       else -> {
         // In general, we don't want to intercept touch events. They should be
