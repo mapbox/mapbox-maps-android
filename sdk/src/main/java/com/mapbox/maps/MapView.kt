@@ -301,11 +301,13 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   @SuppressLint("ClickableViewAccessibility")
   override fun onTouchEvent(event: MotionEvent): Boolean {
     if (interceptedViewAnnotationEvents.isNotEmpty()) {
-      interceptedViewAnnotationEvents.forEach { event ->
-        mapController.onTouchEvent(event)
-        event.recycle()
+      var interceptedTouchRes = false
+      interceptedViewAnnotationEvents.forEach {
+        interceptedTouchRes = interceptedTouchRes || mapController.onTouchEvent(it)
+        it.recycle()
       }
       interceptedViewAnnotationEvents.clear()
+      return interceptedTouchRes
     }
     return mapController.onTouchEvent(event)
   }
