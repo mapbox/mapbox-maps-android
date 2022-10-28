@@ -8,6 +8,7 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.SurfaceView
 import android.view.TextureView
+import android.view.ViewConfiguration
 import android.widget.FrameLayout
 import androidx.annotation.IntRange
 import androidx.annotation.VisibleForTesting
@@ -22,6 +23,7 @@ import com.mapbox.maps.renderer.egl.EGLCore
 import com.mapbox.maps.renderer.widget.Widget
 import com.mapbox.maps.viewannotation.ViewAnnotationManager
 import java.nio.IntBuffer
+import kotlin.math.hypot
 
 /**
  * A [MapView] provides an embeddable map interface.
@@ -39,6 +41,8 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   internal var mapController: MapController
     private set
 
+  private var interceptedViewAnnotationEvents: MutableList<MotionEvent> = mutableListOf()
+  private val touchSlop: Int by lazy { ViewConfiguration.get(context).scaledTouchSlop }
   private val viewAnnotationManagerDelegate = lazy { ViewAnnotationManagerImpl(this) }
   /**
    * Get view annotation manager instance to add / update / remove view annotations
@@ -296,7 +300,64 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    */
   @SuppressLint("ClickableViewAccessibility")
   override fun onTouchEvent(event: MotionEvent): Boolean {
+    if (interceptedViewAnnotationEvents.isNotEmpty()) {
+      var interceptedTouchRes = false
+      interceptedViewAnnotationEvents.forEach {
+        interceptedTouchRes = interceptedTouchRes || mapController.onTouchEvent(it)
+        it.recycle()
+      }
+      interceptedViewAnnotationEvents.clear()
+      return interceptedTouchRes
+    }
     return mapController.onTouchEvent(event)
+  }
+
+  /**
+   * Called whenever a touch event is detected on the surface of a ViewGroup,
+   * including on the surface of its children
+   *
+   * @param event the motion event that has occurred
+   * @return True if event was intercepted, false otherwise
+   */
+  override fun onInterceptTouchEvent(event: MotionEvent): Boolean {
+    return when (event.actionMasked) {
+      MotionEvent.ACTION_DOWN -> {
+        interceptedViewAnnotationEvents.add(MotionEvent.obtain(event))
+        false
+      }
+      MotionEvent.ACTION_POINTER_DOWN -> {
+        interceptedViewAnnotationEvents.add(MotionEvent.obtain(event))
+        false
+      }
+      MotionEvent.ACTION_MOVE -> {
+        interceptedViewAnnotationEvents.any { it.hypot(event, touchSlop) }
+      }
+      else -> {
+        // In general, we don't want to intercept touch events. They should be
+        // handled by the child view.
+        false
+      }
+    }
+  }
+
+  private fun MotionEvent.hypot(moveEvent: MotionEvent, touchSlop: Int): Boolean {
+    for (i in 0 until moveEvent.pointerCount) {
+      val pointerId = moveEvent.getPointerId(i)
+      val originalCoordinateIndex = findPointerIndex(pointerId)
+      val moveCoordinateIndex = moveEvent.findPointerIndex(pointerId)
+      if (originalCoordinateIndex == -1 || moveCoordinateIndex == -1) {
+        continue
+      }
+      if (
+        hypot(
+            x = getX(originalCoordinateIndex) - moveEvent.getX(moveCoordinateIndex),
+            y = getY(originalCoordinateIndex) - moveEvent.getY(moveCoordinateIndex)
+          ) > touchSlop
+      ) {
+        return true
+      }
+    }
+    return false
   }
 
   /**
