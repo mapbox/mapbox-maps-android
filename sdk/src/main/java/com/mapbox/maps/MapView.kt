@@ -348,9 +348,9 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
       }
       if (
         hypot(
-          x = getX(originalCoordinateIndex) - moveEvent.getX(moveCoordinateIndex),
-          y = getY(originalCoordinateIndex) - moveEvent.getY(moveCoordinateIndex)
-        ) > touchSlop
+            x = getX(originalCoordinateIndex) - moveEvent.getX(moveCoordinateIndex),
+            y = getY(originalCoordinateIndex) - moveEvent.getY(moveCoordinateIndex)
+          ) > touchSlop
       ) {
         return true
       }
