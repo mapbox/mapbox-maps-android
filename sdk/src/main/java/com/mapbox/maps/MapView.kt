@@ -329,7 +329,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
         false
       }
       MotionEvent.ACTION_MOVE -> {
-        interceptedActionList.any { it.hypot(event) > touchSlop }
+        interceptedActionList.any { it.hypot(event, touchSlop) }
       }
       else -> {
         // In general, we don't want to intercept touch events. They should be
@@ -339,11 +339,24 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
     }
   }
 
-  private fun MotionEvent.hypot(event: MotionEvent): Int {
-    return hypot(
-      x = (this?.x ?: event.x) - event.x,
-      y = (this?.y ?: event.y) - event.y
-    ).toInt()
+  private fun MotionEvent.hypot(moveEvent: MotionEvent, touchSlop: Int): Boolean {
+    for (i in 0 until moveEvent.pointerCount) {
+      val pointerId = moveEvent.getPointerId(i)
+      val originalCoordinateIndex = findPointerIndex(pointerId)
+      val moveCoordinateIndex = moveEvent.findPointerIndex(pointerId)
+      if (originalCoordinateIndex == -1 || moveCoordinateIndex == -1) {
+        continue
+      }
+      if (
+        hypot(
+          x = getX(originalCoordinateIndex) - moveEvent.getX(moveCoordinateIndex),
+          y = getY(originalCoordinateIndex) - moveEvent.getY(moveCoordinateIndex)
+        ) > touchSlop
+      ) {
+        return true
+      }
+    }
+    return false
   }
 
   /**
