@@ -150,8 +150,8 @@ internal class ViewAnnotationManagerImpl(
   override val annotations: Map<View, ViewAnnotationOptions>
     get() = HashMap<View, ViewAnnotationOptions>().apply {
       idLookupMap.forEach { (view, _) ->
-        getViewAnnotationOptionsByView(lookupMap.key)?.let { viewAnnotationOptions ->
-          put(lookupMap.key, viewAnnotationOptions)
+        getViewAnnotationOptionsByView(view)?.let { viewAnnotationOptions ->
+          put(view, viewAnnotationOptions)
         }
       }
     }
