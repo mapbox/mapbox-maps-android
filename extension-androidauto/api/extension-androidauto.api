@@ -72,12 +72,12 @@ public final class com/mapbox/maps/extension/androidauto/MapboxCarMapSurface {
 }
 
 public final class com/mapbox/maps/extension/androidauto/widgets/CompassWidget : com/mapbox/maps/renderer/widget/BitmapWidget {
-	public fun <init> (Landroid/content/Context;Lcom/mapbox/maps/renderer/widget/WidgetPosition;FF)V
-	public synthetic fun <init> (Landroid/content/Context;Lcom/mapbox/maps/renderer/widget/WidgetPosition;FFILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Landroid/content/Context;Lcom/mapbox/maps/renderer/widget/WidgetPosition;)V
+	public synthetic fun <init> (Landroid/content/Context;Lcom/mapbox/maps/renderer/widget/WidgetPosition;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 }
 
 public final class com/mapbox/maps/extension/androidauto/widgets/LogoWidget : com/mapbox/maps/renderer/widget/BitmapWidget {
-	public fun <init> (Landroid/content/Context;Lcom/mapbox/maps/renderer/widget/WidgetPosition;FF)V
-	public synthetic fun <init> (Landroid/content/Context;Lcom/mapbox/maps/renderer/widget/WidgetPosition;FFILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Landroid/content/Context;Lcom/mapbox/maps/renderer/widget/WidgetPosition;)V
+	public synthetic fun <init> (Landroid/content/Context;Lcom/mapbox/maps/renderer/widget/WidgetPosition;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 }
 
