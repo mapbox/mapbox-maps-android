@@ -10,12 +10,22 @@ abstract class Widget internal constructor() {
   internal abstract val renderer: WidgetRenderer
 
   /**
-   * Set absolute translation of widget in pixels.
+   * Update the widget to the new position.
    */
-  abstract fun setTranslation(translateX: Float, translateY: Float)
+  abstract fun updatePosition(widgetPosition: WidgetPosition)
 
   /**
-   * Set absolute rotation of widget in angles.
+   * Get the current position of the widget.
+   */
+  abstract fun getPosition(): WidgetPosition
+
+  /**
+   * Get the absolute rotation of widget in degrees.
    */
   abstract fun setRotation(angleDegrees: Float)
+
+  /**
+   * Set absolute rotation of widget in degrees.
+   */
+  abstract fun getRotation() : Float
 }

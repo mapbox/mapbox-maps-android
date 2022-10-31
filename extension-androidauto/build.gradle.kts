@@ -23,7 +23,8 @@ android {
 }
 
 dependencies {
-  api(Dependencies.androidAutoMapboxMapSdk)
+//  api(Dependencies.androidAutoMapboxMapSdk)
+  api(project(":sdk"))
   testImplementation(Dependencies.androidAutoMapboxMapSdk)
 
   api(Dependencies.googleCarAppLibrary)

@@ -15,8 +15,6 @@ import com.mapbox.maps.renderer.widget.WidgetPosition
  * @since Maps SDK v10.4.0
  *
  * @param position position of compass
- * @param marginX horizontal margin in pixels
- * @param marginY vertical margin in pixels
  */
 @MapboxExperimental
 class CompassWidget(
@@ -24,12 +22,10 @@ class CompassWidget(
   position: WidgetPosition = WidgetPosition(
     horizontal = WidgetPosition.Horizontal.RIGHT,
     vertical = WidgetPosition.Vertical.TOP,
-  ),
-  marginX: Float = 20f,
-  marginY: Float = 20f,
+    offsetX = 20f,
+    offsetY = 20f
+  )
 ) : BitmapWidget(
   bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.mapbox_compass_icon),
-  position = position,
-  marginX = marginX,
-  marginY = marginY,
+  position = position
 )

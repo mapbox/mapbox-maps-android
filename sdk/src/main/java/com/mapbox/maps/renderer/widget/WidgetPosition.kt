@@ -6,11 +6,15 @@ import com.mapbox.maps.MapboxExperimental
  * Specifies widget position relative to the screen.
  * @param horizontal position relative to the screen.
  * @param vertical position relative to screen.
+ * @param offsetX horizontal offset of the widget.
+ * @param offsetY vertical offset of the widget.
  */
 @MapboxExperimental
 class WidgetPosition(
   val horizontal: Horizontal,
   val vertical: Vertical,
+  val offsetX: Float,
+  val offsetY: Float
 ) {
 
   /**
