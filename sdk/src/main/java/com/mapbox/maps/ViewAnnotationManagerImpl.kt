@@ -39,7 +39,6 @@ internal class ViewAnnotationManagerImpl(
   internal val idLookupMap = ConcurrentHashMap<View, String>()
   private val currentlyDrawnViewIdSet = mutableSetOf<String>()
   private val unpositionedViews = mutableSetOf<View>()
-  private val annotationOptionsLookupMap = ConcurrentHashMap<View, ViewAnnotationOptions>()
 
   // using copy on write as user could remove listener while callback is invoked
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
@@ -83,7 +82,6 @@ internal class ViewAnnotationManagerImpl(
   override fun removeViewAnnotation(view: View): Boolean {
     val id = idLookupMap.remove(view) ?: return false
     val annotation = annotationMap.remove(id) ?: return false
-    annotationOptionsLookupMap.remove(view) ?: return false
     remove(id, annotation)
     return true
   }
@@ -95,7 +93,6 @@ internal class ViewAnnotationManagerImpl(
     currentlyDrawnViewIdSet.clear()
     annotationMap.clear()
     idLookupMap.clear()
-    annotationOptionsLookupMap.clear()
   }
 
   override fun updateViewAnnotation(
@@ -113,7 +110,6 @@ internal class ViewAnnotationManagerImpl(
         it.measuredHeight = USER_FIXED_DIMENSION
       }
       getValue(mapboxMap.updateViewAnnotation(id, options))
-      annotationOptionsLookupMap[view] = options
       return true
     } ?: return false
   }
@@ -153,7 +149,11 @@ internal class ViewAnnotationManagerImpl(
 
   override val annotations: Map<View, ViewAnnotationOptions>
     get() = HashMap<View, ViewAnnotationOptions>().apply {
-      putAll(annotationOptionsLookupMap)
+      idLookupMap.forEach { lookupMap ->
+        getViewAnnotationOptionsByView(lookupMap.key)?.let { viewAnnotationOptions ->
+          put(lookupMap.key, viewAnnotationOptions)
+        }
+      }
     }
 
   /**
@@ -310,7 +310,6 @@ internal class ViewAnnotationManagerImpl(
     inflatedView.addOnAttachStateChangeListener(viewAnnotation.attachStateListener)
     annotationMap[viewAnnotation.id] = viewAnnotation
     idLookupMap[inflatedView] = viewAnnotation.id
-    annotationOptionsLookupMap[inflatedView] = updatedOptions
     getValue(mapboxMap.addViewAnnotation(viewAnnotation.id, updatedOptions))
     return inflatedView
   }

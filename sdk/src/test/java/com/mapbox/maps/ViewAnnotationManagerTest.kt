@@ -326,9 +326,15 @@ class ViewAnnotationManagerTest {
   @Test
   fun getViewAnnotationUpdateMode() {
     every { renderer.viewAnnotationMode } returns ViewAnnotationManager.DEFAULT_UPDATE_MODE
-    assertEquals(ViewAnnotationManager.DEFAULT_UPDATE_MODE, viewAnnotationManager.getViewAnnotationUpdateMode())
+    assertEquals(
+      ViewAnnotationManager.DEFAULT_UPDATE_MODE,
+      viewAnnotationManager.getViewAnnotationUpdateMode()
+    )
     every { renderer.viewAnnotationMode } returns ViewAnnotationUpdateMode.MAP_FIXED_DELAY
-    assertEquals(ViewAnnotationUpdateMode.MAP_FIXED_DELAY, viewAnnotationManager.getViewAnnotationUpdateMode())
+    assertEquals(
+      ViewAnnotationUpdateMode.MAP_FIXED_DELAY,
+      viewAnnotationManager.getViewAnnotationUpdateMode()
+    )
   }
 
   @Test
@@ -337,13 +343,15 @@ class ViewAnnotationManagerTest {
       geometry(DEFAULT_GEOMETRY)
     }
     viewAnnotationManager.addViewAnnotation(view, viewAnnotationOptions)
-
     val anotherView = mockView()
     viewAnnotationManager.addViewAnnotation(
       anotherView,
       viewAnnotationOptions {
         geometry(Point.fromLngLat(90.0, 90.0))
       }
+    )
+    every { mapboxMap.getViewAnnotationOptions(any()) } returns ExpectedFactory.createValue(
+      viewAnnotationOptions
     )
     every { anotherView.removeOnAttachStateChangeListener(any()) } just Runs
     assertEquals(2, viewAnnotationManager.annotations.size)
@@ -356,6 +364,9 @@ class ViewAnnotationManagerTest {
       width(DEFAULT_WIDTH)
       height(DEFAULT_HEIGHT)
     }
+    every { mapboxMap.getViewAnnotationOptions(any()) } returns ExpectedFactory.createValue(
+      viewAnnotationOptions
+    )
     viewAnnotationManager.addViewAnnotation(view, viewAnnotationOptions)
     assertEquals(viewAnnotationOptions, viewAnnotationManager.annotations[view])
   }
@@ -363,12 +374,13 @@ class ViewAnnotationManagerTest {
   @Test
   fun getViewAnnotationsAfterRemoveAnnotation() {
     every { mapboxMap.removeViewAnnotation(any()) } returns ExpectedFactory.createNone()
-    viewAnnotationManager.addViewAnnotation(
-      view,
-      viewAnnotationOptions {
-        geometry(DEFAULT_GEOMETRY)
-      }
+    val viewAnnotationOptions = viewAnnotationOptions {
+      geometry(DEFAULT_GEOMETRY)
+    }
+    every { mapboxMap.getViewAnnotationOptions(any()) } returns ExpectedFactory.createValue(
+      viewAnnotationOptions
     )
+    viewAnnotationManager.addViewAnnotation(view, viewAnnotationOptions)
     assertEquals(1, viewAnnotationManager.annotations.size)
     viewAnnotationManager.removeViewAnnotation(view)
     assert(viewAnnotationManager.annotations.isEmpty())
@@ -392,8 +404,12 @@ class ViewAnnotationManagerTest {
   fun validateUpdateOptionsFromAnnotationsMap() {
     every { mapboxMap.updateViewAnnotation(any(), any()) } returns ExpectedFactory.createNone()
     val expectedOptions = viewAnnotationOptions {
+      geometry(DEFAULT_GEOMETRY)
       offsetX(10)
     }
+    every { mapboxMap.getViewAnnotationOptions(any()) } returns ExpectedFactory.createValue(
+      expectedOptions
+    )
     viewAnnotationManager.addViewAnnotation(
       view,
       viewAnnotationOptions {
@@ -416,21 +432,17 @@ class ViewAnnotationManagerTest {
 
   @Test
   fun validateViewAnnotationSizeAfterAddingDuplicateView() {
-    viewAnnotationManager.addViewAnnotation(
-      view,
-      viewAnnotationOptions {
-        geometry(DEFAULT_GEOMETRY)
-      }
+    val viewAnnotationOptions = viewAnnotationOptions {
+      geometry(DEFAULT_GEOMETRY)
+    }
+    every { mapboxMap.getViewAnnotationOptions(any()) } returns ExpectedFactory.createValue(
+      viewAnnotationOptions
     )
+    viewAnnotationManager.addViewAnnotation(view, viewAnnotationOptions)
     assertEquals(1, viewAnnotationManager.annotations.size)
 
     assertThrows(RuntimeException::class.java) {
-      viewAnnotationManager.addViewAnnotation(
-        view,
-        viewAnnotationOptions {
-          geometry(DEFAULT_GEOMETRY)
-        }
-      )
+      viewAnnotationManager.addViewAnnotation(view, viewAnnotationOptions)
     }
     assertEquals(1, viewAnnotationManager.annotations.size)
   }
