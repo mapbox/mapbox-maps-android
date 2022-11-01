@@ -19,6 +19,29 @@ open class BitmapWidget @JvmOverloads constructor(
     offsetY = 0f
   }
 ) : Widget() {
+  /**
+   * The deprecated constructor for BitmapWidget.
+   *
+   * @param bitmap bitmap used to draw widget
+   * @param position position of widget
+   * @param marginX horizontal margin in pixels
+   * @param marginY vertical margin in pixels
+   */
+  @Deprecated(
+    message = "Constructor with margins is deprecated, the offset parameters has been merged into " +
+      "the WidgetPosition class, and the legacy constructor might be removed in future releases.",
+    replaceWith = ReplaceWith("BitmapWidget(context, position)")
+  )
+  constructor(bitmap: Bitmap, position: WidgetPosition, marginX: Float, marginY: Float) : this(
+    bitmap = bitmap,
+    position = WidgetPosition {
+      horizontal = position.horizontal
+      vertical = position.vertical
+      offsetX = marginX
+      offsetY = marginY
+    }
+  )
+
   override val renderer = BitmapWidgetRenderer(
     bitmap = bitmap,
     widgetPosition = position
@@ -55,5 +78,5 @@ open class BitmapWidget @JvmOverloads constructor(
   /**
    * Set absolute rotation of widget in degrees.
    */
-  override fun getRotation(): Float  = renderer.getRotation()
+  override fun getRotation(): Float = renderer.getRotation()
 }

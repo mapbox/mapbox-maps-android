@@ -6,7 +6,6 @@ import com.mapbox.maps.extension.androidauto.MapboxCarMapSurface
 import com.mapbox.maps.extension.androidauto.widgets.CompassWidget
 import com.mapbox.maps.extension.androidauto.widgets.LogoWidget
 import com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener
-import com.mapbox.maps.renderer.widget.WidgetPosition
 
 /**
  * Note that the Widgets are only available when using android auto extension together with the
@@ -23,12 +22,8 @@ class CarMapWidgets : MapboxCarMapObserver {
       logoWidget = LogoWidget(carContext)
       compassWidget = CompassWidget(
         carContext,
-        position = WidgetPosition {
-          horizontal = WidgetPosition.Horizontal.RIGHT
-          vertical = WidgetPosition.Vertical.TOP
-          offsetX = 26f
-          offsetY = 120f
-        }
+        marginX = 26f,
+        marginY = 120f,
       )
       onCameraChangeListener = OnCameraChangeListener { compassWidget.setRotation(-mapSurface.getMapboxMap().cameraState.bearing.toFloat()) }
       mapSurface.addWidget(logoWidget)

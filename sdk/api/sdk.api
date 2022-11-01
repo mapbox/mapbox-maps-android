@@ -539,6 +539,7 @@ public abstract interface class com/mapbox/maps/renderer/RendererSetupErrorListe
 public class com/mapbox/maps/renderer/widget/BitmapWidget : com/mapbox/maps/renderer/widget/Widget {
 	public fun <init> (Landroid/graphics/Bitmap;)V
 	public fun <init> (Landroid/graphics/Bitmap;Lcom/mapbox/maps/renderer/widget/WidgetPosition;)V
+	public fun <init> (Landroid/graphics/Bitmap;Lcom/mapbox/maps/renderer/widget/WidgetPosition;FF)V
 	public synthetic fun <init> (Landroid/graphics/Bitmap;Lcom/mapbox/maps/renderer/widget/WidgetPosition;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun getPosition ()Lcom/mapbox/maps/renderer/widget/WidgetPosition;
 	public synthetic fun getRenderer$sdk_release ()Lcom/mapbox/maps/renderer/widget/WidgetRenderer;
@@ -552,10 +553,12 @@ public abstract class com/mapbox/maps/renderer/widget/Widget {
 	public abstract fun getPosition ()Lcom/mapbox/maps/renderer/widget/WidgetPosition;
 	public abstract fun getRotation ()F
 	public abstract fun setRotation (F)V
+	public final fun setTranslation (FF)V
 	public abstract fun updatePosition (Lcom/mapbox/maps/renderer/widget/WidgetPosition;)V
 }
 
 public final class com/mapbox/maps/renderer/widget/WidgetPosition {
+	public fun <init> (Lcom/mapbox/maps/renderer/widget/WidgetPosition$Horizontal;Lcom/mapbox/maps/renderer/widget/WidgetPosition$Vertical;)V
 	public synthetic fun <init> (Lcom/mapbox/maps/renderer/widget/WidgetPosition$Horizontal;Lcom/mapbox/maps/renderer/widget/WidgetPosition$Vertical;FFLkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getHorizontal ()Lcom/mapbox/maps/renderer/widget/WidgetPosition$Horizontal;

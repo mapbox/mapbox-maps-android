@@ -18,6 +18,12 @@ class WidgetPosition private constructor(
   val offsetX: Float,
   val offsetY: Float
 ) {
+  @Deprecated(
+    message = "Direct constructor of WidgetPosition is deprecated, and might be removed in future releases.",
+    replaceWith = ReplaceWith("WidgetPosition.Builder()")
+  )
+  constructor(horizontal: Horizontal, vertical: Vertical) : this (horizontal, vertical, 0f, 0f)
+
   /**
    * Returns a String for the object.
    */
@@ -86,6 +92,9 @@ class WidgetPosition private constructor(
      */
     fun setOffsetY(offsetY: Float) = apply { this.offsetY = offsetY }
 
+    /**
+     * Build the [WidgetPosition] from the current settings.
+     */
     fun build() = WidgetPosition(horizontal, vertical, offsetX, offsetY)
   }
 
