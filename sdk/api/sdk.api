@@ -587,6 +587,7 @@ public abstract interface class com/mapbox/maps/viewannotation/ViewAnnotationMan
 	public abstract fun addViewAnnotation (ILcom/mapbox/maps/ViewAnnotationOptions;)Landroid/view/View;
 	public abstract fun addViewAnnotation (ILcom/mapbox/maps/ViewAnnotationOptions;Landroidx/asynclayoutinflater/view/AsyncLayoutInflater;Lkotlin/jvm/functions/Function1;)V
 	public abstract fun addViewAnnotation (Landroid/view/View;Lcom/mapbox/maps/ViewAnnotationOptions;)V
+	public abstract fun getAnnotations ()Ljava/util/Map;
 	public abstract fun getViewAnnotationByFeatureId (Ljava/lang/String;)Landroid/view/View;
 	public abstract fun getViewAnnotationOptionsByFeatureId (Ljava/lang/String;)Lcom/mapbox/maps/ViewAnnotationOptions;
 	public abstract fun getViewAnnotationOptionsByView (Landroid/view/View;)Lcom/mapbox/maps/ViewAnnotationOptions;

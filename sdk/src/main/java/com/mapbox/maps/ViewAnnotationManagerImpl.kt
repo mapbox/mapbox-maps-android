@@ -13,6 +13,7 @@ import com.mapbox.maps.viewannotation.ViewAnnotation.Companion.USER_FIXED_DIMENS
 import com.mapbox.maps.viewannotation.ViewAnnotationVisibility
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.CopyOnWriteArraySet
+import kotlin.collections.Map
 
 internal class ViewAnnotationManagerImpl(
   mapView: MapView,
@@ -145,6 +146,15 @@ internal class ViewAnnotationManagerImpl(
   override fun getViewAnnotationUpdateMode(): ViewAnnotationUpdateMode {
     return renderThread.viewAnnotationMode
   }
+
+  override val annotations: Map<View, ViewAnnotationOptions>
+    get() = HashMap<View, ViewAnnotationOptions>().apply {
+      idLookupMap.forEach { (view, _) ->
+        getViewAnnotationOptionsByView(view)?.let { viewAnnotationOptions ->
+          put(view, viewAnnotationOptions)
+        }
+      }
+    }
 
   /**
    * We will have two calls of this callback:

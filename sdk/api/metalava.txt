@@ -584,6 +584,7 @@ package com.mapbox.maps.viewannotation {
     method public android.view.View addViewAnnotation(@LayoutRes int resId, com.mapbox.maps.ViewAnnotationOptions options);
     method public void addViewAnnotation(@LayoutRes int resId, com.mapbox.maps.ViewAnnotationOptions options, androidx.asynclayoutinflater.view.AsyncLayoutInflater asyncInflater, kotlin.jvm.functions.Function1<? super android.view.View,kotlin.Unit> asyncInflateCallback);
     method public void addViewAnnotation(android.view.View view, com.mapbox.maps.ViewAnnotationOptions options);
+    method public java.util.Map<android.view.View,com.mapbox.maps.ViewAnnotationOptions> getAnnotations();
     method public android.view.View? getViewAnnotationByFeatureId(String featureId);
     method public com.mapbox.maps.ViewAnnotationOptions? getViewAnnotationOptionsByFeatureId(String featureId);
     method public com.mapbox.maps.ViewAnnotationOptions? getViewAnnotationOptionsByView(android.view.View view);
@@ -593,6 +594,7 @@ package com.mapbox.maps.viewannotation {
     method public boolean removeViewAnnotation(android.view.View view);
     method public void setViewAnnotationUpdateMode(com.mapbox.maps.viewannotation.ViewAnnotationUpdateMode mode);
     method public boolean updateViewAnnotation(android.view.View view, com.mapbox.maps.ViewAnnotationOptions options);
+    property public abstract java.util.Map<android.view.View,com.mapbox.maps.ViewAnnotationOptions> annotations;
     field public static final com.mapbox.maps.viewannotation.ViewAnnotationManager.Companion Companion;
     field public static final com.mapbox.maps.viewannotation.ViewAnnotationUpdateMode DEFAULT_UPDATE_MODE;
   }
