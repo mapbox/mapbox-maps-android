@@ -19,12 +19,12 @@ import com.mapbox.maps.renderer.widget.WidgetPosition
 @MapboxExperimental
 class CompassWidget(
   context: Context,
-  position: WidgetPosition = WidgetPosition(
-    horizontal = WidgetPosition.Horizontal.RIGHT,
-    vertical = WidgetPosition.Vertical.TOP,
-    offsetX = 20f,
+  position: WidgetPosition = WidgetPosition {
+    horizontal = WidgetPosition.Horizontal.RIGHT
+    vertical = WidgetPosition.Vertical.TOP
+    offsetX = 20f
     offsetY = 20f
-  )
+  }
 ) : BitmapWidget(
   bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.mapbox_compass_icon),
   position = position

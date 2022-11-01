@@ -12,12 +12,12 @@ import com.mapbox.maps.MapboxExperimental
 @MapboxExperimental
 open class BitmapWidget @JvmOverloads constructor(
   bitmap: Bitmap,
-  position: WidgetPosition = WidgetPosition(
-    vertical = WidgetPosition.Vertical.TOP,
-    horizontal = WidgetPosition.Horizontal.LEFT,
-    offsetX = 0f,
+  position: WidgetPosition = WidgetPosition {
+    vertical = WidgetPosition.Vertical.TOP
+    horizontal = WidgetPosition.Horizontal.LEFT
+    offsetX = 0f
     offsetY = 0f
-  )
+  }
 ) : Widget() {
   override val renderer = BitmapWidgetRenderer(
     bitmap = bitmap,

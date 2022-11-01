@@ -534,7 +534,12 @@ package com.mapbox.maps.renderer {
 package com.mapbox.maps.renderer.widget {
 
   @com.mapbox.maps.MapboxExperimental public class BitmapWidget extends com.mapbox.maps.renderer.widget.Widget {
-    ctor public BitmapWidget(android.graphics.Bitmap bitmap, com.mapbox.maps.renderer.widget.WidgetPosition position = com.mapbox.maps.renderer.widget.WidgetPosition(com.mapbox.maps.renderer.widget.WidgetPosition.Vertical.TOP, com.mapbox.maps.renderer.widget.WidgetPosition.Horizontal.LEFT, 0.0, 0.0));
+    ctor public BitmapWidget(android.graphics.Bitmap bitmap, com.mapbox.maps.renderer.widget.WidgetPosition position = WidgetPosition({ 
+    vertical = WidgetPosition.Vertical.TOP
+    horizontal = WidgetPosition.Horizontal.LEFT
+    offsetX = 0.0
+    offsetY = 0.0
+}));
     ctor public BitmapWidget(android.graphics.Bitmap bitmap);
     method public com.mapbox.maps.renderer.widget.WidgetPosition getPosition();
     method public com.mapbox.maps.renderer.widget.BitmapWidgetRenderer getRenderer$metalava_module();
@@ -553,11 +558,27 @@ package com.mapbox.maps.renderer.widget {
   }
 
   @com.mapbox.maps.MapboxExperimental public final class WidgetPosition {
-    ctor public WidgetPosition(com.mapbox.maps.renderer.widget.WidgetPosition.Horizontal horizontal, com.mapbox.maps.renderer.widget.WidgetPosition.Vertical vertical, float offsetX, float offsetY);
+    method public com.mapbox.maps.renderer.widget.WidgetPosition.Horizontal! getHorizontal();
+    method public float getOffsetX();
+    method public float getOffsetY();
+    method public com.mapbox.maps.renderer.widget.WidgetPosition.Vertical! getVertical();
+    property public final com.mapbox.maps.renderer.widget.WidgetPosition.Horizontal! horizontal;
+    property public final float offsetX;
+    property public final float offsetY;
+    property public final com.mapbox.maps.renderer.widget.WidgetPosition.Vertical! vertical;
+  }
+
+  public static final class WidgetPosition.Builder {
+    ctor public WidgetPosition.Builder();
+    method public com.mapbox.maps.renderer.widget.WidgetPosition build();
     method public com.mapbox.maps.renderer.widget.WidgetPosition.Horizontal getHorizontal();
     method public float getOffsetX();
     method public float getOffsetY();
     method public com.mapbox.maps.renderer.widget.WidgetPosition.Vertical getVertical();
+    method public com.mapbox.maps.renderer.widget.WidgetPosition.Builder setHorizontal(com.mapbox.maps.renderer.widget.WidgetPosition.Horizontal horizontal);
+    method public com.mapbox.maps.renderer.widget.WidgetPosition.Builder setOffsetX(float offsetX);
+    method public com.mapbox.maps.renderer.widget.WidgetPosition.Builder setOffsetY(float offsetY);
+    method public com.mapbox.maps.renderer.widget.WidgetPosition.Builder setVertical(com.mapbox.maps.renderer.widget.WidgetPosition.Vertical vertical);
     property public final com.mapbox.maps.renderer.widget.WidgetPosition.Horizontal horizontal;
     property public final float offsetX;
     property public final float offsetY;
@@ -574,6 +595,9 @@ package com.mapbox.maps.renderer.widget {
     enum_constant public static final com.mapbox.maps.renderer.widget.WidgetPosition.Vertical BOTTOM;
     enum_constant public static final com.mapbox.maps.renderer.widget.WidgetPosition.Vertical CENTER;
     enum_constant public static final com.mapbox.maps.renderer.widget.WidgetPosition.Vertical TOP;
+  }
+
+  public final class WidgetPositionKt {
   }
 
 }

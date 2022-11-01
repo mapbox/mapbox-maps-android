@@ -23,12 +23,12 @@ class CarMapWidgets : MapboxCarMapObserver {
       logoWidget = LogoWidget(carContext)
       compassWidget = CompassWidget(
         carContext,
-        position = WidgetPosition(
-          horizontal = WidgetPosition.Horizontal.RIGHT,
-          vertical = WidgetPosition.Vertical.TOP,
-          offsetX = 26f,
+        position = WidgetPosition {
+          horizontal = WidgetPosition.Horizontal.RIGHT
+          vertical = WidgetPosition.Vertical.TOP
+          offsetX = 26f
           offsetY = 120f
-        )
+        }
       )
       onCameraChangeListener = OnCameraChangeListener { compassWidget.setRotation(-mapSurface.getMapboxMap().cameraState.bearing.toFloat()) }
       mapSurface.addWidget(logoWidget)

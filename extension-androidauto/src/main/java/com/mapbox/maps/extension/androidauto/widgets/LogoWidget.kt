@@ -19,12 +19,12 @@ import com.mapbox.maps.renderer.widget.WidgetPosition
 @MapboxExperimental
 class LogoWidget constructor(
   context: Context,
-  position: WidgetPosition = WidgetPosition(
-    horizontal = WidgetPosition.Horizontal.LEFT,
-    vertical = WidgetPosition.Vertical.BOTTOM,
-    offsetX = 20f,
+  position: WidgetPosition = WidgetPosition {
+    horizontal = WidgetPosition.Horizontal.LEFT
+    vertical = WidgetPosition.Vertical.BOTTOM
+    offsetX = 20f
     offsetY = 20f
-  )
+  }
 ) : BitmapWidget(
   bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.mapbox_logo_icon),
   position = position
