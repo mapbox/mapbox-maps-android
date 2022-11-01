@@ -1,12 +1,17 @@
 package com.mapbox.maps
 
+import android.graphics.Rect
 import android.os.Looper
 import android.view.*
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.FrameLayout
 import androidx.annotation.*
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater
+import androidx.core.view.isVisible
 import com.mapbox.bindgen.Expected
+import com.mapbox.geojson.Point
+import com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName
+import com.mapbox.maps.extension.style.projection.generated.getProjection
 import com.mapbox.maps.viewannotation.*
 import com.mapbox.maps.viewannotation.ViewAnnotation
 import com.mapbox.maps.viewannotation.ViewAnnotation.Companion.USER_FIXED_DIMENSION
@@ -14,6 +19,7 @@ import com.mapbox.maps.viewannotation.ViewAnnotationVisibility
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.CopyOnWriteArraySet
 import kotlin.collections.Map
+import kotlin.math.abs
 
 internal class ViewAnnotationManagerImpl(
   mapView: MapView,
@@ -35,6 +41,7 @@ internal class ViewAnnotationManagerImpl(
   }
 
   private val annotationMap = ConcurrentHashMap<String, ViewAnnotation>()
+
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal val idLookupMap = ConcurrentHashMap<View, String>()
   private val currentlyDrawnViewIdSet = mutableSetOf<String>()
@@ -155,6 +162,115 @@ internal class ViewAnnotationManagerImpl(
         }
       }
     }
+
+  override fun cameraForAnnotations(
+    annotations: List<View>,
+    edgeInsets: EdgeInsets?,
+    bearing: Double?,
+    pitch: Double?
+  ): CameraOptions? {
+    if (mapboxMap.style?.getProjection()?.name == ProjectionName.GLOBE || annotations.isEmpty()) {
+      return null
+    }
+    val viewAnnotationOptions = annotations.mapNotNull {
+      if (it.isVisible) return@mapNotNull getViewAnnotationOptionsByView(it) else null
+    }.filter { it.visible != false }
+
+    if (viewAnnotationOptions.isEmpty()) return null
+    val coordinates = coordinatesFromAnnotations(viewAnnotationOptions)
+    val paddings = calculateEdgeInsets(viewAnnotationOptions, edgeInsets)
+    return mapboxMap.cameraForCoordinates(
+      coordinates,
+      paddings,
+      bearing,
+      pitch
+    )
+  }
+
+  /**
+   * Function to get coordinates from list of [ViewAnnotationOptions].
+   */
+  private fun coordinatesFromAnnotations(annotationOptions: List<ViewAnnotationOptions>): List<Point> {
+    val coordinatesList = mutableListOf<Point>()
+    annotationOptions.forEach {
+      it.geometry?.let { geometry ->
+        coordinatesList.add(geometry as Point)
+      }
+    }
+    return coordinatesList
+  }
+
+  /**
+   * Calculate paddings to show viewAnnotations.
+   * Get the topMost, leftMost, rightMost, bottomMost annotation options and apply paddings accordingly.
+   */
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal fun calculateEdgeInsets(
+    viewAnnotationOptions: List<ViewAnnotationOptions>,
+    edgeInsets: EdgeInsets? = null
+  ): EdgeInsets {
+    val filteredViewAnnotations = viewAnnotationOptions.filter { it.geometry != null }
+    val topAnnotation =
+      filteredViewAnnotations.maxByOrNull { (it.geometry!! as Point).latitude() }
+    val bottomAnnotation =
+      filteredViewAnnotations.minByOrNull { (it.geometry!! as Point).latitude() }
+    val leftAnnotation =
+      filteredViewAnnotations.minByOrNull { (it.geometry!! as Point).longitude() }
+    val rightAnnotation =
+      filteredViewAnnotations.maxByOrNull { (it.geometry!! as Point).longitude() }
+
+    return EdgeInsets(
+      (edgeInsets?.top ?: 0).toDouble()
+        .plus(abs(getViewAnnotationOptionsFrame(topAnnotation)?.top ?: 0)),
+      (edgeInsets?.left ?: 0).toDouble()
+        .plus(abs(getViewAnnotationOptionsFrame(leftAnnotation)?.left ?: 0)),
+      (edgeInsets?.bottom ?: 0).toDouble()
+        .plus(getViewAnnotationOptionsFrame(bottomAnnotation)?.bottom ?: 0),
+      (edgeInsets?.right ?: 0).toDouble()
+        .plus(getViewAnnotationOptionsFrame(rightAnnotation)?.right ?: 0)
+    )
+  }
+
+  /**
+   * Get [Rect] from [ViewAnnotationOptions]'s geometry, width and height.
+   * This function takes [ViewAnnotationOptions.geometry] as the center of rectangle and
+   * use width, height and offset values to calculate [Rect] associated.
+   *
+   * @return [Rect] associated with [ViewAnnotationOptions]
+   */
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal fun getViewAnnotationOptionsFrame(viewAnnotationOptions: ViewAnnotationOptions?): Rect? {
+    viewAnnotationOptions?.let { options ->
+      if (options.width != null && options.height != null) {
+        val offsetWidth = if (options.width!! > 0) (options.width!! * 0.5).toInt() else 0
+        val offsetHeight = if (options.height!! > 0) (options.height!! * 0.5).toInt() else 0
+        // create a dummy rect with center assume at 0,0 with offsetWidth and offsetHeight.
+        val rect = Rect(
+          -offsetWidth,
+          -offsetHeight,
+          offsetWidth,
+          offsetHeight
+        )
+
+        // offset rect with respect to anchor defined in viewannotation options.
+        when (options.anchor ?: ViewAnnotationAnchor.CENTER) {
+          ViewAnnotationAnchor.TOP -> rect.offset(0, offsetHeight)
+          ViewAnnotationAnchor.TOP_LEFT -> rect.offset(offsetWidth, offsetHeight)
+          ViewAnnotationAnchor.TOP_RIGHT -> rect.offset(-offsetWidth, offsetHeight)
+          ViewAnnotationAnchor.BOTTOM -> rect.offset(0, -offsetHeight)
+          ViewAnnotationAnchor.BOTTOM_LEFT -> rect.offset(offsetWidth, -offsetHeight)
+          ViewAnnotationAnchor.BOTTOM_RIGHT -> rect.offset(-offsetWidth, -offsetHeight)
+          ViewAnnotationAnchor.LEFT -> rect.offset(offsetWidth, 0)
+          ViewAnnotationAnchor.RIGHT -> rect.offset(-offsetWidth, 0)
+          else -> rect.offset(0, 0)
+        }
+        // add view annotation option's offsetX and offsetY field to offset the rect.
+        rect.offset(options.offsetX ?: 0, options.offsetY ?: 0)
+        return rect
+      }
+    }
+    return null
+  }
 
   /**
    * We will have two calls of this callback:

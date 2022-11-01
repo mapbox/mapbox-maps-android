@@ -4,12 +4,14 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
+import com.mapbox.maps.plugin.animation.flyTo
 import com.mapbox.maps.plugin.gestures.*
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityViewAnnotationShowcaseBinding
@@ -25,6 +27,7 @@ class ViewAnnotationBasicAddActivity : AppCompatActivity(), OnMapClickListener {
 
   private lateinit var mapboxMap: MapboxMap
   private lateinit var viewAnnotationManager: ViewAnnotationManager
+  private val viewAnnotationViews = mutableListOf<View>()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -43,6 +46,17 @@ class ViewAnnotationBasicAddActivity : AppCompatActivity(), OnMapClickListener {
           }
         }
         Toast.makeText(this@ViewAnnotationBasicAddActivity, STARTUP_TEXT, Toast.LENGTH_LONG).show()
+      }
+    }
+
+    binding.fabReframe.setOnClickListener {
+      if (viewAnnotationViews.isNotEmpty()) {
+        val cameraOptions = viewAnnotationManager.cameraForAnnotations(viewAnnotationViews)
+        cameraOptions?.let {
+          mapboxMap.flyTo(it)
+        }
+      } else {
+        Toast.makeText(this@ViewAnnotationBasicAddActivity, ADD_VIEW_ANNOTATION_TEXT, Toast.LENGTH_LONG).show()
       }
     }
   }
@@ -80,10 +94,12 @@ class ViewAnnotationBasicAddActivity : AppCompatActivity(), OnMapClickListener {
         allowOverlap(true)
       }
     )
+    viewAnnotationViews.add(viewAnnotation)
     ItemCalloutViewBinding.bind(viewAnnotation).apply {
       textNativeView.text = "lat=%.2f\nlon=%.2f".format(point.latitude(), point.longitude())
       closeNativeView.setOnClickListener {
         viewAnnotationManager.removeViewAnnotation(viewAnnotation)
+        viewAnnotationViews.remove(viewAnnotation)
       }
       selectButton.setOnClickListener { b ->
         val button = b as Button
@@ -109,5 +125,6 @@ class ViewAnnotationBasicAddActivity : AppCompatActivity(), OnMapClickListener {
   private companion object {
     const val SELECTED_ADD_COEF_PX = 25
     const val STARTUP_TEXT = "Click on a map to add a view annotation."
+    const val ADD_VIEW_ANNOTATION_TEXT = "Add view annotations to re-frame map camera"
   }
 }

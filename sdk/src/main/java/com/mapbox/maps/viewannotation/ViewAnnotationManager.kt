@@ -6,6 +6,8 @@ import androidx.asynclayoutinflater.view.AsyncLayoutInflater
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
+import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapView
 import com.mapbox.maps.ViewAnnotationOptions
 
@@ -165,6 +167,32 @@ interface ViewAnnotationManager {
    * @return Map of [View] and associated [ViewAnnotationOptions].
    */
   val annotations: Map<View, ViewAnnotationOptions>
+
+  /**
+   * Return camera options bound to given view annotation list, padding, bearing and pitch values.
+   * Annotations with [ViewAnnotationOptions.visible] set to false will be excluded from the calculations of [CameraOptions].
+   * Annotations with only [View.VISIBLE] will be included in the calculations for [CameraOptions]
+   *
+   * Note: This API isn't supported by Globe projection and will return NULL.
+   * Calling this API immediately after adding the view is a no-op.
+   * Please refer to [OnViewAnnotationUpdatedListener] documentation for understanding the exact moment of time when
+   * view annotation is positioned.
+   *
+   * @param annotations view annotation list to be shown. Annotations should be added beforehand
+   * with [ViewAnnotationManager.addViewAnnotation] API.
+   * @param edgeInsets paddings to apply.
+   * @param bearing camera bearing to apply.
+   * @param pitch camera pitch to apply.
+   *
+   * @return [CameraOptions] object or NULL if [annotations] list is empty.
+   *
+   */
+  fun cameraForAnnotations(
+    annotations: List<View>,
+    edgeInsets: EdgeInsets? = null,
+    bearing: Double? = null,
+    pitch: Double? = null
+  ): CameraOptions?
 
   /**
    * Static methods and variables.

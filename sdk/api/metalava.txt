@@ -584,6 +584,7 @@ package com.mapbox.maps.viewannotation {
     method public android.view.View addViewAnnotation(@LayoutRes int resId, com.mapbox.maps.ViewAnnotationOptions options);
     method public void addViewAnnotation(@LayoutRes int resId, com.mapbox.maps.ViewAnnotationOptions options, androidx.asynclayoutinflater.view.AsyncLayoutInflater asyncInflater, kotlin.jvm.functions.Function1<? super android.view.View,kotlin.Unit> asyncInflateCallback);
     method public void addViewAnnotation(android.view.View view, com.mapbox.maps.ViewAnnotationOptions options);
+    method public com.mapbox.maps.CameraOptions? cameraForAnnotations(java.util.List<? extends android.view.View> annotations, com.mapbox.maps.EdgeInsets? edgeInsets = null, Double? bearing = null, Double? pitch = null);
     method public java.util.Map<android.view.View,com.mapbox.maps.ViewAnnotationOptions> getAnnotations();
     method public android.view.View? getViewAnnotationByFeatureId(String featureId);
     method public com.mapbox.maps.ViewAnnotationOptions? getViewAnnotationOptionsByFeatureId(String featureId);
