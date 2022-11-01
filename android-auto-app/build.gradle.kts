@@ -45,7 +45,11 @@ androidExtensions {
 
 dependencies {
   implementation(project(":extension-androidauto"))
-  implementation(Dependencies.googleCarAppLibrary)
+  
+  // Upgrade the google car library to demonstrate adopting new apis.
+  // https://developer.android.com/jetpack/androidx/releases/car-app
+  implementation("androidx.car.app:app:1.3.0-beta01")
+  // implementation(Dependencies.googleCarAppLibrary)
 
   // Please review the compatibility guide. This app is showcasing the latest features.
   // https://github.com/mapbox/mapbox-maps-android/tree/main/extension-androidauto#compatibility-with-maps-sdk-v10

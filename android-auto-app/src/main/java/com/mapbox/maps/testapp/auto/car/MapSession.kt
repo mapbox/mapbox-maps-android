@@ -9,6 +9,7 @@ import androidx.car.app.ScreenManager
 import androidx.car.app.Session
 import com.mapbox.maps.MapInitOptions
 import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.extension.androidauto.MapboxCarMapInitializer
 import com.mapbox.maps.extension.androidauto.mapboxMapInstaller
 
 /**
@@ -18,13 +19,19 @@ import com.mapbox.maps.extension.androidauto.mapboxMapInstaller
 class MapSession : Session() {
 
   private val carMapShowcase = CarMapShowcase()
+  private val initializer = MapboxCarMapInitializer { carContext -> MapInitOptions(carContext) }
   private val mapboxCarMap = mapboxMapInstaller()
-    .onCreated(CarAnimationThreadController(), CarMapWidgets(), carMapShowcase)
+    .onCreated(CarAnimationThreadController(), CarMapWidgets(), carMapShowcase,)
     .install { carContext ->
       // Callback is triggered when the Session calls onCreate. This allows you to specify
       // custom MapInitOptions.
-      MapInitOptions(carContext)
+      initializer.onCreate(carContext)
     }
+
+  init {
+    // Override the SurfaceCallback to capture onClick events
+    lifecycle.addObserver(CarMapOnClickEnabler(mapboxCarMap, initializer))
+  }
 
   override fun onCreateScreen(intent: Intent): Screen {
     // The onCreate is guaranteed to be called before onCreateScreen. You can pass the
