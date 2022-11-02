@@ -42,11 +42,11 @@ class CarMapShowcase : MapboxCarMapObserver {
 
     mapboxCarMapSurface?.mapSurface?.getMapboxMap()?.loadStyle(
       styleExtension = style(mapStyleUri(carContext)) {
-        +rasterDemSource(DEM_SOURCE) {
-          url(TERRAIN_URL_TILE_RESOURCE)
-          tileSize(514)
-        }
-        +terrain(DEM_SOURCE)
+//        +rasterDemSource(DEM_SOURCE) {
+//          url(TERRAIN_URL_TILE_RESOURCE)
+//          tileSize(514)
+//        }
+//        +terrain(DEM_SOURCE)
         +skyLayer(SKY_LAYER) {
           skyType(SkyType.ATMOSPHERE)
           skyAtmosphereSun(sunDirection)
