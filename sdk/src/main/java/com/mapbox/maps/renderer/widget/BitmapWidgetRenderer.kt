@@ -135,10 +135,12 @@ internal class BitmapWidgetRenderer(
       GLES20.glGetUniformLocation(program, "uTexture")
     GlUtils.checkError("glGetUniformLocation")
 
+    println("prepare, needRender")
     needRender = true
   }
 
   override fun render() {
+    println("render bitmap widget")
     if (program == 0) {
       prepare()
     }
@@ -219,6 +221,7 @@ internal class BitmapWidgetRenderer(
    */
   private fun textureFromBitmapIfChanged() {
     bitmap?.let {
+      println("textureFromBitmapIfChanged")
       if (textures[0] == 0) {
         GLES20.glGenTextures(1, textures, 0)
       }
@@ -257,6 +260,7 @@ internal class BitmapWidgetRenderer(
     setTranslation(this.translationX, this.translationY)
     updateVertexBuffer()
     updateMatrix = true
+    println("updateBitmap, needRender")
     needRender = true
   }
 
@@ -264,6 +268,7 @@ internal class BitmapWidgetRenderer(
     Matrix.setIdentityM(rotationMatrix, 0)
     Matrix.setRotateM(rotationMatrix, 0, angleDegrees, 0f, 0f, 1f)
     updateMatrix = true
+    println("setRotation, needRender")
     needRender = true
   }
 
@@ -280,6 +285,7 @@ internal class BitmapWidgetRenderer(
     )
 
     updateMatrix = true
+    println("setTranslation, needRender")
     needRender = true
   }
 

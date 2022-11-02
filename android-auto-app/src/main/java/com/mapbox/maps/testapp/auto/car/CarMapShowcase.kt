@@ -40,6 +40,8 @@ class CarMapShowcase : MapboxCarMapObserver {
     // Polar is degrees from overhead, where 0.0 is overhead.
     val sunDirection = if (carContext.isDarkMode) listOf(-50.0, 90.2) else listOf(0.0, 0.0)
 
+    println("CarMapShowcase : loadMapStyle $carContext")
+
     mapboxCarMapSurface?.mapSurface?.getMapboxMap()?.loadStyle(
       styleExtension = style(mapStyleUri(carContext)) {
 //        +rasterDemSource(DEM_SOURCE) {

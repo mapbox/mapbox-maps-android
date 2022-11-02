@@ -246,6 +246,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
 
   private fun checkSurfaceSizeChanged() {
     if (sizeChanged) {
+      println("renderThread : sizeChanged $width - $height")
       mapboxRenderer.onSurfaceChanged(width = width, height = height)
       widgetRenderer.onSurfaceChanged(width = width, height = height)
       sizeChanged = false
@@ -266,7 +267,9 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       postPrepareRenderFrame()
       return
     }
+    println("renderThread : hasWidgets : ${widgetRenderer.hasWidgets()}")
     if (widgetRenderer.hasWidgets()) {
+      println("renderThread : hasWidgets, need to update : ${widgetRenderer.needTextureUpdate}")
       if (widgetRenderer.needTextureUpdate) {
         widgetRenderer.updateTexture()
         eglCore.makeCurrent(eglSurface)
@@ -274,6 +277,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
 
       mapboxRenderer.render()
 
+      println("renderThread : hasWidgets, need to update : ${widgetRenderer.needTextureUpdate}")
       if (widgetRenderer.hasTexture()) {
         widgetTextureRenderer.render(widgetRenderer.getTexture())
       }

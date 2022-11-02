@@ -32,6 +32,8 @@ class MapSession : Session() {
     // This allows you to scope behaviors to sessions, screens, or events.
     val mapScreen = MapScreen(mapboxCarMap)
 
+    println("MapSession : onCreateScreen")
+
     return if (carContext.checkSelfPermission(ACCESS_FINE_LOCATION) != PERMISSION_GRANTED) {
       carContext.getCarService(ScreenManager::class.java)
         .push(mapScreen)
@@ -40,6 +42,7 @@ class MapSession : Session() {
   }
 
   override fun onCarConfigurationChanged(newConfiguration: Configuration) {
+    println("MapSession : onCarConfigurationChanged")
     carMapShowcase.loadMapStyle(carContext)
   }
 }

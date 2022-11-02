@@ -17,6 +17,7 @@ class CarMapWidgets : MapboxCarMapObserver {
   private lateinit var compassWidget: CompassWidget
   private lateinit var onCameraChangeListener: OnCameraChangeListener
   override fun onAttached(mapboxCarMapSurface: MapboxCarMapSurface) {
+    println("CarMapWidgets : onAttached $mapboxCarMapSurface")
     super.onAttached(mapboxCarMapSurface)
     with(mapboxCarMapSurface) {
       logoWidget = LogoWidget(carContext)
@@ -34,6 +35,7 @@ class CarMapWidgets : MapboxCarMapObserver {
 
   override fun onDetached(mapboxCarMapSurface: MapboxCarMapSurface) {
     super.onDetached(mapboxCarMapSurface)
+    println("CarMapWidgets : onDetached $mapboxCarMapSurface")
     with(mapboxCarMapSurface) {
       mapSurface.getMapboxMap().removeOnCameraChangeListener(onCameraChangeListener)
       mapSurface.removeWidget(logoWidget)
