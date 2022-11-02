@@ -6,9 +6,20 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 * Introduce view annotation `ViewAnnotationManager.annotations` API to access list of added view annotations. ([1751](https://github.com/mapbox/mapbox-maps-android/pull/1751))
 * Introduce view annotation `ViewAnnotationManager.cameraForAnnotations` API to get camera options for given view annotations list. ([1753](https://github.com/mapbox/mapbox-maps-android/pull/1753))
+* Eliminate tiles re-creation and re-layout on zooming map with globe, when the camera is trespassing the zoom projection border. ([1791](https://github.com/mapbox/mapbox-maps-android/pull/1791))
+* Avoid tiles re-layout on enabling terrain with zero exaggeration. ([1791](https://github.com/mapbox/mapbox-maps-android/pull/1791))
+* Asynchronous GeoJSON data parsing when adding a new style source. ([1791](https://github.com/mapbox/mapbox-maps-android/pull/1791))
 
 ## Bug fixes 🐞
-Fix an issue when touch events didn't pass through clickable view annotations. ([1745](https://github.com/mapbox/mapbox-maps-android/pull/1745))
+* Fix an issue when touch events didn't pass through clickable view annotations. ([1745](https://github.com/mapbox/mapbox-maps-android/pull/1745))
+* Handle OOB when getting DEM Data. ([1791](https://github.com/mapbox/mapbox-maps-android/pull/1791))
+* Fix a rare precision issue with symbol and circle layer occlusion when terrain is enabled. ([1791](https://github.com/mapbox/mapbox-maps-android/pull/1791))
+* Fixes a rare crash caused by a race condition during gesture handling. ([1791](https://github.com/mapbox/mapbox-maps-android/pull/1791))
+* Disable location indicator occlusion testing with the terrain when exaggeration is set to 0. This fixes occasional location indicator disappearance. ([1791](https://github.com/mapbox/mapbox-maps-android/pull/1791))
+* Exclude map disk cache files from cloud backups. ([1791](https://github.com/mapbox/mapbox-maps-android/pull/1791))
+
+## Dependencies
+* Update gl-native to v10.10.0-beta.1 and common to v23.2.0-beta.1. ([1791](https://github.com/mapbox/mapbox-maps-android/pull/1791))
 
 
 # 10.9.0 October 21, 2022

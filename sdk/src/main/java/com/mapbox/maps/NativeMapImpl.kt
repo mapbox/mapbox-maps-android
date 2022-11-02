@@ -594,4 +594,12 @@ internal class NativeMapImpl(val map: MapInterface) :
   override fun unsubscribe(observer: Observer) {
     map.unsubscribe(observer)
   }
+
+  override fun setRenderWorldCopies(renderWorldCopies: Boolean) {
+    map.renderWorldCopies = renderWorldCopies
+  }
+
+  override fun getRenderWorldCopies(): Boolean {
+    return map.renderWorldCopies
+  }
 }
