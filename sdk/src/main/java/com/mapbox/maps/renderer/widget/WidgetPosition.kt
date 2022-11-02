@@ -170,10 +170,6 @@ class WidgetPosition private constructor(
      */
     BOTTOM,
   }
-
-  private companion object {
-    private const val EPS = 1E-5f
-  }
 }
 
 /**
