@@ -785,4 +785,18 @@ class NativeMapTest {
     nativeMap.getStyleAtmosphereProperty(property)
     verify { map.getStyleAtmosphereProperty(property) }
   }
+
+  @Test
+  fun setRenderWorldCopiesProperty() {
+    val nativeMap = NativeMapImpl(map)
+    nativeMap.renderWorldCopies = true
+    verify { map.renderWorldCopies = true }
+  }
+
+  @Test
+  fun getRenderWorldCopiesProperty() {
+    val nativeMap = NativeMapImpl(map)
+    nativeMap.renderWorldCopies
+    verify { map.renderWorldCopies }
+  }
 }
