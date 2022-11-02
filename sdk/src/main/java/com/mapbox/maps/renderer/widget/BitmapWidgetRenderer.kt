@@ -11,15 +11,12 @@ import com.mapbox.maps.renderer.gl.GlUtils.toFloatBuffer
 internal class BitmapWidgetRenderer(
   @Volatile
   private var bitmap: Bitmap?,
-  private val position: WidgetPosition,
-  private val marginX: Float,
-  private val marginY: Float,
+  @Volatile
+  private var position: WidgetPosition
 ) : WidgetRenderer {
 
   private var halfBitmapWidth = (bitmap?.width ?: 0) / 2f
   private var halfBitmapHeight = (bitmap?.height ?: 0) / 2f
-  private var translationX = 0f
-  private var translationY = 0f
 
   private var surfaceWidth = 0
   private var surfaceHeight = 0
@@ -51,6 +48,8 @@ internal class BitmapWidgetRenderer(
     1f, 1f
   ).toFloatBuffer()
 
+  private var rotationDegrees = 0F
+
   override var needRender: Boolean = true
 
   override fun onSurfaceChanged(width: Int, height: Int) {
@@ -67,7 +66,7 @@ internal class BitmapWidgetRenderer(
     )
 
     updateVertexBuffer()
-    setTranslation(translationX, translationY)
+    updateTranslateMatrix()
   }
 
   private fun updateVertexBuffer() {
@@ -80,16 +79,16 @@ internal class BitmapWidgetRenderer(
     )
   }
 
-  private fun topY() = when (position.vertical) {
-    WidgetPosition.Vertical.TOP -> marginY + halfBitmapHeight
-    WidgetPosition.Vertical.CENTER -> surfaceHeight.toFloat() / 2 + marginY
-    WidgetPosition.Vertical.BOTTOM -> surfaceHeight.toFloat() - (halfBitmapHeight + marginY)
+  private fun topY() = position.offsetY + when (position.verticalAlignment) {
+    WidgetPosition.Vertical.TOP -> halfBitmapHeight
+    WidgetPosition.Vertical.CENTER -> surfaceHeight.toFloat() / 2
+    WidgetPosition.Vertical.BOTTOM -> surfaceHeight.toFloat() - halfBitmapHeight
   }
 
-  private fun leftX() = when (position.horizontal) {
-    WidgetPosition.Horizontal.LEFT -> marginX + halfBitmapWidth
-    WidgetPosition.Horizontal.CENTER -> surfaceWidth.toFloat() / 2 + marginX
-    WidgetPosition.Horizontal.RIGHT -> surfaceWidth.toFloat() - (halfBitmapWidth + marginX)
+  private fun leftX() = position.offsetX + when (position.horizontalAlignment) {
+    WidgetPosition.Horizontal.LEFT -> halfBitmapWidth
+    WidgetPosition.Horizontal.CENTER -> surfaceWidth.toFloat() / 2
+    WidgetPosition.Horizontal.RIGHT -> surfaceWidth.toFloat() - halfBitmapWidth
   }
 
   override fun prepare() {
@@ -254,33 +253,45 @@ internal class BitmapWidgetRenderer(
     this.bitmap = bitmap
     this.halfBitmapWidth = bitmap.width / 2f
     this.halfBitmapHeight = bitmap.height / 2f
-    setTranslation(this.translationX, this.translationY)
+    updateTranslateMatrix()
     updateVertexBuffer()
     updateMatrix = true
     needRender = true
   }
 
   override fun setRotation(angleDegrees: Float) {
+    rotationDegrees = angleDegrees
     Matrix.setIdentityM(rotationMatrix, 0)
     Matrix.setRotateM(rotationMatrix, 0, angleDegrees, 0f, 0f, 1f)
     updateMatrix = true
     needRender = true
   }
 
-  override fun setTranslation(translationX: Float, translationY: Float) {
-    this.translationX = translationX
-    this.translationY = translationY
+  override fun getRotation(): Float {
+    return rotationDegrees
+  }
+
+  override fun setPosition(widgetPosition: WidgetPosition) {
+    this.position = widgetPosition
+    updateTranslateMatrix()
+  }
+
+  private fun updateTranslateMatrix() {
     Matrix.setIdentityM(translateMatrix, 0)
     Matrix.translateM(
       translateMatrix,
       0,
-      leftX() + translationX,
-      topY() + translationY,
+      leftX(),
+      topY(),
       0f
     )
 
     updateMatrix = true
     needRender = true
+  }
+
+  override fun getPosition(): WidgetPosition {
+    return position
   }
 
   private companion object {

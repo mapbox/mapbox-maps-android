@@ -8,24 +8,84 @@ import com.mapbox.maps.MapboxExperimental
  *
  * @param bitmap bitmap used to draw widget
  * @param position position of widget
- * @param marginX horizontal margin in pixels
- * @param marginY vertical margin in pixels
  */
 @MapboxExperimental
 open class BitmapWidget @JvmOverloads constructor(
   bitmap: Bitmap,
-  position: WidgetPosition = WidgetPosition(
-    vertical = WidgetPosition.Vertical.TOP,
-    horizontal = WidgetPosition.Horizontal.LEFT,
-  ),
-  marginX: Float = 0f,
-  marginY: Float = 0f,
+  position: WidgetPosition = WidgetPosition {
+    verticalAlignment = WidgetPosition.Vertical.TOP
+    horizontalAlignment = WidgetPosition.Horizontal.LEFT
+    offsetX = 0f
+    offsetY = 0f
+  }
 ) : Widget() {
+  /**
+   * The deprecated constructor for BitmapWidget.
+   *
+   * @param bitmap bitmap used to draw widget
+   * @param position position of widget
+   * @param marginX horizontal margin in pixels
+   * @param marginY vertical margin in pixels
+   */
+  @Deprecated(
+    message = "Constructor with margins is deprecated, the offset parameters has been merged into " +
+      "the WidgetPosition class, and the legacy constructor might be removed in future releases.",
+    replaceWith = ReplaceWith("BitmapWidget(context, position)")
+  )
+  constructor(
+    bitmap: Bitmap,
+    position: WidgetPosition = WidgetPosition(
+      vertical = WidgetPosition.Vertical.TOP,
+      horizontal = WidgetPosition.Horizontal.LEFT,
+    ),
+    marginX: Float = 0f,
+    marginY: Float = 0f,
+  ) : this(
+    bitmap = bitmap,
+    position = WidgetPosition {
+      horizontalAlignment = position.horizontalAlignment
+      verticalAlignment = position.verticalAlignment
+      offsetX = when (position.horizontalAlignment) {
+        // as the WidgetPosition.offsetX now uses the absolute direction towards the right of the
+        // screen, and for marginX we move the widget towards opposite of the horizontal alignment,
+        // we need to flip the sign when horizontal alignment is set to RIGHT.
+        WidgetPosition.Horizontal.LEFT, WidgetPosition.Horizontal.CENTER -> marginX
+        WidgetPosition.Horizontal.RIGHT -> -marginX
+      }
+      offsetY = when (position.verticalAlignment) {
+        // as the WidgetPosition.offsetY now uses the absolute direction towards the bottom of the
+        // screen, and for marginY we move the widget towards opposite of the vertical alignment,
+        // we need to flip the sign when vertical alignment is set to BOTTOM.
+        WidgetPosition.Vertical.TOP, WidgetPosition.Vertical.CENTER -> marginY
+        WidgetPosition.Vertical.BOTTOM -> -marginY
+      }
+    }
+  )
+
+  /**
+   * The deprecated constructor for BitmapWidget.
+   *
+   * @param bitmap bitmap used to draw widget
+   * @param position position of widget
+   * @param marginX horizontal margin in pixels
+   */
+  @Deprecated(
+    message = "Constructor with margins is deprecated, the offset parameters has been merged into " +
+      "the WidgetPosition class, and the legacy constructor might be removed in future releases.",
+    replaceWith = ReplaceWith("BitmapWidget(context, position)")
+  )
+  constructor(
+    bitmap: Bitmap,
+    position: WidgetPosition = WidgetPosition(
+      vertical = WidgetPosition.Vertical.TOP,
+      horizontal = WidgetPosition.Horizontal.LEFT,
+    ),
+    marginX: Float = 0f,
+  ) : this(bitmap, position, marginX, 0f)
+
   override val renderer = BitmapWidgetRenderer(
     bitmap = bitmap,
-    position = position,
-    marginX = marginX,
-    marginY = marginY,
+    position = position
   )
 
   /**
@@ -37,11 +97,49 @@ open class BitmapWidget @JvmOverloads constructor(
     renderer.updateBitmap(bitmap)
   }
 
-  override fun setTranslation(translationX: Float, translationY: Float) {
-    renderer.setTranslation(translationX = translationX, translationY = translationY)
+  /**
+   * Update the widget to the new position.
+   */
+  override fun setPosition(widgetPosition: WidgetPosition) {
+    renderer.setPosition(widgetPosition)
   }
 
+  /**
+   * Get the current position of the widget.
+   */
+  override fun getPosition() = renderer.getPosition()
+
+  /**
+   * Set the translation of the widget in pixels, relative to it's current position.
+   *
+   * @param translateX the offset in pixels towards the right of the screen.
+   * @param translateY the offset in pixels towards the bottom of the screen.
+   */
+  @Deprecated(
+    message = "setTranslation is deprecated, please use setPosition instead.",
+    replaceWith = ReplaceWith("setPosition")
+  )
+  override fun setTranslation(translationX: Float, translationY: Float) {
+    val currentPosition = getPosition()
+    setPosition(
+      WidgetPosition {
+        horizontalAlignment = currentPosition.horizontalAlignment
+        verticalAlignment = currentPosition.verticalAlignment
+        offsetX = currentPosition.offsetX + translationX
+        offsetY = currentPosition.offsetY + translationY
+      }
+    )
+  }
+
+  /**
+   * Set the absolute rotation of widget in degrees.
+   */
   override fun setRotation(angleDegrees: Float) {
     renderer.setRotation(angleDegrees = angleDegrees)
   }
+
+  /**
+   * Get absolute rotation of widget in degrees.
+   */
+  override fun getRotation(): Float = renderer.getRotation()
 }

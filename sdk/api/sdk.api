@@ -542,21 +542,55 @@ public class com/mapbox/maps/renderer/widget/BitmapWidget : com/mapbox/maps/rend
 	public fun <init> (Landroid/graphics/Bitmap;Lcom/mapbox/maps/renderer/widget/WidgetPosition;F)V
 	public fun <init> (Landroid/graphics/Bitmap;Lcom/mapbox/maps/renderer/widget/WidgetPosition;FF)V
 	public synthetic fun <init> (Landroid/graphics/Bitmap;Lcom/mapbox/maps/renderer/widget/WidgetPosition;FFILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Landroid/graphics/Bitmap;Lcom/mapbox/maps/renderer/widget/WidgetPosition;FILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Landroid/graphics/Bitmap;Lcom/mapbox/maps/renderer/widget/WidgetPosition;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun getPosition ()Lcom/mapbox/maps/renderer/widget/WidgetPosition;
 	public synthetic fun getRenderer$sdk_release ()Lcom/mapbox/maps/renderer/widget/WidgetRenderer;
+	public fun getRotation ()F
+	public fun setPosition (Lcom/mapbox/maps/renderer/widget/WidgetPosition;)V
 	public fun setRotation (F)V
 	public fun setTranslation (FF)V
 	public final fun updateBitmap (Landroid/graphics/Bitmap;)V
 }
 
 public abstract class com/mapbox/maps/renderer/widget/Widget {
+	public abstract fun getPosition ()Lcom/mapbox/maps/renderer/widget/WidgetPosition;
+	public abstract fun getRotation ()F
+	public abstract fun setPosition (Lcom/mapbox/maps/renderer/widget/WidgetPosition;)V
 	public abstract fun setRotation (F)V
 	public abstract fun setTranslation (FF)V
 }
 
 public final class com/mapbox/maps/renderer/widget/WidgetPosition {
 	public fun <init> (Lcom/mapbox/maps/renderer/widget/WidgetPosition$Horizontal;Lcom/mapbox/maps/renderer/widget/WidgetPosition$Vertical;)V
+	public synthetic fun <init> (Lcom/mapbox/maps/renderer/widget/WidgetPosition$Horizontal;Lcom/mapbox/maps/renderer/widget/WidgetPosition$Vertical;FFLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getHorizontal ()Lcom/mapbox/maps/renderer/widget/WidgetPosition$Horizontal;
+	public final fun getHorizontalAlignment ()Lcom/mapbox/maps/renderer/widget/WidgetPosition$Horizontal;
+	public final fun getOffsetX ()F
+	public final fun getOffsetY ()F
 	public final fun getVertical ()Lcom/mapbox/maps/renderer/widget/WidgetPosition$Vertical;
+	public final fun getVerticalAlignment ()Lcom/mapbox/maps/renderer/widget/WidgetPosition$Vertical;
+	public fun hashCode ()I
+	public final fun toBuilder ()Lcom/mapbox/maps/renderer/widget/WidgetPosition$Builder;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/renderer/widget/WidgetPosition$Builder {
+	public fun <init> ()V
+	public final fun build ()Lcom/mapbox/maps/renderer/widget/WidgetPosition;
+	public final fun getHorizontalAlignment ()Lcom/mapbox/maps/renderer/widget/WidgetPosition$Horizontal;
+	public final fun getOffsetX ()F
+	public final fun getOffsetY ()F
+	public final fun getVerticalAlignment ()Lcom/mapbox/maps/renderer/widget/WidgetPosition$Vertical;
+	public final fun setHorizontalAlignment (Lcom/mapbox/maps/renderer/widget/WidgetPosition$Horizontal;)Lcom/mapbox/maps/renderer/widget/WidgetPosition$Builder;
+	public final synthetic fun setHorizontalAlignment (Lcom/mapbox/maps/renderer/widget/WidgetPosition$Horizontal;)V
+	public final fun setOffsetX (F)Lcom/mapbox/maps/renderer/widget/WidgetPosition$Builder;
+	public final synthetic fun setOffsetX (F)V
+	public final fun setOffsetY (F)Lcom/mapbox/maps/renderer/widget/WidgetPosition$Builder;
+	public final synthetic fun setOffsetY (F)V
+	public final fun setVerticalAlignment (Lcom/mapbox/maps/renderer/widget/WidgetPosition$Vertical;)Lcom/mapbox/maps/renderer/widget/WidgetPosition$Builder;
+	public final synthetic fun setVerticalAlignment (Lcom/mapbox/maps/renderer/widget/WidgetPosition$Vertical;)V
 }
 
 public final class com/mapbox/maps/renderer/widget/WidgetPosition$Horizontal : java/lang/Enum {
@@ -573,6 +607,10 @@ public final class com/mapbox/maps/renderer/widget/WidgetPosition$Vertical : jav
 	public static final field TOP Lcom/mapbox/maps/renderer/widget/WidgetPosition$Vertical;
 	public static fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/renderer/widget/WidgetPosition$Vertical;
 	public static fun values ()[Lcom/mapbox/maps/renderer/widget/WidgetPosition$Vertical;
+}
+
+public final class com/mapbox/maps/renderer/widget/WidgetPositionKt {
+	public static final synthetic fun WidgetPosition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/renderer/widget/WidgetPosition;
 }
 
 public abstract interface class com/mapbox/maps/viewannotation/OnViewAnnotationUpdatedListener {

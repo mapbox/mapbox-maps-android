@@ -702,7 +702,9 @@ jobs:
       - run: exit 0
 
   build-android-auto-app:
-    executor: ubuntu
+    executor:
+      name: ubuntu
+      machine: large
     steps:
       - when:
           condition:
