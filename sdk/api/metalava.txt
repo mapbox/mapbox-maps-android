@@ -563,14 +563,18 @@ package com.mapbox.maps.renderer.widget {
 
   @com.mapbox.maps.MapboxExperimental public final class WidgetPosition {
     ctor @Deprecated public WidgetPosition(com.mapbox.maps.renderer.widget.WidgetPosition.Horizontal horizontal, com.mapbox.maps.renderer.widget.WidgetPosition.Vertical vertical);
+    method @Deprecated public com.mapbox.maps.renderer.widget.WidgetPosition.Horizontal getHorizontal();
     method public com.mapbox.maps.renderer.widget.WidgetPosition.Horizontal! getHorizontalAlignment();
     method public float getOffsetX();
     method public float getOffsetY();
+    method @Deprecated public com.mapbox.maps.renderer.widget.WidgetPosition.Vertical getVertical();
     method public com.mapbox.maps.renderer.widget.WidgetPosition.Vertical! getVerticalAlignment();
     method public com.mapbox.maps.renderer.widget.WidgetPosition.Builder toBuilder();
+    property @Deprecated public final com.mapbox.maps.renderer.widget.WidgetPosition.Horizontal horizontal;
     property public final com.mapbox.maps.renderer.widget.WidgetPosition.Horizontal! horizontalAlignment;
     property public final float offsetX;
     property public final float offsetY;
+    property @Deprecated public final com.mapbox.maps.renderer.widget.WidgetPosition.Vertical vertical;
     property public final com.mapbox.maps.renderer.widget.WidgetPosition.Vertical! verticalAlignment;
   }
 

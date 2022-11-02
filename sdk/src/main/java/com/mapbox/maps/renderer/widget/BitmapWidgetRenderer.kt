@@ -48,7 +48,7 @@ internal class BitmapWidgetRenderer(
     1f, 1f
   ).toFloatBuffer()
 
-  private var rotation = 0F
+  private var rotationDegrees = 0F
 
   override var needRender: Boolean = true
 
@@ -260,7 +260,7 @@ internal class BitmapWidgetRenderer(
   }
 
   override fun setRotation(angleDegrees: Float) {
-    rotation = angleDegrees
+    rotationDegrees = angleDegrees
     Matrix.setIdentityM(rotationMatrix, 0)
     Matrix.setRotateM(rotationMatrix, 0, angleDegrees, 0f, 0f, 1f)
     updateMatrix = true
@@ -268,7 +268,7 @@ internal class BitmapWidgetRenderer(
   }
 
   override fun getRotation(): Float {
-    return rotation
+    return rotationDegrees
   }
 
   override fun setPosition(widgetPosition: WidgetPosition) {

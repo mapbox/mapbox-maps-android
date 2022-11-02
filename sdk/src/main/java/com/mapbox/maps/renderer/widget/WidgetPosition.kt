@@ -18,11 +18,35 @@ class WidgetPosition private constructor(
   val offsetX: Float,
   val offsetY: Float
 ) {
+  /**
+   * Deprecated constructor for WidgetPosition.
+   *
+   * @param horizontal the horizontal position relative to the screen.
+   * @param vertical the vertical position relative to screen.
+   */
   @Deprecated(
     message = "Direct constructor of WidgetPosition is deprecated, and might be removed in future releases.",
     replaceWith = ReplaceWith("WidgetPosition.Builder()")
   )
   constructor(horizontal: Horizontal, vertical: Vertical) : this(horizontal, vertical, 0f, 0f)
+
+  /**
+   * The horizontal position relative to the screen.
+   */
+  @Deprecated(
+    message = "horizontal has been renamed to horizontalAlignment, and might be removed in future releases.",
+    replaceWith = ReplaceWith("horizontalAlignment")
+  )
+  val horizontal = horizontalAlignment
+
+  /**
+   * The vertical position relative to screen.
+   */
+  @Deprecated(
+    message = "vertical has been renamed to verticalAlignment, and might be removed in future releases.",
+    replaceWith = ReplaceWith("verticalAlignment")
+  )
+  val vertical = verticalAlignment
 
   /**
    * Returns a String for the object.
@@ -103,10 +127,11 @@ class WidgetPosition private constructor(
   /**
    * Returns a builder that created the [WidgetPosition].
    */
-  fun toBuilder() =
-    Builder().setHorizontalAlignment(horizontalAlignment).setVerticalAlignment(verticalAlignment)
-      .setOffsetX(offsetX).setOffsetY(offsetY)
-
+  fun toBuilder() = Builder()
+    .setHorizontalAlignment(horizontalAlignment)
+    .setVerticalAlignment(verticalAlignment)
+    .setOffsetX(offsetX)
+    .setOffsetY(offsetY)
 
   /**
    * Widget position Horizontal

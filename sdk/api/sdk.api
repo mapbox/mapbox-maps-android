@@ -565,9 +565,11 @@ public final class com/mapbox/maps/renderer/widget/WidgetPosition {
 	public fun <init> (Lcom/mapbox/maps/renderer/widget/WidgetPosition$Horizontal;Lcom/mapbox/maps/renderer/widget/WidgetPosition$Vertical;)V
 	public synthetic fun <init> (Lcom/mapbox/maps/renderer/widget/WidgetPosition$Horizontal;Lcom/mapbox/maps/renderer/widget/WidgetPosition$Vertical;FFLkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getHorizontal ()Lcom/mapbox/maps/renderer/widget/WidgetPosition$Horizontal;
 	public final fun getHorizontalAlignment ()Lcom/mapbox/maps/renderer/widget/WidgetPosition$Horizontal;
 	public final fun getOffsetX ()F
 	public final fun getOffsetY ()F
+	public final fun getVertical ()Lcom/mapbox/maps/renderer/widget/WidgetPosition$Vertical;
 	public final fun getVerticalAlignment ()Lcom/mapbox/maps/renderer/widget/WidgetPosition$Vertical;
 	public fun hashCode ()I
 	public final fun toBuilder ()Lcom/mapbox/maps/renderer/widget/WidgetPosition$Builder;
