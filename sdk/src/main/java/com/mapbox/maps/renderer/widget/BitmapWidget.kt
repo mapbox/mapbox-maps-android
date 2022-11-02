@@ -81,14 +81,14 @@ open class BitmapWidget @JvmOverloads constructor(
   override fun getPosition() = renderer.getPosition()
 
   /**
-   * Get the absolute rotation of widget in degrees.
+   * Set the absolute rotation of widget in degrees.
    */
   override fun setRotation(angleDegrees: Float) {
     renderer.setRotation(angleDegrees = angleDegrees)
   }
 
   /**
-   * Set absolute rotation of widget in degrees.
+   * Get absolute rotation of widget in degrees.
    */
   override fun getRotation(): Float = renderer.getRotation()
 }

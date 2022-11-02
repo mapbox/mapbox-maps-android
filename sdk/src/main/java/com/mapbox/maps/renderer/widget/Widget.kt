@@ -42,12 +42,12 @@ abstract class Widget internal constructor() {
   }
 
   /**
-   * Get the absolute rotation of widget in degrees.
+   * Set the absolute rotation of widget in degrees.
    */
   abstract fun setRotation(angleDegrees: Float)
 
   /**
-   * Set absolute rotation of widget in degrees.
+   * Get absolute rotation of widget in degrees.
    */
   abstract fun getRotation(): Float
 }
