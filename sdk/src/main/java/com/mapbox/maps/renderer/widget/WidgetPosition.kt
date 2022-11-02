@@ -60,8 +60,8 @@ class WidgetPosition private constructor(
   override fun equals(other: Any?) = other is WidgetPosition &&
     horizontalAlignment == other.horizontalAlignment &&
     verticalAlignment == other.verticalAlignment &&
-    offsetX == other.offsetX &&
-    offsetY == other.offsetY
+    offsetX.compareTo(other.offsetX) == 0 &&
+    offsetY.compareTo(other.offsetY) == 0
 
   /**
    * Returns a hash code value for the object.
