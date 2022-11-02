@@ -22,7 +22,7 @@ class WidgetPosition private constructor(
     message = "Direct constructor of WidgetPosition is deprecated, and might be removed in future releases.",
     replaceWith = ReplaceWith("WidgetPosition.Builder()")
   )
-  constructor(horizontal: Horizontal, vertical: Vertical) : this (horizontal, vertical, 0f, 0f)
+  constructor(horizontal: Horizontal, vertical: Vertical) : this(horizontal, vertical, 0f, 0f)
 
   /**
    * Returns a String for the object.
@@ -75,12 +75,14 @@ class WidgetPosition private constructor(
     /**
      * Set the horizontal position, defaults to [Horizontal.LEFT].
      */
-    fun setHorizontalAlignment(horizontalAlignment: Horizontal) = apply { this.horizontalAlignment = horizontalAlignment }
+    fun setHorizontalAlignment(horizontalAlignment: Horizontal) =
+      apply { this.horizontalAlignment = horizontalAlignment }
 
     /**
      * Set the vertical position, defaults to [Vertical.TOP].
      */
-    fun setVerticalAlignment(verticalAlignment: Vertical) = apply { this.verticalAlignment = verticalAlignment }
+    fun setVerticalAlignment(verticalAlignment: Vertical) =
+      apply { this.verticalAlignment = verticalAlignment }
 
     /**
      * Set the horizontal offset in pixels towards the right of the screen, defaults to 0.
@@ -97,6 +99,14 @@ class WidgetPosition private constructor(
      */
     fun build() = WidgetPosition(horizontalAlignment, verticalAlignment, offsetX, offsetY)
   }
+
+  /**
+   * Returns a builder that created the [WidgetPosition].
+   */
+  fun toBuilder() =
+    Builder().setHorizontalAlignment(horizontalAlignment).setVerticalAlignment(verticalAlignment)
+      .setOffsetX(offsetX).setOffsetY(offsetY)
+
 
   /**
    * Widget position Horizontal
