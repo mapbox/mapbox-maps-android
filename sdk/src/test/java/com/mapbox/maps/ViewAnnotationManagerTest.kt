@@ -1,16 +1,16 @@
 package com.mapbox.maps
 
+import android.graphics.Rect
 import android.view.View
 import android.widget.FrameLayout
 import com.mapbox.bindgen.ExpectedFactory
+import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
 import com.mapbox.maps.ViewAnnotationManagerImpl.Companion.EXCEPTION_TEXT_ASSOCIATED_FEATURE_ID_ALREADY_EXISTS
+import com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName
 import com.mapbox.maps.renderer.MapboxRenderThread
-import com.mapbox.maps.viewannotation.OnViewAnnotationUpdatedListener
-import com.mapbox.maps.viewannotation.ViewAnnotationManager
-import com.mapbox.maps.viewannotation.ViewAnnotationUpdateMode
-import com.mapbox.maps.viewannotation.viewAnnotationOptions
+import com.mapbox.maps.viewannotation.*
 import io.mockk.*
 import org.junit.After
 import org.junit.Assert.*
@@ -26,6 +26,7 @@ class ViewAnnotationManagerTest {
   private lateinit var view: View
   private lateinit var viewAnnotationsLayout: FrameLayout
   private lateinit var renderer: MapboxRenderThread
+  private val style: Style = mockk(relaxUnitFun = true)
 
   @Before
   fun setUp() {
@@ -41,10 +42,11 @@ class ViewAnnotationManagerTest {
     viewAnnotationsLayout = mockk()
     every { viewAnnotationsLayout.layoutParams = any() } just Runs
     every { viewAnnotationsLayout.removeView(any()) } just Runs
-
     every { mapboxMap.addViewAnnotation(any(), any()) } returns ExpectedFactory.createNone()
-
     viewAnnotationManager = ViewAnnotationManagerImpl(mapView, viewAnnotationsLayout)
+    every { mapboxMap.style } returns style
+    every { style.getStyleProjectionProperty("name") } returns
+      StylePropertyValue(Value(ProjectionName.MERCATOR.value), StylePropertyValueKind.CONSTANT)
   }
 
   private fun mockView(): View = mockk<View>().also {
@@ -447,9 +449,118 @@ class ViewAnnotationManagerTest {
     assertEquals(1, viewAnnotationManager.annotations.size)
   }
 
+  @Test
+  fun testCameraForAnnotationsWithEmptyViews() {
+    val annotations = listOf<View>()
+    assertNull(viewAnnotationManager.cameraForAnnotations(annotations))
+  }
+
+  @Test
+  fun testCameraForAnnotationsWithValidViews() {
+    val annotations = mutableListOf<View>()
+    val viewAnnotationOptions = viewAnnotationOptions {
+      geometry(DEFAULT_GEOMETRY)
+    }
+    viewAnnotationManager.addViewAnnotation(view, viewAnnotationOptions)
+    annotations.add(view)
+    every { mapboxMap.getViewAnnotationOptions(any()) } returns ExpectedFactory.createValue(
+      viewAnnotationOptions
+    )
+
+    val point = Point.fromJson(DEFAULT_GEOMETRY.toJson())
+    val expectedCameraOptions = CameraOptions.Builder().center(point).build()
+    every {
+      mapboxMap.cameraForCoordinates(
+        any(),
+        any(),
+        any(),
+        any()
+      )
+    } answers { CameraOptions.Builder().center(point).build() }
+
+    val cameraOptionsActual = viewAnnotationManager.cameraForAnnotations(annotations)
+    assertNotNull(cameraOptionsActual)
+    assertEquals(expectedCameraOptions, cameraOptionsActual!!)
+  }
+
+  @Test
+  fun testCalculateEdgeInsetsWithoutOptionalInsets() {
+    val annotationManagerSpyk = spyk(ViewAnnotationManagerImpl(mapView, viewAnnotationsLayout))
+    val annotationOptionsList = mutableListOf<ViewAnnotationOptions>()
+    val viewAnnotationOptions = viewAnnotationOptions {
+      geometry(DEFAULT_GEOMETRY)
+      width(DEFAULT_WIDTH)
+      height(DEFAULT_HEIGHT)
+    }
+    annotationOptionsList.add(viewAnnotationOptions)
+
+    val rect = Rect()
+    rect.left = 10
+    rect.top = 10
+    rect.right = 10
+    rect.bottom = 10
+    every { annotationManagerSpyk.getViewAnnotationOptionsFrame(any()) } returns rect
+
+    val actualEdgeInsets = annotationManagerSpyk.calculateEdgeInsets(annotationOptionsList)
+    val expectedEdgeInsets = EdgeInsets(10.0, 10.0, 10.0, 10.0)
+    assertEquals(expectedEdgeInsets, actualEdgeInsets)
+  }
+
+  @Test
+  fun testCalculateEdgeInsetsWithOptionalInsets() {
+    val annotationManagerSpyk = spyk(ViewAnnotationManagerImpl(mapView, viewAnnotationsLayout))
+    val annotationOptionsList = mutableListOf<ViewAnnotationOptions>()
+    val edgeInsets = EdgeInsets(10.0, 10.0, 10.0, 10.0)
+    val viewAnnotationOptions = viewAnnotationOptions {
+      geometry(DEFAULT_GEOMETRY)
+      width(DEFAULT_WIDTH)
+      height(DEFAULT_HEIGHT)
+    }
+    annotationOptionsList.add(viewAnnotationOptions)
+
+    val rect = Rect()
+    rect.left = 10
+    rect.top = 10
+    rect.right = 10
+    rect.bottom = 10
+    every { annotationManagerSpyk.getViewAnnotationOptionsFrame(any()) } returns rect
+    val expectedEdgeInsets = EdgeInsets(20.0, 20.0, 20.0, 20.0)
+    val actualEdgeInsets =
+      annotationManagerSpyk.calculateEdgeInsets(annotationOptionsList, edgeInsets)
+    assertEquals(expectedEdgeInsets, actualEdgeInsets)
+  }
+
+  @Test
+  fun testCameraForAnnotationsWithGlobeProjection() {
+    every { style.getStyleProjectionProperty("name") } returns
+      StylePropertyValue(Value(ProjectionName.GLOBE.value), StylePropertyValueKind.CONSTANT)
+
+    val annotations = mutableListOf<View>()
+    val viewAnnotationOptions = viewAnnotationOptions {
+      geometry(DEFAULT_GEOMETRY)
+    }
+    viewAnnotationManager.addViewAnnotation(view, viewAnnotationOptions)
+    annotations.add(view)
+
+    assertNull(viewAnnotationManager.cameraForAnnotations(annotations))
+  }
+
+  @Test
+  fun testCameraForAnnotationsWithInvisibleViews() {
+    val annotations = mutableListOf<View>()
+    val viewAnnotationOptions = viewAnnotationOptions {
+      geometry(DEFAULT_GEOMETRY)
+    }
+    every { view.visibility } returns View.INVISIBLE
+    viewAnnotationManager.addViewAnnotation(view, viewAnnotationOptions)
+    annotations.add(view)
+
+    assertNull(viewAnnotationManager.cameraForAnnotations(annotations))
+  }
+
   private companion object {
     private const val FEATURE_ID = "featureId"
-    val DEFAULT_GEOMETRY: Geometry = Point.fromLngLat(0.0, 0.0)
+    private val DEFAULT_GEOMETRY: Geometry = Point.fromLngLat(0.0, 0.0)
     private const val DEFAULT_WIDTH = 20
     private const val DEFAULT_HEIGHT = 20
   }

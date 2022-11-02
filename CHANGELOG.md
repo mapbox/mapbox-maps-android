@@ -5,6 +5,7 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 ## Features ✨ and improvements 🏁
 * Introduce view annotation `ViewAnnotationManager.annotations` API to access list of added view annotations. ([1751](https://github.com/mapbox/mapbox-maps-android/pull/1751))
+* Introduce view annotation `ViewAnnotationManager.cameraForAnnotations` API to get camera options for given view annotations list. ([1753](https://github.com/mapbox/mapbox-maps-android/pull/1753))
 
 ## Bug fixes 🐞
 Fix an issue when touch events didn't pass through clickable view annotations. ([1745](https://github.com/mapbox/mapbox-maps-android/pull/1745))
