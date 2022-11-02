@@ -1,15 +1,15 @@
 package com.mapbox.maps.renderer.widget
 
 import com.mapbox.maps.MapboxExperimental
-import kotlin.math.abs
+import java.util.Objects
 
 /**
- * Specifies widget position relative to the screen.
+ * Specifies widget position relative to the map.
  *
- * @property horizontalAlignment the horizontal position relative to the screen.
- * @property verticalAlignment the vertical position relative to screen.
- * @property offsetX the horizontal offset in pixels towards the right of the screen.
- * @property offsetY the vertical offset in pixels towards the right of the screen.
+ * @property horizontalAlignment the horizontal position relative to the map.
+ * @property verticalAlignment the vertical position relative to the map.
+ * @property offsetX the horizontal offset in pixels towards the right of the map.
+ * @property offsetY the vertical offset in pixels towards the bottom of the map.
  */
 @MapboxExperimental
 class WidgetPosition private constructor(
@@ -21,8 +21,8 @@ class WidgetPosition private constructor(
   /**
    * Deprecated constructor for WidgetPosition.
    *
-   * @param horizontal the horizontal position relative to the screen.
-   * @param vertical the vertical position relative to screen.
+   * @param horizontal the horizontal position relative to the map.
+   * @param vertical the vertical position relative to the map.
    */
   @Deprecated(
     message = "Direct constructor of WidgetPosition is deprecated, and might be removed in future releases.",
@@ -31,7 +31,7 @@ class WidgetPosition private constructor(
   constructor(horizontal: Horizontal, vertical: Vertical) : this(horizontal, vertical, 0f, 0f)
 
   /**
-   * The horizontal position relative to the screen.
+   * The horizontal position relative to the map.
    */
   @Deprecated(
     message = "horizontal has been renamed to horizontalAlignment, and might be removed in future releases.",
@@ -40,7 +40,7 @@ class WidgetPosition private constructor(
   val horizontal = horizontalAlignment
 
   /**
-   * The vertical position relative to screen.
+   * The vertical position relative to the map.
    */
   @Deprecated(
     message = "vertical has been renamed to verticalAlignment, and might be removed in future releases.",
@@ -60,28 +60,26 @@ class WidgetPosition private constructor(
   override fun equals(other: Any?) = other is WidgetPosition &&
     horizontalAlignment == other.horizontalAlignment &&
     verticalAlignment == other.verticalAlignment &&
-    abs(offsetX - other.offsetX) < EPS &&
-    abs(offsetY - other.offsetY) < EPS
+    offsetX == other.offsetX &&
+    offsetY == other.offsetY
 
   /**
    * Returns a hash code value for the object.
    */
-  override fun hashCode(): Int {
-    var result = 7
-    result = 31 * result + horizontalAlignment.hashCode()
-    result = 31 * result + verticalAlignment.hashCode()
-    result = 31 * result + offsetX.hashCode()
-    result = 31 * result + offsetY.hashCode()
-    return result
-  }
+  override fun hashCode() = Objects.hash(
+    horizontalAlignment,
+    verticalAlignment,
+    offsetX,
+    offsetY
+  )
 
   /**
    * Builder for WidgetPosition class.
    *
-   * @property horizontalAlignment the horizontal position relative to the screen, defaults to [Horizontal.LEFT].
-   * @property verticalAlignment the vertical position relative to screen, defaults to [Vertical.TOP].
-   * @property offsetX the horizontal offset in pixels towards the right of the screen, defaults to 0.
-   * @property offsetY the vertical offset in pixels towards the right of the screen, defaults to 0.
+   * @property horizontalAlignment the horizontal position relative to the map, defaults to [Horizontal.LEFT].
+   * @property verticalAlignment the vertical position relative to the map, defaults to [Vertical.TOP].
+   * @property offsetX the horizontal offset in pixels towards the right of the map, defaults to 0.
+   * @property offsetY the vertical offset in pixels towards the bottom of the map, defaults to 0.
    */
   class Builder {
     @set:JvmSynthetic
@@ -109,12 +107,12 @@ class WidgetPosition private constructor(
       apply { this.verticalAlignment = verticalAlignment }
 
     /**
-     * Set the horizontal offset in pixels towards the right of the screen, defaults to 0.
+     * Set the horizontal offset in pixels towards the right of the map, defaults to 0.
      */
     fun setOffsetX(offsetX: Float) = apply { this.offsetX = offsetX }
 
     /**
-     * Set the vertical offset in pixels towards the right of the screen, defaults to 0.
+     * Set the vertical offset in pixels towards the bottom of the map, defaults to 0.
      */
     fun setOffsetY(offsetY: Float) = apply { this.offsetY = offsetY }
 
