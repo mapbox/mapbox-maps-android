@@ -12,7 +12,7 @@ abstract class Widget internal constructor() {
   /**
    * Update the widget to the new position.
    */
-  abstract fun updatePosition(widgetPosition: WidgetPosition)
+  abstract fun setPosition(widgetPosition: WidgetPosition)
 
   /**
    * Get the current position of the widget.
@@ -26,23 +26,17 @@ abstract class Widget internal constructor() {
    * @param translateY the offset in pixels towards the bottom of the screen.
    */
   @Deprecated(
-    message = "setTranslation is deprecated, please use updatePosition instead.",
-    replaceWith = ReplaceWith("updatePosition")
+    message = "setTranslation is deprecated, please use setPosition instead.",
+    replaceWith = ReplaceWith("setPosition")
   )
   fun setTranslation(translateX: Float, translateY: Float) {
     val currentPosition = getPosition()
-    updatePosition(
+    setPosition(
       WidgetPosition {
-        horizontal = currentPosition.horizontal
-        vertical = currentPosition.vertical
-        offsetX = when (currentPosition.horizontal) {
-          WidgetPosition.Horizontal.LEFT, WidgetPosition.Horizontal.CENTER -> currentPosition.offsetX + translateX
-          WidgetPosition.Horizontal.RIGHT -> currentPosition.offsetX - translateX
-        }
-        offsetY = when (currentPosition.vertical) {
-          WidgetPosition.Vertical.TOP, WidgetPosition.Vertical.CENTER -> currentPosition.offsetY + translateY
-          WidgetPosition.Vertical.BOTTOM -> currentPosition.offsetY - translateY
-        }
+        horizontalAlignment = currentPosition.horizontalAlignment
+        verticalAlignment = currentPosition.verticalAlignment
+        offsetX = currentPosition.offsetX + translateX
+        offsetY = currentPosition.offsetY + translateY
       }
     )
   }

@@ -13,8 +13,8 @@ import com.mapbox.maps.MapboxExperimental
 open class BitmapWidget @JvmOverloads constructor(
   bitmap: Bitmap,
   position: WidgetPosition = WidgetPosition {
-    vertical = WidgetPosition.Vertical.TOP
-    horizontal = WidgetPosition.Horizontal.LEFT
+    verticalAlignment = WidgetPosition.Vertical.TOP
+    horizontalAlignment = WidgetPosition.Horizontal.LEFT
     offsetX = 0f
     offsetY = 0f
   }
@@ -35,16 +35,22 @@ open class BitmapWidget @JvmOverloads constructor(
   constructor(bitmap: Bitmap, position: WidgetPosition, marginX: Float, marginY: Float) : this(
     bitmap = bitmap,
     position = WidgetPosition {
-      horizontal = position.horizontal
-      vertical = position.vertical
-      offsetX = marginX
-      offsetY = marginY
+      horizontalAlignment = position.horizontalAlignment
+      verticalAlignment = position.verticalAlignment
+      offsetX = when (position.horizontalAlignment) {
+        WidgetPosition.Horizontal.LEFT, WidgetPosition.Horizontal.CENTER -> marginX
+        WidgetPosition.Horizontal.RIGHT -> -marginX
+      }
+      offsetY = when (position.verticalAlignment) {
+        WidgetPosition.Vertical.TOP, WidgetPosition.Vertical.CENTER -> marginY
+        WidgetPosition.Vertical.BOTTOM -> -marginY
+      }
     }
   )
 
   override val renderer = BitmapWidgetRenderer(
     bitmap = bitmap,
-    widgetPosition = position
+    position = position
   )
 
   /**
@@ -59,8 +65,8 @@ open class BitmapWidget @JvmOverloads constructor(
   /**
    * Update the widget to the new position.
    */
-  override fun updatePosition(widgetPosition: WidgetPosition) {
-    renderer.updatePosition(widgetPosition)
+  override fun setPosition(widgetPosition: WidgetPosition) {
+    renderer.setPosition(widgetPosition)
   }
 
   /**

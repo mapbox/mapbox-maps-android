@@ -10,6 +10,6 @@ internal interface WidgetRenderer {
 
   fun setRotation(angleDegrees: Float)
   fun getRotation(): Float
-  fun updatePosition(widgetPosition: WidgetPosition)
+  fun setPosition(widgetPosition: WidgetPosition)
   fun getPosition(): WidgetPosition
 }

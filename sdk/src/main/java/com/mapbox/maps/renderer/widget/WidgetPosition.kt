@@ -6,15 +6,15 @@ import kotlin.math.abs
 /**
  * Specifies widget position relative to the screen.
  *
- * @property horizontal position relative to the screen.
- * @property vertical position relative to screen.
- * @property offsetX horizontal offset of the widget.
- * @property offsetY vertical offset of the widget.
+ * @property horizontalAlignment the horizontal position relative to the screen.
+ * @property verticalAlignment the vertical position relative to screen.
+ * @property offsetX the horizontal offset in pixels towards the right of the screen.
+ * @property offsetY the vertical offset in pixels towards the right of the screen.
  */
 @MapboxExperimental
 class WidgetPosition private constructor(
-  val horizontal: Horizontal,
-  val vertical: Vertical,
+  val horizontalAlignment: Horizontal,
+  val verticalAlignment: Vertical,
   val offsetX: Float,
   val offsetY: Float
 ) {
@@ -28,14 +28,14 @@ class WidgetPosition private constructor(
    * Returns a String for the object.
    */
   override fun toString() =
-    "WidgetPosition(horizontal=$horizontal,vertical=$vertical,offsetX=$offsetX,offsetY=$offsetY"
+    "WidgetPosition(horizontalAlignment=$horizontalAlignment,verticalAlignment=$verticalAlignment,offsetX=$offsetX,offsetY=$offsetY"
 
   /**
    * Indicates whether some other object is "equal to" this one.
    */
   override fun equals(other: Any?) = other is WidgetPosition &&
-    horizontal == other.horizontal &&
-    vertical == other.vertical &&
+    horizontalAlignment == other.horizontalAlignment &&
+    verticalAlignment == other.verticalAlignment &&
     abs(offsetX - other.offsetX) < EPS &&
     abs(offsetY - other.offsetY) < EPS
 
@@ -44,8 +44,8 @@ class WidgetPosition private constructor(
    */
   override fun hashCode(): Int {
     var result = 7
-    result = 31 * result + horizontal.hashCode()
-    result = 31 * result + vertical.hashCode()
+    result = 31 * result + horizontalAlignment.hashCode()
+    result = 31 * result + verticalAlignment.hashCode()
     result = 31 * result + offsetX.hashCode()
     result = 31 * result + offsetY.hashCode()
     return result
@@ -54,17 +54,17 @@ class WidgetPosition private constructor(
   /**
    * Builder for WidgetPosition class.
    *
-   * @property horizontal position relative to the screen, defaults to [Horizontal.LEFT].
-   * @property vertical position relative to screen, defaults to [Vertical.TOP].
-   * @property offsetX horizontal offset of the widget, defaults to 0.
-   * @property offsetY vertical offset of the widget, defaults to 0.
+   * @property horizontalAlignment the horizontal position relative to the screen, defaults to [Horizontal.LEFT].
+   * @property verticalAlignment the vertical position relative to screen, defaults to [Vertical.TOP].
+   * @property offsetX the horizontal offset in pixels towards the right of the screen, defaults to 0.
+   * @property offsetY the vertical offset in pixels towards the right of the screen, defaults to 0.
    */
   class Builder {
     @set:JvmSynthetic
-    var horizontal: Horizontal = Horizontal.LEFT
+    var horizontalAlignment: Horizontal = Horizontal.LEFT
 
     @set:JvmSynthetic
-    var vertical: Vertical = Vertical.TOP
+    var verticalAlignment: Vertical = Vertical.TOP
 
     @set:JvmSynthetic
     var offsetX: Float = 0f
@@ -75,27 +75,27 @@ class WidgetPosition private constructor(
     /**
      * Set the horizontal position, defaults to [Horizontal.LEFT].
      */
-    fun setHorizontal(horizontal: Horizontal) = apply { this.horizontal = horizontal }
+    fun setHorizontalAlignment(horizontalAlignment: Horizontal) = apply { this.horizontalAlignment = horizontalAlignment }
 
     /**
      * Set the vertical position, defaults to [Vertical.TOP].
      */
-    fun setVertical(vertical: Vertical) = apply { this.vertical = vertical }
+    fun setVerticalAlignment(verticalAlignment: Vertical) = apply { this.verticalAlignment = verticalAlignment }
 
     /**
-     * Set the offset along X axis, defaults to 0.
+     * Set the horizontal offset in pixels towards the right of the screen, defaults to 0.
      */
     fun setOffsetX(offsetX: Float) = apply { this.offsetX = offsetX }
 
     /**
-     * Set the offset along Y axis, defaults to 0.
+     * Set the vertical offset in pixels towards the right of the screen, defaults to 0.
      */
     fun setOffsetY(offsetY: Float) = apply { this.offsetY = offsetY }
 
     /**
      * Build the [WidgetPosition] from the current settings.
      */
-    fun build() = WidgetPosition(horizontal, vertical, offsetX, offsetY)
+    fun build() = WidgetPosition(horizontalAlignment, verticalAlignment, offsetX, offsetY)
   }
 
   /**

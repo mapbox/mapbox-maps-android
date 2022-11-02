@@ -12,7 +12,7 @@ internal class BitmapWidgetRenderer(
   @Volatile
   private var bitmap: Bitmap?,
   @Volatile
-  private var widgetPosition: WidgetPosition
+  internal var position: WidgetPosition
 ) : WidgetRenderer {
 
   private var halfBitmapWidth = (bitmap?.width ?: 0) / 2f
@@ -66,7 +66,7 @@ internal class BitmapWidgetRenderer(
     )
 
     updateVertexBuffer()
-    updatePosition(widgetPosition)
+    updateTranslateMatrix()
   }
 
   private fun updateVertexBuffer() {
@@ -79,16 +79,16 @@ internal class BitmapWidgetRenderer(
     )
   }
 
-  private fun topY() = when (widgetPosition.vertical) {
-    WidgetPosition.Vertical.TOP -> widgetPosition.offsetY + halfBitmapHeight
-    WidgetPosition.Vertical.CENTER -> surfaceHeight.toFloat() / 2 + widgetPosition.offsetY
-    WidgetPosition.Vertical.BOTTOM -> surfaceHeight.toFloat() - (halfBitmapHeight + widgetPosition.offsetY)
+  private fun topY() = when (position.verticalAlignment) {
+    WidgetPosition.Vertical.TOP -> position.offsetY + halfBitmapHeight
+    WidgetPosition.Vertical.CENTER -> surfaceHeight.toFloat() / 2 + position.offsetY
+    WidgetPosition.Vertical.BOTTOM -> surfaceHeight.toFloat() - halfBitmapHeight + position.offsetY
   }
 
-  private fun leftX() = when (widgetPosition.horizontal) {
-    WidgetPosition.Horizontal.LEFT -> widgetPosition.offsetX + halfBitmapWidth
-    WidgetPosition.Horizontal.CENTER -> surfaceWidth.toFloat() / 2 + widgetPosition.offsetX
-    WidgetPosition.Horizontal.RIGHT -> surfaceWidth.toFloat() - (halfBitmapWidth + widgetPosition.offsetX)
+  private fun leftX() = when (position.horizontalAlignment) {
+    WidgetPosition.Horizontal.LEFT -> position.offsetX + halfBitmapWidth
+    WidgetPosition.Horizontal.CENTER -> surfaceWidth.toFloat() / 2 + position.offsetX
+    WidgetPosition.Horizontal.RIGHT -> surfaceWidth.toFloat() - halfBitmapWidth + position.offsetX
   }
 
   override fun prepare() {
@@ -253,7 +253,7 @@ internal class BitmapWidgetRenderer(
     this.bitmap = bitmap
     this.halfBitmapWidth = bitmap.width / 2f
     this.halfBitmapHeight = bitmap.height / 2f
-    updatePosition(widgetPosition)
+    updateTranslateMatrix()
     updateVertexBuffer()
     updateMatrix = true
     needRender = true
@@ -271,8 +271,12 @@ internal class BitmapWidgetRenderer(
     return rotation
   }
 
-  override fun updatePosition(widgetPosition: WidgetPosition) {
-    this.widgetPosition = widgetPosition
+  override fun setPosition(widgetPosition: WidgetPosition) {
+    this.position = widgetPosition
+    updateTranslateMatrix()
+  }
+
+  private fun updateTranslateMatrix() {
     Matrix.setIdentityM(translateMatrix, 0)
     Matrix.translateM(
       translateMatrix,
@@ -287,7 +291,7 @@ internal class BitmapWidgetRenderer(
   }
 
   override fun getPosition(): WidgetPosition {
-    return widgetPosition
+    return position
   }
 
   private companion object {
