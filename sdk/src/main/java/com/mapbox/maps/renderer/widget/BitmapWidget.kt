@@ -38,10 +38,16 @@ open class BitmapWidget @JvmOverloads constructor(
       horizontalAlignment = position.horizontalAlignment
       verticalAlignment = position.verticalAlignment
       offsetX = when (position.horizontalAlignment) {
+        // as the WidgetPosition.offsetX now uses the absolute direction towards the right of the
+        // screen, and for marginX we move the widget towards opposite of the horizontal alignment,
+        // we need to flip the sign when horizontal alignment is set to RIGHT.
         WidgetPosition.Horizontal.LEFT, WidgetPosition.Horizontal.CENTER -> marginX
         WidgetPosition.Horizontal.RIGHT -> -marginX
       }
       offsetY = when (position.verticalAlignment) {
+        // as the WidgetPosition.offsetY now uses the absolute direction towards the bottom of the
+        // screen, and for marginY we move the widget towards opposite of the vertical alignment,
+        // we need to flip the sign when vertical alignment is set to BOTTOM.
         WidgetPosition.Vertical.TOP, WidgetPosition.Vertical.CENTER -> marginY
         WidgetPosition.Vertical.BOTTOM -> -marginY
       }

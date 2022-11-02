@@ -12,7 +12,7 @@ internal class BitmapWidgetRenderer(
   @Volatile
   private var bitmap: Bitmap?,
   @Volatile
-  internal var position: WidgetPosition
+  private var position: WidgetPosition
 ) : WidgetRenderer {
 
   private var halfBitmapWidth = (bitmap?.width ?: 0) / 2f
@@ -79,16 +79,16 @@ internal class BitmapWidgetRenderer(
     )
   }
 
-  private fun topY() = when (position.verticalAlignment) {
-    WidgetPosition.Vertical.TOP -> position.offsetY + halfBitmapHeight
-    WidgetPosition.Vertical.CENTER -> surfaceHeight.toFloat() / 2 + position.offsetY
-    WidgetPosition.Vertical.BOTTOM -> surfaceHeight.toFloat() - halfBitmapHeight + position.offsetY
+  private fun topY() = position.offsetY + when (position.verticalAlignment) {
+    WidgetPosition.Vertical.TOP -> halfBitmapHeight
+    WidgetPosition.Vertical.CENTER -> surfaceHeight.toFloat() / 2
+    WidgetPosition.Vertical.BOTTOM -> surfaceHeight.toFloat() - halfBitmapHeight
   }
 
-  private fun leftX() = when (position.horizontalAlignment) {
-    WidgetPosition.Horizontal.LEFT -> position.offsetX + halfBitmapWidth
-    WidgetPosition.Horizontal.CENTER -> surfaceWidth.toFloat() / 2 + position.offsetX
-    WidgetPosition.Horizontal.RIGHT -> surfaceWidth.toFloat() - halfBitmapWidth + position.offsetX
+  private fun leftX() = position.offsetX + when (position.horizontalAlignment) {
+    WidgetPosition.Horizontal.LEFT -> halfBitmapWidth
+    WidgetPosition.Horizontal.CENTER -> surfaceWidth.toFloat() / 2
+    WidgetPosition.Horizontal.RIGHT -> surfaceWidth.toFloat() - halfBitmapWidth
   }
 
   override fun prepare() {
