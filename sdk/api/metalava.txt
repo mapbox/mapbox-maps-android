@@ -541,13 +541,14 @@ package com.mapbox.maps.renderer.widget {
     offsetY = 0.0
 }));
     ctor public BitmapWidget(android.graphics.Bitmap bitmap);
-    ctor @Deprecated public BitmapWidget(android.graphics.Bitmap bitmap, com.mapbox.maps.renderer.widget.WidgetPosition position, float marginX, float marginY);
+    ctor @Deprecated public BitmapWidget(android.graphics.Bitmap bitmap, com.mapbox.maps.renderer.widget.WidgetPosition position = com.mapbox.maps.renderer.widget.WidgetPosition(com.mapbox.maps.renderer.widget.WidgetPosition.Vertical.TOP, com.mapbox.maps.renderer.widget.WidgetPosition.Horizontal.LEFT), float marginX = 0f, float marginY = 0f);
+    ctor @Deprecated public BitmapWidget(android.graphics.Bitmap bitmap, com.mapbox.maps.renderer.widget.WidgetPosition position = com.mapbox.maps.renderer.widget.WidgetPosition(com.mapbox.maps.renderer.widget.WidgetPosition.Vertical.TOP, com.mapbox.maps.renderer.widget.WidgetPosition.Horizontal.LEFT), float marginX = 0f);
     method public com.mapbox.maps.renderer.widget.WidgetPosition getPosition();
     method public com.mapbox.maps.renderer.widget.BitmapWidgetRenderer getRenderer$metalava_module();
     method public float getRotation();
     method public void setPosition(com.mapbox.maps.renderer.widget.WidgetPosition widgetPosition);
     method public void setRotation(float angleDegrees);
-    method @Deprecated public void setTranslation(float translateX, float translateY);
+    method @Deprecated public void setTranslation(float translationX, float translationY);
     method public final void updateBitmap(android.graphics.Bitmap bitmap);
     property public com.mapbox.maps.renderer.widget.BitmapWidgetRenderer renderer;
   }

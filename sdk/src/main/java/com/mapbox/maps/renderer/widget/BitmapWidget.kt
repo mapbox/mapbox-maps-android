@@ -32,7 +32,15 @@ open class BitmapWidget @JvmOverloads constructor(
       "the WidgetPosition class, and the legacy constructor might be removed in future releases.",
     replaceWith = ReplaceWith("BitmapWidget(context, position)")
   )
-  constructor(bitmap: Bitmap, position: WidgetPosition, marginX: Float, marginY: Float) : this(
+  constructor(
+    bitmap: Bitmap,
+    position: WidgetPosition = WidgetPosition(
+      vertical = WidgetPosition.Vertical.TOP,
+      horizontal = WidgetPosition.Horizontal.LEFT,
+    ),
+    marginX: Float = 0f,
+    marginY: Float = 0f,
+  ) : this(
     bitmap = bitmap,
     position = WidgetPosition {
       horizontalAlignment = position.horizontalAlignment
@@ -53,6 +61,27 @@ open class BitmapWidget @JvmOverloads constructor(
       }
     }
   )
+
+  /**
+   * The deprecated constructor for BitmapWidget.
+   *
+   * @param bitmap bitmap used to draw widget
+   * @param position position of widget
+   * @param marginX horizontal margin in pixels
+   */
+  @Deprecated(
+    message = "Constructor with margins is deprecated, the offset parameters has been merged into " +
+      "the WidgetPosition class, and the legacy constructor might be removed in future releases.",
+    replaceWith = ReplaceWith("BitmapWidget(context, position)")
+  )
+  constructor(
+    bitmap: Bitmap,
+    position: WidgetPosition = WidgetPosition(
+      vertical = WidgetPosition.Vertical.TOP,
+      horizontal = WidgetPosition.Horizontal.LEFT,
+    ),
+    marginX: Float = 0f,
+  ) : this(bitmap, position, marginX, 0f)
 
   override val renderer = BitmapWidgetRenderer(
     bitmap = bitmap,
@@ -90,14 +119,14 @@ open class BitmapWidget @JvmOverloads constructor(
     message = "setTranslation is deprecated, please use setPosition instead.",
     replaceWith = ReplaceWith("setPosition")
   )
-  override fun setTranslation(translateX: Float, translateY: Float) {
+  override fun setTranslation(translationX: Float, translationY: Float) {
     val currentPosition = getPosition()
     setPosition(
       WidgetPosition {
         horizontalAlignment = currentPosition.horizontalAlignment
         verticalAlignment = currentPosition.verticalAlignment
-        offsetX = currentPosition.offsetX + translateX
-        offsetY = currentPosition.offsetY + translateY
+        offsetX = currentPosition.offsetX + translationX
+        offsetY = currentPosition.offsetY + translationY
       }
     )
   }

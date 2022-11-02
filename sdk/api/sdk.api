@@ -539,7 +539,10 @@ public abstract interface class com/mapbox/maps/renderer/RendererSetupErrorListe
 public class com/mapbox/maps/renderer/widget/BitmapWidget : com/mapbox/maps/renderer/widget/Widget {
 	public fun <init> (Landroid/graphics/Bitmap;)V
 	public fun <init> (Landroid/graphics/Bitmap;Lcom/mapbox/maps/renderer/widget/WidgetPosition;)V
+	public fun <init> (Landroid/graphics/Bitmap;Lcom/mapbox/maps/renderer/widget/WidgetPosition;F)V
 	public fun <init> (Landroid/graphics/Bitmap;Lcom/mapbox/maps/renderer/widget/WidgetPosition;FF)V
+	public synthetic fun <init> (Landroid/graphics/Bitmap;Lcom/mapbox/maps/renderer/widget/WidgetPosition;FFILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Landroid/graphics/Bitmap;Lcom/mapbox/maps/renderer/widget/WidgetPosition;FILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun <init> (Landroid/graphics/Bitmap;Lcom/mapbox/maps/renderer/widget/WidgetPosition;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun getPosition ()Lcom/mapbox/maps/renderer/widget/WidgetPosition;
 	public synthetic fun getRenderer$sdk_release ()Lcom/mapbox/maps/renderer/widget/WidgetRenderer;

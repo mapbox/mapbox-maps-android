@@ -28,7 +28,7 @@ class WidgetPosition private constructor(
    * Returns a String for the object.
    */
   override fun toString() =
-    "WidgetPosition(horizontalAlignment=$horizontalAlignment,verticalAlignment=$verticalAlignment,offsetX=$offsetX,offsetY=$offsetY"
+    "WidgetPosition(horizontalAlignment=$horizontalAlignment,verticalAlignment=$verticalAlignment,offsetX=$offsetX,offsetY=$offsetY)"
 
   /**
    * Indicates whether some other object is "equal to" this one.
