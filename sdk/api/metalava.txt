@@ -547,6 +547,7 @@ package com.mapbox.maps.renderer.widget {
     method public float getRotation();
     method public void setPosition(com.mapbox.maps.renderer.widget.WidgetPosition widgetPosition);
     method public void setRotation(float angleDegrees);
+    method @Deprecated public void setTranslation(float translateX, float translateY);
     method public final void updateBitmap(android.graphics.Bitmap bitmap);
     property public com.mapbox.maps.renderer.widget.BitmapWidgetRenderer renderer;
   }
@@ -556,7 +557,7 @@ package com.mapbox.maps.renderer.widget {
     method public abstract float getRotation();
     method public abstract void setPosition(com.mapbox.maps.renderer.widget.WidgetPosition widgetPosition);
     method public abstract void setRotation(float angleDegrees);
-    method @Deprecated public final void setTranslation(float translateX, float translateY);
+    method @Deprecated public abstract void setTranslation(float translateX, float translateY);
   }
 
   @com.mapbox.maps.MapboxExperimental public final class WidgetPosition {
@@ -565,6 +566,7 @@ package com.mapbox.maps.renderer.widget {
     method public float getOffsetX();
     method public float getOffsetY();
     method public com.mapbox.maps.renderer.widget.WidgetPosition.Vertical! getVerticalAlignment();
+    method public com.mapbox.maps.renderer.widget.WidgetPosition.Builder toBuilder();
     property public final com.mapbox.maps.renderer.widget.WidgetPosition.Horizontal! horizontalAlignment;
     property public final float offsetX;
     property public final float offsetY;

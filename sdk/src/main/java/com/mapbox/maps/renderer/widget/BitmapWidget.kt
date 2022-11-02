@@ -81,6 +81,28 @@ open class BitmapWidget @JvmOverloads constructor(
   override fun getPosition() = renderer.getPosition()
 
   /**
+   * Set the translation of the widget in pixels, relative to it's current position.
+   *
+   * @param translateX the offset in pixels towards the right of the screen.
+   * @param translateY the offset in pixels towards the bottom of the screen.
+   */
+  @Deprecated(
+    message = "setTranslation is deprecated, please use setPosition instead.",
+    replaceWith = ReplaceWith("setPosition")
+  )
+  override fun setTranslation(translateX: Float, translateY: Float) {
+    val currentPosition = getPosition()
+    setPosition(
+      WidgetPosition {
+        horizontalAlignment = currentPosition.horizontalAlignment
+        verticalAlignment = currentPosition.verticalAlignment
+        offsetX = currentPosition.offsetX + translateX
+        offsetY = currentPosition.offsetY + translateY
+      }
+    )
+  }
+
+  /**
    * Set the absolute rotation of widget in degrees.
    */
   override fun setRotation(angleDegrees: Float) {

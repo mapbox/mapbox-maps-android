@@ -29,17 +29,7 @@ abstract class Widget internal constructor() {
     message = "setTranslation is deprecated, please use setPosition instead.",
     replaceWith = ReplaceWith("setPosition")
   )
-  fun setTranslation(translateX: Float, translateY: Float) {
-    val currentPosition = getPosition()
-    setPosition(
-      WidgetPosition {
-        horizontalAlignment = currentPosition.horizontalAlignment
-        verticalAlignment = currentPosition.verticalAlignment
-        offsetX = currentPosition.offsetX + translateX
-        offsetY = currentPosition.offsetY + translateY
-      }
-    )
-  }
+  abstract fun setTranslation(translateX: Float, translateY: Float)
 
   /**
    * Set the absolute rotation of widget in degrees.
