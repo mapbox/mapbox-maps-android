@@ -1,0 +1,222 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>MapEvents</title>
+<link href="../../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../../";</script><script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script><link href="../../../styles/style.css" rel="Stylesheet"><link href="../../../styles/logo-styles.css" rel="Stylesheet"><link href="../../../styles/jetbrains-mono.css" rel="Stylesheet"><link href="../../../styles/main.css" rel="Stylesheet"><script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script><script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script><script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script><script type="text/javascript" src="../../../scripts/main.js" async="async"></script>  </head>
+  <body>
+    <div id="container">
+      <div id="leftColumn"><a href="../../../index.html">
+          <div id="logo"></div>
+        </a>
+        <div id="paneSearch"></div>
+        <div id="sideMenu"></div>
+      </div>
+      <div id="main">
+        <div id="leftToggler"><span class="icon-toggler"></span></div>
+<script type="text/javascript" src="../../../scripts/main.js"></script>        <div class="main-content" id="content" pageIds="mapbox-maps-android::com.mapbox.maps/MapEvents///PointingToDeclaration//540127926">
+          <div class="navigation-wrapper" id="navigation-wrapper">
+            <div class="breadcrumbs"><a href="../../../index.html">mapbox-maps-android</a>/<a href="../index.html">com.mapbox.maps</a>/<a href="index.html">MapEvents</a></div>
+            <div class="pull-right d-flex">
+              <div id="searchBar"></div>
+            </div>
+          </div>
+          <div class="cover ">
+            <h1 class="cover"><span>Map</span><wbr></wbr><span><span>Events</span></span></h1>
+            <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">class <a href="index.html">MapEvents</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><p class="paragraph">List of supported event types by the `map` and `map snapshotter` objects, and event data format specification for each event. ``` text Simplified diagram for events emitted by the map object. ┌─────────────┐ ┌─────────┐ ┌──────────────┐ │ Application │ │ Map │ │ResourceLoader│ └──────┬──────┘ └────┬────┘ └───────┬──────┘ │ │ │ ├───────setStyleURI────────▶│ │ │ ├───────────get style───────────▶│ │ │ │ │ │◀─────────style data────────────┤ │ │ │ │ ├─parse style─┐ │ │ │ │ │ │ StyleDataLoaded ◀─────────────┘ │ │◀────{&quot;type&quot;: &quot;style&quot;}─────┤ │ │ ├─────────get sprite────────────▶│ │ │ │ │ │◀────────sprite data────────────┤ │ │ │ │ ├──────parse sprite───────┐ │ │ │ │ │ │ StyleDataLoaded ◀─────────────────────────┘ │ │◀───{&quot;type&quot;: &quot;sprite&quot;}─────┤ │ │ ├─────get source TileJSON(s)────▶│ │ │ │ │ SourceDataLoaded │◀─────parse TileJSON data───────┤ │◀──{&quot;type&quot;: &quot;metadata&quot;}────┤ │ │ │ │ │ │ │ │ StyleDataLoaded │ │ │◀───{&quot;type&quot;: &quot;sources&quot;}────┤ │ │ ├──────────get tiles────────────▶│ │ │ │ │◀───────StyleLoaded────────┤ │ │ │ │ │ SourceDataLoaded │◀─────────tile data─────────────┤ │◀────{&quot;type&quot;: &quot;tile&quot;}──────┤ │ │ │ │ │ │ │ │◀────RenderFrameStarted────┤ │ │ ├─────render─────┐ │ │ │ │ │ │ ◀────────────────┘ │ │◀───RenderFrameFinished────┤ │ │ ├──render, all tiles loaded──┐ │ │ │ │ │ │ ◀────────────────────────────┘ │ │◀────────MapLoaded─────────┤ │ │ │ │ │ │ │ │◀─────────MapIdle──────────┤ │ │ ┌ ─── ─┴─ ─── ┐ │ │ │ offline │ │ │ └ ─── ─┬─ ─── ┘ │ │ │ │ ├─────────setCamera────────▶│ │ │ ├───────────get tiles───────────▶│ │ │ │ │ │┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ │ │◀─────────MapIdle──────────┤ waiting for connectivity │ │ │ ││ Map renders cached data │ │ │ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘ │ │ │ │ ```</p></div></div>
+          </div>
+          <div class="tabbedcontent">
+            <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Properties">Properties</button></div>
+            <div class="tabs-section-body">
+              <h2 class="">Properties</h2>
+              <div class="table" data-togglable="Properties"><a data-name="1208071075%2FProperties%2F540127926" anchor-label="CAMERA_CHANGED" id="1208071075%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="-c-a-m-e-r-a_-c-h-a-n-g-e-d.html">CAMERA_CHANGED</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1208071075%2FProperties%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="1208071075%2FProperties%2F540127926" anchor-label="CAMERA_CHANGED" id="1208071075%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace">val <a href="-c-a-m-e-r-a_-c-h-a-n-g-e-d.html">CAMERA_CHANGED</a>: <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="1208071075%2FProperties%2F540127926" anchor-label="CAMERA_CHANGED" id="1208071075%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>The camera has changed.</div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-791991098%2FProperties%2F540127926" anchor-label="MAP_IDLE" id="-791991098%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="-m-a-p_-i-d-l-e.html">MAP_IDLE</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-791991098%2FProperties%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-791991098%2FProperties%2F540127926" anchor-label="MAP_IDLE" id="-791991098%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace">val <a href="-m-a-p_-i-d-l-e.html">MAP_IDLE</a>: <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="-791991098%2FProperties%2F540127926" anchor-label="MAP_IDLE" id="-791991098%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>The `map` has entered the idle state.</div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="1636206197%2FProperties%2F540127926" anchor-label="MAP_LOADED" id="1636206197%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="-m-a-p_-l-o-a-d-e-d.html">MAP_LOADED</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1636206197%2FProperties%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="1636206197%2FProperties%2F540127926" anchor-label="MAP_LOADED" id="1636206197%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace">val <a href="-m-a-p_-l-o-a-d-e-d.html">MAP_LOADED</a>: <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="1636206197%2FProperties%2F540127926" anchor-label="MAP_LOADED" id="1636206197%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>The style has been fully loaded, and the `map` has rendered all visible tiles.</div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-1320825701%2FProperties%2F540127926" anchor-label="MAP_LOADING_ERROR" id="-1320825701%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="-m-a-p_-l-o-a-d-i-n-g_-e-r-r-o-r.html">MAP_LOADING_ERROR</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1320825701%2FProperties%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1320825701%2FProperties%2F540127926" anchor-label="MAP_LOADING_ERROR" id="-1320825701%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace">val <a href="-m-a-p_-l-o-a-d-i-n-g_-e-r-r-o-r.html">MAP_LOADING_ERROR</a>: <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="-1320825701%2FProperties%2F540127926" anchor-label="MAP_LOADING_ERROR" id="-1320825701%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Describes an error that has occurred while loading the Map.</div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="1215437136%2FProperties%2F540127926" anchor-label="RENDER_FRAME_FINISHED" id="1215437136%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="-r-e-n-d-e-r_-f-r-a-m-e_-f-i-n-i-s-h-e-d.html">RENDER_FRAME_FINISHED</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1215437136%2FProperties%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="1215437136%2FProperties%2F540127926" anchor-label="RENDER_FRAME_FINISHED" id="1215437136%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace">val <a href="-r-e-n-d-e-r_-f-r-a-m-e_-f-i-n-i-s-h-e-d.html">RENDER_FRAME_FINISHED</a>: <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="1215437136%2FProperties%2F540127926" anchor-label="RENDER_FRAME_FINISHED" id="1215437136%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>The `map` finished rendering a frame.</div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="634185751%2FProperties%2F540127926" anchor-label="RENDER_FRAME_STARTED" id="634185751%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="-r-e-n-d-e-r_-f-r-a-m-e_-s-t-a-r-t-e-d.html">RENDER_FRAME_STARTED</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="634185751%2FProperties%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="634185751%2FProperties%2F540127926" anchor-label="RENDER_FRAME_STARTED" id="634185751%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace">val <a href="-r-e-n-d-e-r_-f-r-a-m-e_-s-t-a-r-t-e-d.html">RENDER_FRAME_STARTED</a>: <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="634185751%2FProperties%2F540127926" anchor-label="RENDER_FRAME_STARTED" id="634185751%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>The `map` started rendering a frame.</div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="186195039%2FProperties%2F540127926" anchor-label="RESOURCE_REQUEST" id="186195039%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="-r-e-s-o-u-r-c-e_-r-e-q-u-e-s-t.html">RESOURCE_REQUEST</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="186195039%2FProperties%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="186195039%2FProperties%2F540127926" anchor-label="RESOURCE_REQUEST" id="186195039%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace">val <a href="-r-e-s-o-u-r-c-e_-r-e-q-u-e-s-t.html">RESOURCE_REQUEST</a>: <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="186195039%2FProperties%2F540127926" anchor-label="RESOURCE_REQUEST" id="186195039%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>The `ResourceRequest` event allows client to observe resource requests made by a `map` or `map snapshotter` objects.</div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="1684576673%2FProperties%2F540127926" anchor-label="SOURCE_ADDED" id="1684576673%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="-s-o-u-r-c-e_-a-d-d-e-d.html">SOURCE_ADDED</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1684576673%2FProperties%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="1684576673%2FProperties%2F540127926" anchor-label="SOURCE_ADDED" id="1684576673%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace">val <a href="-s-o-u-r-c-e_-a-d-d-e-d.html">SOURCE_ADDED</a>: <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="1684576673%2FProperties%2F540127926" anchor-label="SOURCE_ADDED" id="1684576673%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>The source has been added with `addStyleSource` method.</div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-606596473%2FProperties%2F540127926" anchor-label="SOURCE_DATA_LOADED" id="-606596473%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="-s-o-u-r-c-e_-d-a-t-a_-l-o-a-d-e-d.html">SOURCE_DATA_LOADED</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-606596473%2FProperties%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-606596473%2FProperties%2F540127926" anchor-label="SOURCE_DATA_LOADED" id="-606596473%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace">val <a href="-s-o-u-r-c-e_-d-a-t-a_-l-o-a-d-e-d.html">SOURCE_DATA_LOADED</a>: <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="-606596473%2FProperties%2F540127926" anchor-label="SOURCE_DATA_LOADED" id="-606596473%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>A source data has been loaded.</div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-1500067519%2FProperties%2F540127926" anchor-label="SOURCE_REMOVED" id="-1500067519%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="-s-o-u-r-c-e_-r-e-m-o-v-e-d.html">SOURCE_REMOVED</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1500067519%2FProperties%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1500067519%2FProperties%2F540127926" anchor-label="SOURCE_REMOVED" id="-1500067519%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace">val <a href="-s-o-u-r-c-e_-r-e-m-o-v-e-d.html">SOURCE_REMOVED</a>: <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="-1500067519%2FProperties%2F540127926" anchor-label="SOURCE_REMOVED" id="-1500067519%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>The source has been removed with `removeStyleSource` method.</div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="1703846545%2FProperties%2F540127926" anchor-label="STYLE_DATA_LOADED" id="1703846545%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="-s-t-y-l-e_-d-a-t-a_-l-o-a-d-e-d.html">STYLE_DATA_LOADED</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1703846545%2FProperties%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="1703846545%2FProperties%2F540127926" anchor-label="STYLE_DATA_LOADED" id="1703846545%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace">val <a href="-s-t-y-l-e_-d-a-t-a_-l-o-a-d-e-d.html">STYLE_DATA_LOADED</a>: <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="1703846545%2FProperties%2F540127926" anchor-label="STYLE_DATA_LOADED" id="1703846545%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>The requested style data has been loaded.</div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-1579013111%2FProperties%2F540127926" anchor-label="STYLE_IMAGE_MISSING" id="-1579013111%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="-s-t-y-l-e_-i-m-a-g-e_-m-i-s-s-i-n-g.html">STYLE_IMAGE_MISSING</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1579013111%2FProperties%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1579013111%2FProperties%2F540127926" anchor-label="STYLE_IMAGE_MISSING" id="-1579013111%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace">val <a href="-s-t-y-l-e_-i-m-a-g-e_-m-i-s-s-i-n-g.html">STYLE_IMAGE_MISSING</a>: <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="-1579013111%2FProperties%2F540127926" anchor-label="STYLE_IMAGE_MISSING" id="-1579013111%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>A style has a missing image.</div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-1918292930%2FProperties%2F540127926" anchor-label="STYLE_IMAGE_REMOVE_UNUSED" id="-1918292930%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="-s-t-y-l-e_-i-m-a-g-e_-r-e-m-o-v-e_-u-n-u-s-e-d.html">STYLE_IMAGE_REMOVE_UNUSED</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1918292930%2FProperties%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1918292930%2FProperties%2F540127926" anchor-label="STYLE_IMAGE_REMOVE_UNUSED" id="-1918292930%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace">val <a href="-s-t-y-l-e_-i-m-a-g-e_-r-e-m-o-v-e_-u-n-u-s-e-d.html">STYLE_IMAGE_REMOVE_UNUSED</a>: <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="-1918292930%2FProperties%2F540127926" anchor-label="STYLE_IMAGE_REMOVE_UNUSED" id="-1918292930%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>An image added to the style is no longer needed and can be removed using `removeStyleImage` method.</div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-1491474742%2FProperties%2F540127926" anchor-label="STYLE_LOADED" id="-1491474742%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="-s-t-y-l-e_-l-o-a-d-e-d.html">STYLE_LOADED</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1491474742%2FProperties%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1491474742%2FProperties%2F540127926" anchor-label="STYLE_LOADED" id="-1491474742%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace">val <a href="-s-t-y-l-e_-l-o-a-d-e-d.html">STYLE_LOADED</a>: <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="-1491474742%2FProperties%2F540127926" anchor-label="STYLE_LOADED" id="-1491474742%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>The requested style has been fully loaded, including the style, specified sprite and sources' metadata.</div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="go-to-top-icon"><a href="#content"></a></span><span>© 2022 Copyright</span><span class="pull-right"><span>Generated by </span><a href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span></div>
+      </div>
+    </div>
+  </body>
+</html>
+
