@@ -8,6 +8,15 @@ import com.mapbox.maps.MapboxExperimental
 @MapboxExperimental
 abstract class Widget internal constructor() {
   internal abstract val renderer: WidgetRenderer
+  private var repaintTriggerWeakReference: (() -> Unit)? = null
+
+  /**
+   * Triggers a repaint of the widget, as well as the map.
+   * It will do nothing if the widget has not been added to the map.
+   */
+  protected fun triggerRepaint() {
+    repaintTriggerWeakReference?.invoke()
+  }
 
   /**
    * Update the widget to the new position.
@@ -40,4 +49,9 @@ abstract class Widget internal constructor() {
    * Get absolute rotation of widget in degrees.
    */
   abstract fun getRotation(): Float
+
+  @JvmSynthetic
+  internal fun setRepaintTrigger(trigger: () -> Unit) {
+    repaintTriggerWeakReference = trigger
+  }
 }
