@@ -53,6 +53,13 @@ class CarMapShowcase : MapboxCarMapObserver {
           skyType(SkyType.ATMOSPHERE)
           skyAtmosphereSun(sunDirection)
         }
+      },
+      onStyleLoaded = { style ->
+        style.addStyleCustomLayer(
+          layerId = "empty_layer_id",
+          EmptyLayerHost(),
+          layerPosition = null,
+        )
       }
     )
   }
