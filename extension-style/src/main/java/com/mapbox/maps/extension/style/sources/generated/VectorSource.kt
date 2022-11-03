@@ -155,7 +155,8 @@ class VectorSource(builder: Builder) : Source(builder.sourceId) {
   /**
    * A property to use as a feature id (for feature state). Either a property name, or
    * an object of the form `{<sourceLayer>: <propertyName>}`. If specified as a string for a vector tile
-   * source, the same property is used across all its source layers.
+   * source, the same property is used across all its source layers. If specified as an object
+   * only specified source layers will have id overriden, others will fallback to original feature id
    */
   val promoteId: PromoteId?
     /**
@@ -390,7 +391,8 @@ class VectorSource(builder: Builder) : Source(builder.sourceId) {
     /**
      * A property to use as a feature id (for feature state). Either a property name, or
      * an object of the form `{<sourceLayer>: <propertyName>}`. If specified as a string for a vector tile
-     * source, the same property is used across all its source layers.
+     * source, the same property is used across all its source layers. If specified as an object
+     * only specified source layers will have id overriden, others will fallback to original feature id
      */
     fun promoteId(value: PromoteId) = apply {
       val propertyValue = PropertyValue("promoteId", value.toValue())

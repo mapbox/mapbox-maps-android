@@ -479,8 +479,7 @@ class Expression : Value {
     }
 
     /**
-     * Returns the feature's geometry type: `Point`, `MultiPoint`, `LineString`, `MultiLineString`, `Polygon`, `MultiPolygon`. `Multi-` feature types are only
-     * returned in GeoJSON sources. When working with vector tile sources, use the singular forms.
+     * Returns the feature's geometry type: `Point`, `LineString` or `Polygon`. `Multi-` feature types return the singular forms.
      */
     fun geometryType() {
       this@ExpressionBuilder.arguments.add(Expression.geometryType())
@@ -2423,8 +2422,7 @@ class Expression : Value {
       FormatBuilder().apply(block).build()
 
     /**
-     * Returns the feature's geometry type: `Point`, `MultiPoint`, `LineString`, `MultiLineString`, `Polygon`, `MultiPolygon`. `Multi-` feature types are only
-     * returned in GeoJSON sources. When working with vector tile sources, use the singular forms.
+     * Returns the feature's geometry type: `Point`, `LineString` or `Polygon`. `Multi-` feature types return the singular forms.
      */
     @JvmStatic
     fun geometryType() = ExpressionBuilder("geometry-type").build()
