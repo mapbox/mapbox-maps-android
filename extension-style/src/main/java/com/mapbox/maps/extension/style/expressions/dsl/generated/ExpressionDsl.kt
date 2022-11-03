@@ -192,7 +192,7 @@ fun floor(block: Expression.ExpressionBuilder.() -> Unit) = Expression.floor(blo
 fun format(block: Expression.FormatBuilder.() -> Unit) = Expression.format(block)
 
 /**
- * Returns the feature's geometry type: `Point`, `MultiPoint`, `LineString`, `MultiLineString`, `Polygon`, `MultiPolygon`. `Multi*` feature types are only returned in GeoJSON sources. When working with vector tile sources, use the singular forms.
+ * Returns the feature's geometry type: `Point`, `LineString` or `Polygon`. `Multi*` feature types return the singular forms.
  */
 fun geometryType() = Expression.geometryType()
 
