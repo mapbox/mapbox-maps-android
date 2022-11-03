@@ -411,25 +411,29 @@ class MapControllerTest {
   @OptIn(MapboxExperimental::class)
   @Test
   fun addWidgetTest() {
-    val widget = createTestWidget()
+    val mockWidget = mockk<BitmapWidget>()
+    every { mockWidget.setRepaintTrigger(any()) } just runs
     val mockRenderThread = mockk<MapboxRenderThread>(relaxed = true)
     every { mockRenderer.renderThread } returns mockRenderThread
     every { mockRenderer.scheduleRepaint() } just runs
-    testMapController.addWidget(widget)
-    verifyOnce { mockRenderThread.addWidget(widget) }
+    testMapController.addWidget(mockWidget)
+    verifyOnce { mockRenderThread.addWidget(mockWidget) }
+    verifyOnce { mockWidget.setRepaintTrigger(any()) }
     verifyOnce { mockRenderer.scheduleRepaint() }
   }
 
   @OptIn(MapboxExperimental::class)
   @Test
   fun removeWidgetTest() {
-    val widget = createTestWidget()
+    val mockWidget = mockk<BitmapWidget>()
+    every { mockWidget.setRepaintTrigger(any()) } just runs
     val mockRenderThread = mockk<MapboxRenderThread>(relaxed = true)
     every { mockRenderer.renderThread } returns mockRenderThread
     every { mockRenderer.scheduleRepaint() } just runs
-    every { mockRenderThread.removeWidget(widget) } returns true
-    assertTrue(testMapController.removeWidget(widget))
-    verifyOnce { mockRenderThread.removeWidget(widget) }
+    every { mockRenderThread.removeWidget(mockWidget) } returns true
+    assertTrue(testMapController.removeWidget(mockWidget))
+    verifyOnce { mockWidget.setRepaintTrigger(null) }
+    verifyOnce { mockRenderThread.removeWidget(mockWidget) }
     verifyOnce { mockRenderer.scheduleRepaint() }
   }
 
