@@ -204,6 +204,7 @@ package com.mapbox.maps {
     method public double getMetersPerPixelAtLatitude(double latitude);
     method public byte getPrefetchZoomDelta();
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.RenderCacheOptions getRenderCacheOptions();
+    method public boolean getRenderWorldCopies();
     method public com.mapbox.maps.ResourceOptions getResourceOptions();
     method public com.mapbox.maps.Size getSize();
     method public void getStyle(com.mapbox.maps.Style.OnStyleLoaded onStyleLoaded);
@@ -263,6 +264,7 @@ package com.mapbox.maps {
     method public void setNorthOrientation(com.mapbox.maps.NorthOrientation northOrientation);
     method public void setPrefetchZoomDelta(byte delta);
     method @com.mapbox.maps.MapboxExperimental public void setRenderCacheOptions(com.mapbox.maps.RenderCacheOptions options);
+    method public void setRenderWorldCopies(boolean renderWorldCopies);
     method public void setUserAnimationInProgress(boolean inProgress);
     method public void setViewportMode(com.mapbox.maps.ViewportMode viewportMode);
     method public void subscribe(com.mapbox.maps.Observer observer, java.util.List<java.lang.String> events);

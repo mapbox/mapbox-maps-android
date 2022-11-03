@@ -1641,6 +1641,32 @@ class MapboxMap :
   }
 
   /**
+   * Sets whether multiple copies of the world will be rendered side by side beyond -180 and 180 degrees longitude.
+   * If disabled, when the map is zoomed out far enough that a single representation of the world
+   * does not fill the map's entire container, there will be blank space beyond 180 and -180 degrees longitude.
+   * In this case, features that cross 180 and -180 degrees longitude will be cut in two
+   * (with one portion on the right edge of the map and the other on the left edge of the map) at every zoom level.
+   *
+   * By default, renderWorldCopies is set to `true`.
+   *
+   * @param renderWorldCopies The `boolean` value defining whether rendering world copies is going to be enabled or not.
+   */
+  fun setRenderWorldCopies(renderWorldCopies: Boolean) {
+    checkNativeMap("setRenderWorldCopies")
+    nativeMap.renderWorldCopies = renderWorldCopies
+  }
+
+  /**
+   * Returns whether multiple copies of the world are being rendered side by side beyond -180 and 180 degrees longitude.
+   *
+   * @return `true` if rendering world copies is enabled, `false` otherwise.
+   */
+  fun getRenderWorldCopies(): Boolean {
+    checkNativeMap("getRenderWorldCopies")
+    return nativeMap.renderWorldCopies
+  }
+
+  /**
    * Returns if the style has been fully loaded.
    */
   @Deprecated(

@@ -1118,6 +1118,18 @@ class PixelForCoordinatesTest(
     assertEquals(ScreenCoordinate(expectedX, expectedY), screenCoordinate)
   }
 
+  @Test
+  fun setRenderWorldCopies() {
+    mapboxMap.setRenderWorldCopies(true)
+    verify { nativeMap.renderWorldCopies = true }
+  }
+
+  @Test
+  fun getRenderWorldCopies() {
+    mapboxMap.getRenderWorldCopies()
+    verify { nativeMap.renderWorldCopies }
+  }
+
   @After
   fun cleanUp() {
     unmockkStatic(Map::class)

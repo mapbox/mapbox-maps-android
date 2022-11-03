@@ -207,6 +207,7 @@ public final class com/mapbox/maps/MapboxMap : com/mapbox/maps/ObservableInterfa
 	public fun getMetersPerPixelAtLatitude (DD)D
 	public final fun getPrefetchZoomDelta ()B
 	public final fun getRenderCacheOptions ()Lcom/mapbox/maps/RenderCacheOptions;
+	public final fun getRenderWorldCopies ()Z
 	public final fun getResourceOptions ()Lcom/mapbox/maps/ResourceOptions;
 	public fun getSize ()Lcom/mapbox/maps/Size;
 	public final fun getStyle ()Lcom/mapbox/maps/Style;
@@ -274,6 +275,7 @@ public final class com/mapbox/maps/MapboxMap : com/mapbox/maps/ObservableInterfa
 	public fun setNorthOrientation (Lcom/mapbox/maps/NorthOrientation;)V
 	public final fun setPrefetchZoomDelta (B)V
 	public final fun setRenderCacheOptions (Lcom/mapbox/maps/RenderCacheOptions;)V
+	public final fun setRenderWorldCopies (Z)V
 	public fun setUserAnimationInProgress (Z)V
 	public fun setViewportMode (Lcom/mapbox/maps/ViewportMode;)V
 	public fun subscribe (Lcom/mapbox/maps/Observer;Ljava/util/List;)V

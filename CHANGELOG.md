@@ -10,6 +10,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Avoid tiles re-layout on enabling terrain with zero exaggeration. ([1791](https://github.com/mapbox/mapbox-maps-android/pull/1791))
 * Asynchronous GeoJSON data parsing when adding a new style source. ([1791](https://github.com/mapbox/mapbox-maps-android/pull/1791))
 * Unify the `margin`/`translation` `Widget` APIs into the `WidgetPosition.offset`, rename `WidgetPosition.horizontal`/`WidgetPosition.vertical` to `WidgetPosition.horizontalAlignment`/`WidgetPosition.verticalAlignment`; Deprecate the original constructors and `setTranslation` APIs. ([1782](https://github.com/mapbox/mapbox-maps-android/pull/1782))
+* Add APIs to enable/disable rendering of world copies. ([1794](https://github.com/mapbox/mapbox-maps-android/pull/1794), [1791](https://github.com/mapbox/mapbox-maps-android/pull/1791))
 
 ## Bug fixes 🐞
 * Fix an issue when touch events didn't pass through clickable view annotations. ([1745](https://github.com/mapbox/mapbox-maps-android/pull/1745))
