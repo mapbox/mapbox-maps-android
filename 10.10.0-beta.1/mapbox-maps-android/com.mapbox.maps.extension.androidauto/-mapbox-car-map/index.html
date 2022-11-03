@@ -1,0 +1,250 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>MapboxCarMap</title>
+<link href="../../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../../";</script><script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script><link href="../../../styles/style.css" rel="Stylesheet"><link href="../../../styles/logo-styles.css" rel="Stylesheet"><link href="../../../styles/jetbrains-mono.css" rel="Stylesheet"><link href="../../../styles/main.css" rel="Stylesheet"><script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script><script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script><script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script><script type="text/javascript" src="../../../scripts/main.js" async="async"></script>  </head>
+  <body>
+    <div id="container">
+      <div id="leftColumn"><a href="../../../index.html">
+          <div id="logo"></div>
+        </a>
+        <div id="paneSearch"></div>
+        <div id="sideMenu"></div>
+      </div>
+      <div id="main">
+        <div id="leftToggler"><span class="icon-toggler"></span></div>
+<script type="text/javascript" src="../../../scripts/main.js"></script>        <div class="main-content" id="content" pageIds="mapbox-maps-android::com.mapbox.maps.extension.androidauto/MapboxCarMap///PointingToDeclaration//540127926">
+          <div class="navigation-wrapper" id="navigation-wrapper">
+            <div class="breadcrumbs"><a href="../../../index.html">mapbox-maps-android</a>/<a href="../index.html">com.mapbox.maps.extension.androidauto</a>/<a href="index.html">MapboxCarMap</a></div>
+            <div class="pull-right d-flex">
+              <div id="searchBar"></div>
+            </div>
+          </div>
+          <div class="cover ">
+            <h1 class="cover"><span>Mapbox</span><wbr></wbr><span>Car</span><wbr></wbr><span><span>Map</span></span></h1>
+            <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">class <a href="index.html">MapboxCarMap</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><p class="paragraph">This is the main entry point for controlling the Mapbox car map surface.</p><p class="paragraph">You can add the <a href="index.html">MapboxCarMap</a> to your entire <a href="https://developer.android.com/reference/kotlin/androidx/car/app/Session.html">androidx.car.app.Session</a> using the <a href="https://developer.android.com/reference/kotlin/androidx/lifecycle/Lifecycle.html">Lifecycle</a>. And then any <a href="https://developer.android.com/reference/kotlin/androidx/car/app/Screen.html">androidx.car.app.Screen</a> that is using a supported template will automatically show the Mapbox map. You can also, specify a <a href="index.html">MapboxCarMap</a> for each individual <a href="https://developer.android.com/reference/kotlin/androidx/car/app/Screen.html">androidx.car.app.Screen</a> by constructing the <a href="index.html">MapboxCarMap</a> with the screen Lifecycle.</p><p class="paragraph">Supported templates include:</p><ul><li><p class="paragraph"><a href="https://developer.android.com/reference/kotlin/androidx/car/app/navigation/model/NavigationTemplate.html">androidx.car.app.navigation.model.NavigationTemplate</a></p></li><li><p class="paragraph"><a href="https://developer.android.com/reference/kotlin/androidx/car/app/navigation/model/RoutePreviewNavigationTemplate.html">androidx.car.app.navigation.model.RoutePreviewNavigationTemplate</a></p></li><li><p class="paragraph"><a href="https://developer.android.com/reference/kotlin/androidx/car/app/navigation/model/PlaceListNavigationTemplate.html">androidx.car.app.navigation.model.PlaceListNavigationTemplate</a></p></li></ul><p class="paragraph">Customize your <a href="index.html">MapboxCarMap</a> with your own implementations of <a href="../-mapbox-car-map-observer/index.html">MapboxCarMapObserver</a>. Use the <a href="register-observer.html">registerObserver</a> and <a href="unregister-observer.html">unregisterObserver</a> functions to load and detach the observers.</p><p class="paragraph">The internals of this class use <a href="https://developer.android.com/reference/kotlin/androidx/car/app/AppManager.html#setSurfaceCallback-androidx.car.app.SurfaceCallback?-">AppManager.setSurfaceCallback</a>, which assumes there is a single surface callback. Do not use setSurfaceCallback, and do not create multiple instances of <a href="index.html">MapboxCarMap</a>.</p></div></div>
+          </div>
+          <div class="tabbedcontent">
+            <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Constructors">Constructors</button><button class="section-tab" data-togglable="Functions">Functions</button><button class="section-tab" data-togglable="Properties">Properties</button></div>
+            <div class="tabs-section-body">
+              <h2 class="tabbedcontent">Constructors</h2>
+              <div class="table" data-togglable="Constructors"><a data-name="468871987%2FConstructors%2F540127926" anchor-label="MapboxCarMap" id="468871987%2FConstructors%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue TabbedContent">
+                    <div class=""><span class="inline-flex"><a href="-mapbox-car-map.html">MapboxCarMap</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="468871987%2FConstructors%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">fun <a href="-mapbox-car-map.html">MapboxCarMap</a>()<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <h2 class="">Functions</h2>
+              <div class="table" data-togglable="Functions"><a data-name="-772667814%2FFunctions%2F540127926" anchor-label="clearObservers" id="-772667814%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="clear-observers.html"><span>clear</span><wbr></wbr><span><span>Observers</span></span></a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-772667814%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">fun <a href="clear-observers.html">clearObservers</a>(): <a href="index.html">MapboxCarMap</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<div class="brief "><p class="paragraph">Optional function to clear all observers registered through <a href="register-observer.html">registerObserver</a></p></div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-927579060%2FFunctions%2F540127926" anchor-label="prepareSurfaceCallback" id="-927579060%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="prepare-surface-callback.html"><span>prepare</span><wbr></wbr><span>Surface</span><wbr></wbr><span><span>Callback</span></span></a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-927579060%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">fun <a href="prepare-surface-callback.html">prepareSurfaceCallback</a>(carContext: <a href="https://developer.android.com/reference/kotlin/androidx/car/app/CarContext.html">CarContext</a>, mapInitOptions: <a href="../../com.mapbox.maps/-map-init-options/index.html">MapInitOptions</a>): <a href="https://developer.android.com/reference/kotlin/androidx/car/app/SurfaceCallback.html">SurfaceCallback</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<div class="brief "><p class="paragraph">Instead of using <a href="setup.html">setup</a>, this function allows you to create your own <a href="https://developer.android.com/reference/kotlin/androidx/car/app/SurfaceCallback.html">SurfaceCallback</a> and forward the calls to the returned <a href="https://developer.android.com/reference/kotlin/androidx/car/app/SurfaceCallback.html">SurfaceCallback</a>. This makes it possible for you to adopt new api versions or intercept the calls and continue to use the <a href="index.html">MapboxCarMap</a> as designed.</p></div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-518393760%2FFunctions%2F540127926" anchor-label="registerObserver" id="-518393760%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="register-observer.html"><span>register</span><wbr></wbr><span><span>Observer</span></span></a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-518393760%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">fun <a href="register-observer.html">registerObserver</a>(mapboxCarMapObserver: <a href="../-mapbox-car-map-observer/index.html">MapboxCarMapObserver</a>): <a href="index.html">MapboxCarMap</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+</div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-1549135150%2FFunctions%2F540127926" anchor-label="setGestureHandler" id="-1549135150%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="set-gesture-handler.html"><span>set</span><wbr></wbr><span>Gesture</span><wbr></wbr><span><span>Handler</span></span></a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1549135150%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">fun <a href="set-gesture-handler.html">setGestureHandler</a>(gestureHandler: <a href="../-mapbox-car-map-gesture-handler/index.html">MapboxCarMapGestureHandler</a>?): <a href="index.html">MapboxCarMap</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<div class="brief "><p class="paragraph">Override the car gestures with your own implementation. If you would like to build a custom experience for handling gestures, you can implement the <a href="../-mapbox-car-map-gesture-handler/index.html">MapboxCarMapGestureHandler</a> interface, or override the <a href="../-default-mapbox-car-map-gesture-handler/index.html">DefaultMapboxCarMapGestureHandler</a>, or set to null to disable gesture handling.</p></div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-1565359840%2FFunctions%2F540127926" anchor-label="setup" id="-1565359840%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="setup.html"><span><span>setup</span></span></a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1565359840%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">fun <a href="setup.html">setup</a>(carContext: <a href="https://developer.android.com/reference/kotlin/androidx/car/app/CarContext.html">CarContext</a>, mapInitOptions: <a href="../../com.mapbox.maps/-map-init-options/index.html">MapInitOptions</a>): <a href="index.html">MapboxCarMap</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<div class="brief "><p class="paragraph">Calls <a href="https://developer.android.com/reference/kotlin/androidx/car/app/AppManager.html#setSurfaceCallback-androidx.car.app.SurfaceCallback?-">AppManager.setSurfaceCallback</a> to give Mapbox access to render the map onto Android Auto head units. You should only call this once per <a href="https://developer.android.com/reference/kotlin/androidx/car/app/CarContext.html">CarContext</a> in a <a href="https://developer.android.com/reference/kotlin/androidx/car/app/Session.html">Session</a>.</p></div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="1603855335%2FFunctions%2F540127926" anchor-label="unregisterObserver" id="1603855335%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="unregister-observer.html"><span>unregister</span><wbr></wbr><span><span>Observer</span></span></a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1603855335%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">fun <a href="unregister-observer.html">unregisterObserver</a>(mapboxCarMapObserver: <a href="../-mapbox-car-map-observer/index.html">MapboxCarMapObserver</a>): <a href="index.html">MapboxCarMap</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+</div>
+</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <h2 class="">Properties</h2>
+              <div class="table" data-togglable="Properties"><a data-name="303598735%2FProperties%2F540127926" anchor-label="carContext" id="303598735%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="car-context.html">carContext</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="303598735%2FProperties%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="303598735%2FProperties%2F540127926" anchor-label="carContext" id="303598735%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace">val <a href="car-context.html">carContext</a>: <a href="https://developer.android.com/reference/kotlin/androidx/car/app/CarContext.html">CarContext</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="303598735%2FProperties%2F540127926" anchor-label="carContext" id="303598735%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Accessor for the carContext provided to the MapInitOptions. This makes it easier to create screens with the MapboxCarMap in the constructor.</p></div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="2047623659%2FProperties%2F540127926" anchor-label="carMapSurface" id="2047623659%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="car-map-surface.html">carMapSurface</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2047623659%2FProperties%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="2047623659%2FProperties%2F540127926" anchor-label="carMapSurface" id="2047623659%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace">val <a href="car-map-surface.html">carMapSurface</a>: <a href="../-mapbox-car-map-surface/index.html">MapboxCarMapSurface</a>?<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="2047623659%2FProperties%2F540127926" anchor-label="carMapSurface" id="2047623659%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Returns the current <a href="../-mapbox-car-map-surface/index.html">MapboxCarMapSurface</a>. It is recommended to use <a href="register-observer.html">registerObserver</a> and <a href="../-mapbox-car-map-observer/index.html">MapboxCarMapObserver</a> to attach and detach your customizations.</p></div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="220350648%2FProperties%2F540127926" anchor-label="mapInitOptions" id="220350648%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="map-init-options.html">mapInitOptions</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="220350648%2FProperties%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="220350648%2FProperties%2F540127926" anchor-label="mapInitOptions" id="220350648%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace">val <a href="map-init-options.html">mapInitOptions</a>: <a href="../../com.mapbox.maps/-map-init-options/index.html">MapInitOptions</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="220350648%2FProperties%2F540127926" anchor-label="mapInitOptions" id="220350648%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">The initial options used to <a href="setup.html">setup</a> the map.</p></div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-2109381118%2FProperties%2F540127926" anchor-label="stableArea" id="-2109381118%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="stable-area.html">stableArea</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2109381118%2FProperties%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-2109381118%2FProperties%2F540127926" anchor-label="stableArea" id="-2109381118%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace">val <a href="stable-area.html">stableArea</a>: <a href="https://developer.android.com/reference/kotlin/android/graphics/Rect.html">Rect</a>?<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="-2109381118%2FProperties%2F540127926" anchor-label="stableArea" id="-2109381118%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Accessor to the stable area calculated by the car library. It is recommended to use the values returned by <span data-unresolved-link="com.mapbox.maps.extension.androidauto/MapboxCarMapObserver/onStableAreaChanged/#android.graphics.Rect#com.mapbox.maps.EdgeInsets/PointingToDeclaration/">MapboxCarMapObserver.onStableAreaChanged</span>.</p></div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="1994059964%2FProperties%2F540127926" anchor-label="stableEdgeInsets" id="1994059964%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="stable-edge-insets.html">stableEdgeInsets</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1994059964%2FProperties%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="1994059964%2FProperties%2F540127926" anchor-label="stableEdgeInsets" id="1994059964%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace">val <a href="stable-edge-insets.html">stableEdgeInsets</a>: <a href="../../com.mapbox.maps/-edge-insets/index.html">EdgeInsets</a>?<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="1994059964%2FProperties%2F540127926" anchor-label="stableEdgeInsets" id="1994059964%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Accessor to the stableEdgeInsets calculated by the car library. It is recommended to use the values returned by <span data-unresolved-link="com.mapbox.maps.extension.androidauto/MapboxCarMapObserver/onStableAreaChanged/#android.graphics.Rect#com.mapbox.maps.EdgeInsets/PointingToDeclaration/">MapboxCarMapObserver.onStableAreaChanged</span>.</p></div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="1097074289%2FProperties%2F540127926" anchor-label="visibleArea" id="1097074289%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="visible-area.html">visibleArea</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1097074289%2FProperties%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="1097074289%2FProperties%2F540127926" anchor-label="visibleArea" id="1097074289%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace">val <a href="visible-area.html">visibleArea</a>: <a href="https://developer.android.com/reference/kotlin/android/graphics/Rect.html">Rect</a>?<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="1097074289%2FProperties%2F540127926" anchor-label="visibleArea" id="1097074289%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Accessor to the visible area calculated by the car library. It is recommended to use the values returned by <span data-unresolved-link="com.mapbox.maps.extension.androidauto/MapboxCarMapObserver/onVisibleAreaChanged/#android.graphics.Rect#com.mapbox.maps.EdgeInsets/PointingToDeclaration/">MapboxCarMapObserver.onVisibleAreaChanged</span>.</p></div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-1135263253%2FProperties%2F540127926" anchor-label="visibleEdgeInsets" id="-1135263253%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="visible-edge-insets.html">visibleEdgeInsets</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1135263253%2FProperties%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1135263253%2FProperties%2F540127926" anchor-label="visibleEdgeInsets" id="-1135263253%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace">val <a href="visible-edge-insets.html">visibleEdgeInsets</a>: <a href="../../com.mapbox.maps/-edge-insets/index.html">EdgeInsets</a>?<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="-1135263253%2FProperties%2F540127926" anchor-label="visibleEdgeInsets" id="-1135263253%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Accessor to the edgeInsets calculated by the car library. It is recommended to use the values returned by <span data-unresolved-link="com.mapbox.maps.extension.androidauto/MapboxCarMapObserver/onVisibleAreaChanged/#android.graphics.Rect#com.mapbox.maps.EdgeInsets/PointingToDeclaration/">MapboxCarMapObserver.onVisibleAreaChanged</span>.</p></div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="go-to-top-icon"><a href="#content"></a></span><span>© 2022 Copyright</span><span class="pull-right"><span>Generated by </span><a href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span></div>
+      </div>
+    </div>
+  </body>
+</html>
+
