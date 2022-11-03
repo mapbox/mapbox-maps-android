@@ -219,12 +219,16 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
 
   override fun addWidget(widget: Widget) {
     val weakThis = WeakReference(this)
-    renderer.renderThread.addWidget(widget.also { it.setRepaintTrigger { weakThis.get()?.renderer?.scheduleRepaint() } })
+    widget.setRepaintTrigger {
+      weakThis.get()?.renderer?.scheduleRepaint()
+    }
+    renderer.renderThread.addWidget(widget)
     renderer.scheduleRepaint()
   }
 
   override fun removeWidget(widget: Widget): Boolean {
     val wasRemoved = renderer.renderThread.removeWidget(widget)
+    widget.setRepaintTrigger(null)
     if (wasRemoved) {
       renderer.scheduleRepaint()
     }
