@@ -51,7 +51,7 @@ abstract class Widget internal constructor() {
   abstract fun getRotation(): Float
 
   @JvmSynthetic
-  internal fun setRepaintTrigger(trigger: (() -> Unit)?) {
-    repaintTrigger = trigger
+  internal fun setRepaintTrigger(doOnRepaint: (() -> Unit)?) {
+    repaintTrigger = doOnRepaint
   }
 }

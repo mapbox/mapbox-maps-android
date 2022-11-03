@@ -228,8 +228,8 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
 
   override fun removeWidget(widget: Widget): Boolean {
     val wasRemoved = renderer.renderThread.removeWidget(widget)
-    widget.setRepaintTrigger(null)
     if (wasRemoved) {
+      widget.setRepaintTrigger(null)
       renderer.scheduleRepaint()
     }
     return wasRemoved
