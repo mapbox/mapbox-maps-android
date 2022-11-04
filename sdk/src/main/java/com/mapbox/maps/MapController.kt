@@ -37,7 +37,6 @@ import com.mapbox.maps.renderer.MapboxRenderer
 import com.mapbox.maps.renderer.OnFpsChangedListener
 import com.mapbox.maps.renderer.RendererSetupErrorListener
 import com.mapbox.maps.renderer.widget.Widget
-import java.lang.ref.WeakReference
 
 internal class MapController : MapPluginProviderDelegate, MapControllable {
 
@@ -218,9 +217,8 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   }
 
   override fun addWidget(widget: Widget) {
-    val weakThis = WeakReference(this)
-    widget.setRepaintTrigger {
-      weakThis.get()?.renderer?.scheduleRepaint()
+    widget.setTriggerRepaintAction {
+      renderer.scheduleRepaint()
     }
     renderer.renderThread.addWidget(widget)
     renderer.scheduleRepaint()
@@ -229,7 +227,6 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   override fun removeWidget(widget: Widget): Boolean {
     val wasRemoved = renderer.renderThread.removeWidget(widget)
     if (wasRemoved) {
-      widget.setRepaintTrigger(null)
       renderer.scheduleRepaint()
     }
     return wasRemoved

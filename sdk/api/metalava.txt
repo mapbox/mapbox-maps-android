@@ -561,7 +561,6 @@ package com.mapbox.maps.renderer.widget {
     method public abstract void setPosition(com.mapbox.maps.renderer.widget.WidgetPosition widgetPosition);
     method public abstract void setRotation(float angleDegrees);
     method @Deprecated public abstract void setTranslation(float translateX, float translateY);
-    method protected final void triggerRepaint();
   }
 
   @com.mapbox.maps.MapboxExperimental public final class WidgetPosition {

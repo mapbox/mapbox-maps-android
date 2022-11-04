@@ -412,13 +412,13 @@ class MapControllerTest {
   @Test
   fun addWidgetTest() {
     val mockWidget = mockk<BitmapWidget>()
-    every { mockWidget.setRepaintTrigger(any()) } just runs
+    every { mockWidget.setTriggerRepaintAction(any()) } just runs
     val mockRenderThread = mockk<MapboxRenderThread>(relaxed = true)
     every { mockRenderer.renderThread } returns mockRenderThread
     every { mockRenderer.scheduleRepaint() } just runs
     testMapController.addWidget(mockWidget)
     verifyOnce { mockRenderThread.addWidget(mockWidget) }
-    verifyOnce { mockWidget.setRepaintTrigger(any()) }
+    verifyOnce { mockWidget.setTriggerRepaintAction(any()) }
     verifyOnce { mockRenderer.scheduleRepaint() }
   }
 
@@ -426,13 +426,13 @@ class MapControllerTest {
   @Test
   fun removeWidgetTest() {
     val mockWidget = mockk<BitmapWidget>()
-    every { mockWidget.setRepaintTrigger(any()) } just runs
+    every { mockWidget.setTriggerRepaintAction(any()) } just runs
     val mockRenderThread = mockk<MapboxRenderThread>(relaxed = true)
     every { mockRenderer.renderThread } returns mockRenderThread
     every { mockRenderer.scheduleRepaint() } just runs
     every { mockRenderThread.removeWidget(mockWidget) } returns true
     assertTrue(testMapController.removeWidget(mockWidget))
-    verifyOnce { mockWidget.setRepaintTrigger(null) }
+    verifyOnce { mockWidget.setTriggerRepaintAction(null) }
     verifyOnce { mockRenderThread.removeWidget(mockWidget) }
     verifyOnce { mockRenderer.scheduleRepaint() }
   }

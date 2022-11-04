@@ -561,7 +561,6 @@ public abstract class com/mapbox/maps/renderer/widget/Widget {
 	public abstract fun setPosition (Lcom/mapbox/maps/renderer/widget/WidgetPosition;)V
 	public abstract fun setRotation (F)V
 	public abstract fun setTranslation (FF)V
-	protected final fun triggerRepaint ()V
 }
 
 public final class com/mapbox/maps/renderer/widget/WidgetPosition {

@@ -47,6 +47,7 @@ internal abstract class MapboxRenderer : MapClient {
   @UiThread
   fun onDestroy() {
     logI(TAG, "onDestroy")
+    widgetRenderer.cleanUpAllWidgets()
     renderThread.destroy()
     renderThread.fpsChangedListener = null
   }

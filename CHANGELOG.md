@@ -3,8 +3,10 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
-## Features ✨ and improvements 🏁
-* Add `Widget.triggerRepaint` protected API and updated the `BitmapWidget` to trigger repaint after widget is updated. ([1797](https://github.com/mapbox/mapbox-maps-android/pull/1797))
+
+# 10.10.0-rc.1
+## Bug fixes 🐞
+* Trigger repaint after `BitmapWidget` is updated. ([1797](https://github.com/mapbox/mapbox-maps-android/pull/1797))
 
 # 10.10.0-beta.1 November 03, 2022
 ## Features ✨ and improvements 🏁
