@@ -411,12 +411,14 @@ class MapControllerTest {
   @OptIn(MapboxExperimental::class)
   @Test
   fun addWidgetTest() {
-    val widget = createTestWidget()
+    val mockWidget = mockk<BitmapWidget>()
+    every { mockWidget.setTriggerRepaintAction(any()) } just runs
     val mockRenderThread = mockk<MapboxRenderThread>(relaxed = true)
     every { mockRenderer.renderThread } returns mockRenderThread
     every { mockRenderer.scheduleRepaint() } just runs
-    testMapController.addWidget(widget)
-    verifyOnce { mockRenderThread.addWidget(widget) }
+    testMapController.addWidget(mockWidget)
+    verifyOnce { mockRenderThread.addWidget(mockWidget) }
+    verifyOnce { mockWidget.setTriggerRepaintAction(any()) }
     verifyOnce { mockRenderer.scheduleRepaint() }
   }
 

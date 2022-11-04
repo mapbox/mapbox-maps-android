@@ -5,9 +5,14 @@ import android.os.HandlerThread
 import android.os.Looper
 import com.mapbox.maps.*
 import com.mapbox.maps.renderer.gl.PixelReader
+import com.mapbox.maps.renderer.widget.BitmapWidget
+import com.mapbox.maps.renderer.widget.BitmapWidgetRenderer
+import com.mapbox.maps.renderer.widget.WidgetPosition
 import io.mockk.*
 import org.junit.After
 import org.junit.Assert
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -291,10 +296,18 @@ internal abstract class MapboxRendererTest {
 
   @Test
   fun onDestroyTest() {
+    val mockWidget = mockk<BitmapWidget>()
+    val bitmapWidgetRenderer = BitmapWidgetRenderer(null, WidgetPosition { })
+    every { mockWidget.renderer } returns bitmapWidgetRenderer
+    every { mockWidget.setTriggerRepaintAction(any()) } just runs
     val listener = OnFpsChangedListener { }
     every { renderThread.fpsChangedListener } returns listener
+    mapboxRenderer.widgetRenderer.addWidget(mockWidget)
+    assertTrue(mapboxRenderer.widgetRenderer.hasWidgets())
     mapboxRenderer.setOnFpsChangedListener(listener)
     mapboxRenderer.onDestroy()
+    assertFalse(mapboxRenderer.widgetRenderer.hasWidgets())
+    verify { mockWidget.setTriggerRepaintAction(null) }
     verify { renderThread.destroy() }
     verify { renderThread.fpsChangedListener = null }
   }
