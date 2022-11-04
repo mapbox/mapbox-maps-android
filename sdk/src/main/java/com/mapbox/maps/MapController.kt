@@ -217,6 +217,9 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   }
 
   override fun addWidget(widget: Widget) {
+    widget.setTriggerRepaintAction {
+      renderer.scheduleRepaint()
+    }
     renderer.renderThread.addWidget(widget)
     renderer.scheduleRepaint()
   }
