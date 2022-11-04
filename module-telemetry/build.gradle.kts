@@ -8,18 +8,12 @@ plugins {
   id("io.gitlab.arturbosch.detekt").version(Versions.detekt)
 }
 
-val VERSION_NAME: String by project
-
 android {
   compileSdk = AndroidVersions.compileSdkVersion
   defaultConfig {
     minSdk = AndroidVersions.minSdkVersion
     targetSdk = AndroidVersions.targetSdkVersion
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    buildConfigField("String", "MAPBOX_SDK_IDENTIFIER", String.format("\"%s\"", "mapbox-maps-android"))
-    buildConfigField("String", "MAPBOX_SDK_VERSION", String.format("\"%s\"", VERSION_NAME))
-    buildConfigField("String", "MAPBOX_VERSION_STRING", String.format("\"Mapbox/%s\"", VERSION_NAME))
-    buildConfigField("String", "MAPBOX_EVENTS_USER_AGENT", String.format("\"mapbox-maps-android/%s\"", VERSION_NAME))
   }
 }
 

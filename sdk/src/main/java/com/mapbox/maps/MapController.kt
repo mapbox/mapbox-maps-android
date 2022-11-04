@@ -168,6 +168,12 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
       return
     }
     lifecycleState = LifecycleState.STATE_DESTROYED
+    // flush the queued events before destroy to avoid lost telemetry events
+    MapProvider.getEventService(mapInitOptions.resourceOptions.accessToken).flush { expected ->
+      expected.error?.let { error ->
+        logE(TAG, "EventService flush error: $error")
+      }
+    }
     pluginRegistry.onDestroy()
     nativeObserver.onDestroy()
     renderer.onDestroy()

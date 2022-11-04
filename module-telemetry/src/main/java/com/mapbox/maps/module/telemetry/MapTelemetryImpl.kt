@@ -17,6 +17,7 @@ import com.mapbox.common.TelemetryService
 import com.mapbox.common.TelemetryUtils
 import com.mapbox.common.TurnstileEvent
 import com.mapbox.common.UserSKUIdentifier
+import com.mapbox.maps.base.BuildConfig
 import com.mapbox.maps.logE
 import com.mapbox.maps.module.MapTelemetry
 import java.util.*
