@@ -425,15 +425,13 @@ class MapControllerTest {
   @OptIn(MapboxExperimental::class)
   @Test
   fun removeWidgetTest() {
-    val mockWidget = mockk<BitmapWidget>()
-    every { mockWidget.setTriggerRepaintAction(any()) } just runs
+    val widget = createTestWidget()
     val mockRenderThread = mockk<MapboxRenderThread>(relaxed = true)
     every { mockRenderer.renderThread } returns mockRenderThread
     every { mockRenderer.scheduleRepaint() } just runs
-    every { mockRenderThread.removeWidget(mockWidget) } returns true
-    assertTrue(testMapController.removeWidget(mockWidget))
-    verifyOnce { mockWidget.setTriggerRepaintAction(null) }
-    verifyOnce { mockRenderThread.removeWidget(mockWidget) }
+    every { mockRenderThread.removeWidget(widget) } returns true
+    assertTrue(testMapController.removeWidget(widget))
+    verifyOnce { mockRenderThread.removeWidget(widget) }
     verifyOnce { mockRenderer.scheduleRepaint() }
   }
 
