@@ -7,8 +7,7 @@ import android.view.WindowManager
 import com.mapbox.common.*
 import io.mockk.*
 import org.junit.After
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertTrue
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
@@ -121,6 +120,7 @@ class MapTelemetryTest {
     }
     val slot = slot<Event>()
     verify { eventsService.sendEvent(capture(slot), any()) }
+    assertEquals(EventPriority.QUEUED, slot.captured.priority)
     assertTrue(slot.captured.attributes.toJson().contains("\"event\":\"map.load\""))
     assertTrue(slot.captured.attributes.toJson().contains("\"sdkIdentifier\":\"mapbox-maps-android\""))
   }
@@ -170,6 +170,7 @@ class MapTelemetryTest {
     telemetry.onPerformanceEvent(null)
     val slot = slot<Event>()
     verify { eventsService.sendEvent(capture(slot), any()) }
+    assertEquals(EventPriority.QUEUED, slot.captured.priority)
     assertTrue(slot.captured.attributes.toJson().contains("\"event\":\"mobile.performance_trace\""))
   }
 }
