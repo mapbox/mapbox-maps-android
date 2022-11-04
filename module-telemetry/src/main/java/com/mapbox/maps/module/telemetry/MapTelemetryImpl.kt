@@ -86,7 +86,7 @@ class MapTelemetryImpl : MapTelemetry {
 
   private fun sendEvent(event: String) {
     val eventAttributes = Value.fromJson(event)
-    val mapEvent = eventAttributes.value?.let { Event(EventPriority.IMMEDIATE, it, null) }
+    val mapEvent = eventAttributes.value?.let { Event(EventPriority.QUEUED, it, null) }
     if (mapEvent != null) {
       eventsService.sendEvent(mapEvent) { eventsServiceError ->
         eventsServiceError?.let {
