@@ -195,7 +195,18 @@ internal class MapboxWidgetRenderer(
     widgets.add(widget)
   }
 
-  fun removeWidget(widget: Widget) = widgets.remove(widget)
+  fun removeWidget(widget: Widget): Boolean {
+    val removed = widgets.remove(widget)
+    if (removed) {
+      widget.setTriggerRepaintAction(null)
+    }
+    return removed
+  }
+
+  fun cleanUpAllWidgets() {
+    widgets.forEach { it.setTriggerRepaintAction(null) }
+    widgets.clear()
+  }
 
   private companion object {
     private const val TAG: String = "MapboxWidgetRenderer"

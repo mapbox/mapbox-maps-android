@@ -95,6 +95,7 @@ open class BitmapWidget @JvmOverloads constructor(
    */
   fun updateBitmap(bitmap: Bitmap) {
     renderer.updateBitmap(bitmap)
+    triggerRepaint()
   }
 
   /**
@@ -102,6 +103,7 @@ open class BitmapWidget @JvmOverloads constructor(
    */
   override fun setPosition(widgetPosition: WidgetPosition) {
     renderer.setPosition(widgetPosition)
+    triggerRepaint()
   }
 
   /**
@@ -136,6 +138,7 @@ open class BitmapWidget @JvmOverloads constructor(
    */
   override fun setRotation(angleDegrees: Float) {
     renderer.setRotation(angleDegrees = angleDegrees)
+    triggerRepaint()
   }
 
   /**
