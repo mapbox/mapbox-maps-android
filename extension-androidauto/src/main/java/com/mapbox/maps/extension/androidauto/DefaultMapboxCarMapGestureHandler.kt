@@ -8,8 +8,9 @@ import com.mapbox.maps.plugin.animation.camera
  * This class contains the default map gestures. It Handles the gestures received from
  * [SurfaceCallback] and applies them to the [MapboxMap] camera. If you would like to customize
  * the map gestures, use [MapboxCarMap.setGestureHandler].
+ *
+ * @since 1.0.0
  */
-@MapboxExperimental
 open class DefaultMapboxCarMapGestureHandler : MapboxCarMapGestureHandler {
 
   /**
