@@ -5,6 +5,7 @@ import android.telephony.TelephonyManager
 import android.view.Display
 import android.view.WindowManager
 import com.mapbox.common.*
+import com.mapbox.maps.base.BuildConfig
 import io.mockk.*
 import org.junit.After
 import org.junit.Assert.*
