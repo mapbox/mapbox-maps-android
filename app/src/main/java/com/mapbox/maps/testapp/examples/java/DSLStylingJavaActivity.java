@@ -155,7 +155,16 @@ public class DSLStylingJavaActivity extends AppCompatActivity implements OnMapCl
         StyleExtensionImpl.Builder builder = new StyleExtensionImpl.Builder(Style.TRAFFIC_DAY);
 
         // Add a image source
-        builder.addSource(new ImageSource.Builder(IMAGE_URL).coordinates(POINT_LIST).build());
+        builder.addSource(
+                new ImageSource.Builder(IMAGE_SOURCE_ID)
+                        .coordinates(POINT_LIST)
+                        .url(IMAGE_URL)
+                        .build()
+        );
+        // Add a rasterLayer show the image
+        RasterLayer rasterLayer = new RasterLayer(RASTER_LAYER_ID, IMAGE_SOURCE_ID);
+        rasterLayer.rasterOpacity(0.8);
+        builder.addLayer(rasterLayer);
         // Add the earthquake source
         builder.addSource(new GeoJsonSource.Builder(SOURCE_ID)
                 .url(GEOJSON_URL)
@@ -190,34 +199,6 @@ public class DSLStylingJavaActivity extends AppCompatActivity implements OnMapCl
         symbolLayer.symbolSortKey(subtract(toNumber(get(MAG_KEY))));
         builder.addLayerAtPosition(builder.layerAtPosition(symbolLayer, CIRCLE_LAYER_ID));
 
-        // Add a rasterLayer show the image
-        RasterLayer rasterLayer = new RasterLayer(RASTER_LAYER_ID, IMAGE_SOURCE_ID);
-        rasterLayer.rasterOpacity(0.8);
-        builder.addLayer(rasterLayer);
         return builder.build();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mapView.onStart();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        mapView.onStop();
-    }
-
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        mapView.onLowMemory();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mapView.onDestroy();
     }
 }
