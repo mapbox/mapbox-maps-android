@@ -53,10 +53,14 @@ internal object MapProvider {
     return mapTelemetry
   }
 
-  fun getEventService(accessToken: String): EventsService {
+  fun flushPendingEvents(accessToken: String) {
     val eventsServiceOptions =
       EventsServerOptions(accessToken, BuildConfig.MAPBOX_EVENTS_USER_AGENT, null)
-    return EventsService.getOrCreate(eventsServiceOptions)
+    EventsService.getOrCreate(eventsServiceOptions).flush { expected ->
+      expected.error?.let { error ->
+        logE(MapController.TAG, "EventsService flush error: $error")
+      }
+    }
   }
 
   /**
