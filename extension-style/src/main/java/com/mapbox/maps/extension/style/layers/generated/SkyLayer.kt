@@ -5,6 +5,7 @@ package com.mapbox.maps.extension.style.layers.generated
 import androidx.annotation.ColorInt
 import androidx.annotation.UiThread
 import com.mapbox.maps.StyleManager
+import com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.Layer
 import com.mapbox.maps.extension.style.layers.properties.*
@@ -18,6 +19,9 @@ import java.util.*
 
 /**
  * A spherical dome around the map that is always rendered behind all other layers.
+ *
+ * **Warning**: As of v10.6.0, [Atmosphere] is the preferred method for atmospheric styling.
+ * Sky layer is not supported by the globe projection, and will be phased out in future major release.
  *
  * @see [The online documentation](https://www.mapbox.com/mapbox-gl-style-spec/#layers-sky)
  *
