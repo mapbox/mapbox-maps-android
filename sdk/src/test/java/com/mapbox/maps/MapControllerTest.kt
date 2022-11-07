@@ -3,6 +3,7 @@ package com.mapbox.maps
 import android.content.Context
 import android.graphics.Bitmap
 import android.view.MotionEvent
+import com.mapbox.common.EventsService
 import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.MapPluginRegistry
 import com.mapbox.maps.plugin.Plugin
@@ -14,6 +15,7 @@ import com.mapbox.maps.renderer.MapboxRenderer
 import com.mapbox.maps.renderer.OnFpsChangedListener
 import com.mapbox.maps.renderer.widget.BitmapWidget
 import com.mapbox.maps.renderer.widget.Widget
+import com.mapbox.maps.shadows.ShadowEventsService
 import com.mapbox.verifyOnce
 import io.mockk.*
 import org.junit.After
@@ -22,10 +24,11 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
+@Config(shadows = [ShadowEventsService::class])
 class MapControllerTest {
-
   private val mockRenderer: MapboxRenderer = mockk()
   private val mockNativeObserver: NativeObserver = mockk()
   private val mockNativeMap: MapInterface = mockk()
@@ -37,6 +40,7 @@ class MapControllerTest {
   private val mockContext: Context = mockk()
   private val mockMapView: MapView = mockk()
   private val mockOnStyleDataLoadedListener: OnStyleDataLoadedListener = mockk()
+  private val mockEventsService = mockk<EventsService>()
 
   private lateinit var testMapController: MapController
 
@@ -56,6 +60,13 @@ class MapControllerTest {
 
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logI(any(), any()) } just Runs
+    val mockResourceOptions = mockk<ResourceOptions>()
+    every { mockMapInitOptions.resourceOptions } returns mockResourceOptions
+    every { mockResourceOptions.accessToken } returns "access.token"
+
+    mockkStatic(EventsService::class)
+    every { EventsService.getOrCreate(any()) } returns mockEventsService
+    every { mockEventsService.flush(any()) } just runs
   }
 
   @After
@@ -117,6 +128,7 @@ class MapControllerTest {
       mockNativeObserver.removeOnStyleDataLoadedListener(any())
       mockRenderer.onStop()
       mockPluginRegistry.onStop()
+      mockEventsService.flush(any())
     }
   }
 
