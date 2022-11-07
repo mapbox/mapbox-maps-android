@@ -2,7 +2,11 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
+# 10.9.1 November 7, 2022
 
+## Bug fixes 🐞
+* Handle OOB when getting DEM Data ([#1808](https://github.com/mapbox/mapbox-maps-android/pull/1808))
+ 
 # 10.9.0 October 21, 2022
 
 ## Features ✨ and improvements 🏁
