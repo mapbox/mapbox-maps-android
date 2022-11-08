@@ -2,8 +2,11 @@ package com.mapbox.maps
 
 import android.content.Context
 import com.mapbox.annotation.module.MapboxModuleType
+import com.mapbox.common.EventsServerOptions
+import com.mapbox.common.EventsService
 import com.mapbox.common.module.provider.MapboxModuleProvider
 import com.mapbox.common.module.provider.ModuleProviderArgument
+import com.mapbox.maps.base.BuildConfig
 import com.mapbox.maps.module.MapTelemetry
 import com.mapbox.maps.plugin.MapDelegateProviderImpl
 import com.mapbox.maps.plugin.MapPluginRegistry
@@ -48,6 +51,16 @@ internal object MapProvider {
     }
     mapTelemetry.onAppUserTurnstileEvent()
     return mapTelemetry
+  }
+
+  fun flushPendingEvents(accessToken: String) {
+    val eventsServiceOptions =
+      EventsServerOptions(accessToken, BuildConfig.MAPBOX_EVENTS_USER_AGENT, null)
+    EventsService.getOrCreate(eventsServiceOptions).flush { expected ->
+      expected.error?.let { error ->
+        logE(MapController.TAG, "EventsService flush error: $error")
+      }
+    }
   }
 
   /**
