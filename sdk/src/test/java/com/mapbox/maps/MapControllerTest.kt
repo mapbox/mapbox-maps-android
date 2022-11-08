@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.view.MotionEvent
 import com.mapbox.common.EventsService
+import com.mapbox.common.TelemetryService
 import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.MapPluginRegistry
 import com.mapbox.maps.plugin.Plugin
@@ -16,6 +17,7 @@ import com.mapbox.maps.renderer.OnFpsChangedListener
 import com.mapbox.maps.renderer.widget.BitmapWidget
 import com.mapbox.maps.renderer.widget.Widget
 import com.mapbox.maps.shadows.ShadowEventsService
+import com.mapbox.maps.shadows.ShadowTelemetryService
 import com.mapbox.verifyOnce
 import io.mockk.*
 import org.junit.After
@@ -27,7 +29,7 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowEventsService::class])
+@Config(shadows = [ShadowEventsService::class, ShadowTelemetryService::class])
 class MapControllerTest {
   private val mockRenderer: MapboxRenderer = mockk()
   private val mockNativeObserver: NativeObserver = mockk()
@@ -41,6 +43,7 @@ class MapControllerTest {
   private val mockMapView: MapView = mockk()
   private val mockOnStyleDataLoadedListener: OnStyleDataLoadedListener = mockk()
   private val mockEventsService = mockk<EventsService>()
+  private val mockTelemetryService = mockk<TelemetryService>()
 
   private lateinit var testMapController: MapController
 
@@ -67,6 +70,10 @@ class MapControllerTest {
     mockkStatic(EventsService::class)
     every { EventsService.getOrCreate(any()) } returns mockEventsService
     every { mockEventsService.flush(any()) } just runs
+
+    mockkStatic(TelemetryService::class)
+    every { TelemetryService.getOrCreate(any()) } returns mockTelemetryService
+    every { mockTelemetryService.flush(any()) } just runs
   }
 
   @After
@@ -129,6 +136,7 @@ class MapControllerTest {
       mockRenderer.onStop()
       mockPluginRegistry.onStop()
       mockEventsService.flush(any())
+      mockTelemetryService.flush(any())
     }
   }
 
