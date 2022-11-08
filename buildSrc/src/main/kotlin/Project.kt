@@ -99,7 +99,7 @@ object Dependencies {
 object Versions {
   const val pluginAndroidGradle = "7.0.4"
   const val pluginKotlin = "1.5.31"
-  const val pluginLicense = "0.8.80"
+  const val pluginLicense = "0.9.0"
   const val pluginDokka =  "1.5.31"
   const val pluginJacoco = "0.2"
   const val pluginBinaryCompatibilityValidator = "0.8.0"
