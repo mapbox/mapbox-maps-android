@@ -4,6 +4,7 @@ import android.os.Build
 import android.os.Bundle
 import com.google.gson.Gson
 import com.google.gson.JsonObject
+import com.mapbox.maps.base.BuildConfig
 import com.mapbox.maps.module.telemetry.PerformanceEvent.PerformanceAttribute
 import io.mockk.every
 import io.mockk.mockk

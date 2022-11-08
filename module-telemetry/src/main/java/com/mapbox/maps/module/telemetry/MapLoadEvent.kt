@@ -3,6 +3,7 @@ package com.mapbox.maps.module.telemetry
 import android.annotation.SuppressLint
 import android.os.Build
 import com.google.gson.annotations.SerializedName
+import com.mapbox.maps.base.BuildConfig
 
 /**
  * Event will be sent while map is loaded.

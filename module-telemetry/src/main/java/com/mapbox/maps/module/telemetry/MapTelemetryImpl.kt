@@ -17,6 +17,7 @@ import com.mapbox.common.TelemetryService
 import com.mapbox.common.TelemetryUtils
 import com.mapbox.common.TurnstileEvent
 import com.mapbox.common.UserSKUIdentifier
+import com.mapbox.maps.base.BuildConfig
 import com.mapbox.maps.logE
 import com.mapbox.maps.module.MapTelemetry
 import java.util.*
@@ -86,7 +87,7 @@ class MapTelemetryImpl : MapTelemetry {
 
   private fun sendEvent(event: String) {
     val eventAttributes = Value.fromJson(event)
-    val mapEvent = eventAttributes.value?.let { Event(EventPriority.IMMEDIATE, it, null) }
+    val mapEvent = eventAttributes.value?.let { Event(EventPriority.QUEUED, it, null) }
     if (mapEvent != null) {
       eventsService.sendEvent(mapEvent) { eventsServiceError ->
         eventsServiceError?.let {
