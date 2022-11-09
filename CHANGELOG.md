@@ -8,6 +8,11 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * Trigger repaint after `BitmapWidget` is updated. ([1797](https://github.com/mapbox/mapbox-maps-android/pull/1797))
 
+# 10.9.1 November 7, 2022
+
+## Bug fixes 🐞
+* Handle OOB when getting DEM Data. ([#1808](https://github.com/mapbox/mapbox-maps-android/pull/1808))
+
 # 10.10.0-beta.1 November 03, 2022
 ## Features ✨ and improvements 🏁
 * Introduce view annotation `ViewAnnotationManager.annotations` API to access list of added view annotations. ([1751](https://github.com/mapbox/mapbox-maps-android/pull/1751))
