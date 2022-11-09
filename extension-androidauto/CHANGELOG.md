@@ -4,8 +4,16 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 ## Features ✨ and improvements 🏁
+
+# 0.4.0 November 7, 2022
+
+## Features ✨ and improvements 🏁
 * Make the SDK compatible with any version of Mapbox Maps `v10.5.+`. ([#1706](https://github.com/mapbox/mapbox-maps-android/pull/1706))
 * Remove experimental annotation from `MapboxCarMap`, `MapboxCarMapObserver`, `MapboxCarMapSurface`, `MapboxCarMapGestureHandler`, and `DefaultMapboxCarMapGestureHandler`. ([#1767](https://github.com/mapbox/mapbox-maps-android/pull/1767))
+
+## Dependencies
+* Android Auto car library `androidx.car.app:app:1.1.+`
+* Supports any version of [Mapbox Maps 10.5.+](https://github.com/mapbox/mapbox-maps-android/tree/main/extension-androidauto#compatibility-with-maps-sdk-v10)
 
 # 0.3.0 September 26, 2022
 
