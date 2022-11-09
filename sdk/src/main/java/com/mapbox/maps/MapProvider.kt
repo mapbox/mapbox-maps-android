@@ -4,6 +4,7 @@ import android.content.Context
 import com.mapbox.annotation.module.MapboxModuleType
 import com.mapbox.common.EventsServerOptions
 import com.mapbox.common.EventsService
+import com.mapbox.common.TelemetryService
 import com.mapbox.common.module.provider.MapboxModuleProvider
 import com.mapbox.common.module.provider.ModuleProviderArgument
 import com.mapbox.maps.base.BuildConfig
@@ -54,11 +55,16 @@ internal object MapProvider {
   }
 
   fun flushPendingEvents(accessToken: String) {
-    val eventsServiceOptions =
+    val eventsServerOptions =
       EventsServerOptions(accessToken, BuildConfig.MAPBOX_EVENTS_USER_AGENT, null)
-    EventsService.getOrCreate(eventsServiceOptions).flush { expected ->
+    EventsService.getOrCreate(eventsServerOptions).flush { expected ->
       expected.error?.let { error ->
         logE(MapController.TAG, "EventsService flush error: $error")
+      }
+    }
+    TelemetryService.getOrCreate(eventsServerOptions).flush { expected ->
+      expected.error?.let { error ->
+        logE(MapController.TAG, "TelemetryService flush error: $error")
       }
     }
   }
