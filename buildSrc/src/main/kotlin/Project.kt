@@ -138,7 +138,7 @@ object Versions {
   const val mockk = "1.12.3"
   const val robolectric = "4.8.1"
   const val robolectricEgl = "gl1.1-android-2.1_r1"
-  const val lint = "27.2.2"
+  const val lint = "30.0.4"
   const val hamcrest = "2.1"
   const val equalsVerifier = "3.10.1"
   const val asyncInflater = "1.0.0"
