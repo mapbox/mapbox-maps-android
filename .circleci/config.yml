@@ -356,7 +356,7 @@ commands:
                   --app << parameters.app_target >>/build/outputs/apk/debug/<< parameters.app_target >>-debug.apk \
                   --test << parameters.module_target >>/build/outputs/apk/androidTest/debug/<< parameters.module_target >>-debug-androidTest.apk \
                   --device model=blueline,version=28,locale=en,orientation=portrait \
-                  --timeout 45m --use-orchestrator --no-record-video --num-flaky-test-attempts 3 \
+                  --timeout 45m --use-orchestrator --no-record-video --num-flaky-test-attempts 1 \
                   --num-uniform-shards 3
               else
                 gcloud beta firebase test android run --type instrumentation \
@@ -364,7 +364,7 @@ commands:
                 --test << parameters.module_target >>/build/outputs/apk/androidTest/debug/<< parameters.module_target >>-debug-androidTest.apk \
                 --device model=harpia,version=23,locale=en,orientation=portrait \
                 --device model=blueline,version=28,locale=en,orientation=portrait \
-                --timeout 45m --use-orchestrator --no-record-video --num-flaky-test-attempts 3 \
+                --timeout 45m --use-orchestrator --no-record-video --num-flaky-test-attempts 1 \
                 --num-uniform-shards 4
               fi
             fi
