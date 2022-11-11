@@ -38,6 +38,12 @@ class LocationComponentPluginImpl : LocationComponentPlugin2, LocationConsumer2,
   @VisibleForTesting(otherwise = PRIVATE)
   internal var isLocationComponentActivated = false
 
+  private var lastIndicatorPosition: Point? = null
+
+  private var lastIndicatorBearing: Double? = null
+
+  private var lastIndicatorAccuracyRadius: Double? = null
+
   private val onIndicatorPositionChangedListeners =
     CopyOnWriteArraySet<OnIndicatorPositionChangedListener>()
 
@@ -54,6 +60,9 @@ class LocationComponentPluginImpl : LocationComponentPlugin2, LocationConsumer2,
    */
   override fun addOnIndicatorPositionChangedListener(listener: OnIndicatorPositionChangedListener) {
     onIndicatorPositionChangedListeners.add(listener)
+    lastIndicatorPosition?.let {
+      listener.onIndicatorPositionChanged(it)
+    }
   }
 
   /**
@@ -67,6 +76,7 @@ class LocationComponentPluginImpl : LocationComponentPlugin2, LocationConsumer2,
 
   @VisibleForTesting(otherwise = PRIVATE)
   internal val indicatorPositionChangedListener = OnIndicatorPositionChangedListener {
+    lastIndicatorPosition = it
     for (listener in onIndicatorPositionChangedListeners) {
       listener.onIndicatorPositionChanged(it)
     }
@@ -79,6 +89,9 @@ class LocationComponentPluginImpl : LocationComponentPlugin2, LocationConsumer2,
    */
   override fun addOnIndicatorBearingChangedListener(listener: OnIndicatorBearingChangedListener) {
     onIndicatorBearingChangedListeners.add(listener)
+    lastIndicatorBearing?.let {
+      listener.onIndicatorBearingChanged(it)
+    }
   }
 
   /**
@@ -97,6 +110,9 @@ class LocationComponentPluginImpl : LocationComponentPlugin2, LocationConsumer2,
    */
   override fun addOnIndicatorAccuracyRadiusChangedListener(listener: OnIndicatorAccuracyRadiusChangedListener) {
     onIndicatorAccuracyRadiusChangedListeners.add(listener)
+    lastIndicatorAccuracyRadius?.let {
+      listener.onIndicatorAccuracyRadiusChanged(it)
+    }
   }
 
   /**
@@ -140,6 +156,7 @@ class LocationComponentPluginImpl : LocationComponentPlugin2, LocationConsumer2,
 
   @VisibleForTesting(otherwise = PRIVATE)
   internal val indicatorBearingChangedListener = OnIndicatorBearingChangedListener {
+    lastIndicatorBearing = it
     for (listener in onIndicatorBearingChangedListeners) {
       listener.onIndicatorBearingChanged(it)
     }
@@ -147,6 +164,7 @@ class LocationComponentPluginImpl : LocationComponentPlugin2, LocationConsumer2,
 
   @VisibleForTesting(otherwise = PRIVATE)
   internal val indicatorAccuracyRadiusChangedListener = OnIndicatorAccuracyRadiusChangedListener {
+    lastIndicatorAccuracyRadius = it
     for (listener in onIndicatorAccuracyRadiusChangedListeners) {
       listener.onIndicatorAccuracyRadiusChanged(it)
     }
