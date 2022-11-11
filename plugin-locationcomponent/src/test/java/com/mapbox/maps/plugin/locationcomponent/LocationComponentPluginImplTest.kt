@@ -202,7 +202,6 @@ class LocationComponentPluginImplTest {
     verify(exactly = 0) { bearingListener.onIndicatorBearingChanged(0.0) }
   }
 
-
   @Test
   fun testAddOnIndicatorAccuracyRadiusChangedListener() {
     val accuracyListener = mockk<OnIndicatorAccuracyRadiusChangedListener>(relaxed = true)
