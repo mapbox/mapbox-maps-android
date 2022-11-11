@@ -4,9 +4,16 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 ## Features ✨ and improvements 🏁
-* Always use `MapOptions.contextMode = ContextMode.SHARED` when creating the map session preventing hard-catching runtime crashes or artifacts. ([1834](https://github.com/mapbox/mapbox-maps-android/pull/1834))
+
+# 0.5.0 November 16, 2022
 
 ## Features ✨ and improvements 🏁
+* Make the SDK compatible with Jetpack Car Library `v1.2.+`. ([#1828](https://github.com/mapbox/mapbox-maps-android/pull/1828))
+* Always use `MapOptions.contextMode = ContextMode.SHARED` when creating the map session preventing hard-catching runtime crashes or artifacts. ([1834](https://github.com/mapbox/mapbox-maps-android/pull/1834))
+
+## Dependencies
+* Android Auto car library `androidx.car.app:app:1.2.+`
+* Supports any version of [Mapbox Maps 10.5.+](https://github.com/mapbox/mapbox-maps-android/tree/main/extension-androidauto#compatibility-with-maps-sdk-v10)
 
 # 0.4.0 November 7, 2022
 
