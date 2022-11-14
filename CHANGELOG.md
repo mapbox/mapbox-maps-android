@@ -7,6 +7,7 @@ Mapbox welcomes participation and contributions from everyone.
 # 10.10.0-rc.1
 ## Bug fixes 🐞
 * Trigger repaint after `BitmapWidget` is updated. ([1797](https://github.com/mapbox/mapbox-maps-android/pull/1797))
+* Fix BitmapWidget.setTranslation API to offset relative to its original position. ([1833](https://github.com/mapbox/mapbox-maps-android/pull/1833))
 
 # 10.9.1 November 7, 2022
 
