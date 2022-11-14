@@ -572,6 +572,8 @@ internal class ViewAnnotationManagerImpl(
   private fun remove(internalId: String, annotation: ViewAnnotation) {
     viewAnnotationsLayout.removeView(annotation.view)
     updateVisibilityAndNotifyUpdateListeners(annotation, ViewAnnotationVisibility.INVISIBLE)
+    // explicit onViewDetachedFromWindow call is needed to handle use-case
+    // if the view has an animation attached
     annotation.attachStateListener?.onViewDetachedFromWindow(annotation.view)
     annotation.view.removeOnAttachStateChangeListener(annotation.attachStateListener)
     annotation.attachStateListener = null
