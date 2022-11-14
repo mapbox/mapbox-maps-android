@@ -2,6 +2,7 @@ package com.mapbox.maps
 
 import android.graphics.Rect
 import android.view.View
+import android.view.ViewTreeObserver
 import android.widget.FrameLayout
 import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.bindgen.Value
@@ -26,6 +27,7 @@ class ViewAnnotationManagerTest {
   private lateinit var view: View
   private lateinit var viewAnnotationsLayout: FrameLayout
   private lateinit var renderer: MapboxRenderThread
+  private lateinit var viewTreeObserver: ViewTreeObserver
   private val style: Style = mockk(relaxUnitFun = true)
 
   @Before
@@ -34,6 +36,7 @@ class ViewAnnotationManagerTest {
     every { mapView.layoutParams = any() } just Runs
     every { mapView.context } returns mockk()
     renderer = mockk(relaxUnitFun = true)
+    viewTreeObserver = mockk(relaxed = true)
     every { mapView.mapController.renderer.renderThread } returns renderer
     frameLayoutParams = FrameLayout.LayoutParams(0, 0)
     frameLayoutParams.width = DEFAULT_WIDTH
@@ -52,7 +55,7 @@ class ViewAnnotationManagerTest {
   private fun mockView(): View = mockk<View>().also {
     every { it.layoutParams } returns frameLayoutParams
     every { it.visibility } returns View.VISIBLE
-    every { it.viewTreeObserver } returns mockk(relaxed = true)
+    every { it.viewTreeObserver } returns viewTreeObserver
     every { it.addOnAttachStateChangeListener(any()) } just Runs
     every { it.removeOnAttachStateChangeListener(any()) } just Runs
   }
@@ -193,6 +196,8 @@ class ViewAnnotationManagerTest {
     verify(exactly = 1) { view.removeOnAttachStateChangeListener(any()) }
     verify(exactly = 1) { mapboxMap.removeViewAnnotation(id!!) }
     verify(exactly = 1) { viewAnnotationsLayout.removeView(view) }
+    verify(exactly = 1) { viewTreeObserver.removeOnDrawListener(any()) }
+    verify(exactly = 1) { viewTreeObserver.removeOnGlobalLayoutListener(any()) }
   }
 
   @Test
