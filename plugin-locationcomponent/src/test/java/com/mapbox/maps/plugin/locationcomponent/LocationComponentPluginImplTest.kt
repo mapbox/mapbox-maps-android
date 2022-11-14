@@ -148,14 +148,23 @@ class LocationComponentPluginImplTest {
   @Test
   fun testAddOnIndicatorPositionChangedListener() {
     val positionListener = mockk<OnIndicatorPositionChangedListener>(relaxed = true)
-    locationComponentPlugin.addOnIndicatorPositionChangedListener(positionListener)
     locationComponentPlugin.indicatorPositionChangedListener.onIndicatorPositionChanged(
       Point.fromLngLat(
         0.0,
         0.0
       )
     )
-    verify { positionListener.onIndicatorPositionChanged(Point.fromLngLat(0.0, 0.0)) }
+    locationComponentPlugin.addOnIndicatorPositionChangedListener(positionListener)
+    // Verify the newly added listener will get the last updated indicator position
+    verify(exactly = 1) { positionListener.onIndicatorPositionChanged(Point.fromLngLat(0.0, 0.0)) }
+    locationComponentPlugin.indicatorPositionChangedListener.onIndicatorPositionChanged(
+      Point.fromLngLat(
+        1.0,
+        0.0
+      )
+    )
+    // Verify the listener will get notified when new location arrives.
+    verify(exactly = 1) { positionListener.onIndicatorPositionChanged(Point.fromLngLat(1.0, 0.0)) }
   }
 
   @Test
@@ -175,9 +184,13 @@ class LocationComponentPluginImplTest {
   @Test
   fun testAddOnIndicatorBearingChangedListener() {
     val bearingListener = mockk<OnIndicatorBearingChangedListener>(relaxed = true)
-    locationComponentPlugin.addOnIndicatorBearingChangedListener(bearingListener)
     locationComponentPlugin.indicatorBearingChangedListener.onIndicatorBearingChanged(0.0)
-    verify { bearingListener.onIndicatorBearingChanged(0.0) }
+    locationComponentPlugin.addOnIndicatorBearingChangedListener(bearingListener)
+    // Verify the newly added listener will get the last updated indicator bearing
+    verify(exactly = 1) { bearingListener.onIndicatorBearingChanged(0.0) }
+    // Verify the listener will get notified when new bearing arrives.
+    locationComponentPlugin.indicatorBearingChangedListener.onIndicatorBearingChanged(1.0)
+    verify(exactly = 1) { bearingListener.onIndicatorBearingChanged(1.0) }
   }
 
   @Test
@@ -187,6 +200,27 @@ class LocationComponentPluginImplTest {
     locationComponentPlugin.removeOnIndicatorBearingChangedListener(bearingListener)
     locationComponentPlugin.indicatorBearingChangedListener.onIndicatorBearingChanged(0.0)
     verify(exactly = 0) { bearingListener.onIndicatorBearingChanged(0.0) }
+  }
+
+  @Test
+  fun testAddOnIndicatorAccuracyRadiusChangedListener() {
+    val accuracyListener = mockk<OnIndicatorAccuracyRadiusChangedListener>(relaxed = true)
+    locationComponentPlugin.indicatorAccuracyRadiusChangedListener.onIndicatorAccuracyRadiusChanged(0.0)
+    locationComponentPlugin.addOnIndicatorAccuracyRadiusChangedListener(accuracyListener)
+    // Verify the newly added listener will get the last updated indicator accuracy radius
+    verify(exactly = 1) { accuracyListener.onIndicatorAccuracyRadiusChanged(0.0) }
+    // Verify the listener will get notified when new accuracy radius arrives.
+    locationComponentPlugin.indicatorAccuracyRadiusChangedListener.onIndicatorAccuracyRadiusChanged(1.0)
+    verify(exactly = 1) { accuracyListener.onIndicatorAccuracyRadiusChanged(1.0) }
+  }
+
+  @Test
+  fun testRemoveOnIndicatorAccuracyRadiusChangedListener() {
+    val accuracyRadiusListener = mockk<OnIndicatorAccuracyRadiusChangedListener>(relaxed = true)
+    locationComponentPlugin.addOnIndicatorAccuracyRadiusChangedListener(accuracyRadiusListener)
+    locationComponentPlugin.removeOnIndicatorAccuracyRadiusChangedListener(accuracyRadiusListener)
+    locationComponentPlugin.indicatorAccuracyRadiusChangedListener.onIndicatorAccuracyRadiusChanged(.0)
+    verify(exactly = 0) { accuracyRadiusListener.onIndicatorAccuracyRadiusChanged(0.0) }
   }
 
   @Test
