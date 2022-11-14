@@ -45,8 +45,8 @@ class Terrain3DShowcaseActivity : AppCompatActivity() {
   }
 
   companion object {
-    private const val SOURCE = "TERRAIN_SOURCE"
+    const val SOURCE = "TERRAIN_SOURCE"
     private const val SKY_LAYER = "sky"
-    private const val TERRAIN_URL_TILE_RESOURCE = "mapbox://mapbox.mapbox-terrain-dem-v1"
+    const val TERRAIN_URL_TILE_RESOURCE = "mapbox://mapbox.mapbox-terrain-dem-v1"
   }
 }

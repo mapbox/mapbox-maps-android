@@ -1,6 +1,7 @@
 package com.mapbox.maps.renderer.gl
 
 import android.opengl.GLES20
+import com.mapbox.maps.logE
 import com.mapbox.maps.renderer.gl.GlUtils.toFloatBuffer
 
 internal class TextureRenderer(
@@ -61,7 +62,11 @@ internal class TextureRenderer(
       prepare()
     }
     // Reset to guarantee widgets are drawn on top of map
-    GLES20.glDisable(GLES20.GL_STENCIL_TEST)
+//    GLES20.glDisable(GLES20.GL_STENCIL_TEST)
+//    GLES20.glDisable(GLES20.GL_DEPTH_TEST)
+
+    logE("KIRYLDD", "Stencil " + GLES20.glIsEnabled(GLES20.GL_STENCIL_TEST).toString())
+    logE("KIRYLDD", "Depth " + GLES20.glIsEnabled(GLES20.GL_DEPTH_TEST).toString())
 
     GLES20.glUseProgram(program)
     GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[0])
