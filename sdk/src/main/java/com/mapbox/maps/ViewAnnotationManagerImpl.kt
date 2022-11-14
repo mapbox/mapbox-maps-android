@@ -89,6 +89,7 @@ internal class ViewAnnotationManagerImpl(
   override fun removeViewAnnotation(view: View): Boolean {
     val id = idLookupMap.remove(view) ?: return false
     val annotation = annotationMap.remove(id) ?: return false
+    currentlyDrawnViewIdSet.remove(id)
     remove(id, annotation)
     return true
   }
@@ -571,6 +572,9 @@ internal class ViewAnnotationManagerImpl(
   private fun remove(internalId: String, annotation: ViewAnnotation) {
     viewAnnotationsLayout.removeView(annotation.view)
     updateVisibilityAndNotifyUpdateListeners(annotation, ViewAnnotationVisibility.INVISIBLE)
+    // explicit onViewDetachedFromWindow call is needed to handle use-case
+    // if the view has an animation attached
+    annotation.attachStateListener?.onViewDetachedFromWindow(annotation.view)
     annotation.view.removeOnAttachStateChangeListener(annotation.attachStateListener)
     annotation.attachStateListener = null
     getValue(mapboxMap.removeViewAnnotation(internalId))
