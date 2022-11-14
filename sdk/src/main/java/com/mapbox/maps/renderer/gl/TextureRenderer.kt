@@ -62,6 +62,7 @@ internal class TextureRenderer(
     }
     // Reset to guarantee widgets are drawn on top of map
     GLES20.glDisable(GLES20.GL_STENCIL_TEST)
+    GLES20.glDisable(GLES20.GL_DEPTH_TEST)
 
     GLES20.glUseProgram(program)
     GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[0])
