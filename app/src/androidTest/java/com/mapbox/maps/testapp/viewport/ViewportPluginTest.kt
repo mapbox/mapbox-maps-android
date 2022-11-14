@@ -1,5 +1,6 @@
 package com.mapbox.maps.testapp.viewport
 
+import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -15,6 +16,7 @@ import com.mapbox.maps.plugin.viewport.viewport
 import com.mapbox.maps.testapp.BaseMapTest
 import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Assume.assumeTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -68,6 +70,10 @@ class ViewportPluginTest : BaseMapTest() {
 
   @Test
   fun transitionToDefaultTransition() {
+    assumeTrue(
+      "Can only run on API Level 24 or newer because of difference of animator behaviour.",
+      Build.VERSION.SDK_INT > 23
+    )
     handler.post {
       viewportPlugin.transitionTo(followPuckViewportState)
       assertEquals(0.0, mapView.getMapboxMap().cameraState.bearing, EPS)
