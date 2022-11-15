@@ -164,9 +164,11 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   internal constructor(
     context: Context,
     attrs: AttributeSet?,
-    mapController: MapController
+    mapController: MapController,
+    contextMode: ContextMode? = null,
   ) : super(context, attrs, 0, 0) {
     this.mapController = mapController
+    this.contextMode = contextMode
   }
 
   /**
