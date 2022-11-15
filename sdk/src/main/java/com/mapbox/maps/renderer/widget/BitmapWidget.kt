@@ -7,12 +7,12 @@ import com.mapbox.maps.MapboxExperimental
  * Widget displaying bitmap within specified position and margins.
  *
  * @param bitmap bitmap used to draw widget
- * @param position position of widget
+ * @param originalPosition position of widget
  */
 @MapboxExperimental
 open class BitmapWidget @JvmOverloads constructor(
   bitmap: Bitmap,
-  position: WidgetPosition = WidgetPosition {
+  private val originalPosition: WidgetPosition = WidgetPosition {
     verticalAlignment = WidgetPosition.Vertical.TOP
     horizontalAlignment = WidgetPosition.Horizontal.LEFT
     offsetX = 0f
@@ -42,7 +42,7 @@ open class BitmapWidget @JvmOverloads constructor(
     marginY: Float = 0f,
   ) : this(
     bitmap = bitmap,
-    position = WidgetPosition {
+    originalPosition = WidgetPosition {
       horizontalAlignment = position.horizontalAlignment
       verticalAlignment = position.verticalAlignment
       offsetX = when (position.horizontalAlignment) {
@@ -85,7 +85,7 @@ open class BitmapWidget @JvmOverloads constructor(
 
   override val renderer = BitmapWidgetRenderer(
     bitmap = bitmap,
-    position = position
+    position = originalPosition
   )
 
   /**
@@ -112,7 +112,7 @@ open class BitmapWidget @JvmOverloads constructor(
   override fun getPosition() = renderer.getPosition()
 
   /**
-   * Set the translation of the widget in pixels, relative to it's current position.
+   * Set the translation of the widget in pixels, relative to it's original position.
    *
    * @param translateX the offset in pixels towards the right of the screen.
    * @param translateY the offset in pixels towards the bottom of the screen.
@@ -122,13 +122,12 @@ open class BitmapWidget @JvmOverloads constructor(
     replaceWith = ReplaceWith("setPosition")
   )
   override fun setTranslation(translationX: Float, translationY: Float) {
-    val currentPosition = getPosition()
     setPosition(
       WidgetPosition {
-        horizontalAlignment = currentPosition.horizontalAlignment
-        verticalAlignment = currentPosition.verticalAlignment
-        offsetX = currentPosition.offsetX + translationX
-        offsetY = currentPosition.offsetY + translationY
+        horizontalAlignment = originalPosition.horizontalAlignment
+        verticalAlignment = originalPosition.verticalAlignment
+        offsetX = originalPosition.offsetX + translationX
+        offsetY = originalPosition.offsetY + translationY
       }
     )
   }
