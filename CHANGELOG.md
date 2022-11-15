@@ -8,7 +8,13 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * Trigger repaint after `BitmapWidget` is updated. ([1797](https://github.com/mapbox/mapbox-maps-android/pull/1797))
 * Fix a crash after removing the view annotation if view has an attached animation or transition. ([1831](https://github.com/mapbox/mapbox-maps-android/pull/1831))
-* Emit the last indicator state when new listeners are added to the location component. ([1827](https://github.com/mapbox/mapbox-maps-android/pull/1827))
+* Emit the last indicator state when new listeners are added to the location
+  component. ([1827](https://github.com/mapbox/mapbox-maps-android/pull/1827))
+* Stop exposing `mapbox-android-core` APIs directly, they are now part of Mapbox Common library.
+  NOTE: You must remove any explicit dependency declaration
+  to `com.mapbox.mapboxsdk:mapbox-android-core:<version>` from your project to avoid duplicated
+  class definition errors related to location
+  APIs. ([1836](https://github.com/mapbox/mapbox-maps-android/pull/1836))
 
 # 10.9.1 November 7, 2022
 
