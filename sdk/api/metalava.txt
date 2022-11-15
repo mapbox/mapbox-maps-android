@@ -536,7 +536,7 @@ package com.mapbox.maps.renderer {
 package com.mapbox.maps.renderer.widget {
 
   @com.mapbox.maps.MapboxExperimental public class BitmapWidget extends com.mapbox.maps.renderer.widget.Widget {
-    ctor public BitmapWidget(android.graphics.Bitmap bitmap, com.mapbox.maps.renderer.widget.WidgetPosition position = WidgetPosition({ 
+    ctor public BitmapWidget(android.graphics.Bitmap bitmap, com.mapbox.maps.renderer.widget.WidgetPosition originalPosition = WidgetPosition({ 
     verticalAlignment = WidgetPosition.Vertical.TOP
     horizontalAlignment = WidgetPosition.Horizontal.LEFT
     offsetX = 0.0
