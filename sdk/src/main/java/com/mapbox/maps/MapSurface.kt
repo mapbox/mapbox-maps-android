@@ -39,7 +39,8 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
   /**
    * @param context the application context to init the default [MapInitOptions]
    * @param surface the surface that will display map
-   * @param mapInitOptions the init options for map
+   * @param mapInitOptions the init options for map.
+   *  Note: [MapOptions.contextMode] is always set to be [ContextMode.SHARED] to avoid graphical artifacts and crashes.
    */
   @JvmOverloads constructor(
     context: Context,
@@ -48,6 +49,16 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
   ) {
     this.context = context
     this.surface = surface
+    if (mapInitOptions.mapOptions.contextMode != ContextMode.SHARED) {
+      logW(
+        TAG,
+        "Explicitly switching to MapOptions.contextMode = ContextMode.SHARED when creating the map surface. " +
+          "ContextMode.UNIQUE (used by default) is not allowed as it leads to graphical artifacts and crashes."
+      )
+      mapInitOptions.mapOptions = mapInitOptions.mapOptions.toBuilder()
+        .contextMode(ContextMode.SHARED)
+        .build()
+    }
     this.mapInitOptions = mapInitOptions
     this.renderer = MapboxSurfaceRenderer(mapInitOptions.antialiasingSampleCount)
     this.mapController = MapController(renderer, mapInitOptions).apply {
@@ -255,4 +266,8 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
    * @return created plugin instance or null if no plugin is found for given id.
    */
   override fun <T : MapPlugin> getPlugin(id: String): T? = mapController.getPlugin(id)
+
+  private companion object {
+    private const val TAG = "MapSurface"
+  }
 }
