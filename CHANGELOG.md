@@ -3,6 +3,13 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
+## Features ✨ and improvements 🏁
+* Update mapbox styles to latest versions. ([1837](https://github.com/mapbox/mapbox-maps-android/pull/1837))
+  - MAPBOX_STREETS -> `mapbox://styles/mapbox/streets-v12`
+  - SATELLITE_STREETS -> `mapbox://styles/mapbox/satellite-streets-v12`
+  - OUTDOORS -> `mapbox://styles/mapbox/outdoors-v12`
+  - LIGHT -> `mapbox://styles/mapbox/light-v11`
+  - DARK -> `mapbox://styles/mapbox/dark-v11`
 
 # 10.10.0-rc.1
 ## Bug fixes 🐞
