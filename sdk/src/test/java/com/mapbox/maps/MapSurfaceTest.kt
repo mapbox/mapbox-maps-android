@@ -15,7 +15,6 @@ import com.mapbox.verifyOnce
 import io.mockk.*
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertNull
-import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -33,19 +32,11 @@ class MapSurfaceTest {
 
   @Before
   fun setUp() {
-    mockkStatic("com.mapbox.maps.MapboxLogger")
-    every { logW(any(), any()) } just Runs
     context = mockk(relaxUnitFun = true)
     mapController = mockk(relaxUnitFun = true)
     mapboxSurfaceRenderer = mockk(relaxUnitFun = true)
     surface = mockk(relaxed = true)
-    mapInitOptions = spyk(
-      MapInitOptions(
-        context,
-        resourceOptions = mockk(),
-        mapOptions = MapOptions.Builder().build()
-      )
-    )
+    mapInitOptions = mockk(relaxUnitFun = true)
 
     mapSurface = MapSurface(
       context,
@@ -54,35 +45,6 @@ class MapSurfaceTest {
       mapboxSurfaceRenderer,
       mapController
     )
-  }
-
-  @After
-  fun cleanUp() {
-    unmockkStatic("com.mapbox.maps.MapboxLogger")
-  }
-
-  @Test
-  fun testContextModeNotSpecified() {
-    assertEquals(ContextMode.SHARED, mapInitOptions.mapOptions.contextMode)
-  }
-
-  @Test
-  fun testContextModeUniqueSpecified() {
-    mapInitOptions = spyk(
-      MapInitOptions(
-        context,
-        resourceOptions = mockk(),
-        mapOptions = MapOptions.Builder().contextMode(ContextMode.UNIQUE).build()
-      )
-    )
-    mapSurface = MapSurface(
-      context,
-      surface,
-      mapInitOptions,
-      mapboxSurfaceRenderer,
-      mapController
-    )
-    assertEquals(ContextMode.SHARED, mapInitOptions.mapOptions.contextMode)
   }
 
   @Test

@@ -4,6 +4,13 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 ## Features ✨ and improvements 🏁
+* Always use `MapOptions.contextMode = ContextMode.SHARED` when creating the map session preventing hard-catching runtime crashes or artifacts. ([1834](https://github.com/mapbox/mapbox-maps-android/pull/1834))
+
+## Features ✨ and improvements 🏁
+
+# 0.4.0 November 7, 2022
+
+## Features ✨ and improvements 🏁
 * Make the SDK compatible with any version of Mapbox Maps `v10.5.+`. ([#1706](https://github.com/mapbox/mapbox-maps-android/pull/1706))
 
 # 0.3.0 September 26, 2022
