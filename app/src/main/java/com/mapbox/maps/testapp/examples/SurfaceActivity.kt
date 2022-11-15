@@ -9,8 +9,11 @@ import android.view.SurfaceHolder
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.maps.*
+import com.mapbox.maps.extension.style.atmosphere.generated.atmosphere
 import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.generated.fillExtrusionLayer
+import com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName
+import com.mapbox.maps.extension.style.projection.generated.projection
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.sources.generated.rasterDemSource
@@ -56,7 +59,8 @@ class SurfaceActivity : AppCompatActivity(), SurfaceHolder.Callback {
     surfaceHolder.addCallback(this)
     mapSurface = MapSurface(
       this,
-      surfaceHolder.surface
+      surfaceHolder.surface,
+//      MapInitOptions(this, mapOptions = MapOptions.Builder().contextMode(ContextMode.SHARED).build())
     )
 
     mapSurface.addWidget(CompassWidget(this))
@@ -70,6 +74,9 @@ class SurfaceActivity : AppCompatActivity(), SurfaceHolder.Callback {
 //        tileSize(514)
 //      }
 //      +terrain(Terrain3DShowcaseActivity.SOURCE)
+      // TODO adding this causes 100% crash
+      +projection(ProjectionName.GLOBE)
+      +atmosphere { starIntensity(5.0) }
     }) {
       // TODO code below adds fill extrusion - just for testing
 //      val polygon = geoJsonSource(id = "polygon") {
