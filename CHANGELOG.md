@@ -5,16 +5,20 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 
 # 10.10.0-rc.1
+## Features ✨ and improvements 🏁
+* Improve symbol filtering performance when distance-from-camera and pitch expressions are used. ([1836](https://github.com/mapbox/mapbox-maps-android/pull/1836))
+
 ## Bug fixes 🐞
 * Trigger repaint after `BitmapWidget` is updated. ([1797](https://github.com/mapbox/mapbox-maps-android/pull/1797))
 * Fix a crash after removing the view annotation if view has an attached animation or transition. ([1831](https://github.com/mapbox/mapbox-maps-android/pull/1831))
-* Emit the last indicator state when new listeners are added to the location
-  component. ([1827](https://github.com/mapbox/mapbox-maps-android/pull/1827))
-* Stop exposing `mapbox-android-core` APIs directly, they are now part of Mapbox Common library.
-  NOTE: You must remove any explicit dependency declaration
-  to `com.mapbox.mapboxsdk:mapbox-android-core:<version>` from your project to avoid duplicated
-  class definition errors related to location
-  APIs. ([1836](https://github.com/mapbox/mapbox-maps-android/pull/1836))
+* Emit the last indicator state when new listeners are added to the location component. ([1827](https://github.com/mapbox/mapbox-maps-android/pull/1827))
+* Remove `mapbox-android-core` dependency, it is now part of Mapbox Common library.
+  **NOTE:**: You need to remove any explicit dependency declaration to `com.mapbox.mapboxsdk:mapbox-android-core:<version>` from the project to avoid duplicated class definition errors related to location APIs. ([1836](https://github.com/mapbox/mapbox-maps-android/pull/1836))
+* Fix an issue where queried symbol features did not contain the associated feature state. ([1836](https://github.com/mapbox/mapbox-maps-android/pull/1836))
+* Clear geojson tiles after the source is updated with empty features in order to eliminate "phantom tile" artifacts and to obviate extra work for keeping empty tiles. ([1836](https://github.com/mapbox/mapbox-maps-android/pull/1836)) 
+
+## Dependencies
+* Update gl-native to v10.10.0-rc.1 and common to v23.2.0-rc.2. ([1836](https://github.com/mapbox/mapbox-maps-android/pull/1836))
 
 # 10.9.1 November 7, 2022
 
