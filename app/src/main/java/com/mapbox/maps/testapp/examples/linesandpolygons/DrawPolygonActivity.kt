@@ -65,7 +65,7 @@ class DrawPolygonActivity : AppCompatActivity() {
     private const val LAYER_ID = "layer-id"
     private const val SOURCE_ID = "source-id"
     private const val TOP_LAYER_ID = "line-layer"
-    private const val SETTLEMENT_LABEL = "settlement-label"
+    private const val SETTLEMENT_LABEL = "settlement-major-label"
     private const val SOURCE_URL = "asset://maine_polygon.geojson"
     private val START_CAMERA_POSITION = cameraOptions {
       center(

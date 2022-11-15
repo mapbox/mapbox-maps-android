@@ -61,6 +61,6 @@ class ThirdPartyVectorSourceActivity : AppCompatActivity() {
     const val LAYER_ID = SOURCE_ID
     const val TAG = SOURCE_ID
     const val SOURCE_LAYER_ID = "sequence"
-    const val BELOW_LAYER_ID = "road-label"
+    const val BELOW_LAYER_ID = "road-label-simple"
   }
 }
