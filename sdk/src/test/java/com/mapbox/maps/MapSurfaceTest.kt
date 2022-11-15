@@ -6,7 +6,6 @@ import android.view.Display
 import android.view.MotionEvent
 import android.view.Surface
 import android.view.WindowManager
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.renderer.MapboxSurfaceRenderer
 import com.mapbox.maps.renderer.OnFpsChangedListener
@@ -16,11 +15,13 @@ import com.mapbox.verifyOnce
 import io.mockk.*
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertNull
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
 
-@RunWith(AndroidJUnit4::class)
+@RunWith(RobolectricTestRunner::class)
 class MapSurfaceTest {
 
   private lateinit var context: Context
@@ -32,11 +33,19 @@ class MapSurfaceTest {
 
   @Before
   fun setUp() {
+    mockkStatic("com.mapbox.maps.MapboxLogger")
+    every { logW(any(), any()) } just Runs
     context = mockk(relaxUnitFun = true)
-    mapInitOptions = mockk(relaxUnitFun = true)
     mapController = mockk(relaxUnitFun = true)
     mapboxSurfaceRenderer = mockk(relaxUnitFun = true)
     surface = mockk(relaxed = true)
+    mapInitOptions = spyk(
+      MapInitOptions(
+        context,
+        resourceOptions = mockk(),
+        mapOptions = MapOptions.Builder().build()
+      )
+    )
 
     mapSurface = MapSurface(
       context,
@@ -45,6 +54,35 @@ class MapSurfaceTest {
       mapboxSurfaceRenderer,
       mapController
     )
+  }
+
+  @After
+  fun cleanUp() {
+    unmockkStatic("com.mapbox.maps.MapboxLogger")
+  }
+
+  @Test
+  fun testContextModeNotSpecified() {
+    assertEquals(ContextMode.SHARED, mapInitOptions.mapOptions.contextMode)
+  }
+
+  @Test
+  fun testContextModeUniqueSpecified() {
+    mapInitOptions = spyk(
+      MapInitOptions(
+        context,
+        resourceOptions = mockk(),
+        mapOptions = MapOptions.Builder().contextMode(ContextMode.UNIQUE).build()
+      )
+    )
+    mapSurface = MapSurface(
+      context,
+      surface,
+      mapInitOptions,
+      mapboxSurfaceRenderer,
+      mapController
+    )
+    assertEquals(ContextMode.SHARED, mapInitOptions.mapOptions.contextMode)
   }
 
   @Test
