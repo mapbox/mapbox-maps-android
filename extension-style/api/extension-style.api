@@ -28,6 +28,7 @@ public final class com/mapbox/maps/extension/style/StyleExtensionImpl$Builder {
 	public final fun layerAtPosition (Lcom/mapbox/maps/extension/style/layers/Layer;Ljava/lang/String;Ljava/lang/String;)Lkotlin/Pair;
 	public final fun layerAtPosition (Lcom/mapbox/maps/extension/style/layers/Layer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;)Lkotlin/Pair;
 	public static synthetic fun layerAtPosition$default (Lcom/mapbox/maps/extension/style/StyleExtensionImpl$Builder;Lcom/mapbox/maps/extension/style/layers/Layer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;ILjava/lang/Object;)Lkotlin/Pair;
+	public final fun removeAtmosphere (Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;)V
 	public final fun setAtmosphere (Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;)V
 	public final fun setLight (Lcom/mapbox/maps/extension/style/light/generated/Light;)V
 	public final fun setProjection (Lcom/mapbox/maps/extension/style/projection/generated/Projection;)V

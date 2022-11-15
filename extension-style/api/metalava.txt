@@ -33,6 +33,7 @@ package com.mapbox.maps.extension.style {
     method public kotlin.Pair<com.mapbox.maps.extension.style.layers.Layer,com.mapbox.maps.LayerPosition> layerAtPosition(com.mapbox.maps.extension.style.layers.Layer layer, String? above = null, String? below = null);
     method public kotlin.Pair<com.mapbox.maps.extension.style.layers.Layer,com.mapbox.maps.LayerPosition> layerAtPosition(com.mapbox.maps.extension.style.layers.Layer layer, String? above = null);
     method public kotlin.Pair<com.mapbox.maps.extension.style.layers.Layer,com.mapbox.maps.LayerPosition> layerAtPosition(com.mapbox.maps.extension.style.layers.Layer layer);
+    method public operator void removeAtmosphere(com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere);
     method public operator void setAtmosphere(com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere);
     method public operator void setLight(com.mapbox.maps.extension.style.light.generated.Light);
     method public operator void setProjection(com.mapbox.maps.extension.style.projection.generated.Projection);

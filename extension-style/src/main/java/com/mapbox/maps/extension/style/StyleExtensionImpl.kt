@@ -138,6 +138,16 @@ class StyleExtensionImpl private constructor(
     }
 
     /**
+     * Extension function for [Atmosphere] to overload Unary operations.
+     *
+     * Apply -[Atmosphere] will remove the atmosphere to the [StyleExtensionImpl].
+     */
+    @JvmName("removeAtmosphere")
+    operator fun Atmosphere.unaryMinus() {
+      atmosphere = null
+    }
+
+    /**
      * Extension function for [Projection] to overload Unary operations.
      *
      * Using [ProjectionName.GLOBE] requires OpenGL [GLES20.GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS] be more than zero.
