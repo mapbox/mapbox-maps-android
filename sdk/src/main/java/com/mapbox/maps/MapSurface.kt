@@ -36,24 +36,10 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
    */
   val surface: Surface
 
-  private fun setSharedContext(mapInitOptions: MapInitOptions) {
-    if (mapInitOptions.mapOptions.contextMode != ContextMode.SHARED) {
-      logW(
-        TAG,
-        "Explicitly switching to MapOptions.contextMode = ContextMode.SHARED when creating the map surface. " +
-          "ContextMode.UNIQUE (used by default) is not allowed as it leads to graphical artifacts and crashes."
-      )
-      mapInitOptions.mapOptions = mapInitOptions.mapOptions.toBuilder()
-        .contextMode(ContextMode.SHARED)
-        .build()
-    }
-  }
-
   /**
    * @param context the application context to init the default [MapInitOptions]
    * @param surface the surface that will display map
    * @param mapInitOptions the init options for map.
-   *  Note: [MapOptions.contextMode] is always set to be [ContextMode.SHARED] to avoid graphical artifacts and crashes.
    */
   @JvmOverloads constructor(
     context: Context,
@@ -62,7 +48,6 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
   ) {
     this.context = context
     this.surface = surface
-    setSharedContext(mapInitOptions)
     this.mapInitOptions = mapInitOptions
     this.renderer = MapboxSurfaceRenderer(mapInitOptions.antialiasingSampleCount)
     this.mapController = MapController(renderer, mapInitOptions).apply {
@@ -87,7 +72,6 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
   ) {
     this.context = context
     this.surface = surface
-    setSharedContext(mapInitOptions)
     this.mapInitOptions = mapInitOptions
     this.renderer = renderer
     this.mapController = mapController
@@ -233,6 +217,9 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
 
   /**
    * Add [Widget] to the map.
+   *
+   * @throws RuntimeException when trying to add the Widget to the [MapSurface] that does not
+   * have [MapOptions.contextMode] = [ContextMode.SHARED] as part of [MapInitOptions].
    */
   @MapboxExperimental
   override fun addWidget(widget: Widget) {
@@ -271,8 +258,4 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
    * @return created plugin instance or null if no plugin is found for given id.
    */
   override fun <T : MapPlugin> getPlugin(id: String): T? = mapController.getPlugin(id)
-
-  private companion object {
-    private const val TAG = "MapSurface"
-  }
 }

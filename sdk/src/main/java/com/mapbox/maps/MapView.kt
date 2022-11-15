@@ -50,8 +50,6 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    */
   val viewAnnotationManager: ViewAnnotationManager by viewAnnotationManagerDelegate
 
-  private var contextMode: ContextMode? = null
-
   /**
    * Build a [MapView] with [Context] and [MapInitOptions] objects.
    */
@@ -104,7 +102,6 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
     } else {
       SurfaceView(context, attrs)
     }
-    contextMode = resolvedMapInitOptions.mapOptions.contextMode
     mapController = MapController(
       when (view) {
         is SurfaceView -> MapboxSurfaceHolderRenderer(view.holder, resolvedMapInitOptions.antialiasingSampleCount)
@@ -165,10 +162,8 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
     context: Context,
     attrs: AttributeSet?,
     mapController: MapController,
-    contextMode: ContextMode? = null,
   ) : super(context, attrs, 0, 0) {
     this.mapController = mapController
-    this.contextMode = contextMode
   }
 
   /**
@@ -387,9 +382,6 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    */
   @MapboxExperimental
   override fun addWidget(widget: Widget) {
-    if (contextMode != ContextMode.SHARED) {
-      throw RuntimeException("Map view must be init with MapInitOptions.mapOptions.contextMode = ContextMode.SHARED when using widgets!")
-    }
     mapController.addWidget(widget)
   }
 

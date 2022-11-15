@@ -5,8 +5,6 @@ import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.renderer.OnFpsChangedListener
 import com.mapbox.maps.renderer.RendererSetupErrorListener
-import com.mapbox.maps.renderer.widget.Widget
-import com.mapbox.verifyOnce
 import io.mockk.*
 import org.junit.After
 import org.junit.Assert.assertFalse
@@ -177,40 +175,5 @@ class MapViewTest {
     val listener = mockk<RendererSetupErrorListener>()
     mapView.removeRendererSetupErrorListener(listener)
     verify { mapController.removeRendererSetupErrorListener(listener) }
-  }
-
-  @Test(expected = RuntimeException::class)
-  fun addWidgetTestUniqueContext() {
-    mapView = MapView(
-      mockk(relaxed = true),
-      mockk(relaxed = true),
-      mapController,
-      ContextMode.UNIQUE,
-    )
-    mapView.addWidget(mockk())
-  }
-
-  @Test(expected = RuntimeException::class)
-  fun addWidgetTestNullContext() {
-    mapView = MapView(
-      mockk(relaxed = true),
-      mockk(relaxed = true),
-      mapController,
-      null,
-    )
-    mapView.addWidget(mockk())
-  }
-
-  @Test
-  fun addWidgetTestSharedContext() {
-    mapView = MapView(
-      mockk(relaxed = true),
-      mockk(relaxed = true),
-      mapController,
-      ContextMode.SHARED,
-    )
-    val widget = mockk<Widget>()
-    mapView.addWidget(widget)
-    verifyOnce { mapController.addWidget(widget) }
   }
 }
