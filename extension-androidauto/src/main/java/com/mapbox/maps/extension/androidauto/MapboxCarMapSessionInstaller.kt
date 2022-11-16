@@ -98,11 +98,13 @@ class MapboxCarMapSessionInstaller(
 
   private fun enforceSharedContext(mapInitOptions: MapInitOptions) {
     if (mapInitOptions.mapOptions.contextMode != ContextMode.SHARED) {
-      logW(
-        TAG,
-        "Explicitly switching to MapOptions.contextMode = ContextMode.SHARED when creating the car map surface. " +
-          "ContextMode.UNIQUE (used by default) is not allowed as it leads to graphical artifacts and crashes."
-      )
+      if (mapInitOptions.mapOptions.contextMode == ContextMode.UNIQUE) {
+        logW(
+          TAG,
+          "Explicitly switching context mode to MapOptions.contextMode = ContextMode.SHARED when creating the car map surface. " +
+            "ContextMode.UNIQUE is not allowed as it leads to graphical artifacts and crashes."
+        )
+      }
       mapInitOptions.mapOptions = mapInitOptions.mapOptions.toBuilder()
         .contextMode(ContextMode.SHARED)
         .build()

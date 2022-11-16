@@ -33,10 +33,10 @@ class MapSurfaceTest {
   @Before
   fun setUp() {
     context = mockk(relaxUnitFun = true)
+    mapInitOptions = mockk(relaxUnitFun = true)
     mapController = mockk(relaxUnitFun = true)
     mapboxSurfaceRenderer = mockk(relaxUnitFun = true)
     surface = mockk(relaxed = true)
-    mapInitOptions = mockk(relaxUnitFun = true)
 
     mapSurface = MapSurface(
       context,
