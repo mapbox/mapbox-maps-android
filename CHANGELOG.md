@@ -5,6 +5,9 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 
 # 10.10.0-rc.1
+## Features ✨ and improvements 🏁
+* Add API for removing atmosphere. ([1841](https://github.com/mapbox/mapbox-maps-android/pull/1841)) 
+
 ## Bug fixes 🐞
 * Trigger repaint after `BitmapWidget` is updated. ([1797](https://github.com/mapbox/mapbox-maps-android/pull/1797))
 * Fix a crash after removing the view annotation if view has an attached animation or transition. ([1831](https://github.com/mapbox/mapbox-maps-android/pull/1831))
