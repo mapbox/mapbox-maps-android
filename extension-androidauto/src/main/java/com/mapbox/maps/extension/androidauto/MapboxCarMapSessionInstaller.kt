@@ -4,8 +4,10 @@ import androidx.car.app.Session
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
+import com.mapbox.maps.ContextMode
 import com.mapbox.maps.MapInitOptions
 import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.logW
 
 /**
  * When attaching the many possible experiences onto [MapboxCarMap], this installer allows you to
@@ -66,6 +68,7 @@ class MapboxCarMapSessionInstaller(
       override fun onCreate(owner: LifecycleOwner) {
         val carContext = session.carContext
         val mapInitOptions = initializer.onCreate(carContext)
+        enforceSharedContext(mapInitOptions)
         mapboxCarMap.setup(carContext, mapInitOptions)
         onCreated.forEach { mapboxCarMap.registerObserver(it) }
       }
@@ -93,7 +96,23 @@ class MapboxCarMapSessionInstaller(
     return mapboxCarMap
   }
 
+  private fun enforceSharedContext(mapInitOptions: MapInitOptions) {
+    if (mapInitOptions.mapOptions.contextMode != ContextMode.SHARED) {
+      if (mapInitOptions.mapOptions.contextMode == ContextMode.UNIQUE) {
+        logW(
+          TAG,
+          "Explicitly switching context mode to MapOptions.contextMode = ContextMode.SHARED when creating the car map surface. " +
+            "ContextMode.UNIQUE is not allowed as it leads to graphical artifacts and crashes."
+        )
+      }
+      mapInitOptions.mapOptions = mapInitOptions.mapOptions.toBuilder()
+        .contextMode(ContextMode.SHARED)
+        .build()
+    }
+  }
+
   private companion object {
+    private const val TAG = "CarMapSessionInstaller"
     private val defaultInitializer = MapboxCarMapInitializer { carContext ->
       MapInitOptions(context = carContext)
     }

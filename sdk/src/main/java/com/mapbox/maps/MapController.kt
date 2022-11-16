@@ -53,12 +53,15 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   internal var lifecycleState: LifecycleState = LifecycleState.STATE_STOPPED
   private var style: Style? = null
 
+  private var contextMode: ContextMode? = null
+
   constructor(
     renderer: MapboxRenderer,
     mapInitOptions: MapInitOptions,
   ) {
     this.renderer = renderer
     this.mapInitOptions = mapInitOptions
+    this.contextMode = mapInitOptions.mapOptions.contextMode
     AssetManagerProvider().initialize(mapInitOptions.context.assets)
     this.nativeMap = MapProvider.getNativeMapWrapper(
       mapInitOptions,
@@ -98,6 +101,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     renderer: MapboxRenderer,
     nativeObserver: NativeObserver,
     mapInitOptions: MapInitOptions,
+    contextMode: ContextMode?,
     nativeMap: MapInterface,
     mapboxMap: MapboxMap,
     pluginRegistry: MapPluginRegistry,
@@ -106,6 +110,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     this.renderer = renderer
     this.nativeObserver = nativeObserver
     this.mapInitOptions = mapInitOptions
+    this.contextMode = contextMode
     this.nativeMap = nativeMap
     this.mapboxMap = mapboxMap
     this.pluginRegistry = pluginRegistry
@@ -219,6 +224,9 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   }
 
   override fun addWidget(widget: Widget) {
+    if (contextMode != ContextMode.SHARED) {
+      throw RuntimeException("Map view or map surface must be init with MapInitOptions.mapOptions.contextMode = ContextMode.SHARED when using widgets!")
+    }
     widget.setTriggerRepaintAction {
       renderer.scheduleRepaint()
     }

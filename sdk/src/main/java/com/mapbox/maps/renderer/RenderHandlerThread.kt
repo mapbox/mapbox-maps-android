@@ -13,7 +13,6 @@ internal class RenderHandlerThread {
   internal val handlerThread: HandlerThread =
     HandlerThread(HANDLE_THREAD_NAME, THREAD_PRIORITY_DISPLAY)
 
-  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal var handler: Handler? = null
 
   internal val isRunning

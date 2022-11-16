@@ -3,13 +3,9 @@ package com.mapbox.maps.extension.androidauto
 import androidx.car.app.CarContext
 import androidx.car.app.Session
 import androidx.lifecycle.Lifecycle
-import com.mapbox.maps.MapInitOptions
-import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.*
 import com.mapbox.maps.extension.androidauto.testing.TestLifecycleOwner
-import io.mockk.every
-import io.mockk.mockk
-import io.mockk.verify
-import io.mockk.verifyOrder
+import io.mockk.*
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -63,7 +59,8 @@ class MapboxCarMapSessionInstallerTest {
       every { carContext } returns sessionCarContext
       every { lifecycle } returns lifecycleOwner.lifecycle
     }
-    val mapInitOptions: MapInitOptions = mockk()
+    val mapInitOptions: MapInitOptions = mockk(relaxed = true)
+    every { mapInitOptions.mapOptions.contextMode } returns ContextMode.SHARED
     val mockInitializer: MapboxCarMapInitializer = mockk {
       every { onCreate(any()) } returns mapInitOptions
     }
@@ -298,9 +295,55 @@ class MapboxCarMapSessionInstallerTest {
     }
   }
 
-  private fun mockCarInitializer(): MapboxCarMapInitializer = mockk {
+  @Test
+  fun `setup with unique context mode - enforcing shared context with a warning`() {
+    val lifecycleOwner = TestLifecycleOwner()
+    val sessionCarContext = mockk<CarContext>()
+    val session = mockk<Session> {
+      every { carContext } returns sessionCarContext
+      every { lifecycle } returns lifecycleOwner.lifecycle
+    }
+    mockkStatic("com.mapbox.maps.MapboxLogger")
+    every { logW(any(), any()) } just Runs
+    val mapboxCarMap = MapboxCarMapSessionInstaller(session, mockk(relaxed = true))
+      .install(mockCarInitializer(ContextMode.UNIQUE))
+    lifecycleOwner.moveToState(Lifecycle.State.CREATED)
+    unmockkStatic("com.mapbox.maps.MapboxLogger")
+    val mapInitOptions = slot<MapInitOptions>()
+    verify(exactly = 1) {
+      mapboxCarMap.setup(sessionCarContext, capture(mapInitOptions))
+    }
+    assert(mapInitOptions.captured.mapOptions.contextMode == ContextMode.SHARED)
+  }
+
+  @Test
+  fun `setup without explicit context mode - enforcing shared context without warning`() {
+    val lifecycleOwner = TestLifecycleOwner()
+    val sessionCarContext = mockk<CarContext>()
+    val session = mockk<Session> {
+      every { carContext } returns sessionCarContext
+      every { lifecycle } returns lifecycleOwner.lifecycle
+    }
+    val mapboxCarMap = MapboxCarMapSessionInstaller(session, mockk(relaxed = true))
+      .install(mockCarInitializer(null))
+    lifecycleOwner.moveToState(Lifecycle.State.CREATED)
+    val mapInitOptions = slot<MapInitOptions>()
+    verify(exactly = 1) {
+      mapboxCarMap.setup(sessionCarContext, capture(mapInitOptions))
+    }
+    assert(mapInitOptions.captured.mapOptions.contextMode == ContextMode.SHARED)
+  }
+
+  private fun mockCarInitializer(contextMode: ContextMode? = ContextMode.SHARED): MapboxCarMapInitializer = mockk {
     every { onCreate(any()) } answers {
-      mockk { every { context } returns firstArg<CarContext>() }
+      spyk(
+        MapInitOptions(
+          firstArg<CarContext>(),
+          resourceOptions = mockk(),
+          mapOptions = contextMode?.let { MapOptions.Builder().contextMode(contextMode).build() }
+            ?: MapOptions.Builder().build()
+        )
+      )
     }
   }
 }

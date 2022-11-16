@@ -6,7 +6,6 @@ import android.view.Display
 import android.view.MotionEvent
 import android.view.Surface
 import android.view.WindowManager
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.renderer.MapboxSurfaceRenderer
 import com.mapbox.maps.renderer.OnFpsChangedListener
@@ -19,8 +18,9 @@ import junit.framework.Assert.assertNull
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
 
-@RunWith(AndroidJUnit4::class)
+@RunWith(RobolectricTestRunner::class)
 class MapSurfaceTest {
 
   private lateinit var context: Context
