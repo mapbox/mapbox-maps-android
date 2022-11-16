@@ -39,7 +39,7 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
   /**
    * @param context the application context to init the default [MapInitOptions]
    * @param surface the surface that will display map
-   * @param mapInitOptions the init options for map.
+   * @param mapInitOptions the init options for map
    */
   @JvmOverloads constructor(
     context: Context,
