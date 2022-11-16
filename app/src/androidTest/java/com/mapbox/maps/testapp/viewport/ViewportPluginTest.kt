@@ -68,48 +68,134 @@ class ViewportPluginTest : BaseMapTest() {
 
   @Test
   fun transitionToDefaultTransition() {
+    val latch = CountDownLatch(1)
     handler.post {
-      viewportPlugin.transitionTo(followPuckViewportState)
       assertEquals(0.0, mapView.getMapboxMap().cameraState.bearing, EPS)
       mapView.getMapboxMap().cameraState.center.assertEquals(NULL_ISLAND)
-      locationProvider.locationConsumers.forEach { it.onLocationUpdated(TEST_POINT) }
-      locationProvider.locationConsumers.forEach { it.onBearingUpdated(TEST_BEARING) }
+      // immediate update location puck to test location.
+      locationProvider.locationConsumers.forEach {
+        it.onLocationUpdated(
+          TEST_POINT,
+          options = { duration = 0 }
+        )
+      }
+      locationProvider.locationConsumers.forEach {
+        it.onBearingUpdated(
+          TEST_BEARING,
+          options = { duration = 0 }
+        )
+      }
+      // transition to the followPuckViewportState with default transition
+      viewportPlugin.transitionTo(followPuckViewportState) {
+        latch.countDown()
+      }
     }
 
-    val latch = CountDownLatch(1)
-    latch.await(4000, TimeUnit.MILLISECONDS)
+    latch.await(10, TimeUnit.SECONDS)
     handler.post {
-      mapView.getMapboxMap().cameraState.center.assertEquals(TEST_POINT)
-      assertEquals(TEST_BEARING, mapView.getMapboxMap().cameraState.bearing, EPS)
+      val cameraState = mapView.getMapboxMap().cameraState
+      cameraState.center.assertEquals(TEST_POINT)
+      assertEquals(TEST_BEARING, cameraState.bearing, EPS)
     }
   }
 
   @Test
   fun transitionToImmediateTransition() {
+    val latch = CountDownLatch(1)
     handler.post {
-      viewportPlugin.transitionTo(followPuckViewportState, immediateViewportTransition)
       assertEquals(0.0, mapView.getMapboxMap().cameraState.bearing, EPS)
       mapView.getMapboxMap().cameraState.center.assertEquals(NULL_ISLAND)
-      locationProvider.locationConsumers.forEach { it.onLocationUpdated(TEST_POINT) }
-      locationProvider.locationConsumers.forEach { it.onBearingUpdated(TEST_BEARING) }
+      // immediate update location puck to test location.
+      locationProvider.locationConsumers.forEach {
+        it.onLocationUpdated(
+          TEST_POINT,
+          options = { duration = 0 }
+        )
+      }
+      locationProvider.locationConsumers.forEach {
+        it.onBearingUpdated(
+          TEST_BEARING,
+          options = { duration = 0 }
+        )
+      }
+      // immediately transition to the followPuckViewportState
+      viewportPlugin.transitionTo(followPuckViewportState, immediateViewportTransition) {
+        latch.countDown()
+      }
     }
-    val latch = CountDownLatch(1)
-    latch.await(200, TimeUnit.MILLISECONDS)
+
+    if (!latch.await(10, TimeUnit.SECONDS)) {
+      throw TimeoutException()
+    }
+
     handler.post {
       val cameraState = mapView.getMapboxMap().cameraState
       cameraState.center.assertEquals(TEST_POINT)
+      assertEquals(TEST_BEARING, cameraState.bearing, EPS)
+    }
+  }
+
+  @Test
+  fun testFollowPuckViewportState() {
+    val latch = CountDownLatch(1)
+    handler.post {
+      // immediate update location puck to test location.
+      locationProvider.locationConsumers.forEach {
+        it.onLocationUpdated(
+          TEST_POINT,
+          options = { duration = 0 }
+        )
+      }
+      locationProvider.locationConsumers.forEach {
+        it.onBearingUpdated(
+          TEST_BEARING,
+          options = { duration = 0 }
+        )
+      }
+      // immediately transition to the followPuckViewportState
+      viewportPlugin.transitionTo(followPuckViewportState, immediateViewportTransition) {
+        // now we are in the follow puck viewport state
+        val cameraState = mapView.getMapboxMap().cameraState
+        cameraState.center.assertEquals(TEST_POINT)
+        assertEquals(TEST_BEARING, cameraState.bearing, EPS)
+        // emit new bearing and location updates, location component plugin should be driving the animation.
+        // and viewport plugin should do animation with 0 duration on each animated location puck position
+        locationProvider.locationConsumers.forEach {
+          it.onBearingUpdated(
+            TEST_BEARING + 90.0,
+            options = { duration = 1000 }
+          )
+        }
+        locationProvider.locationConsumers.forEach {
+          it.onLocationUpdated(
+            TEST_POINT_MOVED,
+            options = { duration = 1000 }
+          )
+        }
+      }
+    }
+
+    // The location update will be animated with 1 second duration, we wait for 2 seconds for the animation to finish
+    latch.await(2, TimeUnit.SECONDS)
+
+    // validate the camera is at the moved location
+    handler.post {
+      val cameraState = mapView.getMapboxMap().cameraState
+      assertEquals(TEST_BEARING + 90.0, cameraState.bearing, EPS)
+      cameraState.center.assertEquals(TEST_POINT_MOVED)
     }
   }
 
   private fun Point.assertEquals(other: Point) {
-    assertEquals(this.longitude(), other.longitude(), EPS)
-    assertEquals(this.latitude(), other.latitude(), EPS)
-    assertEquals(this.altitude(), other.altitude(), EPS)
+    assertEquals(other.longitude(), this.longitude(), EPS)
+    assertEquals(other.latitude(), this.latitude(), EPS)
+    assertEquals(other.altitude(), this.altitude(), EPS)
   }
 
   private companion object {
-    val TEST_POINT = Point.fromLngLat(24.9384, 60.1699)
-    val NULL_ISLAND = Point.fromLngLat(0.0, 0.0)
+    val TEST_POINT: Point = Point.fromLngLat(24.9384, 60.1699)
+    val TEST_POINT_MOVED: Point = Point.fromLngLat(24.94284, 60.1699)
+    val NULL_ISLAND: Point = Point.fromLngLat(0.0, 0.0)
     const val EPS = 0.000001
     const val TEST_BEARING = 45.0
   }

@@ -460,7 +460,6 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
 
   @Test
   fun testEaseToSequenceDurationZero() {
-
     val targetBearing1 = 5.0
     val targetBearing2 = 10.0
     val targetBearing3 = 15.0
