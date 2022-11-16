@@ -55,6 +55,7 @@ class MapControllerTest {
       mockRenderer,
       mockNativeObserver,
       mockMapInitOptions,
+      ContextMode.SHARED,
       mockNativeMap,
       mockMapboxMap,
       mockPluginRegistry,
@@ -462,6 +463,41 @@ class MapControllerTest {
     val mockRenderThread = mockk<MapboxRenderThread>(relaxed = true)
     every { mockRenderer.renderThread } returns mockRenderThread
     assertFalse(testMapController.removeWidget(widget))
+  }
+
+  @OptIn(MapboxExperimental::class)
+  @Test(expected = RuntimeException::class)
+  fun addWidgetTestUniqueContext() {
+    val initOptions = mockk<MapInitOptions>(relaxed = true)
+    every { initOptions.mapOptions } returns MapOptions.Builder().contextMode(ContextMode.UNIQUE).build()
+    testMapController = MapController(
+      mockRenderer,
+      mockNativeObserver,
+      mockMapInitOptions,
+      ContextMode.UNIQUE,
+      mockNativeMap,
+      mockMapboxMap,
+      mockPluginRegistry,
+      mockOnStyleDataLoadedListener
+    )
+    testMapController.addWidget(mockk())
+  }
+
+  @Test(expected = RuntimeException::class)
+  fun addWidgetTestNullContext() {
+    val initOptions = mockk<MapInitOptions>(relaxed = true)
+    every { initOptions.mapOptions } returns MapOptions.Builder().build()
+    testMapController = MapController(
+      mockRenderer,
+      mockNativeObserver,
+      mockMapInitOptions,
+      null,
+      mockNativeMap,
+      mockMapboxMap,
+      mockPluginRegistry,
+      mockOnStyleDataLoadedListener
+    )
+    testMapController.addWidget(mockk())
   }
 
   @OptIn(MapboxExperimental::class)

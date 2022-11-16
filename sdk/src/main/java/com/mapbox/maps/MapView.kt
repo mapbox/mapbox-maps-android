@@ -161,7 +161,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   internal constructor(
     context: Context,
     attrs: AttributeSet?,
-    mapController: MapController
+    mapController: MapController,
   ) : super(context, attrs, 0, 0) {
     this.mapController = mapController
   }
@@ -376,6 +376,9 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
 
   /**
    * Add [Widget] to the map.
+   *
+   * @throws RuntimeException when trying to add the Widget to the [MapView] that does not
+   * have [MapOptions.contextMode] = [ContextMode.SHARED] as part of [MapInitOptions].
    */
   @MapboxExperimental
   override fun addWidget(widget: Widget) {
