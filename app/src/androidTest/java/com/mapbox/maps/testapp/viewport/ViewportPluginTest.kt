@@ -91,7 +91,8 @@ class ViewportPluginTest : BaseMapTest() {
       }
     }
 
-    latch.await(10, TimeUnit.SECONDS)
+    // Wait for 5 seconds since the default transition time is 3.5 seconds
+    latch.await(5000, TimeUnit.SECONDS)
     handler.post {
       val cameraState = mapView.getMapboxMap().cameraState
       cameraState.center.assertEquals(TEST_POINT)
@@ -124,7 +125,7 @@ class ViewportPluginTest : BaseMapTest() {
       }
     }
 
-    if (!latch.await(10, TimeUnit.SECONDS)) {
+    if (!latch.await(2, TimeUnit.SECONDS)) {
       throw TimeoutException()
     }
 

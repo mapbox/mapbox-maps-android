@@ -83,11 +83,11 @@ abstract class CameraAnimator<out T> (
    */
   final override fun start() {
     postOnAnimatorThread {
-      if (handleImmediateAnimationOnAPI23OrBelow()) {
-        return@postOnAnimatorThread
-      }
       if (registered) {
         canceled = false
+        if (handleImmediateAnimationOnAPI23OrBelow()) {
+          return@postOnAnimatorThread
+        }
         super.start()
       } else {
         logW(
