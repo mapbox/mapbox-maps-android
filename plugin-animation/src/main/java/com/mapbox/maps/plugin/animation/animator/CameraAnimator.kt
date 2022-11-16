@@ -83,7 +83,7 @@ abstract class CameraAnimator<out T> (
    */
   final override fun start() {
     postOnAnimatorThread {
-      if (handleImmediateAnimationOnAPI23()) {
+      if (handleImmediateAnimationOnAPI23OrBelow()) {
         return@postOnAnimatorThread
       }
       if (registered) {
@@ -111,7 +111,7 @@ abstract class CameraAnimator<out T> (
    * returns the animated value for the first of those objects.
    */
   override fun getAnimatedValue(): Any {
-    // For immediate animations on API 23, as we introduced the bypass logic in handleImmediateAnimationOnAPI23(),
+    // For immediate animations on API <= 23, as we introduced the bypass logic in handleImmediateAnimationOnAPI23OrBelow(),
     // the returned ValueAnimator.getAnimatedValue() will be null, in this case, we should return the
     // last configured target value, so we immediately jump to the target value.
     if (Build.VERSION.SDK_INT <= 23) {
@@ -128,7 +128,7 @@ abstract class CameraAnimator<out T> (
    *
    * @return true if the animation is handled, false otherwise
    */
-  private fun handleImmediateAnimationOnAPI23(): Boolean {
+  private fun handleImmediateAnimationOnAPI23OrBelow(): Boolean {
     // Devices with API <= 23 animating with duration = 0 will send initial value from Looper with some small delay as a result.
     // Hence multiple immediate animations sent close to each other may cancel previous ones.
     // For these cases, we bypass the ValueAnimator and emit the user registered AnimatorListeners and AnimatorUpdateListeners immediately.
