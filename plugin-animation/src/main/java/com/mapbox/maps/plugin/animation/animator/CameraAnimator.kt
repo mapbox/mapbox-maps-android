@@ -114,7 +114,12 @@ abstract class CameraAnimator<out T> (
     // For immediate animations on API 23, as we introduced the bypass logic in handleImmediateAnimationOnAPI23(),
     // the returned ValueAnimator.getAnimatedValue() will be null, in this case, we should return the
     // last configured target value, so we immediately jump to the target value.
-    return super.getAnimatedValue() ?: targets.last() as Any
+    if (Build.VERSION.SDK_INT <= 23) {
+      if (duration == 0L && startDelay == 0L) {
+        return super.getAnimatedValue() ?: targets.last() as Any
+      }
+    }
+    return super.getAnimatedValue()
   }
 
   /**
