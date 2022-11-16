@@ -9,7 +9,6 @@ import com.mapbox.maps.plugin.locationcomponent.LocationConsumer
 import com.mapbox.maps.plugin.locationcomponent.LocationProvider
 import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.plugin.viewport.ViewportPlugin
-import com.mapbox.maps.plugin.viewport.state.FollowPuckViewportState
 import com.mapbox.maps.plugin.viewport.transition.ViewportTransition
 import com.mapbox.maps.plugin.viewport.viewport
 import com.mapbox.maps.testapp.BaseMapTest
@@ -31,7 +30,6 @@ class ViewportPluginTest : BaseMapTest() {
 
   private val handler = Handler(Looper.getMainLooper())
   private lateinit var viewportPlugin: ViewportPlugin
-  private lateinit var followPuckViewportState: FollowPuckViewportState
   private lateinit var immediateViewportTransition: ViewportTransition
 
   private val locationProvider = object : LocationProvider {
@@ -51,7 +49,6 @@ class ViewportPluginTest : BaseMapTest() {
     rule.scenario.onActivity { activity ->
       activity.runOnUiThread {
         viewportPlugin = mapView.viewport
-        followPuckViewportState = viewportPlugin.makeFollowPuckViewportState()
         immediateViewportTransition = viewportPlugin.makeImmediateViewportTransition()
         mapView.location.apply {
           enabled = true
@@ -86,13 +83,15 @@ class ViewportPluginTest : BaseMapTest() {
         )
       }
       // transition to the followPuckViewportState with default transition
-      viewportPlugin.transitionTo(followPuckViewportState) {
+      viewportPlugin.transitionTo(viewportPlugin.makeFollowPuckViewportState()) {
         latch.countDown()
       }
     }
 
     // Wait for 5 seconds since the default transition time is 3.5 seconds
-    latch.await(5000, TimeUnit.SECONDS)
+    if (!latch.await(5, TimeUnit.SECONDS)) {
+      throw TimeoutException()
+    }
     handler.post {
       val cameraState = mapView.getMapboxMap().cameraState
       cameraState.center.assertEquals(TEST_POINT)
@@ -120,12 +119,12 @@ class ViewportPluginTest : BaseMapTest() {
         )
       }
       // immediately transition to the followPuckViewportState
-      viewportPlugin.transitionTo(followPuckViewportState, immediateViewportTransition) {
+      viewportPlugin.transitionTo(viewportPlugin.makeFollowPuckViewportState(), immediateViewportTransition) {
         latch.countDown()
       }
     }
 
-    if (!latch.await(2, TimeUnit.SECONDS)) {
+    if (!latch.await(200, TimeUnit.MILLISECONDS)) {
       throw TimeoutException()
     }
 
@@ -142,19 +141,19 @@ class ViewportPluginTest : BaseMapTest() {
     handler.post {
       // immediate update location puck to test location.
       locationProvider.locationConsumers.forEach {
-        it.onLocationUpdated(
-          TEST_POINT,
-          options = { duration = 0 }
-        )
-      }
-      locationProvider.locationConsumers.forEach {
         it.onBearingUpdated(
           TEST_BEARING,
           options = { duration = 0 }
         )
       }
+      locationProvider.locationConsumers.forEach {
+        it.onLocationUpdated(
+          TEST_POINT,
+          options = { duration = 0 }
+        )
+      }
       // immediately transition to the followPuckViewportState
-      viewportPlugin.transitionTo(followPuckViewportState, immediateViewportTransition) {
+      viewportPlugin.transitionTo(viewportPlugin.makeFollowPuckViewportState(), immediateViewportTransition) {
         // now we are in the follow puck viewport state
         val cameraState = mapView.getMapboxMap().cameraState
         cameraState.center.assertEquals(TEST_POINT)
@@ -182,8 +181,8 @@ class ViewportPluginTest : BaseMapTest() {
     // validate the camera is at the moved location
     handler.post {
       val cameraState = mapView.getMapboxMap().cameraState
-      assertEquals(TEST_BEARING + 90.0, cameraState.bearing, EPS)
       cameraState.center.assertEquals(TEST_POINT_MOVED)
+      assertEquals(TEST_BEARING + 90.0, cameraState.bearing, EPS)
     }
   }
 
