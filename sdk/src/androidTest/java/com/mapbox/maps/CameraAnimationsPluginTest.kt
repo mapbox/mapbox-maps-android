@@ -185,6 +185,9 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
 
   @Test
   fun testAnimatorWithAnimatorDelay() {
+    if (ignoreTestForGivenAbi()) {
+      return
+    }
     val duration = 2000L
     val delay = 1000L
     val animatorListener = CameraAnimatorListener()
@@ -227,6 +230,9 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
 
   @Test
   fun testCancelAnimatorWithDelayed() {
+    if (ignoreTestForGivenAbi()) {
+      return
+    }
     val duration = 2000L
     val delay = 500L
     val animatorListener = CameraAnimatorListener()
@@ -270,6 +276,9 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
 
   @Test
   fun testAnimatorWithHandlerPostDelay() {
+    if (ignoreTestForGivenAbi()) {
+      return
+    }
     val duration = 1000L
     val delay = 2000L
     val animatorListener = CameraAnimatorListener()
@@ -316,6 +325,9 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
 
   @Test
   fun testCameraUpdateFrequency() {
+    if (ignoreTestForGivenAbi()) {
+      return
+    }
     val duration = 3000L
 
     // Considering min update frequency is not less than 20 ms assuming running on x86 emulator on CI
@@ -346,6 +358,9 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
 
   @Test
   fun testRegisterExistedAnimatorTypeAndStart() {
+    if (ignoreTestForGivenAbi()) {
+      return
+    }
     val duration = 2000L
 
     val animatorListener1 = CameraAnimatorListener()
@@ -431,6 +446,9 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
 
   @Test
   fun testEaseToSingleDurationShort() {
+    if (ignoreTestForGivenAbi()) {
+      return
+    }
     val targetBearing = 5.0
     val cameraOptions = CameraOptions.Builder().bearing(targetBearing).build()
     val expectedValues = mutableSetOf(-0.0, targetBearing)
@@ -460,6 +478,7 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
 
   @Test
   fun testEaseToSequenceDurationZero() {
+
     val targetBearing1 = 5.0
     val targetBearing2 = 10.0
     val targetBearing3 = 15.0
@@ -613,6 +632,9 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
 
   @Test
   fun testEaseToSequenceDurationShort() {
+    if (ignoreTestForGivenAbi()) {
+      return
+    }
     val targetBearing1 = 5.0
     val targetBearing2 = 10.0
     val targetBearing3 = 15.0
@@ -663,6 +685,9 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
 
   @Test
   fun testEaseToAnimatorSequenceLessThenFrameUpdate() {
+    if (ignoreTestForGivenAbi()) {
+      return
+    }
     val targetBearing1 = 5.0
     val targetBearing2 = 10.0
     val targetBearing3 = 15.0
@@ -741,6 +766,9 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
 
   @Test
   fun testPostDelayedAndStartDelayedAnimators() {
+    if (ignoreTestForGivenAbi()) {
+      return
+    }
     val pitchAnimatorOne = createPitchAnimator(cameraAnimationPlugin, 10.0, 0, 1000L)
     val pitchListenerOne = CameraAnimatorListener()
     pitchAnimatorOne.addListener(pitchListenerOne)
