@@ -25,7 +25,6 @@ import com.mapbox.maps.plugin.annotation.generated.PointAnnotationManager
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions
 import com.mapbox.maps.plugin.annotation.generated.createPointAnnotationManager
 import com.mapbox.maps.plugin.gestures.*
-import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityGesturesBinding
 import java.util.*
@@ -71,7 +70,7 @@ class GesturesActivity : AppCompatActivity() {
       recalculateFocalPoint()
     }
   }
-    private val scaleListener: OnScaleListener = object : OnScaleListener {
+  private val scaleListener: OnScaleListener = object : OnScaleListener {
     override fun onScaleBegin(@NonNull detector: StandardScaleGestureDetector) {
       gestureAlertsAdapter.addAlert(GestureAlert(GestureAlert.TYPE_START, "SCALE START"))
       if (focalPointLatLng != null) {
