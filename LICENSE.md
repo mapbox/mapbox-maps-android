@@ -14,7 +14,7 @@ For the full license terms, please see the Mapbox Terms of Service at https://ww
 ## Additional Mapbox Maps Android licenses
 Mapbox Maps Android uses portions of the Activity.
 
-URL: [https://developer.android.com/jetpack/androidx/releases/activity#1.2.3](https://developer.android.com/jetpack/androidx/releases/activity#1.2.3)
+URL: [https://developer.android.com/jetpack/androidx/releases/savedstate#1.1.0](https://developer.android.com/jetpack/androidx/releases/savedstate#1.1.0)
 
 License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -22,7 +22,7 @@ License: [The Apache Software License, Version 2.0](http://www.apache.org/licens
 
 Mapbox Maps Android uses portions of the Activity.
 
-URL: [https://developer.android.com/jetpack/androidx/releases/savedstate#1.1.0](https://developer.android.com/jetpack/androidx/releases/savedstate#1.1.0)
+URL: [https://developer.android.com/jetpack/androidx/releases/activity#1.2.3](https://developer.android.com/jetpack/androidx/releases/activity#1.2.3)
 
 License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -296,14 +296,6 @@ License: [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENS
 
 ===========================================================================
 
-Mapbox Maps Android uses portions of the Mapbox Android Commmon OkHttp SDK.
-
-URL: [https://github.com/mapbox/mapbox-sdk-common](https://github.com/mapbox/mapbox-sdk-common)
-
-License: [Mapbox Terms of Service](https://www.mapbox.com/legal/tos)
-
-===========================================================================
-
 Mapbox Maps Android uses portions of the Mapbox Android Commmon SDK.
 
 URL: [https://github.com/mapbox/mapbox-sdk-common](https://github.com/mapbox/mapbox-sdk-common)
@@ -365,22 +357,6 @@ Mapbox Maps Android uses portions of the Mapbox Logger.
 URL: [https://github.com/mapbox/mapbox-base-android](https://github.com/mapbox/mapbox-base-android)
 
 License: [BSD](https://opensource.org/licenses/BSD-2-Clause)
-
-===========================================================================
-
-Mapbox Maps Android uses portions of the okhttp.
-
-URL: [https://square.github.io/okhttp/](https://square.github.io/okhttp/)
-
-License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
-===========================================================================
-
-Mapbox Maps Android uses portions of the Okio.
-
-URL: [https://github.com/square/okio/](https://github.com/square/okio/)
-
-License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ===========================================================================
 
