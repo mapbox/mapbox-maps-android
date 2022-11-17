@@ -925,6 +925,12 @@ class AtmosphereTest {
     assertNotNull(style.getAtmosphere())
     verify(exactly = 0) { style.setStyleAtmosphere(any()) }
   }
+
+  @Test
+  fun removeAtmosphereTest() {
+    style.removeAtmosphere()
+    verify { style.setStyleAtmosphere(Value.nullValue()) }
+  }
 }
 
 // End of generated file.

@@ -137,6 +137,7 @@ public final class com/mapbox/maps/extension/style/atmosphere/generated/Atmosphe
 
 public final class com/mapbox/maps/extension/style/atmosphere/generated/AtmosphereUtils {
 	public static final fun getAtmosphere (Lcom/mapbox/maps/extension/style/StyleInterface;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public static final fun removeAtmosphere (Lcom/mapbox/maps/extension/style/StyleInterface;)V
 	public static final fun setAtmosphere (Lcom/mapbox/maps/extension/style/StyleInterface;Lcom/mapbox/maps/extension/style/StyleContract$StyleAtmosphereExtension;)V
 }
 
