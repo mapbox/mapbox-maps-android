@@ -77,11 +77,11 @@ class GesturesActivity : AppCompatActivity() {
   }
 
   override fun onDestroy() {
-    super.onDestroy()
     gesturesPlugin.removeOnMoveListener(moveListener)
     gesturesPlugin.removeOnRotateListener(rotateListener)
     gesturesPlugin.removeOnScaleListener(scaleListener)
     gesturesPlugin.removeOnShoveListener(shoveListener)
+    super.onDestroy()
   }
 
   private fun initializeMap() {
