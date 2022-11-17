@@ -25,6 +25,7 @@ import com.mapbox.maps.plugin.annotation.generated.PointAnnotationManager
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions
 import com.mapbox.maps.plugin.annotation.generated.createPointAnnotationManager
 import com.mapbox.maps.plugin.gestures.*
+import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityGesturesBinding
 import java.util.*
@@ -41,6 +42,10 @@ class GesturesActivity : AppCompatActivity() {
   private var focalPointLatLng: Point? = null
   private var pointAnnotationManager: PointAnnotationManager? = null
   private lateinit var binding: ActivityGesturesBinding
+  private lateinit var rotateListener: OnRotateListener
+  private lateinit var moveListener: OnMoveListener
+  private lateinit var scaleListener: OnScaleListener
+  private lateinit var shoveListener: OnShoveListener
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -71,6 +76,14 @@ class GesturesActivity : AppCompatActivity() {
     gestureAlertsAdapter.cancelUpdates()
   }
 
+  override fun onDestroy() {
+    super.onDestroy()
+    gesturesPlugin.removeOnMoveListener(moveListener)
+    gesturesPlugin.removeOnRotateListener(rotateListener)
+    gesturesPlugin.removeOnScaleListener(scaleListener)
+    gesturesPlugin.removeOnShoveListener(shoveListener)
+  }
+
   private fun initializeMap() {
     gesturesPlugin = binding.mapView.gestures
     gesturesManager = gesturesPlugin.getGesturesManager()
@@ -86,7 +99,7 @@ class GesturesActivity : AppCompatActivity() {
   }
 
   private fun attachListeners() {
-    gesturesPlugin.addOnMoveListener(object : OnMoveListener {
+    moveListener = object : OnMoveListener {
       override fun onMoveBegin(@NonNull detector: MoveGestureDetector) {
         gestureAlertsAdapter.addAlert(GestureAlert(GestureAlert.TYPE_START, "MOVE START"))
       }
@@ -100,9 +113,11 @@ class GesturesActivity : AppCompatActivity() {
         gestureAlertsAdapter.addAlert(GestureAlert(GestureAlert.TYPE_END, "MOVE END"))
         recalculateFocalPoint()
       }
-    })
+    }
+    gesturesPlugin.addOnMoveListener(moveListener)
 
-    gesturesPlugin.addOnRotateListener(object : OnRotateListener {
+
+    rotateListener = object : OnRotateListener {
       override fun onRotateBegin(@NonNull detector: RotateGestureDetector) {
         gestureAlertsAdapter.addAlert(GestureAlert(GestureAlert.TYPE_START, "ROTATE START"))
       }
@@ -115,9 +130,10 @@ class GesturesActivity : AppCompatActivity() {
       override fun onRotateEnd(@NonNull detector: RotateGestureDetector) {
         gestureAlertsAdapter.addAlert(GestureAlert(GestureAlert.TYPE_END, "ROTATE END"))
       }
-    })
+    }
+    gesturesPlugin.addOnRotateListener(rotateListener)
 
-    gesturesPlugin.addOnScaleListener(object : OnScaleListener {
+    scaleListener = object : OnScaleListener {
       override fun onScaleBegin(@NonNull detector: StandardScaleGestureDetector) {
         gestureAlertsAdapter.addAlert(GestureAlert(GestureAlert.TYPE_START, "SCALE START"))
         if (focalPointLatLng != null) {
@@ -157,9 +173,10 @@ class GesturesActivity : AppCompatActivity() {
           gesturesManager.moveGestureDetector.moveThreshold = 0f
         }
       }
-    })
+    }
+    gesturesPlugin.addOnScaleListener(scaleListener)
 
-    gesturesPlugin.addOnShoveListener(object : OnShoveListener {
+    shoveListener = object : OnShoveListener {
       override fun onShoveBegin(@NonNull detector: ShoveGestureDetector) {
         gestureAlertsAdapter.addAlert(GestureAlert(GestureAlert.TYPE_START, "SHOVE START"))
       }
@@ -171,7 +188,8 @@ class GesturesActivity : AppCompatActivity() {
       override fun onShoveEnd(@NonNull detector: ShoveGestureDetector) {
         gestureAlertsAdapter.addAlert(GestureAlert(GestureAlert.TYPE_END, "SHOVE END"))
       }
-    })
+    }
+    gesturesPlugin.addOnShoveListener(shoveListener)
   }
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
