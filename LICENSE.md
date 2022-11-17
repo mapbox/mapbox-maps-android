@@ -328,14 +328,6 @@ License: [BSD](https://opensource.org/licenses/BSD-2-Clause)
 
 ===========================================================================
 
-Mapbox Maps Android uses portions of the Mapbox Android Telemetry Core.
-
-URL: [https://github.com/mapbox/mapbox-events-android](https://github.com/mapbox/mapbox-events-android)
-
-License: [MIT](https://mit-license.org)
-
-===========================================================================
-
 Mapbox Maps Android uses portions of the Mapbox Annotations.
 
 URL: [https://github.com/mapbox/mapbox-base-android](https://github.com/mapbox/mapbox-base-android)
