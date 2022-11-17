@@ -78,6 +78,9 @@ interface MapControllable : MapboxLifecycleObserver {
 
   /**
    * Add [Widget] to the map.
+   *
+   * @throws RuntimeException when trying to add the Widget to the [MapControllable] that does not
+   * have [MapOptions.contextMode] = [ContextMode.SHARED] as part of [MapInitOptions].
    */
   @MapboxExperimental
   fun addWidget(widget: Widget)

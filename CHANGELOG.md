@@ -14,6 +14,8 @@ Mapbox welcomes participation and contributions from everyone.
 * Emit the last indicator state when new listeners are added to the location component. ([1827](https://github.com/mapbox/mapbox-maps-android/pull/1827))
 * Fix an issue where queried symbol features did not contain the associated feature state. ([1836](https://github.com/mapbox/mapbox-maps-android/pull/1836))
 * Clear geojson tiles after the source is updated with empty features in order to eliminate "phantom tile" artifacts and to obviate extra work for keeping empty tiles. ([1836](https://github.com/mapbox/mapbox-maps-android/pull/1836)) 
+* Fix a regression from v10.10.0-beta.1 release, the BitmapWidget.setTranslation API should offset relative to its original position. ([1833](https://github.com/mapbox/mapbox-maps-android/pull/1833))
+* Throw understandable exception when using widgets with the `MapView` or `MapSurface` and not specifying `MapInitOptions.MapOptions.contextMode = ContextMode.SHARED` preventing hard-catching runtime crashes or artifacts. ([1834](https://github.com/mapbox/mapbox-maps-android/pull/1834))
 
 ## Dependencies
 * Update gl-native to v10.10.0-rc.1 and common to v23.2.0-rc.2. ([1836](https://github.com/mapbox/mapbox-maps-android/pull/1836))

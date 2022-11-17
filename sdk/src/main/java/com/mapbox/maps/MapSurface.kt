@@ -217,6 +217,9 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
 
   /**
    * Add [Widget] to the map.
+   *
+   * @throws RuntimeException when trying to add the Widget to the [MapSurface] that does not
+   * have [MapOptions.contextMode] = [ContextMode.SHARED] as part of [MapInitOptions].
    */
   @MapboxExperimental
   override fun addWidget(widget: Widget) {
