@@ -3,7 +3,6 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
-* Fix immediate camera animation on API level 23 or below. ([1842](https://github.com/mapbox/mapbox-maps-android/pull/1842))
 
 # 10.10.0-rc.1
 ## Bug fixes 🐞
@@ -12,6 +11,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Emit the last indicator state when new listeners are added to the location component. ([1827](https://github.com/mapbox/mapbox-maps-android/pull/1827))
 * Fix a regression from v10.10.0-beta.1 release, the BitmapWidget.setTranslation API should offset relative to its original position. ([1833](https://github.com/mapbox/mapbox-maps-android/pull/1833))
 * Throw understandable exception when using widgets with the `MapView` or `MapSurface` and not specifying `MapInitOptions.MapOptions.contextMode = ContextMode.SHARED` preventing hard-catching runtime crashes or artifacts. ([1834](https://github.com/mapbox/mapbox-maps-android/pull/1834))
+* Fix immediate camera animation on API level 23 or below. ([1842](https://github.com/mapbox/mapbox-maps-android/pull/1842))
 
 # 10.10.0-beta.1 November 03, 2022
 ## Features ✨ and improvements 🏁
