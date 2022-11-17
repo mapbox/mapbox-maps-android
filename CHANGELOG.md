@@ -16,6 +16,9 @@ Mapbox welcomes participation and contributions from everyone.
 * Clear geojson tiles after the source is updated with empty features in order to eliminate "phantom tile" artifacts and to obviate extra work for keeping empty tiles. ([1836](https://github.com/mapbox/mapbox-maps-android/pull/1836)) 
 * Fix a regression from v10.10.0-beta.1 release, the BitmapWidget.setTranslation API should offset relative to its original position. ([1833](https://github.com/mapbox/mapbox-maps-android/pull/1833))
 * Throw understandable exception when using widgets with the `MapView` or `MapSurface` and not specifying `MapInitOptions.MapOptions.contextMode = ContextMode.SHARED` preventing hard-catching runtime crashes or artifacts. ([1834](https://github.com/mapbox/mapbox-maps-android/pull/1834))
+* Fix an issue where location updates were not provided on correct thread/looper. ([1836](https://github.com/mapbox/mapbox-maps-android/pull/1836))
+* [telemetry] Dispatch location updates as a location event when the app is moving to background. ([1836](https://github.com/mapbox/mapbox-maps-android/pull/1836))
+* Fix `LocationEngine` to support multiple concurrent clients. ([1836](https://github.com/mapbox/mapbox-maps-android/pull/1836))
 
 ## Dependencies
 * Update gl-native to v10.10.0-rc.1 and common to v23.2.0-rc.2. ([1836](https://github.com/mapbox/mapbox-maps-android/pull/1836))
