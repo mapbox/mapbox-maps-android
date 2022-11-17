@@ -38,14 +38,93 @@ class GesturesActivity : AppCompatActivity() {
   private lateinit var mapboxMap: MapboxMap
   private lateinit var gesturesPlugin: GesturesPlugin
   private lateinit var gesturesManager: AndroidGesturesManager
-  private lateinit var gestureAlertsAdapter: GestureAlertsAdapter
+  private val gestureAlertsAdapter: GestureAlertsAdapter = GestureAlertsAdapter()
   private var focalPointLatLng: Point? = null
   private var pointAnnotationManager: PointAnnotationManager? = null
   private lateinit var binding: ActivityGesturesBinding
-  private lateinit var rotateListener: OnRotateListener
-  private lateinit var moveListener: OnMoveListener
-  private lateinit var scaleListener: OnScaleListener
-  private lateinit var shoveListener: OnShoveListener
+  private val rotateListener: OnRotateListener = object : OnRotateListener {
+    override fun onRotateBegin(@NonNull detector: RotateGestureDetector) {
+      gestureAlertsAdapter.addAlert(GestureAlert(GestureAlert.TYPE_START, "ROTATE START"))
+    }
+
+    override fun onRotate(@NonNull detector: RotateGestureDetector) {
+      gestureAlertsAdapter.addAlert(GestureAlert(GestureAlert.TYPE_PROGRESS, "ROTATE PROGRESS"))
+      recalculateFocalPoint()
+    }
+
+    override fun onRotateEnd(@NonNull detector: RotateGestureDetector) {
+      gestureAlertsAdapter.addAlert(GestureAlert(GestureAlert.TYPE_END, "ROTATE END"))
+    }
+  }
+  private val moveListener: OnMoveListener = object : OnMoveListener {
+    override fun onMoveBegin(@NonNull detector: MoveGestureDetector) {
+      gestureAlertsAdapter.addAlert(GestureAlert(GestureAlert.TYPE_START, "MOVE START"))
+    }
+
+    override fun onMove(@NonNull detector: MoveGestureDetector): Boolean {
+      gestureAlertsAdapter.addAlert(GestureAlert(GestureAlert.TYPE_PROGRESS, "MOVE PROGRESS"))
+      return false
+    }
+
+    override fun onMoveEnd(@NonNull detector: MoveGestureDetector) {
+      gestureAlertsAdapter.addAlert(GestureAlert(GestureAlert.TYPE_END, "MOVE END"))
+      recalculateFocalPoint()
+    }
+  }
+    private val scaleListener: OnScaleListener = object : OnScaleListener {
+    override fun onScaleBegin(@NonNull detector: StandardScaleGestureDetector) {
+      gestureAlertsAdapter.addAlert(GestureAlert(GestureAlert.TYPE_START, "SCALE START"))
+      if (focalPointLatLng != null) {
+        gestureAlertsAdapter.addAlert(
+          GestureAlert(
+            GestureAlert.TYPE_OTHER,
+            "INCREASING MOVE THRESHOLD"
+          )
+        )
+        gesturesManager.moveGestureDetector.moveThreshold = 175 * resources.displayMetrics.density
+
+        gestureAlertsAdapter.addAlert(
+          GestureAlert(
+            GestureAlert.TYPE_OTHER,
+            "MANUALLY INTERRUPTING MOVE"
+          )
+        )
+        gesturesManager.moveGestureDetector.interrupt()
+      }
+      recalculateFocalPoint()
+    }
+
+    override fun onScale(@NonNull detector: StandardScaleGestureDetector) {
+      gestureAlertsAdapter.addAlert(GestureAlert(GestureAlert.TYPE_PROGRESS, "SCALE PROGRESS"))
+    }
+
+    override fun onScaleEnd(@NonNull detector: StandardScaleGestureDetector) {
+      gestureAlertsAdapter.addAlert(GestureAlert(GestureAlert.TYPE_END, "SCALE END"))
+
+      if (focalPointLatLng != null) {
+        gestureAlertsAdapter.addAlert(
+          GestureAlert(
+            GestureAlert.TYPE_OTHER,
+            "REVERTING MOVE THRESHOLD"
+          )
+        )
+        gesturesManager.moveGestureDetector.moveThreshold = 0f
+      }
+    }
+  }
+  private val shoveListener: OnShoveListener = object : OnShoveListener {
+    override fun onShoveBegin(@NonNull detector: ShoveGestureDetector) {
+      gestureAlertsAdapter.addAlert(GestureAlert(GestureAlert.TYPE_START, "SHOVE START"))
+    }
+
+    override fun onShove(@NonNull detector: ShoveGestureDetector) {
+      gestureAlertsAdapter.addAlert(GestureAlert(GestureAlert.TYPE_PROGRESS, "SHOVE PROGRESS"))
+    }
+
+    override fun onShoveEnd(@NonNull detector: ShoveGestureDetector) {
+      gestureAlertsAdapter.addAlert(GestureAlert(GestureAlert.TYPE_END, "SHOVE END"))
+    }
+  }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -67,7 +146,6 @@ class GesturesActivity : AppCompatActivity() {
     }
 
     binding.recycler.layoutManager = LinearLayoutManager(this)
-    gestureAlertsAdapter = GestureAlertsAdapter()
     binding.recycler.adapter = gestureAlertsAdapter
   }
 
@@ -99,96 +177,9 @@ class GesturesActivity : AppCompatActivity() {
   }
 
   private fun attachListeners() {
-    moveListener = object : OnMoveListener {
-      override fun onMoveBegin(@NonNull detector: MoveGestureDetector) {
-        gestureAlertsAdapter.addAlert(GestureAlert(GestureAlert.TYPE_START, "MOVE START"))
-      }
-
-      override fun onMove(@NonNull detector: MoveGestureDetector): Boolean {
-        gestureAlertsAdapter.addAlert(GestureAlert(GestureAlert.TYPE_PROGRESS, "MOVE PROGRESS"))
-        return false
-      }
-
-      override fun onMoveEnd(@NonNull detector: MoveGestureDetector) {
-        gestureAlertsAdapter.addAlert(GestureAlert(GestureAlert.TYPE_END, "MOVE END"))
-        recalculateFocalPoint()
-      }
-    }
     gesturesPlugin.addOnMoveListener(moveListener)
-
-
-    rotateListener = object : OnRotateListener {
-      override fun onRotateBegin(@NonNull detector: RotateGestureDetector) {
-        gestureAlertsAdapter.addAlert(GestureAlert(GestureAlert.TYPE_START, "ROTATE START"))
-      }
-
-      override fun onRotate(@NonNull detector: RotateGestureDetector) {
-        gestureAlertsAdapter.addAlert(GestureAlert(GestureAlert.TYPE_PROGRESS, "ROTATE PROGRESS"))
-        recalculateFocalPoint()
-      }
-
-      override fun onRotateEnd(@NonNull detector: RotateGestureDetector) {
-        gestureAlertsAdapter.addAlert(GestureAlert(GestureAlert.TYPE_END, "ROTATE END"))
-      }
-    }
     gesturesPlugin.addOnRotateListener(rotateListener)
-
-    scaleListener = object : OnScaleListener {
-      override fun onScaleBegin(@NonNull detector: StandardScaleGestureDetector) {
-        gestureAlertsAdapter.addAlert(GestureAlert(GestureAlert.TYPE_START, "SCALE START"))
-        if (focalPointLatLng != null) {
-          gestureAlertsAdapter.addAlert(
-            GestureAlert(
-              GestureAlert.TYPE_OTHER,
-              "INCREASING MOVE THRESHOLD"
-            )
-          )
-          gesturesManager.moveGestureDetector.moveThreshold = 175 * resources.displayMetrics.density
-
-          gestureAlertsAdapter.addAlert(
-            GestureAlert(
-              GestureAlert.TYPE_OTHER,
-              "MANUALLY INTERRUPTING MOVE"
-            )
-          )
-          gesturesManager.moveGestureDetector.interrupt()
-        }
-        recalculateFocalPoint()
-      }
-
-      override fun onScale(@NonNull detector: StandardScaleGestureDetector) {
-        gestureAlertsAdapter.addAlert(GestureAlert(GestureAlert.TYPE_PROGRESS, "SCALE PROGRESS"))
-      }
-
-      override fun onScaleEnd(@NonNull detector: StandardScaleGestureDetector) {
-        gestureAlertsAdapter.addAlert(GestureAlert(GestureAlert.TYPE_END, "SCALE END"))
-
-        if (focalPointLatLng != null) {
-          gestureAlertsAdapter.addAlert(
-            GestureAlert(
-              GestureAlert.TYPE_OTHER,
-              "REVERTING MOVE THRESHOLD"
-            )
-          )
-          gesturesManager.moveGestureDetector.moveThreshold = 0f
-        }
-      }
-    }
     gesturesPlugin.addOnScaleListener(scaleListener)
-
-    shoveListener = object : OnShoveListener {
-      override fun onShoveBegin(@NonNull detector: ShoveGestureDetector) {
-        gestureAlertsAdapter.addAlert(GestureAlert(GestureAlert.TYPE_START, "SHOVE START"))
-      }
-
-      override fun onShove(@NonNull detector: ShoveGestureDetector) {
-        gestureAlertsAdapter.addAlert(GestureAlert(GestureAlert.TYPE_PROGRESS, "SHOVE PROGRESS"))
-      }
-
-      override fun onShoveEnd(@NonNull detector: ShoveGestureDetector) {
-        gestureAlertsAdapter.addAlert(GestureAlert(GestureAlert.TYPE_END, "SHOVE END"))
-      }
-    }
     gesturesPlugin.addOnShoveListener(shoveListener)
   }
 
