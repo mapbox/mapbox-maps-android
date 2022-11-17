@@ -158,6 +158,7 @@ package com.mapbox.maps.extension.style.atmosphere.generated {
 
   public final class AtmosphereUtils {
     method public static com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere getAtmosphere(com.mapbox.maps.extension.style.StyleInterface);
+    method public static void removeAtmosphere(com.mapbox.maps.extension.style.StyleInterface);
     method public static void setAtmosphere(com.mapbox.maps.extension.style.StyleInterface, com.mapbox.maps.extension.style.StyleContract.StyleAtmosphereExtension atmosphere);
   }
 
