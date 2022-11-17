@@ -139,44 +139,51 @@ class ViewportPluginTest : BaseMapTest() {
   fun testFollowPuckViewportState() {
     val latch = CountDownLatch(1)
     handler.post {
+      assertEquals(0.0, mapView.getMapboxMap().cameraState.bearing, EPS)
+      mapView.getMapboxMap().cameraState.center.assertEquals(NULL_ISLAND)
       // immediate update location puck to test location.
-      locationProvider.locationConsumers.forEach {
-        it.onBearingUpdated(
-          TEST_BEARING,
-          options = { duration = 0 }
-        )
-      }
       locationProvider.locationConsumers.forEach {
         it.onLocationUpdated(
           TEST_POINT,
           options = { duration = 0 }
         )
       }
+      locationProvider.locationConsumers.forEach {
+        it.onBearingUpdated(
+          TEST_BEARING,
+          options = { duration = 0 }
+        )
+      }
       // immediately transition to the followPuckViewportState
       viewportPlugin.transitionTo(viewportPlugin.makeFollowPuckViewportState(), immediateViewportTransition) {
-        // now we are in the follow puck viewport state
-        val cameraState = mapView.getMapboxMap().cameraState
-        cameraState.center.assertEquals(TEST_POINT)
-        assertEquals(TEST_BEARING, cameraState.bearing, EPS)
-        // emit new bearing and location updates, location component plugin should be driving the animation.
-        // and viewport plugin should do animation with 0 duration on each animated location puck position
-        locationProvider.locationConsumers.forEach {
-          it.onBearingUpdated(
-            TEST_BEARING + 90.0,
-            options = { duration = 1000 }
-          )
-        }
-        locationProvider.locationConsumers.forEach {
-          it.onLocationUpdated(
-            TEST_POINT_MOVED,
-            options = { duration = 1000 }
-          )
-        }
+        latch.countDown()
+      }
+    }
+
+    if (!latch.await(200, TimeUnit.MILLISECONDS)) {
+      throw TimeoutException()
+    }
+
+    val latch2 = CountDownLatch(1)
+    handler.post {
+      // emit new bearing and location updates, location component plugin should be driving the animation.
+      // and viewport plugin should do animation with 0 duration on each animated location puck position
+      locationProvider.locationConsumers.forEach {
+        it.onBearingUpdated(
+          TEST_BEARING + 90.0,
+          options = { duration = 1000 }
+        )
+      }
+      locationProvider.locationConsumers.forEach {
+        it.onLocationUpdated(
+          TEST_POINT_MOVED,
+          options = { duration = 1000 }
+        )
       }
     }
 
     // The location update will be animated with 1 second duration, we wait for 2 seconds for the animation to finish
-    latch.await(2, TimeUnit.SECONDS)
+    latch2.await(2, TimeUnit.SECONDS)
 
     // validate the camera is at the moved location
     handler.post {
