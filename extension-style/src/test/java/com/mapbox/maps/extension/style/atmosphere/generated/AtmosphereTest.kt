@@ -927,7 +927,7 @@ class AtmosphereTest {
   }
 
   @Test
-  fun getAtmosphereTest() {
+  fun removeAtmosphereTest() {
     style.removeAtmosphere()
     verify { style.setAtmosphere(Value.nullValue()) }
   }
