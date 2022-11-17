@@ -109,7 +109,7 @@ object Versions {
   const val mapboxJavaServices = "5.4.1"
   const val mapboxBase = "0.8.0"
   const val mapboxGlNative = "10.10.0-rc.1"
-  const val mapboxCommon = "23.2.0-rc.2"
+  const val mapboxCommon = "23.2.0-rc.3"
   const val androidxCore = "1.7.0" // last version compatible with kotlin 1.5.31
   const val androidxFragmentTesting = "1.5.0"
   const val androidxAnnotation = "1.1.0"
