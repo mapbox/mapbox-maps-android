@@ -176,22 +176,6 @@ License: [Mapbox Terms of Service](https://www.mapbox.com/legal/tos)
 
 ===========================================================================
 
-Mapbox Maps Android uses portions of the Mapbox Android Core SDK.
-
-URL: [https://github.com/mapbox/mapbox-sdk](https://github.com/mapbox/mapbox-sdk)
-
-License: [BSD](https://opensource.org/licenses/BSD-2-Clause)
-
-===========================================================================
-
-Mapbox Maps Android uses portions of the Mapbox Android Gestures Library.
-
-URL: [https://github.com/mapbox/mapbox-gestures-android](https://github.com/mapbox/mapbox-gestures-android)
-
-License: [BSD](https://opensource.org/licenses/BSD-2-Clause)
-
-===========================================================================
-
 Mapbox Maps Android uses portions of the Mapbox Annotations.
 
 URL: [https://github.com/mapbox/mapbox-base-android](https://github.com/mapbox/mapbox-base-android)
