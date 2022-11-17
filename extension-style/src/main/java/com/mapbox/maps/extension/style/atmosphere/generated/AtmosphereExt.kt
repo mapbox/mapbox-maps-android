@@ -3,6 +3,7 @@
 
 package com.mapbox.maps.extension.style.atmosphere.generated
 
+import com.mapbox.bindgen.Value
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.StyleInterface
 
@@ -22,6 +23,13 @@ fun StyleInterface.getAtmosphere(): Atmosphere {
  */
 fun StyleInterface.setAtmosphere(atmosphere: StyleContract.StyleAtmosphereExtension) {
   atmosphere.bindTo(this)
+}
+
+/**
+ * Removes atmosphere from style if it was set.
+ */
+fun StyleInterface.removeAtmosphere() {
+  setStyleAtmosphere(Value.nullValue())
 }
 
 // End of generated file.
