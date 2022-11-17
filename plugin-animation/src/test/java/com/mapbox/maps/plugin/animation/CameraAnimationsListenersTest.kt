@@ -273,7 +273,7 @@ class CameraAnimationsListenersTest {
     bearingAnimator.start()
     Shadows.shadowOf(Looper.getMainLooper()).idle()
 
-    Assert.assertEquals(5, valuesList.size)
+    Assert.assertEquals(3, valuesList.size)
     Assert.assertArrayEquals(intArrayOf(0, 1, 1), valuesList.slice(0..2).toIntArray())
   }
 
