@@ -3,6 +3,7 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
+* Fix immediate camera animation on API level 23 or below. ([1842](https://github.com/mapbox/mapbox-maps-android/pull/1842))
 
 # 10.10.0-rc.1
 ## Features ✨ and improvements 🏁

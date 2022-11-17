@@ -3,11 +3,13 @@ package com.mapbox.maps.plugin.animation.animator
 import android.animation.TypeEvaluator
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
+import android.os.Build
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.logW
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions
 import com.mapbox.maps.plugin.animation.CameraAnimatorType
 import com.mapbox.maps.threading.AnimationThreadController.postOnAnimatorThread
+import java.util.concurrent.CopyOnWriteArraySet
 
 /**
  * Base generic class for all camera animators.
@@ -42,8 +44,8 @@ abstract class CameraAnimator<out T> (
   private var internalUpdateListener: AnimatorUpdateListener? = null
   private var internalListener: AnimatorListener? = null
 
-  private val userUpdateListeners = mutableListOf<AnimatorUpdateListener?>()
-  private val userListeners = mutableListOf<AnimatorListener?>()
+  private val userUpdateListeners = CopyOnWriteArraySet<AnimatorUpdateListener?>()
+  private val userListeners = CopyOnWriteArraySet<AnimatorListener?>()
 
   internal var canceled = false
   internal var isInternal = false
@@ -83,6 +85,9 @@ abstract class CameraAnimator<out T> (
     postOnAnimatorThread {
       if (registered) {
         canceled = false
+        if (handleImmediateAnimationOnAPI23OrBelow()) {
+          return@postOnAnimatorThread
+        }
         super.start()
       } else {
         logW(
@@ -91,6 +96,59 @@ abstract class CameraAnimator<out T> (
         )
       }
     }
+  }
+
+  /**
+   * The most recent value calculated by this <code>ValueAnimator</code> when there is just one
+   * property being animated. This value is only sensible while the animation is running. The main
+   * purpose for this read-only property is to retrieve the value from the <code>ValueAnimator</code>
+   * during a call to {@link AnimatorUpdateListener#onAnimationUpdate(ValueAnimator)}, which
+   * is called during each animation frame, immediately after the value is calculated.
+   *
+   * @return animatedValue The value most recently calculated by this <code>ValueAnimator</code> for
+   * the single property being animated. If there are several properties being animated
+   * (specified by several PropertyValuesHolder objects in the constructor), this function
+   * returns the animated value for the first of those objects.
+   */
+  override fun getAnimatedValue(): Any {
+    // For immediate animations on API <= 23, as we introduced the bypass logic in handleImmediateAnimationOnAPI23OrBelow(),
+    // the returned ValueAnimator.getAnimatedValue() will be null, in this case, we should return the
+    // last configured target value, so we immediately jump to the target value.
+    if (Build.VERSION.SDK_INT <= 23) {
+      if (duration == 0L && startDelay == 0L) {
+        return super.getAnimatedValue() ?: targets.last() as Any
+      }
+    }
+    return super.getAnimatedValue()
+  }
+
+  /**
+   * Handle immediate animation(when duration and startDelay of the animation is 0) on devices running
+   * API 23 or below, by sending updates to animator listeners directly without triggering [ValueAnimator]'s start().
+   *
+   * @return true if the animation is handled, false otherwise
+   */
+  private fun handleImmediateAnimationOnAPI23OrBelow(): Boolean {
+    // Devices with API <= 23 animating with duration = 0 will send initial value from Looper with some small delay as a result.
+    // Hence multiple immediate animations sent close to each other may cancel previous ones.
+    // For these cases, we bypass the ValueAnimator and emit the user registered AnimatorListeners and AnimatorUpdateListeners immediately.
+    if (Build.VERSION.SDK_INT <= 23) {
+      if (duration == 0L && startDelay == 0L) {
+        val tmpListeners = listeners.toList()
+        tmpListeners.forEach {
+          it.onAnimationStart(this)
+        }
+        internalUpdateListener?.onAnimationUpdate(this)
+        userUpdateListeners.forEach {
+          it?.onAnimationUpdate(this)
+        }
+        tmpListeners.forEach {
+          it.onAnimationEnd(this)
+        }
+        return true
+      }
+    }
+    return false
   }
 
   /**
