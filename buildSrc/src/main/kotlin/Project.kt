@@ -131,7 +131,7 @@ object Versions {
   const val squareLeakCanary = "2.7"
   const val materialDesign = "1.2.0"
   const val googlePlayServicesLocation = "18.0.0"
-  const val googleCarAppLibrary= "1.1.0"
+  const val googleCarAppLibrary= "1.2.0"
   const val androidAutoMapboxMapSdk = "10.5.0"
   const val kotlinCoroutines = "1.3.9"
   const val junit = "4.13.2"
