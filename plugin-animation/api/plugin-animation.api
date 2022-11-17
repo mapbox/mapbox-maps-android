@@ -97,6 +97,7 @@ public abstract class com/mapbox/maps/plugin/animation/animator/CameraAnimator :
 	public final fun addListener (Landroid/animation/Animator$AnimatorListener;)V
 	public final fun addUpdateListener (Landroid/animation/ValueAnimator$AnimatorUpdateListener;)V
 	public final fun cancel ()V
+	public fun getAnimatedValue ()Ljava/lang/Object;
 	public final fun getOwner ()Ljava/lang/String;
 	public final fun getStartValue ()Ljava/lang/Object;
 	public final fun getTargets ()[Ljava/lang/Object;
