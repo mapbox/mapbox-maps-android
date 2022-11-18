@@ -26,25 +26,28 @@ public class LocationComponentInitOptions private constructor(
   public val shadowIconImageId: String,
   public val bearingIconImageId: String
 ) {
-  public override fun toString() = "LocationComponentInitOptions(puck2DLayerId=$puck2DLayerId,puck3DLayerId=$puck3DLayerId, puck3DSourceId=$puck3DSourceId, topIconImageId=$topIconImageId,shadowIconImageId=$shadowIconImageId, bearingIconImageId=$bearingIconImageId)"
+  public override fun toString() =
+    "LocationComponentInitOptions(puck2DLayerId=$puck2DLayerId,puck3DLayerId=$puck3DLayerId, puck3DSourceId=$puck3DSourceId, topIconImageId=$topIconImageId,shadowIconImageId=$shadowIconImageId, bearingIconImageId=$bearingIconImageId)"
 
-  public override fun equals(other: Any?): Boolean = other is LocationComponentInitOptions
-  		&& puck2DLayerId == other.puck2DLayerId
-  		&& puck3DLayerId == other.puck3DLayerId
-  		&& puck3DSourceId == other.puck3DSourceId
-  		&& topIconImageId == other.topIconImageId
-  		&& shadowIconImageId == other.shadowIconImageId
-  		&& bearingIconImageId == other.bearingIconImageId
+  public override fun equals(other: Any?): Boolean = other is LocationComponentInitOptions &&
+    puck2DLayerId == other.puck2DLayerId &&
+    puck3DLayerId == other.puck3DLayerId &&
+    puck3DSourceId == other.puck3DSourceId &&
+    topIconImageId == other.topIconImageId &&
+    shadowIconImageId == other.shadowIconImageId &&
+    bearingIconImageId == other.bearingIconImageId
 
-  public override fun hashCode(): Int = Objects.hash(puck2DLayerId, puck3DLayerId, puck3DSourceId,
-      topIconImageId, shadowIconImageId, bearingIconImageId)
+  public override fun hashCode(): Int = Objects.hash(
+    puck2DLayerId, puck3DLayerId, puck3DSourceId,
+    topIconImageId, shadowIconImageId, bearingIconImageId
+  )
 
   /**
    * Composes and builds a [LocationComponentInitOptions] object.
    *
    * This is a concrete implementation of the builder design pattern.
    *
-   * @property 
+   * @property
    */
   public class Builder {
     @set:JvmSynthetic
@@ -140,8 +143,10 @@ public class LocationComponentInitOptions private constructor(
      * @return LocationComponentInitOptions
      */
     public fun build(): LocationComponentInitOptions {
-      return LocationComponentInitOptions(puck2DLayerId, puck3DLayerId, puck3DSourceId,
-          topIconImageId, shadowIconImageId, bearingIconImageId)
+      return LocationComponentInitOptions(
+        puck2DLayerId, puck3DLayerId, puck3DSourceId,
+        topIconImageId, shadowIconImageId, bearingIconImageId
+      )
     }
   }
 }
@@ -154,4 +159,4 @@ public class LocationComponentInitOptions private constructor(
  */
 @JvmSynthetic
 public fun LocationComponentInitOptions(initializer: LocationComponentInitOptions.Builder.() -> Unit):
-    LocationComponentInitOptions = LocationComponentInitOptions.Builder().apply(initializer).build()
+  LocationComponentInitOptions = LocationComponentInitOptions.Builder().apply(initializer).build()
