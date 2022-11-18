@@ -4,7 +4,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-# 10.10.0-rc.1
+
+# 10.10.0-rc.1 November 18, 2022
 ## Features ✨ and improvements 🏁
 * Improve symbol filtering performance when distance-from-camera and pitch expressions are used. ([1836](https://github.com/mapbox/mapbox-maps-android/pull/1836))
 * Add API for removing atmosphere. ([1841](https://github.com/mapbox/mapbox-maps-android/pull/1841))
@@ -17,7 +18,6 @@ Mapbox welcomes participation and contributions from everyone.
 * Clear geojson tiles after the source is updated with empty features in order to eliminate "phantom tile" artifacts and to obviate extra work for keeping empty tiles. ([1836](https://github.com/mapbox/mapbox-maps-android/pull/1836)) 
 * Fix a regression from v10.10.0-beta.1 release, the BitmapWidget.setTranslation API should offset relative to its original position. ([1833](https://github.com/mapbox/mapbox-maps-android/pull/1833))
 * Throw understandable exception when using widgets with the `MapView` or `MapSurface` and not specifying `MapInitOptions.MapOptions.contextMode = ContextMode.SHARED` preventing hard-catching runtime crashes or artifacts. ([1834](https://github.com/mapbox/mapbox-maps-android/pull/1834))
-* Fix immediate camera animation on API level 23 or below. ([1842](https://github.com/mapbox/mapbox-maps-android/pull/1842))
 * Fix an issue where location updates were not provided on correct thread/looper. ([1836](https://github.com/mapbox/mapbox-maps-android/pull/1836))
 * [telemetry] Dispatch location updates as a location event when the app is moving to background. ([1836](https://github.com/mapbox/mapbox-maps-android/pull/1836))
 * Fix `LocationEngine` to support multiple concurrent clients. ([1836](https://github.com/mapbox/mapbox-maps-android/pull/1836))
@@ -26,6 +26,8 @@ Mapbox welcomes participation and contributions from everyone.
 * Update gl-native to v10.10.0-rc.1 and common to v23.2.0-rc.2. ([1836](https://github.com/mapbox/mapbox-maps-android/pull/1836))
 * Remove `mapbox-android-core` dependency, it is now part of Mapbox Common library.
   **NOTE:**: You need to remove any explicit dependency declaration to `com.mapbox.mapboxsdk:mapbox-android-core:<version>` from the project to avoid duplicated class definition errors related to location APIs. ([1836](https://github.com/mapbox/mapbox-maps-android/pull/1836))
+* Fix immediate camera animation on API level 23 or below. ([1842](https://github.com/mapbox/mapbox-maps-android/pull/1842))
+
 
 # 10.9.1 November 7, 2022
 
