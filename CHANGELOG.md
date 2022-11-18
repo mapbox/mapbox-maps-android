@@ -4,7 +4,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-# 10.10.0-rc.1
+
+# 10.10.0-rc.1 November 18, 2022
 ## Features ✨ and improvements 🏁
 * Improve symbol filtering performance when distance-from-camera and pitch expressions are used. ([1836](https://github.com/mapbox/mapbox-maps-android/pull/1836))
 * Add API for removing atmosphere. ([1841](https://github.com/mapbox/mapbox-maps-android/pull/1841))
@@ -26,6 +27,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Remove `mapbox-android-core` dependency, it is now part of Mapbox Common library.
   **NOTE:**: You need to remove any explicit dependency declaration to `com.mapbox.mapboxsdk:mapbox-android-core:<version>` from the project to avoid duplicated class definition errors related to location APIs. ([1836](https://github.com/mapbox/mapbox-maps-android/pull/1836))
 * Fix immediate camera animation on API level 23 or below. ([1842](https://github.com/mapbox/mapbox-maps-android/pull/1842))
+
 
 # 10.9.1 November 7, 2022
 
