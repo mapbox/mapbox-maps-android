@@ -23,7 +23,6 @@ android {
 }
 
 dependencies {
-  api(Dependencies.mapboxAndroidCore)
   implementation(project(":sdk-base"))
   implementation(Dependencies.mapboxBase)
   implementation(Dependencies.kotlin)
