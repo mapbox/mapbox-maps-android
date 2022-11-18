@@ -1197,10 +1197,23 @@
         </activity>
 
         <activity
-            android:name=".examples.CustomJourneyLocationProviderActivity"
+            android:name=".examples.location.CustomJourneyLocationProviderActivity"
             android:description="@string/description_custom_location_provider"
             android:exported="true"
             android:label="@string/activity_custom_location_provider">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_location" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ExampleOverviewActivity" />
+        </activity>
+
+        <activity
+            android:name=".examples.location.MultipleLocationComponentActivity"
+            android:description="@string/description_multiple_location_component"
+            android:exported="true"
+            android:label="@string/activity_multiple_location_component">
             <meta-data
                 android:name="@string/category"
                 android:value="@string/category_location" />

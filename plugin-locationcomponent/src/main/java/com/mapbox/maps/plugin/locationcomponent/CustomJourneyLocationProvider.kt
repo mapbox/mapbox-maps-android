@@ -51,7 +51,7 @@ class CustomJourneyLocationProvider : LocationProvider {
 }
 
 @MapboxExperimental
-class Journey(val speed: Double = 100.0, val angularSpeed: Double = 100.0) {
+class Journey(val speed: Double = 100.0, val angularSpeed: Double = 500.0) {
   private val locationList = CopyOnWriteArrayList<QueueData>()
   private val initialTimeStamp: Long = 0
   private val remainingPoints = ConcurrentLinkedQueue<QueueData>()

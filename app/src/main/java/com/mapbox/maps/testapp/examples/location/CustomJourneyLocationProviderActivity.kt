@@ -1,4 +1,4 @@
-package com.mapbox.maps.testapp.examples
+package com.mapbox.maps.testapp.examples.location
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -69,7 +69,7 @@ class CustomJourneyLocationProviderActivity : AppCompatActivity(), OnMapClickLis
     locationComponentPlugin2.let {
       it.locationPuck = LocationPuck3D(
         modelUri = "asset://sportcar.glb",
-        modelScale = listOf(0.5f, 0.5f, 0.5f),
+        modelScale = listOf(0.2f, 0.2f, 0.2f),
         modelTranslation = listOf(0.1f, 0.1f, 0.1f),
         modelRotation = listOf(0.0f, 0.0f, 180.0f)
       )

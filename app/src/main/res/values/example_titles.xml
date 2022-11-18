@@ -95,4 +95,5 @@
     <string name="activity_advanced_viewport">Advanced Viewport with gestures</string>
     <string name="activity_third_party_source">External Vector Source</string>
     <string name="activity_custom_location_provider">Custom location provider</string>
+    <string name="activity_multiple_location_component">Multiple location components</string>
 </resources>
