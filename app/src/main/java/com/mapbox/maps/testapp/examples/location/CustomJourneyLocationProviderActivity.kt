@@ -10,20 +10,29 @@ import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapView
 import com.mapbox.maps.Style
 import com.mapbox.maps.plugin.LocationPuck3D
+import com.mapbox.maps.plugin.annotation.annotations
+import com.mapbox.maps.plugin.annotation.generated.PointAnnotation
+import com.mapbox.maps.plugin.annotation.generated.PointAnnotationManager
+import com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions
+import com.mapbox.maps.plugin.annotation.generated.createPointAnnotationManager
 import com.mapbox.maps.plugin.gestures.OnMapClickListener
 import com.mapbox.maps.plugin.gestures.gestures
 import com.mapbox.maps.plugin.locationcomponent.CustomJourneyLocationProvider
 import com.mapbox.maps.plugin.locationcomponent.Journey
 import com.mapbox.maps.plugin.locationcomponent.location2
+import com.mapbox.maps.testapp.R
+import com.mapbox.maps.testapp.utils.BitmapUtils
+import java.util.*
 
 /**
  * Example of using custom location provider.
  */
 class CustomJourneyLocationProviderActivity : AppCompatActivity(), OnMapClickListener {
-
   private val journey = Journey()
   private val customJourneyLocationProvider = CustomJourneyLocationProvider().apply { loadJourney(journey) }
   private lateinit var mapView: MapView
+  private val annotationList = LinkedList<PointAnnotation>()
+  private lateinit var pointAnnotationManager: PointAnnotationManager
 
   @SuppressLint("SetTextI18n")
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,6 +51,7 @@ class CustomJourneyLocationProviderActivity : AppCompatActivity(), OnMapClickLis
         }
       }
     )
+    pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
     mapView.getMapboxMap()
       .apply {
         setCamera(
@@ -57,6 +67,13 @@ class CustomJourneyLocationProviderActivity : AppCompatActivity(), OnMapClickLis
           journey.start()
         }
       }
+
+    journey.observeJourneyUpdates { location, bearing, locationAnimationDurationMs, bearingAnimateDurationMs ->
+      annotationList.poll()?.let {
+        pointAnnotationManager.delete(it)
+      }
+      true
+    }
   }
 
   private fun initClickListeners() {
@@ -80,6 +97,17 @@ class CustomJourneyLocationProviderActivity : AppCompatActivity(), OnMapClickLis
 
   override fun onMapClick(point: Point): Boolean {
     journey.queueLocationUpdate(point)
+    BitmapUtils.bitmapFromDrawableRes(
+      this,
+      R.drawable.red_marker
+    )?.let {
+      pointAnnotationManager.create(
+        PointAnnotationOptions()
+          .withPoint(point)
+          .withIconImage(it)
+          .withDraggable(true)
+      ).also { annotation -> annotationList.add(annotation) }
+    }
     return true
   }
 

@@ -17,16 +17,15 @@ public fun MapView.createLocationComponent(locationComponentInitOptions: Locatio
 }
 
 object LocationComponentUtils {
-  private var custom2DLayerIdCount = 0
-  private var custom3DLayerIdCount = 0
-  private var custom3DSourceIdCount = 0
+  private var customLocationComponentCount = 0
 
   fun getNextLocationComponentOptions() = LocationComponentInitOptions {
-    puck2DLayerId = "custom_location_component_2d_layer_$custom2DLayerIdCount"
-    puck3DLayerId = "custom_location_component_3d_layer_$custom3DLayerIdCount"
-    puck3DSourceId = "custom_location_component_3d_source_$custom3DSourceIdCount"
-    custom2DLayerIdCount++
-    custom3DLayerIdCount++
-    custom3DSourceIdCount++
+    puck2DLayerId = "custom_location_component_2d_layer_$customLocationComponentCount"
+    puck3DLayerId = "custom_location_component_3d_layer_$customLocationComponentCount"
+    puck3DSourceId = "custom_location_component_3d_source_$customLocationComponentCount"
+    puck3DSourceId = "custom_location_component_top_icon_image_id_$customLocationComponentCount"
+    puck3DSourceId = "custom_location_component_shadow_icon_image_id_$customLocationComponentCount"
+    puck3DSourceId = "custom_location_component_bearing_icon_image_id_$customLocationComponentCount"
+    customLocationComponentCount++
   }
 }

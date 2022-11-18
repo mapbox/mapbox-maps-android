@@ -143,25 +143,24 @@ class Journey(val speed: Double = 100.0, val angularSpeed: Double = 500.0) {
   private fun drainQueue() {
     remainingPoints.peek()?.let { data ->
       observers.forEach {
-        if (it.onNewData(
+        if (!it.onNewData(
             data.location,
             data.bearing,
             data.locationAnimationDurationMs,
             data.bearingAnimateDurationMs
           )
         ) {
-          if (isPlaying) {
-            handler.postDelayed(
-              {
-                remainingPoints.poll()
-                drainQueue()
-              },
-              max(data.locationAnimationDurationMs, data.bearingAnimateDurationMs)
-            )
-          }
-        } else {
           observers.remove(it)
         }
+      }
+      if (isPlaying) {
+        handler.postDelayed(
+          {
+            remainingPoints.poll()
+            drainQueue()
+          },
+          max(data.locationAnimationDurationMs, data.bearingAnimateDurationMs)
+        )
       }
     }
   }
