@@ -71,8 +71,15 @@ open class CompassViewPlugin(
         compassImage = drawable
       }
       compassRotation = internalSettings.rotation
+      val wasCompassEnabled = isCompassEnabled
       isCompassEnabled = internalSettings.enabled
-      setCompassAlpha(internalSettings.opacity)
+      if (wasCompassEnabled != isCompassEnabled) {
+        if (!isCompassEnabled) {
+          setCompassAlpha(0f)
+        } else {
+          setCompassAlpha(internalSettings.opacity)
+        }
+      }
       setCompassMargins(
         internalSettings.marginLeft.toInt(),
         internalSettings.marginTop.toInt(),
