@@ -1,5 +1,6 @@
 package com.mapbox.maps
 
+import android.util.Log
 import android.view.MotionEvent
 import androidx.annotation.VisibleForTesting
 import com.mapbox.maps.assets.AssetManagerProvider
@@ -48,6 +49,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   internal val pluginRegistry: MapPluginRegistry
   private val onStyleDataLoadedListener: OnStyleDataLoadedListener
   private val onCameraChangedListener: OnCameraChangeListener
+  private var lastCameraState: CameraState? = null
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal var lifecycleState: LifecycleState = LifecycleState.STATE_STOPPED
@@ -80,6 +82,19 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
       )
     )
     this.onCameraChangedListener = OnCameraChangeListener {
+      with (nativeMap.cameraState) {
+        //Log.d("onCameraChangedListener", this.toString())
+        if (lastCameraState != null &&
+          lastCameraState?.center == center &&
+          lastCameraState?.padding == padding &&
+          lastCameraState?.zoom == zoom &&
+          lastCameraState?.bearing == bearing &&
+          lastCameraState?.pitch == pitch
+        ) {
+          Log.d("onCameraChangedListener", "Duplicate cameraState reported: $this")
+        }
+        lastCameraState = this
+      }
       pluginRegistry.onCameraMove(nativeMap.cameraState)
     }
     this.onStyleDataLoadedListener = OnStyleDataLoadedListener { eventData ->
@@ -115,6 +130,19 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     this.mapboxMap = mapboxMap
     this.pluginRegistry = pluginRegistry
     this.onCameraChangedListener = OnCameraChangeListener {
+      with (nativeMap.cameraState) {
+        //Log.d("onCameraChangedListener", this.toString())
+        if (lastCameraState != null &&
+          lastCameraState?.center == center &&
+          lastCameraState?.padding == padding &&
+          lastCameraState?.zoom == zoom &&
+          lastCameraState?.bearing == bearing &&
+          lastCameraState?.pitch == pitch
+        ) {
+          Log.d("onCameraChangedListener", "Duplicate cameraState reported: $this")
+        }
+        lastCameraState = this
+      }
       pluginRegistry.onCameraMove(nativeMap.cameraState)
     }
     this.onStyleDataLoadedListener = onStyleLoadingFinishedListener
