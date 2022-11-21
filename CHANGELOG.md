@@ -23,7 +23,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix `LocationEngine` to support multiple concurrent clients. ([1836](https://github.com/mapbox/mapbox-maps-android/pull/1836))
 
 ## Dependencies
-* Update gl-native to v10.10.0-rc.1 and common to v23.2.0-rc.2. ([1836](https://github.com/mapbox/mapbox-maps-android/pull/1836))
+* Update gl-native to v10.10.0-rc.1 and common to v23.2.0-rc.3. ([1836](https://github.com/mapbox/mapbox-maps-android/pull/1836))
 * Remove `mapbox-android-core` dependency, it is now part of Mapbox Common library.
   **NOTE:**: You need to remove any explicit dependency declaration to `com.mapbox.mapboxsdk:mapbox-android-core:<version>` from the project to avoid duplicated class definition errors related to location APIs. ([1836](https://github.com/mapbox/mapbox-maps-android/pull/1836))
 * Fix immediate camera animation on API level 23 or below. ([1842](https://github.com/mapbox/mapbox-maps-android/pull/1842))
