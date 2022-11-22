@@ -94,4 +94,5 @@
     <string name="description_viewport">Viewport camera showcase</string>
     <string name="description_advanced_viewport">Advanced viewport with gestures showcase</string>
     <string name="description_third_party_source">Add a third party vector tile source.</string>
+    <string name="description_widget">Add a Widget to the map and demonstrate animations</string>
 </resources>
