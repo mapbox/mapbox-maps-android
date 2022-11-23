@@ -489,53 +489,6 @@ class ViewAnnotationManagerTest {
   }
 
   @Test
-  fun testCalculateEdgeInsetsWithoutOptionalInsets() {
-    val annotationManagerSpyk = spyk(ViewAnnotationManagerImpl(mapView, viewAnnotationsLayout))
-    val annotationOptionsList = mutableListOf<ViewAnnotationOptions>()
-    val viewAnnotationOptions = viewAnnotationOptions {
-      geometry(DEFAULT_GEOMETRY)
-      width(DEFAULT_WIDTH)
-      height(DEFAULT_HEIGHT)
-    }
-    annotationOptionsList.add(viewAnnotationOptions)
-
-    val rect = Rect()
-    rect.left = 10
-    rect.top = 10
-    rect.right = 10
-    rect.bottom = 10
-    every { annotationManagerSpyk.getViewAnnotationOptionsFrame(any()) } returns rect
-
-    val actualEdgeInsets = annotationManagerSpyk.calculateEdgeInsets(annotationOptionsList)
-    val expectedEdgeInsets = EdgeInsets(10.0, 10.0, 10.0, 10.0)
-    assertEquals(expectedEdgeInsets, actualEdgeInsets)
-  }
-
-  @Test
-  fun testCalculateEdgeInsetsWithOptionalInsets() {
-    val annotationManagerSpyk = spyk(ViewAnnotationManagerImpl(mapView, viewAnnotationsLayout))
-    val annotationOptionsList = mutableListOf<ViewAnnotationOptions>()
-    val edgeInsets = EdgeInsets(10.0, 10.0, 10.0, 10.0)
-    val viewAnnotationOptions = viewAnnotationOptions {
-      geometry(DEFAULT_GEOMETRY)
-      width(DEFAULT_WIDTH)
-      height(DEFAULT_HEIGHT)
-    }
-    annotationOptionsList.add(viewAnnotationOptions)
-
-    val rect = Rect()
-    rect.left = 10
-    rect.top = 10
-    rect.right = 10
-    rect.bottom = 10
-    every { annotationManagerSpyk.getViewAnnotationOptionsFrame(any()) } returns rect
-    val expectedEdgeInsets = EdgeInsets(20.0, 20.0, 20.0, 20.0)
-    val actualEdgeInsets =
-      annotationManagerSpyk.calculateEdgeInsets(annotationOptionsList, edgeInsets)
-    assertEquals(expectedEdgeInsets, actualEdgeInsets)
-  }
-
-  @Test
   fun testCameraForAnnotationsWithGlobeProjection() {
     every { style.getStyleProjectionProperty("name") } returns
       StylePropertyValue(Value(ProjectionName.GLOBE.value), StylePropertyValueKind.CONSTANT)

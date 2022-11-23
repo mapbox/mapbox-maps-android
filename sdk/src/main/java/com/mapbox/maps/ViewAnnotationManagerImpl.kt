@@ -28,12 +28,14 @@ internal class ViewAnnotationManagerImpl(
 
   private val mapboxMap: MapboxMap = mapView.getMapboxMap()
   private val renderThread = mapView.mapController.renderer.renderThread
+  private var pixelRatio = 1.0f
 
   init {
     viewAnnotationsLayout.layoutParams = FrameLayout.LayoutParams(
       ViewGroup.LayoutParams.MATCH_PARENT,
       ViewGroup.LayoutParams.MATCH_PARENT,
     )
+    pixelRatio = mapView.resources.displayMetrics.density
     // place the view annotations above the map (index 0) but below the compass, ruler and other plugin views
     mapView.addView(viewAnnotationsLayout, 1)
     mapView.requestDisallowInterceptTouchEvent(false)
@@ -164,6 +166,22 @@ internal class ViewAnnotationManagerImpl(
       }
     }
 
+  /**
+   * ViewAnnotations has width and height, so [MapboxMap.cameraForCoordinates] and
+   * [MapboxMap.cameraForCoordinateBounds] doesn't return correct frame for given annotations.
+   *
+   * In order to calculate correct bounds that includes width and height of viewAnnotations, we used following steps
+   * Step1: Calculate cameraOptions using cameraForCoordinates without considering the width and height of
+   * viewAnnotations.
+   * Step2: Calculate [MapboxMap.getMetersPerPixelAtLatitude] with zoom obtained from cameraOptions.
+   * Step3: Calculate projected meter at the anchor of viewAnnotation using [MapboxMap.projectedMetersForCoordinate]
+   * Step4: Adjust northing and easting vector of viewAnnotation with width, height and [getViewAnnotationOptionsFrame],
+   * this will give us north, east, south, west projected meters values.
+   * Step5: Get northEast and southWest coordinates using [MapboxMap.coordinateForProjectedMeters] and
+   * extend bounds looping through all viewAnnotations this will adjust final bounds.
+   *
+   * @return [CameraOptions] object.
+   */
   override fun cameraForAnnotations(
     annotations: List<View>,
     edgeInsets: EdgeInsets?,
@@ -179,10 +197,43 @@ internal class ViewAnnotationManagerImpl(
 
     if (viewAnnotationOptions.isEmpty()) return null
     val coordinates = coordinatesFromAnnotations(viewAnnotationOptions)
-    val paddings = calculateEdgeInsets(viewAnnotationOptions, edgeInsets)
-    return mapboxMap.cameraForCoordinates(
+    val cameraOptionForCoordinates = mapboxMap.cameraForCoordinates(
       coordinates,
-      paddings,
+      EdgeInsets(0.0, 0.0, 0.0, 0.0),
+      bearing,
+      pitch
+    )
+    val zoom = cameraOptionForCoordinates.zoom
+    var coordinateBounds: CoordinateBounds? = null
+    viewAnnotationOptions.forEach { options ->
+      val frame = getViewAnnotationOptionsFrame(options)
+      val metersPerPixelAtLatitude =
+        if (zoom == null) mapboxMap.getMetersPerPixelAtLatitude((options.geometry as Point).latitude()) else
+          mapboxMap.getMetersPerPixelAtLatitude((options.geometry as Point).latitude(), zoom)
+
+      val projectedMeterForCoordinate =
+        mapboxMap.projectedMetersForCoordinate(options.geometry as Point)
+
+      val northing = projectedMeterForCoordinate.northing + (abs(frame?.top ?: 0).toDouble() * metersPerPixelAtLatitude / pixelRatio)
+      val easting = projectedMeterForCoordinate.easting + (abs(frame?.right ?: 0).toDouble() * metersPerPixelAtLatitude / pixelRatio)
+      val southing = northing - ((options.height ?: 0).toDouble() * metersPerPixelAtLatitude / pixelRatio)
+      val westing = easting - ((options.width ?: 0).toDouble() * metersPerPixelAtLatitude / pixelRatio)
+
+      val projectedMeterNorthEast = ProjectedMeters(northing, easting)
+      val projectedMeterSouthWest = ProjectedMeters(southing, westing)
+
+      val coordinateNorthEast = mapboxMap.coordinateForProjectedMeters(projectedMeterNorthEast)
+      val coordinateSouthWest = mapboxMap.coordinateForProjectedMeters(projectedMeterSouthWest)
+
+      coordinateBounds = if (coordinateBounds == null) {
+        CoordinateBounds(coordinateNorthEast, coordinateSouthWest)
+      } else {
+        coordinateBounds!!.extend(CoordinateBounds(coordinateNorthEast, coordinateSouthWest))
+      }
+    }
+    return mapboxMap.cameraForCoordinateBounds(
+      coordinateBounds!!,
+      edgeInsets ?: EdgeInsets(0.0, 0.0, 0.0, 0.0),
       bearing,
       pitch
     )
@@ -199,37 +250,6 @@ internal class ViewAnnotationManagerImpl(
       }
     }
     return coordinatesList
-  }
-
-  /**
-   * Calculate paddings to show viewAnnotations.
-   * Get the topMost, leftMost, rightMost, bottomMost annotation options and apply paddings accordingly.
-   */
-  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  internal fun calculateEdgeInsets(
-    viewAnnotationOptions: List<ViewAnnotationOptions>,
-    edgeInsets: EdgeInsets? = null
-  ): EdgeInsets {
-    val filteredViewAnnotations = viewAnnotationOptions.filter { it.geometry != null }
-    val topAnnotation =
-      filteredViewAnnotations.maxByOrNull { (it.geometry!! as Point).latitude() }
-    val bottomAnnotation =
-      filteredViewAnnotations.minByOrNull { (it.geometry!! as Point).latitude() }
-    val leftAnnotation =
-      filteredViewAnnotations.minByOrNull { (it.geometry!! as Point).longitude() }
-    val rightAnnotation =
-      filteredViewAnnotations.maxByOrNull { (it.geometry!! as Point).longitude() }
-
-    return EdgeInsets(
-      (edgeInsets?.top ?: 0).toDouble()
-        .plus(abs(getViewAnnotationOptionsFrame(topAnnotation)?.top ?: 0)),
-      (edgeInsets?.left ?: 0).toDouble()
-        .plus(abs(getViewAnnotationOptionsFrame(leftAnnotation)?.left ?: 0)),
-      (edgeInsets?.bottom ?: 0).toDouble()
-        .plus(getViewAnnotationOptionsFrame(bottomAnnotation)?.bottom ?: 0),
-      (edgeInsets?.right ?: 0).toDouble()
-        .plus(getViewAnnotationOptionsFrame(rightAnnotation)?.right ?: 0)
-    )
   }
 
   /**
