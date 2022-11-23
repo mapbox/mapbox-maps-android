@@ -963,6 +963,22 @@ class Style internal constructor(
     return styleManager.setStyleSourceProperties(sourceId, properties)
   }
 
+  override fun setStyleSourceData(sourceId: String, data: Value): Expected<String, None> {
+    // could be called from any thread
+    if (!isStyleValid) {
+      logW(TAG, "Style object (accessing setStyleSourceData) should not be stored and used after MapView is destroyed or new style has been loaded.")
+    }
+    return styleManager.setStyleSourceData(sourceId, data)
+  }
+
+  override fun setStyleSourceData(sourceId: String, geojson: GeoJSON): Expected<String, None> {
+    // could be called from any thread
+    if (!isStyleValid) {
+      logW(TAG, "Style object (accessing setStyleSourceData) should not be stored and used after MapView is destroyed or new style has been loaded.")
+    }
+    return styleManager.setStyleSourceData(sourceId, geojson)
+  }
+
   /**
    * Check if the style is completely loaded.
    *
