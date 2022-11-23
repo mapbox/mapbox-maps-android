@@ -178,7 +178,8 @@ internal class ViewAnnotationManagerImpl(
    * Step4: Adjust northing and easting vector of viewAnnotation with width, height and [getViewAnnotationOptionsFrame],
    * this will give us north, east, south, west projected meters values.
    * Step5: Get northEast and southWest coordinates using [MapboxMap.coordinateForProjectedMeters] and
-   * extend bounds looping through all viewAnnotations this will adjust final bounds.
+   * extend bounds using all viewAnnotations this will adjust the bounds with new [CameraOptions].
+   * Step6: Follow step2 to step5 till we get correct bounds and no other adjustment is needed.
    *
    * @return [CameraOptions] object.
    */
@@ -197,46 +198,84 @@ internal class ViewAnnotationManagerImpl(
 
     if (viewAnnotationOptions.isEmpty()) return null
     val coordinates = coordinatesFromAnnotations(viewAnnotationOptions)
-    val cameraOptionForCoordinates = mapboxMap.cameraForCoordinates(
+    var cameraOptionForCoordinates = mapboxMap.cameraForCoordinates(
       coordinates,
       EdgeInsets(0.0, 0.0, 0.0, 0.0),
       bearing,
       pitch
     )
-    val zoom = cameraOptionForCoordinates.zoom
-    var coordinateBounds: CoordinateBounds? = null
-    viewAnnotationOptions.forEach { options ->
-      val frame = getViewAnnotationOptionsFrame(options)
-      val metersPerPixelAtLatitude =
-        if (zoom == null) mapboxMap.getMetersPerPixelAtLatitude((options.geometry as Point).latitude()) else
-          mapboxMap.getMetersPerPixelAtLatitude((options.geometry as Point).latitude(), zoom)
 
-      val projectedMeterForCoordinate =
-        mapboxMap.projectedMetersForCoordinate(options.geometry as Point)
+    var coordinateBoundsForCamera = mapboxMap.coordinateBoundsForCamera(cameraOptionForCoordinates)
+    var north = coordinateBoundsForCamera.north()
+    var east = coordinateBoundsForCamera.east()
+    var west = coordinateBoundsForCamera.west()
+    var south = coordinateBoundsForCamera.south()
 
-      val northing = projectedMeterForCoordinate.northing + (abs(frame?.top ?: 0).toDouble() * metersPerPixelAtLatitude / pixelRatio)
-      val easting = projectedMeterForCoordinate.easting + (abs(frame?.right ?: 0).toDouble() * metersPerPixelAtLatitude / pixelRatio)
-      val southing = northing - ((options.height ?: 0).toDouble() * metersPerPixelAtLatitude / pixelRatio)
-      val westing = easting - ((options.width ?: 0).toDouble() * metersPerPixelAtLatitude / pixelRatio)
-
-      val projectedMeterNorthEast = ProjectedMeters(northing, easting)
-      val projectedMeterSouthWest = ProjectedMeters(southing, westing)
-
-      val coordinateNorthEast = mapboxMap.coordinateForProjectedMeters(projectedMeterNorthEast)
-      val coordinateSouthWest = mapboxMap.coordinateForProjectedMeters(projectedMeterSouthWest)
-
-      coordinateBounds = if (coordinateBounds == null) {
-        CoordinateBounds(coordinateNorthEast, coordinateSouthWest)
-      } else {
-        coordinateBounds!!.extend(CoordinateBounds(coordinateNorthEast, coordinateSouthWest))
+    var isCorrectBound = false
+    // loop through viewAnnotations and check if associated bound is bigger than coordinateBoundsForCamera.
+    while (!isCorrectBound) {
+      viewAnnotationOptions.forEach { options ->
+        // Calculate coordinate bounds for annotation at specific zoom level.
+        val coordinateBoundsForAnnotationAtZoom = calculateCoordinateBoundForAnnotation(options, cameraOptionForCoordinates.zoom)
+        isCorrectBound = true
+        if (coordinateBoundsForAnnotationAtZoom.north() > north) {
+          north = coordinateBoundsForAnnotationAtZoom.north()
+          isCorrectBound = false
+        }
+        if (coordinateBoundsForAnnotationAtZoom.east() > east) {
+          east = coordinateBoundsForAnnotationAtZoom.east()
+          isCorrectBound = false
+        }
+        if (coordinateBoundsForAnnotationAtZoom.west() < west) {
+          west = coordinateBoundsForAnnotationAtZoom.west()
+          isCorrectBound = false
+        }
+        if (coordinateBoundsForAnnotationAtZoom.south() < south) {
+          south = coordinateBoundsForAnnotationAtZoom.south()
+          isCorrectBound = false
+        }
       }
+      // Adjust coordinate bounds with new east, north, west, south value.
+      coordinateBoundsForCamera = CoordinateBounds(Point.fromLngLat(west, south), Point.fromLngLat(east, north))
+      // Get new cameraOption for updated coordinate bounds.
+      cameraOptionForCoordinates = mapboxMap.cameraForCoordinateBounds(
+        coordinateBoundsForCamera,
+        edgeInsets ?: EdgeInsets(0.0, 0.0, 0.0, 0.0),
+        bearing,
+        pitch
+      )
     }
-    return mapboxMap.cameraForCoordinateBounds(
-      coordinateBounds!!,
-      edgeInsets ?: EdgeInsets(0.0, 0.0, 0.0, 0.0),
-      bearing,
-      pitch
-    )
+    return cameraOptionForCoordinates
+  }
+
+  /**
+   * Function to calculate coordinatebound associated with annotation option.
+   * this uses [MapboxMap.projectedMetersForCoordinate] and [MapboxMap.coordinateForProjectedMeters]
+   * function to get correct coordinate for northEast and southWest point of annotations.
+   */
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal fun calculateCoordinateBoundForAnnotation(
+    viewAnnotationOptions: ViewAnnotationOptions,
+    zoom: Double?
+  ): CoordinateBounds {
+    val frame = getViewAnnotationOptionsFrame(viewAnnotationOptions)
+    val metersPerPixelAtLatitude =
+      if (zoom == null) mapboxMap.getMetersPerPixelAtLatitude((viewAnnotationOptions.geometry as Point).latitude()) else
+        mapboxMap.getMetersPerPixelAtLatitude((viewAnnotationOptions.geometry as Point).latitude(), zoom)
+
+    val projectedMeterForCoordinate = mapboxMap.projectedMetersForCoordinate(viewAnnotationOptions.geometry as Point)
+    val metersPerPixelDensity = metersPerPixelAtLatitude / pixelRatio
+    val northing = projectedMeterForCoordinate.northing + (abs(frame?.top ?: 0).toDouble() * metersPerPixelDensity)
+    val easting = projectedMeterForCoordinate.easting + (abs(frame?.right ?: 0).toDouble() * metersPerPixelDensity)
+    val southing = projectedMeterForCoordinate.northing - (abs(frame?.bottom ?: 0).toDouble() * metersPerPixelDensity)
+    val westing = projectedMeterForCoordinate.easting - (abs(frame?.left ?: 0).toDouble() * metersPerPixelDensity)
+
+    val projectedMeterNorthEast = ProjectedMeters(northing, easting)
+    val projectedMeterSouthWest = ProjectedMeters(southing, westing)
+
+    val coordinateNorthEast = mapboxMap.coordinateForProjectedMeters(projectedMeterNorthEast)
+    val coordinateSouthWest = mapboxMap.coordinateForProjectedMeters(projectedMeterSouthWest)
+    return CoordinateBounds(coordinateSouthWest, coordinateNorthEast)
   }
 
   /**
@@ -487,7 +526,10 @@ internal class ViewAnnotationManagerImpl(
             // still be handled by OnGlobalLayoutListener
             if (annotation.view.visibility == View.VISIBLE) {
               viewAnnotationsLayout.removeView(annotation.view)
-              updateVisibilityAndNotifyUpdateListeners(annotation, ViewAnnotationVisibility.INVISIBLE)
+              updateVisibilityAndNotifyUpdateListeners(
+                annotation,
+                ViewAnnotationVisibility.INVISIBLE
+              )
             }
           }
         }
@@ -539,7 +581,10 @@ internal class ViewAnnotationManagerImpl(
 
         if (unpositionedViews.remove(annotation.view)) {
           annotation.view.visibility = View.VISIBLE
-          updateVisibilityAndNotifyUpdateListeners(annotation, ViewAnnotationVisibility.VISIBLE_AND_POSITIONED)
+          updateVisibilityAndNotifyUpdateListeners(
+            annotation,
+            ViewAnnotationVisibility.VISIBLE_AND_POSITIONED
+          )
         }
 
         // reorder Z index with the iteration order to keep selected annotations on top of others
