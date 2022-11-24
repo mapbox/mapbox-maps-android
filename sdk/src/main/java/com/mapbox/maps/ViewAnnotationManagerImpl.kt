@@ -25,7 +25,6 @@ internal class ViewAnnotationManagerImpl(
   mapView: MapView,
   private val viewAnnotationsLayout: FrameLayout = FrameLayout(mapView.context),
 ) : ViewAnnotationManager, ViewAnnotationPositionsUpdateListener {
-
   private val mapboxMap: MapboxMap = mapView.getMapboxMap()
   private val renderThread = mapView.mapController.renderer.renderThread
   private var pixelRatio = 1.0f
@@ -205,42 +204,52 @@ internal class ViewAnnotationManagerImpl(
       pitch
     )
 
-    var coordinateBoundsForCamera = mapboxMap.coordinateBoundsForCamera(cameraOptionForCoordinates)
-    var north = coordinateBoundsForCamera.north()
-    var east = coordinateBoundsForCamera.east()
-    var west = coordinateBoundsForCamera.west()
-    var south = coordinateBoundsForCamera.south()
-
     var isCorrectBound = false
-    // loop through viewAnnotations and check if associated bound is bigger than coordinateBoundsForCamera.
+    // keep north, east, west and southmost Annotation and its frame to adjust paddings for zoom.
+    var north: Pair<ViewAnnotationOptions, Rect?>? = null
+    var east: Pair<ViewAnnotationOptions, Rect?>? = null
+    var west: Pair<ViewAnnotationOptions, Rect?>? = null
+    var south: Pair<ViewAnnotationOptions, Rect?>? = null
+
     while (!isCorrectBound) {
+      val zoom = cameraOptionForCoordinates.zoom
+      isCorrectBound = true
       viewAnnotationOptions.forEach { options ->
-        // Calculate coordinate bounds for annotation at specific zoom level.
-        val coordinateBoundsForAnnotationAtZoom = calculateCoordinateBoundForAnnotation(options, cameraOptionForCoordinates.zoom)
-        isCorrectBound = true
-        if (coordinateBoundsForAnnotationAtZoom.north() > north) {
-          north = coordinateBoundsForAnnotationAtZoom.north()
+        val frame = getViewAnnotationOptionsFrame(options)
+        val annotationBounds = calculateCoordinateBoundForAnnotation(options, zoom)
+        if (north == null || calculateCoordinateBoundForAnnotation(north!!.first, zoom).north() < annotationBounds.north()) {
+          north = Pair(options, frame)
           isCorrectBound = false
         }
-        if (coordinateBoundsForAnnotationAtZoom.east() > east) {
-          east = coordinateBoundsForAnnotationAtZoom.east()
+        if (east == null || calculateCoordinateBoundForAnnotation(east!!.first, zoom).east() < annotationBounds.east()) {
+          east = Pair(options, frame)
           isCorrectBound = false
         }
-        if (coordinateBoundsForAnnotationAtZoom.west() < west) {
-          west = coordinateBoundsForAnnotationAtZoom.west()
+        if (south == null || calculateCoordinateBoundForAnnotation(south!!.first, zoom).south() > annotationBounds.south()) {
+          south = Pair(options, frame)
           isCorrectBound = false
         }
-        if (coordinateBoundsForAnnotationAtZoom.south() < south) {
-          south = coordinateBoundsForAnnotationAtZoom.south()
+        if (west == null || calculateCoordinateBoundForAnnotation(west!!.first, zoom).west() > annotationBounds.west()) {
+          west = Pair(options, frame)
           isCorrectBound = false
         }
       }
-      // Adjust coordinate bounds with new east, north, west, south value.
-      coordinateBoundsForCamera = CoordinateBounds(Point.fromLngLat(west, south), Point.fromLngLat(east, north))
-      // Get new cameraOption for updated coordinate bounds.
+
+      val coordinateBoundsForCamera = CoordinateBounds(
+        Point.fromLngLat((west!!.first.geometry as Point).longitude(), (south!!.first.geometry as Point).latitude()),
+        Point.fromLngLat((east!!.first.geometry as Point).longitude(), (north!!.first.geometry as Point).latitude())
+      )
+
+      val paddings = EdgeInsets(
+        (edgeInsets?.top ?: 0).toDouble().plus(abs((north!!.second?.top ?: 0.0).toDouble())),
+        (edgeInsets?.left ?: 0).toDouble().plus(abs((west!!.second?.left ?: 0.0).toDouble())),
+        (edgeInsets?.bottom ?: 0).toDouble().plus(abs((south!!.second?.bottom ?: 0.0).toDouble())),
+        (edgeInsets?.right ?: 0).toDouble().plus(abs((east!!.second?.right ?: 0.0).toDouble()))
+      )
+
       cameraOptionForCoordinates = mapboxMap.cameraForCoordinateBounds(
         coordinateBoundsForCamera,
-        edgeInsets ?: EdgeInsets(0.0, 0.0, 0.0, 0.0),
+        paddings,
         bearing,
         pitch
       )
