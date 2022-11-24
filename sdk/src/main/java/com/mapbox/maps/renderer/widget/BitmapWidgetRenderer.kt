@@ -10,7 +10,7 @@ import com.mapbox.maps.renderer.gl.GlUtils.toFloatBuffer
 
 internal class BitmapWidgetRenderer(
   @Volatile
-  private var bitmap: Bitmap?,
+  private var bitmap: Bitmap?, // Bitmap is retained throughout BitmapWidgetRenderer lifetime.
   @Volatile
   private var position: WidgetPosition
 ) : WidgetRenderer {
@@ -38,6 +38,7 @@ internal class BitmapWidgetRenderer(
   private val mvpMatrix = GlUtils.getIdentityMatrix()
   private val mvpMatrixBuffer = mvpMatrix.toFloatBuffer()
 
+  private var updateBitmap: Boolean = true
   private var updateMatrix: Boolean = true
 
   private val vertexPositionBuffer = FloatArray(8).toFloatBuffer()
@@ -135,6 +136,7 @@ internal class BitmapWidgetRenderer(
     GlUtils.checkError("glGetUniformLocation")
 
     needRender = true
+    updateBitmap = true
   }
 
   override fun render() {
@@ -214,10 +216,10 @@ internal class BitmapWidgetRenderer(
   }
 
   /**
-   * Updates texture from bitmap once and nullifies bitmap.
+   * Updates texture from bitmap once.
    */
   private fun textureFromBitmapIfChanged() {
-    bitmap?.let {
+    if (updateBitmap && bitmap != null) {
       if (textures[0] == 0) {
         GLES20.glGenTextures(1, textures, 0)
       }
@@ -242,10 +244,10 @@ internal class BitmapWidgetRenderer(
         GLES20.GL_TEXTURE_WRAP_T,
         GLES20.GL_CLAMP_TO_EDGE.toFloat()
       )
-      GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, it, 0)
+      GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bitmap, 0)
       GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, 0)
 
-      bitmap = null
+      updateBitmap = false
     }
   }
 
@@ -255,6 +257,7 @@ internal class BitmapWidgetRenderer(
     this.halfBitmapHeight = bitmap.height / 2f
     updateTranslateMatrix()
     updateVertexBuffer()
+    updateBitmap = true
     updateMatrix = true
     needRender = true
   }
