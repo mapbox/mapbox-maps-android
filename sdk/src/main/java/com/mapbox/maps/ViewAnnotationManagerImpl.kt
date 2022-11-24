@@ -27,14 +27,13 @@ internal class ViewAnnotationManagerImpl(
 ) : ViewAnnotationManager, ViewAnnotationPositionsUpdateListener {
   private val mapboxMap: MapboxMap = mapView.getMapboxMap()
   private val renderThread = mapView.mapController.renderer.renderThread
-  private var pixelRatio = 1.0f
+  private var pixelRatio = mapView.resources.displayMetrics.density
 
   init {
     viewAnnotationsLayout.layoutParams = FrameLayout.LayoutParams(
       ViewGroup.LayoutParams.MATCH_PARENT,
       ViewGroup.LayoutParams.MATCH_PARENT,
     )
-    pixelRatio = mapView.resources.displayMetrics.density
     // place the view annotations above the map (index 0) but below the compass, ruler and other plugin views
     mapView.addView(viewAnnotationsLayout, 1)
     mapView.requestDisallowInterceptTouchEvent(false)

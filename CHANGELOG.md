@@ -3,6 +3,8 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
+## Bug fixes 🐞
+* Fix a bug where `ViewAnnotationManager.annotations` API doesn't return correct camera bounds. ([1861](https://github.com/mapbox/mapbox-maps-android/pull/1861))
 
 # 10.10.0
 ## Features ✨ and improvements 🏁
