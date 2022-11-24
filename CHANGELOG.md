@@ -5,6 +5,7 @@ Mapbox welcomes participation and contributions from everyone.
 # 10.10.0
 ## Features ✨ and improvements 🏁
 * Introduce `MapTelemetry.getUserTelemetryRequestState` API. ([1877](https://github.com/mapbox/mapbox-maps-android/pull/1877))
+* Fix loss of `Widget` if added to `MapView` in an Activity or Fragment, and the map surface is destroyed, e.g. during background/foreground transition. Widget test added to test app. ([1864](https://github.com/mapbox/mapbox-maps-android/pull/1864))
 
 ## Bug fixes 🐞
 * Fix displaying MapView in Android Studio Layout Preview. ([1881](https://github.com/mapbox/mapbox-maps-android/pull/1881))
