@@ -105,10 +105,11 @@ internal class MapboxWidgetRenderer(
 
         GLES20.glDeleteFramebuffers(framebuffers.size, framebuffers, 0)
         GLES20.glDeleteTextures(textures.size, textures, 0)
+
+        // Do not clear widgets here, or they will be lost if Activity is paused/resumed.
         widgets.forEach {
           it.renderer.release()
         }
-        widgets.clear()
 
         eglCore.releaseSurface(eglSurface)
       }
@@ -117,6 +118,7 @@ internal class MapboxWidgetRenderer(
     }
     this.eglSurface = null
     this.eglCore = null
+    this.eglPrepared = false
   }
 
   fun updateTexture() {

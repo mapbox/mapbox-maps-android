@@ -55,7 +55,7 @@ class WidgetActivity : AppCompatActivity() {
     widget = LogoWidget(this, widgetPosition)
     mapView.addWidget(widget)
     animator.addUpdateListener {
-      val angle = it.animatedFraction * 360f
+      val angle = (it.animatedFraction * 360f) % 360f
       widget.setRotation(angle)
     }
     animator.start()
