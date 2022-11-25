@@ -493,10 +493,10 @@ class ViewAnnotationManagerTest {
       )
     } answers { expectedCameraOptions }
     val coordinateBounds = mockk<CoordinateBounds>(relaxUnitFun = true)
-    every { coordinateBounds.north() } returns 0.0
-    every { coordinateBounds.east() } returns 0.0
-    every { coordinateBounds.west() } returns 0.0
-    every { coordinateBounds.south() } returns 0.0
+    every { coordinateBounds.north() } returns 20.0
+    every { coordinateBounds.east() } returns 20.0
+    every { coordinateBounds.west() } returns 10.0
+    every { coordinateBounds.south() } returns 10.0
 
     every { mapboxMap.coordinateBoundsForCamera(any()) } returns coordinateBounds
     every { mapboxMap.getMetersPerPixelAtLatitude(any(), any()) } returns 1.0
@@ -554,7 +554,7 @@ class ViewAnnotationManagerTest {
       CoordinateBounds(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0))
     annotationManagerSpyk.addViewAnnotation(view, viewAnnotationOptions)
     val actualCoordinateBounds =
-      annotationManagerSpyk.calculateCoordinateBoundForAnnotation(viewAnnotationOptions, 1.0)
+      annotationManagerSpyk.calculateCoordinateBoundForAnnotation(viewAnnotationOptions, rect, 1.0)
     assertEquals(expectedCoordinateBounds, actualCoordinateBounds)
   }
 

@@ -12,18 +12,18 @@ import org.robolectric.annotation.Implements;
 public class ShadowCoordinateBounds {
     @Implementation
     public static double north() {
-        return 0.0;
+        return 20.0;
     }
     @Implementation
     public static double east() {
-        return 0.0;
+        return 20.0;
     }
     @Implementation
     public static double south() {
-        return 0.0;
+        return 10.0;
     }
     @Implementation
     public static double west() {
-        return 0.0;
+        return 10.0;
     }
 }
