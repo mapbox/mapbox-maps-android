@@ -42,6 +42,14 @@ public class LocationComponentInitOptions private constructor(
     topIconImageId, shadowIconImageId, bearingIconImageId
   )
 
+  public fun toBuilder(): Builder = Builder()
+    .setPuck2DLayerId(this.puck2DLayerId)
+    .setPuck3DLayerId(this.puck3DLayerId)
+    .setPuck3DSourceId(this.puck3DSourceId)
+    .setTopIconImageId(this.topIconImageId)
+    .setShadowIconImageId(this.shadowIconImageId)
+    .setBearingIconImageId(this.bearingIconImageId)
+
   /**
    * Composes and builds a [LocationComponentInitOptions] object.
    *
@@ -149,12 +157,29 @@ public class LocationComponentInitOptions private constructor(
       )
     }
   }
+
+  companion object {
+    private var customLocationComponentCount = 0
+
+    @JvmStatic
+    fun getNextUniqueLocationComponentOptions() = LocationComponentInitOptions {
+      puck2DLayerId = "custom_location_component_2d_layer_$customLocationComponentCount"
+      puck3DLayerId = "custom_location_component_3d_layer_$customLocationComponentCount"
+      puck3DSourceId = "custom_location_component_3d_source_$customLocationComponentCount"
+      puck3DSourceId = "custom_location_component_top_icon_image_id_$customLocationComponentCount"
+      puck3DSourceId =
+        "custom_location_component_shadow_icon_image_id_$customLocationComponentCount"
+      puck3DSourceId =
+        "custom_location_component_bearing_icon_image_id_$customLocationComponentCount"
+      customLocationComponentCount++
+    }
+  }
 }
 
 /**
  * Creates a [LocationComponentInitOptions] through a DSL-style builder.
  *
- * @param initializer the intialisation block
+ * @param initializer the initialisation block
  * @return LocationComponentInitOptions
  */
 @JvmSynthetic

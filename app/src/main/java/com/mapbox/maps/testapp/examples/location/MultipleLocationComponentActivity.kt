@@ -5,12 +5,10 @@ import android.os.Bundle
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.Button
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Point
-import com.mapbox.maps.CameraOptions
-import com.mapbox.maps.MapView
-import com.mapbox.maps.MapboxExperimental
-import com.mapbox.maps.Style
+import com.mapbox.maps.*
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.LocationPuck3D
 import com.mapbox.maps.plugin.annotation.annotations
@@ -19,10 +17,18 @@ import com.mapbox.maps.plugin.gestures.OnMapClickListener
 import com.mapbox.maps.plugin.gestures.gestures
 import com.mapbox.maps.plugin.locationcomponent.CustomJourneyLocationProvider
 import com.mapbox.maps.plugin.locationcomponent.Journey
+import com.mapbox.maps.plugin.locationcomponent.LocationComponentInitOptions
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentPlugin2
+import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateBearing
+import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions
+import com.mapbox.maps.plugin.viewport.data.MultiPuckViewportStateBearing
+import com.mapbox.maps.plugin.viewport.data.MultiPuckViewportStateOptions
+import com.mapbox.maps.plugin.viewport.state.MultiPuckViewportState
+import com.mapbox.maps.plugin.viewport.viewport
 import com.mapbox.maps.testapp.R
+import com.mapbox.maps.testapp.databinding.ActivityMultiDisplayBinding
+import com.mapbox.maps.testapp.databinding.ActivityMultiLocationcomponentBinding
 import com.mapbox.maps.testapp.utils.BitmapUtils
-import com.mapbox.maps.testapp.utils.LocationComponentUtils
 import com.mapbox.maps.testapp.utils.createLocationComponent
 import java.util.*
 
@@ -32,7 +38,7 @@ import java.util.*
 @OptIn(MapboxExperimental::class)
 class MultipleLocationComponentActivity : AppCompatActivity(), OnMapClickListener {
   private lateinit var mapView: MapView
-  private val journeys = mutableListOf(Journey(speed = 150.0), Journey(speed = 100.0))
+  private val journeys = mutableListOf(Journey(speed = 150.0, angularSpeed = 150.0), Journey(speed = 100.0, angularSpeed = 150.0))
   private val customJourneyLocationProviders = mutableListOf(
     CustomJourneyLocationProvider().apply { loadJourney(journeys.first()) },
     CustomJourneyLocationProvider().apply { loadJourney(journeys.last()) }
@@ -41,24 +47,26 @@ class MultipleLocationComponentActivity : AppCompatActivity(), OnMapClickListene
     mutableListOf(LinkedList<PointAnnotation>(), LinkedList<PointAnnotation>())
   private val locationComponents = mutableListOf<LocationComponentPlugin2>()
   private lateinit var pointAnnotationManager: PointAnnotationManager
+  private lateinit var multiPuckViewportState: MultiPuckViewportState
 
   var selectedPuck = 0
 
   @SuppressLint("SetTextI18n")
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    mapView = MapView(this)
-    setContentView(mapView)
-    mapView.addView(
-      Button(this).apply {
-        layoutParams = ViewGroup.LayoutParams(WRAP_CONTENT, WRAP_CONTENT)
+    val binding = ActivityMultiLocationcomponentBinding.inflate(layoutInflater)
+    setContentView(binding.root)
+    mapView = binding.mapView
+    binding.toggleControlBtn.apply {
+      text = "Controlling ${if (selectedPuck == 0) "Car" else "Duck"}"
+      setOnClickListener {
+        toggleControl()
         text = "Controlling ${if (selectedPuck == 0) "Car" else "Duck"}"
-        setOnClickListener {
-          toggleControl()
-          text = "Controlling ${if (selectedPuck == 0) "Car" else "Duck"}"
-        }
       }
-    )
+    }
+    binding.followPucksButton.setOnClickListener {
+      mapView.viewport.transitionTo(multiPuckViewportState)
+    }
     pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
     mapView.getMapboxMap()
       .apply {
@@ -97,7 +105,7 @@ class MultipleLocationComponentActivity : AppCompatActivity(), OnMapClickListene
   private fun initLocationComponents() {
     // Puck with pulsing car
     locationComponents.add(
-      mapView.createLocationComponent(LocationComponentUtils.getNextLocationComponentOptions())
+      mapView.createLocationComponent(LocationComponentInitOptions.getNextUniqueLocationComponentOptions())
         .apply {
           setLocationProvider(customJourneyLocationProviders.first())
           enabled = true
@@ -110,7 +118,7 @@ class MultipleLocationComponentActivity : AppCompatActivity(), OnMapClickListene
         }
     )
     locationComponents.add(
-      mapView.createLocationComponent(LocationComponentUtils.getNextLocationComponentOptions())
+      mapView.createLocationComponent(LocationComponentInitOptions.getNextUniqueLocationComponentOptions())
         .apply {
           setLocationProvider(customJourneyLocationProviders.first())
           enabled = true
@@ -125,7 +133,7 @@ class MultipleLocationComponentActivity : AppCompatActivity(), OnMapClickListene
     )
     // Puck with pulsing duck
     locationComponents.add(
-      mapView.createLocationComponent(LocationComponentUtils.getNextLocationComponentOptions())
+      mapView.createLocationComponent(LocationComponentInitOptions.getNextUniqueLocationComponentOptions())
         .apply {
           setLocationProvider(customJourneyLocationProviders.last())
           enabled = true
@@ -138,7 +146,7 @@ class MultipleLocationComponentActivity : AppCompatActivity(), OnMapClickListene
         }
     )
     locationComponents.add(
-      mapView.createLocationComponent(LocationComponentUtils.getNextLocationComponentOptions())
+      mapView.createLocationComponent(LocationComponentInitOptions.getNextUniqueLocationComponentOptions())
         .apply {
           setLocationProvider(customJourneyLocationProviders.last())
           enabled = true
@@ -150,6 +158,14 @@ class MultipleLocationComponentActivity : AppCompatActivity(), OnMapClickListene
           )
           puckBearingEnabled = true
         }
+    )
+    multiPuckViewportState = mapView.viewport.makeMultiPuckViewportState(
+      MultiPuckViewportStateOptions
+        .Builder()
+        .bearing(MultiPuckViewportStateBearing.SyncWithLocationPuck(locationComponents.first()))
+        .padding(EdgeInsets(100.0, 100.0, 100.0, 100.0))
+        .build(),
+      locationComponents = locationComponents
     )
   }
 

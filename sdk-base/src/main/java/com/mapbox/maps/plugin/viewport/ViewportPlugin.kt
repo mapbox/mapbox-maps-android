@@ -1,11 +1,10 @@
 package com.mapbox.maps.plugin.viewport
 
 import com.mapbox.maps.plugin.MapPlugin
-import com.mapbox.maps.plugin.viewport.data.DefaultViewportTransitionOptions
-import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions
-import com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions
-import com.mapbox.maps.plugin.viewport.data.ViewportOptions
+import com.mapbox.maps.plugin.locationcomponent.LocationComponentPlugin2
+import com.mapbox.maps.plugin.viewport.data.*
 import com.mapbox.maps.plugin.viewport.state.FollowPuckViewportState
+import com.mapbox.maps.plugin.viewport.state.MultiPuckViewportState
 import com.mapbox.maps.plugin.viewport.state.OverviewViewportState
 import com.mapbox.maps.plugin.viewport.state.ViewportState
 import com.mapbox.maps.plugin.viewport.transition.DefaultViewportTransition
@@ -120,6 +119,11 @@ interface ViewportPlugin : MapPlugin {
   fun makeFollowPuckViewportState(
     options: FollowPuckViewportStateOptions = FollowPuckViewportStateOptions.Builder().build()
   ): FollowPuckViewportState
+
+  fun makeMultiPuckViewportState(
+    options: MultiPuckViewportStateOptions = MultiPuckViewportStateOptions.Builder().build(),
+    locationComponents: List<LocationComponentPlugin2>
+  ): MultiPuckViewportState
 
   /**
    * Create a new [OverviewViewportState] instance with provided [OverviewViewportStateOptions].

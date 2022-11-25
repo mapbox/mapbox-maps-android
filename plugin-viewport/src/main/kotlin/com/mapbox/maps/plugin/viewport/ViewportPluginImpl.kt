@@ -10,16 +10,11 @@ import com.mapbox.maps.plugin.animation.Cancelable
 import com.mapbox.maps.plugin.animation.MapAnimationOwnerRegistry
 import com.mapbox.maps.plugin.animation.camera
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
-import com.mapbox.maps.plugin.viewport.data.DefaultViewportTransitionOptions
-import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions
-import com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions
-import com.mapbox.maps.plugin.viewport.data.ViewportOptions
-import com.mapbox.maps.plugin.viewport.data.ViewportStatusChangeReason
-import com.mapbox.maps.plugin.viewport.state.FollowPuckViewportState
+import com.mapbox.maps.plugin.locationcomponent.LocationComponentPlugin2
+import com.mapbox.maps.plugin.viewport.data.*
+import com.mapbox.maps.plugin.viewport.state.*
 import com.mapbox.maps.plugin.viewport.state.FollowPuckViewportStateImpl
-import com.mapbox.maps.plugin.viewport.state.OverviewViewportState
 import com.mapbox.maps.plugin.viewport.state.OverviewViewportStateImpl
-import com.mapbox.maps.plugin.viewport.state.ViewportState
 import com.mapbox.maps.plugin.viewport.transition.DefaultViewportTransition
 import com.mapbox.maps.plugin.viewport.transition.DefaultViewportTransitionImpl
 import com.mapbox.maps.plugin.viewport.transition.ImmediateViewportTransition
@@ -237,6 +232,13 @@ class ViewportPluginImpl(private val handler: Handler = Handler(Looper.getMainLo
    */
   override fun makeFollowPuckViewportState(options: FollowPuckViewportStateOptions): FollowPuckViewportState {
     return FollowPuckViewportStateImpl(delegateProvider, options)
+  }
+
+  override fun makeMultiPuckViewportState(
+    options: MultiPuckViewportStateOptions,
+    locationComponents: List<LocationComponentPlugin2>
+  ): MultiPuckViewportState {
+    return MultiPuckViewportStateImpl(delegateProvider, options, locationComponents)
   }
 
   /**
