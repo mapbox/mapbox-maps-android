@@ -30,23 +30,31 @@ import java.lang.ref.WeakReference
 class LocationComponentActivity : AppCompatActivity() {
 
   private var lastStyleUri = Style.DARK
-  private lateinit var locationPermissionHelper: LocationPermissionHelper
+
+  private lateinit var locationPermissionHelper: LocationPermissionHelper // See utils package
+
   private val onIndicatorPositionChangedListener = OnIndicatorPositionChangedListener {
     // Jump to the current indicator position
     binding.mapView.getMapboxMap().setCamera(CameraOptions.Builder().center(it).build())
     // Set the gestures plugin's focal point to the current indicator location.
     binding.mapView.gestures.focalPoint = binding.mapView.getMapboxMap().pixelForCoordinate(it)
   }
+
   private lateinit var binding: ActivityLocationComponentBinding
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     binding = ActivityLocationComponentBinding.inflate(layoutInflater)
     setContentView(binding.root)
+
+    // Initialize permissions helper
     locationPermissionHelper = LocationPermissionHelper(WeakReference(this))
     locationPermissionHelper.checkPermissions {
+
+      // Set up map
       binding.mapView.apply {
         getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS) {
+
           // Disable scroll gesture, since we are updating the camera position based on the indicator location.
           gestures.scrollEnabled = false
           gestures.addOnMapClickListener { point ->
@@ -58,6 +66,8 @@ class LocationComponentActivity : AppCompatActivity() {
               }
             true
           }
+
+
           gestures.addOnMapLongClickListener { point ->
             location.isLocatedAt(point) { isPuckLocatedAtPoint ->
               if (isPuckLocatedAtPoint) {
@@ -67,6 +77,8 @@ class LocationComponentActivity : AppCompatActivity() {
             }
             true
           }
+
+          // Add user location to map
           val locationProvider = location.getLocationProvider() as DefaultLocationProvider
           locationProvider.addOnCompassCalibrationListener {
             Toast.makeText(context, "Compass needs to be calibrated", Toast.LENGTH_LONG).show()
