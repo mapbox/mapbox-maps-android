@@ -36,6 +36,7 @@ class LocationComponentActivity : AppCompatActivity() {
   private val onIndicatorPositionChangedListener = OnIndicatorPositionChangedListener {
     // Jump to the current indicator position
     binding.mapView.getMapboxMap().setCamera(CameraOptions.Builder().center(it).build())
+    
     // Set the gestures plugin's focal point to the current indicator location.
     binding.mapView.gestures.focalPoint = binding.mapView.getMapboxMap().pixelForCoordinate(it)
   }
@@ -49,7 +50,7 @@ class LocationComponentActivity : AppCompatActivity() {
 
     // Initialize permissions helper
     locationPermissionHelper = LocationPermissionHelper(WeakReference(this))
-    locationPermissionHelper.checkPermissions {
+    locationPermissionHelper.checkPermissions { // Permissions granted
 
       // Set up map
       binding.mapView.apply {
@@ -57,6 +58,7 @@ class LocationComponentActivity : AppCompatActivity() {
 
           // Disable scroll gesture, since we are updating the camera position based on the indicator location.
           gestures.scrollEnabled = false
+          
           gestures.addOnMapClickListener { point ->
             location
               .isLocatedAt(point) { isPuckLocatedAtPoint ->
