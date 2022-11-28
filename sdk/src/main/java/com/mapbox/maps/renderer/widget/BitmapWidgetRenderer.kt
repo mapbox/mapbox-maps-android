@@ -10,7 +10,8 @@ import com.mapbox.maps.renderer.gl.GlUtils.toFloatBuffer
 
 internal class BitmapWidgetRenderer(
   @Volatile
-  private var bitmap: Bitmap?, // Bitmap is retained throughout BitmapWidgetRenderer lifetime.
+  // Bitmap is retained throughout BitmapWidgetRenderer lifetime.
+  private var bitmap: Bitmap?,
   @Volatile
   private var position: WidgetPosition
 ) : WidgetRenderer {
