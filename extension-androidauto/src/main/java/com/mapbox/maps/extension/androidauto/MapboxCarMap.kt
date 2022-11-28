@@ -29,8 +29,9 @@ import com.mapbox.maps.MapboxExperimental
  * The internals of this class use [AppManager.setSurfaceCallback], which assumes there is a single
  * surface callback. Do not use setSurfaceCallback, and do not create multiple instances of
  * [MapboxCarMap].
+ *
+ * @since 1.0.0
  */
-@MapboxExperimental
 class MapboxCarMap {
   private val carMapSurfaceOwner = CarMapSurfaceOwner()
 
@@ -71,7 +72,7 @@ class MapboxCarMap {
   fun setup(
     carContext: CarContext,
     mapInitOptions: MapInitOptions,
-  ) = apply {
+  ) : MapboxCarMap = apply {
     val surfaceCallback = prepareSurfaceCallback(carContext, mapInitOptions)
     carContext.getCarService(AppManager::class.java).setSurfaceCallback(surfaceCallback)
   }
@@ -135,21 +136,21 @@ class MapboxCarMap {
   /**
    * @param mapboxCarMapObserver implements the desired mapbox car experiences
    */
-  fun registerObserver(mapboxCarMapObserver: MapboxCarMapObserver) = apply {
+  fun registerObserver(mapboxCarMapObserver: MapboxCarMapObserver) : MapboxCarMap = apply {
     carMapSurfaceOwner.registerObserver(mapboxCarMapObserver)
   }
 
   /**
    * @param mapboxCarMapObserver the instance used in [registerObserver]
    */
-  fun unregisterObserver(mapboxCarMapObserver: MapboxCarMapObserver) = apply {
+  fun unregisterObserver(mapboxCarMapObserver: MapboxCarMapObserver) : MapboxCarMap = apply {
     carMapSurfaceOwner.unregisterObserver(mapboxCarMapObserver)
   }
 
   /**
    * Optional function to clear all observers registered through [registerObserver]
    */
-  fun clearObservers() = apply {
+  fun clearObservers() : MapboxCarMap = apply {
     carMapSurfaceOwner.clearObservers()
   }
 
@@ -159,7 +160,7 @@ class MapboxCarMap {
    * interface, or override the [DefaultMapboxCarMapGestureHandler], or set to null to disable
    * gesture handling.
    */
-  fun setGestureHandler(gestureHandler: MapboxCarMapGestureHandler?) = apply {
+  fun setGestureHandler(gestureHandler: MapboxCarMapGestureHandler?) : MapboxCarMap = apply {
     carMapSurfaceOwner.gestureHandler = gestureHandler
   }
 }
