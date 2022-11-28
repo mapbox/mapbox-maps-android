@@ -31,7 +31,7 @@ class MapboxCarMapScreenInstaller(
    * @param observers observers that will be attached while the [Screen] is in the
    * [Lifecycle.State.CREATED] state.
    */
-  fun onCreated(vararg observers: MapboxCarMapObserver) = apply {
+  fun onCreated(vararg observers: MapboxCarMapObserver): MapboxCarMapScreenInstaller = apply {
     onCreated.addAll(observers)
   }
 
@@ -39,7 +39,7 @@ class MapboxCarMapScreenInstaller(
    * @param observers observers that will be attached while the [Screen] is in the
    * [Lifecycle.State.STARTED] state.
    */
-  fun onStarted(vararg observers: MapboxCarMapObserver) = apply {
+  fun onStarted(vararg observers: MapboxCarMapObserver): MapboxCarMapScreenInstaller = apply {
     onStarted.addAll(observers)
   }
 
@@ -47,7 +47,7 @@ class MapboxCarMapScreenInstaller(
    * @param observers observers that will be attached while the [Screen] is in the
    * [Lifecycle.State.RESUMED] state.
    */
-  fun onResumed(vararg observers: MapboxCarMapObserver) = apply {
+  fun onResumed(vararg observers: MapboxCarMapObserver): MapboxCarMapScreenInstaller = apply {
     onResumed.addAll(observers)
   }
 
@@ -55,7 +55,7 @@ class MapboxCarMapScreenInstaller(
    * @param handler gesture handler that will be used while the [Screen] is in the
    * [Lifecycle.State.RESUMED] state.
    */
-  fun gestureHandler(handler: MapboxCarMapGestureHandler?) = apply {
+  fun gestureHandler(handler: MapboxCarMapGestureHandler?): MapboxCarMapScreenInstaller = apply {
     gestureHandler = handler
   }
 
