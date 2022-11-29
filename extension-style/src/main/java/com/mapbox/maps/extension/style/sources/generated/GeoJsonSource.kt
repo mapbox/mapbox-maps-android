@@ -464,11 +464,10 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
      * A URL to a GeoJSON file, or inline GeoJSON.
      */
     fun data(value: String) = apply {
+      geoJson = null
       if (directSetterEnabled()) {
-        geoJson = null
         data = value
       } else {
-        geoJson = null
         val propertyValue = PropertyValue("data", TypeUtils.wrapToValue(value))
         properties[propertyValue.propertyName] = propertyValue
       }
