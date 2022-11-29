@@ -72,7 +72,7 @@ class MapboxCarMap {
   fun setup(
     carContext: CarContext,
     mapInitOptions: MapInitOptions,
-  ) = apply {
+  ): MapboxCarMap = apply {
     val surfaceCallback = prepareSurfaceCallback(carContext, mapInitOptions)
     carContext.getCarService(AppManager::class.java).setSurfaceCallback(surfaceCallback)
   }
@@ -103,54 +103,64 @@ class MapboxCarMap {
    * [MapboxCarMapObserver] to attach and detach your customizations.
    */
   val carMapSurface: MapboxCarMapSurface?
-    get() { return carMapSurfaceOwner.mapboxCarMapSurface }
+    get() {
+      return carMapSurfaceOwner.mapboxCarMapSurface
+    }
 
   /**
    * Accessor to the visible area calculated by the car library. It is recommended to
    * use the values returned by [MapboxCarMapObserver.onVisibleAreaChanged].
    */
   val visibleArea: Rect?
-    get() { return carMapSurfaceOwner.visibleArea }
+    get() {
+      return carMapSurfaceOwner.visibleArea
+    }
 
   /**
    * Accessor to the edgeInsets calculated by the car library. It is recommended to
    * use the values returned by [MapboxCarMapObserver.onVisibleAreaChanged].
    */
   val visibleEdgeInsets: EdgeInsets?
-    get() { return carMapSurfaceOwner.visibleEdgeInsets }
+    get() {
+      return carMapSurfaceOwner.visibleEdgeInsets
+    }
 
   /**
    * Accessor to the stable area calculated by the car library. It is recommended to
    * use the values returned by [MapboxCarMapObserver.onStableAreaChanged].
    */
   val stableArea: Rect?
-    get() { return carMapSurfaceOwner.stableArea }
+    get() {
+      return carMapSurfaceOwner.stableArea
+    }
 
   /**
    * Accessor to the stableEdgeInsets calculated by the car library. It is recommended to
    * use the values returned by [MapboxCarMapObserver.onStableAreaChanged].
    */
   val stableEdgeInsets: EdgeInsets?
-    get() { return carMapSurfaceOwner.stableEdgeInsets }
+    get() {
+      return carMapSurfaceOwner.stableEdgeInsets
+    }
 
   /**
    * @param mapboxCarMapObserver implements the desired mapbox car experiences
    */
-  fun registerObserver(mapboxCarMapObserver: MapboxCarMapObserver) = apply {
+  fun registerObserver(mapboxCarMapObserver: MapboxCarMapObserver): MapboxCarMap = apply {
     carMapSurfaceOwner.registerObserver(mapboxCarMapObserver)
   }
 
   /**
    * @param mapboxCarMapObserver the instance used in [registerObserver]
    */
-  fun unregisterObserver(mapboxCarMapObserver: MapboxCarMapObserver) = apply {
+  fun unregisterObserver(mapboxCarMapObserver: MapboxCarMapObserver): MapboxCarMap = apply {
     carMapSurfaceOwner.unregisterObserver(mapboxCarMapObserver)
   }
 
   /**
    * Optional function to clear all observers registered through [registerObserver]
    */
-  fun clearObservers() = apply {
+  fun clearObservers(): MapboxCarMap = apply {
     carMapSurfaceOwner.clearObservers()
   }
 
@@ -160,7 +170,7 @@ class MapboxCarMap {
    * interface, or override the [DefaultMapboxCarMapGestureHandler], or set to null to disable
    * gesture handling.
    */
-  fun setGestureHandler(gestureHandler: MapboxCarMapGestureHandler?) = apply {
+  fun setGestureHandler(gestureHandler: MapboxCarMapGestureHandler?): MapboxCarMap = apply {
     carMapSurfaceOwner.gestureHandler = gestureHandler
   }
 }

@@ -33,7 +33,7 @@ class MapboxCarMapSessionInstaller(
    * @param observers observers that will be attached while the [Session] is in the
    * [Lifecycle.State.CREATED] state.
    */
-  fun onCreated(vararg observers: MapboxCarMapObserver) = apply {
+  fun onCreated(vararg observers: MapboxCarMapObserver): MapboxCarMapSessionInstaller = apply {
     onCreated.addAll(observers)
   }
 
@@ -41,7 +41,7 @@ class MapboxCarMapSessionInstaller(
    * @param observers observers that will be attached while the [Session] is in the
    * [Lifecycle.State.STARTED] state.
    */
-  fun onStarted(vararg observers: MapboxCarMapObserver) = apply {
+  fun onStarted(vararg observers: MapboxCarMapObserver): MapboxCarMapSessionInstaller = apply {
     onStarted.addAll(observers)
   }
 
@@ -49,7 +49,7 @@ class MapboxCarMapSessionInstaller(
    * @param observers observers that will be attached while the [Session] is in the
    * [Lifecycle.State.RESUMED] state.
    */
-  fun onResumed(vararg observers: MapboxCarMapObserver) = apply {
+  fun onResumed(vararg observers: MapboxCarMapObserver): MapboxCarMapSessionInstaller = apply {
     onResumed.addAll(observers)
   }
 
