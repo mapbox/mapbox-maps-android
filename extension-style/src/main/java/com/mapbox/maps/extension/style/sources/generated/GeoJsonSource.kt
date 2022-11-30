@@ -371,10 +371,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
    * @param value the feature
    * @throws [MapboxConcurrentGeometryModificationException]
    */
-  fun feature(value: Feature): GeoJsonSource = if (directSetterEnabled)
-    apply { setGeoJSON(value) }
-  else
-    applyGeoJsonData(value)
+  fun feature(value: Feature): GeoJsonSource = applyGeoJsonData(value)
 
   /**
    * Add a Feature Collection to the GeojsonSource.
@@ -391,10 +388,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
    * @param value the feature collection
    * @throws [MapboxConcurrentGeometryModificationException]
    */
-  fun featureCollection(value: FeatureCollection): GeoJsonSource = if (directSetterEnabled)
-    apply { setGeoJSON(value) }
-  else
-    applyGeoJsonData(value)
+  fun featureCollection(value: FeatureCollection): GeoJsonSource = applyGeoJsonData(value)
 
   /**
    * Add a Geometry to the GeojsonSource.
@@ -411,10 +405,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
    * @param value the geometry
    * @throws [MapboxConcurrentGeometryModificationException]
    */
-  fun geometry(value: Geometry): GeoJsonSource = if (directSetterEnabled)
-    apply { setGeoJSON(value) }
-  else
-    applyGeoJsonData(value)
+  fun geometry(value: Geometry): GeoJsonSource = applyGeoJsonData(value)
 
   private fun GeoJson.toPropertyValue(): PropertyValue<*> {
     try {
@@ -441,13 +432,17 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
   private fun applyGeoJsonData(
     data: GeoJson
   ): GeoJsonSource = apply {
-    // remove any events from queue before posting this task
-    workerHandler.removeCallbacksAndMessages(null)
-    workerHandler.post {
-      val property = data.toPropertyValue()
-      mainHandler.post {
-        // we set parsed data when sync setter was not called during background work
-        setProperty(property, throwRuntimeException = false)
+    if (directSetterEnabled) {
+      setGeoJSON(data)
+    } else {
+      // remove any events from queue before posting this task
+      workerHandler.removeCallbacksAndMessages(null)
+      workerHandler.post {
+        val property = data.toPropertyValue()
+        mainHandler.post {
+          // we set parsed data when sync setter was not called during background work
+          setProperty(property, throwRuntimeException = false)
+        }
       }
     }
   }

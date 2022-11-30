@@ -531,8 +531,8 @@ internal class NativeMapImpl(val map: MapInterface) :
     return map.setStyleSourceProperties(sourceId, properties)
   }
 
-  override fun setStyleSourceData(sourceId: String, geojson: GeoJSONSourceData): Expected<String, None> {
-    return map.setStyleSourceData(sourceId, geojson)
+  override fun setStyleSourceData(sourceId: String, geojsonSourceData: GeoJSONSourceData): Expected<String, None> {
+    return map.setStyleSourceData(sourceId, geojsonSourceData)
   }
 
   override fun removeFeatureState(
