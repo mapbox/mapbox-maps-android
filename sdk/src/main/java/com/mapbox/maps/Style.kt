@@ -1,6 +1,7 @@
 package com.mapbox.maps
 
 import android.graphics.Bitmap
+import androidx.annotation.WorkerThread
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
@@ -24,6 +25,7 @@ class Style internal constructor(
   override val pixelRatio: Float
 ) : StyleInterface {
 
+  @Volatile
   private var isStyleValid = true
 
   internal fun markInvalid() {
@@ -379,6 +381,9 @@ class Style internal constructor(
     return styleManager.setStyleLightProperty(id, light)
   }
 
+  /**
+   * Not yet implemented - remove when bumping to gl-native v10.10
+   */
   override fun setStyleLightProperty(
     id: String,
     property: String,
@@ -387,10 +392,16 @@ class Style internal constructor(
     TODO("Not yet implemented - remove when bumping to gl-native v10.10")
   }
 
+  /**
+   * Not yet implemented - remove when bumping to gl-native v10.10
+   */
   override fun getStyleLights(): MutableList<StyleObjectInfo> {
     TODO("Not yet implemented - remove when bumping to gl-native v10.10")
   }
 
+  /**
+   * Not yet implemented - remove when bumping to gl-native v10.10
+   */
   override fun setStyleLights(lights: Value): Expected<String, None> {
     TODO("Not yet implemented - remove when bumping to gl-native v10.10")
   }
@@ -520,6 +531,9 @@ class Style internal constructor(
     return styleManager.getStyleLightProperty(property)
   }
 
+  /**
+   * Not yet implemented - remove when bumping to gl-native v10.10
+   */
   override fun getStyleLightProperty(id: String, property: String): StylePropertyValue {
     TODO("Not yet implemented - remove when bumping to gl-native v10.10")
   }
@@ -986,11 +1000,11 @@ class Style internal constructor(
   /**
    * This method is for internal use.
    */
+  @WorkerThread
   override fun setStyleSourceData(
     sourceId: String,
     geojsonSourceData: GeoJSONSourceData
   ): Expected<String, None> {
-    // could be called from any thread
     if (!isStyleValid) {
       logW(TAG, "Style object (accessing setStyleSourceData) should not be stored and used after MapView is destroyed or new style has been loaded.")
     }
