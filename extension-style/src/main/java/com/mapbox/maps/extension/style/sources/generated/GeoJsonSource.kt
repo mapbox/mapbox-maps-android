@@ -736,8 +736,11 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
   companion object {
     private const val TAG = "GeoJsonSource"
 
+    /**
+     * Check if runtime property geojson_allow_direct_setter is enabled.
+     */
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    internal fun directSetterEnabled(): Boolean {
+    fun directSetterEnabled(): Boolean {
       val settingValue = SettingsServiceFactory
         .getInstance(SettingsServiceStorageType.NON_PERSISTENT)
         .get("geojson_allow_direct_setter")
