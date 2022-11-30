@@ -1,29 +1,28 @@
 package com.mapbox.maps.testapp.examples
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.postDelayed
 import com.mapbox.bindgen.Value
 import com.mapbox.common.SettingsServiceFactory
 import com.mapbox.common.SettingsServiceStorageType
 import com.mapbox.geojson.Feature
-import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapView
 import com.mapbox.maps.Style
-import com.mapbox.maps.extension.observable.model.SourceDataType
+import com.mapbox.maps.extension.style.image.image
 import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.generated.lineLayer
+import com.mapbox.maps.extension.style.layers.generated.symbolLayer
+import com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.style
-import com.mapbox.maps.logE
 import com.mapbox.maps.plugin.animation.MapAnimationOptions
 import com.mapbox.maps.plugin.animation.flyTo
-import com.mapbox.maps.plugin.delegates.listeners.OnSourceDataLoadedListener
+import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
-import java.util.*
 
 /**
  * Example of passing large geojson to verify it does not block UI thread
@@ -31,90 +30,83 @@ import java.util.*
  */
 class LargeGeojsonPerformanceActivity : AppCompatActivity() {
 
-  private val listener = OnSourceDataLoadedListener {
-    if (it.type == SourceDataType.METADATA && it.id.startsWith("SOURCE_", ignoreCase = true)) {
-      logE("KIRYLDD", "Geojson data applied for ${it.id} at ${System.currentTimeMillis()}")
-    }
-  }
-
-  private val featureList = mutableListOf<Feature>()
+  private lateinit var routePoints: Feature
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     val mapView = MapView(this)
     setContentView(mapView)
 
-    val routePoints = Feature.fromJson(
+    SettingsServiceFactory
+      .getInstance(SettingsServiceStorageType.NON_PERSISTENT)
+      .set("geojson_allow_direct_setter", Value(true))
+
+    routePoints = Feature.fromJson(
       AnnotationUtils.loadStringFromAssets(
         this@LargeGeojsonPerformanceActivity, LARGE_GEOJSON_ASSET_NAME
       )!!
     )
-    featureList.add(routePoints)
-    val data = (routePoints.geometry() as LineString).coordinates()
-    val freshCopy1 = LinkedList(data)
-    val freshCopy2 = LinkedList(data)
-    val freshCopy3 = LinkedList(data)
-    val freshCopy4 = LinkedList(data)
-    val freshCopy5 = LinkedList(data)
-    freshCopy1.removeAt(10)
-    featureList.add(Feature.fromGeometry(LineString.fromLngLats(freshCopy1)))
-    freshCopy2.removeAt(20)
-    featureList.add(Feature.fromGeometry(LineString.fromLngLats(freshCopy2)))
-    freshCopy3.removeAt(30)
-    featureList.add(Feature.fromGeometry(LineString.fromLngLats(freshCopy3)))
-    freshCopy4.removeAt(40)
-    featureList.add(Feature.fromGeometry(LineString.fromLngLats(freshCopy4)))
-    freshCopy5.removeAt(50)
-    featureList.add(Feature.fromGeometry(LineString.fromLngLats(freshCopy5)))
 
     mapView.getMapboxMap()
       .apply {
-        addOnSourceDataLoadedListener(listener)
         setCamera(
           CameraOptions.Builder()
             .center(Point.fromLngLat(LONGITUDE, LATITUDE))
             .zoom(START_ZOOM)
             .build()
         )
+        // start an animation that uses UI thread to update map camera
+        flyTo(
+          CameraOptions.Builder()
+            .zoom(END_ZOOM)
+            .build(),
+          MapAnimationOptions.mapAnimationOptions {
+            duration(ANIMATION_DURATION_MS)
+          }
+        )
         // start loading style with multiple very heavy geojson's
         loadStyle(
-          style(Style.MAPBOX_STREETS) {}
-        ) {
-          mapView.postDelayed(0L) {
-            // start an animation that uses UI thread to update map camera
-            flyTo(
-              CameraOptions.Builder()
-                .zoom(END_ZOOM)
-                .build(),
-              MapAnimationOptions.mapAnimationOptions {
-                duration(ANIMATION_DURATION_MS)
+          style(Style.MAPBOX_STREETS) {
+            for (i in 0 until LARGE_SOURCE_COUNT) {
+              +geoJsonSource("${SOURCE}_$i") {
+                feature(routePoints)
               }
-            )
-            // also add couple of additional large geojson's when style is fully loaded
-            loadAdditionalGeoJsonAfter(it)
+              +lineLayer("${LAYER}_$i", "${SOURCE}_$i") {
+                lineColor("blue")
+                lineOffset(5.0 * i)
+              }
+            }
+            // add an icon that uses very small geojson source
+            +image("icon") {
+              bitmap(BitmapFactory.decodeResource(resources, R.drawable.blue_marker_view))
+            }
+            +geoJsonSource("${SOURCE}_marker") {
+              geometry(Point.fromLngLat(LONGITUDE, LATITUDE))
+            }
+            +symbolLayer("${LAYER}_marker", "${SOURCE}_marker") {
+              iconImage("icon")
+              iconAnchor(IconAnchor.BOTTOM)
+            }
           }
+        ) {
+          // also add couple of additional large geojson's when style is fully loaded
+          loadAdditionalGeoJsonAfter(it)
         }
       }
   }
 
   private fun loadAdditionalGeoJsonAfter(style: Style) {
-    for (i in 0 until LARGE_SOURCE_COUNT + 1) {
-      SettingsServiceFactory
-        .getInstance(SettingsServiceStorageType.NON_PERSISTENT)
-        .set("geojson_allow_direct_setter", Value(true))
-      logE("KIRYLDD", "Geojson data setting started for ${SOURCE}_$i at ${System.currentTimeMillis()}")
-      style.addSource(
-        geoJsonSource("${SOURCE}_$i") {
-          feature(featureList[i])
-        }
-      )
-      style.addLayer(
-        lineLayer("${LAYER}_$i", "${SOURCE}_$i") {
-          lineColor("blue")
-          lineOffset(5.0 * i)
-        }
-      )
-    }
+    style.addSource(
+      geoJsonSource("${SOURCE}_$LARGE_SOURCE_COUNT") {
+        feature(routePoints)
+      }
+    )
+    style.addLayer(
+      lineLayer("${LAYER}_$LARGE_SOURCE_COUNT", "${SOURCE}_$LARGE_SOURCE_COUNT") {
+        lineColor("green")
+        lineOffset(5.0 * LARGE_SOURCE_COUNT)
+      }
+    )
   }
 
   companion object {
