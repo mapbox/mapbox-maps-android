@@ -54,6 +54,8 @@ class GeoJsonSourceTest {
 
     // For default property getters
     mockkStatic(StyleManager::class)
+    mockkObject(GeoJsonSource)
+    every { GeoJsonSource.directSetterEnabled() } returns false
     every { StyleManager.getStyleSourcePropertyDefaultValue(any(), any()) } returns styleProperty
   }
 
