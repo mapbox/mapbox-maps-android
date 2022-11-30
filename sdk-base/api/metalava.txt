@@ -556,7 +556,7 @@ package com.mapbox.maps.module {
 
   public interface MapTelemetry {
     method public void disableTelemetrySession();
-    method public default boolean getTelemetryCollectionState();
+    method public default boolean getUserTelemetryRequestState();
     method public void onAppUserTurnstileEvent();
     method public void onPerformanceEvent(android.os.Bundle?);
     method @Deprecated public void setDebugLoggingEnabled(boolean);

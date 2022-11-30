@@ -61,7 +61,7 @@ public interface MapTelemetry {
    *
    * @return true if end-user opted-in in telemetry collection, false otherwise.
    */
-  default boolean getTelemetryCollectionState() {
+  default boolean getUserTelemetryRequestState() {
     return TelemetryUtils.getEventsCollectionState();
   }
 }
