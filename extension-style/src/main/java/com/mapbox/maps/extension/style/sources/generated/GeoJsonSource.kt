@@ -19,7 +19,6 @@ import com.mapbox.maps.MapEvents
 import com.mapbox.maps.MapboxConcurrentGeometryModificationException
 import com.mapbox.maps.Observer
 import com.mapbox.maps.StyleManager
-import com.mapbox.maps.logW
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
@@ -29,6 +28,7 @@ import com.mapbox.maps.extension.style.types.SourceDsl
 import com.mapbox.maps.extension.style.utils.TypeUtils
 import com.mapbox.maps.extension.style.utils.silentUnwrap
 import com.mapbox.maps.extension.style.utils.toValue
+import com.mapbox.maps.logW
 
 /**
  * A GeoJSON data source.
@@ -679,13 +679,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
      * @param value the feature
      */
     fun feature(value: Feature) = apply {
-      geoJson = value
-      if (directSetterEnabled) {
-        data = null
-      } else {
-        val propertyValue = PropertyValue("data", "null")
-        properties[propertyValue.propertyName] = propertyValue
-      }
+      setGeoJson(value)
     }
 
     /**
@@ -694,13 +688,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
      * @param value the feature collection
      */
     fun featureCollection(value: FeatureCollection) = apply {
-      geoJson = value
-      if (directSetterEnabled) {
-        data = null
-      } else {
-        val propertyValue = PropertyValue("data", "null")
-        properties[propertyValue.propertyName] = propertyValue
-      }
+      setGeoJson(value)
     }
 
     /**
@@ -709,7 +697,11 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
      * @param value the geometry
      */
     fun geometry(value: Geometry) = apply {
-      geoJson = value
+      setGeoJson(value)
+    }
+
+    private fun setGeoJson(geoJson: GeoJson) {
+      this.geoJson = geoJson
       if (directSetterEnabled) {
         data = null
       } else {
@@ -749,6 +741,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
   companion object {
     private const val TAG = "GeoJsonSource"
 
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     internal fun directSetterEnabled(): Boolean {
       val settingValue = SettingsServiceFactory
         .getInstance(SettingsServiceStorageType.NON_PERSISTENT)
