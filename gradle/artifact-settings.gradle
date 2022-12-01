@@ -12,5 +12,5 @@ ext {
     mapboxArtifactLicenseUrl = 'https://opensource.org/licenses/BSD-2-Clause'
     versionName = project.hasProperty('MODULE_VERSION_NAME') ? project.property('MODULE_VERSION_NAME') : project.property('VERSION_NAME')
     mapboxRegistrySdkName = project.hasProperty('REGISTRY_SDK_NAME') ? project.property('REGISTRY_SDK_NAME') : System.getenv('REGISTRY_SDK_NAME')
-    mapboxRegistryExcludeFromRootProject = project.hasProperty('REGISTRY_EXCLUDE_FROM_ROOT_PROEJCT') ? project.property('REGISTRY_EXCLUDE_FROM_ROOT_PROEJCT').toBoolean() : false
+    mapboxRegistryExcludeFromRootProject = project.hasProperty('REGISTRY_EXCLUDE_FROM_ROOT_PROJECT') ? project.property('REGISTRY_EXCLUDE_FROM_ROOT_PROJECT').toBoolean() : false
 }
