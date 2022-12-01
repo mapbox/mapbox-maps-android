@@ -556,11 +556,12 @@ package com.mapbox.maps.module {
 
   public interface MapTelemetry {
     method public void disableTelemetrySession();
+    method public default boolean getUserTelemetryRequestState();
     method public void onAppUserTurnstileEvent();
-    method public void onPerformanceEvent(android.os.Bundle? data);
-    method @Deprecated public void setDebugLoggingEnabled(boolean debugLoggingEnabled);
-    method @Deprecated public boolean setSessionIdRotationInterval(int interval);
-    method public void setUserTelemetryRequestState(boolean enabled);
+    method public void onPerformanceEvent(android.os.Bundle?);
+    method @Deprecated public void setDebugLoggingEnabled(boolean);
+    method @Deprecated public boolean setSessionIdRotationInterval(int);
+    method public void setUserTelemetryRequestState(boolean);
   }
 
 }

@@ -19,10 +19,11 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.Surface;
 
-import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.mapbox.android.gestures.AndroidGesturesManager;
 import com.mapbox.android.gestures.MoveGestureDetector;
@@ -58,6 +59,7 @@ import com.mapbox.maps.extension.style.layers.generated.SymbolLayer;
 import com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor;
 import com.mapbox.maps.extension.style.types.Formatted;
 import com.mapbox.maps.extension.style.types.FormattedSection;
+import com.mapbox.maps.module.MapTelemetry;
 import com.mapbox.maps.plugin.LocationPuck;
 import com.mapbox.maps.plugin.LocationPuck2D;
 import com.mapbox.maps.plugin.LocationPuck3D;
@@ -545,5 +547,38 @@ public class JavaInterfaceChecker {
                         });
             }
         });
+    }
+
+
+    private class CustomTelemetry implements MapTelemetry {
+        @Override
+        public void onAppUserTurnstileEvent() {
+
+        }
+
+        @Override
+        public void setUserTelemetryRequestState(boolean enabled) {
+
+        }
+
+        @Override
+        public void disableTelemetrySession() {
+
+        }
+
+        @Override
+        public void setDebugLoggingEnabled(boolean debugLoggingEnabled) {
+
+        }
+
+        @Override
+        public boolean setSessionIdRotationInterval(int interval) {
+            return false;
+        }
+
+        @Override
+        public void onPerformanceEvent(@Nullable Bundle data) {
+
+        }
     }
 }
