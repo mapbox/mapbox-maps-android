@@ -210,8 +210,11 @@ internal class ViewAnnotationManagerImpl(
     var west: Pair<ViewAnnotationOptions, Rect?>? = null
     var south: Pair<ViewAnnotationOptions, Rect?>? = null
 
-    while (!isCorrectBound) {
+    // we run the loop twice to adjust bounds correctly to fit all the annotations.
+    var boundsCounter = 1
+    while (!isCorrectBound && boundsCounter <= MAX_ADJUST_BOUNDS_COUNTER) {
       val zoom = cameraOptionForCoordinates.zoom
+      boundsCounter++
       isCorrectBound = true
       viewAnnotationOptions.forEach { options ->
         val frame = getViewAnnotationOptionsFrame(options) ?: Rect(0, 0, 0, 0)
@@ -666,6 +669,7 @@ internal class ViewAnnotationManagerImpl(
     internal const val EXCEPTION_TEXT_ASSOCIATED_FEATURE_ID_ALREADY_EXISTS =
       "View annotation with associatedFeatureId=%s already exists!"
     private const val TAG = "ViewAnnotationImpl"
+    private const val MAX_ADJUST_BOUNDS_COUNTER = 2
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     internal fun needToReorderZ(
