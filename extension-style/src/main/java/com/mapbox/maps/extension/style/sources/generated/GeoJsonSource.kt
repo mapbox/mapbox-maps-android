@@ -70,7 +70,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
   private fun setGeoJson(geoJson: GeoJson) {
     workerHandler.removeCallbacksAndMessages(null)
     workerHandler.post {
-      delegate?.setStyleSourceData(sourceId, toGeoJsonData(geoJson)) ?: logW(
+      delegate?.setStyleGeoJSONSourceData(sourceId, toGeoJsonData(geoJson)) ?: logW(
         TAG,
         "GeoJsonSource (id=$sourceId) was not able to set data" +
           " with `feature()`, `featureCollection()` or `geometry()`" +
@@ -82,7 +82,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
   private fun setData(data: String) {
     workerHandler.removeCallbacksAndMessages(null)
     workerHandler.post {
-      delegate?.setStyleSourceData(sourceId, GeoJSONSourceData.valueOf(data)) ?: logW(
+      delegate?.setStyleGeoJSONSourceData(sourceId, GeoJSONSourceData.valueOf(data)) ?: logW(
         TAG,
         "GeoJsonSource (id=$sourceId) was not able to set data with `data()` or `url()`" +
           " as there is no Style object."

@@ -380,22 +380,6 @@ internal class NativeMapImpl(val map: MapInterface) :
     return map.setStyleLightProperty(property, value)
   }
 
-  override fun setStyleLightProperty(
-    id: String,
-    property: String,
-    value: Value
-  ): Expected<String, None> {
-    TODO("Not yet implemented - remove when bumping to gl-native v10.10")
-  }
-
-  override fun getStyleLights(): MutableList<StyleObjectInfo> {
-    TODO("Not yet implemented - remove when bumping to gl-native v10.10")
-  }
-
-  override fun setStyleLights(lights: Value): Expected<String, None> {
-    TODO("Not yet implemented - remove when bumping to gl-native v10.10")
-  }
-
   override fun setStyleAtmosphere(properties: Value): Expected<String, None> {
     return map.setStyleAtmosphere(properties)
   }
@@ -410,10 +394,6 @@ internal class NativeMapImpl(val map: MapInterface) :
 
   override fun getStyleLightProperty(property: String): StylePropertyValue {
     return map.getStyleLightProperty(property)
-  }
-
-  override fun getStyleLightProperty(id: String, property: String): StylePropertyValue {
-    TODO("Not yet implemented - remove when bumping to gl-native v10.10")
   }
 
   override fun getStyleImage(imageId: String): Image? {
@@ -531,8 +511,8 @@ internal class NativeMapImpl(val map: MapInterface) :
     return map.setStyleSourceProperties(sourceId, properties)
   }
 
-  override fun setStyleSourceData(sourceId: String, geojsonSourceData: GeoJSONSourceData): Expected<String, None> {
-    return map.setStyleSourceData(sourceId, geojsonSourceData)
+  override fun setStyleGeoJSONSourceData(sourceId: String, data: GeoJSONSourceData): Expected<String, None> {
+    return map.setStyleGeoJSONSourceData(sourceId, data)
   }
 
   override fun removeFeatureState(

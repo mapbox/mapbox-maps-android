@@ -382,31 +382,6 @@ class Style internal constructor(
   }
 
   /**
-   * Not yet implemented - remove when bumping to gl-native v10.10
-   */
-  override fun setStyleLightProperty(
-    id: String,
-    property: String,
-    value: Value
-  ): Expected<String, None> {
-    TODO("Not yet implemented - remove when bumping to gl-native v10.10")
-  }
-
-  /**
-   * Not yet implemented - remove when bumping to gl-native v10.10
-   */
-  override fun getStyleLights(): MutableList<StyleObjectInfo> {
-    TODO("Not yet implemented - remove when bumping to gl-native v10.10")
-  }
-
-  /**
-   * Not yet implemented - remove when bumping to gl-native v10.10
-   */
-  override fun setStyleLights(lights: Value): Expected<String, None> {
-    TODO("Not yet implemented - remove when bumping to gl-native v10.10")
-  }
-
-  /**
    * Sets the style global [atmosphere](https://docs.mapbox.com/mapbox-gl-js/style-spec/fog/) properties.
    *
    * @param properties A map of style atmosphere properties values, with their names as a key.
@@ -529,13 +504,6 @@ class Style internal constructor(
   override fun getStyleLightProperty(property: String): StylePropertyValue {
     checkNativeStyle("getStyleLightProperty")
     return styleManager.getStyleLightProperty(property)
-  }
-
-  /**
-   * Not yet implemented - remove when bumping to gl-native v10.10
-   */
-  override fun getStyleLightProperty(id: String, property: String): StylePropertyValue {
-    TODO("Not yet implemented - remove when bumping to gl-native v10.10")
   }
 
   /**
@@ -1001,14 +969,14 @@ class Style internal constructor(
    * This method is for internal use.
    */
   @WorkerThread
-  override fun setStyleSourceData(
+  override fun setStyleGeoJSONSourceData(
     sourceId: String,
-    geojsonSourceData: GeoJSONSourceData
+    data: GeoJSONSourceData
   ): Expected<String, None> {
     if (!isStyleValid) {
-      logW(TAG, "Style object (accessing setStyleSourceData) should not be stored and used after MapView is destroyed or new style has been loaded.")
+      logW(TAG, "Style object (accessing setStyleGeoJSONSourceData) should not be stored and used after MapView is destroyed or new style has been loaded.")
     }
-    return styleManager.setStyleSourceData(sourceId, geojsonSourceData)
+    return styleManager.setStyleGeoJSONSourceData(sourceId, data)
   }
 
   /**
