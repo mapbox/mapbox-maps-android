@@ -6,7 +6,6 @@ import android.content.Context
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.SurfaceHolder
-import android.view.animation.Animation
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.maps.*
 import com.mapbox.maps.renderer.widget.BitmapWidget
@@ -22,7 +21,7 @@ class SurfaceActivity : AppCompatActivity(), SurfaceHolder.Callback {
   private lateinit var surfaceHolder: SurfaceHolder
   private lateinit var mapSurface: MapSurface
   private lateinit var widget: Widget
-  private var animator = ValueAnimator.ofFloat(0f, 1f).also {
+  private val animator = ValueAnimator.ofFloat(0f, 1f).also {
     it.duration = ANIMATION_DURATION
     it.repeatCount = ValueAnimator.INFINITE
   }
@@ -104,9 +103,8 @@ class SurfaceActivity : AppCompatActivity(), SurfaceHolder.Callback {
     animator.pause()
   }
 
-  companion object {
-    const val TAG = "SurfaceActivity"
-    const val ANIMATION_DURATION = 10000L
+  private companion object {
+    private const val ANIMATION_DURATION = 10000L
   }
 
   private class LogoWidget constructor(context: Context, position: WidgetPosition) : BitmapWidget(
