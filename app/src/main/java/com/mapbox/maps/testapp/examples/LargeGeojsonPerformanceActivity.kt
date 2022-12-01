@@ -3,9 +3,6 @@ package com.mapbox.maps.testapp.examples
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.mapbox.bindgen.Value
-import com.mapbox.common.SettingsServiceFactory
-import com.mapbox.common.SettingsServiceStorageType
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
@@ -36,10 +33,6 @@ class LargeGeojsonPerformanceActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     val mapView = MapView(this)
     setContentView(mapView)
-
-    SettingsServiceFactory
-      .getInstance(SettingsServiceStorageType.NON_PERSISTENT)
-      .set("geojson_allow_direct_setter", Value(true))
 
     routePoints = Feature.fromJson(
       AnnotationUtils.loadStringFromAssets(

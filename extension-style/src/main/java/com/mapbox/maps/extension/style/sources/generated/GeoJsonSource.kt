@@ -41,7 +41,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
     Handler(workerThread.looper)
   }
 
-  private var initGeoJSON: GeoJson? = null
+  private var initGeoJson: GeoJson? = null
   private var initData: String? = null
 
   private var directSetterEnabled: Boolean = false
@@ -53,7 +53,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
   ) : this(builder) {
     directSetterEnabled = builder.directSetterEnabled
     if (directSetterEnabled) {
-      this.initGeoJSON = geoJson
+      this.initGeoJson = geoJson
       this.initData = data
     } else {
       geoJson?.let {
@@ -67,36 +67,26 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
     }
   }
 
-  private fun setGeoJSON(geoJson: GeoJson) {
+  private fun setGeoJson(geoJson: GeoJson) {
     workerHandler.removeCallbacksAndMessages(null)
     workerHandler.post {
-      if (delegate != null) {
-        delegate?.setStyleSourceData(sourceId, toGeoJsonData(geoJson))
-        initGeoJSON = null
-      } else {
-        logW(
-          TAG,
-          "GeoJsonSource (id=$sourceId) was not able to set data" +
-            " with `feature()`, `featureCollection()` or `geometry()`" +
-            " as there is no Style object."
-        )
-      }
+      delegate?.setStyleSourceData(sourceId, toGeoJsonData(geoJson)) ?: logW(
+        TAG,
+        "GeoJsonSource (id=$sourceId) was not able to set data" +
+          " with `feature()`, `featureCollection()` or `geometry()`" +
+          " as there is no Style object."
+      )
     }
   }
 
   private fun setData(data: String) {
     workerHandler.removeCallbacksAndMessages(null)
     workerHandler.post {
-      if (delegate != null) {
-        delegate?.setStyleSourceData(sourceId, GeoJSONSourceData.valueOf(data))
-        initData = null
-      } else {
-        logW(
-          TAG,
-          "GeoJsonSource (id=$sourceId) was not able to set data with `data()` or `url()`" +
-            " as there is no Style object."
-        )
-      }
+      delegate?.setStyleSourceData(sourceId, GeoJSONSourceData.valueOf(data)) ?: logW(
+        TAG,
+        "GeoJsonSource (id=$sourceId) was not able to set data with `data()` or `url()`" +
+          " as there is no Style object."
+      )
     }
   }
 
@@ -108,11 +98,13 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
   override fun bindTo(delegate: StyleInterface) {
     super.bindTo(delegate)
     if (directSetterEnabled) {
-      initGeoJSON?.let {
-        setGeoJSON(it)
+      initGeoJson?.let {
+        setGeoJson(it)
+        initGeoJson = null
       }
       initData?.let {
         setData(it)
+        initData = null
       }
     }
   }
@@ -433,7 +425,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
     data: GeoJson
   ): GeoJsonSource = apply {
     if (directSetterEnabled) {
-      setGeoJSON(data)
+      setGeoJson(data)
     } else {
       // remove any events from queue before posting this task
       workerHandler.removeCallbacksAndMessages(null)
@@ -674,7 +666,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
      * @param value the feature
      */
     fun feature(value: Feature) = apply {
-      setGeoJson(value)
+      geoJson(value)
     }
 
     /**
@@ -683,7 +675,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
      * @param value the feature collection
      */
     fun featureCollection(value: FeatureCollection) = apply {
-      setGeoJson(value)
+      geoJson(value)
     }
 
     /**
@@ -692,10 +684,10 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
      * @param value the geometry
      */
     fun geometry(value: Geometry) = apply {
-      setGeoJson(value)
+      geoJson(value)
     }
 
-    private fun setGeoJson(geoJson: GeoJson) {
+    private fun geoJson(geoJson: GeoJson) {
       this.geoJson = geoJson
       if (directSetterEnabled) {
         data = null
@@ -721,8 +713,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
      */
     fun build(): GeoJsonSource {
       if (directSetterEnabled) {
-        // we need empty initial data when creating the geojson (as we don't set it in constructor) -
-        // actual data (if specified by the user) will be applied asynchronously later
+        // set default data to allow empty data source.
         val propertyValue = PropertyValue("data", TypeUtils.wrapToValue(""))
         properties[propertyValue.propertyName] = propertyValue
       }
