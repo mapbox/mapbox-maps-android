@@ -94,5 +94,4 @@
     <string name="activity_viewport">Viewport camera</string>
     <string name="activity_advanced_viewport">Advanced Viewport with gestures</string>
     <string name="activity_third_party_source">External Vector Source</string>
-    <string name="activity_widget">Add a Widget to the map</string>
 </resources>
