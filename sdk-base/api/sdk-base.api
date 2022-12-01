@@ -540,6 +540,7 @@ public abstract interface class com/mapbox/maps/extension/style/StyleInterface :
 
 public abstract interface class com/mapbox/maps/module/MapTelemetry {
 	public abstract fun disableTelemetrySession ()V
+	public fun getUserTelemetryRequestState ()Z
 	public abstract fun onAppUserTurnstileEvent ()V
 	public abstract fun onPerformanceEvent (Landroid/os/Bundle;)V
 	public abstract fun setDebugLoggingEnabled (Z)V

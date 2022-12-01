@@ -4,6 +4,9 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 10.10.0
+## Features ✨ and improvements 🏁
+* Introduce `MapTelemetry.getUserTelemetryRequestState` API. ([1877](https://github.com/mapbox/mapbox-maps-android/pull/1877))
 
 # 10.10.0-rc.1 November 18, 2022
 ## Features ✨ and improvements 🏁
