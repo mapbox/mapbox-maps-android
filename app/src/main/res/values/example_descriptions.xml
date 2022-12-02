@@ -64,7 +64,7 @@
     <string name="description_map_overlay">Use Map Overlay</string>
     <string name="description_localization">Automatically localize the map labels into the device\'s current language.</string>
     <string name="description_transparent_bg">MapView with transparent background</string>
-    <string name="description_surface">MapSurface with SurfaceView host</string>
+    <string name="description_surface">MapSurface with SurfaceView host and Widget</string>
     <string name="description_view_snapshot">Create a bitmap snapshot from a MapView</string>
     <string name="description_custom_attribution">Custom attribution showcase</string>
     <string name="description_annotation_fill">Show polygon annotations on a map</string>
