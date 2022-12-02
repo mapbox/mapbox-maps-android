@@ -12,7 +12,7 @@ apply {
 val buildFromSource: String by project
 
 android {
-  compileSdk = AndroidVersions.compileSdkVersion
+  compileSdk = AndroidVersions.ExampleApp.compileSdkVersion
   signingConfigs {
     create("release") {
       storeFile = rootProject.file("$rootDir/testapp-release.keystore")
@@ -35,8 +35,8 @@ android {
   }
   defaultConfig {
     applicationId = "com.mapbox.maps.testapp"
-    minSdk = AndroidVersions.minSdkVersion
-    targetSdk = AndroidVersions.targetSdkVersion
+    minSdk = AndroidVersions.ExampleApp.minSdkVersion
+    targetSdk = AndroidVersions.ExampleApp.targetSdkVersion
     versionCode = if (project.hasProperty("gitVersionCode")) project.property("gitVersionCode") as Int else 1
     versionName = if (project.hasProperty("gitVersionName")) project.property("gitVersionName") as String else "0.1.0"
     multiDexEnabled = true
