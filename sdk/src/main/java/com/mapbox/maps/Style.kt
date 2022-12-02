@@ -1,6 +1,7 @@
 package com.mapbox.maps
 
 import android.graphics.Bitmap
+import androidx.annotation.WorkerThread
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
@@ -24,6 +25,7 @@ class Style internal constructor(
   override val pixelRatio: Float
 ) : StyleInterface {
 
+  @Volatile
   private var isStyleValid = true
 
   internal fun markInvalid() {
@@ -961,6 +963,20 @@ class Style internal constructor(
   ): Expected<String, None> {
     checkNativeStyle("setStyleSourceProperties")
     return styleManager.setStyleSourceProperties(sourceId, properties)
+  }
+
+  /**
+   * This method is for internal use.
+   */
+  @WorkerThread
+  override fun setStyleGeoJSONSourceData(
+    sourceId: String,
+    data: GeoJSONSourceData
+  ): Expected<String, None> {
+    if (!isStyleValid) {
+      logW(TAG, "Style object (accessing setStyleGeoJSONSourceData) should not be stored and used after MapView is destroyed or new style has been loaded.")
+    }
+    return styleManager.setStyleGeoJSONSourceData(sourceId, data)
   }
 
   /**
