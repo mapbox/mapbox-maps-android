@@ -38,7 +38,7 @@ import kotlin.math.hypot
  * and for ensuring your use adheres to the relevant terms of use.
  */
 open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
-  internal var mapController: MapController
+  internal lateinit var mapController: MapController
     private set
 
   private var interceptedViewAnnotationEvents: MutableList<MotionEvent> = mutableListOf()
@@ -97,6 +97,9 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
     } else {
       initOptions ?: MapInitOptions(context)
     }
+    if (isInEditMode) {
+      return
+    }
     val view = if (resolvedMapInitOptions.textureView) {
       TextureView(context, attrs)
     } else {
@@ -116,7 +119,9 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
 
   override fun onAttachedToWindow() {
     super.onAttachedToWindow()
-    mapController.onAttachedToWindow(this)
+    if (!isInEditMode) {
+      mapController.onAttachedToWindow(this)
+    }
   }
 
   @SuppressLint("CustomViewStyleable")
@@ -180,7 +185,9 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    * Called when the size of the MapView has changed
    */
   override fun onSizeChanged(w: Int, h: Int) {
-    mapController.onSizeChanged(w, h)
+    if (!isInEditMode) {
+      mapController.onSizeChanged(w, h)
+    }
   }
 
   /**
