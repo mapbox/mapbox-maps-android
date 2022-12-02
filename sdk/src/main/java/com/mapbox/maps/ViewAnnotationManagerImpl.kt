@@ -25,9 +25,9 @@ internal class ViewAnnotationManagerImpl(
   mapView: MapView,
   private val viewAnnotationsLayout: FrameLayout = FrameLayout(mapView.context),
 ) : ViewAnnotationManager, ViewAnnotationPositionsUpdateListener {
-
   private val mapboxMap: MapboxMap = mapView.getMapboxMap()
   private val renderThread = mapView.mapController.renderer.renderThread
+  private val pixelRatio = mapView.resources.displayMetrics.density
 
   init {
     viewAnnotationsLayout.layoutParams = FrameLayout.LayoutParams(
@@ -164,6 +164,23 @@ internal class ViewAnnotationManagerImpl(
       }
     }
 
+  /**
+   * ViewAnnotations has width and height, so [MapboxMap.cameraForCoordinates] and
+   * [MapboxMap.cameraForCoordinateBounds] doesn't return correct frame for given annotations.
+   *
+   * In order to calculate correct bounds that includes width and height of viewAnnotations, we used following steps
+   * Step1: Calculate cameraOptions using cameraForCoordinates without considering the width and height of
+   * viewAnnotations.
+   * Step2: Calculate [MapboxMap.getMetersPerPixelAtLatitude] with zoom obtained from cameraOptions.
+   * Step3: Calculate projected meter at the anchor of viewAnnotation using [MapboxMap.projectedMetersForCoordinate]
+   * Step4: Adjust northing and easting vector of viewAnnotation with width, height and [getViewAnnotationOptionsFrame],
+   * this will give us north, east, south, west projected meters values.
+   * Step5: Get northEast and southWest coordinates using [MapboxMap.coordinateForProjectedMeters] and
+   * extend bounds using all viewAnnotations this will adjust the bounds with new [CameraOptions].
+   * Step6: Follow step2 to step5 till we get correct bounds and no other adjustment is needed.
+   *
+   * @return [CameraOptions] object.
+   */
   override fun cameraForAnnotations(
     annotations: List<View>,
     edgeInsets: EdgeInsets?,
@@ -179,13 +196,106 @@ internal class ViewAnnotationManagerImpl(
 
     if (viewAnnotationOptions.isEmpty()) return null
     val coordinates = coordinatesFromAnnotations(viewAnnotationOptions)
-    val paddings = calculateEdgeInsets(viewAnnotationOptions, edgeInsets)
-    return mapboxMap.cameraForCoordinates(
+    var cameraOptionForCoordinates = mapboxMap.cameraForCoordinates(
       coordinates,
-      paddings,
+      EdgeInsets(0.0, 0.0, 0.0, 0.0),
       bearing,
       pitch
     )
+
+    var isCorrectBound = false
+    // keep north, east, west and southmost Annotation and its frame to adjust paddings for zoom.
+    var north: Pair<ViewAnnotationOptions, Rect?>? = null
+    var east: Pair<ViewAnnotationOptions, Rect?>? = null
+    var west: Pair<ViewAnnotationOptions, Rect?>? = null
+    var south: Pair<ViewAnnotationOptions, Rect?>? = null
+
+    // we run the loop twice to optimize bounds correctly to fit all the annotations. this might not
+    // provide correct results when map is pitched or have bearing.
+    var boundsCounter = 1
+    while (!isCorrectBound && boundsCounter <= MAX_ADJUST_BOUNDS_COUNTER) {
+      val zoom = cameraOptionForCoordinates.zoom
+      boundsCounter++
+      isCorrectBound = true
+      viewAnnotationOptions.forEach { options ->
+        val frame = getViewAnnotationOptionsFrame(options) ?: Rect(0, 0, 0, 0)
+        val annotationBounds = calculateCoordinateBoundForAnnotation(options, frame, zoom)
+        if (north == null || calculateCoordinateBoundForAnnotation(north!!.first, frame, zoom).north() < annotationBounds.north()) {
+          north = Pair(options, frame)
+          isCorrectBound = false
+        }
+        if (east == null || calculateCoordinateBoundForAnnotation(east!!.first, frame, zoom).east() < annotationBounds.east()) {
+          east = Pair(options, frame)
+          isCorrectBound = false
+        }
+        if (south == null || calculateCoordinateBoundForAnnotation(south!!.first, frame, zoom).south() > annotationBounds.south()) {
+          south = Pair(options, frame)
+          isCorrectBound = false
+        }
+        if (west == null || calculateCoordinateBoundForAnnotation(west!!.first, frame, zoom).west() > annotationBounds.west()) {
+          west = Pair(options, frame)
+          isCorrectBound = false
+        }
+      }
+
+      // adding extra checks for nullability (this shouldn't execute normally as we are checking nullability in loop of viewannotations).
+      if (north == null || east == null || south == null || west == null) {
+        logW(TAG, "ViewAnnotation options framing is null. Returning null camera option")
+        return null
+      }
+
+      val coordinateBoundsForCamera = CoordinateBounds(
+        Point.fromLngLat(west!!.first.coordinate().longitude(), south!!.first.coordinate().latitude()),
+        Point.fromLngLat(east!!.first.coordinate().longitude(), north!!.first.coordinate().latitude())
+      )
+
+      val paddings = EdgeInsets(
+        (edgeInsets?.top ?: 0).toDouble() + abs((north!!.second?.top ?: 0.0).toDouble()),
+        (edgeInsets?.left ?: 0).toDouble() + abs((west!!.second?.left ?: 0.0).toDouble()),
+        (edgeInsets?.bottom ?: 0).toDouble() + abs((south!!.second?.bottom ?: 0.0).toDouble()),
+        (edgeInsets?.right ?: 0).toDouble() + abs((east!!.second?.right ?: 0.0).toDouble())
+      )
+
+      cameraOptionForCoordinates = mapboxMap.cameraForCoordinateBounds(
+        coordinateBoundsForCamera,
+        paddings,
+        bearing,
+        pitch
+      )
+    }
+    return cameraOptionForCoordinates
+  }
+
+  private fun ViewAnnotationOptions.coordinate() = geometry as Point
+
+  /**
+   * Function to calculate coordinatebound associated with annotation option.
+   * this uses [MapboxMap.projectedMetersForCoordinate] and [MapboxMap.coordinateForProjectedMeters]
+   * function to get correct coordinate for northEast and southWest point of annotations.
+   */
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal fun calculateCoordinateBoundForAnnotation(
+    viewAnnotationOptions: ViewAnnotationOptions,
+    annotationFrame: Rect,
+    zoom: Double?
+  ): CoordinateBounds {
+    val metersPerPixelAtLatitude =
+      if (zoom == null) mapboxMap.getMetersPerPixelAtLatitude(viewAnnotationOptions.coordinate().latitude()) else
+        mapboxMap.getMetersPerPixelAtLatitude(viewAnnotationOptions.coordinate().latitude(), zoom)
+
+    val projectedMeterForCoordinate = mapboxMap.projectedMetersForCoordinate(viewAnnotationOptions.coordinate())
+    val metersPerPixelDensity = metersPerPixelAtLatitude / pixelRatio
+    val northing = projectedMeterForCoordinate.northing + (abs(annotationFrame.top).toDouble() * metersPerPixelDensity)
+    val easting = projectedMeterForCoordinate.easting + (abs(annotationFrame.right).toDouble() * metersPerPixelDensity)
+    val southing = projectedMeterForCoordinate.northing - (abs(annotationFrame.bottom).toDouble() * metersPerPixelDensity)
+    val westing = projectedMeterForCoordinate.easting - (abs(annotationFrame.left).toDouble() * metersPerPixelDensity)
+
+    val projectedMeterNorthEast = ProjectedMeters(northing, easting)
+    val projectedMeterSouthWest = ProjectedMeters(southing, westing)
+
+    val coordinateNorthEast = mapboxMap.coordinateForProjectedMeters(projectedMeterNorthEast)
+    val coordinateSouthWest = mapboxMap.coordinateForProjectedMeters(projectedMeterSouthWest)
+    return CoordinateBounds(coordinateSouthWest, coordinateNorthEast)
   }
 
   /**
@@ -199,37 +309,6 @@ internal class ViewAnnotationManagerImpl(
       }
     }
     return coordinatesList
-  }
-
-  /**
-   * Calculate paddings to show viewAnnotations.
-   * Get the topMost, leftMost, rightMost, bottomMost annotation options and apply paddings accordingly.
-   */
-  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  internal fun calculateEdgeInsets(
-    viewAnnotationOptions: List<ViewAnnotationOptions>,
-    edgeInsets: EdgeInsets? = null
-  ): EdgeInsets {
-    val filteredViewAnnotations = viewAnnotationOptions.filter { it.geometry != null }
-    val topAnnotation =
-      filteredViewAnnotations.maxByOrNull { (it.geometry!! as Point).latitude() }
-    val bottomAnnotation =
-      filteredViewAnnotations.minByOrNull { (it.geometry!! as Point).latitude() }
-    val leftAnnotation =
-      filteredViewAnnotations.minByOrNull { (it.geometry!! as Point).longitude() }
-    val rightAnnotation =
-      filteredViewAnnotations.maxByOrNull { (it.geometry!! as Point).longitude() }
-
-    return EdgeInsets(
-      (edgeInsets?.top ?: 0).toDouble()
-        .plus(abs(getViewAnnotationOptionsFrame(topAnnotation)?.top ?: 0)),
-      (edgeInsets?.left ?: 0).toDouble()
-        .plus(abs(getViewAnnotationOptionsFrame(leftAnnotation)?.left ?: 0)),
-      (edgeInsets?.bottom ?: 0).toDouble()
-        .plus(getViewAnnotationOptionsFrame(bottomAnnotation)?.bottom ?: 0),
-      (edgeInsets?.right ?: 0).toDouble()
-        .plus(getViewAnnotationOptionsFrame(rightAnnotation)?.right ?: 0)
-    )
   }
 
   /**
@@ -467,7 +546,10 @@ internal class ViewAnnotationManagerImpl(
             // still be handled by OnGlobalLayoutListener
             if (annotation.view.visibility == View.VISIBLE) {
               viewAnnotationsLayout.removeView(annotation.view)
-              updateVisibilityAndNotifyUpdateListeners(annotation, ViewAnnotationVisibility.INVISIBLE)
+              updateVisibilityAndNotifyUpdateListeners(
+                annotation,
+                ViewAnnotationVisibility.INVISIBLE
+              )
             }
           }
         }
@@ -519,7 +601,10 @@ internal class ViewAnnotationManagerImpl(
 
         if (unpositionedViews.remove(annotation.view)) {
           annotation.view.visibility = View.VISIBLE
-          updateVisibilityAndNotifyUpdateListeners(annotation, ViewAnnotationVisibility.VISIBLE_AND_POSITIONED)
+          updateVisibilityAndNotifyUpdateListeners(
+            annotation,
+            ViewAnnotationVisibility.VISIBLE_AND_POSITIONED
+          )
         }
 
         // reorder Z index with the iteration order to keep selected annotations on top of others
@@ -584,6 +669,8 @@ internal class ViewAnnotationManagerImpl(
     internal const val EXCEPTION_TEXT_GEOMETRY_IS_NULL = "Geometry can not be null!"
     internal const val EXCEPTION_TEXT_ASSOCIATED_FEATURE_ID_ALREADY_EXISTS =
       "View annotation with associatedFeatureId=%s already exists!"
+    private const val TAG = "ViewAnnotationImpl"
+    private const val MAX_ADJUST_BOUNDS_COUNTER = 2
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     internal fun needToReorderZ(

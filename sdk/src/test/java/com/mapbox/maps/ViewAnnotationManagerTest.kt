@@ -1,6 +1,7 @@
 package com.mapbox.maps
 
 import android.graphics.Rect
+import android.util.DisplayMetrics
 import android.view.View
 import android.view.ViewTreeObserver
 import android.widget.FrameLayout
@@ -11,13 +12,19 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.ViewAnnotationManagerImpl.Companion.EXCEPTION_TEXT_ASSOCIATED_FEATURE_ID_ALREADY_EXISTS
 import com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName
 import com.mapbox.maps.renderer.MapboxRenderThread
+import com.mapbox.maps.shadows.ShadowCoordinateBounds
 import com.mapbox.maps.viewannotation.*
 import io.mockk.*
 import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 
+@RunWith(RobolectricTestRunner::class)
+@Config(shadows = [ShadowCoordinateBounds::class])
 class ViewAnnotationManagerTest {
   private val mapboxMap: MapboxMap = mockk(relaxUnitFun = true)
   private val mapView: MapView = mockk(relaxUnitFun = true)
@@ -46,6 +53,8 @@ class ViewAnnotationManagerTest {
     every { viewAnnotationsLayout.layoutParams = any() } just Runs
     every { viewAnnotationsLayout.removeView(any()) } just Runs
     every { mapboxMap.addViewAnnotation(any(), any()) } returns ExpectedFactory.createNone()
+    val displayMetrics = DisplayMetrics().apply { density = 1f }
+    every { mapView.resources.displayMetrics } returns displayMetrics
     viewAnnotationManager = ViewAnnotationManagerImpl(mapView, viewAnnotationsLayout)
     every { mapboxMap.style } returns style
     every { style.getStyleProjectionProperty("name") } returns
@@ -473,7 +482,8 @@ class ViewAnnotationManagerTest {
     )
 
     val point = Point.fromJson(DEFAULT_GEOMETRY.toJson())
-    val expectedCameraOptions = CameraOptions.Builder().center(point).build()
+    val zoom = 1.0
+    val expectedCameraOptions = CameraOptions.Builder().center(point).zoom(zoom).build()
     every {
       mapboxMap.cameraForCoordinates(
         any(),
@@ -481,58 +491,22 @@ class ViewAnnotationManagerTest {
         any(),
         any()
       )
-    } answers { CameraOptions.Builder().center(point).build() }
+    } answers { expectedCameraOptions }
+    val coordinateBounds = mockk<CoordinateBounds>(relaxUnitFun = true)
+    every { coordinateBounds.north() } returns 20.0
+    every { coordinateBounds.east() } returns 20.0
+    every { coordinateBounds.west() } returns 10.0
+    every { coordinateBounds.south() } returns 10.0
+
+    every { mapboxMap.coordinateBoundsForCamera(any()) } returns coordinateBounds
+    every { mapboxMap.getMetersPerPixelAtLatitude(any(), any()) } returns 1.0
+    every { mapboxMap.projectedMetersForCoordinate(any()) } returns ProjectedMeters(1.0, 1.0)
+    every { mapboxMap.coordinateForProjectedMeters(any()) } returns Point.fromLngLat(0.0, 0.0)
+    every { mapboxMap.cameraForCoordinateBounds(any()) } returns expectedCameraOptions
 
     val cameraOptionsActual = viewAnnotationManager.cameraForAnnotations(annotations)
     assertNotNull(cameraOptionsActual)
     assertEquals(expectedCameraOptions, cameraOptionsActual!!)
-  }
-
-  @Test
-  fun testCalculateEdgeInsetsWithoutOptionalInsets() {
-    val annotationManagerSpyk = spyk(ViewAnnotationManagerImpl(mapView, viewAnnotationsLayout))
-    val annotationOptionsList = mutableListOf<ViewAnnotationOptions>()
-    val viewAnnotationOptions = viewAnnotationOptions {
-      geometry(DEFAULT_GEOMETRY)
-      width(DEFAULT_WIDTH)
-      height(DEFAULT_HEIGHT)
-    }
-    annotationOptionsList.add(viewAnnotationOptions)
-
-    val rect = Rect()
-    rect.left = 10
-    rect.top = 10
-    rect.right = 10
-    rect.bottom = 10
-    every { annotationManagerSpyk.getViewAnnotationOptionsFrame(any()) } returns rect
-
-    val actualEdgeInsets = annotationManagerSpyk.calculateEdgeInsets(annotationOptionsList)
-    val expectedEdgeInsets = EdgeInsets(10.0, 10.0, 10.0, 10.0)
-    assertEquals(expectedEdgeInsets, actualEdgeInsets)
-  }
-
-  @Test
-  fun testCalculateEdgeInsetsWithOptionalInsets() {
-    val annotationManagerSpyk = spyk(ViewAnnotationManagerImpl(mapView, viewAnnotationsLayout))
-    val annotationOptionsList = mutableListOf<ViewAnnotationOptions>()
-    val edgeInsets = EdgeInsets(10.0, 10.0, 10.0, 10.0)
-    val viewAnnotationOptions = viewAnnotationOptions {
-      geometry(DEFAULT_GEOMETRY)
-      width(DEFAULT_WIDTH)
-      height(DEFAULT_HEIGHT)
-    }
-    annotationOptionsList.add(viewAnnotationOptions)
-
-    val rect = Rect()
-    rect.left = 10
-    rect.top = 10
-    rect.right = 10
-    rect.bottom = 10
-    every { annotationManagerSpyk.getViewAnnotationOptionsFrame(any()) } returns rect
-    val expectedEdgeInsets = EdgeInsets(20.0, 20.0, 20.0, 20.0)
-    val actualEdgeInsets =
-      annotationManagerSpyk.calculateEdgeInsets(annotationOptionsList, edgeInsets)
-    assertEquals(expectedEdgeInsets, actualEdgeInsets)
   }
 
   @Test
@@ -561,6 +535,27 @@ class ViewAnnotationManagerTest {
     annotations.add(view)
 
     assertNull(viewAnnotationManager.cameraForAnnotations(annotations))
+  }
+
+  @Test
+  fun testCalculateCoordinateBoundForAnnotation() {
+    val annotationManagerSpyk = spyk(ViewAnnotationManagerImpl(mapView, viewAnnotationsLayout))
+    val viewAnnotationOptions = viewAnnotationOptions {
+      geometry(DEFAULT_GEOMETRY)
+    }
+    val rect = Rect(10, 10, 10, 10)
+    val projectedMeters = ProjectedMeters(1.0, 1.0)
+    every { annotationManagerSpyk.getViewAnnotationOptionsFrame(any()) } returns rect
+    every { mapboxMap.getMetersPerPixelAtLatitude(any(), any()) } returns 1.0
+    every { mapboxMap.projectedMetersForCoordinate(any()) } returns projectedMeters
+    every { mapboxMap.coordinateForProjectedMeters(any()) } returns Point.fromLngLat(0.0, 0.0)
+
+    val expectedCoordinateBounds =
+      CoordinateBounds(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0))
+    annotationManagerSpyk.addViewAnnotation(view, viewAnnotationOptions)
+    val actualCoordinateBounds =
+      annotationManagerSpyk.calculateCoordinateBoundForAnnotation(viewAnnotationOptions, rect, 1.0)
+    assertEquals(expectedCoordinateBounds, actualCoordinateBounds)
   }
 
   private companion object {
