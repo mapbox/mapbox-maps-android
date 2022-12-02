@@ -14,7 +14,7 @@ For the full license terms, please see the Mapbox Terms of Service at https://ww
 ## Additional Mapbox Maps Android licenses
 Mapbox Maps Android uses portions of the Activity.
 
-URL: [https://developer.android.com/jetpack/androidx/releases/activity#1.2.3](https://developer.android.com/jetpack/androidx/releases/activity#1.2.3)
+URL: [https://developer.android.com/jetpack/androidx/releases/savedstate#1.1.0](https://developer.android.com/jetpack/androidx/releases/savedstate#1.1.0)
 
 License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -22,7 +22,7 @@ License: [The Apache Software License, Version 2.0](http://www.apache.org/licens
 
 Mapbox Maps Android uses portions of the Activity.
 
-URL: [https://developer.android.com/jetpack/androidx/releases/savedstate#1.1.0](https://developer.android.com/jetpack/androidx/releases/savedstate#1.1.0)
+URL: [https://developer.android.com/jetpack/androidx/releases/activity#1.2.3](https://developer.android.com/jetpack/androidx/releases/activity#1.2.3)
 
 License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -293,30 +293,6 @@ Mapbox Maps Android uses portions of the Kotlin Stdlib Jdk8.
 URL: [https://kotlinlang.org/](https://kotlinlang.org/)
 
 License: [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
-===========================================================================
-
-Mapbox Maps Android uses portions of the Mapbox Android Commmon OkHttp SDK.
-
-URL: [https://github.com/mapbox/mapbox-sdk-common](https://github.com/mapbox/mapbox-sdk-common)
-
-License: [Mapbox Terms of Service](https://www.mapbox.com/legal/tos)
-
-===========================================================================
-
-Mapbox Maps Android uses portions of the Mapbox Android Commmon SDK.
-
-URL: [https://github.com/mapbox/mapbox-sdk-common](https://github.com/mapbox/mapbox-sdk-common)
-
-License: [Mapbox Terms of Service](https://www.mapbox.com/legal/tos)
-
-===========================================================================
-
-Mapbox Maps Android uses portions of the Mapbox Android Core SDK.
-
-URL: [https://github.com/mapbox/mapbox-sdk](https://github.com/mapbox/mapbox-sdk)
-
-License: [BSD](https://opensource.org/licenses/BSD-2-Clause)
 
 ===========================================================================
 
