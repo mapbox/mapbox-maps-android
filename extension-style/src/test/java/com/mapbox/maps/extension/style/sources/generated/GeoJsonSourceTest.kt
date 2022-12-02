@@ -51,11 +51,11 @@ class GeoJsonSourceTest {
     every { expectedDelta.error } returns null
     every { styleProperty.kind } returns StylePropertyValueKind.CONSTANT
     every { style.isValid() } returns true
+    mockkObject(GeoJsonSource)
+    every { GeoJsonSource.directSetterEnabled() } returns false
 
     // For default property getters
     mockkStatic(StyleManager::class)
-    mockkObject(GeoJsonSource)
-    every { GeoJsonSource.directSetterEnabled() } returns false
     every { StyleManager.getStyleSourcePropertyDefaultValue(any(), any()) } returns styleProperty
   }
 

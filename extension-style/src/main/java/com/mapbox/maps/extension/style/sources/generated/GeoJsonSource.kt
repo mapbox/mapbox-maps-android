@@ -90,11 +90,6 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
     }
   }
 
-  init {
-    sourceProperties.putAll(builder.properties)
-    volatileSourceProperties.putAll(builder.volatileProperties)
-  }
-
   override fun bindTo(delegate: StyleInterface) {
     super.bindTo(delegate)
     if (directSetterEnabled) {
@@ -107,6 +102,11 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
         initData = null
       }
     }
+  }
+
+  init {
+    sourceProperties.putAll(builder.properties)
+    volatileSourceProperties.putAll(builder.volatileProperties)
   }
 
   /**
