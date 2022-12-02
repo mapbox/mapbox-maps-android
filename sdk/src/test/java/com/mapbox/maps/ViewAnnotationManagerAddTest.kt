@@ -1,5 +1,6 @@
 package com.mapbox.maps
 
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
@@ -54,7 +55,8 @@ class ViewAnnotationManagerAddTest(
     every { viewAnnotationsLayout.addView(any()) } just Runs
     every { viewAnnotationsLayout.removeView(any()) } just Runs
     every { viewAnnotationsLayout.context } returns mockk()
-
+    val displayMetrics = DisplayMetrics().apply { density = 1f }
+    every { mapView.resources.displayMetrics } returns displayMetrics
     viewAnnotationManager = ViewAnnotationManagerImpl(mapView, viewAnnotationsLayout)
   }
 
