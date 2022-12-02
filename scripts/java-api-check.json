@@ -32,6 +32,8 @@
             "com\\.mapbox\\.maps\\.renderer\\.egl\\.EGLConfigChooser",
             "com\\.mapbox\\.maps\\.renderer\\.egl\\.EGLCore",
             "com\\.mapbox\\.maps\\.renderer\\.gl\\.PixelReader",
+            "com\\.mapbox\\.maps\\.renderer\\.widget\\.BitmapWidgetRenderer",
+            "com\\.mapbox\\.maps\\.renderer\\.widget\\.WidgetRenderer",
             "com\\.mapbox\\.maps\\.plugin\\.animation\\.animator\\.CameraAnchorAnimator",
             "com\\.mapbox\\.maps\\.plugin\\.animation\\.animator\\.CameraBearingAnimator",
             "com\\.mapbox\\.maps\\.plugin\\.animation\\.animator\\.CameraCenterAnimator",
