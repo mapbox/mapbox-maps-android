@@ -53,7 +53,7 @@ class ViewAnnotationManagerTest {
     every { viewAnnotationsLayout.layoutParams = any() } just Runs
     every { viewAnnotationsLayout.removeView(any()) } just Runs
     every { mapboxMap.addViewAnnotation(any(), any()) } returns ExpectedFactory.createNone()
-    val displayMetrics = DisplayMetrics().also { it.density = 1f }
+    val displayMetrics = DisplayMetrics().apply { density = 1f }
     every { mapView.resources.displayMetrics } returns displayMetrics
     viewAnnotationManager = ViewAnnotationManagerImpl(mapView, viewAnnotationsLayout)
     every { mapboxMap.style } returns style

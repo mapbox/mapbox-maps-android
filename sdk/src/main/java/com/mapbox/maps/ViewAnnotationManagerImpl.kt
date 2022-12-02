@@ -210,7 +210,8 @@ internal class ViewAnnotationManagerImpl(
     var west: Pair<ViewAnnotationOptions, Rect?>? = null
     var south: Pair<ViewAnnotationOptions, Rect?>? = null
 
-    // we run the loop twice to adjust bounds correctly to fit all the annotations.
+    // we run the loop twice to optimize bounds correctly to fit all the annotations. this might not
+    // provide correct results when map is pitched or have bearing.
     var boundsCounter = 1
     while (!isCorrectBound && boundsCounter <= MAX_ADJUST_BOUNDS_COUNTER) {
       val zoom = cameraOptionForCoordinates.zoom
