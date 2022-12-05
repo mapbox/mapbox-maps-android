@@ -6,12 +6,52 @@ Mapbox welcomes participation and contributions from everyone.
 
 # 10.10.0
 ## Features ✨ and improvements 🏁
+* Introduce view annotation `ViewAnnotationManager.annotations` API to access list of added view annotations. ([1751](https://github.com/mapbox/mapbox-maps-android/pull/1751))
+* Introduce view annotation `ViewAnnotationManager.cameraForAnnotations` API to get camera options for given view annotations list. ([1753](https://github.com/mapbox/mapbox-maps-android/pull/1753))
+* Unify the `margin`/`translation` `Widget` APIs into the `WidgetPosition.offset`, rename `WidgetPosition.horizontal`/`WidgetPosition.vertical` to `WidgetPosition.horizontalAlignment`/`WidgetPosition.verticalAlignment`; Deprecate the original constructors and `setTranslation` APIs. ([1782](https://github.com/mapbox/mapbox-maps-android/pull/1782))
+* Add API for removing atmosphere. ([1841](https://github.com/mapbox/mapbox-maps-android/pull/1841))
 * Introduce `MapTelemetry.getUserTelemetryRequestState` API. ([1877](https://github.com/mapbox/mapbox-maps-android/pull/1877))
+* Eliminate tiles re-creation and re-layout on zooming map with globe, when the camera is trespassing the zoom projection border. ([1891](https://github.com/mapbox/mapbox-maps-android/pull/1891))
+* Avoid tiles re-layout on enabling terrain with zero exaggeration. ([1891](https://github.com/mapbox/mapbox-maps-android/pull/1891))
+* Added API to enable/disable rendering of world copies in mercator mode. ([1891](https://github.com/mapbox/mapbox-maps-android/pull/1891))
+* Improve symbol filtering performance when `distance-from-camera` and `pitch` expressions are used. ([1891](https://github.com/mapbox/mapbox-maps-android/pull/1891))
+* Reduce number of operations when terrain is used with zero exaggeration. ([1891](https://github.com/mapbox/mapbox-maps-android/pull/1891))
 
 ## Bug fixes 🐞
+* Fix an issue when touch events didn't pass through clickable view annotations. ([1745](https://github.com/mapbox/mapbox-maps-android/pull/1745))
+* Trigger repaint after `BitmapWidget` is updated. ([1797](https://github.com/mapbox/mapbox-maps-android/pull/1797))
+* Fix a crash after removing the view annotation if view has an attached animation or transition. ([1831](https://github.com/mapbox/mapbox-maps-android/pull/1831))
+* Emit the last indicator state when new listeners are added to the location component. ([1827](https://github.com/mapbox/mapbox-maps-android/pull/1827))
+* Fix an issue where queried symbol features did not contain the associated feature state. ([1836](https://github.com/mapbox/mapbox-maps-android/pull/1836))
+* Throw understandable exception when using widgets with the `MapView` or `MapSurface` and not specifying `MapInitOptions.MapOptions.contextMode = ContextMode.SHARED` preventing hard-catching runtime crashes or artifacts. ([1834](https://github.com/mapbox/mapbox-maps-android/pull/1834))
+* Fix an issue where location updates were not provided on correct thread/looper. ([1836](https://github.com/mapbox/mapbox-maps-android/pull/1836))
+* Dispatch location updates as a location event when the app is moving to background. ([1836](https://github.com/mapbox/mapbox-maps-android/pull/1836))
+* Fix `LocationEngine` to support multiple concurrent clients. ([1836](https://github.com/mapbox/mapbox-maps-android/pull/1836))
+* Fix immediate camera animation on API level 23 or below. ([1842](https://github.com/mapbox/mapbox-maps-android/pull/1842))
 * Fix loss of `Widget` during background/foreground transition. ([1864](https://github.com/mapbox/mapbox-maps-android/pull/1864))
 * Fix displaying MapView in Android Studio Layout Preview. ([1881](https://github.com/mapbox/mapbox-maps-android/pull/1881))
-* Fix a bug where `ViewAnnotationManager.annotations` API doesn't return correct camera bounds. ([1861](https://github.com/mapbox/mapbox-maps-android/pull/1861))
+* Fix a bug where `ViewAnnotationManager.cameraForAnnotations` API doesn't return correct camera bounds. ([1861](https://github.com/mapbox/mapbox-maps-android/pull/1861))
+* Handle OOB when getting DEM Data ([1891](https://github.com/mapbox/mapbox-maps-android/pull/1891))
+* Fix a rare precision issue with symbol and circle layer occlusion when terrain is enabled. ([1891](https://github.com/mapbox/mapbox-maps-android/pull/1891))
+* Fixes a rare crash caused by a race condition during gesture handling. ([1891](https://github.com/mapbox/mapbox-maps-android/pull/1891))
+* Disable location indicator occlusion testing with the terrain when exaggeration is set to 0. This fixes occasional location indicator disappearance. ([1891](https://github.com/mapbox/mapbox-maps-android/pull/1891))
+* Fix an issue where queried symbol features did not contain associated feature state. ([1891](https://github.com/mapbox/mapbox-maps-android/pull/1891))
+* Clear geojson tiles after the source is updated with empty features in order to eliminate "phantom tile" artefacts and to obviate extra work for keeping empty tiles. ([1891](https://github.com/mapbox/mapbox-maps-android/pull/1891))
+* Eliminate duplicated tile async upload requests - fix a race condition causing a tile rendering the previous layout result. ([1891](https://github.com/mapbox/mapbox-maps-android/pull/1891))
+* Truncate long single line text in symbol layers to prevent rendering artifact. ([1891](https://github.com/mapbox/mapbox-maps-android/pull/1891))
+* Fixes an issue when the mixed usage of patterns and icons caused bleeding of textures. ([1891](https://github.com/mapbox/mapbox-maps-android/pull/1891))
+* Fixes visible tile borders when MSAA enabled. ([1891](https://github.com/mapbox/mapbox-maps-android/pull/1891))
+* Fix LOD and prevent from flickering on enabling terrain with zero exaggeration. ([1891](https://github.com/mapbox/mapbox-maps-android/pull/1891))
+* Setting empty value for a style layer filter now clears the filter. ([1891](https://github.com/mapbox/mapbox-maps-android/pull/1891))
+* Fixes rendering artifacts near tile borders when using terrain with zero exaggeration. ([1891](https://github.com/mapbox/mapbox-maps-android/pull/1891))
+* Fixes fog rendering when terrain is used with zero exaggeration. ([1891](https://github.com/mapbox/mapbox-maps-android/pull/1891))
+* Fix `distance-to-center` filtering of symbols when terrain is enabled. ([1891](https://github.com/mapbox/mapbox-maps-android/pull/1891))
+* Improved `cameraForCoordinate` result quality with pitch and with terrain. ([1891](https://github.com/mapbox/mapbox-maps-android/pull/1891))
+
+## Dependencies
+* Update gl-native to v10.10.0 and common to v23.2.0. ([1891](https://github.com/mapbox/mapbox-maps-android/pull/1891))
+* Remove `mapbox-android-core` dependency, it is now part of Mapbox Common library.
+    **NOTE:**: You need to remove any explicit dependency declaration to `com.mapbox.mapboxsdk:mapbox-android-core:<version>` from the project to avoid duplicated class definition errors related to location APIs. ([1836](https://github.com/mapbox/mapbox-maps-android/pull/1836))
 
 # 10.10.0-rc.1 November 18, 2022
 ## Features ✨ and improvements 🏁
@@ -29,12 +69,13 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix an issue where location updates were not provided on correct thread/looper. ([1836](https://github.com/mapbox/mapbox-maps-android/pull/1836))
 * [telemetry] Dispatch location updates as a location event when the app is moving to background. ([1836](https://github.com/mapbox/mapbox-maps-android/pull/1836))
 * Fix `LocationEngine` to support multiple concurrent clients. ([1836](https://github.com/mapbox/mapbox-maps-android/pull/1836))
+* Fix immediate camera animation on API level 23 or below. ([1842](https://github.com/mapbox/mapbox-maps-android/pull/1842))
 
 ## Dependencies
 * Update gl-native to v10.10.0-rc.1 and common to v23.2.0-rc.3. ([1836](https://github.com/mapbox/mapbox-maps-android/pull/1836))
 * Remove `mapbox-android-core` dependency, it is now part of Mapbox Common library.
   **NOTE:**: You need to remove any explicit dependency declaration to `com.mapbox.mapboxsdk:mapbox-android-core:<version>` from the project to avoid duplicated class definition errors related to location APIs. ([1836](https://github.com/mapbox/mapbox-maps-android/pull/1836))
-* Fix immediate camera animation on API level 23 or below. ([1842](https://github.com/mapbox/mapbox-maps-android/pull/1842))
+
 
 
 # 10.9.1 November 7, 2022
@@ -48,7 +89,6 @@ Mapbox welcomes participation and contributions from everyone.
 * Introduce view annotation `ViewAnnotationManager.cameraForAnnotations` API to get camera options for given view annotations list. ([1753](https://github.com/mapbox/mapbox-maps-android/pull/1753))
 * Eliminate tiles re-creation and re-layout on zooming map with globe, when the camera is trespassing the zoom projection border. ([1791](https://github.com/mapbox/mapbox-maps-android/pull/1791))
 * Avoid tiles re-layout on enabling terrain with zero exaggeration. ([1791](https://github.com/mapbox/mapbox-maps-android/pull/1791))
-* Asynchronous GeoJSON data parsing when adding a new style source. ([1791](https://github.com/mapbox/mapbox-maps-android/pull/1791))
 * Unify the `margin`/`translation` `Widget` APIs into the `WidgetPosition.offset`, rename `WidgetPosition.horizontal`/`WidgetPosition.vertical` to `WidgetPosition.horizontalAlignment`/`WidgetPosition.verticalAlignment`; Deprecate the original constructors and `setTranslation` APIs. ([1782](https://github.com/mapbox/mapbox-maps-android/pull/1782))
 * Add APIs to enable/disable rendering of world copies. ([1794](https://github.com/mapbox/mapbox-maps-android/pull/1794), [1791](https://github.com/mapbox/mapbox-maps-android/pull/1791))
 
