@@ -8,9 +8,9 @@ import android.graphics.drawable.Drawable
 import android.hardware.SensorManager
 import android.util.AttributeSet
 import android.view.WindowManager
+import com.mapbox.android.core.location.LocationEngine
+import com.mapbox.android.core.location.LocationEngineProvider
 import com.mapbox.bindgen.ExpectedFactory
-import com.mapbox.common.location.compat.LocationEngine
-import com.mapbox.common.location.compat.LocationEngineProvider
 import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.logW
