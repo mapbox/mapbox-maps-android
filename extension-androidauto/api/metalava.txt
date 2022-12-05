@@ -5,7 +5,7 @@ package com.mapbox.maps.extension.androidauto {
     ctor public DefaultMapboxCarMapGestureHandler();
   }
 
-  @com.mapbox.maps.MapboxExperimental public final class MapboxCarMap {
+  public final class MapboxCarMap {
     ctor public MapboxCarMap();
     method public com.mapbox.maps.extension.androidauto.MapboxCarMap clearObservers();
     method public androidx.car.app.CarContext getCarContext();
