@@ -13,7 +13,6 @@ import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.locationcomponent.animators.PuckAnimatorManager
 import com.mapbox.maps.plugin.locationcomponent.generated.*
-import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentAttributeParser
 import java.lang.ref.WeakReference
 import java.util.concurrent.CopyOnWriteArraySet
 
@@ -22,6 +21,9 @@ import java.util.concurrent.CopyOnWriteArraySet
  * to the user's current location.
  */
 class LocationComponentPluginImpl(
+  /**
+   * The initialisation options for the location component, defaults to the default LocationComponent configurations.
+   */
   val locationComponentInitOptions: LocationComponentInitOptions = LocationComponentInitOptions.Builder()
     .build()
 ) : LocationComponentPlugin2, LocationConsumer2,

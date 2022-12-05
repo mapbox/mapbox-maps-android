@@ -8,7 +8,6 @@ import com.mapbox.geojson.MultiPoint
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.EdgeInsets
-import com.mapbox.maps.logE
 import com.mapbox.maps.logW
 import com.mapbox.maps.plugin.animation.Cancelable
 import com.mapbox.maps.plugin.animation.camera
@@ -105,8 +104,7 @@ internal class MultiPuckViewportStateImpl(
       with(options.bearing) {
         when (this) {
           is MultiPuckViewportStateBearing.Constant -> bearing
-          is MultiPuckViewportStateBearing.SyncWithLocationPuck -> lastBearings[locationComponent]
-            ?: 0.0
+          is MultiPuckViewportStateBearing.SyncWithLocationPuck -> lastBearings[locationComponent] ?: 0.0
           else -> 0.0
         }
       },

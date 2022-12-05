@@ -2,10 +2,6 @@ package com.mapbox.maps.testapp.examples.location
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.ViewGroup
-import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
-import android.widget.Button
-import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
@@ -19,14 +15,11 @@ import com.mapbox.maps.plugin.locationcomponent.CustomJourneyLocationProvider
 import com.mapbox.maps.plugin.locationcomponent.Journey
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentInitOptions
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentPlugin2
-import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateBearing
-import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions
 import com.mapbox.maps.plugin.viewport.data.MultiPuckViewportStateBearing
 import com.mapbox.maps.plugin.viewport.data.MultiPuckViewportStateOptions
 import com.mapbox.maps.plugin.viewport.state.MultiPuckViewportState
 import com.mapbox.maps.plugin.viewport.viewport
 import com.mapbox.maps.testapp.R
-import com.mapbox.maps.testapp.databinding.ActivityMultiDisplayBinding
 import com.mapbox.maps.testapp.databinding.ActivityMultiLocationcomponentBinding
 import com.mapbox.maps.testapp.utils.BitmapUtils
 import com.mapbox.maps.testapp.utils.createLocationComponent

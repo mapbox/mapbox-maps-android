@@ -17,6 +17,9 @@ import kotlin.math.*
 class CustomJourneyLocationProvider : LocationProvider {
   private var locationConsumers = CopyOnWriteArraySet<LocationConsumer>()
 
+  /**
+   * Load a journey to the CustomJourneyLocationProvider.
+   */
   fun loadJourney(journey: Journey) {
     journey.observeJourneyUpdates { point, bearing, locationAnimationDurationMs, bearingAnimationDurationMs ->
       emitLocationUpdated(point, bearing, locationAnimationDurationMs, bearingAnimationDurationMs)
@@ -41,17 +44,35 @@ class CustomJourneyLocationProvider : LocationProvider {
     }
   }
 
+  /**
+   * Handling of registered location consumers.
+   */
   override fun registerLocationConsumer(locationConsumer: LocationConsumer) {
     this.locationConsumers.add(locationConsumer)
   }
 
+  /**
+   * Handling of unregistered location consumer.
+   */
   override fun unRegisterLocationConsumer(locationConsumer: LocationConsumer) {
     this.locationConsumers.remove(locationConsumer)
   }
 }
 
+/**
+ * Abstraction of a Journey.
+ */
 @MapboxExperimental
-class Journey(val speed: Double = 100.0, val angularSpeed: Double = 500.0) {
+class Journey(
+  /**
+   * The speed to playback the journey.
+   */
+  val speed: Double = 100.0,
+  /**
+   * The angular speed to playback the journey.
+   */
+  val angularSpeed: Double = 500.0
+) {
   private val locationList = CopyOnWriteArrayList<QueueData>()
   private val initialTimeStamp: Long = 0
   private val remainingPoints = ConcurrentLinkedQueue<QueueData>()
@@ -70,6 +91,9 @@ class Journey(val speed: Double = 100.0, val angularSpeed: Double = 500.0) {
       }
     }
 
+  /**
+   * Observe the journey updates.
+   */
   fun observeJourneyUpdates(observer: JourneyDataObserver) {
     observers.add(observer)
   }
@@ -120,7 +144,12 @@ class Journey(val speed: Double = 100.0, val angularSpeed: Double = 500.0) {
       (distanceInMeter(it, location) / speed) * 1000.0
     } ?: 1000L
     val bearingAnimateDurationMs =
-      abs(shortestRotation(bearing, locationList.lastOrNull()?.bearing ?: 0.0) / angularSpeed) * 1000.0
+      abs(
+        shortestRotation(
+          bearing,
+          locationList.lastOrNull()?.bearing ?: 0.0
+        ) / angularSpeed
+      ) * 1000.0
 
     val nextData =
       QueueData(location, bearing, animationDurationMs.toLong(), bearingAnimateDurationMs.toLong())
@@ -235,6 +264,9 @@ class Journey(val speed: Double = 100.0, val angularSpeed: Double = 500.0) {
   }
 }
 
+/**
+ * Defines the interface to observe the journey data uppdates.
+ */
 fun interface JourneyDataObserver {
   /**
    * Notifies that new data is available.

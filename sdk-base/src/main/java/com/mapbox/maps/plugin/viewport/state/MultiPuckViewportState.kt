@@ -2,7 +2,6 @@ package com.mapbox.maps.plugin.viewport.state
 
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentPlugin
 import com.mapbox.maps.plugin.viewport.ViewportPlugin
-import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions
 import com.mapbox.maps.plugin.viewport.data.MultiPuckViewportStateOptions
 
 /**

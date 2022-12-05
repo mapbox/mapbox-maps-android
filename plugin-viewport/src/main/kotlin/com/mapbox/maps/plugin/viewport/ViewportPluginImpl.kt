@@ -234,6 +234,12 @@ class ViewportPluginImpl(private val handler: Handler = Handler(Looper.getMainLo
     return FollowPuckViewportStateImpl(delegateProvider, options)
   }
 
+  /**
+   * Create a new [MultiPuckViewportState] instance with provided [MultiPuckViewportStateOptions].
+   *
+   * @param options The desired [MultiPuckViewportStateOptions], defaults to [MultiPuckViewportStateOptions] that's initialised with default parameters.
+   * @return The newly-created [MultiPuckViewportState] instance.
+   */
   override fun makeMultiPuckViewportState(
     options: MultiPuckViewportStateOptions,
     locationComponents: List<LocationComponentPlugin2>

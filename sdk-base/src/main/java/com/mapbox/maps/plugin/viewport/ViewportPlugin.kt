@@ -120,6 +120,12 @@ interface ViewportPlugin : MapPlugin {
     options: FollowPuckViewportStateOptions = FollowPuckViewportStateOptions.Builder().build()
   ): FollowPuckViewportState
 
+  /**
+   * Create a new [MultiPuckViewportState] instance with provided [MultiPuckViewportStateOptions].
+   *
+   * @param options The desired [MultiPuckViewportStateOptions], defaults to [MultiPuckViewportStateOptions] that's initialised with default parameters.
+   * @return The newly-created [MultiPuckViewportState] instance.
+   */
   fun makeMultiPuckViewportState(
     options: MultiPuckViewportStateOptions = MultiPuckViewportStateOptions.Builder().build(),
     locationComponents: List<LocationComponentPlugin2>

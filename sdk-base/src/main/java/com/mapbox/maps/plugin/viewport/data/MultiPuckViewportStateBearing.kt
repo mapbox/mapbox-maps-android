@@ -3,7 +3,7 @@ package com.mapbox.maps.plugin.viewport.data
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentPlugin2
 import com.mapbox.maps.plugin.viewport.state.MultiPuckViewportState
-import java.util.Objects
+import java.util.*
 
 /**
  * Describes different ways that [MultiPuckViewportState] can obtain values to use when setting
@@ -38,11 +38,17 @@ sealed class MultiPuckViewportStateBearing {
    * When set to this mode, the viewport's bearing is driven by the location, thus guarantees
    * the synchronization of the location puck and camera position.
    */
-  class SyncWithLocationPuck(val locationComponent: LocationComponentPlugin2) : MultiPuckViewportStateBearing() {
+  class SyncWithLocationPuck(
+    /**
+     * The location component instance to be synced with.
+     */
+    val locationComponent: LocationComponentPlugin2
+  ) : MultiPuckViewportStateBearing() {
     /**
      * Indicates whether some other object is "equal to" this one.
      */
-    override fun equals(other: Any?) = other is SyncWithLocationPuck && locationComponent == other.locationComponent
+    override fun equals(other: Any?) =
+      other is SyncWithLocationPuck && locationComponent == other.locationComponent
 
     /**
      * Returns a hash code value for the object.

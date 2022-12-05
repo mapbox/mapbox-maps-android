@@ -6,29 +6,47 @@ import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.MODEL
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.MODEL_SOURCE
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.SHADOW_ICON
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.TOP_ICON
-import java.util.Objects
-import kotlin.Any
-import kotlin.Boolean
-import kotlin.Int
-import kotlin.String
-import kotlin.Unit
-import kotlin.jvm.JvmSynthetic
+import java.util.*
 
 /**
  * Initialisation options for location component to allow multiple instances
  * of LocationComponent.
  */
 public class LocationComponentInitOptions private constructor(
+  /**
+   * The layer id of the location indicator layer used to draw the 2d puck.
+   */
   public val puck2DLayerId: String,
+  /**
+   * The layer id of the model layer used to draw the 3d puck.
+   */
   public val puck3DLayerId: String,
+  /**
+   * The source id of the model layer used to draw the 3d puck.
+   */
   public val puck3DSourceId: String,
+  /**
+   * The top icon image id for the 2d puck.
+   */
   public val topIconImageId: String,
+  /**
+   * The shadow icon image id for the 2d puck.
+   */
   public val shadowIconImageId: String,
+  /**
+   * The bearing icon image id for the 2d puck.
+   */
   public val bearingIconImageId: String
 ) {
+  /**
+   * Convert the LocationComponentInitOptions to a String.
+   */
   public override fun toString() =
     "LocationComponentInitOptions(puck2DLayerId=$puck2DLayerId,puck3DLayerId=$puck3DLayerId, puck3DSourceId=$puck3DSourceId, topIconImageId=$topIconImageId,shadowIconImageId=$shadowIconImageId, bearingIconImageId=$bearingIconImageId)"
 
+  /**
+   * Compares two LocationComponentOptions.
+   */
   public override fun equals(other: Any?): Boolean = other is LocationComponentInitOptions &&
     puck2DLayerId == other.puck2DLayerId &&
     puck3DLayerId == other.puck3DLayerId &&
@@ -37,11 +55,17 @@ public class LocationComponentInitOptions private constructor(
     shadowIconImageId == other.shadowIconImageId &&
     bearingIconImageId == other.bearingIconImageId
 
+  /**
+   * The hashcode of the LocationComponentOptions.
+   */
   public override fun hashCode(): Int = Objects.hash(
     puck2DLayerId, puck3DLayerId, puck3DSourceId,
     topIconImageId, shadowIconImageId, bearingIconImageId
   )
 
+  /**
+   * Convert LocationComponentOptions to a Builder.
+   */
   public fun toBuilder(): Builder = Builder()
     .setPuck2DLayerId(this.puck2DLayerId)
     .setPuck3DLayerId(this.puck3DLayerId)
@@ -58,21 +82,39 @@ public class LocationComponentInitOptions private constructor(
    * @property
    */
   public class Builder {
+    /**
+     * The layer id of the location indicator layer used to draw the 2d puck.
+     */
     @set:JvmSynthetic
     public var puck2DLayerId: String = LOCATION_INDICATOR_LAYER
 
+    /**
+     * The layer id of the model layer used to draw the 3d puck.
+     */
     @set:JvmSynthetic
     public var puck3DLayerId: String = MODEL_LAYER
 
+    /**
+     * The source id of the model layer used to draw the 3d puck.
+     */
     @set:JvmSynthetic
     public var puck3DSourceId: String = MODEL_SOURCE
 
+    /**
+     * The top icon image id for the 2d puck.
+     */
     @set:JvmSynthetic
     public var topIconImageId: String = TOP_ICON
 
+    /**
+     * The shadow icon image id for the 2d puck.
+     */
     @set:JvmSynthetic
     public var shadowIconImageId: String = SHADOW_ICON
 
+    /**
+     * The bearing icon image id for the 2d puck.
+     */
     @set:JvmSynthetic
     public var bearingIconImageId: String = BEARING_ICON
 
@@ -158,9 +200,15 @@ public class LocationComponentInitOptions private constructor(
     }
   }
 
+  /**
+   * Companion object of [LocationComponentInitOptions].
+   */
   companion object {
     private var customLocationComponentCount = 0
 
+    /**
+     * Create a unique LocationComponentInitOptions with incremental layer/source/image ids.
+     */
     @JvmStatic
     fun getNextUniqueLocationComponentOptions() = LocationComponentInitOptions {
       puck2DLayerId = "custom_location_component_2d_layer_$customLocationComponentCount"
