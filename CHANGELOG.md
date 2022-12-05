@@ -11,11 +11,9 @@ Mapbox welcomes participation and contributions from everyone.
 * Unify the `margin`/`translation` `Widget` APIs into the `WidgetPosition.offset`, rename `WidgetPosition.horizontal`/`WidgetPosition.vertical` to `WidgetPosition.horizontalAlignment`/`WidgetPosition.verticalAlignment`; Deprecate the original constructors and `setTranslation` APIs. ([1782](https://github.com/mapbox/mapbox-maps-android/pull/1782))
 * Add API for removing atmosphere. ([1841](https://github.com/mapbox/mapbox-maps-android/pull/1841))
 * Introduce `MapTelemetry.getUserTelemetryRequestState` API. ([1877](https://github.com/mapbox/mapbox-maps-android/pull/1877))
-* Update mapbox-common to v23.2.0. ([1891](https://github.com/mapbox/mapbox-maps-android/pull/1891))
 * Eliminate tiles re-creation and re-layout on zooming map with globe, when the camera is trespassing the zoom projection border. ([1891](https://github.com/mapbox/mapbox-maps-android/pull/1891))
 * Avoid tiles re-layout on enabling terrain with zero exaggeration. ([1891](https://github.com/mapbox/mapbox-maps-android/pull/1891))
 * Added API to enable/disable rendering of world copies in mercator mode. ([1891](https://github.com/mapbox/mapbox-maps-android/pull/1891))
-* Asynchronous GeoJSON data parsing when adding a new style source. ([1891](https://github.com/mapbox/mapbox-maps-android/pull/1891))
 * Improve symbol filtering performance when `distance-from-camera` and `pitch` expressions are used. ([1891](https://github.com/mapbox/mapbox-maps-android/pull/1891))
 * Reduce number of operations when terrain is used with zero exaggeration. ([1891](https://github.com/mapbox/mapbox-maps-android/pull/1891))
 
@@ -32,7 +30,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix immediate camera animation on API level 23 or below. ([1842](https://github.com/mapbox/mapbox-maps-android/pull/1842))
 * Fix loss of `Widget` during background/foreground transition. ([1864](https://github.com/mapbox/mapbox-maps-android/pull/1864))
 * Fix displaying MapView in Android Studio Layout Preview. ([1881](https://github.com/mapbox/mapbox-maps-android/pull/1881))
-* Fix a bug where `ViewAnnotationManager.annotations` API doesn't return correct camera bounds. ([1861](https://github.com/mapbox/mapbox-maps-android/pull/1861))
+* Fix a bug where `ViewAnnotationManager.cameraForAnnotations` API doesn't return correct camera bounds. ([1861](https://github.com/mapbox/mapbox-maps-android/pull/1861))
 * Handle OOB when getting DEM Data ([1891](https://github.com/mapbox/mapbox-maps-android/pull/1891))
 * Fix a rare precision issue with symbol and circle layer occlusion when terrain is enabled. ([1891](https://github.com/mapbox/mapbox-maps-android/pull/1891))
 * Fixes a rare crash caused by a race condition during gesture handling. ([1891](https://github.com/mapbox/mapbox-maps-android/pull/1891))
@@ -91,7 +89,6 @@ Mapbox welcomes participation and contributions from everyone.
 * Introduce view annotation `ViewAnnotationManager.cameraForAnnotations` API to get camera options for given view annotations list. ([1753](https://github.com/mapbox/mapbox-maps-android/pull/1753))
 * Eliminate tiles re-creation and re-layout on zooming map with globe, when the camera is trespassing the zoom projection border. ([1791](https://github.com/mapbox/mapbox-maps-android/pull/1791))
 * Avoid tiles re-layout on enabling terrain with zero exaggeration. ([1791](https://github.com/mapbox/mapbox-maps-android/pull/1791))
-* Asynchronous GeoJSON data parsing when adding a new style source. ([1791](https://github.com/mapbox/mapbox-maps-android/pull/1791))
 * Unify the `margin`/`translation` `Widget` APIs into the `WidgetPosition.offset`, rename `WidgetPosition.horizontal`/`WidgetPosition.vertical` to `WidgetPosition.horizontalAlignment`/`WidgetPosition.verticalAlignment`; Deprecate the original constructors and `setTranslation` APIs. ([1782](https://github.com/mapbox/mapbox-maps-android/pull/1782))
 * Add APIs to enable/disable rendering of world copies. ([1794](https://github.com/mapbox/mapbox-maps-android/pull/1794), [1791](https://github.com/mapbox/mapbox-maps-android/pull/1791))
 
