@@ -7,11 +7,11 @@ import android.os.Handler
 import android.os.Looper
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
-import com.mapbox.common.location.compat.LocationEngineCallback
-import com.mapbox.common.location.compat.LocationEngineProvider
-import com.mapbox.common.location.compat.LocationEngineRequest
-import com.mapbox.common.location.compat.LocationEngineResult
-import com.mapbox.common.location.compat.permissions.PermissionsManager
+import com.mapbox.android.core.location.LocationEngineCallback
+import com.mapbox.android.core.location.LocationEngineProvider
+import com.mapbox.android.core.location.LocationEngineRequest
+import com.mapbox.android.core.location.LocationEngineResult
+import com.mapbox.android.core.permissions.PermissionsManager
 import com.mapbox.geojson.Point
 import com.mapbox.maps.logE
 import com.mapbox.maps.logW
