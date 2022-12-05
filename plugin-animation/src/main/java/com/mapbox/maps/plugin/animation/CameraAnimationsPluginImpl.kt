@@ -134,7 +134,7 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
   }
 
   @VisibleForTesting(otherwise = PRIVATE)
-  internal var lastCameraOptions: CameraOptions? = null
+  internal var currentCameraState: CameraState? = null
   private var cameraOptionsBuilder = CameraOptions.Builder()
 
   private lateinit var mapDelegateProvider: MapDelegateProvider
@@ -183,7 +183,7 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
 
   @VisibleForTesting(otherwise = PRIVATE)
   internal fun performMapJump(cameraOptions: CameraOptions) {
-    if (lastCameraOptions == cameraOptions) {
+    if (currentCameraState == cameraOptions) {
       return
     }
     // move native map to new position
@@ -191,7 +191,7 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
       mapCameraManagerDelegate.setCamera(cameraOptions)
       // notify listeners with actual values
       notifyListeners(mapCameraManagerDelegate.cameraState)
-      lastCameraOptions = cameraOptions
+      currentCameraState = cameraOptions
     } catch (e: Exception) {
       logE(
         TAG,
