@@ -62,6 +62,8 @@ class CircleAnnotationManagerTest {
     mockkStatic("com.mapbox.maps.extension.style.sources.SourceUtils")
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logE(any(), any()) } just Runs
+    mockkObject(GeoJsonSource)
+    every { GeoJsonSource.directSetterEnabled() } returns false
     val captureCallback = slot<(StyleInterface) -> Unit>()
     every { delegateProvider.getStyle(capture(captureCallback)) } answers {
       captureCallback.captured.invoke(style)

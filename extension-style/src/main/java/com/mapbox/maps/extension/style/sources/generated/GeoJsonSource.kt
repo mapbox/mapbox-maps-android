@@ -8,14 +8,18 @@ import android.os.Looper
 import android.os.Process.THREAD_PRIORITY_DEFAULT
 import androidx.annotation.VisibleForTesting
 import com.mapbox.bindgen.Value
+import com.mapbox.common.SettingsServiceFactory
+import com.mapbox.common.SettingsServiceStorageType
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.GeoJson
 import com.mapbox.geojson.Geometry
+import com.mapbox.maps.GeoJSONSourceData
 import com.mapbox.maps.MapEvents
 import com.mapbox.maps.MapboxConcurrentGeometryModificationException
 import com.mapbox.maps.Observer
 import com.mapbox.maps.StyleManager
+import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
 import com.mapbox.maps.extension.style.sources.Source
@@ -24,6 +28,7 @@ import com.mapbox.maps.extension.style.types.SourceDsl
 import com.mapbox.maps.extension.style.utils.TypeUtils
 import com.mapbox.maps.extension.style.utils.silentUnwrap
 import com.mapbox.maps.extension.style.utils.toValue
+import com.mapbox.maps.logW
 
 /**
  * A GeoJSON data source.
@@ -35,16 +40,66 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
   private val workerHandler by lazy {
     Handler(workerThread.looper)
   }
+
+  private var initGeoJson: GeoJson? = null
+  private var initData: String? = null
+
+  private var directSetterEnabled: Boolean = false
+
   private constructor(
     builder: Builder,
-    rawGeoJson: GeoJson?
+    geoJson: GeoJson?,
+    data: String?,
   ) : this(builder) {
-    rawGeoJson?.let {
-      workerHandler.post {
-        val property = it.toPropertyValue()
-        mainHandler.post {
-          setProperty(property, throwRuntimeException = false)
+    directSetterEnabled = builder.directSetterEnabled
+    if (directSetterEnabled) {
+      this.initGeoJson = geoJson
+      this.initData = data
+    } else {
+      geoJson?.let {
+        workerHandler.post {
+          val property = it.toPropertyValue()
+          mainHandler.post {
+            setProperty(property, throwRuntimeException = false)
+          }
         }
+      }
+    }
+  }
+
+  private fun setGeoJson(geoJson: GeoJson) {
+    workerHandler.removeCallbacksAndMessages(null)
+    workerHandler.post {
+      delegate?.setStyleGeoJSONSourceData(sourceId, toGeoJsonData(geoJson)) ?: logW(
+        TAG,
+        "GeoJsonSource (id=$sourceId) was not able to set data" +
+          " with `feature()`, `featureCollection()` or `geometry()`" +
+          " as there is no Style object."
+      )
+    }
+  }
+
+  private fun setData(data: String) {
+    workerHandler.removeCallbacksAndMessages(null)
+    workerHandler.post {
+      delegate?.setStyleGeoJSONSourceData(sourceId, GeoJSONSourceData.valueOf(data)) ?: logW(
+        TAG,
+        "GeoJsonSource (id=$sourceId) was not able to set data with `data()` or `url()`" +
+          " as there is no Style object."
+      )
+    }
+  }
+
+  override fun bindTo(delegate: StyleInterface) {
+    super.bindTo(delegate)
+    if (directSetterEnabled) {
+      initGeoJson?.let {
+        setGeoJson(it)
+        initGeoJson = null
+      }
+      initData?.let {
+        setData(it)
+        initData = null
       }
     }
   }
@@ -65,12 +120,16 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
    * A URL to a GeoJSON file, or inline GeoJSON.
    */
   fun data(value: String) = apply {
-    // remove any events from queue before posting this task
-    workerHandler.removeCallbacksAndMessages(null)
-    workerHandler.post {
-      mainHandler.post {
-        // we set parsed data when sync setter was not called during background work
-        setProperty(PropertyValue("data", Value(value)), throwRuntimeException = false)
+    if (directSetterEnabled) {
+      setData(value)
+    } else {
+      // remove any events from queue before posting this task
+      workerHandler.removeCallbacksAndMessages(null)
+      workerHandler.post {
+        mainHandler.post {
+          // we set parsed data when sync setter was not called during background work
+          setProperty(PropertyValue("data", Value(value)), throwRuntimeException = false)
+        }
       }
     }
   }
@@ -365,13 +424,17 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
   private fun applyGeoJsonData(
     data: GeoJson
   ): GeoJsonSource = apply {
-    // remove any events from queue before posting this task
-    workerHandler.removeCallbacksAndMessages(null)
-    workerHandler.post {
-      val property = data.toPropertyValue()
-      mainHandler.post {
-        // we set parsed data when sync setter was not called during background work
-        setProperty(property, throwRuntimeException = false)
+    if (directSetterEnabled) {
+      setGeoJson(data)
+    } else {
+      // remove any events from queue before posting this task
+      workerHandler.removeCallbacksAndMessages(null)
+      workerHandler.post {
+        val property = data.toPropertyValue()
+        mainHandler.post {
+          // we set parsed data when sync setter was not called during background work
+          setProperty(property, throwRuntimeException = false)
+        }
       }
     }
   }
@@ -386,7 +449,10 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
     val sourceId: String
   ) {
 
-    private var rawGeoJson: GeoJson? = null
+    internal val directSetterEnabled = directSetterEnabled()
+
+    private var geoJson: GeoJson? = null
+    private var data: String? = null
     internal val properties = HashMap<String, PropertyValue<*>>()
     // Properties that only settable after the source is added to the style.
     internal val volatileProperties = HashMap<String, PropertyValue<*>>()
@@ -395,9 +461,13 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
      * A URL to a GeoJSON file, or inline GeoJSON.
      */
     fun data(value: String) = apply {
-      rawGeoJson = null
-      val propertyValue = PropertyValue("data", TypeUtils.wrapToValue(value))
-      properties[propertyValue.propertyName] = propertyValue
+      geoJson = null
+      if (directSetterEnabled) {
+        data = value
+      } else {
+        val propertyValue = PropertyValue("data", TypeUtils.wrapToValue(value))
+        properties[propertyValue.propertyName] = propertyValue
+      }
     }
 
     /**
@@ -596,9 +666,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
      * @param value the feature
      */
     fun feature(value: Feature) = apply {
-      rawGeoJson = value
-      val propertyValue = PropertyValue("data", "null")
-      properties[propertyValue.propertyName] = propertyValue
+      geoJson(value)
     }
 
     /**
@@ -607,9 +675,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
      * @param value the feature collection
      */
     fun featureCollection(value: FeatureCollection) = apply {
-      rawGeoJson = value
-      val propertyValue = PropertyValue("data", "null")
-      properties[propertyValue.propertyName] = propertyValue
+      geoJson(value)
     }
 
     /**
@@ -618,16 +684,26 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
      * @param value the geometry
      */
     fun geometry(value: Geometry) = apply {
-      rawGeoJson = value
-      val propertyValue = PropertyValue("data", "null")
-      properties[propertyValue.propertyName] = propertyValue
+      geoJson(value)
+    }
+
+    private fun geoJson(geoJson: GeoJson) {
+      this.geoJson = geoJson
+      if (directSetterEnabled) {
+        data = null
+      } else {
+        val propertyValue = PropertyValue("data", "null")
+        properties[propertyValue.propertyName] = propertyValue
+      }
     }
 
     /**
      * Initialize GeoJsonSource builder with default data to allow empty data source.
      */
     init {
-      this.data("")
+      if (!directSetterEnabled) {
+        this.data("")
+      }
     }
 
     /**
@@ -635,13 +711,33 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
      *
      * @return the GeoJsonSource
      */
-    fun build() = GeoJsonSource(this, rawGeoJson)
+    fun build(): GeoJsonSource {
+      if (directSetterEnabled) {
+        // set default data to allow empty data source.
+        val propertyValue = PropertyValue("data", TypeUtils.wrapToValue(""))
+        properties[propertyValue.propertyName] = propertyValue
+      }
+      return GeoJsonSource(this, geoJson, data)
+    }
   }
 
   /**
    * Static variables and methods.
    */
   companion object {
+    private const val TAG = "GeoJsonSource"
+
+    /**
+     * Check if runtime property geojson_allow_direct_setter is enabled.
+     */
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    fun directSetterEnabled(): Boolean {
+      val settingValue = SettingsServiceFactory
+        .getInstance(SettingsServiceStorageType.NON_PERSISTENT)
+        .get("geojson_allow_direct_setter")
+      return settingValue.value?.contents as? Boolean ?: false
+    }
+
     /** A worker thread to parse large geojson data. */
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     internal val workerThread = HandlerThread("GEOJSON_PARSER", THREAD_PRIORITY_DEFAULT).apply {
@@ -649,6 +745,15 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
     }
 
     private val mainHandler = Handler(Looper.getMainLooper())
+
+    internal fun toGeoJsonData(geoJson: GeoJson): GeoJSONSourceData {
+      return when (geoJson) {
+        is Feature -> GeoJSONSourceData.valueOf(geoJson)
+        is Geometry -> GeoJSONSourceData.valueOf(geoJson)
+        is FeatureCollection -> GeoJSONSourceData.valueOf(geoJson.features()!!)
+        else -> throw RuntimeException("Incorrect GeoJson data format")
+      }
+    }
 
     /**
      * Maximum zoom level at which to create vector tiles (higher means greater detail at high zoom

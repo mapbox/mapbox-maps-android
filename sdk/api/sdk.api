@@ -432,6 +432,7 @@ public final class com/mapbox/maps/Style : com/mapbox/maps/extension/style/Style
 	public fun setStyleAtmosphere (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;
 	public fun setStyleAtmosphereProperty (Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;
 	public fun setStyleCustomGeometrySourceTileData (Ljava/lang/String;Lcom/mapbox/maps/CanonicalTileID;Ljava/util/List;)Lcom/mapbox/bindgen/Expected;
+	public fun setStyleGeoJSONSourceData (Ljava/lang/String;Lcom/mapbox/maps/GeoJSONSourceData;)Lcom/mapbox/bindgen/Expected;
 	public fun setStyleJSON (Ljava/lang/String;)V
 	public fun setStyleLayerProperties (Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;
 	public fun setStyleLayerProperty (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;

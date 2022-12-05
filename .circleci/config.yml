@@ -673,7 +673,9 @@ jobs:
       - run: exit 0
 
   run-style-test:
-    executor: ubuntu
+    executor:
+      name: ubuntu
+      machine: large
     steps:
       - when:
           condition:
