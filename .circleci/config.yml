@@ -32,6 +32,7 @@ workflows:
                 - main
     jobs:
       - check-gradle-dependencies
+
   build:
     when:
       not: << pipeline.parameters.mapbox_upstream >>
@@ -89,7 +90,7 @@ workflows:
               branches:
                   ignore:
                       - main
-                      - << pipeline.parameters.git_release_branch >>
+                      - /<< pipeline.parameters.git_release_branch >>/
           name: run-sdk-e2e-test-devel
           requires:
               - verify-code
@@ -98,9 +99,9 @@ workflows:
               branches:
                   only:
                       - main
-                      - << pipeline.parameters.git_release_branch >>
+                      - /<< pipeline.parameters.git_release_branch >>/
               tags:
-                  only: << pipeline.parameters.git_release_tag >>
+                  only: /<< pipeline.parameters.git_release_tag >>/
           name: run-sdk-e2e-test-validation
           requires:
               - verify-code
@@ -110,7 +111,7 @@ workflows:
             branches:
               only:
                 - main
-                - << pipeline.parameters.git_release_branch >>
+                - /<< pipeline.parameters.git_release_branch >>/
           requires:
             - verify-code
 
