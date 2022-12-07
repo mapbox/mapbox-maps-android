@@ -47,9 +47,10 @@ Mapbox welcomes participation and contributions from everyone.
 * Fixes fog rendering when terrain is used with zero exaggeration. ([1891](https://github.com/mapbox/mapbox-maps-android/pull/1891))
 * Fix `distance-to-center` filtering of symbols when terrain is enabled. ([1891](https://github.com/mapbox/mapbox-maps-android/pull/1891))
 * Improved `cameraForCoordinate` result quality with pitch and with terrain. ([1891](https://github.com/mapbox/mapbox-maps-android/pull/1891))
+* Fix a crash on Android 10 and below, when Google Play Location Service is not present. ([1898](https://github.com/mapbox/mapbox-maps-android/pull/1898))
 
 ## Dependencies
-* Update gl-native to v10.10.0 and common to v23.2.0. ([1891](https://github.com/mapbox/mapbox-maps-android/pull/1891))
+* Update gl-native to v10.10.0 and common to v23.2.1. ([1891](https://github.com/mapbox/mapbox-maps-android/pull/1891) [1898](https://github.com/mapbox/mapbox-maps-android/pull/1898))
 * Remove `mapbox-android-core` dependency, it is now part of Mapbox Common library.
     **NOTE:**: You need to remove any explicit dependency declaration to `com.mapbox.mapboxsdk:mapbox-android-core:<version>` from the project to avoid duplicated class definition errors related to location APIs. ([1836](https://github.com/mapbox/mapbox-maps-android/pull/1836))
 
