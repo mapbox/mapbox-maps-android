@@ -17,7 +17,7 @@ parameters:
     default: "^add-changelog.*"
   git_release_branch:
     type: string
-    default: ^v[0-9]+\.[0-9]+$
+    default: ^yds-text-v[0-9]+\.[0-9]+$
 
 workflows:
   version: 2
@@ -32,92 +32,101 @@ workflows:
                 - main
     jobs:
       - check-gradle-dependencies
-  build:
-    when:
-      not: << pipeline.parameters.mapbox_upstream >>
+
+  test-sync:
     jobs:
-      - verify-code:
-          filters:
-            tags:
-              only: /(v.*|extension-androidauto-v.*)/
-      - verify-docs:
-          requires:
-            - verify-code
-      - verify-api-kotlin-binary-compatibility:
-          requires:
-            - verify-code
-      - verify-api-metalava:
-          requires:
-            - verify-code
-      - verify-api-revapi:
-          requires:
-            - verify-code
-      - verify-internal:
-            requires:
-              - verify-code
-      - run-lint:
-          requires:
-            - verify-code
-      - run-unit-test:
-          requires:
-            - verify-code
-      - start-run-style-test:
-          type: approval
-      - run-style-test:
-          requires:
-            - start-run-style-test
-      - build-android-auto-app:
-          requires:
-            - verify-code
-      - build-modules-and-instrumentation-tests:
-          requires:
-            - verify-code
-          filters:
-            tags:
-              only: /(v.*|extension-androidauto-v.*)/
-      - run-app-instrumentation-test:
-          requires:
-            - build-modules-and-instrumentation-tests
-      - run-sdk-instrumentation-test:
-          requires:
-            - build-modules-and-instrumentation-tests
-      - run-robo-test:
-          requires:
-            - build-modules-and-instrumentation-tests
-      - sdk-e2e-test:
-          filters:
-              branches:
-                  ignore:
-                      - main
-                      - << pipeline.parameters.git_release_branch >>
-          name: run-sdk-e2e-test-devel
-          requires:
-              - verify-code
-      - sdk-e2e-test:
-          filters:
-              branches:
-                  only:
-                      - main
-                      - << pipeline.parameters.git_release_branch >>
-              tags:
-                  only: << pipeline.parameters.git_release_tag >>
-          name: run-sdk-e2e-test-validation
-          requires:
-              - verify-code
-          validation: true
       - sync-internal-ci:
           filters:
             branches:
               only:
                 - main
-                - << pipeline.parameters.git_release_branch >>
-          requires:
-            - verify-code
+                - /<< pipeline.parameters.git_release_branch >>/
+#  build:
+#    when:
+#      not: << pipeline.parameters.mapbox_upstream >>
+#    jobs:
+#      - verify-code:
+#          filters:
+#            tags:
+#              only: /(v.*|extension-androidauto-v.*)/
+#      - verify-docs:
+#          requires:
+#            - verify-code
+#      - verify-api-kotlin-binary-compatibility:
+#          requires:
+#            - verify-code
+#      - verify-api-metalava:
+#          requires:
+#            - verify-code
+#      - verify-api-revapi:
+#          requires:
+#            - verify-code
+#      - verify-internal:
+#            requires:
+#              - verify-code
+#      - run-lint:
+#          requires:
+#            - verify-code
+#      - run-unit-test:
+#          requires:
+#            - verify-code
+#      - start-run-style-test:
+#          type: approval
+#      - run-style-test:
+#          requires:
+#            - start-run-style-test
+#      - build-android-auto-app:
+#          requires:
+#            - verify-code
+#      - build-modules-and-instrumentation-tests:
+#          requires:
+#            - verify-code
+#          filters:
+#            tags:
+#              only: /(v.*|extension-androidauto-v.*)/
+#      - run-app-instrumentation-test:
+#          requires:
+#            - build-modules-and-instrumentation-tests
+#      - run-sdk-instrumentation-test:
+#          requires:
+#            - build-modules-and-instrumentation-tests
+#      - run-robo-test:
+#          requires:
+#            - build-modules-and-instrumentation-tests
+#      - sdk-e2e-test:
+#          filters:
+#              branches:
+#                  ignore:
+#                      - main
+#                      - << pipeline.parameters.git_release_branch >>
+#          name: run-sdk-e2e-test-devel
+#          requires:
+#              - verify-code
+#      - sdk-e2e-test:
+#          filters:
+#              branches:
+#                  only:
+#                      - main
+#                      - << pipeline.parameters.git_release_branch >>
+#              tags:
+#                  only: << pipeline.parameters.git_release_tag >>
+#          name: run-sdk-e2e-test-validation
+#          requires:
+#              - verify-code
+#          validation: true
+#      - sync-internal-ci:
+#          filters:
+#            branches:
+#              only:
+#                - main
+#                - << pipeline.parameters.git_release_branch >>
+#          requires:
+#            - verify-code
 
-  validation:
-    when: << pipeline.parameters.mapbox_upstream >>
-    jobs:
-      - run-sdk-instrumentation-test
+#  validation:
+#    when: << pipeline.parameters.mapbox_upstream >>
+#    jobs:
+#      - run-sdk-instrumentation-test
 
 commands:
   save-to-workspace:
@@ -837,11 +846,7 @@ jobs:
             - run:
                 name: Notify maps internal CI about $CIRCLE_BRANCH branch update
                 command: |
-                  python3 scripts/ci-circleci-start-pipeline.py --token ${MOBILE_METRICS_TOKEN} \
-                    --origin-slug mapbox/mapbox-maps-android \
-                    --current-branch $CIRCLE_BRANCH \
-                    --target-slug mapbox/mapbox-maps-android-private \
-                    --sync-internal True
+                  echo "Run sync"
       - run: exit 0
 
   check-gradle-dependencies:
