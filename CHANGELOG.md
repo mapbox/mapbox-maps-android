@@ -4,7 +4,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-# 10.10.0
+
+# 10.10.0 December 07, 2022
 ## Features ✨ and improvements 🏁
 * Introduce view annotation `ViewAnnotationManager.annotations` API to access list of added view annotations. ([1751](https://github.com/mapbox/mapbox-maps-android/pull/1751))
 * Introduce view annotation `ViewAnnotationManager.cameraForAnnotations` API to get camera options for given view annotations list. ([1753](https://github.com/mapbox/mapbox-maps-android/pull/1753))
@@ -53,6 +54,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Update gl-native to v10.10.0 and common to v23.2.1. ([1891](https://github.com/mapbox/mapbox-maps-android/pull/1891) [1898](https://github.com/mapbox/mapbox-maps-android/pull/1898))
 * Remove `mapbox-android-core` dependency, it is now part of Mapbox Common library.
     **NOTE:**: You need to remove any explicit dependency declaration to `com.mapbox.mapboxsdk:mapbox-android-core:<version>` from the project to avoid duplicated class definition errors related to location APIs. ([1836](https://github.com/mapbox/mapbox-maps-android/pull/1836))
+
 
 # 10.10.0-rc.1 November 18, 2022
 ## Features ✨ and improvements 🏁
