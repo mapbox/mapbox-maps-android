@@ -1,0 +1,123 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>AnimationThreadController</title>
+<link href="../../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../../";</script><script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script><link href="../../../styles/style.css" rel="Stylesheet"><link href="../../../styles/logo-styles.css" rel="Stylesheet"><link href="../../../styles/jetbrains-mono.css" rel="Stylesheet"><link href="../../../styles/main.css" rel="Stylesheet"><script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script><script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script><script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script><script type="text/javascript" src="../../../scripts/main.js" async="async"></script>  </head>
+  <body>
+    <div id="container">
+      <div id="leftColumn"><a href="../../../index.html">
+          <div id="logo"></div>
+        </a>
+        <div id="paneSearch"></div>
+        <div id="sideMenu"></div>
+      </div>
+      <div id="main">
+        <div id="leftToggler"><span class="icon-toggler"></span></div>
+<script type="text/javascript" src="../../../scripts/main.js"></script>        <div class="main-content" id="content" pageIds="mapbox-maps-android::com.mapbox.maps.threading/AnimationThreadController///PointingToDeclaration//540127926">
+          <div class="navigation-wrapper" id="navigation-wrapper">
+            <div class="breadcrumbs"><a href="../../../index.html">mapbox-maps-android</a>/<a href="../index.html">com.mapbox.maps.threading</a>/<a href="index.html">AnimationThreadController</a></div>
+            <div class="pull-right d-flex">
+              <div id="searchBar"></div>
+            </div>
+          </div>
+          <div class="cover ">
+            <h1 class="cover"><span>Animation</span><wbr></wbr><span>Thread</span><wbr></wbr><span><span>Controller</span></span></h1>
+            <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">object <a href="index.html">AnimationThreadController</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><p class="paragraph">Experimental controller singleton allowing to use background thread for all Mapbox animations. Most likely should not be used directly, calling <a href="use-background-thread.html">useBackgroundThread</a> should do all the work.</p><p class="paragraph">By default all Mapbox animations are running on Android Main thread.</p><p class="paragraph">Following Mapbox plugins are updated to make use of background animation thread:</p><ul><li><p class="paragraph">plugin-locationcomponent</p></li><li><p class="paragraph">plugin-animation</p></li><li><p class="paragraph">plugin-viewport</p></li></ul><p class="paragraph">Switching between <a href="use-background-thread.html">useBackgroundThread</a> and <a href="use-main-thread.html">useMainThread</a> could be done at any point in runtime.</p><p class="paragraph">Using this class is extremely unsafe and error prone, it should be used in very specific use-cases! Even when it's essential to use it (for example Android Auto use-case on specific devices when locking the device) it would be safer to use Android Main thread as much as possible and switch to background thread only when it's needed.</p></div></div>
+          </div>
+          <div class="tabbedcontent">
+            <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Functions">Functions</button><button class="section-tab" data-togglable="Properties">Properties</button></div>
+            <div class="tabs-section-body">
+              <h2 class="">Functions</h2>
+              <div class="table" data-togglable="Functions"><a data-name="-114012870%2FFunctions%2F540127926" anchor-label="postOnAnimatorThread" id="-114012870%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="post-on-animator-thread.html"><span>post</span><wbr></wbr><span>On</span><wbr></wbr><span>Animator</span><wbr></wbr><span><span>Thread</span></span></a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-114012870%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">fun <a href="post-on-animator-thread.html">postOnAnimatorThread</a>(function: () -&gt; <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a>)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<div class="brief "><p class="paragraph">Execute <a href="post-on-animator-thread.html">function</a> on animator thread.</p></div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="537219340%2FFunctions%2F540127926" anchor-label="postOnMainThread" id="537219340%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="post-on-main-thread.html"><span>post</span><wbr></wbr><span>On</span><wbr></wbr><span>Main</span><wbr></wbr><span><span>Thread</span></span></a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="537219340%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">fun <a href="post-on-main-thread.html">postOnMainThread</a>(function: () -&gt; <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a>)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<div class="brief "><p class="paragraph">Execute <a href="post-on-main-thread.html">function</a> on Android Main thread.</p></div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-1972304993%2FFunctions%2F540127926" anchor-label="useBackgroundThread" id="-1972304993%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="use-background-thread.html"><span>use</span><wbr></wbr><span>Background</span><wbr></wbr><span><span>Thread</span></span></a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1972304993%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">fun <a href="use-background-thread.html">useBackgroundThread</a>()<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<div class="brief "><p class="paragraph">Spawn new animation <a href="https://developer.android.com/reference/kotlin/android/os/HandlerThread.html">HandlerThread</a> that will be used for all Mapbox animators. If animation thread is already running - function is no-op.</p></div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-1684974284%2FFunctions%2F540127926" anchor-label="useMainThread" id="-1684974284%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="use-main-thread.html"><span>use</span><wbr></wbr><span>Main</span><wbr></wbr><span><span>Thread</span></span></a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1684974284%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">fun <a href="use-main-thread.html">useMainThread</a>()<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<div class="brief "><p class="paragraph">If <a href="use-background-thread.html">useBackgroundThread</a> was called beforehand - kill background animator thread and use Android Main thread for all Mapbox animators. Otherwise function is no-op.</p></div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <h2 class="">Properties</h2>
+              <div class="table" data-togglable="Properties"><a data-name="-445935358%2FProperties%2F540127926" anchor-label="usingBackgroundThread" id="-445935358%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="using-background-thread.html">usingBackgroundThread</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-445935358%2FProperties%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-445935358%2FProperties%2F540127926" anchor-label="usingBackgroundThread" id="-445935358%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><div class="block"><div class="block">@<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-volatile/index.html">Volatile</a></div></div>var <a href="using-background-thread.html">usingBackgroundThread</a>: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a> = false<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="-445935358%2FProperties%2F540127926" anchor-label="usingBackgroundThread" id="-445935358%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Indicates if background thread is used now to run Mapbox animators.</p></div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="go-to-top-icon"><a href="#content"></a></span><span>© 2022 Copyright</span><span class="pull-right"><span>Generated by </span><a href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span></div>
+      </div>
+    </div>
+  </body>
+</html>
+
