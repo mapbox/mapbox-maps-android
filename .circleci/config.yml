@@ -11,13 +11,13 @@ parameters:
     default: "owner/repo"
   git_release_tag:
     type: string
-    default: ^v[0-9]+\.[0-9]+\.[0-9]+.*$
+    default: ^yds-text-v[0-9]+\.[0-9]+\.[0-9]+.*$
   changelog_branch:
     type: string
     default: "^add-changelog.*"
   git_release_branch:
     type: string
-    default: ^v[0-9]+\.[0-9]+$
+    default: ^yds-text-v[0-9]+\.[0-9]+$
 
 workflows:
   version: 2
@@ -33,92 +33,104 @@ workflows:
     jobs:
       - check-gradle-dependencies
 
-  build:
-    when:
-      not: << pipeline.parameters.mapbox_upstream >>
+  test_tag:
     jobs:
-      - verify-code:
-          filters:
-            tags:
-              only: /(v.*|extension-androidauto-v.*)/
-      - verify-docs:
-          requires:
-            - verify-code
-      - verify-api-kotlin-binary-compatibility:
-          requires:
-            - verify-code
-      - verify-api-metalava:
-          requires:
-            - verify-code
-      - verify-api-revapi:
-          requires:
-            - verify-code
-      - verify-internal:
-            requires:
-              - verify-code
-      - run-lint:
-          requires:
-            - verify-code
-      - run-unit-test:
-          requires:
-            - verify-code
-      - start-run-style-test:
-          type: approval
-      - run-style-test:
-          requires:
-            - start-run-style-test
-      - build-android-auto-app:
-          requires:
-            - verify-code
-      - build-modules-and-instrumentation-tests:
-          requires:
-            - verify-code
-          filters:
-            tags:
-              only: /(v.*|extension-androidauto-v.*)/
-      - run-app-instrumentation-test:
-          requires:
-            - build-modules-and-instrumentation-tests
-      - run-sdk-instrumentation-test:
-          requires:
-            - build-modules-and-instrumentation-tests
-      - run-robo-test:
-          requires:
-            - build-modules-and-instrumentation-tests
       - sdk-e2e-test:
-          filters:
-              branches:
-                  ignore:
-                      - main
-                      - /<< pipeline.parameters.git_release_branch >>/
-          name: run-sdk-e2e-test-devel
-          requires:
-              - verify-code
-      - sdk-e2e-test:
-          filters:
-              branches:
-                  only:
-                      - main
-                      - /<< pipeline.parameters.git_release_branch >>/
-              tags:
-                  only: /<< pipeline.parameters.git_release_tag >>/
-          name: run-sdk-e2e-test-validation
-          requires:
-              - verify-code
-          validation: true
-      - sync-internal-ci:
           filters:
             branches:
               only:
                 - main
                 - /<< pipeline.parameters.git_release_branch >>/
-          requires:
-            - verify-code
+            tags:
+              only: /<< pipeline.parameters.git_release_tag >>/
+          name: run-sdk-e2e-test-validation
+          validation: true
+#  build:
+#    when:
+#      not: << pipeline.parameters.mapbox_upstream >>
+#    jobs:
+#      - verify-code:
+#          filters:
+#            tags:
+#              only: /(v.*|extension-androidauto-v.*)/
+#      - verify-docs:
+#          requires:
+#            - verify-code
+#      - verify-api-kotlin-binary-compatibility:
+#          requires:
+#            - verify-code
+#      - verify-api-metalava:
+#          requires:
+#            - verify-code
+#      - verify-api-revapi:
+#          requires:
+#            - verify-code
+#      - verify-internal:
+#            requires:
+#              - verify-code
+#      - run-lint:
+#          requires:
+#            - verify-code
+#      - run-unit-test:
+#          requires:
+#            - verify-code
+#      - start-run-style-test:
+#          type: approval
+#      - run-style-test:
+#          requires:
+#            - start-run-style-test
+#      - build-android-auto-app:
+#          requires:
+#            - verify-code
+#      - build-modules-and-instrumentation-tests:
+#          requires:
+#            - verify-code
+#          filters:
+#            tags:
+#              only: /(v.*|extension-androidauto-v.*)/
+#      - run-app-instrumentation-test:
+#          requires:
+#            - build-modules-and-instrumentation-tests
+#      - run-sdk-instrumentation-test:
+#          requires:
+#            - build-modules-and-instrumentation-tests
+#      - run-robo-test:
+#          requires:
+#            - build-modules-and-instrumentation-tests
+#      - sdk-e2e-test:
+#          filters:
+#              branches:
+#                  ignore:
+#                      - main
+#                      - /<< pipeline.parameters.git_release_branch >>/
+#          name: run-sdk-e2e-test-devel
+#          requires:
+#              - verify-code
+#      - sdk-e2e-test:
+#          filters:
+#              branches:
+#                  only:
+#                      - main
+#                      - /<< pipeline.parameters.git_release_branch >>/
+#              tags:
+#                  only: /<< pipeline.parameters.git_release_tag >>/
+#          name: run-sdk-e2e-test-validation
+#          requires:
+#              - verify-code
+#          validation: true
+#      - sync-internal-ci:
+#          filters:
+#            branches:
+#              only:
+#                - main
+#                - /<< pipeline.parameters.git_release_branch >>/
+#          requires:
+#            - verify-code
 
-  validation:
-    when: << pipeline.parameters.mapbox_upstream >>
-    jobs:
-      - run-sdk-instrumentation-test
+#  validation:
+#    when: << pipeline.parameters.mapbox_upstream >>
+#    jobs:
+#      - run-sdk-instrumentation-test
 
 commands:
   save-to-workspace:
@@ -777,48 +789,50 @@ jobs:
                   pattern: << pipeline.parameters.changelog_branch >>
                   value: << pipeline.git.branch >>
             steps:
-              - add_ssh_keys:
-                  fingerprints:
-                      - 3b:cd:47:bf:57:9c:e5:36:b0:4d:5f:12:5e:d3:b3:3e
-              - checkout
-              - init-aws
-              - run:
-                  command: |
-                      sudo pip3 install gitpython
-                      sudo cp ./mbx-ci /usr/local/bin/
-                  name: Install dependency
+#              - add_ssh_keys:
+#                  fingerprints:
+#                      - 3b:cd:47:bf:57:9c:e5:36:b0:4d:5f:12:5e:d3:b3:3e
+#              - checkout
+#              - init-aws
+#              - run:
+#                  command: |
+#                      sudo pip3 install gitpython
+#                      sudo cp ./mbx-ci /usr/local/bin/
+#                  name: Install dependency
               - when:
                   condition:
                       not: << parameters.validation >>
                   steps:
                       - run:
                           command: |
-                              E2E_TRIGGER=$(./scripts/ci-e2e-job-trigger-checker.sh || echo -n "retval $?")
-                              echo $E2E_TRIGGER
-                              if [[ $E2E_TRIGGER == *"retval 1"* ]]; then
-                                  echo "E2E tests not requested, skipping."
-                                  exit 0
-                              fi
-                              export GITHUB_TOKEN=$(mbx-ci github reader token)
-                              LABELS=$(gh pr view --repo $CIRCLE_REPOSITORY_URL $CIRCLE_PULL_REQUEST --json labels)
-                              if [[ $LABELS == *"e2e_trunk"* ]]; then
-                                  export E2E_VERSION_CONFIG="trunk"
-                              elif [[ $LABELS == *"e2e_latest"* ]]; then
-                                  export E2E_VERSION_CONFIG="latest"
-                              else
-                                  export E2E_VERSION_CONFIG="default"
-                              fi
-                              echo "Run E2E tests with ${E2E_VERSION_CONFIG} config."
-                              scripts/ci-e2e-compatibility-start-pipeline.py --token ${MOBILE_METRICS_TOKEN} --config mapbox-maps-android=${CIRCLE_SHA1} --platform all --versions ${E2E_VERSION_CONFIG}
+                              echo "No validation"
+#                              E2E_TRIGGER=$(./scripts/ci-e2e-job-trigger-checker.sh || echo -n "retval $?")
+#                              echo $E2E_TRIGGER
+#                              if [[ $E2E_TRIGGER == *"retval 1"* ]]; then
+#                                  echo "E2E tests not requested, skipping."
+#                                  exit 0
+#                              fi
+#                              export GITHUB_TOKEN=$(mbx-ci github reader token)
+#                              LABELS=$(gh pr view --repo $CIRCLE_REPOSITORY_URL $CIRCLE_PULL_REQUEST --json labels)
+#                              if [[ $LABELS == *"e2e_trunk"* ]]; then
+#                                  export E2E_VERSION_CONFIG="trunk"
+#                              elif [[ $LABELS == *"e2e_latest"* ]]; then
+#                                  export E2E_VERSION_CONFIG="latest"
+#                              else
+#                                  export E2E_VERSION_CONFIG="default"
+#                              fi
+#                              echo "Run E2E tests with ${E2E_VERSION_CONFIG} config."
+#                              scripts/ci-e2e-compatibility-start-pipeline.py --token ${MOBILE_METRICS_TOKEN} --config mapbox-maps-android=${CIRCLE_SHA1} --platform all --versions ${E2E_VERSION_CONFIG}
                           name: Trigger E2E SDK test devel pipeline
               - when:
                   condition: << parameters.validation >>
                   steps:
                       - run:
                           command: |
-                              export E2E_VERSION_CONFIG="latest"
-                              echo "Run E2E tests with ${E2E_VERSION_CONFIG} config."
-                              scripts/ci-e2e-compatibility-start-pipeline.py --token ${MOBILE_METRICS_TOKEN} --config mapbox-maps-android=${CIRCLE_SHA1} --platform all --versions ${E2E_VERSION_CONFIG}
+                              echo "No validation"
+#                              export E2E_VERSION_CONFIG="latest"
+#                              echo "Run E2E tests with ${E2E_VERSION_CONFIG} config."
+#                              scripts/ci-e2e-compatibility-start-pipeline.py --token ${MOBILE_METRICS_TOKEN} --config mapbox-maps-android=${CIRCLE_SHA1} --platform all --versions ${E2E_VERSION_CONFIG}
                           name: Trigger E2E SDK test validation pipeline
         - run: exit 0
 
