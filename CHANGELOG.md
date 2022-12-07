@@ -2,7 +2,8 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# 10.10.0
+
+# 10.10.0 December 07, 2022
 ## Features ✨ and improvements 🏁
 * Introduce view annotation `ViewAnnotationManager.annotations` API to access list of added view annotations. ([1751](https://github.com/mapbox/mapbox-maps-android/pull/1751))
 * Introduce view annotation `ViewAnnotationManager.cameraForAnnotations` API to get camera options for given view annotations list. ([1753](https://github.com/mapbox/mapbox-maps-android/pull/1753))
@@ -16,9 +17,6 @@ Mapbox welcomes participation and contributions from everyone.
 * Reduce number of operations when terrain is used with zero exaggeration. ([1891](https://github.com/mapbox/mapbox-maps-android/pull/1891))
 
 ## Bug fixes 🐞
-* Fix displaying MapView in Android Studio Layout Preview. ([1881](https://github.com/mapbox/mapbox-maps-android/pull/1881))
-* Fix loss of `Widget` during background/foreground transition. ([1864](https://github.com/mapbox/mapbox-maps-android/pull/1864))
-* Fix a bug where `ViewAnnotationManager.annotations` API doesn't return correct camera bounds. ([1861](https://github.com/mapbox/mapbox-maps-android/pull/1861))
 * Fix an issue when touch events didn't pass through clickable view annotations. ([1745](https://github.com/mapbox/mapbox-maps-android/pull/1745))
 * Trigger repaint after `BitmapWidget` is updated. ([1797](https://github.com/mapbox/mapbox-maps-android/pull/1797))
 * Fix a crash after removing the view annotation if view has an attached animation or transition. ([1831](https://github.com/mapbox/mapbox-maps-android/pull/1831))
@@ -54,6 +52,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Update gl-native to v10.10.0 and common to v23.2.1. ([1891](https://github.com/mapbox/mapbox-maps-android/pull/1891) [1898](https://github.com/mapbox/mapbox-maps-android/pull/1898))
 * Remove `mapbox-android-core` dependency, it is now part of Mapbox Common library.
     **NOTE:**: You need to remove any explicit dependency declaration to `com.mapbox.mapboxsdk:mapbox-android-core:<version>` from the project to avoid duplicated class definition errors related to location APIs. ([1836](https://github.com/mapbox/mapbox-maps-android/pull/1836))
+
 
 # 10.10.0-rc.1 November 18, 2022
 ## Features ✨ and improvements 🏁
