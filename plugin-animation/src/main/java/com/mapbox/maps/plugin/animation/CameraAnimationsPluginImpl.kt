@@ -10,6 +10,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
+import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.plugin.animation.animator.*
 import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.threading.AnimationThreadController.postOnAnimatorThread
@@ -134,7 +135,8 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
   }
 
   @VisibleForTesting(otherwise = PRIVATE)
-  internal var currentCameraState: CameraState? = null
+  internal var currentCameraOptions: CameraOptions? = null
+  private var currentCameraState: CameraState? = null
   private var cameraOptionsBuilder = CameraOptions.Builder()
 
   private lateinit var mapDelegateProvider: MapDelegateProvider
@@ -164,6 +166,14 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
   }
 
   /**
+   * Called when a new Style is loaded.s
+   */
+  override fun onStyleChanged(styleDelegate: StyleInterface) {
+    val property = styleDelegate.getStyleTerrainProperty("exaggeration")
+    logE("KIRYLDD", "$property")
+  }
+
+  /**
    * Called when the map is destroyed. Should be used to cleanup plugin resources for that map.
    * Cancel all running animations and cleanup all resources (registered animations, listeners).
    */
@@ -181,17 +191,27 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     handler.removeCallbacks(commitChangesRunnable)
   }
 
+  private fun skipNativeSetCamera(cameraOptions: CameraOptions): Boolean {
+    if (currentCameraOptions == cameraOptions) {
+      return true
+    }
+    //
+    return false
+  }
+
   @VisibleForTesting(otherwise = PRIVATE)
   internal fun performMapJump(cameraOptions: CameraOptions) {
-    if (currentCameraState == cameraOptions) {
+    if (skipNativeSetCamera(cameraOptions)) {
       return
     }
     // move native map to new position
     try {
       mapCameraManagerDelegate.setCamera(cameraOptions)
-      // notify listeners with actual values
-      notifyListeners(mapCameraManagerDelegate.cameraState)
-      currentCameraState = cameraOptions
+      currentCameraState = mapCameraManagerDelegate.cameraState.also { coreCameraState ->
+        // notify listeners with actual values
+        notifyListeners(coreCameraState)
+      }
+      currentCameraOptions = cameraOptions
     } catch (e: Exception) {
       logE(
         TAG,
