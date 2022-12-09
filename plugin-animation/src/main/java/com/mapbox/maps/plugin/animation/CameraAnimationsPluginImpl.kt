@@ -134,8 +134,6 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     }
   }
 
-  @VisibleForTesting(otherwise = PRIVATE)
-  internal var currentCameraOptions: CameraOptions? = null
   private var currentCameraState: CameraState? = null
   private var cameraOptionsBuilder = CameraOptions.Builder()
 
@@ -154,11 +152,21 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     ENDED
   }
 
+  private var style: StyleInterface? = null
+
+  private fun terrainEnabled(): Boolean {
+    val exaggeration = style?.getStyleTerrainProperty("exaggeration")?.value?.contents as? Double
+    return (exaggeration ?: 0.0) > 0.0
+  }
+
   /**
    * Provides all map delegate instances.
    */
   override fun onDelegateProvider(delegateProvider: MapDelegateProvider) {
     mapDelegateProvider = delegateProvider
+    mapDelegateProvider.getStyle {
+      style = it
+    }
     mapCameraManagerDelegate = mapDelegateProvider.mapCameraManagerDelegate
     mapTransformDelegate = mapDelegateProvider.mapTransformDelegate
     mapProjectionDelegate = mapDelegateProvider.mapProjectionDelegate
@@ -166,11 +174,10 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
   }
 
   /**
-   * Called when a new Style is loaded.s
+   * Called when a new Style is loaded.
    */
   override fun onStyleChanged(styleDelegate: StyleInterface) {
-    val property = styleDelegate.getStyleTerrainProperty("exaggeration")
-    logE("KIRYLDD", "$property")
+    style = styleDelegate
   }
 
   /**
@@ -192,11 +199,27 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
   }
 
   private fun skipNativeSetCamera(cameraOptions: CameraOptions): Boolean {
-    if (currentCameraOptions == cameraOptions) {
-      return true
+    cameraOptions.anchor?.let {
+      return false
     }
-    //
-    return false
+    cameraOptions.pitch?.let { userPitch ->
+      if ((userPitch >= 60.0 && terrainEnabled()) ||
+        userPitch != currentCameraState?.pitch
+      ) return false
+    }
+    cameraOptions.zoom?.let { userZoom ->
+      if (userZoom != currentCameraState?.zoom) return false
+    }
+    cameraOptions.bearing?.let { userBearing ->
+      if (userBearing != currentCameraState?.bearing) return false
+    }
+    cameraOptions.center?.let { userCenter ->
+      if (userCenter != currentCameraState?.center) return false
+    }
+    cameraOptions.padding?.let { userPadding ->
+      if (userPadding != currentCameraState?.padding) return false
+    }
+    return true
   }
 
   @VisibleForTesting(otherwise = PRIVATE)
@@ -211,7 +234,6 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
         // notify listeners with actual values
         notifyListeners(coreCameraState)
       }
-      currentCameraOptions = cameraOptions
     } catch (e: Exception) {
       logE(
         TAG,
