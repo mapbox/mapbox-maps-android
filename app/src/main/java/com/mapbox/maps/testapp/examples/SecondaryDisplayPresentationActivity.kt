@@ -22,10 +22,6 @@ import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivitySecondaryDisplayPresentationBinding
 import com.mapbox.maps.testapp.databinding.ItemDisplayInfoBinding
 
-private const val TAG = "SecondaryDisplayPresent"
-
-private const val DISPLAY_INFO_TAG = "DisplayInfo"
-
 class SecondaryDisplayPresentationActivity : AppCompatActivity() {
   private lateinit var displayManager: DisplayManager
   private var currentPresentation: Presentation? = null
@@ -75,13 +71,13 @@ class SecondaryDisplayPresentationActivity : AppCompatActivity() {
   }
 
   override fun onStop() {
-    super.onStop()
     // Dismiss the presentation when the activity is not visible.
     currentPresentation?.let {
       Log.i(TAG, "Dismissing presentation because the activity is no longer visible.")
       it.dismiss()
       currentPresentation = null
     }
+    super.onStop()
   }
 
   private fun updateDisplaysInfo() {
@@ -146,11 +142,17 @@ class SecondaryDisplayPresentationActivity : AppCompatActivity() {
         presentation.show()
         presentation
       } catch (ex: WindowManager.InvalidDisplayException) {
-        Log.w(TAG, "Couldn't show presentation!  Display was removed in the meantime.", ex)
+        Log.e(TAG, "Couldn't show presentation!  Display was removed in the meantime.", ex)
         null
       }
     }
     updateDisplaysInfo()
+  }
+
+  private companion object {
+    private const val TAG = "SecondaryDisplayPresent"
+
+    private const val DISPLAY_INFO_TAG = "DisplayInfo"
   }
 
   /**
