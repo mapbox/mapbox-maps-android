@@ -91,22 +91,22 @@ class SecondaryDisplayPresentationActivity : AppCompatActivity() {
     } else {
       secondaryDisplays.forEach { display ->
         Log.d(TAG, "updatePresentation: Found display $display")
-        val displayInfoBinding =
-          ItemDisplayInfoBinding.inflate(
-            LayoutInflater.from(binding.root.context),
-            binding.root,
-            true
-          )
-        displayInfoBinding.root.tag = DISPLAY_INFO_TAG
-        displayInfoBinding.displayInfo.text = "${display.name} [${display.displayId}]"
-        displayInfoBinding.displayBt.isEnabled = true
-        displayInfoBinding.displayBt.setOnClickListener {
-          updatePresentation(display)
-        }
-        // Disable the PRESENT button for those displays that are already presenting
-        currentPresentation?.let {
-          if (it.display == display) {
-            displayInfoBinding.displayBt.isEnabled = false
+        ItemDisplayInfoBinding.inflate(
+          LayoutInflater.from(binding.root.context),
+          binding.root,
+          true
+        ).apply {
+          root.tag = DISPLAY_INFO_TAG
+          displayInfo.text = "${display.name} [${display.displayId}]"
+          displayBt.isEnabled = true
+          displayBt.setOnClickListener {
+            updatePresentation(display)
+          }
+          // Disable the PRESENT button for those displays that are already presenting
+          currentPresentation?.let {
+            if (it.display == display) {
+              displayBt.isEnabled = false
+            }
           }
         }
       }
