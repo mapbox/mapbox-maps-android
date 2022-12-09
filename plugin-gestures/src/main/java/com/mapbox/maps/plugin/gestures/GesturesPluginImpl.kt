@@ -29,11 +29,7 @@ import com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Companion.cameraAn
 import com.mapbox.maps.plugin.animation.MapAnimationOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOwnerRegistry
-import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
-import com.mapbox.maps.plugin.delegates.MapDelegateProvider
-import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
-import com.mapbox.maps.plugin.delegates.MapProjectionDelegate
-import com.mapbox.maps.plugin.delegates.MapTransformDelegate
+import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.plugin.gestures.generated.GesturesAttributeParser
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettings
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettingsBase
@@ -1470,6 +1466,12 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
       // Skip invalid focal points with non-finite values
       if (!focalPoint.x.isFinite() || !focalPoint.y.isFinite()) {
         logE(TAG, "Invalid focal point=$focalPoint to perform map panning!")
+        return false
+      }
+
+      // Skip invalid distance with non-finite values
+      if (!distanceX.isFinite() || !distanceY.isFinite()) {
+        logE(TAG, "Invalid distanceX=$distanceX or distanceY=$distanceY to perform map panning!")
         return false
       }
 

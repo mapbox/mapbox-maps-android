@@ -406,6 +406,24 @@ class GesturesPluginTest {
   }
 
   @Test
+  fun verifyHandleMoveExceptionFreeForInvalidDistance() {
+    mockkStatic("com.mapbox.maps.MapboxLogger")
+    every { logE(any(), any()) } just Runs
+    val moveGestureDetector = mockk<MoveGestureDetector>()
+    every { moveGestureDetector.pointersCount } returns 1
+    every {
+      moveGestureDetector.focalPoint
+    } returns PointF(0f, 0f)
+    var handled = presenter.handleMove(moveGestureDetector, 1f, Float.NaN)
+    assertFalse(handled)
+    verify(exactly = 1) { logE(any(), any()) }
+    handled = presenter.handleMove(moveGestureDetector, Float.NaN, 1f)
+    assertFalse(handled)
+    verify(exactly = 2) { logE(any(), any()) }
+    unmockkStatic("com.mapbox.maps.MapboxLogger")
+  }
+
+  @Test
   fun verifyMoveListenerPinchScrollDisabled() {
     presenter.pinchScrollEnabled = false
     val listener: OnMoveListener = mockk(relaxed = true)
