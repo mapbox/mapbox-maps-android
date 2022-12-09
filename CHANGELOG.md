@@ -3,6 +3,8 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
+## Features ✨ and improvements 🏁
+* Added new example `SecondaryDisplayPresentationActivity` to showcase how to use [Presentation](https://developer.android.com/reference/android/app/Presentation) to show a `Mapview` on a secondary display. ([1905](https://github.com/mapbox/mapbox-maps-android/pull/1905))
 
 
 # 10.10.0 December 07, 2022
