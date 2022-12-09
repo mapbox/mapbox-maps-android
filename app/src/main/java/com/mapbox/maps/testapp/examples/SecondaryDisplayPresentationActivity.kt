@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
@@ -57,7 +58,7 @@ class SecondaryDisplayPresentationActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     binding = ActivitySecondaryDisplayPresentationBinding.inflate(layoutInflater)
     setContentView(binding.root)
-    displayManager = getSystemService(DisplayManager::class.java)
+    displayManager = ContextCompat.getSystemService(this, DisplayManager::class.java)!!
   }
 
   override fun onResume() {
