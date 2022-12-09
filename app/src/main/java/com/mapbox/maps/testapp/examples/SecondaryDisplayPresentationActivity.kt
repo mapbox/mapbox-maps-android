@@ -22,6 +22,14 @@ import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivitySecondaryDisplayPresentationBinding
 import com.mapbox.maps.testapp.databinding.ItemDisplayInfoBinding
 
+/**
+ * Example of displaying a map on a secondary display using [Presentation].
+ *
+ * To use this example, you either need to:
+ * - attach a second display to your device
+ * - have the simulated secondary display enabled in the developer settings
+ * - in the emulator's extended controls, add a new secondary display
+ */
 class SecondaryDisplayPresentationActivity : AppCompatActivity() {
   private lateinit var displayManager: DisplayManager
   private var currentPresentation: Presentation? = null
@@ -89,6 +97,7 @@ class SecondaryDisplayPresentationActivity : AppCompatActivity() {
     if (secondaryDisplays.isEmpty()) {
       binding.displayNone.visibility = View.VISIBLE
     } else {
+      binding.displayNone.visibility = View.GONE
       secondaryDisplays.forEach { display ->
         Log.d(TAG, "updatePresentation: Found display $display")
         ItemDisplayInfoBinding.inflate(
