@@ -51,7 +51,6 @@ class SecondaryDisplayPresentationActivity : AppCompatActivity() {
       Log.d(TAG, "Display #$displayId changed.")
       updateDisplaysInfo()
     }
-
   }
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -78,9 +77,9 @@ class SecondaryDisplayPresentationActivity : AppCompatActivity() {
     super.onStop()
     // Dismiss the presentation when the activity is not visible.
     currentPresentation?.let {
-      Log.i(TAG, "Dismissing presentation because the activity is no longer visible.");
-      it.dismiss();
-      currentPresentation = null;
+      Log.i(TAG, "Dismissing presentation because the activity is no longer visible.")
+      it.dismiss()
+      currentPresentation = null
     }
   }
 
