@@ -13,6 +13,7 @@ import com.mapbox.maps.*
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.plugin.animation.animator.*
 import com.mapbox.maps.plugin.delegates.*
+import com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener
 import com.mapbox.maps.threading.AnimationThreadController.postOnAnimatorThread
 import com.mapbox.maps.threading.AnimationThreadController.postOnMainThread
 import com.mapbox.maps.threading.AnimationThreadController.usingBackgroundThread
@@ -159,6 +160,15 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     return (exaggeration ?: 0.0) > 0.0
   }
 
+  // by subscribing to core camera change listener we make sure that we report
+  // all camera changes not just the ones coming from this plugin
+  private val cameraChangeListener = OnCameraChangeListener {
+    currentCameraState = mapCameraManagerDelegate.cameraState.also { coreCameraState ->
+      // notify listeners with actual values
+      notifyListeners(coreCameraState)
+    }
+  }
+
   /**
    * Provides all map delegate instances.
    */
@@ -167,6 +177,7 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     mapDelegateProvider.getStyle {
       style = it
     }
+    mapDelegateProvider.mapListenerDelegate.addOnCameraChangeListener(cameraChangeListener)
     mapCameraManagerDelegate = mapDelegateProvider.mapCameraManagerDelegate
     mapTransformDelegate = mapDelegateProvider.mapTransformDelegate
     mapProjectionDelegate = mapDelegateProvider.mapProjectionDelegate
@@ -185,6 +196,7 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
    * Cancel all running animations and cleanup all resources (registered animations, listeners).
    */
   override fun cleanup() {
+    mapDelegateProvider.mapListenerDelegate.removeOnCameraChangeListener(cameraChangeListener)
     unregisterAnimators(*animators.toTypedArray())
     cancelAnimatorSet()
     centerListeners.clear()
@@ -198,7 +210,15 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     handler.removeCallbacks(commitChangesRunnable)
   }
 
+  /**
+   * Assuming currentCameraState always reflects valid current camera core state -
+   * we may skip calling native setCamera in situations when given cameraOptions are part
+   * of already applied camera.
+   */
   private fun skipNativeSetCamera(cameraOptions: CameraOptions): Boolean {
+    if (cameraOptions.isEmpty) {
+      return true
+    }
     cameraOptions.anchor?.let {
       return false
     }
@@ -225,15 +245,15 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
   @VisibleForTesting(otherwise = PRIVATE)
   internal fun performMapJump(cameraOptions: CameraOptions) {
     if (skipNativeSetCamera(cameraOptions)) {
+      logE(TAG, "Skip $cameraOptions")
       return
     }
     // move native map to new position
     try {
+      logE(TAG, "Native setCamera $cameraOptions")
+      // setCamera triggers OnCameraChangeListener in the same callchain
       mapCameraManagerDelegate.setCamera(cameraOptions)
-      currentCameraState = mapCameraManagerDelegate.cameraState.also { coreCameraState ->
-        // notify listeners with actual values
-        notifyListeners(coreCameraState)
-      }
+      logE(TAG, "Native setCamera $cameraOptions done")
     } catch (e: Exception) {
       logE(
         TAG,
@@ -254,7 +274,7 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
       CameraAnimatorType.PITCH -> mapCameraManagerDelegate.cameraState.pitch
     }.also {
       if (debugMode) {
-        logD(
+        logI(
           TAG,
           "Animation ${cameraAnimator.type.name}(${cameraAnimator.hashCode()}): automatically setting start value $it."
         )
@@ -279,7 +299,20 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
         }
       }
     }
+    if (skipRedundantAnimator(*targets)) {
+      return false
+    }
     cameraAnimator.setObjectValues(*targets)
+    return true
+  }
+
+  private fun skipRedundantAnimator(vararg arguments: Any?): Boolean {
+    for (i in 0 until arguments.size - 1) {
+      if (arguments[i] != arguments[i + 1]) {
+        return false
+      }
+    }
+    // TODO check for current camera
     return true
   }
 
@@ -361,7 +394,7 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
                 registerInternalUpdateListener(startingAnimator)
               }
               if (debugMode) {
-                logD(TAG, "Animation ${startingAnimator.type.name}(${hashCode()}) started.")
+                logI(TAG, "Animation ${startingAnimator.type.name}(${hashCode()}) started.")
               }
             }
           } ?: throw MapboxCameraAnimationException(
@@ -387,11 +420,11 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
                 AnimationFinishStatus.CANCELED -> "was canceled."
                 AnimationFinishStatus.ENDED -> "ended."
               }
-              logD(TAG, "Animation ${type.name}(${hashCode()}) $logText")
+              logI(TAG, "Animation ${type.name}(${hashCode()}) $logText")
             }
             if (isInternal) {
               if (debugMode) {
-                logD(TAG, "Internal Animator ${type.name}(${hashCode()}) was unregistered")
+                logI(TAG, "Internal Animator ${type.name}(${hashCode()}) was unregistered")
               }
               unregisterAnimators(this, cancelAnimators = false)
             }

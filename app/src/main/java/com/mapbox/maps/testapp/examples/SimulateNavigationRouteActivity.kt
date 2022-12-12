@@ -8,6 +8,7 @@ import com.mapbox.api.directions.v5.models.DirectionsResponse
 import com.mapbox.core.constants.Constants
 import com.mapbox.geojson.LineString
 import com.mapbox.maps.MapView
+import com.mapbox.maps.plugin.animation.camera
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
 import com.mapbox.maps.testapp.utils.NavigationSimulator
 
@@ -25,6 +26,7 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     val mapView = MapView(this)
     setContentView(mapView)
+    mapView.camera.debugMode = true
     val routePoints = LineString.fromPolyline(
       DirectionsResponse.fromJson(
         AnnotationUtils.loadStringFromAssets(
