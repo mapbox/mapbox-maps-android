@@ -18,6 +18,7 @@ import com.mapbox.maps.threading.AnimationThreadController.postOnAnimatorThread
 import com.mapbox.maps.threading.AnimationThreadController.postOnMainThread
 import com.mapbox.maps.threading.AnimationThreadController.usingBackgroundThread
 import com.mapbox.maps.util.MathUtils
+import java.util.Objects
 import java.util.concurrent.CopyOnWriteArraySet
 import kotlin.properties.Delegates
 
@@ -250,10 +251,9 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     }
     // move native map to new position
     try {
-      logE(TAG, "Native setCamera $cameraOptions")
+      logE(TAG, "Native setCamera $cameraOptions, current state $currentCameraState")
       // setCamera triggers OnCameraChangeListener in the same callchain
       mapCameraManagerDelegate.setCamera(cameraOptions)
-      logE(TAG, "Native setCamera $cameraOptions done")
     } catch (e: Exception) {
       logE(
         TAG,
@@ -266,12 +266,12 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     @Suppress("IMPLICIT_CAST_TO_ANY")
 
     val startValue = cameraAnimator.startValue ?: when (cameraAnimator.type) {
-      CameraAnimatorType.CENTER -> mapCameraManagerDelegate.cameraState.center
-      CameraAnimatorType.ZOOM -> mapCameraManagerDelegate.cameraState.zoom
+      CameraAnimatorType.CENTER -> currentCameraState?.center
+      CameraAnimatorType.ZOOM -> currentCameraState?.zoom
       CameraAnimatorType.ANCHOR -> anchor ?: ScreenCoordinate(0.0, 0.0)
-      CameraAnimatorType.PADDING -> mapCameraManagerDelegate.cameraState.padding
-      CameraAnimatorType.BEARING -> mapCameraManagerDelegate.cameraState.bearing
-      CameraAnimatorType.PITCH -> mapCameraManagerDelegate.cameraState.pitch
+      CameraAnimatorType.PADDING -> currentCameraState?.padding
+      CameraAnimatorType.BEARING -> currentCameraState?.bearing
+      CameraAnimatorType.PITCH -> currentCameraState?.pitch
     }.also {
       if (debugMode) {
         logI(
@@ -299,21 +299,31 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
         }
       }
     }
-    if (skipRedundantAnimator(*targets)) {
+    if (skipRedundantAnimator(targets, cameraAnimator.type)) {
+      logW(TAG, "Skip animator start")
       return false
     }
     cameraAnimator.setObjectValues(*targets)
     return true
   }
 
-  private fun skipRedundantAnimator(vararg arguments: Any?): Boolean {
-    for (i in 0 until arguments.size - 1) {
-      if (arguments[i] != arguments[i + 1]) {
+  private fun skipRedundantAnimator(targets: Array<out Any?>, type: CameraAnimatorType): Boolean {
+    if (targets.size <= 1) {
+      return true
+    }
+    for (i in 0 until targets.size - 1) {
+      if (targets[i] != targets[i + 1]) {
         return false
       }
     }
-    // TODO check for current camera
-    return true
+    return when (type) {
+      CameraAnimatorType.CENTER -> Objects.equals(currentCameraState?.center, targets[0])
+      CameraAnimatorType.ZOOM -> Objects.equals(currentCameraState?.zoom, targets[0])
+      CameraAnimatorType.ANCHOR -> false
+      CameraAnimatorType.PADDING -> Objects.equals(currentCameraState?.padding, targets[0])
+      CameraAnimatorType.BEARING -> Objects.equals(currentCameraState?.bearing, targets[0])
+      CameraAnimatorType.PITCH -> Objects.equals(currentCameraState?.pitch, targets[0])
+    }
   }
 
   internal fun notifyListeners(cameraState: CameraState) {
@@ -361,6 +371,13 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
             if (startingAnimator.canceled) {
               return
             }
+            // Prepare animator values
+            // Some animators might not have initial values and should be skipped from internal update
+            val animatorStartRequired = updateAnimatorValues(startingAnimator)
+            if (!animatorStartRequired) {
+              startingAnimator.skipped = true
+              return
+            }
             lifecycleListeners.forEach {
               it.onAnimatorStarting(startingAnimator.type, startingAnimator, startingAnimator.owner)
             }
@@ -384,18 +401,13 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
                 }
               }
             }
-            // Prepare animator values
-            // Some animators might not have initial values and should be skipped from internal update
-            val isUpdated = updateAnimatorValues(startingAnimator)
-            if (isUpdated) {
-              // finally register update listener in order to update map properly -
-              // if it's not specific use-case using 0-duration animations with background thread
-              if (!usingBackgroundThread || startingAnimator.duration != 0L) {
-                registerInternalUpdateListener(startingAnimator)
-              }
-              if (debugMode) {
-                logI(TAG, "Animation ${startingAnimator.type.name}(${hashCode()}) started.")
-              }
+            // finally register update listener in order to update map properly -
+            // if it's not specific use-case using 0-duration animations with background thread
+            if (!usingBackgroundThread || startingAnimator.duration != 0L) {
+              registerInternalUpdateListener(startingAnimator)
+            }
+            if (debugMode) {
+              logI(TAG, "Animation ${startingAnimator.type.name}(${startingAnimator.hashCode()}) started.")
             }
           } ?: throw MapboxCameraAnimationException(
             "Could not start animation as it must be an instance of CameraAnimator and not null!"
@@ -414,6 +426,9 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
 
         private fun finishAnimation(animation: Animator, finishStatus: AnimationFinishStatus) {
           (animation as? CameraAnimator<*>)?.apply {
+            if (skipped) {
+              return
+            }
             runningAnimatorsQueue.remove(animation)
             if (debugMode) {
               val logText = when (finishStatus) {

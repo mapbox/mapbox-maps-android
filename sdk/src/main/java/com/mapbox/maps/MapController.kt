@@ -81,8 +81,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
       )
     )
     this.onCameraChangedListener = OnCameraChangeListener {
-      with (nativeMap.cameraState) {
-        //Log.d("onCameraChangedListener", this.toString())
+      with(nativeMap.cameraState) {
         if (lastCameraState != null &&
           lastCameraState?.center == center &&
           lastCameraState?.padding == padding &&
