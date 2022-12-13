@@ -231,6 +231,12 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
   @VisibleForTesting(otherwise = PRIVATE)
   internal fun performMapJump(cameraOptions: CameraOptions) {
     if (skipNativeSetCamera(cameraOptions)) {
+      if (debugMode) {
+        logI(
+          TAG,
+          "Setting $cameraOptions to core was skipped due to optimization."
+        )
+      }
       return
     }
     // move native map to new position
@@ -283,6 +289,12 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
       }
     }
     if (skipRedundantAnimator(targets, cameraAnimator.type)) {
+      if (debugMode) {
+        logI(
+          TAG,
+          "Animation ${cameraAnimator.type.name}(${cameraAnimator.hashCode()}) was skipped."
+        )
+      }
       return false
     }
     cameraAnimator.setObjectValues(*targets)
