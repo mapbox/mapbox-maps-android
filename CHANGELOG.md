@@ -3,10 +3,11 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
-## Bug fixes 🐞
-* Fix crash due to invalid distance when panning the map. ([1906](https://github.com/mapbox/mapbox-maps-android/pull/1906))
 ## Features ✨ and improvements 🏁
 * Add camera events preprocessing reducing number of `MapboxMap.setCamera` calls. ([1909](https://github.com/mapbox/mapbox-maps-android/pull/1909))
+
+## Bug fixes 🐞
+* Fix crash due to invalid distance when panning the map. ([1906](https://github.com/mapbox/mapbox-maps-android/pull/1906))
 
 # 10.10.0 December 07, 2022
 ## Features ✨ and improvements 🏁
