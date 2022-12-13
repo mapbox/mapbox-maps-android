@@ -18,7 +18,7 @@ build:
 	./gradlew module-telemetry:assembleRelease;
 	./gradlew plugin-animation:assembleRelease;
 	./gradlew plugin-annotation:assembleRelease;
-	./gradlew plugin-attribution:assembleRelease;	
+	./gradlew plugin-attribution:assembleRelease;
 	./gradlew plugin-compass:assembleRelease;
 	./gradlew plugin-gestures:assembleRelease;
 	./gradlew plugin-locationcomponent:assembleRelease;
@@ -135,3 +135,19 @@ update-metalava:
 start-android-auto-dhu:
 	adb forward tcp:5277 tcp:5277;
 	$(ANDROID_HOME)/extras/google/auto/desktop-head-unit;
+
+
+# Check permissions app module, requires app:assembleDebug first
+.PHONY: check-permissions
+check-permissions:
+	 python3 scripts/check-permissions.py \
+	 	--apk app/build/outputs/apk/debug/app-debug.apk \
+		--file app/permission.json
+
+# Update permissions app module, requires app:assembleDebug first
+.PHONY: update-permissions
+update-permissions:
+	 python3 scripts/check-permissions.py \
+	 	--apk app/build/outputs/apk/debug/app-debug.apk \
+		--file app/permission.json \
+		--update True
