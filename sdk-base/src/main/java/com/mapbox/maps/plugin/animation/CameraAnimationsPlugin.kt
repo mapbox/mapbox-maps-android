@@ -6,12 +6,11 @@ import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.MapPlugin
-import com.mapbox.maps.plugin.MapStyleObserverPlugin
 
 /**
  * Interface to interact with Camera Animations plugin
  */
-interface CameraAnimationsPlugin : MapPlugin, MapStyleObserverPlugin {
+interface CameraAnimationsPlugin : MapPlugin {
 
   /**
    * If debug mode is enabled extra logs will be written about animation lifecycle and

@@ -753,7 +753,7 @@ public abstract interface class com/mapbox/maps/plugin/animation/CameraAnimation
 	public abstract fun onAnimatorStarting (Lcom/mapbox/maps/plugin/animation/CameraAnimatorType;Landroid/animation/ValueAnimator;Ljava/lang/String;)V
 }
 
-public abstract interface class com/mapbox/maps/plugin/animation/CameraAnimationsPlugin : com/mapbox/maps/plugin/MapPlugin, com/mapbox/maps/plugin/MapStyleObserverPlugin {
+public abstract interface class com/mapbox/maps/plugin/animation/CameraAnimationsPlugin : com/mapbox/maps/plugin/MapPlugin {
 	public abstract fun addCameraAnchorChangeListener (Lcom/mapbox/maps/plugin/animation/CameraAnimatorNullableChangeListener;)V
 	public abstract fun addCameraAnimationsLifecycleListener (Lcom/mapbox/maps/plugin/animation/CameraAnimationsLifecycleListener;)V
 	public abstract fun addCameraBearingChangeListener (Lcom/mapbox/maps/plugin/animation/CameraAnimatorChangeListener;)V

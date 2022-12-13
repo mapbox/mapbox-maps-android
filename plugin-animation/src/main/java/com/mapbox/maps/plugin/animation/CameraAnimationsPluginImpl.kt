@@ -10,7 +10,6 @@ import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
-import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.plugin.animation.animator.*
 import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener
@@ -155,13 +154,6 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     ENDED
   }
 
-  private var style: StyleInterface? = null
-
-  private fun terrainEnabled(): Boolean {
-    val exaggeration = style?.getStyleTerrainProperty("exaggeration")?.value?.contents as? Double
-    return (exaggeration ?: 0.0) > 0.0
-  }
-
   // by subscribing to core camera change listener we make sure that we report
   // all camera changes not just the ones coming from this plugin
   @VisibleForTesting(otherwise = PRIVATE)
@@ -177,21 +169,11 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
    */
   override fun onDelegateProvider(delegateProvider: MapDelegateProvider) {
     mapDelegateProvider = delegateProvider
-    mapDelegateProvider.getStyle {
-      style = it
-    }
     mapDelegateProvider.mapListenerDelegate.addOnCameraChangeListener(cameraChangeListener)
     mapCameraManagerDelegate = mapDelegateProvider.mapCameraManagerDelegate
     mapTransformDelegate = mapDelegateProvider.mapTransformDelegate
     mapProjectionDelegate = mapDelegateProvider.mapProjectionDelegate
     cameraAnimationsFactory = CameraAnimatorsFactory(mapDelegateProvider)
-  }
-
-  /**
-   * Called when a new Style is loaded.
-   */
-  override fun onStyleChanged(styleDelegate: StyleInterface) {
-    style = styleDelegate
   }
 
   /**
@@ -226,9 +208,10 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
       return false
     }
     cameraOptions.pitch?.let { userPitch ->
-      if ((userPitch >= 60.0 && terrainEnabled()) ||
-        userPitch != currentCameraState?.pitch
-      ) return false
+      // use-case when pitch >= 60 and terrain enabled might result in some optimizations
+      // in gl-native and different result camera state - we check just for the pitch as
+      // checking for terrain enabled requires having the style object and more complex code
+      if (userPitch >= 60.0 || userPitch != currentCameraState?.pitch) return false
     }
     cameraOptions.zoom?.let { userZoom ->
       if (userZoom != currentCameraState?.zoom) return false
@@ -248,12 +231,10 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
   @VisibleForTesting(otherwise = PRIVATE)
   internal fun performMapJump(cameraOptions: CameraOptions) {
     if (skipNativeSetCamera(cameraOptions)) {
-//      logE(TAG, "Skip $cameraOptions")
       return
     }
     // move native map to new position
     try {
-//      logE(TAG, "Native setCamera $cameraOptions, current state $currentCameraState")
       // setCamera triggers OnCameraChangeListener in the same callchain
       mapCameraManagerDelegate.setCamera(cameraOptions)
     } catch (e: Exception) {
@@ -302,7 +283,6 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
       }
     }
     if (skipRedundantAnimator(targets, cameraAnimator.type)) {
-      logW(TAG, "Skip animator start")
       return false
     }
     cameraAnimator.setObjectValues(*targets)
