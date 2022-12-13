@@ -4,6 +4,8 @@ import android.animation.Animator
 import android.animation.ValueAnimator
 import android.os.Looper
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.CameraState
+import com.mapbox.maps.extension.observable.eventdata.CameraChangedEventData
 import com.mapbox.maps.logW
 import com.mapbox.maps.plugin.animation.CameraAnimationsPluginImplTest.Companion.toCameraState
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Companion.cameraAnimatorOptions
@@ -29,6 +31,7 @@ class CameraAnimationsListenersTest {
   private lateinit var cameraAnimationsPluginImpl: CameraAnimationsPluginImpl
   private lateinit var mapTransformDelegate: MapTransformDelegate
   private lateinit var mapCameraManagerDelegate: MapCameraManagerDelegate
+  private var actualCameraState: CameraState = CameraAnimationsPluginImplTest.cameraState
 
   private class Listener : Animator.AnimatorListener {
     override fun onAnimationStart(animation: Animator?) {}
@@ -53,6 +56,16 @@ class CameraAnimationsListenersTest {
     every { delegateProvider.mapTransformDelegate } returns mapTransformDelegate
     cameraAnimationsPluginImpl = CameraAnimationsPluginImpl().apply {
       onDelegateProvider(delegateProvider)
+    }
+    actualCameraState = CameraAnimationsPluginImplTest.cameraState
+    every {
+      mapCameraManagerDelegate.cameraState
+    } answers { actualCameraState }
+    every { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) } answers {
+      actualCameraState = firstArg<CameraOptions>().toCameraState()
+      cameraAnimationsPluginImpl.cameraChangeListener.onCameraChanged(
+        CameraChangedEventData(0L, null)
+      )
     }
   }
 
@@ -343,7 +356,6 @@ class CameraAnimationsListenersTest {
 
   @Test
   fun testRemoveAllUpdateListeners() {
-    var cameraPosition = CameraOptions.Builder().build()
     val bearingAnimator = CameraBearingAnimator(
       cameraAnimatorOptions(100.0) {
         startValue(0.0)
@@ -351,12 +363,6 @@ class CameraAnimationsListenersTest {
       true
     ) {
       duration = 50
-    }
-    every { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) } answers {
-      cameraPosition = firstArg()
-    }
-    every { mapCameraManagerDelegate.cameraState } answers {
-      cameraPosition.toCameraState()
     }
     var bearing = 0.0
     cameraAnimationsPluginImpl.registerAnimators(bearingAnimator)

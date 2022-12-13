@@ -9,6 +9,7 @@ import android.os.Looper.getMainLooper
 import androidx.core.animation.addListener
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
+import com.mapbox.maps.extension.observable.eventdata.CameraChangedEventData
 import com.mapbox.maps.plugin.animation.CameraAnimationsPluginImpl.Companion.TAG
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Companion.cameraAnimatorOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
@@ -77,7 +78,6 @@ class CameraAnimationsPluginImplTest {
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logW(any(), any()) } just Runs
     every { logI(any(), any()) } just Runs
-    every { logD(any(), any()) } just Runs
     every { logE(any(), any()) } just Runs
     every { delegateProvider.mapCameraManagerDelegate } returns mapCameraManagerDelegate
     every { delegateProvider.mapTransformDelegate } returns mapTransformDelegate
@@ -301,15 +301,16 @@ class CameraAnimationsPluginImplTest {
 
   @Test
   fun testEaseToSingleDurationZero() {
-
     var cameraPosition = CameraOptions.Builder().build()
+    every {
+      mapCameraManagerDelegate.cameraState
+    } answers { cameraPosition.toCameraState() }
     every { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) } answers {
-      cameraPosition = firstArg()
+      cameraPosition = firstArg<CameraOptions>()
+      cameraAnimationsPluginImpl.cameraChangeListener.onCameraChanged(
+        CameraChangedEventData(0L, null)
+      )
     }
-    every { mapCameraManagerDelegate.cameraState } answers {
-      cameraPosition.toCameraState()
-    }
-
     val targetPitch = 5.0
     val cameraOptions = CameraOptions.Builder().pitch(targetPitch).build()
     val expectedValues = mutableSetOf(targetPitch)
@@ -333,15 +334,16 @@ class CameraAnimationsPluginImplTest {
 
   @Test
   fun testEaseToSingleDurationShort() {
-
     var cameraPosition = CameraOptions.Builder().build()
+    every {
+      mapCameraManagerDelegate.cameraState
+    } answers { cameraPosition.toCameraState() }
     every { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) } answers {
-      cameraPosition = firstArg()
+      cameraPosition = firstArg<CameraOptions>()
+      cameraAnimationsPluginImpl.cameraChangeListener.onCameraChanged(
+        CameraChangedEventData(0L, null)
+      )
     }
-    every { mapCameraManagerDelegate.cameraState } answers {
-      cameraPosition.toCameraState()
-    }
-
     val targetPitch = 5.0
     val cameraOptions = CameraOptions.Builder().pitch(targetPitch).build()
     val expectedValues = mutableSetOf(VALUE, targetPitch)
@@ -372,12 +374,15 @@ class CameraAnimationsPluginImplTest {
       90.0,
       0.0
     )
+    every {
+      mapCameraManagerDelegate.cameraState
+    } answers { cameraPosition }
     every { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) } answers {
-      cameraPosition = (firstArg() as CameraOptions).toCameraState()
+      cameraPosition = firstArg<CameraOptions>().toCameraState()
+      cameraAnimationsPluginImpl.cameraChangeListener.onCameraChanged(
+        CameraChangedEventData(0L, null)
+      )
     }
-
-    every { mapCameraManagerDelegate.cameraState } answers { cameraPosition }
-
     val targetPitchFirst = 5.0
     val targetPitchSecond = 10.0
     val targetPitchThird = 15.0
@@ -416,12 +421,15 @@ class CameraAnimationsPluginImplTest {
       90.0,
       0.0
     )
+    every {
+      mapCameraManagerDelegate.cameraState
+    } answers { cameraPosition }
     every { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) } answers {
-      cameraPosition = (firstArg() as CameraOptions).toCameraState()
+      cameraPosition = firstArg<CameraOptions>().toCameraState()
+      cameraAnimationsPluginImpl.cameraChangeListener.onCameraChanged(
+        CameraChangedEventData(0L, null)
+      )
     }
-
-    every { mapCameraManagerDelegate.cameraState } answers { cameraPosition }
-
     val targetPitchFirst = 5.0
     val targetPitchSecond = 10.0
     val targetPitchThird = 15.0
@@ -457,13 +465,15 @@ class CameraAnimationsPluginImplTest {
   @Test
   fun testDelayedAnimatorsFinalStateAndCallbackResult() {
     var cameraPosition = CameraOptions.Builder().build()
+    every {
+      mapCameraManagerDelegate.cameraState
+    } answers { cameraPosition.toCameraState() }
     every { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) } answers {
-      cameraPosition = firstArg()
+      cameraPosition = firstArg<CameraOptions>()
+      cameraAnimationsPluginImpl.cameraChangeListener.onCameraChanged(
+        CameraChangedEventData(0L, null)
+      )
     }
-    every { mapCameraManagerDelegate.cameraState } answers {
-      cameraPosition.toCameraState()
-    }
-
     val targetPitchOne = 10.0
     val pitchAnimatorOne = createPitchAnimator(targetPitchOne, 0, 1000L)
     val pitchListenerOne = CameraAnimatorListener()
@@ -997,7 +1007,7 @@ class CameraAnimationsPluginImplTest {
     shadowOf(getMainLooper()).pause()
     cameraAnimationsPluginImpl.easeTo(cameraState.toCameraOptions(), mapAnimationOptions { duration(DURATION) })
     shadowOf(getMainLooper()).idle()
-    verify { logD(TAG, any()) }
+    verify { logI(TAG, any()) }
   }
 
   @Test
@@ -1006,7 +1016,7 @@ class CameraAnimationsPluginImplTest {
     shadowOf(getMainLooper()).pause()
     cameraAnimationsPluginImpl.easeTo(cameraState.toCameraOptions(), mapAnimationOptions { duration(DURATION) })
     shadowOf(getMainLooper()).idle()
-    verify(exactly = 0) { logD(TAG, any()) }
+    verify(exactly = 0) { logI(TAG, any()) }
   }
 
   @Test
@@ -1015,22 +1025,21 @@ class CameraAnimationsPluginImplTest {
   }
 
   private fun executeSetCameraTest(error: Throwable) {
-    val lastCameraOptions = cameraState.toCameraOptions()
     val targetCameraOptions = CameraOptions.Builder().center(
       Point.fromLngLat(50.0, 50.0)
     ).pitch(50.0)
       .bearing(50.0)
       .zoom(5.0).build()
-    cameraAnimationsPluginImpl.lastCameraOptions = lastCameraOptions
+    cameraAnimationsPluginImpl.currentCameraState = cameraState
     every { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) } throws error
 
     cameraAnimationsPluginImpl.performMapJump(targetCameraOptions)
     // assert camera options did not change
-    assertNotEquals(targetCameraOptions, cameraAnimationsPluginImpl.lastCameraOptions)
+    assertNotEquals(targetCameraOptions, cameraAnimationsPluginImpl.currentCameraState)
 
     // assert camera states
-    assertNotNull(cameraAnimationsPluginImpl.lastCameraOptions)
-    assertEquals(lastCameraOptions, cameraAnimationsPluginImpl.lastCameraOptions)
+    assertNotNull(cameraAnimationsPluginImpl.currentCameraState)
+    assertEquals(cameraState, cameraAnimationsPluginImpl.currentCameraState)
   }
 
   class LifecycleListener : CameraAnimationsLifecycleListener {

@@ -136,7 +136,8 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     }
   }
 
-  private var currentCameraState: CameraState? = null
+  @VisibleForTesting(otherwise = PRIVATE)
+  internal var currentCameraState: CameraState? = null
   private var cameraOptionsBuilder = CameraOptions.Builder()
 
   private lateinit var mapDelegateProvider: MapDelegateProvider
@@ -163,7 +164,8 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
 
   // by subscribing to core camera change listener we make sure that we report
   // all camera changes not just the ones coming from this plugin
-  private val cameraChangeListener = OnCameraChangeListener {
+  @VisibleForTesting(otherwise = PRIVATE)
+  internal val cameraChangeListener = OnCameraChangeListener {
     currentCameraState = mapCameraManagerDelegate.cameraState.also { coreCameraState ->
       // notify listeners with actual values
       notifyListeners(coreCameraState)
@@ -246,12 +248,12 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
   @VisibleForTesting(otherwise = PRIVATE)
   internal fun performMapJump(cameraOptions: CameraOptions) {
     if (skipNativeSetCamera(cameraOptions)) {
-      logE(TAG, "Skip $cameraOptions")
+//      logE(TAG, "Skip $cameraOptions")
       return
     }
     // move native map to new position
     try {
-      logE(TAG, "Native setCamera $cameraOptions, current state $currentCameraState")
+//      logE(TAG, "Native setCamera $cameraOptions, current state $currentCameraState")
       // setCamera triggers OnCameraChangeListener in the same callchain
       mapCameraManagerDelegate.setCamera(cameraOptions)
     } catch (e: Exception) {
@@ -266,12 +268,12 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     @Suppress("IMPLICIT_CAST_TO_ANY")
 
     val startValue = cameraAnimator.startValue ?: when (cameraAnimator.type) {
-      CameraAnimatorType.CENTER -> currentCameraState?.center
-      CameraAnimatorType.ZOOM -> currentCameraState?.zoom
+      CameraAnimatorType.CENTER -> currentCameraState?.center ?: mapCameraManagerDelegate.cameraState.center
+      CameraAnimatorType.ZOOM -> currentCameraState?.zoom ?: mapCameraManagerDelegate.cameraState.zoom
       CameraAnimatorType.ANCHOR -> anchor ?: ScreenCoordinate(0.0, 0.0)
-      CameraAnimatorType.PADDING -> currentCameraState?.padding
-      CameraAnimatorType.BEARING -> currentCameraState?.bearing
-      CameraAnimatorType.PITCH -> currentCameraState?.pitch
+      CameraAnimatorType.PADDING -> currentCameraState?.padding ?: mapCameraManagerDelegate.cameraState.padding
+      CameraAnimatorType.BEARING -> currentCameraState?.bearing ?: mapCameraManagerDelegate.cameraState.bearing
+      CameraAnimatorType.PITCH -> currentCameraState?.pitch ?: mapCameraManagerDelegate.cameraState.pitch
     }.also {
       if (debugMode) {
         logI(

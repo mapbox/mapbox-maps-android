@@ -26,6 +26,7 @@ public final class com/mapbox/maps/plugin/animation/CameraAnimationsPluginImpl :
 	public fun initialize ()V
 	public fun moveBy (Lcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;)Lcom/mapbox/maps/plugin/animation/Cancelable;
 	public fun onDelegateProvider (Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;)V
+	public fun onStyleChanged (Lcom/mapbox/maps/extension/style/StyleInterface;)V
 	public fun pitchBy (DLcom/mapbox/maps/plugin/animation/MapAnimationOptions;)Lcom/mapbox/maps/plugin/animation/Cancelable;
 	public fun playAnimatorsSequentially ([Landroid/animation/ValueAnimator;)V
 	public fun playAnimatorsTogether ([Landroid/animation/ValueAnimator;)V

@@ -745,7 +745,7 @@ package com.mapbox.maps.plugin.animation {
     method public void onAnimatorStarting(com.mapbox.maps.plugin.animation.CameraAnimatorType type, android.animation.ValueAnimator animator, String? owner);
   }
 
-  public interface CameraAnimationsPlugin extends com.mapbox.maps.plugin.MapPlugin {
+  public interface CameraAnimationsPlugin extends com.mapbox.maps.plugin.MapPlugin com.mapbox.maps.plugin.MapStyleObserverPlugin {
     method public void addCameraAnchorChangeListener(com.mapbox.maps.plugin.animation.CameraAnimatorNullableChangeListener<com.mapbox.maps.ScreenCoordinate> listener);
     method public void addCameraAnimationsLifecycleListener(com.mapbox.maps.plugin.animation.CameraAnimationsLifecycleListener listener);
     method public void addCameraBearingChangeListener(com.mapbox.maps.plugin.animation.CameraAnimatorChangeListener<java.lang.Double> listener);
