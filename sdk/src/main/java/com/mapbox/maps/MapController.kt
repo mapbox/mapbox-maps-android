@@ -48,7 +48,6 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   internal val pluginRegistry: MapPluginRegistry
   private val onStyleDataLoadedListener: OnStyleDataLoadedListener
   private val onCameraChangedListener: OnCameraChangeListener
-  private var lastCameraState: CameraState? = null
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal var lifecycleState: LifecycleState = LifecycleState.STATE_STOPPED
@@ -81,20 +80,6 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
       )
     )
     this.onCameraChangedListener = OnCameraChangeListener {
-      with(nativeMap.cameraState) {
-        if (lastCameraState != null &&
-          lastCameraState?.center == center &&
-          lastCameraState?.padding == padding &&
-          lastCameraState?.zoom == zoom &&
-          lastCameraState?.bearing == bearing &&
-          lastCameraState?.pitch == pitch
-        ) {
-          logE("onCameraChangedListener", "Duplicate cameraState reported: $this")
-        } else {
-          logE("onCameraChangedListener", "NON duplicate cameraState reported: $this")
-        }
-        lastCameraState = this
-      }
       pluginRegistry.onCameraMove(nativeMap.cameraState)
     }
     this.onStyleDataLoadedListener = OnStyleDataLoadedListener { eventData ->
