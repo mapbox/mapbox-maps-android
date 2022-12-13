@@ -1136,6 +1136,18 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
+            android:name=".examples.markersandcallouts.ViewAnnotationAnimationActivity"
+            android:description="@string/description_view_annotation_animation"
+            android:exported="true"
+            android:label="@string/activity_view_annotations_animation">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_markers_and_callouts" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ExampleOverviewActivity" />
+        </activity>
+        <activity
             android:name=".examples.viewport.ViewportShowcaseActivity"
             android:description="@string/description_viewport"
             android:exported="true"

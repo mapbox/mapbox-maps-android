@@ -131,7 +131,7 @@ object Versions {
   const val androidxLifecycle = "2.3.0"
   const val androidxActivityCompose = "1.4.0"
   const val squareRetrofit="2.9.0"
-  const val squareLeakCanary = "2.7"
+  const val squareLeakCanary = "2.9.1"
   const val materialDesign = "1.2.0"
   const val googlePlayServicesLocation = "18.0.0"
   const val googleCarAppLibrary= "1.2.0"
