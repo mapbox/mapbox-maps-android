@@ -8,8 +8,8 @@ ext {
     mapboxArtifactUrl = 'https://github.com/mapbox/mapbox-maps-android'
     mapboxArtifactVcsUrl = 'https://github.com/mapbox/mapbox-maps-android.git'
     mapboxArtifactScmUrl = 'scm:git@github.com:mapbox/mapbox-maps-android.git'
-    mapboxArtifactLicenseName = 'BSD'
-    mapboxArtifactLicenseUrl = 'https://opensource.org/licenses/BSD-2-Clause'
+    mapboxArtifactLicenseName = 'Mapbox Terms of Service'
+    mapboxArtifactLicenseUrl = 'https://www.mapbox.com/legal/tos/'
     versionName = project.hasProperty('MODULE_VERSION_NAME') ? project.property('MODULE_VERSION_NAME') : project.property('VERSION_NAME')
     mapboxRegistrySdkName = project.hasProperty('REGISTRY_SDK_NAME') ? project.property('REGISTRY_SDK_NAME') : System.getenv('REGISTRY_SDK_NAME')
     mapboxRegistryExcludeFromRootProject = project.hasProperty('REGISTRY_EXCLUDE_FROM_ROOT_PROJECT') ? project.property('REGISTRY_EXCLUDE_FROM_ROOT_PROJECT').toBoolean() : false
