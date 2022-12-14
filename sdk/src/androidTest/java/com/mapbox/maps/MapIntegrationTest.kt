@@ -139,19 +139,16 @@ class MapIntegrationTest {
             }
           }
         ) {
-          mapView.postDelayed(
-            {
-              mapboxMap.queryRenderedFeatures(
-                RenderedQueryGeometry(ScreenCoordinate(mapView.width / 2.0, mapView.height / 2.0)),
-                RenderedQueryOptions(listOf("layer"), null)
-              ) { result ->
-                if (result.value?.size == 1) {
-                  countDownLatch.countDown()
-                }
+          mapboxMap.addOnMapLoadedListener {
+            mapboxMap.queryRenderedFeatures(
+              RenderedQueryGeometry(ScreenCoordinate(mapView.width / 2.0, mapView.height / 2.0)),
+              RenderedQueryOptions(listOf("layer"), null)
+            ) { result ->
+              if (result.value?.size == 1) {
+                countDownLatch.countDown()
               }
-            },
-            1_000L
-          )
+            }
+          }
         }
         mapView.onStart()
       }
@@ -199,19 +196,16 @@ class MapIntegrationTest {
           source.geometry(Point.fromLngLat(0.1, 0.1))
           style.addSource(source)
           style.addLayer(layer)
-          mapView.postDelayed(
-            {
-              mapboxMap.queryRenderedFeatures(
-                RenderedQueryGeometry(ScreenCoordinate(mapView.width / 2.0, mapView.height / 2.0)),
-                RenderedQueryOptions(listOf("layer"), null)
-              ) { result ->
-                if (result.value?.size == 1) {
-                  countDownLatch.countDown()
-                }
+          mapboxMap.addOnMapLoadedListener {
+            mapboxMap.queryRenderedFeatures(
+              RenderedQueryGeometry(ScreenCoordinate(mapView.width / 2.0, mapView.height / 2.0)),
+              RenderedQueryOptions(listOf("layer"), null)
+            ) { result ->
+              if (result.value?.size == 1) {
+                countDownLatch.countDown()
               }
-            },
-            1_000L
-          )
+            }
+          }
         }
         mapView.onStart()
       }
@@ -269,19 +263,16 @@ class MapIntegrationTest {
           )
           style.addSource(source)
           style.addLayer(layer)
-          mapView.postDelayed(
-            {
-              mapboxMap.queryRenderedFeatures(
-                RenderedQueryGeometry(ScreenCoordinate(mapView.width / 2.0, mapView.height / 2.0)),
-                RenderedQueryOptions(listOf("layer"), null)
-              ) { result ->
-                if (result.value?.size == 1) {
-                  countDownLatch.countDown()
-                }
+          mapboxMap.addOnMapLoadedListener {
+            mapboxMap.queryRenderedFeatures(
+              RenderedQueryGeometry(ScreenCoordinate(mapView.width / 2.0, mapView.height / 2.0)),
+              RenderedQueryOptions(listOf("layer"), null)
+            ) { result ->
+              if (result.value?.size == 1) {
+                countDownLatch.countDown()
               }
-            },
-            1_000L
-          )
+            }
+          }
         }
         mapView.onStart()
       }
@@ -321,19 +312,21 @@ class MapIntegrationTest {
           source.geometry(Point.fromLngLat(0.2, 0.2))
           style.addSource(source)
           style.addLayer(layer)
-          mapView.postDelayed(
-            {
-              mapboxMap.queryRenderedFeatures(
-                RenderedQueryGeometry(ScreenCoordinate(mapView.width / 2.0, mapView.height / 2.0)),
-                RenderedQueryOptions(listOf("layer"), null)
-              ) { result ->
-                if (result.value?.size == 1) {
-                  countDownLatch.countDown()
-                }
+          mapboxMap.addOnMapLoadedListener {
+            mapboxMap.queryRenderedFeatures(
+              RenderedQueryGeometry(
+                ScreenCoordinate(
+                  mapView.width / 2.0,
+                  mapView.height / 2.0
+                )
+              ),
+              RenderedQueryOptions(listOf("layer"), null)
+            ) { result ->
+              if (result.value?.size == 1) {
+                countDownLatch.countDown()
               }
-            },
-            1_000L
-          )
+            }
+          }
         }
         mapView.onStart()
       }
@@ -391,19 +384,16 @@ class MapIntegrationTest {
                 listOf(feature)
               )
             )
-          mapView.postDelayed(
-            {
-              mapboxMap.queryRenderedFeatures(
-                RenderedQueryGeometry(ScreenCoordinate(mapView.width / 2.0, mapView.height / 2.0)),
-                RenderedQueryOptions(listOf("layer"), null)
-              ) { result ->
-                if (result.value?.size == 1) {
-                  countDownLatch.countDown()
-                }
+          mapboxMap.addOnMapLoadedListener {
+            mapboxMap.queryRenderedFeatures(
+              RenderedQueryGeometry(ScreenCoordinate(mapView.width / 2.0, mapView.height / 2.0)),
+              RenderedQueryOptions(listOf("layer"), null)
+            ) { result ->
+              if (result.value?.size == 1) {
+                countDownLatch.countDown()
               }
-            },
-            1_000L
-          )
+            }
+          }
         }
         mapView.onStart()
       }

@@ -56,7 +56,7 @@ class StyleProjectionTest {
     rule.scenario.onActivity {
       it.runOnUiThread {
         mapboxMap.apply {
-          addOnMapIdleListener {
+          addOnMapLoadedListener {
             getStyle { style ->
               Assert.assertEquals(ProjectionName.GLOBE, style.getProjection().name)
               countDownLatch.countDown()
@@ -80,7 +80,7 @@ class StyleProjectionTest {
     rule.scenario.onActivity {
       it.runOnUiThread {
         mapboxMap.apply {
-          addOnMapIdleListener {
+          addOnMapLoadedListener {
             getStyle { style ->
               // although actual projection looks like Mercator - we now report still it's Globe
               Assert.assertEquals(ProjectionName.GLOBE, style.getProjection().name)

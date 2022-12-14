@@ -53,7 +53,7 @@ class LifecycleTest {
         }
       }
     }
-    countDownLatch.await(5, TimeUnit.SECONDS)
+    countDownLatch.await(10, TimeUnit.SECONDS)
     assertTrue(callbackInvoked)
   }
 }
