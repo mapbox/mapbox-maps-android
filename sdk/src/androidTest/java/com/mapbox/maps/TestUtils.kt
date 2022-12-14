@@ -17,4 +17,4 @@ internal fun CountDownLatch.throwExceptionOnTimeoutMs(timeoutMs: Long = DEFAULT_
   }
 }
 
-internal const val DEFAULT_LATCH_TIMEOUT_MS = 5_000L
+internal const val DEFAULT_LATCH_TIMEOUT_MS = 10_000L
