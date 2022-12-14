@@ -10,9 +10,9 @@ import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
+import com.mapbox.maps.plugin.MapCameraPlugin
 import com.mapbox.maps.plugin.animation.animator.*
 import com.mapbox.maps.plugin.delegates.*
-import com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener
 import com.mapbox.maps.threading.AnimationThreadController.postOnAnimatorThread
 import com.mapbox.maps.threading.AnimationThreadController.postOnMainThread
 import com.mapbox.maps.threading.AnimationThreadController.usingBackgroundThread
@@ -37,7 +37,7 @@ import kotlin.properties.Delegates
  * However, it doesn't have to be the UI thread.
  */
 
-class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
+class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlugin {
 
   @VisibleForTesting(otherwise = PRIVATE)
   internal val animators = hashSetOf<CameraAnimator<*>>()
@@ -135,8 +135,6 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     }
   }
 
-  @VisibleForTesting(otherwise = PRIVATE)
-  internal var currentCameraState: CameraState? = null
   private var cameraOptionsBuilder = CameraOptions.Builder()
 
   private lateinit var mapDelegateProvider: MapDelegateProvider
@@ -154,26 +152,40 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     ENDED
   }
 
-  // by subscribing to core camera change listener we make sure that we report
-  // all camera changes not just the ones coming from this plugin
-  @VisibleForTesting(otherwise = PRIVATE)
-  internal val cameraChangeListener = OnCameraChangeListener {
-    currentCameraState = mapCameraManagerDelegate.cameraState.also { coreCameraState ->
-      // notify listeners with actual values
-      notifyListeners(coreCameraState)
-    }
-  }
-
   /**
    * Provides all map delegate instances.
    */
   override fun onDelegateProvider(delegateProvider: MapDelegateProvider) {
     mapDelegateProvider = delegateProvider
-    mapDelegateProvider.mapListenerDelegate.addOnCameraChangeListener(cameraChangeListener)
     mapCameraManagerDelegate = mapDelegateProvider.mapCameraManagerDelegate
     mapTransformDelegate = mapDelegateProvider.mapTransformDelegate
     mapProjectionDelegate = mapDelegateProvider.mapProjectionDelegate
     cameraAnimationsFactory = CameraAnimatorsFactory(mapDelegateProvider)
+  }
+
+  override fun onCameraMove(
+    lat: Double,
+    lon: Double,
+    zoom: Double,
+    pitch: Double,
+    bearing: Double,
+    padding: Array<Double>
+  ) {
+    this.bearing = bearing
+    this.center = Point.fromLngLat(lon, lat)
+    // Insets array order : insets.left, insets.top, insets.right, insets.bottom
+    this.padding = EdgeInsets(
+      /* top = */
+      padding[1],
+      /* left = */
+      padding[0],
+      /* bottom = */
+      padding[3],
+      /* right = */
+      padding[2],
+    )
+    this.pitch = pitch
+    this.zoom = zoom
   }
 
   /**
@@ -181,7 +193,6 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
    * Cancel all running animations and cleanup all resources (registered animations, listeners).
    */
   override fun cleanup() {
-    mapDelegateProvider.mapListenerDelegate.removeOnCameraChangeListener(cameraChangeListener)
     unregisterAnimators(*animators.toTypedArray())
     cancelAnimatorSet()
     centerListeners.clear()
@@ -204,26 +215,26 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     if (cameraOptions.isEmpty) {
       return true
     }
-    cameraOptions.anchor?.let {
+    if (cameraOptions.anchor != null) {
       return false
     }
     cameraOptions.pitch?.let { userPitch ->
       // use-case when pitch >= 60 and terrain enabled might result in some optimizations
       // in gl-native and different result camera state - we check just for the pitch as
       // checking for terrain enabled requires having the style object and more complex code
-      if (userPitch >= 60.0 || userPitch != currentCameraState?.pitch) return false
+      if (userPitch >= 60.0 || userPitch != pitch) return false
     }
-    cameraOptions.zoom?.let { userZoom ->
-      if (userZoom != currentCameraState?.zoom) return false
+    if (cameraOptions.zoom != null && cameraOptions.zoom != zoom) {
+      return false
     }
-    cameraOptions.bearing?.let { userBearing ->
-      if (userBearing != currentCameraState?.bearing) return false
+    if (cameraOptions.bearing != null && cameraOptions.bearing != bearing) {
+      return false
     }
-    cameraOptions.center?.let { userCenter ->
-      if (userCenter != currentCameraState?.center) return false
+    if (cameraOptions.center != null && cameraOptions.center != center) {
+      return false
     }
-    cameraOptions.padding?.let { userPadding ->
-      if (userPadding != currentCameraState?.padding) return false
+    if (cameraOptions.padding != null && cameraOptions.padding != padding) {
+      return false
     }
     return true
   }
@@ -231,6 +242,7 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
   @VisibleForTesting(otherwise = PRIVATE)
   internal fun performMapJump(cameraOptions: CameraOptions) {
     if (skipNativeSetCamera(cameraOptions)) {
+
       if (debugMode) {
         logI(
           TAG,
@@ -255,12 +267,12 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     @Suppress("IMPLICIT_CAST_TO_ANY")
 
     val startValue = cameraAnimator.startValue ?: when (cameraAnimator.type) {
-      CameraAnimatorType.CENTER -> currentCameraState?.center ?: mapCameraManagerDelegate.cameraState.center
-      CameraAnimatorType.ZOOM -> currentCameraState?.zoom ?: mapCameraManagerDelegate.cameraState.zoom
+      CameraAnimatorType.CENTER -> center ?: mapCameraManagerDelegate.cameraState.center
+      CameraAnimatorType.ZOOM -> zoom ?: mapCameraManagerDelegate.cameraState.zoom
       CameraAnimatorType.ANCHOR -> anchor ?: ScreenCoordinate(0.0, 0.0)
-      CameraAnimatorType.PADDING -> currentCameraState?.padding ?: mapCameraManagerDelegate.cameraState.padding
-      CameraAnimatorType.BEARING -> currentCameraState?.bearing ?: mapCameraManagerDelegate.cameraState.bearing
-      CameraAnimatorType.PITCH -> currentCameraState?.pitch ?: mapCameraManagerDelegate.cameraState.pitch
+      CameraAnimatorType.PADDING -> padding ?: mapCameraManagerDelegate.cameraState.padding
+      CameraAnimatorType.BEARING -> bearing ?: mapCameraManagerDelegate.cameraState.bearing
+      CameraAnimatorType.PITCH -> pitch ?: mapCameraManagerDelegate.cameraState.pitch
     }.also {
       if (debugMode) {
         logI(
@@ -311,22 +323,12 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
       }
     }
     return when (type) {
-      CameraAnimatorType.CENTER -> Objects.equals(currentCameraState?.center, targets[0])
-      CameraAnimatorType.ZOOM -> Objects.equals(currentCameraState?.zoom, targets[0])
+      CameraAnimatorType.CENTER -> Objects.equals(center, targets[0])
+      CameraAnimatorType.ZOOM -> Objects.equals(zoom, targets[0])
       CameraAnimatorType.ANCHOR -> false
-      CameraAnimatorType.PADDING -> Objects.equals(currentCameraState?.padding, targets[0])
-      CameraAnimatorType.BEARING -> Objects.equals(currentCameraState?.bearing, targets[0])
-      CameraAnimatorType.PITCH -> Objects.equals(currentCameraState?.pitch, targets[0])
-    }
-  }
-
-  internal fun notifyListeners(cameraState: CameraState) {
-    cameraState.also {
-      bearing = it.bearing
-      center = it.center
-      padding = it.padding
-      pitch = it.pitch
-      zoom = it.zoom
+      CameraAnimatorType.PADDING -> Objects.equals(padding, targets[0])
+      CameraAnimatorType.BEARING -> Objects.equals(bearing, targets[0])
+      CameraAnimatorType.PITCH -> Objects.equals(pitch, targets[0])
     }
   }
 
@@ -401,7 +403,10 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
               registerInternalUpdateListener(startingAnimator)
             }
             if (debugMode) {
-              logI(TAG, "Animation ${startingAnimator.type.name}(${startingAnimator.hashCode()}) started.")
+              logI(
+                TAG,
+                "Animation ${startingAnimator.type.name}(${startingAnimator.hashCode()}) started."
+              )
             }
           } ?: throw MapboxCameraAnimationException(
             "Could not start animation as it must be an instance of CameraAnimator and not null!"

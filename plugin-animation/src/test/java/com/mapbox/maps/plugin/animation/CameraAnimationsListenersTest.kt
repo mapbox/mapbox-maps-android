@@ -4,8 +4,6 @@ import android.animation.Animator
 import android.animation.ValueAnimator
 import android.os.Looper
 import com.mapbox.maps.CameraOptions
-import com.mapbox.maps.CameraState
-import com.mapbox.maps.extension.observable.eventdata.CameraChangedEventData
 import com.mapbox.maps.logW
 import com.mapbox.maps.plugin.animation.CameraAnimationsPluginImplTest.Companion.toCameraState
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Companion.cameraAnimatorOptions
@@ -31,7 +29,6 @@ class CameraAnimationsListenersTest {
   private lateinit var cameraAnimationsPluginImpl: CameraAnimationsPluginImpl
   private lateinit var mapTransformDelegate: MapTransformDelegate
   private lateinit var mapCameraManagerDelegate: MapCameraManagerDelegate
-  private var actualCameraState: CameraState = CameraAnimationsPluginImplTest.cameraState
 
   private class Listener : Animator.AnimatorListener {
     override fun onAnimationStart(animation: Animator?) {}
@@ -57,16 +54,28 @@ class CameraAnimationsListenersTest {
     cameraAnimationsPluginImpl = CameraAnimationsPluginImpl().apply {
       onDelegateProvider(delegateProvider)
     }
-    actualCameraState = CameraAnimationsPluginImplTest.cameraState
+    var actualCameraState = CameraAnimationsPluginImplTest.cameraState
+
     every {
       mapCameraManagerDelegate.cameraState
     } answers { actualCameraState }
+
     every { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) } answers {
       actualCameraState = firstArg<CameraOptions>().toCameraState()
-      cameraAnimationsPluginImpl.cameraChangeListener.onCameraChanged(
-        CameraChangedEventData(0L, null)
+      cameraAnimationsPluginImpl.onCameraMove(
+        lat = actualCameraState.center.latitude(),
+        lon = actualCameraState.center.longitude(),
+        zoom = actualCameraState.zoom,
+        pitch = actualCameraState.pitch,
+        bearing = actualCameraState.bearing,
+        padding = actualCameraState.padding.let { insets ->
+          arrayOf(insets.left, insets.top, insets.right, insets.bottom)
+        }
       )
     }
+  }
+
+  private fun CameraAnimationsPluginImpl.onCameraMove(cameraOptions: CameraOptions) {
   }
 
   @After
