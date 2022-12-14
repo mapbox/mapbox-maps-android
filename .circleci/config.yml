@@ -53,6 +53,9 @@ workflows:
       - verify-api-revapi:
           requires:
             - verify-code
+      - verify-permissions:
+          requires:
+            - build-modules-and-instrumentation-tests
       - verify-internal:
             requires:
               - verify-code
@@ -561,6 +564,27 @@ jobs:
                   fi
             - store_artifacts:
                 path: api_compat_report
+      - run: exit 0
+
+  verify-permissions:
+    executor:
+      name: ubuntu
+      machine: small
+    steps:
+      - when:
+          condition:
+            not:
+              matches:
+                pattern: << pipeline.parameters.changelog_branch >>
+                value: << pipeline.git.branch >>
+          steps:
+            - checkout
+            - read-from-workspace
+            - run:
+                name: verify-permissions
+                command: |
+                  apt install -y aapt
+                  make check-permissions
       - run: exit 0
 
   verify-internal:
