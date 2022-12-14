@@ -4,15 +4,16 @@ import argparse
 import subprocess
 import json
 
-USER_PERMISSION = "uses-permission: name="
+USES_PERMISSION = "uses-permission: name="
+
 
 def load_apk_permissions(args):
     permissions = []
     shell = subprocess.Popen(f"aapt d permissions {args.apk}", stdout=subprocess.PIPE, shell=True).stdout
     for output in shell:
         line = output.decode('utf-8')
-        if USER_PERMISSION in line:
-            permission = line.partition(USER_PERMISSION)[2].strip()[1:-1]
+        if USES_PERMISSION in line:
+            permission = line.partition(USES_PERMISSION)[2].strip()[1:-1]
             permissions.append(permission)
     permissions.sort()
     return permissions
@@ -50,5 +51,5 @@ if __name__ == "__main__":
     else:
         print(f"Checking if permissions file({args.file}) matches\n")
         expected = load_file(args)
-        assert expected == permissions
+        assert expected == permissions, "Permission check failed, the permission file is outdated and you need to rerun the script with the --update true to update the baseline file"
         print("Success, exiting..")

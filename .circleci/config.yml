@@ -583,6 +583,7 @@ jobs:
             - run:
                 name: verify-permissions
                 command: |
+                  apt install -y aapt
                   make check-permissions
       - run: exit 0
 
