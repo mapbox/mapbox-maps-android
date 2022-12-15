@@ -10,6 +10,7 @@ import androidx.core.animation.addListener
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.plugin.animation.CameraAnimationsPluginImpl.Companion.TAG
+import com.mapbox.maps.plugin.animation.CameraAnimationsPluginImplTest.Companion.toCameraState
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Companion.cameraAnimatorOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
 import com.mapbox.maps.plugin.animation.animator.CameraAnimator
@@ -42,19 +43,6 @@ class CameraAnimationsPluginImplTest {
   private lateinit var cameraAnimatorsFactory: CameraAnimatorsFactory
   private lateinit var bearingAnimator: CameraBearingAnimator
   private lateinit var centerAnimator: CameraCenterAnimator
-
-  private fun CameraAnimationsPluginImpl.onCameraMove(cameraState: CameraState) {
-    onCameraMove(
-      lat = cameraState.center.latitude(),
-      lon = cameraState.center.longitude(),
-      zoom = cameraState.zoom,
-      pitch = cameraState.pitch,
-      bearing = cameraState.bearing,
-      padding = cameraState.padding.let { insets ->
-        arrayOf(insets.left, insets.top, insets.right, insets.bottom)
-      }
-    )
-  }
 
   @Before
   fun setUp() {
@@ -191,7 +179,9 @@ class CameraAnimationsPluginImplTest {
   @Test
   fun testEaseToRegister() {
     cameraAnimationsPluginImpl.cameraAnimationsFactory = cameraAnimatorsFactory
-    cameraAnimationsPluginImpl.easeTo(cameraState.toCameraOptions(), mapAnimationOptions { duration(DURATION) })
+    cameraAnimationsPluginImpl.easeTo(
+      cameraState.toCameraOptions(),
+      mapAnimationOptions { duration(DURATION) })
     verify {
       centerAnimator.addInternalListener(any())
       bearingAnimator.addInternalListener(any())
@@ -201,7 +191,9 @@ class CameraAnimationsPluginImplTest {
   @Test
   fun testMoveToRegister() {
     cameraAnimationsPluginImpl.cameraAnimationsFactory = cameraAnimatorsFactory
-    cameraAnimationsPluginImpl.moveBy(ScreenCoordinate(VALUE, VALUE), mapAnimationOptions { duration(DURATION) })
+    cameraAnimationsPluginImpl.moveBy(
+      ScreenCoordinate(VALUE, VALUE),
+      mapAnimationOptions { duration(DURATION) })
     verify {
       centerAnimator.addInternalListener(any())
       bearingAnimator.addInternalListener(any())
@@ -211,7 +203,10 @@ class CameraAnimationsPluginImplTest {
   @Test
   fun testScaleByRegister() {
     cameraAnimationsPluginImpl.cameraAnimationsFactory = cameraAnimatorsFactory
-    cameraAnimationsPluginImpl.scaleBy(VALUE, ScreenCoordinate(VALUE, VALUE), mapAnimationOptions { duration(DURATION) })
+    cameraAnimationsPluginImpl.scaleBy(
+      VALUE,
+      ScreenCoordinate(VALUE, VALUE),
+      mapAnimationOptions { duration(DURATION) })
     verify {
       centerAnimator.addInternalListener(any())
       bearingAnimator.addInternalListener(any())
@@ -409,8 +404,16 @@ class CameraAnimationsPluginImplTest {
     val handler = Handler(getMainLooper())
     cameraAnimationsPluginImpl.easeTo(cameraOptions1, mapAnimationOptions { duration(0) })
 
-    handler.postDelayed({ cameraAnimationsPluginImpl.easeTo(cameraOptions2, mapAnimationOptions { duration(0) }) }, 1)
-    handler.postDelayed({ cameraAnimationsPluginImpl.easeTo(cameraOptions3, mapAnimationOptions { duration(0) }) }, 2)
+    handler.postDelayed({
+      cameraAnimationsPluginImpl.easeTo(
+        cameraOptions2,
+        mapAnimationOptions { duration(0) })
+    }, 1)
+    handler.postDelayed({
+      cameraAnimationsPluginImpl.easeTo(
+        cameraOptions3,
+        mapAnimationOptions { duration(0) })
+    }, 2)
 
     shadowOf(getMainLooper()).idleFor(Duration.ofMillis(2))
 
@@ -455,10 +458,18 @@ class CameraAnimationsPluginImplTest {
     cameraAnimationsPluginImpl.easeTo(cameraOptions1, mapAnimationOptions { duration(1) })
     shadowOf(getMainLooper()).idleFor(Duration.ofMillis(0))
     shadowOf(getMainLooper()).idle()
-    handler.postDelayed({ cameraAnimationsPluginImpl.easeTo(cameraOptions2, mapAnimationOptions { duration(1) }) }, 2)
+    handler.postDelayed({
+      cameraAnimationsPluginImpl.easeTo(
+        cameraOptions2,
+        mapAnimationOptions { duration(1) })
+    }, 2)
     shadowOf(getMainLooper()).idleFor(Duration.ofMillis(2))
     shadowOf(getMainLooper()).idle()
-    handler.postDelayed({ cameraAnimationsPluginImpl.easeTo(cameraOptions3, mapAnimationOptions { duration(1) }) }, 8)
+    handler.postDelayed({
+      cameraAnimationsPluginImpl.easeTo(
+        cameraOptions3,
+        mapAnimationOptions { duration(1) })
+    }, 8)
     shadowOf(getMainLooper()).idleFor(Duration.ofMillis(8))
     shadowOf(getMainLooper()).idle()
 
@@ -1007,7 +1018,9 @@ class CameraAnimationsPluginImplTest {
   fun debugModeTrueTest() {
     cameraAnimationsPluginImpl.debugMode = true
     shadowOf(getMainLooper()).pause()
-    cameraAnimationsPluginImpl.easeTo(cameraState.toCameraOptions(), mapAnimationOptions { duration(DURATION) })
+    cameraAnimationsPluginImpl.easeTo(
+      cameraState.toCameraOptions(),
+      mapAnimationOptions { duration(DURATION) })
     shadowOf(getMainLooper()).idle()
     verify { logI(TAG, any()) }
   }
@@ -1016,32 +1029,151 @@ class CameraAnimationsPluginImplTest {
   fun debugModeFalseTest() {
     cameraAnimationsPluginImpl.debugMode = false
     shadowOf(getMainLooper()).pause()
-    cameraAnimationsPluginImpl.easeTo(cameraState.toCameraOptions(), mapAnimationOptions { duration(DURATION) })
+    cameraAnimationsPluginImpl.easeTo(
+      cameraState.toCameraOptions(),
+      mapAnimationOptions { duration(DURATION) })
     shadowOf(getMainLooper()).idle()
     verify(exactly = 0) { logI(TAG, any()) }
   }
 
   @Test
   fun catchExceptionOnSetCameraTest() {
-//    executeSetCameraTest(Exception("Invalid camera options"))
+    val targetCameraOptions = CameraOptions.Builder()
+      .center(Point.fromLngLat(50.0, 50.0))
+      .pitch(50.0)
+      .bearing(50.0)
+      .zoom(5.0)
+      .build()
+    every { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) } throws Exception("Invalid camera options")
+
+    cameraAnimationsPluginImpl.performMapJump(targetCameraOptions)
+
+    verify(exactly = 1) { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) }
   }
 
-  private fun executeSetCameraTest(error: Throwable) {
-//    val targetCameraOptions = CameraOptions.Builder().center(
-//      Point.fromLngLat(50.0, 50.0)
-//    ).pitch(50.0)
-//      .bearing(50.0)
-//      .zoom(5.0).build()
-//    cameraAnimationsPluginImpl.currentCameraState = cameraState
-//    every { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) } throws error
-//
-//    cameraAnimationsPluginImpl.performMapJump(targetCameraOptions)
-//    // assert camera options did not change
-//    assertNotEquals(targetCameraOptions, cameraAnimationsPluginImpl.currentCameraState)
-//
-//    // assert camera states
-//    assertNotNull(cameraAnimationsPluginImpl.currentCameraState)
-//    assertEquals(cameraState, cameraAnimationsPluginImpl.currentCameraState)
+  @Test
+  fun skipsEmptyCameraOptions() {
+    val targetCameraOptions = CameraOptions.Builder().build()
+
+    cameraAnimationsPluginImpl.performMapJump(targetCameraOptions)
+
+    verify(exactly = 0) { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) }
+  }
+
+  @Test
+  fun skipsAlreadyAppliedCameraOptions() {
+    val startCameraOptions = CameraOptions.Builder()
+      .center(Point.fromLngLat(50.0, 50.0))
+      .pitch(50.0)
+      .bearing(50.0)
+      .zoom(5.0)
+      .build()
+
+    val sameCameraOptions1 = CameraOptions.Builder()
+      .center(Point.fromLngLat(50.0, 50.0))
+      .bearing(50.0)
+      .build()
+    val sameCameraOptions2 = CameraOptions.Builder()
+      .center(Point.fromLngLat(50.0, 50.0))
+      .bearing(50.0)
+      .build()
+    val sameCameraOptions3 = CameraOptions.Builder()
+      .zoom(5.0)
+      .build()
+
+    cameraAnimationsPluginImpl.onCameraMove(startCameraOptions.toCameraState())
+    cameraAnimationsPluginImpl.performMapJump(sameCameraOptions1)
+    cameraAnimationsPluginImpl.performMapJump(sameCameraOptions2)
+    cameraAnimationsPluginImpl.performMapJump(sameCameraOptions3)
+    cameraAnimationsPluginImpl.performMapJump(startCameraOptions)
+
+    verify(exactly = 0) { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) }
+  }
+
+  @Test
+  fun doesNotSkipNewCameraOptions() {
+    val startCameraOptions = CameraOptions.Builder()
+      .center(Point.fromLngLat(50.0, 50.0))
+      .pitch(50.0)
+      .bearing(50.0)
+      .zoom(5.0)
+      .build()
+    val newCameraOptions1 = CameraOptions.Builder()
+      .center(Point.fromLngLat(50.0, 50.0))
+      .bearing(60.0)
+      .build()
+    val newCameraOptions2 = CameraOptions.Builder()
+      .center(Point.fromLngLat(50.0, 50.0))
+      .bearing(20.0)
+      .build()
+    val newCameraOptions3 = CameraOptions.Builder()
+      .zoom(1.0)
+      .build()
+
+    cameraAnimationsPluginImpl.onCameraMove(startCameraOptions.toCameraState())
+    cameraAnimationsPluginImpl.performMapJump(newCameraOptions1)
+
+    cameraAnimationsPluginImpl.onCameraMove(newCameraOptions1.toCameraState())
+    cameraAnimationsPluginImpl.performMapJump(newCameraOptions2)
+
+    cameraAnimationsPluginImpl.onCameraMove(newCameraOptions2.toCameraState())
+    cameraAnimationsPluginImpl.performMapJump(newCameraOptions3)
+
+    cameraAnimationsPluginImpl.onCameraMove(newCameraOptions3.toCameraState())
+    cameraAnimationsPluginImpl.performMapJump(startCameraOptions)
+
+    verify(exactly = 4) { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) }
+  }
+
+  @Test
+  fun doesNotSkipCameraOptionsWithAnchor() {
+    val startCameraOptions = CameraOptions.Builder()
+      .center(Point.fromLngLat(50.0, 50.0))
+      .pitch(50.0)
+      .bearing(50.0)
+      .zoom(5.0)
+      .anchor(ScreenCoordinate(0.0, 5.0))
+      .build()
+
+    val newCameraOptions = CameraOptions.Builder()
+      .anchor(ScreenCoordinate(0.0, 5.0))
+      .build()
+
+    cameraAnimationsPluginImpl.onCameraMove(startCameraOptions.toCameraState())
+    cameraAnimationsPluginImpl.performMapJump(startCameraOptions)
+
+    cameraAnimationsPluginImpl.onCameraMove(startCameraOptions.toCameraState())
+    cameraAnimationsPluginImpl.performMapJump(newCameraOptions)
+
+    verify(exactly = 2) { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) }
+  }
+
+  @Test
+  fun skipsCameraOptionsWithLowPitch() {
+    val startCameraOptionsPitchLow = CameraOptions.Builder()
+      .pitch(50.0)
+      .build()
+
+    cameraAnimationsPluginImpl.onCameraMove(startCameraOptionsPitchLow.toCameraState())
+    cameraAnimationsPluginImpl.performMapJump(startCameraOptionsPitchLow)
+    cameraAnimationsPluginImpl.performMapJump(startCameraOptionsPitchLow)
+    cameraAnimationsPluginImpl.performMapJump(startCameraOptionsPitchLow)
+
+    verify(exactly = 0) { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) }
+  }
+
+  @Test
+  fun doesNotSkipCameraOptionsWithPitch60() {
+    val startCameraOptionsPitchHigh = CameraOptions.Builder()
+      .pitch(65.0)
+      .build()
+
+    cameraAnimationsPluginImpl.onCameraMove(startCameraOptionsPitchHigh.toCameraState())
+    cameraAnimationsPluginImpl.performMapJump(startCameraOptionsPitchHigh)
+    cameraAnimationsPluginImpl.performMapJump(startCameraOptionsPitchHigh)
+    cameraAnimationsPluginImpl.performMapJump(startCameraOptionsPitchHigh)
+
+    verify(exactly = 3) { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) }
   }
 
   class LifecycleListener : CameraAnimationsLifecycleListener {
@@ -1121,7 +1253,12 @@ class CameraAnimationsPluginImplTest {
     }
   }
 
-  private fun createBearingAnimator(target: Double, animatorDelay: Long, animatorDuration: Long, owner: String? = null) =
+  private fun createBearingAnimator(
+    target: Double,
+    animatorDelay: Long,
+    animatorDuration: Long,
+    owner: String? = null
+  ) =
     CameraBearingAnimator(
       cameraAnimatorOptions(target) {
         startValue(0.0)
@@ -1135,7 +1272,12 @@ class CameraAnimationsPluginImplTest {
       duration = animatorDuration
     }
 
-  private fun createPitchAnimator(target: Double, animatorDelay: Long, animatorDuration: Long, owner: String? = null) =
+  private fun createPitchAnimator(
+    target: Double,
+    animatorDelay: Long,
+    animatorDuration: Long,
+    owner: String? = null
+  ) =
     CameraPitchAnimator(
       cameraAnimatorOptions(target) {
         startValue(0.0)
@@ -1168,6 +1310,20 @@ class CameraAnimationsPluginImplTest {
         pitch ?: cameraState.pitch
       )
     }
+
+    private fun CameraAnimationsPluginImpl.onCameraMove(cameraState: CameraState) {
+      onCameraMove(
+        lat = cameraState.center.latitude(),
+        lon = cameraState.center.longitude(),
+        zoom = cameraState.zoom,
+        pitch = cameraState.pitch,
+        bearing = cameraState.bearing,
+        padding = cameraState.padding.let { insets ->
+          arrayOf(insets.left, insets.top, insets.right, insets.bottom)
+        }
+      )
+    }
+
 
     const val EPS = 0.000001
   }

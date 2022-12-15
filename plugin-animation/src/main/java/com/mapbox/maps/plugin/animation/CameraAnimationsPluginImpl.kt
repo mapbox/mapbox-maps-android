@@ -173,16 +173,16 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlugin {
   ) {
     this.bearing = bearing
     this.center = Point.fromLngLat(lon, lat)
-    // Insets array order : insets.left, insets.top, insets.right, insets.bottom
+    // Insets array order : insets.top, insets.left, insets.bottom, insets.right
     this.padding = EdgeInsets(
       /* top = */
-      padding[1],
-      /* left = */
       padding[0],
+      /* left = */
+      padding[1],
       /* bottom = */
-      padding[3],
-      /* right = */
       padding[2],
+      /* right = */
+      padding[3],
     )
     this.pitch = pitch
     this.zoom = zoom
@@ -206,12 +206,10 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlugin {
     handler.removeCallbacks(commitChangesRunnable)
   }
 
-  /**
-   * Assuming currentCameraState always reflects valid current camera core state -
-   * we may skip calling native setCamera in situations when given cameraOptions are part
-   * of already applied camera.
+  /*
+   * CameraOptions that are already applied should be skipped.
    */
-  private fun skipNativeSetCamera(cameraOptions: CameraOptions): Boolean {
+  private fun skipMapJump(cameraOptions: CameraOptions): Boolean {
     if (cameraOptions.isEmpty) {
       return true
     }
@@ -241,8 +239,7 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlugin {
 
   @VisibleForTesting(otherwise = PRIVATE)
   internal fun performMapJump(cameraOptions: CameraOptions) {
-    if (skipNativeSetCamera(cameraOptions)) {
-
+    if (skipMapJump(cameraOptions)) {
       if (debugMode) {
         logI(
           TAG,
@@ -253,7 +250,7 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlugin {
     }
     // move native map to new position
     try {
-      // setCamera triggers OnCameraChangeListener in the same callchain
+      // setCamera triggers OnCameraMove that updates camera options and notifies listeners
       mapCameraManagerDelegate.setCamera(cameraOptions)
     } catch (e: Exception) {
       logE(
