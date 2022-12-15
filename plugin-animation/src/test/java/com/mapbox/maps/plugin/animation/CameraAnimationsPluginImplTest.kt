@@ -181,7 +181,8 @@ class CameraAnimationsPluginImplTest {
     cameraAnimationsPluginImpl.cameraAnimationsFactory = cameraAnimatorsFactory
     cameraAnimationsPluginImpl.easeTo(
       cameraState.toCameraOptions(),
-      mapAnimationOptions { duration(DURATION) })
+      mapAnimationOptions { duration(DURATION) }
+    )
     verify {
       centerAnimator.addInternalListener(any())
       bearingAnimator.addInternalListener(any())
@@ -193,7 +194,8 @@ class CameraAnimationsPluginImplTest {
     cameraAnimationsPluginImpl.cameraAnimationsFactory = cameraAnimatorsFactory
     cameraAnimationsPluginImpl.moveBy(
       ScreenCoordinate(VALUE, VALUE),
-      mapAnimationOptions { duration(DURATION) })
+      mapAnimationOptions { duration(DURATION) }
+    )
     verify {
       centerAnimator.addInternalListener(any())
       bearingAnimator.addInternalListener(any())
@@ -206,7 +208,8 @@ class CameraAnimationsPluginImplTest {
     cameraAnimationsPluginImpl.scaleBy(
       VALUE,
       ScreenCoordinate(VALUE, VALUE),
-      mapAnimationOptions { duration(DURATION) })
+      mapAnimationOptions { duration(DURATION) }
+    )
     verify {
       centerAnimator.addInternalListener(any())
       bearingAnimator.addInternalListener(any())
@@ -404,16 +407,24 @@ class CameraAnimationsPluginImplTest {
     val handler = Handler(getMainLooper())
     cameraAnimationsPluginImpl.easeTo(cameraOptions1, mapAnimationOptions { duration(0) })
 
-    handler.postDelayed({
-      cameraAnimationsPluginImpl.easeTo(
-        cameraOptions2,
-        mapAnimationOptions { duration(0) })
-    }, 1)
-    handler.postDelayed({
-      cameraAnimationsPluginImpl.easeTo(
-        cameraOptions3,
-        mapAnimationOptions { duration(0) })
-    }, 2)
+    handler.postDelayed(
+      {
+        cameraAnimationsPluginImpl.easeTo(
+          cameraOptions2,
+          mapAnimationOptions { duration(0) }
+        )
+      },
+      1
+    )
+    handler.postDelayed(
+      {
+        cameraAnimationsPluginImpl.easeTo(
+          cameraOptions3,
+          mapAnimationOptions { duration(0) }
+        )
+      },
+      2
+    )
 
     shadowOf(getMainLooper()).idleFor(Duration.ofMillis(2))
 
@@ -458,18 +469,26 @@ class CameraAnimationsPluginImplTest {
     cameraAnimationsPluginImpl.easeTo(cameraOptions1, mapAnimationOptions { duration(1) })
     shadowOf(getMainLooper()).idleFor(Duration.ofMillis(0))
     shadowOf(getMainLooper()).idle()
-    handler.postDelayed({
-      cameraAnimationsPluginImpl.easeTo(
-        cameraOptions2,
-        mapAnimationOptions { duration(1) })
-    }, 2)
+    handler.postDelayed(
+      {
+        cameraAnimationsPluginImpl.easeTo(
+          cameraOptions2,
+          mapAnimationOptions { duration(1) }
+        )
+      },
+      2
+    )
     shadowOf(getMainLooper()).idleFor(Duration.ofMillis(2))
     shadowOf(getMainLooper()).idle()
-    handler.postDelayed({
-      cameraAnimationsPluginImpl.easeTo(
-        cameraOptions3,
-        mapAnimationOptions { duration(1) })
-    }, 8)
+    handler.postDelayed(
+      {
+        cameraAnimationsPluginImpl.easeTo(
+          cameraOptions3,
+          mapAnimationOptions { duration(1) }
+        )
+      },
+      8
+    )
     shadowOf(getMainLooper()).idleFor(Duration.ofMillis(8))
     shadowOf(getMainLooper()).idle()
 
@@ -1020,7 +1039,8 @@ class CameraAnimationsPluginImplTest {
     shadowOf(getMainLooper()).pause()
     cameraAnimationsPluginImpl.easeTo(
       cameraState.toCameraOptions(),
-      mapAnimationOptions { duration(DURATION) })
+      mapAnimationOptions { duration(DURATION) }
+    )
     shadowOf(getMainLooper()).idle()
     verify { logI(TAG, any()) }
   }
@@ -1031,7 +1051,8 @@ class CameraAnimationsPluginImplTest {
     shadowOf(getMainLooper()).pause()
     cameraAnimationsPluginImpl.easeTo(
       cameraState.toCameraOptions(),
-      mapAnimationOptions { duration(DURATION) })
+      mapAnimationOptions { duration(DURATION) }
+    )
     shadowOf(getMainLooper()).idle()
     verify(exactly = 0) { logI(TAG, any()) }
   }
@@ -1323,7 +1344,6 @@ class CameraAnimationsPluginImplTest {
         }
       )
     }
-
 
     const val EPS = 0.000001
   }
