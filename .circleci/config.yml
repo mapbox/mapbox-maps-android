@@ -557,7 +557,9 @@ jobs:
                 command: |
                   make build
                   echo "$(./mbx-ci github reader token)" > gh_token.txt
-                  if [[ $CIRCLE_TAG =~ << pipeline.parameters.git_release_tag >> ]]; then
+                  if [[ $CIRCLE_BRANCH == "tvn-revapi-main" ]]; then
+                    echo "Running on main branch, skipping revapi"
+                  elif [[ $CIRCLE_TAG =~ << pipeline.parameters.git_release_tag >> ]]; then
                     ./scripts/java-api-check-all.sh "${CIRCLE_TAG}"
                   else
                     ./scripts/java-api-check-all.sh ""
