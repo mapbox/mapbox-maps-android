@@ -163,6 +163,17 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlugin {
     cameraAnimationsFactory = CameraAnimatorsFactory(mapDelegateProvider)
   }
 
+  /**
+   * Called whenever camera position changes.
+   * Could be invoked from any thread when map starts rendering.
+   *
+   * @param lat latitude
+   * @param lon longitude
+   * @param zoom zoom
+   * @param pitch pitch in degrees
+   * @param bearing bearing in degrees
+   * @param padding padding ordered as [left, top, right, bottom]
+   */
   override fun onCameraMove(
     lat: Double,
     lon: Double,
