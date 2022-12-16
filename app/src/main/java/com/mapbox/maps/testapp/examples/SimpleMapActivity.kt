@@ -1,6 +1,7 @@
 package com.mapbox.maps.testapp.examples
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commitNow
 import androidx.lifecycle.lifecycleScope
 import com.google.gson.JsonObject
+import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
@@ -19,6 +21,7 @@ import com.mapbox.maps.MapInitOptions
 import com.mapbox.maps.MapView
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.expressions.generated.Expression
+import com.mapbox.maps.extension.style.expressions.dsl.generated.switchCase
 import com.mapbox.maps.extension.style.image.image
 import com.mapbox.maps.extension.style.layers.generated.SymbolLayerDsl
 import com.mapbox.maps.extension.style.layers.generated.symbolLayer
@@ -26,6 +29,7 @@ import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.sources.getSourceAs
 import com.mapbox.maps.extension.style.style
+import com.mapbox.maps.extension.style.types.transitionOptions
 import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.plugin.animation.MapAnimationOptions
 import com.mapbox.maps.plugin.animation.flyTo
@@ -60,6 +64,8 @@ class SimpleMapActivity : AppCompatActivity() {
 }
 
 class GlitchDemoMapFragment : Fragment() {
+  private var useFeatureState: Boolean = true
+  private var selectedId: String = ""
 
   private val mapView
     get() = requireView() as MapView
@@ -122,30 +128,88 @@ class GlitchDemoMapFragment : Fragment() {
     mapView.getMapboxMap().loadStyle(style(
       Style.MAPBOX_STREETS
     ) {
-      // we add a layer for all symbols that do not have the state "selected=true"
-      +symbolLayer("symbol-layer", "symbol-source") {
-        filter(Expression.eq(Expression.get("selected"), Expression.literal(false)))
-        image()
+      if (useFeatureState) {
+        // we add a layer for all symbols that do not have the state "selected=true"
+        +symbolLayer("symbol-layer", "symbol-source") {
+          iconOpacity(
+            switchCase {
+              boolean {
+                featureState {
+                  literal("selected")
+                }
+                literal(false)
+              }
+              literal(0.0)
+              literal(1.0)
+            })
+          image()
+        }
+
+        // we add a layer for a red background for all symbols that have the state "selected=true"
+        +symbolLayer("symbol-layer-selected-background", "symbol-source") {
+          iconOpacity(
+            switchCase {
+              boolean {
+                featureState {
+                  literal("selected")
+                }
+                literal(false)
+              }
+              literal(1.0)
+              literal(0.0)
+            })
+          selection()
+        }
+
+        // we add a layer for the selected symbol foreground
+        +symbolLayer("symbol-layer-selected-foreground", "symbol-source") {
+          iconOpacity(
+            switchCase {
+              boolean {
+                featureState {
+                  literal("selected")
+                }
+                literal(false)
+              }
+              literal(1.0)
+              literal(0.0)
+            })
+          image()
+        }
+        transitionOptions {  }
+      } else {
+        // we add a layer for all symbols that do not have the state "selected=true"
+        +symbolLayer("symbol-layer", "symbol-source") {
+          filter(Expression.eq(Expression.get("selected"), Expression.literal(false)))
+          image()
+        }
+        // we add a layer for a red background for all symbols that have the state "selected=true"
+        +symbolLayer("symbol-layer-selected-background", "symbol-source") {
+          filter(Expression.eq(Expression.get("selected"), Expression.literal(true)))
+          selection()
+        }
+        // we add a layer for the selected symbol foreground
+        +symbolLayer("symbol-layer-selected-foreground", "symbol-source") {
+          filter(Expression.eq(Expression.get("selected"), Expression.literal(true)))
+          image()
+        }
       }
 
-      // we add a layer for a red background for all symbols that have the state "selected=true"
-      +symbolLayer("symbol-layer-selected-background", "symbol-source") {
-        filter(Expression.eq(Expression.get("selected"), Expression.literal(true)))
-        selection()
-      }
-
-      // we add a layer for the selected symbol foreground
-      +symbolLayer("symbol-layer-selected-foreground", "symbol-source") {
-        filter(Expression.eq(Expression.get("selected"), Expression.literal(true)))
-        image()
-      }
       // we statically provide the background symbol
       +image("background") {
         this.bitmap(background())
       }
 
-      +geoJsonSource("symbol-source")
+      +geoJsonSource("symbol-source") {
+        featureCollection(lazyFeatures)
+      }
+      // Disable default placement transitions.
     })
+
+    // Subscribe to signal to handle removal of unused images.
+    mapView.getMapboxMap().addOnStyleImageUnusedListener { eventData ->
+      Log.d("GLITCH", "Can remove unused image: ${eventData.id}")
+    }
 
     mapView.getMapboxMap().addOnStyleImageMissingListener { eventData ->
       // we first add a placeholder image (required or else later the map doesn't invalidate)
@@ -158,29 +222,30 @@ class GlitchDemoMapFragment : Fragment() {
       }
     }
 
-
     lifecycleScope.launch(Dispatchers.IO) {
       while (isActive) {
         delay(2000L)
         withContext(Dispatchers.Main) {
-          mapView.getMapboxMap().getStyle()?.let {
-            var pointToFocus: Point? = null
-
-            // we update the source every 2 seconds and select + frame a different symbol
-            it.getSourceAs<GeoJsonSource>("symbol-source")?.let { source ->
-              source.featureCollection(lazyFeatures.apply {
-                val randomFeature = Random.nextInt(0, this.features()!!.size - 1)
-                this.features()!!.forEachIndexed { index, feature ->
-                  val isSelected = index == randomFeature
-                  feature.addBooleanProperty("selected", isSelected)
-                  if (isSelected) {
-                    pointToFocus = feature.geometry() as Point
-                  }
-                }
-              })
+          if (useFeatureState) {
+            if (!selectedId.isEmpty()) {
+              mapView.getMapboxMap().setFeatureState("symbol-source", null, selectedId, Value(
+                hashMapOf("selected" to Value(false))))
             }
 
-            // we animate to the newly selected symbol
+            var pointToFocus: Point? = null
+            lazyFeatures.apply {
+              val randomFeature = Random.nextInt(0, this.features()!!.size - 1)
+              selectedId = "id_$randomFeature"
+              mapView.getMapboxMap().setFeatureState("symbol-source", null, selectedId, Value(
+                hashMapOf("selected" to Value(true))))
+
+              this.features()!!.forEachIndexed { index, feature ->
+                if (index == randomFeature) {
+                  pointToFocus = feature.geometry() as Point
+                }
+              }
+            }
+
             pointToFocus?.let { point ->
               val nextZoom = Random.nextDouble(0.0, 4.0)
               mapView.getMapboxMap().flyTo(
@@ -188,6 +253,34 @@ class GlitchDemoMapFragment : Fragment() {
                 animationOptions = MapAnimationOptions.mapAnimationOptions {
                   duration(2000L)
                 })
+            }
+          } else {
+            mapView.getMapboxMap().getStyle()?.let {
+              var pointToFocus: Point? = null
+
+              // we update the source every 2 seconds and select + frame a different symbol
+              it.getSourceAs<GeoJsonSource>("symbol-source")?.let { source ->
+                source.featureCollection(lazyFeatures.apply {
+                  val randomFeature = Random.nextInt(0, this.features()!!.size - 1)
+                  this.features()!!.forEachIndexed { index, feature ->
+                    val isSelected = index == randomFeature
+                    feature.addBooleanProperty("selected", isSelected)
+                    if (isSelected) {
+                      pointToFocus = feature.geometry() as Point
+                    }
+                  }
+                })
+              }
+
+              // we animate to the newly selected symbol
+              pointToFocus?.let { point ->
+                val nextZoom = Random.nextDouble(0.0, 4.0)
+                mapView.getMapboxMap().flyTo(
+                  CameraOptions.Builder().center(point).zoom(nextZoom).build(),
+                  animationOptions = MapAnimationOptions.mapAnimationOptions {
+                    duration(2000L)
+                  })
+              }
             }
           }
         }
@@ -215,6 +308,7 @@ class GlitchDemoMapFragment : Fragment() {
       delay(0)
     }
     this.iconAllowOverlap(true)
+    this.iconIgnorePlacement(true)
   }
 
   private fun SymbolLayerDsl.selection() {
@@ -226,6 +320,7 @@ class GlitchDemoMapFragment : Fragment() {
       delay(0)
     }
     this.iconAllowOverlap(true)
+    this.iconIgnorePlacement(true)
   }
 
 
