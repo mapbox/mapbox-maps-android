@@ -26,6 +26,7 @@ internal class EGLCore(
   private val antialiasingSampleCount: Int,
   private val sharedContext: EGLContext = EGL10.EGL_NO_CONTEXT,
 ) {
+
   private lateinit var egl: EGL10
   private lateinit var eglConfig: EGLConfig
   private var eglDisplay: EGLDisplay = EGL10.EGL_NO_DISPLAY
@@ -64,14 +65,19 @@ internal class EGLCore(
       notifyListeners(RendererError.NO_VALID_EGL_CONFIG_FOUND)
       return false
     }
-    val context = egl.eglCreateContext(
-      eglDisplay,
-      eglConfig,
-      sharedContext,
-      intArrayOf(EGL_CONTEXT_CLIENT_VERSION, 2, EGL10.EGL_NONE)
-    )
-    checkEglErrorAndNotify("eglCreateContext")
-    eglContext = context
+    synchronized(contextsRegistry) {
+      val context = egl.eglCreateContext(
+        eglDisplay,
+        eglConfig,
+        contextsRegistry.lastOrNull().also { println("eglCreateContext used shared context from the registry : $it") } ?: sharedContext,
+        intArrayOf(EGL_CONTEXT_CLIENT_VERSION, 2, EGL10.EGL_NONE)
+      )
+      println("Added shared context to registry : $context")
+      contextsRegistry.add(context)
+      checkEglErrorAndNotify("eglCreateContext")
+      eglContext = context
+    }
+
     // Confirm with query.
     val values = IntArray(1)
     val eglQueryContextSuccess = egl.eglQueryContext(
@@ -102,7 +108,11 @@ internal class EGLCore(
       egl.eglTerminate(eglDisplay)
     }
     eglDisplay = EGL10.EGL_NO_DISPLAY
-    eglContext = EGL10.EGL_NO_CONTEXT
+    synchronized(contextsRegistry) {
+      println("Remove $eglContext")
+      contextsRegistry.remove(eglContext)
+      eglContext = EGL10.EGL_NO_CONTEXT
+    }
   }
 
   /**
@@ -257,6 +267,8 @@ internal class EGLCore(
   }
 
   companion object {
+    private var contextsRegistry = mutableSetOf<EGLContext>()
+
     private const val TAG = "Mbgl-EglCore"
     private const val EGL_CONTEXT_CLIENT_VERSION = 0x3098
   }
