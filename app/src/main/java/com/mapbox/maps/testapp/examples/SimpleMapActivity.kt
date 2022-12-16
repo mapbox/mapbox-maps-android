@@ -22,6 +22,7 @@ import com.mapbox.maps.MapView
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.expressions.dsl.generated.switchCase
+import com.mapbox.maps.extension.style.expressions.dsl.generated.id
 import com.mapbox.maps.extension.style.image.image
 import com.mapbox.maps.extension.style.layers.generated.SymbolLayerDsl
 import com.mapbox.maps.extension.style.layers.generated.symbolLayer
@@ -131,6 +132,7 @@ class GlitchDemoMapFragment : Fragment() {
       if (useFeatureState) {
         // we add a layer for all symbols that do not have the state "selected=true"
         +symbolLayer("symbol-layer", "symbol-source") {
+          textField(id())
           iconOpacity(
             switchCase {
               boolean {
@@ -147,6 +149,7 @@ class GlitchDemoMapFragment : Fragment() {
 
         // we add a layer for a red background for all symbols that have the state "selected=true"
         +symbolLayer("symbol-layer-selected-background", "symbol-source") {
+          textField(id())
           iconOpacity(
             switchCase {
               boolean {
@@ -163,6 +166,7 @@ class GlitchDemoMapFragment : Fragment() {
 
         // we add a layer for the selected symbol foreground
         +symbolLayer("symbol-layer-selected-foreground", "symbol-source") {
+          textField(id())
           iconOpacity(
             switchCase {
               boolean {
@@ -176,21 +180,23 @@ class GlitchDemoMapFragment : Fragment() {
             })
           image()
         }
-        transitionOptions {  }
       } else {
         // we add a layer for all symbols that do not have the state "selected=true"
         +symbolLayer("symbol-layer", "symbol-source") {
           filter(Expression.eq(Expression.get("selected"), Expression.literal(false)))
+          textField(id())
           image()
         }
         // we add a layer for a red background for all symbols that have the state "selected=true"
         +symbolLayer("symbol-layer-selected-background", "symbol-source") {
           filter(Expression.eq(Expression.get("selected"), Expression.literal(true)))
+          textField(id())
           selection()
         }
         // we add a layer for the selected symbol foreground
         +symbolLayer("symbol-layer-selected-foreground", "symbol-source") {
           filter(Expression.eq(Expression.get("selected"), Expression.literal(true)))
+          textField(id())
           image()
         }
       }
@@ -309,6 +315,8 @@ class GlitchDemoMapFragment : Fragment() {
     }
     this.iconAllowOverlap(true)
     this.iconIgnorePlacement(true)
+    this.textAllowOverlap(true)
+    this.textIgnorePlacement(true)
   }
 
   private fun SymbolLayerDsl.selection() {
@@ -321,6 +329,8 @@ class GlitchDemoMapFragment : Fragment() {
     }
     this.iconAllowOverlap(true)
     this.iconIgnorePlacement(true)
+    this.textAllowOverlap(true)
+    this.textIgnorePlacement(true)
   }
 
 
