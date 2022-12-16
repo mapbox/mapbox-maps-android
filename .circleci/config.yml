@@ -549,9 +549,7 @@ jobs:
                     pattern: << pipeline.parameters.changelog_branch >>
                     value: << pipeline.git.branch >>
               - not:
-                  matches:
-                    pattern: "tvn-revapi-main"
-                    value: $CIRCLE_BRANCH
+                  equal: [ "tvn-revapi-main", << pipeline.git.branch >> ]
           steps:
             - checkout
             - restore-gradle-cache
