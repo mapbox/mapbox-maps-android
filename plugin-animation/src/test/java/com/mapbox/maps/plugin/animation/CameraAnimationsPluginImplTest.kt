@@ -10,6 +10,7 @@ import androidx.core.animation.addListener
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.plugin.animation.CameraAnimationsPluginImpl.Companion.TAG
+import com.mapbox.maps.plugin.animation.CameraAnimationsPluginImplTest.Companion.cameraState
 import com.mapbox.maps.plugin.animation.CameraAnimationsPluginImplTest.Companion.toCameraState
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Companion.cameraAnimatorOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
@@ -566,7 +567,6 @@ class CameraAnimationsPluginImplTest {
 
   @Test
   fun testAnimatorListenersCallsCount() {
-
     val bearingDuration = 17L
     val bearingAnimator = createBearingAnimator(10.0, 2, bearingDuration)
     val bearingListener = CameraAnimatorListener()
@@ -659,7 +659,6 @@ class CameraAnimationsPluginImplTest {
 
   @Test
   fun testPlayAnimatorsTogether() {
-
     val pitch = createPitchAnimator(15.0, 0, 5)
     val pitchListener = CameraAnimatorListener()
     pitch.addListener(pitchListener)
@@ -775,7 +774,6 @@ class CameraAnimationsPluginImplTest {
 
   @Test
   fun testCancelAllExceptProtected() {
-
     val listenerOne = CameraAnimatorListener()
     val listenerTwo = CameraAnimatorListener()
     val listenerThree = CameraAnimatorListener()
@@ -1195,6 +1193,37 @@ class CameraAnimationsPluginImplTest {
     cameraAnimationsPluginImpl.performMapJump(startCameraOptionsPitchHigh)
 
     verify(exactly = 3) { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) }
+  }
+
+  @Test
+  fun listenersAreNotified() {
+    val cameraState = CameraOptions.Builder()
+      .center(Point.fromLngLat(30.0, 20.0))
+      .pitch(50.0)
+      .bearing(60.0)
+      .zoom(5.0)
+      .padding(EdgeInsets(1.0, 2.0, 3.0, 4.0))
+      .build()
+      .toCameraState()
+
+    var pitch = 0.0
+    cameraAnimationsPluginImpl.addCameraPitchChangeListener { pitch = it }
+    var edgeInsets: EdgeInsets? = null
+    cameraAnimationsPluginImpl.addCameraPaddingChangeListener { edgeInsets = it }
+    var center: Point? = null
+    cameraAnimationsPluginImpl.addCameraCenterChangeListener { center = it }
+    var bearing = 0.0
+    cameraAnimationsPluginImpl.addCameraBearingChangeListener { bearing = it }
+    var zoom = 0.0
+    cameraAnimationsPluginImpl.addCameraZoomChangeListener { zoom = it }
+
+    cameraAnimationsPluginImpl.onCameraMove(cameraState)
+
+    assertEquals(50.0, pitch, EPS)
+    assertEquals(60.0, bearing, EPS)
+    assertEquals(5.0, zoom, EPS)
+    assertEquals(Point.fromLngLat(30.0, 20.0), center)
+    assertEquals(EdgeInsets(1.0, 2.0, 3.0, 4.0), edgeInsets)
   }
 
   class LifecycleListener : CameraAnimationsLifecycleListener {

@@ -173,16 +173,16 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlugin {
   ) {
     this.bearing = bearing
     this.center = Point.fromLngLat(lon, lat)
-    // Insets array order : insets.top, insets.left, insets.bottom, insets.right
+    // Insets array order : [left, top, right, bottom]
     this.padding = EdgeInsets(
       /* top = */
-      padding[0],
-      /* left = */
       padding[1],
+      /* left = */
+      padding[0],
       /* bottom = */
-      padding[2],
-      /* right = */
       padding[3],
+      /* right = */
+      padding[2],
     )
     this.pitch = pitch
     this.zoom = zoom

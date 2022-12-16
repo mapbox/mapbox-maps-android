@@ -157,7 +157,7 @@ internal class MapPluginRegistry(
         cameraState.pitch,
         cameraState.bearing,
         cameraState.padding.let { insets ->
-          arrayOf(insets.top, insets.left, insets.bottom, insets.right)
+          arrayOf(insets.left, insets.top, insets.right, insets.bottom)
         }
       )
     }

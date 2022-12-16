@@ -177,7 +177,7 @@ class MapPluginRegistryTest {
         zoom,
         pitch,
         bearing,
-        arrayOf(insets.top, insets.left, insets.bottom, insets.right)
+        arrayOf(insets.left, insets.top, insets.right, insets.bottom)
       )
     }
   }
