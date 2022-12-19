@@ -17,7 +17,7 @@ import com.mapbox.maps.threading.AnimationThreadController.postOnAnimatorThread
 import com.mapbox.maps.threading.AnimationThreadController.postOnMainThread
 import com.mapbox.maps.threading.AnimationThreadController.usingBackgroundThread
 import com.mapbox.maps.util.MathUtils
-import java.util.Objects
+import java.util.*
 import java.util.concurrent.CopyOnWriteArraySet
 import kotlin.properties.Delegates
 
@@ -271,9 +271,16 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlugin {
     }
   }
 
+  // Returns true if values were applied to animator, false if animation was skipped.
   private fun updateAnimatorValues(cameraAnimator: CameraAnimator<*>): Boolean {
+    if (cameraAnimator.targets.isEmpty()) {
+      logE(
+        TAG,
+        "Skipped animation ${cameraAnimator.type.name} with no targets!"
+      )
+      return false
+    }
     @Suppress("IMPLICIT_CAST_TO_ANY")
-
     val startValue = cameraAnimator.startValue ?: when (cameraAnimator.type) {
       CameraAnimatorType.CENTER -> center ?: mapCameraManagerDelegate.cameraState.center
       CameraAnimatorType.ZOOM -> zoom ?: mapCameraManagerDelegate.cameraState.zoom
@@ -289,7 +296,7 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlugin {
         )
       }
     }
-    val targets = if (cameraAnimator is CameraBearingAnimator && cameraAnimator.useShortestPath) {
+    val animationObjectValues = if (cameraAnimator is CameraBearingAnimator && cameraAnimator.useShortestPath) {
       MathUtils.prepareOptimalBearingPath(
         DoubleArray(cameraAnimator.targets.size + 1) { index ->
           if (index == 0) {
@@ -308,7 +315,7 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlugin {
         }
       }
     }
-    if (skipRedundantAnimator(targets, cameraAnimator.type)) {
+    if (skipRedundantAnimator(animationObjectValues, cameraAnimator.type)) {
       if (debugMode) {
         logI(
           TAG,
@@ -317,27 +324,17 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlugin {
       }
       return false
     }
-    cameraAnimator.setObjectValues(*targets)
+    cameraAnimator.setObjectValues(*animationObjectValues)
     return true
   }
 
-  private fun skipRedundantAnimator(targets: Array<out Any?>, type: CameraAnimatorType): Boolean {
-    if (targets.size <= 1) {
-      return true
-    }
-    for (i in 0 until targets.size - 1) {
-      if (targets[i] != targets[i + 1]) {
-        return false
-      }
-    }
-    return when (type) {
-      CameraAnimatorType.CENTER -> Objects.equals(center, targets[0])
-      CameraAnimatorType.ZOOM -> Objects.equals(zoom, targets[0])
-      CameraAnimatorType.ANCHOR -> false
-      CameraAnimatorType.PADDING -> Objects.equals(padding, targets[0])
-      CameraAnimatorType.BEARING -> Objects.equals(bearing, targets[0])
-      CameraAnimatorType.PITCH -> Objects.equals(pitch, targets[0])
-    }
+  private fun skipRedundantAnimator(animationObjectValues: Array<out Any?>, type: CameraAnimatorType) = when (type) {
+    CameraAnimatorType.ANCHOR -> false // anchor animations are never skipped
+    CameraAnimatorType.CENTER -> animationObjectValues.all { Objects.equals(center, it) }
+    CameraAnimatorType.ZOOM -> animationObjectValues.all { Objects.equals(zoom, it) }
+    CameraAnimatorType.PADDING -> animationObjectValues.all { Objects.equals(padding, it) }
+    CameraAnimatorType.BEARING -> animationObjectValues.all { Objects.equals(bearing, it) }
+    CameraAnimatorType.PITCH -> animationObjectValues.all { Objects.equals(pitch, it) }
   }
 
   private fun updateCameraValue(cameraAnimator: CameraAnimator<*>) {
@@ -375,10 +372,8 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlugin {
             if (startingAnimator.canceled) {
               return
             }
-            // Prepare animator values
-            // Some animators might not have initial values and should be skipped from internal update
-            val animatorStartRequired = updateAnimatorValues(startingAnimator)
-            if (!animatorStartRequired) {
+            if (!updateAnimatorValues(startingAnimator)) {
+              // animation was skipped - camera values are already applied
               startingAnimator.skipped = true
               return
             }
