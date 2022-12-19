@@ -1,4 +1,8 @@
 version: 2.1
+
+orbs:
+  slack: circleci/slack@4.5
+
 parameters:
   mapbox_upstream:
     type: boolean
@@ -18,24 +22,18 @@ parameters:
   git_release_branch:
     type: string
     default: ^v[0-9]+\.[0-9]+$
+  weekly:
+    type: boolean
+    default: false
 
 workflows:
   version: 2
-  weekly:
-    triggers:
-      - schedule:
-          # at 7:00 on Monday
-          cron: 0 7 * * 1
-          filters:
-            branches:
-              only:
-                - main
-    jobs:
-      - check-gradle-dependencies
 
   build:
     when:
-      not: << pipeline.parameters.mapbox_upstream >>
+      and:
+        - not: << pipeline.parameters.mapbox_upstream >>
+        - not: << pipeline.parameters.weekly >>
     jobs:
       - verify-code:
           filters:
@@ -122,6 +120,43 @@ workflows:
     when: << pipeline.parameters.mapbox_upstream >>
     jobs:
       - run-sdk-instrumentation-test
+
+  weekly:
+    triggers:
+      - schedule:
+          # at 7:00 on Monday
+          cron: 0 7 * * 1
+          filters:
+            branches:
+              only:
+                - main
+    jobs:
+      - check-gradle-dependencies
+      - run-robo-test-weekly:
+          requires:
+            - build-modules-and-instrumentation-tests
+      - run-sdk-instrumentation-test-weekly:
+          requires:
+            - run-robo-test-weekly
+      - build-modules-and-instrumentation-tests:
+          requires:
+            - verify-code
+      - verify-code
+
+  validation-weekly:
+    when: << pipeline.parameters.weekly >>
+    jobs:
+      - check-gradle-dependencies
+      - run-robo-test-weekly:
+          requires:
+            - build-modules-and-instrumentation-tests
+      - run-sdk-instrumentation-test-weekly:
+          requires:
+            - run-robo-test-weekly
+      - build-modules-and-instrumentation-tests:
+          requires:
+            - verify-code
+      - verify-code
 
 commands:
   save-to-workspace:
@@ -349,6 +384,10 @@ commands:
         description: app target
         type: string
         default: "app"
+      multiple_devices:
+        description: multiple_devices build or normal
+        type: boolean
+        default: false
     steps:
       - run:
           name: Run instrumentation tests on Firebase
@@ -363,36 +402,54 @@ commands:
                   --timeout 45m --use-orchestrator --no-record-video --num-flaky-test-attempts 1 \
                   --num-uniform-shards 3
               else
-                gcloud beta firebase test android run --type instrumentation \
-                --app << parameters.app_target >>/build/outputs/apk/debug/<< parameters.app_target >>-debug.apk \
-                --test << parameters.module_target >>/build/outputs/apk/androidTest/debug/<< parameters.module_target >>-debug-androidTest.apk \
-                --device model=harpia,version=23,locale=en,orientation=portrait \
-                --device model=blueline,version=28,locale=en,orientation=portrait \
-                --timeout 45m --use-orchestrator --no-record-video --num-flaky-test-attempts 1 \
-                --num-uniform-shards 4
+                if << parameters.multiple_devices >> ; then
+                  gcloud beta firebase test android run --type instrumentation \
+                    --app << parameters.app_target >>/build/outputs/apk/debug/<< parameters.app_target >>-debug.apk \
+                    --test << parameters.module_target >>/build/outputs/apk/androidTest/debug/<< parameters.module_target >>-debug-androidTest.apk \
+                    --device model=harpia,version=23,locale=en,orientation=portrait \
+                    --device model=blueline,version=28,locale=en,orientation=portrait \
+                    --device model=redfin,version=30,locale=en,orientation=portrait \
+                    --device model=oriole,version=33,locale=en,orientation=portrait \
+                    --timeout 45m --use-orchestrator --no-record-video --num-flaky-test-attempts 1 \
+                    --num-uniform-shards 4
+                else
+                  gcloud beta firebase test android run --type instrumentation \
+                    --app << parameters.app_target >>/build/outputs/apk/debug/<< parameters.app_target >>-debug.apk \
+                    --test << parameters.module_target >>/build/outputs/apk/androidTest/debug/<< parameters.module_target >>-debug-androidTest.apk \
+                    --device model=redfin,version=30,locale=en,orientation=portrait \
+                    --timeout 45m --use-orchestrator --no-record-video --num-flaky-test-attempts 1 \
+                    --num-uniform-shards 4
+                fi
               fi
             fi
 
   run-firebase-robo:
+    parameters:
+      multiple_devices:
+        description: multiple_devices build or normal
+        type: boolean
+        default: false
     steps:
       - run:
-          name: Run instrumentation tests on Firebase
+          name: Run robo tests on Firebase
           no_output_timeout: 10m
           command: |
             if [[ -n "${GCLOUD_SERVICE_ACCOUNT_JSON}" ]]; then
-              gcloud firebase test android models list
-              ### We use following devices to run robo tests:
-              ### * 1 old API 21, virtual Nexus 5
-              ### * 1 new API 31, physical Pixel 6
-              ### * 1 x86-64, virtual Pixel2
-              ### * 1 API 23, physical Moto G Play, API known to work weird sometimes
-              gcloud firebase test android run --type robo \
-                --app app/build/outputs/apk/release/app-release.apk \
-                --device model=Nexus5,version=21,locale=en,orientation=portrait \
-                --device model=harpia,version=23,locale=en,orientation=portrait \
-                --device model=Pixel2,version=29,locale=en,orientation=portrait \
-                --device model=oriole,version=31,locale=en,orientation=portrait \
-                --timeout 90s
+              if << parameters.multiple_devices >> ; then
+                gcloud firebase test android run --type robo \
+                  --app app/build/outputs/apk/release/app-release.apk \
+                  --device model=Nexus5,version=21,locale=en,orientation=portrait \
+                  --device model=harpia,version=23,locale=en,orientation=portrait \
+                  --device model=Pixel2,version=29,locale=en,orientation=portrait \
+                  --device model=redfin,version=30,locale=en,orientation=portrait \
+                  --device model=oriole,version=33,locale=en,orientation=portrait \
+                  --timeout 90s
+              else
+                gcloud firebase test android run --type robo \
+                  --app app/build/outputs/apk/release/app-release.apk \
+                  --device model=redfin,version=30,locale=en,orientation=portrait \
+                  --timeout 90s
+              fi
             fi
 
   mapbox-gl-native-begin:
@@ -656,8 +713,23 @@ jobs:
           steps:
             - read-from-workspace
             - login-google-cloud-platform
-            - run-firebase-robo
+            - run-firebase-robo:
+                multiple_devices: false
       - run: exit 0
+
+  run-robo-test-weekly:
+    executor:
+      name: ubuntu
+      machine: small
+    steps:
+      - read-from-workspace
+      - login-google-cloud-platform
+      - run-firebase-robo:
+          multiple_devices: true
+      - slack/notify:
+          event: fail
+          mentions: '@maps-android'
+          template: basic_fail_1
 
   run-app-instrumentation-test:
     executor:
@@ -694,7 +766,27 @@ jobs:
             - login-google-cloud-platform
             - run-firebase-instrumentation:
                 module_target: "sdk"
+                multiple_devices: false
             - mapbox-gl-native-end
+      - run: exit 0
+
+  run-sdk-instrumentation-test-weekly:
+    executor:
+      name: ubuntu
+      machine: small
+    steps:
+      - read-from-workspace
+      - login-google-cloud-platform
+      - run-firebase-instrumentation:
+          module_target: "sdk"
+          multiple_devices: true
+      - slack/notify:
+          event: fail
+          mentions: '@maps-android'
+          template: basic_fail_1
+      - slack/notify:
+          event: pass
+          template: basic_success_1
       - run: exit 0
 
   run-style-test:
