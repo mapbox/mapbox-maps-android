@@ -384,8 +384,8 @@ commands:
         description: app target
         type: string
         default: "app"
-      nightly:
-        description: nightly build or normal
+      multiple_devices:
+        description: multiple_devices build or normal
         type: boolean
         default: false
     steps:
@@ -402,7 +402,7 @@ commands:
                   --timeout 45m --use-orchestrator --no-record-video --num-flaky-test-attempts 1 \
                   --num-uniform-shards 3
               else
-                if << parameters.nightly >> ; then
+                if << parameters.multiple_devices >> ; then
                   gcloud beta firebase test android run --type instrumentation \
                     --app << parameters.app_target >>/build/outputs/apk/debug/<< parameters.app_target >>-debug.apk \
                     --test << parameters.module_target >>/build/outputs/apk/androidTest/debug/<< parameters.module_target >>-debug-androidTest.apk \
@@ -425,8 +425,8 @@ commands:
 
   run-firebase-robo:
     parameters:
-      nightly:
-        description: nightly build or normal
+      multiple_devices:
+        description: multiple_devices build or normal
         type: boolean
         default: false
     steps:
@@ -435,7 +435,7 @@ commands:
           no_output_timeout: 10m
           command: |
             if [[ -n "${GCLOUD_SERVICE_ACCOUNT_JSON}" ]]; then
-              if << parameters.nightly >> ; then              
+              if << parameters.multiple_devices >> ; then
                 gcloud firebase test android run --type robo \
                   --app app/build/outputs/apk/release/app-release.apk \
                   --device model=Nexus5,version=21,locale=en,orientation=portrait \
@@ -448,7 +448,7 @@ commands:
                 gcloud firebase test android run --type robo \
                   --app app/build/outputs/apk/release/app-release.apk \
                   --device model=redfin,version=30,locale=en,orientation=portrait \
-                  --timeout 90s            
+                  --timeout 90s
               fi
             fi
 
@@ -714,7 +714,7 @@ jobs:
             - read-from-workspace
             - login-google-cloud-platform
             - run-firebase-robo:
-                nightly: false
+                multiple_devices: false
       - run: exit 0
 
   run-robo-test-weekly:
@@ -725,7 +725,7 @@ jobs:
       - read-from-workspace
       - login-google-cloud-platform
       - run-firebase-robo:
-          nightly: true
+          multiple_devices: true
       - slack/notify:
           event: fail
           mentions: '@maps-android'
@@ -766,7 +766,7 @@ jobs:
             - login-google-cloud-platform
             - run-firebase-instrumentation:
                 module_target: "sdk"
-                nightly: false
+                multiple_devices: false
             - mapbox-gl-native-end
       - run: exit 0
 
@@ -779,7 +779,7 @@ jobs:
       - login-google-cloud-platform
       - run-firebase-instrumentation:
           module_target: "sdk"
-          nightly: true
+          multiple_devices: true
       - slack/notify:
           event: fail
           mentions: '@maps-android'
