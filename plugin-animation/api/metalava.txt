@@ -1,7 +1,7 @@
 // Signature format: 3.0
 package com.mapbox.maps.plugin.animation {
 
-  public final class CameraAnimationsPluginImpl implements com.mapbox.maps.plugin.animation.CameraAnimationsPlugin {
+  public final class CameraAnimationsPluginImpl implements com.mapbox.maps.plugin.animation.CameraAnimationsPlugin com.mapbox.maps.plugin.MapCameraPlugin {
     ctor public CameraAnimationsPluginImpl();
     method public void addCameraAnchorChangeListener(com.mapbox.maps.plugin.animation.CameraAnimatorNullableChangeListener<com.mapbox.maps.ScreenCoordinate> listener);
     method public void addCameraAnimationsLifecycleListener(com.mapbox.maps.plugin.animation.CameraAnimationsLifecycleListener listener);
@@ -25,6 +25,7 @@ package com.mapbox.maps.plugin.animation {
     method public com.mapbox.maps.plugin.animation.CameraAnimatorsFactory getCameraAnimationsFactory();
     method public boolean getDebugMode();
     method public com.mapbox.maps.plugin.animation.Cancelable moveBy(com.mapbox.maps.ScreenCoordinate screenCoordinate, com.mapbox.maps.plugin.animation.MapAnimationOptions? animationOptions);
+    method public void onCameraMove(double lat, double lon, double zoom, double pitch, double bearing, Double![] padding);
     method public void onDelegateProvider(com.mapbox.maps.plugin.delegates.MapDelegateProvider delegateProvider);
     method public com.mapbox.maps.plugin.animation.Cancelable pitchBy(double pitch, com.mapbox.maps.plugin.animation.MapAnimationOptions? animationOptions);
     method public void playAnimatorsSequentially(android.animation.ValueAnimator... animators);

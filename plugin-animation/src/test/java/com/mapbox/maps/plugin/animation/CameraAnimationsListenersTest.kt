@@ -54,6 +54,28 @@ class CameraAnimationsListenersTest {
     cameraAnimationsPluginImpl = CameraAnimationsPluginImpl().apply {
       onDelegateProvider(delegateProvider)
     }
+    var actualCameraState = CameraAnimationsPluginImplTest.cameraState
+
+    every {
+      mapCameraManagerDelegate.cameraState
+    } answers { actualCameraState }
+
+    every { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) } answers {
+      actualCameraState = firstArg<CameraOptions>().toCameraState()
+      cameraAnimationsPluginImpl.onCameraMove(
+        lat = actualCameraState.center.latitude(),
+        lon = actualCameraState.center.longitude(),
+        zoom = actualCameraState.zoom,
+        pitch = actualCameraState.pitch,
+        bearing = actualCameraState.bearing,
+        padding = actualCameraState.padding.let { insets ->
+          arrayOf(insets.left, insets.top, insets.right, insets.bottom)
+        }
+      )
+    }
+  }
+
+  private fun CameraAnimationsPluginImpl.onCameraMove(cameraOptions: CameraOptions) {
   }
 
   @After
@@ -343,7 +365,6 @@ class CameraAnimationsListenersTest {
 
   @Test
   fun testRemoveAllUpdateListeners() {
-    var cameraPosition = CameraOptions.Builder().build()
     val bearingAnimator = CameraBearingAnimator(
       cameraAnimatorOptions(100.0) {
         startValue(0.0)
@@ -351,12 +372,6 @@ class CameraAnimationsListenersTest {
       true
     ) {
       duration = 50
-    }
-    every { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) } answers {
-      cameraPosition = firstArg()
-    }
-    every { mapCameraManagerDelegate.cameraState } answers {
-      cameraPosition.toCameraState()
     }
     var bearing = 0.0
     cameraAnimationsPluginImpl.registerAnimators(bearingAnimator)

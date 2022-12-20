@@ -49,6 +49,7 @@ abstract class CameraAnimator<out T> (
 
   internal var canceled = false
   internal var isInternal = false
+  internal var skipped = false
 
   init {
     setObjectValues(targets[0], targets[0])

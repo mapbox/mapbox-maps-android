@@ -3,6 +3,9 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
+## Features ✨ and improvements 🏁
+* Skip redundant `MapboxMap.setCamera` updates in `CameraAnimationsPlugin`. ([1909](https://github.com/mapbox/mapbox-maps-android/pull/1909))
+
 ## Bug fixes 🐞
 * Fix crash due to invalid distance when panning the map. ([1906](https://github.com/mapbox/mapbox-maps-android/pull/1906))
 

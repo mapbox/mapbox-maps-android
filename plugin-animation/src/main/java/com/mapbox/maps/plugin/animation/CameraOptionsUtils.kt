@@ -13,6 +13,3 @@ internal val CameraOptions.isEmpty: Boolean
 
     return true
   }
-
-internal val CameraOptions.hasChanges: Boolean
-  get() = !isEmpty

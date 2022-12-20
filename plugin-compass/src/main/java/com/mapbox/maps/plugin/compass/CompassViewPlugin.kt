@@ -33,7 +33,7 @@ open class CompassViewPlugin(
   private val viewImplProvider: (Context) -> CompassViewImpl = { CompassViewImpl(it) },
   @SuppressLint("Recycle")
   private val fadeAnimator: ValueAnimator = ValueAnimator.ofFloat(1f, 0f),
-  private val mainHandler: Handler = Handler(Looper.getMainLooper())
+  @Suppress("unused") private val mainHandler: Handler = Handler(Looper.getMainLooper())
 ) : CompassPlugin, CompassSettingsBase() {
 
   private lateinit var compassView: CompassView
@@ -185,9 +185,7 @@ open class CompassViewPlugin(
     bearing: Double,
     padding: Array<Double>
   ) {
-    mainHandler.post {
-      update(bearing)
-    }
+    update(bearing)
   }
 
   /**

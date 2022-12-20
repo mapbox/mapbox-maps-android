@@ -12,7 +12,7 @@ object MathUtils {
   fun prepareOptimalBearingPath(targets: DoubleArray): DoubleArray {
     val optimized = DoubleArray(targets.size)
     targets.apply {
-      for (i in 0 until size) {
+      for (i in indices) {
         optimized[i] = if (i == 0)
           normalize(get(i))
         else

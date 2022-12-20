@@ -653,7 +653,7 @@ package com.mapbox.maps.plugin {
   }
 
   public fun interface MapCameraPlugin extends com.mapbox.maps.plugin.MapPlugin {
-    method @AnyThread public void onCameraMove(double lat, double lon, double zoom, double pitch, double bearing, Double![] padding);
+    method public void onCameraMove(double lat, double lon, double zoom, double pitch, double bearing, Double![] padding);
   }
 
   public interface MapPlugin {

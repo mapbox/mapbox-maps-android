@@ -10,12 +10,14 @@ import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
+import com.mapbox.maps.plugin.MapCameraPlugin
 import com.mapbox.maps.plugin.animation.animator.*
 import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.threading.AnimationThreadController.postOnAnimatorThread
 import com.mapbox.maps.threading.AnimationThreadController.postOnMainThread
 import com.mapbox.maps.threading.AnimationThreadController.usingBackgroundThread
 import com.mapbox.maps.util.MathUtils
+import java.util.*
 import java.util.concurrent.CopyOnWriteArraySet
 import kotlin.properties.Delegates
 
@@ -35,7 +37,7 @@ import kotlin.properties.Delegates
  * However, it doesn't have to be the UI thread.
  */
 
-class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
+class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlugin {
 
   @VisibleForTesting(otherwise = PRIVATE)
   internal val animators = hashSetOf<CameraAnimator<*>>()
@@ -133,8 +135,6 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     }
   }
 
-  @VisibleForTesting(otherwise = PRIVATE)
-  internal var lastCameraOptions: CameraOptions? = null
   private var cameraOptionsBuilder = CameraOptions.Builder()
 
   private lateinit var mapDelegateProvider: MapDelegateProvider
@@ -164,6 +164,41 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
   }
 
   /**
+   * Called whenever camera position changes.
+   *
+   * @param lat latitude
+   * @param lon longitude
+   * @param zoom zoom
+   * @param pitch pitch in degrees
+   * @param bearing bearing in degrees
+   * @param padding padding ordered as [left, top, right, bottom]
+   */
+  override fun onCameraMove(
+    lat: Double,
+    lon: Double,
+    zoom: Double,
+    pitch: Double,
+    bearing: Double,
+    padding: Array<Double>
+  ) {
+    this.bearing = bearing
+    this.center = Point.fromLngLat(lon, lat)
+    // Insets array order : [left, top, right, bottom]
+    this.padding = EdgeInsets(
+      /* top = */
+      padding[1],
+      /* left = */
+      padding[0],
+      /* bottom = */
+      padding[3],
+      /* right = */
+      padding[2],
+    )
+    this.pitch = pitch
+    this.zoom = zoom
+  }
+
+  /**
    * Called when the map is destroyed. Should be used to cleanup plugin resources for that map.
    * Cancel all running animations and cleanup all resources (registered animations, listeners).
    */
@@ -181,17 +216,52 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     handler.removeCallbacks(commitChangesRunnable)
   }
 
+  /*
+   * CameraOptions that are already applied should be skipped.
+   */
+  private fun skipMapJump(cameraOptions: CameraOptions): Boolean {
+    if (cameraOptions.isEmpty) {
+      return true
+    }
+    if (cameraOptions.anchor != null) {
+      return false
+    }
+    cameraOptions.pitch?.let { userPitch ->
+      // use-case when pitch >= 60 and terrain enabled might result in some optimizations
+      // in gl-native and different result camera state - we check just for the pitch as
+      // checking for terrain enabled requires having the style object and more complex code
+      if (userPitch >= 60.0 || userPitch != pitch) return false
+    }
+    if (cameraOptions.zoom != null && cameraOptions.zoom != zoom) {
+      return false
+    }
+    if (cameraOptions.bearing != null && cameraOptions.bearing != bearing) {
+      return false
+    }
+    if (cameraOptions.center != null && cameraOptions.center != center) {
+      return false
+    }
+    if (cameraOptions.padding != null && cameraOptions.padding != padding) {
+      return false
+    }
+    return true
+  }
+
   @VisibleForTesting(otherwise = PRIVATE)
   internal fun performMapJump(cameraOptions: CameraOptions) {
-    if (lastCameraOptions == cameraOptions) {
+    if (skipMapJump(cameraOptions)) {
+      if (debugMode) {
+        logI(
+          TAG,
+          "Setting $cameraOptions to core was skipped due to optimization."
+        )
+      }
       return
     }
     // move native map to new position
     try {
+      // setCamera triggers OnCameraMove that updates camera options and notifies listeners
       mapCameraManagerDelegate.setCamera(cameraOptions)
-      // notify listeners with actual values
-      notifyListeners(mapCameraManagerDelegate.cameraState)
-      lastCameraOptions = cameraOptions
     } catch (e: Exception) {
       logE(
         TAG,
@@ -200,25 +270,32 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     }
   }
 
+  // Returns true if values were applied to animator, false if animation was skipped.
   private fun updateAnimatorValues(cameraAnimator: CameraAnimator<*>): Boolean {
+    if (cameraAnimator.targets.isEmpty()) {
+      logE(
+        TAG,
+        "Skipped animation ${cameraAnimator.type.name} with no targets!"
+      )
+      return false
+    }
     @Suppress("IMPLICIT_CAST_TO_ANY")
-
     val startValue = cameraAnimator.startValue ?: when (cameraAnimator.type) {
-      CameraAnimatorType.CENTER -> mapCameraManagerDelegate.cameraState.center
-      CameraAnimatorType.ZOOM -> mapCameraManagerDelegate.cameraState.zoom
+      CameraAnimatorType.CENTER -> center ?: mapCameraManagerDelegate.cameraState.center
+      CameraAnimatorType.ZOOM -> zoom ?: mapCameraManagerDelegate.cameraState.zoom
       CameraAnimatorType.ANCHOR -> anchor ?: ScreenCoordinate(0.0, 0.0)
-      CameraAnimatorType.PADDING -> mapCameraManagerDelegate.cameraState.padding
-      CameraAnimatorType.BEARING -> mapCameraManagerDelegate.cameraState.bearing
-      CameraAnimatorType.PITCH -> mapCameraManagerDelegate.cameraState.pitch
+      CameraAnimatorType.PADDING -> padding ?: mapCameraManagerDelegate.cameraState.padding
+      CameraAnimatorType.BEARING -> bearing ?: mapCameraManagerDelegate.cameraState.bearing
+      CameraAnimatorType.PITCH -> pitch ?: mapCameraManagerDelegate.cameraState.pitch
     }.also {
       if (debugMode) {
-        logD(
+        logI(
           TAG,
           "Animation ${cameraAnimator.type.name}(${cameraAnimator.hashCode()}): automatically setting start value $it."
         )
       }
     }
-    val targets = if (cameraAnimator is CameraBearingAnimator && cameraAnimator.useShortestPath) {
+    val animationObjectValues = if (cameraAnimator is CameraBearingAnimator && cameraAnimator.useShortestPath) {
       MathUtils.prepareOptimalBearingPath(
         DoubleArray(cameraAnimator.targets.size + 1) { index ->
           if (index == 0) {
@@ -237,18 +314,26 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
         }
       }
     }
-    cameraAnimator.setObjectValues(*targets)
+    if (skipRedundantAnimator(animationObjectValues, cameraAnimator.type)) {
+      if (debugMode) {
+        logI(
+          TAG,
+          "Animation ${cameraAnimator.type.name}(${cameraAnimator.hashCode()}) was skipped."
+        )
+      }
+      return false
+    }
+    cameraAnimator.setObjectValues(*animationObjectValues)
     return true
   }
 
-  internal fun notifyListeners(cameraState: CameraState) {
-    cameraState.also {
-      bearing = it.bearing
-      center = it.center
-      padding = it.padding
-      pitch = it.pitch
-      zoom = it.zoom
-    }
+  private fun skipRedundantAnimator(animationObjectValues: Array<out Any?>, type: CameraAnimatorType) = when (type) {
+    CameraAnimatorType.ANCHOR -> false // anchor animations are never skipped
+    CameraAnimatorType.CENTER -> animationObjectValues.all { Objects.equals(center, it) }
+    CameraAnimatorType.ZOOM -> animationObjectValues.all { Objects.equals(zoom, it) }
+    CameraAnimatorType.PADDING -> animationObjectValues.all { Objects.equals(padding, it) }
+    CameraAnimatorType.BEARING -> animationObjectValues.all { Objects.equals(bearing, it) }
+    CameraAnimatorType.PITCH -> animationObjectValues.all { Objects.equals(pitch, it) }
   }
 
   private fun updateCameraValue(cameraAnimator: CameraAnimator<*>) {
@@ -286,6 +371,11 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
             if (startingAnimator.canceled) {
               return
             }
+            if (!updateAnimatorValues(startingAnimator)) {
+              // animation was skipped - camera values are already applied
+              startingAnimator.skipped = true
+              return
+            }
             lifecycleListeners.forEach {
               it.onAnimatorStarting(startingAnimator.type, startingAnimator, startingAnimator.owner)
             }
@@ -309,18 +399,16 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
                 }
               }
             }
-            // Prepare animator values
-            // Some animators might not have initial values and should be skipped from internal update
-            val isUpdated = updateAnimatorValues(startingAnimator)
-            if (isUpdated) {
-              // finally register update listener in order to update map properly -
-              // if it's not specific use-case using 0-duration animations with background thread
-              if (!usingBackgroundThread || startingAnimator.duration != 0L) {
-                registerInternalUpdateListener(startingAnimator)
-              }
-              if (debugMode) {
-                logD(TAG, "Animation ${startingAnimator.type.name}(${hashCode()}) started.")
-              }
+            // finally register update listener in order to update map properly -
+            // if it's not specific use-case using 0-duration animations with background thread
+            if (!usingBackgroundThread || startingAnimator.duration != 0L) {
+              registerInternalUpdateListener(startingAnimator)
+            }
+            if (debugMode) {
+              logI(
+                TAG,
+                "Animation ${startingAnimator.type.name}(${startingAnimator.hashCode()}) started."
+              )
             }
           } ?: throw MapboxCameraAnimationException(
             "Could not start animation as it must be an instance of CameraAnimator and not null!"
@@ -339,17 +427,20 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
 
         private fun finishAnimation(animation: Animator, finishStatus: AnimationFinishStatus) {
           (animation as? CameraAnimator<*>)?.apply {
+            if (skipped) {
+              return
+            }
             runningAnimatorsQueue.remove(animation)
             if (debugMode) {
               val logText = when (finishStatus) {
                 AnimationFinishStatus.CANCELED -> "was canceled."
                 AnimationFinishStatus.ENDED -> "ended."
               }
-              logD(TAG, "Animation ${type.name}(${hashCode()}) $logText")
+              logI(TAG, "Animation ${type.name}(${hashCode()}) $logText")
             }
             if (isInternal) {
               if (debugMode) {
-                logD(TAG, "Internal Animator ${type.name}(${hashCode()}) was unregistered")
+                logI(TAG, "Internal Animator ${type.name}(${hashCode()}) was unregistered")
               }
               unregisterAnimators(this, cancelAnimators = false)
             }

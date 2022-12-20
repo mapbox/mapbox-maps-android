@@ -1,7 +1,5 @@
 package com.mapbox.maps.plugin
 
-import androidx.annotation.AnyThread
-
 /**
  * Definition for map camera plugins. The map will constantly push current camera position values.
  */
@@ -9,9 +7,14 @@ fun interface MapCameraPlugin : MapPlugin {
 
   /**
    * Called whenever camera position changes.
-   * Could be invoked from any thread when map starts rendering.
+   *
+   * @param lat latitude
+   * @param lon longitude
+   * @param zoom zoom
+   * @param pitch pitch in degrees
+   * @param bearing bearing in degrees
+   * @param padding padding ordered as [left, top, right, bottom]
    */
-  @AnyThread
   fun onCameraMove(
     lat: Double,
     lon: Double,

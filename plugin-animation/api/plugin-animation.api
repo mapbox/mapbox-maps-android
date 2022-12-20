@@ -1,4 +1,4 @@
-public final class com/mapbox/maps/plugin/animation/CameraAnimationsPluginImpl : com/mapbox/maps/plugin/animation/CameraAnimationsPlugin {
+public final class com/mapbox/maps/plugin/animation/CameraAnimationsPluginImpl : com/mapbox/maps/plugin/MapCameraPlugin, com/mapbox/maps/plugin/animation/CameraAnimationsPlugin {
 	public static final field Companion Lcom/mapbox/maps/plugin/animation/CameraAnimationsPluginImpl$Companion;
 	public field cameraAnimationsFactory Lcom/mapbox/maps/plugin/animation/CameraAnimatorsFactory;
 	public fun <init> ()V
@@ -25,6 +25,7 @@ public final class com/mapbox/maps/plugin/animation/CameraAnimationsPluginImpl :
 	public fun getDebugMode ()Z
 	public fun initialize ()V
 	public fun moveBy (Lcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;)Lcom/mapbox/maps/plugin/animation/Cancelable;
+	public fun onCameraMove (DDDDD[Ljava/lang/Double;)V
 	public fun onDelegateProvider (Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;)V
 	public fun pitchBy (DLcom/mapbox/maps/plugin/animation/MapAnimationOptions;)Lcom/mapbox/maps/plugin/animation/Cancelable;
 	public fun playAnimatorsSequentially ([Landroid/animation/ValueAnimator;)V
