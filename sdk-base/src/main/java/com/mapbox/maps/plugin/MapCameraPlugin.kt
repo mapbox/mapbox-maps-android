@@ -1,7 +1,5 @@
 package com.mapbox.maps.plugin
 
-import androidx.annotation.AnyThread
-
 /**
  * Definition for map camera plugins. The map will constantly push current camera position values.
  */
