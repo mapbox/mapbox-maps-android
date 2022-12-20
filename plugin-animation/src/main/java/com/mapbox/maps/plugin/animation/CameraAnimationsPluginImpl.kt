@@ -165,7 +165,6 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlugin {
 
   /**
    * Called whenever camera position changes.
-   * Could be invoked from any thread when map starts rendering.
    *
    * @param lat latitude
    * @param lon longitude

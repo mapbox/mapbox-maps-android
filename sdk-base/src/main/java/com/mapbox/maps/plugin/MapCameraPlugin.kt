@@ -9,7 +9,6 @@ fun interface MapCameraPlugin : MapPlugin {
 
   /**
    * Called whenever camera position changes.
-   * Could be invoked from any thread when map starts rendering.
    *
    * @param lat latitude
    * @param lon longitude
@@ -18,7 +17,6 @@ fun interface MapCameraPlugin : MapPlugin {
    * @param bearing bearing in degrees
    * @param padding padding ordered as [left, top, right, bottom]
    */
-  @AnyThread
   fun onCameraMove(
     lat: Double,
     lon: Double,
