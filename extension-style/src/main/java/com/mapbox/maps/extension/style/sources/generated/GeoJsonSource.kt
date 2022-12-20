@@ -8,8 +8,6 @@ import android.os.Looper
 import android.os.Process.THREAD_PRIORITY_DEFAULT
 import androidx.annotation.VisibleForTesting
 import com.mapbox.bindgen.Value
-import com.mapbox.common.SettingsServiceFactory
-import com.mapbox.common.SettingsServiceStorageType
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.GeoJson
