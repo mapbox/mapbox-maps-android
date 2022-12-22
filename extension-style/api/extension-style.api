@@ -3725,7 +3725,6 @@ public final class com/mapbox/maps/extension/style/sources/generated/GeoJsonSour
 }
 
 public final class com/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Companion {
-	public final fun directSetterEnabled ()Z
 	public final fun getDefaultBuffer ()Ljava/lang/Long;
 	public final fun getDefaultCluster ()Ljava/lang/Boolean;
 	public final fun getDefaultClusterMaxZoom ()Ljava/lang/Long;
