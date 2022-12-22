@@ -32,3 +32,4 @@ include(
 )
 rootProject.name = "Mapbox Maps Android"
 rootProject.buildFileName = "build.gradle.kts"
+include(":test-app")
