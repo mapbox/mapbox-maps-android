@@ -95,6 +95,8 @@ internal class FollowPuckViewportStateImpl(
       locationComponent.addOnIndicatorPositionChangedListener(indicatorPositionChangedListener)
       locationComponent.addOnIndicatorBearingChangedListener(indicatorBearingChangedListener)
       isObservingLocationUpdates = true
+    } else {
+      notifyLatestViewportData()
     }
   }
 
@@ -103,6 +105,8 @@ internal class FollowPuckViewportStateImpl(
       locationComponent.removeOnIndicatorPositionChangedListener(indicatorPositionChangedListener)
       locationComponent.removeOnIndicatorBearingChangedListener(indicatorBearingChangedListener)
       isObservingLocationUpdates = false
+      lastBearing = null
+      lastLocation = null
     }
   }
 
@@ -124,8 +128,8 @@ internal class FollowPuckViewportStateImpl(
    */
   override fun observeDataSource(viewportStateDataObserver: ViewportStateDataObserver): Cancelable {
     checkLocationComponentEnablement()
-    addIndicatorListenerIfNeeded()
     dataSourceUpdateObservers.add(viewportStateDataObserver)
+    addIndicatorListenerIfNeeded()
     return Cancelable {
       dataSourceUpdateObservers.remove(viewportStateDataObserver)
       removeIndicatorListenerIfNeeded()
