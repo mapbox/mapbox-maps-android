@@ -48,6 +48,6 @@ internal data class ViewAnnotation(
 
   companion object {
     private var VIEW_ANNOTATION_CURRENT_ID = 42
-    internal val USER_FIXED_DIMENSION = -1
+    internal const val USER_FIXED_DIMENSION = -1
   }
 }
