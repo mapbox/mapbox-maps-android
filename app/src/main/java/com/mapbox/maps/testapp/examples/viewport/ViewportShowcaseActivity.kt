@@ -1,5 +1,6 @@
 package com.mapbox.maps.testapp.examples.viewport
 
+import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.res.Configuration
 import android.content.res.Resources
@@ -7,6 +8,7 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.animation.doOnEnd
 import com.mapbox.api.directions.v5.models.DirectionsResponse
 import com.mapbox.core.constants.Constants
 import com.mapbox.geojson.LineString
@@ -26,6 +28,7 @@ import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityViewportAnimationBinding
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
 import com.mapbox.maps.testapp.utils.SimulateRouteLocationProvider
+
 
 /**
  * Showcase the use age of viewport plugin.
@@ -139,7 +142,7 @@ class ViewportShowcaseActivity : AppCompatActivity() {
         """.trimIndent()
       )
       when (to.getCurrentOrNextState()) {
-        is FollowPuckViewportState -> viewportButton.text = OVERVIEW
+        is FollowPuckViewportState -> viewportButton.text = FOLLOW_WITH_LOWER_ZOOM
         else -> viewportButton.text = FOLLOW
       }
     }
@@ -161,8 +164,29 @@ class ViewportShowcaseActivity : AppCompatActivity() {
     viewportButton.setOnClickListener {
       when (viewportButton.text) {
         FOLLOW -> viewport.transitionTo(followPuckViewportState)
-        OVERVIEW -> viewport.transitionTo(overviewViewportState)
+        OVERVIEW -> {
+          viewport.transitionTo(overviewViewportState)
+          followPuckViewportState.options =
+            followPuckViewportState.options.toBuilder().zoom(14.0).build()
+        }
+        FOLLOW_WITH_LOWER_ZOOM -> animateZoomSeparately(followPuckViewportState)
       }
+    }
+  }
+
+  private fun animateZoomSeparately(followPuckViewportState: FollowPuckViewportState) {
+    val zoomAnimator = ValueAnimator.ofFloat(followPuckViewportState.options.zoom!!.toFloat(), 12f)
+    zoomAnimator.apply {
+      duration = 1000
+      addUpdateListener { animation ->
+        val animatedValue = animation.animatedValue as Float
+        followPuckViewportState.options =
+          followPuckViewportState.options.toBuilder().zoom(animatedValue.toDouble()).build()
+      }
+      doOnEnd {
+        viewportButton.text = OVERVIEW
+      }
+      start()
     }
   }
 
@@ -170,6 +194,7 @@ class ViewportShowcaseActivity : AppCompatActivity() {
     private const val TAG = "ViewportShowcase"
     private const val FOLLOW = "Follow"
     private const val OVERVIEW = "Overview"
+    private const val FOLLOW_WITH_LOWER_ZOOM = "Follow with lower zoom"
     private const val POINT_LAT = 34.052235
     private const val POINT_LNG = -118.243683
     private const val NAVIGATION_ROUTE_JSON_NAME = "navigation_route.json"
