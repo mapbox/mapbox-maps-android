@@ -59,17 +59,27 @@ internal class FollowPuckViewportStateImpl(
   }
 
   private fun notifyLatestViewportData() {
-    if (lastLocation != null && (options.bearing is FollowPuckViewportStateBearing.Constant || lastBearing != null)) {
+    if (shouldNotifyLatestViewportData()) {
       val viewportData = evaluateViewportData()
       if (isFollowingStateRunning) {
         // Use instant update here since the location updates are already interpolated by the location component plugin
         updateFrame(viewportData, true)
       }
       dataSourceUpdateObservers.forEach {
-        if (!it.onNewData(viewportData)) {
-          dataSourceUpdateObservers.remove(it)
-        }
+        notifyViewportStateDataObserver(it, viewportData)
       }
+    }
+  }
+
+  private fun shouldNotifyLatestViewportData() =
+    lastLocation != null && (options.bearing is FollowPuckViewportStateBearing.Constant || lastBearing != null)
+
+  private fun notifyViewportStateDataObserver(
+    observer: ViewportStateDataObserver,
+    cameraOptions: CameraOptions
+  ) {
+    if (!observer.onNewData(cameraOptions)) {
+      dataSourceUpdateObservers.remove(observer)
     }
   }
 
@@ -103,6 +113,10 @@ internal class FollowPuckViewportStateImpl(
       locationComponent.removeOnIndicatorPositionChangedListener(indicatorPositionChangedListener)
       locationComponent.removeOnIndicatorBearingChangedListener(indicatorBearingChangedListener)
       isObservingLocationUpdates = false
+      // when unsubscribed from the location updates, we don't want to keep an outdated location, so
+      // when user transition to the FollowPuckViewportState, there wouldn't be any unintentional jump.
+      lastBearing = null
+      lastLocation = null
     }
   }
 
@@ -126,6 +140,9 @@ internal class FollowPuckViewportStateImpl(
     checkLocationComponentEnablement()
     addIndicatorListenerIfNeeded()
     dataSourceUpdateObservers.add(viewportStateDataObserver)
+    if (shouldNotifyLatestViewportData()) {
+      notifyViewportStateDataObserver(viewportStateDataObserver, evaluateViewportData())
+    }
     return Cancelable {
       dataSourceUpdateObservers.remove(viewportStateDataObserver)
       removeIndicatorListenerIfNeeded()

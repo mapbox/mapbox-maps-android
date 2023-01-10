@@ -21,16 +21,7 @@ import com.mapbox.maps.plugin.viewport.LOCATION_COMPONENT_UTILS
 import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateBearing
 import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions
 import com.mapbox.maps.plugin.viewport.transition.MapboxViewportTransitionFactory
-import io.mockk.every
-import io.mockk.just
-import io.mockk.mockk
-import io.mockk.mockkStatic
-import io.mockk.runs
-import io.mockk.slot
-import io.mockk.unmockkAll
-import io.mockk.unmockkStatic
-import io.mockk.verify
-import io.mockk.verifySequence
+import io.mockk.*
 import org.junit.After
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -135,7 +126,9 @@ class FollowPuckViewportStateImplTest {
 
     // set the bearing to be constant
     followingState.apply {
-      options = options.toBuilder().bearing(FollowPuckViewportStateBearing.Constant(constantBearing)).build()
+      options =
+        options.toBuilder().bearing(FollowPuckViewportStateBearing.Constant(constantBearing))
+          .build()
     }
     // stop observing after the first data point
     every { dataObserver.onNewData(any()) } returns false
@@ -177,6 +170,71 @@ class FollowPuckViewportStateImplTest {
     indicatorPositionChangedListenerSlot.captured.onIndicatorPositionChanged(testCenter)
     verify(exactly = 1) {
       dataObserver.onNewData(any())
+    }
+  }
+
+  @Test
+  fun testObserveDataSourceWithOnlyExistingLocation() {
+    val indicatorBearingChangedListenerSlot = slot<OnIndicatorBearingChangedListener>()
+    val indicatorPositionChangedListenerSlot = slot<OnIndicatorPositionChangedListener>()
+    val dataObserver = mockk<ViewportStateDataObserver>()
+    val testBearing = 10.0
+    val testCenter = Point.fromLngLat(0.0, 0.0)
+
+    // keep observing after the first data point
+    every { dataObserver.onNewData(any()) } returns true
+
+    // immediately emmit location update when listener is added.
+    every {
+      locationPlugin.addOnIndicatorBearingChangedListener(
+        capture(
+          indicatorBearingChangedListenerSlot
+        )
+      )
+    } answers {
+      indicatorBearingChangedListenerSlot.captured.onIndicatorBearingChanged(testBearing)
+    }
+    every {
+      locationPlugin.addOnIndicatorPositionChangedListener(
+        capture(
+          indicatorPositionChangedListenerSlot
+        )
+      )
+    } answers {
+      indicatorPositionChangedListenerSlot.captured.onIndicatorPositionChanged(testCenter)
+    }
+
+    followingState.observeDataSource(dataObserver)
+    verify {
+      locationPlugin.addOnIndicatorBearingChangedListener(any())
+    }
+    verify {
+      locationPlugin.addOnIndicatorPositionChangedListener(any())
+    }
+    verify(exactly = 1) {
+      dataObserver.onNewData(
+        cameraOptions {
+          bearing(testBearing)
+          center(testCenter)
+          pitch(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_PITCH)
+          zoom(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_ZOOM)
+          padding(EdgeInsets(0.0, 0.0, 0.0, 0.0))
+        }
+      )
+    }
+
+    // observing the data source again should only emit exactly one data point.
+    followingState.observeDataSource(dataObserver)
+    verify(exactly = 2) {
+      dataObserver.onNewData(
+        cameraOptions {
+          bearing(testBearing)
+          center(testCenter)
+          pitch(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_PITCH)
+          zoom(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_ZOOM)
+          padding(EdgeInsets(0.0, 0.0, 0.0, 0.0))
+        }
+      )
     }
   }
 

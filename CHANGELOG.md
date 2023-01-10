@@ -6,6 +6,7 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 * Skip redundant `MapboxMap.setCamera` updates in `CameraAnimationsPlugin`. ([1909](https://github.com/mapbox/mapbox-maps-android/pull/1909))
 * Improve performance by setting geojson data directly. ([1920](https://github.com/mapbox/mapbox-maps-android/pull/1920))
+* Fix viewport hang when transition to `FollowPuckViewportState` and no new location update is available. ([1929](https://github.com/mapbox/mapbox-maps-android/pull/1929))
 
 ## Bug fixes 🐞
 * Fix crash due to invalid distance when panning the map. ([1906](https://github.com/mapbox/mapbox-maps-android/pull/1906))
