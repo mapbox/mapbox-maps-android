@@ -113,6 +113,8 @@ internal class FollowPuckViewportStateImpl(
       locationComponent.removeOnIndicatorPositionChangedListener(indicatorPositionChangedListener)
       locationComponent.removeOnIndicatorBearingChangedListener(indicatorBearingChangedListener)
       isObservingLocationUpdates = false
+      // when unsubscribed from the location updates, we don't want to keep an outdated location, so
+      // when user transition to the FollowPuckViewportState, there wouldn't be any unintentional jump.
       lastBearing = null
       lastLocation = null
     }
