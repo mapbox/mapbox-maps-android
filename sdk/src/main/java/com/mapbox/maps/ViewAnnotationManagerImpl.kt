@@ -62,12 +62,7 @@ internal class ViewAnnotationManagerImpl(
   ) {
     validateOptions(options)
     asyncInflater.inflate(resId, viewAnnotationsLayout) { view, _, _ ->
-      view.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
-      val measuredOptions = options.toBuilder()
-        .width(view.measuredWidth)
-        .height(view.measuredHeight)
-        .build()
-      asyncInflateCallback.invoke(prepareViewAnnotation(view, measuredOptions))
+      asyncInflateCallback.invoke(prepareViewAnnotation(view, options))
     }
   }
 
@@ -113,7 +108,7 @@ internal class ViewAnnotationManagerImpl(
     options: ViewAnnotationOptions,
   ): Boolean {
     val id = idLookupMap[view] ?: return false
-//    checkAssociatedFeatureIdUniqueness(options)
+    checkAssociatedFeatureIdUniqueness(options)
     annotationMap[id]?.let {
       it.handleVisibilityAutomatically = (options.visible == null)
       if (options.width != null) {
@@ -419,6 +414,7 @@ internal class ViewAnnotationManagerImpl(
     val updatedOptions = options.toBuilder()
       .width(options.width ?: inflatedViewLayout.width)
       .height(options.height ?: inflatedViewLayout.height)
+      .visible(inflatedView.visibility == View.VISIBLE)
       .build()
     val viewAnnotation = ViewAnnotation(
       view = inflatedView,

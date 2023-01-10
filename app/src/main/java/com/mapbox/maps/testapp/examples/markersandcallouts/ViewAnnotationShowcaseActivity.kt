@@ -134,19 +134,7 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
     ) {
       onFeatureClicked(it) { feature ->
         if (feature.id() != null) {
-          val view = viewAnnotationManager.getViewAnnotationByFeatureId(feature.id()!!)
-          viewAnnotationManager.getViewAnnotationOptionsByFeatureId(feature.id()!!)
-            ?.let { options ->
-              val currentState = options.visible
-              val newOptions = options.toBuilder().visible(currentState!!.not()).build()
-
-              view!!.visibility = if (newOptions.visible == true) {
-                View.VISIBLE
-              } else {
-                View.GONE
-              }
-              viewAnnotationManager.updateViewAnnotation(view, newOptions)
-            }
+          viewAnnotationManager.getViewAnnotationByFeatureId(feature.id()!!)?.toggleViewVisibility()
         }
       }
     }
@@ -187,7 +175,6 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
         associatedFeatureId(markerId)
         anchor(ViewAnnotationAnchor.BOTTOM)
         allowOverlap(false)
-        visible(false)
       },
       asyncInflater = asyncInflater
     ) { viewAnnotation ->

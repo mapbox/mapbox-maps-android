@@ -173,6 +173,7 @@ class ViewAnnotationManagerAddTest(
           // width and height are calculated based on layout params
           width(20)
           height(30)
+          visible(true)
         },
         /* runtimeExceptionThrown */ false,
       ),
@@ -192,6 +193,7 @@ class ViewAnnotationManagerAddTest(
           offsetX(10)
           width(40)
           height(30)
+          visible(true)
         },
         /* runtimeExceptionThrown */ false,
       ),
@@ -211,6 +213,7 @@ class ViewAnnotationManagerAddTest(
           offsetX(10)
           width(20)
           height(40)
+          visible(true)
         },
         /* runtimeExceptionThrown */ false,
       ),
@@ -231,6 +234,7 @@ class ViewAnnotationManagerAddTest(
           offsetX(10)
           width(50)
           height(40)
+          visible(true)
         },
         /* runtimeExceptionThrown */ false,
       ),
