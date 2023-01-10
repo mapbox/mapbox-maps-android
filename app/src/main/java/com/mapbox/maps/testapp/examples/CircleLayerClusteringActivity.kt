@@ -18,6 +18,7 @@ import com.mapbox.maps.extension.style.layers.generated.circleLayer
 import com.mapbox.maps.extension.style.layers.generated.symbolLayer
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
+import com.mapbox.maps.extension.style.utils.ColorUtils
 import com.mapbox.maps.plugin.animation.flyTo
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.utils.BitmapUtils.bitmapFromDrawableRes
@@ -140,47 +141,29 @@ class CircleLayerClusteringActivity : AppCompatActivity() {
       intArrayOf(0, ContextCompat.getColor(this, R.color.blue))
     )
 
-    for (i in layers.indices) {
-
-      // Add clusters' circles
-      style.addLayer(
-        circleLayer("cluster-$i", GEOJSON_SOURCE_ID) {
-          circleColor(layers[i][1])
-          circleRadius(18.0)
-          filter(
-            if (i == 0) {
-              has {
-                literal("point_count")
-              }
-              gte {
-                toNumber {
-                  get { literal("point_count") }
-                }
-                literal(layers[i][0].toLong())
-              }
-            } else {
-              all {
-                has {
-                  literal("point_count")
-                }
-                gte {
-                  toNumber {
-                    get { literal("point_count") }
-                  }
-                  literal(layers[i][0].toLong())
-                }
-                lt {
-                  toNumber {
-                    get { literal("point_count") }
-                  }
-                  literal(layers[i - 1][0].toLong())
-                }
-              }
+    // Add clusters' circles
+    style.addLayer(
+      circleLayer("clusters", GEOJSON_SOURCE_ID) {
+        circleColor(
+          step {
+            get("point_count")
+            literal(ColorUtils.colorToRgbaString(layers[2][1]))
+            stop {
+              literal(layers[1][0].toDouble())
+              literal(ColorUtils.colorToRgbaString(layers[1][1]))
             }
-          )
-        }
-      )
-    }
+            stop {
+              literal(layers[0][0].toDouble())
+              literal(ColorUtils.colorToRgbaString(layers[0][1]))
+            }
+          }
+        )
+        circleRadius(18.0)
+        filter(
+          has("point_count")
+        )
+      }
+    )
 
     style.addLayer(
       symbolLayer("count", GEOJSON_SOURCE_ID) {
