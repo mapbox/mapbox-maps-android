@@ -6,6 +6,7 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 * Skip redundant `MapboxMap.setCamera` updates in `CameraAnimationsPlugin`. ([1909](https://github.com/mapbox/mapbox-maps-android/pull/1909))
 * Improve performance by setting geojson data directly. ([1920](https://github.com/mapbox/mapbox-maps-android/pull/1920))
+* Update license to reflect latest version of the Mapbox TOS. ([1927](https://github.com/mapbox/mapbox-maps-android/pull/1927))
 * Fix viewport hang when transition to `FollowPuckViewportState` and no new location update is available. ([1929](https://github.com/mapbox/mapbox-maps-android/pull/1929))
 * Optimize shadow rendering memory use and performance. ([1934](https://github.com/mapbox/mapbox-maps-android/pull/1934))
 * Enable the usage of expressions in array values during style parsing, where the member expressions in the array is evaluated to the same type. ([1934](https://github.com/mapbox/mapbox-maps-android/pull/1934))
@@ -91,7 +92,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix a crash after removing the view annotation if view has an attached animation or transition. ([1831](https://github.com/mapbox/mapbox-maps-android/pull/1831))
 * Emit the last indicator state when new listeners are added to the location component. ([1827](https://github.com/mapbox/mapbox-maps-android/pull/1827))
 * Fix an issue where queried symbol features did not contain the associated feature state. ([1836](https://github.com/mapbox/mapbox-maps-android/pull/1836))
-* Clear geojson tiles after the source is updated with empty features in order to eliminate "phantom tile" artifacts and to obviate extra work for keeping empty tiles. ([1836](https://github.com/mapbox/mapbox-maps-android/pull/1836)) 
+* Clear geojson tiles after the source is updated with empty features in order to eliminate "phantom tile" artifacts and to obviate extra work for keeping empty tiles. ([1836](https://github.com/mapbox/mapbox-maps-android/pull/1836))
 * Fix a regression from v10.10.0-beta.1 release, the BitmapWidget.setTranslation API should offset relative to its original position. ([1833](https://github.com/mapbox/mapbox-maps-android/pull/1833))
 * Throw understandable exception when using widgets with the `MapView` or `MapSurface` and not specifying `MapInitOptions.MapOptions.contextMode = ContextMode.SHARED` preventing hard-catching runtime crashes or artifacts. ([1834](https://github.com/mapbox/mapbox-maps-android/pull/1834))
 * Fix an issue where location updates were not provided on correct thread/looper. ([1836](https://github.com/mapbox/mapbox-maps-android/pull/1836))
@@ -217,7 +218,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Bug fixes 🐞
 * Make telemetry a single instance. Avoids module recreation when coming from background. ([#1695](https://github.com/mapbox/mapbox-maps-android/pull/1695))
-* Fix an issue where location engine doesn't produce bearing/accuracy/speed information with the location updates. ([1696](https://github.com/mapbox/mapbox-maps-android/pull/1696)) 
+* Fix an issue where location engine doesn't produce bearing/accuracy/speed information with the location updates. ([1696](https://github.com/mapbox/mapbox-maps-android/pull/1696))
 
 ## Dependencies
 * Bump common sdk to v23.1.0-beta.2. ([1696](https://github.com/mapbox/mapbox-maps-android/pull/1696))
@@ -311,7 +312,7 @@ Bump gl-native to v10.8.0-rc.1 and common to v23.0.0-rc.2. ([1623](https://githu
 ## Features ✨ and improvements 🏁
 * Introduce a callback to be invoked when the device compass sensors need to be re-calibrated. ([1513](https://github.com/mapbox/mapbox-maps-android/pull/1513))
 * Add support for `LocationComponentSettingsInterface.pulsingMaxRadius` to follow location's accuracy radius. ([1561](https://github.com/mapbox/mapbox-maps-android/pull/1561))
- 
+
 ## Bug fixes 🐞
 * Support altitude interpolation in location component, and pass through GPS altitude information from the DefaultLocationProvider. ([1478](https://github.com/mapbox/mapbox-maps-android/pull/1478))
 * Fix edge cases for renderer that could result in map not rendered. ([1538](https://github.com/mapbox/mapbox-maps-android/pull/1538))
