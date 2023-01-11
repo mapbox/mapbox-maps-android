@@ -383,7 +383,7 @@ class Style internal constructor(
   }
 
   /**
-   * NO-OP
+   * This API is for internal use only and will return a no-op result.
    */
   @MapboxExperimental
   override fun setStyleLightProperty(
@@ -395,7 +395,7 @@ class Style internal constructor(
   }
 
   /**
-   * NO-OP
+   * This API is for internal use only and will return a no-op result.
    */
   @MapboxExperimental
   override fun getStyleLights(): MutableList<StyleObjectInfo> {
@@ -403,7 +403,7 @@ class Style internal constructor(
   }
 
   /**
-   * NO-OP
+   * This API is for internal use only and will return a no-op result.
    */
   @MapboxExperimental
   override fun setStyleLights(lights: Value): Expected<String, None> {
@@ -536,7 +536,7 @@ class Style internal constructor(
   }
 
   /**
-   * NO-OP
+   * This API is for internal use only and will return a no-op result.
    */
   @MapboxExperimental
   override fun getStyleLightProperty(id: String, property: String): StylePropertyValue {
