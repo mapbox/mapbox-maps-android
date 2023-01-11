@@ -7,7 +7,6 @@ import com.mapbox.common.Cancelable
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
-import java.util.*
 
 internal class NativeMapImpl(val map: MapInterface) :
   MapInterface, StyleManagerInterface, ObservableInterface {
@@ -380,6 +379,22 @@ internal class NativeMapImpl(val map: MapInterface) :
     return map.setStyleLightProperty(property, value)
   }
 
+  override fun setStyleLightProperty(
+    id: String,
+    property: String,
+    value: Value
+  ): Expected<String, None> {
+    return map.setStyleLightProperty(id, property, value)
+  }
+
+  override fun getStyleLights(): MutableList<StyleObjectInfo> {
+    return map.styleLights
+  }
+
+  override fun setStyleLights(lights: Value): Expected<String, None> {
+    return map.setStyleLights(lights)
+  }
+
   override fun setStyleAtmosphere(properties: Value): Expected<String, None> {
     return map.setStyleAtmosphere(properties)
   }
@@ -394,6 +409,10 @@ internal class NativeMapImpl(val map: MapInterface) :
 
   override fun getStyleLightProperty(property: String): StylePropertyValue {
     return map.getStyleLightProperty(property)
+  }
+
+  override fun getStyleLightProperty(id: String, property: String): StylePropertyValue {
+    return map.getStyleLightProperty(id, property)
   }
 
   override fun getStyleImage(imageId: String): Image? {

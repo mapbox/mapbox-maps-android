@@ -3,6 +3,7 @@ package com.mapbox.maps
 import android.graphics.Bitmap
 import androidx.annotation.WorkerThread
 import com.mapbox.bindgen.Expected
+import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
@@ -382,6 +383,34 @@ class Style internal constructor(
   }
 
   /**
+   * This API is for internal use only and will return a no-op result.
+   */
+  @MapboxExperimental
+  override fun setStyleLightProperty(
+    id: String,
+    property: String,
+    value: Value
+  ): Expected<String, None> {
+    return ExpectedFactory.createNone()
+  }
+
+  /**
+   * This API is for internal use only and will return a no-op result.
+   */
+  @MapboxExperimental
+  override fun getStyleLights(): MutableList<StyleObjectInfo> {
+    return ArrayList(0)
+  }
+
+  /**
+   * This API is for internal use only and will return a no-op result.
+   */
+  @MapboxExperimental
+  override fun setStyleLights(lights: Value): Expected<String, None> {
+    return ExpectedFactory.createNone()
+  }
+
+  /**
    * Sets the style global [atmosphere](https://docs.mapbox.com/mapbox-gl-js/style-spec/fog/) properties.
    *
    * @param properties A map of style atmosphere properties values, with their names as a key.
@@ -504,6 +533,14 @@ class Style internal constructor(
   override fun getStyleLightProperty(property: String): StylePropertyValue {
     checkNativeStyle("getStyleLightProperty")
     return styleManager.getStyleLightProperty(property)
+  }
+
+  /**
+   * This API is for internal use only and will return a no-op result.
+   */
+  @MapboxExperimental
+  override fun getStyleLightProperty(id: String, property: String): StylePropertyValue {
+    return StylePropertyValue(Value.nullValue(), StylePropertyValueKind.UNDEFINED)
   }
 
   /**
