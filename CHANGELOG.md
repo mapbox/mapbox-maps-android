@@ -21,6 +21,10 @@ Mapbox welcomes participation and contributions from everyone.
 * Mitigate symbol flickering on source data change during camera animation. ([1934](https://github.com/mapbox/mapbox-maps-android/pull/1934))
 * Fixes rare crashes during render feature queries, if the features are located close to each other. ([1934](https://github.com/mapbox/mapbox-maps-android/pull/1934))
 * Fix redundant snapshot capturing that caused excessive memory usage. ([1934](https://github.com/mapbox/mapbox-maps-android/pull/1934))
+* Fixes an issue when allow-overlap, ignore-placement , and map rotation-alignment of icon breaks the rendering of symbols on the globe. ([1934](https://github.com/mapbox/mapbox-maps-android/pull/1934))
+* Mitigate symbol flickering on source data change during camera animation. ([1934](https://github.com/mapbox/mapbox-maps-android/pull/1934))
+* Mitigate OOM caused by Snapshotter API usage. ([1934](https://github.com/mapbox/mapbox-maps-android/pull/1934))
+* Fix an issue where the camera would start flickering during subsequent calls to `Map::jumpTo` / `Map::easeTo` with terrain enabled. ([1934](https://github.com/mapbox/mapbox-maps-android/pull/1934))
 
 ## Dependencies
 * Update gl-native to v10.11.0-beta.1 and common to v23.3.0-beta.1. ([1934](https://github.com/mapbox/mapbox-maps-android/pull/1934))
