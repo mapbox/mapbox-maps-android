@@ -73,6 +73,7 @@ dependencies {
   api(project(":plugin-viewport"))
   compileOnly(Dependencies.asyncInflater)
   implementation(Dependencies.kotlin)
+  implementation(Dependencies.coroutines)
   implementation(Dependencies.androidxCoreKtx)
   implementation(Dependencies.androidxAnnotations)
   testImplementation(Dependencies.junit)

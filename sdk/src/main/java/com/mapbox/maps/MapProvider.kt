@@ -11,6 +11,8 @@ import com.mapbox.maps.base.BuildConfig
 import com.mapbox.maps.module.MapTelemetry
 import com.mapbox.maps.plugin.MapDelegateProviderImpl
 import com.mapbox.maps.plugin.MapPluginRegistry
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 internal object MapProvider {
 
@@ -50,7 +52,9 @@ internal object MapProvider {
         paramsProvider(context, accessToken, MapboxModuleType.MapTelemetry)
       }
     }
-    mapTelemetry.onAppUserTurnstileEvent()
+    GlobalScope.launch {
+      mapTelemetry.onAppUserTurnstileEvent()
+    }
     return mapTelemetry
   }
 
