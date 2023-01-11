@@ -376,6 +376,8 @@ package com.mapbox.maps {
     method public com.mapbox.maps.StylePropertyValue getStyleLayerProperty(String layerId, String property);
     method public java.util.List<com.mapbox.maps.StyleObjectInfo> getStyleLayers();
     method public com.mapbox.maps.StylePropertyValue getStyleLightProperty(String property);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.StylePropertyValue getStyleLightProperty(String id, String property);
+    method @com.mapbox.maps.MapboxExperimental public java.util.List<com.mapbox.maps.StyleObjectInfo> getStyleLights();
     method public com.mapbox.maps.StylePropertyValue getStyleProjectionProperty(String property);
     method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.Value> getStyleSourceProperties(String sourceId);
     method public com.mapbox.maps.StylePropertyValue getStyleSourceProperty(String sourceId, String property);
@@ -405,6 +407,8 @@ package com.mapbox.maps {
     method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleLayerProperty(String layerId, String property, com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleLight(com.mapbox.bindgen.Value parameters);
     method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleLightProperty(String id, com.mapbox.bindgen.Value light);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleLightProperty(String id, String property, com.mapbox.bindgen.Value value);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleLights(com.mapbox.bindgen.Value lights);
     method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleProjection(com.mapbox.bindgen.Value properties);
     method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleProjectionProperty(String property, com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleSourceProperties(String sourceId, com.mapbox.bindgen.Value properties);
