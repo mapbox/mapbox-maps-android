@@ -817,40 +817,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * Transition options for LineDasharray.
-   */
-  val lineDasharrayTransition: StyleTransition?
-    /**
-     * Get the LineDasharray property transition options
-     *
-     * Use static method [LineLayer.defaultLineDasharrayTransition] to get the default property.
-     *
-     * @return transition options for List<Double>
-     */
-    get() {
-      return getPropertyValue("line-dasharray-transition")
-    }
-
-  /**
-   * Set the LineDasharray property transition options
-   *
-   * Use static method [LineLayer.defaultLineDasharrayTransition] to set the default property.
-   *
-   * @param options transition options for List<Double>
-   */
-  override fun lineDasharrayTransition(options: StyleTransition) = apply {
-    val propertyValue = PropertyValue("line-dasharray-transition", options)
-    setProperty(propertyValue)
-  }
-
-  /**
-   * DSL for [lineDasharrayTransition].
-   */
-  override fun lineDasharrayTransition(block: StyleTransition.Builder.() -> Unit) = apply {
-    lineDasharrayTransition(StyleTransition.Builder().apply(block).build())
-  }
-
-  /**
    * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap.
    */
   val lineGapWidth: Double?
@@ -1237,40 +1203,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   override fun linePattern(linePattern: Expression) = apply {
     val propertyValue = PropertyValue("line-pattern", linePattern)
     setProperty(propertyValue)
-  }
-
-  /**
-   * Transition options for LinePattern.
-   */
-  val linePatternTransition: StyleTransition?
-    /**
-     * Get the LinePattern property transition options
-     *
-     * Use static method [LineLayer.defaultLinePatternTransition] to get the default property.
-     *
-     * @return transition options for String
-     */
-    get() {
-      return getPropertyValue("line-pattern-transition")
-    }
-
-  /**
-   * Set the LinePattern property transition options
-   *
-   * Use static method [LineLayer.defaultLinePatternTransition] to set the default property.
-   *
-   * @param options transition options for String
-   */
-  override fun linePatternTransition(options: StyleTransition) = apply {
-    val propertyValue = PropertyValue("line-pattern-transition", options)
-    setProperty(propertyValue)
-  }
-
-  /**
-   * DSL for [linePatternTransition].
-   */
-  override fun linePatternTransition(block: StyleTransition.Builder.() -> Unit) = apply {
-    linePatternTransition(StyleTransition.Builder().apply(block).build())
   }
 
   /**
@@ -2007,17 +1939,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * Transition options for LineDasharray.
-     */
-    val defaultLineDasharrayTransition: StyleTransition?
-      /**
-       * Get the LineDasharray property transition options
-       *
-       * @return transition options for List<Double>
-       */
-      get() = StyleManager.getStyleLayerPropertyDefaultValue("line", "line-dasharray-transition").silentUnwrap()
-
-    /**
      * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap.
      */
     val defaultLineGapWidth: Double?
@@ -2197,17 +2118,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
         }
         return null
       }
-
-    /**
-     * Transition options for LinePattern.
-     */
-    val defaultLinePatternTransition: StyleTransition?
-      /**
-       * Get the LinePattern property transition options
-       *
-       * @return transition options for String
-       */
-      get() = StyleManager.getStyleLayerPropertyDefaultValue("line", "line-pattern-transition").silentUnwrap()
 
     /**
      * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
@@ -2596,22 +2506,6 @@ interface LineLayerDsl {
   fun lineDasharray(lineDasharray: Expression): LineLayer
 
   /**
-   * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels.
-   *
-   * Set the LineDasharray property transition options
-   *
-   * @param options transition options for List<Double>
-   */
-  fun lineDasharrayTransition(options: StyleTransition): LineLayer
-
-  /**
-   * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels.
-   *
-   * DSL for [lineDasharrayTransition].
-   */
-  fun lineDasharrayTransition(block: StyleTransition.Builder.() -> Unit): LineLayer
-
-  /**
    * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap.
    *
    * @param lineGapWidth value of lineGapWidth
@@ -2721,22 +2615,6 @@ interface LineLayerDsl {
    * @param linePattern value of linePattern as Expression
    */
   fun linePattern(linePattern: Expression): LineLayer
-
-  /**
-   * Name of image in sprite to use for drawing image lines. For seamless patterns, image width must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
-   *
-   * Set the LinePattern property transition options
-   *
-   * @param options transition options for String
-   */
-  fun linePatternTransition(options: StyleTransition): LineLayer
-
-  /**
-   * Name of image in sprite to use for drawing image lines. For seamless patterns, image width must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
-   *
-   * DSL for [linePatternTransition].
-   */
-  fun linePatternTransition(block: StyleTransition.Builder.() -> Unit): LineLayer
 
   /**
    * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.

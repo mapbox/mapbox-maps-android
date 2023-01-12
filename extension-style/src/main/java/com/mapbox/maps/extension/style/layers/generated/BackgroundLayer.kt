@@ -424,40 +424,6 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
   }
 
   /**
-   * Transition options for BackgroundPattern.
-   */
-  val backgroundPatternTransition: StyleTransition?
-    /**
-     * Get the BackgroundPattern property transition options
-     *
-     * Use static method [BackgroundLayer.defaultBackgroundPatternTransition] to get the default property.
-     *
-     * @return transition options for String
-     */
-    get() {
-      return getPropertyValue("background-pattern-transition")
-    }
-
-  /**
-   * Set the BackgroundPattern property transition options
-   *
-   * Use static method [BackgroundLayer.defaultBackgroundPatternTransition] to set the default property.
-   *
-   * @param options transition options for String
-   */
-  override fun backgroundPatternTransition(options: StyleTransition) = apply {
-    val propertyValue = PropertyValue("background-pattern-transition", options)
-    setProperty(propertyValue)
-  }
-
-  /**
-   * DSL for [backgroundPatternTransition].
-   */
-  override fun backgroundPatternTransition(block: StyleTransition.Builder.() -> Unit) = apply {
-    backgroundPatternTransition(StyleTransition.Builder().apply(block).build())
-  }
-
-  /**
    * Get the type of this layer
    *
    * @return Type of the layer as [String]
@@ -667,17 +633,6 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
         }
         return null
       }
-
-    /**
-     * Transition options for BackgroundPattern.
-     */
-    val defaultBackgroundPatternTransition: StyleTransition?
-      /**
-       * Get the BackgroundPattern property transition options
-       *
-       * @return transition options for String
-       */
-      get() = StyleManager.getStyleLayerPropertyDefaultValue("background", "background-pattern-transition").silentUnwrap()
   }
 }
 
@@ -801,22 +756,6 @@ interface BackgroundLayerDsl {
    * @param backgroundPattern value of backgroundPattern as Expression
    */
   fun backgroundPattern(backgroundPattern: Expression): BackgroundLayer
-
-  /**
-   * Name of image in sprite to use for drawing an image background. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
-   *
-   * Set the BackgroundPattern property transition options
-   *
-   * @param options transition options for String
-   */
-  fun backgroundPatternTransition(options: StyleTransition): BackgroundLayer
-
-  /**
-   * Name of image in sprite to use for drawing an image background. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
-   *
-   * DSL for [backgroundPatternTransition].
-   */
-  fun backgroundPatternTransition(block: StyleTransition.Builder.() -> Unit): BackgroundLayer
 }
 
 /**
