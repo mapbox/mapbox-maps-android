@@ -55,7 +55,7 @@ androidExtensions {
 }
 
 dependencies {
-  implementation(project(":sdk"))
+  implementation(project(":android-sdk"))
   implementation(Dependencies.googleMaterialDesign)
   implementation(Dependencies.composeUi)
   implementation(Dependencies.composeMaterial)

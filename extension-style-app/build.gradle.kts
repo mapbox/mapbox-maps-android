@@ -44,7 +44,7 @@ androidExtensions {
 }
 
 dependencies {
-  implementation(project(":sdk"))
+  implementation(project(":android-sdk"))
   implementation(Dependencies.kotlin)
   implementation(Dependencies.androidxAppCompat)
   androidTestUtil(Dependencies.androidxOrchestrator)

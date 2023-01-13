@@ -93,7 +93,7 @@ android {
 }
 
 dependencies {
-  implementation(project(":sdk"))
+  implementation(project(":android-sdk"))
   implementation(Dependencies.kotlin)
   implementation(Dependencies.mapboxJavaTurf)
   implementation(Dependencies.mapboxJavaGeoJSON)
