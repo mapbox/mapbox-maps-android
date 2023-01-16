@@ -746,6 +746,42 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   }
 
   /**
+   * Transition options for FillPattern.
+   */
+  @Deprecated("This property has been deprecated and will do no operations")
+  val fillPatternTransition: StyleTransition?
+    /**
+     * Get the FillPattern property transition options
+     *
+     * Use static method [FillLayer.defaultFillPatternTransition] to get the default property.
+     *
+     * @return transition options for String
+     */
+    get() {
+      return null
+    }
+
+  /**
+   * Set the FillPattern property transition options
+   *
+   * Use static method [FillLayer.defaultFillPatternTransition] to set the default property.
+   *
+   * @param options transition options for String
+   */
+  @Deprecated("This property has been deprecated and will do no operations")
+  override fun fillPatternTransition(options: StyleTransition) = apply {
+    // no-op
+  }
+
+  /**
+   * DSL for [fillPatternTransition].
+   */
+    @Deprecated("This property has been deprecated and will do no operations")
+    override fun fillPatternTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+      // no-op
+    }
+
+  /**
    * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
    */
   val fillTranslate: List<Double>?
@@ -1265,6 +1301,18 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
       }
 
     /**
+    * Transition options for FillPattern.
+    */
+      @Deprecated("This property has been deprecated and will do no operations")
+    val defaultFillPatternTransition: StyleTransition?
+      /**
+        * Get the FillPattern property transition options
+        *
+        * @return transition options for String
+        */
+      get() = null
+
+    /**
      * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
      */
     val defaultFillTranslate: List<Double>?
@@ -1559,6 +1607,22 @@ interface FillLayerDsl {
    * @param fillPattern value of fillPattern as Expression
    */
   fun fillPattern(fillPattern: Expression): FillLayer
+
+  /**
+   * Name of image in sprite to use for drawing image fills. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
+   *
+   * Set the FillPattern property transition options
+   *
+   * @param options transition options for String
+   */
+  fun fillPatternTransition(options: StyleTransition): FillLayer
+
+  /**
+   * Name of image in sprite to use for drawing image fills. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
+   *
+   * DSL for [fillPatternTransition].
+   */
+  fun fillPatternTransition(block: StyleTransition.Builder.() -> Unit): FillLayer
 
   /**
    * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
