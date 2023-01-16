@@ -11,8 +11,8 @@ import com.mapbox.maps.base.BuildConfig
 import com.mapbox.maps.module.MapTelemetry
 import com.mapbox.maps.plugin.MapDelegateProviderImpl
 import com.mapbox.maps.plugin.MapPluginRegistry
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlin.concurrent.thread
+
 
 internal object MapProvider {
 
@@ -52,7 +52,8 @@ internal object MapProvider {
         paramsProvider(context, accessToken, MapboxModuleType.MapTelemetry)
       }
     }
-    GlobalScope.launch {
+    // Report turnstile event in background thread.
+    thread {
       mapTelemetry.onAppUserTurnstileEvent()
     }
     return mapTelemetry
