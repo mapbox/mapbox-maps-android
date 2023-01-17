@@ -16,10 +16,7 @@ import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
-import com.mapbox.maps.CameraOptions
-import com.mapbox.maps.MapInitOptions
-import com.mapbox.maps.MapView
-import com.mapbox.maps.Style
+import com.mapbox.maps.*
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.expressions.dsl.generated.switchCase
 import com.mapbox.maps.extension.style.expressions.dsl.generated.id
@@ -121,11 +118,20 @@ class GlitchDemoMapFragment : Fragment() {
     foreground()
   }
 
+  private val debugOptions: MutableList<MapDebugOptions> = mutableListOf(
+    MapDebugOptions.TILE_BORDERS,
+    MapDebugOptions.PARSE_STATUS,
+    MapDebugOptions.TIMESTAMPS,
+    MapDebugOptions.STENCIL_CLIP,
+    MapDebugOptions.DEPTH_BUFFER,
+  )
+
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
 
     //TODO: the issue only appears, if a style with vector backgrounds is loaded.
     // It will not glitch when using Style.SATELLITE
+    mapView.getMapboxMap().setDebug(debugOptions, true)
     mapView.getMapboxMap().loadStyle(style(
       Style.MAPBOX_STREETS
     ) {
