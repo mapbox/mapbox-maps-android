@@ -1,4 +1,4 @@
-## Mapbox Maps SDK for Android
+# Mapbox Maps SDK for Android
 
 [![CLA assistant](https://cla-assistant.io/readme/badge/mapbox/mapbox-maps-android)](https://cla-assistant.io/mapbox/mapbox-maps-android)
 
