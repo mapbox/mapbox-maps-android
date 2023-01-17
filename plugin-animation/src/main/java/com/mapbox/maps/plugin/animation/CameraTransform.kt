@@ -1,5 +1,6 @@
 package com.mapbox.maps.plugin.animation
 
+import androidx.annotation.VisibleForTesting
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
@@ -62,4 +63,25 @@ internal object CameraTransform {
   }
 
   fun calculateScaleBy(amount: Double, currentZoom: Double) = log2(amount) + currentZoom
+
+  /**
+   * Extension function to wrap longitude to one world copy.
+   */
+  fun Point.wrapCoordinate(): Point {
+    val lng = wrap(this.longitude(), -LONGITUDE_MAX.toDouble(), LONGITUDE_MAX.toDouble())
+    return Point.fromLngLat(lng, this.latitude())
+  }
+
+  // Wrap value to the given range (including min, excluding max).
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal fun wrap(value: Double, min: Double, max: Double): Double {
+    if (value >= min && value < max) {
+      return value
+    } else if (value == max) {
+      return min
+    }
+    val delta = max - min
+    val wrapped = min + ((value - min) % delta)
+    return if (value < min) wrapped + delta else wrapped
+  }
 }
