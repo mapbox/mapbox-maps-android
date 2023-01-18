@@ -508,9 +508,6 @@ jobs:
                 value: << pipeline.git.branch >>
           steps:
             - checkout
-            - add_ssh_keys:
-                fingerprints:
-                  - "3b:cd:47:bf:57:9c:e5:36:b0:4d:5f:12:5e:d3:b3:3e"
             - restore-gradle-cache
             - init-aws
             - set-pr-target-branch
@@ -657,9 +654,6 @@ jobs:
                 value: << pipeline.git.branch >>
           steps:
             - checkout
-            - add_ssh_keys:
-                fingerprints:
-                  - "3b:cd:47:bf:57:9c:e5:36:b0:4d:5f:12:5e:d3:b3:3e"
             - validate-internal-ci
       - run: exit 0
 
@@ -849,9 +843,6 @@ jobs:
                 value: << pipeline.git.branch >>
           steps:
             - checkout
-            - add_ssh_keys:
-                fingerprints:
-                  - "3b:cd:47:bf:57:9c:e5:36:b0:4d:5f:12:5e:d3:b3:3e"
             - restore-gradle-cache
             - generate-sanity-test
             - build-module:
@@ -893,9 +884,6 @@ jobs:
                   pattern: << pipeline.parameters.changelog_branch >>
                   value: << pipeline.git.branch >>
             steps:
-              - add_ssh_keys:
-                  fingerprints:
-                      - 3b:cd:47:bf:57:9c:e5:36:b0:4d:5f:12:5e:d3:b3:3e
               - checkout
               - init-aws
               - run:
