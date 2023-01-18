@@ -29,10 +29,6 @@ android {
     targetCompatibility = JavaVersion.VERSION_1_8
   }
 
-  composeOptions {
-    kotlinCompilerExtensionVersion = Versions.compose
-  }
-
   testOptions {
     if (!project.hasProperty("android.injected.invoked.from.ide")) {
       execution = "ANDROIDX_TEST_ORCHESTRATOR"
@@ -48,6 +44,9 @@ android {
   buildFeatures {
     compose = true
   }
+  composeOptions {
+    kotlinCompilerExtensionVersion = "1.3.2"
+  }
 }
 
 androidExtensions {
@@ -60,6 +59,7 @@ dependencies {
   implementation(Dependencies.composeUi)
   implementation(Dependencies.composeMaterial)
   implementation(Dependencies.composeUiToolingPreview)
+  debugImplementation("androidx.compose.ui:ui-tooling:1.2.1")
   implementation(Dependencies.androidxLifecycleKtx)
   implementation(Dependencies.androidxActivityCompose)
   implementation(Dependencies.androidxAppCompat)

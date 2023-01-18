@@ -9,8 +9,8 @@ object AndroidVersions {
   }
   object Compose {
     const val minSdkVersion = 23
-    const val targetSdkVersion = 30
-    const val compileSdkVersion = 31
+    const val targetSdkVersion = 33
+    const val compileSdkVersion = 33
   }
   object ExampleApp {
     const val minSdkVersion = 23
@@ -102,7 +102,7 @@ object Dependencies {
 
 object Versions {
   const val pluginAndroidGradle = "7.0.4"
-  const val pluginKotlin = "1.5.31"
+  const val pluginKotlin = "1.7.20"
   const val pluginLicense = "0.9.0"
   const val pluginDokka =  "1.5.31"
   const val pluginJacoco = "0.2"
@@ -148,7 +148,7 @@ object Versions {
   const val mapboxSdkVersionsPlugin = "1.1.3"
   const val pitest = "0.2.8"
   const val detekt = "1.20.0"
-  const val compose = "1.1.0-beta03"
+  const val compose = "1.2.1"
   const val pluginPlayPublisher = "3.7.0"
   const val gradleVersionsPlugin = "0.42.0"
 }
