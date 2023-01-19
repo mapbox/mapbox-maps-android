@@ -222,18 +222,22 @@ class CameraAnimatorsFactoryTest {
 }
 
 @RunWith(Parameterized::class)
-class WrapCoordinateTest(private val actual: Double, private val expected: Double) {
+class WrapCoordinateTest(
+  private val actual: Triple<Double, Double, Double>,
+  private val expected: Double
+) {
 
   private companion object {
     @JvmStatic
     @Parameterized.Parameters
     fun data() = listOf(
-      arrayOf(CameraTransform.wrap(-0.911, -LONGITUDE_MAX, LONGITUDE_MAX), -0.911),
-      arrayOf(CameraTransform.wrap(LONGITUDE_MAX, -LONGITUDE_MAX, LONGITUDE_MAX), -LONGITUDE_MAX),
-      arrayOf(CameraTransform.wrap(-LONGITUDE_MAX, -LONGITUDE_MAX, LONGITUDE_MAX), -LONGITUDE_MAX),
-      arrayOf(CameraTransform.wrap(275.0, -LONGITUDE_MAX, LONGITUDE_MAX), -85.0),
-      arrayOf(CameraTransform.wrap(-458.0, -LONGITUDE_MAX, LONGITUDE_MAX), -98.0),
-      arrayOf(CameraTransform.wrap(385.0, -LONGITUDE_MAX, LONGITUDE_MAX), 25.0),
+      arrayOf(Triple(-0.911, -LONGITUDE_MAX, LONGITUDE_MAX), -0.911),
+      arrayOf(Triple(LONGITUDE_MAX, -LONGITUDE_MAX, LONGITUDE_MAX), -LONGITUDE_MAX),
+      arrayOf(Triple(-LONGITUDE_MAX, -LONGITUDE_MAX, LONGITUDE_MAX), -LONGITUDE_MAX),
+      arrayOf(Triple(275.0, -LONGITUDE_MAX, LONGITUDE_MAX), -85.0),
+      arrayOf(Triple(-458.0, -LONGITUDE_MAX, LONGITUDE_MAX), -98.0),
+      arrayOf(Triple(385.0, -LONGITUDE_MAX, LONGITUDE_MAX), 25.0),
+      arrayOf(Triple(0.0, LONGITUDE_MAX, LONGITUDE_MAX), Double.NaN),
     )
 
     private const val DELTA = 0.0001
@@ -242,6 +246,10 @@ class WrapCoordinateTest(private val actual: Double, private val expected: Doubl
 
   @Test
   fun testLongitudeWrap() {
-    Assert.assertEquals(expected, actual, DELTA)
+    Assert.assertEquals(
+      expected,
+      CameraTransform.wrap(actual.first, actual.second, actual.third),
+      DELTA
+    )
   }
 }

@@ -3,6 +3,7 @@ package com.mapbox.maps.plugin.animation
 import androidx.annotation.VisibleForTesting
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
+import com.mapbox.maps.plugin.animation.CameraTransform.ge
 import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 import com.mapbox.maps.plugin.delegates.MapTransformDelegate
 import kotlin.math.*
@@ -65,23 +66,33 @@ internal object CameraTransform {
   fun calculateScaleBy(amount: Double, currentZoom: Double) = log2(amount) + currentZoom
 
   /**
-   * Extension function to wrap longitude to one world copy.
+   * Extension function to wrap coordinate to one world copy.
    */
   fun Point.wrapCoordinate(): Point {
-    val lng = wrap(this.longitude(), -LONGITUDE_MAX.toDouble(), LONGITUDE_MAX.toDouble())
-    return Point.fromLngLat(lng, this.latitude())
+    val lng = wrap(
+      value = this.longitude(),
+      min = -LONGITUDE_MAX.toDouble(),
+      max = LONGITUDE_MAX.toDouble()
+    )
+    return if (lng.isNaN()) Point.fromLngLat(this.longitude(), this.latitude())
+    else Point.fromLngLat(lng, this.latitude())
   }
 
   // Wrap value to the given range (including min, excluding max).
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal fun wrap(value: Double, min: Double, max: Double): Double {
-    if (value >= min && value < max) {
-      return value
-    } else if (value == max) {
+    if (value.eq(max)) {
       return min
+    } else if (value.ge(min) && value.less(max)) {
+      return value
     }
     val delta = max - min
     val wrapped = min + ((value - min) % delta)
     return if (value < min) wrapped + delta else wrapped
   }
+
+  private const val PRECISION = 1e-6
+  private fun Double.eq(other: Double) = abs(this - other) < PRECISION
+  private fun Double.ge(other: Double) = (this - other) > PRECISION || this.eq(other)
+  private fun Double.less(other: Double) = (this - other) < -PRECISION
 }
