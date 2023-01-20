@@ -42,7 +42,7 @@ object Dependencies {
   const val mapboxAnnotationsProcessor = "com.mapbox.base:annotations-processor:${Versions.mapboxBase}"
   const val mapboxJavaGeoJSON = "com.mapbox.mapboxsdk:mapbox-sdk-geojson:${Versions.mapboxJavaServices}"
   const val mapboxServices = "com.mapbox.mapboxsdk:mapbox-sdk-services:${Versions.mapboxJavaServices}"
-  const val mapboxGlNative = "com.mapbox.maps:android-core:${Versions.mapboxGlNative}"
+  const val mapboxGlNative = "com.mapbox.maps:android-core:10.10.0-36e818e95b-SNAPSHOT"
   const val mapboxCoreCommon = "com.mapbox.common:common:${Versions.mapboxCommon}"
   const val mapboxOkHttp = "com.mapbox.common:okhttp:${Versions.mapboxCommon}"
   const val mapboxJavaTurf = "com.mapbox.mapboxsdk:mapbox-sdk-turf:${Versions.mapboxJavaServices}"
