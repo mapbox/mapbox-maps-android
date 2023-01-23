@@ -776,10 +776,10 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   /**
    * DSL for [fillPatternTransition].
    */
-    @Deprecated("This property has been deprecated and will do no operations")
-    override fun fillPatternTransition(block: StyleTransition.Builder.() -> Unit) = apply {
-      // no-op
-    }
+  @Deprecated("This property has been deprecated and will do no operations")
+  override fun fillPatternTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+    // no-op
+  }
 
   /**
    * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
@@ -1301,15 +1301,15 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
       }
 
     /**
-    * Transition options for FillPattern.
-    */
-      @Deprecated("This property has been deprecated and will do no operations")
+     * Transition options for FillPattern.
+     */
+    @Deprecated("This property has been deprecated and will do no operations")
     val defaultFillPatternTransition: StyleTransition?
       /**
-        * Get the FillPattern property transition options
-        *
-        * @return transition options for String
-        */
+       * Get the FillPattern property transition options
+       *
+       * @return transition options for String
+       */
       get() = null
 
     /**

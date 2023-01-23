@@ -454,10 +454,10 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
   /**
    * DSL for [backgroundPatternTransition].
    */
-    @Deprecated("This property has been deprecated and will do no operations")
-    override fun backgroundPatternTransition(block: StyleTransition.Builder.() -> Unit) = apply {
-      // no-op
-    }
+  @Deprecated("This property has been deprecated and will do no operations")
+  override fun backgroundPatternTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+    // no-op
+  }
 
   /**
    * Get the type of this layer
@@ -671,15 +671,15 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
       }
 
     /**
-    * Transition options for BackgroundPattern.
-    */
-      @Deprecated("This property has been deprecated and will do no operations")
+     * Transition options for BackgroundPattern.
+     */
+    @Deprecated("This property has been deprecated and will do no operations")
     val defaultBackgroundPatternTransition: StyleTransition?
       /**
-        * Get the BackgroundPattern property transition options
-        *
-        * @return transition options for String
-        */
+       * Get the BackgroundPattern property transition options
+       *
+       * @return transition options for String
+       */
       get() = null
   }
 }

@@ -912,10 +912,10 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   /**
    * DSL for [fillExtrusionPatternTransition].
    */
-    @Deprecated("This property has been deprecated and will do no operations")
-    override fun fillExtrusionPatternTransition(block: StyleTransition.Builder.() -> Unit) = apply {
-      // no-op
-    }
+  @Deprecated("This property has been deprecated and will do no operations")
+  override fun fillExtrusionPatternTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+    // no-op
+  }
 
   /**
    * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively.
@@ -1553,15 +1553,15 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-    * Transition options for FillExtrusionPattern.
-    */
-      @Deprecated("This property has been deprecated and will do no operations")
+     * Transition options for FillExtrusionPattern.
+     */
+    @Deprecated("This property has been deprecated and will do no operations")
     val defaultFillExtrusionPatternTransition: StyleTransition?
       /**
-        * Get the FillExtrusionPattern property transition options
-        *
-        * @return transition options for String
-        */
+       * Get the FillExtrusionPattern property transition options
+       *
+       * @return transition options for String
+       */
       get() = null
 
     /**
