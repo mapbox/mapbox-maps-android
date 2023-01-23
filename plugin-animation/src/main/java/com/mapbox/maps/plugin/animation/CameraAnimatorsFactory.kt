@@ -12,6 +12,7 @@ import com.mapbox.maps.plugin.animation.CameraTransform.deg2rad
 import com.mapbox.maps.plugin.animation.CameraTransform.offset
 import com.mapbox.maps.plugin.animation.CameraTransform.rad2deg
 import com.mapbox.maps.plugin.animation.CameraTransform.scaleZoom
+import com.mapbox.maps.plugin.animation.CameraTransform.wrapCoordinate
 import com.mapbox.maps.plugin.animation.CameraTransform.zoomScale
 import com.mapbox.maps.plugin.animation.animator.*
 import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
@@ -255,7 +256,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
     val currentCameraState = mapCameraManagerDelegate.cameraState
 
     val endPadding = cameraOptions.padding ?: currentCameraState.padding
-    val endPointRaw = cameraOptions.center ?: currentCameraState.center
+    val endPointRaw = (cameraOptions.center ?: currentCameraState.center).wrapCoordinate()
     var endZoom = cameraOptions.zoom ?: currentCameraState.zoom
     val endBearing = cameraOptions.bearing ?: currentCameraState.bearing
     val endPitch = cameraOptions.pitch ?: currentCameraState.pitch
@@ -269,7 +270,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
     )
 
     // Determine endpoints
-    var startPointRaw = currentCameraState.center
+    var startPointRaw = currentCameraState.center.wrapCoordinate()
     startPointRaw = CameraTransform.unwrapForShortestPath(startPointRaw, endPointRaw)
 
     val startPoint = mapProjectionDelegate.project(startPointRaw, startScale)
