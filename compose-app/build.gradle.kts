@@ -48,6 +48,10 @@ android {
   buildFeatures {
     compose = true
   }
+  kotlinOptions {
+    //  projects, see https://youtrack.jetbrains.com/issue/KT-37652.
+    freeCompilerArgs += "-Xexplicit-api=strict"
+  }
 }
 
 androidExtensions {

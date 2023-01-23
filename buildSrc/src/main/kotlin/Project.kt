@@ -8,7 +8,7 @@ object AndroidVersions {
     const val compileSdkVersion = 31
   }
   object Compose {
-    const val minSdkVersion = 23
+    const val minSdkVersion = 21
     const val targetSdkVersion = 30
     const val compileSdkVersion = 31
   }
@@ -94,6 +94,7 @@ object Dependencies {
   const val asyncInflater = "androidx.asynclayoutinflater:asynclayoutinflater:${Versions.asyncInflater}"
   const val kotlinReflect = "org.jetbrains.kotlin:kotlin-reflect:${Versions.pluginKotlin}"
   const val detektFormatting = "io.gitlab.arturbosch.detekt:detekt-formatting:${Versions.detekt}"
+  const val composeBOM = "androidx.compose:compose-bom:${Versions.composeBOM}"
   const val composeUi = "androidx.compose.ui:ui:${Versions.compose}"
   const val composeMaterial = "androidx.compose.material:material:${Versions.compose}"
   const val composeUiToolingPreview = "androidx.compose.ui:ui-tooling-preview:${Versions.compose}"
@@ -149,6 +150,7 @@ object Versions {
   const val mapboxSdkVersionsPlugin = "1.1.3"
   const val pitest = "0.2.8"
   const val detekt = "1.20.0"
+  const val composeBOM = "2023.01.00"
   const val compose = "1.1.0-beta03"
   const val pluginPlayPublisher = "3.7.0"
   const val gradleVersionsPlugin = "0.42.0"

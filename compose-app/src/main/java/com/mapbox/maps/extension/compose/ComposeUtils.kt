@@ -1,78 +1,48 @@
 package com.mapbox.maps.extension.compose
 
-import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.background
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalInspectionMode
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.viewinterop.AndroidView
-import androidx.compose.ui.viewinterop.NoOpUpdate
-import com.mapbox.maps.MapInitOptions
+import androidx.compose.runtime.Composition
+import androidx.compose.runtime.CompositionContext
+import com.mapbox.maps.MapSurface
 import com.mapbox.maps.MapView
-import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettings
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettingsInterface
+import kotlinx.coroutines.awaitCancellation
 
-@Composable
-fun MapboxMap(
-  modifier: Modifier = Modifier,
-  mapInitOptions: MapInitOptions = MapInitOptions(LocalContext.current),
-  styleExtension: StyleContract.StyleExtension? = null,
-  update: (MapView) -> Unit = NoOpUpdate
-) {
-  if (LocalInspectionMode.current) {
-    PlaceHolder(modifier)
-  } else {
-    AndroidView(
-      factory = { context ->
-        MapView(context, mapInitOptions)
-      },
-      modifier = modifier,
-    ) { mapView ->
-      mapView.apply(update)
-      styleExtension?.let {
-        mapView.getMapboxMap().loadStyle(it)
-      }
-    }
+
+internal suspend inline fun disposingComposition(factory: () -> Composition) {
+  val composition = factory()
+  try {
+    awaitCancellation()
+  } finally {
+    composition.dispose()
   }
 }
 
-@Composable
-internal fun PlaceHolder(
-  modifier: Modifier,
-  placeholderColor: Color = Color(0xFFD2D2D9),
-  strokeWidthInDp: Int = 5,
-  strokeColor: Color = Color.Blue
-) {
-  Canvas(modifier = modifier.background(placeholderColor)) {
-    val canvasWidth = size.width
-    val canvasHeight = size.height
-    drawRect(
-      color = strokeColor,
-      size = size,
-      style = Stroke(width = strokeWidthInDp.dp.toPx())
-    )
-    drawLine(
-      start = Offset(x = canvasWidth, y = 0f),
-      end = Offset(x = 0f, y = canvasHeight),
-      strokeWidth = strokeWidthInDp.dp.toPx(),
-      color = strokeColor
-    )
-    drawLine(
-      start = Offset(x = 0f, y = 0f),
-      end = Offset(x = canvasWidth, y = canvasHeight),
-      strokeWidth = strokeWidthInDp.dp.toPx(),
-      color = strokeColor
-    )
+internal fun MapView.newComposition(
+  parent: CompositionContext,
+  content: @Composable () -> Unit
+): Composition {
+  return Composition(
+    MapApplier(this, this), parent
+  ).apply {
+    setContent(content)
   }
 }
 
-fun GesturesSettingsInterface.applySettings(gesturesSettings: GesturesSettings) {
+internal fun MapSurface.newComposition(
+  parent: CompositionContext,
+  content: @Composable () -> Unit
+): Composition {
+  return Composition(
+    MapApplier(this, this), parent
+  ).apply {
+    setContent(content)
+  }
+}
+
+
+public fun GesturesSettingsInterface.applySettings(gesturesSettings: GesturesSettings) {
   this.updateSettings {
     rotateEnabled = gesturesSettings.rotateEnabled
     pinchToZoomEnabled = gesturesSettings.pinchToZoomEnabled
