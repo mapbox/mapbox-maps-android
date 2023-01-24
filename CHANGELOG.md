@@ -5,6 +5,7 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 ## Bug fixes 🐞
 * Fix a bug where `flyTo` animation request invalid tiles from map engine. ([1949](https://github.com/mapbox/mapbox-maps-android/pull/1949))
+* Deprecate `pattern` and `dash` transition properties for layer (e.g. `BackgroundLayer.backgroundPatternTransition`, `FillExtrusionLayer.fillExtrusionPatternTransition`, `FillLayer.fillPatternTransition`, `LineLayer.lineDasharrayTransition`, `LineLayer.linePatternTransition`, ...).  ([1941](https://github.com/mapbox/mapbox-maps-android/pull/1941))
 
 # 10.11.0-beta.1 January 11, 2023
 ## Features ✨ and improvements 🏁

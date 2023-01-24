@@ -14,6 +14,7 @@ import com.mapbox.maps.extension.style.utils.ColorUtils.colorIntToRgbaExpression
 import com.mapbox.maps.extension.style.utils.ColorUtils.rgbaExpressionToColorInt
 import com.mapbox.maps.extension.style.utils.ColorUtils.rgbaExpressionToColorString
 import com.mapbox.maps.extension.style.utils.silentUnwrap
+import com.mapbox.maps.logE
 import java.util.*
 
 /**
@@ -426,6 +427,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
   /**
    * Transition options for BackgroundPattern.
    */
+  @Deprecated("This property has been deprecated and will do no operations")
   val backgroundPatternTransition: StyleTransition?
     /**
      * Get the BackgroundPattern property transition options
@@ -435,7 +437,8 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
      * @return transition options for String
      */
     get() {
-      return getPropertyValue("background-pattern-transition")
+      logE("BackgroundLayer", "This property has been deprecated and will return null.")
+      return null
     }
 
   /**
@@ -445,16 +448,17 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
    *
    * @param options transition options for String
    */
+  @Deprecated("This property has been deprecated and will do no operations")
   override fun backgroundPatternTransition(options: StyleTransition) = apply {
-    val propertyValue = PropertyValue("background-pattern-transition", options)
-    setProperty(propertyValue)
+    // no-op
   }
 
   /**
    * DSL for [backgroundPatternTransition].
    */
+  @Deprecated("This property has been deprecated and will do no operations")
   override fun backgroundPatternTransition(block: StyleTransition.Builder.() -> Unit) = apply {
-    backgroundPatternTransition(StyleTransition.Builder().apply(block).build())
+    // no-op
   }
 
   /**
@@ -671,13 +675,17 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
     /**
      * Transition options for BackgroundPattern.
      */
+    @Deprecated("This property has been deprecated and will do no operations")
     val defaultBackgroundPatternTransition: StyleTransition?
       /**
        * Get the BackgroundPattern property transition options
        *
        * @return transition options for String
        */
-      get() = StyleManager.getStyleLayerPropertyDefaultValue("background", "background-pattern-transition").silentUnwrap()
+      get() {
+        logE("BackgroundLayer", "This property has been deprecated and will return null.")
+        return null
+      }
   }
 }
 
