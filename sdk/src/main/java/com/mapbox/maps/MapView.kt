@@ -42,8 +42,10 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
     private set
 
   private var interceptedViewAnnotationEvents: MutableList<MotionEvent> = mutableListOf()
+
   private val touchSlop: Int by lazy { ViewConfiguration.get(context).scaledTouchSlop }
   private val viewAnnotationManagerDelegate = lazy { ViewAnnotationManagerImpl(this) }
+
   /**
    * Get view annotation manager instance to add / update / remove view annotations
    * represented as Android views.
@@ -107,8 +109,14 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
     }
     mapController = MapController(
       when (view) {
-        is SurfaceView -> MapboxSurfaceHolderRenderer(view.holder, resolvedMapInitOptions.antialiasingSampleCount)
-        is TextureView -> MapboxTextureViewRenderer(view, resolvedMapInitOptions.antialiasingSampleCount)
+        is SurfaceView -> MapboxSurfaceHolderRenderer(
+          view.holder,
+          resolvedMapInitOptions.antialiasingSampleCount
+        )
+        is TextureView -> MapboxTextureViewRenderer(
+          view,
+          resolvedMapInitOptions.antialiasingSampleCount
+        )
         else -> throw IllegalArgumentException("Provided view has to be a texture or a surface.")
       },
       resolvedMapInitOptions
@@ -140,7 +148,10 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
       val textureView = typedArray.getInt(R.styleable.mapbox_MapView_mapbox_mapSurface, 0) != 0
       val styleUri =
         typedArray.getString(R.styleable.mapbox_MapView_mapbox_styleUri) ?: Style.MAPBOX_STREETS
-      val antialiasingSampleCount = typedArray.getInteger(R.styleable.mapbox_MapView_mapbox_mapAntialiasingSampleCount, DEFAULT_ANTIALIASING_SAMPLE_COUNT)
+      val antialiasingSampleCount = typedArray.getInteger(
+        R.styleable.mapbox_MapView_mapbox_mapAntialiasingSampleCount,
+        DEFAULT_ANTIALIASING_SAMPLE_COUNT
+      )
 
       return MapInitOptions(
         context,
@@ -313,6 +324,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
       interceptedViewAnnotationEvents.removeFirst()
       return interceptedTouchRes
     }
+    interceptedViewAnnotationEvents.clear()
     return mapController.onTouchEvent(event)
   }
 
@@ -325,10 +337,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    */
   override fun onInterceptTouchEvent(event: MotionEvent): Boolean {
     return when (event.actionMasked) {
-      MotionEvent.ACTION_DOWN -> {
-        interceptedViewAnnotationEvents.add(MotionEvent.obtain(event))
-        false
-      }
+      MotionEvent.ACTION_DOWN,
       MotionEvent.ACTION_POINTER_DOWN -> {
         interceptedViewAnnotationEvents.add(MotionEvent.obtain(event))
         false
@@ -336,9 +345,20 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
       MotionEvent.ACTION_MOVE -> {
         interceptedViewAnnotationEvents.any { it.hypot(event, touchSlop) }
       }
+      MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+        interceptedViewAnnotationEvents.clear()
+        return false
+      }
+      MotionEvent.ACTION_POINTER_UP -> {
+        val upPointerId = event.getPointerId(event.actionIndex)
+        interceptedViewAnnotationEvents.removeAll {
+          val cachedPointerId = it.getPointerId(it.actionIndex)
+          upPointerId == cachedPointerId
+        }
+        return false
+      }
       else -> {
-        // In general, we don't want to intercept touch events. They should be
-        // handled by the child view.
+        // In general, we don't intercept touch events, they are handled by the child view.
         false
       }
     }
@@ -354,9 +374,9 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
       }
       if (
         hypot(
-            x = getX(originalCoordinateIndex) - moveEvent.getX(moveCoordinateIndex),
-            y = getY(originalCoordinateIndex) - moveEvent.getY(moveCoordinateIndex)
-          ) > touchSlop
+          x = getX(originalCoordinateIndex) - moveEvent.getX(moveCoordinateIndex),
+          y = getY(originalCoordinateIndex) - moveEvent.getY(moveCoordinateIndex)
+        ) > touchSlop
       ) {
         return true
       }
@@ -440,6 +460,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
      * This will not affect rendering on displays with higher frame rate if [MapView.setMaximumFps] was not called.
      */
     internal const val DEFAULT_FPS = 60
+
     /**
      * Static method to check if [MapView] could properly render on this device.
      * This method may take some time on slow devices.
