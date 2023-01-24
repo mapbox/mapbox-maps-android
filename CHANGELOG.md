@@ -32,7 +32,8 @@ Mapbox welcomes participation and contributions from everyone.
 ## Dependencies
 * Update gl-native to v10.11.0-beta.1 and common to v23.3.0-beta.1. ([1934](https://github.com/mapbox/mapbox-maps-android/pull/1934))
 
-
+## Known issues
+* Using `pattern` and `dash` transition properties for layer (e.g. `BackgroundLayer.backgroundPatternTransition`, `FillExtrusionLayer.fillExtrusionPatternTransition`, `FillLayer.fillPatternTransition`, `LineLayer.lineDasharrayTransition`, `LineLayer.linePatternTransition`, ...) will result in an invalid layer.
 
 # 10.10.0 December 07, 2022
 ## Features ✨ and improvements 🏁
