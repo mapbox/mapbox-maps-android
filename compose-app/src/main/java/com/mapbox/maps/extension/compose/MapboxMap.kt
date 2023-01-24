@@ -6,12 +6,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.content.res.ResourcesCompat
 import com.mapbox.maps.*
+import com.mapbox.maps.extension.compose.viewport.MapViewport
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.style
+import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettings
 import com.mapbox.maps.plugin.gestures.gestures
+import com.mapbox.maps.plugin.locationcomponent.R
+import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
+import com.mapbox.maps.plugin.locationcomponent.location
+import com.mapbox.maps.plugin.viewport.viewport
 
 internal class MapRootNode(
   val mapController: MapControllable,
@@ -33,12 +40,30 @@ internal class MapRootNode(
 public fun MapboxMap(
   modifier: Modifier = Modifier,
   mapInitOptions: MapInitOptions = MapInitOptions(LocalContext.current),
-//  gesturesState: GesturesState = rememberGesturesState(),
   gesturesSettings: GesturesSettings = GesturesSettings(),
-  // Add states for all the plugins...
-//  styleState: StyleState = rememberStyleState(),
+  locationComponentSettings: LocationComponentSettings = LocationComponentSettings(
+    locationPuck = LocationPuck2D(
+      topImage = ResourcesCompat.getDrawable(
+        LocalContext.current.resources,
+        R.drawable.mapbox_user_icon,
+        null
+      ),
+      bearingImage = ResourcesCompat.getDrawable(
+        LocalContext.current.resources,
+        R.drawable.mapbox_user_stroke_icon,
+        null
+      ),
+      shadowImage = ResourcesCompat.getDrawable(
+        LocalContext.current.resources,
+        R.drawable.mapbox_user_icon_shadow,
+        null
+      ),
+    )
+  ),
+  // Add settings for all the plugins...
   style: StyleContract.StyleExtension = style(Style.MAPBOX_STREETS) { },
   cameraOptions: CameraOptions = CameraOptions.Builder().build(),
+  mapViewport: MapViewport = MapViewport.Idle,
   content: @Composable MapboxMapScope.() -> Unit
 ) {
   if (LocalInspectionMode.current) {
@@ -64,12 +89,11 @@ public fun MapboxMap(
   val currentStyleState by rememberUpdatedState(style)
   val currentCameraOptions by rememberUpdatedState(cameraOptions)
   val currentContent by rememberUpdatedState(content)
+  val currentViewport by rememberUpdatedState(mapViewport)
   val parentComposition = rememberCompositionContext()
 
   LaunchedEffect(Unit) {
     logE("compose", "LaunchedEffect")
-//    currentGesturesState.setGesturesPlugin(plugin = mapView.gestures)
-//    currentStyleState.setMapboxMap(mapboxMap = mapView.getMapboxMap())
     disposingComposition {
       mapView.newComposition(parentComposition) {
         logE("compose", "mapView.newComposition")
@@ -99,6 +123,39 @@ public fun MapboxMap(
               logE("compose", "currentCameraOptions set: $it")
               this.cameraOptions = it
               this.mapController.getMapboxMap().setCamera(it)
+            }
+            set(locationComponentSettings.enabled) {
+              this.mapPluginProvider.location.enabled = it
+            }
+            set(locationComponentSettings.locationPuck) {
+              this.mapPluginProvider.location.locationPuck = it
+            }
+            set(currentViewport) { mapViewport ->
+              logE("compose", "currentViewport set: $mapViewport")
+              val viewportPlugin = this.mapPluginProvider.viewport
+              when (mapViewport) {
+                MapViewport.Idle -> viewportPlugin.idle()
+                is MapViewport.FollowPuckState -> {
+                  viewportPlugin.transitionTo(
+                    viewportPlugin.makeFollowPuckViewportState(
+                      mapViewport.stateOptions
+                    ),
+                    viewportPlugin.makeDefaultViewportTransition(
+                      mapViewport.transitionOptions
+                    )
+                  )
+                }
+                is MapViewport.OverviewState -> {
+                  viewportPlugin.transitionTo(
+                    viewportPlugin.makeOverviewViewportState(
+                      mapViewport.stateOptions
+                    ),
+                    viewportPlugin.makeDefaultViewportTransition(
+                      mapViewport.transitionOptions
+                    )
+                  )
+                }
+              }
             }
           }
         )
