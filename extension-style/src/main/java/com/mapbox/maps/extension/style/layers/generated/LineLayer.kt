@@ -14,6 +14,7 @@ import com.mapbox.maps.extension.style.utils.ColorUtils.colorIntToRgbaExpression
 import com.mapbox.maps.extension.style.utils.ColorUtils.rgbaExpressionToColorInt
 import com.mapbox.maps.extension.style.utils.ColorUtils.rgbaExpressionToColorString
 import com.mapbox.maps.extension.style.utils.silentUnwrap
+import com.mapbox.maps.logE
 import java.util.*
 
 /**
@@ -829,6 +830,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      * @return transition options for List<Double>
      */
     get() {
+      logE("LineLayer", "This property has been deprecated and will return null.")
       return null
     }
 
@@ -1254,6 +1256,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      * @return transition options for String
      */
     get() {
+      logE("LineLayer", "This property has been deprecated and will return null.")
       return null
     }
 
@@ -2020,7 +2023,10 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
        *
        * @return transition options for List<Double>
        */
-      get() = null
+      get() {
+        logE("LineLayer", "This property has been deprecated and will return null.")
+        return null
+      }
 
     /**
      * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap.
@@ -2213,7 +2219,10 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
        *
        * @return transition options for String
        */
-      get() = null
+      get() {
+        logE("LineLayer", "This property has been deprecated and will return null.")
+        return null
+      }
 
     /**
      * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.

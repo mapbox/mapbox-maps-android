@@ -14,6 +14,7 @@ import com.mapbox.maps.extension.style.utils.ColorUtils.colorIntToRgbaExpression
 import com.mapbox.maps.extension.style.utils.ColorUtils.rgbaExpressionToColorInt
 import com.mapbox.maps.extension.style.utils.ColorUtils.rgbaExpressionToColorString
 import com.mapbox.maps.extension.style.utils.silentUnwrap
+import com.mapbox.maps.logE
 import java.util.*
 
 /**
@@ -436,6 +437,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
      * @return transition options for String
      */
     get() {
+      logE("BackgroundLayer", "This property has been deprecated and will return null.")
       return null
     }
 
@@ -680,7 +682,10 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
        *
        * @return transition options for String
        */
-      get() = null
+      get() {
+        logE("BackgroundLayer", "This property has been deprecated and will return null.")
+        return null
+      }
   }
 }
 

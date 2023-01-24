@@ -14,6 +14,7 @@ import com.mapbox.maps.extension.style.utils.ColorUtils.colorIntToRgbaExpression
 import com.mapbox.maps.extension.style.utils.ColorUtils.rgbaExpressionToColorInt
 import com.mapbox.maps.extension.style.utils.ColorUtils.rgbaExpressionToColorString
 import com.mapbox.maps.extension.style.utils.silentUnwrap
+import com.mapbox.maps.logE
 import java.util.*
 
 /**
@@ -758,6 +759,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
      * @return transition options for String
      */
     get() {
+      logE("FillLayer", "This property has been deprecated and will return null.")
       return null
     }
 
@@ -1310,7 +1312,10 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
        *
        * @return transition options for String
        */
-      get() = null
+      get() {
+        logE("FillLayer", "This property has been deprecated and will return null.")
+        return null
+      }
 
     /**
      * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.

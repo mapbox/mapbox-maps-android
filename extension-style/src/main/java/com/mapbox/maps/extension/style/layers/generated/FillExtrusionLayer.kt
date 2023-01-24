@@ -14,6 +14,7 @@ import com.mapbox.maps.extension.style.utils.ColorUtils.colorIntToRgbaExpression
 import com.mapbox.maps.extension.style.utils.ColorUtils.rgbaExpressionToColorInt
 import com.mapbox.maps.extension.style.utils.ColorUtils.rgbaExpressionToColorString
 import com.mapbox.maps.extension.style.utils.silentUnwrap
+import com.mapbox.maps.logE
 import java.util.*
 
 /**
@@ -894,6 +895,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
      * @return transition options for String
      */
     get() {
+      logE("FillExtrusionLayer", "This property has been deprecated and will return null.")
       return null
     }
 
@@ -1562,7 +1564,10 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
        *
        * @return transition options for String
        */
-      get() = null
+      get() {
+        logE("FillExtrusionLayer", "This property has been deprecated and will return null.")
+        return null
+      }
 
     /**
      * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively.
