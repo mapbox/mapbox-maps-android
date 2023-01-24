@@ -42,10 +42,8 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
     private set
 
   private var interceptedViewAnnotationEvents: MutableList<MotionEvent> = mutableListOf()
-
   private val touchSlop: Int by lazy { ViewConfiguration.get(context).scaledTouchSlop }
   private val viewAnnotationManagerDelegate = lazy { ViewAnnotationManagerImpl(this) }
-
   /**
    * Get view annotation manager instance to add / update / remove view annotations
    * represented as Android views.
@@ -318,14 +316,15 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    */
   @SuppressLint("ClickableViewAccessibility")
   override fun onTouchEvent(event: MotionEvent): Boolean {
-    interceptedViewAnnotationEvents.firstOrNull()?.let {
-      val interceptedTouchRes = mapController.onTouchEvent(it)
-      it.recycle()
-      interceptedViewAnnotationEvents.removeFirst()
-      return interceptedTouchRes
+    var interceptedTouchRes = false
+    if (interceptedViewAnnotationEvents.isNotEmpty() && interceptedViewAnnotationEvents.none { it.eventTime == event.eventTime }) {
+      interceptedViewAnnotationEvents.forEach {
+        interceptedTouchRes = mapController.onTouchEvent(it) || interceptedTouchRes
+        it.recycle()
+      }
     }
     interceptedViewAnnotationEvents.clear()
-    return mapController.onTouchEvent(event)
+    return mapController.onTouchEvent(event) || interceptedTouchRes
   }
 
   /**
@@ -345,7 +344,8 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
       MotionEvent.ACTION_MOVE -> {
         interceptedViewAnnotationEvents.any { it.hypot(event, touchSlop) }
       }
-      MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+      MotionEvent.ACTION_UP,
+      MotionEvent.ACTION_CANCEL -> {
         interceptedViewAnnotationEvents.clear()
         return false
       }
@@ -355,10 +355,12 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
           val cachedPointerId = it.getPointerId(it.actionIndex)
           upPointerId == cachedPointerId
         }
+
         return false
       }
       else -> {
-        // In general, we don't intercept touch events, they are handled by the child view.
+        // In general, we don't want to intercept touch events. They should be
+        // handled by the child view.
         false
       }
     }
@@ -374,9 +376,9 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
       }
       if (
         hypot(
-          x = getX(originalCoordinateIndex) - moveEvent.getX(moveCoordinateIndex),
-          y = getY(originalCoordinateIndex) - moveEvent.getY(moveCoordinateIndex)
-        ) > touchSlop
+            x = getX(originalCoordinateIndex) - moveEvent.getX(moveCoordinateIndex),
+            y = getY(originalCoordinateIndex) - moveEvent.getY(moveCoordinateIndex)
+          ) > touchSlop
       ) {
         return true
       }
