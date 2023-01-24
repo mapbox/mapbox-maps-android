@@ -348,37 +348,6 @@ class LineLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
-  fun lineDasharrayTransitionTest() {
-    val transition = transitionOptions {
-      duration(100)
-      delay(200)
-    }
-    val layer = lineLayer("id", "source") {
-      lineDasharrayTransition(transition)
-    }
-    setupLayer(layer)
-    assertEquals(transition, layer.lineDasharrayTransition)
-  }
-
-  @Test
-  @UiThreadTest
-  fun lineDasharrayTransitionSetDslTest() {
-    val transition = transitionOptions {
-      duration(100)
-      delay(200)
-    }
-    val layer = lineLayer("id", "source") {
-      lineDasharrayTransition {
-        duration(100)
-        delay(200)
-      }
-    }
-    setupLayer(layer)
-    assertEquals(transition, layer.lineDasharrayTransition)
-  }
-
-  @Test
-  @UiThreadTest
   fun lineGapWidthTest() {
     val testValue = 1.0
     val layer = lineLayer("id", "source") {
@@ -618,37 +587,6 @@ class LineLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
-  fun linePatternTransitionTest() {
-    val transition = transitionOptions {
-      duration(100)
-      delay(200)
-    }
-    val layer = lineLayer("id", "source") {
-      linePatternTransition(transition)
-    }
-    setupLayer(layer)
-    assertEquals(transition, layer.linePatternTransition)
-  }
-
-  @Test
-  @UiThreadTest
-  fun linePatternTransitionSetDslTest() {
-    val transition = transitionOptions {
-      duration(100)
-      delay(200)
-    }
-    val layer = lineLayer("id", "source") {
-      linePatternTransition {
-        duration(100)
-        delay(200)
-      }
-    }
-    setupLayer(layer)
-    assertEquals(transition, layer.linePatternTransition)
-  }
-
-  @Test
-  @UiThreadTest
   fun lineTranslateTest() {
     val testValue = listOf(0.0, 1.0)
     val layer = lineLayer("id", "source") {
@@ -845,7 +783,6 @@ class LineLayerTest : BaseStyleTest() {
     assertNotNull("defaultLineColorTransition should not be null", LineLayer.defaultLineColorTransition)
     assertNotNull("defaultLineDasharray should not be null", LineLayer.defaultLineDasharray)
     assertNotNull("defaultLineDasharrayAsExpression should not be null", LineLayer.defaultLineDasharrayAsExpression)
-    assertNotNull("defaultLineDasharrayTransition should not be null", LineLayer.defaultLineDasharrayTransition)
     assertNotNull("defaultLineGapWidth should not be null", LineLayer.defaultLineGapWidth)
     assertNotNull("defaultLineGapWidthAsExpression should not be null", LineLayer.defaultLineGapWidthAsExpression)
     assertNotNull("defaultLineGapWidthTransition should not be null", LineLayer.defaultLineGapWidthTransition)
@@ -857,7 +794,6 @@ class LineLayerTest : BaseStyleTest() {
     assertNotNull("defaultLineOpacityTransition should not be null", LineLayer.defaultLineOpacityTransition)
     assertNotNull("defaultLinePattern should not be null", LineLayer.defaultLinePattern)
     assertNotNull("defaultLinePatternAsExpression should not be null", LineLayer.defaultLinePatternAsExpression)
-    assertNotNull("defaultLinePatternTransition should not be null", LineLayer.defaultLinePatternTransition)
     assertNotNull("defaultLineTranslate should not be null", LineLayer.defaultLineTranslate)
     assertNotNull("defaultLineTranslateAsExpression should not be null", LineLayer.defaultLineTranslateAsExpression)
     assertNotNull("defaultLineTranslateTransition should not be null", LineLayer.defaultLineTranslateTransition)

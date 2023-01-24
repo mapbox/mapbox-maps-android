@@ -764,46 +764,6 @@ class FillLayerTest {
   }
 
   @Test
-  fun fillPatternTransitionSet() {
-    val layer = fillLayer("id", "source") {}
-    layer.bindTo(style)
-    layer.fillPatternTransition(
-      transitionOptions {
-        duration(100)
-        delay(200)
-      }
-    )
-    verify { style.setStyleLayerProperty("id", "fill-pattern-transition", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
-  }
-
-  @Test
-  fun fillPatternTransitionGet() {
-    val transition = transitionOptions {
-      duration(100)
-      delay(200)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
-    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
-    val layer = fillLayer("id", "source") {}
-    layer.bindTo(style)
-    assertEquals(transition.toValue().toString(), layer.fillPatternTransition?.toValue().toString())
-    verify { style.getStyleLayerProperty("id", "fill-pattern-transition") }
-  }
-
-  @Test
-  fun fillPatternTransitionSetDsl() {
-    val layer = fillLayer("id", "source") {}
-    layer.bindTo(style)
-    layer.fillPatternTransition {
-      duration(100)
-      delay(200)
-    }
-    verify { style.setStyleLayerProperty("id", "fill-pattern-transition", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
-  }
-
-  @Test
   fun fillTranslateSet() {
     val layer = fillLayer("id", "source") {}
     val testValue = listOf(0.0, 1.0)
@@ -1313,19 +1273,6 @@ class FillLayerTest {
     assertEquals("abc", FillLayer.defaultFillPatternAsExpression.toString())
     assertEquals("abc", FillLayer.defaultFillPattern)
     verify { StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-pattern") }
-  }
-
-  @Test
-  fun defaultFillPatternTransitionTest() {
-    val transition = transitionOptions {
-      duration(100)
-      delay(200)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
-    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
-
-    assertEquals(transition.toValue().toString(), FillLayer.defaultFillPatternTransition?.toValue().toString())
-    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-pattern-transition") }
   }
 
   @Test
