@@ -349,37 +349,6 @@ class FillLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
-  fun fillPatternTransitionTest() {
-    val transition = transitionOptions {
-      duration(100)
-      delay(200)
-    }
-    val layer = fillLayer("id", "source") {
-      fillPatternTransition(transition)
-    }
-    setupLayer(layer)
-    assertEquals(transition, layer.fillPatternTransition)
-  }
-
-  @Test
-  @UiThreadTest
-  fun fillPatternTransitionSetDslTest() {
-    val transition = transitionOptions {
-      duration(100)
-      delay(200)
-    }
-    val layer = fillLayer("id", "source") {
-      fillPatternTransition {
-        duration(100)
-        delay(200)
-      }
-    }
-    setupLayer(layer)
-    assertEquals(transition, layer.fillPatternTransition)
-  }
-
-  @Test
-  @UiThreadTest
   fun fillTranslateTest() {
     val testValue = listOf(0.0, 1.0)
     val layer = fillLayer("id", "source") {
@@ -491,7 +460,6 @@ class FillLayerTest : BaseStyleTest() {
     assertNotNull("defaultFillOutlineColorTransition should not be null", FillLayer.defaultFillOutlineColorTransition)
     assertNotNull("defaultFillPattern should not be null", FillLayer.defaultFillPattern)
     assertNotNull("defaultFillPatternAsExpression should not be null", FillLayer.defaultFillPatternAsExpression)
-    assertNotNull("defaultFillPatternTransition should not be null", FillLayer.defaultFillPatternTransition)
     assertNotNull("defaultFillTranslate should not be null", FillLayer.defaultFillTranslate)
     assertNotNull("defaultFillTranslateAsExpression should not be null", FillLayer.defaultFillTranslateAsExpression)
     assertNotNull("defaultFillTranslateTransition should not be null", FillLayer.defaultFillTranslateTransition)

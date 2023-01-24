@@ -14,6 +14,7 @@ import com.mapbox.maps.extension.style.utils.ColorUtils.colorIntToRgbaExpression
 import com.mapbox.maps.extension.style.utils.ColorUtils.rgbaExpressionToColorInt
 import com.mapbox.maps.extension.style.utils.ColorUtils.rgbaExpressionToColorString
 import com.mapbox.maps.extension.style.utils.silentUnwrap
+import com.mapbox.maps.logE
 import java.util.*
 
 /**
@@ -748,6 +749,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   /**
    * Transition options for FillPattern.
    */
+  @Deprecated("This property has been deprecated and will do no operations")
   val fillPatternTransition: StyleTransition?
     /**
      * Get the FillPattern property transition options
@@ -757,7 +759,8 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
      * @return transition options for String
      */
     get() {
-      return getPropertyValue("fill-pattern-transition")
+      logE("FillLayer", "This property has been deprecated and will return null.")
+      return null
     }
 
   /**
@@ -767,16 +770,17 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    *
    * @param options transition options for String
    */
+  @Deprecated("This property has been deprecated and will do no operations")
   override fun fillPatternTransition(options: StyleTransition) = apply {
-    val propertyValue = PropertyValue("fill-pattern-transition", options)
-    setProperty(propertyValue)
+    // no-op
   }
 
   /**
    * DSL for [fillPatternTransition].
    */
+  @Deprecated("This property has been deprecated and will do no operations")
   override fun fillPatternTransition(block: StyleTransition.Builder.() -> Unit) = apply {
-    fillPatternTransition(StyleTransition.Builder().apply(block).build())
+    // no-op
   }
 
   /**
@@ -1301,13 +1305,17 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     /**
      * Transition options for FillPattern.
      */
+    @Deprecated("This property has been deprecated and will do no operations")
     val defaultFillPatternTransition: StyleTransition?
       /**
        * Get the FillPattern property transition options
        *
        * @return transition options for String
        */
-      get() = StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-pattern-transition").silentUnwrap()
+      get() {
+        logE("FillLayer", "This property has been deprecated and will return null.")
+        return null
+      }
 
     /**
      * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.

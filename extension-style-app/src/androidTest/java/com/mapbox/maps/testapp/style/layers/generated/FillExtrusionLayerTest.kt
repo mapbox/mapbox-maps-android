@@ -452,37 +452,6 @@ class FillExtrusionLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
-  fun fillExtrusionPatternTransitionTest() {
-    val transition = transitionOptions {
-      duration(100)
-      delay(200)
-    }
-    val layer = fillExtrusionLayer("id", "source") {
-      fillExtrusionPatternTransition(transition)
-    }
-    setupLayer(layer)
-    assertEquals(transition, layer.fillExtrusionPatternTransition)
-  }
-
-  @Test
-  @UiThreadTest
-  fun fillExtrusionPatternTransitionSetDslTest() {
-    val transition = transitionOptions {
-      duration(100)
-      delay(200)
-    }
-    val layer = fillExtrusionLayer("id", "source") {
-      fillExtrusionPatternTransition {
-        duration(100)
-        delay(200)
-      }
-    }
-    setupLayer(layer)
-    assertEquals(transition, layer.fillExtrusionPatternTransition)
-  }
-
-  @Test
-  @UiThreadTest
   fun fillExtrusionTranslateTest() {
     val testValue = listOf(0.0, 1.0)
     val layer = fillExtrusionLayer("id", "source") {
@@ -622,7 +591,6 @@ class FillExtrusionLayerTest : BaseStyleTest() {
     assertNotNull("defaultFillExtrusionOpacityTransition should not be null", FillExtrusionLayer.defaultFillExtrusionOpacityTransition)
     assertNotNull("defaultFillExtrusionPattern should not be null", FillExtrusionLayer.defaultFillExtrusionPattern)
     assertNotNull("defaultFillExtrusionPatternAsExpression should not be null", FillExtrusionLayer.defaultFillExtrusionPatternAsExpression)
-    assertNotNull("defaultFillExtrusionPatternTransition should not be null", FillExtrusionLayer.defaultFillExtrusionPatternTransition)
     assertNotNull("defaultFillExtrusionTranslate should not be null", FillExtrusionLayer.defaultFillExtrusionTranslate)
     assertNotNull("defaultFillExtrusionTranslateAsExpression should not be null", FillExtrusionLayer.defaultFillExtrusionTranslateAsExpression)
     assertNotNull("defaultFillExtrusionTranslateTransition should not be null", FillExtrusionLayer.defaultFillExtrusionTranslateTransition)

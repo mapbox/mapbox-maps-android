@@ -1005,8 +1005,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundOpacityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundPattern(String backgroundPattern);
     method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundPattern(com.mapbox.maps.extension.style.expressions.generated.Expression backgroundPattern);
-    method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundPatternTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
-    method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundPatternTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @Deprecated public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundPatternTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @Deprecated public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundPatternTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public String? getBackgroundColor();
     method @ColorInt public Integer? getBackgroundColorAsColorInt();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getBackgroundColorAsExpression();
@@ -1016,7 +1016,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.types.StyleTransition? getBackgroundOpacityTransition();
     method public String? getBackgroundPattern();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getBackgroundPatternAsExpression();
-    method public com.mapbox.maps.extension.style.types.StyleTransition? getBackgroundPatternTransition();
+    method @Deprecated public com.mapbox.maps.extension.style.types.StyleTransition? getBackgroundPatternTransition();
     method public String getLayerId();
     method public Double? getMaxZoom();
     method public Double? getMinZoom();
@@ -1034,7 +1034,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final com.mapbox.maps.extension.style.types.StyleTransition? backgroundOpacityTransition;
     property public final String? backgroundPattern;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? backgroundPatternAsExpression;
-    property public final com.mapbox.maps.extension.style.types.StyleTransition? backgroundPatternTransition;
+    property @Deprecated public final com.mapbox.maps.extension.style.types.StyleTransition? backgroundPatternTransition;
     property public String layerId;
     property public Double? maxZoom;
     property public Double? minZoom;
@@ -1052,7 +1052,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultBackgroundOpacityTransition();
     method public String? getDefaultBackgroundPattern();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultBackgroundPatternAsExpression();
-    method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultBackgroundPatternTransition();
+    method @Deprecated public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultBackgroundPatternTransition();
     method public Double? getDefaultMaxZoom();
     method public Double? getDefaultMinZoom();
     method public com.mapbox.maps.extension.style.layers.properties.generated.Visibility? getDefaultVisibility();
@@ -1065,7 +1065,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultBackgroundOpacityTransition;
     property public final String? defaultBackgroundPattern;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultBackgroundPatternAsExpression;
-    property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultBackgroundPatternTransition;
+    property @Deprecated public final com.mapbox.maps.extension.style.types.StyleTransition? defaultBackgroundPatternTransition;
     property public final Double? defaultMaxZoom;
     property public final Double? defaultMinZoom;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.Visibility? defaultVisibility;
@@ -1389,8 +1389,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionOpacityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionPattern(String fillExtrusionPattern);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionPattern(com.mapbox.maps.extension.style.expressions.generated.Expression fillExtrusionPattern);
-    method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionPatternTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
-    method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionPatternTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @Deprecated public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionPatternTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @Deprecated public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionPatternTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionTranslate(java.util.List<java.lang.Double> fillExtrusionTranslate);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionTranslate(com.mapbox.maps.extension.style.expressions.generated.Expression fillExtrusionTranslate);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionTranslateAnchor(com.mapbox.maps.extension.style.layers.properties.generated.FillExtrusionTranslateAnchor fillExtrusionTranslateAnchor);
@@ -1421,7 +1421,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.types.StyleTransition? getFillExtrusionOpacityTransition();
     method public String? getFillExtrusionPattern();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getFillExtrusionPatternAsExpression();
-    method public com.mapbox.maps.extension.style.types.StyleTransition? getFillExtrusionPatternTransition();
+    method @Deprecated public com.mapbox.maps.extension.style.types.StyleTransition? getFillExtrusionPatternTransition();
     method public java.util.List<java.lang.Double>? getFillExtrusionTranslate();
     method public com.mapbox.maps.extension.style.layers.properties.generated.FillExtrusionTranslateAnchor? getFillExtrusionTranslateAnchor();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getFillExtrusionTranslateAnchorAsExpression();
@@ -1462,7 +1462,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final com.mapbox.maps.extension.style.types.StyleTransition? fillExtrusionOpacityTransition;
     property public final String? fillExtrusionPattern;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? fillExtrusionPatternAsExpression;
-    property public final com.mapbox.maps.extension.style.types.StyleTransition? fillExtrusionPatternTransition;
+    property @Deprecated public final com.mapbox.maps.extension.style.types.StyleTransition? fillExtrusionPatternTransition;
     property public final java.util.List<java.lang.Double>? fillExtrusionTranslate;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.FillExtrusionTranslateAnchor? fillExtrusionTranslateAnchor;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? fillExtrusionTranslateAnchorAsExpression;
@@ -1502,7 +1502,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultFillExtrusionOpacityTransition();
     method public String? getDefaultFillExtrusionPattern();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultFillExtrusionPatternAsExpression();
-    method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultFillExtrusionPatternTransition();
+    method @Deprecated public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultFillExtrusionPatternTransition();
     method public java.util.List<java.lang.Double>? getDefaultFillExtrusionTranslate();
     method public com.mapbox.maps.extension.style.layers.properties.generated.FillExtrusionTranslateAnchor? getDefaultFillExtrusionTranslateAnchor();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultFillExtrusionTranslateAnchorAsExpression();
@@ -1534,7 +1534,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultFillExtrusionOpacityTransition;
     property public final String? defaultFillExtrusionPattern;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultFillExtrusionPatternAsExpression;
-    property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultFillExtrusionPatternTransition;
+    property @Deprecated public final com.mapbox.maps.extension.style.types.StyleTransition? defaultFillExtrusionPatternTransition;
     property public final java.util.List<java.lang.Double>? defaultFillExtrusionTranslate;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.FillExtrusionTranslateAnchor? defaultFillExtrusionTranslateAnchor;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultFillExtrusionTranslateAnchorAsExpression;
@@ -1616,8 +1616,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillOutlineColorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillPattern(String fillPattern);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillPattern(com.mapbox.maps.extension.style.expressions.generated.Expression fillPattern);
-    method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillPatternTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
-    method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillPatternTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @Deprecated public com.mapbox.maps.extension.style.layers.generated.FillLayer fillPatternTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @Deprecated public com.mapbox.maps.extension.style.layers.generated.FillLayer fillPatternTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillSortKey(double fillSortKey);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillSortKey(com.mapbox.maps.extension.style.expressions.generated.Expression fillSortKey);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillTranslate(java.util.List<java.lang.Double> fillTranslate);
@@ -1642,7 +1642,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.types.StyleTransition? getFillOutlineColorTransition();
     method public String? getFillPattern();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getFillPatternAsExpression();
-    method public com.mapbox.maps.extension.style.types.StyleTransition? getFillPatternTransition();
+    method @Deprecated public com.mapbox.maps.extension.style.types.StyleTransition? getFillPatternTransition();
     method public Double? getFillSortKey();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getFillSortKeyAsExpression();
     method public java.util.List<java.lang.Double>? getFillTranslate();
@@ -1677,7 +1677,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final com.mapbox.maps.extension.style.types.StyleTransition? fillOutlineColorTransition;
     property public final String? fillPattern;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? fillPatternAsExpression;
-    property public final com.mapbox.maps.extension.style.types.StyleTransition? fillPatternTransition;
+    property @Deprecated public final com.mapbox.maps.extension.style.types.StyleTransition? fillPatternTransition;
     property public final Double? fillSortKey;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? fillSortKeyAsExpression;
     property public final java.util.List<java.lang.Double>? fillTranslate;
@@ -1711,7 +1711,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultFillOutlineColorTransition();
     method public String? getDefaultFillPattern();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultFillPatternAsExpression();
-    method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultFillPatternTransition();
+    method @Deprecated public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultFillPatternTransition();
     method public Double? getDefaultFillSortKey();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultFillSortKeyAsExpression();
     method public java.util.List<java.lang.Double>? getDefaultFillTranslate();
@@ -1737,7 +1737,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultFillOutlineColorTransition;
     property public final String? defaultFillPattern;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultFillPatternAsExpression;
-    property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultFillPatternTransition;
+    property @Deprecated public final com.mapbox.maps.extension.style.types.StyleTransition? defaultFillPatternTransition;
     property public final Double? defaultFillSortKey;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultFillSortKeyAsExpression;
     property public final java.util.List<java.lang.Double>? defaultFillTranslate;
@@ -2094,7 +2094,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.types.StyleTransition? getLineColorTransition();
     method public java.util.List<java.lang.Double>? getLineDasharray();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getLineDasharrayAsExpression();
-    method public com.mapbox.maps.extension.style.types.StyleTransition? getLineDasharrayTransition();
+    method @Deprecated public com.mapbox.maps.extension.style.types.StyleTransition? getLineDasharrayTransition();
     method public Double? getLineGapWidth();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getLineGapWidthAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getLineGapWidthTransition();
@@ -2111,7 +2111,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.types.StyleTransition? getLineOpacityTransition();
     method public String? getLinePattern();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getLinePatternAsExpression();
-    method public com.mapbox.maps.extension.style.types.StyleTransition? getLinePatternTransition();
+    method @Deprecated public com.mapbox.maps.extension.style.types.StyleTransition? getLinePatternTransition();
     method public Double? getLineRoundLimit();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getLineRoundLimitAsExpression();
     method public Double? getLineSortKey();
@@ -2145,8 +2145,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineColorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineDasharray(java.util.List<java.lang.Double> lineDasharray);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineDasharray(com.mapbox.maps.extension.style.expressions.generated.Expression lineDasharray);
-    method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineDasharrayTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
-    method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineDasharrayTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @Deprecated public com.mapbox.maps.extension.style.layers.generated.LineLayer lineDasharrayTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @Deprecated public com.mapbox.maps.extension.style.layers.generated.LineLayer lineDasharrayTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineGapWidth(double lineGapWidth);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineGapWidth(com.mapbox.maps.extension.style.expressions.generated.Expression lineGapWidth);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineGapWidthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -2166,8 +2166,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineOpacityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer linePattern(String linePattern);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer linePattern(com.mapbox.maps.extension.style.expressions.generated.Expression linePattern);
-    method public com.mapbox.maps.extension.style.layers.generated.LineLayer linePatternTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
-    method public com.mapbox.maps.extension.style.layers.generated.LineLayer linePatternTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @Deprecated public com.mapbox.maps.extension.style.layers.generated.LineLayer linePatternTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @Deprecated public com.mapbox.maps.extension.style.layers.generated.LineLayer linePatternTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineRoundLimit(double lineRoundLimit);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineRoundLimit(com.mapbox.maps.extension.style.expressions.generated.Expression lineRoundLimit);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineSortKey(double lineSortKey);
@@ -2201,7 +2201,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final com.mapbox.maps.extension.style.types.StyleTransition? lineColorTransition;
     property public final java.util.List<java.lang.Double>? lineDasharray;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? lineDasharrayAsExpression;
-    property public final com.mapbox.maps.extension.style.types.StyleTransition? lineDasharrayTransition;
+    property @Deprecated public final com.mapbox.maps.extension.style.types.StyleTransition? lineDasharrayTransition;
     property public final Double? lineGapWidth;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? lineGapWidthAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? lineGapWidthTransition;
@@ -2218,7 +2218,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final com.mapbox.maps.extension.style.types.StyleTransition? lineOpacityTransition;
     property public final String? linePattern;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? linePatternAsExpression;
-    property public final com.mapbox.maps.extension.style.types.StyleTransition? linePatternTransition;
+    property @Deprecated public final com.mapbox.maps.extension.style.types.StyleTransition? linePatternTransition;
     property public final Double? lineRoundLimit;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? lineRoundLimitAsExpression;
     property public final Double? lineSortKey;
@@ -2253,7 +2253,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultLineColorTransition();
     method public java.util.List<java.lang.Double>? getDefaultLineDasharray();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultLineDasharrayAsExpression();
-    method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultLineDasharrayTransition();
+    method @Deprecated public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultLineDasharrayTransition();
     method public Double? getDefaultLineGapWidth();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultLineGapWidthAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultLineGapWidthTransition();
@@ -2269,7 +2269,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultLineOpacityTransition();
     method public String? getDefaultLinePattern();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultLinePatternAsExpression();
-    method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultLinePatternTransition();
+    method @Deprecated public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultLinePatternTransition();
     method public Double? getDefaultLineRoundLimit();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultLineRoundLimitAsExpression();
     method public Double? getDefaultLineSortKey();
@@ -2298,7 +2298,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultLineColorTransition;
     property public final java.util.List<java.lang.Double>? defaultLineDasharray;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultLineDasharrayAsExpression;
-    property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultLineDasharrayTransition;
+    property @Deprecated public final com.mapbox.maps.extension.style.types.StyleTransition? defaultLineDasharrayTransition;
     property public final Double? defaultLineGapWidth;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultLineGapWidthAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultLineGapWidthTransition;
@@ -2314,7 +2314,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultLineOpacityTransition;
     property public final String? defaultLinePattern;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultLinePatternAsExpression;
-    property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultLinePatternTransition;
+    property @Deprecated public final com.mapbox.maps.extension.style.types.StyleTransition? defaultLinePatternTransition;
     property public final Double? defaultLineRoundLimit;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultLineRoundLimitAsExpression;
     property public final Double? defaultLineSortKey;
