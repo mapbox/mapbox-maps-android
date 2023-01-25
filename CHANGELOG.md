@@ -2,7 +2,7 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# 10.10.1 January 25, 2023
+# 10.10.1
 ## Features ✨ and improvements 🏁
 * Add custom header x-mapbox-app-info to requests. ([1957](https://github.com/mapbox/mapbox-maps-android/pull/1957)
 
