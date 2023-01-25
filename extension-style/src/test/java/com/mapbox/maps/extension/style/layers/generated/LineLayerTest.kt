@@ -818,46 +818,6 @@ class LineLayerTest {
   }
 
   @Test
-  fun lineDasharrayTransitionSet() {
-    val layer = lineLayer("id", "source") {}
-    layer.bindTo(style)
-    layer.lineDasharrayTransition(
-      transitionOptions {
-        duration(100)
-        delay(200)
-      }
-    )
-    verify { style.setStyleLayerProperty("id", "line-dasharray-transition", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
-  }
-
-  @Test
-  fun lineDasharrayTransitionGet() {
-    val transition = transitionOptions {
-      duration(100)
-      delay(200)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
-    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
-    val layer = lineLayer("id", "source") {}
-    layer.bindTo(style)
-    assertEquals(transition.toValue().toString(), layer.lineDasharrayTransition?.toValue().toString())
-    verify { style.getStyleLayerProperty("id", "line-dasharray-transition") }
-  }
-
-  @Test
-  fun lineDasharrayTransitionSetDsl() {
-    val layer = lineLayer("id", "source") {}
-    layer.bindTo(style)
-    layer.lineDasharrayTransition {
-      duration(100)
-      delay(200)
-    }
-    verify { style.setStyleLayerProperty("id", "line-dasharray-transition", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
-  }
-
-  @Test
   fun lineGapWidthSet() {
     val layer = lineLayer("id", "source") {}
     val testValue = 1.0
@@ -1328,46 +1288,6 @@ class LineLayerTest {
     assertEquals("abc", layer.linePatternAsExpression.toString())
     assertEquals("abc", layer.linePattern)
     verify { style.getStyleLayerProperty("id", "line-pattern") }
-  }
-
-  @Test
-  fun linePatternTransitionSet() {
-    val layer = lineLayer("id", "source") {}
-    layer.bindTo(style)
-    layer.linePatternTransition(
-      transitionOptions {
-        duration(100)
-        delay(200)
-      }
-    )
-    verify { style.setStyleLayerProperty("id", "line-pattern-transition", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
-  }
-
-  @Test
-  fun linePatternTransitionGet() {
-    val transition = transitionOptions {
-      duration(100)
-      delay(200)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
-    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
-    val layer = lineLayer("id", "source") {}
-    layer.bindTo(style)
-    assertEquals(transition.toValue().toString(), layer.linePatternTransition?.toValue().toString())
-    verify { style.getStyleLayerProperty("id", "line-pattern-transition") }
-  }
-
-  @Test
-  fun linePatternTransitionSetDsl() {
-    val layer = lineLayer("id", "source") {}
-    layer.bindTo(style)
-    layer.linePatternTransition {
-      duration(100)
-      delay(200)
-    }
-    verify { style.setStyleLayerProperty("id", "line-pattern-transition", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
   }
 
   @Test
@@ -2077,19 +1997,6 @@ class LineLayerTest {
   }
 
   @Test
-  fun defaultLineDasharrayTransitionTest() {
-    val transition = transitionOptions {
-      duration(100)
-      delay(200)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
-    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
-
-    assertEquals(transition.toValue().toString(), LineLayer.defaultLineDasharrayTransition?.toValue().toString())
-    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-dasharray-transition") }
-  }
-
-  @Test
   fun defaultLineGapWidthTest() {
     val testValue = 1.0
     every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
@@ -2252,19 +2159,6 @@ class LineLayerTest {
     assertEquals("abc", LineLayer.defaultLinePatternAsExpression.toString())
     assertEquals("abc", LineLayer.defaultLinePattern)
     verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-pattern") }
-  }
-
-  @Test
-  fun defaultLinePatternTransitionTest() {
-    val transition = transitionOptions {
-      duration(100)
-      delay(200)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
-    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
-
-    assertEquals(transition.toValue().toString(), LineLayer.defaultLinePatternTransition?.toValue().toString())
-    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-pattern-transition") }
   }
 
   @Test

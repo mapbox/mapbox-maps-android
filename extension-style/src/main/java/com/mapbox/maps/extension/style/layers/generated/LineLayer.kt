@@ -14,6 +14,7 @@ import com.mapbox.maps.extension.style.utils.ColorUtils.colorIntToRgbaExpression
 import com.mapbox.maps.extension.style.utils.ColorUtils.rgbaExpressionToColorInt
 import com.mapbox.maps.extension.style.utils.ColorUtils.rgbaExpressionToColorString
 import com.mapbox.maps.extension.style.utils.silentUnwrap
+import com.mapbox.maps.logE
 import java.util.*
 
 /**
@@ -819,6 +820,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   /**
    * Transition options for LineDasharray.
    */
+  @Deprecated("This property has been deprecated and will do no operations")
   val lineDasharrayTransition: StyleTransition?
     /**
      * Get the LineDasharray property transition options
@@ -828,7 +830,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      * @return transition options for List<Double>
      */
     get() {
-      return getPropertyValue("line-dasharray-transition")
+      logE("LineLayer", "This property has been deprecated and will return null.")
+      return null
     }
 
   /**
@@ -838,16 +841,17 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param options transition options for List<Double>
    */
+  @Deprecated("This property has been deprecated and will do no operations")
   override fun lineDasharrayTransition(options: StyleTransition) = apply {
-    val propertyValue = PropertyValue("line-dasharray-transition", options)
-    setProperty(propertyValue)
+    // no-op
   }
 
   /**
    * DSL for [lineDasharrayTransition].
    */
+  @Deprecated("This property has been deprecated and will do no operations")
   override fun lineDasharrayTransition(block: StyleTransition.Builder.() -> Unit) = apply {
-    lineDasharrayTransition(StyleTransition.Builder().apply(block).build())
+    // no-op
   }
 
   /**
@@ -1242,6 +1246,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   /**
    * Transition options for LinePattern.
    */
+  @Deprecated("This property has been deprecated and will do no operations")
   val linePatternTransition: StyleTransition?
     /**
      * Get the LinePattern property transition options
@@ -1251,7 +1256,8 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      * @return transition options for String
      */
     get() {
-      return getPropertyValue("line-pattern-transition")
+      logE("LineLayer", "This property has been deprecated and will return null.")
+      return null
     }
 
   /**
@@ -1261,16 +1267,17 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param options transition options for String
    */
+  @Deprecated("This property has been deprecated and will do no operations")
   override fun linePatternTransition(options: StyleTransition) = apply {
-    val propertyValue = PropertyValue("line-pattern-transition", options)
-    setProperty(propertyValue)
+    // no-op
   }
 
   /**
    * DSL for [linePatternTransition].
    */
+  @Deprecated("This property has been deprecated and will do no operations")
   override fun linePatternTransition(block: StyleTransition.Builder.() -> Unit) = apply {
-    linePatternTransition(StyleTransition.Builder().apply(block).build())
+    // no-op
   }
 
   /**
@@ -2009,13 +2016,17 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     /**
      * Transition options for LineDasharray.
      */
+    @Deprecated("This property has been deprecated and will do no operations")
     val defaultLineDasharrayTransition: StyleTransition?
       /**
        * Get the LineDasharray property transition options
        *
        * @return transition options for List<Double>
        */
-      get() = StyleManager.getStyleLayerPropertyDefaultValue("line", "line-dasharray-transition").silentUnwrap()
+      get() {
+        logE("LineLayer", "This property has been deprecated and will return null.")
+        return null
+      }
 
     /**
      * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap.
@@ -2201,13 +2212,17 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     /**
      * Transition options for LinePattern.
      */
+    @Deprecated("This property has been deprecated and will do no operations")
     val defaultLinePatternTransition: StyleTransition?
       /**
        * Get the LinePattern property transition options
        *
        * @return transition options for String
        */
-      get() = StyleManager.getStyleLayerPropertyDefaultValue("line", "line-pattern-transition").silentUnwrap()
+      get() {
+        logE("LineLayer", "This property has been deprecated and will return null.")
+        return null
+      }
 
     /**
      * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
