@@ -4,7 +4,6 @@ package com.mapbox.maps.extension.style.sources.generated
 
 import android.os.Handler
 import android.os.HandlerThread
-import android.os.Looper
 import android.os.Process.THREAD_PRIORITY_DEFAULT
 import androidx.annotation.VisibleForTesting
 import com.mapbox.bindgen.Value
@@ -34,7 +33,7 @@ import com.mapbox.maps.logW
  * @see [The online documentation](https://docs.mapbox.com/mapbox-gl-js/style-spec/sources/#geojson)
  *
  */
-class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
+class GeoJsonSource : Source {
   private val workerHandler by lazy {
     Handler(workerThread.looper)
   }
@@ -42,13 +41,11 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
   private var initGeoJson: GeoJson? = null
   private var initData: String? = null
 
-  private constructor(
-    builder: Builder,
-    geoJson: GeoJson?,
-    data: String?,
-  ) : this(builder) {
-    this.initGeoJson = geoJson
-    this.initData = data
+  private constructor(builder: Builder): super(builder.sourceId) {
+      initGeoJson = builder.geoJson
+      initData = builder.data
+      sourceProperties.putAll(builder.properties)
+      volatileSourceProperties.putAll(builder.volatileProperties)
   }
 
   private fun setGeoJson(geoJson: GeoJson) {
@@ -84,11 +81,6 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
       setData(it)
       initData = null
     }
-  }
-
-  init {
-    sourceProperties.putAll(builder.properties)
-    volatileSourceProperties.putAll(builder.volatileProperties)
   }
 
   /**
@@ -407,12 +399,18 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
   class Builder(
     val sourceId: String
   ) {
-
-    private var geoJson: GeoJson? = null
-    private var data: String? = null
+    internal var geoJson: GeoJson? = null
+    internal var data: String? = null
     internal val properties = HashMap<String, PropertyValue<*>>()
+
     // Properties that only settable after the source is added to the style.
     internal val volatileProperties = HashMap<String, PropertyValue<*>>()
+
+    init {
+      // set default data to allow empty data source.
+      val propertyValue = PropertyValue("data", TypeUtils.wrapToValue(""))
+      properties[propertyValue.propertyName] = propertyValue
+    }
 
     /**
      * A URL to a GeoJSON file, or inline GeoJSON.
@@ -650,10 +648,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
      * @return the GeoJsonSource
      */
     fun build(): GeoJsonSource {
-      // set default data to allow empty data source.
-      val propertyValue = PropertyValue("data", TypeUtils.wrapToValue(""))
-      properties[propertyValue.propertyName] = propertyValue
-      return GeoJsonSource(this, geoJson, data)
+      return GeoJsonSource(this)
     }
   }
 
@@ -668,8 +663,6 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
     internal val workerThread = HandlerThread("GEOJSON_PARSER", THREAD_PRIORITY_DEFAULT).apply {
       start()
     }
-
-    private val mainHandler = Handler(Looper.getMainLooper())
 
     internal fun toGeoJsonData(geoJson: GeoJson): GeoJSONSourceData {
       return when (geoJson) {
@@ -743,7 +736,8 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
        *
        * @return Long
        */
-      get() = StyleManager.getStyleSourcePropertyDefaultValue("geojson", "clusterRadius").silentUnwrap()
+      get() = StyleManager.getStyleSourcePropertyDefaultValue("geojson", "clusterRadius")
+        .silentUnwrap()
 
     /**
      * Max zoom on which to cluster points if clustering is enabled. Defaults to one zoom less
@@ -756,7 +750,8 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
        *
        * @return Long
        */
-      get() = StyleManager.getStyleSourcePropertyDefaultValue("geojson", "clusterMaxZoom").silentUnwrap()
+      get() = StyleManager.getStyleSourcePropertyDefaultValue("geojson", "clusterMaxZoom")
+        .silentUnwrap()
 
     /**
      * Whether to calculate line distance metrics. This is required for line layers that specify `line-gradient` values.
@@ -767,7 +762,8 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
        *
        * @return Boolean
        */
-      get() = StyleManager.getStyleSourcePropertyDefaultValue("geojson", "lineMetrics").silentUnwrap()
+      get() = StyleManager.getStyleSourcePropertyDefaultValue("geojson", "lineMetrics")
+        .silentUnwrap()
 
     /**
      * Whether to generate ids for the geojson features. When enabled, the `feature.id` property will be auto
@@ -779,7 +775,8 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
        *
        * @return Boolean
        */
-      get() = StyleManager.getStyleSourcePropertyDefaultValue("geojson", "generateId").silentUnwrap()
+      get() = StyleManager.getStyleSourcePropertyDefaultValue("geojson", "generateId")
+        .silentUnwrap()
 
     /**
      * When loading a map, if PrefetchZoomDelta is set to any number greater than 0, the map
@@ -794,7 +791,8 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
        *
        * @return Long
        */
-      get() = StyleManager.getStyleSourcePropertyDefaultValue("geojson", "prefetch-zoom-delta").silentUnwrap()
+      get() = StyleManager.getStyleSourcePropertyDefaultValue("geojson", "prefetch-zoom-delta")
+        .silentUnwrap()
   }
 }
 
