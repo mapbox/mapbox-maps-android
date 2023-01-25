@@ -736,8 +736,7 @@ class GeoJsonSource : Source {
        *
        * @return Long
        */
-      get() = StyleManager.getStyleSourcePropertyDefaultValue("geojson", "clusterRadius")
-        .silentUnwrap()
+      get() = StyleManager.getStyleSourcePropertyDefaultValue("geojson", "clusterRadius").silentUnwrap()
 
     /**
      * Max zoom on which to cluster points if clustering is enabled. Defaults to one zoom less
@@ -750,8 +749,7 @@ class GeoJsonSource : Source {
        *
        * @return Long
        */
-      get() = StyleManager.getStyleSourcePropertyDefaultValue("geojson", "clusterMaxZoom")
-        .silentUnwrap()
+      get() = StyleManager.getStyleSourcePropertyDefaultValue("geojson", "clusterMaxZoom").silentUnwrap()
 
     /**
      * Whether to calculate line distance metrics. This is required for line layers that specify `line-gradient` values.
@@ -762,8 +760,7 @@ class GeoJsonSource : Source {
        *
        * @return Boolean
        */
-      get() = StyleManager.getStyleSourcePropertyDefaultValue("geojson", "lineMetrics")
-        .silentUnwrap()
+      get() = StyleManager.getStyleSourcePropertyDefaultValue("geojson", "lineMetrics").silentUnwrap()
 
     /**
      * Whether to generate ids for the geojson features. When enabled, the `feature.id` property will be auto
@@ -775,8 +772,7 @@ class GeoJsonSource : Source {
        *
        * @return Boolean
        */
-      get() = StyleManager.getStyleSourcePropertyDefaultValue("geojson", "generateId")
-        .silentUnwrap()
+      get() = StyleManager.getStyleSourcePropertyDefaultValue("geojson", "generateId").silentUnwrap()
 
     /**
      * When loading a map, if PrefetchZoomDelta is set to any number greater than 0, the map
@@ -791,8 +787,7 @@ class GeoJsonSource : Source {
        *
        * @return Long
        */
-      get() = StyleManager.getStyleSourcePropertyDefaultValue("geojson", "prefetch-zoom-delta")
-        .silentUnwrap()
+      get() = StyleManager.getStyleSourcePropertyDefaultValue("geojson", "prefetch-zoom-delta").silentUnwrap()
   }
 }
 
