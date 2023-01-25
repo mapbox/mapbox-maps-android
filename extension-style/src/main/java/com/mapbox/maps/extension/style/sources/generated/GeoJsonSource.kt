@@ -41,11 +41,11 @@ class GeoJsonSource : Source {
   private var initGeoJson: GeoJson? = null
   private var initData: String? = null
 
-  private constructor(builder: Builder): super(builder.sourceId) {
-      initGeoJson = builder.geoJson
-      initData = builder.data
-      sourceProperties.putAll(builder.properties)
-      volatileSourceProperties.putAll(builder.volatileProperties)
+  private constructor(builder: Builder) : super(builder.sourceId) {
+    initGeoJson = builder.geoJson
+    initData = builder.data
+    sourceProperties.putAll(builder.properties)
+    volatileSourceProperties.putAll(builder.volatileProperties)
   }
 
   private fun setGeoJson(geoJson: GeoJson) {
