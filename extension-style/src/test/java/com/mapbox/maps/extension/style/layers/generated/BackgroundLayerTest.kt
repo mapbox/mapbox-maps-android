@@ -379,46 +379,6 @@ class BackgroundLayerTest {
   }
 
   @Test
-  fun backgroundPatternTransitionSet() {
-    val layer = backgroundLayer("id") {}
-    layer.bindTo(style)
-    layer.backgroundPatternTransition(
-      transitionOptions {
-        duration(100)
-        delay(200)
-      }
-    )
-    verify { style.setStyleLayerProperty("id", "background-pattern-transition", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
-  }
-
-  @Test
-  fun backgroundPatternTransitionGet() {
-    val transition = transitionOptions {
-      duration(100)
-      delay(200)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
-    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
-    val layer = backgroundLayer("id") {}
-    layer.bindTo(style)
-    assertEquals(transition.toValue().toString(), layer.backgroundPatternTransition?.toValue().toString())
-    verify { style.getStyleLayerProperty("id", "background-pattern-transition") }
-  }
-
-  @Test
-  fun backgroundPatternTransitionSetDsl() {
-    val layer = backgroundLayer("id") {}
-    layer.bindTo(style)
-    layer.backgroundPatternTransition {
-      duration(100)
-      delay(200)
-    }
-    verify { style.setStyleLayerProperty("id", "background-pattern-transition", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
-  }
-
-  @Test
   fun visibilitySet() {
     val layer = backgroundLayer("id") {}
     layer.bindTo(style)
@@ -610,19 +570,6 @@ class BackgroundLayerTest {
     assertEquals("abc", BackgroundLayer.defaultBackgroundPatternAsExpression.toString())
     assertEquals("abc", BackgroundLayer.defaultBackgroundPattern)
     verify { StyleManager.getStyleLayerPropertyDefaultValue("background", "background-pattern") }
-  }
-
-  @Test
-  fun defaultBackgroundPatternTransitionTest() {
-    val transition = transitionOptions {
-      duration(100)
-      delay(200)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
-    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
-
-    assertEquals(transition.toValue().toString(), BackgroundLayer.defaultBackgroundPatternTransition?.toValue().toString())
-    verify { StyleManager.getStyleLayerPropertyDefaultValue("background", "background-pattern-transition") }
   }
 
   @Test
