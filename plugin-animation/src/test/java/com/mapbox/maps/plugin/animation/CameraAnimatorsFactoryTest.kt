@@ -21,6 +21,7 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.junit.runners.Parameterized
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.LooperMode
 import org.robolectric.shadows.ShadowLog
@@ -217,5 +218,38 @@ class CameraAnimatorsFactoryTest {
         }
       }
     }
+  }
+}
+
+@RunWith(Parameterized::class)
+class WrapCoordinateTest(
+  private val actual: Triple<Double, Double, Double>,
+  private val expected: Double
+) {
+
+  private companion object {
+    @JvmStatic
+    @Parameterized.Parameters
+    fun data() = listOf(
+      arrayOf(Triple(-0.911, -LONGITUDE_MAX, LONGITUDE_MAX), -0.911),
+      arrayOf(Triple(LONGITUDE_MAX, -LONGITUDE_MAX, LONGITUDE_MAX), -LONGITUDE_MAX),
+      arrayOf(Triple(-LONGITUDE_MAX, -LONGITUDE_MAX, LONGITUDE_MAX), -LONGITUDE_MAX),
+      arrayOf(Triple(275.0, -LONGITUDE_MAX, LONGITUDE_MAX), -85.0),
+      arrayOf(Triple(-458.0, -LONGITUDE_MAX, LONGITUDE_MAX), -98.0),
+      arrayOf(Triple(385.0, -LONGITUDE_MAX, LONGITUDE_MAX), 25.0),
+      arrayOf(Triple(0.0, LONGITUDE_MAX, LONGITUDE_MAX), Double.NaN),
+    )
+
+    private const val DELTA = 0.0001
+    private const val LONGITUDE_MAX = 180.0
+  }
+
+  @Test
+  fun testLongitudeWrap() {
+    Assert.assertEquals(
+      expected,
+      CameraTransform.wrap(actual.first, actual.second, actual.third),
+      DELTA
+    )
   }
 }
