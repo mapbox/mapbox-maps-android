@@ -39,6 +39,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Using `pattern` and `dash` transition properties for layer (e.g. `BackgroundLayer.backgroundPatternTransition`, `FillExtrusionLayer.fillExtrusionPatternTransition`, `FillLayer.fillPatternTransition`, `LineLayer.lineDasharrayTransition`, `LineLayer.linePatternTransition`, ...) will result in an invalid layer.
 
 # 10.10.1 January 25, 2023
+# 10.10.1
 ## Features ✨ and improvements 🏁
 * Add custom header x-mapbox-app-info to requests. ([1957](https://github.com/mapbox/mapbox-maps-android/pull/1957)
 
