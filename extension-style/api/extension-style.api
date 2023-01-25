@@ -3666,8 +3666,7 @@ public final class com/mapbox/maps/extension/style/sources/generated/Encoding : 
 
 public final class com/mapbox/maps/extension/style/sources/generated/GeoJsonSource : com/mapbox/maps/extension/style/sources/Source {
 	public static final field Companion Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Companion;
-	public fun <init> (Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;)V
-	public synthetic fun <init> (Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;Lcom/mapbox/geojson/GeoJson;Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun bindTo (Lcom/mapbox/maps/extension/style/StyleInterface;)V
 	public final fun data (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource;
 	public final fun feature (Lcom/mapbox/geojson/Feature;)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource;

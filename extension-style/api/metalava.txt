@@ -4369,7 +4369,6 @@ package com.mapbox.maps.extension.style.sources.generated {
   }
 
   public final class GeoJsonSource extends com.mapbox.maps.extension.style.sources.Source {
-    ctor public GeoJsonSource(com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder builder);
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource data(String value);
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource feature(com.mapbox.geojson.Feature value);
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource featureCollection(com.mapbox.geojson.FeatureCollection value);
