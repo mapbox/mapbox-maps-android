@@ -33,6 +33,7 @@ import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettings
 import com.mapbox.maps.plugin.locationcomponent.R
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
+import com.mapbox.maps.plugin.viewport.ViewportStatus
 import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions
 import com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions
 
@@ -84,6 +85,9 @@ private fun HomeScreen() {
   var mapViewport by remember {
     mutableStateOf<MapViewport>(MapViewport.Idle)
   }
+  var viewportStatus by remember {
+    mutableStateOf<ViewportStatus>(ViewportStatus.Idle)
+  }
   Box(Modifier.fillMaxSize()) {
     MapboxMap(
       modifier = Modifier.matchParentSize(),
@@ -119,6 +123,13 @@ private fun HomeScreen() {
         )
       ),
       mapViewport = mapViewport,
+      viewportStatusObserver = { from, to, reason ->
+        viewportStatus = to
+      },
+      onMapClickListener = { point ->
+        logE("compose", "OnMapClickListener - $point")
+        false
+      },
       style = mapStyleState,
       cameraOptions = CameraOptions.Builder().zoom(zoomLevel.toDouble()).build()
     ) {
@@ -193,7 +204,7 @@ private fun HomeScreen() {
           }
         }
       ) {
-        Text(text = "Toggle viewport - current: $mapViewport")
+        Text(text = "Toggle viewport - current: \n$viewportStatus")
       }
     }
   }

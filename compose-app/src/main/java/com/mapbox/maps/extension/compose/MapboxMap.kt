@@ -13,11 +13,14 @@ import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
+import com.mapbox.maps.plugin.gestures.OnMapClickListener
+import com.mapbox.maps.plugin.gestures.OnMapLongClickListener
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettings
 import com.mapbox.maps.plugin.gestures.gestures
 import com.mapbox.maps.plugin.locationcomponent.R
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
 import com.mapbox.maps.plugin.locationcomponent.location
+import com.mapbox.maps.plugin.viewport.ViewportStatusObserver
 import com.mapbox.maps.plugin.viewport.viewport
 
 internal class MapRootNode(
@@ -64,6 +67,9 @@ public fun MapboxMap(
   style: StyleContract.StyleExtension = style(Style.MAPBOX_STREETS) { },
   cameraOptions: CameraOptions = CameraOptions.Builder().build(),
   mapViewport: MapViewport = MapViewport.Idle,
+  viewportStatusObserver: ViewportStatusObserver = ViewportStatusObserver { _, _, _ -> },
+  onMapClickListener: OnMapClickListener = OnMapClickListener { false },
+  onMapLongClickListener: OnMapLongClickListener = OnMapLongClickListener { false },
   content: @Composable MapboxMapScope.() -> Unit
 ) {
   if (LocalInspectionMode.current) {
@@ -89,7 +95,9 @@ public fun MapboxMap(
   val currentStyleState by rememberUpdatedState(style)
   val currentCameraOptions by rememberUpdatedState(cameraOptions)
   val currentContent by rememberUpdatedState(content)
+  val currentLocationComponentSettings by rememberUpdatedState(locationComponentSettings)
   val currentViewport by rememberUpdatedState(mapViewport)
+  val currentViewportStatusObserver by rememberUpdatedState(viewportStatusObserver)
   val parentComposition = rememberCompositionContext()
 
   LaunchedEffect(Unit) {
@@ -109,6 +117,12 @@ public fun MapboxMap(
             )
           },
           update = {
+            set(onMapClickListener) {
+              this.mapPluginProvider.gestures.addOnMapClickListener(it)
+            }
+            set(onMapLongClickListener) {
+              this.mapPluginProvider.gestures.addOnMapLongClickListener(it)
+            }
             set(currentGesturesState) {
               logE("compose", "currentGesturesState set: $it")
               this.gesturesState = it
@@ -124,11 +138,14 @@ public fun MapboxMap(
               this.cameraOptions = it
               this.mapController.getMapboxMap().setCamera(it)
             }
-            set(locationComponentSettings.enabled) {
+            set(currentLocationComponentSettings.enabled) {
               this.mapPluginProvider.location.enabled = it
             }
-            set(locationComponentSettings.locationPuck) {
+            set(currentLocationComponentSettings.locationPuck) {
               this.mapPluginProvider.location.locationPuck = it
+            }
+            update(currentViewportStatusObserver) {
+              this.mapPluginProvider.viewport.addStatusObserver(it)
             }
             set(currentViewport) { mapViewport ->
               logE("compose", "currentViewport set: $mapViewport")
