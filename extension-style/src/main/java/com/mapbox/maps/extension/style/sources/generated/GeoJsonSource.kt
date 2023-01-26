@@ -36,10 +36,10 @@ import com.mapbox.maps.logW
  */
 class GeoJsonSource : Source {
   private constructor(builder: Builder) : super(builder.sourceId) {
-    initGeoJson = builder.geoJson
-    initData = builder.data
     sourceProperties.putAll(builder.properties)
     volatileSourceProperties.putAll(builder.volatileProperties)
+    initGeoJson = builder.geoJson
+    initData = builder.data
   }
 
   private val workerHandler by lazy {
@@ -397,9 +397,7 @@ class GeoJsonSource : Source {
    * @param sourceId the ID of the source
    */
   @SourceDsl
-  class Builder(
-    val sourceId: String
-  ) {
+  class Builder(val sourceId: String) {
     internal var geoJson: GeoJson? = null
     internal var data: String? = null
     internal val properties = HashMap<String, PropertyValue<*>>()

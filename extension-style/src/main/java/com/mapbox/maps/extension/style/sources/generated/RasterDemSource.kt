@@ -18,7 +18,10 @@ import java.util.*
  *
  */
 class RasterDemSource : Source {
-  private constructor(builder: Builder) : super(builder.sourceId)
+  private constructor(builder: Builder) : super(builder.sourceId) {
+    sourceProperties.putAll(builder.properties)
+    volatileSourceProperties.putAll(builder.volatileProperties)
+  }
 
   /**
    * Get the type of the current source as a String.
