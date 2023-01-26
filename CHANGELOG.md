@@ -14,6 +14,8 @@ Mapbox welcomes participation and contributions from everyone.
 ## Dependencies
 * Update gl-native to v10.11.0-rc.1 and common to v23.3.0-rc.1. ([1953](https://github.com/mapbox/mapbox-maps-android/pull/1953))
 
+## Known issues
+* If last location is not available, location component will throw a `NullPointerException`.
 
 # 10.11.0-beta.1 January 11, 2023
 ## Features ✨ and improvements 🏁
