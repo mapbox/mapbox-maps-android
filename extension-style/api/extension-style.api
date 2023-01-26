@@ -3666,8 +3666,7 @@ public final class com/mapbox/maps/extension/style/sources/generated/Encoding : 
 
 public final class com/mapbox/maps/extension/style/sources/generated/GeoJsonSource : com/mapbox/maps/extension/style/sources/Source {
 	public static final field Companion Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Companion;
-	public fun <init> (Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;)V
-	public synthetic fun <init> (Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;Lcom/mapbox/geojson/GeoJson;Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun bindTo (Lcom/mapbox/maps/extension/style/StyleInterface;)V
 	public final fun data (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource;
 	public final fun feature (Lcom/mapbox/geojson/Feature;)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource;
@@ -3743,7 +3742,7 @@ public final class com/mapbox/maps/extension/style/sources/generated/GeoJsonSour
 
 public final class com/mapbox/maps/extension/style/sources/generated/ImageSource : com/mapbox/maps/extension/style/sources/Source {
 	public static final field Companion Lcom/mapbox/maps/extension/style/sources/generated/ImageSource$Companion;
-	public fun <init> (Lcom/mapbox/maps/extension/style/sources/generated/ImageSource$Builder;)V
+	public synthetic fun <init> (Lcom/mapbox/maps/extension/style/sources/generated/ImageSource$Builder;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun coordinates (Ljava/util/List;)Lcom/mapbox/maps/extension/style/sources/generated/ImageSource;
 	public final fun getCoordinates ()Ljava/util/List;
 	public final fun getPrefetchZoomDelta ()Ljava/lang/Long;
@@ -3773,7 +3772,7 @@ public final class com/mapbox/maps/extension/style/sources/generated/ImageSource
 
 public final class com/mapbox/maps/extension/style/sources/generated/RasterDemSource : com/mapbox/maps/extension/style/sources/Source {
 	public static final field Companion Lcom/mapbox/maps/extension/style/sources/generated/RasterDemSource$Companion;
-	public fun <init> (Lcom/mapbox/maps/extension/style/sources/generated/RasterDemSource$Builder;)V
+	public synthetic fun <init> (Lcom/mapbox/maps/extension/style/sources/generated/RasterDemSource$Builder;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun getAttribution ()Ljava/lang/String;
 	public final fun getBounds ()Ljava/util/List;
 	public final fun getEncoding ()Lcom/mapbox/maps/extension/style/sources/generated/Encoding;
@@ -3856,7 +3855,7 @@ public final class com/mapbox/maps/extension/style/sources/generated/RasterDemSo
 
 public final class com/mapbox/maps/extension/style/sources/generated/RasterSource : com/mapbox/maps/extension/style/sources/Source {
 	public static final field Companion Lcom/mapbox/maps/extension/style/sources/generated/RasterSource$Companion;
-	public fun <init> (Lcom/mapbox/maps/extension/style/sources/generated/RasterSource$Builder;)V
+	public synthetic fun <init> (Lcom/mapbox/maps/extension/style/sources/generated/RasterSource$Builder;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun getAttribution ()Ljava/lang/String;
 	public final fun getBounds ()Ljava/util/List;
 	public final fun getMaxOverscaleFactorForParentTiles ()Ljava/lang/Long;
@@ -3947,7 +3946,7 @@ public final class com/mapbox/maps/extension/style/sources/generated/Scheme : ja
 
 public final class com/mapbox/maps/extension/style/sources/generated/VectorSource : com/mapbox/maps/extension/style/sources/Source {
 	public static final field Companion Lcom/mapbox/maps/extension/style/sources/generated/VectorSource$Companion;
-	public fun <init> (Lcom/mapbox/maps/extension/style/sources/generated/VectorSource$Builder;)V
+	public synthetic fun <init> (Lcom/mapbox/maps/extension/style/sources/generated/VectorSource$Builder;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun getAttribution ()Ljava/lang/String;
 	public final fun getBounds ()Ljava/util/List;
 	public final fun getMaxOverscaleFactorForParentTiles ()Ljava/lang/Long;

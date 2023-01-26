@@ -4369,7 +4369,6 @@ package com.mapbox.maps.extension.style.sources.generated {
   }
 
   public final class GeoJsonSource extends com.mapbox.maps.extension.style.sources.Source {
-    ctor public GeoJsonSource(com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder builder);
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource data(String value);
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource feature(com.mapbox.geojson.Feature value);
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource featureCollection(com.mapbox.geojson.FeatureCollection value);
@@ -4459,7 +4458,6 @@ package com.mapbox.maps.extension.style.sources.generated {
   }
 
   public final class ImageSource extends com.mapbox.maps.extension.style.sources.Source {
-    ctor public ImageSource(com.mapbox.maps.extension.style.sources.generated.ImageSource.Builder builder);
     method public com.mapbox.maps.extension.style.sources.generated.ImageSource coordinates(java.util.List<? extends java.util.List<java.lang.Double>> value);
     method public java.util.List<java.util.List<java.lang.Double>>? getCoordinates();
     method public Long? getPrefetchZoomDelta();
@@ -4493,7 +4491,6 @@ package com.mapbox.maps.extension.style.sources.generated {
   }
 
   public final class RasterDemSource extends com.mapbox.maps.extension.style.sources.Source {
-    ctor public RasterDemSource(com.mapbox.maps.extension.style.sources.generated.RasterDemSource.Builder builder);
     method public String? getAttribution();
     method public java.util.List<java.lang.Double>? getBounds();
     method public com.mapbox.maps.extension.style.sources.generated.Encoding? getEncoding();
@@ -4583,7 +4580,6 @@ package com.mapbox.maps.extension.style.sources.generated {
   }
 
   public final class RasterSource extends com.mapbox.maps.extension.style.sources.Source {
-    ctor public RasterSource(com.mapbox.maps.extension.style.sources.generated.RasterSource.Builder builder);
     method public String? getAttribution();
     method public java.util.List<java.lang.Double>? getBounds();
     method public Long? getMaxOverscaleFactorForParentTiles();
@@ -4680,7 +4676,6 @@ package com.mapbox.maps.extension.style.sources.generated {
   }
 
   public final class VectorSource extends com.mapbox.maps.extension.style.sources.Source {
-    ctor public VectorSource(com.mapbox.maps.extension.style.sources.generated.VectorSource.Builder builder);
     method public String? getAttribution();
     method public java.util.List<java.lang.Double>? getBounds();
     method public Long? getMaxOverscaleFactorForParentTiles();
