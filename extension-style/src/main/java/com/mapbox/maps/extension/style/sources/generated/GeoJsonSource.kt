@@ -424,6 +424,7 @@ class GeoJsonSource : Source {
     fun url(value: String) = apply {
       data(value)
     }
+
     /**
      * Maximum zoom level at which to create vector tiles (higher means greater detail at high zoom
      * levels).
@@ -432,6 +433,7 @@ class GeoJsonSource : Source {
       val propertyValue = PropertyValue("maxzoom", TypeUtils.wrapToValue(value))
       properties[propertyValue.propertyName] = propertyValue
     }
+
     /**
      * Contains an attribution to be displayed when the map is shown to a user.
      */
@@ -439,6 +441,7 @@ class GeoJsonSource : Source {
       val propertyValue = PropertyValue("attribution", TypeUtils.wrapToValue(value))
       properties[propertyValue.propertyName] = propertyValue
     }
+
     /**
      * Size of the tile buffer on each side. A value of 0 produces no buffer. A
      * value of 512 produces a buffer as wide as the tile itself. Larger values produce fewer
@@ -448,6 +451,7 @@ class GeoJsonSource : Source {
       val propertyValue = PropertyValue("buffer", TypeUtils.wrapToValue(value))
       properties[propertyValue.propertyName] = propertyValue
     }
+
     /**
      * Douglas-Peucker simplification tolerance (higher means simpler geometries and faster performance).
      */
@@ -455,6 +459,7 @@ class GeoJsonSource : Source {
       val propertyValue = PropertyValue("tolerance", TypeUtils.wrapToValue(value))
       properties[propertyValue.propertyName] = propertyValue
     }
+
     /**
      * If the data is a collection of point features, setting this to true clusters the points
      * by radius into groups. Cluster groups become new `Point` features in the source with additional properties:
@@ -468,6 +473,7 @@ class GeoJsonSource : Source {
       val propertyValue = PropertyValue("cluster", TypeUtils.wrapToValue(value))
       properties[propertyValue.propertyName] = propertyValue
     }
+
     /**
      * Radius of each cluster if clustering is enabled. A value of 512 indicates a radius equal
      * to the width of a tile.
@@ -476,6 +482,7 @@ class GeoJsonSource : Source {
       val propertyValue = PropertyValue("clusterRadius", TypeUtils.wrapToValue(value))
       properties[propertyValue.propertyName] = propertyValue
     }
+
     /**
      * Max zoom on which to cluster points if clustering is enabled. Defaults to one zoom less
      * than maxzoom (so that last zoom features are not clustered). Clusters are re-evaluated at integer zoom
@@ -485,6 +492,7 @@ class GeoJsonSource : Source {
       val propertyValue = PropertyValue("clusterMaxZoom", TypeUtils.wrapToValue(value))
       properties[propertyValue.propertyName] = propertyValue
     }
+
     /**
      * An object defining custom properties on the generated clusters if clustering is enabled, aggregating values from
      * clustered points. Has the form `{"property_name": [operator, map_expression]}`. `operator` is any expression function that accepts at
@@ -561,6 +569,7 @@ class GeoJsonSource : Source {
         val propertyValue = PropertyValue("clusterProperties", TypeUtils.wrapToValue(options))
         properties[propertyValue.propertyName] = propertyValue
       }
+
     /**
      * Whether to calculate line distance metrics. This is required for line layers that specify `line-gradient` values.
      */
@@ -568,6 +577,7 @@ class GeoJsonSource : Source {
       val propertyValue = PropertyValue("lineMetrics", TypeUtils.wrapToValue(value))
       properties[propertyValue.propertyName] = propertyValue
     }
+
     /**
      * Whether to generate ids for the geojson features. When enabled, the `feature.id` property will be auto
      * assigned based on its index in the `features` array, over-writing any previous values.
@@ -576,6 +586,7 @@ class GeoJsonSource : Source {
       val propertyValue = PropertyValue("generateId", TypeUtils.wrapToValue(value))
       properties[propertyValue.propertyName] = propertyValue
     }
+
     /**
      * A property to use as a feature id (for feature state). Either a property name, or
      * an object of the form `{<sourceLayer>: <propertyName>}`.
@@ -584,6 +595,7 @@ class GeoJsonSource : Source {
       val propertyValue = PropertyValue("promoteId", value.toValue())
       properties[propertyValue.propertyName] = propertyValue
     }
+
     /**
      * When loading a map, if PrefetchZoomDelta is set to any number greater than 0, the map
      * will first request a tile at zoom level lower than zoom - delta, but so that

@@ -117,6 +117,7 @@ class ImageSource : Source {
       val propertyValue = PropertyValue("url", TypeUtils.wrapToValue(value))
       properties[propertyValue.propertyName] = propertyValue
     }
+
     /**
      * Corners of image specified in longitude, latitude pairs.
      */
@@ -124,6 +125,7 @@ class ImageSource : Source {
       val propertyValue = PropertyValue("coordinates", TypeUtils.wrapToValue(value))
       properties[propertyValue.propertyName] = propertyValue
     }
+
     /**
      * When loading a map, if PrefetchZoomDelta is set to any number greater than 0, the map
      * will first request a tile at zoom level lower than zoom - delta, but so that

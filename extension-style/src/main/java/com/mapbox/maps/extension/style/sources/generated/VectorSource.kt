@@ -341,6 +341,7 @@ class VectorSource : Source {
       val propertyValue = PropertyValue("url", TypeUtils.wrapToValue(value))
       properties[propertyValue.propertyName] = propertyValue
     }
+
     /**
      * An array of one or more tile source URLs, as in the TileJSON spec.
      */
@@ -348,6 +349,7 @@ class VectorSource : Source {
       val propertyValue = PropertyValue("tiles", TypeUtils.wrapToValue(value))
       properties[propertyValue.propertyName] = propertyValue
     }
+
     /**
      * An array containing the longitude and latitude of the southwest and northeast corners of the source's
      * bounding box in the following order: `[sw.lng, sw.lat, ne.lng, ne.lat]`. When this property is included in
@@ -357,6 +359,7 @@ class VectorSource : Source {
       val propertyValue = PropertyValue("bounds", TypeUtils.wrapToValue(value))
       properties[propertyValue.propertyName] = propertyValue
     }
+
     /**
      * Influences the y direction of the tile coordinates. The global-mercator (aka Spherical Mercator) profile is assumed.
      */
@@ -364,6 +367,7 @@ class VectorSource : Source {
       val propertyValue = PropertyValue("scheme", TypeUtils.wrapToValue(value.value))
       properties[propertyValue.propertyName] = propertyValue
     }
+
     /**
      * Minimum zoom level for which tiles are available, as in the TileJSON spec.
      */
@@ -371,6 +375,7 @@ class VectorSource : Source {
       val propertyValue = PropertyValue("minzoom", TypeUtils.wrapToValue(value))
       properties[propertyValue.propertyName] = propertyValue
     }
+
     /**
      * Maximum zoom level for which tiles are available, as in the TileJSON spec. Data from tiles
      * at the maxzoom are used when displaying the map at higher zoom levels.
@@ -379,6 +384,7 @@ class VectorSource : Source {
       val propertyValue = PropertyValue("maxzoom", TypeUtils.wrapToValue(value))
       properties[propertyValue.propertyName] = propertyValue
     }
+
     /**
      * Contains an attribution to be displayed when the map is shown to a user.
      */
@@ -386,6 +392,7 @@ class VectorSource : Source {
       val propertyValue = PropertyValue("attribution", TypeUtils.wrapToValue(value))
       properties[propertyValue.propertyName] = propertyValue
     }
+
     /**
      * A property to use as a feature id (for feature state). Either a property name, or
      * an object of the form `{<sourceLayer>: <propertyName>}`. If specified as a string for a vector tile
@@ -396,6 +403,7 @@ class VectorSource : Source {
       val propertyValue = PropertyValue("promoteId", value.toValue())
       properties[propertyValue.propertyName] = propertyValue
     }
+
     /**
      * A setting to determine whether a source's tiles are cached locally.
      */
@@ -403,6 +411,7 @@ class VectorSource : Source {
       val propertyValue = PropertyValue("volatile", TypeUtils.wrapToValue(value))
       properties[propertyValue.propertyName] = propertyValue
     }
+
     /**
      * When loading a map, if PrefetchZoomDelta is set to any number greater than 0, the map
      * will first request a tile at zoom level lower than zoom - delta, but so that
@@ -414,6 +423,7 @@ class VectorSource : Source {
       val propertyValue = PropertyValue("prefetch-zoom-delta", TypeUtils.wrapToValue(value))
       volatileProperties[propertyValue.propertyName] = propertyValue
     }
+
     /**
      * Minimum tile update interval in seconds, which is used to throttle the tile update network requests.
      * If the given source supports loading tiles from a server, sets the minimum tile update interval.
@@ -423,6 +433,7 @@ class VectorSource : Source {
       val propertyValue = PropertyValue("minimum-tile-update-interval", TypeUtils.wrapToValue(value))
       volatileProperties[propertyValue.propertyName] = propertyValue
     }
+
     /**
      * When a set of tiles for a current zoom level is being rendered and some of
      * the ideal tiles that cover the screen are not yet loaded, parent tile could be used
@@ -433,6 +444,7 @@ class VectorSource : Source {
       val propertyValue = PropertyValue("max-overscale-factor-for-parent-tiles", TypeUtils.wrapToValue(value))
       volatileProperties[propertyValue.propertyName] = propertyValue
     }
+
     /**
      * For the tiled sources, this property sets the tile requests delay. The given delay comes in
      * action only during an ongoing animation or gestures. It helps to avoid loading, parsing and rendering
@@ -442,6 +454,7 @@ class VectorSource : Source {
       val propertyValue = PropertyValue("tile-requests-delay", TypeUtils.wrapToValue(value))
       volatileProperties[propertyValue.propertyName] = propertyValue
     }
+
     /**
      * For the tiled sources, this property sets the tile network requests delay. The given delay comes
      * in action only during an ongoing animation or gestures. It helps to avoid loading the transient
