@@ -104,8 +104,6 @@ class ImageSource : Source {
     // Properties that only settable after the source is added to the style.
     internal val volatileProperties = HashMap<String, PropertyValue<*>>()
 
-
-
     /**
      * URL that points to an image.
      */

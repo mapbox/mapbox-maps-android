@@ -409,7 +409,6 @@ class GeoJsonSource : Source {
       properties[propertyValue.propertyName] = propertyValue
     }
 
-
     /**
      * A URL to a GeoJSON file, or inline GeoJSON.
      */
