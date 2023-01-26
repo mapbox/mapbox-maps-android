@@ -67,6 +67,9 @@ private fun HomeScreen() {
   var annotationSize by remember {
     mutableStateOf(10.0)
   }
+  var annotationEnabled by remember {
+    mutableStateOf(true)
+  }
   var annotationPoint1 by remember {
     mutableStateOf(Point.fromLngLat(LONGITUDE + 0.01, LATITUDE))
   }
@@ -146,15 +149,17 @@ private fun HomeScreen() {
         logE("compose", "MapEffect with key=Show Debug")
         map.getMapboxMap().setDebug(listOf(MapDebugOptions.TILE_BORDERS), true)
       }
-      CircleAnnotation(
-        point = annotationPoint,
-        circleRadius = annotationSize,
-        onClick = {
-          annotationPoint =
-            Point.fromLngLat(annotationPoint.longitude(), annotationPoint.latitude() + 0.01)
-          annotationSize += 5.0
-        }
-      )
+      if (annotationEnabled) {
+        CircleAnnotation(
+          point = annotationPoint,
+          circleRadius = annotationSize,
+          onClick = {
+            annotationPoint =
+              Point.fromLngLat(annotationPoint.longitude(), annotationPoint.latitude() + 0.01)
+            annotationSize += 5.0
+          }
+        )
+      }
       CircleAnnotation(
         point = animatedPoint,
         circleRadius = animatedSize.toDouble(),
@@ -181,6 +186,13 @@ private fun HomeScreen() {
         }
       ) {
         Text(text = "Toggle mapStyleUri")
+      }
+      Button(
+        onClick = {
+          annotationEnabled = !annotationEnabled
+        }
+      ) {
+        Text(text = "Toggle annotation enabled\n - current: $annotationEnabled")
       }
       Button(
         onClick = {
