@@ -4,7 +4,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-# 10.11.0-rc.1
+
+# 10.11.0-rc.1 January 26, 2023
 ## Features ✨ and improvements 🏁
 * Improve performance for style switch use cases by avoiding unneeded tiles re-layout. ([1953](https://github.com/mapbox/mapbox-maps-android/pull/1953))
 
@@ -18,6 +19,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Known issues
 * If last location is not available, `LocationEngine` will throw a `NullPointerException`.
+
 
 # 10.11.0-beta.1 January 11, 2023
 ## Features ✨ and improvements 🏁
