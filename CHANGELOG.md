@@ -3,9 +3,21 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
+
+# 10.11.0-rc.1
+## Features ✨ and improvements 🏁
+* Improve performance for style switch use cases by avoiding unneeded tiles re-layout. ([1953](https://github.com/mapbox/mapbox-maps-android/pull/1953))
+
 ## Bug fixes 🐞
 * Fix a bug where `flyTo` animation request invalid tiles from map engine. ([1949](https://github.com/mapbox/mapbox-maps-android/pull/1949))
 * Deprecate `pattern` and `dash` transition properties for layer (e.g. `BackgroundLayer.backgroundPatternTransition`, `FillExtrusionLayer.fillExtrusionPatternTransition`, `FillLayer.fillPatternTransition`, `LineLayer.lineDasharrayTransition`, `LineLayer.linePatternTransition`, ...).  ([1941](https://github.com/mapbox/mapbox-maps-android/pull/1941))
+* Fix terrain tiles missing issue when running in the emulator and some android devices. ([1953](https://github.com/mapbox/mapbox-maps-android/pull/1953))
+
+## Dependencies
+* Update gl-native to v10.11.0-rc.1 and common to v23.3.0-rc.1. ([1953](https://github.com/mapbox/mapbox-maps-android/pull/1953))
+
+## Known issues
+* If last location is not available, `LocationEngine` will throw a `NullPointerException`.
 
 # 10.11.0-beta.1 January 11, 2023
 ## Features ✨ and improvements 🏁
