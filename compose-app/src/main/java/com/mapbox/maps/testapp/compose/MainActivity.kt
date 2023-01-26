@@ -24,8 +24,10 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
+import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.extension.compose.MapEffect
 import com.mapbox.maps.extension.compose.MapboxMap
+import com.mapbox.maps.extension.compose.animation.animatePointAsState
 import com.mapbox.maps.extension.compose.annotation.CircleAnnotation
 import com.mapbox.maps.extension.compose.viewport.MapViewport
 import com.mapbox.maps.extension.style.style
@@ -65,17 +67,26 @@ private fun HomeScreen() {
   var annotationSize by remember {
     mutableStateOf(10.0)
   }
-
   var annotationPoint1 by remember {
     mutableStateOf(Point.fromLngLat(LONGITUDE + 0.01, LATITUDE))
   }
+  val animatedPoint: Point by animatePointAsState(
+    targetValue = annotationPoint1
+  )
   var annotationSize1 by remember {
     mutableStateOf(5.0)
   }
+  val animatedSize: Float by animateFloatAsState(
+    annotationSize1.toFloat(),
+    animationSpec = tween(
+      durationMillis = 1000,
+      easing = LinearOutSlowInEasing
+    )
+  )
   var zoom by remember {
     mutableStateOf(12.0f)
   }
-  val zoomLevel: Float by animateFloatAsState(
+  val animatedZoom: Float by animateFloatAsState(
     zoom,
     animationSpec = tween(
       durationMillis = 1000,
@@ -93,13 +104,11 @@ private fun HomeScreen() {
       modifier = Modifier.matchParentSize(),
       mapInitOptions = MapInitOptions(
         context = LocalContext.current,
-        mapOptions = MapOptions.Builder()
-          .applyDefaultParams(LocalContext.current)
-          .optimizeForTerrain(true)
-          .contextMode(ContextMode.UNIQUE)
-          .build(),
-        cameraOptions = CameraOptions.Builder().center(Point.fromLngLat(LONGITUDE, LATITUDE))
-          .zoom(12.0).build(),
+        styleUri = Style.MAPBOX_STREETS,
+        cameraOptions = cameraOptions {
+          center(Point.fromLngLat(LONGITUDE, LATITUDE))
+          zoom(12.0)
+        },
       ),
       gesturesSettings = mapGesturesState,
       locationComponentSettings = LocationComponentSettings(
@@ -131,7 +140,7 @@ private fun HomeScreen() {
         false
       },
       style = mapStyleState,
-      cameraOptions = CameraOptions.Builder().zoom(zoomLevel.toDouble()).build()
+      cameraOptions = CameraOptions.Builder().zoom(animatedZoom.toDouble()).build()
     ) {
       MapEffect(key1 = "Show Debug") { map ->
         logE("compose", "MapEffect with key=Show Debug")
@@ -147,8 +156,8 @@ private fun HomeScreen() {
         }
       )
       CircleAnnotation(
-        point = annotationPoint1,
-        circleRadius = annotationSize1,
+        point = animatedPoint,
+        circleRadius = animatedSize.toDouble(),
         onClick = {
           annotationPoint1 =
             Point.fromLngLat(annotationPoint1.longitude(), annotationPoint1.latitude() + 0.01)
@@ -178,14 +187,14 @@ private fun HomeScreen() {
           zoom -= 1f
         }
       ) {
-        Text(text = "Zoom out - current: $zoomLevel")
+        Text(text = "Zoom out - current: $animatedZoom")
       }
       Button(
         onClick = {
           zoom += 1f
         }
       ) {
-        Text(text = "Zoom in - current: $zoomLevel")
+        Text(text = "Zoom in - current: $animatedZoom")
       }
       Button(
         onClick = {
@@ -217,11 +226,11 @@ private fun RequestLocationPermission() {
   ) { isGranted: Boolean ->
     if (isGranted) {
       // Permission Accepted: Do something
-      logD("compose","PERMISSION GRANTED")
+      logD("compose", "PERMISSION GRANTED")
 
     } else {
       // Permission Denied: Do something
-      logE("compose","PERMISSION DENIED")
+      logE("compose", "PERMISSION DENIED")
     }
   }
   val context = LocalContext.current
