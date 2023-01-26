@@ -145,7 +145,7 @@ class RasterSource : Source {
      */
     get() {
       getPropertyValue<String?>("scheme")?.let {
-        return Scheme.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+        return Scheme.valueOf(it.uppercase(Locale.US).replace('-', '_'))
       }
       return null
     }
@@ -318,11 +318,7 @@ class RasterSource : Source {
     // Properties that only settable after the source is added to the style.
     internal val volatileProperties = HashMap<String, PropertyValue<*>>()
 
-    init {
-      // set default data to allow empty data source.
-      val propertyValue = PropertyValue("data", TypeUtils.wrapToValue(""))
-      properties[propertyValue.propertyName] = propertyValue
-    }
+
 
     /**
      * A URL to a TileJSON resource. Supported protocols are `http:`, `https:`, and `mapbox://<Tileset ID>`.
@@ -526,7 +522,7 @@ class RasterSource : Source {
        */
       get() {
         StyleManager.getStyleSourcePropertyDefaultValue("raster", "scheme").silentUnwrap<String>()?.let {
-          return Scheme.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+          return Scheme.valueOf(it.uppercase(Locale.US).replace('-', '_'))
         }
         return null
       }

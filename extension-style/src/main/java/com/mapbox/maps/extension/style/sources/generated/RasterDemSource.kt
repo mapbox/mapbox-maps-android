@@ -156,7 +156,7 @@ class RasterDemSource : Source {
      */
     get() {
       getPropertyValue<String?>("encoding")?.let {
-        return Encoding.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+        return Encoding.valueOf(it.uppercase(Locale.US).replace('-', '_'))
       }
       return null
     }
@@ -318,11 +318,7 @@ class RasterDemSource : Source {
     // Properties that only settable after the source is added to the style.
     internal val volatileProperties = HashMap<String, PropertyValue<*>>()
 
-    init {
-      // set default data to allow empty data source.
-      val propertyValue = PropertyValue("data", TypeUtils.wrapToValue(""))
-      properties[propertyValue.propertyName] = propertyValue
-    }
+
 
     /**
      * A URL to a TileJSON resource. Supported protocols are `http:`, `https:`, and `mapbox://<Tileset ID>`.
@@ -526,7 +522,7 @@ class RasterDemSource : Source {
        */
       get() {
         StyleManager.getStyleSourcePropertyDefaultValue("raster-dem", "encoding").silentUnwrap<String>()?.let {
-          return Encoding.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+          return Encoding.valueOf(it.uppercase(Locale.US).replace('-', '_'))
         }
         return null
       }

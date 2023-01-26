@@ -4,7 +4,6 @@ package com.mapbox.maps.extension.style.sources.generated
 
 import android.os.Handler
 import android.os.HandlerThread
-import android.os.Looper
 import android.os.Process.THREAD_PRIORITY_DEFAULT
 import androidx.annotation.VisibleForTesting
 import com.mapbox.bindgen.Value
@@ -410,6 +409,7 @@ class GeoJsonSource : Source {
       properties[propertyValue.propertyName] = propertyValue
     }
 
+
     /**
      * A URL to a GeoJSON file, or inline GeoJSON.
      */
@@ -661,8 +661,6 @@ class GeoJsonSource : Source {
     internal val workerThread = HandlerThread("GEOJSON_PARSER", THREAD_PRIORITY_DEFAULT).apply {
       start()
     }
-
-    private val mainHandler = Handler(Looper.getMainLooper())
 
     internal fun toGeoJsonData(geoJson: GeoJson): GeoJSONSourceData {
       return when (geoJson) {
