@@ -908,46 +908,6 @@ class FillExtrusionLayerTest {
   }
 
   @Test
-  fun fillExtrusionPatternTransitionSet() {
-    val layer = fillExtrusionLayer("id", "source") {}
-    layer.bindTo(style)
-    layer.fillExtrusionPatternTransition(
-      transitionOptions {
-        duration(100)
-        delay(200)
-      }
-    )
-    verify { style.setStyleLayerProperty("id", "fill-extrusion-pattern-transition", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
-  }
-
-  @Test
-  fun fillExtrusionPatternTransitionGet() {
-    val transition = transitionOptions {
-      duration(100)
-      delay(200)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
-    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
-    val layer = fillExtrusionLayer("id", "source") {}
-    layer.bindTo(style)
-    assertEquals(transition.toValue().toString(), layer.fillExtrusionPatternTransition?.toValue().toString())
-    verify { style.getStyleLayerProperty("id", "fill-extrusion-pattern-transition") }
-  }
-
-  @Test
-  fun fillExtrusionPatternTransitionSetDsl() {
-    val layer = fillExtrusionLayer("id", "source") {}
-    layer.bindTo(style)
-    layer.fillExtrusionPatternTransition {
-      duration(100)
-      delay(200)
-    }
-    verify { style.setStyleLayerProperty("id", "fill-extrusion-pattern-transition", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
-  }
-
-  @Test
   fun fillExtrusionTranslateSet() {
     val layer = fillExtrusionLayer("id", "source") {}
     val testValue = listOf(0.0, 1.0)
@@ -1563,19 +1523,6 @@ class FillExtrusionLayerTest {
     assertEquals("abc", FillExtrusionLayer.defaultFillExtrusionPatternAsExpression.toString())
     assertEquals("abc", FillExtrusionLayer.defaultFillExtrusionPattern)
     verify { StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-pattern") }
-  }
-
-  @Test
-  fun defaultFillExtrusionPatternTransitionTest() {
-    val transition = transitionOptions {
-      duration(100)
-      delay(200)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
-    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
-
-    assertEquals(transition.toValue().toString(), FillExtrusionLayer.defaultFillExtrusionPatternTransition?.toValue().toString())
-    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-pattern-transition") }
   }
 
   @Test

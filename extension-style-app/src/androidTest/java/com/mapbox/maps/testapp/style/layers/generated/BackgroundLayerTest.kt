@@ -173,37 +173,6 @@ class BackgroundLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
-  fun backgroundPatternTransitionTest() {
-    val transition = transitionOptions {
-      duration(100)
-      delay(200)
-    }
-    val layer = backgroundLayer("id") {
-      backgroundPatternTransition(transition)
-    }
-    setupLayer(layer)
-    assertEquals(transition, layer.backgroundPatternTransition)
-  }
-
-  @Test
-  @UiThreadTest
-  fun backgroundPatternTransitionSetDslTest() {
-    val transition = transitionOptions {
-      duration(100)
-      delay(200)
-    }
-    val layer = backgroundLayer("id") {
-      backgroundPatternTransition {
-        duration(100)
-        delay(200)
-      }
-    }
-    setupLayer(layer)
-    assertEquals(transition, layer.backgroundPatternTransition)
-  }
-
-  @Test
-  @UiThreadTest
   fun visibilityTest() {
     val layer = backgroundLayer("id") {
       visibility(Visibility.NONE)
@@ -229,7 +198,6 @@ class BackgroundLayerTest : BaseStyleTest() {
     assertNotNull("defaultBackgroundOpacityTransition should not be null", BackgroundLayer.defaultBackgroundOpacityTransition)
     assertNotNull("defaultBackgroundPattern should not be null", BackgroundLayer.defaultBackgroundPattern)
     assertNotNull("defaultBackgroundPatternAsExpression should not be null", BackgroundLayer.defaultBackgroundPatternAsExpression)
-    assertNotNull("defaultBackgroundPatternTransition should not be null", BackgroundLayer.defaultBackgroundPatternTransition)
   }
 
   @Test
