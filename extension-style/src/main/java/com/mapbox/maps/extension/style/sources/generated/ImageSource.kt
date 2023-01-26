@@ -16,12 +16,8 @@ import java.util.*
  * @see [The online documentation](https://docs.mapbox.com/mapbox-gl-js/style-spec/sources/#image)
  *
  */
-class ImageSource(builder: Builder) : Source(builder.sourceId) {
-
-  init {
-    sourceProperties.putAll(builder.properties)
-    volatileSourceProperties.putAll(builder.volatileProperties)
-  }
+class ImageSource : Source {
+  private constructor(builder: Builder) : super(builder.sourceId)
 
   /**
    * Get the type of the current source as a String.
@@ -105,6 +101,12 @@ class ImageSource(builder: Builder) : Source(builder.sourceId) {
     // Properties that only settable after the source is added to the style.
     internal val volatileProperties = HashMap<String, PropertyValue<*>>()
 
+    init {
+      // set default data to allow empty data source.
+      val propertyValue = PropertyValue("data", TypeUtils.wrapToValue(""))
+      properties[propertyValue.propertyName] = propertyValue
+    }
+
     /**
      * URL that points to an image.
      */
@@ -112,7 +114,6 @@ class ImageSource(builder: Builder) : Source(builder.sourceId) {
       val propertyValue = PropertyValue("url", TypeUtils.wrapToValue(value))
       properties[propertyValue.propertyName] = propertyValue
     }
-
     /**
      * Corners of image specified in longitude, latitude pairs.
      */
@@ -120,7 +121,6 @@ class ImageSource(builder: Builder) : Source(builder.sourceId) {
       val propertyValue = PropertyValue("coordinates", TypeUtils.wrapToValue(value))
       properties[propertyValue.propertyName] = propertyValue
     }
-
     /**
      * When loading a map, if PrefetchZoomDelta is set to any number greater than 0, the map
      * will first request a tile at zoom level lower than zoom - delta, but so that

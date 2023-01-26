@@ -17,12 +17,8 @@ import java.util.*
  * @see [The online documentation](https://docs.mapbox.com/mapbox-gl-js/style-spec/sources/#raster_dem)
  *
  */
-class RasterDemSource(builder: Builder) : Source(builder.sourceId) {
-
-  init {
-    sourceProperties.putAll(builder.properties)
-    volatileSourceProperties.putAll(builder.volatileProperties)
-  }
+class RasterDemSource : Source {
+  private constructor(builder: Builder) : super(builder.sourceId)
 
   /**
    * Get the type of the current source as a String.
@@ -319,6 +315,12 @@ class RasterDemSource(builder: Builder) : Source(builder.sourceId) {
     // Properties that only settable after the source is added to the style.
     internal val volatileProperties = HashMap<String, PropertyValue<*>>()
 
+    init {
+      // set default data to allow empty data source.
+      val propertyValue = PropertyValue("data", TypeUtils.wrapToValue(""))
+      properties[propertyValue.propertyName] = propertyValue
+    }
+
     /**
      * A URL to a TileJSON resource. Supported protocols are `http:`, `https:`, and `mapbox://<Tileset ID>`.
      */
@@ -326,7 +328,6 @@ class RasterDemSource(builder: Builder) : Source(builder.sourceId) {
       val propertyValue = PropertyValue("url", TypeUtils.wrapToValue(value))
       properties[propertyValue.propertyName] = propertyValue
     }
-
     /**
      * An array of one or more tile source URLs, as in the TileJSON spec.
      */
@@ -334,7 +335,6 @@ class RasterDemSource(builder: Builder) : Source(builder.sourceId) {
       val propertyValue = PropertyValue("tiles", TypeUtils.wrapToValue(value))
       properties[propertyValue.propertyName] = propertyValue
     }
-
     /**
      * An array containing the longitude and latitude of the southwest and northeast corners of the source's
      * bounding box in the following order: `[sw.lng, sw.lat, ne.lng, ne.lat]`. When this property is included in
@@ -344,7 +344,6 @@ class RasterDemSource(builder: Builder) : Source(builder.sourceId) {
       val propertyValue = PropertyValue("bounds", TypeUtils.wrapToValue(value))
       properties[propertyValue.propertyName] = propertyValue
     }
-
     /**
      * Minimum zoom level for which tiles are available, as in the TileJSON spec.
      */
@@ -352,7 +351,6 @@ class RasterDemSource(builder: Builder) : Source(builder.sourceId) {
       val propertyValue = PropertyValue("minzoom", TypeUtils.wrapToValue(value))
       properties[propertyValue.propertyName] = propertyValue
     }
-
     /**
      * Maximum zoom level for which tiles are available, as in the TileJSON spec. Data from tiles
      * at the maxzoom are used when displaying the map at higher zoom levels.
@@ -361,7 +359,6 @@ class RasterDemSource(builder: Builder) : Source(builder.sourceId) {
       val propertyValue = PropertyValue("maxzoom", TypeUtils.wrapToValue(value))
       properties[propertyValue.propertyName] = propertyValue
     }
-
     /**
      * The minimum visual size to display tiles for this layer. Only configurable for raster layers.
      */
@@ -369,7 +366,6 @@ class RasterDemSource(builder: Builder) : Source(builder.sourceId) {
       val propertyValue = PropertyValue("tileSize", TypeUtils.wrapToValue(value))
       properties[propertyValue.propertyName] = propertyValue
     }
-
     /**
      * Contains an attribution to be displayed when the map is shown to a user.
      */
@@ -377,7 +373,6 @@ class RasterDemSource(builder: Builder) : Source(builder.sourceId) {
       val propertyValue = PropertyValue("attribution", TypeUtils.wrapToValue(value))
       properties[propertyValue.propertyName] = propertyValue
     }
-
     /**
      * The encoding used by this source. Mapbox Terrain RGB is used by default
      */
@@ -385,7 +380,6 @@ class RasterDemSource(builder: Builder) : Source(builder.sourceId) {
       val propertyValue = PropertyValue("encoding", TypeUtils.wrapToValue(value.value))
       properties[propertyValue.propertyName] = propertyValue
     }
-
     /**
      * A setting to determine whether a source's tiles are cached locally.
      */
@@ -393,7 +387,6 @@ class RasterDemSource(builder: Builder) : Source(builder.sourceId) {
       val propertyValue = PropertyValue("volatile", TypeUtils.wrapToValue(value))
       properties[propertyValue.propertyName] = propertyValue
     }
-
     /**
      * When loading a map, if PrefetchZoomDelta is set to any number greater than 0, the map
      * will first request a tile at zoom level lower than zoom - delta, but so that
@@ -405,7 +398,6 @@ class RasterDemSource(builder: Builder) : Source(builder.sourceId) {
       val propertyValue = PropertyValue("prefetch-zoom-delta", TypeUtils.wrapToValue(value))
       volatileProperties[propertyValue.propertyName] = propertyValue
     }
-
     /**
      * Minimum tile update interval in seconds, which is used to throttle the tile update network requests.
      * If the given source supports loading tiles from a server, sets the minimum tile update interval.
@@ -415,7 +407,6 @@ class RasterDemSource(builder: Builder) : Source(builder.sourceId) {
       val propertyValue = PropertyValue("minimum-tile-update-interval", TypeUtils.wrapToValue(value))
       volatileProperties[propertyValue.propertyName] = propertyValue
     }
-
     /**
      * When a set of tiles for a current zoom level is being rendered and some of
      * the ideal tiles that cover the screen are not yet loaded, parent tile could be used
@@ -426,7 +417,6 @@ class RasterDemSource(builder: Builder) : Source(builder.sourceId) {
       val propertyValue = PropertyValue("max-overscale-factor-for-parent-tiles", TypeUtils.wrapToValue(value))
       volatileProperties[propertyValue.propertyName] = propertyValue
     }
-
     /**
      * For the tiled sources, this property sets the tile requests delay. The given delay comes in
      * action only during an ongoing animation or gestures. It helps to avoid loading, parsing and rendering
@@ -436,7 +426,6 @@ class RasterDemSource(builder: Builder) : Source(builder.sourceId) {
       val propertyValue = PropertyValue("tile-requests-delay", TypeUtils.wrapToValue(value))
       volatileProperties[propertyValue.propertyName] = propertyValue
     }
-
     /**
      * For the tiled sources, this property sets the tile network requests delay. The given delay comes
      * in action only during an ongoing animation or gestures. It helps to avoid loading the transient
