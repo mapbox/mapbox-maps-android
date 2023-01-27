@@ -3,6 +3,7 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
+* Source constructor visibility changed to private, users should use Builder class instead. ([1975](https://github.com/mapbox/mapbox-maps-android/pull/1975))
 
 
 # 10.11.0-rc.1 January 26, 2023
