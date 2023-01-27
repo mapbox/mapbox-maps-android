@@ -46,11 +46,10 @@ class MainActivity : ComponentActivity() {
     }
   }
 
-
   private companion object {
     const val LATITUDE = 60.239
     const val LONGITUDE = 25.004
+    const val ZOOM: Double = 12.0
     val POINT: Point = Point.fromLngLat(LONGITUDE, LATITUDE)
-    val ZOOM: Double = 12.0
   }
 }
