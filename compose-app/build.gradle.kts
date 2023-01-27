@@ -56,11 +56,7 @@ androidExtensions {
 
 dependencies {
   implementation(project(":sdk"))
-  implementation(Dependencies.googleMaterialDesign)
-  implementation(Dependencies.composeUi)
-  implementation(Dependencies.composeMaterial)
-  implementation(Dependencies.composeUiToolingPreview)
-  implementation(Dependencies.androidxLifecycleKtx)
+  implementation(project(":extension-compose"))
   implementation(Dependencies.androidxActivityCompose)
   implementation(Dependencies.androidxAppCompat)
   implementation(Dependencies.androidxCoreKtx)
