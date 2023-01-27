@@ -17,9 +17,8 @@ import java.util.*
  * @see [The online documentation](https://docs.mapbox.com/mapbox-gl-js/style-spec/sources/#raster_dem)
  *
  */
-class RasterDemSource(builder: Builder) : Source(builder.sourceId) {
-
-  init {
+class RasterDemSource : Source {
+  private constructor(builder: Builder) : super(builder.sourceId) {
     sourceProperties.putAll(builder.properties)
     volatileSourceProperties.putAll(builder.volatileProperties)
   }
@@ -157,7 +156,7 @@ class RasterDemSource(builder: Builder) : Source(builder.sourceId) {
      */
     get() {
       getPropertyValue<String?>("encoding")?.let {
-        return Encoding.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+        return Encoding.valueOf(it.uppercase(Locale.US).replace('-', '_'))
       }
       return null
     }
@@ -521,7 +520,7 @@ class RasterDemSource(builder: Builder) : Source(builder.sourceId) {
        */
       get() {
         StyleManager.getStyleSourcePropertyDefaultValue("raster-dem", "encoding").silentUnwrap<String>()?.let {
-          return Encoding.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+          return Encoding.valueOf(it.uppercase(Locale.US).replace('-', '_'))
         }
         return null
       }

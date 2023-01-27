@@ -18,9 +18,8 @@ import java.util.*
  * @see [The online documentation](https://docs.mapbox.com/mapbox-gl-js/style-spec/sources/#vector)
  *
  */
-class VectorSource(builder: Builder) : Source(builder.sourceId) {
-
-  init {
+class VectorSource : Source {
+  private constructor(builder: Builder) : super(builder.sourceId) {
     sourceProperties.putAll(builder.properties)
     volatileSourceProperties.putAll(builder.volatileProperties)
   }
@@ -94,7 +93,7 @@ class VectorSource(builder: Builder) : Source(builder.sourceId) {
      */
     get() {
       getPropertyValue<String?>("scheme")?.let {
-        return Scheme.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+        return Scheme.valueOf(it.uppercase(Locale.US).replace('-', '_'))
       }
       return null
     }
@@ -511,7 +510,7 @@ class VectorSource(builder: Builder) : Source(builder.sourceId) {
        */
       get() {
         StyleManager.getStyleSourcePropertyDefaultValue("vector", "scheme").silentUnwrap<String>()?.let {
-          return Scheme.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+          return Scheme.valueOf(it.uppercase(Locale.US).replace('-', '_'))
         }
         return null
       }

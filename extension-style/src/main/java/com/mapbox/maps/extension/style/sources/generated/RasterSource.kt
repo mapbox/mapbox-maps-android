@@ -17,9 +17,8 @@ import java.util.*
  * @see [The online documentation](https://docs.mapbox.com/mapbox-gl-js/style-spec/sources/#raster)
  *
  */
-class RasterSource(builder: Builder) : Source(builder.sourceId) {
-
-  init {
+class RasterSource : Source {
+  private constructor(builder: Builder) : super(builder.sourceId) {
     sourceProperties.putAll(builder.properties)
     volatileSourceProperties.putAll(builder.volatileProperties)
   }
@@ -146,7 +145,7 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
      */
     get() {
       getPropertyValue<String?>("scheme")?.let {
-        return Scheme.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+        return Scheme.valueOf(it.uppercase(Locale.US).replace('-', '_'))
       }
       return null
     }
@@ -521,7 +520,7 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
        */
       get() {
         StyleManager.getStyleSourcePropertyDefaultValue("raster", "scheme").silentUnwrap<String>()?.let {
-          return Scheme.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+          return Scheme.valueOf(it.uppercase(Locale.US).replace('-', '_'))
         }
         return null
       }
