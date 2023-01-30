@@ -8,12 +8,14 @@ import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.viewinterop.AndroidView
 import com.mapbox.maps.MapInitOptions
 import com.mapbox.maps.MapView
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
 
 /**
  * Entry point for adding a Mapbox Map instance to the Jetpack Compose UI.
  */
 @Composable
+@MapboxExperimental
 public fun MapboxMap(
   /**
    * Modifier to be applied to the Mapbox map.

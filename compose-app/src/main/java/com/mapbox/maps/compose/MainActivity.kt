@@ -11,6 +11,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import com.mapbox.geojson.Point
 import com.mapbox.maps.MapInitOptions
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.Style
 import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.extension.compose.MapboxMap
@@ -18,6 +19,7 @@ import com.mapbox.maps.extension.compose.MapboxMap
 /**
  * Example to showcase usage of MapView
  */
+@OptIn(MapboxExperimental::class)
 public class MainActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
