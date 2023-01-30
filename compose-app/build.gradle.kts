@@ -61,10 +61,15 @@ androidExtensions {
 dependencies {
   implementation(project(":sdk"))
   implementation(project(":extension-compose"))
+  implementation(Dependencies.composeUi)
+  implementation(Dependencies.composeMaterial)
   implementation(Dependencies.androidxActivityCompose)
+  implementation(Dependencies.googleMaterialDesign)
+  implementation(Dependencies.composeUiToolingPreview)
+  debugImplementation(Dependencies.composeUiTooling)
+
   implementation(Dependencies.androidxAppCompat)
   implementation(Dependencies.androidxCoreKtx)
-
   androidTestUtil(Dependencies.androidxOrchestrator)
   androidTestImplementation(Dependencies.androidxTestRunner)
   androidTestImplementation(Dependencies.androidxJUnitTestRules)

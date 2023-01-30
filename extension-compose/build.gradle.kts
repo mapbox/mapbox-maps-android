@@ -37,11 +37,9 @@ android {
 dependencies {
   dependencies {
     compileOnly(project(":sdk"))
-    api(Dependencies.googleMaterialDesign)
-    api(Dependencies.composeUi)
-    api(Dependencies.composeMaterial)
-    debugApi(Dependencies.composeUiTooling)
-    debugApi(Dependencies.composeUiToolingPreview)
+    implementation(Dependencies.composeUi)
+    implementation(Dependencies.composeMaterial)
+
     implementation(Dependencies.androidxCoreKtx)
     androidTestUtil(Dependencies.androidxOrchestrator)
     androidTestImplementation(Dependencies.androidxTestRunner)
