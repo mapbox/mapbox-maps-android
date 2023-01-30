@@ -18,7 +18,7 @@ import com.mapbox.maps.extension.compose.MapboxMap
 /**
  * Example to showcase usage of MapView
  */
-class MainActivity : ComponentActivity() {
+public class MainActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContent {

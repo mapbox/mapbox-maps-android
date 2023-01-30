@@ -33,6 +33,10 @@ android {
     kotlinCompilerExtensionVersion = Versions.compose
   }
 
+  kotlinOptions {
+    freeCompilerArgs += "-Xexplicit-api=strict"
+  }
+
   testOptions {
     if (!project.hasProperty("android.injected.invoked.from.ide")) {
       execution = "ANDROIDX_TEST_ORCHESTRATOR"
