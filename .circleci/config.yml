@@ -22,6 +22,9 @@ parameters:
   git_release_branch:
     type: string
     default: ^v[0-9]+\.[0-9]+$
+  release_tags_pattern:
+    type: string
+    default: (v.*|extension-androidauto-v.*|extension-compose-v.*)
   weekly:
     type: boolean
     default: false
@@ -38,7 +41,7 @@ workflows:
       - verify-code:
           filters:
             tags:
-              only: /(v.*|extension-androidauto-v.*|extension-compose-v.*)/
+              only: /<< pipeline.parameters.release_tags_pattern >>/
       - verify-docs:
           requires:
             - verify-code
@@ -79,7 +82,7 @@ workflows:
             - verify-code
           filters:
             tags:
-              only: /(v.*|extension-androidauto-v.*|extension-compose-v.*)/
+              only: /<< pipeline.parameters.release_tags_pattern >>/
       - run-app-instrumentation-test:
           requires:
             - build-modules-and-instrumentation-tests
