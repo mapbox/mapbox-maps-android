@@ -33,20 +33,13 @@ import com.mapbox.maps.logW
  * @see [The online documentation](https://docs.mapbox.com/mapbox-gl-js/style-spec/sources/#geojson)
  *
  */
-class GeoJsonSource : Source {
-  private constructor(builder: Builder) : super(builder.sourceId) {
-    sourceProperties.putAll(builder.properties)
-    volatileSourceProperties.putAll(builder.volatileProperties)
-    initGeoJson = builder.geoJson
-    initData = builder.data
-  }
+class GeoJsonSource private constructor(builder: Builder): Source(builder.sourceId) { 
+  private var initGeoJson: GeoJson? = builder.geoJson
+  private var initData: String? = builder.data
 
   private val workerHandler by lazy {
     Handler(workerThread.looper)
   }
-
-  private var initGeoJson: GeoJson? = null
-  private var initData: String? = null
 
   private fun setGeoJson(geoJson: GeoJson) {
     workerHandler.removeCallbacksAndMessages(null)
@@ -81,6 +74,11 @@ class GeoJsonSource : Source {
       setData(it)
       initData = null
     }
+  }
+
+  init {
+    sourceProperties.putAll(builder.properties)
+    volatileSourceProperties.putAll(builder.volatileProperties)
   }
 
   /**
@@ -403,12 +401,6 @@ class GeoJsonSource : Source {
     // Properties that only settable after the source is added to the style.
     internal val volatileProperties = HashMap<String, PropertyValue<*>>()
 
-    init {
-      // set default data to allow empty data source.
-      val propertyValue = PropertyValue("data", TypeUtils.wrapToValue(""))
-      properties[propertyValue.propertyName] = propertyValue
-    }
-
     /**
      * A URL to a GeoJSON file, or inline GeoJSON.
      */
@@ -645,6 +637,9 @@ class GeoJsonSource : Source {
      * @return the GeoJsonSource
      */
     fun build(): GeoJsonSource {
+      // set default data to allow empty data source.
+      val propertyValue = PropertyValue("data", TypeUtils.wrapToValue(""))
+      properties[propertyValue.propertyName] = propertyValue
       return GeoJsonSource(this)
     }
   }
