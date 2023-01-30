@@ -17,7 +17,7 @@ import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.extension.compose.MapboxMap
 
 /**
- * Example to showcase usage of MapView
+ * Example to showcase usage of MapboxMap.
  */
 @OptIn(MapboxExperimental::class)
 public class MainActivity : ComponentActivity() {

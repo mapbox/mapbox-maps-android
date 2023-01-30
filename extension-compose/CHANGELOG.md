@@ -1,4 +1,4 @@
-# Changelog for Mapbox Maps Android Auto Extension SDK
+# Changelog for Mapbox Maps Compose Extension
 
 Mapbox welcomes participation and contributions from everyone.
 
