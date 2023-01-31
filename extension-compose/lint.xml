@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="InvalidColorHexValue" severity="error" />
+    <issue id="MissingColorAlphaChannel" severity="error" />
+
+    <issue id="ComposableLambdaParameterNaming" severity="error" />
+    <issue id="ComposableLambdaParameterPosition" severity="error" />
+    <issue id="ComposableNaming" severity="error" />
+    <issue id="CompositionLocalNaming" severity="error" />
+<!--    <issue id="MutableCollectionMutableState" severity="error" />-->
+
+    <issue id="UnnecessaryComposedModifier" severity="error" />
+    <issue id="ComposableModifierFactory" severity="error" />
+    <issue id="ModifierFactoryReturnType" severity="error" />
+    <issue id="ModifierFactoryExtensionFunction" severity="error" />
+    <issue id="ModifierParameter" severity="error" />
+<!--    <issue id="MultipleAwaitPointerEventScopes" severity="error" />-->
+<!--    <issue id="ReturnFromAwaitPointerEventScope" severity="error" />-->
+
+<!--    <issue id="FrequentlyChangedStateReadInComposition" severity="error" />-->
+<!--    <issue id="UseOfNonLambdaOffsetOverload" severity="error" />-->
+
+</lint>

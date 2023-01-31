@@ -8,7 +8,7 @@ object AndroidVersions {
     const val compileSdkVersion = 31
   }
   object Compose {
-    const val minSdkVersion = 23
+    const val minSdkVersion = 21
     const val targetSdkVersion = 30
     const val compileSdkVersion = 31
   }
@@ -97,7 +97,7 @@ object Dependencies {
   const val composeUi = "androidx.compose.ui:ui:${Versions.compose}"
   const val composeMaterial = "androidx.compose.material:material:${Versions.compose}"
   const val composeUiToolingPreview = "androidx.compose.ui:ui-tooling-preview:${Versions.compose}"
-
+  const val composeUiTooling = "androidx.compose.ui:ui-tooling:${Versions.compose}"
 }
 
 object Versions {
