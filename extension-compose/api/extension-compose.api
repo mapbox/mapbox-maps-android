@@ -5,7 +5,21 @@ public final class com/mapbox/maps/extension/compose/BuildConfig {
 	public fun <init> ()V
 }
 
+public final class com/mapbox/maps/extension/compose/MapEffectKt {
+	public static final fun MapEffect (Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;I)V
+	public static final fun MapEffect (Ljava/lang/Object;Ljava/lang/Object;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;I)V
+	public static final fun MapEffect (Ljava/lang/Object;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;I)V
+	public static final fun MapEffect ([Ljava/lang/Object;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;I)V
+}
+
+public abstract interface annotation class com/mapbox/maps/extension/compose/MapboxMapComposable : java/lang/annotation/Annotation {
+}
+
 public final class com/mapbox/maps/extension/compose/MapboxMapKt {
-	public static final fun MapboxMap (Landroidx/compose/ui/Modifier;Lcom/mapbox/maps/MapInitOptions;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+	public static final fun MapboxMap (Landroidx/compose/ui/Modifier;Lcom/mapbox/maps/MapInitOptions;Lcom/mapbox/maps/plugin/gestures/OnMapClickListener;Lcom/mapbox/maps/plugin/gestures/OnMapLongClickListener;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class com/mapbox/maps/extension/compose/MapboxMapScope {
+	public static final field INSTANCE Lcom/mapbox/maps/extension/compose/MapboxMapScope;
 }
 
