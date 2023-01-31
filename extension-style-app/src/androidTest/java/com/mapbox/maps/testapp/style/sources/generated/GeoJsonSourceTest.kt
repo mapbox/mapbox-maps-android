@@ -79,11 +79,32 @@ class GeoJsonSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun urlTest() {
+    val latch = CountDownLatch(2)
+    val dataList = mutableListOf<String?>()
     val testSource = geoJsonSource(SOURCE_ID) {
       url(TEST_URI)
     }
-    setupSource(testSource)
-    Handler(Looper.getMainLooper()).postDelayed({ assertEquals(TEST_URI, testSource.data) }, LATCH_MAX_TIME_MS)
+    val listener = OnSourceDataLoadedListener {
+      if (it.type == SourceDataType.METADATA && it.id == SOURCE_ID) {
+        dataList.add(testSource.data)
+        latch.countDown()
+      }
+    }
+    rule.scenario.onActivity {
+      it.runOnUiThread {
+        mapboxMap.apply {
+          addOnSourceDataLoadedListener(listener)
+          setupSource(testSource)
+        }
+      }
+    }
+    if (!latch.await(LATCH_MAX_TIME_MS, TimeUnit.MILLISECONDS)) {
+      throw TimeoutException()
+    }
+    assertEquals(2, dataList.size)
+    assertEquals("", dataList[0])
+    assertEquals(TEST_URI, dataList[1])
+    mapboxMap.removeOnSourceDataLoadedListener(listener)
   }
 
   @Test
