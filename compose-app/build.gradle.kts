@@ -33,6 +33,10 @@ android {
     kotlinCompilerExtensionVersion = Versions.compose
   }
 
+  kotlinOptions {
+    freeCompilerArgs += "-Xexplicit-api=strict"
+  }
+
   testOptions {
     if (!project.hasProperty("android.injected.invoked.from.ide")) {
       execution = "ANDROIDX_TEST_ORCHESTRATOR"
@@ -56,15 +60,16 @@ androidExtensions {
 
 dependencies {
   implementation(project(":sdk"))
-  implementation(Dependencies.googleMaterialDesign)
+  implementation(project(":extension-compose"))
   implementation(Dependencies.composeUi)
   implementation(Dependencies.composeMaterial)
-  implementation(Dependencies.composeUiToolingPreview)
-  implementation(Dependencies.androidxLifecycleKtx)
   implementation(Dependencies.androidxActivityCompose)
+  implementation(Dependencies.googleMaterialDesign)
+  implementation(Dependencies.composeUiToolingPreview)
+  debugImplementation(Dependencies.composeUiTooling)
+
   implementation(Dependencies.androidxAppCompat)
   implementation(Dependencies.androidxCoreKtx)
-
   androidTestUtil(Dependencies.androidxOrchestrator)
   androidTestImplementation(Dependencies.androidxTestRunner)
   androidTestImplementation(Dependencies.androidxJUnitTestRules)
