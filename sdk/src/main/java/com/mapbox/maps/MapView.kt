@@ -352,8 +352,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
       MotionEvent.ACTION_POINTER_UP -> {
         val upPointerId = event.getPointerId(event.actionIndex)
         interceptedViewAnnotationEvents.removeAll {
-          val cachedPointerId = it.getPointerId(it.actionIndex)
-          upPointerId == cachedPointerId
+          upPointerId == it.getPointerId(it.actionIndex)
         }
 
         return false

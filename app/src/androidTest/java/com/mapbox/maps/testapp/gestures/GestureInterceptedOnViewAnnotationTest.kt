@@ -32,12 +32,12 @@ class GestureInterceptedOnViewAnnotationTest : BaseMapTest() {
 
   private fun withLatch(
     count: Int = 1,
-    timeout: Long = 3000,
+    timeoutMillis: Long = 3000,
     lambda: (CountDownLatch) -> Unit
   ) {
     val latch = CountDownLatch(count)
     lambda(latch)
-    if (!latch.await(timeout, TimeUnit.MILLISECONDS)) {
+    if (!latch.await(timeoutMillis, TimeUnit.MILLISECONDS)) {
       throw TimeoutException()
     }
   }
@@ -100,17 +100,10 @@ class GestureInterceptedOnViewAnnotationTest : BaseMapTest() {
       }
     }
 
-    // click on view annotation to close it
-    onView(withId(R.id.view_annotation)).perform(
-      GesturesUiTestUtils.move(
-        deltaX = 0f,
-        deltaY = 0f,
-        withVelocity = false,
-        duration = 1L
-      )
-    )
+    // click on view annotation - triggers closing on onClickListener
+    onView(withId(R.id.view_annotation)).perform(GesturesUiTestUtils.click())
 
-    // sleep to check that long-touch wong be triggered after next gestures
+    // sleep to check that long-touch wont be triggered after next gestures
     Thread.sleep(2000)
 
     // scroll map
@@ -123,14 +116,7 @@ class GestureInterceptedOnViewAnnotationTest : BaseMapTest() {
     )
 
     // click on map
-    onView(withId(com.mapbox.maps.R.id.mapView)).perform(
-      GesturesUiTestUtils.move(
-        deltaX = 0f,
-        deltaY = 0f,
-        withVelocity = false,
-        duration = 1L
-      )
-    )
+    onView(withId(com.mapbox.maps.R.id.mapView)).perform(GesturesUiTestUtils.click())
 
     withLatch { latch ->
       rule.scenario.onActivity {
