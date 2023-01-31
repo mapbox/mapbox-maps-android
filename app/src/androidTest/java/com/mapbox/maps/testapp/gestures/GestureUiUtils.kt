@@ -94,6 +94,14 @@ object GesturesUiTestUtils {
     }
   }
 
+  fun click() = move(
+    deltaX = 0f,
+    deltaY = 0f,
+    startPoint = null,
+    withVelocity = false,
+    duration = 0
+  )
+
   private fun getCenterPointF(view: View): PointF {
     val locationOnScreen = IntArray(2)
     view.getLocationOnScreen(locationOnScreen)
