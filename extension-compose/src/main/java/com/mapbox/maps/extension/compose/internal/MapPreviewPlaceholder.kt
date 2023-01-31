@@ -1,4 +1,4 @@
-package com.mapbox.maps.extension.compose
+package com.mapbox.maps.extension.compose.internal
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
@@ -9,6 +9,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.dp
 
+/**
+ * A place holder to show the Map in Android Studio Preview.
+ */
 @Composable
 @JvmSynthetic
 internal fun MapPreviewPlaceHolder(
