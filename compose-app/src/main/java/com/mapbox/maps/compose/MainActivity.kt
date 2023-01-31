@@ -3,57 +3,55 @@ package com.mapbox.maps.compose
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.viewinterop.AndroidView
 import com.mapbox.geojson.Point
-import com.mapbox.maps.CameraOptions
-import com.mapbox.maps.MapView
+import com.mapbox.maps.MapInitOptions
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.Style
+import com.mapbox.maps.dsl.cameraOptions
+import com.mapbox.maps.extension.compose.MapboxMap
 
-private const val LATITUDE = 60.239
-private const val LONGITUDE = 25.004
-
-class MainActivity : ComponentActivity() {
+/**
+ * Example to showcase usage of MapboxMap.
+ */
+@OptIn(MapboxExperimental::class)
+public class MainActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContent {
-      MapboxMap()
+      Home()
     }
   }
-}
 
-@Composable
-private fun MapboxMap() {
-  val mapView = mapView()
-  AndroidView(
-    factory = { mapView },
-    modifier = Modifier.fillMaxSize()
-  ) { mapView ->
-    mapView.getMapboxMap()
-      .apply {
-        loadStyleUri(Style.MAPBOX_STREETS)
-        setCamera(
-          CameraOptions.Builder()
-            .center(Point.fromLngLat(LONGITUDE, LATITUDE))
-            .zoom(9.0)
-            .build()
+  @Preview(showBackground = true)
+  @Composable
+  private fun Home() {
+    Box(Modifier.fillMaxSize()) {
+      MapboxMap(
+        Modifier.matchParentSize(),
+        mapInitOptions = MapInitOptions(
+          context = LocalContext.current,
+          styleUri = Style.MAPBOX_STREETS,
+          cameraOptions = cameraOptions {
+            center(POINT)
+            zoom(ZOOM)
+          }
         )
+      ) {
+        // TODO: add contents to the map
       }
+    }
   }
-}
 
-@Composable
-private fun mapView(): MapView {
-  val context = LocalContext.current
-  return MapView(context)
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun DefaultPreview() {
-  MapboxMap()
+  private companion object {
+    const val LATITUDE = 60.239
+    const val LONGITUDE = 25.004
+    const val ZOOM: Double = 12.0
+    val POINT: Point = Point.fromLngLat(LONGITUDE, LATITUDE)
+  }
 }

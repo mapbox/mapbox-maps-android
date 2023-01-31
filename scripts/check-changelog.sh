@@ -24,7 +24,7 @@ if grep -q "$pr_number" <<< "$skip_changelog_prs"; then
   exit 0
 fi
 
-changelog_diff=$(git diff origin/main..HEAD CHANGELOG.md extension-androidauto/CHANGELOG.md)
+changelog_diff=$(git diff origin/main..HEAD CHANGELOG.md extension-androidauto/CHANGELOG.md extension-compose/CHANGELOG.md)
 
 if [[ -z "$changelog_diff" ]]; then
     echo "No changes in CHANGELOG.md found"

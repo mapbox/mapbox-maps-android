@@ -11,6 +11,7 @@ include(
   ":compose-app",
   ":app",
   ":extension-androidauto",
+  ":extension-compose",
   ":extension-style",
   ":extension-localization",
   ":extension-style-app",
