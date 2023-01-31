@@ -107,8 +107,14 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
     }
     mapController = MapController(
       when (view) {
-        is SurfaceView -> MapboxSurfaceHolderRenderer(view.holder, resolvedMapInitOptions.antialiasingSampleCount)
-        is TextureView -> MapboxTextureViewRenderer(view, resolvedMapInitOptions.antialiasingSampleCount)
+        is SurfaceView -> MapboxSurfaceHolderRenderer(
+          view.holder,
+          resolvedMapInitOptions.antialiasingSampleCount
+        )
+        is TextureView -> MapboxTextureViewRenderer(
+          view,
+          resolvedMapInitOptions.antialiasingSampleCount
+        )
         else -> throw IllegalArgumentException("Provided view has to be a texture or a surface.")
       },
       resolvedMapInitOptions
@@ -140,7 +146,10 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
       val textureView = typedArray.getInt(R.styleable.mapbox_MapView_mapbox_mapSurface, 0) != 0
       val styleUri =
         typedArray.getString(R.styleable.mapbox_MapView_mapbox_styleUri) ?: Style.MAPBOX_STREETS
-      val antialiasingSampleCount = typedArray.getInteger(R.styleable.mapbox_MapView_mapbox_mapAntialiasingSampleCount, DEFAULT_ANTIALIASING_SAMPLE_COUNT)
+      val antialiasingSampleCount = typedArray.getInteger(
+        R.styleable.mapbox_MapView_mapbox_mapAntialiasingSampleCount,
+        DEFAULT_ANTIALIASING_SAMPLE_COUNT
+      )
 
       return MapInitOptions(
         context,
@@ -307,13 +316,15 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    */
   @SuppressLint("ClickableViewAccessibility")
   override fun onTouchEvent(event: MotionEvent): Boolean {
-    interceptedViewAnnotationEvents.firstOrNull()?.let {
-      val interceptedTouchRes = mapController.onTouchEvent(it)
-      it.recycle()
-      interceptedViewAnnotationEvents.removeFirst()
-      return interceptedTouchRes
+    var interceptedTouchRes = false
+    if (interceptedViewAnnotationEvents.isNotEmpty() && interceptedViewAnnotationEvents.none { it.eventTime == event.eventTime }) {
+      interceptedViewAnnotationEvents.forEach {
+        interceptedTouchRes = mapController.onTouchEvent(it) || interceptedTouchRes
+        it.recycle()
+      }
     }
-    return mapController.onTouchEvent(event)
+    interceptedViewAnnotationEvents.clear()
+    return mapController.onTouchEvent(event) || interceptedTouchRes
   }
 
   /**
@@ -325,16 +336,26 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    */
   override fun onInterceptTouchEvent(event: MotionEvent): Boolean {
     return when (event.actionMasked) {
-      MotionEvent.ACTION_DOWN -> {
-        interceptedViewAnnotationEvents.add(MotionEvent.obtain(event))
-        false
-      }
+      MotionEvent.ACTION_DOWN,
       MotionEvent.ACTION_POINTER_DOWN -> {
         interceptedViewAnnotationEvents.add(MotionEvent.obtain(event))
         false
       }
       MotionEvent.ACTION_MOVE -> {
         interceptedViewAnnotationEvents.any { it.hypot(event, touchSlop) }
+      }
+      MotionEvent.ACTION_UP,
+      MotionEvent.ACTION_CANCEL -> {
+        interceptedViewAnnotationEvents.clear()
+        return false
+      }
+      MotionEvent.ACTION_POINTER_UP -> {
+        val upPointerId = event.getPointerId(event.actionIndex)
+        interceptedViewAnnotationEvents.removeAll {
+          upPointerId == it.getPointerId(it.actionIndex)
+        }
+
+        return false
       }
       else -> {
         // In general, we don't want to intercept touch events. They should be
@@ -440,6 +461,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
      * This will not affect rendering on displays with higher frame rate if [MapView.setMaximumFps] was not called.
      */
     internal const val DEFAULT_FPS = 60
+
     /**
      * Static method to check if [MapView] could properly render on this device.
      * This method may take some time on slow devices.

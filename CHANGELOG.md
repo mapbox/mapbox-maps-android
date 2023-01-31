@@ -13,6 +13,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix a bug where `flyTo` animation request invalid tiles from map engine. ([1949](https://github.com/mapbox/mapbox-maps-android/pull/1949))
 * Deprecate `pattern` and `dash` transition properties for layer (e.g. `BackgroundLayer.backgroundPatternTransition`, `FillExtrusionLayer.fillExtrusionPatternTransition`, `FillLayer.fillPatternTransition`, `LineLayer.lineDasharrayTransition`, `LineLayer.linePatternTransition`, ...).  ([1941](https://github.com/mapbox/mapbox-maps-android/pull/1941))
 * Fix terrain tiles missing issue when running in the emulator and some android devices. ([1953](https://github.com/mapbox/mapbox-maps-android/pull/1953))
+* Fix wrong `onLongTouch` event detected on any map gesture after clicks on ViewAnnotation. ([1954](https://github.com/mapbox/mapbox-maps-android/pull/1954))
 
 ## Dependencies
 * Update gl-native to v10.11.0-rc.1 and common to v23.3.0-rc.1. ([1953](https://github.com/mapbox/mapbox-maps-android/pull/1953))
