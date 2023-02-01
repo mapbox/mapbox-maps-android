@@ -65,7 +65,7 @@ public fun MapboxMap(
 ) {
   // display placeholder when in preview mode.
   if (LocalInspectionMode.current) {
-    MapPreviewPlaceHolder(modifier)
+    MapPreviewPlaceHolder(modifier, mapInitOptions)
     return
   }
   val context = LocalContext.current.applicationContext

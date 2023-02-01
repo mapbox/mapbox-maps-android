@@ -1,4 +1,4 @@
-package com.mapbox.maps.compose.ui.theme
+package com.mapbox.maps.compose.testapp.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle

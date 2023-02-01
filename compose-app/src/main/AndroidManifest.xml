@@ -12,7 +12,7 @@
       android:supportsRtl="true"
       android:theme="@style/Theme.MapboxMapCompose">
     <activity
-        android:name="com.mapbox.maps.compose.MainActivity"
+        android:name=".testapp.MainActivity"
         android:exported="true"
         android:label="@string/app_name"
         android:configChanges="orientation|screenSize|screenLayout"

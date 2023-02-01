@@ -1,4 +1,4 @@
-package com.mapbox.maps.compose
+package com.mapbox.maps.compose.testapp
 
 import android.os.Bundle
 import android.widget.Toast
@@ -11,10 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import com.mapbox.geojson.Point
-import com.mapbox.maps.MapDebugOptions
-import com.mapbox.maps.MapInitOptions
-import com.mapbox.maps.MapboxExperimental
-import com.mapbox.maps.Style
+import com.mapbox.maps.*
 import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.extension.compose.MapEffect
 import com.mapbox.maps.extension.compose.MapboxMap
