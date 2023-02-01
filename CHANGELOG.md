@@ -3,6 +3,8 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
+## Dependencies
+* Update common to v23.3.0. ([1984](https://github.com/mapbox/mapbox-maps-android/pull/1984))
 
 
 # 10.11.0-rc.1 January 26, 2023
