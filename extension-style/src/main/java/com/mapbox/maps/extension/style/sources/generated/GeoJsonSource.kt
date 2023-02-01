@@ -33,7 +33,7 @@ import com.mapbox.maps.logW
  * @see [The online documentation](https://docs.mapbox.com/mapbox-gl-js/style-spec/sources/#geojson)
  *
  */
-class GeoJsonSource private constructor(builder: Builder): Source(builder.sourceId) { 
+class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourceId) {
   private var initGeoJson: GeoJson? = builder.geoJson
   private var initData: String? = builder.data
 

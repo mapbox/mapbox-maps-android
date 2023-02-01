@@ -17,7 +17,7 @@ import java.util.*
  * @see [The online documentation](https://docs.mapbox.com/mapbox-gl-js/style-spec/sources/#raster_dem)
  *
  */
-class RasterDemSource private constructor(builder: Builder): Source(builder.sourceId) { 
+class RasterDemSource private constructor(builder: Builder) : Source(builder.sourceId) {
 
   init {
     sourceProperties.putAll(builder.properties)

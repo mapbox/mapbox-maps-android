@@ -16,7 +16,7 @@ import java.util.*
  * @see [The online documentation](https://docs.mapbox.com/mapbox-gl-js/style-spec/sources/#image)
  *
  */
-class ImageSource private constructor(builder: Builder): Source(builder.sourceId) { 
+class ImageSource private constructor(builder: Builder) : Source(builder.sourceId) {
 
   init {
     sourceProperties.putAll(builder.properties)

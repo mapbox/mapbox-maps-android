@@ -18,7 +18,7 @@ import java.util.*
  * @see [The online documentation](https://docs.mapbox.com/mapbox-gl-js/style-spec/sources/#vector)
  *
  */
-class VectorSource private constructor(builder: Builder): Source(builder.sourceId) { 
+class VectorSource private constructor(builder: Builder) : Source(builder.sourceId) {
 
   init {
     sourceProperties.putAll(builder.properties)
