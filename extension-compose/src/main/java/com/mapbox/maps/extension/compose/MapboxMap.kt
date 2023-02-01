@@ -22,13 +22,36 @@ import kotlinx.coroutines.awaitCancellation
  */
 private class MapboxMapNode(
   val controller: MapView,
-  var clickListener: OnMapClickListener,
-  var longClickListener: OnMapLongClickListener
+  var clickListener: OnMapClickListener?,
+  var longClickListener: OnMapLongClickListener?
 ) : MapNode {
   override fun onAttached() {
     controller.gestures.apply {
-      addOnMapClickListener(clickListener)
-      addOnMapLongClickListener(longClickListener)
+      clickListener?.let {
+        addOnMapClickListener(it)
+      }
+      longClickListener?.let {
+        addOnMapLongClickListener(it)
+      }
+    }
+  }
+
+  override fun onRemoved() {
+    cleanUp()
+  }
+
+  override fun onClear() {
+    cleanUp()
+  }
+
+  private fun cleanUp() {
+    controller.gestures.apply {
+      clickListener?.let {
+        removeOnMapClickListener(it)
+      }
+      longClickListener?.let {
+        removeOnMapLongClickListener(it)
+      }
     }
   }
 }
@@ -49,15 +72,15 @@ public fun MapboxMap(
    * It can only be set once and not mutable after the initialisation. Mutating the [MapInitOptions]
    * during recomposition will result in a [IllegalStateException].
    */
-  mapInitOptions: MapInitOptions = MapInitOptions(LocalContext.current),
+  mapInitOptions: MapInitOptions = MapInitOptions(LocalContext.current.applicationContext),
   /**
    * Callback to be invoked when the user clicks on the map view.
    */
-  onMapClickListener: OnMapClickListener = OnMapClickListener { false },
+  onMapClickListener: OnMapClickListener? = null,
   /**
    * Callback to be invoked when the user long clicks on the map view.
    */
-  onMapLongClickListener: OnMapLongClickListener = OnMapLongClickListener { false },
+  onMapLongClickListener: OnMapLongClickListener? = null,
   /**
    * The content of the map.
    */
@@ -97,19 +120,29 @@ public fun MapboxMap(
           },
           update = {
             // input arguments updater
-            update(onMapClickListener) {
+            update(onMapClickListener) { listener ->
+              val previousListener = this.clickListener
               controller.gestures.apply {
-                removeOnMapClickListener(this@update.clickListener)
-                addOnMapClickListener(it)
+                previousListener?.let {
+                  removeOnMapClickListener(it)
+                }
+                listener?.let {
+                  addOnMapClickListener(it)
+                }
               }
-              this.clickListener = it
+              this.clickListener = listener
             }
-            update(onMapLongClickListener) {
+            update(onMapLongClickListener) { listener ->
+              val previousListener = this.longClickListener
               controller.gestures.apply {
-                removeOnMapLongClickListener(this@update.longClickListener)
-                addOnMapLongClickListener(it)
+                previousListener?.let {
+                  removeOnMapLongClickListener(it)
+                }
+                listener?.let {
+                  addOnMapLongClickListener(it)
+                }
               }
-              this.longClickListener = it
+              this.longClickListener = listener
             }
             update(mapInitOptions) {
               throw IllegalStateException(

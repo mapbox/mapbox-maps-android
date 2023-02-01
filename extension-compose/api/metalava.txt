@@ -12,13 +12,7 @@ package com.mapbox.maps.extension.compose {
   }
 
   public final class MapboxMapKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static void MapboxMap(androidx.compose.ui.Modifier modifier = Modifier, com.mapbox.maps.MapInitOptions mapInitOptions = com.mapbox.maps.MapInitOptions(LocalContext.current), com.mapbox.maps.plugin.gestures.OnMapClickListener onMapClickListener = OnMapClickListener({ var it: com.mapbox.geojson.Point ->
-
-    return false
-}), com.mapbox.maps.plugin.gestures.OnMapLongClickListener onMapLongClickListener = OnMapLongClickListener({ var it: com.mapbox.geojson.Point ->
-
-    return false
-}), kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.MapboxMapScope,kotlin.Unit>? content = null);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static void MapboxMap(androidx.compose.ui.Modifier modifier = Modifier, com.mapbox.maps.MapInitOptions mapInitOptions = com.mapbox.maps.MapInitOptions(LocalContext.current.applicationContext), com.mapbox.maps.plugin.gestures.OnMapClickListener? onMapClickListener = null, com.mapbox.maps.plugin.gestures.OnMapLongClickListener? onMapLongClickListener = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.MapboxMapScope,kotlin.Unit>? content = null);
   }
 
   @androidx.compose.foundation.layout.LayoutScopeMarker @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class MapboxMapScope {

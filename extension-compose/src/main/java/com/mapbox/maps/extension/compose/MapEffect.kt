@@ -9,10 +9,10 @@ import com.mapbox.maps.extension.compose.internal.MapApplier
 import kotlinx.coroutines.CoroutineScope
 
 /**
- * When MapEffect enters the composition it will launch block into the composition's CoroutineContext.
- * The coroutine will be cancelled and re-launched when MapEffect is recomposed with a different key1.
+ * When MapEffect enters the composition it will launch [block] into the composition's CoroutineContext.
+ * The coroutine will be cancelled and re-launched when [MapEffect] is recomposed with a different [key1].
  *
- * The coroutine will be cancelled when the MapEffect leaves the composition.
+ * The coroutine will be cancelled when the [MapEffect] leaves the composition.
  *
  * This function should not be used to (re-)launch ongoing tasks in response to callback events by
  * way of storing callback data in MutableState passed to key. Instead, see rememberCoroutineScope
@@ -30,11 +30,11 @@ public fun MapEffect(key1: Any?, block: suspend CoroutineScope.(MapView) -> Unit
 }
 
 /**
- * When MapEffect enters the composition it will launch block into the composition's CoroutineContext.
- * The coroutine will be cancelled and re-launched when MapEffect is recomposed with a different key1
- * or key2.
+ * When MapEffect enters the composition it will launch [block] into the composition's CoroutineContext.
+ * The coroutine will be cancelled and re-launched when [MapEffect] is recomposed with a different [key1]
+ * or [key2].
  *
- * The coroutine will be cancelled when the MapEffect leaves the composition.
+ * The coroutine will be cancelled when the [MapEffect] leaves the composition.
  *
  * This function should not be used to (re-)launch ongoing tasks in response to callback events by
  * way of storing callback data in MutableState passed to key. Instead, see rememberCoroutineScope
@@ -52,11 +52,11 @@ public fun MapEffect(key1: Any?, key2: Any?, block: suspend CoroutineScope.(MapV
 }
 
 /**
- * When MapEffect enters the composition it will launch block into the composition's CoroutineContext.
- * The coroutine will be cancelled and re-launched when MapEffect is recomposed with a different key1,
- * key2 or key3.
+ * When MapEffect enters the composition it will launch [block] into the composition's CoroutineContext.
+ * The coroutine will be cancelled and re-launched when [MapEffect] is recomposed with a different [key1],
+ * [key2] or [key3].
  *
- * The coroutine will be cancelled when the MapEffect leaves the composition.
+ * The coroutine will be cancelled when the [MapEffect] leaves the composition.
  *
  * This function should not be used to (re-)launch ongoing tasks in response to callback events by
  * way of storing callback data in MutableState passed to key. Instead, see rememberCoroutineScope
@@ -79,10 +79,10 @@ public fun MapEffect(
 }
 
 /**
- * When MapEffect enters the composition it will launch block into the composition's CoroutineContext.
- * The coroutine will be cancelled and re-launched when MapEffect is recomposed with any different keys.
+ * When MapEffect enters the composition it will launch [block] into the composition's CoroutineContext.
+ * The coroutine will be cancelled and re-launched when [MapEffect] is recomposed with any different [keys].
  *
- * The coroutine will be cancelled when the MapEffect leaves the composition.
+ * The coroutine will be cancelled when the [MapEffect] leaves the composition.
  *
  * This function should not be used to (re-)launch ongoing tasks in response to callback events by
  * way of storing callback data in MutableState passed to key. Instead, see rememberCoroutineScope
