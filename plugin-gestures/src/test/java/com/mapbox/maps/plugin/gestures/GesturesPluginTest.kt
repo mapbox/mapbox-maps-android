@@ -1229,7 +1229,7 @@ class GesturesPluginTest {
 @RunWith(ParameterizedRobolectricTestRunner::class)
 @LooperMode(LooperMode.Mode.PAUSED)
 class IsPointAboveHorizonTest(
-  private val testProjectionStylePropertyValue: StylePropertyValue?,
+  private val testProjectionStylePropertyValue: StylePropertyValue,
   private val testScreenCoordinate: ScreenCoordinate,
   private val testMapSize: Size,
   private val testPixelForCoordinate: ScreenCoordinate,
@@ -1244,7 +1244,7 @@ class IsPointAboveHorizonTest(
   private val mapPluginProviderDelegate: MapPluginProviderDelegate = mockk(relaxUnitFun = true)
   private val mapProjectionDelegate: MapProjectionDelegate = mockk(relaxUnitFun = true)
   private val cameraAnimationsPlugin: CameraAnimationsPlugin = mockk(relaxed = true)
-  private val style: StyleInterface? = mockk()
+  private val style: StyleInterface = mockk()
 
   private lateinit var presenter: GesturesPluginImpl
 
@@ -1272,24 +1272,25 @@ class IsPointAboveHorizonTest(
     every { typedArray.getInt(any(), any()) } returns 2
     every { typedArray.hasValue(any()) } returns true
 
+    presenter = GesturesPluginImpl(context, attrs, style)
+    presenter.bind(
+      context,
+      gesturesManager,
+      GestureState(gesturesManager),
+      attrs,
+      1f
+    )
+
     every { mapDelegateProvider.mapCameraManagerDelegate } returns mapCameraManagerDelegate
     every { mapDelegateProvider.mapTransformDelegate } returns mapTransformDelegate
     every { mapDelegateProvider.mapProjectionDelegate } returns mapProjectionDelegate
     every { mapDelegateProvider.mapPluginProviderDelegate } returns mapPluginProviderDelegate
     every { mapPluginProviderDelegate.getPlugin<CameraAnimationsPlugin>(Plugin.MAPBOX_CAMERA_PLUGIN_ID) } returns cameraAnimationsPlugin
-    every { style?.getStyleProjectionProperty("name") } returns testProjectionStylePropertyValue
+    every { style.getStyleProjectionProperty("name") } returns testProjectionStylePropertyValue
     every { mapTransformDelegate.getSize() } returns testMapSize
     every { mapCameraManagerDelegate.coordinateForPixel(any()) } returns Point.fromLngLat(0.0, 0.0)
     every { mapCameraManagerDelegate.pixelForCoordinate(any()) } returns testPixelForCoordinate
 
-    presenter = GesturesPluginImpl(context, attrs, style!!)
-    presenter.bind(
-      context,
-      gesturesManager,
-      GestureState(presenter.getGesturesManager()),
-      attrs,
-      1f
-    )
     presenter.onDelegateProvider(mapDelegateProvider)
     presenter.initialize()
   }
@@ -1398,13 +1399,6 @@ class IsPointAboveHorizonTest(
         Size(100f, 100f),
         ScreenCoordinate(0.0, 0.0),
         true
-      ),
-      arrayOf(
-        null,
-        ScreenCoordinate(0.0, 0.0),
-        Size(100f, 100f),
-        ScreenCoordinate(0.0, 0.0),
-        false
       ),
       arrayOf(
         StylePropertyValue(
