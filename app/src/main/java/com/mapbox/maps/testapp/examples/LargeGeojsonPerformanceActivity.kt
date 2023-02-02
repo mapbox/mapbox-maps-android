@@ -5,9 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
-import com.mapbox.maps.CameraOptions
-import com.mapbox.maps.MapView
-import com.mapbox.maps.Style
+import com.mapbox.maps.*
 import com.mapbox.maps.extension.style.image.image
 import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.generated.lineLayer
@@ -27,21 +25,29 @@ import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
  */
 class LargeGeojsonPerformanceActivity : AppCompatActivity() {
 
-  private lateinit var routePoints: Feature
+  private val routePoints by lazy {
+    Feature.fromJson(
+      AnnotationUtils.loadStringFromAssets(
+        this@LargeGeojsonPerformanceActivity, LARGE_GEOJSON_ASSET_NAME
+      )!!
+    )
+  }
+  private var jsonUpdateCounter = 0
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     val mapView = MapView(this)
     setContentView(mapView)
 
-    routePoints = Feature.fromJson(
-      AnnotationUtils.loadStringFromAssets(
-        this@LargeGeojsonPerformanceActivity, LARGE_GEOJSON_ASSET_NAME
-      )!!
-    )
-
     mapView.getMapboxMap()
       .apply {
+        addOnSourceDataLoadedListener {
+          if (it.dataId.isNullOrBlank().not()) {
+            // log whenever update with corresponding data-id is rendered on the map
+            logI(TAG, "GeoJsonSource was updated, data-id : ${it.dataId}")
+          }
+        }
+
         setCamera(
           CameraOptions.Builder()
             .center(Point.fromLngLat(LONGITUDE, LATITUDE))
@@ -62,7 +68,8 @@ class LargeGeojsonPerformanceActivity : AppCompatActivity() {
           style(Style.MAPBOX_STREETS) {
             for (i in 0 until LARGE_SOURCE_COUNT) {
               +geoJsonSource("${SOURCE}_$i") {
-                feature(routePoints)
+                logI(TAG, "Update routePoints ${SOURCE}_$i, data-id : $jsonUpdateCounter")
+                feature(routePoints, jsonUpdateCounter++.toString())
               }
               +lineLayer("${LAYER}_$i", "${SOURCE}_$i") {
                 lineColor("blue")
@@ -74,7 +81,8 @@ class LargeGeojsonPerformanceActivity : AppCompatActivity() {
               bitmap(BitmapFactory.decodeResource(resources, R.drawable.blue_marker_view))
             }
             +geoJsonSource("${SOURCE}_marker") {
-              geometry(Point.fromLngLat(LONGITUDE, LATITUDE))
+              logI(TAG, "Update marker ${SOURCE}_marker, data-id : $jsonUpdateCounter")
+              geometry(Point.fromLngLat(LONGITUDE, LATITUDE), jsonUpdateCounter++.toString())
             }
             +symbolLayer("${LAYER}_marker", "${SOURCE}_marker") {
               iconImage("icon")
@@ -91,7 +99,8 @@ class LargeGeojsonPerformanceActivity : AppCompatActivity() {
   private fun loadAdditionalGeoJsonAfter(style: Style) {
     style.addSource(
       geoJsonSource("${SOURCE}_$LARGE_SOURCE_COUNT") {
-        feature(routePoints)
+        logI(TAG, "Update routePoints ${SOURCE}_$LARGE_SOURCE_COUNT, data-id : $jsonUpdateCounter")
+        feature(routePoints, jsonUpdateCounter++.toString())
       }
     )
     style.addLayer(
@@ -112,5 +121,6 @@ class LargeGeojsonPerformanceActivity : AppCompatActivity() {
     private const val LONGITUDE = 17.0385
     private const val START_ZOOM = 6.0
     private const val END_ZOOM = 2.0
+    private const val TAG = "LargeGeojsonUpdate"
   }
 }
