@@ -1771,20 +1771,18 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
    */
   override fun bind(context: Context, attrs: AttributeSet?, pixelRatio: Float) {
     val gesturesManager = AndroidGesturesManager(context)
-    val gestureState = GestureState(gesturesManager)
-    bind(context, gesturesManager, gestureState, attrs, pixelRatio)
+    bind(context, gesturesManager, attrs, pixelRatio)
   }
 
   // For internal testing.
   internal fun bind(
     context: Context,
     gesturesManager: AndroidGesturesManager,
-    gestureState: GestureState,
     attrs: AttributeSet?,
     pixelRatio: Float
   ) {
     this.gesturesManager = gesturesManager
-    this.gestureState = gestureState
+    this.gestureState = GestureState(gesturesManager)
     this.pixelRatio = pixelRatio
     internalSettings = GesturesAttributeParser.parseGesturesSettings(context, attrs, pixelRatio)
   }

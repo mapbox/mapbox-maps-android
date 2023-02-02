@@ -67,7 +67,6 @@ class GesturesPluginTest {
   private val gestureListener = slot<StandardGestureDetector.StandardOnGestureListener>()
 
   private lateinit var presenter: GesturesPluginImpl
-  private lateinit var gestureState: GestureState
 
   @MapboxExperimental
   @Before
@@ -114,9 +113,8 @@ class GesturesPluginTest {
     every { motionEvent2.y } returns 0.0f
 
     presenter = GesturesPluginImpl(context, attrs, style)
-    gestureState = GestureState(gesturesManager)
 
-    presenter.bind(context, gesturesManager, gestureState, attrs, 1f)
+    presenter.bind(context, gesturesManager, attrs, 1f)
     presenter.onDelegateProvider(mapDelegateProvider)
     every {
       gesturesManager.setStandardGestureListener(capture(gestureListener))
@@ -888,7 +886,6 @@ class GesturesPluginTest {
     val result = presenter.handleShoveBegin(gestureDetector)
     assert(result)
     verify(exactly = 1) { shoveListener.onShoveBegin(any()) }
-    assertEquals(true, gestureState.peek(GestureState.Type.Shove))
     presenter.removeOnShoveListener(shoveListener)
     presenter.removeOnMoveListener(moveListener)
     presenter.handleShoveBegin(gestureDetector)
@@ -923,7 +920,6 @@ class GesturesPluginTest {
     val gestureDetector = mockk<ShoveGestureDetector>(relaxUnitFun = true)
     presenter.handleShoveEnd(gestureDetector)
     verify(exactly = 1) { listener.onShoveEnd(any()) }
-    assertNull(gestureState.peek(GestureState.Type.Shove))
   }
 
   @Test
@@ -1276,7 +1272,6 @@ class IsPointAboveHorizonTest(
     presenter.bind(
       context,
       gesturesManager,
-      GestureState(gesturesManager),
       attrs,
       1f
     )
@@ -1533,7 +1528,7 @@ class FlingGestureTest(
 
     presenter = GesturesPluginImpl(context, attrs, style)
 
-    presenter.bind(context, gesturesManager, GestureState(gesturesManager), attrs, 1f)
+    presenter.bind(context, gesturesManager, attrs, 1f)
     presenter.onDelegateProvider(mapDelegateProvider)
     presenter.initialize()
 

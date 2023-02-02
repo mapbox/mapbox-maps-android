@@ -72,7 +72,7 @@ class GestureOptionsTest {
   }
 
   private fun setupGesturePlugin() {
-    gesturePlugin.bind(context, gestureManager, GestureState(gestureManager), attrs, 1f)
+    gesturePlugin.bind(context, gestureManager, attrs, 1f)
     gesturePlugin.initialize()
   }
 
