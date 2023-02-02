@@ -47,6 +47,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
   private var pixelRatio: Float = 1f
 
   private lateinit var gesturesManager: AndroidGesturesManager
+  private lateinit var gestureState: GestureState
   private var style: StyleInterface? = null
 
   private lateinit var mapTransformDelegate: MapTransformDelegate
@@ -68,6 +69,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
 
   // FocalPoint
   private var doubleTapFocalPoint = ScreenCoordinate(0.0, 0.0)
+
   @VisibleForTesting(otherwise = PRIVATE)
   internal var centerScreen = doubleTapFocalPoint
 
@@ -489,7 +491,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
   private fun doubleTapFinished() {
     if (doubleTapRegistered) {
       // re-enable the move detector in case of double tap
-      gesturesManager.moveGestureDetector.isEnabled = true
+      gestureState.restore(GestureState.Type.DoubleTap)
       doubleTapRegistered = false
     }
   }
@@ -586,13 +588,10 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
     velocityX: Float,
     velocityY: Float
   ) {
-    if (quickZoom) {
-      // re-enabled the move detector if the quickzoom happened
-      gesturesManager.moveGestureDetector.isEnabled = true
-    } else {
-      // re-enable rotation in case it's been disabled
-      gesturesManager.rotateGestureDetector.isEnabled = true
-    }
+    if (quickZoom)
+      gestureState.restore(GestureState.Type.ScaleQuickZoom)
+    else
+      gestureState.restore(GestureState.Type.Scale)
 
     notifyOnScaleEndListeners(detector)
 
@@ -710,7 +709,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
         return false
       }
       // re-try disabling the move detector in case double tap has been interrupted before quickzoom started
-      gesturesManager.moveGestureDetector.isEnabled = false
+      gestureState.saveAndDisable(GestureState.Type.ScaleQuickZoom)
     } else {
       if (!internalSettings.pinchToZoomEnabled) {
         return false
@@ -735,7 +734,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
           }
 
           // disable rotate gesture when scale is detected first
-          gesturesManager.rotateGestureDetector.isEnabled = false
+          gestureState.saveAndDisable(GestureState.Type.Scale)
         }
       } else {
         return false
@@ -1042,7 +1041,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
     cancelTransitionsIfRequired()
 
     // disabling move gesture during shove
-    gesturesManager.moveGestureDetector.isEnabled = false
+    gestureState.saveAndDisable(GestureState.Type.Shove)
 
     notifyOnShoveBeginListeners(detector)
 
@@ -1075,7 +1074,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
     detector: ShoveGestureDetector
   ) {
     // re-enabling move gesture
-    gesturesManager.moveGestureDetector.isEnabled = true
+    gestureState.restore(GestureState.Type.Shove)
 
     notifyOnShoveEndListeners(detector)
   }
@@ -1262,7 +1261,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
       doubleTapFocalPoint = motionEvent.toScreenCoordinate()
       // disable the move detector in preparation for the quickzoom,
       // so that we don't move the map's center slightly before the quickzoom is started (see #14227)
-      gesturesManager.moveGestureDetector.isEnabled = false
+      gestureState.saveAndDisable(GestureState.Type.DoubleTap)
       doubleTapRegistered = true
     }
 
@@ -1728,7 +1727,10 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
     attachDefaultListeners: Boolean,
     setDefaultMutuallyExclusives: Boolean
   ) {
-    initializeGesturesManager(internalGesturesManager, setDefaultMutuallyExclusives)
+    initializeGesturesManager(
+      internalGesturesManager,
+      setDefaultMutuallyExclusives
+    )
     initializeGestureListeners(context, attachDefaultListeners)
   }
 
@@ -1768,17 +1770,21 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
    * @param pixelRatio The pixel density of the screen.
    */
   override fun bind(context: Context, attrs: AttributeSet?, pixelRatio: Float) {
-    bind(context, AndroidGesturesManager(context), attrs, pixelRatio)
+    val gesturesManager = AndroidGesturesManager(context)
+    val gestureState = GestureState(gesturesManager)
+    bind(context, gesturesManager, gestureState, attrs, pixelRatio)
   }
 
   // For internal testing.
   internal fun bind(
     context: Context,
     gesturesManager: AndroidGesturesManager,
+    gestureState: GestureState,
     attrs: AttributeSet?,
     pixelRatio: Float
   ) {
     this.gesturesManager = gesturesManager
+    this.gestureState = gestureState
     this.pixelRatio = pixelRatio
     internalSettings = GesturesAttributeParser.parseGesturesSettings(context, attrs, pixelRatio)
   }
