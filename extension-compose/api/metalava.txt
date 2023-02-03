@@ -26,5 +26,8 @@ package com.mapbox.maps.extension.compose.internal {
   public final class MapPreviewPlaceholderKt {
   }
 
+  public final class MapboxMapNodeKt {
+  }
+
 }
 
