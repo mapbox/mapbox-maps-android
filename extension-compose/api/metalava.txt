@@ -1,11 +1,32 @@
 // Signature format: 3.0
 package com.mapbox.maps.extension.compose {
 
-  public final class MapPreviewPlaceholderKt {
+  public final class MapEffectKt {
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void MapEffect(Object? key1, kotlin.jvm.functions.Function3<? super kotlinx.coroutines.CoroutineScope,? super com.mapbox.maps.MapView,? super kotlin.coroutines.Continuation<? super kotlin.Unit>,?> block);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void MapEffect(Object? key1, Object? key2, kotlin.jvm.functions.Function3<? super kotlinx.coroutines.CoroutineScope,? super com.mapbox.maps.MapView,? super kotlin.coroutines.Continuation<? super kotlin.Unit>,?> block);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void MapEffect(Object? key1, Object? key2, Object? key3, kotlin.jvm.functions.Function3<? super kotlinx.coroutines.CoroutineScope,? super com.mapbox.maps.MapView,? super kotlin.coroutines.Continuation<? super kotlin.Unit>,?> block);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void MapEffect(Object![]? keys, kotlin.jvm.functions.Function3<? super kotlinx.coroutines.CoroutineScope,? super com.mapbox.maps.MapView,? super kotlin.coroutines.Continuation<? super kotlin.Unit>,?> block);
+  }
+
+  @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention) @kotlin.annotation.Target(allowedTargets={kotlin.annotation.AnnotationTarget, kotlin.annotation.AnnotationTarget, kotlin.annotation.AnnotationTarget, kotlin.annotation.AnnotationTarget, kotlin.annotation.AnnotationTarget}) public @interface MapboxMapComposable {
   }
 
   public final class MapboxMapKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static void MapboxMap(androidx.compose.ui.Modifier modifier = Modifier, com.mapbox.maps.MapInitOptions mapInitOptions = com.mapbox.maps.MapInitOptions(LocalContext.current.applicationContext), kotlin.jvm.functions.Function0<kotlin.Unit> content);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static void MapboxMap(androidx.compose.ui.Modifier modifier = Modifier, com.mapbox.maps.MapInitOptions mapInitOptions = com.mapbox.maps.MapInitOptions(LocalContext.current.applicationContext), com.mapbox.maps.plugin.gestures.OnMapClickListener? onMapClickListener = null, com.mapbox.maps.plugin.gestures.OnMapLongClickListener? onMapLongClickListener = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.MapboxMapScope,kotlin.Unit>? content = null);
+  }
+
+  @androidx.compose.foundation.layout.LayoutScopeMarker @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class MapboxMapScope {
+    field public static final com.mapbox.maps.extension.compose.MapboxMapScope INSTANCE;
+  }
+
+}
+
+package com.mapbox.maps.extension.compose.internal {
+
+  public final class MapPreviewPlaceholderKt {
+  }
+
+  public final class MapboxMapNodeKt {
   }
 
 }
