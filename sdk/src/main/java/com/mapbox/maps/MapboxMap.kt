@@ -1820,6 +1820,15 @@ class MapboxMap :
   }
 
   /**
+   * Returns tileIDs that cover specific transform
+   *
+   * @param tileCoverOptions Options for the tile cover method
+   */
+  fun getTileCover(tileCoverOptions: TileCoverOptions): MutableList<CanonicalTileID> {
+    return nativeMap.tileCover(tileCoverOptions)
+  }
+
+  /**
    * A convenience object to access MapboxMap's static utilities.
    */
   companion object {

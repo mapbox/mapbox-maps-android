@@ -166,6 +166,10 @@ internal class NativeMapImpl(val map: MapInterface) :
     return map.getViewAnnotationOptions(identifier)
   }
 
+  override fun tileCover(tileCoverOptions: TileCoverOptions): MutableList<CanonicalTileID> {
+    return map.tileCover(tileCoverOptions)
+  }
+
   override fun coordinateBoundsForCamera(cameraOptions: CameraOptions): CoordinateBounds {
     return map.coordinateBoundsForCamera(cameraOptions)
   }
@@ -532,6 +536,14 @@ internal class NativeMapImpl(val map: MapInterface) :
 
   override fun setStyleGeoJSONSourceData(sourceId: String, data: GeoJSONSourceData): Expected<String, None> {
     return map.setStyleGeoJSONSourceData(sourceId, data)
+  }
+
+  override fun setStyleGeoJSONSourceData(
+    sourceId: String,
+    dataId: String,
+    data: GeoJSONSourceData
+  ): Expected<String, None> {
+    TODO("Not yet implemented")
   }
 
   override fun removeFeatureState(
