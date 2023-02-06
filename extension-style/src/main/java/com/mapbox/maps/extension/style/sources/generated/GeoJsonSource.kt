@@ -63,18 +63,16 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
           /* data = */ toGeoJsonData(geoJson)
         ) ?: logW(
           TAG,
-          "GeoJsonSource (id=$sourceId) was not able to set data" +
-            " with `feature()`, `featureCollection()` or `geometry()`" +
-            " as there is no Style object."
+          "GeoJsonSource (sourceId=$sourceId) was not able to set data" +
+            " with `feature()`, `featureCollection()` or `geometry()` as there is no Style object."
         )
       } else {
         delegate?.setStyleGeoJSONSourceData(
           /* sourceId = */ sourceId,
           /* data = */ toGeoJsonData(geoJson)) ?: logW(
           TAG,
-          "GeoJsonSource (id=$sourceId) was not able to set data" +
-            " with `feature()`, `featureCollection()` or `geometry()`" +
-            " as there is no Style object."
+          "GeoJsonSource (sourceId=$sourceId) was not able to set data (dataId=$dataId)" +
+            " with `feature()`, `featureCollection()` or `geometry()` as there is no Style object."
         )
       }
     }
@@ -90,8 +88,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
           /* data = */ GeoJSONSourceData.valueOf(data)
         ) ?: logW(
           TAG,
-          "GeoJsonSource (id=$sourceId) was not able to set data with `data()` or `url()`" +
-            " as there is no Style object."
+          "GeoJsonSource (id=$sourceId) was not able to set data with `data()` or `url()` as there is no Style object."
         )
       } else {
         delegate?.setStyleGeoJSONSourceData(
@@ -99,7 +96,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
           /* data = */ GeoJSONSourceData.valueOf(data)
         ) ?: logW(
           TAG,
-          "GeoJsonSource (id=$sourceId) was not able to set data with `data()` or `url()`" +
+          "GeoJsonSource (sourceId=$sourceId) was not able to set data (dataId=$dataId) `data()` or `url()`" +
             " as there is no Style object."
         )
       }
@@ -425,7 +422,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
       )
     } catch (e: ConcurrentModificationException) {
       throw MapboxConcurrentGeometryModificationException(
-        """While applying ${javaClass.simpleName} to geojson source with id="$sourceId" some collection was mutated which is not allowed as data parsing happens on another thread.
+        """While applying ${javaClass.simpleName} to geojson source with sourceId="$sourceId" some collection was mutated which is not allowed as data parsing happens on another thread.
         Please make sure all collections passed via `geometry`, `feature`, `featureCollection` methods are immutable.
         Easiest way to achieve this is either always pass the fresh copy or use https://developer.android.com/reference/java/util/concurrent/CopyOnWriteArrayList.
         """.trimIndent(),
