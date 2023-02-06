@@ -490,7 +490,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
 
   private fun doubleTapFinished() {
     if (doubleTapRegistered) {
-      // re-enable the move detector in case of double tap
       gestureState.restore(GestureState.Type.DoubleTap)
       doubleTapRegistered = false
     }
@@ -588,10 +587,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
     velocityX: Float,
     velocityY: Float
   ) {
-    if (quickZoom)
-      gestureState.restore(GestureState.Type.ScaleQuickZoom)
-    else
-      gestureState.restore(GestureState.Type.Scale)
+    gestureState.restore(if (quickZoom) GestureState.Type.ScaleQuickZoom else GestureState.Type.Scale)
 
     notifyOnScaleEndListeners(detector)
 
@@ -732,8 +728,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
             // do not scale in case we're preferring to start rotation
             return false
           }
-
-          // disable rotate gesture when scale is detected first
           gestureState.saveAndDisable(GestureState.Type.Scale)
         }
       } else {
@@ -1040,7 +1034,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
 
     cancelTransitionsIfRequired()
 
-    // disabling move gesture during shove
     gestureState.saveAndDisable(GestureState.Type.Shove)
 
     notifyOnShoveBeginListeners(detector)
@@ -1073,9 +1066,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
   internal fun handleShoveEnd(
     detector: ShoveGestureDetector
   ) {
-    // re-enabling move gesture
     gestureState.restore(GestureState.Type.Shove)
-
     notifyOnShoveEndListeners(detector)
   }
 

@@ -10,47 +10,29 @@ internal class GestureState(private val gesturesManager: AndroidGesturesManager)
     Shove,
   }
 
-  private val rememberedGestureSettings = mutableMapOf<Type, Boolean>()
+  private val savedGestureEnabledMap = mutableMapOf<Type, Boolean>()
 
-  fun saveAndDisable(gesture: Type): Boolean {
-    return when (gesture) {
-      Type.DoubleTap -> {
-        gesturesManager.moveGestureDetector.isEnabled.also {
-          gesturesManager.moveGestureDetector.isEnabled = false
-        }
-      }
-      Type.Scale -> {
-        gesturesManager.rotateGestureDetector.isEnabled.also {
-          gesturesManager.rotateGestureDetector.isEnabled = false
-        }
-      }
-      Type.ScaleQuickZoom -> {
-        gesturesManager.moveGestureDetector.isEnabled.also {
-          gesturesManager.moveGestureDetector.isEnabled = false
-        }
-      }
-      Type.Shove -> {
-        gesturesManager.moveGestureDetector.isEnabled.also {
-          gesturesManager.moveGestureDetector.isEnabled = false
-        }
-      }
-    }.also {
-      rememberedGestureSettings[gesture] = it
+  fun saveAndDisable(gesture: Type): Boolean =
+    when (gesture) {
+      Type.Scale -> gesturesManager.rotateGestureDetector
+      else -> gesturesManager.moveGestureDetector
+    }.let { detector ->
+      val state = detector.isEnabled
+      savedGestureEnabledMap[gesture] = state
+      detector.isEnabled = false
+      state
     }
-  }
 
   fun restore(gesture: Type) {
-    rememberedGestureSettings.remove(gesture)?.let {
+    savedGestureEnabledMap.remove(gesture)?.let { state ->
       when (gesture) {
-        Type.DoubleTap -> gesturesManager.moveGestureDetector.isEnabled = it
-        Type.Scale -> gesturesManager.rotateGestureDetector.isEnabled = it
-        Type.ScaleQuickZoom -> gesturesManager.moveGestureDetector.isEnabled = it
-        Type.Shove -> gesturesManager.moveGestureDetector.isEnabled = it
-      }
+        Type.Scale -> gesturesManager.rotateGestureDetector
+        else -> gesturesManager.moveGestureDetector
+      }.isEnabled = state
     }
   }
 
   fun peek(gesture: Type): Boolean? {
-    return rememberedGestureSettings[gesture]
+    return savedGestureEnabledMap[gesture]
   }
 }
