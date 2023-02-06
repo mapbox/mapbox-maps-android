@@ -34,13 +34,14 @@ import com.mapbox.maps.logW
  *
  */
 class GeoJsonSource : Source {
-  @Deprecated("Use builder instead", level = DeprecationLevel.WARNING)
+  @Deprecated("Use builder instead", level = DeprecationLevel.ERROR)
   constructor(builder: Builder) : super(builder.sourceId) {
-      sourceProperties.putAll(builder.properties)
-      volatileSourceProperties.putAll(builder.volatileProperties)
+    sourceProperties.putAll(builder.properties)
+    volatileSourceProperties.putAll(builder.volatileProperties)
     initGeoJson = builder.geoJson
     initData = builder.data
   }
+
   private var initGeoJson: GeoJson?
   private var initData: String?
 
@@ -638,7 +639,7 @@ class GeoJsonSource : Source {
      *
      * @return the GeoJsonSource
      */
-    @SuppressWarnings("deprecation")
+    @Suppress("DEPRECATION_ERROR")
     fun build(): GeoJsonSource {
       // set default data to allow empty data source.
       val propertyValue = PropertyValue("data", TypeUtils.wrapToValue(""))

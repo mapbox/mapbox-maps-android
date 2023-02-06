@@ -16,13 +16,7 @@ import java.util.*
  * @see [The online documentation](https://docs.mapbox.com/mapbox-gl-js/style-spec/sources/#image)
  *
  */
-class ImageSource : Source {
-  @Deprecated("Use builder instead", level = DeprecationLevel.WARNING)
-  constructor(builder: Builder) : super(builder.sourceId) {
-      sourceProperties.putAll(builder.properties)
-      volatileSourceProperties.putAll(builder.volatileProperties)
-  }
-
+class ImageSource(builder: Builder) : Source(builder.sourceId) {
   /**
    * Get the type of the current source as a String.
    */
@@ -103,7 +97,7 @@ class ImageSource : Source {
   class Builder(val sourceId: String) {
     internal val properties = HashMap<String, PropertyValue<*>>()
     // Properties that only settable after the source is added to the style.
-    internal val volatileProperties = HashMap<String, PropertyValue<*>>()
+    private val volatileProperties = HashMap<String, PropertyValue<*>>()
 
     /**
      * URL that points to an image.
