@@ -69,7 +69,8 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
       } else {
         delegate?.setStyleGeoJSONSourceData(
           /* sourceId = */ sourceId,
-          /* data = */ toGeoJsonData(geoJson)) ?: logW(
+          /* data = */ toGeoJsonData(geoJson)
+        ) ?: logW(
           TAG,
           "GeoJsonSource (sourceId=$sourceId) was not able to set data (dataId=$dataId)" +
             " with `feature()`, `featureCollection()` or `geometry()` as there is no Style object."

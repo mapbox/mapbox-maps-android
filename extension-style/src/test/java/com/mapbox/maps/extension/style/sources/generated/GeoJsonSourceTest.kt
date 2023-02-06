@@ -653,7 +653,8 @@ class GeoJsonSourceTest {
   companion object {
     private val TEST_GEOJSON = FeatureCollection.fromFeatures(listOf()).toJson()
     private val DATA_ID = "data-id"
-    private val FEATURE = Feature.fromJson("""
+    private val FEATURE = Feature.fromJson(
+      """
         {
           "type": "Feature",
           "geometry": {
