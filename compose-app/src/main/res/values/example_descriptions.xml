@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="description_simple_map">Create and display a map that uses the default Mapbox streets style. This example also shows how to update the starting camera for a map.</string>
+    <string name="description_debug_mode">Use variations of debug modes of the Map</string>
+</resources>

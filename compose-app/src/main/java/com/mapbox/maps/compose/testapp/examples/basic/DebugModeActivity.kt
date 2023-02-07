@@ -1,60 +1,73 @@
-package com.mapbox.maps.compose.testapp
+package com.mapbox.maps.compose.testapp.examples.basic
 
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import com.mapbox.geojson.Point
 import com.mapbox.maps.*
+import com.mapbox.maps.compose.testapp.ExampleScaffold
+import com.mapbox.maps.compose.testapp.examples.utils.CityLocations
+import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
 import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.extension.compose.MapEffect
 import com.mapbox.maps.extension.compose.MapboxMap
 
 /**
- * Example to showcase usage of MapboxMap.
+ * Example to showcase usage of MapEffect to enable debug mode.
  */
 @OptIn(MapboxExperimental::class)
-public class MainActivity : ComponentActivity() {
+public class DebugModeActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContent {
-      Home()
+      MapboxMapComposeTheme {
+        MapScreen()
+      }
     }
   }
 
   @Preview(showBackground = true)
   @Composable
-  private fun Home() {
-    Box(Modifier.fillMaxSize()) {
+  private fun MapScreen() {
+    ExampleScaffold {
       MapboxMap(
-        Modifier.matchParentSize(),
+        Modifier.fillMaxSize(),
         mapInitOptions = MapInitOptions(
           context = LocalContext.current,
           styleUri = Style.MAPBOX_STREETS,
           cameraOptions = cameraOptions {
-            center(POINT)
+            center(CityLocations.BERLIN)
             zoom(ZOOM)
           }
         ),
         onMapClickListener = {
-          Toast.makeText(this@MainActivity, "Clicked on $it", Toast.LENGTH_SHORT).show()
+          Toast.makeText(this@DebugModeActivity, "Clicked on $it", Toast.LENGTH_SHORT).show()
           false
         },
         onMapLongClickListener = {
-          Toast.makeText(this@MainActivity, "Long-clicked on $it", Toast.LENGTH_SHORT).show()
+          Toast.makeText(this@DebugModeActivity, "Long-clicked on $it", Toast.LENGTH_SHORT).show()
           false
         }
       ) {
-        // Enable tile borders debug mode using MapEffect
+        // Enable debug mode using MapEffect
         MapEffect(Unit) { map ->
           map.getMapboxMap().setDebug(
-            listOf(MapDebugOptions.TILE_BORDERS, MapDebugOptions.TIMESTAMPS),
+            listOf(
+              MapDebugOptions.TILE_BORDERS,
+              MapDebugOptions.PARSE_STATUS,
+              MapDebugOptions.TIMESTAMPS,
+              MapDebugOptions.COLLISION,
+              MapDebugOptions.STENCIL_CLIP,
+              MapDebugOptions.DEPTH_BUFFER,
+              MapDebugOptions.RENDER_CACHE,
+              MapDebugOptions.MODEL_BOUNDS,
+              MapDebugOptions.TERRAIN_WIREFRAME,
+            ),
             true
           )
         }
@@ -63,9 +76,6 @@ public class MainActivity : ComponentActivity() {
   }
 
   private companion object {
-    const val LATITUDE = 60.239
-    const val LONGITUDE = 25.004
-    const val ZOOM: Double = 12.0
-    val POINT: Point = Point.fromLngLat(LONGITUDE, LATITUDE)
+    const val ZOOM: Double = 9.0
   }
 }
