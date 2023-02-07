@@ -7,7 +7,6 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import com.mapbox.maps.*
 import com.mapbox.maps.compose.testapp.ExampleScaffold
@@ -37,14 +36,16 @@ public class DebugModeActivity : ComponentActivity() {
     ExampleScaffold {
       MapboxMap(
         Modifier.fillMaxSize(),
-        mapInitOptions = MapInitOptions(
-          context = LocalContext.current,
-          styleUri = Style.MAPBOX_STREETS,
-          cameraOptions = cameraOptions {
-            center(CityLocations.BERLIN)
-            zoom(ZOOM)
-          }
-        ),
+        mapInitOptionsFactory = { context ->
+          MapInitOptions(
+            context = context,
+            styleUri = Style.MAPBOX_STREETS,
+            cameraOptions = cameraOptions {
+              center(CityLocations.BERLIN)
+              zoom(ZOOM)
+            }
+          )
+        },
         onMapClickListener = {
           Toast.makeText(this@DebugModeActivity, "Clicked on $it", Toast.LENGTH_SHORT).show()
           false

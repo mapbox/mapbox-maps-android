@@ -1,5 +1,6 @@
 package com.mapbox.maps.extension.compose.internal
 
+import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ComposeNode
 import androidx.compose.runtime.currentComposer
@@ -64,7 +65,7 @@ private class MapboxMapNode(
 @JvmSynthetic
 @Composable
 internal fun MapboxMapComposeNode(
-  mapInitOptions: MapInitOptions,
+  mapInitOptionsFactory: (Context) -> MapInitOptions,
   attributionSettings: AttributionSettings,
   compassSettings: CompassSettings,
   gesturesSettings: GesturesSettings,
@@ -86,7 +87,7 @@ internal fun MapboxMapComposeNode(
     },
     update = {
       // input arguments updater
-      update(mapInitOptions) {
+      update(mapInitOptionsFactory) {
         throw IllegalStateException(
           """
           Mutating MapInitOptions during composition is not allowed.

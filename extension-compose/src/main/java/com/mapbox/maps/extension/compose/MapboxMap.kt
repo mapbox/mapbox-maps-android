@@ -1,5 +1,6 @@
 package com.mapbox.maps.extension.compose
 
+import android.content.Context
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -34,12 +35,12 @@ public fun MapboxMap(
    */
   modifier: Modifier = Modifier,
   /**
-   * Defines the initialisation configurations for a [MapboxMap].
+   * Defines the initialisation configurations factory for a [MapboxMap].
    *
    * It can only be set once and not mutable after the initialisation. Mutating the [MapInitOptions]
    * during recomposition will result in a [IllegalStateException].
    */
-  mapInitOptions: MapInitOptions = MapInitOptions(LocalContext.current.applicationContext),
+  mapInitOptionsFactory: (Context) -> MapInitOptions = { context -> MapInitOptions(context) },
   /**
    * Settings for showing the attribution icon on the map.
    */
@@ -55,10 +56,9 @@ public fun MapboxMap(
   /**
    * Settings for showing a location puck on the map.
    */
-  locationComponentSettings: LocationComponentSettings =
-    LocationComponentSettingsProvider.getDefaultSettings(
-      context = LocalContext.current.applicationContext,
-    ),
+  locationComponentSettings: LocationComponentSettings = LocationComponentSettingsProvider.getDefaultSettings(
+    context = LocalContext.current.applicationContext,
+  ),
   /**
    * Additional settings for showing a location puck on the map.
    */
@@ -86,12 +86,15 @@ public fun MapboxMap(
 ) {
   // display placeholder when in preview mode.
   if (LocalInspectionMode.current) {
-    MapPreviewPlaceHolder(modifier, mapInitOptions)
+    MapPreviewPlaceHolder(modifier)
     return
   }
   val context = LocalContext.current.applicationContext
   val mapView = remember {
-    MapView(context, mapInitOptions)
+    MapView(
+      context,
+      mapInitOptions = mapInitOptionsFactory.invoke(context)
+    )
   }
   AndroidView(
     factory = {
@@ -101,7 +104,7 @@ public fun MapboxMap(
   )
 
   val parentComposition = rememberCompositionContext()
-  val currentMapInitOptions by rememberUpdatedState(mapInitOptions)
+  val currentMapInitOptionsFactory by rememberUpdatedState(mapInitOptionsFactory)
   val currentAttributionSettings by rememberUpdatedState(attributionSettings)
   val currentCompassSettings by rememberUpdatedState(compassSettings)
   val currentGesturesSettings by rememberUpdatedState(gesturesSettings)
@@ -120,7 +123,7 @@ public fun MapboxMap(
       ).apply {
         setContent {
           MapboxMapComposeNode(
-            currentMapInitOptions,
+            currentMapInitOptionsFactory,
             currentAttributionSettings,
             currentCompassSettings,
             currentGesturesSettings,
