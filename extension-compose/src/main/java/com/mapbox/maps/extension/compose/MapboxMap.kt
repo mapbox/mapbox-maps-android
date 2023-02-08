@@ -44,33 +44,41 @@ public fun MapboxMap(
   /**
    * Settings for showing the attribution icon on the map.
    */
-  attributionSettings: AttributionSettings = AttributionSettings(),
+  attributionSettings: AttributionSettings = DefaultSettingsProvider.defaultAttributionSettings(
+    LocalContext.current.applicationContext
+  ),
   /**
    * Settings for showing the compass icon on the map.
    */
-  compassSettings: CompassSettings = CompassSettings(),
+  compassSettings: CompassSettings = DefaultSettingsProvider.defaultCompassSettings(
+    LocalContext.current.applicationContext
+  ),
   /**
    * Gesture configuration allows to control the user touch interaction.
    */
-  gesturesSettings: GesturesSettings = GesturesSettings(),
+  gesturesSettings: GesturesSettings = DefaultSettingsProvider.defaultGesturesSettings,
   /**
    * Settings for showing a location puck on the map.
    */
-  locationComponentSettings: LocationComponentSettings = LocationComponentSettingsProvider.getDefaultSettings(
-    context = LocalContext.current.applicationContext,
+  locationComponentSettings: LocationComponentSettings = DefaultSettingsProvider.defaultLocationComponentSettings(
+    LocalContext.current.applicationContext,
   ),
   /**
    * Additional settings for showing a location puck on the map.
    */
-  locationComponentSettings2: LocationComponentSettings2 = LocationComponentSettings2(),
+  locationComponentSettings2: LocationComponentSettings2 = DefaultSettingsProvider.defaultLocationComponentSettings2,
   /**
    * Settings for showing the Mapbox logo on the map.
    */
-  logoSettings: LogoSettings = LogoSettings(),
+  logoSettings: LogoSettings = DefaultSettingsProvider.defaultLogoSettings(
+    LocalContext.current.applicationContext
+  ),
   /**
    * Settings for showing the scale bar on the map.
    */
-  scaleBarSettings: ScaleBarSettings = ScaleBarSettings(),
+  scaleBarSettings: ScaleBarSettings = DefaultSettingsProvider.defaultScaleBarSettings(
+    LocalContext.current.applicationContext
+  ),
   /**
    * Callback to be invoked when the user clicks on the map view.
    */
