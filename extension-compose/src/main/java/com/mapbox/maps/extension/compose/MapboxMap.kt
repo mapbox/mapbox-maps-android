@@ -6,10 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.viewinterop.AndroidView
-import com.mapbox.maps.MapInitOptions
-import com.mapbox.maps.MapView
-import com.mapbox.maps.MapboxExperimental
-import com.mapbox.maps.MapboxMap
+import com.mapbox.maps.*
 import com.mapbox.maps.extension.compose.internal.MapApplier
 import com.mapbox.maps.extension.compose.internal.MapPreviewPlaceHolder
 import com.mapbox.maps.extension.compose.internal.MapboxMapComposeNode
@@ -80,13 +77,21 @@ public fun MapboxMap(
     LocalContext.current.applicationContext
   ),
   /**
+   * Set the camera of the map.
+   */
+  cameraOptions: CameraOptions = CameraOptions.Builder().build(),
+  /**
+   * Lambda to be invoked when camera changes.
+   */
+  onCameraStateChange: (CameraState) -> Unit = DefaultSettingsProvider.defaultOnCameraStateChange,
+  /**
    * Callback to be invoked when the user clicks on the map view.
    */
-  onMapClickListener: OnMapClickListener = OnMapClickListener { false },
+  onMapClickListener: OnMapClickListener = DefaultSettingsProvider.defaultOnClickListener,
   /**
    * Callback to be invoked when the user long clicks on the map view.
    */
-  onMapLongClickListener: OnMapLongClickListener = OnMapLongClickListener { false },
+  onMapLongClickListener: OnMapLongClickListener = DefaultSettingsProvider.defaultOnLongClickListener,
   /**
    * The content of the map.
    */
@@ -120,6 +125,8 @@ public fun MapboxMap(
   val currentLocationComponentSettings2 by rememberUpdatedState(locationComponentSettings2)
   val currentLogoSettings by rememberUpdatedState(logoSettings)
   val currentScaleBarSettings by rememberUpdatedState(scaleBarSettings)
+  val currentCameraOptions by rememberUpdatedState(cameraOptions)
+  val currentOnCameraStateChange by rememberUpdatedState(onCameraStateChange)
   val currentOnMapClickListener by rememberUpdatedState(onMapClickListener)
   val currentOnMapLongClickListener by rememberUpdatedState(onMapLongClickListener)
   val currentContent by rememberUpdatedState(content)
@@ -139,6 +146,8 @@ public fun MapboxMap(
             currentLocationComponentSettings2,
             currentLogoSettings,
             currentScaleBarSettings,
+            currentCameraOptions,
+            currentOnCameraStateChange,
             currentOnMapClickListener,
             currentOnMapLongClickListener
           )

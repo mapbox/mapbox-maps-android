@@ -4,12 +4,18 @@ import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ComposeNode
 import androidx.compose.runtime.currentComposer
+import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.CameraState
 import com.mapbox.maps.MapInitOptions
 import com.mapbox.maps.MapView
+import com.mapbox.maps.extension.compose.DefaultSettingsProvider
+import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
+import com.mapbox.maps.plugin.animation.camera
 import com.mapbox.maps.plugin.attribution.attribution
 import com.mapbox.maps.plugin.attribution.generated.AttributionSettings
 import com.mapbox.maps.plugin.compass.compass
 import com.mapbox.maps.plugin.compass.generated.CompassSettings
+import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import com.mapbox.maps.plugin.gestures.OnMapClickListener
 import com.mapbox.maps.plugin.gestures.OnMapLongClickListener
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettings
@@ -29,29 +35,41 @@ import com.mapbox.maps.plugin.scalebar.scalebar
 private class MapboxMapNode(
   val controller: MapView,
   initialClickListener: OnMapClickListener,
-  initialLongClickListener: OnMapLongClickListener
+  initialLongClickListener: OnMapLongClickListener,
+  var onCameraStateChange: (CameraState) -> Unit
 ) : MapNode {
+  init {
+    controller.getMapboxMap().apply {
+      addOnCameraChangeListener {
+        // Avoid invoke onCameraStateChange when the default instance is used.
+        if (onCameraStateChange !== DefaultSettingsProvider.defaultOnCameraStateChange) {
+          onCameraStateChange.invoke(cameraState)
+        }
+      }
+    }
+  }
+
   var clickListener: OnMapClickListener = initialClickListener
     set(value) {
       controller.gestures.apply {
-        removeOnMapClickListener(field)
-        addOnMapClickListener(value)
+        removeNonDefaultOnClickListener(field)
+        addNonDefaultOnClickListener(value)
       }
       field = value
     }
   var longClickListener: OnMapLongClickListener = initialLongClickListener
     set(value) {
       controller.gestures.apply {
-        removeOnMapLongClickListener(field)
-        addOnMapLongClickListener(value)
+        removeNonDefaultOnLongClickListener(field)
+        addNonDefaultOnLongClickListener(value)
       }
       field = value
     }
 
   override fun onAttached() {
     controller.gestures.apply {
-      addOnMapClickListener(clickListener)
-      addOnMapLongClickListener(longClickListener)
+      addNonDefaultOnClickListener(clickListener)
+      addNonDefaultOnLongClickListener(longClickListener)
     }
   }
 
@@ -65,8 +83,8 @@ private class MapboxMapNode(
 
   private fun cleanUp() {
     controller.gestures.apply {
-      removeOnMapClickListener(clickListener)
-      removeOnMapLongClickListener(longClickListener)
+      removeNonDefaultOnClickListener(clickListener)
+      removeNonDefaultOnLongClickListener(longClickListener)
     }
   }
 }
@@ -82,6 +100,8 @@ internal fun MapboxMapComposeNode(
   locationComponentSettings2: LocationComponentSettings2,
   logoSettings: LogoSettings,
   scaleBarSettings: ScaleBarSettings,
+  cameraOptions: CameraOptions,
+  onCameraStateChange: (CameraState) -> Unit,
   onMapClickListener: OnMapClickListener,
   onMapLongClickListener: OnMapLongClickListener,
 ) {
@@ -91,7 +111,8 @@ internal fun MapboxMapComposeNode(
       MapboxMapNode(
         mapApplier.mapView,
         onMapClickListener,
-        onMapLongClickListener
+        onMapLongClickListener,
+        onCameraStateChange
       )
     },
     update = {
@@ -124,6 +145,14 @@ internal fun MapboxMapComposeNode(
       set(scaleBarSettings) {
         this.controller.scalebar.applySettings(it)
       }
+      set(cameraOptions) {
+        if (!it.isEmpty()) {
+          this.controller.camera.easeTo(it, mapAnimationOptions { duration(0) })
+        }
+      }
+      update(onCameraStateChange) {
+        this.onCameraStateChange = it
+      }
       update(onMapClickListener) { listener ->
         this.clickListener = listener
       }
@@ -132,4 +161,37 @@ internal fun MapboxMapComposeNode(
       }
     }
   )
+}
+
+private fun CameraOptions.isEmpty(): Boolean {
+  return center == null && padding == null && anchor == null && zoom == null &&
+    bearing == null && pitch == null
+}
+
+private fun GesturesPlugin.addNonDefaultOnClickListener(onMapClickListener: OnMapClickListener) {
+  // Avoid addOnMapClickListener when the default instance is used.
+  if (onMapClickListener !== DefaultSettingsProvider.defaultOnClickListener) {
+    addOnMapClickListener(onMapClickListener)
+  }
+}
+
+private fun GesturesPlugin.removeNonDefaultOnClickListener(onMapClickListener: OnMapClickListener) {
+  // Avoid removeOnMapClickListener when the default instance is used.
+  if (onMapClickListener !== DefaultSettingsProvider.defaultOnClickListener) {
+    removeOnMapClickListener(onMapClickListener)
+  }
+}
+
+private fun GesturesPlugin.addNonDefaultOnLongClickListener(onMapLongClickListener: OnMapLongClickListener) {
+  // Avoid addOnMapLongClickListener when the default instance is used.
+  if (onMapLongClickListener !== DefaultSettingsProvider.defaultOnClickListener) {
+    addOnMapLongClickListener(onMapLongClickListener)
+  }
+}
+
+private fun GesturesPlugin.removeNonDefaultOnLongClickListener(onMapLongClickListener: OnMapLongClickListener) {
+  // Avoid removeOnMapLongClickListener when the default instance is used.
+  if (onMapLongClickListener !== DefaultSettingsProvider.defaultOnClickListener) {
+    removeOnMapLongClickListener(onMapLongClickListener)
+  }
 }

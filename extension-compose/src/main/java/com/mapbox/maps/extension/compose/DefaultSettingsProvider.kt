@@ -3,9 +3,12 @@ package com.mapbox.maps.extension.compose
 import android.content.Context
 import androidx.annotation.DrawableRes
 import androidx.core.content.res.ResourcesCompat
+import com.mapbox.maps.CameraState
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.attribution.generated.AttributionSettings
 import com.mapbox.maps.plugin.compass.generated.CompassSettings
+import com.mapbox.maps.plugin.gestures.OnMapClickListener
+import com.mapbox.maps.plugin.gestures.OnMapLongClickListener
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettings
 import com.mapbox.maps.plugin.locationcomponent.R
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
@@ -153,4 +156,8 @@ public object DefaultSettingsProvider {
       textSize *= pixelRatio
     }
   }
+
+  internal val defaultOnClickListener = OnMapClickListener { false }
+  internal val defaultOnLongClickListener = OnMapLongClickListener { false }
+  internal val defaultOnCameraStateChange: (CameraState) -> Unit = {}
 }
