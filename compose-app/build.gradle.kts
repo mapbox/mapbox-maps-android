@@ -11,7 +11,7 @@ val buildFromSource: String by project
 android {
   compileSdk = AndroidVersions.Compose.compileSdkVersion
   defaultConfig {
-    applicationId = "com.mapbox.maps.testapp.compose"
+    applicationId = "com.mapbox.maps.compose.testapp"
     minSdk = AndroidVersions.Compose.minSdkVersion
     targetSdk = AndroidVersions.Compose.targetSdkVersion
     versionCode = 1
@@ -70,6 +70,7 @@ dependencies {
 
   implementation(Dependencies.androidxAppCompat)
   implementation(Dependencies.androidxCoreKtx)
+  implementation(Dependencies.androidxMultidex)
   androidTestUtil(Dependencies.androidxOrchestrator)
   androidTestImplementation(Dependencies.androidxTestRunner)
   androidTestImplementation(Dependencies.androidxJUnitTestRules)
