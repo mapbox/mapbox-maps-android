@@ -4,6 +4,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+## Bug fixes 🐞
+* Original gesture settings should be maintained after map operations (such as panning the map) complete. ([1989](https://github.com/mapbox/mapbox-maps-android/pull/1989))
 
 # 10.11.0-rc.1 January 26, 2023
 ## Features ✨ and improvements 🏁
