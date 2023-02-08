@@ -82,11 +82,11 @@ public fun MapboxMap(
   /**
    * Callback to be invoked when the user clicks on the map view.
    */
-  onMapClickListener: OnMapClickListener? = null,
+  onMapClickListener: OnMapClickListener = OnMapClickListener { false },
   /**
    * Callback to be invoked when the user long clicks on the map view.
    */
-  onMapLongClickListener: OnMapLongClickListener? = null,
+  onMapLongClickListener: OnMapLongClickListener = OnMapLongClickListener { false },
   /**
    * The content of the map.
    */

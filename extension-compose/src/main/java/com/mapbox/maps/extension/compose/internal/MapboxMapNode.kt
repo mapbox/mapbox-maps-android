@@ -28,17 +28,30 @@ import com.mapbox.maps.plugin.scalebar.scalebar
  */
 private class MapboxMapNode(
   val controller: MapView,
-  var clickListener: OnMapClickListener?,
-  var longClickListener: OnMapLongClickListener?
+  initialClickListener: OnMapClickListener,
+  initialLongClickListener: OnMapLongClickListener
 ) : MapNode {
+  var clickListener: OnMapClickListener = initialClickListener
+    set(value) {
+      controller.gestures.apply {
+        removeOnMapClickListener(field)
+        addOnMapClickListener(value)
+      }
+      field = value
+    }
+  var longClickListener: OnMapLongClickListener = initialLongClickListener
+    set(value) {
+      controller.gestures.apply {
+        removeOnMapLongClickListener(field)
+        addOnMapLongClickListener(value)
+      }
+      field = value
+    }
+
   override fun onAttached() {
     controller.gestures.apply {
-      clickListener?.let {
-        addOnMapClickListener(it)
-      }
-      longClickListener?.let {
-        addOnMapLongClickListener(it)
-      }
+      addOnMapClickListener(clickListener)
+      addOnMapLongClickListener(longClickListener)
     }
   }
 
@@ -52,12 +65,8 @@ private class MapboxMapNode(
 
   private fun cleanUp() {
     controller.gestures.apply {
-      clickListener?.let {
-        removeOnMapClickListener(it)
-      }
-      longClickListener?.let {
-        removeOnMapLongClickListener(it)
-      }
+      removeOnMapClickListener(clickListener)
+      removeOnMapLongClickListener(longClickListener)
     }
   }
 }
@@ -73,8 +82,8 @@ internal fun MapboxMapComposeNode(
   locationComponentSettings2: LocationComponentSettings2,
   logoSettings: LogoSettings,
   scaleBarSettings: ScaleBarSettings,
-  onMapClickListener: OnMapClickListener?,
-  onMapLongClickListener: OnMapLongClickListener?,
+  onMapClickListener: OnMapClickListener,
+  onMapLongClickListener: OnMapLongClickListener,
 ) {
   val mapApplier = currentComposer.applier as MapApplier
   ComposeNode<MapboxMapNode, MapApplier>(
@@ -116,27 +125,9 @@ internal fun MapboxMapComposeNode(
         this.controller.scalebar.applySettings(it)
       }
       update(onMapClickListener) { listener ->
-        val previousListener = this.clickListener
-        controller.gestures.apply {
-          previousListener?.let {
-            removeOnMapClickListener(it)
-          }
-          listener?.let {
-            addOnMapClickListener(it)
-          }
-        }
         this.clickListener = listener
       }
       update(onMapLongClickListener) { listener ->
-        val previousListener = this.longClickListener
-        controller.gestures.apply {
-          previousListener?.let {
-            removeOnMapLongClickListener(it)
-          }
-          listener?.let {
-            addOnMapLongClickListener(it)
-          }
-        }
         this.longClickListener = listener
       }
     }
