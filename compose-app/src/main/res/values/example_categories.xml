@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="category">category</string>
+    <string name="category_basic">Basic</string>
+    <string name="category_custom_layer">Custom layer</string>
+    <string name="category_styles">Styles</string>
+    <string name="category_integration">Integration</string>
+    <string name="category_gestures">Gestures</string>
+    <string name="category_snapshot">Snapshot</string>
+    <string name="category_location">Location</string>
+    <string name="category_config">Map configuration</string>
+    <string name="category_lab">Lab</string>
+    <string name="category_camera">Camera</string>
+    <string name="category_offline">Offline</string>
+    <string name="category_sky">Sky</string>
+    <string name="category_annotation">Annotation</string>
+    <string name="category_3D">3D</string>
+    <string name="category_viewport">Viewport</string>
+    <string name="category_lines_and_polygons">Lines and polygons</string>
+    <string name="category_markers_and_callouts">Markers and callouts</string>
+    <string name="category_data_visualization">Data Visualization</string>
+    <string name="category_globe">Globe and atmosphere</string>
+</resources>
