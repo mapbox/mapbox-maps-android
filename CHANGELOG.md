@@ -42,10 +42,10 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix an issue where the camera would start flickering during subsequent calls to `Map::jumpTo` / `Map::easeTo` with terrain enabled.. ([1984](https://github.com/mapbox/mapbox-maps-android/pull/1984))
 * Fix redundant snapshot capturing that caused excessive memory usage. ([1984](https://github.com/mapbox/mapbox-maps-android/pull/1984))
 * Fix incorrect resource type being specified map loading error event data. ([1984](https://github.com/mapbox/mapbox-maps-android/pull/1984))
- 
+* Original gesture settings should be maintained after map operations (such as panning the map) complete. ([1989](https://github.com/mapbox/mapbox-maps-android/pull/1989))
+
 ## Dependencies
 * Update gl-native to v10.11.1, common to v23.3.1. ([1984](https://github.com/mapbox/mapbox-maps-android/pull/1984))
-
 
 # 10.11.0-rc.1 January 26, 2023
 ## Features ✨ and improvements 🏁

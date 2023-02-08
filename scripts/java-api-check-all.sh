@@ -40,7 +40,7 @@ echo "CURRENT_BRANCH: $CURRENT_BRANCH"
 echo "TARGET_BRANCH: $TARGET_BRANCH"
 readonly STABLE_RELEASE_TAG_PATTERN="v10\.[0-9]*\.0$"
 
-if [ "$TARGET_BRANCH" = "main" ]; then
+if [ "$TARGET_BRANCH" = "main" ] || [ "$TARGET_BRANCH" = "develop" ]; then
   # use the latest stable minor release tag for main branch
   LAST_STABLE_RELEASE_TAG=$(git tag --list --sort=-creatordate | grep $STABLE_RELEASE_TAG_PATTERN | head -n 1)
 else
