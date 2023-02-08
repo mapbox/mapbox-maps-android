@@ -1016,14 +1016,6 @@ class Style internal constructor(
     return styleManager.setStyleGeoJSONSourceData(sourceId, data)
   }
 
-  override fun setStyleGeoJSONSourceData(
-    sourceId: String,
-    dataId: String,
-    data: GeoJSONSourceData
-  ): Expected<String, None> {
-    TODO("Not yet implemented")
-  }
-
   /**
    * Check if the style is completely loaded.
    *

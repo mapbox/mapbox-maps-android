@@ -6,11 +6,14 @@ Mapbox welcomes participation and contributions from everyone.
 
 # 10.11.0
 ## Features ✨ and improvements 🏁
+* Skip redundant `MapboxMap.setCamera` updates in `CameraAnimationsPlugin`. ([1909](https://github.com/mapbox/mapbox-maps-android/pull/1909))
+* Improve performance by setting geojson data directly. ([1920](https://github.com/mapbox/mapbox-maps-android/pull/1920))
+* Fix viewport hang when transition to `FollowPuckViewportState` and no new location update is available. ([1929](https://github.com/mapbox/mapbox-maps-android/pull/1929))
 * Avoid unneeded tiles relayout on style change. ([1984](https://github.com/mapbox/mapbox-maps-android/pull/1984))
 * Enable the usage of expressions in array values during style parsing, where the member expressions in the array is evaluated to the same type. ([1984](https://github.com/mapbox/mapbox-maps-android/pull/1984))
 * Slightly improve quality and performance of the terrain. ([1984](https://github.com/mapbox/mapbox-maps-android/pull/1984))
 * Improve performance for style switch use cases by avoiding unneeded tiles re-layout. ([1984](https://github.com/mapbox/mapbox-maps-android/pull/1984))
- 
+
 ## Bug fixes 🐞
 * Fix a bug where `flyTo` animation request invalid tiles from map engine. ([1949](https://github.com/mapbox/mapbox-maps-android/pull/1949))
 * Deprecate `pattern` and `dash` transition properties for layer (e.g. `BackgroundLayer.backgroundPatternTransition`, `FillExtrusionLayer.fillExtrusionPatternTransition`, `FillLayer.fillPatternTransition`, `LineLayer.lineDasharrayTransition`, `LineLayer.linePatternTransition`, ...).  ([1941](https://github.com/mapbox/mapbox-maps-android/pull/1941))
@@ -38,9 +41,10 @@ Mapbox welcomes participation and contributions from everyone.
 * Fixes rare crashes during render feature queries, if the features are located close to each other. ([1984](https://github.com/mapbox/mapbox-maps-android/pull/1984))
 * Fix an issue where the camera would start flickering during subsequent calls to `Map::jumpTo` / `Map::easeTo` with terrain enabled.. ([1984](https://github.com/mapbox/mapbox-maps-android/pull/1984))
 * Fix redundant snapshot capturing that caused excessive memory usage. ([1984](https://github.com/mapbox/mapbox-maps-android/pull/1984))
-
+* Fix incorrect resource type being specified map loading error event data. ([1984](https://github.com/mapbox/mapbox-maps-android/pull/1984))
+ 
 ## Dependencies
-* Update gl-native to v10.11.0, common to v23.3.1. ([1984](https://github.com/mapbox/mapbox-maps-android/pull/1984))
+* Update gl-native to v10.11.1, common to v23.3.1. ([1984](https://github.com/mapbox/mapbox-maps-android/pull/1984))
 
 
 # 10.11.0-rc.1 January 26, 2023
