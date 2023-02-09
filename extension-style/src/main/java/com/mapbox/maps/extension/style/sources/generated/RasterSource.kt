@@ -18,6 +18,11 @@ import java.util.*
  *
  */
 class RasterSource(builder: Builder) : Source(builder.sourceId) {
+  init {
+    sourceProperties.putAll(builder.properties)
+    volatileSourceProperties.putAll(builder.volatileProperties)
+  }
+
   /**
    * Get the type of the current source as a String.
    */
@@ -311,7 +316,7 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
   class Builder(val sourceId: String) {
     internal val properties = HashMap<String, PropertyValue<*>>()
     // Properties that only settable after the source is added to the style.
-    private val volatileProperties = HashMap<String, PropertyValue<*>>()
+    internal val volatileProperties = HashMap<String, PropertyValue<*>>()
 
     /**
      * A URL to a TileJSON resource. Supported protocols are `http:`, `https:`, and `mapbox://<Tileset ID>`.
