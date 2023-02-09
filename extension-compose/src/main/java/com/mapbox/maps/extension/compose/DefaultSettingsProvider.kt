@@ -157,7 +157,18 @@ public object DefaultSettingsProvider {
     }
   }
 
-  internal val defaultOnClickListener = OnMapClickListener { false }
-  internal val defaultOnLongClickListener = OnMapLongClickListener { false }
-  internal val defaultOnCameraStateChange: (CameraState) -> Unit = {}
+  /**
+   * Get the default [OnMapClickListener] that does nothing.
+   */
+  public val defaultOnClickListener: OnMapClickListener = OnMapClickListener { false }
+
+  /**
+   * Get the default [OnMapLongClickListener] that does nothing.
+   */
+  public val defaultOnLongClickListener: OnMapLongClickListener = OnMapLongClickListener { false }
+
+  /**
+   * Get the default onCameraStateChange block that does nothing.
+   */
+  public val defaultOnCameraStateChange: (CameraState) -> Unit = {}
 }

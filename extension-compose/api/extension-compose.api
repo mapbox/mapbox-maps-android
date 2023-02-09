@@ -23,6 +23,9 @@ public final class com/mapbox/maps/extension/compose/DefaultSettingsProvider {
 	public static synthetic fun defaultScaleBarSettings$default (Lcom/mapbox/maps/extension/compose/DefaultSettingsProvider;Landroid/content/Context;FILjava/lang/Object;)Lcom/mapbox/maps/plugin/scalebar/generated/ScaleBarSettings;
 	public final fun getDefaultGesturesSettings ()Lcom/mapbox/maps/plugin/gestures/generated/GesturesSettings;
 	public final fun getDefaultLocationComponentSettings2 ()Lcom/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings2;
+	public final fun getDefaultOnCameraStateChange ()Lkotlin/jvm/functions/Function1;
+	public final fun getDefaultOnClickListener ()Lcom/mapbox/maps/plugin/gestures/OnMapClickListener;
+	public final fun getDefaultOnLongClickListener ()Lcom/mapbox/maps/plugin/gestures/OnMapLongClickListener;
 }
 
 public final class com/mapbox/maps/extension/compose/MapEffectKt {
@@ -36,7 +39,7 @@ public abstract interface annotation class com/mapbox/maps/extension/compose/Map
 }
 
 public final class com/mapbox/maps/extension/compose/MapboxMapKt {
-	public static final fun MapboxMap (Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function1;Lcom/mapbox/maps/plugin/attribution/generated/AttributionSettings;Lcom/mapbox/maps/plugin/compass/generated/CompassSettings;Lcom/mapbox/maps/plugin/gestures/generated/GesturesSettings;Lcom/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings;Lcom/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings2;Lcom/mapbox/maps/plugin/logo/generated/LogoSettings;Lcom/mapbox/maps/plugin/scalebar/generated/ScaleBarSettings;Lcom/mapbox/maps/plugin/gestures/OnMapClickListener;Lcom/mapbox/maps/plugin/gestures/OnMapLongClickListener;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;III)V
+	public static final fun MapboxMap (Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function1;Lcom/mapbox/maps/plugin/attribution/generated/AttributionSettings;Lcom/mapbox/maps/plugin/compass/generated/CompassSettings;Lcom/mapbox/maps/plugin/gestures/generated/GesturesSettings;Lcom/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings;Lcom/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings2;Lcom/mapbox/maps/plugin/logo/generated/LogoSettings;Lcom/mapbox/maps/plugin/scalebar/generated/ScaleBarSettings;Lcom/mapbox/maps/CameraOptions;Lkotlin/jvm/functions/Function1;Lcom/mapbox/maps/plugin/gestures/OnMapClickListener;Lcom/mapbox/maps/plugin/gestures/OnMapLongClickListener;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;III)V
 }
 
 public final class com/mapbox/maps/extension/compose/MapboxMapScope {
