@@ -6,6 +6,8 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * Fix wrong `onLongTouch` event detected on any map gesture after clicks on ViewAnnotation. ([1954](https://github.com/mapbox/mapbox-maps-android/pull/1954))
 
+## Bug fixes 🐞
+* Original gesture settings should be maintained after map operations (such as panning the map) complete. ([1989](https://github.com/mapbox/mapbox-maps-android/pull/1989))
 
 # 10.11.0-rc.1 January 26, 2023
 ## Features ✨ and improvements 🏁
