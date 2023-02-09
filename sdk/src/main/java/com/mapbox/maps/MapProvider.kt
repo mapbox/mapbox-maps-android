@@ -1,6 +1,8 @@
 package com.mapbox.maps
 
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import com.mapbox.annotation.module.MapboxModuleType
 import com.mapbox.common.EventsServerOptions
 import com.mapbox.common.EventsService
@@ -50,7 +52,9 @@ internal object MapProvider {
         paramsProvider(context, accessToken, MapboxModuleType.MapTelemetry)
       }
     }
-    mapTelemetry.onAppUserTurnstileEvent()
+    Handler(Looper.getMainLooper()).post {
+      mapTelemetry.onAppUserTurnstileEvent()
+    }
     return mapTelemetry
   }
 

@@ -5,6 +5,50 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 
 
+# 10.11.0 February 09, 2023
+## Features ✨ and improvements 🏁
+* Skip redundant `MapboxMap.setCamera` updates in `CameraAnimationsPlugin`. ([1909](https://github.com/mapbox/mapbox-maps-android/pull/1909))
+* Improve performance by setting geojson data directly. ([1920](https://github.com/mapbox/mapbox-maps-android/pull/1920))
+* Fix viewport hang when transition to `FollowPuckViewportState` and no new location update is available. ([1929](https://github.com/mapbox/mapbox-maps-android/pull/1929))
+* Avoid unneeded tiles relayout on style change. ([1984](https://github.com/mapbox/mapbox-maps-android/pull/1984))
+* Enable the usage of expressions in array values during style parsing, where the member expressions in the array is evaluated to the same type. ([1984](https://github.com/mapbox/mapbox-maps-android/pull/1984))
+* Slightly improve quality and performance of the terrain. ([1984](https://github.com/mapbox/mapbox-maps-android/pull/1984))
+* Improve performance for style switch use cases by avoiding unneeded tiles re-layout. ([1984](https://github.com/mapbox/mapbox-maps-android/pull/1984))
+
+## Bug fixes 🐞
+* Fix a bug where `flyTo` animation request invalid tiles from map engine. ([1949](https://github.com/mapbox/mapbox-maps-android/pull/1949))
+* Deprecate `pattern` and `dash` transition properties for layer (e.g. `BackgroundLayer.backgroundPatternTransition`, `FillExtrusionLayer.fillExtrusionPatternTransition`, `FillLayer.fillPatternTransition`, `LineLayer.lineDasharrayTransition`, `LineLayer.linePatternTransition`, ...).  ([1941](https://github.com/mapbox/mapbox-maps-android/pull/1941))
+* Fix terrain tiles missing issue when running in the emulator and some android devices. ([1953](https://github.com/mapbox/mapbox-maps-android/pull/1953))
+* Fix wrong `onLongTouch` event detected on any map gesture after clicks on ViewAnnotation. ([1954](https://github.com/mapbox/mapbox-maps-android/pull/1954))
+* Fix a known issue where `NullPointerException` was thrown when last location was not available. ([1984](https://github.com/mapbox/mapbox-maps-android/pull/1984))
+* Fix flickering issues for the symbols that allow overlap (have text(icon)-allow-overlap: true) with skipping fade-in animation for them. ([1984](https://github.com/mapbox/mapbox-maps-android/pull/1984))
+* Fix data queueing issue when calling API 'setStyleGeoJSONSourceData'. ([1984](https://github.com/mapbox/mapbox-maps-android/pull/1984))
+* Fix flickering terrain on high pitched views. ([1984](https://github.com/mapbox/mapbox-maps-android/pull/1984))
+* Clamp inputs in DEMData::get() to prevent OOB Access. ([1984](https://github.com/mapbox/mapbox-maps-android/pull/1984))
+* Fix asset file source threading model - do not use legacy RunLoop, thus do not use ALooper and get rid of an extra thread. ([1984](https://github.com/mapbox/mapbox-maps-android/pull/1984))
+* Fix text visualization when in orthographic mode. ([1984](https://github.com/mapbox/mapbox-maps-android/pull/1984))
+* Fix terrain elevation when a padded dem source is used. ([1984](https://github.com/mapbox/mapbox-maps-android/pull/1984))
+* Fixes visible tile borders when msaa enabled. ([1984](https://github.com/mapbox/mapbox-maps-android/pull/1984))
+* Fix distance-to-center filtering of symbols when terrain is enabled. ([1984](https://github.com/mapbox/mapbox-maps-android/pull/1984))
+* Fix color transitions in model ligthing. ([1984](https://github.com/mapbox/mapbox-maps-android/pull/1984))
+* Fix terrain placement for model layer when model scale is set to zero. ([1984](https://github.com/mapbox/mapbox-maps-android/pull/1984))
+* Fix geometry tile model layer paint property transition. ([1984](https://github.com/mapbox/mapbox-maps-android/pull/1984))
+* Fix camera bumpiness at the beginning of a drag operation when terrain is enabled. ([1984](https://github.com/mapbox/mapbox-maps-android/pull/1984))
+* Fix disappearing tiles when terrain with a high exaggeration is enabled. ([1984](https://github.com/mapbox/mapbox-maps-android/pull/1984))
+* Fix line-border-color when used with line-trim-offset. ([1984](https://github.com/mapbox/mapbox-maps-android/pull/1984))
+* Fixes an issue when allow-overlap, ignore-placement , and map rotation-alignment of icon breaks the rendering of symbols on the globe. ([1984](https://github.com/mapbox/mapbox-maps-android/pull/1984))
+* Mitigate symbol flickering on source data change during camera animation. ([1984](https://github.com/mapbox/mapbox-maps-android/pull/1984))
+* Mitigate OOM caused by Snapshotter API usage. ([1984](https://github.com/mapbox/mapbox-maps-android/pull/1984))
+* Fixes rare crashes during render feature queries, if the features are located close to each other. ([1984](https://github.com/mapbox/mapbox-maps-android/pull/1984))
+* Fix an issue where the camera would start flickering during subsequent calls to `Map::jumpTo` / `Map::easeTo` with terrain enabled.. ([1984](https://github.com/mapbox/mapbox-maps-android/pull/1984))
+* Fix redundant snapshot capturing that caused excessive memory usage. ([1984](https://github.com/mapbox/mapbox-maps-android/pull/1984))
+* Fix incorrect resource type being specified map loading error event data. ([1984](https://github.com/mapbox/mapbox-maps-android/pull/1984))
+* Original gesture settings should be maintained after map operations (such as panning the map) complete. ([1989](https://github.com/mapbox/mapbox-maps-android/pull/1989))
+
+## Dependencies
+* Update gl-native to v10.11.1, common to v23.3.1. ([1984](https://github.com/mapbox/mapbox-maps-android/pull/1984))
+
+
 # 10.11.0-rc.1 January 26, 2023
 ## Features ✨ and improvements 🏁
 * Improve performance for style switch use cases by avoiding unneeded tiles re-layout. ([1953](https://github.com/mapbox/mapbox-maps-android/pull/1953))
@@ -13,6 +57,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix a bug where `flyTo` animation request invalid tiles from map engine. ([1949](https://github.com/mapbox/mapbox-maps-android/pull/1949))
 * Deprecate `pattern` and `dash` transition properties for layer (e.g. `BackgroundLayer.backgroundPatternTransition`, `FillExtrusionLayer.fillExtrusionPatternTransition`, `FillLayer.fillPatternTransition`, `LineLayer.lineDasharrayTransition`, `LineLayer.linePatternTransition`, ...).  ([1941](https://github.com/mapbox/mapbox-maps-android/pull/1941))
 * Fix terrain tiles missing issue when running in the emulator and some android devices. ([1953](https://github.com/mapbox/mapbox-maps-android/pull/1953))
+* Fix wrong `onLongTouch` event detected on any map gesture after clicks on ViewAnnotation. ([1954](https://github.com/mapbox/mapbox-maps-android/pull/1954))
 
 ## Dependencies
 * Update gl-native to v10.11.0-rc.1 and common to v23.3.0-rc.1. ([1953](https://github.com/mapbox/mapbox-maps-android/pull/1953))
