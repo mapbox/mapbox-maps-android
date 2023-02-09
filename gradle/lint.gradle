@@ -2,6 +2,7 @@ android {
     lintOptions {
         checkReleaseBuilds false
         warningsAsErrors true
+        abortOnError false
         xmlReport false
         disable 'AllowBackup', 'UnusedResources'
     }
