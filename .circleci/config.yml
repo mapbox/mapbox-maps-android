@@ -212,7 +212,7 @@ commands:
       - run:
           name: Run JVM unit tests & create jacoco code coverage report
           no_output_timeout: 15m
-          command: ./gradlew jacocoTestDebugUnitTestReport
+          command: ./gradlew jacocoTestPublicDebugUnitTestReport
 #      - run:
 #          name: Upload codecov
 #          command: bash <(curl -sSfL https://codecov.io/bash)
@@ -747,7 +747,7 @@ jobs:
             - restore-gradle-cache
             - run:
                 name: lintRelease
-                command: ./gradlew lintRelease
+                command: ./gradlew lintPublicRelease lintPrivateRelease
       - run: exit 0
 
   run-robo-test:

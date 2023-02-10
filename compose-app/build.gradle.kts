@@ -48,6 +48,17 @@ android {
   buildFeatures {
     compose = true
   }
+
+  flavorDimensions.add("version")
+  productFlavors {
+    val private by creating {
+      dimension = "version"
+    }
+    val public by creating {
+      dimension = "version"
+      isDefault = true
+    }
+  }
 }
 
 androidExtensions {

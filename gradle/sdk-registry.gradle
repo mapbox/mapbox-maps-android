@@ -5,80 +5,82 @@ apply from: file('../gradle/artifact-settings.gradle')
 version = project.ext.versionName
 group = project.ext.mapboxArtifactGroupId
 afterEvaluate {
-    publishing {
-        publications {
-            release(MavenPublication) {
-                from components.release
-                groupId this.group
-                artifactId project.ext.mapboxArtifactId
-                version this.version
+    components.findAll { it.name.endsWith("Release") }.forEach { currentComponent ->
+        def flavor = currentComponent.name.substring(0, currentComponent.name.length() - "Release".length())
+        def componentRegistrySdkName = project.ext.mapboxRegistrySdkName + (flavor == "private" ? "-private" : "")
+        registry {
+            sdkName = componentRegistrySdkName
+            override = project.ext.versionName.endsWith("-SNAPSHOT")
+            dryRun = false
+            publish = true
+            snapshot = project.ext.versionName.endsWith("-SNAPSHOT")
+            publishMessage = "cc @mapbox/maps-android"
+            publications = [currentComponent.name]
+            excludeFromRootProject = project.ext.mapboxRegistryExcludeFromRootProject
+        }
 
-                artifact(androidSourcesJar)
-                artifact(javadocsJar)
+        tasks.register("javadocs${currentComponent.name}Jar", Jar) {
+            def flavorDokkaJavadoc = tasks.findByName("${currentComponent.name}DokkaJavadoc")
+            dependsOn(flavorDokkaJavadoc)
+            classifier "javadoc"
+            from flavorDokkaJavadoc.outputDirectory
+            destinationDirectory.set(destinationDirectory.get().dir(currentComponent.name))
+        }
 
-                pom.withXml {
-                    final mainNode = asNode()
-                    mainNode.appendNode('name', project.ext.mapboxArtifactTitle)
-                    mainNode.appendNode('description', project.ext.mapboxArtifactTitle)
-                    mainNode.appendNode('url', project.ext.mapboxArtifactUrl)
+        tasks.register("androidSources${currentComponent.name}Jar", Jar) {
+            classifier "sources"
+            // We always add the `main` kotlin which already includes the java in it
+            from android.sourceSets.main.kotlin.srcDirs
+            android.sourceSets.each {
+                // then let's add the flavor specific folders (i.e. `public` and `publicRelease`) for current component
+                if (it.name == flavor || it.name == currentComponent.name) {
+                    from it.kotlin.srcDirs
+                }
+            }
+            destinationDirectory.set(destinationDirectory.get().dir(currentComponent.name))
+        }
+        publishing {
+            publications {
+                // Find all the flavour releases (i.e. "privateRelease" and "publicRelease") and
+                // create a publication per each of them
+                // TODO: once we move to AGP 7.1+: https://developer.android.com/studio/publish-library/configure-pub-variants#kts
+                "$currentComponent.name"(MavenPublication) {
+                    from currentComponent
+                    groupId this.group
+                    artifactId project.ext.mapboxArtifactId
+                    version this.version
 
-                    final licenseNode = mainNode.appendNode('licenses').appendNode('license')
-                    licenseNode.appendNode('name', project.ext.mapboxArtifactLicenseName)
-                    licenseNode.appendNode('url', project.ext.mapboxArtifactLicenseUrl)
-                    licenseNode.appendNode('distribution', "repo")
+                    artifact(tasks.findByName("androidSources${currentComponent.name}Jar"))
+                    artifact(tasks.findByName("javadocs${currentComponent.name}Jar"))
 
-                    final developerNode = mainNode.appendNode('developers').appendNode('developer')
-                    developerNode.appendNode('id', project.ext.mapboxDeveloperId)
-                    developerNode.appendNode('name', project.ext.mapboxDeveloperName)
+                    pom.withXml {
+                        final mainNode = asNode()
+                        mainNode.appendNode('name', project.ext.mapboxArtifactTitle)
+                        mainNode.appendNode('description', project.ext.mapboxArtifactTitle)
+                        mainNode.appendNode('url', project.ext.mapboxArtifactUrl)
 
-                    final scmNode = mainNode.appendNode("scm")
-                    scmNode.appendNode("connection", project.ext.mapboxArtifactScmUrl)
-                    scmNode.appendNode("developerConnection", project.ext.mapboxArtifactScmUrl)
-                    scmNode.appendNode("url", project.ext.mapboxArtifactUrl)
+                        final licenseNode = mainNode.appendNode('licenses').appendNode('license')
+                        licenseNode.appendNode('name', project.ext.mapboxArtifactLicenseName)
+                        licenseNode.appendNode('url', project.ext.mapboxArtifactLicenseUrl)
+                        licenseNode.appendNode('distribution', "repo")
+
+                        final developerNode = mainNode.appendNode('developers').appendNode('developer')
+                        developerNode.appendNode('id', project.ext.mapboxDeveloperId)
+                        developerNode.appendNode('name', project.ext.mapboxDeveloperName)
+
+                        final scmNode = mainNode.appendNode("scm")
+                        scmNode.appendNode("connection", project.ext.mapboxArtifactScmUrl)
+                        scmNode.appendNode("developerConnection", project.ext.mapboxArtifactScmUrl)
+                        scmNode.appendNode("url", project.ext.mapboxArtifactUrl)
+                    }
                 }
             }
         }
     }
 }
 
-registry {
-    sdkName = project.ext.mapboxRegistrySdkName
-    override = project.ext.versionName.endsWith("-SNAPSHOT")
-    dryRun = false
-    publish = true
-    snapshot = project.ext.versionName.endsWith("-SNAPSHOT")
-    publishMessage = "cc @mapbox/maps-android"
-    publications = ["release"]
-    excludeFromRootProject = project.ext.mapboxRegistryExcludeFromRootProject
-}
-
-task androidJavadocs(type: Javadoc) {
-    source = android.sourceSets.main.java.sourceFiles
-    classpath = files(android.bootClasspath)
-    failOnError = false
-}
-
-task javadocsJar(type: Jar, dependsOn: dokkaJavadoc) {
-    classifier "javadoc"
-    from dokkaJavadoc.outputDirectory
-}
-
-task androidSourcesJar(type: Jar) {
-    classifier "sources"
-    from android.sourceSets.main.java.srcDirs
-    from android.sourceSets.main.kotlin.srcDirs
-}
-
-tasks.withType(Javadoc) {
+tasks.withType(Javadoc).configureEach {
     options.addStringOption('encoding', 'UTF-8')
     options.addStringOption('docencoding', 'UTF-8')
     options.addStringOption('charset', 'UTF-8')
-}
-
-afterEvaluate { project ->
-    android.libraryVariants.all { variant ->
-        tasks.androidJavadocs.doFirst {
-            classpath += files(variant.javaCompile.classpath.files)
-        }
-    }
 }

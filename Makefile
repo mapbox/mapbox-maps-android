@@ -78,7 +78,7 @@ clean:
 
 .PHONY: codecoverage
 codecoverage:
-	./gradlew sdk:jacocoTestDebugUnitTestReport && google-chrome sdk/build/jacoco/jacocoHtml/index.html
+	./gradlew sdk:jacocoTestPublicDebugUnitTestReport && google-chrome sdk/build/jacoco/jacocoHtml/index.html
 
 # Use `make generate-changelog TAG=LastReleaseTag` while running locally.
 .PHONY: generate-changelog
@@ -141,13 +141,13 @@ start-android-auto-dhu:
 .PHONY: check-permissions
 check-permissions:
 	 python3 scripts/check-permissions.py \
-	 	--apk app/build/outputs/apk/debug/app-debug.apk \
+	 	--apk app/build/outputs/apk/public/debug/app-public-debug.apk \
 		--file app/permission.json
 
 # Update permissions app module, requires app:assembleDebug first
 .PHONY: update-permissions
 update-permissions:
 	 python3 scripts/check-permissions.py \
-	 	--apk app/build/outputs/apk/debug/app-debug.apk \
+	 	--apk app/build/outputs/apk/public/debug/app-public-debug.apk \
 		--file app/permission.json \
 		--update True

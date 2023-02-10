@@ -37,6 +37,17 @@ android {
       jniLibs.pickFirsts.add("**/libc++_shared.so")
     }
   }
+
+  flavorDimensions.add("version")
+  productFlavors {
+    val private by creating {
+      dimension = "version"
+    }
+    val public by creating {
+      dimension = "version"
+      isDefault = true
+    }
+  }
 }
 
 androidExtensions {
