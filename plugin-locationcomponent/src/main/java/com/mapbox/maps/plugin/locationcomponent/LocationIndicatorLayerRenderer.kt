@@ -5,16 +5,13 @@ import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.plugin.LocationPuck2D
-import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.BEARING_ICON
-import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.LOCATION_INDICATOR_LAYER
-import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.SHADOW_ICON
-import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.TOP_ICON
 import com.mapbox.maps.plugin.locationcomponent.utils.BitmapUtils
 import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.util.Locale
 
 internal class LocationIndicatorLayerRenderer(
+  private val locationComponentInitOptions: LocationComponentInitOptions,
   private val puckOptions: LocationPuck2D,
   layerSourceProvider: LayerSourceProvider
 ) : LocationLayerRenderer {
@@ -28,7 +25,7 @@ internal class LocationIndicatorLayerRenderer(
   }
 
   override fun isRendererInitialised(): Boolean {
-    return style?.styleLayerExists(LOCATION_INDICATOR_LAYER) ?: false
+    return style?.styleLayerExists(locationComponentInitOptions.puck2DLayerId) ?: false
   }
 
   override fun addLayers(positionManager: LocationComponentPositionManager) {
@@ -76,22 +73,22 @@ internal class LocationIndicatorLayerRenderer(
 
   private fun setupBitmaps() {
     puckOptions.topImage?.let { BitmapUtils.getBitmapFromDrawable(it) }
-      ?.let { style?.addImage(TOP_ICON, it) }
+      ?.let { style?.addImage(locationComponentInitOptions.topIconImageId, it) }
     puckOptions.bearingImage?.let { BitmapUtils.getBitmapFromDrawable(it) }
-      ?.let { style?.addImage(BEARING_ICON, it) }
+      ?.let { style?.addImage(locationComponentInitOptions.bearingIconImageId, it) }
 
     puckOptions.shadowImage?.let { BitmapUtils.getBitmapFromDrawable(it) }
-      ?.let { style?.addImage(SHADOW_ICON, it) }
-    layer.topImage(TOP_ICON)
-    layer.bearingImage(BEARING_ICON)
-    layer.shadowImage(SHADOW_ICON)
+      ?.let { style?.addImage(locationComponentInitOptions.shadowIconImageId, it) }
+    layer.topImage(locationComponentInitOptions.topIconImageId)
+    layer.bearingImage(locationComponentInitOptions.bearingIconImageId)
+    layer.shadowImage(locationComponentInitOptions.shadowIconImageId)
     layer.opacity(puckOptions.opacity.toDouble())
   }
 
   override fun clearBitmaps() {
-    style?.removeStyleImage(TOP_ICON)
-    style?.removeStyleImage(BEARING_ICON)
-    style?.removeStyleImage(SHADOW_ICON)
+    style?.removeStyleImage(locationComponentInitOptions.topIconImageId)
+    style?.removeStyleImage(locationComponentInitOptions.bearingIconImageId)
+    style?.removeStyleImage(locationComponentInitOptions.shadowIconImageId)
   }
 
   override fun updateStyle(style: StyleInterface) {

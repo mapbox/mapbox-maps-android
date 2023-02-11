@@ -11,11 +11,8 @@ import com.mapbox.maps.RenderedQueryGeometry
 import com.mapbox.maps.RenderedQueryOptions
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
-import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.LOCATION_INDICATOR_LAYER
-import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.MODEL_LAYER
 import com.mapbox.maps.plugin.locationcomponent.animators.PuckAnimatorManager
 import com.mapbox.maps.plugin.locationcomponent.generated.*
-import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentAttributeParser
 import java.lang.ref.WeakReference
 import java.util.concurrent.CopyOnWriteArraySet
 
@@ -23,7 +20,13 @@ import java.util.concurrent.CopyOnWriteArraySet
  * Default implementation of the LocationComponentPlugin, it renders the configured location puck
  * to the user's current location.
  */
-class LocationComponentPluginImpl : LocationComponentPlugin2, LocationConsumer2,
+class LocationComponentPluginImpl(
+  /**
+   * The initialisation options for the location component, defaults to the default LocationComponent configurations.
+   */
+  val locationComponentInitOptions: LocationComponentInitOptions = LocationComponentInitOptions.Builder()
+    .build()
+) : LocationComponentPlugin2, LocationConsumer2,
   LocationComponentSettingsBase2() {
   private lateinit var delegateProvider: MapDelegateProvider
 
@@ -135,8 +138,8 @@ class LocationComponentPluginImpl : LocationComponentPlugin2, LocationConsumer2,
       RenderedQueryGeometry(delegateProvider.mapCameraManagerDelegate.pixelForCoordinate(point)),
       RenderedQueryOptions(
         listOf(
-          LOCATION_INDICATOR_LAYER,
-          MODEL_LAYER
+          locationComponentInitOptions.puck2DLayerId,
+          locationComponentInitOptions.puck3DLayerId
         ),
         null
       )
@@ -213,7 +216,7 @@ class LocationComponentPluginImpl : LocationComponentPlugin2, LocationConsumer2,
               internalSettings.layerAbove,
               internalSettings.layerBelow
             ),
-            layerSourceProvider = LayerSourceProvider(),
+            layerSourceProvider = LayerSourceProvider(locationComponentInitOptions),
             animationManager = PuckAnimatorManager(
               indicatorPositionChangedListener,
               indicatorBearingChangedListener,

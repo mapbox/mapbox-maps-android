@@ -6,10 +6,9 @@ import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.plugin.LocationPuck3D
-import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.MODEL_LAYER
-import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.MODEL_SOURCE
 
 internal class ModelLayerRenderer(
+  private val locationComponentInitOptions: LocationComponentInitOptions,
   layerSourceProvider: LayerSourceProvider,
   private val locationModelLayerOptions: LocationPuck3D
 ) : LocationLayerRenderer {
@@ -32,11 +31,11 @@ internal class ModelLayerRenderer(
   }
 
   private fun isLayerInitialised(): Boolean {
-    return style?.styleLayerExists(MODEL_LAYER) ?: false
+    return style?.styleLayerExists(locationComponentInitOptions.puck3DLayerId) ?: false
   }
 
   private fun isSourceInitialised(): Boolean {
-    return style?.styleSourceExists(MODEL_SOURCE) ?: false
+    return style?.styleSourceExists(locationComponentInitOptions.puck3DSourceId) ?: false
   }
 
   override fun addLayers(positionManager: LocationComponentPositionManager) {
