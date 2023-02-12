@@ -6,7 +6,8 @@ plugins {
   kotlin("android")
   id("com.jaredsburrows.license")
   id("org.jetbrains.dokka")
-  id("com.mapbox.android.sdk.versions")
+  // FIXME https://mapbox.atlassian.net/browse/MAPSAND-794
+  //id("com.mapbox.android.sdk.versions")
   id("io.gitlab.arturbosch.detekt").version(Versions.detekt)
 }
 
