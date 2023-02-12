@@ -35,10 +35,5 @@ data class SourceDataLoadedEventData(
   /**
    * The 'tile-id' property defines the tile id if the 'type' field equals 'tile'.
    */
-  @SerializedName("tile-id") val tileID: TileID?,
-
-  /**
-   * The 'data-id' property if set with the corresponding data update.
-   */
-  @SerializedName("data-id") val dataId: String?,
+  @SerializedName("tile-id") val tileID: TileID?
 )

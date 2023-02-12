@@ -427,8 +427,7 @@ fun Event.getSourceDataLoadedEventData(): SourceDataLoadedEventData {
       zoom = tileIDMap.nonNullLong(Z),
       x = tileIDMap.nonNullLong(X),
       y = tileIDMap.nonNullLong(Y)
-    ),
-    dataId = map.nullableString("data-id"),
+    )
   )
 }
 

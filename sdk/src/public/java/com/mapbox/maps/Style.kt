@@ -1017,21 +1017,6 @@ class Style internal constructor(
   }
 
   /**
-   * This method is for internal use.
-   */
-  @WorkerThread
-  override fun setStyleGeoJSONSourceData(
-    sourceId: String,
-    dataId: String,
-    data: GeoJSONSourceData
-  ): Expected<String, None> {
-    if (!isStyleValid) {
-      logW(TAG, "Style object (accessing setStyleGeoJSONSourceData) should not be stored and used after MapView is destroyed or new style has been loaded.")
-    }
-    return styleManager.setStyleGeoJSONSourceData(sourceId, dataId, data)
-  }
-
-  /**
    * Check if the style is completely loaded.
    *
    * @return TRUE if and only if the style JSON contents, the style specified sprite and sources are all loaded, otherwise returns FALSE.
