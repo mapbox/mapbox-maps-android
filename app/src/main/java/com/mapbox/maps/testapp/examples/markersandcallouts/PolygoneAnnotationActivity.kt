@@ -7,18 +7,17 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.JsonPrimitive
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
+import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.plugin.annotation.AnnotationPlugin
 import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.*
 import com.mapbox.maps.testapp.databinding.ActivityAnnotationBinding
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
-import java.util.*
 
 /**
  * Example showing how to add Polygone annotations
  */
 class PolygoneAnnotationActivity : AppCompatActivity() {
-  private val random = Random()
   private var polygonAnnotationManager: PolygonAnnotationManager? = null
   private var index: Int = 0
   private val nextStyle: String
@@ -31,6 +30,7 @@ class PolygoneAnnotationActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     val binding = ActivityAnnotationBinding.inflate(layoutInflater)
     setContentView(binding.root)
+    binding.mapView.getMapboxMap().setCamera(INITIAL_CAMERA_POS)
     binding.mapView.getMapboxMap().loadStyleUri(nextStyle) {
       annotationPlugin = binding.mapView.annotations
       polygonAnnotationManager = annotationPlugin.createPolygonAnnotationManager().apply {
@@ -62,10 +62,11 @@ class PolygoneAnnotationActivity : AppCompatActivity() {
 
         val points = listOf(
           listOf(
-            Point.fromLngLat(-3.363937, -10.733102),
-            Point.fromLngLat(1.754703, -19.716317),
-            Point.fromLngLat(-15.747196, -21.085074),
-            Point.fromLngLat(-3.363937, -10.733102)
+            Point.fromLngLat(-89.857177734375, 24.51713945052515),
+            Point.fromLngLat(-87.967529296875, 24.51713945052515),
+            Point.fromLngLat(-87.967529296875, 26.244156283890756),
+            Point.fromLngLat(-89.857177734375, 26.244156283890756),
+            Point.fromLngLat(-89.857177734375, 24.51713945052515)
           )
         )
 
@@ -74,18 +75,6 @@ class PolygoneAnnotationActivity : AppCompatActivity() {
           .withData(JsonPrimitive("Foobar"))
           .withFillColor(Color.RED)
         create(polygonAnnotationOptions)
-
-        // random add fills across the globe
-        val polygonAnnotationOptionsList: MutableList<PolygonAnnotationOptions> = ArrayList()
-        for (i in 0..2) {
-          val color = Color.argb(255, random.nextInt(256), random.nextInt(256), random.nextInt(256))
-          polygonAnnotationOptionsList.add(
-            PolygonAnnotationOptions()
-              .withPoints(AnnotationUtils.createRandomPointsList())
-              .withFillColor(color)
-          )
-        }
-        create(polygonAnnotationOptionsList)
 
         AnnotationUtils.loadStringFromAssets(
           this@PolygoneAnnotationActivity,
@@ -102,5 +91,12 @@ class PolygoneAnnotationActivity : AppCompatActivity() {
       }
     }
     binding.changeStyle.setOnClickListener { binding.mapView.getMapboxMap().loadStyleUri(nextStyle) }
+  }
+
+  private companion object {
+    private val INITIAL_CAMERA_POS = cameraOptions {
+      center(Point.fromLngLat(-88.90136, 25.04579))
+      zoom(5.0)
+    }
   }
 }
