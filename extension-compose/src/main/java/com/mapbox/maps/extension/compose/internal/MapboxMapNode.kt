@@ -184,14 +184,14 @@ private fun GesturesPlugin.removeNonDefaultOnClickListener(onMapClickListener: O
 
 private fun GesturesPlugin.addNonDefaultOnLongClickListener(onMapLongClickListener: OnMapLongClickListener) {
   // Avoid addOnMapLongClickListener when the default instance is used.
-  if (onMapLongClickListener !== DefaultSettingsProvider.defaultOnClickListener) {
+  if (onMapLongClickListener !== DefaultSettingsProvider.defaultOnLongClickListener) {
     addOnMapLongClickListener(onMapLongClickListener)
   }
 }
 
 private fun GesturesPlugin.removeNonDefaultOnLongClickListener(onMapLongClickListener: OnMapLongClickListener) {
   // Avoid removeOnMapLongClickListener when the default instance is used.
-  if (onMapLongClickListener !== DefaultSettingsProvider.defaultOnClickListener) {
+  if (onMapLongClickListener !== DefaultSettingsProvider.defaultOnLongClickListener) {
     removeOnMapLongClickListener(onMapLongClickListener)
   }
 }
