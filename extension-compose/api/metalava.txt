@@ -1,0 +1,57 @@
+// Signature format: 3.0
+package com.mapbox.maps.extension.compose {
+
+  public final class DefaultSettingsProvider {
+    method public com.mapbox.maps.plugin.LocationPuck2D createDefault2DPuck(android.content.Context context, boolean withBearing = false);
+    method public com.mapbox.maps.plugin.LocationPuck2D createDefault2DPuck(android.content.Context context);
+    method public com.mapbox.maps.plugin.attribution.generated.AttributionSettings defaultAttributionSettings(android.content.Context context, float pixelRatio = android.util.DisplayMetrics.density);
+    method public com.mapbox.maps.plugin.compass.generated.CompassSettings defaultCompassSettings(android.content.Context context, float pixelRatio = android.util.DisplayMetrics.density);
+    method public com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings defaultLocationComponentSettings(android.content.Context context, float pixelRatio = android.util.DisplayMetrics.density);
+    method public com.mapbox.maps.plugin.logo.generated.LogoSettings defaultLogoSettings(android.content.Context context, float pixelRatio = android.util.DisplayMetrics.density);
+    method public com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings defaultScaleBarSettings(android.content.Context context, float pixelRatio = android.util.DisplayMetrics.density);
+    method public com.mapbox.maps.plugin.gestures.generated.GesturesSettings getDefaultGesturesSettings();
+    method public com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings2 getDefaultLocationComponentSettings2();
+    method public kotlin.jvm.functions.Function1<com.mapbox.maps.CameraState,kotlin.Unit> getDefaultOnCameraStateChange();
+    method public com.mapbox.maps.plugin.gestures.OnMapClickListener getDefaultOnClickListener();
+    method public com.mapbox.maps.plugin.gestures.OnMapLongClickListener getDefaultOnLongClickListener();
+    property public final com.mapbox.maps.plugin.gestures.generated.GesturesSettings defaultGesturesSettings;
+    property public final com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings2 defaultLocationComponentSettings2;
+    property public final kotlin.jvm.functions.Function1<com.mapbox.maps.CameraState,kotlin.Unit> defaultOnCameraStateChange;
+    property public final com.mapbox.maps.plugin.gestures.OnMapClickListener defaultOnClickListener;
+    property public final com.mapbox.maps.plugin.gestures.OnMapLongClickListener defaultOnLongClickListener;
+    field public static final com.mapbox.maps.extension.compose.DefaultSettingsProvider INSTANCE;
+  }
+
+  public final class MapEffectKt {
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void MapEffect(Object? key1, kotlin.jvm.functions.Function3<? super kotlinx.coroutines.CoroutineScope,? super com.mapbox.maps.MapView,? super kotlin.coroutines.Continuation<? super kotlin.Unit>,?> block);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void MapEffect(Object? key1, Object? key2, kotlin.jvm.functions.Function3<? super kotlinx.coroutines.CoroutineScope,? super com.mapbox.maps.MapView,? super kotlin.coroutines.Continuation<? super kotlin.Unit>,?> block);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void MapEffect(Object? key1, Object? key2, Object? key3, kotlin.jvm.functions.Function3<? super kotlinx.coroutines.CoroutineScope,? super com.mapbox.maps.MapView,? super kotlin.coroutines.Continuation<? super kotlin.Unit>,?> block);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void MapEffect(Object![]? keys, kotlin.jvm.functions.Function3<? super kotlinx.coroutines.CoroutineScope,? super com.mapbox.maps.MapView,? super kotlin.coroutines.Continuation<? super kotlin.Unit>,?> block);
+  }
+
+  @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention) @kotlin.annotation.Target(allowedTargets={kotlin.annotation.AnnotationTarget, kotlin.annotation.AnnotationTarget, kotlin.annotation.AnnotationTarget, kotlin.annotation.AnnotationTarget, kotlin.annotation.AnnotationTarget}) public @interface MapboxMapComposable {
+  }
+
+  public final class MapboxMapKt {
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static void MapboxMap(androidx.compose.ui.Modifier modifier = Modifier, kotlin.jvm.functions.Function1<? super android.content.Context,com.mapbox.maps.MapInitOptions> mapInitOptionsFactory = { context -> return <init>(context) }, com.mapbox.maps.plugin.attribution.generated.AttributionSettings attributionSettings = DefaultSettingsProvider.defaultAttributionSettings(LocalContext.current.applicationContext), com.mapbox.maps.plugin.compass.generated.CompassSettings compassSettings = DefaultSettingsProvider.defaultCompassSettings(LocalContext.current.applicationContext), com.mapbox.maps.plugin.gestures.generated.GesturesSettings gesturesSettings = DefaultSettingsProvider.defaultGesturesSettings, com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings locationComponentSettings = DefaultSettingsProvider.defaultLocationComponentSettings(LocalContext.current.applicationContext), com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings2 locationComponentSettings2 = DefaultSettingsProvider.defaultLocationComponentSettings2, com.mapbox.maps.plugin.logo.generated.LogoSettings logoSettings = DefaultSettingsProvider.defaultLogoSettings(LocalContext.current.applicationContext), com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings scaleBarSettings = DefaultSettingsProvider.defaultScaleBarSettings(LocalContext.current.applicationContext), com.mapbox.maps.CameraOptions cameraOptions = CameraOptions.<init>().build(), kotlin.jvm.functions.Function1<? super com.mapbox.maps.CameraState,kotlin.Unit> onCameraStateChange = DefaultSettingsProvider.defaultOnCameraStateChange, com.mapbox.maps.plugin.gestures.OnMapClickListener onMapClickListener = DefaultSettingsProvider.defaultOnClickListener, com.mapbox.maps.plugin.gestures.OnMapLongClickListener onMapLongClickListener = DefaultSettingsProvider.defaultOnLongClickListener, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.MapboxMapScope,kotlin.Unit>? content = null);
+  }
+
+  @androidx.compose.foundation.layout.LayoutScopeMarker @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class MapboxMapScope {
+    field public static final com.mapbox.maps.extension.compose.MapboxMapScope INSTANCE;
+  }
+
+}
+
+package com.mapbox.maps.extension.compose.internal {
+
+  public final class MapPreviewPlaceholderKt {
+  }
+
+  public final class MapboxMapNodeKt {
+  }
+
+  public final class SettingsUtilsKt {
+  }
+
+}
+

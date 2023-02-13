@@ -15,6 +15,7 @@ build:
 	./gradlew extension-style:assembleRelease;
 	./gradlew extension-localization:assembleRelease;
 	./gradlew extension-androidauto:assembleRelease;
+	./gradlew extension-compose:assembleRelease;
 	./gradlew module-telemetry:assembleRelease;
 	./gradlew plugin-animation:assembleRelease;
 	./gradlew plugin-annotation:assembleRelease;
@@ -56,7 +57,7 @@ fix:
 
 .PHONY: sdkRegistryUpload
 sdkRegistryUpload:
-	./gradlew mapboxSDKRegistryUpload -x extension-androidauto:mapboxSDKRegistryUpload --no-parallel --no-daemon;
+	./gradlew mapboxSDKRegistryUpload -x extension-androidauto:mapboxSDKRegistryUpload -x extension-compose:mapboxSDKRegistryUpload --no-parallel --no-daemon;
 
 .PHONY: sdkRegistryPublish
 sdkRegistryPublish:
@@ -71,6 +72,15 @@ sdkRegistryUploadAndroidAutoExtension:
 sdkRegistryPublishAndroidAutoExtension:
 	python3 -m pip install git-pull-request;
 	./gradlew extension-androidauto:mapboxSDKRegistryPublish;
+
+.PHONY: sdkRegistryUploadComposeExtension
+sdkRegistryUploadComposeExtension:
+	./gradlew extension-compose:mapboxSDKRegistryUpload;
+
+.PHONY: sdkRegistryPublishComposeExtension
+sdkRegistryPublishComposeExtension:
+	python3 -m pip install git-pull-request;
+	./gradlew extension-compose:mapboxSDKRegistryPublish;
 
 .PHONY: clean
 clean:
