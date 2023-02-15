@@ -5,18 +5,23 @@ apply from: file('../gradle/artifact-settings.gradle')
 version = project.ext.versionName
 group = project.ext.mapboxArtifactGroupId
 afterEvaluate {
+    def isSnapshot = project.ext.versionName.endsWith("-SNAPSHOT")
     components.findAll { it.name.endsWith("Release") }.forEach { currentComponent ->
         def flavor = currentComponent.name.substring(0, currentComponent.name.length() - "Release".length())
+        // Append `-private` if we're publishing a privateRelease variant
         def componentRegistrySdkName = project.ext.mapboxRegistrySdkName + (flavor == "private" ? "-private" : "")
         registry {
-            sdkName = componentRegistrySdkName
-            override = project.ext.versionName.endsWith("-SNAPSHOT")
-            dryRun = false
-            publish = true
-            snapshot = project.ext.versionName.endsWith("-SNAPSHOT")
-            publishMessage = "cc @mapbox/maps-android"
-            publications = [currentComponent.name]
-            excludeFromRootProject = project.ext.mapboxRegistryExcludeFromRootProject
+            registryPublications {
+                "${currentComponent.name}" {
+                    sdkName = componentRegistrySdkName
+                    dryRun = false
+                    publish = true
+                    snapshot = isSnapshot
+                    publishMessage = "cc @mapbox/maps-android"
+                    publications = [currentComponent.name]
+                    excludeFromRootProject = project.ext.mapboxRegistryExcludeFromRootProject
+                }
+            }
         }
 
         tasks.register("javadocs${currentComponent.name}Jar", Jar) {
