@@ -343,26 +343,14 @@ class GeoJsonSourceTest : BaseStyleTest() {
   fun featureTest() {
     val latch = CountDownLatch(2)
     val answerList = mutableListOf<String?>()
-    val feature = Feature.fromJson(
-      """
-        {
-          "type": "Feature",
-          "geometry": {
-            "type": "Point",
-            "coordinates": [102.0, 0.5]
-          },
-          "properties": {
-                  "prop0": "value0"
-                }
-        }
-      """.trimIndent()
-    )
+    val dataIdList = mutableListOf<String?>()
     val testSource = geoJsonSource(SOURCE_ID) {
-      feature(feature)
+      feature(FEATURE, DATA_ID)
     }
     val listener = OnSourceDataLoadedListener {
       if (it.type == SourceDataType.METADATA && it.id == SOURCE_ID) {
         answerList.add(testSource.data)
+        it.dataId?.let(dataIdList::add)
         latch.countDown()
       }
     }
@@ -381,6 +369,8 @@ class GeoJsonSourceTest : BaseStyleTest() {
     assertEquals("", answerList[0])
     // Plain json string data getter is not supported due to performance consideration.
     assertNull(answerList[1])
+    assertEquals(1, dataIdList.size)
+    assertEquals(DATA_ID, dataIdList.first())
     mapboxMap.removeOnSourceDataLoadedListener(listener)
   }
 
@@ -388,39 +378,14 @@ class GeoJsonSourceTest : BaseStyleTest() {
   fun featureCollectionTest() {
     val latch = CountDownLatch(2)
     val answerList = mutableListOf<String?>()
-    val featureCollection = FeatureCollection.fromJson(
-      """
-        {
-          "type": "FeatureCollection",
-          "features": [
-            {
-              "type": "Feature",
-              "properties": {},
-              "geometry": {
-                "type": "Point",
-                "coordinates": [102.0, 0.5]
-              }
-            },
-            {
-              "type": "Feature",
-              "properties": {},
-              "geometry": {
-                "type": "LineString",
-                "coordinates": [
-                  [102.0, 0.0], [103.0, 1.0], [104.0, 0.0], [105.0, 1.0]
-                ]
-              }
-            }
-          ]
-        }
-      """.trimIndent()
-    )
+    val dataIdList = mutableListOf<String?>()
     val testSource = geoJsonSource(SOURCE_ID) {
-      featureCollection(featureCollection)
+      featureCollection(FEATURE_COLLECTION, DATA_ID)
     }
     val listener = OnSourceDataLoadedListener {
       if (it.type == SourceDataType.METADATA && it.id == SOURCE_ID) {
         answerList.add(testSource.data)
+        it.dataId?.let(dataIdList::add)
         latch.countDown()
       }
     }
@@ -439,6 +404,8 @@ class GeoJsonSourceTest : BaseStyleTest() {
     assertEquals("", answerList[0])
     // Plain json string data getter is not supported due to performance consideration.
     assertNull(answerList[1])
+    assertEquals(1, dataIdList.size)
+    assertEquals(DATA_ID, dataIdList.first())
     mapboxMap.removeOnSourceDataLoadedListener(listener)
   }
 
@@ -446,26 +413,14 @@ class GeoJsonSourceTest : BaseStyleTest() {
   fun geometryTest() {
     val latch = CountDownLatch(2)
     val answerList = mutableListOf<String?>()
-    val feature = Feature.fromJson(
-      """
-        {
-          "type": "Feature",
-          "geometry": {
-            "type": "Point",
-            "coordinates": [102.0, 0.5]
-          },
-          "properties": {
-                  "prop0": "value0"
-                }
-        }
-      """.trimIndent()
-    )
+    val dataIdList = mutableListOf<String?>()
     val testSource = geoJsonSource(SOURCE_ID) {
-      geometry(feature.geometry()!!)
+      geometry(FEATURE.geometry()!!, DATA_ID)
     }
     val listener = OnSourceDataLoadedListener {
       if (it.type == SourceDataType.METADATA && it.id == SOURCE_ID) {
         answerList.add(testSource.data)
+        it.dataId?.let(dataIdList::add)
         latch.countDown()
       }
     }
@@ -484,6 +439,8 @@ class GeoJsonSourceTest : BaseStyleTest() {
     assertEquals("", answerList[0])
     // Plain json string data getter is not supported due to performance consideration.
     assertNull(answerList[1])
+    assertEquals(1, dataIdList.size)
+    assertEquals(DATA_ID, dataIdList.first())
     mapboxMap.removeOnSourceDataLoadedListener(listener)
   }
 
@@ -491,26 +448,14 @@ class GeoJsonSourceTest : BaseStyleTest() {
   fun featureAfterBindTest() {
     val latch = CountDownLatch(2)
     val answerList = mutableListOf<String?>()
-    val feature = Feature.fromJson(
-      """
-        {
-          "type": "Feature",
-          "geometry": {
-            "type": "Point",
-            "coordinates": [102.0, 0.5]
-          },
-          "properties": {
-                  "prop0": "value0"
-                }
-        }
-      """.trimIndent()
-    )
+    val dataIdList = mutableListOf<String?>()
     val testSource = geoJsonSource(SOURCE_ID) {
       url(TEST_URI)
     }
     val listener = OnSourceDataLoadedListener {
       if (it.type == SourceDataType.METADATA && it.id == SOURCE_ID) {
         answerList.add(testSource.data)
+        it.dataId?.let(dataIdList::add)
         latch.countDown()
       }
     }
@@ -519,7 +464,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
         mapboxMap.apply {
           addOnSourceDataLoadedListener(listener)
           setupSource(testSource)
-          testSource.feature(feature)
+          testSource.feature(FEATURE, DATA_ID)
         }
       }
     }
@@ -530,6 +475,8 @@ class GeoJsonSourceTest : BaseStyleTest() {
     assertEquals("", answerList[0])
     // Plain json string data getter is not supported due to performance consideration.
     assertNull(answerList[1])
+    assertEquals(1, dataIdList.size)
+    assertEquals(DATA_ID, dataIdList.first())
     mapboxMap.removeOnSourceDataLoadedListener(listener)
   }
 
@@ -537,39 +484,15 @@ class GeoJsonSourceTest : BaseStyleTest() {
   fun featureCollectionAfterBindTest() {
     val latch = CountDownLatch(2)
     val answerList = mutableListOf<String?>()
-    val featureCollection = FeatureCollection.fromJson(
-      """
-        {
-          "type": "FeatureCollection",
-          "features": [
-            {
-              "type": "Feature",
-              "properties": {},
-              "geometry": {
-                "type": "Point",
-                "coordinates": [102.0, 0.5]
-              }
-            },
-            {
-              "type": "Feature",
-              "properties": {},
-              "geometry": {
-                "type": "LineString",
-                "coordinates": [
-                  [102.0, 0.0], [103.0, 1.0], [104.0, 0.0], [105.0, 1.0]
-                ]
-              }
-            }
-          ]
-        }
-      """.trimIndent()
-    )
+    val dataIdList = mutableListOf<String?>()
     val testSource = geoJsonSource(SOURCE_ID) {
       url(TEST_URI)
     }
     val listener = OnSourceDataLoadedListener {
       if (it.type == SourceDataType.METADATA && it.id == SOURCE_ID) {
         answerList.add(testSource.data)
+        println("Data-id : ${it.dataId}")
+        it.dataId?.let(dataIdList::add)
         latch.countDown()
       }
     }
@@ -578,7 +501,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
         mapboxMap.apply {
           addOnSourceDataLoadedListener(listener)
           setupSource(testSource)
-          testSource.featureCollection(featureCollection)
+          testSource.featureCollection(FEATURE_COLLECTION, DATA_ID)
         }
       }
     }
@@ -589,6 +512,8 @@ class GeoJsonSourceTest : BaseStyleTest() {
     assertEquals("", answerList[0])
     // Plain json string data getter is not supported due to performance consideration.
     assertNull(answerList[1])
+    assertEquals(1, dataIdList.size)
+    assertEquals(DATA_ID, dataIdList.first())
     mapboxMap.removeOnSourceDataLoadedListener(listener)
   }
 
@@ -596,26 +521,14 @@ class GeoJsonSourceTest : BaseStyleTest() {
   fun geometryAfterBindTest() {
     val latch = CountDownLatch(2)
     val answerList = mutableListOf<String?>()
-    val feature = Feature.fromJson(
-      """
-        {
-          "type": "Feature",
-          "geometry": {
-            "type": "Point",
-            "coordinates": [102.0, 0.5]
-          },
-          "properties": {
-                  "prop0": "value0"
-                }
-        }
-      """.trimIndent()
-    )
+    val dataIdList = mutableListOf<String?>()
     val testSource = geoJsonSource(SOURCE_ID) {
       url(TEST_URI)
     }
     val listener = OnSourceDataLoadedListener {
       if (it.type == SourceDataType.METADATA && it.id == SOURCE_ID) {
         answerList.add(testSource.data)
+        it.dataId?.let(dataIdList::add)
         latch.countDown()
       }
     }
@@ -624,7 +537,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
         mapboxMap.apply {
           addOnSourceDataLoadedListener(listener)
           setupSource(testSource)
-          testSource.geometry(feature.geometry()!!)
+          testSource.geometry(FEATURE.geometry()!!, DATA_ID)
         }
       }
     }
@@ -635,6 +548,8 @@ class GeoJsonSourceTest : BaseStyleTest() {
     assertEquals("", answerList[0])
     // Plain json string data getter is not supported due to performance consideration.
     assertNull(answerList[1])
+    assertEquals(1, dataIdList.size)
+    assertEquals(DATA_ID, dataIdList.first())
     mapboxMap.removeOnSourceDataLoadedListener(listener)
   }
 
@@ -659,6 +574,48 @@ class GeoJsonSourceTest : BaseStyleTest() {
     const val SOURCE_ID = "testId"
     val TEST_GEOJSON = FeatureCollection.fromFeatures(listOf()).toJson()
     const val LATCH_MAX_TIME_MS = 10_000L
+    const val DATA_ID = "data-id"
+    val FEATURE = Feature.fromJson(
+      """
+        {
+          "type": "Feature",
+          "geometry": {
+            "type": "Point",
+            "coordinates": [102.0, 0.5]
+          },
+          "properties": {
+                  "prop0": "value0"
+                }
+        }
+      """.trimIndent()
+    )
+    val FEATURE_COLLECTION = FeatureCollection.fromJson(
+      """
+        {
+          "type": "FeatureCollection",
+          "features": [
+            {
+              "type": "Feature",
+              "properties": {},
+              "geometry": {
+                "type": "Point",
+                "coordinates": [102.0, 0.5]
+              }
+            },
+            {
+              "type": "Feature",
+              "properties": {},
+              "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                  [102.0, 0.0], [103.0, 1.0], [104.0, 0.0], [105.0, 1.0]
+                ]
+              }
+            }
+          ]
+        }
+      """.trimIndent()
+    )
   }
 }
 

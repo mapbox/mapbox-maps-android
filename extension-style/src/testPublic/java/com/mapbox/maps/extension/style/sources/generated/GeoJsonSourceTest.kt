@@ -17,7 +17,6 @@ import com.mapbox.maps.StylePropertyValueKind
 import com.mapbox.maps.extension.style.ShadowStyleManager
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.expressions.dsl.generated.get
-import com.mapbox.maps.extension.style.expressions.dsl.generated.literal
 import com.mapbox.maps.extension.style.expressions.dsl.generated.sum
 import com.mapbox.maps.extension.style.types.PromoteId
 import com.mapbox.maps.extension.style.utils.TypeUtils
@@ -79,9 +78,19 @@ class GeoJsonSourceTest {
       data(TEST_GEOJSON)
     }
     testSource.bindTo(style)
-
     verify { style.setStyleGeoJSONSourceData("testId", capture(jsonSlot)) }
-    assertTrue(jsonSlot.captured.string.toString().contains("{\"type\":\"FeatureCollection\",\"features\":[]}"))
+    assertTrue(jsonSlot.captured.string.contains("{\"type\":\"FeatureCollection\",\"features\":[]}"))
+  }
+
+  @Test
+  fun dataSetWithId() {
+    val testSource = geoJsonSource("testId") {
+      data(TEST_GEOJSON, DATA_ID)
+    }
+    testSource.bindTo(style)
+
+    verify { style.setStyleGeoJSONSourceData("testId", DATA_ID, capture(jsonSlot)) }
+    assertTrue(jsonSlot.captured.string.contains("{\"type\":\"FeatureCollection\",\"features\":[]}"))
   }
 
   @Test
@@ -95,7 +104,14 @@ class GeoJsonSourceTest {
     Shadows.shadowOf(Looper.getMainLooper()).idle()
 
     verify { style.setStyleGeoJSONSourceData("testId", capture(jsonSlot)) }
-    assertEquals(jsonSlot.captured.string.toString(), "{\"type\":\"FeatureCollection\",\"features\":[]}")
+    assertEquals(jsonSlot.captured.string, "{\"type\":\"FeatureCollection\",\"features\":[]}")
+
+    testSource.data(TEST_GEOJSON, DATA_ID)
+    Shadows.shadowOf(GeoJsonSource.workerThread.looper).idle()
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+
+    verify { style.setStyleGeoJSONSourceData("testId", DATA_ID, capture(jsonSlot)) }
+    assertEquals(jsonSlot.captured.string, "{\"type\":\"FeatureCollection\",\"features\":[]}")
   }
 
   @Test
@@ -116,7 +132,7 @@ class GeoJsonSourceTest {
     testSource.bindTo(style)
 
     verify { style.setStyleGeoJSONSourceData("testId", capture(jsonSlot)) }
-    assertEquals(jsonSlot.captured.string.toString(), "testUrl")
+    assertEquals(jsonSlot.captured.string, "testUrl")
   }
 
   @Test
@@ -130,7 +146,7 @@ class GeoJsonSourceTest {
     Shadows.shadowOf(Looper.getMainLooper()).idle()
 
     verify { style.setStyleGeoJSONSourceData("testId", capture(jsonSlot)) }
-    assertEquals(jsonSlot.captured.string.toString(), "testUrl")
+    assertEquals(jsonSlot.captured.string, "testUrl")
   }
 
   @Test
@@ -300,6 +316,7 @@ class GeoJsonSourceTest {
     assertEquals((hashMapOf("key1" to "x", "key2" to "y") as HashMap<String, Any>).toString(), testSource.clusterProperties?.toString())
     verify { style.getStyleSourceProperty("testId", "clusterProperties") }
   }
+
   // Cluster Properties is not mutable so afterBind test is ignored
   @Test
   fun clusterPropertyTest() {
@@ -467,111 +484,59 @@ class GeoJsonSourceTest {
 
   @Test
   fun featureAfterBindTest() {
-    val feature = Feature.fromJson(
-      """
-        {
-          "type": "Feature",
-          "geometry": {
-            "type": "Point",
-            "coordinates": [102.0, 0.5]
-          },
-          "properties": {
-                  "prop0": "value0"
-                }
-        }
-      """.trimIndent()
-    )
     val testSource = geoJsonSource("testId") {}
     testSource.bindTo(style)
     Shadows.shadowOf(Looper.getMainLooper()).pause()
     Shadows.shadowOf(GeoJsonSource.workerThread.looper).pause()
-    testSource.feature(feature)
+    testSource.feature(FEATURE)
     Shadows.shadowOf(GeoJsonSource.workerThread.looper).idle()
     Shadows.shadowOf(Looper.getMainLooper()).idle()
     verify { style.setStyleGeoJSONSourceData("testId", any()) }
+
+    testSource.feature(FEATURE, DATA_ID)
+    Shadows.shadowOf(GeoJsonSource.workerThread.looper).idle()
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+    verify { style.setStyleGeoJSONSourceData("testId", DATA_ID, any()) }
   }
 
   @Test
   fun featureCollectionAfterBindTest() {
-    val featureCollection = FeatureCollection.fromJson(
-      """
-        {
-          "type": "FeatureCollection",
-          "features": [
-            {
-              "type": "Feature",
-              "geometry": {
-                "type": "Point",
-                "coordinates": [102.0, 0.5]
-              }
-            },
-            {
-              "type": "Feature",
-              "geometry": {
-                "type": "LineString",
-                "coordinates": [
-                  [102.0, 0.0], [103.0, 1.0], [104.0, 0.0], [105.0, 1.0]
-                ]
-              }
-            }
-          ]
-        }
-      """.trimIndent()
-    )
     val testSource = geoJsonSource("testId") {}
     testSource.bindTo(style)
     Shadows.shadowOf(Looper.getMainLooper()).pause()
     Shadows.shadowOf(GeoJsonSource.workerThread.looper).pause()
-    testSource.featureCollection(featureCollection)
+    testSource.featureCollection(FEATURE_COLLECTION)
     Shadows.shadowOf(GeoJsonSource.workerThread.looper).idle()
     Shadows.shadowOf(Looper.getMainLooper()).idle()
     verify { style.setStyleGeoJSONSourceData("testId", any()) }
+
+    testSource.featureCollection(FEATURE_COLLECTION, DATA_ID)
+    Shadows.shadowOf(GeoJsonSource.workerThread.looper).idle()
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+    verify { style.setStyleGeoJSONSourceData("testId", DATA_ID, any()) }
   }
 
   @Test
   fun geometryAfterBindTest() {
-    val feature = Feature.fromJson(
-      """
-        {
-          "type": "Feature",
-          "geometry": {
-            "type": "Point",
-            "coordinates": [102.0, 0.5]
-          },
-          "properties": {
-                  "prop0": "value0"
-                }
-        }
-      """.trimIndent()
-    )
     val testSource = geoJsonSource("testId") {}
     testSource.bindTo(style)
     Shadows.shadowOf(Looper.getMainLooper()).pause()
     Shadows.shadowOf(GeoJsonSource.workerThread.looper).pause()
-    testSource.geometry(feature.geometry()!!)
+    testSource.geometry(FEATURE.geometry()!!)
     Shadows.shadowOf(GeoJsonSource.workerThread.looper).idle()
     Shadows.shadowOf(Looper.getMainLooper()).idle()
     verify { style.setStyleGeoJSONSourceData("testId", any()) }
+
+    testSource.geometry(FEATURE.geometry()!!, DATA_ID)
+    Shadows.shadowOf(GeoJsonSource.workerThread.looper).idle()
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+    verify { style.setStyleGeoJSONSourceData("testId", DATA_ID, any()) }
   }
 
   @Test
   fun featureTest() {
-    val feature = Feature.fromJson(
-      """
-        {
-          "type": "Feature",
-          "geometry": {
-            "type": "Point",
-            "coordinates": [102.0, 0.5]
-          },
-          "properties": {
-                  "prop0": "value0"
-                }
-        }
-      """.trimIndent()
-    )
     val testSource = geoJsonSource("testId") {
-      feature(feature)
+      feature(FEATURE)
     }
     testSource.bindTo(style)
     verify { style.addStyleSource("testId", capture(valueSlot)) }
@@ -580,33 +545,8 @@ class GeoJsonSourceTest {
 
   @Test
   fun featureCollectionTest() {
-    val featureCollection = FeatureCollection.fromJson(
-      """
-        {
-          "type": "FeatureCollection",
-          "features": [
-            {
-              "type": "Feature",
-              "geometry": {
-                "type": "Point",
-                "coordinates": [102.0, 0.5]
-              }
-            },
-            {
-              "type": "Feature",
-              "geometry": {
-                "type": "LineString",
-                "coordinates": [
-                  [102.0, 0.0], [103.0, 1.0], [104.0, 0.0], [105.0, 1.0]
-                ]
-              }
-            }
-          ]
-        }
-      """.trimIndent()
-    )
     val testSource = geoJsonSource("testId") {
-      featureCollection(featureCollection)
+      featureCollection(FEATURE_COLLECTION)
     }
     testSource.bindTo(style)
     verify { style.addStyleSource("testId", capture(valueSlot)) }
@@ -615,22 +555,8 @@ class GeoJsonSourceTest {
 
   @Test
   fun geometryTest() {
-    val feature = Feature.fromJson(
-      """
-        {
-          "type": "Feature",
-          "geometry": {
-            "type": "Point",
-            "coordinates": [102.0, 0.5]
-          },
-          "properties": {
-                  "prop0": "value0"
-                }
-        }
-      """.trimIndent()
-    )
     val testSource = geoJsonSource("testId") {
-      geometry(feature.geometry()!!)
+      geometry(FEATURE.geometry()!!)
     }
     testSource.bindTo(style)
     verify { style.addStyleSource("testId", capture(valueSlot)) }
@@ -726,6 +652,46 @@ class GeoJsonSourceTest {
 
   companion object {
     private val TEST_GEOJSON = FeatureCollection.fromFeatures(listOf()).toJson()
+    private val DATA_ID = "data-id"
+    private val FEATURE = Feature.fromJson(
+      """
+        {
+          "type": "Feature",
+          "geometry": {
+            "type": "Point",
+            "coordinates": [102.0, 0.5]
+          },
+          "properties": {
+                  "prop0": "value0"
+                }
+        }
+      """.trimIndent()
+    )
+    private val FEATURE_COLLECTION = FeatureCollection.fromJson(
+      """
+        {
+          "type": "FeatureCollection",
+          "features": [
+            {
+              "type": "Feature",
+              "geometry": {
+                "type": "Point",
+                "coordinates": [102.0, 0.5]
+              }
+            },
+            {
+              "type": "Feature",
+              "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                  [102.0, 0.0], [103.0, 1.0], [104.0, 0.0], [105.0, 1.0]
+                ]
+              }
+            }
+          ]
+        }
+      """.trimIndent()
+    )
   }
 }
 

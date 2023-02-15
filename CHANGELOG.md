@@ -3,7 +3,9 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
-
+## Features ✨ and improvements 🏁
+* Add `data-id` argument to `GeoJsonSource` data update methods. `data-id` is later attached to the 
+`SourceDataLoadedEventData` event and allows to track the specific `GeoJsonSource` update. ([1991](https://github.com/mapbox/mapbox-maps-android/pull/1991))
 
 # 10.11.0 February 09, 2023
 ## Features ✨ and improvements 🏁
