@@ -4,11 +4,10 @@ Mapbox welcomes participation and contributions from everyone.
 
 # 10.10.2
 ## Bug fixes 🐞
-* [tile store] Remove token from TileStore Logs. ([1992](https://github.com/mapbox/mapbox-maps-android/pull/1992))
-* [billing] Fix double-sending of events when validity is 0 in billing session. ([1992](https://github.com/mapbox/mapbox-maps-android/pull/1992))
+* [tile store] Remove token from TileStore Logs. ([2011](https://github.com/mapbox/mapbox-maps-android/pull/2011))
 
 ## Dependencies
-* Update common to v23.2.3. ([1992](https://github.com/mapbox/mapbox-maps-android/pull/1992))
+* Update common to v23.2.3. ([2011](https://github.com/mapbox/mapbox-maps-android/pull/2011))
 
 # 10.10.1 January 25, 2023
 ## Features ✨ and improvements 🏁
