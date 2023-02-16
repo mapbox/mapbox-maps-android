@@ -4,6 +4,12 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 10.10.2
+## Bug fixes 🐞
+* [tile store] Remove token from TileStore Logs. ([2011](https://github.com/mapbox/mapbox-maps-android/pull/2011))
+
+## Dependencies
+* Update common to v23.2.3. ([2011](https://github.com/mapbox/mapbox-maps-android/pull/2011))
 
 # 10.11.0 February 09, 2023
 ## Features ✨ and improvements 🏁
