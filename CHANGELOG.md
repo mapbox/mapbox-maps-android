@@ -7,6 +7,13 @@ Mapbox welcomes participation and contributions from everyone.
 * Add `data-id` argument to `GeoJsonSource` data update methods. `data-id` is later attached to the 
 `SourceDataLoadedEventData` event and allows to track the specific `GeoJsonSource` update. ([1991](https://github.com/mapbox/mapbox-maps-android/pull/1991))
 
+# 10.10.2 February 16, 2023
+## Bug fixes 🐞
+* [tile store] Remove token from TileStore Logs. ([2011](https://github.com/mapbox/mapbox-maps-android/pull/2011))
+
+## Dependencies
+* Update common to v23.2.3. ([2011](https://github.com/mapbox/mapbox-maps-android/pull/2011))
+
 # 10.11.0 February 09, 2023
 ## Features ✨ and improvements 🏁
 * Skip redundant `MapboxMap.setCamera` updates in `CameraAnimationsPlugin`. ([1909](https://github.com/mapbox/mapbox-maps-android/pull/1909))
