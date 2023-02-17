@@ -2,6 +2,7 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
+
 # main
 ## Features ✨ and improvements 🏁
 * Add `data-id` argument to `GeoJsonSource` data update methods. `data-id` is later attached to the 
