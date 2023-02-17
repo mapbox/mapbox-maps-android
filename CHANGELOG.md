@@ -1,6 +1,5 @@
 # Changelog for Mapbox Maps SDK v10 for Android
 
-
 Mapbox welcomes participation and contributions from everyone.
 
 # main
