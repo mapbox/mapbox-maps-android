@@ -88,7 +88,7 @@ generate-changelog:
 	changelog-draft -b main -p $(TAG) -o CHANGELOG.md
 
 # Use `make update-android-docs TAG=YourReleaseTag` while running locally.
-# Run `make prepare-release-doc` first in the internal repository,
+# Run `make prepare-public-release-doc` or `make prepare-private-release-doc` first in the internal repository,
 # Note: if run locally, execute `mbx env` first.
 .PHONY: update-android-docs
 update-android-docs:
