@@ -3,12 +3,14 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
-## Bug fixes 🐞
-* Fix wrong `onLongTouch` event detected on any map gesture after clicks on ViewAnnotation. ([1954](https://github.com/mapbox/mapbox-maps-android/pull/1954))
 
+# 10.11.1 February 21, 2023
 ## Bug fixes 🐞
-* Original gesture settings should be maintained after map operations (such as panning the map) complete. ([1989](https://github.com/mapbox/mapbox-maps-android/pull/1989))
+* [tile store] Remove access token from TileStore Log ([2019](https://github.com/mapbox/mapbox-maps-android/pull/2019))
+* One-time migrate MME's mapboxTelemetryState flag to CoreTelemetry ([2019](https://github.com/mapbox/mapbox-maps-android/pull/2019))
 
+## Dependencies
+* Update common to v23.3.2. ([2019](https://github.com/mapbox/mapbox-maps-android/pull/2019))
 
 # 10.11.0 February 09, 2023
 ## Features ✨ and improvements 🏁
