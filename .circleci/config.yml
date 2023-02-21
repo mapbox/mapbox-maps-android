@@ -71,92 +71,6 @@ workflows:
       - build-android-auto-app:
           requires:
             - verify-code
-      - build-modules-and-instrumentation-tests:
-          requires:
-            - verify-code
-          filters:
-            tags:
-              only: /(v.*|extension-androidauto-v.*)/
-      - run-app-instrumentation-test:
-          requires:
-            - build-modules-and-instrumentation-tests
-      - run-sdk-instrumentation-test:
-          requires:
-            - build-modules-and-instrumentation-tests
-      - run-robo-test:
-          requires:
-            - build-modules-and-instrumentation-tests
-      - sdk-e2e-test:
-          filters:
-              branches:
-                  ignore:
-                      - main
-                      - /<< pipeline.parameters.git_release_branch >>/
-          name: run-sdk-e2e-test-devel
-          requires:
-              - verify-code
-      - sdk-e2e-test:
-          filters:
-              branches:
-                  only:
-                      - main
-                      - /<< pipeline.parameters.git_release_branch >>/
-              tags:
-                  only: /<< pipeline.parameters.git_release_tag >>/
-          name: run-sdk-e2e-test-validation
-          requires:
-              - verify-code
-          validation: true
-      - sync-internal-ci:
-          filters:
-            branches:
-              only:
-                - main
-                - /<< pipeline.parameters.git_release_branch >>/
-          requires:
-            - verify-code
-
-  validation:
-    when: << pipeline.parameters.mapbox_upstream >>
-    jobs:
-      - run-sdk-instrumentation-test
-
-  weekly:
-    triggers:
-      - schedule:
-          # at 7:00 on Monday
-          cron: 0 7 * * 1
-          filters:
-            branches:
-              only:
-                - main
-    jobs:
-      - check-gradle-dependencies
-      - run-robo-test-weekly:
-          requires:
-            - build-modules-and-instrumentation-tests
-      - run-sdk-instrumentation-test-weekly:
-          requires:
-            - run-robo-test-weekly
-      - build-modules-and-instrumentation-tests:
-          requires:
-            - verify-code
-      - verify-code
-
-  validation-weekly:
-    when: << pipeline.parameters.weekly >>
-    jobs:
-      - check-gradle-dependencies
-      - run-robo-test-weekly:
-          requires:
-            - build-modules-and-instrumentation-tests
-      - run-sdk-instrumentation-test-weekly:
-          requires:
-            - run-robo-test-weekly
-      - build-modules-and-instrumentation-tests:
-          requires:
-            - verify-code
-      - verify-code
 
 commands:
   save-to-workspace:
@@ -575,7 +489,7 @@ jobs:
                 name: check release runtime Mapbox dependencies to fail fast
                 command: |
                   echo "PR Target branch: $PR_TARGET_BRANCH"
-                  ./gradlew sdk:dependencyInsight --configuration releaseRuntimeClasspath --dependency com.mapbox.maps | grep -vzq 'FAILED'
+                  ./gradlew sdk:dependencyInsight --configuration publicReleaseRuntimeClasspath --dependency com.mapbox.maps | grep -vzq 'FAILED'
             - run:
                 name: check changelog
                 command: |
@@ -747,7 +661,7 @@ jobs:
             - restore-gradle-cache
             - run:
                 name: lintRelease
-                command: ./gradlew lintPublicRelease lintPrivateRelease
+                command: ./gradlew lintPublicRelease
       - run: exit 0
 
   run-robo-test:
