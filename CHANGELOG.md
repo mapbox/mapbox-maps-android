@@ -6,7 +6,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 # 10.11.1 February 21, 2023
 ## Bug fixes 🐞
-* [tile store] Remove access token from TileStore Log ([2019](https://github.com/mapbox/mapbox-maps-android/pull/2019))
+* [tile store] Remove access token from TileStore Log. ([2019](https://github.com/mapbox/mapbox-maps-android/pull/2019))
 * One-time migrate MME's mapboxTelemetryState flag to CoreTelemetry ([2019](https://github.com/mapbox/mapbox-maps-android/pull/2019))
 
 ## Dependencies
