@@ -33,24 +33,25 @@ import com.mapbox.maps.logW
  * @see [The online documentation](https://docs.mapbox.com/mapbox-gl-js/style-spec/sources/#geojson)
  *
  */
-class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
-  private val workerHandler by lazy {
-    Handler(workerThread.looper)
+class GeoJsonSource : Source {
+  @Deprecated(
+    "SourceGeoJson constructor is deprecated, use Builder class instead",
+    level = DeprecationLevel.ERROR
+  )
+  constructor(builder: Builder) : super(builder.sourceId) {
+    sourceProperties.putAll(builder.properties)
+    volatileSourceProperties.putAll(builder.volatileProperties)
+    initGeoJson = builder.geoJson
+    initData = builder.data
+    initDataId = builder.dataId
   }
 
-  private var initGeoJson: GeoJson? = null
-  private var initData: String? = null
-  private var initDataId: String? = null
+  private var initGeoJson: GeoJson?
+  private var initData: String?
+  private var initDataId: String?
 
-  private constructor(
-    builder: Builder,
-    geoJson: GeoJson?,
-    data: String?,
-    dataId: String?,
-  ) : this(builder) {
-    this.initGeoJson = geoJson
-    this.initData = data
-    this.initDataId = dataId
+  private val workerHandler by lazy {
+    Handler(workerThread.looper)
   }
 
   private fun setGeoJson(geoJson: GeoJson, dataId: String? = null) {
@@ -119,11 +120,6 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
       setData(it, initDataId)
       initData = null
     }
-  }
-
-  init {
-    sourceProperties.putAll(builder.properties)
-    volatileSourceProperties.putAll(builder.volatileProperties)
   }
 
   /**
@@ -455,9 +451,9 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
     // Properties that only settable after the source is added to the style.
     internal val volatileProperties = HashMap<String, PropertyValue<*>>()
 
-    private var geoJson: GeoJson? = null
-    private var data: String? = null
-    private var dataId: String? = null
+    internal var geoJson: GeoJson? = null
+    internal var data: String? = null
+    internal var dataId: String? = null
 
     /**
      * @param value an URL to a GeoJSON file, or an inline GeoJSON.
@@ -706,11 +702,12 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
      *
      * @return the GeoJsonSource
      */
+    @Suppress("DEPRECATION_ERROR")
     fun build(): GeoJsonSource {
       // set default data to allow empty data source.
       val propertyValue = PropertyValue("data", TypeUtils.wrapToValue(""))
       properties[propertyValue.propertyName] = propertyValue
-      return GeoJsonSource(this, geoJson, data, dataId)
+      return GeoJsonSource(this)
     }
   }
 
