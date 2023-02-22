@@ -3,11 +3,12 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
+
+# 10.12.0-beta.1 February 22, 2023
 ## Features ✨ and improvements 🏁
 * Add `data-id` argument to `GeoJsonSource` data update methods. `data-id` is later attached to the 
 `SourceDataLoadedEventData` event and allows to track the specific `GeoJsonSource` update. ([1991](https://github.com/mapbox/mapbox-maps-android/pull/1991))
 * Reduce line gradient texture size if there is no color change.
-* Update mapbox-common to v23.4.0-beta.1.
 
 ## Bug fixes 🐞
 * Avoid generation of the unneeded glyph textures.
@@ -17,6 +18,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v10.12.0-beta.1 and common to v23.4.0-beta.1.
+
 
 # 10.10.2 February 16, 2023
 ## Bug fixes 🐞
