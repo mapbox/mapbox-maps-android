@@ -58,6 +58,10 @@ fix:
 sdkRegistryUpload:
 	./gradlew mapboxSDKRegistryUpload -x extension-androidauto:mapboxSDKRegistryUpload --no-parallel --no-daemon;
 
+.PHONY: sdkRegistryPublicReleaseUpload
+sdkRegistryPublicReleaseUpload:
+	./gradlew mapboxSDKRegistryPublicReleaseUpload -x extension-androidauto:mapboxSDKRegistryPublicReleaseUpload --no-parallel --no-daemon;
+
 .PHONY: sdkRegistryPublish
 sdkRegistryPublish:
 	python3 -m pip install git-pull-request;

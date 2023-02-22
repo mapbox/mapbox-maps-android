@@ -94,6 +94,7 @@ function create_pull_request() {
 gh auth login --with-token < gh_token.txt
 
 # Generate docs, create branch and make PR with API documentation in the SDK repo.
+cd ..
 prepare_branch_with_documentation $MAPS_SDK_VERSION
 create_pull_request "Add ${MAPS_SDK_VERSION} API documentation." $BRANCH_WITH_DOCUMENTATION
 
