@@ -166,6 +166,13 @@ internal class NativeMapImpl(val map: MapInterface) :
     return map.getViewAnnotationOptions(identifier)
   }
 
+  override fun tileCover(
+    tileCoverOptions: TileCoverOptions,
+    cameraOptions: CameraOptions?
+  ): MutableList<CanonicalTileID> {
+    return map.tileCover(tileCoverOptions, cameraOptions)
+  }
+
   override fun coordinateBoundsForCamera(cameraOptions: CameraOptions): CoordinateBounds {
     return map.coordinateBoundsForCamera(cameraOptions)
   }
