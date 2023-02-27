@@ -5,7 +5,7 @@ apply from: file('../gradle/artifact-settings.gradle')
 version = project.ext.versionName
 group = project.ext.mapboxArtifactGroupId
 afterEvaluate {
-    def isSnapshot = project.ext.versionName.endsWith("-SNAPSHOT")
+    def isSnapshot = project.ext.versionName.contains("-SNAPSHOT")
     components.findAll { it.name.endsWith("Release") }.forEach { currentComponent ->
         def flavor = currentComponent.name.substring(0, currentComponent.name.length() - "Release".length())
         // Append `-private` if we're publishing a privateRelease variant
