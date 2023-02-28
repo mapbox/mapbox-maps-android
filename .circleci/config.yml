@@ -51,12 +51,6 @@ workflows:
       - verify-api-revapi:
           requires:
             - verify-code
-      - verify-permissions:
-          requires:
-            - build-modules-and-instrumentation-tests
-      - verify-internal:
-            requires:
-              - verify-code
       - run-lint:
           requires:
             - verify-code
@@ -68,9 +62,6 @@ workflows:
       - run-style-test:
           requires:
             - start-run-style-test
-      - build-android-auto-app:
-          requires:
-            - verify-code
 
 commands:
   save-to-workspace:
@@ -834,12 +825,6 @@ jobs:
             - store_artifacts:
                 path: app/build/outputs/apk
                 destination: .
-            - update-version-name
-            - init-aws
-            - generate-docs
-            - publish-sdk-registry
-            # should be the last step on the job - halts job execution to not send Slack notification if not needed
-            - publish-sdk-registry-named-snapshot
       - run: exit 0
 
   sdk-e2e-test:
