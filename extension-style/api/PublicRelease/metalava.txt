@@ -4369,10 +4369,14 @@ package com.mapbox.maps.extension.style.sources.generated {
   }
 
   public final class GeoJsonSource extends com.mapbox.maps.extension.style.sources.Source {
-    ctor public GeoJsonSource(com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder builder);
+    ctor @Deprecated public GeoJsonSource(com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder builder);
+    method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource data(String value, String? dataId = null);
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource data(String value);
+    method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource feature(com.mapbox.geojson.Feature value, String? dataId = null);
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource feature(com.mapbox.geojson.Feature value);
+    method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource featureCollection(com.mapbox.geojson.FeatureCollection value, String? dataId = null);
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource featureCollection(com.mapbox.geojson.FeatureCollection value);
+    method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource geometry(com.mapbox.geojson.Geometry value, String? dataId = null);
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource geometry(com.mapbox.geojson.Geometry value);
     method public String? getAttribution();
     method public Long? getBuffer();
@@ -4389,6 +4393,7 @@ package com.mapbox.maps.extension.style.sources.generated {
     method public Double? getTolerance();
     method public String getType$metalava_module();
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource prefetchZoomDelta(long value = 4L);
+    method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource url(String value, String? dataId = null);
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource url(String value);
     property public final String? attribution;
     property public final Long? buffer;
@@ -4417,10 +4422,14 @@ package com.mapbox.maps.extension.style.sources.generated {
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder clusterProperty(String propertyName, com.mapbox.maps.extension.style.expressions.generated.Expression operatorExpr, com.mapbox.maps.extension.style.expressions.generated.Expression mapExpr);
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder clusterProperty(String propertyName, com.mapbox.maps.extension.style.expressions.generated.Expression mapExpr);
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder clusterRadius(long value = 50L);
+    method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder data(String value, String? dataId = null);
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder data(String value);
+    method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder feature(com.mapbox.geojson.Feature value, String? dataId = null);
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder feature(com.mapbox.geojson.Feature value);
+    method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder featureCollection(com.mapbox.geojson.FeatureCollection value, String? dataId = null);
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder featureCollection(com.mapbox.geojson.FeatureCollection value);
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder generateId(boolean value = false);
+    method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder geometry(com.mapbox.geojson.Geometry value, String? dataId = null);
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder geometry(com.mapbox.geojson.Geometry value);
     method public String getSourceId();
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder lineMetrics(boolean value = false);
@@ -4428,6 +4437,7 @@ package com.mapbox.maps.extension.style.sources.generated {
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder prefetchZoomDelta(long value = 4L);
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder promoteId(com.mapbox.maps.extension.style.types.PromoteId value);
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder tolerance(double value = 0.375);
+    method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder url(String value, String? dataId = null);
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder url(String value);
     property public final String sourceId;
   }
@@ -4946,3 +4956,4 @@ package com.mapbox.maps.extension.style.utils {
   }
 
 }
+

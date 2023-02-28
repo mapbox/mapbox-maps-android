@@ -86,7 +86,7 @@ project.apply {
   from("$rootDir/gradle/lint.gradle")
   from("${rootDir}/gradle/jacoco.gradle")
   from("$rootDir/gradle/sdk-registry.gradle")
-//  from("$rootDir/gradle/track-public-version-apis.gradle")
+  from("$rootDir/gradle/track-public-apis.gradle")
   from("$rootDir/gradle/detekt.gradle")
   from("$rootDir/gradle/dependency-updates.gradle")
 }

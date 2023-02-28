@@ -239,21 +239,24 @@ package com.mapbox.maps.extension.observable.eventdata {
   }
 
   public final class SourceDataLoadedEventData {
-    ctor public SourceDataLoadedEventData(@com.google.gson.annotations.SerializedName long begin, @com.google.gson.annotations.SerializedName Long? end, @com.google.gson.annotations.SerializedName String id, @com.google.gson.annotations.SerializedName com.mapbox.maps.extension.observable.model.SourceDataType type, @com.google.gson.annotations.SerializedName Boolean? loaded, @com.google.gson.annotations.SerializedName com.mapbox.maps.extension.observable.model.TileID? tileID);
+    ctor public SourceDataLoadedEventData(@com.google.gson.annotations.SerializedName long begin, @com.google.gson.annotations.SerializedName Long? end, @com.google.gson.annotations.SerializedName String id, @com.google.gson.annotations.SerializedName com.mapbox.maps.extension.observable.model.SourceDataType type, @com.google.gson.annotations.SerializedName Boolean? loaded, @com.google.gson.annotations.SerializedName com.mapbox.maps.extension.observable.model.TileID? tileID, @com.google.gson.annotations.SerializedName String? dataId);
     method public long component1();
     method public Long? component2();
     method public String component3();
     method public com.mapbox.maps.extension.observable.model.SourceDataType component4();
     method public Boolean? component5();
     method public com.mapbox.maps.extension.observable.model.TileID? component6();
-    method public com.mapbox.maps.extension.observable.eventdata.SourceDataLoadedEventData copy(long begin, Long? end, String id, com.mapbox.maps.extension.observable.model.SourceDataType type, Boolean? loaded, com.mapbox.maps.extension.observable.model.TileID? tileID);
+    method public String? component7();
+    method public com.mapbox.maps.extension.observable.eventdata.SourceDataLoadedEventData copy(long begin, Long? end, String id, com.mapbox.maps.extension.observable.model.SourceDataType type, Boolean? loaded, com.mapbox.maps.extension.observable.model.TileID? tileID, String? dataId);
     method public long getBegin();
+    method public String? getDataId();
     method public Long? getEnd();
     method public String getId();
     method public Boolean? getLoaded();
     method public com.mapbox.maps.extension.observable.model.TileID? getTileID();
     method public com.mapbox.maps.extension.observable.model.SourceDataType getType();
     property public final long begin;
+    property public final String? dataId;
     property public final Long? end;
     property public final String id;
     property public final Boolean? loaded;
