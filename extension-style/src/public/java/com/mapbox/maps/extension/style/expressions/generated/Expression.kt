@@ -750,6 +750,14 @@ class Expression : Value {
     }
 
     /**
+     * Returns the raster value of a pixel computed via `raster-color-mix`. Can only be used in the
+     * `raster-color` property.
+     */
+    fun rasterValue() {
+      this@ExpressionBuilder.arguments.add(Expression.rasterValue())
+    }
+
+    /**
      * Returns the IETF language tag of the locale being used by the provided `collator`. This can
      * be used to determine the default system locale, or to determine if a requested locale was
      * successfully loaded.
@@ -2898,6 +2906,13 @@ class Expression : Value {
      */
     @JvmStatic
     fun properties() = ExpressionBuilder("properties").build()
+
+    /**
+     * Returns the raster value of a pixel computed via `raster-color-mix`. Can only be used in the
+     * `raster-color` property.
+     */
+    @JvmStatic
+    fun rasterValue() = ExpressionBuilder("raster-value").build()
 
     /**
      * Returns the IETF language tag of the locale being used by the provided `collator`. This can

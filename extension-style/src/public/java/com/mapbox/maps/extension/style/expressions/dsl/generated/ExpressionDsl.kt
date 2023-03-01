@@ -362,6 +362,11 @@ fun pitch() = Expression.pitch()
 fun properties() = Expression.properties()
 
 /**
+ * Returns the raster value of a pixel computed via `raster-color-mix`. Can only be used in the `raster-color` property.
+ */
+fun rasterValue() = Expression.rasterValue()
+
+/**
  * Returns the IETF language tag of the locale being used by the provided `collator`. This can be used to determine the default system locale, or to determine if a requested locale was successfully loaded.
  */
 fun resolvedLocale(block: Expression.ExpressionBuilder.() -> Unit) = Expression.resolvedLocale(block)

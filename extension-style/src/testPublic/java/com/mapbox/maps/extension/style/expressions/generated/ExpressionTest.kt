@@ -1135,6 +1135,12 @@ class ExpressionTest {
   }
 
   @Test
+  fun expression_rasterValue() {
+    val expression = rasterValue()
+    assertEquals("assert raster-value expression", "[raster-value]", expression.toString())
+  }
+
+  @Test
   fun dsl_expression_resolvedLocale() {
     val expression = resolvedLocale {
       // test builder function

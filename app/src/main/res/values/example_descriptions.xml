@@ -95,4 +95,5 @@
     <string name="description_viewport">Viewport camera showcase</string>
     <string name="description_advanced_viewport">Advanced viewport with gestures showcase</string>
     <string name="description_third_party_source">Add a third party vector tile source.</string>
+    <string name="description_raster_colorization">Raster colorization using raster-color</string>
 </resources>

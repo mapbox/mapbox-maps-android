@@ -353,6 +353,231 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   }
 
   /**
+   * Defines a color map by which to colorize a raster layer, parameterized by the `["raster-value"]` expression and evaluated at 1024 uniformly spaced steps over the range specified by `raster-color-range`.
+   */
+  val rasterColor: Expression?
+    /**
+     * Defines a color map by which to colorize a raster layer, parameterized by the `["raster-value"]` expression and evaluated at 1024 uniformly spaced steps over the range specified by `raster-color-range`.
+     *
+     * Use static method [RasterLayer.defaultRasterColor] to get the default property.
+     *
+     * @return Expression
+     */
+    get() {
+      return getPropertyValue("raster-color")
+    }
+
+  /**
+   * Defines a color map by which to colorize a raster layer, parameterized by the `["raster-value"]` expression and evaluated at 1024 uniformly spaced steps over the range specified by `raster-color-range`.
+   *
+   * Use static method [RasterLayer.defaultRasterColor] to set the default property.
+   *
+   * @param rasterColor value of rasterColor
+   */
+  override fun rasterColor(rasterColor: Expression) = apply {
+    val propertyValue = PropertyValue("raster-color", rasterColor)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * When `raster-color` is active, specifies the combination of source RGB channels used to compute the raster value. Computed using the equation `mix.r * src.r + mix.g * src.g + mix.b * src.b + mix.a`. The first three components specify the mix of source red, green, and blue channels, respectively. The fourth component serves as a constant offset and is *not* multipled by source alpha. Source alpha is instead carried through and applied as opacity to the colorized result. Default value corresponds to RGB luminosity.
+   */
+  val rasterColorMix: List<Double>?
+    /**
+     * When `raster-color` is active, specifies the combination of source RGB channels used to compute the raster value. Computed using the equation `mix.r * src.r + mix.g * src.g + mix.b * src.b + mix.a`. The first three components specify the mix of source red, green, and blue channels, respectively. The fourth component serves as a constant offset and is *not* multipled by source alpha. Source alpha is instead carried through and applied as opacity to the colorized result. Default value corresponds to RGB luminosity.
+     *
+     * Use static method [RasterLayer.defaultRasterColorMix] to get the default property.
+     *
+     * @return List<Double>
+     */
+    get() {
+      return getPropertyValue<List<Double>>("raster-color-mix")
+    }
+
+  /**
+   * When `raster-color` is active, specifies the combination of source RGB channels used to compute the raster value. Computed using the equation `mix.r * src.r + mix.g * src.g + mix.b * src.b + mix.a`. The first three components specify the mix of source red, green, and blue channels, respectively. The fourth component serves as a constant offset and is *not* multipled by source alpha. Source alpha is instead carried through and applied as opacity to the colorized result. Default value corresponds to RGB luminosity.
+   *
+   * Use static method [RasterLayer.defaultRasterColorMix] to set the default property.
+   *
+   * @param rasterColorMix value of rasterColorMix
+   */
+  override fun rasterColorMix(rasterColorMix: List<Double>) = apply {
+    val propertyValue = PropertyValue("raster-color-mix", rasterColorMix)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * When `raster-color` is active, specifies the combination of source RGB channels used to compute the raster value. Computed using the equation `mix.r * src.r + mix.g * src.g + mix.b * src.b + mix.a`. The first three components specify the mix of source red, green, and blue channels, respectively. The fourth component serves as a constant offset and is *not* multipled by source alpha. Source alpha is instead carried through and applied as opacity to the colorized result. Default value corresponds to RGB luminosity.
+   *
+   * This is an Expression representation of "raster-color-mix".
+   *
+   */
+  val rasterColorMixAsExpression: Expression?
+    /**
+     * When `raster-color` is active, specifies the combination of source RGB channels used to compute the raster value. Computed using the equation `mix.r * src.r + mix.g * src.g + mix.b * src.b + mix.a`. The first three components specify the mix of source red, green, and blue channels, respectively. The fourth component serves as a constant offset and is *not* multipled by source alpha. Source alpha is instead carried through and applied as opacity to the colorized result. Default value corresponds to RGB luminosity.
+     *
+     * Get the RasterColorMix property as an Expression
+     *
+     * Use static method [RasterLayer.defaultRasterColorMixAsExpression] to get the default property.
+     *
+     * @return List<Double>
+     */
+    get() {
+      getPropertyValue<Expression>("raster-color-mix")?.let {
+        return it
+      }
+      rasterColorMix?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * When `raster-color` is active, specifies the combination of source RGB channels used to compute the raster value. Computed using the equation `mix.r * src.r + mix.g * src.g + mix.b * src.b + mix.a`. The first three components specify the mix of source red, green, and blue channels, respectively. The fourth component serves as a constant offset and is *not* multipled by source alpha. Source alpha is instead carried through and applied as opacity to the colorized result. Default value corresponds to RGB luminosity.
+   *
+   * Use static method [RasterLayer.defaultRasterColorMixAsExpression] to set the default property.
+   *
+   * @param rasterColorMix value of rasterColorMix as Expression
+   */
+  override fun rasterColorMix(rasterColorMix: Expression) = apply {
+    val propertyValue = PropertyValue("raster-color-mix", rasterColorMix)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Transition options for RasterColorMix.
+   */
+  val rasterColorMixTransition: StyleTransition?
+    /**
+     * Get the RasterColorMix property transition options
+     *
+     * Use static method [RasterLayer.defaultRasterColorMixTransition] to get the default property.
+     *
+     * @return transition options for List<Double>
+     */
+    get() {
+      return getPropertyValue("raster-color-mix-transition")
+    }
+
+  /**
+   * Set the RasterColorMix property transition options
+   *
+   * Use static method [RasterLayer.defaultRasterColorMixTransition] to set the default property.
+   *
+   * @param options transition options for List<Double>
+   */
+  override fun rasterColorMixTransition(options: StyleTransition) = apply {
+    val propertyValue = PropertyValue("raster-color-mix-transition", options)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * DSL for [rasterColorMixTransition].
+   */
+  override fun rasterColorMixTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+    rasterColorMixTransition(StyleTransition.Builder().apply(block).build())
+  }
+
+  /**
+   * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`.
+   */
+  val rasterColorRange: List<Double>?
+    /**
+     * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`.
+     *
+     * Use static method [RasterLayer.defaultRasterColorRange] to get the default property.
+     *
+     * @return List<Double>
+     */
+    get() {
+      return getPropertyValue<List<Double>>("raster-color-range")
+    }
+
+  /**
+   * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`.
+   *
+   * Use static method [RasterLayer.defaultRasterColorRange] to set the default property.
+   *
+   * @param rasterColorRange value of rasterColorRange
+   */
+  override fun rasterColorRange(rasterColorRange: List<Double>) = apply {
+    val propertyValue = PropertyValue("raster-color-range", rasterColorRange)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`.
+   *
+   * This is an Expression representation of "raster-color-range".
+   *
+   */
+  val rasterColorRangeAsExpression: Expression?
+    /**
+     * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`.
+     *
+     * Get the RasterColorRange property as an Expression
+     *
+     * Use static method [RasterLayer.defaultRasterColorRangeAsExpression] to get the default property.
+     *
+     * @return List<Double>
+     */
+    get() {
+      getPropertyValue<Expression>("raster-color-range")?.let {
+        return it
+      }
+      rasterColorRange?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`.
+   *
+   * Use static method [RasterLayer.defaultRasterColorRangeAsExpression] to set the default property.
+   *
+   * @param rasterColorRange value of rasterColorRange as Expression
+   */
+  override fun rasterColorRange(rasterColorRange: Expression) = apply {
+    val propertyValue = PropertyValue("raster-color-range", rasterColorRange)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Transition options for RasterColorRange.
+   */
+  val rasterColorRangeTransition: StyleTransition?
+    /**
+     * Get the RasterColorRange property transition options
+     *
+     * Use static method [RasterLayer.defaultRasterColorRangeTransition] to get the default property.
+     *
+     * @return transition options for List<Double>
+     */
+    get() {
+      return getPropertyValue("raster-color-range-transition")
+    }
+
+  /**
+   * Set the RasterColorRange property transition options
+   *
+   * Use static method [RasterLayer.defaultRasterColorRangeTransition] to set the default property.
+   *
+   * @param options transition options for List<Double>
+   */
+  override fun rasterColorRangeTransition(options: StyleTransition) = apply {
+    val propertyValue = PropertyValue("raster-color-range-transition", options)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * DSL for [rasterColorRangeTransition].
+   */
+  override fun rasterColorRangeTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+    rasterColorRangeTransition(StyleTransition.Builder().apply(block).build())
+  }
+
+  /**
    * Increase or reduce the contrast of the image.
    */
   val rasterContrast: Double?
@@ -1037,6 +1262,102 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-brightness-min-transition").silentUnwrap()
 
     /**
+     * When `raster-color` is active, specifies the combination of source RGB channels used to compute the raster value. Computed using the equation `mix.r * src.r + mix.g * src.g + mix.b * src.b + mix.a`. The first three components specify the mix of source red, green, and blue channels, respectively. The fourth component serves as a constant offset and is *not* multipled by source alpha. Source alpha is instead carried through and applied as opacity to the colorized result. Default value corresponds to RGB luminosity.
+     */
+    val defaultRasterColorMix: List<Double>?
+      /**
+       * When `raster-color` is active, specifies the combination of source RGB channels used to compute the raster value. Computed using the equation `mix.r * src.r + mix.g * src.g + mix.b * src.b + mix.a`. The first three components specify the mix of source red, green, and blue channels, respectively. The fourth component serves as a constant offset and is *not* multipled by source alpha. Source alpha is instead carried through and applied as opacity to the colorized result. Default value corresponds to RGB luminosity.
+       *
+       * Get the default value of RasterColorMix property
+       *
+       * @return List<Double>
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-color-mix").silentUnwrap()
+      }
+
+    /**
+     * When `raster-color` is active, specifies the combination of source RGB channels used to compute the raster value. Computed using the equation `mix.r * src.r + mix.g * src.g + mix.b * src.b + mix.a`. The first three components specify the mix of source red, green, and blue channels, respectively. The fourth component serves as a constant offset and is *not* multipled by source alpha. Source alpha is instead carried through and applied as opacity to the colorized result. Default value corresponds to RGB luminosity.
+     *
+     * This is an Expression representation of "raster-color-mix".
+     *
+     */
+    val defaultRasterColorMixAsExpression: Expression?
+      /**
+       * Get default value of the RasterColorMix property as an Expression
+       *
+       * @return List<Double>
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-color-mix").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultRasterColorMix?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
+
+    /**
+     * Transition options for RasterColorMix.
+     */
+    val defaultRasterColorMixTransition: StyleTransition?
+      /**
+       * Get the RasterColorMix property transition options
+       *
+       * @return transition options for List<Double>
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-color-mix-transition").silentUnwrap()
+
+    /**
+     * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`.
+     */
+    val defaultRasterColorRange: List<Double>?
+      /**
+       * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`.
+       *
+       * Get the default value of RasterColorRange property
+       *
+       * @return List<Double>
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-color-range").silentUnwrap()
+      }
+
+    /**
+     * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`.
+     *
+     * This is an Expression representation of "raster-color-range".
+     *
+     */
+    val defaultRasterColorRangeAsExpression: Expression?
+      /**
+       * Get default value of the RasterColorRange property as an Expression
+       *
+       * @return List<Double>
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-color-range").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultRasterColorRange?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
+
+    /**
+     * Transition options for RasterColorRange.
+     */
+    val defaultRasterColorRangeTransition: StyleTransition?
+      /**
+       * Get the RasterColorRange property transition options
+       *
+       * @return transition options for List<Double>
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-color-range-transition").silentUnwrap()
+
+    /**
      * Increase or reduce the contrast of the image.
      */
     val defaultRasterContrast: Double?
@@ -1413,6 +1734,73 @@ interface RasterLayerDsl {
    * DSL for [rasterBrightnessMinTransition].
    */
   fun rasterBrightnessMinTransition(block: StyleTransition.Builder.() -> Unit): RasterLayer
+
+  /**
+   * Defines a color map by which to colorize a raster layer, parameterized by the `["raster-value"]` expression and evaluated at 1024 uniformly spaced steps over the range specified by `raster-color-range`.
+   *
+   * @param rasterColor value of rasterColor
+   */
+  fun rasterColor(rasterColor: Expression): RasterLayer
+
+  /**
+   * When `raster-color` is active, specifies the combination of source RGB channels used to compute the raster value. Computed using the equation `mix.r * src.r + mix.g * src.g + mix.b * src.b + mix.a`. The first three components specify the mix of source red, green, and blue channels, respectively. The fourth component serves as a constant offset and is *not* multipled by source alpha. Source alpha is instead carried through and applied as opacity to the colorized result. Default value corresponds to RGB luminosity.
+   *
+   * @param rasterColorMix value of rasterColorMix
+   */
+  fun rasterColorMix(rasterColorMix: List<Double> = listOf(0.2126, 0.7152, 0.0722, 0.0)): RasterLayer
+
+  /**
+   * When `raster-color` is active, specifies the combination of source RGB channels used to compute the raster value. Computed using the equation `mix.r * src.r + mix.g * src.g + mix.b * src.b + mix.a`. The first three components specify the mix of source red, green, and blue channels, respectively. The fourth component serves as a constant offset and is *not* multipled by source alpha. Source alpha is instead carried through and applied as opacity to the colorized result. Default value corresponds to RGB luminosity.
+   *
+   * @param rasterColorMix value of rasterColorMix as Expression
+   */
+  fun rasterColorMix(rasterColorMix: Expression): RasterLayer
+
+  /**
+   * When `raster-color` is active, specifies the combination of source RGB channels used to compute the raster value. Computed using the equation `mix.r * src.r + mix.g * src.g + mix.b * src.b + mix.a`. The first three components specify the mix of source red, green, and blue channels, respectively. The fourth component serves as a constant offset and is *not* multipled by source alpha. Source alpha is instead carried through and applied as opacity to the colorized result. Default value corresponds to RGB luminosity.
+   *
+   * Set the RasterColorMix property transition options
+   *
+   * @param options transition options for List<Double>
+   */
+  fun rasterColorMixTransition(options: StyleTransition): RasterLayer
+
+  /**
+   * When `raster-color` is active, specifies the combination of source RGB channels used to compute the raster value. Computed using the equation `mix.r * src.r + mix.g * src.g + mix.b * src.b + mix.a`. The first three components specify the mix of source red, green, and blue channels, respectively. The fourth component serves as a constant offset and is *not* multipled by source alpha. Source alpha is instead carried through and applied as opacity to the colorized result. Default value corresponds to RGB luminosity.
+   *
+   * DSL for [rasterColorMixTransition].
+   */
+  fun rasterColorMixTransition(block: StyleTransition.Builder.() -> Unit): RasterLayer
+
+  /**
+   * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`.
+   *
+   * @param rasterColorRange value of rasterColorRange
+   */
+  fun rasterColorRange(rasterColorRange: List<Double> = listOf(0.0, 1.0)): RasterLayer
+
+  /**
+   * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`.
+   *
+   * @param rasterColorRange value of rasterColorRange as Expression
+   */
+  fun rasterColorRange(rasterColorRange: Expression): RasterLayer
+
+  /**
+   * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`.
+   *
+   * Set the RasterColorRange property transition options
+   *
+   * @param options transition options for List<Double>
+   */
+  fun rasterColorRangeTransition(options: StyleTransition): RasterLayer
+
+  /**
+   * When `raster-color` is active, specifies the range over which `raster-color` is tabulated. Units correspond to the computed raster value via `raster-color-mix`.
+   *
+   * DSL for [rasterColorRangeTransition].
+   */
+  fun rasterColorRangeTransition(block: StyleTransition.Builder.() -> Unit): RasterLayer
 
   /**
    * Increase or reduce the contrast of the image.
