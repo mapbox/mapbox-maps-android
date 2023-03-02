@@ -2,7 +2,11 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# main
+#develop
+
+# 11.0.0-alpha.1 March 2, 2023
+## Features ✨ and improvements 🏁
+* Enable raster colorization via `raster-color` expression and `RasterLayer.rasterColor`, `RasterLayer.rasterColorMix`, `RasterLayer.rasterColorRange` layer properties.
 
 # 10.12.0-beta.1 February 22, 2023
 ## Features ✨ and improvements 🏁
