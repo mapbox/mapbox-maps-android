@@ -62,10 +62,21 @@ sdkRegistryUpload:
 sdkRegistryPublicReleaseUpload:
 	./gradlew mapboxSDKRegistryPublicReleaseUpload -x extension-androidauto:mapboxSDKRegistryPublicReleaseUpload --no-parallel --no-daemon;
 
+.PHONY: sdkRegistryPrivateReleaseUpload
+sdkRegistryPrivateReleaseUpload:
+	./gradlew mapboxSDKRegistryPrivateReleaseUpload -x extension-androidauto:mapboxSDKRegistryPrivateReleaseUpload --no-parallel --no-daemon;
+
 .PHONY: sdkRegistryPublish
 sdkRegistryPublish:
-	python3 -m pip install git-pull-request;
 	./gradlew mapboxSDKRegistryPublishAll;
+
+.PHONY: sdkRegistryPublicReleasePublish
+sdkRegistryPublicReleasePublish:
+	./gradlew mapboxSDKRegistryPublicReleasePublishAll;
+
+.PHONY: sdkRegistryPrivateReleasePublish
+sdkRegistryPrivateReleasePublish:
+	./gradlew mapboxSDKRegistryPrivateReleasePublishAll;
 
 .PHONY: sdkRegistryUploadAndroidAutoExtension
 sdkRegistryUploadAndroidAutoExtension:
@@ -73,7 +84,6 @@ sdkRegistryUploadAndroidAutoExtension:
 
 .PHONY: sdkRegistryPublishAndroidAutoExtension
 sdkRegistryPublishAndroidAutoExtension:
-	python3 -m pip install git-pull-request;
 	./gradlew extension-androidauto:mapboxSDKRegistryPublish;
 
 .PHONY: clean
