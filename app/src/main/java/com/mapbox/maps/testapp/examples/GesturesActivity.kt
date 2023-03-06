@@ -172,7 +172,7 @@ class GesturesActivity : AppCompatActivity() {
 
     attachListeners()
 
-    fixedFocalPointEnabled(mapboxMap.getGesturesSettings()?.focalPoint != null)
+    fixedFocalPointEnabled(gesturesPlugin.getSettings().focalPoint != null)
   }
 
   private fun attachListeners() {

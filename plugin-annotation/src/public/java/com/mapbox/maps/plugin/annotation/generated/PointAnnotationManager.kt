@@ -2,7 +2,6 @@
 
 package com.mapbox.maps.plugin.annotation.generated
 
-import android.view.View
 import com.mapbox.geojson.*
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.expressions.generated.Expression
@@ -1094,19 +1093,6 @@ class PointAnnotationManager(
     var ID_GENERATOR = AtomicLong(0)
   }
 }
-
-/**
- * Extension function to create a PointAnnotationManager instance.
- */
-@Deprecated(
-  "mapView parameter is not needed",
-  ReplaceWith("createPointAnnotationManager(annotationConfig)")
-)
-@JvmOverloads
-fun AnnotationPlugin.createPointAnnotationManager(
-  mapView: View,
-  annotationConfig: AnnotationConfig? = null
-): PointAnnotationManager = createPointAnnotationManager(annotationConfig)
 
 /**
  * Extension function to create a PointAnnotationManager instance.

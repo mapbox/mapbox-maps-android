@@ -1,6 +1,5 @@
 package com.mapbox.maps.plugin.annotation
 
-import android.view.View
 import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.MapSizePlugin
 import com.mapbox.maps.plugin.MapStyleObserverPlugin
@@ -9,25 +8,6 @@ import com.mapbox.maps.plugin.MapStyleObserverPlugin
  * Plugin interface for the annotation.
  */
 interface AnnotationPlugin : MapPlugin, MapSizePlugin, MapStyleObserverPlugin {
-
-  /**
-   * Create an annotation manager.
-   *
-   * @param mapView The MapView instance.
-   * @param type annotation manager [AnnotationType] type
-   * @param annotationConfig custom [AnnotationConfig] config, defaults to null
-   * @return annotation manager instance
-   */
-  @Deprecated(
-    "mapView parameter is not needed",
-    ReplaceWith("createAnnotationManager(AnnotationType, annotationConfig)")
-  )
-  fun createAnnotationManager(
-    mapView: View,
-    type: AnnotationType,
-    annotationConfig: AnnotationConfig?
-  ): AnnotationManager<*, *, *, *, *, *, *>
-
   /**
    * Create an annotation manager.
    *

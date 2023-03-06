@@ -54,7 +54,6 @@ package com.mapbox.maps.plugin.gestures {
     method public static void addOnShoveListener(com.mapbox.maps.plugin.delegates.MapPluginExtensionsDelegate, com.mapbox.maps.plugin.gestures.OnShoveListener listener);
     method public static com.mapbox.maps.plugin.gestures.GesturesPlugin getGestures(com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate);
     method public static com.mapbox.android.gestures.AndroidGesturesManager? getGesturesManager(com.mapbox.maps.plugin.delegates.MapPluginExtensionsDelegate);
-    method @Deprecated public static com.mapbox.maps.plugin.gestures.generated.GesturesSettings? getGesturesSettings(com.mapbox.maps.plugin.delegates.MapPluginExtensionsDelegate);
     method public static boolean isScrollHorizontallyLimited(com.mapbox.maps.plugin.gestures.generated.GesturesSettings);
     method public static boolean isScrollVerticallyLimited(com.mapbox.maps.plugin.gestures.generated.GesturesSettings);
     method public static void removeOnFlingListener(com.mapbox.maps.plugin.delegates.MapPluginExtensionsDelegate, com.mapbox.maps.plugin.gestures.OnFlingListener onFlingListener);

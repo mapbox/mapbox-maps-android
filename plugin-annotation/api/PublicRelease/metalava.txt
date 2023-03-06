@@ -69,7 +69,6 @@ package com.mapbox.maps.plugin.annotation {
   public final class AnnotationPluginImpl implements com.mapbox.maps.plugin.annotation.AnnotationPlugin {
     ctor public AnnotationPluginImpl();
     method public void cleanup();
-    method public com.mapbox.maps.plugin.annotation.AnnotationManager<?,?,?,?,?,?,?> createAnnotationManager(android.view.View mapView, com.mapbox.maps.plugin.annotation.AnnotationType type, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig);
     method public com.mapbox.maps.plugin.annotation.AnnotationManager<?,?,?,?,?,?,?> createAnnotationManager(com.mapbox.maps.plugin.annotation.AnnotationType type, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig);
     method public void onDelegateProvider(com.mapbox.maps.plugin.delegates.MapDelegateProvider delegateProvider);
     method public void onSizeChanged(int width, int height);
@@ -186,8 +185,6 @@ package com.mapbox.maps.plugin.annotation.generated {
   }
 
   public final class CircleAnnotationManagerKt {
-    method @Deprecated public static com.mapbox.maps.plugin.annotation.generated.CircleAnnotationManager createCircleAnnotationManager(com.mapbox.maps.plugin.annotation.AnnotationPlugin, android.view.View mapView, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null);
-    method @Deprecated public static com.mapbox.maps.plugin.annotation.generated.CircleAnnotationManager createCircleAnnotationManager(com.mapbox.maps.plugin.annotation.AnnotationPlugin, android.view.View mapView);
     method public static com.mapbox.maps.plugin.annotation.generated.CircleAnnotationManager createCircleAnnotationManager(com.mapbox.maps.plugin.annotation.AnnotationPlugin, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null);
   }
 
@@ -528,8 +525,6 @@ package com.mapbox.maps.plugin.annotation.generated {
   }
 
   public final class PointAnnotationManagerKt {
-    method @Deprecated public static com.mapbox.maps.plugin.annotation.generated.PointAnnotationManager createPointAnnotationManager(com.mapbox.maps.plugin.annotation.AnnotationPlugin, android.view.View mapView, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null);
-    method @Deprecated public static com.mapbox.maps.plugin.annotation.generated.PointAnnotationManager createPointAnnotationManager(com.mapbox.maps.plugin.annotation.AnnotationPlugin, android.view.View mapView);
     method public static com.mapbox.maps.plugin.annotation.generated.PointAnnotationManager createPointAnnotationManager(com.mapbox.maps.plugin.annotation.AnnotationPlugin, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null);
   }
 
@@ -766,8 +761,6 @@ package com.mapbox.maps.plugin.annotation.generated {
   }
 
   public final class PolygonAnnotationManagerKt {
-    method @Deprecated public static com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationManager createPolygonAnnotationManager(com.mapbox.maps.plugin.annotation.AnnotationPlugin, android.view.View mapView, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null);
-    method @Deprecated public static com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationManager createPolygonAnnotationManager(com.mapbox.maps.plugin.annotation.AnnotationPlugin, android.view.View mapView);
     method public static com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationManager createPolygonAnnotationManager(com.mapbox.maps.plugin.annotation.AnnotationPlugin, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null);
   }
 
@@ -912,8 +905,6 @@ package com.mapbox.maps.plugin.annotation.generated {
   }
 
   public final class PolylineAnnotationManagerKt {
-    method @Deprecated public static com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationManager createPolylineAnnotationManager(com.mapbox.maps.plugin.annotation.AnnotationPlugin, android.view.View mapView, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null);
-    method @Deprecated public static com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationManager createPolylineAnnotationManager(com.mapbox.maps.plugin.annotation.AnnotationPlugin, android.view.View mapView);
     method public static com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationManager createPolylineAnnotationManager(com.mapbox.maps.plugin.annotation.AnnotationPlugin, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null);
   }
 

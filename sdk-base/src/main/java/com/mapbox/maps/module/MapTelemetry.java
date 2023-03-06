@@ -27,29 +27,6 @@ public interface MapTelemetry {
   void disableTelemetrySession();
 
   /**
-   * Set the debug logging enabled states.
-   *
-   * @deprecated
-   * Note this method is deprecated, there will be no operations when it is called.
-   *
-   * @param debugLoggingEnabled whether to enable the debug logging for telemetry.
-   */
-  @Deprecated
-  void setDebugLoggingEnabled(boolean debugLoggingEnabled);
-
-  /**
-   * Set the telemetry rotation session id interval.
-   *
-   * @deprecated
-   * Note this method is deprecated, there will be no operations when it is called.
-   *
-   * @param interval the selected session interval
-   * @return true if rotation session id was updated
-   */
-  @Deprecated
-  boolean setSessionIdRotationInterval(int interval);
-
-  /**
    * Register a performance event.
    *
    * @param data performance event data

@@ -148,12 +148,6 @@ class MapTelemetryTest {
   }
 
   @Test
-  fun testSetSessionIdRotationInterval() {
-    telemetry = MapTelemetryImpl(context, "sk.foobar")
-    assertFalse(telemetry.setSessionIdRotationInterval(22))
-  }
-
-  @Test
   @Ignore("testSetDebugLoggingEnabled has been deprecated")
   fun testSetDebugLoggingEnabled() {
     // no-ops

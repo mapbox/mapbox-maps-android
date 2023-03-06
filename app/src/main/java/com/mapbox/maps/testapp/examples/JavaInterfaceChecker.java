@@ -224,14 +224,10 @@ public class JavaInterfaceChecker {
     }
 
     private void annotationManager(AnnotationPlugin annotationPlugin, MapView mapView, AnnotationConfig annotationConfig) {
-        createPolylineAnnotationManager(annotationPlugin, mapView);
-        createPolylineAnnotationManager(annotationPlugin, mapView, annotationConfig);
-        createPolygonAnnotationManager(annotationPlugin, mapView);
-        createPolygonAnnotationManager(annotationPlugin, mapView, annotationConfig);
-        createPointAnnotationManager(annotationPlugin, mapView);
-        createPointAnnotationManager(annotationPlugin, mapView, annotationConfig);
-        createCircleAnnotationManager(annotationPlugin, mapView);
-        createCircleAnnotationManager(annotationPlugin, mapView, annotationConfig);
+        createPolylineAnnotationManager(annotationPlugin, annotationConfig);
+        createPolygonAnnotationManager(annotationPlugin, annotationConfig);
+        createPointAnnotationManager(annotationPlugin, annotationConfig);
+        createCircleAnnotationManager(annotationPlugin, annotationConfig);
     }
 
     private void attribution() {
@@ -516,7 +512,6 @@ public class JavaInterfaceChecker {
         GesturesUtils.removeOnShoveListener(mapboxMap, onShoveListener);
         AndroidGesturesManager gesturesManager = GesturesUtils.getGesturesManager(mapboxMap);
         GesturesUtils.setGesturesManager(mapboxMap, gesturesManager, false, false);
-        GesturesUtils.getGesturesSettings(mapboxMap);
     }
 
     private void locationComponent(MapView mapView) {
@@ -564,16 +559,6 @@ public class JavaInterfaceChecker {
         @Override
         public void disableTelemetrySession() {
 
-        }
-
-        @Override
-        public void setDebugLoggingEnabled(boolean debugLoggingEnabled) {
-
-        }
-
-        @Override
-        public boolean setSessionIdRotationInterval(int interval) {
-            return false;
         }
 
         @Override

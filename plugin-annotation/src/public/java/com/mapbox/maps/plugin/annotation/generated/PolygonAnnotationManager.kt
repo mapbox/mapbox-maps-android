@@ -2,7 +2,6 @@
 
 package com.mapbox.maps.plugin.annotation.generated
 
-import android.view.View
 import com.mapbox.geojson.*
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.expressions.generated.Expression
@@ -256,19 +255,6 @@ class PolygonAnnotationManager(
     var ID_GENERATOR = AtomicLong(0)
   }
 }
-
-/**
- * Extension function to create a PolygonAnnotationManager instance.
- */
-@Deprecated(
-  "mapView parameter is not needed",
-  ReplaceWith("createPolygonAnnotationManager(annotationConfig)")
-)
-@JvmOverloads
-fun AnnotationPlugin.createPolygonAnnotationManager(
-  mapView: View,
-  annotationConfig: AnnotationConfig? = null
-): PolygonAnnotationManager = createPolygonAnnotationManager(annotationConfig)
 
 /**
  * Extension function to create a PolygonAnnotationManager instance.

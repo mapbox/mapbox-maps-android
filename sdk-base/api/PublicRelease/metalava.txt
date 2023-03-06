@@ -562,8 +562,6 @@ package com.mapbox.maps.module {
     method public default boolean getUserTelemetryRequestState();
     method public void onAppUserTurnstileEvent();
     method public void onPerformanceEvent(android.os.Bundle?);
-    method @Deprecated public void setDebugLoggingEnabled(boolean);
-    method @Deprecated public boolean setSessionIdRotationInterval(int);
     method public void setUserTelemetryRequestState(boolean);
   }
 
@@ -964,7 +962,6 @@ package com.mapbox.maps.plugin.annotation {
   }
 
   public interface AnnotationPlugin extends com.mapbox.maps.plugin.MapPlugin com.mapbox.maps.plugin.MapSizePlugin com.mapbox.maps.plugin.MapStyleObserverPlugin {
-    method @Deprecated public com.mapbox.maps.plugin.annotation.AnnotationManager<?,?,?,?,?,?,?> createAnnotationManager(android.view.View mapView, com.mapbox.maps.plugin.annotation.AnnotationType type, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig);
     method public com.mapbox.maps.plugin.annotation.AnnotationManager<?,?,?,?,?,?,?> createAnnotationManager(com.mapbox.maps.plugin.annotation.AnnotationType type, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig);
     method public void removeAnnotationManager(com.mapbox.maps.plugin.annotation.AnnotationManager<?,?,?,?,?,?,?> annotationManager);
   }
