@@ -4,6 +4,14 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 10.12.0-rc.1
+## Bug fixes 🐞
+* Interrupt blocking disk cache database operations on application exit so that the application does not hang.
+* Fix a bug where continuously dragging and changing zoom would lead to either very slow or fast map dragging.
+
+## Dependencies
+* Update gl-native to v10.12.0-rc.1 and common to v23.4.0-rc.1.
+
 # 10.12.0-beta.1 February 22, 2023
 ## Features ✨ and improvements 🏁
 * Add `data-id` argument to `GeoJsonSource` data update methods. `data-id` is later attached to the 
