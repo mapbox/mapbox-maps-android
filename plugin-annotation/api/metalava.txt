@@ -874,6 +874,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method protected String getLayerId();
     method public com.mapbox.maps.extension.style.layers.properties.generated.LineCap? getLineCap();
     method public java.util.List<java.lang.Double>? getLineDasharray();
+    method public Double? getLineDepthOcclusionFactor();
     method public Double? getLineMiterLimit();
     method public Double? getLineRoundLimit();
     method public java.util.List<java.lang.Double>? getLineTranslate();
@@ -885,6 +886,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setLayerFilter(com.mapbox.maps.extension.style.expressions.generated.Expression? value);
     method public void setLineCap(com.mapbox.maps.extension.style.layers.properties.generated.LineCap? value);
     method public void setLineDasharray(java.util.List<java.lang.Double>? value);
+    method public void setLineDepthOcclusionFactor(Double? value);
     method public void setLineMiterLimit(Double? value);
     method public void setLineRoundLimit(Double? value);
     method public void setLineTranslate(java.util.List<java.lang.Double>? value);
@@ -896,6 +898,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     property protected String layerId;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.LineCap? lineCap;
     property public final java.util.List<java.lang.Double>? lineDasharray;
+    property public final Double? lineDepthOcclusionFactor;
     property public final Double? lineMiterLimit;
     property public final Double? lineRoundLimit;
     property public final java.util.List<java.lang.Double>? lineTranslate;
