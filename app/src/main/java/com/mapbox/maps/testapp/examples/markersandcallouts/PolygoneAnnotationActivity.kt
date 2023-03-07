@@ -74,6 +74,7 @@ class PolygoneAnnotationActivity : AppCompatActivity() {
           .withPoints(points)
           .withData(JsonPrimitive("Foobar"))
           .withFillColor(Color.RED)
+          .withDraggable(true)
         create(polygonAnnotationOptions)
 
         AnnotationUtils.loadStringFromAssets(
