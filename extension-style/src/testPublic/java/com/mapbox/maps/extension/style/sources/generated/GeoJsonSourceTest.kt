@@ -483,6 +483,31 @@ class GeoJsonSourceTest {
   }
 
   @Test
+  fun dataSetBeforeBind() {
+    val testSource = geoJsonSource("testId") {}
+    Shadows.shadowOf(Looper.getMainLooper()).pause()
+    Shadows.shadowOf(GeoJsonSource.workerThread.looper).pause()
+    testSource.data(TEST_GEOJSON, DATA_ID)
+    Shadows.shadowOf(GeoJsonSource.workerThread.looper).idle()
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+
+    Shadows.shadowOf(Looper.getMainLooper()).pause()
+    Shadows.shadowOf(GeoJsonSource.workerThread.looper).pause()
+    testSource.bindTo(style)
+    Shadows.shadowOf(GeoJsonSource.workerThread.looper).idle()
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+
+    verify(exactly = 1) {
+      style.setStyleGeoJSONSourceData(
+        "testId",
+        DATA_ID,
+        capture(jsonSlot)
+      )
+    }
+    assertEquals(jsonSlot.captured.string, "{\"type\":\"FeatureCollection\",\"features\":[]}")
+  }
+
+  @Test
   fun featureAfterBindTest() {
     val testSource = geoJsonSource("testId") {}
     testSource.bindTo(style)
@@ -514,6 +539,28 @@ class GeoJsonSourceTest {
     Shadows.shadowOf(GeoJsonSource.workerThread.looper).idle()
     Shadows.shadowOf(Looper.getMainLooper()).idle()
     verify { style.setStyleGeoJSONSourceData("testId", DATA_ID, any()) }
+  }
+
+  @Test
+  fun featureCollectionBeforeBindTest() {
+    val testSource = geoJsonSource("testId") {}
+    Shadows.shadowOf(Looper.getMainLooper()).pause()
+    Shadows.shadowOf(GeoJsonSource.workerThread.looper).pause()
+    testSource.featureCollection(FEATURE_COLLECTION, DATA_ID)
+    Shadows.shadowOf(GeoJsonSource.workerThread.looper).idle()
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+    Shadows.shadowOf(Looper.getMainLooper()).pause()
+    Shadows.shadowOf(GeoJsonSource.workerThread.looper).pause()
+    testSource.bindTo(style)
+    Shadows.shadowOf(GeoJsonSource.workerThread.looper).idle()
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+    verify(exactly = 1) {
+      style.setStyleGeoJSONSourceData(
+        "testId",
+        DATA_ID,
+        any()
+      )
+    }
   }
 
   @Test
