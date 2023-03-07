@@ -24,8 +24,6 @@ import com.mapbox.maps.extension.style.types.PromoteId
 import com.mapbox.maps.extension.style.types.SourceDsl
 import com.mapbox.maps.extension.style.utils.TypeUtils
 import com.mapbox.maps.extension.style.utils.silentUnwrap
-import com.mapbox.maps.extension.style.utils.toValue
-import com.mapbox.maps.logW
 
 /**
  * A GeoJSON data source.
@@ -55,53 +53,50 @@ class GeoJsonSource : Source {
   }
 
   private fun setGeoJson(geoJson: GeoJson, dataId: String? = null) {
-    workerHandler.removeCallbacksAndMessages(null)
-    workerHandler.post {
-      if (dataId != null) {
-        delegate?.setStyleGeoJSONSourceData(
-          /* sourceId = */ sourceId,
-          /* dataId = */ dataId,
-          /* data = */ toGeoJsonData(geoJson)
-        ) ?: logW(
-          TAG,
-          "GeoJsonSource (sourceId=$sourceId) was not able to set data" +
-            " with `feature()`, `featureCollection()` or `geometry()` as there is no Style object."
-        )
-      } else {
-        delegate?.setStyleGeoJSONSourceData(
-          /* sourceId = */ sourceId,
-          /* data = */ toGeoJsonData(geoJson)
-        ) ?: logW(
-          TAG,
-          "GeoJsonSource (sourceId=$sourceId) was not able to set data (dataId=$dataId)" +
-            " with `feature()`, `featureCollection()` or `geometry()` as there is no Style object."
-        )
+    delegate?.let { style ->
+      workerHandler.removeCallbacksAndMessages(null)
+      workerHandler.post {
+        if (dataId != null) {
+          style.setStyleGeoJSONSourceData(
+            /* sourceId = */ sourceId,
+            /* dataId = */ dataId,
+            /* data = */ toGeoJsonData(geoJson)
+          )
+        } else {
+          style.setStyleGeoJSONSourceData(
+            /* sourceId = */ sourceId,
+            /* data = */ toGeoJsonData(geoJson)
+          )
+        }
       }
+    } ?: run {
+      initGeoJson = geoJson
+      initDataId = dataId
+      initData = null
     }
   }
 
   private fun setData(data: String, dataId: String? = null) {
-    workerHandler.removeCallbacksAndMessages(null)
-    workerHandler.post {
-      if (dataId != null) {
-        delegate?.setStyleGeoJSONSourceData(
-          /* sourceId = */ sourceId,
-          /* dataId = */ dataId,
-          /* data = */ GeoJSONSourceData.valueOf(data)
-        ) ?: logW(
-          TAG,
-          "GeoJsonSource (id=$sourceId) was not able to set data with `data()` or `url()` as there is no Style object."
-        )
-      } else {
-        delegate?.setStyleGeoJSONSourceData(
-          /* sourceId = */ sourceId,
-          /* data = */ GeoJSONSourceData.valueOf(data)
-        ) ?: logW(
-          TAG,
-          "GeoJsonSource (sourceId=$sourceId) was not able to set data (dataId=$dataId) `data()` or `url()`" +
-            " as there is no Style object."
-        )
+    delegate?.let { style ->
+      workerHandler.removeCallbacksAndMessages(null)
+      workerHandler.post {
+        if (dataId != null) {
+          style.setStyleGeoJSONSourceData(
+            /* sourceId = */ sourceId,
+            /* dataId = */ dataId,
+            /* data = */ GeoJSONSourceData.valueOf(data)
+          )
+        } else {
+          style.setStyleGeoJSONSourceData(
+            /* sourceId = */ sourceId,
+            /* data = */ GeoJSONSourceData.valueOf(data)
+          )
+        }
       }
+    } ?: run {
+      initData = data
+      initDataId = dataId
+      initGeoJson = null
     }
   }
 
@@ -115,10 +110,12 @@ class GeoJsonSource : Source {
     initGeoJson?.let {
       setGeoJson(it, initDataId)
       initGeoJson = null
+      initDataId = null
     }
     initData?.let {
       setData(it, initDataId)
       initData = null
+      initDataId = null
     }
   }
 
@@ -410,28 +407,6 @@ class GeoJsonSource : Source {
    */
   @JvmOverloads
   fun geometry(value: Geometry, dataId: String? = null): GeoJsonSource = applyGeoJsonData(value, dataId)
-
-  private fun GeoJson.toPropertyValue(): PropertyValue<*> {
-    try {
-      return PropertyValue(
-        "data",
-        when (this) {
-          is Geometry -> toValue()
-          is FeatureCollection -> toValue()
-          is Feature -> toValue()
-          else -> RuntimeException("GeoJson data must be Geometry, FeatureCollection or Feature!")
-        }
-      )
-    } catch (e: ConcurrentModificationException) {
-      throw MapboxConcurrentGeometryModificationException(
-        """While applying ${javaClass.simpleName} to geojson source with sourceId="$sourceId" some collection was mutated which is not allowed as data parsing happens on another thread.
-        Please make sure all collections passed via `geometry`, `feature`, `featureCollection` methods are immutable.
-        Easiest way to achieve this is either always pass the fresh copy or use https://developer.android.com/reference/java/util/concurrent/CopyOnWriteArrayList.
-        """.trimIndent(),
-        sourceId
-      )
-    }
-  }
 
   private fun applyGeoJsonData(
     data: GeoJson,
