@@ -4,6 +4,10 @@ Mapbox welcomes participation and contributions from everyone.
 
 #develop
 
+# 10.12.0-rc.1
+## Bug fixes 🐞
+* Fix regression from `v10.11.0` when applying geojson data was not working when no style was available.
+
 # 11.0.0-alpha.1 March 2, 2023
 ## Features ✨ and improvements 🏁
 * Enable raster colorization via `raster-color` expression and `RasterLayer.rasterColor`, `RasterLayer.rasterColorMix`, `RasterLayer.rasterColorRange` layer properties.
