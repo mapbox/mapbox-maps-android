@@ -4,7 +4,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-# 10.12.0-rc.1
+
+# 10.12.0-rc.1 March 09, 2023
 ## Bug fixes 🐞
 * Fix regression from `v10.11.0` when applying geojson data was not working when no style was available.
 * Interrupt blocking disk cache database operations on application exit so that the application does not hang.
@@ -13,6 +14,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v10.12.0-rc.1 and common to v23.4.0-rc.1.
+
 
 # 11.0.0-alpha.1 March 2, 2023
 ## Features ✨ and improvements 🏁
