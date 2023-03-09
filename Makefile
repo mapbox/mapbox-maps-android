@@ -78,13 +78,13 @@ sdkRegistryPublicReleasePublish:
 sdkRegistryPrivateReleasePublish:
 	./gradlew mapboxSDKRegistryPrivateReleasePublishAll;
 
-.PHONY: sdkRegistryUploadAndroidAutoExtension
-sdkRegistryUploadAndroidAutoExtension:
-	./gradlew extension-androidauto:mapboxSDKRegistryUpload;
+.PHONY: sdkRegistryUploadPublicReleaseAndroidAutoExtension
+sdkRegistryUploadPublicReleaseAndroidAutoExtension:
+	./gradlew extension-androidauto:mapboxSDKRegistryPublicReleaseUpload;
 
-.PHONY: sdkRegistryPublishAndroidAutoExtension
-sdkRegistryPublishAndroidAutoExtension:
-	./gradlew extension-androidauto:mapboxSDKRegistryPublish;
+.PHONY: sdkRegistryPublishPublicReleaseAndroidAutoExtension
+sdkRegistryPublishPublicReleaseAndroidAutoExtension:
+	./gradlew extension-androidauto:mapboxSDKRegistryPublicReleasePublish;
 
 .PHONY: clean
 clean:
