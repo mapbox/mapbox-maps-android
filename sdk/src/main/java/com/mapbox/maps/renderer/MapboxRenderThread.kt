@@ -585,11 +585,14 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     }
   }
 
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal var skipTextureFloatExtensionCheck = false
   /*
    * Force disabling extension texture float if the device doesn't support both `OES_texture_float`
    * and `OES_texture_float_linear`.
    */
   private fun disableTextureFloatExtensionIfItsUnavailable() {
+    if (skipTextureFloatExtensionCheck) return
     val extensions = "${glGetString(GLES20.GL_EXTENSIONS) ?: ""} "
     if (
       extensions.contains("OES_texture_float ").not() ||
