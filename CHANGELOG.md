@@ -7,6 +7,9 @@ Mapbox welcomes participation and contributions from everyone.
 # 10.12.0-rc.1
 ## Bug fixes 🐞
 * Fix regression from `v10.11.0` when applying geojson data was not working when no style was available.
+* Interrupt blocking disk cache database operations on application exit so that the application does not hang.
+* Fix a bug where continuously dragging and changing zoom would lead to either very slow or fast map dragging.
+* Fix missing terrain on some GPUs (e.g. Mali).
 
 # 11.0.0-alpha.1 March 2, 2023
 ## Features ✨ and improvements 🏁
