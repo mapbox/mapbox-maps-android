@@ -3,6 +3,9 @@
 Mapbox welcomes participation and contributions from everyone.
 
 #develop
+## Features ✨ and improvements 🏁
+* Remove deprecated `MapboxMap.queryRenderedFeatures` methods.
+* Remove `Snapshotter.setTileMode`, `Snapshotter.isInTileMode` methods.
 
 ## Features ✨ and improvements 🏁
 * Update SDK's targetSdkVersion and CompileSdkVersion to 33.

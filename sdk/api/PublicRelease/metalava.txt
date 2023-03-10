@@ -230,9 +230,6 @@ package com.mapbox.maps {
     method public com.mapbox.maps.MercatorCoordinate project(com.mapbox.geojson.Point point, double zoomScale);
     method public com.mapbox.maps.ProjectedMeters projectedMetersForCoordinate(com.mapbox.geojson.Point point);
     method @Deprecated public void queryFeatureExtensions(String sourceIdentifier, com.mapbox.geojson.Feature feature, String extension, String extensionField, java.util.HashMap<java.lang.String,com.mapbox.bindgen.Value>? args, com.mapbox.maps.QueryFeatureExtensionCallback callback);
-    method @Deprecated public void queryRenderedFeatures(java.util.List<com.mapbox.maps.ScreenCoordinate> shape, com.mapbox.maps.RenderedQueryOptions options, com.mapbox.maps.QueryFeaturesCallback callback);
-    method @Deprecated public void queryRenderedFeatures(com.mapbox.maps.ScreenBox box, com.mapbox.maps.RenderedQueryOptions options, com.mapbox.maps.QueryFeaturesCallback callback);
-    method @Deprecated public void queryRenderedFeatures(com.mapbox.maps.ScreenCoordinate pixel, com.mapbox.maps.RenderedQueryOptions options, com.mapbox.maps.QueryFeaturesCallback callback);
     method public com.mapbox.common.Cancelable queryRenderedFeatures(com.mapbox.maps.RenderedQueryGeometry geometry, com.mapbox.maps.RenderedQueryOptions options, com.mapbox.maps.QueryFeaturesCallback callback);
     method public void querySourceFeatures(String sourceId, com.mapbox.maps.SourceQueryOptions options, com.mapbox.maps.QueryFeaturesCallback callback);
     method public void reduceMemoryUse();
@@ -337,13 +334,11 @@ package com.mapbox.maps {
     method public final com.mapbox.maps.Size getSize();
     method public final String getStyleJson();
     method public final String getStyleUri();
-    method public final boolean isInTileMode();
     method public final void setCamera(com.mapbox.maps.CameraOptions cameraOptions);
     method public final void setSize(com.mapbox.maps.Size size);
     method public final void setStyleJson(String styleJson);
     method public final void setStyleListener(com.mapbox.maps.SnapshotStyleListener listener);
     method public final void setStyleUri(String styleUri);
-    method public final void setTileMode(boolean set);
     method public final void start(com.mapbox.maps.SnapshotCreatedListener callback);
     method public final void subscribe(com.mapbox.maps.Observer observer, java.util.List<java.lang.String> events);
     method public final void unsubscribe(com.mapbox.maps.Observer observer, java.util.List<java.lang.String> events);

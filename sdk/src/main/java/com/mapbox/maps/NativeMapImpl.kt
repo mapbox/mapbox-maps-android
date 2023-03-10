@@ -60,11 +60,11 @@ internal class NativeMapImpl(val map: MapInterface) :
 
   override fun cameraForCoordinateBounds(
     coordinateBounds: CoordinateBounds,
-    edgeInsets: EdgeInsets,
+    padding: EdgeInsets,
     zoom: Double?,
     pitch: Double?
   ): CameraOptions {
-    return map.cameraForCoordinateBounds(coordinateBounds, edgeInsets, zoom, pitch)
+    return map.cameraForCoordinateBounds(coordinateBounds, padding, zoom, pitch)
   }
 
   override fun setUserAnimationInProgress(inProgress: Boolean) {
@@ -104,11 +104,11 @@ internal class NativeMapImpl(val map: MapInterface) :
 
   override fun cameraForCoordinates(
     points: List<Point>,
-    edgeInsets: EdgeInsets,
+    padding: EdgeInsets,
     zoom: Double?,
     pitch: Double?
   ): CameraOptions {
-    return map.cameraForCoordinates(points, edgeInsets, zoom, pitch)
+    return map.cameraForCoordinates(points, padding, zoom, pitch)
   }
 
   override fun cameraForCoordinates(
@@ -121,11 +121,11 @@ internal class NativeMapImpl(val map: MapInterface) :
 
   override fun cameraForGeometry(
     geometry: Geometry,
-    edgeInsets: EdgeInsets,
+    padding: EdgeInsets,
     zoom: Double?,
     pitch: Double?
   ): CameraOptions {
-    return map.cameraForGeometry(geometry, edgeInsets, zoom, pitch)
+    return map.cameraForGeometry(geometry, padding, zoom, pitch)
   }
 
   override fun getElevation(point: Point): Double? {
@@ -444,30 +444,6 @@ internal class NativeMapImpl(val map: MapInterface) :
 
   override fun hasStyleModel(modelId: String): Boolean {
     return map.hasStyleModel(modelId)
-  }
-
-  override fun queryRenderedFeatures(
-    shape: MutableList<ScreenCoordinate>,
-    options: RenderedQueryOptions,
-    callback: QueryFeaturesCallback
-  ) {
-    map.queryRenderedFeatures(shape, options, callback)
-  }
-
-  override fun queryRenderedFeatures(
-    screenBox: ScreenBox,
-    options: RenderedQueryOptions,
-    callback: QueryFeaturesCallback
-  ) {
-    map.queryRenderedFeatures(screenBox, options, callback)
-  }
-
-  override fun queryRenderedFeatures(
-    pixel: ScreenCoordinate,
-    options: RenderedQueryOptions,
-    callback: QueryFeaturesCallback
-  ) {
-    map.queryRenderedFeatures(pixel, options, callback)
   }
 
   override fun queryRenderedFeatures(

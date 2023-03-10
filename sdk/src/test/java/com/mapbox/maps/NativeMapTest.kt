@@ -614,27 +614,7 @@ class NativeMapTest {
   @Test
   fun queryRenderedFeaturesGeometry() {
     val callback = mockk<QueryFeaturesCallback>()
-    val value = mockk<MutableList<ScreenCoordinate>>()
-    val queryOptions = mockk<RenderedQueryOptions>()
-    val nativeMap = NativeMapImpl(map)
-    nativeMap.queryRenderedFeatures(value, queryOptions, callback)
-    verify { map.queryRenderedFeatures(value, queryOptions, callback) }
-  }
-
-  @Test
-  fun queryRenderedFeaturesBox() {
-    val callback = mockk<QueryFeaturesCallback>()
-    val value = mockk<ScreenBox>()
-    val queryOptions = mockk<RenderedQueryOptions>()
-    val nativeMap = NativeMapImpl(map)
-    nativeMap.queryRenderedFeatures(value, queryOptions, callback)
-    verify { map.queryRenderedFeatures(value, queryOptions, callback) }
-  }
-
-  @Test
-  fun queryRenderedFeaturesCoordinate() {
-    val callback = mockk<QueryFeaturesCallback>()
-    val value = mockk<ScreenCoordinate>()
+    val value = mockk<RenderedQueryGeometry>()
     val queryOptions = mockk<RenderedQueryOptions>()
     val nativeMap = NativeMapImpl(map)
     nativeMap.queryRenderedFeatures(value, queryOptions, callback)

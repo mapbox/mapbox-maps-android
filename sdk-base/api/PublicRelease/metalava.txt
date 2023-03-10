@@ -1497,9 +1497,6 @@ package com.mapbox.maps.plugin.delegates {
 
   public interface MapFeatureQueryDelegate {
     method public void executeOnRenderThread(Runnable runnable);
-    method @Deprecated public void queryRenderedFeatures(java.util.List<com.mapbox.maps.ScreenCoordinate> shape, com.mapbox.maps.RenderedQueryOptions options, com.mapbox.maps.QueryFeaturesCallback callback);
-    method @Deprecated public void queryRenderedFeatures(com.mapbox.maps.ScreenBox box, com.mapbox.maps.RenderedQueryOptions options, com.mapbox.maps.QueryFeaturesCallback callback);
-    method @Deprecated public void queryRenderedFeatures(com.mapbox.maps.ScreenCoordinate pixel, com.mapbox.maps.RenderedQueryOptions options, com.mapbox.maps.QueryFeaturesCallback callback);
     method public com.mapbox.common.Cancelable queryRenderedFeatures(com.mapbox.maps.RenderedQueryGeometry geometry, com.mapbox.maps.RenderedQueryOptions options, com.mapbox.maps.QueryFeaturesCallback callback);
     method public void querySourceFeatures(String sourceId, com.mapbox.maps.SourceQueryOptions options, com.mapbox.maps.QueryFeaturesCallback callback);
   }

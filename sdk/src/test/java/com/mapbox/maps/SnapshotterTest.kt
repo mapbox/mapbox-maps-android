@@ -123,18 +123,6 @@ class SnapshotterTest {
   }
 
   @Test
-  fun isInTileMode() {
-    snapshotter.isInTileMode()
-    verify { coreSnapshotter.isInTileMode }
-  }
-
-  @Test
-  fun setTileMode() {
-    snapshotter.setTileMode(true)
-    verify { coreSnapshotter.setTileMode(true) }
-  }
-
-  @Test
   fun start() {
     every { coreSnapshotter.styleJSON } returns "foobar"
     snapshotter.start(mockk())
