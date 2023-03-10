@@ -978,7 +978,7 @@ class CameraAnimationsPluginImplTest {
       mapAnimationOptions {
         duration(50L)
         animatorListener(object : AnimatorListenerAdapter() {
-          override fun onAnimationEnd(animation: Animator?) {
+          override fun onAnimationEnd(animation: Animator) {
             super.onAnimationEnd(animation)
             cameraAnimationsPluginImpl.flyTo(
               CameraOptions.Builder()
@@ -1285,19 +1285,19 @@ class CameraAnimationsPluginImplTest {
     var canceled = false
     var canceledCount = 0
 
-    override fun onAnimationRepeat(animation: Animator?) {}
+    override fun onAnimationRepeat(animation: Animator) {}
 
-    override fun onAnimationEnd(animation: Animator?) {
+    override fun onAnimationEnd(animation: Animator) {
       endedCount += 1
       ended = true
     }
 
-    override fun onAnimationCancel(animation: Animator?) {
+    override fun onAnimationCancel(animation: Animator) {
       canceledCount += 1
       canceled = true
     }
 
-    override fun onAnimationStart(animation: Animator?) {
+    override fun onAnimationStart(animation: Animator) {
       startedCount += 1
       started = true
     }

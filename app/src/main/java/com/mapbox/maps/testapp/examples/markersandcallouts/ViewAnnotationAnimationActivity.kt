@@ -117,7 +117,7 @@ class ViewAnnotationAnimationActivity : AppCompatActivity() {
       duration = animateDuration.roundToLong()
       addUpdateListener(animatorUpdateListener)
       addListener(object : AnimatorListenerAdapter() {
-        override fun onAnimationEnd(animation: Animator?) {
+        override fun onAnimationEnd(animation: Animator) {
           super.onAnimationEnd(animation)
           currentRouteCoordinate++
           animateNextStep()

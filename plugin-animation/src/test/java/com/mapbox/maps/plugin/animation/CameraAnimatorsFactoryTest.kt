@@ -49,16 +49,16 @@ class CameraAnimatorsFactoryTest {
   private val durationNew = 50L
 
   private val emptyListener = object : Animator.AnimatorListener {
-    override fun onAnimationStart(animation: Animator?) {
+    override fun onAnimationStart(animation: Animator) {
     }
 
-    override fun onAnimationEnd(animation: Animator?) {
+    override fun onAnimationEnd(animation: Animator) {
     }
 
-    override fun onAnimationCancel(animation: Animator?) {
+    override fun onAnimationCancel(animation: Animator) {
     }
 
-    override fun onAnimationRepeat(animation: Animator?) {
+    override fun onAnimationRepeat(animation: Animator) {
     }
   }
 
@@ -118,6 +118,8 @@ class CameraAnimatorsFactoryTest {
   @Test
   fun testFlyToAnimatorsWithSinglePixelPadding() {
     val size = Size(800.0f, 600.0f)
+
+    every { mapProjectionDelegate.unproject(any(), any()) } returns initialCenter
     every { mapCameraManagerDelegate.cameraState } returns initialCameraPosition
     every { mapTransformDelegate.getMapOptions() } returns MapOptions.Builder().size(size).build()
     every { mapTransformDelegate.getSize() } returns size
@@ -215,6 +217,10 @@ class CameraAnimatorsFactoryTest {
         CameraAnimatorType.PADDING -> {
           Assert.assertEquals(initialCameraPosition.padding, startValue)
           Assert.assertEquals(targetCameraPosition.padding, targetValue)
+        }
+        CameraAnimatorType.CENTER -> {
+          Assert.assertEquals(initialCameraPosition.center, startValue)
+          Assert.assertEquals(targetCameraPosition.center, targetValue)
         }
       }
     }

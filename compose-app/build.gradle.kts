@@ -1,7 +1,6 @@
 plugins {
   id("com.android.application")
   kotlin("android")
-  kotlin("android.extensions")
   id("com.mapbox.maps.token")
   id("io.gitlab.arturbosch.detekt").version(Versions.detekt)
 }
@@ -61,13 +60,10 @@ android {
   }
 }
 
-androidExtensions {
-  isExperimental = true
-}
-
 dependencies {
   implementation(project(":sdk"))
   implementation(Dependencies.googleMaterialDesign)
+  implementation(platform(Dependencies.composeBom))
   implementation(Dependencies.composeUi)
   implementation(Dependencies.composeMaterial)
   implementation(Dependencies.composeUiToolingPreview)

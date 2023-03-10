@@ -427,21 +427,21 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
     /**
      * Called when an on down gesture was detected.
      */
-    override fun onDown(motionEvent: MotionEvent?): Boolean {
+    override fun onDown(motionEvent: MotionEvent): Boolean {
       return true
     }
 
     /**
      * Called when an on single tap up gesture was detected.
      */
-    override fun onSingleTapUp(motionEvent: MotionEvent?): Boolean {
+    override fun onSingleTapUp(motionEvent: MotionEvent): Boolean {
       return handleSingleTapUpEvent()
     }
 
     /**
      * Called when an on single tap up confirmed gesture was detected.
      */
-    override fun onSingleTapConfirmed(motionEvent: MotionEvent?): Boolean {
+    override fun onSingleTapConfirmed(motionEvent: MotionEvent): Boolean {
       if (motionEvent == null) {
         return false
       }
@@ -451,7 +451,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
     /**
      * Called when an on double tap gesture was detected.
      */
-    override fun onDoubleTapEvent(motionEvent: MotionEvent?): Boolean {
+    override fun onDoubleTapEvent(motionEvent: MotionEvent): Boolean {
       if (motionEvent == null) {
         return false
       }
@@ -463,7 +463,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
     /**
      * Called when an on long press gesture was detected.
      */
-    override fun onLongPress(motionEvent: MotionEvent?) {
+    override fun onLongPress(motionEvent: MotionEvent) {
       if (motionEvent == null) {
         return
       }
@@ -475,8 +475,8 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
      * Called when an on fling gesture was detected.
      */
     override fun onFling(
-      e1: MotionEvent?,
-      e2: MotionEvent?,
+      e1: MotionEvent,
+      e2: MotionEvent,
       velocityX: Float,
       velocityY: Float
     ): Boolean {

@@ -4,6 +4,45 @@ Mapbox welcomes participation and contributions from everyone.
 
 #develop
 
+## Features ✨ and improvements 🏁
+* Update SDK's targetSdkVersion and CompileSdkVersion to 33.
+
+## Dependencies
+* Update dependencies
+
+| Dependency | Before | After |
+| ----- | ----- | ----- |
+| Android Gradle Plugin | 7.0.4 | 7.4.2 |
+| Kotlin | 1.5.31 | 1.8.10 |
+| org.jetbrains.kotlin:kotlin-stdlib-jdk7 | 1.5.31 |  |
+| org.jetbrains.kotlin:kotlin-stdlib-jdk8 |  | 1.8.10 |
+| Dokka plugin | 1.5.31 | 1.8.10 |
+| androidx.core:core-ktx | 1.7.0 | 1.9.0 |
+| androidx.appcompat:appcompat | 1.3.0 | 1.6.1 |
+| androidx.test:rules | 1.4.0 | 1.5.0 |
+| androidx.test:core | 1.4.0 | 1.5.0 |
+| androidx.test:runner | 1.4.0 | 1.5.2 |
+| androidx.test:orchestrator | 1.4.0 | 1.4.2 |
+| androidx.test:monitor | 1.4.0 | 1.6.1 |
+| androidx.test.espresso:espresso-core | 3.4.0 | 3.5.1 |
+| androidx.test.ext:junit | 1.1.3 | 1.1.5 |
+| org.jetbrains.kotlinx:kotlinx-coroutines-android | 1.3.9 | 1.6.1 |
+| org.jetbrains.kotlinx:kotlinx-coroutines-test | 1.3.9 | 1.6.1 |
+| io.mockk:mockk | 1.12.3 | 1.13.4 |
+| io.mockk:mockk-agent-api | 1.12.3 | 1.13.4 |
+| io.mockk:mockk-agent-jvm | 1.12.3 | 1.13.4 |
+| org.robolectric:robolectric | 4.8.1 | 4.9.2 |
+| com.android.tools.lint:lint-api | 30.0.4 | 30.4.2 |
+| com.android.tools.lint:lint-checks | 30.0.4 | 30.4.2 |
+| com.android.tools.lint:lint | 30.0.4 | 30.4.2 |
+| com.android.tools.lint:lint-tests | 30.0.4 | 30.4.2 |
+| com.android.tools:testutils | 30.0.4 | 30.4.2 |
+| nl.jqno.equalsverifier:equalsverifier | 3.10.1 | 3.14 |
+| io.gitlab.arturbosch.detekt:detekt-formatting | 1.20.0 | 1.22.0 |
+| composeOptions -> kotlinCompilerExtensionVersion | 1.1.0-beta03 | 1.4.3 |
+| androidx.compose:compose-bom |  | 2023.01.00 |
+| com.pinterest:ktlint | 0.39.0 | 0.48.2 |
+
 # 10.12.0-rc.1
 ## Bug fixes 🐞
 * Fix regression from `v10.11.0` when applying geojson data was not working when no style was available.

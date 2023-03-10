@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.mapbox.maps"
     android:versionCode="1"
     android:versionName="1.0">
 
@@ -9,12 +8,7 @@
         android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
 
         <activity
-            android:name=".TestActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/test_app_name" />
-
-        <activity
-            android:name=".EmptyActivity"
+            android:name="com.mapbox.maps.EmptyActivity"
             android:screenOrientation="portrait"
             android:label="@string/test_app_name" />
     </application>

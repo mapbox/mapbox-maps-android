@@ -36,6 +36,7 @@ dependencies {
   implementation(Dependencies.kotlin)
   implementation(Dependencies.androidxCoreKtx)
   implementation(Dependencies.androidxLifecycle)
+  testImplementation(Dependencies.coroutinesTest)
   testImplementation(Dependencies.junit)
   testImplementation(Dependencies.mockk)
   testImplementation(Dependencies.androidxTestCore)

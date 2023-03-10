@@ -79,11 +79,14 @@ android {
       execution = "ANDROIDX_TEST_ORCHESTRATOR"
     }
   }
+
   externalNativeBuild {
     cmake {
       path = file("src/main/cpp/CMakeLists.txt")
     }
   }
+
+  ndkVersion = AndroidVersions.ExampleApp.ndkVersion
 
   packagingOptions {
     if (buildFromSource.toBoolean()) {
@@ -133,6 +136,7 @@ dependencies {
   implementation(Dependencies.asyncInflater)
 
   debugImplementation(Dependencies.squareLeakCanary)
+  debugImplementation(Dependencies.androidxTestMonitor)
   androidTestUtil(Dependencies.androidxOrchestrator)
   androidTestImplementation(Dependencies.androidxTestRunner)
   androidTestImplementation(Dependencies.androidxJUnitTestRules)

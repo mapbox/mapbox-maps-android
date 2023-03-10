@@ -10,15 +10,7 @@ The software and files in this repository (collectively, “Software”) are lic
 ## Additional Mapbox Maps Android licenses
 Mapbox Maps Android uses portions of the Activity.
 
-URL: [https://developer.android.com/jetpack/androidx/releases/savedstate#1.1.0](https://developer.android.com/jetpack/androidx/releases/savedstate#1.1.0)
-
-License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
-===========================================================================
-
-Mapbox Maps Android uses portions of the Activity.
-
-URL: [https://developer.android.com/jetpack/androidx/releases/activity#1.2.3](https://developer.android.com/jetpack/androidx/releases/activity#1.2.3)
+URL: [https://developer.android.com/jetpack/androidx/releases/activity#1.6.0](https://developer.android.com/jetpack/androidx/releases/activity#1.6.0)
 
 License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -26,7 +18,7 @@ License: [The Apache Software License, Version 2.0](http://www.apache.org/licens
 
 Mapbox Maps Android uses portions of the Android App Startup Runtime.
 
-URL: [https://developer.android.com/jetpack/androidx/releases/startup#1.1.0](https://developer.android.com/jetpack/androidx/releases/startup#1.1.0)
+URL: [https://developer.android.com/jetpack/androidx/releases/startup#1.1.1](https://developer.android.com/jetpack/androidx/releases/startup#1.1.1)
 
 License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -34,7 +26,7 @@ License: [The Apache Software License, Version 2.0](http://www.apache.org/licens
 
 Mapbox Maps Android uses portions of the Android AppCompat Library.
 
-URL: [https://developer.android.com/jetpack/androidx/releases/appcompat#1.3.0](https://developer.android.com/jetpack/androidx/releases/appcompat#1.3.0)
+URL: [https://developer.android.com/jetpack/androidx/releases/appcompat#1.6.1](https://developer.android.com/jetpack/androidx/releases/appcompat#1.6.1)
 
 License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -56,6 +48,22 @@ License: [The Apache Software License, Version 2.0](http://www.apache.org/licens
 
 ===========================================================================
 
+Mapbox Maps Android uses portions of the Android Emoji2 Compat.
+
+URL: [https://developer.android.com/jetpack/androidx/releases/emoji2#1.2.0](https://developer.android.com/jetpack/androidx/releases/emoji2#1.2.0)
+
+License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+===========================================================================
+
+Mapbox Maps Android uses portions of the Android Emoji2 Compat view helpers.
+
+URL: [https://developer.android.com/jetpack/androidx/releases/emoji2#1.2.0](https://developer.android.com/jetpack/androidx/releases/emoji2#1.2.0)
+
+License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+===========================================================================
+
 Mapbox Maps Android uses portions of the Android Lifecycle LiveData.
 
 URL: [https://developer.android.com/topic/libraries/architecture/index.html](https://developer.android.com/topic/libraries/architecture/index.html)
@@ -66,7 +74,15 @@ License: [The Apache Software License, Version 2.0](http://www.apache.org/licens
 
 Mapbox Maps Android uses portions of the Android Lifecycle LiveData Core.
 
-URL: [https://developer.android.com/jetpack/androidx/releases/lifecycle#2.3.1](https://developer.android.com/jetpack/androidx/releases/lifecycle#2.3.1)
+URL: [https://developer.android.com/jetpack/androidx/releases/lifecycle#2.5.1](https://developer.android.com/jetpack/androidx/releases/lifecycle#2.5.1)
+
+License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+===========================================================================
+
+Mapbox Maps Android uses portions of the Android Lifecycle Process.
+
+URL: [https://developer.android.com/jetpack/androidx/releases/lifecycle#2.4.1](https://developer.android.com/jetpack/androidx/releases/lifecycle#2.4.1)
 
 License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -74,7 +90,7 @@ License: [The Apache Software License, Version 2.0](http://www.apache.org/licens
 
 Mapbox Maps Android uses portions of the Android Lifecycle Runtime.
 
-URL: [https://developer.android.com/jetpack/androidx/releases/lifecycle#2.3.1](https://developer.android.com/jetpack/androidx/releases/lifecycle#2.3.1)
+URL: [https://developer.android.com/jetpack/androidx/releases/lifecycle#2.5.1](https://developer.android.com/jetpack/androidx/releases/lifecycle#2.5.1)
 
 License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -82,7 +98,7 @@ License: [The Apache Software License, Version 2.0](http://www.apache.org/licens
 
 Mapbox Maps Android uses portions of the Android Lifecycle ViewModel.
 
-URL: [https://developer.android.com/jetpack/androidx/releases/lifecycle#2.3.1](https://developer.android.com/jetpack/androidx/releases/lifecycle#2.3.1)
+URL: [https://developer.android.com/jetpack/androidx/releases/lifecycle#2.5.1](https://developer.android.com/jetpack/androidx/releases/lifecycle#2.5.1)
 
 License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -90,7 +106,7 @@ License: [The Apache Software License, Version 2.0](http://www.apache.org/licens
 
 Mapbox Maps Android uses portions of the Android Lifecycle ViewModel with SavedState.
 
-URL: [https://developer.android.com/jetpack/androidx/releases/lifecycle#2.3.1](https://developer.android.com/jetpack/androidx/releases/lifecycle#2.3.1)
+URL: [https://developer.android.com/jetpack/androidx/releases/lifecycle#2.5.1](https://developer.android.com/jetpack/androidx/releases/lifecycle#2.5.1)
 
 License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -98,7 +114,15 @@ License: [The Apache Software License, Version 2.0](http://www.apache.org/licens
 
 Mapbox Maps Android uses portions of the Android Lifecycle-Common.
 
-URL: [https://developer.android.com/jetpack/androidx/releases/lifecycle#2.3.1](https://developer.android.com/jetpack/androidx/releases/lifecycle#2.3.1)
+URL: [https://developer.android.com/jetpack/androidx/releases/lifecycle#2.5.1](https://developer.android.com/jetpack/androidx/releases/lifecycle#2.5.1)
+
+License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+===========================================================================
+
+Mapbox Maps Android uses portions of the Android Resource Inspection - Annotations.
+
+URL: [https://developer.android.com/jetpack/androidx/releases/resourceinspection#1.0.1](https://developer.android.com/jetpack/androidx/releases/resourceinspection#1.0.1)
 
 License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -106,7 +130,7 @@ License: [The Apache Software License, Version 2.0](http://www.apache.org/licens
 
 Mapbox Maps Android uses portions of the Android Resources Library.
 
-URL: [https://developer.android.com/jetpack/androidx/releases/appcompat#1.3.0](https://developer.android.com/jetpack/androidx/releases/appcompat#1.3.0)
+URL: [https://developer.android.com/jetpack/androidx/releases/appcompat#1.6.1](https://developer.android.com/jetpack/androidx/releases/appcompat#1.6.1)
 
 License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -122,7 +146,7 @@ License: [The Apache Software License, Version 2.0](http://www.apache.org/licens
 
 Mapbox Maps Android uses portions of the Android Support Library Annotations.
 
-URL: [https://developer.android.com/jetpack/androidx/releases/annotation#1.2.0](https://developer.android.com/jetpack/androidx/releases/annotation#1.2.0)
+URL: [https://developer.android.com/jetpack/androidx/releases/annotation#1.3.0](https://developer.android.com/jetpack/androidx/releases/annotation#1.3.0)
 
 License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -138,7 +162,7 @@ License: [The Apache Software License, Version 2.0](http://www.apache.org/licens
 
 Mapbox Maps Android uses portions of the Android Support Library compat.
 
-URL: [https://developer.android.com/jetpack/androidx/releases/core#1.7.0](https://developer.android.com/jetpack/androidx/releases/core#1.7.0)
+URL: [https://developer.android.com/jetpack/androidx/releases/core#1.9.0](https://developer.android.com/jetpack/androidx/releases/core#1.9.0)
 
 License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -170,7 +194,7 @@ License: [The Apache Software License, Version 2.0](http://www.apache.org/licens
 
 Mapbox Maps Android uses portions of the Android Support Library fragment.
 
-URL: [https://developer.android.com/jetpack/androidx/releases/fragment#1.3.4](https://developer.android.com/jetpack/androidx/releases/fragment#1.3.4)
+URL: [https://developer.android.com/jetpack/androidx/releases/fragment#1.3.6](https://developer.android.com/jetpack/androidx/releases/fragment#1.3.6)
 
 License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -226,7 +250,7 @@ License: [The Apache Software License, Version 2.0](http://www.apache.org/licens
 
 Mapbox Maps Android uses portions of the Core Kotlin Extensions.
 
-URL: [https://developer.android.com/jetpack/androidx/releases/core#1.7.0](https://developer.android.com/jetpack/androidx/releases/core#1.7.0)
+URL: [https://developer.android.com/jetpack/androidx/releases/core#1.9.0](https://developer.android.com/jetpack/androidx/releases/core#1.9.0)
 
 License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -234,7 +258,7 @@ License: [The Apache Software License, Version 2.0](http://www.apache.org/licens
 
 Mapbox Maps Android uses portions of the Experimental annotation.
 
-URL: [https://developer.android.com/jetpack/androidx/releases/annotation#1.1.0](https://developer.android.com/jetpack/androidx/releases/annotation#1.1.0)
+URL: [https://developer.android.com/jetpack/androidx/releases/annotation#1.3.0](https://developer.android.com/jetpack/androidx/releases/annotation#1.3.0)
 
 License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -289,6 +313,22 @@ Mapbox Maps Android uses portions of the Kotlin Stdlib Jdk8.
 URL: [https://kotlinlang.org/](https://kotlinlang.org/)
 
 License: [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+===========================================================================
+
+Mapbox Maps Android uses portions of the kotlinx-coroutines-android.
+
+URL: [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+
+License: [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+===========================================================================
+
+Mapbox Maps Android uses portions of the kotlinx-coroutines-core.
+
+URL: [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+
+License: [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ===========================================================================
 
@@ -351,6 +391,14 @@ License: [The Apache Software License, Version 2.0](http://www.apache.org/licens
 Mapbox Maps Android uses portions of the Okio.
 
 URL: [https://github.com/square/okio/](https://github.com/square/okio/)
+
+License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+===========================================================================
+
+Mapbox Maps Android uses portions of the Saved State.
+
+URL: [https://developer.android.com/jetpack/androidx/releases/savedstate#1.2.0](https://developer.android.com/jetpack/androidx/releases/savedstate#1.2.0)
 
 License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 

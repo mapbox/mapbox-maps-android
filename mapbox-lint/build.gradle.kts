@@ -4,17 +4,17 @@ plugins {
   id("com.android.lint")
 }
 
-lintOptions {
+lint {
   htmlReport = true
   htmlOutput = file("lint-report.html")
   textReport = true
-  isAbsolutePaths = false
-  isIgnoreTestSources = true
+  absolutePaths = false
+  ignoreTestSources = true
 }
 
 java {
-  sourceCompatibility = JavaVersion.VERSION_1_8
-  targetCompatibility = JavaVersion.VERSION_1_8
+  sourceCompatibility = JavaVersion.VERSION_11
+  targetCompatibility = JavaVersion.VERSION_11
 }
 
 dependencies {

@@ -1,21 +1,25 @@
 object AndroidVersions {
   const val minSdkVersion = 21
-  const val targetSdkVersion = 30
-  const val compileSdkVersion = 31
+  const val targetSdkVersion = 33
+  const val compileSdkVersion = 33
   object AndroidAuto {
     const val minSdkVersion = 23
-    const val targetSdkVersion = 30
-    const val compileSdkVersion = 31
+    const val targetSdkVersion = 33
+    const val compileSdkVersion = 33
   }
   object Compose {
     const val minSdkVersion = 23
-    const val targetSdkVersion = 30
-    const val compileSdkVersion = 31
+    const val targetSdkVersion = 33
+    const val compileSdkVersion = 33
   }
   object ExampleApp {
     const val minSdkVersion = 23
-    const val targetSdkVersion = 31
-    const val compileSdkVersion = 31
+    const val targetSdkVersion = 33
+    const val compileSdkVersion = 33
+    // Enforce app module to use ndk-r21e as our CI and native dependencies uses the 21e version
+    // If not specified, AGP 7.4.0 defaults to 23.1.7779620, which our CI didn't install.
+    // Long term, we should bump the ndk version and align with common and gl-native.
+    const val ndkVersion = "21.4.7075529"
   }
 }
 
@@ -57,12 +61,13 @@ object Dependencies {
   const val androidxTestJUnit = "androidx.test.ext:junit:${Versions.androidxJUnit}"
   const val androidxRules = "androidx.test:rules:${Versions.androidxTest}"
   const val androidxJUnitTestRules = "androidx.test:rules:${Versions.androidxTest}"
-  const val androidxTestRunner = "androidx.test:runner:${Versions.androidxTest}"
+  const val androidxTestRunner = "androidx.test:runner:${Versions.androidxTestRunner}"
   const val androidxTestCore = "androidx.test:core:${Versions.androidxTest}"
+  const val androidxTestMonitor = "androidx.test:monitor:${Versions.androidXTestMonitor}"
   const val androidxArchCoreTest = "androidx.arch.core:core-testing:${Versions.androidxArchCoreTest}"
   const val androidxUiAutomator = "androidx.test.uiautomator:uiautomator:${Versions.androidxUiAutomator}"
   const val androidxFragmentTest = "androidx.fragment:fragment-testing:${Versions.androidxFragmentTesting}"
-  const val androidxOrchestrator = "androidx.test:orchestrator:${Versions.androidxTest}"
+  const val androidxOrchestrator = "androidx.test:orchestrator:${Versions.androidxTestOrchestrator}"
   const val androidxMultidex = "androidx.multidex:multidex:${Versions.androidxMultidex}"
   const val androidxLifecycle = "androidx.lifecycle:lifecycle-runtime:${Versions.androidxLifecycle}"
   const val androidxLifecycleKtx = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.androidxLifecycle}"
@@ -75,8 +80,9 @@ object Dependencies {
   const val squareLeakCanary = "com.squareup.leakcanary:leakcanary-android:${Versions.squareLeakCanary}"
   const val squareRetrofit = "com.squareup.retrofit2:retrofit:${Versions.squareRetrofit}"
   const val squareRetrofitGsonConverter = "com.squareup.retrofit2:converter-gson:${Versions.squareRetrofit}"
-  const val kotlin = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.pluginKotlin}"
+  const val kotlin = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.pluginKotlin}"
   const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.kotlinCoroutines}"
+  const val coroutinesTest = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.kotlinCoroutines}"
   const val junit = "junit:junit:${Versions.junit}"
   const val mockk = "io.mockk:mockk:${Versions.mockk}"
   const val mockkAgentApi = "io.mockk:mockk-agent-api:${Versions.mockk}"
@@ -94,17 +100,18 @@ object Dependencies {
   const val asyncInflater = "androidx.asynclayoutinflater:asynclayoutinflater:${Versions.asyncInflater}"
   const val kotlinReflect = "org.jetbrains.kotlin:kotlin-reflect:${Versions.pluginKotlin}"
   const val detektFormatting = "io.gitlab.arturbosch.detekt:detekt-formatting:${Versions.detekt}"
-  const val composeUi = "androidx.compose.ui:ui:${Versions.compose}"
-  const val composeMaterial = "androidx.compose.material:material:${Versions.compose}"
-  const val composeUiToolingPreview = "androidx.compose.ui:ui-tooling-preview:${Versions.compose}"
+  const val composeBom = "androidx.compose:compose-bom:${Versions.composeBom}"
+  const val composeUi = "androidx.compose.ui:ui"
+  const val composeMaterial = "androidx.compose.material:material"
+  const val composeUiToolingPreview = "androidx.compose.ui:ui-tooling-preview"
 
 }
 
 object Versions {
-  const val pluginAndroidGradle = "7.0.4"
-  const val pluginKotlin = "1.5.31"
+  const val pluginAndroidGradle = "7.4.2"
+  const val pluginKotlin = "1.8.10"
   const val pluginLicense = "0.9.0"
-  const val pluginDokka =  "1.5.31"
+  const val pluginDokka =  "1.8.10"
   const val pluginJacoco = "0.2"
   const val pluginBinaryCompatibilityValidator = "0.8.0"
   const val pluginTaskTree = "2.1.0"
@@ -115,15 +122,22 @@ object Versions {
   const val mapboxBase = "0.8.0"
   const val mapboxGlNative = "11.0.0-alpha.1"
   const val mapboxCommon = "23.4.0-beta.1"
-  const val androidxCore = "1.7.0" // last version compatible with kotlin 1.5.31
+  const val androidxCore = "1.9.0" // last version compatible with kotlin 1.8.10
   const val androidxFragmentTesting = "1.5.0"
+  // can not bump to v1.6.0, due to incompatible
+  // `@androidx.annotation.VisibleForTesting(otherwise = null)`
+  // generated by the telemetry module setup, we can update either by updating the annotation
+  // processor in mapbox-android-base, or remove the module setup in mapbox-maps-android
   const val androidxAnnotation = "1.1.0"
-  const val androidxAppcompat = "1.3.0"
-  const val androidxTest = "1.4.0"
+  const val androidxAppcompat = "1.6.1"
+  const val androidxTest = "1.5.0"
+  const val androidxTestRunner = "1.5.2"
+  const val androidxTestOrchestrator = "1.4.2"
+  const val androidXTestMonitor = "1.6.1"
   const val androidxArchCoreTest = "2.1.0"
   const val androidxConstraintLayout = "2.0.0"
-  const val androidxEspresso = "3.4.0"
-  const val androidxJUnit = "1.1.3"
+  const val androidxEspresso = "3.5.1"
+  const val androidxJUnit = "1.1.5"
   const val androidxUiAutomator = "2.2.0"
   const val androidxRecyclerView = "1.1.0"
   const val androidxInterpolator="1.0.0"
@@ -136,19 +150,21 @@ object Versions {
   const val googlePlayServicesLocation = "18.0.0"
   const val googleCarAppLibrary= "1.2.0"
   const val androidAutoMapboxMapSdk = "10.5.0"
-  const val kotlinCoroutines = "1.3.9"
+  // Use kotlinCoroutines to 1.6.1 to be compatible with platform runtime.
+  const val kotlinCoroutines = "1.6.1"
   const val junit = "4.13.2"
-  const val mockk = "1.12.3"
-  const val robolectric = "4.8.1"
+  const val mockk = "1.13.4"
+  const val robolectric = "4.9.2"
   const val robolectricEgl = "gl1.1-android-2.1_r1"
-  const val lint = "30.0.4"
+  const val lint = "30.4.2"
   const val hamcrest = "2.1"
-  const val equalsVerifier = "3.10.1"
+  const val equalsVerifier = "3.14"
   const val asyncInflater = "1.0.0"
   const val mapboxSdkVersionsPlugin = "1.1.3"
   const val pitest = "0.2.8"
-  const val detekt = "1.20.0"
-  const val compose = "1.1.0-beta03"
+  const val detekt = "1.22.0"
+  const val compose = "1.4.3"
+  const val composeBom = "2023.01.00"
   const val pluginPlayPublisher = "3.7.0"
   const val gradleVersionsPlugin = "0.42.0"
 }

@@ -8,6 +8,10 @@ import androidx.lifecycle.ViewTreeLifecycleOwner
 import androidx.lifecycle.testing.TestLifecycleOwner
 import com.mapbox.maps.plugin.lifecycle.ViewLifecycleOwner
 import io.mockk.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.newSingleThreadContext
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Assert
 import org.junit.Assert.assertEquals
@@ -19,12 +23,16 @@ class ViewLifecycleOwnerTest {
   @get:Rule
   val instantTaskExecutorRule = InstantTaskExecutorRule()
 
-  private val hostingLifecycleOwner = generateHostingLifecycleOwner()
+  private lateinit var hostingLifecycleOwner: TestLifecycleOwner
   private var view = mockk<View>()
   private val attachStateSlot = slot<View.OnAttachStateChangeListener>()
+  private val mainThreadSurrogate = newSingleThreadContext("UI thread")
 
   @Before
   fun setup() {
+    // Needed as we don't have access to Dispatchers.Main in unit testing
+    Dispatchers.setMain(mainThreadSurrogate)
+    hostingLifecycleOwner = generateHostingLifecycleOwner()
     mockkStatic(ViewTreeLifecycleOwner::class)
     every { ViewTreeLifecycleOwner.get(view) } returns hostingLifecycleOwner
     every { view.addOnAttachStateChangeListener(capture(attachStateSlot)) } just Runs
@@ -183,6 +191,8 @@ class ViewLifecycleOwnerTest {
 
   @After
   fun tearDown() {
+    Dispatchers.resetMain() // reset the main dispatcher to the original Main dispatcher
+    mainThreadSurrogate.close()
     unmockkStatic(ViewTreeLifecycleOwner::class)
     unmockkAll()
   }
@@ -195,6 +205,7 @@ class ViewLifecycleOwnerTest {
     attachStateSlot.captured.onViewAttachedToWindow(view)
     every { view.isAttachedToWindow } returns true
   }
+
   private fun detach() {
     attachStateSlot.captured.onViewDetachedFromWindow(view)
     every { view.isAttachedToWindow } returns false

@@ -29,7 +29,7 @@ internal class PuckPulsingAnimator(private val pixelRatio: Float = 1.0f) :
       animate(0.0, maxRadius)
     }
     addListener(object : AnimatorListenerAdapter() {
-      override fun onAnimationRepeat(animation: Animator?) {
+      override fun onAnimationRepeat(animation: Animator) {
         super.onAnimationRepeat(animation)
         setObjectValues(0.0, maxRadius)
       }
