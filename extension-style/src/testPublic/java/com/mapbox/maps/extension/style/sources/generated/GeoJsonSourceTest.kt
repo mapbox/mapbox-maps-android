@@ -74,20 +74,25 @@ class GeoJsonSourceTest {
 
   @Test
   fun dataSet() {
+    Shadows.shadowOf(GeoJsonSource.workerThread.looper).pause()
     val testSource = geoJsonSource("testId") {
       data(TEST_GEOJSON)
     }
     testSource.bindTo(style)
+    Shadows.shadowOf(GeoJsonSource.workerThread.looper).idle()
+
     verify { style.setStyleGeoJSONSourceData("testId", capture(jsonSlot)) }
     assertTrue(jsonSlot.captured.string.contains("{\"type\":\"FeatureCollection\",\"features\":[]}"))
   }
 
   @Test
   fun dataSetWithId() {
+    Shadows.shadowOf(GeoJsonSource.workerThread.looper).pause()
     val testSource = geoJsonSource("testId") {
       data(TEST_GEOJSON, DATA_ID)
     }
     testSource.bindTo(style)
+    Shadows.shadowOf(GeoJsonSource.workerThread.looper).idle()
 
     verify { style.setStyleGeoJSONSourceData("testId", DATA_ID, capture(jsonSlot)) }
     assertTrue(jsonSlot.captured.string.contains("{\"type\":\"FeatureCollection\",\"features\":[]}"))
@@ -126,10 +131,12 @@ class GeoJsonSourceTest {
 
   @Test
   fun urlSetTest() {
+    Shadows.shadowOf(GeoJsonSource.workerThread.looper).pause()
     val testSource = geoJsonSource("testId") {
       url("testUrl")
     }
     testSource.bindTo(style)
+    Shadows.shadowOf(GeoJsonSource.workerThread.looper).idle()
 
     verify { style.setStyleGeoJSONSourceData("testId", capture(jsonSlot)) }
     assertEquals(jsonSlot.captured.string, "testUrl")
