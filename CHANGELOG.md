@@ -3,6 +3,11 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
+## Bug fixes 🐞
+* Fix missing terrain on some GPUs (e.g. Mali). ([2036](https://github.com/mapbox/mapbox-maps-android/pull/2036)) 
+
+## Dependencies
+* Update gl-native to v10.11.2. ([2036](https://github.com/mapbox/mapbox-maps-android/pull/2036))
 
 # 10.11.1 February 21, 2023
 ## Bug fixes 🐞
