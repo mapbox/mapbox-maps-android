@@ -4,6 +4,13 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 10.11.2
+## Bug fixes 🐞
+* Fix missing terrain on some GPUs (e.g. Mali). ([2036](https://github.com/mapbox/mapbox-maps-android/pull/2038)) 
+
+## Dependencies
+* Update gl-native to v10.11.2. ([2036](https://github.com/mapbox/mapbox-maps-android/pull/2038))
+
 # 10.12.0-beta.1 February 22, 2023
 ## Features ✨ and improvements 🏁
 * Add `data-id` argument to `GeoJsonSource` data update methods. `data-id` is later attached to the 
