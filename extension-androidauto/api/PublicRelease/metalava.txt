@@ -83,11 +83,11 @@ package com.mapbox.maps.extension.androidauto {
 package com.mapbox.maps.extension.androidauto.widgets {
 
   @com.mapbox.maps.MapboxExperimental public final class CompassWidget extends com.mapbox.maps.renderer.widget.BitmapWidget {
-    ctor public CompassWidget(android.content.Context context, com.mapbox.maps.renderer.widget.WidgetPosition position = com.mapbox.maps.renderer.widget.WidgetPosition(WidgetPosition.Horizontal.RIGHT, WidgetPosition.Vertical.TOP), float marginX = 20f, float marginY = 20f);
+    ctor public CompassWidget(android.content.Context context, com.mapbox.maps.renderer.widget.WidgetPosition position = com.mapbox.maps.renderer.widget.WidgetPosition(com.mapbox.maps.renderer.widget.WidgetPosition.Horizontal.RIGHT, com.mapbox.maps.renderer.widget.WidgetPosition.Vertical.TOP), float marginX = 20f, float marginY = 20f);
   }
 
   @com.mapbox.maps.MapboxExperimental public final class LogoWidget extends com.mapbox.maps.renderer.widget.BitmapWidget {
-    ctor public LogoWidget(android.content.Context context, com.mapbox.maps.renderer.widget.WidgetPosition position = com.mapbox.maps.renderer.widget.WidgetPosition(WidgetPosition.Horizontal.LEFT, WidgetPosition.Vertical.BOTTOM), float marginX = 20f, float marginY = 20f);
+    ctor public LogoWidget(android.content.Context context, com.mapbox.maps.renderer.widget.WidgetPosition position = com.mapbox.maps.renderer.widget.WidgetPosition(com.mapbox.maps.renderer.widget.WidgetPosition.Horizontal.LEFT, com.mapbox.maps.renderer.widget.WidgetPosition.Vertical.BOTTOM), float marginX = 20f, float marginY = 20f);
   }
 
 }

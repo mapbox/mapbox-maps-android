@@ -65,27 +65,28 @@ class MapAnimationOptions private constructor(
     /**
      * Set the owner or creator this animation.
      */
-    fun owner(owner: String) = apply { this.owner = owner }
+    fun owner(owner: String): Builder = apply { this.owner = owner }
 
     /**
      * Set the duration of the animation in milliseconds.
      */
-    fun duration(duration: Long) = apply { this.duration = duration }
+    fun duration(duration: Long): Builder = apply { this.duration = duration }
 
     /**
      * Set the start delay of the animation in milliseconds.
      */
-    fun startDelay(startDelay: Long) = apply { this.startDelay = startDelay }
+    fun startDelay(startDelay: Long): Builder = apply { this.startDelay = startDelay }
 
     /**
      * Set the animation interpolator.
      */
-    fun interpolator(interpolator: TimeInterpolator) = apply { this.interpolator = interpolator }
+    fun interpolator(interpolator: TimeInterpolator): Builder =
+      apply { this.interpolator = interpolator }
 
     /**
      * Set the animator start / cancel / end listener.
      */
-    fun animatorListener(animatorListener: Animator.AnimatorListener) =
+    fun animatorListener(animatorListener: Animator.AnimatorListener): Builder =
       apply { this.animatorListener = animatorListener }
 
     /**
@@ -132,6 +133,7 @@ class MapAnimationOptions private constructor(
     /**
      * Builder DSL function to create [MapAnimationOptions] object.
      */
-    inline fun mapAnimationOptions(block: Builder.() -> Unit) = Builder().apply(block).build()
+    inline fun mapAnimationOptions(block: Builder.() -> Unit): MapAnimationOptions =
+      Builder().apply(block).build()
   }
 }

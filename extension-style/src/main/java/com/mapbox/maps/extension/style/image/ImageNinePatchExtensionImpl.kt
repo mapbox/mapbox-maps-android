@@ -91,14 +91,14 @@ class ImageNinePatchExtensionImpl(private val builder: Builder) : StyleContract.
     /**
      * Scale factor for the image.
      */
-    fun scale(scale: Float) = apply {
+    fun scale(scale: Float): Builder = apply {
       this.scale = scale
     }
 
     /**
      * Option to treat whether image is SDF(signed distance field) or not.
      */
-    fun sdf(sdf: Boolean = false) = apply {
+    fun sdf(sdf: Boolean = false): Builder = apply {
       this.sdf = sdf
     }
 

@@ -37,7 +37,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param sourceLayer value of sourceLayer
    */
-  override fun sourceLayer(sourceLayer: String) = apply {
+  override fun sourceLayer(sourceLayer: String): LineLayer = apply {
     val param = PropertyValue("source-layer", sourceLayer)
     setProperty(param)
   }
@@ -67,7 +67,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param filter the expression filter to set
    */
-  override fun filter(filter: Expression) = apply {
+  override fun filter(filter: Expression): LineLayer = apply {
     val propertyValue = PropertyValue("filter", filter)
     setProperty(propertyValue)
   }
@@ -115,7 +115,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param visibility value of Visibility
    */
-  override fun visibility(visibility: Visibility) = apply {
+  override fun visibility(visibility: Visibility): LineLayer = apply {
     val propertyValue = PropertyValue("visibility", visibility)
     setProperty(propertyValue)
   }
@@ -150,7 +150,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param value value of minzoom
    */
-  override fun minZoom(minZoom: Double) = apply {
+  override fun minZoom(minZoom: Double): LineLayer = apply {
     val param = PropertyValue("minzoom", minZoom)
     setProperty(param)
   }
@@ -185,7 +185,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param value value of maxzoom
    */
-  override fun maxZoom(maxZoom: Double) = apply {
+  override fun maxZoom(maxZoom: Double): LineLayer = apply {
     val param = PropertyValue("maxzoom", maxZoom)
     setProperty(param)
   }
@@ -217,7 +217,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param lineCap value of lineCap
    */
-  override fun lineCap(lineCap: LineCap) = apply {
+  override fun lineCap(lineCap: LineCap): LineLayer = apply {
     val propertyValue = PropertyValue("line-cap", lineCap)
     setProperty(propertyValue)
   }
@@ -255,7 +255,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param lineCap value of lineCap as Expression
    */
-  override fun lineCap(lineCap: Expression) = apply {
+  override fun lineCap(lineCap: Expression): LineLayer = apply {
     val propertyValue = PropertyValue("line-cap", lineCap)
     setProperty(propertyValue)
   }
@@ -285,7 +285,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param lineJoin value of lineJoin
    */
-  override fun lineJoin(lineJoin: LineJoin) = apply {
+  override fun lineJoin(lineJoin: LineJoin): LineLayer = apply {
     val propertyValue = PropertyValue("line-join", lineJoin)
     setProperty(propertyValue)
   }
@@ -323,7 +323,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param lineJoin value of lineJoin as Expression
    */
-  override fun lineJoin(lineJoin: Expression) = apply {
+  override fun lineJoin(lineJoin: Expression): LineLayer = apply {
     val propertyValue = PropertyValue("line-join", lineJoin)
     setProperty(propertyValue)
   }
@@ -350,7 +350,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param lineMiterLimit value of lineMiterLimit
    */
-  override fun lineMiterLimit(lineMiterLimit: Double) = apply {
+  override fun lineMiterLimit(lineMiterLimit: Double): LineLayer = apply {
     val propertyValue = PropertyValue("line-miter-limit", lineMiterLimit)
     setProperty(propertyValue)
   }
@@ -388,7 +388,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param lineMiterLimit value of lineMiterLimit as Expression
    */
-  override fun lineMiterLimit(lineMiterLimit: Expression) = apply {
+  override fun lineMiterLimit(lineMiterLimit: Expression): LineLayer = apply {
     val propertyValue = PropertyValue("line-miter-limit", lineMiterLimit)
     setProperty(propertyValue)
   }
@@ -415,7 +415,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param lineRoundLimit value of lineRoundLimit
    */
-  override fun lineRoundLimit(lineRoundLimit: Double) = apply {
+  override fun lineRoundLimit(lineRoundLimit: Double): LineLayer = apply {
     val propertyValue = PropertyValue("line-round-limit", lineRoundLimit)
     setProperty(propertyValue)
   }
@@ -453,7 +453,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param lineRoundLimit value of lineRoundLimit as Expression
    */
-  override fun lineRoundLimit(lineRoundLimit: Expression) = apply {
+  override fun lineRoundLimit(lineRoundLimit: Expression): LineLayer = apply {
     val propertyValue = PropertyValue("line-round-limit", lineRoundLimit)
     setProperty(propertyValue)
   }
@@ -480,7 +480,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param lineSortKey value of lineSortKey
    */
-  override fun lineSortKey(lineSortKey: Double) = apply {
+  override fun lineSortKey(lineSortKey: Double): LineLayer = apply {
     val propertyValue = PropertyValue("line-sort-key", lineSortKey)
     setProperty(propertyValue)
   }
@@ -518,7 +518,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param lineSortKey value of lineSortKey as Expression
    */
-  override fun lineSortKey(lineSortKey: Expression) = apply {
+  override fun lineSortKey(lineSortKey: Expression): LineLayer = apply {
     val propertyValue = PropertyValue("line-sort-key", lineSortKey)
     setProperty(propertyValue)
   }
@@ -545,7 +545,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param lineBlur value of lineBlur
    */
-  override fun lineBlur(lineBlur: Double) = apply {
+  override fun lineBlur(lineBlur: Double): LineLayer = apply {
     val propertyValue = PropertyValue("line-blur", lineBlur)
     setProperty(propertyValue)
   }
@@ -583,7 +583,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param lineBlur value of lineBlur as Expression
    */
-  override fun lineBlur(lineBlur: Expression) = apply {
+  override fun lineBlur(lineBlur: Expression): LineLayer = apply {
     val propertyValue = PropertyValue("line-blur", lineBlur)
     setProperty(propertyValue)
   }
@@ -610,7 +610,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param options transition options for Double
    */
-  override fun lineBlurTransition(options: StyleTransition) = apply {
+  override fun lineBlurTransition(options: StyleTransition): LineLayer = apply {
     val propertyValue = PropertyValue("line-blur-transition", options)
     setProperty(propertyValue)
   }
@@ -618,7 +618,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   /**
    * DSL for [lineBlurTransition].
    */
-  override fun lineBlurTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun lineBlurTransition(block: StyleTransition.Builder.() -> Unit): LineLayer = apply {
     lineBlurTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -647,7 +647,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param lineColor value of lineColor
    */
-  override fun lineColor(lineColor: String) = apply {
+  override fun lineColor(lineColor: String): LineLayer = apply {
     val propertyValue = PropertyValue("line-color", lineColor)
     setProperty(propertyValue)
   }
@@ -682,7 +682,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param lineColor value of lineColor as Expression
    */
-  override fun lineColor(lineColor: Expression) = apply {
+  override fun lineColor(lineColor: Expression): LineLayer = apply {
     val propertyValue = PropertyValue("line-color", lineColor)
     setProperty(propertyValue)
   }
@@ -713,7 +713,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param lineColor value of lineColor
    */
-  override fun lineColor(@ColorInt lineColor: Int) = apply {
+  override fun lineColor(@ColorInt lineColor: Int): LineLayer = apply {
     val propertyValue = PropertyValue("line-color", colorIntToRgbaExpression(lineColor))
     setProperty(propertyValue)
   }
@@ -740,7 +740,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param options transition options for String
    */
-  override fun lineColorTransition(options: StyleTransition) = apply {
+  override fun lineColorTransition(options: StyleTransition): LineLayer = apply {
     val propertyValue = PropertyValue("line-color-transition", options)
     setProperty(propertyValue)
   }
@@ -748,7 +748,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   /**
    * DSL for [lineColorTransition].
    */
-  override fun lineColorTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun lineColorTransition(block: StyleTransition.Builder.() -> Unit): LineLayer = apply {
     lineColorTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -774,7 +774,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param lineDasharray value of lineDasharray
    */
-  override fun lineDasharray(lineDasharray: List<Double>) = apply {
+  override fun lineDasharray(lineDasharray: List<Double>): LineLayer = apply {
     val propertyValue = PropertyValue("line-dasharray", lineDasharray)
     setProperty(propertyValue)
   }
@@ -812,7 +812,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param lineDasharray value of lineDasharray as Expression
    */
-  override fun lineDasharray(lineDasharray: Expression) = apply {
+  override fun lineDasharray(lineDasharray: Expression): LineLayer = apply {
     val propertyValue = PropertyValue("line-dasharray", lineDasharray)
     setProperty(propertyValue)
   }
@@ -842,7 +842,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    * @param options transition options for List<Double>
    */
   @Deprecated("This property has been deprecated and will do no operations")
-  override fun lineDasharrayTransition(options: StyleTransition) = apply {
+  override fun lineDasharrayTransition(options: StyleTransition): LineLayer = apply {
     // no-op
   }
 
@@ -850,7 +850,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    * DSL for [lineDasharrayTransition].
    */
   @Deprecated("This property has been deprecated and will do no operations")
-  override fun lineDasharrayTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun lineDasharrayTransition(block: StyleTransition.Builder.() -> Unit): LineLayer = apply {
     // no-op
   }
 
@@ -876,7 +876,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param lineGapWidth value of lineGapWidth
    */
-  override fun lineGapWidth(lineGapWidth: Double) = apply {
+  override fun lineGapWidth(lineGapWidth: Double): LineLayer = apply {
     val propertyValue = PropertyValue("line-gap-width", lineGapWidth)
     setProperty(propertyValue)
   }
@@ -914,7 +914,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param lineGapWidth value of lineGapWidth as Expression
    */
-  override fun lineGapWidth(lineGapWidth: Expression) = apply {
+  override fun lineGapWidth(lineGapWidth: Expression): LineLayer = apply {
     val propertyValue = PropertyValue("line-gap-width", lineGapWidth)
     setProperty(propertyValue)
   }
@@ -941,7 +941,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param options transition options for Double
    */
-  override fun lineGapWidthTransition(options: StyleTransition) = apply {
+  override fun lineGapWidthTransition(options: StyleTransition): LineLayer = apply {
     val propertyValue = PropertyValue("line-gap-width-transition", options)
     setProperty(propertyValue)
   }
@@ -949,7 +949,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   /**
    * DSL for [lineGapWidthTransition].
    */
-  override fun lineGapWidthTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun lineGapWidthTransition(block: StyleTransition.Builder.() -> Unit): LineLayer = apply {
     lineGapWidthTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -975,7 +975,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param lineGradient value of lineGradient
    */
-  override fun lineGradient(lineGradient: Expression) = apply {
+  override fun lineGradient(lineGradient: Expression): LineLayer = apply {
     val propertyValue = PropertyValue("line-gradient", lineGradient)
     setProperty(propertyValue)
   }
@@ -1002,7 +1002,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param lineOffset value of lineOffset
    */
-  override fun lineOffset(lineOffset: Double) = apply {
+  override fun lineOffset(lineOffset: Double): LineLayer = apply {
     val propertyValue = PropertyValue("line-offset", lineOffset)
     setProperty(propertyValue)
   }
@@ -1040,7 +1040,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param lineOffset value of lineOffset as Expression
    */
-  override fun lineOffset(lineOffset: Expression) = apply {
+  override fun lineOffset(lineOffset: Expression): LineLayer = apply {
     val propertyValue = PropertyValue("line-offset", lineOffset)
     setProperty(propertyValue)
   }
@@ -1067,7 +1067,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param options transition options for Double
    */
-  override fun lineOffsetTransition(options: StyleTransition) = apply {
+  override fun lineOffsetTransition(options: StyleTransition): LineLayer = apply {
     val propertyValue = PropertyValue("line-offset-transition", options)
     setProperty(propertyValue)
   }
@@ -1075,7 +1075,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   /**
    * DSL for [lineOffsetTransition].
    */
-  override fun lineOffsetTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun lineOffsetTransition(block: StyleTransition.Builder.() -> Unit): LineLayer = apply {
     lineOffsetTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -1101,7 +1101,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param lineOpacity value of lineOpacity
    */
-  override fun lineOpacity(lineOpacity: Double) = apply {
+  override fun lineOpacity(lineOpacity: Double): LineLayer = apply {
     val propertyValue = PropertyValue("line-opacity", lineOpacity)
     setProperty(propertyValue)
   }
@@ -1139,7 +1139,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param lineOpacity value of lineOpacity as Expression
    */
-  override fun lineOpacity(lineOpacity: Expression) = apply {
+  override fun lineOpacity(lineOpacity: Expression): LineLayer = apply {
     val propertyValue = PropertyValue("line-opacity", lineOpacity)
     setProperty(propertyValue)
   }
@@ -1166,7 +1166,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param options transition options for Double
    */
-  override fun lineOpacityTransition(options: StyleTransition) = apply {
+  override fun lineOpacityTransition(options: StyleTransition): LineLayer = apply {
     val propertyValue = PropertyValue("line-opacity-transition", options)
     setProperty(propertyValue)
   }
@@ -1174,7 +1174,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   /**
    * DSL for [lineOpacityTransition].
    */
-  override fun lineOpacityTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun lineOpacityTransition(block: StyleTransition.Builder.() -> Unit): LineLayer = apply {
     lineOpacityTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -1200,7 +1200,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param linePattern value of linePattern
    */
-  override fun linePattern(linePattern: String) = apply {
+  override fun linePattern(linePattern: String): LineLayer = apply {
     val propertyValue = PropertyValue("line-pattern", linePattern)
     setProperty(propertyValue)
   }
@@ -1238,7 +1238,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param linePattern value of linePattern as Expression
    */
-  override fun linePattern(linePattern: Expression) = apply {
+  override fun linePattern(linePattern: Expression): LineLayer = apply {
     val propertyValue = PropertyValue("line-pattern", linePattern)
     setProperty(propertyValue)
   }
@@ -1268,7 +1268,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    * @param options transition options for String
    */
   @Deprecated("This property has been deprecated and will do no operations")
-  override fun linePatternTransition(options: StyleTransition) = apply {
+  override fun linePatternTransition(options: StyleTransition): LineLayer = apply {
     // no-op
   }
 
@@ -1276,7 +1276,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    * DSL for [linePatternTransition].
    */
   @Deprecated("This property has been deprecated and will do no operations")
-  override fun linePatternTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun linePatternTransition(block: StyleTransition.Builder.() -> Unit): LineLayer = apply {
     // no-op
   }
 
@@ -1302,7 +1302,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param lineTranslate value of lineTranslate
    */
-  override fun lineTranslate(lineTranslate: List<Double>) = apply {
+  override fun lineTranslate(lineTranslate: List<Double>): LineLayer = apply {
     val propertyValue = PropertyValue("line-translate", lineTranslate)
     setProperty(propertyValue)
   }
@@ -1340,7 +1340,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param lineTranslate value of lineTranslate as Expression
    */
-  override fun lineTranslate(lineTranslate: Expression) = apply {
+  override fun lineTranslate(lineTranslate: Expression): LineLayer = apply {
     val propertyValue = PropertyValue("line-translate", lineTranslate)
     setProperty(propertyValue)
   }
@@ -1367,7 +1367,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param options transition options for List<Double>
    */
-  override fun lineTranslateTransition(options: StyleTransition) = apply {
+  override fun lineTranslateTransition(options: StyleTransition): LineLayer = apply {
     val propertyValue = PropertyValue("line-translate-transition", options)
     setProperty(propertyValue)
   }
@@ -1375,7 +1375,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   /**
    * DSL for [lineTranslateTransition].
    */
-  override fun lineTranslateTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun lineTranslateTransition(block: StyleTransition.Builder.() -> Unit): LineLayer = apply {
     lineTranslateTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -1404,7 +1404,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param lineTranslateAnchor value of lineTranslateAnchor
    */
-  override fun lineTranslateAnchor(lineTranslateAnchor: LineTranslateAnchor) = apply {
+  override fun lineTranslateAnchor(lineTranslateAnchor: LineTranslateAnchor): LineLayer = apply {
     val propertyValue = PropertyValue("line-translate-anchor", lineTranslateAnchor)
     setProperty(propertyValue)
   }
@@ -1442,7 +1442,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param lineTranslateAnchor value of lineTranslateAnchor as Expression
    */
-  override fun lineTranslateAnchor(lineTranslateAnchor: Expression) = apply {
+  override fun lineTranslateAnchor(lineTranslateAnchor: Expression): LineLayer = apply {
     val propertyValue = PropertyValue("line-translate-anchor", lineTranslateAnchor)
     setProperty(propertyValue)
   }
@@ -1469,7 +1469,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param lineTrimOffset value of lineTrimOffset
    */
-  override fun lineTrimOffset(lineTrimOffset: List<Double>) = apply {
+  override fun lineTrimOffset(lineTrimOffset: List<Double>): LineLayer = apply {
     val propertyValue = PropertyValue("line-trim-offset", lineTrimOffset)
     setProperty(propertyValue)
   }
@@ -1507,7 +1507,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param lineTrimOffset value of lineTrimOffset as Expression
    */
-  override fun lineTrimOffset(lineTrimOffset: Expression) = apply {
+  override fun lineTrimOffset(lineTrimOffset: Expression): LineLayer = apply {
     val propertyValue = PropertyValue("line-trim-offset", lineTrimOffset)
     setProperty(propertyValue)
   }
@@ -1534,7 +1534,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param lineWidth value of lineWidth
    */
-  override fun lineWidth(lineWidth: Double) = apply {
+  override fun lineWidth(lineWidth: Double): LineLayer = apply {
     val propertyValue = PropertyValue("line-width", lineWidth)
     setProperty(propertyValue)
   }
@@ -1572,7 +1572,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param lineWidth value of lineWidth as Expression
    */
-  override fun lineWidth(lineWidth: Expression) = apply {
+  override fun lineWidth(lineWidth: Expression): LineLayer = apply {
     val propertyValue = PropertyValue("line-width", lineWidth)
     setProperty(propertyValue)
   }
@@ -1599,7 +1599,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param options transition options for Double
    */
-  override fun lineWidthTransition(options: StyleTransition) = apply {
+  override fun lineWidthTransition(options: StyleTransition): LineLayer = apply {
     val propertyValue = PropertyValue("line-width-transition", options)
     setProperty(propertyValue)
   }
@@ -1607,7 +1607,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   /**
    * DSL for [lineWidthTransition].
    */
-  override fun lineWidthTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun lineWidthTransition(block: StyleTransition.Builder.() -> Unit): LineLayer = apply {
     lineWidthTransition(StyleTransition.Builder().apply(block).build())
   }
 

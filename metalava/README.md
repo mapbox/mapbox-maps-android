@@ -16,21 +16,21 @@ sh ./scripts/update_metalava.sh
 -e
 Dependencies:
 
-com.android.tools.external.org-jetbrains:uast:30.0.0-alpha14
-com.android.tools.external.com-intellij:kotlin-compiler:30.0.0-alpha14
-com.android.tools.external.com-intellij:intellij-core:30.0.0-alpha14
-com.android.tools.lint:lint-api:30.0.0-alpha14
-com.android.tools.lint:lint-checks:30.0.0-alpha14
-com.android.tools.lint:lint-gradle:30.0.0-alpha14
-com.android.tools.lint:lint:30.0.0-alpha14
-com.android.tools:common:30.0.0-alpha14
-com.android.tools:sdk-common:30.0.0-alpha14
-com.android.tools:sdklib:30.0.0-alpha14
-org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.0
-org.jetbrains.kotlin:kotlin-reflect:1.5.0
+com.android.tools.external.org-jetbrains:uast:30.3.0-alpha08
+com.android.tools.external.com-intellij:kotlin-compiler:30.3.0-alpha08
+com.android.tools.external.com-intellij:intellij-core:30.3.0-alpha08
+com.android.tools.lint:lint-api:30.3.0-alpha08
+com.android.tools.lint:lint-checks:30.3.0-alpha08
+com.android.tools.lint:lint-gradle:30.3.0-alpha08
+com.android.tools.lint:lint:30.3.0-alpha08
+com.android.tools:common:30.3.0-alpha08
+com.android.tools:sdk-common:30.3.0-alpha08
+com.android.tools:sdklib:30.3.0-alpha08
+org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.10
+org.jetbrains.kotlin:kotlin-reflect:1.8.10
 org.ow2.asm:asm:8.0
 org.ow2.asm:asm-tree:8.0
-
+com.google.guava:guava:30.1.1-jre
 ```
 
 - That places the latest `metalava.jar` into this folder and prints out its deps 👀

@@ -11,12 +11,12 @@ package com.mapbox.maps.plugin.compass {
     method public boolean isCompassEnabled();
     method public boolean isCompassVisible();
     method public void setCompassAlpha(float float);
-    method public void setCompassEnabled(boolean value);
-    method public void setCompassGravity(int value);
-    method public void setCompassImage(android.graphics.drawable.Drawable compass);
+    method public void setCompassEnabled(boolean);
+    method public void setCompassGravity(int);
+    method public void setCompassImage(android.graphics.drawable.Drawable);
     method public void setCompassMargins(int left, int top, int right, int bottom);
-    method public void setCompassRotation(float value);
-    method public void setCompassVisible(boolean value);
+    method public void setCompassRotation(float);
+    method public void setCompassVisible(boolean);
     property public int compassGravity;
     property public android.graphics.drawable.Drawable compassImage;
     property public float compassRotation;
@@ -39,7 +39,7 @@ package com.mapbox.maps.plugin.compass {
     method public void onStart();
     method public void onStop();
     method public void removeCompassClickListener(com.mapbox.maps.plugin.compass.OnCompassClickListener onClickListener);
-    method protected void setInternalSettings(com.mapbox.maps.plugin.compass.generated.CompassSettings internalSettings);
+    method protected void setInternalSettings(com.mapbox.maps.plugin.compass.generated.CompassSettings);
     property public boolean enabled;
     property protected com.mapbox.maps.plugin.compass.generated.CompassSettings internalSettings;
     field public static final com.mapbox.maps.plugin.compass.CompassViewPlugin.Companion Companion;

@@ -41,7 +41,7 @@ class Terrain(private val sourceId: String) : TerrainDslReceiver, StyleContract.
    *
    * @param exaggeration as Double
    */
-  override fun exaggeration(exaggeration: Double) = apply {
+  override fun exaggeration(exaggeration: Double): Terrain = apply {
     setProperty(PropertyValue("exaggeration", exaggeration))
   }
 
@@ -62,7 +62,7 @@ class Terrain(private val sourceId: String) : TerrainDslReceiver, StyleContract.
    *
    * @param options transition options for exaggeration
    */
-  override fun exaggerationTransition(options: StyleTransition) = apply {
+  override fun exaggerationTransition(options: StyleTransition): Terrain = apply {
     val propertyValue = PropertyValue("exaggeration-transition", options)
     setProperty(propertyValue)
   }
@@ -70,7 +70,7 @@ class Terrain(private val sourceId: String) : TerrainDslReceiver, StyleContract.
   /**
    * DSL for [exaggerationTransition].
    */
-  override fun exaggerationTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun exaggerationTransition(block: StyleTransition.Builder.() -> Unit): Terrain = apply {
     exaggerationTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -101,7 +101,7 @@ class Terrain(private val sourceId: String) : TerrainDslReceiver, StyleContract.
    *
    * @param exaggeration value of exaggeration as Expression
    */
-  override fun exaggeration(exaggeration: Expression) = apply {
+  override fun exaggeration(exaggeration: Expression): Terrain = apply {
     val propertyValue = PropertyValue("exaggeration", exaggeration)
     setProperty(propertyValue)
   }

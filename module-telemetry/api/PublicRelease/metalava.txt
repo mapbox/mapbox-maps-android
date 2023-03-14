@@ -1,7 +1,7 @@
 // Signature format: 3.0
 package com.mapbox.maps.module.telemetry {
 
-  @com.mapbox.annotation.module.MapboxModule(type=com.mapbox.annotation.module.MapboxModuleType) public final class MapTelemetryImpl implements com.mapbox.maps.module.MapTelemetry {
+  @com.mapbox.annotation.module.MapboxModule(type=com.mapbox.annotation.module.MapboxModuleType.MapTelemetry) public final class MapTelemetryImpl implements com.mapbox.maps.module.MapTelemetry {
     ctor public MapTelemetryImpl(android.content.Context appContext, String accessToken);
     method public void disableTelemetrySession();
     method public void onAppUserTurnstileEvent();

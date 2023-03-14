@@ -46,8 +46,8 @@ android.libraryVariants.all { variant ->
             args = [
                     '--no-banner',
                     '--source-path', inputs.getFiles().getAsPath(),
-                    '--compatible-output=no',
-                    '--omit-common-packages=yes',
+//                    '--compatible-output=no',
+//                    '--omit-common-packages=yes',
                     '--output-kotlin-nulls=yes',
                     '--hide', 'HiddenSuperclass',
                     '--hide', 'DeprecationMismatch',
@@ -97,14 +97,14 @@ android.libraryVariants.all { variant ->
             args = [
                     '--no-banner',
                     '--source-path', inputDir,
-                    '--compatible-output=no',
-                    '--omit-common-packages=yes',
+//                    '--compatible-output=no',
+//                    '--omit-common-packages=yes',
                     '--output-kotlin-nulls=yes',
                     '--input-kotlin-nulls=yes',
                     '--hide', 'HiddenSuperclass',
                     '--hide', 'DeprecationMismatch',
                     '--classpath', metalavaClasspath,
-                    '--check-compatibility:api:current', variantMetalavaFilePath
+                    '--check-compatibility:api:released', variantMetalavaFilePath
             ]
             if (project.hasProperty('hidePackage')) {
                 args += '--hide-package'

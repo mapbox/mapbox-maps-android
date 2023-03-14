@@ -20,7 +20,7 @@ class ViewportOptions private constructor(
   /**
    * Returns a builder that created the [ViewportOptions]
    */
-  fun toBuilder() = Builder().transitionsToIdleUponUserInteraction(transitionsToIdleUponUserInteraction)
+  fun toBuilder(): Builder = Builder().transitionsToIdleUponUserInteraction(transitionsToIdleUponUserInteraction)
 
   /**
    * Indicates whether some other object is "equal to" this one.
@@ -53,7 +53,7 @@ class ViewportOptions private constructor(
      *
      * Defaults to true.
      */
-    fun transitionsToIdleUponUserInteraction(transitionsToIdleUponUserInteraction: Boolean) = apply {
+    fun transitionsToIdleUponUserInteraction(transitionsToIdleUponUserInteraction: Boolean): Builder = apply {
       this.transitionsToIdleUponUserInteraction = transitionsToIdleUponUserInteraction
     }
 

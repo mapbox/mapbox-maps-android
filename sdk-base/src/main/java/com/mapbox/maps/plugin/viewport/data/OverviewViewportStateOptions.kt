@@ -46,8 +46,9 @@ class OverviewViewportStateOptions private constructor(
   /**
    * Returns a builder that created the [OverviewViewportStateOptions]
    */
-  fun toBuilder() = Builder().geometry(geometry).padding(padding).bearing(bearing).pitch(pitch)
-    .animationDurationMs(animationDurationMs)
+  fun toBuilder(): Builder =
+    Builder().geometry(geometry).padding(padding).bearing(bearing).pitch(pitch)
+      .animationDurationMs(animationDurationMs)
 
   /**
    * Indicates whether some other object is "equal to" this one.
@@ -84,7 +85,7 @@ class OverviewViewportStateOptions private constructor(
     /**
      * The geometry that the [OverviewViewportState] should use when calculating its camera.
      */
-    fun geometry(geometry: Geometry) = apply {
+    fun geometry(geometry: Geometry): Builder = apply {
       this.geometry = geometry
     }
 
@@ -93,7 +94,7 @@ class OverviewViewportStateOptions private constructor(
      *
      * Defaults to 0 padding.
      */
-    fun padding(padding: EdgeInsets) = apply {
+    fun padding(padding: EdgeInsets): Builder = apply {
       this.padding = padding
     }
 
@@ -102,7 +103,7 @@ class OverviewViewportStateOptions private constructor(
      *
      * Defaults to 0.
      */
-    fun bearing(bearing: Double?) = apply {
+    fun bearing(bearing: Double?): Builder = apply {
       this.bearing = bearing
     }
 
@@ -111,7 +112,7 @@ class OverviewViewportStateOptions private constructor(
      *
      * Defaults to 0.
      */
-    fun pitch(pitch: Double?) = apply {
+    fun pitch(pitch: Double?): Builder = apply {
       this.pitch = pitch
     }
 
@@ -123,14 +124,14 @@ class OverviewViewportStateOptions private constructor(
      *
      * Defaults to [DEFAULT_STATE_ANIMATION_DURATION_MS] milliseconds
      */
-    fun animationDurationMs(duration: Long) = apply {
+    fun animationDurationMs(duration: Long): Builder = apply {
       this.animationDurationMs = duration
     }
 
     /**
      * Builds [OverviewViewportStateOptions]
      */
-    fun build() = geometry?.let {
+    fun build(): OverviewViewportStateOptions = geometry?.let {
       OverviewViewportStateOptions(
         it,
         padding,

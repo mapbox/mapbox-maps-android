@@ -36,7 +36,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param sourceLayer value of sourceLayer
    */
-  override fun sourceLayer(sourceLayer: String) = apply {
+  override fun sourceLayer(sourceLayer: String): SymbolLayer = apply {
     val param = PropertyValue("source-layer", sourceLayer)
     setProperty(param)
   }
@@ -66,7 +66,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param filter the expression filter to set
    */
-  override fun filter(filter: Expression) = apply {
+  override fun filter(filter: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("filter", filter)
     setProperty(propertyValue)
   }
@@ -114,7 +114,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param visibility value of Visibility
    */
-  override fun visibility(visibility: Visibility) = apply {
+  override fun visibility(visibility: Visibility): SymbolLayer = apply {
     val propertyValue = PropertyValue("visibility", visibility)
     setProperty(propertyValue)
   }
@@ -149,7 +149,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param value value of minzoom
    */
-  override fun minZoom(minZoom: Double) = apply {
+  override fun minZoom(minZoom: Double): SymbolLayer = apply {
     val param = PropertyValue("minzoom", minZoom)
     setProperty(param)
   }
@@ -184,7 +184,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param value value of maxzoom
    */
-  override fun maxZoom(maxZoom: Double) = apply {
+  override fun maxZoom(maxZoom: Double): SymbolLayer = apply {
     val param = PropertyValue("maxzoom", maxZoom)
     setProperty(param)
   }
@@ -213,7 +213,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param iconAllowOverlap value of iconAllowOverlap
    */
-  override fun iconAllowOverlap(iconAllowOverlap: Boolean) = apply {
+  override fun iconAllowOverlap(iconAllowOverlap: Boolean): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-allow-overlap", iconAllowOverlap)
     setProperty(propertyValue)
   }
@@ -251,7 +251,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param iconAllowOverlap value of iconAllowOverlap as Expression
    */
-  override fun iconAllowOverlap(iconAllowOverlap: Expression) = apply {
+  override fun iconAllowOverlap(iconAllowOverlap: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-allow-overlap", iconAllowOverlap)
     setProperty(propertyValue)
   }
@@ -281,7 +281,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param iconAnchor value of iconAnchor
    */
-  override fun iconAnchor(iconAnchor: IconAnchor) = apply {
+  override fun iconAnchor(iconAnchor: IconAnchor): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-anchor", iconAnchor)
     setProperty(propertyValue)
   }
@@ -319,7 +319,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param iconAnchor value of iconAnchor as Expression
    */
-  override fun iconAnchor(iconAnchor: Expression) = apply {
+  override fun iconAnchor(iconAnchor: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-anchor", iconAnchor)
     setProperty(propertyValue)
   }
@@ -346,7 +346,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param iconIgnorePlacement value of iconIgnorePlacement
    */
-  override fun iconIgnorePlacement(iconIgnorePlacement: Boolean) = apply {
+  override fun iconIgnorePlacement(iconIgnorePlacement: Boolean): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-ignore-placement", iconIgnorePlacement)
     setProperty(propertyValue)
   }
@@ -384,7 +384,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param iconIgnorePlacement value of iconIgnorePlacement as Expression
    */
-  override fun iconIgnorePlacement(iconIgnorePlacement: Expression) = apply {
+  override fun iconIgnorePlacement(iconIgnorePlacement: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-ignore-placement", iconIgnorePlacement)
     setProperty(propertyValue)
   }
@@ -411,7 +411,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param iconImage value of iconImage
    */
-  override fun iconImage(iconImage: String) = apply {
+  override fun iconImage(iconImage: String): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-image", iconImage)
     setProperty(propertyValue)
   }
@@ -449,7 +449,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param iconImage value of iconImage as Expression
    */
-  override fun iconImage(iconImage: Expression) = apply {
+  override fun iconImage(iconImage: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-image", iconImage)
     setProperty(propertyValue)
   }
@@ -476,7 +476,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param iconKeepUpright value of iconKeepUpright
    */
-  override fun iconKeepUpright(iconKeepUpright: Boolean) = apply {
+  override fun iconKeepUpright(iconKeepUpright: Boolean): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-keep-upright", iconKeepUpright)
     setProperty(propertyValue)
   }
@@ -514,7 +514,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param iconKeepUpright value of iconKeepUpright as Expression
    */
-  override fun iconKeepUpright(iconKeepUpright: Expression) = apply {
+  override fun iconKeepUpright(iconKeepUpright: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-keep-upright", iconKeepUpright)
     setProperty(propertyValue)
   }
@@ -541,7 +541,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param iconOffset value of iconOffset
    */
-  override fun iconOffset(iconOffset: List<Double>) = apply {
+  override fun iconOffset(iconOffset: List<Double>): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-offset", iconOffset)
     setProperty(propertyValue)
   }
@@ -579,7 +579,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param iconOffset value of iconOffset as Expression
    */
-  override fun iconOffset(iconOffset: Expression) = apply {
+  override fun iconOffset(iconOffset: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-offset", iconOffset)
     setProperty(propertyValue)
   }
@@ -606,7 +606,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param iconOptional value of iconOptional
    */
-  override fun iconOptional(iconOptional: Boolean) = apply {
+  override fun iconOptional(iconOptional: Boolean): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-optional", iconOptional)
     setProperty(propertyValue)
   }
@@ -644,7 +644,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param iconOptional value of iconOptional as Expression
    */
-  override fun iconOptional(iconOptional: Expression) = apply {
+  override fun iconOptional(iconOptional: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-optional", iconOptional)
     setProperty(propertyValue)
   }
@@ -671,7 +671,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param iconPadding value of iconPadding
    */
-  override fun iconPadding(iconPadding: Double) = apply {
+  override fun iconPadding(iconPadding: Double): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-padding", iconPadding)
     setProperty(propertyValue)
   }
@@ -709,7 +709,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param iconPadding value of iconPadding as Expression
    */
-  override fun iconPadding(iconPadding: Expression) = apply {
+  override fun iconPadding(iconPadding: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-padding", iconPadding)
     setProperty(propertyValue)
   }
@@ -739,7 +739,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param iconPitchAlignment value of iconPitchAlignment
    */
-  override fun iconPitchAlignment(iconPitchAlignment: IconPitchAlignment) = apply {
+  override fun iconPitchAlignment(iconPitchAlignment: IconPitchAlignment): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-pitch-alignment", iconPitchAlignment)
     setProperty(propertyValue)
   }
@@ -777,7 +777,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param iconPitchAlignment value of iconPitchAlignment as Expression
    */
-  override fun iconPitchAlignment(iconPitchAlignment: Expression) = apply {
+  override fun iconPitchAlignment(iconPitchAlignment: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-pitch-alignment", iconPitchAlignment)
     setProperty(propertyValue)
   }
@@ -804,7 +804,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param iconRotate value of iconRotate
    */
-  override fun iconRotate(iconRotate: Double) = apply {
+  override fun iconRotate(iconRotate: Double): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-rotate", iconRotate)
     setProperty(propertyValue)
   }
@@ -842,7 +842,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param iconRotate value of iconRotate as Expression
    */
-  override fun iconRotate(iconRotate: Expression) = apply {
+  override fun iconRotate(iconRotate: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-rotate", iconRotate)
     setProperty(propertyValue)
   }
@@ -872,7 +872,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param iconRotationAlignment value of iconRotationAlignment
    */
-  override fun iconRotationAlignment(iconRotationAlignment: IconRotationAlignment) = apply {
+  override fun iconRotationAlignment(iconRotationAlignment: IconRotationAlignment): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-rotation-alignment", iconRotationAlignment)
     setProperty(propertyValue)
   }
@@ -910,7 +910,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param iconRotationAlignment value of iconRotationAlignment as Expression
    */
-  override fun iconRotationAlignment(iconRotationAlignment: Expression) = apply {
+  override fun iconRotationAlignment(iconRotationAlignment: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-rotation-alignment", iconRotationAlignment)
     setProperty(propertyValue)
   }
@@ -937,7 +937,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param iconSize value of iconSize
    */
-  override fun iconSize(iconSize: Double) = apply {
+  override fun iconSize(iconSize: Double): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-size", iconSize)
     setProperty(propertyValue)
   }
@@ -975,7 +975,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param iconSize value of iconSize as Expression
    */
-  override fun iconSize(iconSize: Expression) = apply {
+  override fun iconSize(iconSize: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-size", iconSize)
     setProperty(propertyValue)
   }
@@ -1005,7 +1005,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param iconTextFit value of iconTextFit
    */
-  override fun iconTextFit(iconTextFit: IconTextFit) = apply {
+  override fun iconTextFit(iconTextFit: IconTextFit): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-text-fit", iconTextFit)
     setProperty(propertyValue)
   }
@@ -1043,7 +1043,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param iconTextFit value of iconTextFit as Expression
    */
-  override fun iconTextFit(iconTextFit: Expression) = apply {
+  override fun iconTextFit(iconTextFit: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-text-fit", iconTextFit)
     setProperty(propertyValue)
   }
@@ -1070,7 +1070,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param iconTextFitPadding value of iconTextFitPadding
    */
-  override fun iconTextFitPadding(iconTextFitPadding: List<Double>) = apply {
+  override fun iconTextFitPadding(iconTextFitPadding: List<Double>): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-text-fit-padding", iconTextFitPadding)
     setProperty(propertyValue)
   }
@@ -1108,7 +1108,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param iconTextFitPadding value of iconTextFitPadding as Expression
    */
-  override fun iconTextFitPadding(iconTextFitPadding: Expression) = apply {
+  override fun iconTextFitPadding(iconTextFitPadding: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-text-fit-padding", iconTextFitPadding)
     setProperty(propertyValue)
   }
@@ -1135,7 +1135,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param symbolAvoidEdges value of symbolAvoidEdges
    */
-  override fun symbolAvoidEdges(symbolAvoidEdges: Boolean) = apply {
+  override fun symbolAvoidEdges(symbolAvoidEdges: Boolean): SymbolLayer = apply {
     val propertyValue = PropertyValue("symbol-avoid-edges", symbolAvoidEdges)
     setProperty(propertyValue)
   }
@@ -1173,7 +1173,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param symbolAvoidEdges value of symbolAvoidEdges as Expression
    */
-  override fun symbolAvoidEdges(symbolAvoidEdges: Expression) = apply {
+  override fun symbolAvoidEdges(symbolAvoidEdges: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("symbol-avoid-edges", symbolAvoidEdges)
     setProperty(propertyValue)
   }
@@ -1203,7 +1203,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param symbolPlacement value of symbolPlacement
    */
-  override fun symbolPlacement(symbolPlacement: SymbolPlacement) = apply {
+  override fun symbolPlacement(symbolPlacement: SymbolPlacement): SymbolLayer = apply {
     val propertyValue = PropertyValue("symbol-placement", symbolPlacement)
     setProperty(propertyValue)
   }
@@ -1241,7 +1241,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param symbolPlacement value of symbolPlacement as Expression
    */
-  override fun symbolPlacement(symbolPlacement: Expression) = apply {
+  override fun symbolPlacement(symbolPlacement: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("symbol-placement", symbolPlacement)
     setProperty(propertyValue)
   }
@@ -1268,7 +1268,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param symbolSortKey value of symbolSortKey
    */
-  override fun symbolSortKey(symbolSortKey: Double) = apply {
+  override fun symbolSortKey(symbolSortKey: Double): SymbolLayer = apply {
     val propertyValue = PropertyValue("symbol-sort-key", symbolSortKey)
     setProperty(propertyValue)
   }
@@ -1306,7 +1306,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param symbolSortKey value of symbolSortKey as Expression
    */
-  override fun symbolSortKey(symbolSortKey: Expression) = apply {
+  override fun symbolSortKey(symbolSortKey: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("symbol-sort-key", symbolSortKey)
     setProperty(propertyValue)
   }
@@ -1333,7 +1333,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param symbolSpacing value of symbolSpacing
    */
-  override fun symbolSpacing(symbolSpacing: Double) = apply {
+  override fun symbolSpacing(symbolSpacing: Double): SymbolLayer = apply {
     val propertyValue = PropertyValue("symbol-spacing", symbolSpacing)
     setProperty(propertyValue)
   }
@@ -1371,7 +1371,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param symbolSpacing value of symbolSpacing as Expression
    */
-  override fun symbolSpacing(symbolSpacing: Expression) = apply {
+  override fun symbolSpacing(symbolSpacing: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("symbol-spacing", symbolSpacing)
     setProperty(propertyValue)
   }
@@ -1401,7 +1401,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param symbolZOrder value of symbolZOrder
    */
-  override fun symbolZOrder(symbolZOrder: SymbolZOrder) = apply {
+  override fun symbolZOrder(symbolZOrder: SymbolZOrder): SymbolLayer = apply {
     val propertyValue = PropertyValue("symbol-z-order", symbolZOrder)
     setProperty(propertyValue)
   }
@@ -1439,7 +1439,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param symbolZOrder value of symbolZOrder as Expression
    */
-  override fun symbolZOrder(symbolZOrder: Expression) = apply {
+  override fun symbolZOrder(symbolZOrder: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("symbol-z-order", symbolZOrder)
     setProperty(propertyValue)
   }
@@ -1466,7 +1466,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textAllowOverlap value of textAllowOverlap
    */
-  override fun textAllowOverlap(textAllowOverlap: Boolean) = apply {
+  override fun textAllowOverlap(textAllowOverlap: Boolean): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-allow-overlap", textAllowOverlap)
     setProperty(propertyValue)
   }
@@ -1504,7 +1504,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textAllowOverlap value of textAllowOverlap as Expression
    */
-  override fun textAllowOverlap(textAllowOverlap: Expression) = apply {
+  override fun textAllowOverlap(textAllowOverlap: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-allow-overlap", textAllowOverlap)
     setProperty(propertyValue)
   }
@@ -1534,7 +1534,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textAnchor value of textAnchor
    */
-  override fun textAnchor(textAnchor: TextAnchor) = apply {
+  override fun textAnchor(textAnchor: TextAnchor): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-anchor", textAnchor)
     setProperty(propertyValue)
   }
@@ -1572,7 +1572,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textAnchor value of textAnchor as Expression
    */
-  override fun textAnchor(textAnchor: Expression) = apply {
+  override fun textAnchor(textAnchor: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-anchor", textAnchor)
     setProperty(propertyValue)
   }
@@ -1602,7 +1602,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textField value of textField
    */
-  override fun textField(textField: Formatted) = apply {
+  override fun textField(textField: Formatted): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-field", textField)
     setProperty(propertyValue)
   }
@@ -1637,7 +1637,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textField value of textField as Expression
    */
-  override fun textField(textField: Expression) = apply {
+  override fun textField(textField: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-field", textField)
     setProperty(propertyValue)
   }
@@ -1669,7 +1669,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textField value of textField as String
    */
-  override fun textField(textField: String) = apply {
+  override fun textField(textField: String): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-field", textField)
     setProperty(propertyValue)
   }
@@ -1677,7 +1677,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   /**
    * DSL for construct [Formatted] textField.
    */
-  override fun textField(block: Formatted.() -> Unit) = apply {
+  override fun textField(block: Formatted.() -> Unit): SymbolLayer = apply {
     textField(Formatted().apply(block))
   }
 
@@ -1703,7 +1703,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textFont value of textFont
    */
-  override fun textFont(textFont: List<String>) = apply {
+  override fun textFont(textFont: List<String>): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-font", textFont)
     setProperty(propertyValue)
   }
@@ -1741,7 +1741,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textFont value of textFont as Expression
    */
-  override fun textFont(textFont: Expression) = apply {
+  override fun textFont(textFont: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-font", textFont)
     setProperty(propertyValue)
   }
@@ -1768,7 +1768,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textIgnorePlacement value of textIgnorePlacement
    */
-  override fun textIgnorePlacement(textIgnorePlacement: Boolean) = apply {
+  override fun textIgnorePlacement(textIgnorePlacement: Boolean): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-ignore-placement", textIgnorePlacement)
     setProperty(propertyValue)
   }
@@ -1806,7 +1806,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textIgnorePlacement value of textIgnorePlacement as Expression
    */
-  override fun textIgnorePlacement(textIgnorePlacement: Expression) = apply {
+  override fun textIgnorePlacement(textIgnorePlacement: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-ignore-placement", textIgnorePlacement)
     setProperty(propertyValue)
   }
@@ -1836,7 +1836,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textJustify value of textJustify
    */
-  override fun textJustify(textJustify: TextJustify) = apply {
+  override fun textJustify(textJustify: TextJustify): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-justify", textJustify)
     setProperty(propertyValue)
   }
@@ -1874,7 +1874,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textJustify value of textJustify as Expression
    */
-  override fun textJustify(textJustify: Expression) = apply {
+  override fun textJustify(textJustify: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-justify", textJustify)
     setProperty(propertyValue)
   }
@@ -1901,7 +1901,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textKeepUpright value of textKeepUpright
    */
-  override fun textKeepUpright(textKeepUpright: Boolean) = apply {
+  override fun textKeepUpright(textKeepUpright: Boolean): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-keep-upright", textKeepUpright)
     setProperty(propertyValue)
   }
@@ -1939,7 +1939,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textKeepUpright value of textKeepUpright as Expression
    */
-  override fun textKeepUpright(textKeepUpright: Expression) = apply {
+  override fun textKeepUpright(textKeepUpright: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-keep-upright", textKeepUpright)
     setProperty(propertyValue)
   }
@@ -1966,7 +1966,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textLetterSpacing value of textLetterSpacing
    */
-  override fun textLetterSpacing(textLetterSpacing: Double) = apply {
+  override fun textLetterSpacing(textLetterSpacing: Double): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-letter-spacing", textLetterSpacing)
     setProperty(propertyValue)
   }
@@ -2004,7 +2004,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textLetterSpacing value of textLetterSpacing as Expression
    */
-  override fun textLetterSpacing(textLetterSpacing: Expression) = apply {
+  override fun textLetterSpacing(textLetterSpacing: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-letter-spacing", textLetterSpacing)
     setProperty(propertyValue)
   }
@@ -2031,7 +2031,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textLineHeight value of textLineHeight
    */
-  override fun textLineHeight(textLineHeight: Double) = apply {
+  override fun textLineHeight(textLineHeight: Double): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-line-height", textLineHeight)
     setProperty(propertyValue)
   }
@@ -2069,7 +2069,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textLineHeight value of textLineHeight as Expression
    */
-  override fun textLineHeight(textLineHeight: Expression) = apply {
+  override fun textLineHeight(textLineHeight: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-line-height", textLineHeight)
     setProperty(propertyValue)
   }
@@ -2096,7 +2096,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textMaxAngle value of textMaxAngle
    */
-  override fun textMaxAngle(textMaxAngle: Double) = apply {
+  override fun textMaxAngle(textMaxAngle: Double): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-max-angle", textMaxAngle)
     setProperty(propertyValue)
   }
@@ -2134,7 +2134,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textMaxAngle value of textMaxAngle as Expression
    */
-  override fun textMaxAngle(textMaxAngle: Expression) = apply {
+  override fun textMaxAngle(textMaxAngle: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-max-angle", textMaxAngle)
     setProperty(propertyValue)
   }
@@ -2161,7 +2161,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textMaxWidth value of textMaxWidth
    */
-  override fun textMaxWidth(textMaxWidth: Double) = apply {
+  override fun textMaxWidth(textMaxWidth: Double): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-max-width", textMaxWidth)
     setProperty(propertyValue)
   }
@@ -2199,7 +2199,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textMaxWidth value of textMaxWidth as Expression
    */
-  override fun textMaxWidth(textMaxWidth: Expression) = apply {
+  override fun textMaxWidth(textMaxWidth: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-max-width", textMaxWidth)
     setProperty(propertyValue)
   }
@@ -2226,7 +2226,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textOffset value of textOffset
    */
-  override fun textOffset(textOffset: List<Double>) = apply {
+  override fun textOffset(textOffset: List<Double>): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-offset", textOffset)
     setProperty(propertyValue)
   }
@@ -2264,7 +2264,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textOffset value of textOffset as Expression
    */
-  override fun textOffset(textOffset: Expression) = apply {
+  override fun textOffset(textOffset: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-offset", textOffset)
     setProperty(propertyValue)
   }
@@ -2291,7 +2291,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textOptional value of textOptional
    */
-  override fun textOptional(textOptional: Boolean) = apply {
+  override fun textOptional(textOptional: Boolean): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-optional", textOptional)
     setProperty(propertyValue)
   }
@@ -2329,7 +2329,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textOptional value of textOptional as Expression
    */
-  override fun textOptional(textOptional: Expression) = apply {
+  override fun textOptional(textOptional: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-optional", textOptional)
     setProperty(propertyValue)
   }
@@ -2356,7 +2356,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textPadding value of textPadding
    */
-  override fun textPadding(textPadding: Double) = apply {
+  override fun textPadding(textPadding: Double): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-padding", textPadding)
     setProperty(propertyValue)
   }
@@ -2394,7 +2394,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textPadding value of textPadding as Expression
    */
-  override fun textPadding(textPadding: Expression) = apply {
+  override fun textPadding(textPadding: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-padding", textPadding)
     setProperty(propertyValue)
   }
@@ -2424,7 +2424,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textPitchAlignment value of textPitchAlignment
    */
-  override fun textPitchAlignment(textPitchAlignment: TextPitchAlignment) = apply {
+  override fun textPitchAlignment(textPitchAlignment: TextPitchAlignment): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-pitch-alignment", textPitchAlignment)
     setProperty(propertyValue)
   }
@@ -2462,7 +2462,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textPitchAlignment value of textPitchAlignment as Expression
    */
-  override fun textPitchAlignment(textPitchAlignment: Expression) = apply {
+  override fun textPitchAlignment(textPitchAlignment: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-pitch-alignment", textPitchAlignment)
     setProperty(propertyValue)
   }
@@ -2489,7 +2489,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textRadialOffset value of textRadialOffset
    */
-  override fun textRadialOffset(textRadialOffset: Double) = apply {
+  override fun textRadialOffset(textRadialOffset: Double): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-radial-offset", textRadialOffset)
     setProperty(propertyValue)
   }
@@ -2527,7 +2527,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textRadialOffset value of textRadialOffset as Expression
    */
-  override fun textRadialOffset(textRadialOffset: Expression) = apply {
+  override fun textRadialOffset(textRadialOffset: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-radial-offset", textRadialOffset)
     setProperty(propertyValue)
   }
@@ -2554,7 +2554,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textRotate value of textRotate
    */
-  override fun textRotate(textRotate: Double) = apply {
+  override fun textRotate(textRotate: Double): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-rotate", textRotate)
     setProperty(propertyValue)
   }
@@ -2592,7 +2592,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textRotate value of textRotate as Expression
    */
-  override fun textRotate(textRotate: Expression) = apply {
+  override fun textRotate(textRotate: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-rotate", textRotate)
     setProperty(propertyValue)
   }
@@ -2622,7 +2622,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textRotationAlignment value of textRotationAlignment
    */
-  override fun textRotationAlignment(textRotationAlignment: TextRotationAlignment) = apply {
+  override fun textRotationAlignment(textRotationAlignment: TextRotationAlignment): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-rotation-alignment", textRotationAlignment)
     setProperty(propertyValue)
   }
@@ -2660,7 +2660,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textRotationAlignment value of textRotationAlignment as Expression
    */
-  override fun textRotationAlignment(textRotationAlignment: Expression) = apply {
+  override fun textRotationAlignment(textRotationAlignment: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-rotation-alignment", textRotationAlignment)
     setProperty(propertyValue)
   }
@@ -2687,7 +2687,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textSize value of textSize
    */
-  override fun textSize(textSize: Double) = apply {
+  override fun textSize(textSize: Double): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-size", textSize)
     setProperty(propertyValue)
   }
@@ -2725,7 +2725,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textSize value of textSize as Expression
    */
-  override fun textSize(textSize: Expression) = apply {
+  override fun textSize(textSize: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-size", textSize)
     setProperty(propertyValue)
   }
@@ -2755,7 +2755,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textTransform value of textTransform
    */
-  override fun textTransform(textTransform: TextTransform) = apply {
+  override fun textTransform(textTransform: TextTransform): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-transform", textTransform)
     setProperty(propertyValue)
   }
@@ -2793,7 +2793,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textTransform value of textTransform as Expression
    */
-  override fun textTransform(textTransform: Expression) = apply {
+  override fun textTransform(textTransform: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-transform", textTransform)
     setProperty(propertyValue)
   }
@@ -2820,7 +2820,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textVariableAnchor value of textVariableAnchor
    */
-  override fun textVariableAnchor(textVariableAnchor: List<String>) = apply {
+  override fun textVariableAnchor(textVariableAnchor: List<String>): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-variable-anchor", textVariableAnchor)
     setProperty(propertyValue)
   }
@@ -2858,7 +2858,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textVariableAnchor value of textVariableAnchor as Expression
    */
-  override fun textVariableAnchor(textVariableAnchor: Expression) = apply {
+  override fun textVariableAnchor(textVariableAnchor: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-variable-anchor", textVariableAnchor)
     setProperty(propertyValue)
   }
@@ -2885,7 +2885,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textWritingMode value of textWritingMode
    */
-  override fun textWritingMode(textWritingMode: List<String>) = apply {
+  override fun textWritingMode(textWritingMode: List<String>): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-writing-mode", textWritingMode)
     setProperty(propertyValue)
   }
@@ -2923,7 +2923,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textWritingMode value of textWritingMode as Expression
    */
-  override fun textWritingMode(textWritingMode: Expression) = apply {
+  override fun textWritingMode(textWritingMode: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-writing-mode", textWritingMode)
     setProperty(propertyValue)
   }
@@ -2953,7 +2953,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param iconColor value of iconColor
    */
-  override fun iconColor(iconColor: String) = apply {
+  override fun iconColor(iconColor: String): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-color", iconColor)
     setProperty(propertyValue)
   }
@@ -2988,7 +2988,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param iconColor value of iconColor as Expression
    */
-  override fun iconColor(iconColor: Expression) = apply {
+  override fun iconColor(iconColor: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-color", iconColor)
     setProperty(propertyValue)
   }
@@ -3019,7 +3019,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param iconColor value of iconColor
    */
-  override fun iconColor(@ColorInt iconColor: Int) = apply {
+  override fun iconColor(@ColorInt iconColor: Int): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-color", colorIntToRgbaExpression(iconColor))
     setProperty(propertyValue)
   }
@@ -3046,7 +3046,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param options transition options for String
    */
-  override fun iconColorTransition(options: StyleTransition) = apply {
+  override fun iconColorTransition(options: StyleTransition): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-color-transition", options)
     setProperty(propertyValue)
   }
@@ -3054,7 +3054,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   /**
    * DSL for [iconColorTransition].
    */
-  override fun iconColorTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun iconColorTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer = apply {
     iconColorTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -3080,7 +3080,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param iconHaloBlur value of iconHaloBlur
    */
-  override fun iconHaloBlur(iconHaloBlur: Double) = apply {
+  override fun iconHaloBlur(iconHaloBlur: Double): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-halo-blur", iconHaloBlur)
     setProperty(propertyValue)
   }
@@ -3118,7 +3118,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param iconHaloBlur value of iconHaloBlur as Expression
    */
-  override fun iconHaloBlur(iconHaloBlur: Expression) = apply {
+  override fun iconHaloBlur(iconHaloBlur: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-halo-blur", iconHaloBlur)
     setProperty(propertyValue)
   }
@@ -3145,7 +3145,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param options transition options for Double
    */
-  override fun iconHaloBlurTransition(options: StyleTransition) = apply {
+  override fun iconHaloBlurTransition(options: StyleTransition): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-halo-blur-transition", options)
     setProperty(propertyValue)
   }
@@ -3153,7 +3153,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   /**
    * DSL for [iconHaloBlurTransition].
    */
-  override fun iconHaloBlurTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun iconHaloBlurTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer = apply {
     iconHaloBlurTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -3182,7 +3182,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param iconHaloColor value of iconHaloColor
    */
-  override fun iconHaloColor(iconHaloColor: String) = apply {
+  override fun iconHaloColor(iconHaloColor: String): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-halo-color", iconHaloColor)
     setProperty(propertyValue)
   }
@@ -3217,7 +3217,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param iconHaloColor value of iconHaloColor as Expression
    */
-  override fun iconHaloColor(iconHaloColor: Expression) = apply {
+  override fun iconHaloColor(iconHaloColor: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-halo-color", iconHaloColor)
     setProperty(propertyValue)
   }
@@ -3248,7 +3248,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param iconHaloColor value of iconHaloColor
    */
-  override fun iconHaloColor(@ColorInt iconHaloColor: Int) = apply {
+  override fun iconHaloColor(@ColorInt iconHaloColor: Int): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-halo-color", colorIntToRgbaExpression(iconHaloColor))
     setProperty(propertyValue)
   }
@@ -3275,7 +3275,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param options transition options for String
    */
-  override fun iconHaloColorTransition(options: StyleTransition) = apply {
+  override fun iconHaloColorTransition(options: StyleTransition): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-halo-color-transition", options)
     setProperty(propertyValue)
   }
@@ -3283,7 +3283,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   /**
    * DSL for [iconHaloColorTransition].
    */
-  override fun iconHaloColorTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun iconHaloColorTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer = apply {
     iconHaloColorTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -3309,7 +3309,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param iconHaloWidth value of iconHaloWidth
    */
-  override fun iconHaloWidth(iconHaloWidth: Double) = apply {
+  override fun iconHaloWidth(iconHaloWidth: Double): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-halo-width", iconHaloWidth)
     setProperty(propertyValue)
   }
@@ -3347,7 +3347,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param iconHaloWidth value of iconHaloWidth as Expression
    */
-  override fun iconHaloWidth(iconHaloWidth: Expression) = apply {
+  override fun iconHaloWidth(iconHaloWidth: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-halo-width", iconHaloWidth)
     setProperty(propertyValue)
   }
@@ -3374,7 +3374,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param options transition options for Double
    */
-  override fun iconHaloWidthTransition(options: StyleTransition) = apply {
+  override fun iconHaloWidthTransition(options: StyleTransition): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-halo-width-transition", options)
     setProperty(propertyValue)
   }
@@ -3382,7 +3382,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   /**
    * DSL for [iconHaloWidthTransition].
    */
-  override fun iconHaloWidthTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun iconHaloWidthTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer = apply {
     iconHaloWidthTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -3408,7 +3408,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param iconOpacity value of iconOpacity
    */
-  override fun iconOpacity(iconOpacity: Double) = apply {
+  override fun iconOpacity(iconOpacity: Double): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-opacity", iconOpacity)
     setProperty(propertyValue)
   }
@@ -3446,7 +3446,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param iconOpacity value of iconOpacity as Expression
    */
-  override fun iconOpacity(iconOpacity: Expression) = apply {
+  override fun iconOpacity(iconOpacity: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-opacity", iconOpacity)
     setProperty(propertyValue)
   }
@@ -3473,7 +3473,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param options transition options for Double
    */
-  override fun iconOpacityTransition(options: StyleTransition) = apply {
+  override fun iconOpacityTransition(options: StyleTransition): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-opacity-transition", options)
     setProperty(propertyValue)
   }
@@ -3481,7 +3481,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   /**
    * DSL for [iconOpacityTransition].
    */
-  override fun iconOpacityTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun iconOpacityTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer = apply {
     iconOpacityTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -3507,7 +3507,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param iconTranslate value of iconTranslate
    */
-  override fun iconTranslate(iconTranslate: List<Double>) = apply {
+  override fun iconTranslate(iconTranslate: List<Double>): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-translate", iconTranslate)
     setProperty(propertyValue)
   }
@@ -3545,7 +3545,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param iconTranslate value of iconTranslate as Expression
    */
-  override fun iconTranslate(iconTranslate: Expression) = apply {
+  override fun iconTranslate(iconTranslate: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-translate", iconTranslate)
     setProperty(propertyValue)
   }
@@ -3572,7 +3572,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param options transition options for List<Double>
    */
-  override fun iconTranslateTransition(options: StyleTransition) = apply {
+  override fun iconTranslateTransition(options: StyleTransition): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-translate-transition", options)
     setProperty(propertyValue)
   }
@@ -3580,7 +3580,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   /**
    * DSL for [iconTranslateTransition].
    */
-  override fun iconTranslateTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun iconTranslateTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer = apply {
     iconTranslateTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -3609,7 +3609,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param iconTranslateAnchor value of iconTranslateAnchor
    */
-  override fun iconTranslateAnchor(iconTranslateAnchor: IconTranslateAnchor) = apply {
+  override fun iconTranslateAnchor(iconTranslateAnchor: IconTranslateAnchor): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-translate-anchor", iconTranslateAnchor)
     setProperty(propertyValue)
   }
@@ -3647,7 +3647,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param iconTranslateAnchor value of iconTranslateAnchor as Expression
    */
-  override fun iconTranslateAnchor(iconTranslateAnchor: Expression) = apply {
+  override fun iconTranslateAnchor(iconTranslateAnchor: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-translate-anchor", iconTranslateAnchor)
     setProperty(propertyValue)
   }
@@ -3677,7 +3677,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textColor value of textColor
    */
-  override fun textColor(textColor: String) = apply {
+  override fun textColor(textColor: String): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-color", textColor)
     setProperty(propertyValue)
   }
@@ -3712,7 +3712,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textColor value of textColor as Expression
    */
-  override fun textColor(textColor: Expression) = apply {
+  override fun textColor(textColor: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-color", textColor)
     setProperty(propertyValue)
   }
@@ -3743,7 +3743,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textColor value of textColor
    */
-  override fun textColor(@ColorInt textColor: Int) = apply {
+  override fun textColor(@ColorInt textColor: Int): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-color", colorIntToRgbaExpression(textColor))
     setProperty(propertyValue)
   }
@@ -3770,7 +3770,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param options transition options for String
    */
-  override fun textColorTransition(options: StyleTransition) = apply {
+  override fun textColorTransition(options: StyleTransition): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-color-transition", options)
     setProperty(propertyValue)
   }
@@ -3778,7 +3778,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   /**
    * DSL for [textColorTransition].
    */
-  override fun textColorTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun textColorTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer = apply {
     textColorTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -3804,7 +3804,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textHaloBlur value of textHaloBlur
    */
-  override fun textHaloBlur(textHaloBlur: Double) = apply {
+  override fun textHaloBlur(textHaloBlur: Double): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-halo-blur", textHaloBlur)
     setProperty(propertyValue)
   }
@@ -3842,7 +3842,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textHaloBlur value of textHaloBlur as Expression
    */
-  override fun textHaloBlur(textHaloBlur: Expression) = apply {
+  override fun textHaloBlur(textHaloBlur: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-halo-blur", textHaloBlur)
     setProperty(propertyValue)
   }
@@ -3869,7 +3869,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param options transition options for Double
    */
-  override fun textHaloBlurTransition(options: StyleTransition) = apply {
+  override fun textHaloBlurTransition(options: StyleTransition): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-halo-blur-transition", options)
     setProperty(propertyValue)
   }
@@ -3877,7 +3877,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   /**
    * DSL for [textHaloBlurTransition].
    */
-  override fun textHaloBlurTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun textHaloBlurTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer = apply {
     textHaloBlurTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -3906,7 +3906,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textHaloColor value of textHaloColor
    */
-  override fun textHaloColor(textHaloColor: String) = apply {
+  override fun textHaloColor(textHaloColor: String): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-halo-color", textHaloColor)
     setProperty(propertyValue)
   }
@@ -3941,7 +3941,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textHaloColor value of textHaloColor as Expression
    */
-  override fun textHaloColor(textHaloColor: Expression) = apply {
+  override fun textHaloColor(textHaloColor: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-halo-color", textHaloColor)
     setProperty(propertyValue)
   }
@@ -3972,7 +3972,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textHaloColor value of textHaloColor
    */
-  override fun textHaloColor(@ColorInt textHaloColor: Int) = apply {
+  override fun textHaloColor(@ColorInt textHaloColor: Int): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-halo-color", colorIntToRgbaExpression(textHaloColor))
     setProperty(propertyValue)
   }
@@ -3999,7 +3999,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param options transition options for String
    */
-  override fun textHaloColorTransition(options: StyleTransition) = apply {
+  override fun textHaloColorTransition(options: StyleTransition): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-halo-color-transition", options)
     setProperty(propertyValue)
   }
@@ -4007,7 +4007,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   /**
    * DSL for [textHaloColorTransition].
    */
-  override fun textHaloColorTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun textHaloColorTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer = apply {
     textHaloColorTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -4033,7 +4033,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textHaloWidth value of textHaloWidth
    */
-  override fun textHaloWidth(textHaloWidth: Double) = apply {
+  override fun textHaloWidth(textHaloWidth: Double): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-halo-width", textHaloWidth)
     setProperty(propertyValue)
   }
@@ -4071,7 +4071,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textHaloWidth value of textHaloWidth as Expression
    */
-  override fun textHaloWidth(textHaloWidth: Expression) = apply {
+  override fun textHaloWidth(textHaloWidth: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-halo-width", textHaloWidth)
     setProperty(propertyValue)
   }
@@ -4098,7 +4098,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param options transition options for Double
    */
-  override fun textHaloWidthTransition(options: StyleTransition) = apply {
+  override fun textHaloWidthTransition(options: StyleTransition): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-halo-width-transition", options)
     setProperty(propertyValue)
   }
@@ -4106,7 +4106,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   /**
    * DSL for [textHaloWidthTransition].
    */
-  override fun textHaloWidthTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun textHaloWidthTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer = apply {
     textHaloWidthTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -4132,7 +4132,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textOpacity value of textOpacity
    */
-  override fun textOpacity(textOpacity: Double) = apply {
+  override fun textOpacity(textOpacity: Double): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-opacity", textOpacity)
     setProperty(propertyValue)
   }
@@ -4170,7 +4170,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textOpacity value of textOpacity as Expression
    */
-  override fun textOpacity(textOpacity: Expression) = apply {
+  override fun textOpacity(textOpacity: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-opacity", textOpacity)
     setProperty(propertyValue)
   }
@@ -4197,7 +4197,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param options transition options for Double
    */
-  override fun textOpacityTransition(options: StyleTransition) = apply {
+  override fun textOpacityTransition(options: StyleTransition): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-opacity-transition", options)
     setProperty(propertyValue)
   }
@@ -4205,7 +4205,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   /**
    * DSL for [textOpacityTransition].
    */
-  override fun textOpacityTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun textOpacityTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer = apply {
     textOpacityTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -4231,7 +4231,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textTranslate value of textTranslate
    */
-  override fun textTranslate(textTranslate: List<Double>) = apply {
+  override fun textTranslate(textTranslate: List<Double>): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-translate", textTranslate)
     setProperty(propertyValue)
   }
@@ -4269,7 +4269,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textTranslate value of textTranslate as Expression
    */
-  override fun textTranslate(textTranslate: Expression) = apply {
+  override fun textTranslate(textTranslate: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-translate", textTranslate)
     setProperty(propertyValue)
   }
@@ -4296,7 +4296,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param options transition options for List<Double>
    */
-  override fun textTranslateTransition(options: StyleTransition) = apply {
+  override fun textTranslateTransition(options: StyleTransition): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-translate-transition", options)
     setProperty(propertyValue)
   }
@@ -4304,7 +4304,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   /**
    * DSL for [textTranslateTransition].
    */
-  override fun textTranslateTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun textTranslateTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer = apply {
     textTranslateTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -4333,7 +4333,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textTranslateAnchor value of textTranslateAnchor
    */
-  override fun textTranslateAnchor(textTranslateAnchor: TextTranslateAnchor) = apply {
+  override fun textTranslateAnchor(textTranslateAnchor: TextTranslateAnchor): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-translate-anchor", textTranslateAnchor)
     setProperty(propertyValue)
   }
@@ -4371,7 +4371,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textTranslateAnchor value of textTranslateAnchor as Expression
    */
-  override fun textTranslateAnchor(textTranslateAnchor: Expression) = apply {
+  override fun textTranslateAnchor(textTranslateAnchor: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-translate-anchor", textTranslateAnchor)
     setProperty(propertyValue)
   }

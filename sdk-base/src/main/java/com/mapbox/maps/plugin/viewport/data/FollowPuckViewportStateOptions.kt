@@ -49,7 +49,7 @@ class FollowPuckViewportStateOptions private constructor(
   /**
    * Returns a builder that created the [FollowPuckViewportStateOptions]
    */
-  fun toBuilder() = Builder().padding(padding).zoom(zoom).bearing(bearing).pitch(pitch)
+  fun toBuilder(): Builder = Builder().padding(padding).zoom(zoom).bearing(bearing).pitch(pitch)
 
   /**
    * Indicates whether some other object is "equal to" this one.
@@ -87,7 +87,7 @@ class FollowPuckViewportStateOptions private constructor(
      *
      * Defaults to 0 padding.
      */
-    fun padding(padding: EdgeInsets?) = apply {
+    fun padding(padding: EdgeInsets?): Builder = apply {
       this.padding = padding
     }
 
@@ -97,7 +97,7 @@ class FollowPuckViewportStateOptions private constructor(
      *
      * Defaults to [DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_ZOOM].
      */
-    fun zoom(zoom: Double?) = apply {
+    fun zoom(zoom: Double?): Builder = apply {
       this.zoom = zoom
     }
 
@@ -107,7 +107,7 @@ class FollowPuckViewportStateOptions private constructor(
      *
      * Defaults to [FollowPuckViewportStateBearing.SyncWithLocationPuck]
      */
-    fun bearing(options: FollowPuckViewportStateBearing?) = apply {
+    fun bearing(options: FollowPuckViewportStateBearing?): Builder = apply {
       this.bearing = options
     }
 
@@ -117,14 +117,14 @@ class FollowPuckViewportStateOptions private constructor(
      *
      * Defaults to [DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_PITCH] degrees.
      */
-    fun pitch(pitch: Double?) = apply {
+    fun pitch(pitch: Double?): Builder = apply {
       this.pitch = pitch
     }
 
     /**
      * Builds [FollowPuckViewportStateOptions]
      */
-    fun build() =
+    fun build(): FollowPuckViewportStateOptions =
       FollowPuckViewportStateOptions(
         padding,
         zoom,

@@ -32,7 +32,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
    *
    * @param sourceLayer value of sourceLayer
    */
-  override fun sourceLayer(sourceLayer: String) = apply {
+  override fun sourceLayer(sourceLayer: String): RasterLayer = apply {
     val param = PropertyValue("source-layer", sourceLayer)
     setProperty(param)
   }
@@ -77,7 +77,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
    *
    * @param visibility value of Visibility
    */
-  override fun visibility(visibility: Visibility) = apply {
+  override fun visibility(visibility: Visibility): RasterLayer = apply {
     val propertyValue = PropertyValue("visibility", visibility)
     setProperty(propertyValue)
   }
@@ -112,7 +112,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
    *
    * @param value value of minzoom
    */
-  override fun minZoom(minZoom: Double) = apply {
+  override fun minZoom(minZoom: Double): RasterLayer = apply {
     val param = PropertyValue("minzoom", minZoom)
     setProperty(param)
   }
@@ -147,7 +147,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
    *
    * @param value value of maxzoom
    */
-  override fun maxZoom(maxZoom: Double) = apply {
+  override fun maxZoom(maxZoom: Double): RasterLayer = apply {
     val param = PropertyValue("maxzoom", maxZoom)
     setProperty(param)
   }
@@ -176,7 +176,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
    *
    * @param rasterBrightnessMax value of rasterBrightnessMax
    */
-  override fun rasterBrightnessMax(rasterBrightnessMax: Double) = apply {
+  override fun rasterBrightnessMax(rasterBrightnessMax: Double): RasterLayer = apply {
     val propertyValue = PropertyValue("raster-brightness-max", rasterBrightnessMax)
     setProperty(propertyValue)
   }
@@ -214,7 +214,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
    *
    * @param rasterBrightnessMax value of rasterBrightnessMax as Expression
    */
-  override fun rasterBrightnessMax(rasterBrightnessMax: Expression) = apply {
+  override fun rasterBrightnessMax(rasterBrightnessMax: Expression): RasterLayer = apply {
     val propertyValue = PropertyValue("raster-brightness-max", rasterBrightnessMax)
     setProperty(propertyValue)
   }
@@ -241,7 +241,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
    *
    * @param options transition options for Double
    */
-  override fun rasterBrightnessMaxTransition(options: StyleTransition) = apply {
+  override fun rasterBrightnessMaxTransition(options: StyleTransition): RasterLayer = apply {
     val propertyValue = PropertyValue("raster-brightness-max-transition", options)
     setProperty(propertyValue)
   }
@@ -249,7 +249,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   /**
    * DSL for [rasterBrightnessMaxTransition].
    */
-  override fun rasterBrightnessMaxTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun rasterBrightnessMaxTransition(block: StyleTransition.Builder.() -> Unit): RasterLayer = apply {
     rasterBrightnessMaxTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -275,7 +275,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
    *
    * @param rasterBrightnessMin value of rasterBrightnessMin
    */
-  override fun rasterBrightnessMin(rasterBrightnessMin: Double) = apply {
+  override fun rasterBrightnessMin(rasterBrightnessMin: Double): RasterLayer = apply {
     val propertyValue = PropertyValue("raster-brightness-min", rasterBrightnessMin)
     setProperty(propertyValue)
   }
@@ -313,7 +313,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
    *
    * @param rasterBrightnessMin value of rasterBrightnessMin as Expression
    */
-  override fun rasterBrightnessMin(rasterBrightnessMin: Expression) = apply {
+  override fun rasterBrightnessMin(rasterBrightnessMin: Expression): RasterLayer = apply {
     val propertyValue = PropertyValue("raster-brightness-min", rasterBrightnessMin)
     setProperty(propertyValue)
   }
@@ -340,7 +340,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
    *
    * @param options transition options for Double
    */
-  override fun rasterBrightnessMinTransition(options: StyleTransition) = apply {
+  override fun rasterBrightnessMinTransition(options: StyleTransition): RasterLayer = apply {
     val propertyValue = PropertyValue("raster-brightness-min-transition", options)
     setProperty(propertyValue)
   }
@@ -348,7 +348,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   /**
    * DSL for [rasterBrightnessMinTransition].
    */
-  override fun rasterBrightnessMinTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun rasterBrightnessMinTransition(block: StyleTransition.Builder.() -> Unit): RasterLayer = apply {
     rasterBrightnessMinTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -374,7 +374,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
    *
    * @param rasterColor value of rasterColor
    */
-  override fun rasterColor(rasterColor: Expression) = apply {
+  override fun rasterColor(rasterColor: Expression): RasterLayer = apply {
     val propertyValue = PropertyValue("raster-color", rasterColor)
     setProperty(propertyValue)
   }
@@ -401,7 +401,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
    *
    * @param rasterColorMix value of rasterColorMix
    */
-  override fun rasterColorMix(rasterColorMix: List<Double>) = apply {
+  override fun rasterColorMix(rasterColorMix: List<Double>): RasterLayer = apply {
     val propertyValue = PropertyValue("raster-color-mix", rasterColorMix)
     setProperty(propertyValue)
   }
@@ -439,7 +439,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
    *
    * @param rasterColorMix value of rasterColorMix as Expression
    */
-  override fun rasterColorMix(rasterColorMix: Expression) = apply {
+  override fun rasterColorMix(rasterColorMix: Expression): RasterLayer = apply {
     val propertyValue = PropertyValue("raster-color-mix", rasterColorMix)
     setProperty(propertyValue)
   }
@@ -466,7 +466,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
    *
    * @param options transition options for List<Double>
    */
-  override fun rasterColorMixTransition(options: StyleTransition) = apply {
+  override fun rasterColorMixTransition(options: StyleTransition): RasterLayer = apply {
     val propertyValue = PropertyValue("raster-color-mix-transition", options)
     setProperty(propertyValue)
   }
@@ -474,7 +474,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   /**
    * DSL for [rasterColorMixTransition].
    */
-  override fun rasterColorMixTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun rasterColorMixTransition(block: StyleTransition.Builder.() -> Unit): RasterLayer = apply {
     rasterColorMixTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -500,7 +500,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
    *
    * @param rasterColorRange value of rasterColorRange
    */
-  override fun rasterColorRange(rasterColorRange: List<Double>) = apply {
+  override fun rasterColorRange(rasterColorRange: List<Double>): RasterLayer = apply {
     val propertyValue = PropertyValue("raster-color-range", rasterColorRange)
     setProperty(propertyValue)
   }
@@ -538,7 +538,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
    *
    * @param rasterColorRange value of rasterColorRange as Expression
    */
-  override fun rasterColorRange(rasterColorRange: Expression) = apply {
+  override fun rasterColorRange(rasterColorRange: Expression): RasterLayer = apply {
     val propertyValue = PropertyValue("raster-color-range", rasterColorRange)
     setProperty(propertyValue)
   }
@@ -565,7 +565,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
    *
    * @param options transition options for List<Double>
    */
-  override fun rasterColorRangeTransition(options: StyleTransition) = apply {
+  override fun rasterColorRangeTransition(options: StyleTransition): RasterLayer = apply {
     val propertyValue = PropertyValue("raster-color-range-transition", options)
     setProperty(propertyValue)
   }
@@ -573,7 +573,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   /**
    * DSL for [rasterColorRangeTransition].
    */
-  override fun rasterColorRangeTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun rasterColorRangeTransition(block: StyleTransition.Builder.() -> Unit): RasterLayer = apply {
     rasterColorRangeTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -599,7 +599,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
    *
    * @param rasterContrast value of rasterContrast
    */
-  override fun rasterContrast(rasterContrast: Double) = apply {
+  override fun rasterContrast(rasterContrast: Double): RasterLayer = apply {
     val propertyValue = PropertyValue("raster-contrast", rasterContrast)
     setProperty(propertyValue)
   }
@@ -637,7 +637,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
    *
    * @param rasterContrast value of rasterContrast as Expression
    */
-  override fun rasterContrast(rasterContrast: Expression) = apply {
+  override fun rasterContrast(rasterContrast: Expression): RasterLayer = apply {
     val propertyValue = PropertyValue("raster-contrast", rasterContrast)
     setProperty(propertyValue)
   }
@@ -664,7 +664,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
    *
    * @param options transition options for Double
    */
-  override fun rasterContrastTransition(options: StyleTransition) = apply {
+  override fun rasterContrastTransition(options: StyleTransition): RasterLayer = apply {
     val propertyValue = PropertyValue("raster-contrast-transition", options)
     setProperty(propertyValue)
   }
@@ -672,7 +672,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   /**
    * DSL for [rasterContrastTransition].
    */
-  override fun rasterContrastTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun rasterContrastTransition(block: StyleTransition.Builder.() -> Unit): RasterLayer = apply {
     rasterContrastTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -698,7 +698,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
    *
    * @param rasterFadeDuration value of rasterFadeDuration
    */
-  override fun rasterFadeDuration(rasterFadeDuration: Double) = apply {
+  override fun rasterFadeDuration(rasterFadeDuration: Double): RasterLayer = apply {
     val propertyValue = PropertyValue("raster-fade-duration", rasterFadeDuration)
     setProperty(propertyValue)
   }
@@ -736,7 +736,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
    *
    * @param rasterFadeDuration value of rasterFadeDuration as Expression
    */
-  override fun rasterFadeDuration(rasterFadeDuration: Expression) = apply {
+  override fun rasterFadeDuration(rasterFadeDuration: Expression): RasterLayer = apply {
     val propertyValue = PropertyValue("raster-fade-duration", rasterFadeDuration)
     setProperty(propertyValue)
   }
@@ -763,7 +763,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
    *
    * @param rasterHueRotate value of rasterHueRotate
    */
-  override fun rasterHueRotate(rasterHueRotate: Double) = apply {
+  override fun rasterHueRotate(rasterHueRotate: Double): RasterLayer = apply {
     val propertyValue = PropertyValue("raster-hue-rotate", rasterHueRotate)
     setProperty(propertyValue)
   }
@@ -801,7 +801,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
    *
    * @param rasterHueRotate value of rasterHueRotate as Expression
    */
-  override fun rasterHueRotate(rasterHueRotate: Expression) = apply {
+  override fun rasterHueRotate(rasterHueRotate: Expression): RasterLayer = apply {
     val propertyValue = PropertyValue("raster-hue-rotate", rasterHueRotate)
     setProperty(propertyValue)
   }
@@ -828,7 +828,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
    *
    * @param options transition options for Double
    */
-  override fun rasterHueRotateTransition(options: StyleTransition) = apply {
+  override fun rasterHueRotateTransition(options: StyleTransition): RasterLayer = apply {
     val propertyValue = PropertyValue("raster-hue-rotate-transition", options)
     setProperty(propertyValue)
   }
@@ -836,7 +836,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   /**
    * DSL for [rasterHueRotateTransition].
    */
-  override fun rasterHueRotateTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun rasterHueRotateTransition(block: StyleTransition.Builder.() -> Unit): RasterLayer = apply {
     rasterHueRotateTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -862,7 +862,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
    *
    * @param rasterOpacity value of rasterOpacity
    */
-  override fun rasterOpacity(rasterOpacity: Double) = apply {
+  override fun rasterOpacity(rasterOpacity: Double): RasterLayer = apply {
     val propertyValue = PropertyValue("raster-opacity", rasterOpacity)
     setProperty(propertyValue)
   }
@@ -900,7 +900,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
    *
    * @param rasterOpacity value of rasterOpacity as Expression
    */
-  override fun rasterOpacity(rasterOpacity: Expression) = apply {
+  override fun rasterOpacity(rasterOpacity: Expression): RasterLayer = apply {
     val propertyValue = PropertyValue("raster-opacity", rasterOpacity)
     setProperty(propertyValue)
   }
@@ -927,7 +927,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
    *
    * @param options transition options for Double
    */
-  override fun rasterOpacityTransition(options: StyleTransition) = apply {
+  override fun rasterOpacityTransition(options: StyleTransition): RasterLayer = apply {
     val propertyValue = PropertyValue("raster-opacity-transition", options)
     setProperty(propertyValue)
   }
@@ -935,7 +935,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   /**
    * DSL for [rasterOpacityTransition].
    */
-  override fun rasterOpacityTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun rasterOpacityTransition(block: StyleTransition.Builder.() -> Unit): RasterLayer = apply {
     rasterOpacityTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -964,7 +964,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
    *
    * @param rasterResampling value of rasterResampling
    */
-  override fun rasterResampling(rasterResampling: RasterResampling) = apply {
+  override fun rasterResampling(rasterResampling: RasterResampling): RasterLayer = apply {
     val propertyValue = PropertyValue("raster-resampling", rasterResampling)
     setProperty(propertyValue)
   }
@@ -1002,7 +1002,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
    *
    * @param rasterResampling value of rasterResampling as Expression
    */
-  override fun rasterResampling(rasterResampling: Expression) = apply {
+  override fun rasterResampling(rasterResampling: Expression): RasterLayer = apply {
     val propertyValue = PropertyValue("raster-resampling", rasterResampling)
     setProperty(propertyValue)
   }
@@ -1029,7 +1029,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
    *
    * @param rasterSaturation value of rasterSaturation
    */
-  override fun rasterSaturation(rasterSaturation: Double) = apply {
+  override fun rasterSaturation(rasterSaturation: Double): RasterLayer = apply {
     val propertyValue = PropertyValue("raster-saturation", rasterSaturation)
     setProperty(propertyValue)
   }
@@ -1067,7 +1067,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
    *
    * @param rasterSaturation value of rasterSaturation as Expression
    */
-  override fun rasterSaturation(rasterSaturation: Expression) = apply {
+  override fun rasterSaturation(rasterSaturation: Expression): RasterLayer = apply {
     val propertyValue = PropertyValue("raster-saturation", rasterSaturation)
     setProperty(propertyValue)
   }
@@ -1094,7 +1094,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
    *
    * @param options transition options for Double
    */
-  override fun rasterSaturationTransition(options: StyleTransition) = apply {
+  override fun rasterSaturationTransition(options: StyleTransition): RasterLayer = apply {
     val propertyValue = PropertyValue("raster-saturation-transition", options)
     setProperty(propertyValue)
   }
@@ -1102,7 +1102,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   /**
    * DSL for [rasterSaturationTransition].
    */
-  override fun rasterSaturationTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun rasterSaturationTransition(block: StyleTransition.Builder.() -> Unit): RasterLayer = apply {
     rasterSaturationTransition(StyleTransition.Builder().apply(block).build())
   }
 

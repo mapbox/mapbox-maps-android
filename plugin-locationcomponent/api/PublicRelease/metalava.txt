@@ -60,8 +60,8 @@ package com.mapbox.maps.plugin.locationcomponent {
     method public void removeOnIndicatorAccuracyRadiusChangedListener(com.mapbox.maps.plugin.locationcomponent.OnIndicatorAccuracyRadiusChangedListener listener);
     method public void removeOnIndicatorBearingChangedListener(com.mapbox.maps.plugin.locationcomponent.OnIndicatorBearingChangedListener listener);
     method public void removeOnIndicatorPositionChangedListener(com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener listener);
-    method protected void setInternalSettings(com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings internalSettings);
-    method protected void setInternalSettings2(com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings2 internalSettings2);
+    method protected void setInternalSettings(com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings);
+    method protected void setInternalSettings2(com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings2);
     method public void setLocationProvider(com.mapbox.maps.plugin.locationcomponent.LocationProvider locationProvider);
     property protected com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings internalSettings;
     property protected com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings2 internalSettings2;

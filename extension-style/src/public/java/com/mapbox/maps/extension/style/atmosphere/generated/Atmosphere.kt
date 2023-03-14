@@ -48,7 +48,7 @@ class Atmosphere : AtmosphereDslReceiver, StyleContract.StyleAtmosphereExtension
    *
    * @param color as int
    */
-  override fun color(@ColorInt color: Int) = apply {
+  override fun color(@ColorInt color: Int): Atmosphere = apply {
     val propertyValue = PropertyValue("color", colorIntToRgbaExpression(color))
     setProperty(propertyValue)
   }
@@ -73,7 +73,7 @@ class Atmosphere : AtmosphereDslReceiver, StyleContract.StyleAtmosphereExtension
    *
    * @param color as String
    */
-  override fun color(color: String) = apply {
+  override fun color(color: String): Atmosphere = apply {
     setProperty(PropertyValue("color", color))
   }
 
@@ -95,7 +95,7 @@ class Atmosphere : AtmosphereDslReceiver, StyleContract.StyleAtmosphereExtension
    *
    * @param options transition options for color
    */
-  override fun colorTransition(options: StyleTransition) = apply {
+  override fun colorTransition(options: StyleTransition): Atmosphere = apply {
     val propertyValue = PropertyValue("color-transition", options)
     setProperty(propertyValue)
   }
@@ -103,7 +103,7 @@ class Atmosphere : AtmosphereDslReceiver, StyleContract.StyleAtmosphereExtension
   /**
    * DSL for [colorTransition].
    */
-  override fun colorTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun colorTransition(block: StyleTransition.Builder.() -> Unit): Atmosphere = apply {
     colorTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -131,7 +131,7 @@ class Atmosphere : AtmosphereDslReceiver, StyleContract.StyleAtmosphereExtension
    *
    * @param color value of color as Expression
    */
-  override fun color(color: Expression) = apply {
+  override fun color(color: Expression): Atmosphere = apply {
     val propertyValue = PropertyValue("color", color)
     setProperty(propertyValue)
   }
@@ -156,7 +156,7 @@ class Atmosphere : AtmosphereDslReceiver, StyleContract.StyleAtmosphereExtension
    *
    * @param highColor as int
    */
-  override fun highColor(@ColorInt highColor: Int) = apply {
+  override fun highColor(@ColorInt highColor: Int): Atmosphere = apply {
     val propertyValue = PropertyValue("high-color", colorIntToRgbaExpression(highColor))
     setProperty(propertyValue)
   }
@@ -181,7 +181,7 @@ class Atmosphere : AtmosphereDslReceiver, StyleContract.StyleAtmosphereExtension
    *
    * @param highColor as String
    */
-  override fun highColor(highColor: String) = apply {
+  override fun highColor(highColor: String): Atmosphere = apply {
     setProperty(PropertyValue("high-color", highColor))
   }
 
@@ -203,7 +203,7 @@ class Atmosphere : AtmosphereDslReceiver, StyleContract.StyleAtmosphereExtension
    *
    * @param options transition options for high-color
    */
-  override fun highColorTransition(options: StyleTransition) = apply {
+  override fun highColorTransition(options: StyleTransition): Atmosphere = apply {
     val propertyValue = PropertyValue("high-color-transition", options)
     setProperty(propertyValue)
   }
@@ -211,7 +211,7 @@ class Atmosphere : AtmosphereDslReceiver, StyleContract.StyleAtmosphereExtension
   /**
    * DSL for [highColorTransition].
    */
-  override fun highColorTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun highColorTransition(block: StyleTransition.Builder.() -> Unit): Atmosphere = apply {
     highColorTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -239,7 +239,7 @@ class Atmosphere : AtmosphereDslReceiver, StyleContract.StyleAtmosphereExtension
    *
    * @param highColor value of highColor as Expression
    */
-  override fun highColor(highColor: Expression) = apply {
+  override fun highColor(highColor: Expression): Atmosphere = apply {
     val propertyValue = PropertyValue("high-color", highColor)
     setProperty(propertyValue)
   }
@@ -261,7 +261,7 @@ class Atmosphere : AtmosphereDslReceiver, StyleContract.StyleAtmosphereExtension
    *
    * @param horizonBlend as Double
    */
-  override fun horizonBlend(horizonBlend: Double) = apply {
+  override fun horizonBlend(horizonBlend: Double): Atmosphere = apply {
     setProperty(PropertyValue("horizon-blend", horizonBlend))
   }
 
@@ -283,7 +283,7 @@ class Atmosphere : AtmosphereDslReceiver, StyleContract.StyleAtmosphereExtension
    *
    * @param options transition options for horizon-blend
    */
-  override fun horizonBlendTransition(options: StyleTransition) = apply {
+  override fun horizonBlendTransition(options: StyleTransition): Atmosphere = apply {
     val propertyValue = PropertyValue("horizon-blend-transition", options)
     setProperty(propertyValue)
   }
@@ -291,7 +291,7 @@ class Atmosphere : AtmosphereDslReceiver, StyleContract.StyleAtmosphereExtension
   /**
    * DSL for [horizonBlendTransition].
    */
-  override fun horizonBlendTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun horizonBlendTransition(block: StyleTransition.Builder.() -> Unit): Atmosphere = apply {
     horizonBlendTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -322,7 +322,7 @@ class Atmosphere : AtmosphereDslReceiver, StyleContract.StyleAtmosphereExtension
    *
    * @param horizonBlend value of horizonBlend as Expression
    */
-  override fun horizonBlend(horizonBlend: Expression) = apply {
+  override fun horizonBlend(horizonBlend: Expression): Atmosphere = apply {
     val propertyValue = PropertyValue("horizon-blend", horizonBlend)
     setProperty(propertyValue)
   }
@@ -344,7 +344,7 @@ class Atmosphere : AtmosphereDslReceiver, StyleContract.StyleAtmosphereExtension
    *
    * @param range as List<Double>
    */
-  override fun range(range: List<Double>) = apply {
+  override fun range(range: List<Double>): Atmosphere = apply {
     setProperty(PropertyValue("range", range))
   }
 
@@ -366,7 +366,7 @@ class Atmosphere : AtmosphereDslReceiver, StyleContract.StyleAtmosphereExtension
    *
    * @param options transition options for range
    */
-  override fun rangeTransition(options: StyleTransition) = apply {
+  override fun rangeTransition(options: StyleTransition): Atmosphere = apply {
     val propertyValue = PropertyValue("range-transition", options)
     setProperty(propertyValue)
   }
@@ -374,7 +374,7 @@ class Atmosphere : AtmosphereDslReceiver, StyleContract.StyleAtmosphereExtension
   /**
    * DSL for [rangeTransition].
    */
-  override fun rangeTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun rangeTransition(block: StyleTransition.Builder.() -> Unit): Atmosphere = apply {
     rangeTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -405,7 +405,7 @@ class Atmosphere : AtmosphereDslReceiver, StyleContract.StyleAtmosphereExtension
    *
    * @param range value of range as Expression
    */
-  override fun range(range: Expression) = apply {
+  override fun range(range: Expression): Atmosphere = apply {
     val propertyValue = PropertyValue("range", range)
     setProperty(propertyValue)
   }
@@ -430,7 +430,7 @@ class Atmosphere : AtmosphereDslReceiver, StyleContract.StyleAtmosphereExtension
    *
    * @param spaceColor as int
    */
-  override fun spaceColor(@ColorInt spaceColor: Int) = apply {
+  override fun spaceColor(@ColorInt spaceColor: Int): Atmosphere = apply {
     val propertyValue = PropertyValue("space-color", colorIntToRgbaExpression(spaceColor))
     setProperty(propertyValue)
   }
@@ -455,7 +455,7 @@ class Atmosphere : AtmosphereDslReceiver, StyleContract.StyleAtmosphereExtension
    *
    * @param spaceColor as String
    */
-  override fun spaceColor(spaceColor: String) = apply {
+  override fun spaceColor(spaceColor: String): Atmosphere = apply {
     setProperty(PropertyValue("space-color", spaceColor))
   }
 
@@ -477,7 +477,7 @@ class Atmosphere : AtmosphereDslReceiver, StyleContract.StyleAtmosphereExtension
    *
    * @param options transition options for space-color
    */
-  override fun spaceColorTransition(options: StyleTransition) = apply {
+  override fun spaceColorTransition(options: StyleTransition): Atmosphere = apply {
     val propertyValue = PropertyValue("space-color-transition", options)
     setProperty(propertyValue)
   }
@@ -485,7 +485,7 @@ class Atmosphere : AtmosphereDslReceiver, StyleContract.StyleAtmosphereExtension
   /**
    * DSL for [spaceColorTransition].
    */
-  override fun spaceColorTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun spaceColorTransition(block: StyleTransition.Builder.() -> Unit): Atmosphere = apply {
     spaceColorTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -513,7 +513,7 @@ class Atmosphere : AtmosphereDslReceiver, StyleContract.StyleAtmosphereExtension
    *
    * @param spaceColor value of spaceColor as Expression
    */
-  override fun spaceColor(spaceColor: Expression) = apply {
+  override fun spaceColor(spaceColor: Expression): Atmosphere = apply {
     val propertyValue = PropertyValue("space-color", spaceColor)
     setProperty(propertyValue)
   }
@@ -535,7 +535,7 @@ class Atmosphere : AtmosphereDslReceiver, StyleContract.StyleAtmosphereExtension
    *
    * @param starIntensity as Double
    */
-  override fun starIntensity(starIntensity: Double) = apply {
+  override fun starIntensity(starIntensity: Double): Atmosphere = apply {
     setProperty(PropertyValue("star-intensity", starIntensity))
   }
 
@@ -557,7 +557,7 @@ class Atmosphere : AtmosphereDslReceiver, StyleContract.StyleAtmosphereExtension
    *
    * @param options transition options for star-intensity
    */
-  override fun starIntensityTransition(options: StyleTransition) = apply {
+  override fun starIntensityTransition(options: StyleTransition): Atmosphere = apply {
     val propertyValue = PropertyValue("star-intensity-transition", options)
     setProperty(propertyValue)
   }
@@ -565,7 +565,7 @@ class Atmosphere : AtmosphereDslReceiver, StyleContract.StyleAtmosphereExtension
   /**
    * DSL for [starIntensityTransition].
    */
-  override fun starIntensityTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun starIntensityTransition(block: StyleTransition.Builder.() -> Unit): Atmosphere = apply {
     starIntensityTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -596,7 +596,7 @@ class Atmosphere : AtmosphereDslReceiver, StyleContract.StyleAtmosphereExtension
    *
    * @param starIntensity value of starIntensity as Expression
    */
-  override fun starIntensity(starIntensity: Expression) = apply {
+  override fun starIntensity(starIntensity: Expression): Atmosphere = apply {
     val propertyValue = PropertyValue("star-intensity", starIntensity)
     setProperty(propertyValue)
   }

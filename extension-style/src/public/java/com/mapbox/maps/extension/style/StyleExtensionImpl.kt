@@ -28,17 +28,17 @@ class StyleExtensionImpl private constructor(
   /**
    * The sources of the style.
    */
-  override val sources = builder.sources.toList()
+  override val sources: List<Source> = builder.sources.toList()
 
   /**
    * The images of the style.
    */
-  override val images = builder.images.toList()
+  override val images: List<StyleContract.StyleImageExtension> = builder.images.toList()
 
   /**
    * The layers of the style.
    */
-  override val layers = builder.layers.toList()
+  override val layers: List<Pair<Layer, LayerPosition>> = builder.layers.toList()
 
   /**
    * The light of the style.
@@ -205,5 +205,5 @@ class StyleExtensionImpl private constructor(
 /**
  * DSL function to construct a style extension.
  */
-fun style(styleUri: String = "", block: Builder.() -> Unit) =
+fun style(styleUri: String = "", block: Builder.() -> Unit): StyleContract.StyleExtension =
   Builder(styleUri).apply(block).build()

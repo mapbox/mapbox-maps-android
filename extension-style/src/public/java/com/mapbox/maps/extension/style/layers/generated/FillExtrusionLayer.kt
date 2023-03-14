@@ -37,7 +37,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
    *
    * @param sourceLayer value of sourceLayer
    */
-  override fun sourceLayer(sourceLayer: String) = apply {
+  override fun sourceLayer(sourceLayer: String): FillExtrusionLayer = apply {
     val param = PropertyValue("source-layer", sourceLayer)
     setProperty(param)
   }
@@ -67,7 +67,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
    *
    * @param filter the expression filter to set
    */
-  override fun filter(filter: Expression) = apply {
+  override fun filter(filter: Expression): FillExtrusionLayer = apply {
     val propertyValue = PropertyValue("filter", filter)
     setProperty(propertyValue)
   }
@@ -115,7 +115,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
    *
    * @param visibility value of Visibility
    */
-  override fun visibility(visibility: Visibility) = apply {
+  override fun visibility(visibility: Visibility): FillExtrusionLayer = apply {
     val propertyValue = PropertyValue("visibility", visibility)
     setProperty(propertyValue)
   }
@@ -150,7 +150,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
    *
    * @param value value of minzoom
    */
-  override fun minZoom(minZoom: Double) = apply {
+  override fun minZoom(minZoom: Double): FillExtrusionLayer = apply {
     val param = PropertyValue("minzoom", minZoom)
     setProperty(param)
   }
@@ -185,7 +185,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
    *
    * @param value value of maxzoom
    */
-  override fun maxZoom(maxZoom: Double) = apply {
+  override fun maxZoom(maxZoom: Double): FillExtrusionLayer = apply {
     val param = PropertyValue("maxzoom", maxZoom)
     setProperty(param)
   }
@@ -214,7 +214,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
    *
    * @param fillExtrusionAmbientOcclusionIntensity value of fillExtrusionAmbientOcclusionIntensity
    */
-  override fun fillExtrusionAmbientOcclusionIntensity(fillExtrusionAmbientOcclusionIntensity: Double) = apply {
+  override fun fillExtrusionAmbientOcclusionIntensity(fillExtrusionAmbientOcclusionIntensity: Double): FillExtrusionLayer = apply {
     val propertyValue = PropertyValue("fill-extrusion-ambient-occlusion-intensity", fillExtrusionAmbientOcclusionIntensity)
     setProperty(propertyValue)
   }
@@ -252,7 +252,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
    *
    * @param fillExtrusionAmbientOcclusionIntensity value of fillExtrusionAmbientOcclusionIntensity as Expression
    */
-  override fun fillExtrusionAmbientOcclusionIntensity(fillExtrusionAmbientOcclusionIntensity: Expression) = apply {
+  override fun fillExtrusionAmbientOcclusionIntensity(fillExtrusionAmbientOcclusionIntensity: Expression): FillExtrusionLayer = apply {
     val propertyValue = PropertyValue("fill-extrusion-ambient-occlusion-intensity", fillExtrusionAmbientOcclusionIntensity)
     setProperty(propertyValue)
   }
@@ -279,7 +279,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
    *
    * @param options transition options for Double
    */
-  override fun fillExtrusionAmbientOcclusionIntensityTransition(options: StyleTransition) = apply {
+  override fun fillExtrusionAmbientOcclusionIntensityTransition(options: StyleTransition): FillExtrusionLayer = apply {
     val propertyValue = PropertyValue("fill-extrusion-ambient-occlusion-intensity-transition", options)
     setProperty(propertyValue)
   }
@@ -287,7 +287,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   /**
    * DSL for [fillExtrusionAmbientOcclusionIntensityTransition].
    */
-  override fun fillExtrusionAmbientOcclusionIntensityTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun fillExtrusionAmbientOcclusionIntensityTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer = apply {
     fillExtrusionAmbientOcclusionIntensityTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -313,7 +313,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
    *
    * @param fillExtrusionAmbientOcclusionRadius value of fillExtrusionAmbientOcclusionRadius
    */
-  override fun fillExtrusionAmbientOcclusionRadius(fillExtrusionAmbientOcclusionRadius: Double) = apply {
+  override fun fillExtrusionAmbientOcclusionRadius(fillExtrusionAmbientOcclusionRadius: Double): FillExtrusionLayer = apply {
     val propertyValue = PropertyValue("fill-extrusion-ambient-occlusion-radius", fillExtrusionAmbientOcclusionRadius)
     setProperty(propertyValue)
   }
@@ -351,7 +351,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
    *
    * @param fillExtrusionAmbientOcclusionRadius value of fillExtrusionAmbientOcclusionRadius as Expression
    */
-  override fun fillExtrusionAmbientOcclusionRadius(fillExtrusionAmbientOcclusionRadius: Expression) = apply {
+  override fun fillExtrusionAmbientOcclusionRadius(fillExtrusionAmbientOcclusionRadius: Expression): FillExtrusionLayer = apply {
     val propertyValue = PropertyValue("fill-extrusion-ambient-occlusion-radius", fillExtrusionAmbientOcclusionRadius)
     setProperty(propertyValue)
   }
@@ -378,7 +378,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
    *
    * @param options transition options for Double
    */
-  override fun fillExtrusionAmbientOcclusionRadiusTransition(options: StyleTransition) = apply {
+  override fun fillExtrusionAmbientOcclusionRadiusTransition(options: StyleTransition): FillExtrusionLayer = apply {
     val propertyValue = PropertyValue("fill-extrusion-ambient-occlusion-radius-transition", options)
     setProperty(propertyValue)
   }
@@ -386,7 +386,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   /**
    * DSL for [fillExtrusionAmbientOcclusionRadiusTransition].
    */
-  override fun fillExtrusionAmbientOcclusionRadiusTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun fillExtrusionAmbientOcclusionRadiusTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer = apply {
     fillExtrusionAmbientOcclusionRadiusTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -412,7 +412,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
    *
    * @param fillExtrusionBase value of fillExtrusionBase
    */
-  override fun fillExtrusionBase(fillExtrusionBase: Double) = apply {
+  override fun fillExtrusionBase(fillExtrusionBase: Double): FillExtrusionLayer = apply {
     val propertyValue = PropertyValue("fill-extrusion-base", fillExtrusionBase)
     setProperty(propertyValue)
   }
@@ -450,7 +450,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
    *
    * @param fillExtrusionBase value of fillExtrusionBase as Expression
    */
-  override fun fillExtrusionBase(fillExtrusionBase: Expression) = apply {
+  override fun fillExtrusionBase(fillExtrusionBase: Expression): FillExtrusionLayer = apply {
     val propertyValue = PropertyValue("fill-extrusion-base", fillExtrusionBase)
     setProperty(propertyValue)
   }
@@ -477,7 +477,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
    *
    * @param options transition options for Double
    */
-  override fun fillExtrusionBaseTransition(options: StyleTransition) = apply {
+  override fun fillExtrusionBaseTransition(options: StyleTransition): FillExtrusionLayer = apply {
     val propertyValue = PropertyValue("fill-extrusion-base-transition", options)
     setProperty(propertyValue)
   }
@@ -485,7 +485,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   /**
    * DSL for [fillExtrusionBaseTransition].
    */
-  override fun fillExtrusionBaseTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun fillExtrusionBaseTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer = apply {
     fillExtrusionBaseTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -514,7 +514,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
    *
    * @param fillExtrusionColor value of fillExtrusionColor
    */
-  override fun fillExtrusionColor(fillExtrusionColor: String) = apply {
+  override fun fillExtrusionColor(fillExtrusionColor: String): FillExtrusionLayer = apply {
     val propertyValue = PropertyValue("fill-extrusion-color", fillExtrusionColor)
     setProperty(propertyValue)
   }
@@ -549,7 +549,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
    *
    * @param fillExtrusionColor value of fillExtrusionColor as Expression
    */
-  override fun fillExtrusionColor(fillExtrusionColor: Expression) = apply {
+  override fun fillExtrusionColor(fillExtrusionColor: Expression): FillExtrusionLayer = apply {
     val propertyValue = PropertyValue("fill-extrusion-color", fillExtrusionColor)
     setProperty(propertyValue)
   }
@@ -580,7 +580,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
    *
    * @param fillExtrusionColor value of fillExtrusionColor
    */
-  override fun fillExtrusionColor(@ColorInt fillExtrusionColor: Int) = apply {
+  override fun fillExtrusionColor(@ColorInt fillExtrusionColor: Int): FillExtrusionLayer = apply {
     val propertyValue = PropertyValue("fill-extrusion-color", colorIntToRgbaExpression(fillExtrusionColor))
     setProperty(propertyValue)
   }
@@ -607,7 +607,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
    *
    * @param options transition options for String
    */
-  override fun fillExtrusionColorTransition(options: StyleTransition) = apply {
+  override fun fillExtrusionColorTransition(options: StyleTransition): FillExtrusionLayer = apply {
     val propertyValue = PropertyValue("fill-extrusion-color-transition", options)
     setProperty(propertyValue)
   }
@@ -615,7 +615,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   /**
    * DSL for [fillExtrusionColorTransition].
    */
-  override fun fillExtrusionColorTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun fillExtrusionColorTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer = apply {
     fillExtrusionColorTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -641,7 +641,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
    *
    * @param fillExtrusionHeight value of fillExtrusionHeight
    */
-  override fun fillExtrusionHeight(fillExtrusionHeight: Double) = apply {
+  override fun fillExtrusionHeight(fillExtrusionHeight: Double): FillExtrusionLayer = apply {
     val propertyValue = PropertyValue("fill-extrusion-height", fillExtrusionHeight)
     setProperty(propertyValue)
   }
@@ -679,7 +679,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
    *
    * @param fillExtrusionHeight value of fillExtrusionHeight as Expression
    */
-  override fun fillExtrusionHeight(fillExtrusionHeight: Expression) = apply {
+  override fun fillExtrusionHeight(fillExtrusionHeight: Expression): FillExtrusionLayer = apply {
     val propertyValue = PropertyValue("fill-extrusion-height", fillExtrusionHeight)
     setProperty(propertyValue)
   }
@@ -706,7 +706,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
    *
    * @param options transition options for Double
    */
-  override fun fillExtrusionHeightTransition(options: StyleTransition) = apply {
+  override fun fillExtrusionHeightTransition(options: StyleTransition): FillExtrusionLayer = apply {
     val propertyValue = PropertyValue("fill-extrusion-height-transition", options)
     setProperty(propertyValue)
   }
@@ -714,7 +714,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   /**
    * DSL for [fillExtrusionHeightTransition].
    */
-  override fun fillExtrusionHeightTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun fillExtrusionHeightTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer = apply {
     fillExtrusionHeightTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -740,7 +740,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
    *
    * @param fillExtrusionOpacity value of fillExtrusionOpacity
    */
-  override fun fillExtrusionOpacity(fillExtrusionOpacity: Double) = apply {
+  override fun fillExtrusionOpacity(fillExtrusionOpacity: Double): FillExtrusionLayer = apply {
     val propertyValue = PropertyValue("fill-extrusion-opacity", fillExtrusionOpacity)
     setProperty(propertyValue)
   }
@@ -778,7 +778,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
    *
    * @param fillExtrusionOpacity value of fillExtrusionOpacity as Expression
    */
-  override fun fillExtrusionOpacity(fillExtrusionOpacity: Expression) = apply {
+  override fun fillExtrusionOpacity(fillExtrusionOpacity: Expression): FillExtrusionLayer = apply {
     val propertyValue = PropertyValue("fill-extrusion-opacity", fillExtrusionOpacity)
     setProperty(propertyValue)
   }
@@ -805,7 +805,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
    *
    * @param options transition options for Double
    */
-  override fun fillExtrusionOpacityTransition(options: StyleTransition) = apply {
+  override fun fillExtrusionOpacityTransition(options: StyleTransition): FillExtrusionLayer = apply {
     val propertyValue = PropertyValue("fill-extrusion-opacity-transition", options)
     setProperty(propertyValue)
   }
@@ -813,7 +813,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   /**
    * DSL for [fillExtrusionOpacityTransition].
    */
-  override fun fillExtrusionOpacityTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun fillExtrusionOpacityTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer = apply {
     fillExtrusionOpacityTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -839,7 +839,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
    *
    * @param fillExtrusionPattern value of fillExtrusionPattern
    */
-  override fun fillExtrusionPattern(fillExtrusionPattern: String) = apply {
+  override fun fillExtrusionPattern(fillExtrusionPattern: String): FillExtrusionLayer = apply {
     val propertyValue = PropertyValue("fill-extrusion-pattern", fillExtrusionPattern)
     setProperty(propertyValue)
   }
@@ -877,7 +877,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
    *
    * @param fillExtrusionPattern value of fillExtrusionPattern as Expression
    */
-  override fun fillExtrusionPattern(fillExtrusionPattern: Expression) = apply {
+  override fun fillExtrusionPattern(fillExtrusionPattern: Expression): FillExtrusionLayer = apply {
     val propertyValue = PropertyValue("fill-extrusion-pattern", fillExtrusionPattern)
     setProperty(propertyValue)
   }
@@ -907,7 +907,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
    * @param options transition options for String
    */
   @Deprecated("This property has been deprecated and will do no operations")
-  override fun fillExtrusionPatternTransition(options: StyleTransition) = apply {
+  override fun fillExtrusionPatternTransition(options: StyleTransition): FillExtrusionLayer = apply {
     // no-op
   }
 
@@ -915,7 +915,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
    * DSL for [fillExtrusionPatternTransition].
    */
   @Deprecated("This property has been deprecated and will do no operations")
-  override fun fillExtrusionPatternTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun fillExtrusionPatternTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer = apply {
     // no-op
   }
 
@@ -941,7 +941,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
    *
    * @param fillExtrusionTranslate value of fillExtrusionTranslate
    */
-  override fun fillExtrusionTranslate(fillExtrusionTranslate: List<Double>) = apply {
+  override fun fillExtrusionTranslate(fillExtrusionTranslate: List<Double>): FillExtrusionLayer = apply {
     val propertyValue = PropertyValue("fill-extrusion-translate", fillExtrusionTranslate)
     setProperty(propertyValue)
   }
@@ -979,7 +979,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
    *
    * @param fillExtrusionTranslate value of fillExtrusionTranslate as Expression
    */
-  override fun fillExtrusionTranslate(fillExtrusionTranslate: Expression) = apply {
+  override fun fillExtrusionTranslate(fillExtrusionTranslate: Expression): FillExtrusionLayer = apply {
     val propertyValue = PropertyValue("fill-extrusion-translate", fillExtrusionTranslate)
     setProperty(propertyValue)
   }
@@ -1006,7 +1006,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
    *
    * @param options transition options for List<Double>
    */
-  override fun fillExtrusionTranslateTransition(options: StyleTransition) = apply {
+  override fun fillExtrusionTranslateTransition(options: StyleTransition): FillExtrusionLayer = apply {
     val propertyValue = PropertyValue("fill-extrusion-translate-transition", options)
     setProperty(propertyValue)
   }
@@ -1014,7 +1014,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   /**
    * DSL for [fillExtrusionTranslateTransition].
    */
-  override fun fillExtrusionTranslateTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun fillExtrusionTranslateTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer = apply {
     fillExtrusionTranslateTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -1043,7 +1043,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
    *
    * @param fillExtrusionTranslateAnchor value of fillExtrusionTranslateAnchor
    */
-  override fun fillExtrusionTranslateAnchor(fillExtrusionTranslateAnchor: FillExtrusionTranslateAnchor) = apply {
+  override fun fillExtrusionTranslateAnchor(fillExtrusionTranslateAnchor: FillExtrusionTranslateAnchor): FillExtrusionLayer = apply {
     val propertyValue = PropertyValue("fill-extrusion-translate-anchor", fillExtrusionTranslateAnchor)
     setProperty(propertyValue)
   }
@@ -1081,7 +1081,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
    *
    * @param fillExtrusionTranslateAnchor value of fillExtrusionTranslateAnchor as Expression
    */
-  override fun fillExtrusionTranslateAnchor(fillExtrusionTranslateAnchor: Expression) = apply {
+  override fun fillExtrusionTranslateAnchor(fillExtrusionTranslateAnchor: Expression): FillExtrusionLayer = apply {
     val propertyValue = PropertyValue("fill-extrusion-translate-anchor", fillExtrusionTranslateAnchor)
     setProperty(propertyValue)
   }
@@ -1108,7 +1108,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
    *
    * @param fillExtrusionVerticalGradient value of fillExtrusionVerticalGradient
    */
-  override fun fillExtrusionVerticalGradient(fillExtrusionVerticalGradient: Boolean) = apply {
+  override fun fillExtrusionVerticalGradient(fillExtrusionVerticalGradient: Boolean): FillExtrusionLayer = apply {
     val propertyValue = PropertyValue("fill-extrusion-vertical-gradient", fillExtrusionVerticalGradient)
     setProperty(propertyValue)
   }
@@ -1146,7 +1146,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
    *
    * @param fillExtrusionVerticalGradient value of fillExtrusionVerticalGradient as Expression
    */
-  override fun fillExtrusionVerticalGradient(fillExtrusionVerticalGradient: Expression) = apply {
+  override fun fillExtrusionVerticalGradient(fillExtrusionVerticalGradient: Expression): FillExtrusionLayer = apply {
     val propertyValue = PropertyValue("fill-extrusion-vertical-gradient", fillExtrusionVerticalGradient)
     setProperty(propertyValue)
   }

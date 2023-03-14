@@ -41,7 +41,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
    *
    * @param filter the expression filter to set
    */
-  override fun filter(filter: Expression) = apply {
+  override fun filter(filter: Expression): SkyLayer = apply {
     val propertyValue = PropertyValue("filter", filter)
     setProperty(propertyValue)
   }
@@ -89,7 +89,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
    *
    * @param visibility value of Visibility
    */
-  override fun visibility(visibility: Visibility) = apply {
+  override fun visibility(visibility: Visibility): SkyLayer = apply {
     val propertyValue = PropertyValue("visibility", visibility)
     setProperty(propertyValue)
   }
@@ -124,7 +124,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
    *
    * @param value value of minzoom
    */
-  override fun minZoom(minZoom: Double) = apply {
+  override fun minZoom(minZoom: Double): SkyLayer = apply {
     val param = PropertyValue("minzoom", minZoom)
     setProperty(param)
   }
@@ -159,7 +159,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
    *
    * @param value value of maxzoom
    */
-  override fun maxZoom(maxZoom: Double) = apply {
+  override fun maxZoom(maxZoom: Double): SkyLayer = apply {
     val param = PropertyValue("maxzoom", maxZoom)
     setProperty(param)
   }
@@ -191,7 +191,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
    *
    * @param skyAtmosphereColor value of skyAtmosphereColor
    */
-  override fun skyAtmosphereColor(skyAtmosphereColor: String) = apply {
+  override fun skyAtmosphereColor(skyAtmosphereColor: String): SkyLayer = apply {
     val propertyValue = PropertyValue("sky-atmosphere-color", skyAtmosphereColor)
     setProperty(propertyValue)
   }
@@ -226,7 +226,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
    *
    * @param skyAtmosphereColor value of skyAtmosphereColor as Expression
    */
-  override fun skyAtmosphereColor(skyAtmosphereColor: Expression) = apply {
+  override fun skyAtmosphereColor(skyAtmosphereColor: Expression): SkyLayer = apply {
     val propertyValue = PropertyValue("sky-atmosphere-color", skyAtmosphereColor)
     setProperty(propertyValue)
   }
@@ -257,7 +257,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
    *
    * @param skyAtmosphereColor value of skyAtmosphereColor
    */
-  override fun skyAtmosphereColor(@ColorInt skyAtmosphereColor: Int) = apply {
+  override fun skyAtmosphereColor(@ColorInt skyAtmosphereColor: Int): SkyLayer = apply {
     val propertyValue = PropertyValue("sky-atmosphere-color", colorIntToRgbaExpression(skyAtmosphereColor))
     setProperty(propertyValue)
   }
@@ -287,7 +287,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
    *
    * @param skyAtmosphereHaloColor value of skyAtmosphereHaloColor
    */
-  override fun skyAtmosphereHaloColor(skyAtmosphereHaloColor: String) = apply {
+  override fun skyAtmosphereHaloColor(skyAtmosphereHaloColor: String): SkyLayer = apply {
     val propertyValue = PropertyValue("sky-atmosphere-halo-color", skyAtmosphereHaloColor)
     setProperty(propertyValue)
   }
@@ -322,7 +322,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
    *
    * @param skyAtmosphereHaloColor value of skyAtmosphereHaloColor as Expression
    */
-  override fun skyAtmosphereHaloColor(skyAtmosphereHaloColor: Expression) = apply {
+  override fun skyAtmosphereHaloColor(skyAtmosphereHaloColor: Expression): SkyLayer = apply {
     val propertyValue = PropertyValue("sky-atmosphere-halo-color", skyAtmosphereHaloColor)
     setProperty(propertyValue)
   }
@@ -353,7 +353,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
    *
    * @param skyAtmosphereHaloColor value of skyAtmosphereHaloColor
    */
-  override fun skyAtmosphereHaloColor(@ColorInt skyAtmosphereHaloColor: Int) = apply {
+  override fun skyAtmosphereHaloColor(@ColorInt skyAtmosphereHaloColor: Int): SkyLayer = apply {
     val propertyValue = PropertyValue("sky-atmosphere-halo-color", colorIntToRgbaExpression(skyAtmosphereHaloColor))
     setProperty(propertyValue)
   }
@@ -380,7 +380,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
    *
    * @param skyAtmosphereSun value of skyAtmosphereSun
    */
-  override fun skyAtmosphereSun(skyAtmosphereSun: List<Double>) = apply {
+  override fun skyAtmosphereSun(skyAtmosphereSun: List<Double>): SkyLayer = apply {
     val propertyValue = PropertyValue("sky-atmosphere-sun", skyAtmosphereSun)
     setProperty(propertyValue)
   }
@@ -418,7 +418,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
    *
    * @param skyAtmosphereSun value of skyAtmosphereSun as Expression
    */
-  override fun skyAtmosphereSun(skyAtmosphereSun: Expression) = apply {
+  override fun skyAtmosphereSun(skyAtmosphereSun: Expression): SkyLayer = apply {
     val propertyValue = PropertyValue("sky-atmosphere-sun", skyAtmosphereSun)
     setProperty(propertyValue)
   }
@@ -445,7 +445,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
    *
    * @param skyAtmosphereSunIntensity value of skyAtmosphereSunIntensity
    */
-  override fun skyAtmosphereSunIntensity(skyAtmosphereSunIntensity: Double) = apply {
+  override fun skyAtmosphereSunIntensity(skyAtmosphereSunIntensity: Double): SkyLayer = apply {
     val propertyValue = PropertyValue("sky-atmosphere-sun-intensity", skyAtmosphereSunIntensity)
     setProperty(propertyValue)
   }
@@ -483,7 +483,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
    *
    * @param skyAtmosphereSunIntensity value of skyAtmosphereSunIntensity as Expression
    */
-  override fun skyAtmosphereSunIntensity(skyAtmosphereSunIntensity: Expression) = apply {
+  override fun skyAtmosphereSunIntensity(skyAtmosphereSunIntensity: Expression): SkyLayer = apply {
     val propertyValue = PropertyValue("sky-atmosphere-sun-intensity", skyAtmosphereSunIntensity)
     setProperty(propertyValue)
   }
@@ -510,7 +510,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
    *
    * @param skyGradient value of skyGradient
    */
-  override fun skyGradient(skyGradient: Expression) = apply {
+  override fun skyGradient(skyGradient: Expression): SkyLayer = apply {
     val propertyValue = PropertyValue("sky-gradient", skyGradient)
     setProperty(propertyValue)
   }
@@ -537,7 +537,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
    *
    * @param skyGradientCenter value of skyGradientCenter
    */
-  override fun skyGradientCenter(skyGradientCenter: List<Double>) = apply {
+  override fun skyGradientCenter(skyGradientCenter: List<Double>): SkyLayer = apply {
     val propertyValue = PropertyValue("sky-gradient-center", skyGradientCenter)
     setProperty(propertyValue)
   }
@@ -575,7 +575,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
    *
    * @param skyGradientCenter value of skyGradientCenter as Expression
    */
-  override fun skyGradientCenter(skyGradientCenter: Expression) = apply {
+  override fun skyGradientCenter(skyGradientCenter: Expression): SkyLayer = apply {
     val propertyValue = PropertyValue("sky-gradient-center", skyGradientCenter)
     setProperty(propertyValue)
   }
@@ -602,7 +602,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
    *
    * @param skyGradientRadius value of skyGradientRadius
    */
-  override fun skyGradientRadius(skyGradientRadius: Double) = apply {
+  override fun skyGradientRadius(skyGradientRadius: Double): SkyLayer = apply {
     val propertyValue = PropertyValue("sky-gradient-radius", skyGradientRadius)
     setProperty(propertyValue)
   }
@@ -640,7 +640,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
    *
    * @param skyGradientRadius value of skyGradientRadius as Expression
    */
-  override fun skyGradientRadius(skyGradientRadius: Expression) = apply {
+  override fun skyGradientRadius(skyGradientRadius: Expression): SkyLayer = apply {
     val propertyValue = PropertyValue("sky-gradient-radius", skyGradientRadius)
     setProperty(propertyValue)
   }
@@ -667,7 +667,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
    *
    * @param skyOpacity value of skyOpacity
    */
-  override fun skyOpacity(skyOpacity: Double) = apply {
+  override fun skyOpacity(skyOpacity: Double): SkyLayer = apply {
     val propertyValue = PropertyValue("sky-opacity", skyOpacity)
     setProperty(propertyValue)
   }
@@ -705,7 +705,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
    *
    * @param skyOpacity value of skyOpacity as Expression
    */
-  override fun skyOpacity(skyOpacity: Expression) = apply {
+  override fun skyOpacity(skyOpacity: Expression): SkyLayer = apply {
     val propertyValue = PropertyValue("sky-opacity", skyOpacity)
     setProperty(propertyValue)
   }
@@ -732,7 +732,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
    *
    * @param options transition options for Double
    */
-  override fun skyOpacityTransition(options: StyleTransition) = apply {
+  override fun skyOpacityTransition(options: StyleTransition): SkyLayer = apply {
     val propertyValue = PropertyValue("sky-opacity-transition", options)
     setProperty(propertyValue)
   }
@@ -740,7 +740,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
   /**
    * DSL for [skyOpacityTransition].
    */
-  override fun skyOpacityTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun skyOpacityTransition(block: StyleTransition.Builder.() -> Unit): SkyLayer = apply {
     skyOpacityTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -769,7 +769,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
    *
    * @param skyType value of skyType
    */
-  override fun skyType(skyType: SkyType) = apply {
+  override fun skyType(skyType: SkyType): SkyLayer = apply {
     val propertyValue = PropertyValue("sky-type", skyType)
     setProperty(propertyValue)
   }
@@ -807,7 +807,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
    *
    * @param skyType value of skyType as Expression
    */
-  override fun skyType(skyType: Expression) = apply {
+  override fun skyType(skyType: Expression): SkyLayer = apply {
     val propertyValue = PropertyValue("sky-type", skyType)
     setProperty(propertyValue)
   }

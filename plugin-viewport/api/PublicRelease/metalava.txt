@@ -15,8 +15,8 @@ package com.mapbox.maps.plugin.viewport {
     method public com.mapbox.maps.plugin.viewport.state.OverviewViewportState makeOverviewViewportState(com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions options);
     method public void onDelegateProvider(com.mapbox.maps.plugin.delegates.MapDelegateProvider delegateProvider);
     method public void removeStatusObserver(com.mapbox.maps.plugin.viewport.ViewportStatusObserver viewportStatusObserver);
-    method public void setDefaultTransition(com.mapbox.maps.plugin.viewport.transition.ViewportTransition defaultTransition);
-    method public void setOptions(com.mapbox.maps.plugin.viewport.data.ViewportOptions options);
+    method public void setDefaultTransition(com.mapbox.maps.plugin.viewport.transition.ViewportTransition);
+    method public void setOptions(com.mapbox.maps.plugin.viewport.data.ViewportOptions);
     method public void transitionTo(com.mapbox.maps.plugin.viewport.state.ViewportState targetState, com.mapbox.maps.plugin.viewport.transition.ViewportTransition? transition, com.mapbox.maps.plugin.viewport.CompletionListener? completionListener);
     property public com.mapbox.maps.plugin.viewport.transition.ViewportTransition defaultTransition;
     property public com.mapbox.maps.plugin.viewport.data.ViewportOptions options;

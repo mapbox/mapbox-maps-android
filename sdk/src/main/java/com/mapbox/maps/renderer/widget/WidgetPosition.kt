@@ -51,13 +51,13 @@ class WidgetPosition private constructor(
   /**
    * Returns a String for the object.
    */
-  override fun toString() =
+  override fun toString(): String =
     "WidgetPosition(horizontalAlignment=$horizontalAlignment,verticalAlignment=$verticalAlignment,offsetX=$offsetX,offsetY=$offsetY)"
 
   /**
    * Indicates whether some other object is "equal to" this one.
    */
-  override fun equals(other: Any?) = other is WidgetPosition &&
+  override fun equals(other: Any?): Boolean = other is WidgetPosition &&
     horizontalAlignment == other.horizontalAlignment &&
     verticalAlignment == other.verticalAlignment &&
     offsetX.compareTo(other.offsetX) == 0 &&
@@ -66,7 +66,7 @@ class WidgetPosition private constructor(
   /**
    * Returns a hash code value for the object.
    */
-  override fun hashCode() = Objects.hash(
+  override fun hashCode(): Int = Objects.hash(
     horizontalAlignment,
     verticalAlignment,
     offsetX,
@@ -97,35 +97,36 @@ class WidgetPosition private constructor(
     /**
      * Set the horizontal position, defaults to [Horizontal.LEFT].
      */
-    fun setHorizontalAlignment(horizontalAlignment: Horizontal) =
+    fun setHorizontalAlignment(horizontalAlignment: Horizontal): Builder =
       apply { this.horizontalAlignment = horizontalAlignment }
 
     /**
      * Set the vertical position, defaults to [Vertical.TOP].
      */
-    fun setVerticalAlignment(verticalAlignment: Vertical) =
+    fun setVerticalAlignment(verticalAlignment: Vertical): Builder =
       apply { this.verticalAlignment = verticalAlignment }
 
     /**
      * Set the horizontal offset in pixels towards the right of the map, defaults to 0.
      */
-    fun setOffsetX(offsetX: Float) = apply { this.offsetX = offsetX }
+    fun setOffsetX(offsetX: Float): Builder = apply { this.offsetX = offsetX }
 
     /**
      * Set the vertical offset in pixels towards the bottom of the map, defaults to 0.
      */
-    fun setOffsetY(offsetY: Float) = apply { this.offsetY = offsetY }
+    fun setOffsetY(offsetY: Float): Builder = apply { this.offsetY = offsetY }
 
     /**
      * Build the [WidgetPosition] from the current settings.
      */
-    fun build() = WidgetPosition(horizontalAlignment, verticalAlignment, offsetX, offsetY)
+    fun build(): WidgetPosition =
+      WidgetPosition(horizontalAlignment, verticalAlignment, offsetX, offsetY)
   }
 
   /**
    * Returns a builder that created the [WidgetPosition].
    */
-  fun toBuilder() = Builder()
+  fun toBuilder(): Builder = Builder()
     .setHorizontalAlignment(horizontalAlignment)
     .setVerticalAlignment(verticalAlignment)
     .setOffsetX(offsetX)

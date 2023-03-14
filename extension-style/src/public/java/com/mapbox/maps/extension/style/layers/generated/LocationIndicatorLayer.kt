@@ -52,7 +52,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    *
    * @param visibility value of Visibility
    */
-  override fun visibility(visibility: Visibility) = apply {
+  override fun visibility(visibility: Visibility): LocationIndicatorLayer = apply {
     val propertyValue = PropertyValue("visibility", visibility)
     setProperty(propertyValue)
   }
@@ -87,7 +87,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    *
    * @param value value of minzoom
    */
-  override fun minZoom(minZoom: Double) = apply {
+  override fun minZoom(minZoom: Double): LocationIndicatorLayer = apply {
     val param = PropertyValue("minzoom", minZoom)
     setProperty(param)
   }
@@ -122,7 +122,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    *
    * @param value value of maxzoom
    */
-  override fun maxZoom(maxZoom: Double) = apply {
+  override fun maxZoom(maxZoom: Double): LocationIndicatorLayer = apply {
     val param = PropertyValue("maxzoom", maxZoom)
     setProperty(param)
   }
@@ -151,7 +151,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    *
    * @param bearingImage value of bearingImage
    */
-  override fun bearingImage(bearingImage: String) = apply {
+  override fun bearingImage(bearingImage: String): LocationIndicatorLayer = apply {
     val propertyValue = PropertyValue("bearing-image", bearingImage)
     setProperty(propertyValue)
   }
@@ -189,7 +189,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    *
    * @param bearingImage value of bearingImage as Expression
    */
-  override fun bearingImage(bearingImage: Expression) = apply {
+  override fun bearingImage(bearingImage: Expression): LocationIndicatorLayer = apply {
     val propertyValue = PropertyValue("bearing-image", bearingImage)
     setProperty(propertyValue)
   }
@@ -216,7 +216,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    *
    * @param shadowImage value of shadowImage
    */
-  override fun shadowImage(shadowImage: String) = apply {
+  override fun shadowImage(shadowImage: String): LocationIndicatorLayer = apply {
     val propertyValue = PropertyValue("shadow-image", shadowImage)
     setProperty(propertyValue)
   }
@@ -254,7 +254,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    *
    * @param shadowImage value of shadowImage as Expression
    */
-  override fun shadowImage(shadowImage: Expression) = apply {
+  override fun shadowImage(shadowImage: Expression): LocationIndicatorLayer = apply {
     val propertyValue = PropertyValue("shadow-image", shadowImage)
     setProperty(propertyValue)
   }
@@ -281,7 +281,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    *
    * @param topImage value of topImage
    */
-  override fun topImage(topImage: String) = apply {
+  override fun topImage(topImage: String): LocationIndicatorLayer = apply {
     val propertyValue = PropertyValue("top-image", topImage)
     setProperty(propertyValue)
   }
@@ -319,7 +319,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    *
    * @param topImage value of topImage as Expression
    */
-  override fun topImage(topImage: Expression) = apply {
+  override fun topImage(topImage: Expression): LocationIndicatorLayer = apply {
     val propertyValue = PropertyValue("top-image", topImage)
     setProperty(propertyValue)
   }
@@ -346,7 +346,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    *
    * @param accuracyRadius value of accuracyRadius
    */
-  override fun accuracyRadius(accuracyRadius: Double) = apply {
+  override fun accuracyRadius(accuracyRadius: Double): LocationIndicatorLayer = apply {
     val propertyValue = PropertyValue("accuracy-radius", accuracyRadius)
     setProperty(propertyValue)
   }
@@ -384,7 +384,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    *
    * @param accuracyRadius value of accuracyRadius as Expression
    */
-  override fun accuracyRadius(accuracyRadius: Expression) = apply {
+  override fun accuracyRadius(accuracyRadius: Expression): LocationIndicatorLayer = apply {
     val propertyValue = PropertyValue("accuracy-radius", accuracyRadius)
     setProperty(propertyValue)
   }
@@ -411,7 +411,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    *
    * @param options transition options for Double
    */
-  override fun accuracyRadiusTransition(options: StyleTransition) = apply {
+  override fun accuracyRadiusTransition(options: StyleTransition): LocationIndicatorLayer = apply {
     val propertyValue = PropertyValue("accuracy-radius-transition", options)
     setProperty(propertyValue)
   }
@@ -419,7 +419,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
   /**
    * DSL for [accuracyRadiusTransition].
    */
-  override fun accuracyRadiusTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun accuracyRadiusTransition(block: StyleTransition.Builder.() -> Unit): LocationIndicatorLayer = apply {
     accuracyRadiusTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -448,7 +448,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    *
    * @param accuracyRadiusBorderColor value of accuracyRadiusBorderColor
    */
-  override fun accuracyRadiusBorderColor(accuracyRadiusBorderColor: String) = apply {
+  override fun accuracyRadiusBorderColor(accuracyRadiusBorderColor: String): LocationIndicatorLayer = apply {
     val propertyValue = PropertyValue("accuracy-radius-border-color", accuracyRadiusBorderColor)
     setProperty(propertyValue)
   }
@@ -483,7 +483,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    *
    * @param accuracyRadiusBorderColor value of accuracyRadiusBorderColor as Expression
    */
-  override fun accuracyRadiusBorderColor(accuracyRadiusBorderColor: Expression) = apply {
+  override fun accuracyRadiusBorderColor(accuracyRadiusBorderColor: Expression): LocationIndicatorLayer = apply {
     val propertyValue = PropertyValue("accuracy-radius-border-color", accuracyRadiusBorderColor)
     setProperty(propertyValue)
   }
@@ -514,7 +514,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    *
    * @param accuracyRadiusBorderColor value of accuracyRadiusBorderColor
    */
-  override fun accuracyRadiusBorderColor(@ColorInt accuracyRadiusBorderColor: Int) = apply {
+  override fun accuracyRadiusBorderColor(@ColorInt accuracyRadiusBorderColor: Int): LocationIndicatorLayer = apply {
     val propertyValue = PropertyValue("accuracy-radius-border-color", colorIntToRgbaExpression(accuracyRadiusBorderColor))
     setProperty(propertyValue)
   }
@@ -541,7 +541,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    *
    * @param options transition options for String
    */
-  override fun accuracyRadiusBorderColorTransition(options: StyleTransition) = apply {
+  override fun accuracyRadiusBorderColorTransition(options: StyleTransition): LocationIndicatorLayer = apply {
     val propertyValue = PropertyValue("accuracy-radius-border-color-transition", options)
     setProperty(propertyValue)
   }
@@ -549,7 +549,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
   /**
    * DSL for [accuracyRadiusBorderColorTransition].
    */
-  override fun accuracyRadiusBorderColorTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun accuracyRadiusBorderColorTransition(block: StyleTransition.Builder.() -> Unit): LocationIndicatorLayer = apply {
     accuracyRadiusBorderColorTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -578,7 +578,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    *
    * @param accuracyRadiusColor value of accuracyRadiusColor
    */
-  override fun accuracyRadiusColor(accuracyRadiusColor: String) = apply {
+  override fun accuracyRadiusColor(accuracyRadiusColor: String): LocationIndicatorLayer = apply {
     val propertyValue = PropertyValue("accuracy-radius-color", accuracyRadiusColor)
     setProperty(propertyValue)
   }
@@ -613,7 +613,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    *
    * @param accuracyRadiusColor value of accuracyRadiusColor as Expression
    */
-  override fun accuracyRadiusColor(accuracyRadiusColor: Expression) = apply {
+  override fun accuracyRadiusColor(accuracyRadiusColor: Expression): LocationIndicatorLayer = apply {
     val propertyValue = PropertyValue("accuracy-radius-color", accuracyRadiusColor)
     setProperty(propertyValue)
   }
@@ -644,7 +644,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    *
    * @param accuracyRadiusColor value of accuracyRadiusColor
    */
-  override fun accuracyRadiusColor(@ColorInt accuracyRadiusColor: Int) = apply {
+  override fun accuracyRadiusColor(@ColorInt accuracyRadiusColor: Int): LocationIndicatorLayer = apply {
     val propertyValue = PropertyValue("accuracy-radius-color", colorIntToRgbaExpression(accuracyRadiusColor))
     setProperty(propertyValue)
   }
@@ -671,7 +671,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    *
    * @param options transition options for String
    */
-  override fun accuracyRadiusColorTransition(options: StyleTransition) = apply {
+  override fun accuracyRadiusColorTransition(options: StyleTransition): LocationIndicatorLayer = apply {
     val propertyValue = PropertyValue("accuracy-radius-color-transition", options)
     setProperty(propertyValue)
   }
@@ -679,7 +679,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
   /**
    * DSL for [accuracyRadiusColorTransition].
    */
-  override fun accuracyRadiusColorTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun accuracyRadiusColorTransition(block: StyleTransition.Builder.() -> Unit): LocationIndicatorLayer = apply {
     accuracyRadiusColorTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -705,7 +705,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    *
    * @param bearing value of bearing
    */
-  override fun bearing(bearing: Double) = apply {
+  override fun bearing(bearing: Double): LocationIndicatorLayer = apply {
     val propertyValue = PropertyValue("bearing", bearing)
     setProperty(propertyValue)
   }
@@ -743,7 +743,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    *
    * @param bearing value of bearing as Expression
    */
-  override fun bearing(bearing: Expression) = apply {
+  override fun bearing(bearing: Expression): LocationIndicatorLayer = apply {
     val propertyValue = PropertyValue("bearing", bearing)
     setProperty(propertyValue)
   }
@@ -770,7 +770,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    *
    * @param options transition options for Double
    */
-  override fun bearingTransition(options: StyleTransition) = apply {
+  override fun bearingTransition(options: StyleTransition): LocationIndicatorLayer = apply {
     val propertyValue = PropertyValue("bearing-transition", options)
     setProperty(propertyValue)
   }
@@ -778,7 +778,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
   /**
    * DSL for [bearingTransition].
    */
-  override fun bearingTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun bearingTransition(block: StyleTransition.Builder.() -> Unit): LocationIndicatorLayer = apply {
     bearingTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -804,7 +804,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    *
    * @param bearingImageSize value of bearingImageSize
    */
-  override fun bearingImageSize(bearingImageSize: Double) = apply {
+  override fun bearingImageSize(bearingImageSize: Double): LocationIndicatorLayer = apply {
     val propertyValue = PropertyValue("bearing-image-size", bearingImageSize)
     setProperty(propertyValue)
   }
@@ -842,7 +842,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    *
    * @param bearingImageSize value of bearingImageSize as Expression
    */
-  override fun bearingImageSize(bearingImageSize: Expression) = apply {
+  override fun bearingImageSize(bearingImageSize: Expression): LocationIndicatorLayer = apply {
     val propertyValue = PropertyValue("bearing-image-size", bearingImageSize)
     setProperty(propertyValue)
   }
@@ -869,7 +869,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    *
    * @param options transition options for Double
    */
-  override fun bearingImageSizeTransition(options: StyleTransition) = apply {
+  override fun bearingImageSizeTransition(options: StyleTransition): LocationIndicatorLayer = apply {
     val propertyValue = PropertyValue("bearing-image-size-transition", options)
     setProperty(propertyValue)
   }
@@ -877,7 +877,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
   /**
    * DSL for [bearingImageSizeTransition].
    */
-  override fun bearingImageSizeTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun bearingImageSizeTransition(block: StyleTransition.Builder.() -> Unit): LocationIndicatorLayer = apply {
     bearingImageSizeTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -906,7 +906,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    *
    * @param emphasisCircleColor value of emphasisCircleColor
    */
-  override fun emphasisCircleColor(emphasisCircleColor: String) = apply {
+  override fun emphasisCircleColor(emphasisCircleColor: String): LocationIndicatorLayer = apply {
     val propertyValue = PropertyValue("emphasis-circle-color", emphasisCircleColor)
     setProperty(propertyValue)
   }
@@ -941,7 +941,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    *
    * @param emphasisCircleColor value of emphasisCircleColor as Expression
    */
-  override fun emphasisCircleColor(emphasisCircleColor: Expression) = apply {
+  override fun emphasisCircleColor(emphasisCircleColor: Expression): LocationIndicatorLayer = apply {
     val propertyValue = PropertyValue("emphasis-circle-color", emphasisCircleColor)
     setProperty(propertyValue)
   }
@@ -972,7 +972,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    *
    * @param emphasisCircleColor value of emphasisCircleColor
    */
-  override fun emphasisCircleColor(@ColorInt emphasisCircleColor: Int) = apply {
+  override fun emphasisCircleColor(@ColorInt emphasisCircleColor: Int): LocationIndicatorLayer = apply {
     val propertyValue = PropertyValue("emphasis-circle-color", colorIntToRgbaExpression(emphasisCircleColor))
     setProperty(propertyValue)
   }
@@ -999,7 +999,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    *
    * @param options transition options for String
    */
-  override fun emphasisCircleColorTransition(options: StyleTransition) = apply {
+  override fun emphasisCircleColorTransition(options: StyleTransition): LocationIndicatorLayer = apply {
     val propertyValue = PropertyValue("emphasis-circle-color-transition", options)
     setProperty(propertyValue)
   }
@@ -1007,7 +1007,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
   /**
    * DSL for [emphasisCircleColorTransition].
    */
-  override fun emphasisCircleColorTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun emphasisCircleColorTransition(block: StyleTransition.Builder.() -> Unit): LocationIndicatorLayer = apply {
     emphasisCircleColorTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -1033,7 +1033,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    *
    * @param emphasisCircleRadius value of emphasisCircleRadius
    */
-  override fun emphasisCircleRadius(emphasisCircleRadius: Double) = apply {
+  override fun emphasisCircleRadius(emphasisCircleRadius: Double): LocationIndicatorLayer = apply {
     val propertyValue = PropertyValue("emphasis-circle-radius", emphasisCircleRadius)
     setProperty(propertyValue)
   }
@@ -1071,7 +1071,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    *
    * @param emphasisCircleRadius value of emphasisCircleRadius as Expression
    */
-  override fun emphasisCircleRadius(emphasisCircleRadius: Expression) = apply {
+  override fun emphasisCircleRadius(emphasisCircleRadius: Expression): LocationIndicatorLayer = apply {
     val propertyValue = PropertyValue("emphasis-circle-radius", emphasisCircleRadius)
     setProperty(propertyValue)
   }
@@ -1098,7 +1098,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    *
    * @param options transition options for Double
    */
-  override fun emphasisCircleRadiusTransition(options: StyleTransition) = apply {
+  override fun emphasisCircleRadiusTransition(options: StyleTransition): LocationIndicatorLayer = apply {
     val propertyValue = PropertyValue("emphasis-circle-radius-transition", options)
     setProperty(propertyValue)
   }
@@ -1106,7 +1106,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
   /**
    * DSL for [emphasisCircleRadiusTransition].
    */
-  override fun emphasisCircleRadiusTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun emphasisCircleRadiusTransition(block: StyleTransition.Builder.() -> Unit): LocationIndicatorLayer = apply {
     emphasisCircleRadiusTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -1132,7 +1132,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    *
    * @param imagePitchDisplacement value of imagePitchDisplacement
    */
-  override fun imagePitchDisplacement(imagePitchDisplacement: Double) = apply {
+  override fun imagePitchDisplacement(imagePitchDisplacement: Double): LocationIndicatorLayer = apply {
     val propertyValue = PropertyValue("image-pitch-displacement", imagePitchDisplacement)
     setProperty(propertyValue)
   }
@@ -1170,7 +1170,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    *
    * @param imagePitchDisplacement value of imagePitchDisplacement as Expression
    */
-  override fun imagePitchDisplacement(imagePitchDisplacement: Expression) = apply {
+  override fun imagePitchDisplacement(imagePitchDisplacement: Expression): LocationIndicatorLayer = apply {
     val propertyValue = PropertyValue("image-pitch-displacement", imagePitchDisplacement)
     setProperty(propertyValue)
   }
@@ -1197,7 +1197,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    *
    * @param location value of location
    */
-  override fun location(location: List<Double>) = apply {
+  override fun location(location: List<Double>): LocationIndicatorLayer = apply {
     val propertyValue = PropertyValue("location", location)
     setProperty(propertyValue)
   }
@@ -1235,7 +1235,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    *
    * @param location value of location as Expression
    */
-  override fun location(location: Expression) = apply {
+  override fun location(location: Expression): LocationIndicatorLayer = apply {
     val propertyValue = PropertyValue("location", location)
     setProperty(propertyValue)
   }
@@ -1262,7 +1262,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    *
    * @param options transition options for List<Double>
    */
-  override fun locationTransition(options: StyleTransition) = apply {
+  override fun locationTransition(options: StyleTransition): LocationIndicatorLayer = apply {
     val propertyValue = PropertyValue("location-transition", options)
     setProperty(propertyValue)
   }
@@ -1270,7 +1270,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
   /**
    * DSL for [locationTransition].
    */
-  override fun locationTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun locationTransition(block: StyleTransition.Builder.() -> Unit): LocationIndicatorLayer = apply {
     locationTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -1296,7 +1296,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    *
    * @param locationIndicatorOpacity value of locationIndicatorOpacity
    */
-  override fun locationIndicatorOpacity(locationIndicatorOpacity: Double) = apply {
+  override fun locationIndicatorOpacity(locationIndicatorOpacity: Double): LocationIndicatorLayer = apply {
     val propertyValue = PropertyValue("location-indicator-opacity", locationIndicatorOpacity)
     setProperty(propertyValue)
   }
@@ -1334,7 +1334,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    *
    * @param locationIndicatorOpacity value of locationIndicatorOpacity as Expression
    */
-  override fun locationIndicatorOpacity(locationIndicatorOpacity: Expression) = apply {
+  override fun locationIndicatorOpacity(locationIndicatorOpacity: Expression): LocationIndicatorLayer = apply {
     val propertyValue = PropertyValue("location-indicator-opacity", locationIndicatorOpacity)
     setProperty(propertyValue)
   }
@@ -1361,7 +1361,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    *
    * @param options transition options for Double
    */
-  override fun locationIndicatorOpacityTransition(options: StyleTransition) = apply {
+  override fun locationIndicatorOpacityTransition(options: StyleTransition): LocationIndicatorLayer = apply {
     val propertyValue = PropertyValue("location-indicator-opacity-transition", options)
     setProperty(propertyValue)
   }
@@ -1369,7 +1369,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
   /**
    * DSL for [locationIndicatorOpacityTransition].
    */
-  override fun locationIndicatorOpacityTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun locationIndicatorOpacityTransition(block: StyleTransition.Builder.() -> Unit): LocationIndicatorLayer = apply {
     locationIndicatorOpacityTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -1395,7 +1395,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    *
    * @param perspectiveCompensation value of perspectiveCompensation
    */
-  override fun perspectiveCompensation(perspectiveCompensation: Double) = apply {
+  override fun perspectiveCompensation(perspectiveCompensation: Double): LocationIndicatorLayer = apply {
     val propertyValue = PropertyValue("perspective-compensation", perspectiveCompensation)
     setProperty(propertyValue)
   }
@@ -1433,7 +1433,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    *
    * @param perspectiveCompensation value of perspectiveCompensation as Expression
    */
-  override fun perspectiveCompensation(perspectiveCompensation: Expression) = apply {
+  override fun perspectiveCompensation(perspectiveCompensation: Expression): LocationIndicatorLayer = apply {
     val propertyValue = PropertyValue("perspective-compensation", perspectiveCompensation)
     setProperty(propertyValue)
   }
@@ -1460,7 +1460,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    *
    * @param shadowImageSize value of shadowImageSize
    */
-  override fun shadowImageSize(shadowImageSize: Double) = apply {
+  override fun shadowImageSize(shadowImageSize: Double): LocationIndicatorLayer = apply {
     val propertyValue = PropertyValue("shadow-image-size", shadowImageSize)
     setProperty(propertyValue)
   }
@@ -1498,7 +1498,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    *
    * @param shadowImageSize value of shadowImageSize as Expression
    */
-  override fun shadowImageSize(shadowImageSize: Expression) = apply {
+  override fun shadowImageSize(shadowImageSize: Expression): LocationIndicatorLayer = apply {
     val propertyValue = PropertyValue("shadow-image-size", shadowImageSize)
     setProperty(propertyValue)
   }
@@ -1525,7 +1525,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    *
    * @param options transition options for Double
    */
-  override fun shadowImageSizeTransition(options: StyleTransition) = apply {
+  override fun shadowImageSizeTransition(options: StyleTransition): LocationIndicatorLayer = apply {
     val propertyValue = PropertyValue("shadow-image-size-transition", options)
     setProperty(propertyValue)
   }
@@ -1533,7 +1533,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
   /**
    * DSL for [shadowImageSizeTransition].
    */
-  override fun shadowImageSizeTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun shadowImageSizeTransition(block: StyleTransition.Builder.() -> Unit): LocationIndicatorLayer = apply {
     shadowImageSizeTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -1559,7 +1559,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    *
    * @param topImageSize value of topImageSize
    */
-  override fun topImageSize(topImageSize: Double) = apply {
+  override fun topImageSize(topImageSize: Double): LocationIndicatorLayer = apply {
     val propertyValue = PropertyValue("top-image-size", topImageSize)
     setProperty(propertyValue)
   }
@@ -1597,7 +1597,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    *
    * @param topImageSize value of topImageSize as Expression
    */
-  override fun topImageSize(topImageSize: Expression) = apply {
+  override fun topImageSize(topImageSize: Expression): LocationIndicatorLayer = apply {
     val propertyValue = PropertyValue("top-image-size", topImageSize)
     setProperty(propertyValue)
   }
@@ -1624,7 +1624,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    *
    * @param options transition options for Double
    */
-  override fun topImageSizeTransition(options: StyleTransition) = apply {
+  override fun topImageSizeTransition(options: StyleTransition): LocationIndicatorLayer = apply {
     val propertyValue = PropertyValue("top-image-size-transition", options)
     setProperty(propertyValue)
   }
@@ -1632,7 +1632,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
   /**
    * DSL for [topImageSizeTransition].
    */
-  override fun topImageSizeTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun topImageSizeTransition(block: StyleTransition.Builder.() -> Unit): LocationIndicatorLayer = apply {
     topImageSizeTransition(StyleTransition.Builder().apply(block).build())
   }
 

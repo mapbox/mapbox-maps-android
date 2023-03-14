@@ -36,7 +36,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * @param sourceLayer value of sourceLayer
    */
-  override fun sourceLayer(sourceLayer: String) = apply {
+  override fun sourceLayer(sourceLayer: String): CircleLayer = apply {
     val param = PropertyValue("source-layer", sourceLayer)
     setProperty(param)
   }
@@ -66,7 +66,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * @param filter the expression filter to set
    */
-  override fun filter(filter: Expression) = apply {
+  override fun filter(filter: Expression): CircleLayer = apply {
     val propertyValue = PropertyValue("filter", filter)
     setProperty(propertyValue)
   }
@@ -114,7 +114,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * @param visibility value of Visibility
    */
-  override fun visibility(visibility: Visibility) = apply {
+  override fun visibility(visibility: Visibility): CircleLayer = apply {
     val propertyValue = PropertyValue("visibility", visibility)
     setProperty(propertyValue)
   }
@@ -149,7 +149,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * @param value value of minzoom
    */
-  override fun minZoom(minZoom: Double) = apply {
+  override fun minZoom(minZoom: Double): CircleLayer = apply {
     val param = PropertyValue("minzoom", minZoom)
     setProperty(param)
   }
@@ -184,7 +184,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * @param value value of maxzoom
    */
-  override fun maxZoom(maxZoom: Double) = apply {
+  override fun maxZoom(maxZoom: Double): CircleLayer = apply {
     val param = PropertyValue("maxzoom", maxZoom)
     setProperty(param)
   }
@@ -213,7 +213,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * @param circleSortKey value of circleSortKey
    */
-  override fun circleSortKey(circleSortKey: Double) = apply {
+  override fun circleSortKey(circleSortKey: Double): CircleLayer = apply {
     val propertyValue = PropertyValue("circle-sort-key", circleSortKey)
     setProperty(propertyValue)
   }
@@ -251,7 +251,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * @param circleSortKey value of circleSortKey as Expression
    */
-  override fun circleSortKey(circleSortKey: Expression) = apply {
+  override fun circleSortKey(circleSortKey: Expression): CircleLayer = apply {
     val propertyValue = PropertyValue("circle-sort-key", circleSortKey)
     setProperty(propertyValue)
   }
@@ -278,7 +278,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * @param circleBlur value of circleBlur
    */
-  override fun circleBlur(circleBlur: Double) = apply {
+  override fun circleBlur(circleBlur: Double): CircleLayer = apply {
     val propertyValue = PropertyValue("circle-blur", circleBlur)
     setProperty(propertyValue)
   }
@@ -316,7 +316,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * @param circleBlur value of circleBlur as Expression
    */
-  override fun circleBlur(circleBlur: Expression) = apply {
+  override fun circleBlur(circleBlur: Expression): CircleLayer = apply {
     val propertyValue = PropertyValue("circle-blur", circleBlur)
     setProperty(propertyValue)
   }
@@ -343,7 +343,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * @param options transition options for Double
    */
-  override fun circleBlurTransition(options: StyleTransition) = apply {
+  override fun circleBlurTransition(options: StyleTransition): CircleLayer = apply {
     val propertyValue = PropertyValue("circle-blur-transition", options)
     setProperty(propertyValue)
   }
@@ -351,7 +351,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
   /**
    * DSL for [circleBlurTransition].
    */
-  override fun circleBlurTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun circleBlurTransition(block: StyleTransition.Builder.() -> Unit): CircleLayer = apply {
     circleBlurTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -380,7 +380,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * @param circleColor value of circleColor
    */
-  override fun circleColor(circleColor: String) = apply {
+  override fun circleColor(circleColor: String): CircleLayer = apply {
     val propertyValue = PropertyValue("circle-color", circleColor)
     setProperty(propertyValue)
   }
@@ -415,7 +415,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * @param circleColor value of circleColor as Expression
    */
-  override fun circleColor(circleColor: Expression) = apply {
+  override fun circleColor(circleColor: Expression): CircleLayer = apply {
     val propertyValue = PropertyValue("circle-color", circleColor)
     setProperty(propertyValue)
   }
@@ -446,7 +446,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * @param circleColor value of circleColor
    */
-  override fun circleColor(@ColorInt circleColor: Int) = apply {
+  override fun circleColor(@ColorInt circleColor: Int): CircleLayer = apply {
     val propertyValue = PropertyValue("circle-color", colorIntToRgbaExpression(circleColor))
     setProperty(propertyValue)
   }
@@ -473,7 +473,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * @param options transition options for String
    */
-  override fun circleColorTransition(options: StyleTransition) = apply {
+  override fun circleColorTransition(options: StyleTransition): CircleLayer = apply {
     val propertyValue = PropertyValue("circle-color-transition", options)
     setProperty(propertyValue)
   }
@@ -481,7 +481,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
   /**
    * DSL for [circleColorTransition].
    */
-  override fun circleColorTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun circleColorTransition(block: StyleTransition.Builder.() -> Unit): CircleLayer = apply {
     circleColorTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -507,7 +507,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * @param circleOpacity value of circleOpacity
    */
-  override fun circleOpacity(circleOpacity: Double) = apply {
+  override fun circleOpacity(circleOpacity: Double): CircleLayer = apply {
     val propertyValue = PropertyValue("circle-opacity", circleOpacity)
     setProperty(propertyValue)
   }
@@ -545,7 +545,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * @param circleOpacity value of circleOpacity as Expression
    */
-  override fun circleOpacity(circleOpacity: Expression) = apply {
+  override fun circleOpacity(circleOpacity: Expression): CircleLayer = apply {
     val propertyValue = PropertyValue("circle-opacity", circleOpacity)
     setProperty(propertyValue)
   }
@@ -572,7 +572,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * @param options transition options for Double
    */
-  override fun circleOpacityTransition(options: StyleTransition) = apply {
+  override fun circleOpacityTransition(options: StyleTransition): CircleLayer = apply {
     val propertyValue = PropertyValue("circle-opacity-transition", options)
     setProperty(propertyValue)
   }
@@ -580,7 +580,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
   /**
    * DSL for [circleOpacityTransition].
    */
-  override fun circleOpacityTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun circleOpacityTransition(block: StyleTransition.Builder.() -> Unit): CircleLayer = apply {
     circleOpacityTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -609,7 +609,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * @param circlePitchAlignment value of circlePitchAlignment
    */
-  override fun circlePitchAlignment(circlePitchAlignment: CirclePitchAlignment) = apply {
+  override fun circlePitchAlignment(circlePitchAlignment: CirclePitchAlignment): CircleLayer = apply {
     val propertyValue = PropertyValue("circle-pitch-alignment", circlePitchAlignment)
     setProperty(propertyValue)
   }
@@ -647,7 +647,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * @param circlePitchAlignment value of circlePitchAlignment as Expression
    */
-  override fun circlePitchAlignment(circlePitchAlignment: Expression) = apply {
+  override fun circlePitchAlignment(circlePitchAlignment: Expression): CircleLayer = apply {
     val propertyValue = PropertyValue("circle-pitch-alignment", circlePitchAlignment)
     setProperty(propertyValue)
   }
@@ -677,7 +677,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * @param circlePitchScale value of circlePitchScale
    */
-  override fun circlePitchScale(circlePitchScale: CirclePitchScale) = apply {
+  override fun circlePitchScale(circlePitchScale: CirclePitchScale): CircleLayer = apply {
     val propertyValue = PropertyValue("circle-pitch-scale", circlePitchScale)
     setProperty(propertyValue)
   }
@@ -715,7 +715,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * @param circlePitchScale value of circlePitchScale as Expression
    */
-  override fun circlePitchScale(circlePitchScale: Expression) = apply {
+  override fun circlePitchScale(circlePitchScale: Expression): CircleLayer = apply {
     val propertyValue = PropertyValue("circle-pitch-scale", circlePitchScale)
     setProperty(propertyValue)
   }
@@ -742,7 +742,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * @param circleRadius value of circleRadius
    */
-  override fun circleRadius(circleRadius: Double) = apply {
+  override fun circleRadius(circleRadius: Double): CircleLayer = apply {
     val propertyValue = PropertyValue("circle-radius", circleRadius)
     setProperty(propertyValue)
   }
@@ -780,7 +780,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * @param circleRadius value of circleRadius as Expression
    */
-  override fun circleRadius(circleRadius: Expression) = apply {
+  override fun circleRadius(circleRadius: Expression): CircleLayer = apply {
     val propertyValue = PropertyValue("circle-radius", circleRadius)
     setProperty(propertyValue)
   }
@@ -807,7 +807,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * @param options transition options for Double
    */
-  override fun circleRadiusTransition(options: StyleTransition) = apply {
+  override fun circleRadiusTransition(options: StyleTransition): CircleLayer = apply {
     val propertyValue = PropertyValue("circle-radius-transition", options)
     setProperty(propertyValue)
   }
@@ -815,7 +815,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
   /**
    * DSL for [circleRadiusTransition].
    */
-  override fun circleRadiusTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun circleRadiusTransition(block: StyleTransition.Builder.() -> Unit): CircleLayer = apply {
     circleRadiusTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -844,7 +844,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * @param circleStrokeColor value of circleStrokeColor
    */
-  override fun circleStrokeColor(circleStrokeColor: String) = apply {
+  override fun circleStrokeColor(circleStrokeColor: String): CircleLayer = apply {
     val propertyValue = PropertyValue("circle-stroke-color", circleStrokeColor)
     setProperty(propertyValue)
   }
@@ -879,7 +879,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * @param circleStrokeColor value of circleStrokeColor as Expression
    */
-  override fun circleStrokeColor(circleStrokeColor: Expression) = apply {
+  override fun circleStrokeColor(circleStrokeColor: Expression): CircleLayer = apply {
     val propertyValue = PropertyValue("circle-stroke-color", circleStrokeColor)
     setProperty(propertyValue)
   }
@@ -910,7 +910,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * @param circleStrokeColor value of circleStrokeColor
    */
-  override fun circleStrokeColor(@ColorInt circleStrokeColor: Int) = apply {
+  override fun circleStrokeColor(@ColorInt circleStrokeColor: Int): CircleLayer = apply {
     val propertyValue = PropertyValue("circle-stroke-color", colorIntToRgbaExpression(circleStrokeColor))
     setProperty(propertyValue)
   }
@@ -937,7 +937,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * @param options transition options for String
    */
-  override fun circleStrokeColorTransition(options: StyleTransition) = apply {
+  override fun circleStrokeColorTransition(options: StyleTransition): CircleLayer = apply {
     val propertyValue = PropertyValue("circle-stroke-color-transition", options)
     setProperty(propertyValue)
   }
@@ -945,7 +945,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
   /**
    * DSL for [circleStrokeColorTransition].
    */
-  override fun circleStrokeColorTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun circleStrokeColorTransition(block: StyleTransition.Builder.() -> Unit): CircleLayer = apply {
     circleStrokeColorTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -971,7 +971,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * @param circleStrokeOpacity value of circleStrokeOpacity
    */
-  override fun circleStrokeOpacity(circleStrokeOpacity: Double) = apply {
+  override fun circleStrokeOpacity(circleStrokeOpacity: Double): CircleLayer = apply {
     val propertyValue = PropertyValue("circle-stroke-opacity", circleStrokeOpacity)
     setProperty(propertyValue)
   }
@@ -1009,7 +1009,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * @param circleStrokeOpacity value of circleStrokeOpacity as Expression
    */
-  override fun circleStrokeOpacity(circleStrokeOpacity: Expression) = apply {
+  override fun circleStrokeOpacity(circleStrokeOpacity: Expression): CircleLayer = apply {
     val propertyValue = PropertyValue("circle-stroke-opacity", circleStrokeOpacity)
     setProperty(propertyValue)
   }
@@ -1036,7 +1036,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * @param options transition options for Double
    */
-  override fun circleStrokeOpacityTransition(options: StyleTransition) = apply {
+  override fun circleStrokeOpacityTransition(options: StyleTransition): CircleLayer = apply {
     val propertyValue = PropertyValue("circle-stroke-opacity-transition", options)
     setProperty(propertyValue)
   }
@@ -1044,7 +1044,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
   /**
    * DSL for [circleStrokeOpacityTransition].
    */
-  override fun circleStrokeOpacityTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun circleStrokeOpacityTransition(block: StyleTransition.Builder.() -> Unit): CircleLayer = apply {
     circleStrokeOpacityTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -1070,7 +1070,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * @param circleStrokeWidth value of circleStrokeWidth
    */
-  override fun circleStrokeWidth(circleStrokeWidth: Double) = apply {
+  override fun circleStrokeWidth(circleStrokeWidth: Double): CircleLayer = apply {
     val propertyValue = PropertyValue("circle-stroke-width", circleStrokeWidth)
     setProperty(propertyValue)
   }
@@ -1108,7 +1108,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * @param circleStrokeWidth value of circleStrokeWidth as Expression
    */
-  override fun circleStrokeWidth(circleStrokeWidth: Expression) = apply {
+  override fun circleStrokeWidth(circleStrokeWidth: Expression): CircleLayer = apply {
     val propertyValue = PropertyValue("circle-stroke-width", circleStrokeWidth)
     setProperty(propertyValue)
   }
@@ -1135,7 +1135,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * @param options transition options for Double
    */
-  override fun circleStrokeWidthTransition(options: StyleTransition) = apply {
+  override fun circleStrokeWidthTransition(options: StyleTransition): CircleLayer = apply {
     val propertyValue = PropertyValue("circle-stroke-width-transition", options)
     setProperty(propertyValue)
   }
@@ -1143,7 +1143,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
   /**
    * DSL for [circleStrokeWidthTransition].
    */
-  override fun circleStrokeWidthTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun circleStrokeWidthTransition(block: StyleTransition.Builder.() -> Unit): CircleLayer = apply {
     circleStrokeWidthTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -1169,7 +1169,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * @param circleTranslate value of circleTranslate
    */
-  override fun circleTranslate(circleTranslate: List<Double>) = apply {
+  override fun circleTranslate(circleTranslate: List<Double>): CircleLayer = apply {
     val propertyValue = PropertyValue("circle-translate", circleTranslate)
     setProperty(propertyValue)
   }
@@ -1207,7 +1207,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * @param circleTranslate value of circleTranslate as Expression
    */
-  override fun circleTranslate(circleTranslate: Expression) = apply {
+  override fun circleTranslate(circleTranslate: Expression): CircleLayer = apply {
     val propertyValue = PropertyValue("circle-translate", circleTranslate)
     setProperty(propertyValue)
   }
@@ -1234,7 +1234,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * @param options transition options for List<Double>
    */
-  override fun circleTranslateTransition(options: StyleTransition) = apply {
+  override fun circleTranslateTransition(options: StyleTransition): CircleLayer = apply {
     val propertyValue = PropertyValue("circle-translate-transition", options)
     setProperty(propertyValue)
   }
@@ -1242,7 +1242,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
   /**
    * DSL for [circleTranslateTransition].
    */
-  override fun circleTranslateTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun circleTranslateTransition(block: StyleTransition.Builder.() -> Unit): CircleLayer = apply {
     circleTranslateTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -1271,7 +1271,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * @param circleTranslateAnchor value of circleTranslateAnchor
    */
-  override fun circleTranslateAnchor(circleTranslateAnchor: CircleTranslateAnchor) = apply {
+  override fun circleTranslateAnchor(circleTranslateAnchor: CircleTranslateAnchor): CircleLayer = apply {
     val propertyValue = PropertyValue("circle-translate-anchor", circleTranslateAnchor)
     setProperty(propertyValue)
   }
@@ -1309,7 +1309,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * @param circleTranslateAnchor value of circleTranslateAnchor as Expression
    */
-  override fun circleTranslateAnchor(circleTranslateAnchor: Expression) = apply {
+  override fun circleTranslateAnchor(circleTranslateAnchor: Expression): CircleLayer = apply {
     val propertyValue = PropertyValue("circle-translate-anchor", circleTranslateAnchor)
     setProperty(propertyValue)
   }

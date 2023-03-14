@@ -36,7 +36,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
    *
    * @param sourceLayer value of sourceLayer
    */
-  override fun sourceLayer(sourceLayer: String) = apply {
+  override fun sourceLayer(sourceLayer: String): HillshadeLayer = apply {
     val param = PropertyValue("source-layer", sourceLayer)
     setProperty(param)
   }
@@ -81,7 +81,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
    *
    * @param visibility value of Visibility
    */
-  override fun visibility(visibility: Visibility) = apply {
+  override fun visibility(visibility: Visibility): HillshadeLayer = apply {
     val propertyValue = PropertyValue("visibility", visibility)
     setProperty(propertyValue)
   }
@@ -116,7 +116,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
    *
    * @param value value of minzoom
    */
-  override fun minZoom(minZoom: Double) = apply {
+  override fun minZoom(minZoom: Double): HillshadeLayer = apply {
     val param = PropertyValue("minzoom", minZoom)
     setProperty(param)
   }
@@ -151,7 +151,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
    *
    * @param value value of maxzoom
    */
-  override fun maxZoom(maxZoom: Double) = apply {
+  override fun maxZoom(maxZoom: Double): HillshadeLayer = apply {
     val param = PropertyValue("maxzoom", maxZoom)
     setProperty(param)
   }
@@ -183,7 +183,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
    *
    * @param hillshadeAccentColor value of hillshadeAccentColor
    */
-  override fun hillshadeAccentColor(hillshadeAccentColor: String) = apply {
+  override fun hillshadeAccentColor(hillshadeAccentColor: String): HillshadeLayer = apply {
     val propertyValue = PropertyValue("hillshade-accent-color", hillshadeAccentColor)
     setProperty(propertyValue)
   }
@@ -218,7 +218,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
    *
    * @param hillshadeAccentColor value of hillshadeAccentColor as Expression
    */
-  override fun hillshadeAccentColor(hillshadeAccentColor: Expression) = apply {
+  override fun hillshadeAccentColor(hillshadeAccentColor: Expression): HillshadeLayer = apply {
     val propertyValue = PropertyValue("hillshade-accent-color", hillshadeAccentColor)
     setProperty(propertyValue)
   }
@@ -249,7 +249,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
    *
    * @param hillshadeAccentColor value of hillshadeAccentColor
    */
-  override fun hillshadeAccentColor(@ColorInt hillshadeAccentColor: Int) = apply {
+  override fun hillshadeAccentColor(@ColorInt hillshadeAccentColor: Int): HillshadeLayer = apply {
     val propertyValue = PropertyValue("hillshade-accent-color", colorIntToRgbaExpression(hillshadeAccentColor))
     setProperty(propertyValue)
   }
@@ -276,7 +276,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
    *
    * @param options transition options for String
    */
-  override fun hillshadeAccentColorTransition(options: StyleTransition) = apply {
+  override fun hillshadeAccentColorTransition(options: StyleTransition): HillshadeLayer = apply {
     val propertyValue = PropertyValue("hillshade-accent-color-transition", options)
     setProperty(propertyValue)
   }
@@ -284,7 +284,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
   /**
    * DSL for [hillshadeAccentColorTransition].
    */
-  override fun hillshadeAccentColorTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun hillshadeAccentColorTransition(block: StyleTransition.Builder.() -> Unit): HillshadeLayer = apply {
     hillshadeAccentColorTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -310,7 +310,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
    *
    * @param hillshadeExaggeration value of hillshadeExaggeration
    */
-  override fun hillshadeExaggeration(hillshadeExaggeration: Double) = apply {
+  override fun hillshadeExaggeration(hillshadeExaggeration: Double): HillshadeLayer = apply {
     val propertyValue = PropertyValue("hillshade-exaggeration", hillshadeExaggeration)
     setProperty(propertyValue)
   }
@@ -348,7 +348,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
    *
    * @param hillshadeExaggeration value of hillshadeExaggeration as Expression
    */
-  override fun hillshadeExaggeration(hillshadeExaggeration: Expression) = apply {
+  override fun hillshadeExaggeration(hillshadeExaggeration: Expression): HillshadeLayer = apply {
     val propertyValue = PropertyValue("hillshade-exaggeration", hillshadeExaggeration)
     setProperty(propertyValue)
   }
@@ -375,7 +375,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
    *
    * @param options transition options for Double
    */
-  override fun hillshadeExaggerationTransition(options: StyleTransition) = apply {
+  override fun hillshadeExaggerationTransition(options: StyleTransition): HillshadeLayer = apply {
     val propertyValue = PropertyValue("hillshade-exaggeration-transition", options)
     setProperty(propertyValue)
   }
@@ -383,7 +383,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
   /**
    * DSL for [hillshadeExaggerationTransition].
    */
-  override fun hillshadeExaggerationTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun hillshadeExaggerationTransition(block: StyleTransition.Builder.() -> Unit): HillshadeLayer = apply {
     hillshadeExaggerationTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -412,7 +412,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
    *
    * @param hillshadeHighlightColor value of hillshadeHighlightColor
    */
-  override fun hillshadeHighlightColor(hillshadeHighlightColor: String) = apply {
+  override fun hillshadeHighlightColor(hillshadeHighlightColor: String): HillshadeLayer = apply {
     val propertyValue = PropertyValue("hillshade-highlight-color", hillshadeHighlightColor)
     setProperty(propertyValue)
   }
@@ -447,7 +447,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
    *
    * @param hillshadeHighlightColor value of hillshadeHighlightColor as Expression
    */
-  override fun hillshadeHighlightColor(hillshadeHighlightColor: Expression) = apply {
+  override fun hillshadeHighlightColor(hillshadeHighlightColor: Expression): HillshadeLayer = apply {
     val propertyValue = PropertyValue("hillshade-highlight-color", hillshadeHighlightColor)
     setProperty(propertyValue)
   }
@@ -478,7 +478,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
    *
    * @param hillshadeHighlightColor value of hillshadeHighlightColor
    */
-  override fun hillshadeHighlightColor(@ColorInt hillshadeHighlightColor: Int) = apply {
+  override fun hillshadeHighlightColor(@ColorInt hillshadeHighlightColor: Int): HillshadeLayer = apply {
     val propertyValue = PropertyValue("hillshade-highlight-color", colorIntToRgbaExpression(hillshadeHighlightColor))
     setProperty(propertyValue)
   }
@@ -505,7 +505,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
    *
    * @param options transition options for String
    */
-  override fun hillshadeHighlightColorTransition(options: StyleTransition) = apply {
+  override fun hillshadeHighlightColorTransition(options: StyleTransition): HillshadeLayer = apply {
     val propertyValue = PropertyValue("hillshade-highlight-color-transition", options)
     setProperty(propertyValue)
   }
@@ -513,7 +513,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
   /**
    * DSL for [hillshadeHighlightColorTransition].
    */
-  override fun hillshadeHighlightColorTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun hillshadeHighlightColorTransition(block: StyleTransition.Builder.() -> Unit): HillshadeLayer = apply {
     hillshadeHighlightColorTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -542,7 +542,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
    *
    * @param hillshadeIlluminationAnchor value of hillshadeIlluminationAnchor
    */
-  override fun hillshadeIlluminationAnchor(hillshadeIlluminationAnchor: HillshadeIlluminationAnchor) = apply {
+  override fun hillshadeIlluminationAnchor(hillshadeIlluminationAnchor: HillshadeIlluminationAnchor): HillshadeLayer = apply {
     val propertyValue = PropertyValue("hillshade-illumination-anchor", hillshadeIlluminationAnchor)
     setProperty(propertyValue)
   }
@@ -580,7 +580,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
    *
    * @param hillshadeIlluminationAnchor value of hillshadeIlluminationAnchor as Expression
    */
-  override fun hillshadeIlluminationAnchor(hillshadeIlluminationAnchor: Expression) = apply {
+  override fun hillshadeIlluminationAnchor(hillshadeIlluminationAnchor: Expression): HillshadeLayer = apply {
     val propertyValue = PropertyValue("hillshade-illumination-anchor", hillshadeIlluminationAnchor)
     setProperty(propertyValue)
   }
@@ -607,7 +607,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
    *
    * @param hillshadeIlluminationDirection value of hillshadeIlluminationDirection
    */
-  override fun hillshadeIlluminationDirection(hillshadeIlluminationDirection: Double) = apply {
+  override fun hillshadeIlluminationDirection(hillshadeIlluminationDirection: Double): HillshadeLayer = apply {
     val propertyValue = PropertyValue("hillshade-illumination-direction", hillshadeIlluminationDirection)
     setProperty(propertyValue)
   }
@@ -645,7 +645,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
    *
    * @param hillshadeIlluminationDirection value of hillshadeIlluminationDirection as Expression
    */
-  override fun hillshadeIlluminationDirection(hillshadeIlluminationDirection: Expression) = apply {
+  override fun hillshadeIlluminationDirection(hillshadeIlluminationDirection: Expression): HillshadeLayer = apply {
     val propertyValue = PropertyValue("hillshade-illumination-direction", hillshadeIlluminationDirection)
     setProperty(propertyValue)
   }
@@ -675,7 +675,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
    *
    * @param hillshadeShadowColor value of hillshadeShadowColor
    */
-  override fun hillshadeShadowColor(hillshadeShadowColor: String) = apply {
+  override fun hillshadeShadowColor(hillshadeShadowColor: String): HillshadeLayer = apply {
     val propertyValue = PropertyValue("hillshade-shadow-color", hillshadeShadowColor)
     setProperty(propertyValue)
   }
@@ -710,7 +710,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
    *
    * @param hillshadeShadowColor value of hillshadeShadowColor as Expression
    */
-  override fun hillshadeShadowColor(hillshadeShadowColor: Expression) = apply {
+  override fun hillshadeShadowColor(hillshadeShadowColor: Expression): HillshadeLayer = apply {
     val propertyValue = PropertyValue("hillshade-shadow-color", hillshadeShadowColor)
     setProperty(propertyValue)
   }
@@ -741,7 +741,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
    *
    * @param hillshadeShadowColor value of hillshadeShadowColor
    */
-  override fun hillshadeShadowColor(@ColorInt hillshadeShadowColor: Int) = apply {
+  override fun hillshadeShadowColor(@ColorInt hillshadeShadowColor: Int): HillshadeLayer = apply {
     val propertyValue = PropertyValue("hillshade-shadow-color", colorIntToRgbaExpression(hillshadeShadowColor))
     setProperty(propertyValue)
   }
@@ -768,7 +768,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
    *
    * @param options transition options for String
    */
-  override fun hillshadeShadowColorTransition(options: StyleTransition) = apply {
+  override fun hillshadeShadowColorTransition(options: StyleTransition): HillshadeLayer = apply {
     val propertyValue = PropertyValue("hillshade-shadow-color-transition", options)
     setProperty(propertyValue)
   }
@@ -776,7 +776,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
   /**
    * DSL for [hillshadeShadowColorTransition].
    */
-  override fun hillshadeShadowColorTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun hillshadeShadowColorTransition(block: StyleTransition.Builder.() -> Unit): HillshadeLayer = apply {
     hillshadeShadowColorTransition(StyleTransition.Builder().apply(block).build())
   }
 

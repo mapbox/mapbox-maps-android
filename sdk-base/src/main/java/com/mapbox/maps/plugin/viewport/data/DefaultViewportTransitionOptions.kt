@@ -17,7 +17,7 @@ class DefaultViewportTransitionOptions private constructor(
   /**
    * Returns a builder that created the [DefaultViewportTransitionOptions]
    */
-  fun toBuilder() = Builder().maxDurationMs(maxDurationMs)
+  fun toBuilder(): Builder = Builder().maxDurationMs(maxDurationMs)
 
   /**
    * Indicates whether some other object is "equal to" this one.
@@ -47,13 +47,13 @@ class DefaultViewportTransitionOptions private constructor(
      *
      * Defaults to [DEFAULT_TRANSITION_MAX_DURATION_MS] milliseconds.
      */
-    fun maxDurationMs(maxDurationMs: Long) = apply {
+    fun maxDurationMs(maxDurationMs: Long): Builder = apply {
       this.maxDurationMs = maxDurationMs
     }
 
     /**
      * Builds [DefaultViewportTransitionOptions]
      */
-    fun build() = DefaultViewportTransitionOptions(maxDurationMs)
+    fun build(): DefaultViewportTransitionOptions = DefaultViewportTransitionOptions(maxDurationMs)
   }
 }

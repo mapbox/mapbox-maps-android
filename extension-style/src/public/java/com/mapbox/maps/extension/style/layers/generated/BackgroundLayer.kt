@@ -53,7 +53,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
    *
    * @param visibility value of Visibility
    */
-  override fun visibility(visibility: Visibility) = apply {
+  override fun visibility(visibility: Visibility): BackgroundLayer = apply {
     val propertyValue = PropertyValue("visibility", visibility)
     setProperty(propertyValue)
   }
@@ -88,7 +88,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
    *
    * @param value value of minzoom
    */
-  override fun minZoom(minZoom: Double) = apply {
+  override fun minZoom(minZoom: Double): BackgroundLayer = apply {
     val param = PropertyValue("minzoom", minZoom)
     setProperty(param)
   }
@@ -123,7 +123,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
    *
    * @param value value of maxzoom
    */
-  override fun maxZoom(maxZoom: Double) = apply {
+  override fun maxZoom(maxZoom: Double): BackgroundLayer = apply {
     val param = PropertyValue("maxzoom", maxZoom)
     setProperty(param)
   }
@@ -155,7 +155,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
    *
    * @param backgroundColor value of backgroundColor
    */
-  override fun backgroundColor(backgroundColor: String) = apply {
+  override fun backgroundColor(backgroundColor: String): BackgroundLayer = apply {
     val propertyValue = PropertyValue("background-color", backgroundColor)
     setProperty(propertyValue)
   }
@@ -190,7 +190,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
    *
    * @param backgroundColor value of backgroundColor as Expression
    */
-  override fun backgroundColor(backgroundColor: Expression) = apply {
+  override fun backgroundColor(backgroundColor: Expression): BackgroundLayer = apply {
     val propertyValue = PropertyValue("background-color", backgroundColor)
     setProperty(propertyValue)
   }
@@ -221,7 +221,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
    *
    * @param backgroundColor value of backgroundColor
    */
-  override fun backgroundColor(@ColorInt backgroundColor: Int) = apply {
+  override fun backgroundColor(@ColorInt backgroundColor: Int): BackgroundLayer = apply {
     val propertyValue = PropertyValue("background-color", colorIntToRgbaExpression(backgroundColor))
     setProperty(propertyValue)
   }
@@ -248,7 +248,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
    *
    * @param options transition options for String
    */
-  override fun backgroundColorTransition(options: StyleTransition) = apply {
+  override fun backgroundColorTransition(options: StyleTransition): BackgroundLayer = apply {
     val propertyValue = PropertyValue("background-color-transition", options)
     setProperty(propertyValue)
   }
@@ -256,7 +256,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
   /**
    * DSL for [backgroundColorTransition].
    */
-  override fun backgroundColorTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun backgroundColorTransition(block: StyleTransition.Builder.() -> Unit): BackgroundLayer = apply {
     backgroundColorTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -282,7 +282,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
    *
    * @param backgroundOpacity value of backgroundOpacity
    */
-  override fun backgroundOpacity(backgroundOpacity: Double) = apply {
+  override fun backgroundOpacity(backgroundOpacity: Double): BackgroundLayer = apply {
     val propertyValue = PropertyValue("background-opacity", backgroundOpacity)
     setProperty(propertyValue)
   }
@@ -320,7 +320,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
    *
    * @param backgroundOpacity value of backgroundOpacity as Expression
    */
-  override fun backgroundOpacity(backgroundOpacity: Expression) = apply {
+  override fun backgroundOpacity(backgroundOpacity: Expression): BackgroundLayer = apply {
     val propertyValue = PropertyValue("background-opacity", backgroundOpacity)
     setProperty(propertyValue)
   }
@@ -347,7 +347,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
    *
    * @param options transition options for Double
    */
-  override fun backgroundOpacityTransition(options: StyleTransition) = apply {
+  override fun backgroundOpacityTransition(options: StyleTransition): BackgroundLayer = apply {
     val propertyValue = PropertyValue("background-opacity-transition", options)
     setProperty(propertyValue)
   }
@@ -355,7 +355,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
   /**
    * DSL for [backgroundOpacityTransition].
    */
-  override fun backgroundOpacityTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun backgroundOpacityTransition(block: StyleTransition.Builder.() -> Unit): BackgroundLayer = apply {
     backgroundOpacityTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -381,7 +381,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
    *
    * @param backgroundPattern value of backgroundPattern
    */
-  override fun backgroundPattern(backgroundPattern: String) = apply {
+  override fun backgroundPattern(backgroundPattern: String): BackgroundLayer = apply {
     val propertyValue = PropertyValue("background-pattern", backgroundPattern)
     setProperty(propertyValue)
   }
@@ -419,7 +419,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
    *
    * @param backgroundPattern value of backgroundPattern as Expression
    */
-  override fun backgroundPattern(backgroundPattern: Expression) = apply {
+  override fun backgroundPattern(backgroundPattern: Expression): BackgroundLayer = apply {
     val propertyValue = PropertyValue("background-pattern", backgroundPattern)
     setProperty(propertyValue)
   }
@@ -449,7 +449,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
    * @param options transition options for String
    */
   @Deprecated("This property has been deprecated and will do no operations")
-  override fun backgroundPatternTransition(options: StyleTransition) = apply {
+  override fun backgroundPatternTransition(options: StyleTransition): BackgroundLayer = apply {
     // no-op
   }
 
@@ -457,7 +457,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
    * DSL for [backgroundPatternTransition].
    */
   @Deprecated("This property has been deprecated and will do no operations")
-  override fun backgroundPatternTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun backgroundPatternTransition(block: StyleTransition.Builder.() -> Unit): BackgroundLayer = apply {
     // no-op
   }
 
