@@ -154,7 +154,7 @@ public final class com/mapbox/maps/MapboxConstants {
 	public static final fun getMAPBOX_LOCALE ()Ljava/util/Locale;
 }
 
-public final class com/mapbox/maps/MapboxMap : com/mapbox/maps/ObservableInterface, com/mapbox/maps/plugin/delegates/MapCameraManagerDelegate, com/mapbox/maps/plugin/delegates/MapFeatureQueryDelegate, com/mapbox/maps/plugin/delegates/MapListenerDelegate, com/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate, com/mapbox/maps/plugin/delegates/MapProjectionDelegate, com/mapbox/maps/plugin/delegates/MapStyleStateDelegate, com/mapbox/maps/plugin/delegates/MapTransformDelegate {
+public final class com/mapbox/maps/MapboxMap : com/mapbox/maps/ObservableInterface, com/mapbox/maps/plugin/delegates/MapCameraManagerDelegate, com/mapbox/maps/plugin/delegates/MapFeatureQueryDelegate, com/mapbox/maps/plugin/delegates/MapListenerDelegate, com/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate, com/mapbox/maps/plugin/delegates/MapProjectionDelegate, com/mapbox/maps/plugin/delegates/MapTransformDelegate {
 	public static final field Companion Lcom/mapbox/maps/MapboxMap$Companion;
 	public fun addOnCameraChangeListener (Lcom/mapbox/maps/plugin/delegates/listeners/OnCameraChangeListener;)V
 	public fun addOnMapIdleListener (Lcom/mapbox/maps/plugin/delegates/listeners/OnMapIdleListener;)V

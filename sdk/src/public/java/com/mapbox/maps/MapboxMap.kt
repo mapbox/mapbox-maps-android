@@ -40,8 +40,7 @@ class MapboxMap :
   ObservableInterface,
   MapListenerDelegate,
   MapPluginExtensionsDelegate,
-  MapCameraManagerDelegate,
-  MapStyleStateDelegate {
+  MapCameraManagerDelegate {
 
   private val nativeMap: MapInterface
   private var isMapValid = true
@@ -1589,20 +1588,6 @@ class MapboxMap :
   fun getRenderWorldCopies(): Boolean {
     checkNativeMap("getRenderWorldCopies")
     return nativeMap.renderWorldCopies
-  }
-
-  /**
-   * Returns if the style has been fully loaded.
-   */
-  @Deprecated(
-    "Use getStyle()?.isStyleLoaded instead.",
-    replaceWith = ReplaceWith(
-      "getStyle()?.isStyleLoaded",
-    )
-  )
-  override fun isFullyLoaded(): Boolean {
-    checkNativeMap("isFullyLoaded")
-    return style?.isStyleLoaded ?: false
   }
 
   /**

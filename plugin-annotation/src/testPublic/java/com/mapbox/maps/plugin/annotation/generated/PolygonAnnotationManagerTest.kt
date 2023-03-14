@@ -70,8 +70,6 @@ class PolygonAnnotationManagerTest {
     every { delegateProvider.getStyle(capture(captureCallback)) } answers {
       captureCallback.captured.invoke(style)
     }
-    val styleStateDelegate = mockk<MapStyleStateDelegate>()
-    every { delegateProvider.styleStateDelegate } returns styleStateDelegate
     every { style.addSource(any()) } just Runs
     every { style.getSource(any()) } returns null
     every { style.addPersistentStyleLayer(any(), any()) } returns ExpectedFactory.createNone()

@@ -947,15 +947,6 @@ class MapboxMapTest {
   }
 
   @Test
-  fun isFullyLoaded() {
-    val style = mockk<Style>(relaxed = true)
-    mapboxMap.style = style
-    every { style.isStyleLoaded } returns true
-    assertTrue(mapboxMap.isFullyLoaded())
-    verify { style.isStyleLoaded }
-  }
-
-  @Test
   fun dragStart() {
     val screenCoordinate = mockk<ScreenCoordinate>()
     mapboxMap.dragStart(screenCoordinate)

@@ -1491,7 +1491,6 @@ package com.mapbox.maps.plugin.delegates {
     method public com.mapbox.maps.plugin.delegates.MapProjectionDelegate getMapProjectionDelegate();
     method public com.mapbox.maps.plugin.delegates.MapTransformDelegate getMapTransformDelegate();
     method public void getStyle(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.StyleInterface,kotlin.Unit> callback);
-    method public com.mapbox.maps.plugin.delegates.MapStyleStateDelegate getStyleStateDelegate();
     property public abstract com.mapbox.maps.plugin.delegates.MapAttributionDelegate mapAttributionDelegate;
     property public abstract com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate mapCameraManagerDelegate;
     property public abstract com.mapbox.maps.plugin.delegates.MapFeatureQueryDelegate mapFeatureQueryDelegate;
@@ -1499,7 +1498,6 @@ package com.mapbox.maps.plugin.delegates {
     property public abstract com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate mapPluginProviderDelegate;
     property public abstract com.mapbox.maps.plugin.delegates.MapProjectionDelegate mapProjectionDelegate;
     property public abstract com.mapbox.maps.plugin.delegates.MapTransformDelegate mapTransformDelegate;
-    property public abstract com.mapbox.maps.plugin.delegates.MapStyleStateDelegate styleStateDelegate;
   }
 
   public interface MapFeatureQueryDelegate {
@@ -1553,10 +1551,6 @@ package com.mapbox.maps.plugin.delegates {
     method public com.mapbox.maps.MercatorCoordinate project(com.mapbox.geojson.Point point, double zoomScale);
     method public com.mapbox.maps.ProjectedMeters projectedMetersForCoordinate(com.mapbox.geojson.Point point);
     method public com.mapbox.geojson.Point unproject(com.mapbox.maps.MercatorCoordinate coordinate, double zoomScale);
-  }
-
-  public fun interface MapStyleStateDelegate {
-    method @Deprecated public boolean isFullyLoaded();
   }
 
   public interface MapTransformDelegate {

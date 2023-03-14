@@ -155,7 +155,7 @@ package com.mapbox.maps {
     field public static final String MAPBOX_ACCESS_TOKEN_RESOURCE_NAME = "mapbox_access_token";
   }
 
-  public final class MapboxMap implements com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate com.mapbox.maps.plugin.delegates.MapFeatureQueryDelegate com.mapbox.maps.plugin.delegates.MapListenerDelegate com.mapbox.maps.plugin.delegates.MapPluginExtensionsDelegate com.mapbox.maps.plugin.delegates.MapProjectionDelegate com.mapbox.maps.plugin.delegates.MapStyleStateDelegate com.mapbox.maps.plugin.delegates.MapTransformDelegate com.mapbox.maps.ObservableInterface {
+  public final class MapboxMap implements com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate com.mapbox.maps.plugin.delegates.MapFeatureQueryDelegate com.mapbox.maps.plugin.delegates.MapListenerDelegate com.mapbox.maps.plugin.delegates.MapPluginExtensionsDelegate com.mapbox.maps.plugin.delegates.MapProjectionDelegate com.mapbox.maps.plugin.delegates.MapTransformDelegate com.mapbox.maps.ObservableInterface {
     method public void addOnCameraChangeListener(com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener onCameraChangeListener);
     method public void addOnMapIdleListener(com.mapbox.maps.plugin.delegates.listeners.OnMapIdleListener onMapIdleListener);
     method public void addOnMapLoadErrorListener(com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener onMapLoadErrorListener);
@@ -210,7 +210,6 @@ package com.mapbox.maps {
     method public com.mapbox.maps.Size getSize();
     method public void getStyle(com.mapbox.maps.Style.OnStyleLoaded onStyleLoaded);
     method public com.mapbox.maps.Style? getStyle();
-    method @Deprecated public boolean isFullyLoaded();
     method public boolean isGestureInProgress();
     method public boolean isUserAnimationInProgress();
     method public boolean isValid();

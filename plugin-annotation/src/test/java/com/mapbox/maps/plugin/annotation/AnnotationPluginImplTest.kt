@@ -10,7 +10,6 @@ import com.mapbox.maps.plugin.annotation.generated.PointAnnotationManager
 import com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationManager
 import com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationManager
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
-import com.mapbox.maps.plugin.delegates.MapStyleStateDelegate
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import io.mockk.*
 import junit.framework.Assert.assertEquals
@@ -31,9 +30,6 @@ class AnnotationPluginImplTest {
     mockkStatic("com.mapbox.maps.extension.style.layers.LayerUtils")
     mockkStatic("com.mapbox.maps.extension.style.sources.SourceUtils")
 
-    val styleStateDelegate = mockk<MapStyleStateDelegate>()
-    every { delegateProvider.styleStateDelegate } returns styleStateDelegate
-    every { styleStateDelegate.isFullyLoaded() } returns true
     every { style.addSource(any()) } just Runs
     every { style.addLayer(any()) } just Runs
     every { style.addPersistentStyleLayer(any(), any()) } returns ExpectedFactory.createNone()
