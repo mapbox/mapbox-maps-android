@@ -24,9 +24,10 @@ fi
 
     # Pick the release tag you prefer,
     # more detailed tags/versions can be found at https://android.googlesource.com/platform/tools/metalava/+refs
-    git checkout android-12.0.0_r32
+    git checkout android13-s3-release
+    git apply ../../../../metalava/metalava.patch
     ./gradlew jar --console=plain -q --no-daemon
-    find ../../out/host/common/libs ! -name '*full*' -type f -exec cp {} ../../../../metalava/metalava.jar \;
+    find ../../out/metalava/libs ! -name '*full*' -type f -exec cp {} ../../../../metalava/metalava.jar \;
     echo " Done"
 
     echo -e "\nDependencies:\n"

@@ -1,4 +1,3 @@
-import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 import org.jetbrains.dokka.gradle.DokkaTask
 
 plugins {
@@ -113,23 +112,43 @@ dependencies {
 android.productFlavors.all {
   val flavor = name
   tasks.register("${flavor}ReleaseDokkaJavadoc", DokkaTask::class.java) {
-    // We want to generate Javadoc so we copy the `dokkaJavadoc` task plugins dependencies in order
-    // to generate documentation in Javadoc format
+    // We want to generate Javadoc so we copy the `dokkaJavadoc` task plugins/runtime
     val dokkaJavadocTask = tasks.findByName("dokkaJavadoc") as DokkaTask
-    plugins.dependencies.addAll(dokkaJavadocTask.plugins.allDependencies)
-    // Make sure we disable all the source sets not related to this flavour (and only for release build)
-    dokkaSourceSets.configureEach {
-      if (name != "main" && name != flavor && name != "${flavor}Release") {
-        suppress.set(true)
-      }
-      reportUndocumented.set(true)
-      failOnWarning.set(true)
-      if (buildFromSource.toBoolean()) {
-        File("upstream-api-doc-list.txt").forEachLine {
-          if (!it.startsWith("//")) {
-            sourceRoots.from(file("../../$it"))
+    plugins.setExtendsFrom(listOf(dokkaJavadocTask.plugins))
+    runtime.setExtendsFrom(listOf(dokkaJavadocTask.runtime))
+
+    dokkaSourceSets {
+      // To avoid undocumented inherited methods/classes we need to join all the source roots
+      // related to the flavor release variant into one source set (`${flavor}Release`).
+      named("${flavor}Release") {
+        listOf("java", "kotlin").forEach { lang ->
+          sourceRoots.from(
+            file("src/main/$lang"),
+            file("src/${flavor}/$lang"),
+            file("src/${flavor}Release/$lang"),
+          )
+        }
+        if (buildFromSource.toBoolean()) {
+          File("upstream-api-doc-list.txt").forEachLine {
+            if (!it.startsWith("//")) {
+              sourceRoots.from(file("../../$it"))
+            }
           }
         }
+      }
+      configureEach {
+        // Make sure we disable all the source sets not related to this flavour release variant.
+        // Otherwise, we would have duplicate classes or undocumented entries.
+        if (name != "${flavor}Release") {
+          suppress.set(true)
+        }
+        if (buildFromSource.toBoolean()) {
+          // when building from source we inlude the files in "upstream-api-doc-list.txt" which might not have docs
+          reportUndocumented.set(false)
+        } else {
+          reportUndocumented.set(true)
+        }
+        failOnWarning.set(true)
       }
     }
   }

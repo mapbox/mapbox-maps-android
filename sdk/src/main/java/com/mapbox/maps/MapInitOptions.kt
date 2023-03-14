@@ -61,7 +61,7 @@ data class MapInitOptions @JvmOverloads constructor(
      *
      * If creating [MapView] from xml - all plugins listed here will be applied to given [MapView] on startup.
      */
-    val defaultPluginList = listOf(
+    val defaultPluginList: List<Plugin> = listOf(
       Plugin.Mapbox(Plugin.MAPBOX_CAMERA_PLUGIN_ID),
       Plugin.Mapbox(Plugin.MAPBOX_GESTURES_PLUGIN_ID),
       Plugin.Mapbox(Plugin.MAPBOX_COMPASS_PLUGIN_ID),

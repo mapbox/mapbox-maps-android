@@ -2,6 +2,7 @@ package com.mapbox.maps.plugin.annotation
 
 import android.graphics.Color
 import com.mapbox.bindgen.Value
+import java.util.*
 
 /**
  * Options to show and configure symbol clustering with using SymbolManager.

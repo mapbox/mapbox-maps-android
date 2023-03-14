@@ -55,7 +55,6 @@ class LifecycleMethodDetectorTest {
                   """
       ).indented()
     )
-
       .issues(
         LifecycleMethodDetector.ISSUE
       )

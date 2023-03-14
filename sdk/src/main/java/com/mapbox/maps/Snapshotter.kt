@@ -188,17 +188,6 @@ open class Snapshotter {
   }
 
   /**
-   * Sets the snapshotter to the tile mode.
-   *
-   * In the tile mode, the snapshotter fetches the still image of a single tile.
-   *
-   * @param set Bool representing if the snapshotter is in the tile mode.
-   */
-  fun setTileMode(set: Boolean) {
-    coreSnapshotter.setTileMode(set)
-  }
-
-  /**
    * Returns the coordinate bounds for a given camera.
    *
    * Note that if the given camera shows the antimeridian, the returned wrapped bounds
@@ -227,13 +216,6 @@ open class Snapshotter {
     pitch: Double
   ): CameraOptions {
     return coreSnapshotter.cameraForCoordinates(coordinates, padding, bearing, pitch)
-  }
-
-  /**
-   *  Returns TRUE if the snapshotter is in the tile mode.
-   */
-  fun isInTileMode(): Boolean {
-    return coreSnapshotter.isInTileMode
   }
 
   /**

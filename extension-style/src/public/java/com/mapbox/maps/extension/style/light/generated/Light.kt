@@ -52,7 +52,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
    *
    * @param anchor as Anchor
    */
-  override fun anchor(anchor: Anchor) = apply {
+  override fun anchor(anchor: Anchor): Light = apply {
     setProperty(PropertyValue("anchor", anchor))
   }
 
@@ -83,7 +83,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
    *
    * @param anchor value of anchor as Expression
    */
-  override fun anchor(anchor: Expression) = apply {
+  override fun anchor(anchor: Expression): Light = apply {
     val propertyValue = PropertyValue("anchor", anchor)
     setProperty(propertyValue)
   }
@@ -108,7 +108,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
    *
    * @param color as int
    */
-  override fun color(@ColorInt color: Int) = apply {
+  override fun color(@ColorInt color: Int): Light = apply {
     val propertyValue = PropertyValue("color", colorIntToRgbaExpression(color))
     setProperty(propertyValue)
   }
@@ -132,7 +132,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
    *
    * @param color as String
    */
-  override fun color(color: String) = apply {
+  override fun color(color: String): Light = apply {
     setProperty(PropertyValue("color", color))
   }
 
@@ -160,7 +160,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
    *
    * @param color value of color as Expression
    */
-  override fun color(color: Expression) = apply {
+  override fun color(color: Expression): Light = apply {
     val propertyValue = PropertyValue("color", color)
     setProperty(propertyValue)
   }
@@ -181,7 +181,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
    *
    * @param options transition options for color
    */
-  override fun colorTransition(options: StyleTransition) = apply {
+  override fun colorTransition(options: StyleTransition): Light = apply {
     val propertyValue = PropertyValue("color-transition", options)
     setProperty(propertyValue)
   }
@@ -189,7 +189,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
   /**
    * DSL for [colorTransition].
    */
-  override fun colorTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun colorTransition(block: StyleTransition.Builder.() -> Unit): Light = apply {
     colorTransition(StyleTransition.Builder().apply(block).build())
   }
   /**
@@ -209,7 +209,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
    *
    * @param intensity as Double
    */
-  override fun intensity(intensity: Double) = apply {
+  override fun intensity(intensity: Double): Light = apply {
     setProperty(PropertyValue("intensity", intensity))
   }
 
@@ -240,7 +240,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
    *
    * @param intensity value of intensity as Expression
    */
-  override fun intensity(intensity: Expression) = apply {
+  override fun intensity(intensity: Expression): Light = apply {
     val propertyValue = PropertyValue("intensity", intensity)
     setProperty(propertyValue)
   }
@@ -261,7 +261,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
    *
    * @param options transition options for intensity
    */
-  override fun intensityTransition(options: StyleTransition) = apply {
+  override fun intensityTransition(options: StyleTransition): Light = apply {
     val propertyValue = PropertyValue("intensity-transition", options)
     setProperty(propertyValue)
   }
@@ -269,7 +269,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
   /**
    * DSL for [intensityTransition].
    */
-  override fun intensityTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun intensityTransition(block: StyleTransition.Builder.() -> Unit): Light = apply {
     intensityTransition(StyleTransition.Builder().apply(block).build())
   }
   /**
@@ -293,7 +293,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
    *
    * DSL for setting [LightPosition].
    */
-  override fun position(radialCoordinate: Double, azimuthalAngle: Double, polarAngle: Double) = apply {
+  override fun position(radialCoordinate: Double, azimuthalAngle: Double, polarAngle: Double): Light = apply {
     position(LightPosition(radialCoordinate, azimuthalAngle, polarAngle))
   }
   /**
@@ -301,7 +301,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
    *
    * @param position as LightPosition
    */
-  override fun position(position: LightPosition) = apply {
+  override fun position(position: LightPosition): Light = apply {
     setProperty(PropertyValue("position", position))
   }
 
@@ -332,7 +332,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
    *
    * @param position value of position as Expression
    */
-  override fun position(position: Expression) = apply {
+  override fun position(position: Expression): Light = apply {
     val propertyValue = PropertyValue("position", position)
     setProperty(propertyValue)
   }
@@ -353,7 +353,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
    *
    * @param options transition options for position
    */
-  override fun positionTransition(options: StyleTransition) = apply {
+  override fun positionTransition(options: StyleTransition): Light = apply {
     val propertyValue = PropertyValue("position-transition", options)
     setProperty(propertyValue)
   }
@@ -361,7 +361,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
   /**
    * DSL for [positionTransition].
    */
-  override fun positionTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun positionTransition(block: StyleTransition.Builder.() -> Unit): Light = apply {
     positionTransition(StyleTransition.Builder().apply(block).build())
   }
 

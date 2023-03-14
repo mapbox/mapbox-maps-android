@@ -98,22 +98,22 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   /**
    * The added dragListeners
    */
-  override val dragListeners = mutableListOf<D>()
+  override val dragListeners: MutableList<D> = mutableListOf()
 
   /**
    * The Added clickListeners
    */
-  override val clickListeners = mutableListOf<U>()
+  override val clickListeners: MutableList<U> = mutableListOf()
 
   /**
    * The added longClickListeners
    */
-  override val longClickListeners = mutableListOf<V>()
+  override val longClickListeners: MutableList<V> = mutableListOf()
 
   /**
    * The added interactionListener
    */
-  override val interactionListener = mutableListOf<I>()
+  override val interactionListener: MutableList<I> = mutableListOf()
 
   init {
     gesturesPlugin.addOnMapClickListener(mapClickResolver)

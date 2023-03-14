@@ -1168,19 +1168,6 @@ class GesturesPluginTest {
     assertEquals(cameraOptionsSlot.captured.zoom!!, startZoom + expectedZoomDelta * 3, EPS)
   }
 
-  @Test
-  fun verifyDoesNotCrashIfNullMotionEventPassed() {
-    gestureListener.captured.onSingleTapConfirmed(null)
-    gestureListener.captured.onDoubleTap(null)
-    gestureListener.captured.onDoubleTapEvent(null)
-    gestureListener.captured.onDown(null)
-    gestureListener.captured.onShowPress(null)
-    gestureListener.captured.onSingleTapUp(null)
-    gestureListener.captured.onLongPress(null)
-    gestureListener.captured.onScroll(null, null, 0f, 0f)
-    gestureListener.captured.onFling(null, null, 0f, 0f)
-  }
-
   private companion object {
     const val ROTATION_ANGLE_THRESHOLD = 3.0f
     const val MAX_SHOVE_ANGLE = 45.0f

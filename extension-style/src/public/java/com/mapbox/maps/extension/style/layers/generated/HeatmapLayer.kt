@@ -32,7 +32,7 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
    *
    * @param sourceLayer value of sourceLayer
    */
-  override fun sourceLayer(sourceLayer: String) = apply {
+  override fun sourceLayer(sourceLayer: String): HeatmapLayer = apply {
     val param = PropertyValue("source-layer", sourceLayer)
     setProperty(param)
   }
@@ -62,7 +62,7 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
    *
    * @param filter the expression filter to set
    */
-  override fun filter(filter: Expression) = apply {
+  override fun filter(filter: Expression): HeatmapLayer = apply {
     val propertyValue = PropertyValue("filter", filter)
     setProperty(propertyValue)
   }
@@ -110,7 +110,7 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
    *
    * @param visibility value of Visibility
    */
-  override fun visibility(visibility: Visibility) = apply {
+  override fun visibility(visibility: Visibility): HeatmapLayer = apply {
     val propertyValue = PropertyValue("visibility", visibility)
     setProperty(propertyValue)
   }
@@ -145,7 +145,7 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
    *
    * @param value value of minzoom
    */
-  override fun minZoom(minZoom: Double) = apply {
+  override fun minZoom(minZoom: Double): HeatmapLayer = apply {
     val param = PropertyValue("minzoom", minZoom)
     setProperty(param)
   }
@@ -180,7 +180,7 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
    *
    * @param value value of maxzoom
    */
-  override fun maxZoom(maxZoom: Double) = apply {
+  override fun maxZoom(maxZoom: Double): HeatmapLayer = apply {
     val param = PropertyValue("maxzoom", maxZoom)
     setProperty(param)
   }
@@ -209,7 +209,7 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
    *
    * @param heatmapColor value of heatmapColor
    */
-  override fun heatmapColor(heatmapColor: Expression) = apply {
+  override fun heatmapColor(heatmapColor: Expression): HeatmapLayer = apply {
     val propertyValue = PropertyValue("heatmap-color", heatmapColor)
     setProperty(propertyValue)
   }
@@ -236,7 +236,7 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
    *
    * @param heatmapIntensity value of heatmapIntensity
    */
-  override fun heatmapIntensity(heatmapIntensity: Double) = apply {
+  override fun heatmapIntensity(heatmapIntensity: Double): HeatmapLayer = apply {
     val propertyValue = PropertyValue("heatmap-intensity", heatmapIntensity)
     setProperty(propertyValue)
   }
@@ -274,7 +274,7 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
    *
    * @param heatmapIntensity value of heatmapIntensity as Expression
    */
-  override fun heatmapIntensity(heatmapIntensity: Expression) = apply {
+  override fun heatmapIntensity(heatmapIntensity: Expression): HeatmapLayer = apply {
     val propertyValue = PropertyValue("heatmap-intensity", heatmapIntensity)
     setProperty(propertyValue)
   }
@@ -301,7 +301,7 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
    *
    * @param options transition options for Double
    */
-  override fun heatmapIntensityTransition(options: StyleTransition) = apply {
+  override fun heatmapIntensityTransition(options: StyleTransition): HeatmapLayer = apply {
     val propertyValue = PropertyValue("heatmap-intensity-transition", options)
     setProperty(propertyValue)
   }
@@ -309,7 +309,7 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
   /**
    * DSL for [heatmapIntensityTransition].
    */
-  override fun heatmapIntensityTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun heatmapIntensityTransition(block: StyleTransition.Builder.() -> Unit): HeatmapLayer = apply {
     heatmapIntensityTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -335,7 +335,7 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
    *
    * @param heatmapOpacity value of heatmapOpacity
    */
-  override fun heatmapOpacity(heatmapOpacity: Double) = apply {
+  override fun heatmapOpacity(heatmapOpacity: Double): HeatmapLayer = apply {
     val propertyValue = PropertyValue("heatmap-opacity", heatmapOpacity)
     setProperty(propertyValue)
   }
@@ -373,7 +373,7 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
    *
    * @param heatmapOpacity value of heatmapOpacity as Expression
    */
-  override fun heatmapOpacity(heatmapOpacity: Expression) = apply {
+  override fun heatmapOpacity(heatmapOpacity: Expression): HeatmapLayer = apply {
     val propertyValue = PropertyValue("heatmap-opacity", heatmapOpacity)
     setProperty(propertyValue)
   }
@@ -400,7 +400,7 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
    *
    * @param options transition options for Double
    */
-  override fun heatmapOpacityTransition(options: StyleTransition) = apply {
+  override fun heatmapOpacityTransition(options: StyleTransition): HeatmapLayer = apply {
     val propertyValue = PropertyValue("heatmap-opacity-transition", options)
     setProperty(propertyValue)
   }
@@ -408,7 +408,7 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
   /**
    * DSL for [heatmapOpacityTransition].
    */
-  override fun heatmapOpacityTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun heatmapOpacityTransition(block: StyleTransition.Builder.() -> Unit): HeatmapLayer = apply {
     heatmapOpacityTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -434,7 +434,7 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
    *
    * @param heatmapRadius value of heatmapRadius
    */
-  override fun heatmapRadius(heatmapRadius: Double) = apply {
+  override fun heatmapRadius(heatmapRadius: Double): HeatmapLayer = apply {
     val propertyValue = PropertyValue("heatmap-radius", heatmapRadius)
     setProperty(propertyValue)
   }
@@ -472,7 +472,7 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
    *
    * @param heatmapRadius value of heatmapRadius as Expression
    */
-  override fun heatmapRadius(heatmapRadius: Expression) = apply {
+  override fun heatmapRadius(heatmapRadius: Expression): HeatmapLayer = apply {
     val propertyValue = PropertyValue("heatmap-radius", heatmapRadius)
     setProperty(propertyValue)
   }
@@ -499,7 +499,7 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
    *
    * @param options transition options for Double
    */
-  override fun heatmapRadiusTransition(options: StyleTransition) = apply {
+  override fun heatmapRadiusTransition(options: StyleTransition): HeatmapLayer = apply {
     val propertyValue = PropertyValue("heatmap-radius-transition", options)
     setProperty(propertyValue)
   }
@@ -507,7 +507,7 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
   /**
    * DSL for [heatmapRadiusTransition].
    */
-  override fun heatmapRadiusTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun heatmapRadiusTransition(block: StyleTransition.Builder.() -> Unit): HeatmapLayer = apply {
     heatmapRadiusTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -533,7 +533,7 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
    *
    * @param heatmapWeight value of heatmapWeight
    */
-  override fun heatmapWeight(heatmapWeight: Double) = apply {
+  override fun heatmapWeight(heatmapWeight: Double): HeatmapLayer = apply {
     val propertyValue = PropertyValue("heatmap-weight", heatmapWeight)
     setProperty(propertyValue)
   }
@@ -571,7 +571,7 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
    *
    * @param heatmapWeight value of heatmapWeight as Expression
    */
-  override fun heatmapWeight(heatmapWeight: Expression) = apply {
+  override fun heatmapWeight(heatmapWeight: Expression): HeatmapLayer = apply {
     val propertyValue = PropertyValue("heatmap-weight", heatmapWeight)
     setProperty(propertyValue)
   }

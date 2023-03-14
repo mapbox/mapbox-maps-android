@@ -427,7 +427,8 @@ fun Event.getSourceDataLoadedEventData(): SourceDataLoadedEventData {
       zoom = tileIDMap.nonNullLong(Z),
       x = tileIDMap.nonNullLong(X),
       y = tileIDMap.nonNullLong(Y)
-    )
+    ),
+    dataId = map.nullableString(DATA_ID),
   )
 }
 
@@ -627,6 +628,7 @@ private const val REASON = "reason"
 // SourceDataLoadedEventData
 private const val ID = "id"
 private const val LOADED = "loaded"
+private const val DATA_ID = "data-id"
 
 // RenderFrameFinishedEventData(
 private const val RENDER_MODE = "render-mode"

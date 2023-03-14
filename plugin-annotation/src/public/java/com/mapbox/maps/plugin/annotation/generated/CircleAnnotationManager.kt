@@ -2,7 +2,6 @@
 
 package com.mapbox.maps.plugin.annotation.generated
 
-import android.view.View
 import com.mapbox.geojson.*
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.expressions.generated.Expression
@@ -303,19 +302,6 @@ class CircleAnnotationManager(
     var ID_GENERATOR = AtomicLong(0)
   }
 }
-
-/**
- * Extension function to create a CircleAnnotationManager instance.
- */
-@Deprecated(
-  "mapView parameter is not needed",
-  ReplaceWith("createCircleAnnotationManager(annotationConfig)")
-)
-@JvmOverloads
-fun AnnotationPlugin.createCircleAnnotationManager(
-  mapView: View,
-  annotationConfig: AnnotationConfig? = null
-): CircleAnnotationManager = createCircleAnnotationManager(annotationConfig)
 
 /**
  * Extension function to create a CircleAnnotationManager instance.

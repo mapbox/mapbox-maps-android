@@ -2,7 +2,6 @@
 
 package com.mapbox.maps.plugin.annotation.generated
 
-import android.view.View
 import com.mapbox.geojson.*
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.expressions.generated.Expression
@@ -388,19 +387,6 @@ class PolylineAnnotationManager(
     var ID_GENERATOR = AtomicLong(0)
   }
 }
-
-/**
- * Extension function to create a PolylineAnnotationManager instance.
- */
-@Deprecated(
-  "mapView parameter is not needed",
-  ReplaceWith("createPolylineAnnotationManager(annotationConfig)")
-)
-@JvmOverloads
-fun AnnotationPlugin.createPolylineAnnotationManager(
-  mapView: View,
-  annotationConfig: AnnotationConfig? = null
-): PolylineAnnotationManager = createPolylineAnnotationManager(annotationConfig)
 
 /**
  * Extension function to create a PolylineAnnotationManager instance.

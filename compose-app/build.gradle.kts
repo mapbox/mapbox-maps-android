@@ -1,9 +1,9 @@
 plugins {
   id("com.android.application")
   kotlin("android")
-  kotlin("android.extensions")
   id("com.mapbox.maps.token")
   id("io.gitlab.arturbosch.detekt").version(Versions.detekt)
+  id("org.jetbrains.kotlin.plugin.parcelize")
 }
 
 val buildFromSource: String by project
@@ -65,13 +65,10 @@ android {
   }
 }
 
-androidExtensions {
-  isExperimental = true
-}
-
 dependencies {
   implementation(project(":sdk"))
   implementation(project(":extension-compose"))
+  implementation(platform(Dependencies.composeBom))
   implementation(Dependencies.composeUi)
   implementation(Dependencies.composeMaterial)
   implementation(Dependencies.androidxActivityCompose)

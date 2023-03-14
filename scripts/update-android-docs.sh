@@ -59,26 +59,31 @@ MAPS_SDK_VERSION=${MAPS_SDK_VERSION:1}
 read GITHUB_TOKEN < gh_token.txt
 
 function prepare_branch_with_documentation() {
-  git remote set-url origin https://x-access-token:"$GITHUB_TOKEN"@github.com/mapbox/mapbox-maps-android.git
-
   INTERIM_BRANCH_WITH_DOCUMENTATION="${BRANCH_WITH_DOCUMENTATION}_${1}"
-  git checkout -b $INTERIM_BRANCH_WITH_DOCUMENTATION origin/$BRANCH_WITH_DOCUMENTATION
-  unzip -qq -o -d release-docs release-docs/dokka-docs.zip
-  mkdir -p $1
-  cp -fr release-docs/htmlCollector/* $1
+  git clone https://x-access-token:"$GITHUB_TOKEN"@github.com/mapbox/mapbox-maps-android.git -b $BRANCH_WITH_DOCUMENTATION ~/android-docs
+  unzip -qq -o -d ~/android-docs/release-docs release-docs/dokka-docs.zip
+  mkdir -p ~/android-docs/$1
+  cp -fr ~/android-docs/release-docs/htmlCollector/* ~/android-docs/$1
+  cd ~/android-docs
+  # Create new working branch with version (e.g. `publisher-production_10.999.0`)
+  git checkout -b $INTERIM_BRANCH_WITH_DOCUMENTATION
   git add $1
   git commit --quiet -m "Add $1 API documentation."
   git push --set-upstream origin $INTERIM_BRANCH_WITH_DOCUMENTATION --force
+  cd -
 }
 
 function prepare_branch_with_empty() {
+  cd ~/android-docs
   INTERIM_BRANCH_WITH_DOCUMENTATION="${BRANCH_WITH_DOCUMENTATION}_${1}_empty"
   git checkout -b $INTERIM_BRANCH_WITH_DOCUMENTATION origin/$BRANCH_WITH_DOCUMENTATION
   git commit --allow-empty -m "empty commit"
   git push --set-upstream origin $INTERIM_BRANCH_WITH_DOCUMENTATION --force
+  cd -
 }
 
 function create_pull_request() {
+  cd ~/android-docs
   CMD="gh pr create --title \"${1}\" --body \"cc: @mapbox/maps-android\""
 
   if [ ! -z "$REVIEWERS" ]; then
@@ -89,6 +94,7 @@ function create_pull_request() {
     CMD+=" --base ${BRANCH_WITH_DOCUMENTATION}"
   fi
   eval $CMD
+  cd -
 }
 
 gh auth login --with-token < gh_token.txt
@@ -100,6 +106,3 @@ create_pull_request "Add ${MAPS_SDK_VERSION} API documentation." $BRANCH_WITH_DO
 # Create a pr with empty commit to trigger dos deploy
 prepare_branch_with_empty $MAPS_SDK_VERSION
 create_pull_request "Trigger ${MAPS_SDK_VERSION} deploy." $BRANCH_WITH_DOCUMENTATION
-
-# Rollback the remote url when run the script locally
-git remote set-url origin git@github.com:mapbox/mapbox-maps-android.git

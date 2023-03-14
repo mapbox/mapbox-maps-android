@@ -56,12 +56,12 @@ class StyleTransition private constructor(builder: Builder) {
     /**
      * Duration of the transition.
      */
-    fun duration(duration: Long) = apply { this.duration = duration }
+    fun duration(duration: Long): Builder = apply { this.duration = duration }
 
     /**
      * Delay of the transition.
      */
-    fun delay(delay: Long) = apply { this.delay = delay }
+    fun delay(delay: Long): Builder = apply { this.delay = delay }
 
     /**
      * Build the StyleTransitionImpl.

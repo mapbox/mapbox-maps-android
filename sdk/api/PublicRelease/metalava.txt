@@ -46,13 +46,13 @@ package com.mapbox.maps {
     method public com.mapbox.maps.ResourceOptions getResourceOptions();
     method public String? getStyleUri();
     method public boolean getTextureView();
-    method public void setAntialiasingSampleCount(int antialiasingSampleCount);
-    method public void setAttrs(android.util.AttributeSet? attrs);
-    method public void setCameraOptions(com.mapbox.maps.CameraOptions? cameraOptions);
-    method public void setMapOptions(com.mapbox.maps.MapOptions mapOptions);
-    method public void setPlugins(java.util.List<? extends com.mapbox.maps.plugin.Plugin> plugins);
-    method public void setResourceOptions(com.mapbox.maps.ResourceOptions resourceOptions);
-    method public void setTextureView(boolean textureView);
+    method public void setAntialiasingSampleCount(int);
+    method public void setAttrs(android.util.AttributeSet?);
+    method public void setCameraOptions(com.mapbox.maps.CameraOptions?);
+    method public void setMapOptions(com.mapbox.maps.MapOptions);
+    method public void setPlugins(java.util.List<? extends com.mapbox.maps.plugin.Plugin>);
+    method public void setResourceOptions(com.mapbox.maps.ResourceOptions);
+    method public void setTextureView(boolean);
     property public final int antialiasingSampleCount;
     property public final android.util.AttributeSet? attrs;
     property public final com.mapbox.maps.CameraOptions? cameraOptions;
@@ -67,9 +67,9 @@ package com.mapbox.maps {
 
   public static final class MapInitOptions.Companion {
     method public com.mapbox.maps.MapOptions getDefaultMapOptions(android.content.Context context);
-    method public java.util.List<com.mapbox.maps.plugin.Plugin.Mapbox> getDefaultPluginList();
+    method public java.util.List<com.mapbox.maps.plugin.Plugin> getDefaultPluginList();
     method public com.mapbox.maps.ResourceOptions getDefaultResourceOptions(android.content.Context context);
-    property public final java.util.List<com.mapbox.maps.plugin.Plugin.Mapbox> defaultPluginList;
+    property public final java.util.List<com.mapbox.maps.plugin.Plugin> defaultPluginList;
   }
 
   public final class MapInitOptionsKt {
@@ -127,7 +127,7 @@ package com.mapbox.maps {
     method public void queueEvent(Runnable event, boolean needRender);
     method public void removeRendererSetupErrorListener(com.mapbox.maps.renderer.RendererSetupErrorListener rendererSetupErrorListener);
     method @com.mapbox.maps.MapboxExperimental public boolean removeWidget(com.mapbox.maps.renderer.widget.Widget widget);
-    method public void setMaximumFps(@IntRange(from=1, to=Int.MAX_VALUE.toLong()) int fps);
+    method public void setMaximumFps(@IntRange(from=1L, to=kotlin.jvm.internal.IntCompanionObject.MAX_VALUE.toLong()) int fps);
     method public void setOnFpsChangedListener(com.mapbox.maps.renderer.OnFpsChangedListener listener);
     method public android.graphics.Bitmap? snapshot();
     method public void snapshot(com.mapbox.maps.MapView.OnSnapshotReady listener);
@@ -151,6 +151,7 @@ package com.mapbox.maps {
 
   public final class MapboxConstants {
     method public static java.util.Locale getMAPBOX_LOCALE();
+    property public static final java.util.Locale MAPBOX_LOCALE;
     field public static final String MAPBOX_ACCESS_TOKEN_RESOURCE_NAME = "mapbox_access_token";
   }
 
@@ -230,9 +231,6 @@ package com.mapbox.maps {
     method public com.mapbox.maps.MercatorCoordinate project(com.mapbox.geojson.Point point, double zoomScale);
     method public com.mapbox.maps.ProjectedMeters projectedMetersForCoordinate(com.mapbox.geojson.Point point);
     method @Deprecated public void queryFeatureExtensions(String sourceIdentifier, com.mapbox.geojson.Feature feature, String extension, String extensionField, java.util.HashMap<java.lang.String,com.mapbox.bindgen.Value>? args, com.mapbox.maps.QueryFeatureExtensionCallback callback);
-    method @Deprecated public void queryRenderedFeatures(java.util.List<com.mapbox.maps.ScreenCoordinate> shape, com.mapbox.maps.RenderedQueryOptions options, com.mapbox.maps.QueryFeaturesCallback callback);
-    method @Deprecated public void queryRenderedFeatures(com.mapbox.maps.ScreenBox box, com.mapbox.maps.RenderedQueryOptions options, com.mapbox.maps.QueryFeaturesCallback callback);
-    method @Deprecated public void queryRenderedFeatures(com.mapbox.maps.ScreenCoordinate pixel, com.mapbox.maps.RenderedQueryOptions options, com.mapbox.maps.QueryFeaturesCallback callback);
     method public com.mapbox.common.Cancelable queryRenderedFeatures(com.mapbox.maps.RenderedQueryGeometry geometry, com.mapbox.maps.RenderedQueryOptions options, com.mapbox.maps.QueryFeaturesCallback callback);
     method public void querySourceFeatures(String sourceId, com.mapbox.maps.SourceQueryOptions options, com.mapbox.maps.QueryFeaturesCallback callback);
     method public void reduceMemoryUse();
@@ -291,7 +289,7 @@ package com.mapbox.maps {
     method public com.mapbox.maps.ResourceOptions component1();
     method public com.mapbox.maps.ResourceOptionsManager copy(com.mapbox.maps.ResourceOptions resourceOptions);
     method public com.mapbox.maps.ResourceOptions getResourceOptions();
-    method public void setResourceOptions(com.mapbox.maps.ResourceOptions resourceOptions);
+    method public void setResourceOptions(com.mapbox.maps.ResourceOptions);
     method public void update(kotlin.jvm.functions.Function1<? super com.mapbox.maps.ResourceOptions.Builder,kotlin.Unit> block);
     property public final com.mapbox.maps.ResourceOptions resourceOptions;
     field public static final com.mapbox.maps.ResourceOptionsManager.Companion Companion;
@@ -309,6 +307,7 @@ package com.mapbox.maps {
   public final class SnapshotOverlayOptions {
     ctor public SnapshotOverlayOptions(boolean showLogo = true, boolean showAttributes = true);
     ctor public SnapshotOverlayOptions(boolean showLogo = true);
+    ctor public SnapshotOverlayOptions();
     method public boolean component1();
     method public boolean component2();
     method public com.mapbox.maps.SnapshotOverlayOptions copy(boolean showLogo, boolean showAttributes);
@@ -337,13 +336,11 @@ package com.mapbox.maps {
     method public final com.mapbox.maps.Size getSize();
     method public final String getStyleJson();
     method public final String getStyleUri();
-    method public final boolean isInTileMode();
     method public final void setCamera(com.mapbox.maps.CameraOptions cameraOptions);
     method public final void setSize(com.mapbox.maps.Size size);
     method public final void setStyleJson(String styleJson);
     method public final void setStyleListener(com.mapbox.maps.SnapshotStyleListener listener);
     method public final void setStyleUri(String styleUri);
-    method public final void setTileMode(boolean set);
     method public final void start(com.mapbox.maps.SnapshotCreatedListener callback);
     method public final void subscribe(com.mapbox.maps.Observer observer, java.util.List<java.lang.String> events);
     method public final void unsubscribe(com.mapbox.maps.Observer observer, java.util.List<java.lang.String> events);
@@ -402,6 +399,7 @@ package com.mapbox.maps {
     method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleAtmosphereProperty(String property, com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleCustomGeometrySourceTileData(String sourceId, com.mapbox.maps.CanonicalTileID tileId, java.util.List<com.mapbox.geojson.Feature> featureCollection);
     method @WorkerThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleGeoJSONSourceData(String sourceId, com.mapbox.maps.GeoJSONSourceData data);
+    method @WorkerThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleGeoJSONSourceData(String sourceId, String dataId, com.mapbox.maps.GeoJSONSourceData data);
     method public void setStyleJSON(String json);
     method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleLayerProperties(String layerId, com.mapbox.bindgen.Value properties);
     method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleLayerProperty(String layerId, String property, com.mapbox.bindgen.Value value);
@@ -551,13 +549,11 @@ package com.mapbox.maps.renderer.widget {
     ctor @Deprecated public BitmapWidget(android.graphics.Bitmap bitmap, com.mapbox.maps.renderer.widget.WidgetPosition position = com.mapbox.maps.renderer.widget.WidgetPosition(com.mapbox.maps.renderer.widget.WidgetPosition.Vertical.TOP, com.mapbox.maps.renderer.widget.WidgetPosition.Horizontal.LEFT), float marginX = 0f, float marginY = 0f);
     ctor @Deprecated public BitmapWidget(android.graphics.Bitmap bitmap, com.mapbox.maps.renderer.widget.WidgetPosition position = com.mapbox.maps.renderer.widget.WidgetPosition(com.mapbox.maps.renderer.widget.WidgetPosition.Vertical.TOP, com.mapbox.maps.renderer.widget.WidgetPosition.Horizontal.LEFT), float marginX = 0f);
     method public com.mapbox.maps.renderer.widget.WidgetPosition getPosition();
-    method public com.mapbox.maps.renderer.widget.BitmapWidgetRenderer getRenderer$metalava_module();
     method public float getRotation();
     method public void setPosition(com.mapbox.maps.renderer.widget.WidgetPosition widgetPosition);
     method public void setRotation(float angleDegrees);
     method @Deprecated public void setTranslation(float translationX, float translationY);
     method public final void updateBitmap(android.graphics.Bitmap bitmap);
-    property public com.mapbox.maps.renderer.widget.BitmapWidgetRenderer renderer;
   }
 
   @com.mapbox.maps.MapboxExperimental public abstract class Widget {
@@ -571,18 +567,18 @@ package com.mapbox.maps.renderer.widget {
   @com.mapbox.maps.MapboxExperimental public final class WidgetPosition {
     ctor @Deprecated public WidgetPosition(com.mapbox.maps.renderer.widget.WidgetPosition.Horizontal horizontal, com.mapbox.maps.renderer.widget.WidgetPosition.Vertical vertical);
     method @Deprecated public com.mapbox.maps.renderer.widget.WidgetPosition.Horizontal getHorizontal();
-    method public com.mapbox.maps.renderer.widget.WidgetPosition.Horizontal! getHorizontalAlignment();
+    method public com.mapbox.maps.renderer.widget.WidgetPosition.Horizontal getHorizontalAlignment();
     method public float getOffsetX();
     method public float getOffsetY();
     method @Deprecated public com.mapbox.maps.renderer.widget.WidgetPosition.Vertical getVertical();
-    method public com.mapbox.maps.renderer.widget.WidgetPosition.Vertical! getVerticalAlignment();
+    method public com.mapbox.maps.renderer.widget.WidgetPosition.Vertical getVerticalAlignment();
     method public com.mapbox.maps.renderer.widget.WidgetPosition.Builder toBuilder();
     property @Deprecated public final com.mapbox.maps.renderer.widget.WidgetPosition.Horizontal horizontal;
-    property public final com.mapbox.maps.renderer.widget.WidgetPosition.Horizontal! horizontalAlignment;
+    property public final com.mapbox.maps.renderer.widget.WidgetPosition.Horizontal horizontalAlignment;
     property public final float offsetX;
     property public final float offsetY;
     property @Deprecated public final com.mapbox.maps.renderer.widget.WidgetPosition.Vertical vertical;
-    property public final com.mapbox.maps.renderer.widget.WidgetPosition.Vertical! verticalAlignment;
+    property public final com.mapbox.maps.renderer.widget.WidgetPosition.Vertical verticalAlignment;
   }
 
   public static final class WidgetPosition.Builder {
@@ -615,6 +611,7 @@ package com.mapbox.maps.renderer.widget {
   }
 
   public final class WidgetPositionKt {
+    method @kotlin.jvm.JvmSynthetic public static com.mapbox.maps.renderer.widget.WidgetPosition! WidgetPosition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.renderer.widget.WidgetPosition.Builder,? extends kotlin.Unit> initializer);
   }
 
 }

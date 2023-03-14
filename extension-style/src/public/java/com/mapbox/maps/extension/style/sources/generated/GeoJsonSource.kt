@@ -4,7 +4,6 @@ package com.mapbox.maps.extension.style.sources.generated
 
 import android.os.Handler
 import android.os.HandlerThread
-import android.os.Looper
 import android.os.Process.THREAD_PRIORITY_DEFAULT
 import androidx.annotation.VisibleForTesting
 import com.mapbox.bindgen.Value
@@ -25,8 +24,7 @@ import com.mapbox.maps.extension.style.types.PromoteId
 import com.mapbox.maps.extension.style.types.SourceDsl
 import com.mapbox.maps.extension.style.utils.TypeUtils
 import com.mapbox.maps.extension.style.utils.silentUnwrap
-import com.mapbox.maps.extension.style.utils.toValue
-import com.mapbox.maps.logW
+import java.util.*
 
 /**
  * A GeoJSON data source.
@@ -34,61 +32,92 @@ import com.mapbox.maps.logW
  * @see [The online documentation](https://docs.mapbox.com/mapbox-gl-js/style-spec/sources/#geojson)
  *
  */
-class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
+class GeoJsonSource : Source {
+  @Deprecated(
+    "SourceGeoJson constructor is deprecated, use Builder class instead",
+    level = DeprecationLevel.ERROR
+  )
+  constructor(builder: Builder) : super(builder.sourceId) {
+    sourceProperties.putAll(builder.properties)
+    volatileSourceProperties.putAll(builder.volatileProperties)
+    initGeoJson = builder.geoJson
+    initData = builder.data
+    initDataId = builder.dataId
+  }
+
+  private var initGeoJson: GeoJson?
+  private var initData: String?
+  private var initDataId: String?
+
   private val workerHandler by lazy {
     Handler(workerThread.looper)
   }
 
-  private var initGeoJson: GeoJson? = null
-  private var initData: String? = null
-
-  private constructor(
-    builder: Builder,
-    geoJson: GeoJson?,
-    data: String?,
-  ) : this(builder) {
-    this.initGeoJson = geoJson
-    this.initData = data
-  }
-
-  private fun setGeoJson(geoJson: GeoJson) {
-    workerHandler.removeCallbacksAndMessages(null)
-    workerHandler.post {
-      delegate?.setStyleGeoJSONSourceData(sourceId, toGeoJsonData(geoJson)) ?: logW(
-        TAG,
-        "GeoJsonSource (id=$sourceId) was not able to set data" +
-          " with `feature()`, `featureCollection()` or `geometry()`" +
-          " as there is no Style object."
-      )
-    }
-  }
-
-  private fun setData(data: String) {
-    workerHandler.removeCallbacksAndMessages(null)
-    workerHandler.post {
-      delegate?.setStyleGeoJSONSourceData(sourceId, GeoJSONSourceData.valueOf(data)) ?: logW(
-        TAG,
-        "GeoJsonSource (id=$sourceId) was not able to set data with `data()` or `url()`" +
-          " as there is no Style object."
-      )
-    }
-  }
-
-  override fun bindTo(delegate: StyleInterface) {
-    super.bindTo(delegate)
-    initGeoJson?.let {
-      setGeoJson(it)
-      initGeoJson = null
-    }
-    initData?.let {
-      setData(it)
+  private fun setGeoJson(geoJson: GeoJson, dataId: String? = null) {
+    delegate?.let { style ->
+      workerHandler.removeCallbacksAndMessages(null)
+      workerHandler.post {
+        if (dataId != null) {
+          style.setStyleGeoJSONSourceData(
+            /* sourceId = */ sourceId,
+            /* dataId = */ dataId,
+            /* data = */ toGeoJsonData(geoJson)
+          )
+        } else {
+          style.setStyleGeoJSONSourceData(
+            /* sourceId = */ sourceId,
+            /* data = */ toGeoJsonData(geoJson)
+          )
+        }
+      }
+    } ?: run {
+      initGeoJson = geoJson
+      initDataId = dataId
       initData = null
     }
   }
 
-  init {
-    sourceProperties.putAll(builder.properties)
-    volatileSourceProperties.putAll(builder.volatileProperties)
+  private fun setData(data: String, dataId: String? = null) {
+    delegate?.let { style ->
+      workerHandler.removeCallbacksAndMessages(null)
+      workerHandler.post {
+        if (dataId != null) {
+          style.setStyleGeoJSONSourceData(
+            /* sourceId = */ sourceId,
+            /* dataId = */ dataId,
+            /* data = */ GeoJSONSourceData.valueOf(data)
+          )
+        } else {
+          style.setStyleGeoJSONSourceData(
+            /* sourceId = */ sourceId,
+            /* data = */ GeoJSONSourceData.valueOf(data)
+          )
+        }
+      }
+    } ?: run {
+      initData = data
+      initDataId = dataId
+      initGeoJson = null
+    }
+  }
+
+  /**
+   * Add the GeoJsonSource to the Style.
+   *
+   * @param delegate The style delegate
+   */
+  override fun bindTo(delegate: StyleInterface) {
+    super.bindTo(delegate)
+    initGeoJson?.let {
+      setGeoJson(it, initDataId)
+      initGeoJson = null
+      initDataId = null
+    }
+    initData?.let {
+      setData(it, initDataId)
+      initData = null
+      initDataId = null
+    }
   }
 
   /**
@@ -99,10 +128,12 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
   }
 
   /**
-   * A URL to a GeoJSON file, or inline GeoJSON.
+   * @param value an URL to a GeoJSON file, or an inline GeoJSON.
+   * @param dataId optional metadata to filter the SOURCE_DATA_LOADED events later
    */
-  fun data(value: String) = apply {
-    setData(value)
+  @JvmOverloads
+  fun data(value: String, dataId: String? = null): GeoJsonSource = apply {
+    setData(value, dataId)
   }
 
   /**
@@ -119,10 +150,12 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
     get() = getPropertyValue("data")
 
   /**
-   * A URL to a GeoJSON file, or inline GeoJSON.
+   * @param value an URL to a GeoJSON file, or an inline GeoJSON.
+   * @param dataId optional metadata to filter the SOURCE_DATA_LOADED events later
    */
-  fun url(value: String) = apply {
-    data(value)
+  @JvmOverloads
+  fun url(value: String, dataId: String? = null): GeoJsonSource = apply {
+    data(value, dataId)
   }
 
   /**
@@ -298,7 +331,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
    * lower resolution as quick as possible. It will get clamped at the tile source minimum zoom.
    * The default delta is 4.
    */
-  fun prefetchZoomDelta(value: Long = 4L) = apply {
+  fun prefetchZoomDelta(value: Long = 4L): GeoJsonSource = apply {
     setVolatileProperty(PropertyValue("prefetch-zoom-delta", TypeUtils.wrapToValue(value)))
   }
 
@@ -325,16 +358,18 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
    * use main thread to pass this data to gl-native.
    *
    * In order to capture events when actual data is drawn on the map please refer to [Observer] API
-   * and listen to [MapEvents.SOURCE_DATA_LOADED] or [MapEvents.MAP_LOADING_ERROR] with `type = metadata`
-   * if data parsing error has occurred.
+   * and listen to [MapEvents.SOURCE_DATA_LOADED] (optionally pass `data-id` to filter the events)
+   * or [MapEvents.MAP_LOADING_ERROR] with `type = metadata` if data parsing error has occurred.
    *
    * Note: This method is not thread-safe. The Feature is parsed on a worker thread, please make sure
    * the Feature is immutable as well as all collections that are used to build it.
    *
    * @param value the feature
+   * @param dataId optional metadata to filter the SOURCE_DATA_LOADED events later
    * @throws [MapboxConcurrentGeometryModificationException]
    */
-  fun feature(value: Feature): GeoJsonSource = applyGeoJsonData(value)
+  @JvmOverloads
+  fun feature(value: Feature, dataId: String? = null): GeoJsonSource = applyGeoJsonData(value, dataId)
 
   /**
    * Add a Feature Collection to the GeojsonSource.
@@ -342,16 +377,18 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
    * use main thread to pass this data to gl-native.
    *
    * In order to capture events when actual data is drawn on the map please refer to [Observer] API
-   * and listen to [MapEvents.SOURCE_DATA_LOADED] or [MapEvents.MAP_LOADING_ERROR] with `type = metadata`
-   * if data parsing error has occurred.
+   * and listen to [MapEvents.SOURCE_DATA_LOADED] (optionally pass `data-id` to filter the events)
+   * or [MapEvents.MAP_LOADING_ERROR] with `type = metadata` if data parsing error has occurred.
    *
    * Note: This method is not thread-safe. The FeatureCollection is parsed on a worker thread, please make sure
    * the FeatureCollection is immutable as well as all collections that are used to build it.
    *
    * @param value the feature collection
+   * @param dataId optional metadata to filter the SOURCE_DATA_LOADED events later
    * @throws [MapboxConcurrentGeometryModificationException]
    */
-  fun featureCollection(value: FeatureCollection): GeoJsonSource = applyGeoJsonData(value)
+  @JvmOverloads
+  fun featureCollection(value: FeatureCollection, dataId: String? = null): GeoJsonSource = applyGeoJsonData(value, dataId)
 
   /**
    * Add a Geometry to the GeojsonSource.
@@ -359,43 +396,24 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
    * use main thread to pass this data to gl-native.
    *
    * In order to capture events when actual data is drawn on the map please refer to [Observer] API
-   * and listen to [MapEvents.SOURCE_DATA_LOADED] or [MapEvents.MAP_LOADING_ERROR] with `type = metadata`
-   * if data parsing error has occurred.
+   * and listen to [MapEvents.SOURCE_DATA_LOADED] (optionally pass `data-id` to filter the events)
+   * or [MapEvents.MAP_LOADING_ERROR] with `type = metadata` if data parsing error has occurred.
    *
    * Note: This method is not thread-safe. The Geometry is parsed on a worker thread, please make sure
    * the Geometry is immutable as well as all collections that are used to build it.
    *
    * @param value the geometry
+   * @param dataId optional metadata to filter the SOURCE_DATA_LOADED events later
    * @throws [MapboxConcurrentGeometryModificationException]
    */
-  fun geometry(value: Geometry): GeoJsonSource = applyGeoJsonData(value)
-
-  private fun GeoJson.toPropertyValue(): PropertyValue<*> {
-    try {
-      return PropertyValue(
-        "data",
-        when (this) {
-          is Geometry -> toValue()
-          is FeatureCollection -> toValue()
-          is Feature -> toValue()
-          else -> RuntimeException("GeoJson data must be Geometry, FeatureCollection or Feature!")
-        }
-      )
-    } catch (e: ConcurrentModificationException) {
-      throw MapboxConcurrentGeometryModificationException(
-        """While applying ${javaClass.simpleName} to geojson source with id="$sourceId" some collection was mutated which is not allowed as data parsing happens on another thread.
-        Please make sure all collections passed via `geometry`, `feature`, `featureCollection` methods are immutable.
-        Easiest way to achieve this is either always pass the fresh copy or use https://developer.android.com/reference/java/util/concurrent/CopyOnWriteArrayList.
-        """.trimIndent(),
-        sourceId
-      )
-    }
-  }
+  @JvmOverloads
+  fun geometry(value: Geometry, dataId: String? = null): GeoJsonSource = applyGeoJsonData(value, dataId)
 
   private fun applyGeoJsonData(
-    data: GeoJson
+    data: GeoJson,
+    dataId: String?,
   ): GeoJsonSource = apply {
-    setGeoJson(data)
+    setGeoJson(data, dataId)
   }
 
   /**
@@ -404,36 +422,40 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
    * @param sourceId the ID of the source
    */
   @SourceDsl
-  class Builder(
-    val sourceId: String
-  ) {
-
-    private var geoJson: GeoJson? = null
-    private var data: String? = null
+  class Builder(val sourceId: String) {
     internal val properties = HashMap<String, PropertyValue<*>>()
     // Properties that only settable after the source is added to the style.
     internal val volatileProperties = HashMap<String, PropertyValue<*>>()
 
+    internal var geoJson: GeoJson? = null
+    internal var data: String? = null
+    internal var dataId: String? = null
+
     /**
-     * A URL to a GeoJSON file, or inline GeoJSON.
+     * @param value an URL to a GeoJSON file, or an inline GeoJSON.
+     * @param dataId optional metadata to filter the SOURCE_DATA_LOADED events later
      */
-    fun data(value: String) = apply {
+    @JvmOverloads
+    fun data(value: String, dataId: String? = null): Builder = apply {
       geoJson = null
       data = value
+      this.dataId = dataId
     }
 
     /**
-     * A URL to a GeoJSON file, or inline GeoJSON.
+     * @param value an URL to a GeoJSON file, or an inline GeoJSON.
+     * @param dataId optional metadata to filter the SOURCE_DATA_LOADED events later
      */
-    fun url(value: String) = apply {
-      data(value)
+    @JvmOverloads
+    fun url(value: String, dataId: String? = null): Builder = apply {
+      data(value, dataId)
     }
 
     /**
      * Maximum zoom level at which to create vector tiles (higher means greater detail at high zoom
      * levels).
      */
-    fun maxzoom(value: Long = 18L) = apply {
+    fun maxzoom(value: Long = 18L): Builder = apply {
       val propertyValue = PropertyValue("maxzoom", TypeUtils.wrapToValue(value))
       properties[propertyValue.propertyName] = propertyValue
     }
@@ -441,7 +463,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
     /**
      * Contains an attribution to be displayed when the map is shown to a user.
      */
-    fun attribution(value: String) = apply {
+    fun attribution(value: String): Builder = apply {
       val propertyValue = PropertyValue("attribution", TypeUtils.wrapToValue(value))
       properties[propertyValue.propertyName] = propertyValue
     }
@@ -451,7 +473,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
      * value of 512 produces a buffer as wide as the tile itself. Larger values produce fewer
      * rendering artifacts near tile edges and slower performance.
      */
-    fun buffer(value: Long = 128L) = apply {
+    fun buffer(value: Long = 128L): Builder = apply {
       val propertyValue = PropertyValue("buffer", TypeUtils.wrapToValue(value))
       properties[propertyValue.propertyName] = propertyValue
     }
@@ -459,7 +481,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
     /**
      * Douglas-Peucker simplification tolerance (higher means simpler geometries and faster performance).
      */
-    fun tolerance(value: Double = 0.375) = apply {
+    fun tolerance(value: Double = 0.375): Builder = apply {
       val propertyValue = PropertyValue("tolerance", TypeUtils.wrapToValue(value))
       properties[propertyValue.propertyName] = propertyValue
     }
@@ -473,7 +495,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
      * - `point_count` Number of original points grouped into this cluster
      * - `point_count_abbreviated` An abbreviated point count
      */
-    fun cluster(value: Boolean = false) = apply {
+    fun cluster(value: Boolean = false): Builder = apply {
       val propertyValue = PropertyValue("cluster", TypeUtils.wrapToValue(value))
       properties[propertyValue.propertyName] = propertyValue
     }
@@ -482,7 +504,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
      * Radius of each cluster if clustering is enabled. A value of 512 indicates a radius equal
      * to the width of a tile.
      */
-    fun clusterRadius(value: Long = 50L) = apply {
+    fun clusterRadius(value: Long = 50L): Builder = apply {
       val propertyValue = PropertyValue("clusterRadius", TypeUtils.wrapToValue(value))
       properties[propertyValue.propertyName] = propertyValue
     }
@@ -492,7 +514,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
      * than maxzoom (so that last zoom features are not clustered). Clusters are re-evaluated at integer zoom
      * levels so setting clusterMaxZoom to 14 means the clusters will be displayed until z15.
      */
-    fun clusterMaxZoom(value: Long) = apply {
+    fun clusterMaxZoom(value: Long): Builder = apply {
       val propertyValue = PropertyValue("clusterMaxZoom", TypeUtils.wrapToValue(value))
       properties[propertyValue.propertyName] = propertyValue
     }
@@ -509,7 +531,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
      * that references a special `["accumulated"]` value, e.g.:
      * `{"sum": [["+", ["accumulated"], ["get", "sum"]], ["get", "scalerank"]]}`
      */
-    fun clusterProperties(value: HashMap<String, Any>) = apply {
+    fun clusterProperties(value: HashMap<String, Any>): Builder = apply {
       val propertyValue = PropertyValue("clusterProperties", TypeUtils.wrapToValue(value))
       properties[propertyValue.propertyName] = propertyValue
     }
@@ -535,7 +557,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
      * expression
      *
      */
-    fun clusterProperty(propertyName: String, operatorExpr: Expression, mapExpr: Expression) =
+    fun clusterProperty(propertyName: String, operatorExpr: Expression, mapExpr: Expression): Builder =
       apply {
         @Suppress("UNCHECKED_CAST")
         val options: HashMap<String, Value> =
@@ -563,7 +585,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
      * expression
      *
      */
-    fun clusterProperty(propertyName: String, mapExpr: Expression) =
+    fun clusterProperty(propertyName: String, mapExpr: Expression): Builder =
       apply {
         @Suppress("UNCHECKED_CAST")
         val options: HashMap<String, Value> =
@@ -577,7 +599,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
     /**
      * Whether to calculate line distance metrics. This is required for line layers that specify `line-gradient` values.
      */
-    fun lineMetrics(value: Boolean = false) = apply {
+    fun lineMetrics(value: Boolean = false): Builder = apply {
       val propertyValue = PropertyValue("lineMetrics", TypeUtils.wrapToValue(value))
       properties[propertyValue.propertyName] = propertyValue
     }
@@ -586,7 +608,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
      * Whether to generate ids for the geojson features. When enabled, the `feature.id` property will be auto
      * assigned based on its index in the `features` array, over-writing any previous values.
      */
-    fun generateId(value: Boolean = false) = apply {
+    fun generateId(value: Boolean = false): Builder = apply {
       val propertyValue = PropertyValue("generateId", TypeUtils.wrapToValue(value))
       properties[propertyValue.propertyName] = propertyValue
     }
@@ -595,7 +617,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
      * A property to use as a feature id (for feature state). Either a property name, or
      * an object of the form `{<sourceLayer>: <propertyName>}`.
      */
-    fun promoteId(value: PromoteId) = apply {
+    fun promoteId(value: PromoteId): Builder = apply {
       val propertyValue = PropertyValue("promoteId", value.toValue())
       properties[propertyValue.propertyName] = propertyValue
     }
@@ -607,7 +629,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
      * lower resolution as quick as possible. It will get clamped at the tile source minimum zoom.
      * The default delta is 4.
      */
-    fun prefetchZoomDelta(value: Long = 4L) = apply {
+    fun prefetchZoomDelta(value: Long = 4L): Builder = apply {
       val propertyValue = PropertyValue("prefetch-zoom-delta", TypeUtils.wrapToValue(value))
       volatileProperties[propertyValue.propertyName] = propertyValue
     }
@@ -616,31 +638,38 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
      * Add a Feature to the GeojsonSource.
      *
      * @param value the feature
+     * @param dataId optional metadata to filter the SOURCE_DATA_LOADED events later
      */
-    fun feature(value: Feature) = apply {
-      geoJson(value)
+    @JvmOverloads
+    fun feature(value: Feature, dataId: String? = null): Builder = apply {
+      geoJson(value, dataId)
     }
 
     /**
      * Add a FeatureCollection to the GeojsonSource.
      *
      * @param value the feature collection
+     * @param dataId optional metadata to filter the SOURCE_DATA_LOADED events later
      */
-    fun featureCollection(value: FeatureCollection) = apply {
-      geoJson(value)
+    @JvmOverloads
+    fun featureCollection(value: FeatureCollection, dataId: String? = null): Builder = apply {
+      geoJson(value, dataId)
     }
 
     /**
      * Add a Geometry to the GeojsonSource.
      *
      * @param value the geometry
+     * @param dataId optional metadata to filter the SOURCE_DATA_LOADED events later
      */
-    fun geometry(value: Geometry) = apply {
-      geoJson(value)
+    @JvmOverloads
+    fun geometry(value: Geometry, dataId: String? = null): Builder = apply {
+      geoJson(value, dataId)
     }
 
-    private fun geoJson(geoJson: GeoJson) {
+    private fun geoJson(geoJson: GeoJson, dataId: String? = null) {
       this.geoJson = geoJson
+      this.dataId = dataId
       data = null
     }
 
@@ -649,11 +678,12 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
      *
      * @return the GeoJsonSource
      */
+    @Suppress("DEPRECATION_ERROR")
     fun build(): GeoJsonSource {
       // set default data to allow empty data source.
       val propertyValue = PropertyValue("data", TypeUtils.wrapToValue(""))
       properties[propertyValue.propertyName] = propertyValue
-      return GeoJsonSource(this, geoJson, data)
+      return GeoJsonSource(this)
     }
   }
 
@@ -668,8 +698,6 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
     internal val workerThread = HandlerThread("GEOJSON_PARSER", THREAD_PRIORITY_DEFAULT).apply {
       start()
     }
-
-    private val mainHandler = Handler(Looper.getMainLooper())
 
     internal fun toGeoJsonData(geoJson: GeoJson): GeoJSONSourceData {
       return when (geoJson) {
@@ -804,7 +832,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
  */
 fun geoJsonSource(
   id: String
-) = GeoJsonSource.Builder(id).build()
+): GeoJsonSource = GeoJsonSource.Builder(id).build()
 
 /**
  * DSL function for [GeoJsonSource].
@@ -826,7 +854,8 @@ fun geoJsonSource(
  * [GeoJsonSource.featureCollection] or [GeoJsonSource.geometry] on the map.
  *
  * In order to capture events when actual data is drawn on the map please refer to [Observer] API
- * and listen to [MapEvents.SOURCE_DATA_LOADED] or [MapEvents.MAP_LOADING_ERROR] with `type = metadata`
+ * and listen to [MapEvents.SOURCE_DATA_LOADED] (optionally pass `data-id` with the data update call
+ * to filter the events) or [MapEvents.MAP_LOADING_ERROR] with `type = metadata`
  * if data parsing error has occurred.
  */
 fun geoJsonSource(

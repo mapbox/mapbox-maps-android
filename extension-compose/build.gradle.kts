@@ -48,6 +48,7 @@ android {
 dependencies {
   dependencies {
     compileOnly(project(":sdk"))
+    implementation(platform(Dependencies.composeBom))
     implementation(Dependencies.composeUi)
     implementation(Dependencies.composeMaterial)
 

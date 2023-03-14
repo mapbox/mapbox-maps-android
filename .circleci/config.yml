@@ -54,12 +54,6 @@ workflows:
       - verify-api-revapi:
           requires:
             - verify-code
-      - verify-permissions:
-          requires:
-            - build-modules-and-instrumentation-tests
-      - verify-internal:
-            requires:
-              - verify-code
       - run-lint:
           requires:
             - verify-code
@@ -71,98 +65,6 @@ workflows:
       - run-style-test:
           requires:
             - start-run-style-test
-      - build-android-auto-app:
-          requires:
-            - verify-code
-      - build-compose-app:
-          requires:
-            - verify-code
-      - build-modules-and-instrumentation-tests:
-          requires:
-            - verify-code
-          filters:
-            tags:
-              only: /<< pipeline.parameters.release_tags_pattern >>/
-      - run-app-instrumentation-test:
-          requires:
-            - build-modules-and-instrumentation-tests
-      - run-sdk-instrumentation-test:
-          requires:
-            - build-modules-and-instrumentation-tests
-      - run-robo-test:
-          requires:
-            - build-modules-and-instrumentation-tests
-      - sdk-e2e-test:
-          filters:
-              branches:
-                  ignore:
-                      - main
-                      - /<< pipeline.parameters.git_release_branch >>/
-          name: run-sdk-e2e-test-devel
-          requires:
-              - verify-code
-      - sdk-e2e-test:
-          filters:
-              branches:
-                  only:
-                      - main
-                      - /<< pipeline.parameters.git_release_branch >>/
-              tags:
-                  only: /<< pipeline.parameters.git_release_tag >>/
-          name: run-sdk-e2e-test-validation
-          requires:
-              - verify-code
-          validation: true
-      - sync-internal-ci:
-          filters:
-            branches:
-              only:
-                - main
-                - /<< pipeline.parameters.git_release_branch >>/
-          requires:
-            - verify-code
-
-  validation:
-    when: << pipeline.parameters.mapbox_upstream >>
-    jobs:
-      - run-sdk-instrumentation-test
-
-  weekly:
-    triggers:
-      - schedule:
-          # at 7:00 on Monday
-          cron: 0 7 * * 1
-          filters:
-            branches:
-              only:
-                - main
-    jobs:
-      - check-gradle-dependencies
-      - run-robo-test-weekly:
-          requires:
-            - build-modules-and-instrumentation-tests
-      - run-sdk-instrumentation-test-weekly:
-          requires:
-            - run-robo-test-weekly
-      - build-modules-and-instrumentation-tests:
-          requires:
-            - verify-code
-      - verify-code
-
-  validation-weekly:
-    when: << pipeline.parameters.weekly >>
-    jobs:
-      - check-gradle-dependencies
-      - run-robo-test-weekly:
-          requires:
-            - build-modules-and-instrumentation-tests
-      - run-sdk-instrumentation-test-weekly:
-          requires:
-            - run-robo-test-weekly
-      - build-modules-and-instrumentation-tests:
-          requires:
-            - verify-code
-      - verify-code
 
 commands:
   save-to-workspace:
@@ -319,115 +221,6 @@ commands:
           command: |
             curl -Ls https://mapbox-release-engineering.s3.amazonaws.com/mbx-ci/latest/mbx-ci-linux-amd64 > mbx-ci && chmod 755 ./mbx-ci
             ./mbx-ci aws setup
-
-  publish-sdk-registry:
-    steps:
-      - unless:
-          condition: << pipeline.parameters.mapbox_upstream >>
-          steps:
-            - run:
-                name: Publish the SDK
-                command: |
-                  if [[ $CIRCLE_TAG =~ << pipeline.parameters.git_release_tag >> ||  $CIRCLE_BRANCH == main ]]; then
-                    make sdkRegistryUpload
-                  fi
-                  if [[ $CIRCLE_TAG =~ << pipeline.parameters.git_release_tag >> ]]; then
-                    git config --global user.email "MapboxCI@users.noreply.github.com"
-                    git config --global user.name "MapboxCI"
-                    export GITHUB_TOKEN=$(./mbx-ci github writer private token)
-                    make sdkRegistryPublish
-                  fi
-                  if [[ $CIRCLE_TAG == extension-androidauto-v* ]]; then
-                    git config --global user.email "MapboxCI@users.noreply.github.com"
-                    git config --global user.name "MapboxCI"
-                    export GITHUB_TOKEN=$(./mbx-ci github writer private token)
-                    make sdkRegistryUploadAndroidAutoExtension
-                    make sdkRegistryPublishAndroidAutoExtension
-                  fi
-                  if [[ $CIRCLE_TAG == extension-compose-v* ]]; then
-                    git config --global user.email "MapboxCI@users.noreply.github.com"
-                    git config --global user.name "MapboxCI"
-                    export GITHUB_TOKEN=$(./mbx-ci github writer private token)
-                    make sdkRegistryUploadComposeExtension
-                    make sdkRegistryPublishComposeExtension
-                  fi
-
-  publish-sdk-registry-named-snapshot:
-    steps:
-      - unless:
-          condition: << pipeline.parameters.mapbox_upstream >>
-          steps:
-            - run:
-                name: Publish the SDK snapshot based on the keyword in commit message
-                command: |
-                  COMMIT_SHA=$(git rev-parse --short HEAD)
-                  LAST_RELEASE=$(git describe --tags --abbrev=0 --match 'android-v[0-9]*.[0-9]*.[0-9]*' --match 'v[0-9]*.[0-9]*.[0-9]*')
-                  if [[ $LAST_RELEASE == android-v* ]]; then
-                    LAST_RELEASE=${LAST_RELEASE:9}
-                  else
-                    LAST_RELEASE=${LAST_RELEASE:1}
-                  fi
-                  if [[ -n ${CIRCLE_BRANCH+x} ]] && [[ $CIRCLE_BRANCH != "main" ]] && [[ "$(git log -1)" = *"publish_android_snapshot"* ]]; then
-                    export SNAPSHOT_VERSION_NAME="${LAST_RELEASE}-${CIRCLE_BRANCH}-${COMMIT_SHA}-SNAPSHOT"
-                    # Make it available to next steps
-                    echo "export SNAPSHOT_VERSION_NAME=${SNAPSHOT_VERSION_NAME}" >> "$BASH_ENV"
-
-                    sed -i -e "s/^VERSION_NAME=.*/VERSION_NAME=${SNAPSHOT_VERSION_NAME}/" gradle.properties
-                    make sdkRegistryUpload
-                  else
-                    echo "Skipping Slack notification - snapshot wasn't requested"
-                    circleci-agent step halt
-                  fi
-            - slack/notify:
-                event: pass
-                mentions: '@maps-android'
-                custom: |
-                  {
-                    "blocks": [
-                        {
-                            "type": "header",
-                            "text": {
-                                "type": "plain_text",
-                                "text": "Maps SDK snapshot was published. :shipit_parrot:",
-                                "emoji": true
-                            }
-                        },
-                        {
-                            "type": "section",
-                            "fields": [
-                                {
-                                    "type": "mrkdwn",
-                                    "text": "*Version*: `com.mapbox.maps:android:${SNAPSHOT_VERSION_NAME}`"
-                                },
-                                {
-                                    "type": "mrkdwn",
-                                    "text": "*Project*: $CIRCLE_PROJECT_REPONAME"
-                                },
-                                {
-                                    "type": "mrkdwn",
-                                    "text": "*Branch*: $CIRCLE_BRANCH"
-                                },
-                                {
-                                    "type": "mrkdwn",
-                                    "text": "*Author*: @${CIRCLE_USERNAME}"
-                                }
-                            ]
-                        },
-                        {
-                            "type": "actions",
-                            "elements": [
-                                {
-                                    "type": "button",
-                                    "text": {
-                                        "type": "plain_text",
-                                        "text": "View Job"
-                                    },
-                                    "url": "${CIRCLE_BUILD_URL}"
-                                }
-                            ]
-                        }
-                    ]
-                  }
 
   login-google-cloud-platform:
     steps:
@@ -591,7 +384,7 @@ jobs:
                 name: check release runtime Mapbox dependencies to fail fast
                 command: |
                   echo "PR Target branch: $PR_TARGET_BRANCH"
-                  ./gradlew sdk:dependencyInsight --configuration releaseRuntimeClasspath --dependency com.mapbox.maps | grep -vzq 'FAILED'
+                  ./gradlew sdk:dependencyInsight --configuration publicReleaseRuntimeClasspath --dependency com.mapbox.maps | grep -vzq 'FAILED'
             - run:
                 name: check changelog
                 command: |
@@ -763,7 +556,7 @@ jobs:
             - restore-gradle-cache
             - run:
                 name: lintRelease
-                command: ./gradlew lintPublicRelease lintPrivateRelease
+                command: ./gradlew lintPublicRelease
       - run: exit 0
 
   run-robo-test:
@@ -955,12 +748,6 @@ jobs:
             - store_artifacts:
                 path: app/build/outputs/apk
                 destination: .
-            - update-version-name
-            - init-aws
-            - generate-docs
-            - publish-sdk-registry
-            # should be the last step on the job - halts job execution to not send Slack notification if not needed
-            - publish-sdk-registry-named-snapshot
       - run: exit 0
 
   sdk-e2e-test:

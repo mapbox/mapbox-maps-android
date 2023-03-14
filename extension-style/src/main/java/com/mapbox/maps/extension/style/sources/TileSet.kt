@@ -3,6 +3,7 @@ package com.mapbox.maps.extension.style.sources
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.extension.style.sources.generated.Encoding
 import com.mapbox.maps.extension.style.sources.generated.Scheme
+import java.util.HashMap
 
 /**
  * Tile set, allows using TileJson specification as source.
@@ -45,7 +46,7 @@ class TileSet private constructor(builder: Builder) : HashMap<String, Value>(bui
      *
      * @param value the name to be set
      */
-    fun name(value: String) = apply {
+    fun name(value: String): Builder = apply {
       parameters["name"] = Value(value)
     }
 
@@ -58,7 +59,7 @@ class TileSet private constructor(builder: Builder) : HashMap<String, Value>(bui
      *
      * @param value the description to set
      */
-    fun description(value: String) = apply {
+    fun description(value: String): Builder = apply {
       parameters["description"] = Value(value)
     }
 
@@ -73,7 +74,7 @@ class TileSet private constructor(builder: Builder) : HashMap<String, Value>(bui
      *
      *  @param value the version to set
      */
-    fun version(value: String = "1.0.0") = apply {
+    fun version(value: String = "1.0.0"): Builder = apply {
       parameters["version"] = Value(value)
     }
 
@@ -86,7 +87,7 @@ class TileSet private constructor(builder: Builder) : HashMap<String, Value>(bui
      *
      * @param value the attribution to set
      */
-    fun attribution(value: String) = apply {
+    fun attribution(value: String): Builder = apply {
       parameters["attribution"] = Value(value)
     }
 
@@ -99,7 +100,7 @@ class TileSet private constructor(builder: Builder) : HashMap<String, Value>(bui
      *
      * @param value the template to set
      */
-    fun template(value: String) = apply {
+    fun template(value: String): Builder = apply {
       parameters["template"] = Value(value)
     }
 
@@ -112,7 +113,7 @@ class TileSet private constructor(builder: Builder) : HashMap<String, Value>(bui
      *
      * @param value the legend to set
      */
-    fun legend(value: String) = apply {
+    fun legend(value: String): Builder = apply {
       parameters["legend"] = Value(value)
     }
 
@@ -124,7 +125,7 @@ class TileSet private constructor(builder: Builder) : HashMap<String, Value>(bui
      *
      * @param value the scheme to set
      */
-    fun scheme(value: Scheme) = apply {
+    fun scheme(value: Scheme): Builder = apply {
       parameters["scheme"] = Value(value.value)
     }
 
@@ -142,7 +143,7 @@ class TileSet private constructor(builder: Builder) : HashMap<String, Value>(bui
      *
      * @param value the grids to set
      */
-    fun grids(value: List<String>) = apply {
+    fun grids(value: List<String>): Builder = apply {
       parameters["grids"] = Value(value.map(::Value))
     }
 
@@ -160,7 +161,7 @@ class TileSet private constructor(builder: Builder) : HashMap<String, Value>(bui
      *
      * @param value the data array to set
      */
-    fun data(value: List<String>) = apply {
+    fun data(value: List<String>): Builder = apply {
       parameters["data"] = Value(value.map(::Value))
     }
 
@@ -169,7 +170,7 @@ class TileSet private constructor(builder: Builder) : HashMap<String, Value>(bui
      *
      * @param value the minZoom level to set
      */
-    fun minZoom(value: Int = 0) = apply {
+    fun minZoom(value: Int = 0): Builder = apply {
       parameters["minzoom"] = Value(value.toLong())
     }
 
@@ -178,7 +179,7 @@ class TileSet private constructor(builder: Builder) : HashMap<String, Value>(bui
      *
      * @param value the maxZoom level to set
      */
-    fun maxZoom(value: Int = 30) = apply {
+    fun maxZoom(value: Int = 30): Builder = apply {
       parameters["maxzoom"] = Value(value.toLong())
     }
 
@@ -190,7 +191,7 @@ class TileSet private constructor(builder: Builder) : HashMap<String, Value>(bui
      *
      * @param value the Double list to set
      */
-    fun bounds(value: List<Double> = listOf(-180.0, -90.0, 180.0, 90.0)) = apply {
+    fun bounds(value: List<Double> = listOf(-180.0, -90.0, 180.0, 90.0)): Builder = apply {
       parameters["bounds"] = Value(value.map(::Value))
     }
 
@@ -205,7 +206,7 @@ class TileSet private constructor(builder: Builder) : HashMap<String, Value>(bui
      *
      * @param value the Double array to set
      */
-    fun center(value: List<Double>) = apply {
+    fun center(value: List<Double>): Builder = apply {
       parameters["center"] = Value(value.map(::Value))
     }
 
@@ -241,7 +242,7 @@ class TileSet private constructor(builder: Builder) : HashMap<String, Value>(bui
      *
      * @param value the String to set
      */
-    fun encoding(value: Encoding) = apply {
+    fun encoding(value: Encoding): RasterDemBuilder = apply {
       parameters["encoding"] = Value(value.value)
     }
   }

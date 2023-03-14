@@ -166,7 +166,7 @@ class Expression : Value {
      *
      * @param expression
      */
-    fun addArgument(expression: Expression) = apply { this.arguments.add(expression) }
+    fun addArgument(expression: Expression): ExpressionBuilder = apply { this.arguments.add(expression) }
 
     /**
      * For two inputs, returns the result of subtracting the second input from the first. For a
@@ -750,6 +750,14 @@ class Expression : Value {
     }
 
     /**
+     * Returns the raster value of a pixel computed via `raster-color-mix`. Can only be used in the
+     * `raster-color` property.
+     */
+    fun rasterValue() {
+      this@ExpressionBuilder.arguments.add(Expression.rasterValue())
+    }
+
+    /**
      * Returns the IETF language tag of the locale being used by the provided `collator`. This can
      * be used to determine the default system locale, or to determine if a requested locale was
      * successfully loaded.
@@ -1310,7 +1318,7 @@ class Expression : Value {
      * @param locale the locale to use while performing number formatting
      * @return number format builder
      */
-    fun locale(locale: String) = apply {
+    fun locale(locale: String): NumberFormatBuilder = apply {
       this.options["locale"] = literal(locale)
     }
 
@@ -1319,7 +1327,7 @@ class Expression : Value {
      * @param locale the locale to use while performing number formatting
      * @return number format builder
      */
-    fun locale(locale: Expression) = apply {
+    fun locale(locale: Expression): NumberFormatBuilder = apply {
       this.options["locale"] = locale
     }
 
@@ -1328,7 +1336,7 @@ class Expression : Value {
      *
      * @return number format builder
      */
-    fun locale(block: ExpressionBuilder.() -> Unit) = apply {
+    fun locale(block: ExpressionBuilder.() -> Unit): NumberFormatBuilder = apply {
       this.options["locale"] = string(block)
     }
 
@@ -1338,7 +1346,7 @@ class Expression : Value {
      * @param currency the currency to use while performing number formatting
      * @return number format option
      */
-    fun currency(currency: String) = apply {
+    fun currency(currency: String): NumberFormatBuilder = apply {
       this.options["currency"] = literal(currency)
     }
 
@@ -1348,7 +1356,7 @@ class Expression : Value {
      * @param currency the currency to use while performing number formatting
      * @return number format option
      */
-    fun currency(currency: Expression) = apply {
+    fun currency(currency: Expression): NumberFormatBuilder = apply {
       this.options["currency"] = currency
     }
 
@@ -1357,7 +1365,7 @@ class Expression : Value {
      *
      * @return number format option
      */
-    fun currency(block: ExpressionBuilder.() -> Unit) = apply {
+    fun currency(block: ExpressionBuilder.() -> Unit): NumberFormatBuilder = apply {
       this.options["currency"] = string(block)
     }
 
@@ -1367,7 +1375,7 @@ class Expression : Value {
      * @param minFractionDigits the amount of minimum fraction digits to include
      * @return number format option
      */
-    fun minFractionDigits(minFractionDigits: Int) = apply {
+    fun minFractionDigits(minFractionDigits: Int): NumberFormatBuilder = apply {
       this.options["min-fraction-digits"] = literal(minFractionDigits.toLong())
     }
 
@@ -1377,7 +1385,7 @@ class Expression : Value {
      * @param minFractionDigits the amount of minimum fraction digits to include
      * @return number format option
      */
-    fun minFractionDigits(minFractionDigits: Expression) = apply {
+    fun minFractionDigits(minFractionDigits: Expression): NumberFormatBuilder = apply {
       this.options["min-fraction-digits"] = minFractionDigits
     }
 
@@ -1386,7 +1394,7 @@ class Expression : Value {
      *
      * @return number format option
      */
-    fun minFractionDigits(block: ExpressionBuilder.() -> Unit) = apply {
+    fun minFractionDigits(block: ExpressionBuilder.() -> Unit): NumberFormatBuilder = apply {
       this.options["min-fraction-digits"] = number(block)
     }
 
@@ -1396,7 +1404,7 @@ class Expression : Value {
      * @param maxFractionDigits the amount of minimum fraction digits to include
      * @return number format option
      */
-    fun maxFractionDigits(maxFractionDigits: Int) = apply {
+    fun maxFractionDigits(maxFractionDigits: Int): NumberFormatBuilder = apply {
       this.options["max-fraction-digits"] = literal(maxFractionDigits.toLong())
     }
 
@@ -1406,7 +1414,7 @@ class Expression : Value {
      * @param maxFractionDigits the amount of minimum fraction digits to include
      * @return number format option
      */
-    fun maxFractionDigits(maxFractionDigits: Expression) = apply {
+    fun maxFractionDigits(maxFractionDigits: Expression): NumberFormatBuilder = apply {
       this.options["max-fraction-digits"] = maxFractionDigits
     }
 
@@ -1415,7 +1423,7 @@ class Expression : Value {
      *
      * @return number format option
      */
-    fun maxFractionDigits(block: ExpressionBuilder.() -> Unit) = apply {
+    fun maxFractionDigits(block: ExpressionBuilder.() -> Unit): NumberFormatBuilder = apply {
       this.options["max-fraction-digits"] = number(block)
     }
 
@@ -1447,7 +1455,7 @@ class Expression : Value {
      *
      * @param fontScale
      */
-    fun fontScale(fontScale: Double) = apply {
+    fun fontScale(fontScale: Double): FormatSectionBuilder = apply {
       this.options["font-scale"] = literal(fontScale)
     }
 
@@ -1459,7 +1467,7 @@ class Expression : Value {
      *
      * @param fontScale
      */
-    fun fontScale(fontScale: Expression) = apply {
+    fun fontScale(fontScale: Expression): FormatSectionBuilder = apply {
       this.options["font-scale"] = fontScale
     }
 
@@ -1469,7 +1477,7 @@ class Expression : Value {
      *
      * "font-scale" is required to be of a resulting type number.
      */
-    fun fontScale(block: ExpressionBuilder.() -> Unit) = apply {
+    fun fontScale(block: ExpressionBuilder.() -> Unit): FormatSectionBuilder = apply {
       this.options["font-scale"] = number(block)
     }
 
@@ -1483,7 +1491,7 @@ class Expression : Value {
      *
      * @param textFont
      */
-    fun textFont(textFont: List<String>) = apply {
+    fun textFont(textFont: List<String>): FormatSectionBuilder = apply {
       this.options["text-font"] = literal(textFont)
     }
 
@@ -1497,7 +1505,7 @@ class Expression : Value {
      *
      * @param textFont
      */
-    fun textFont(textFont: Expression) = apply {
+    fun textFont(textFont: Expression): FormatSectionBuilder = apply {
       this.options["text-font"] = textFont
     }
 
@@ -1509,7 +1517,7 @@ class Expression : Value {
      * The requested font stack has to be a part of the used style.
      * For more information see [The online documentation](https://www.mapbox.com/help/define-font-stack/).
      */
-    fun textFont(block: ExpressionBuilder.() -> Unit) = apply {
+    fun textFont(block: ExpressionBuilder.() -> Unit): FormatSectionBuilder = apply {
       this.options["text-font"] =
         ExpressionBuilder("array").addArgument(literal("string")).apply(block).build()
     }
@@ -1519,7 +1527,7 @@ class Expression : Value {
      *
      * @param textColor
      */
-    fun textColor(@ColorInt textColor: Int) = apply {
+    fun textColor(@ColorInt textColor: Int): FormatSectionBuilder = apply {
       this.options["text-color"] = color(textColor)
     }
 
@@ -1528,7 +1536,7 @@ class Expression : Value {
      *
      * @param textColor
      */
-    fun textColor(textColor: String) = apply {
+    fun textColor(textColor: String): FormatSectionBuilder = apply {
       this.options["text-color"] = literal(textColor)
     }
 
@@ -1537,14 +1545,14 @@ class Expression : Value {
      *
      * @param textColor
      */
-    fun textColor(textColor: Expression) = apply {
+    fun textColor(textColor: Expression): FormatSectionBuilder = apply {
       this.options["text-color"] = textColor
     }
 
     /**
      * If set, the text-color argument overrides the color specified by the root paint properties.
      */
-    fun textColor(block: ExpressionBuilder.() -> Unit) = apply {
+    fun textColor(block: ExpressionBuilder.() -> Unit): FormatSectionBuilder = apply {
       this.options["text-color"] = toColor(block)
     }
 
@@ -1568,7 +1576,7 @@ class Expression : Value {
      *
      * @param content displayed string or image as an Expression
      */
-    fun formatSection(content: Expression) = apply {
+    fun formatSection(content: Expression): FormatBuilder = apply {
       sections.addAll(FormatSectionBuilder(content).build())
     }
 
@@ -1577,7 +1585,7 @@ class Expression : Value {
      *
      * @param content displayed string or image as an Expression
      */
-    fun formatSection(content: Expression, block: FormatSectionBuilder.() -> Unit) = apply {
+    fun formatSection(content: Expression, block: FormatSectionBuilder.() -> Unit): FormatBuilder = apply {
       sections.addAll(FormatSectionBuilder(content).apply(block).build())
     }
 
@@ -1586,7 +1594,7 @@ class Expression : Value {
      *
      * @param text displayed string
      */
-    fun formatSection(text: String) = apply {
+    fun formatSection(text: String): FormatBuilder = apply {
       sections.addAll(FormatSectionBuilder(literal(text)).build())
     }
 
@@ -1595,7 +1603,7 @@ class Expression : Value {
      *
      * @param text displayed string
      */
-    fun formatSection(text: String, block: FormatSectionBuilder.() -> Unit) = apply {
+    fun formatSection(text: String, block: FormatSectionBuilder.() -> Unit): FormatBuilder = apply {
       sections.addAll(FormatSectionBuilder(literal(text)).apply(block).build())
     }
 
@@ -1618,70 +1626,70 @@ class Expression : Value {
     /**
      * Set the case-sensitive option, default to false.
      */
-    fun caseSensitive(caseSensitive: Expression) = apply {
+    fun caseSensitive(caseSensitive: Expression): CollatorBuilder = apply {
       options["case-sensitive"] = caseSensitive
     }
 
     /**
      * Set the case-sensitive option, default to false.
      */
-    fun caseSensitive(block: ExpressionBuilder.() -> Unit) = apply {
+    fun caseSensitive(block: ExpressionBuilder.() -> Unit): CollatorBuilder = apply {
       options["case-sensitive"] = boolean(block)
     }
 
     /**
      * Set the case-sensitive option, default to false.
      */
-    fun caseSensitive(caseSensitive: Boolean = false) = apply {
+    fun caseSensitive(caseSensitive: Boolean = false): CollatorBuilder = apply {
       options["case-sensitive"] = literal(caseSensitive)
     }
 
     /**
      * Set the diacritic-sensitive option, default to false.
      */
-    fun diacriticSensitive(diacriticSensitive: Expression) = apply {
+    fun diacriticSensitive(diacriticSensitive: Expression): CollatorBuilder = apply {
       options["diacritic-sensitive"] = diacriticSensitive
     }
 
     /**
      * Set the  diacritic-sensitive option, default to false.
      */
-    fun diacriticSensitive(block: ExpressionBuilder.() -> Unit) = apply {
+    fun diacriticSensitive(block: ExpressionBuilder.() -> Unit): CollatorBuilder = apply {
       options["diacritic-sensitive"] = boolean(block)
     }
 
     /**
      * Set the diacritic-sensitive option, default to false.
      */
-    fun diacriticSensitive(diacriticSensitive: Boolean = false) = apply {
+    fun diacriticSensitive(diacriticSensitive: Boolean = false): CollatorBuilder = apply {
       options["diacritic-sensitive"] = literal(diacriticSensitive)
     }
 
     /**
      * Set the locale option.
      */
-    fun locale(locale: Expression) = apply {
+    fun locale(locale: Expression): CollatorBuilder = apply {
       options["locale"] = locale
     }
 
     /**
      * Set the locale option.
      */
-    fun locale(block: ExpressionBuilder.() -> Unit) = apply {
+    fun locale(block: ExpressionBuilder.() -> Unit): CollatorBuilder = apply {
       options["locale"] = string(block)
     }
 
     /**
      * Set the locale option.
      */
-    fun locale(locale: String) = apply {
+    fun locale(locale: String): CollatorBuilder = apply {
       options["locale"] = literal(locale)
     }
 
     /**
      * Set the locale option.
      */
-    fun locale(locale: Locale) = apply {
+    fun locale(locale: Locale): CollatorBuilder = apply {
       val localeStringBuilder = StringBuilder()
 
       val language = locale.language
@@ -1998,7 +2006,7 @@ class Expression : Value {
      * `clusterProperties` option of a clustered GeoJSON source.
      */
     @JvmStatic
-    fun accumulated() = ExpressionBuilder("accumulated").build()
+    fun accumulated(): Expression = ExpressionBuilder("accumulated").build()
 
     /**
      * Returns the arccosine of the input.
@@ -2327,7 +2335,7 @@ class Expression : Value {
      * from the center. `["distance-from-center"]` may only be used in the `filter` expression for a `symbol` layer.
      */
     @JvmStatic
-    fun distanceFromCenter() = ExpressionBuilder("distance-from-center").build()
+    fun distanceFromCenter(): Expression = ExpressionBuilder("distance-from-center").build()
 
     /**
      * Returns the input string converted to lowercase. Follows the Unicode Default Case Conversion algorithm and the
@@ -2352,7 +2360,7 @@ class Expression : Value {
      * Returns the mathematical constant e.
      */
     @JvmStatic
-    fun e() = ExpressionBuilder("e").build()
+    fun e(): Expression = ExpressionBuilder("e").build()
 
     /**
      * Retrieves a property value from the current feature's state. Returns `null` if the requested property is
@@ -2425,7 +2433,7 @@ class Expression : Value {
      * Returns the feature's geometry type: `Point`, `LineString` or `Polygon`. `Multi-` feature types return the singular forms.
      */
     @JvmStatic
-    fun geometryType() = ExpressionBuilder("geometry-type").build()
+    fun geometryType(): Expression = ExpressionBuilder("geometry-type").build()
 
     /**
      * Retrieves a property value from the current feature's properties, or from another object if a second
@@ -2471,13 +2479,13 @@ class Expression : Value {
      * in the `heatmap-color` property.
      */
     @JvmStatic
-    fun heatmapDensity() = ExpressionBuilder("heatmap-density").build()
+    fun heatmapDensity(): Expression = ExpressionBuilder("heatmap-density").build()
 
     /**
      * Returns the feature's id, if it has one.
      */
     @JvmStatic
-    fun id() = ExpressionBuilder("id").build()
+    fun id(): Expression = ExpressionBuilder("id").build()
 
     /**
      * Returns a [`ResolvedImage`](/mapbox-gl-js/style-spec/types/#resolvedimage) for use in [`icon-image`](/mapbox-gl-js/style-spec/layers/#layout-symbol-icon-image), `--pattern` entries, and as a section in the [`'format'`](#types-format)
@@ -2632,7 +2640,7 @@ class Expression : Value {
      * Returns the progress along a gradient line. Can only be used in the `line-gradient` property.
      */
     @JvmStatic
-    fun lineProgress() = ExpressionBuilder("line-progress").build()
+    fun lineProgress(): Expression = ExpressionBuilder("line-progress").build()
 
     /**
      * Provides a literal array or object value.
@@ -2708,7 +2716,7 @@ class Expression : Value {
      * Returns mathematical constant ln(2).
      */
     @JvmStatic
-    fun ln2() = ExpressionBuilder("ln2").build()
+    fun ln2(): Expression = ExpressionBuilder("ln2").build()
 
     /**
      * Returns the base-ten logarithm of the input.
@@ -2883,21 +2891,28 @@ class Expression : Value {
      * Returns the mathematical constant pi.
      */
     @JvmStatic
-    fun pi() = ExpressionBuilder("pi").build()
+    fun pi(): Expression = ExpressionBuilder("pi").build()
 
     /**
      * Returns the current pitch in degrees. `["pitch"]` may only be used in the `filter` expression for
      * a `symbol` layer.
      */
     @JvmStatic
-    fun pitch() = ExpressionBuilder("pitch").build()
+    fun pitch(): Expression = ExpressionBuilder("pitch").build()
 
     /**
      * Returns the feature properties object.  Note that in some cases, it may be more efficient
      * to use `["get", "property_name"]` directly.
      */
     @JvmStatic
-    fun properties() = ExpressionBuilder("properties").build()
+    fun properties(): Expression = ExpressionBuilder("properties").build()
+
+    /**
+     * Returns the raster value of a pixel computed via `raster-color-mix`. Can only be used in the
+     * `raster-color` property.
+     */
+    @JvmStatic
+    fun rasterValue(): Expression = ExpressionBuilder("raster-value").build()
 
     /**
      * Returns the IETF language tag of the locale being used by the provided `collator`. This can
@@ -3002,7 +3017,7 @@ class Expression : Value {
      * property.
      */
     @JvmStatic
-    fun skyRadialProgress() = ExpressionBuilder("sky-radial-progress").build()
+    fun skyRadialProgress(): Expression = ExpressionBuilder("sky-radial-progress").build()
 
     /**
      * Returns an item from an array or a substring from a string from a specified start
@@ -3287,7 +3302,7 @@ class Expression : Value {
      * only appear as the input to a top-level "step" or "interpolate" expression.
      */
     @JvmStatic
-    fun zoom() = ExpressionBuilder("zoom").build()
+    fun zoom(): Expression = ExpressionBuilder("zoom").build()
 
     /**
      * Construct a RGB color expression from numbers.
@@ -3318,7 +3333,7 @@ class Expression : Value {
      * Interpolates linearly between the pair of stops just less than and just greater than the input.
      */
     @JvmStatic
-    fun linear() = ExpressionBuilder("linear").build()
+    fun linear(): Expression = ExpressionBuilder("linear").build()
 
     /**
      * Interpolates exponentially between the stops just less than and just greater than the input.
@@ -3327,7 +3342,7 @@ class Expression : Value {
      * With values close to 1 the output increases linearly.
      */
     @JvmStatic
-    fun exponential(expression: Expression) =
+    fun exponential(expression: Expression): Expression =
       ExpressionBuilder("exponential").addArgument(expression).build()
 
     /**
@@ -3336,21 +3351,21 @@ class Expression : Value {
      * higher values make the output increase more towards the high end of the range.
      * With values close to 1 the output increases linearly.
      */
-    fun exponential(block: ExpressionBuilder.() -> Unit) =
+    fun exponential(block: ExpressionBuilder.() -> Unit): Expression =
       ExpressionBuilder("exponential").apply(block).build()
 
     /**
      * Interpolates using the cubic bezier curve defined by the given control points.
      */
     @JvmStatic
-    fun cubicBezier(x1: Expression, x2: Expression, x3: Expression, x4: Expression) =
+    fun cubicBezier(x1: Expression, x2: Expression, x3: Expression, x4: Expression): Expression =
       ExpressionBuilder("cubic-bezier").addArgument(x1).addArgument(x2)
         .addArgument(x3).addArgument(x4).build()
 
     /**
      * Interpolates using the cubic bezier curve defined by the given control points.
      */
-    fun cubicBezier(block: ExpressionBuilder.() -> Unit) =
+    fun cubicBezier(block: ExpressionBuilder.() -> Unit): Expression =
       ExpressionBuilder("cubic-bezier").apply(block).build()
 
     /**

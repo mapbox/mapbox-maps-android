@@ -11,8 +11,8 @@ import org.ajoberstar.grgit.Grgit
 
 ext {
     git = Grgit.open(currentDir: projectDir)
-    // added extra 1 to fix playstore error regarding versioncode
-    def tagSize = git.tag.list().findAll { (it.name =~ "android-v*" || it.name =~ "v1\\d.*") }.size() + 1
+    // added 70 to enable publish app to playstore after internal restructure.
+    def tagSize = git.tag.list().findAll { (it.name =~ "android-v*" || it.name =~ "v1\\d.*") }.size() + 70
     gitVersionCode = tagSize + 1
     gitVersionName = "0.1.$tagSize".toString()
 }

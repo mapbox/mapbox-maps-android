@@ -11,8 +11,8 @@ package com.mapbox.maps.plugin.logo {
     ctor public LogoViewImpl(android.content.Context context, android.util.AttributeSet attrs, int defStyleAttr);
     method public boolean getLogoEnabled();
     method public int getLogoGravity();
-    method public void setLogoEnabled(boolean value);
-    method public void setLogoGravity(int value);
+    method public void setLogoEnabled(boolean);
+    method public void setLogoGravity(int);
     method public void setLogoMargins(int left, int top, int right, int bottom);
     property public boolean logoEnabled;
     property public int logoGravity;
@@ -25,7 +25,7 @@ package com.mapbox.maps.plugin.logo {
     method protected com.mapbox.maps.plugin.logo.generated.LogoSettings getInternalSettings();
     method public void initialize();
     method public void onPluginView(android.view.View view);
-    method protected void setInternalSettings(com.mapbox.maps.plugin.logo.generated.LogoSettings internalSettings);
+    method protected void setInternalSettings(com.mapbox.maps.plugin.logo.generated.LogoSettings);
     property public boolean enabled;
     property protected com.mapbox.maps.plugin.logo.generated.LogoSettings internalSettings;
   }

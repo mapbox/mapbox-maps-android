@@ -2,8 +2,83 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# main
+#develop
+## Features ✨ and improvements 🏁
+* Remove deprecated `MapboxMap.queryRenderedFeatures` methods.
+* Remove `Snapshotter.setTileMode`, `Snapshotter.isInTileMode` methods.
 
+## Features ✨ and improvements 🏁
+* Update SDK's targetSdkVersion and CompileSdkVersion to 33.
+
+## Dependencies
+* Update dependencies
+
+| Dependency | Before | After |
+| ----- | ----- | ----- |
+| Android Gradle Plugin | 7.0.4 | 7.4.2 |
+| Kotlin | 1.5.31 | 1.8.10 |
+| org.jetbrains.kotlin:kotlin-stdlib-jdk7 | 1.5.31 |  |
+| org.jetbrains.kotlin:kotlin-stdlib-jdk8 |  | 1.8.10 |
+| Dokka plugin | 1.5.31 | 1.8.10 |
+| androidx.core:core-ktx | 1.7.0 | 1.9.0 |
+| androidx.appcompat:appcompat | 1.3.0 | 1.6.1 |
+| androidx.test:rules | 1.4.0 | 1.5.0 |
+| androidx.test:core | 1.4.0 | 1.5.0 |
+| androidx.test:runner | 1.4.0 | 1.5.2 |
+| androidx.test:orchestrator | 1.4.0 | 1.4.2 |
+| androidx.test:monitor | 1.4.0 | 1.6.1 |
+| androidx.test.espresso:espresso-core | 3.4.0 | 3.5.1 |
+| androidx.test.ext:junit | 1.1.3 | 1.1.5 |
+| org.jetbrains.kotlinx:kotlinx-coroutines-android | 1.3.9 | 1.6.1 |
+| org.jetbrains.kotlinx:kotlinx-coroutines-test | 1.3.9 | 1.6.1 |
+| io.mockk:mockk | 1.12.3 | 1.13.4 |
+| io.mockk:mockk-agent-api | 1.12.3 | 1.13.4 |
+| io.mockk:mockk-agent-jvm | 1.12.3 | 1.13.4 |
+| org.robolectric:robolectric | 4.8.1 | 4.9.2 |
+| com.android.tools.lint:lint-api | 30.0.4 | 30.4.2 |
+| com.android.tools.lint:lint-checks | 30.0.4 | 30.4.2 |
+| com.android.tools.lint:lint | 30.0.4 | 30.4.2 |
+| com.android.tools.lint:lint-tests | 30.0.4 | 30.4.2 |
+| com.android.tools:testutils | 30.0.4 | 30.4.2 |
+| nl.jqno.equalsverifier:equalsverifier | 3.10.1 | 3.14 |
+| io.gitlab.arturbosch.detekt:detekt-formatting | 1.20.0 | 1.22.0 |
+| composeOptions -> kotlinCompilerExtensionVersion | 1.1.0-beta03 | 1.4.3 |
+| androidx.compose:compose-bom |  | 2023.01.00 |
+| com.pinterest:ktlint | 0.39.0 | 0.48.2 |
+
+# 10.12.0-rc.1
+## Bug fixes 🐞
+* Fix regression from `v10.11.0` when applying geojson data was not working when no style was available.
+* Interrupt blocking disk cache database operations on application exit so that the application does not hang.
+* Fix a bug where continuously dragging and changing zoom would lead to either very slow or fast map dragging.
+* Fix missing terrain on some GPUs (e.g. Mali).
+
+# 11.0.0-alpha.1 March 2, 2023
+## Features ✨ and improvements 🏁
+* Enable raster colorization via `raster-color` expression and `RasterLayer.rasterColor`, `RasterLayer.rasterColorMix`, `RasterLayer.rasterColorRange` layer properties.
+
+# 10.12.0-beta.1 February 22, 2023
+## Features ✨ and improvements 🏁
+* Add `data-id` argument to `GeoJsonSource` data update methods. `data-id` is later attached to the 
+`SourceDataLoadedEventData` event and allows to track the specific `GeoJsonSource` update. ([1991](https://github.com/mapbox/mapbox-maps-android/pull/1991))
+* Reduce line gradient texture size if there is no color change.
+
+## Bug fixes 🐞
+* Avoid generation of the unneeded glyph textures.
+* Fixes rendering errors when the closing point is missing in GeoJSON polygon features.
+* Fix a bug where taking consecutive snapshots had missing tiles.
+* Fix a bug where fill extrusions would flicker when crossing a certain zoom threshold.
+
+## Dependencies
+* Update gl-native to v10.12.0-beta.1 and common to v23.4.0-beta.1.
+
+
+# 10.10.2 February 16, 2023
+## Bug fixes 🐞
+* [tile store] Remove token from TileStore Logs. ([2011](https://github.com/mapbox/mapbox-maps-android/pull/2011))
+
+## Dependencies
+* Update common to v23.2.3. ([2011](https://github.com/mapbox/mapbox-maps-android/pull/2011))
 
 # 10.11.0 February 09, 2023
 ## Features ✨ and improvements 🏁

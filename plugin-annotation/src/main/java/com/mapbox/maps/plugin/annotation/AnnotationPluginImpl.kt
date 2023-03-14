@@ -1,6 +1,5 @@
 package com.mapbox.maps.plugin.annotation
 
-import android.view.View
 import androidx.annotation.VisibleForTesting
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_ANNOTATION_PLUGIN_ID
@@ -19,20 +18,6 @@ class AnnotationPluginImpl : AnnotationPlugin {
   internal val managerList = mutableListOf<WeakReference<AnnotationManager<*, *, *, *, *, *, *>>>()
   private var width = 0
   private var height = 0
-
-  /**
-   * Create an annotation manager.
-   *
-   * @param mapView The MapView instance.
-   * @param type The type of the created annotation manager
-   * @param annotationConfig Default is null, used for some custom configs
-   * @return The created annotation manager
-   */
-  override fun createAnnotationManager(
-    mapView: View,
-    type: AnnotationType,
-    annotationConfig: AnnotationConfig?
-  ): AnnotationManager<*, *, *, *, *, *, *> = createAnnotationManager(type, annotationConfig)
 
   /**
    * Create an annotation manager.

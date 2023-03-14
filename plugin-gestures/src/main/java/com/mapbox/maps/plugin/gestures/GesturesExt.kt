@@ -171,25 +171,6 @@ fun MapPluginExtensionsDelegate.setGesturesManager(
 }
 
 /**
- * Get copy of current gesture settings.
- *
- * Updating any property of [GesturesSettings] object returned will not take any effect,
- * please use MapView.gestures.updateSettings { } instead.
- *
- * Gesture plugin with id = [Plugin.MAPBOX_GESTURES_PLUGIN_ID] must be added while constructing
- * `MapView` as part of `MapInitOptions.plugins`.
- */
-@Deprecated(
-  "Gesture plugin instance obtained from MapView should be used instead to get a copy of current settings object. " +
-    "In order to set particular setting same gesture plugin instance should be used e.g. mapView.gestures.rotateEnabled = false",
-  replaceWith = ReplaceWith(
-    "mapView.gestures.getSettings()",
-  ),
-)
-fun MapPluginExtensionsDelegate.getGesturesSettings() =
-  gesturesPlugin { getSettings() } as GesturesSettings?
-
-/**
  * Returns if the scroll is horizontally limited,
  * In other words, the scroll mode is set to vertical.
  */

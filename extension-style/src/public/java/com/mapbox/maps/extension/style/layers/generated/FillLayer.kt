@@ -37,7 +37,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    *
    * @param sourceLayer value of sourceLayer
    */
-  override fun sourceLayer(sourceLayer: String) = apply {
+  override fun sourceLayer(sourceLayer: String): FillLayer = apply {
     val param = PropertyValue("source-layer", sourceLayer)
     setProperty(param)
   }
@@ -67,7 +67,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    *
    * @param filter the expression filter to set
    */
-  override fun filter(filter: Expression) = apply {
+  override fun filter(filter: Expression): FillLayer = apply {
     val propertyValue = PropertyValue("filter", filter)
     setProperty(propertyValue)
   }
@@ -115,7 +115,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    *
    * @param visibility value of Visibility
    */
-  override fun visibility(visibility: Visibility) = apply {
+  override fun visibility(visibility: Visibility): FillLayer = apply {
     val propertyValue = PropertyValue("visibility", visibility)
     setProperty(propertyValue)
   }
@@ -150,7 +150,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    *
    * @param value value of minzoom
    */
-  override fun minZoom(minZoom: Double) = apply {
+  override fun minZoom(minZoom: Double): FillLayer = apply {
     val param = PropertyValue("minzoom", minZoom)
     setProperty(param)
   }
@@ -185,7 +185,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    *
    * @param value value of maxzoom
    */
-  override fun maxZoom(maxZoom: Double) = apply {
+  override fun maxZoom(maxZoom: Double): FillLayer = apply {
     val param = PropertyValue("maxzoom", maxZoom)
     setProperty(param)
   }
@@ -214,7 +214,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    *
    * @param fillSortKey value of fillSortKey
    */
-  override fun fillSortKey(fillSortKey: Double) = apply {
+  override fun fillSortKey(fillSortKey: Double): FillLayer = apply {
     val propertyValue = PropertyValue("fill-sort-key", fillSortKey)
     setProperty(propertyValue)
   }
@@ -252,7 +252,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    *
    * @param fillSortKey value of fillSortKey as Expression
    */
-  override fun fillSortKey(fillSortKey: Expression) = apply {
+  override fun fillSortKey(fillSortKey: Expression): FillLayer = apply {
     val propertyValue = PropertyValue("fill-sort-key", fillSortKey)
     setProperty(propertyValue)
   }
@@ -279,7 +279,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    *
    * @param fillAntialias value of fillAntialias
    */
-  override fun fillAntialias(fillAntialias: Boolean) = apply {
+  override fun fillAntialias(fillAntialias: Boolean): FillLayer = apply {
     val propertyValue = PropertyValue("fill-antialias", fillAntialias)
     setProperty(propertyValue)
   }
@@ -317,7 +317,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    *
    * @param fillAntialias value of fillAntialias as Expression
    */
-  override fun fillAntialias(fillAntialias: Expression) = apply {
+  override fun fillAntialias(fillAntialias: Expression): FillLayer = apply {
     val propertyValue = PropertyValue("fill-antialias", fillAntialias)
     setProperty(propertyValue)
   }
@@ -347,7 +347,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    *
    * @param fillColor value of fillColor
    */
-  override fun fillColor(fillColor: String) = apply {
+  override fun fillColor(fillColor: String): FillLayer = apply {
     val propertyValue = PropertyValue("fill-color", fillColor)
     setProperty(propertyValue)
   }
@@ -382,7 +382,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    *
    * @param fillColor value of fillColor as Expression
    */
-  override fun fillColor(fillColor: Expression) = apply {
+  override fun fillColor(fillColor: Expression): FillLayer = apply {
     val propertyValue = PropertyValue("fill-color", fillColor)
     setProperty(propertyValue)
   }
@@ -413,7 +413,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    *
    * @param fillColor value of fillColor
    */
-  override fun fillColor(@ColorInt fillColor: Int) = apply {
+  override fun fillColor(@ColorInt fillColor: Int): FillLayer = apply {
     val propertyValue = PropertyValue("fill-color", colorIntToRgbaExpression(fillColor))
     setProperty(propertyValue)
   }
@@ -440,7 +440,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    *
    * @param options transition options for String
    */
-  override fun fillColorTransition(options: StyleTransition) = apply {
+  override fun fillColorTransition(options: StyleTransition): FillLayer = apply {
     val propertyValue = PropertyValue("fill-color-transition", options)
     setProperty(propertyValue)
   }
@@ -448,7 +448,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   /**
    * DSL for [fillColorTransition].
    */
-  override fun fillColorTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun fillColorTransition(block: StyleTransition.Builder.() -> Unit): FillLayer = apply {
     fillColorTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -474,7 +474,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    *
    * @param fillOpacity value of fillOpacity
    */
-  override fun fillOpacity(fillOpacity: Double) = apply {
+  override fun fillOpacity(fillOpacity: Double): FillLayer = apply {
     val propertyValue = PropertyValue("fill-opacity", fillOpacity)
     setProperty(propertyValue)
   }
@@ -512,7 +512,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    *
    * @param fillOpacity value of fillOpacity as Expression
    */
-  override fun fillOpacity(fillOpacity: Expression) = apply {
+  override fun fillOpacity(fillOpacity: Expression): FillLayer = apply {
     val propertyValue = PropertyValue("fill-opacity", fillOpacity)
     setProperty(propertyValue)
   }
@@ -539,7 +539,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    *
    * @param options transition options for Double
    */
-  override fun fillOpacityTransition(options: StyleTransition) = apply {
+  override fun fillOpacityTransition(options: StyleTransition): FillLayer = apply {
     val propertyValue = PropertyValue("fill-opacity-transition", options)
     setProperty(propertyValue)
   }
@@ -547,7 +547,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   /**
    * DSL for [fillOpacityTransition].
    */
-  override fun fillOpacityTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun fillOpacityTransition(block: StyleTransition.Builder.() -> Unit): FillLayer = apply {
     fillOpacityTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -576,7 +576,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    *
    * @param fillOutlineColor value of fillOutlineColor
    */
-  override fun fillOutlineColor(fillOutlineColor: String) = apply {
+  override fun fillOutlineColor(fillOutlineColor: String): FillLayer = apply {
     val propertyValue = PropertyValue("fill-outline-color", fillOutlineColor)
     setProperty(propertyValue)
   }
@@ -611,7 +611,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    *
    * @param fillOutlineColor value of fillOutlineColor as Expression
    */
-  override fun fillOutlineColor(fillOutlineColor: Expression) = apply {
+  override fun fillOutlineColor(fillOutlineColor: Expression): FillLayer = apply {
     val propertyValue = PropertyValue("fill-outline-color", fillOutlineColor)
     setProperty(propertyValue)
   }
@@ -642,7 +642,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    *
    * @param fillOutlineColor value of fillOutlineColor
    */
-  override fun fillOutlineColor(@ColorInt fillOutlineColor: Int) = apply {
+  override fun fillOutlineColor(@ColorInt fillOutlineColor: Int): FillLayer = apply {
     val propertyValue = PropertyValue("fill-outline-color", colorIntToRgbaExpression(fillOutlineColor))
     setProperty(propertyValue)
   }
@@ -669,7 +669,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    *
    * @param options transition options for String
    */
-  override fun fillOutlineColorTransition(options: StyleTransition) = apply {
+  override fun fillOutlineColorTransition(options: StyleTransition): FillLayer = apply {
     val propertyValue = PropertyValue("fill-outline-color-transition", options)
     setProperty(propertyValue)
   }
@@ -677,7 +677,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   /**
    * DSL for [fillOutlineColorTransition].
    */
-  override fun fillOutlineColorTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun fillOutlineColorTransition(block: StyleTransition.Builder.() -> Unit): FillLayer = apply {
     fillOutlineColorTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -703,7 +703,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    *
    * @param fillPattern value of fillPattern
    */
-  override fun fillPattern(fillPattern: String) = apply {
+  override fun fillPattern(fillPattern: String): FillLayer = apply {
     val propertyValue = PropertyValue("fill-pattern", fillPattern)
     setProperty(propertyValue)
   }
@@ -741,7 +741,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    *
    * @param fillPattern value of fillPattern as Expression
    */
-  override fun fillPattern(fillPattern: Expression) = apply {
+  override fun fillPattern(fillPattern: Expression): FillLayer = apply {
     val propertyValue = PropertyValue("fill-pattern", fillPattern)
     setProperty(propertyValue)
   }
@@ -771,7 +771,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    * @param options transition options for String
    */
   @Deprecated("This property has been deprecated and will do no operations")
-  override fun fillPatternTransition(options: StyleTransition) = apply {
+  override fun fillPatternTransition(options: StyleTransition): FillLayer = apply {
     // no-op
   }
 
@@ -779,7 +779,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    * DSL for [fillPatternTransition].
    */
   @Deprecated("This property has been deprecated and will do no operations")
-  override fun fillPatternTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun fillPatternTransition(block: StyleTransition.Builder.() -> Unit): FillLayer = apply {
     // no-op
   }
 
@@ -805,7 +805,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    *
    * @param fillTranslate value of fillTranslate
    */
-  override fun fillTranslate(fillTranslate: List<Double>) = apply {
+  override fun fillTranslate(fillTranslate: List<Double>): FillLayer = apply {
     val propertyValue = PropertyValue("fill-translate", fillTranslate)
     setProperty(propertyValue)
   }
@@ -843,7 +843,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    *
    * @param fillTranslate value of fillTranslate as Expression
    */
-  override fun fillTranslate(fillTranslate: Expression) = apply {
+  override fun fillTranslate(fillTranslate: Expression): FillLayer = apply {
     val propertyValue = PropertyValue("fill-translate", fillTranslate)
     setProperty(propertyValue)
   }
@@ -870,7 +870,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    *
    * @param options transition options for List<Double>
    */
-  override fun fillTranslateTransition(options: StyleTransition) = apply {
+  override fun fillTranslateTransition(options: StyleTransition): FillLayer = apply {
     val propertyValue = PropertyValue("fill-translate-transition", options)
     setProperty(propertyValue)
   }
@@ -878,7 +878,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   /**
    * DSL for [fillTranslateTransition].
    */
-  override fun fillTranslateTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+  override fun fillTranslateTransition(block: StyleTransition.Builder.() -> Unit): FillLayer = apply {
     fillTranslateTransition(StyleTransition.Builder().apply(block).build())
   }
 
@@ -907,7 +907,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    *
    * @param fillTranslateAnchor value of fillTranslateAnchor
    */
-  override fun fillTranslateAnchor(fillTranslateAnchor: FillTranslateAnchor) = apply {
+  override fun fillTranslateAnchor(fillTranslateAnchor: FillTranslateAnchor): FillLayer = apply {
     val propertyValue = PropertyValue("fill-translate-anchor", fillTranslateAnchor)
     setProperty(propertyValue)
   }
@@ -945,7 +945,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    *
    * @param fillTranslateAnchor value of fillTranslateAnchor as Expression
    */
-  override fun fillTranslateAnchor(fillTranslateAnchor: Expression) = apply {
+  override fun fillTranslateAnchor(fillTranslateAnchor: Expression): FillLayer = apply {
     val propertyValue = PropertyValue("fill-translate-anchor", fillTranslateAnchor)
     setProperty(propertyValue)
   }

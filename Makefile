@@ -59,19 +59,33 @@ fix:
 sdkRegistryUpload:
 	./gradlew mapboxSDKRegistryUpload -x extension-androidauto:mapboxSDKRegistryUpload -x extension-compose:mapboxSDKRegistryUpload --no-parallel --no-daemon;
 
+.PHONY: sdkRegistryPublicReleaseUpload
+sdkRegistryPublicReleaseUpload:
+	./gradlew mapboxSDKRegistryPublicReleaseUpload -x extension-androidauto:mapboxSDKRegistryPublicReleaseUpload --no-parallel --no-daemon;
+
+.PHONY: sdkRegistryPrivateReleaseUpload
+sdkRegistryPrivateReleaseUpload:
+	./gradlew mapboxSDKRegistryPrivateReleaseUpload -x extension-androidauto:mapboxSDKRegistryPrivateReleaseUpload --no-parallel --no-daemon;
+
 .PHONY: sdkRegistryPublish
 sdkRegistryPublish:
-	python3 -m pip install git-pull-request;
 	./gradlew mapboxSDKRegistryPublishAll;
 
-.PHONY: sdkRegistryUploadAndroidAutoExtension
-sdkRegistryUploadAndroidAutoExtension:
-	./gradlew extension-androidauto:mapboxSDKRegistryUpload;
+.PHONY: sdkRegistryPublicReleasePublish
+sdkRegistryPublicReleasePublish:
+	./gradlew mapboxSDKRegistryPublicReleasePublishAll;
 
-.PHONY: sdkRegistryPublishAndroidAutoExtension
-sdkRegistryPublishAndroidAutoExtension:
-	python3 -m pip install git-pull-request;
-	./gradlew extension-androidauto:mapboxSDKRegistryPublish;
+.PHONY: sdkRegistryPrivateReleasePublish
+sdkRegistryPrivateReleasePublish:
+	./gradlew mapboxSDKRegistryPrivateReleasePublishAll;
+
+.PHONY: sdkRegistryUploadPublicReleaseAndroidAutoExtension
+sdkRegistryUploadPublicReleaseAndroidAutoExtension:
+	./gradlew extension-androidauto:mapboxSDKRegistryPublicReleaseUpload;
+
+.PHONY: sdkRegistryPublishPublicReleaseAndroidAutoExtension
+sdkRegistryPublishPublicReleaseAndroidAutoExtension:
+	./gradlew extension-androidauto:mapboxSDKRegistryPublicReleasePublish;
 
 .PHONY: sdkRegistryUploadComposeExtension
 sdkRegistryUploadComposeExtension:
@@ -98,7 +112,7 @@ generate-changelog:
 	changelog-draft -b main -p $(TAG) -o CHANGELOG.md
 
 # Use `make update-android-docs TAG=YourReleaseTag` while running locally.
-# Run `make prepare-release-doc` first in the internal repository,
+# Run `make prepare-public-release-doc` or `make prepare-private-release-doc` first in the internal repository,
 # Note: if run locally, execute `mbx env` first.
 .PHONY: update-android-docs
 update-android-docs:

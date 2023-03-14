@@ -6,6 +6,7 @@ import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.utils.ColorUtils
 import com.mapbox.maps.extension.style.utils.unwrapToTyped
 import java.lang.StringBuilder
+import java.util.ArrayList
 
 /**
  * Represents a string broken into sections annotated with separate formatting options.

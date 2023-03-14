@@ -82,14 +82,14 @@ class ImageExtensionImpl(private val builder: Builder) : StyleContract.StyleImag
     /**
      * Pixel data of the image.
      */
-    fun image(image: Image) = apply {
+    fun image(image: Image): Builder = apply {
       this.internalImage = image
     }
 
     /**
      * Set bitmap data of the image.
      */
-    fun bitmap(bitmap: Bitmap) = apply {
+    fun bitmap(bitmap: Bitmap): Builder = apply {
       if (bitmap.config != Bitmap.Config.ARGB_8888) {
         throw IllegalArgumentException("Only ARGB_8888 bitmap config is supported!")
       }
@@ -101,14 +101,14 @@ class ImageExtensionImpl(private val builder: Builder) : StyleContract.StyleImag
     /**
      * Scale factor for the image.
      */
-    fun scale(scale: Float) = apply {
+    fun scale(scale: Float): Builder = apply {
       this.scale = scale
     }
 
     /**
      * Option to treat whether image is SDF(signed distance field) or not.
      */
-    fun sdf(sdf: Boolean = false) = apply {
+    fun sdf(sdf: Boolean = false): Builder = apply {
       this.sdf = sdf
     }
 
@@ -116,7 +116,7 @@ class ImageExtensionImpl(private val builder: Builder) : StyleContract.StyleImag
      * An array of two-element arrays, consisting of two numbers that represent
      * the from position and the to position of areas that can be stretched horizontally.
      */
-    fun stretchX(stretchX: List<ImageStretches> = listOf()) = apply {
+    fun stretchX(stretchX: List<ImageStretches> = listOf()): Builder = apply {
       this.stretchX = stretchX
     }
 
@@ -124,7 +124,7 @@ class ImageExtensionImpl(private val builder: Builder) : StyleContract.StyleImag
      * An array of two-element arrays, consisting of two numbers that represent
      * the from position and the to position of areas that can be stretched vertically.
      */
-    fun stretchY(stretchY: List<ImageStretches> = listOf()) = apply {
+    fun stretchY(stretchY: List<ImageStretches> = listOf()): Builder = apply {
       this.stretchY = stretchY
     }
 
@@ -133,7 +133,7 @@ class ImageExtensionImpl(private val builder: Builder) : StyleContract.StyleImag
      * corner, and the last two specifying the right, bottom corner. If present, and if the
      * icon uses icon-text-fit, the symbol's text will be fit inside the content box.
      */
-    fun content(content: ImageContent) = apply {
+    fun content(content: ImageContent): Builder = apply {
       this.content = content
     }
 
