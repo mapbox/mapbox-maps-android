@@ -74,7 +74,7 @@ class IconSizeChangeOnClickActivity : AppCompatActivity(), OnMapClickListener {
       val pixel = mapboxMap.pixelForCoordinate(point)
       mapboxMap.queryRenderedFeatures(
         RenderedQueryGeometry(screenBoxFromPixel(pixel)), RenderedQueryOptions(listOf("selected-marker-layer"), null)
-      ) { expected: Expected<String, MutableList<QueriedFeature>> ->
+      ) { expected: Expected<String, MutableList<QueriedRenderedFeature>> ->
         if (expected.value!!.isNotEmpty() && markerSelected) {
           return@queryRenderedFeatures
         }
@@ -91,7 +91,7 @@ class IconSizeChangeOnClickActivity : AppCompatActivity(), OnMapClickListener {
           }
 
           it.getSourceAs<GeoJsonSource>("selected-marker")!!.apply {
-            queriedFeatures[0].feature.geometry()?.let { value ->
+            queriedFeatures[0].queriedFeature.feature.geometry()?.let { value ->
               geometry(value)
             }
           }

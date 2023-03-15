@@ -612,8 +612,8 @@ class NativeMapTest {
   }
 
   @Test
-  fun queryRenderedFeaturesGeometry() {
-    val callback = mockk<QueryFeaturesCallback>()
+  fun queryRenderedFeatures() {
+    val callback = mockk<QueryRenderedFeaturesCallback>()
     val value = mockk<RenderedQueryGeometry>()
     val queryOptions = mockk<RenderedQueryOptions>()
     val nativeMap = NativeMapImpl(map)
@@ -623,7 +623,7 @@ class NativeMapTest {
 
   @Test
   fun querySourceFeatures() {
-    val callback = mockk<QueryFeaturesCallback>()
+    val callback = mockk<QuerySourceFeaturesCallback>()
     val queryOptions = mockk<SourceQueryOptions>()
     val nativeMap = NativeMapImpl(map)
     nativeMap.querySourceFeatures("foo", queryOptions, callback)
@@ -653,14 +653,15 @@ class NativeMapTest {
   fun setFeatureState() {
     val value = mockk<Value>()
     val nativeMap = NativeMapImpl(map)
-    nativeMap.setFeatureState("foo", "bar", "id", value)
-    verify { map.setFeatureState("foo", "bar", "id", value) }
+    val callback = mockk<FeatureStateOperationCallback>()
+    nativeMap.setFeatureState("foo", "bar", "id", value, callback)
+    verify { map.setFeatureState("foo", "bar", "id", any(), callback) }
   }
 
   @Test
   fun getFeatureState() {
-    val callback = mockk<QueryFeatureStateCallback>()
     val nativeMap = NativeMapImpl(map)
+    val callback = mockk<QueryFeatureStateCallback>()
     nativeMap.getFeatureState("foo", "bar", "id", callback)
     verify { map.getFeatureState("foo", "bar", "id", callback) }
   }
@@ -668,8 +669,17 @@ class NativeMapTest {
   @Test
   fun removeFeatureState() {
     val nativeMap = NativeMapImpl(map)
-    nativeMap.removeFeatureState("foo", "bar", "id", "key")
-    verify { map.removeFeatureState("foo", "bar", "id", "key") }
+    val callback = mockk<FeatureStateOperationCallback>()
+    nativeMap.removeFeatureState("foo", "bar", "id", "key", callback)
+    verify { map.removeFeatureState("foo", "bar", "id", "key", callback) }
+  }
+
+  @Test
+  fun resetFeatureStates() {
+    val nativeMap = NativeMapImpl(map)
+    val callback = mockk<FeatureStateOperationCallback>()
+    nativeMap.resetFeatureStates("foo", "bar", callback)
+    verify { map.resetFeatureStates("foo", "bar", callback) }
   }
 
   @Test

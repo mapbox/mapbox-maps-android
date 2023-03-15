@@ -45,14 +45,6 @@ class ObservableExtensionTest : BaseMapTest() {
     super.before()
   }
 
-  override fun loadMap() {
-    rule.scenario.onActivity {
-      it.runOnUiThread {
-        mapboxMap = mapView.getMapboxMap()
-      }
-    }
-  }
-
   private fun loadTestStyle(styleUri: String = Style.MAPBOX_STREETS) {
     rule.scenario.onActivity {
       it.runOnUiThread {

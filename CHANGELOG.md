@@ -7,9 +7,13 @@ Mapbox welcomes participation and contributions from everyone.
 * Remove deprecated `MapboxMap.queryRenderedFeatures` methods.
 * Remove `Snapshotter.setTileMode`, `Snapshotter.isInTileMode` methods.
 * Remove deprecated `MapStyleStateDelegate` and `isFullyLoaded` method.
-
-## Features ✨ and improvements 🏁
-* Update SDK's targetSdkVersion and CompileSdkVersion to 33.
+* Remove experimental `setRenderCacheOptions`, `getRenderCacheOptions` apis.
+* Update SDK's `targetSdkVersion` and `compileSdkVersion` to 33.
+* Add `callback` argument to the `MapboxMap` methods `getFeatureState`, `setFeatureState`, `removeFeatureState`.
+* Add the `MapboxMap.resetFeatureState` method.
+* Use different callback types for the `MapboxMap.queryRenderedFeatures` and the `MapboxMap.querySourceFeatures` methods.
+* Return `cancelable` from the `MapboxMap` methods : `getFeatureState`, `setFeatureState`, `removeFeatureState`, `querySourceFeatures`, `getGeoJsonClusterLeaves`, `getGeoJsonClusterChildren`, `getGeoJsonClusterExpansionZoom`.
+* Remove the deprecated `MapboxMap.queryFeatureExtensions` method.
 
 ## Dependencies
 * Update dependencies

@@ -51,13 +51,13 @@ class PolylineAnnotationManagerTest {
   private val source: GeoJsonSource = mockk()
   private val dragLayer: LineLayer = mockk()
   private val dragSource: GeoJsonSource = mockk()
-  private val queriedFeatures = mockk<Expected<String, List<QueriedFeature>>>()
-  private val queriedFeature = mockk<QueriedFeature>()
+  private val queriedRenderedFeaturesExpected = mockk<Expected<String, List<QueriedRenderedFeature>>>()
+  private val queriedRenderedFeature = mockk<QueriedRenderedFeature>()
   private val cancelable = mockk<Cancelable>()
   private val feature = mockk<Feature>()
-  private val queriedFeatureList = listOf(queriedFeature)
-  private val querySlot = slot<QueryFeaturesCallback>()
-  private val executeQuerySlot = slot<Runnable>()
+  private val queriedRenderedFeatureList = listOf(queriedRenderedFeature)
+  private val queryRenderedFeaturesCallbackSlot = slot<QueryRenderedFeaturesCallback>()
+  private val executeOnRenderThreadSlot = slot<Runnable>()
 
   private lateinit var manager: PolylineAnnotationManager
   @Before
@@ -98,20 +98,20 @@ class PolylineAnnotationManagerTest {
     every { source.sourceId } returns "source0"
     every { source.featureCollection(any()) } answers { source }
 
-    every { queriedFeature.feature } returns feature
-    every { queriedFeatures.value } returns queriedFeatureList
+    every { queriedRenderedFeature.queriedFeature.feature } returns feature
+    every { queriedRenderedFeaturesExpected.value } returns queriedRenderedFeatureList
     every { feature.getProperty(any()).asLong } returns 0L
-    every { mapFeatureQueryDelegate.executeOnRenderThread(capture(executeQuerySlot)) } answers {
-      executeQuerySlot.captured.run()
+    every { mapFeatureQueryDelegate.executeOnRenderThread(capture(executeOnRenderThreadSlot)) } answers {
+      executeOnRenderThreadSlot.captured.run()
     }
     every {
       mapFeatureQueryDelegate.queryRenderedFeatures(
         any<RenderedQueryGeometry>(),
         any(),
-        capture(querySlot)
+        capture(queryRenderedFeaturesCallbackSlot)
       )
     } answers {
-      querySlot.captured.run(queriedFeatures)
+      queryRenderedFeaturesCallbackSlot.captured.run(queriedRenderedFeaturesExpected)
       cancelable
     }
 

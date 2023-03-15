@@ -142,11 +142,11 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
   }
 
   private fun onFeatureClicked(
-    expected: Expected<String, List<QueriedFeature>>,
+    expected: Expected<String, List<QueriedRenderedFeature>>,
     onFeatureClicked: (Feature) -> Unit
   ) {
     if (expected.isValue && expected.value?.size!! > 0) {
-      expected.value?.get(0)?.feature?.let { feature ->
+      expected.value?.get(0)?.queriedFeature?.feature?.let { feature ->
         onFeatureClicked.invoke(feature)
       }
     }

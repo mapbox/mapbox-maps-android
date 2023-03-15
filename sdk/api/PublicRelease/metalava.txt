@@ -192,19 +192,18 @@ package com.mapbox.maps {
     method public java.util.List<com.mapbox.maps.MapDebugOptions> getDebug();
     method public com.mapbox.maps.CameraOptions getDragCameraOptions(com.mapbox.maps.ScreenCoordinate fromPoint, com.mapbox.maps.ScreenCoordinate toPoint);
     method public Double? getElevation(com.mapbox.geojson.Point coordinate);
-    method public void getFeatureState(String sourceId, String? sourceLayerId = null, String featureId, com.mapbox.maps.QueryFeatureStateCallback callback);
-    method public void getFeatureState(String sourceId, String featureId, com.mapbox.maps.QueryFeatureStateCallback callback);
+    method public com.mapbox.common.Cancelable getFeatureState(String sourceId, String? sourceLayerId = null, String featureId, com.mapbox.maps.QueryFeatureStateCallback callback);
+    method public com.mapbox.common.Cancelable getFeatureState(String sourceId, String featureId, com.mapbox.maps.QueryFeatureStateCallback callback);
     method public com.mapbox.maps.FreeCameraOptions getFreeCameraOptions();
-    method public void getGeoJsonClusterChildren(String sourceIdentifier, com.mapbox.geojson.Feature cluster, com.mapbox.maps.QueryFeatureExtensionCallback callback);
-    method public void getGeoJsonClusterExpansionZoom(String sourceIdentifier, com.mapbox.geojson.Feature cluster, com.mapbox.maps.QueryFeatureExtensionCallback callback);
-    method public void getGeoJsonClusterLeaves(String sourceIdentifier, com.mapbox.geojson.Feature cluster, long limit = 10L, long offset = 0L, com.mapbox.maps.QueryFeatureExtensionCallback callback);
-    method public void getGeoJsonClusterLeaves(String sourceIdentifier, com.mapbox.geojson.Feature cluster, long limit = 10L, com.mapbox.maps.QueryFeatureExtensionCallback callback);
-    method public void getGeoJsonClusterLeaves(String sourceIdentifier, com.mapbox.geojson.Feature cluster, com.mapbox.maps.QueryFeatureExtensionCallback callback);
+    method public com.mapbox.common.Cancelable getGeoJsonClusterChildren(String sourceIdentifier, com.mapbox.geojson.Feature cluster, com.mapbox.maps.QueryFeatureExtensionCallback callback);
+    method public com.mapbox.common.Cancelable getGeoJsonClusterExpansionZoom(String sourceIdentifier, com.mapbox.geojson.Feature cluster, com.mapbox.maps.QueryFeatureExtensionCallback callback);
+    method public com.mapbox.common.Cancelable getGeoJsonClusterLeaves(String sourceIdentifier, com.mapbox.geojson.Feature cluster, long limit = 10L, long offset = 0L, com.mapbox.maps.QueryFeatureExtensionCallback callback);
+    method public com.mapbox.common.Cancelable getGeoJsonClusterLeaves(String sourceIdentifier, com.mapbox.geojson.Feature cluster, long limit = 10L, com.mapbox.maps.QueryFeatureExtensionCallback callback);
+    method public com.mapbox.common.Cancelable getGeoJsonClusterLeaves(String sourceIdentifier, com.mapbox.geojson.Feature cluster, com.mapbox.maps.QueryFeatureExtensionCallback callback);
     method public com.mapbox.maps.MapOptions getMapOptions();
     method public double getMetersPerPixelAtLatitude(double latitude, double zoom);
     method public double getMetersPerPixelAtLatitude(double latitude);
     method public byte getPrefetchZoomDelta();
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.RenderCacheOptions getRenderCacheOptions();
     method public boolean getRenderWorldCopies();
     method public com.mapbox.maps.ResourceOptions getResourceOptions();
     method public com.mapbox.maps.Size getSize();
@@ -229,13 +228,12 @@ package com.mapbox.maps {
     method public java.util.List<com.mapbox.maps.ScreenCoordinate> pixelsForCoordinates(java.util.List<com.mapbox.geojson.Point> coordinates);
     method public com.mapbox.maps.MercatorCoordinate project(com.mapbox.geojson.Point point, double zoomScale);
     method public com.mapbox.maps.ProjectedMeters projectedMetersForCoordinate(com.mapbox.geojson.Point point);
-    method @Deprecated public void queryFeatureExtensions(String sourceIdentifier, com.mapbox.geojson.Feature feature, String extension, String extensionField, java.util.HashMap<java.lang.String,com.mapbox.bindgen.Value>? args, com.mapbox.maps.QueryFeatureExtensionCallback callback);
-    method public com.mapbox.common.Cancelable queryRenderedFeatures(com.mapbox.maps.RenderedQueryGeometry geometry, com.mapbox.maps.RenderedQueryOptions options, com.mapbox.maps.QueryFeaturesCallback callback);
-    method public void querySourceFeatures(String sourceId, com.mapbox.maps.SourceQueryOptions options, com.mapbox.maps.QueryFeaturesCallback callback);
+    method public com.mapbox.common.Cancelable queryRenderedFeatures(com.mapbox.maps.RenderedQueryGeometry geometry, com.mapbox.maps.RenderedQueryOptions options, com.mapbox.maps.QueryRenderedFeaturesCallback callback);
+    method public com.mapbox.common.Cancelable querySourceFeatures(String sourceId, com.mapbox.maps.SourceQueryOptions options, com.mapbox.maps.QuerySourceFeaturesCallback callback);
     method public void reduceMemoryUse();
-    method public void removeFeatureState(String sourceId, String? sourceLayerId = null, String featureId, String? stateKey = null);
-    method public void removeFeatureState(String sourceId, String? sourceLayerId = null, String featureId);
-    method public void removeFeatureState(String sourceId, String featureId);
+    method public com.mapbox.common.Cancelable removeFeatureState(String sourceId, String? sourceLayerId = null, String featureId, String? stateKey = null, com.mapbox.maps.FeatureStateOperationCallback callback);
+    method public com.mapbox.common.Cancelable removeFeatureState(String sourceId, String? sourceLayerId = null, String featureId, com.mapbox.maps.FeatureStateOperationCallback callback);
+    method public com.mapbox.common.Cancelable removeFeatureState(String sourceId, String featureId, com.mapbox.maps.FeatureStateOperationCallback callback);
     method public void removeOnCameraChangeListener(com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener onCameraChangeListener);
     method public void removeOnMapIdleListener(com.mapbox.maps.plugin.delegates.listeners.OnMapIdleListener onMapIdleListener);
     method public void removeOnMapLoadErrorListener(com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener onMapLoadErrorListener);
@@ -249,18 +247,18 @@ package com.mapbox.maps {
     method public void removeOnStyleImageMissingListener(com.mapbox.maps.plugin.delegates.listeners.OnStyleImageMissingListener onStyleImageMissingListener);
     method public void removeOnStyleImageUnusedListener(com.mapbox.maps.plugin.delegates.listeners.OnStyleImageUnusedListener onStyleImageUnusedListener);
     method public void removeOnStyleLoadedListener(com.mapbox.maps.plugin.delegates.listeners.OnStyleLoadedListener onStyleLoadedListener);
+    method public com.mapbox.common.Cancelable resetFeatureStates(String sourceId, String sourceLayerId, com.mapbox.maps.FeatureStateOperationCallback callback);
     method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setBounds(com.mapbox.maps.CameraBoundsOptions options);
     method public void setCamera(com.mapbox.maps.CameraOptions cameraOptions);
     method public void setCamera(com.mapbox.maps.FreeCameraOptions freeCameraOptions);
     method public void setConstrainMode(com.mapbox.maps.ConstrainMode constrainMode);
     method public void setDebug(java.util.List<? extends com.mapbox.maps.MapDebugOptions> debugOptions, boolean enabled);
-    method public void setFeatureState(String sourceId, String? sourceLayerId = null, String featureId, com.mapbox.bindgen.Value state);
-    method public void setFeatureState(String sourceId, String featureId, com.mapbox.bindgen.Value state);
+    method public com.mapbox.common.Cancelable setFeatureState(String sourceId, String? sourceLayerId = null, String featureId, com.mapbox.bindgen.Value state, com.mapbox.maps.FeatureStateOperationCallback callback);
+    method public com.mapbox.common.Cancelable setFeatureState(String sourceId, String featureId, com.mapbox.bindgen.Value state, com.mapbox.maps.FeatureStateOperationCallback callback);
     method public void setGestureInProgress(boolean inProgress);
     method @com.mapbox.maps.MapboxExperimental public void setMemoryBudget(com.mapbox.maps.MapMemoryBudget? memoryBudget);
     method public void setNorthOrientation(com.mapbox.maps.NorthOrientation northOrientation);
     method public void setPrefetchZoomDelta(byte delta);
-    method @com.mapbox.maps.MapboxExperimental public void setRenderCacheOptions(com.mapbox.maps.RenderCacheOptions options);
     method public void setRenderWorldCopies(boolean renderWorldCopies);
     method public void setUserAnimationInProgress(boolean inProgress);
     method public void setViewportMode(com.mapbox.maps.ViewportMode viewportMode);
@@ -275,12 +273,6 @@ package com.mapbox.maps {
 
   public static final class MapboxMap.Companion {
     method public void clearData(com.mapbox.maps.ResourceOptions resourceOptions, com.mapbox.maps.AsyncOperationResultCallback callback);
-  }
-
-  public final class RenderCacheOptionsExtKt {
-    method public static com.mapbox.maps.RenderCacheOptions.Builder setDisabled(com.mapbox.maps.RenderCacheOptions.Builder);
-    method public static com.mapbox.maps.RenderCacheOptions.Builder setLargeSize(com.mapbox.maps.RenderCacheOptions.Builder);
-    method public static com.mapbox.maps.RenderCacheOptions.Builder setSmallSize(com.mapbox.maps.RenderCacheOptions.Builder);
   }
 
   public final class ResourceOptionsManager {

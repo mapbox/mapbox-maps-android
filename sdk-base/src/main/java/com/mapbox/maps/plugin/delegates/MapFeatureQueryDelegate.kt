@@ -7,6 +7,7 @@ import com.mapbox.maps.*
  * Definition of the feature query delegate. Provide interface to query map's features.
  */
 interface MapFeatureQueryDelegate {
+
   /**
    * Queries the map for rendered features.
    *
@@ -18,7 +19,7 @@ interface MapFeatureQueryDelegate {
   fun queryRenderedFeatures(
     geometry: RenderedQueryGeometry,
     options: RenderedQueryOptions,
-    callback: QueryFeaturesCallback
+    callback: QueryRenderedFeaturesCallback
   ): Cancelable
 
   /**
@@ -31,8 +32,8 @@ interface MapFeatureQueryDelegate {
   fun querySourceFeatures(
     sourceId: String,
     options: SourceQueryOptions,
-    callback: QueryFeaturesCallback
-  )
+    callback: QuerySourceFeaturesCallback
+  ): Cancelable
 
   /**
    * In some cases querying source / render features is expected to be a blocking operation

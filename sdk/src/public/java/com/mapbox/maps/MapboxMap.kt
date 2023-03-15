@@ -955,7 +955,7 @@ class MapboxMap :
   override fun queryRenderedFeatures(
     geometry: RenderedQueryGeometry,
     options: RenderedQueryOptions,
-    callback: QueryFeaturesCallback
+    callback: QueryRenderedFeaturesCallback
   ): Cancelable {
     checkNativeMap("queryRenderedFeatures", false)
     return nativeMap.queryRenderedFeatures(geometry, options, callback)
@@ -964,18 +964,21 @@ class MapboxMap :
   /**
    * Queries the map for source features.
    *
-   * @param sourceId Style source identifier used to query for source features.
-   * @param options Options for querying source features.
+   * @param sourceId The style source identifier used to query for source features.
+   * @param options The `source query options` for querying source features.
+   * @param callback The `query features callback` called when the query completes.
+   * @return A `cancelable` object that could be used to cancel the pending query.
    *
-   * @return An array of source features.
+   * Note: In order to get expected results, the corresponding source needs to be in use and
+   * the query shall be made after the corresponding source data is loaded.
    */
   override fun querySourceFeatures(
     sourceId: String,
     options: SourceQueryOptions,
-    callback: QueryFeaturesCallback
-  ) {
+    callback: QuerySourceFeaturesCallback
+  ): Cancelable {
     checkNativeMap("querySourceFeatures", false)
-    nativeMap.querySourceFeatures(sourceId, options, callback)
+    return nativeMap.querySourceFeatures(sourceId, options, callback)
   }
 
   /**
@@ -1001,47 +1004,6 @@ class MapboxMap :
   }
 
   /**
-   * Queries for feature extension values in a GeoJSON source.
-   *
-   * @param sourceIdentifier The identifier of the source to query.
-   * @param feature to look for in the query.
-   * @param extension, now only support keyword 'supercluster'.
-   * @param extensionField, now only support following three extensions:
-   *        'children': returns the children of a cluster (on the next zoom level).
-   *        'leaves': returns all the leaves of a cluster (given its cluster_id)
-   *        'expansion-zoom': returns the zoom on which the cluster expands into several children (useful for "click to zoom" feature).
-   * @param args used for further query specification when using 'leaves' extensionField. Now only support following two args:
-   *        'limit': the number of points to return from the query (must use type [Long], set to maximum for all points)
-   *        'offset': the amount of points to skip (for pagination, must use type [Long])
-   *
-   * @param callback The result will be returned through the [QueryFeatureExtensionCallback].
-   *         The result could be a feature extension value containing either a value (expansion-zoom) or a feature collection (children or leaves).
-   *         Or a string describing an error if the operation was not successful.
-   */
-  @Deprecated(
-    "The function of queryFeatureExtensions is covered by others.",
-    ReplaceWith("getGeoJsonClusterLeaves/getGeoJsonClusterChildren/getGeoJsonClusterExpansionZoom")
-  )
-  fun queryFeatureExtensions(
-    sourceIdentifier: String,
-    feature: Feature,
-    extension: String,
-    extensionField: String,
-    args: HashMap<String, Value>?,
-    callback: QueryFeatureExtensionCallback
-  ) {
-    checkNativeMap("queryFeatureExtensions")
-    nativeMap.queryFeatureExtensions(
-      sourceIdentifier,
-      feature,
-      extension,
-      extensionField,
-      args,
-      callback
-    )
-  }
-
-  /**
    * Returns all the leaves (original points) of a cluster (given its cluster_id) from a GeoJsonSource, with pagination support: limit is the number of leaves
    * to return (set to Infinity for all points), and offset is the amount of points to skip (for pagination).
    *
@@ -1053,6 +1015,8 @@ class MapboxMap :
    * @param offset The amount of points to skip (for pagination, must use type [Long]). Defaults to 0.
    * @param callback The result will be returned through the [QueryFeatureExtensionCallback].
    *         The result is a feature collection or a string describing an error if the operation was not successful.
+   *
+   * @return A `cancelable` object that could be used to cancel the pending query.
    */
   @JvmOverloads
   fun getGeoJsonClusterLeaves(
@@ -1061,10 +1025,13 @@ class MapboxMap :
     limit: Long = QFE_DEFAULT_LIMIT,
     offset: Long = QFE_DEFAULT_OFFSET,
     callback: QueryFeatureExtensionCallback,
-  ) = queryFeatureExtensions(
-    sourceIdentifier, cluster, QFE_SUPER_CLUSTER, QFE_LEAVES,
-    hashMapOf(QFE_LIMIT to Value(limit), QFE_OFFSET to Value(offset)),
-    callback
+  ): Cancelable = nativeMap.queryFeatureExtensions(
+    /* sourceIdentifier = */ sourceIdentifier,
+    /* feature = */ cluster,
+    /* extension = */ QFE_SUPER_CLUSTER,
+    /* extensionField = */ QFE_LEAVES,
+    /* args = */ hashMapOf(QFE_LIMIT to Value(limit), QFE_OFFSET to Value(offset)),
+    /* callback = */ callback
   )
 
   /**
@@ -1077,13 +1044,20 @@ class MapboxMap :
    * @param cluster cluster from which to retrieve children from
    * @param callback The result will be returned through the [QueryFeatureExtensionCallback].
    *         The result is a feature collection or a string describing an error if the operation was not successful.
+   *
+   * @return A `cancelable` object that could be used to cancel the pending query.
    */
   fun getGeoJsonClusterChildren(
     sourceIdentifier: String,
     cluster: Feature,
     callback: QueryFeatureExtensionCallback,
-  ) = queryFeatureExtensions(
-    sourceIdentifier, cluster, QFE_SUPER_CLUSTER, QFE_CHILDREN, null, callback
+  ): Cancelable = nativeMap.queryFeatureExtensions(
+    /* sourceIdentifier = */ sourceIdentifier,
+    /* feature = */ cluster,
+    /* extension = */ QFE_SUPER_CLUSTER,
+    /* extensionField = */ QFE_CHILDREN,
+    /* args = */ null,
+    /* callback = */ callback
   )
 
   /**
@@ -1096,39 +1070,57 @@ class MapboxMap :
    * @param cluster cluster from which to retrieve the expansion zoom from
    * @param callback The result will be returned through the [QueryFeatureExtensionCallback].
    *         The result is a feature extension value containing a value or a string describing an error if the operation was not successful.
+   *
+   * @return A `cancelable` object that could be used to cancel the pending query.
    */
   fun getGeoJsonClusterExpansionZoom(
     sourceIdentifier: String,
     cluster: Feature,
     callback: QueryFeatureExtensionCallback,
-  ) = queryFeatureExtensions(
-    sourceIdentifier, cluster, QFE_SUPER_CLUSTER, QFE_EXPANSION_ZOOM, null, callback
+  ): Cancelable = nativeMap.queryFeatureExtensions(
+    /* sourceIdentifier = */ sourceIdentifier,
+    /* feature = */ cluster,
+    /* extension = */ QFE_SUPER_CLUSTER,
+    /* extensionField = */ QFE_EXPANSION_ZOOM,
+    /* args = */ null,
+    /* callback = */ callback
   )
 
   /**
-   * Update the state map of a feature within a style source.
+   * Updates the state object of a feature within a style source.
    *
-   * Update entries in the state map of a given feature within a style source. Only entries listed in the
-   * \p state map will be updated. An entry in the feature state map that is not listed in \p state will
-   * retain its previous value.
+   * Update entries in the `state` object of a given feature within a style source. Only properties of the
+   * `state` object will be updated. A property in the feature `state` object that is not listed in `state` will
+   * retain its previous value. The properties must be paint properties, layout properties are not supported.
    *
-   * Note that updates to feature state are asynchronous, so changes made by this method might not be
-   * immediately visible using getStateFeature().
+   * Note that updates to feature `state` are asynchronous, so changes made by this method might not be
+   * immediately visible using `getStateFeature`. And the corresponding source needs to be in use to ensure the
+   * feature data it contains can be successfully updated.
    *
-   * @param sourceId Style source identifier.
-   * @param sourceLayerId Style source layer identifier (for multi-layer sources such as vector sources).
-   * @param featureId Identifier of the feature whose state should be updated.
-   * @param state Map of entries to update with their respective new values.
+   * @param sourceId The style source identifier.
+   * @param sourceLayerId The style source layer identifier (for multi-layer sources such as vector sources).
+   * @param featureId The feature identifier of the feature whose state should be updated.
+   * @param state The `state` object with properties to update with their respective new values.
+   * @param callback The `feature state operation callback` called when the operation completes or ends.
+   * @return A `cancelable` object that could be used to cancel the pending operation.
+   *
    */
   @JvmOverloads
   fun setFeatureState(
     sourceId: String,
     sourceLayerId: String? = null,
     featureId: String,
-    state: Value
-  ) {
+    state: Value,
+    callback: FeatureStateOperationCallback,
+  ): Cancelable {
     checkNativeMap("setFeatureState")
-    nativeMap.setFeatureState(sourceId, sourceLayerId, featureId, state)
+    return nativeMap.setFeatureState(
+      /* sourceId = */ sourceId,
+      /* sourceLayerId = */ sourceLayerId,
+      /* featureId = */ featureId,
+      /* state = */ state,
+      /* callback = */ callback
+    )
   }
 
   /**
@@ -1137,49 +1129,79 @@ class MapboxMap :
    * Note that updates to feature state are asynchronous, so changes made by other methods might not be
    * immediately visible.
    *
-   * @param sourceId Style source identifier.
-   * @param sourceLayerId Style source layer identifier (for multi-layer sources such as vector sources).
-   * @param featureId Identifier of the feature whose state should be queried.
-   * @return Feature's state map or an empty map if the feature could not be found.
+   * @param sourceId The style source identifier.
+   * @param sourceLayerId The style source layer identifier (for multi-layer sources such as vector sources).
+   * @param featureId The feature identifier of the feature whose state should be queried.
+   * @param callback The `query feature state callback` called when the query completes.
+   * @return A `cancelable` object that could be used to cancel the pending query.
    */
   @JvmOverloads
   fun getFeatureState(
     sourceId: String,
     sourceLayerId: String? = null,
     featureId: String,
-    callback: QueryFeatureStateCallback
-  ) {
+    callback: QueryFeatureStateCallback,
+  ): Cancelable {
     checkNativeMap("getFeatureState")
-    nativeMap.getFeatureState(sourceId, sourceLayerId, featureId, callback)
+    return nativeMap.getFeatureState(
+      /* sourceId = */ sourceId,
+      /* sourceLayerId = */ sourceLayerId,
+      /* featureId = */ featureId,
+      /* callback = */callback
+    )
   }
 
   /**
-   * Remove entries from a feature state map.
+   * Removes entries from a feature state object.
    *
-   * Remove a specified entry or all entries from a feature's state map, depending on the value of stateKey.
+   * Remove a specified property or all property from a feature's state object, depending on the value of
+   * `stateKey`.
    *
    * Note that updates to feature state are asynchronous, so changes made by this method might not be
-   * immediately visible using getStateFeature().
+   * immediately visible using `getStateFeature`.
    *
-   * @param sourceId Style source identifier.
-   * @param sourceLayerId Style source layer identifier (for multi-layer sources such as vector sources).
-   * @param featureId Identifier of the feature whose state should be removed.
-   * @param stateKey Key of the entry to remove. If empty, the entire state is removed.
+   * @param sourceId The style source identifier.
+   * @param sourceLayerId The style source layer identifier (for multi-layer sources such as vector sources).
+   * @param featureId The feature identifier of the feature whose state should be removed.
+   * @param stateKey The key of the property to remove. If `null`, all feature's state object properties are removed.
+   * @param callback The `feature state operation callback` called when the operation completes or ends.
+   * @return A `cancelable` object that could be used to cancel the pending operation.
    */
   @JvmOverloads
   fun removeFeatureState(
     sourceId: String,
     sourceLayerId: String? = null,
     featureId: String,
-    stateKey: String? = null
-  ) {
+    stateKey: String? = null,
+    callback: FeatureStateOperationCallback,
+  ): Cancelable {
     checkNativeMap("removeFeatureState")
-    nativeMap.removeFeatureState(
-      sourceId,
-      sourceLayerId,
-      featureId,
-      stateKey
+    return nativeMap.removeFeatureState(
+      /* sourceId = */ sourceId,
+      /* sourceLayerId = */ sourceLayerId,
+      /* featureId = */ featureId,
+      /* stateKey = */ stateKey,
+      /* callback = */ callback,
     )
+  }
+
+  /**
+   * Reset all the feature states within a style source.
+   *
+   * Remove all feature state entries from the specified style source or source layer.
+   *
+   * Note that updates to feature state are asynchronous, so changes made by this method might not be
+   * immediately visible using `getStateFeature`.
+   *
+   * @param sourceId The style source identifier.
+   * @param sourceLayerId The style source layer identifier (for multi-layer sources such as vector sources).
+   * @param callback The `feature state operation callback` called when the operation completes or ends.
+   * @return A `cancelable` object that could be used to cancel the pending operation.
+   */
+  @JvmOverloads
+  fun resetFeatureStates(sourceId: String, sourceLayerId: String? = null, callback: FeatureStateOperationCallback): Cancelable {
+    checkNativeMap("resetFeatureState")
+    return nativeMap.resetFeatureStates(sourceId, sourceLayerId, callback)
   }
 
   /**
@@ -1505,43 +1527,6 @@ class MapboxMap :
   fun getElevation(coordinate: Point): Double? {
     checkNativeMap("getElevation")
     return nativeMap.getElevation(coordinate)
-  }
-
-  /**
-   * Enables or disables the experimental render cache feature.
-   *
-   * Render cache is an experimental feature aiming to reduce resource usage of map rendering
-   * by caching intermediate rendering results of tiles into specific cache textures for reuse between frames.
-   * Performance benefit of the cache depends on the style as not all layers are cacheable due to e.g.
-   * viewport aligned features. Render cache always prefers quality over performance.
-   *
-   * If [RenderCacheOptions.size] is not specified explicitly when using [RenderCacheOptions.Builder] - render cache will be disabled.
-   * If [RenderCacheOptions.size] is less than zero - [IllegalArgumentException] will be thrown.
-   *
-   * @param options Options defining the render cache behavior
-   */
-  @MapboxExperimental
-  fun setRenderCacheOptions(options: RenderCacheOptions) {
-    checkNativeMap("setRenderCacheOptions")
-    options.size?.let { size ->
-      nativeMap.renderCacheOptions = if (size >= 0)
-        options
-      else
-        throw IllegalArgumentException("Render cache size must be >= 0!")
-    } ?: nativeMap.apply {
-      this.renderCacheOptions = RenderCacheOptions.Builder().setDisabled().build()
-    }
-  }
-
-  /**
-   * Get the current RenderCacheOptions.
-   *
-   * The size of the render cache is in megabytes. Returned value is zero if the feature is disabled.
-   */
-  @MapboxExperimental
-  fun getRenderCacheOptions(): RenderCacheOptions {
-    checkNativeMap("getRenderCacheOptions")
-    return nativeMap.renderCacheOptions
   }
 
   /**
