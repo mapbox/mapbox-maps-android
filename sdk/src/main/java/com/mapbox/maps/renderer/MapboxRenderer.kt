@@ -64,23 +64,11 @@ internal abstract class MapboxRenderer : MapClient {
   }
 
   @AnyThread
-  override fun scheduleTask(task: Task) {
-    renderThread.queueRenderEvent(
-      RenderEvent(
-        runnable = { task.run() },
-        needRender = false,
-        eventType = if (renderThread.renderDestroyCallChain) EventType.DESTROY_RENDERER else EventType.DEFAULT
-      )
-    )
-  }
-
-  @AnyThread
   fun queueRenderEvent(runnable: Runnable) {
     renderThread.queueRenderEvent(
       RenderEvent(
         runnable = runnable,
         needRender = true,
-        eventType = EventType.DEFAULT
       )
     )
   }
@@ -91,7 +79,6 @@ internal abstract class MapboxRenderer : MapClient {
       RenderEvent(
         runnable = runnable,
         needRender = false,
-        eventType = EventType.DEFAULT
       )
     )
   }
@@ -157,7 +144,6 @@ internal abstract class MapboxRenderer : MapClient {
             }
           },
           needRender = true,
-          eventType = EventType.DEFAULT
         )
       )
       waitCondition.await(1, TimeUnit.SECONDS)
@@ -175,7 +161,6 @@ internal abstract class MapboxRenderer : MapClient {
       RenderEvent(
         runnable = { listener.onSnapshotReady(performSnapshot()) },
         needRender = true,
-        eventType = EventType.DEFAULT
       )
     )
   }
@@ -237,6 +222,6 @@ internal abstract class MapboxRenderer : MapClient {
   companion object {
     private const val TAG = "Mbgl-Renderer"
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    internal val repaintRenderEvent = RenderEvent(null, true, EventType.DEFAULT)
+    internal val repaintRenderEvent = RenderEvent(null, true)
   }
 }

@@ -76,11 +76,11 @@ class RenderHandlerThreadTest {
   }
 
   @Test
-  fun clearDefaultMessagesTest() {
+  fun clearRenderEventQueueTest() {
     renderHandlerThread.start()
     renderHandlerThread.handler = mockk(relaxed = true)
-    renderHandlerThread.clearDefaultMessages()
-    verify { renderHandlerThread.handler?.removeCallbacksAndMessages(EventType.DEFAULT) }
+    renderHandlerThread.clearRenderEventQueue()
+    verify { renderHandlerThread.handler?.removeCallbacksAndMessages(null) }
   }
 
   @Test
@@ -116,7 +116,8 @@ class RenderHandlerThreadTest {
     }
     Shadows.shadowOf(Looper.getMainLooper()).idleFor(Duration.ofMillis(50))
     verify { actionOne.invoke() }
-    verify { actionTwo.invoke() }
+    // action two skipped because of using HandlerThread#quit() and not quitSafely()
+    verifyNo { actionTwo.invoke() }
     verifyNo { actionThree.invoke() }
     verifyNo { actionFour.invoke() }
   }

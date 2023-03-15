@@ -405,7 +405,6 @@ class MapboxRenderThreadTest {
       RenderEvent(
         runnable,
         true,
-        EventType.DEFAULT
       )
     )
     assertEquals(1, mapboxRenderThread.renderEventQueue.size)
@@ -429,7 +428,6 @@ class MapboxRenderThreadTest {
       RenderEvent(
         runnable,
         false,
-        EventType.DEFAULT
       )
     )
     // we do not add non-render event to the queue
@@ -454,7 +452,6 @@ class MapboxRenderThreadTest {
       RenderEvent(
         runnable,
         false,
-        EventType.DEFAULT
       )
     )
     // we add to the queue
@@ -486,7 +483,6 @@ class MapboxRenderThreadTest {
       RenderEvent(
         runnable,
         false,
-        EventType.DEFAULT
       )
     )
     // simulate render thread is not fully prepared, e.g. EGL context is lost
@@ -549,7 +545,6 @@ class MapboxRenderThreadTest {
       RenderEvent(
         runnable,
         false,
-        EventType.DEFAULT
       )
     )
     idleHandler()
@@ -590,9 +585,9 @@ class MapboxRenderThreadTest {
 
       pauseHandler()
 
-      mapboxRenderThread.queueRenderEvent(RenderEvent(runnable, true, EventType.DEFAULT))
-      mapboxRenderThread.queueRenderEvent(RenderEvent(runnable2, true, EventType.DEFAULT))
-      mapboxRenderThread.queueRenderEvent(RenderEvent(runnable3, true, EventType.DEFAULT))
+      mapboxRenderThread.queueRenderEvent(RenderEvent(runnable, true))
+      mapboxRenderThread.queueRenderEvent(RenderEvent(runnable2, true))
+      mapboxRenderThread.queueRenderEvent(RenderEvent(runnable3, true))
 
       idleHandler()
     }
@@ -780,7 +775,7 @@ class MapboxRenderThreadTest {
   }
 
   @Test
-  fun onDestroyExecutesAllDestroyTasks() {
+  fun onDestroyClearsAllTasks() {
     initRenderThread()
     every { eglCore.makeCurrent(any()) } returns true
     val runnables = listOf<Runnable>(
@@ -788,7 +783,10 @@ class MapboxRenderThreadTest {
       mockk(relaxUnitFun = true),
       mockk(relaxUnitFun = true),
     )
-    val events = runnables.map { RenderEvent(it, false, EventType.DESTROY_RENDERER) }
+    // first is render event, second and third are non-render events
+    val events = runnables.mapIndexed { i, runnable ->
+      RenderEvent(runnable, i == 0)
+    }
 
     // simulate chained DESTROY events being added via scheduleTask on destroyRenderer call
     every { mapboxRenderer.destroyRenderer() } answers {
@@ -798,7 +796,7 @@ class MapboxRenderThreadTest {
     provideValidSurface()
     mapboxRenderThread.destroy()
 
-    verifyOrder {
+    verifyNo {
       runnables.forEach { it.run() }
     }
   }
@@ -815,8 +813,8 @@ class MapboxRenderThreadTest {
       runnable2 = mockCountdownRunnable(this)
       mapboxRenderThread.onSurfaceDestroyed()
 
-      mapboxRenderThread.queueRenderEvent(RenderEvent(runnable, false, EventType.DEFAULT))
-      mapboxRenderThread.queueRenderEvent(RenderEvent(runnable2, false, EventType.DEFAULT))
+      mapboxRenderThread.queueRenderEvent(RenderEvent(runnable, false))
+      mapboxRenderThread.queueRenderEvent(RenderEvent(runnable2, false))
 
       mapboxRenderThread.onSurfaceCreated(surface, 1, 1)
 
@@ -885,16 +883,17 @@ class MapboxRenderThreadTest {
     provideValidSurface()
     waitZeroCounter {
       val latch = this
-      // simulate real situation that `destroyRenderer` schedules some task in queue
-      // which was leading to a deadlock in `onSurfaceDestroyed`
+      // `destroyRenderer` should not schedule anything but even if it does - we make sure we do
+      // not execute it and clean up resources
       every { mapboxRenderer.destroyRenderer() } answers {
         renderHandlerThread.handler?.post {
           Thread.sleep(500)
-          latch.countDown()
+          assert(false)
         }
       }
       mapboxRenderThread.destroy()
       mapboxRenderThread.onSurfaceDestroyed()
+      latch.countDown()
     }
     verifyOnce { eglCore.release() }
     verifyOnce { mapboxRenderer.destroyRenderer() }

@@ -58,36 +58,9 @@ internal abstract class MapboxRendererTest {
         RenderEvent(
           null,
           true,
-          EventType.DEFAULT
         )
       )
     }
-  }
-
-  @Test
-  fun scheduleTaskTest() {
-    val task = mockk<Task>(relaxUnitFun = true)
-    every { renderThread.renderDestroyCallChain } returns false
-    val event = slot<RenderEvent>()
-    mapboxRenderer.scheduleTask(task)
-    verify {
-      renderThread.queueRenderEvent(capture(event))
-    }
-    assert(!event.captured.needRender)
-    assert(event.captured.eventType == EventType.DEFAULT)
-  }
-
-  @Test
-  fun scheduleDestroyTaskTest() {
-    val task = mockk<Task>(relaxUnitFun = true)
-    every { renderThread.renderDestroyCallChain } returns true
-    val event = slot<RenderEvent>()
-    mapboxRenderer.scheduleTask(task)
-    verify {
-      renderThread.queueRenderEvent(capture(event))
-    }
-    assert(!event.captured.needRender)
-    assert(event.captured.eventType == EventType.DESTROY_RENDERER)
   }
 
   @Test
@@ -135,7 +108,6 @@ internal abstract class MapboxRendererTest {
         RenderEvent(
           event,
           false,
-          EventType.DEFAULT
         )
       )
     }
@@ -150,7 +122,6 @@ internal abstract class MapboxRendererTest {
         RenderEvent(
           event,
           true,
-          EventType.DEFAULT
         )
       )
     }
