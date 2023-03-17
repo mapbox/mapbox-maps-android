@@ -16,7 +16,7 @@ import java.util.concurrent.TimeoutException
 @LargeTest
 class LegacyOfflineManagerTest {
 
-  private lateinit var offlineManager: OfflineRegionManagerInterface
+  private lateinit var offlineManager: OfflineRegionManager
 
   @Test
   fun sanity() {

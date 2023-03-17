@@ -8,7 +8,7 @@ import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
 
-internal class NativeMapImpl(val map: MapInterface) :
+internal class NativeMapImpl(val map: Map) :
   MapInterface, StyleManagerInterface, ObservableInterface {
 
   override fun setSize(size: Size) {
@@ -563,10 +563,6 @@ internal class NativeMapImpl(val map: MapInterface) :
 
   override fun isStyleLoaded(): Boolean {
     return map.isStyleLoaded
-  }
-
-  override fun isMapLoaded(): Boolean {
-    return map.isMapLoaded
   }
 
   override fun setStyleSourceProperty(

@@ -29,7 +29,7 @@ internal object MapProvider {
     )
   )
 
-  fun getNativeMapCore(mapView: MapView): MapInterface {
+  fun getNativeMapCore(mapView: MapView): Map {
     return (mapView.getController().getNativeMap() as NativeMapImpl).map
   }
 

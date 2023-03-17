@@ -4,13 +4,27 @@ import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
+import com.mapbox.maps.shadows.ShadowObservable
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 
+@RunWith(RobolectricTestRunner::class)
+@Config(
+  shadows = [
+    ShadowMap::class,
+    ShadowMapSnapshotter::class,
+    ShadowObservable::class,
+    ShadowCameraManager::class,
+    ShadowStyleManager::class,
+  ]
+)
 class NativeMapTest {
 
-  private val map = mockk<MapInterface>(relaxed = true)
+  private val map = mockk<Map>(relaxed = true)
 
   @Test
   fun subscribe() {
@@ -595,13 +609,6 @@ class NativeMapTest {
     val nativeMap = NativeMapImpl(map)
     nativeMap.setDebug(value, true)
     verify { map.setDebug(value, true) }
-  }
-
-  @Test
-  fun isMapFullyLoaded() {
-    val nativeMap = NativeMapImpl(map)
-    nativeMap.isMapLoaded
-    verify { map.isMapLoaded }
   }
 
   @Test
