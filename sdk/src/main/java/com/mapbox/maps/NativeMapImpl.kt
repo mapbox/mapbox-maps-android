@@ -60,7 +60,7 @@ internal class NativeMapImpl(val map: MapInterface) :
 
   override fun cameraForCoordinateBounds(
     coordinateBounds: CoordinateBounds,
-    padding: EdgeInsets,
+    padding: EdgeInsets?,
     zoom: Double?,
     pitch: Double?
   ): CameraOptions {
@@ -104,7 +104,7 @@ internal class NativeMapImpl(val map: MapInterface) :
 
   override fun cameraForCoordinates(
     points: List<Point>,
-    padding: EdgeInsets,
+    padding: EdgeInsets?,
     zoom: Double?,
     pitch: Double?
   ): CameraOptions {
@@ -121,7 +121,7 @@ internal class NativeMapImpl(val map: MapInterface) :
 
   override fun cameraForGeometry(
     geometry: Geometry,
-    padding: EdgeInsets,
+    padding: EdgeInsets?,
     zoom: Double?,
     pitch: Double?
   ): CameraOptions {

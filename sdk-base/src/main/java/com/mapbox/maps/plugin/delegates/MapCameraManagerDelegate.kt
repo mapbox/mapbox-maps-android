@@ -30,7 +30,7 @@ interface MapCameraManagerDelegate {
    */
   fun cameraForCoordinateBounds(
     bounds: CoordinateBounds,
-    padding: EdgeInsets = EdgeInsets(0.0, 0.0, 0.0, 0.0),
+    padding: EdgeInsets? = null,
     bearing: Double? = null,
     pitch: Double? = null
   ): CameraOptions
@@ -49,7 +49,7 @@ interface MapCameraManagerDelegate {
    */
   fun cameraForCoordinates(
     coordinates: List<Point>,
-    padding: EdgeInsets = EdgeInsets(0.0, 0.0, 0.0, 0.0),
+    padding: EdgeInsets? = null,
     bearing: Double? = null,
     pitch: Double? = null
   ): CameraOptions
@@ -91,7 +91,7 @@ interface MapCameraManagerDelegate {
    */
   fun cameraForGeometry(
     geometry: Geometry,
-    padding: EdgeInsets = EdgeInsets(0.0, 0.0, 0.0, 0.0),
+    padding: EdgeInsets? = null,
     bearing: Double? = null,
     pitch: Double? = null
   ): CameraOptions

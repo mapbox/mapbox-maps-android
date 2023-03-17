@@ -1458,10 +1458,10 @@ package com.mapbox.maps.plugin.delegates {
   }
 
   public interface MapCameraManagerDelegate {
-    method public com.mapbox.maps.CameraOptions cameraForCoordinateBounds(com.mapbox.maps.CoordinateBounds bounds, com.mapbox.maps.EdgeInsets padding = com.mapbox.maps.EdgeInsets(0.0, 0.0, 0.0, 0.0), Double? bearing = null, Double? pitch = null);
-    method public com.mapbox.maps.CameraOptions cameraForCoordinates(java.util.List<com.mapbox.geojson.Point> coordinates, com.mapbox.maps.EdgeInsets padding = com.mapbox.maps.EdgeInsets(0.0, 0.0, 0.0, 0.0), Double? bearing = null, Double? pitch = null);
+    method public com.mapbox.maps.CameraOptions cameraForCoordinateBounds(com.mapbox.maps.CoordinateBounds bounds, com.mapbox.maps.EdgeInsets? padding = null, Double? bearing = null, Double? pitch = null);
+    method public com.mapbox.maps.CameraOptions cameraForCoordinates(java.util.List<com.mapbox.geojson.Point> coordinates, com.mapbox.maps.EdgeInsets? padding = null, Double? bearing = null, Double? pitch = null);
     method public com.mapbox.maps.CameraOptions cameraForCoordinates(java.util.List<com.mapbox.geojson.Point> coordinates, com.mapbox.maps.CameraOptions camera, com.mapbox.maps.ScreenBox box);
-    method public com.mapbox.maps.CameraOptions cameraForGeometry(com.mapbox.geojson.Geometry geometry, com.mapbox.maps.EdgeInsets padding = com.mapbox.maps.EdgeInsets(0.0, 0.0, 0.0, 0.0), Double? bearing = null, Double? pitch = null);
+    method public com.mapbox.maps.CameraOptions cameraForGeometry(com.mapbox.geojson.Geometry geometry, com.mapbox.maps.EdgeInsets? padding = null, Double? bearing = null, Double? pitch = null);
     method public com.mapbox.maps.CoordinateBounds coordinateBoundsForCamera(com.mapbox.maps.CameraOptions camera);
     method public com.mapbox.maps.CoordinateBounds coordinateBoundsForCameraUnwrapped(com.mapbox.maps.CameraOptions camera);
     method public com.mapbox.maps.CoordinateBoundsZoom coordinateBoundsZoomForCamera(com.mapbox.maps.CameraOptions camera);

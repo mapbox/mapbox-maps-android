@@ -789,4 +789,28 @@ class NativeMapTest {
     nativeMap.renderWorldCopies
     verify { map.renderWorldCopies }
   }
+
+  @Test
+  fun cameraForCoordinateBoundsWithoutPadding() {
+    val bounds = mockk<CoordinateBounds>()
+    val nativeMap = NativeMapImpl(map)
+    nativeMap.cameraForCoordinateBounds(bounds, null, 1.0, 2.0)
+    verify { map.cameraForCoordinateBounds(bounds, null, 1.0, 2.0) }
+  }
+
+  @Test
+  fun cameraForCoordinatesWithoutPadding() {
+    val points = mockk<MutableList<Point>>()
+    val nativeMap = NativeMapImpl(map)
+    nativeMap.cameraForCoordinates(points, null, 1.0, 2.0)
+    verify { map.cameraForCoordinates(points, null, 1.0, 2.0) }
+  }
+
+  @Test
+  fun cameraForGeometryWithoutPadding() {
+    val geometry = mockk<Geometry>()
+    val nativeMap = NativeMapImpl(map)
+    nativeMap.cameraForGeometry(geometry, null, 1.0, 2.0)
+    verify { map.cameraForGeometry(geometry, null, 1.0, 2.0) }
+  }
 }

@@ -502,7 +502,7 @@ class ViewAnnotationManagerTest {
     every { mapboxMap.getMetersPerPixelAtLatitude(any(), any()) } returns 1.0
     every { mapboxMap.projectedMetersForCoordinate(any()) } returns ProjectedMeters(1.0, 1.0)
     every { mapboxMap.coordinateForProjectedMeters(any()) } returns Point.fromLngLat(0.0, 0.0)
-    every { mapboxMap.cameraForCoordinateBounds(any()) } returns expectedCameraOptions
+    every { mapboxMap.cameraForCoordinateBounds(any(), any()) } returns expectedCameraOptions
 
     val cameraOptionsActual = viewAnnotationManager.cameraForAnnotations(annotations)
     assertNotNull(cameraOptionsActual)

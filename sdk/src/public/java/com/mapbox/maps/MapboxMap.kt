@@ -568,7 +568,7 @@ class MapboxMap :
    * and [com.mapbox.maps.extension.style.projection.generated.getProjection]
    *
    * @param bounds The LatLngBounds to take in account when converting
-   * @param padding The additional padding to take in account when converting
+   * @param padding The optional padding to take in account when converting
    * @param bearing The optional bearing to take in account when converting
    * @param pitch The optional pitch to take in account when converting
    *
@@ -576,7 +576,7 @@ class MapboxMap :
    */
   override fun cameraForCoordinateBounds(
     bounds: CoordinateBounds,
-    padding: EdgeInsets,
+    padding: EdgeInsets?,
     bearing: Double?,
     pitch: Double?
   ): CameraOptions {
@@ -602,7 +602,7 @@ class MapboxMap :
    * and [com.mapbox.maps.extension.style.projection.generated.getProjection]
    *
    * @param coordinates The List of coordinates to take in account when converting
-   * @param padding The additional padding to take in account when converting
+   * @param padding The optional padding to take in account when converting
    * @param bearing The optional bearing to take in account when converting
    * @param pitch The optional pitch to take in account when converting
    *
@@ -610,7 +610,7 @@ class MapboxMap :
    */
   override fun cameraForCoordinates(
     coordinates: List<Point>,
-    padding: EdgeInsets,
+    padding: EdgeInsets?,
     bearing: Double?,
     pitch: Double?
   ): CameraOptions {
@@ -662,7 +662,7 @@ class MapboxMap :
    * and [com.mapbox.maps.extension.style.projection.generated.getProjection]
    *
    * @param geometry The geometry to take in account when converting
-   * @param padding The additional padding to take in account when converting
+   * @param padding The optional padding to take in account when converting
    * @param bearing The optional bearing to take in account when converting
    * @param pitch The optional pitch to take in account when converting
    *
@@ -670,7 +670,7 @@ class MapboxMap :
    */
   override fun cameraForGeometry(
     geometry: Geometry,
-    padding: EdgeInsets,
+    padding: EdgeInsets?,
     bearing: Double?,
     pitch: Double?
   ): CameraOptions {
