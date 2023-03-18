@@ -1,8 +1,6 @@
 plugins {
-  id("com.android.application")
-  kotlin("android")
+  id("com.mapbox.gradle.application")
   id("com.mapbox.maps.token")
-  id("io.gitlab.arturbosch.detekt").version(Versions.detekt)
 }
 
 apply {
@@ -91,17 +89,6 @@ android {
   packagingOptions {
     if (buildFromSource.toBoolean()) {
       jniLibs.pickFirsts.add("**/libc++_shared.so")
-    }
-  }
-
-  flavorDimensions.add("version")
-  productFlavors {
-    val private by creating {
-      dimension = "version"
-    }
-    val public by creating {
-      dimension = "version"
-      isDefault = true
     }
   }
 }
