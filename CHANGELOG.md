@@ -53,6 +53,10 @@ Mapbox welcomes participation and contributions from everyone.
 | androidx.compose:compose-bom |  | 2023.01.00 |
 | com.pinterest:ktlint | 0.39.0 | 0.48.2 |
 
+# 10.12.0
+## Bug fixes 🐞
+* Fix regression from `v10.11.0` when applying geojson from loaded style to the new style could cause the crash or no data applied.
+
 # 10.12.0-rc.1
 ## Bug fixes 🐞
 * Fix regression from `v10.11.0` when applying geojson data was not working when no style was available.
