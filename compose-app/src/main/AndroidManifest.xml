@@ -44,6 +44,18 @@
           android:name="@string/category"
           android:value="@string/category_basic" />
     </activity>
+
+    <activity
+        android:name=".examples.basic.ViewAnnotationActivity"
+        android:description="@string/description_view_annotation"
+        android:exported="true"
+        android:parentActivityName=".ExampleOverviewActivity"
+        android:configChanges="orientation|screenSize|screenLayout"
+        android:label="@string/activity_view_annotation">
+      <meta-data
+          android:name="@string/category"
+          android:value="@string/category_annotation" />
+    </activity>
   </application>
 
 </manifest>

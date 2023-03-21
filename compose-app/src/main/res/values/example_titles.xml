@@ -2,4 +2,5 @@
 <resources>
     <string name="activity_simple_map">Display a map view</string>
     <string name="activity_debug_mode">Debug mode</string>
+    <string name="activity_view_annotation">View annotation</string>
 </resources>
