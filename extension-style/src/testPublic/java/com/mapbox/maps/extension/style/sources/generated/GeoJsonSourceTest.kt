@@ -45,13 +45,11 @@ class GeoJsonSourceTest {
 
   @Before
   fun prepareTest() {
-    every { style.addStyleSource(any(), any()) } returns expected
-    every { style.setStyleSourceProperty(any(), any(), any()) } returns expected
-    every { style.getStyleSourceProperty(any(), any()) } returns styleProperty
     every { expected.error } returns null
     every { expectedDelta.error } returns null
     every { styleProperty.kind } returns StylePropertyValueKind.CONSTANT
-    every { style.isValid() } returns true
+
+    mockkStyle(style)
 
     // For default property getters
     mockkStatic(StyleManager::class)
@@ -64,6 +62,13 @@ class GeoJsonSourceTest {
       if (isPaused)
         unPause()
     }
+  }
+
+  private fun mockkStyle(style: StyleInterface) {
+    every { style.addStyleSource(any(), any()) } returns expected
+    every { style.setStyleSourceProperty(any(), any(), any()) } returns expected
+    every { style.getStyleSourceProperty(any(), any()) } returns styleProperty
+    every { style.isValid() } returns true
   }
 
   @Test
@@ -508,6 +513,46 @@ class GeoJsonSourceTest {
   }
 
   @Test
+  fun reuseDataWithAnotherStyle() {
+    val testSource = geoJsonSource("testId") {}
+    Shadows.shadowOf(Looper.getMainLooper()).pause()
+    Shadows.shadowOf(GeoJsonSource.workerThread.looper).pause()
+    testSource.data(TEST_GEOJSON, DATA_ID)
+    Shadows.shadowOf(GeoJsonSource.workerThread.looper).idle()
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+
+    Shadows.shadowOf(Looper.getMainLooper()).pause()
+    Shadows.shadowOf(GeoJsonSource.workerThread.looper).pause()
+    testSource.bindTo(style)
+    Shadows.shadowOf(GeoJsonSource.workerThread.looper).idle()
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+
+    val newStyle = mockk<StyleInterface>(relaxUnitFun = true, relaxed = true)
+    mockkStyle(newStyle)
+    Shadows.shadowOf(Looper.getMainLooper()).pause()
+    Shadows.shadowOf(GeoJsonSource.workerThread.looper).pause()
+    testSource.bindTo(newStyle)
+    Shadows.shadowOf(GeoJsonSource.workerThread.looper).idle()
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+
+    verify(exactly = 1) {
+      style.setStyleGeoJSONSourceData(
+        "testId",
+        DATA_ID,
+        capture(jsonSlot)
+      )
+    }
+    verify(exactly = 1) {
+      newStyle.setStyleGeoJSONSourceData(
+        "testId",
+        DATA_ID,
+        capture(jsonSlot)
+      )
+    }
+    assertEquals(jsonSlot.captured.string, "{\"type\":\"FeatureCollection\",\"features\":[]}")
+  }
+
+  @Test
   fun featureAfterBindTest() {
     val testSource = geoJsonSource("testId") {}
     testSource.bindTo(style)
@@ -556,6 +601,45 @@ class GeoJsonSourceTest {
     Shadows.shadowOf(Looper.getMainLooper()).idle()
     verify(exactly = 1) {
       style.setStyleGeoJSONSourceData(
+        "testId",
+        DATA_ID,
+        any()
+      )
+    }
+  }
+
+  @Test
+  fun reuseFeatureCollectionWithAnotherStyle() {
+    val testSource = geoJsonSource("testId") {}
+    Shadows.shadowOf(Looper.getMainLooper()).pause()
+    Shadows.shadowOf(GeoJsonSource.workerThread.looper).pause()
+    testSource.featureCollection(FEATURE_COLLECTION, DATA_ID)
+    Shadows.shadowOf(GeoJsonSource.workerThread.looper).idle()
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+
+    Shadows.shadowOf(Looper.getMainLooper()).pause()
+    Shadows.shadowOf(GeoJsonSource.workerThread.looper).pause()
+    testSource.bindTo(style)
+    Shadows.shadowOf(GeoJsonSource.workerThread.looper).idle()
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+
+    val newStyle = mockk<StyleInterface>(relaxUnitFun = true, relaxed = true)
+    mockkStyle(newStyle)
+    Shadows.shadowOf(Looper.getMainLooper()).pause()
+    Shadows.shadowOf(GeoJsonSource.workerThread.looper).pause()
+    testSource.bindTo(newStyle)
+    Shadows.shadowOf(GeoJsonSource.workerThread.looper).idle()
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+
+    verify(exactly = 1) {
+      style.setStyleGeoJSONSourceData(
+        "testId",
+        DATA_ID,
+        any()
+      )
+    }
+    verify(exactly = 1) {
+      newStyle.setStyleGeoJSONSourceData(
         "testId",
         DATA_ID,
         any()

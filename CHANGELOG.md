@@ -4,6 +4,10 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 10.12.0
+## Bug fixes 🐞
+* Fix regression from `v10.11.0` when applying geojson from loaded style to the new style could cause the crash or no data applied.
+
 # 10.11.2 March 10, 2023
 ## Bug fixes 🐞
 * Fix missing terrain on some GPUs (e.g. Mali). ([2038](https://github.com/mapbox/mapbox-maps-android/pull/2038))

@@ -31,16 +31,21 @@ class RasterDemSourceTest {
 
   @Before
   fun prepareTest() {
-    every { style.addStyleSource(any(), any()) } returns expected
-    every { style.setStyleSourceProperty(any(), any(), any()) } returns expected
-    every { style.getStyleSourceProperty(any(), any()) } returns styleProperty
     every { expected.error } returns null
     every { expectedDelta.error } returns null
     every { styleProperty.kind } returns StylePropertyValueKind.CONSTANT
 
+    mockkStyle(style)
+
     // For default property getters
     mockkStatic(StyleManager::class)
     every { StyleManager.getStyleSourcePropertyDefaultValue(any(), any()) } returns styleProperty
+  }
+
+  private fun mockkStyle(style: StyleInterface) {
+    every { style.addStyleSource(any(), any()) } returns expected
+    every { style.setStyleSourceProperty(any(), any(), any()) } returns expected
+    every { style.getStyleSourceProperty(any(), any()) } returns styleProperty
   }
 
   @Test
