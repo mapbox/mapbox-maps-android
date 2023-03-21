@@ -279,8 +279,41 @@ public interface StyleManagerInterface extends ObservableInterface {
      */
     @NonNull
     Expected<String, com.mapbox.bindgen.None> setStyleSourceProperties(@NonNull String sourceId, @NonNull Value properties);
+    /**
+     * Sets GeoJSON data to a GeoJSON style source.
+     *
+     * This method is thread safe.
+     *
+     * Note that if this method is called from a thread other than the main thread
+     * the return value does not contain the actual operation status and
+     * the events API shall be used to make sure that the operation succeeded.
+     * In case of success, a `map-loaded` event will be propagated. In case of errors,
+     * a `map-loading-error` event will be propagated instead.
+     *
+     * @param sourceId A style source identifier.
+     * @param data the GeoJSON data.
+     *
+     * @return A string describing an error if the operation was not successful, empty otherwise.
+     */
     @NonNull
     Expected<String, com.mapbox.bindgen.None> setStyleGeoJSONSourceData(@NonNull String sourceId, @NonNull GeoJSONSourceData data);
+    /**
+     * Sets GeoJSON data to a GeoJSON style source.
+     *
+     * This method is thread safe.
+     *
+     * The overloaded version of the method above allows for passing
+     * a data id - a user-provided string that will be returned as a
+     * `data-id` parameter of the `source-data-loaded` event argument.
+     * In this way, the client can determine which instance of the data
+     * actually applies to the map if multiple instances were set in a row.
+     *
+     * @param sourceId A style source identifier.
+     * @param dataId An arbitrary string used to track the given GeoJSON data.
+     * @param data the GeoJSON data.
+     *
+     * @return A string describing an error if the operation was not successful, empty otherwise.
+     */
     @NonNull
     Expected<String, com.mapbox.bindgen.None> setStyleGeoJSONSourceData(@NonNull String sourceId, @NonNull String dataId, @NonNull GeoJSONSourceData data);
     /**
@@ -342,12 +375,40 @@ public interface StyleManagerInterface extends ObservableInterface {
      */
     @NonNull
     Expected<String, com.mapbox.bindgen.None> setStyleLightProperty(@NonNull String property, @NonNull Value value);
+    /**
+     * Returns the existing style lights.
+     *
+     * @return The list containing the information about existing style lights.
+     */
     @NonNull
     List<StyleObjectInfo> getStyleLights();
+    /**
+     * Sets the style lights.
+     *
+     * @param lights An array of style lights.
+     *
+     * @return A string describing an error if the operation was not successful, empty otherwise.
+     */
     @NonNull
     Expected<String, com.mapbox.bindgen.None> setStyleLights(@NonNull Value lights);
+    /**
+     * Gets the value of a style light property in lights array.
+     *
+     * @param id The id of the style light in lights array.
+     * @param property The style light property name.
+     * @return The style light property value.
+     */
     @NonNull
     StylePropertyValue getStyleLightProperty(@NonNull String id, @NonNull String property);
+    /**
+     * Sets a value to the the style light property.
+     *
+     * @param id The style light id.
+     * @param property The style light property name.
+     * @param value The style light property value.
+     *
+     * @return A string describing an error if the operation was not successful, empty otherwise.
+     */
     @NonNull
     Expected<String, com.mapbox.bindgen.None> setStyleLightProperty(@NonNull String id, @NonNull String property, @NonNull Value value);
     /**

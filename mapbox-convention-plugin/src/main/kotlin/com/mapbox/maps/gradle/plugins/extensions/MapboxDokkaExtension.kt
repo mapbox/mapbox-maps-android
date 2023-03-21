@@ -9,14 +9,19 @@ import org.gradle.api.provider.ListProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.TaskProvider
 import org.gradle.kotlin.dsl.listProperty
+import org.jetbrains.dokka.gradle.DokkaCollectorTask
 import org.jetbrains.dokka.gradle.DokkaTask
 import javax.inject.Inject
 
+/**
+ * Dokka extension that takes care of setting up related tasks and configuration for Dokka.
+ *
+ * It can be applied to root project (see [applyToRootProject]) or Android library subproject
+ * (see [applyTo]).
+ */
 public abstract class MapboxDokkaExtension @Inject constructor(objects: ObjectFactory) {
   private val extraListOfSourcesProperty: ListProperty<String> =
-    objects.listProperty<String>().convention(
-      emptyList()
-    )
+    objects.listProperty<String>().convention(emptyList())
 
   /**
    * List of files to include as part of the Dokka source sets when generating documentation.
@@ -44,6 +49,11 @@ public abstract class MapboxDokkaExtension @Inject constructor(objects: ObjectFa
       reportUndocumentedProperty.disallowChanges()
     }
 
+  internal fun applyToRootProject(project: Project) {
+    project.applyRequiredPlugins()
+    configureRootProjectDokka(project)
+  }
+
   internal fun applyTo(project: Project, libraryExtension: LibraryExtension) {
     project.applyRequiredPlugins()
     libraryExtension.configureDokka(project)
@@ -51,6 +61,12 @@ public abstract class MapboxDokkaExtension @Inject constructor(objects: ObjectFa
 
   private fun Project.applyRequiredPlugins() {
     plugins.apply("org.jetbrains.dokka")
+  }
+
+  private fun configureRootProjectDokka(rootProject: Project) = rootProject.run {
+    tasks.withType(DokkaCollectorTask::class.java).configureEach {
+      failOnWarning.set(true)
+    }
   }
 
   private fun LibraryExtension.configureDokka(project: Project) {
@@ -67,7 +83,8 @@ public abstract class MapboxDokkaExtension @Inject constructor(objects: ObjectFa
       }
 
       val mapboxHtmlDokkaFlavor: String? = project.findProperty("mapbox.dokkaHtmlFlavor") as String?
-      if (project.gradle.startParameter.taskNames.contains("dokkaHtmlCollector") && mapboxHtmlDokkaFlavor == null) {
+      val taskNames = project.gradle.startParameter.taskNames
+      if ((taskNames.contains("dokkaHtmlCollector") || taskNames.contains("dokkaHtml")) && mapboxHtmlDokkaFlavor == null) {
         throw GradleException("Parameter `mapbox.dokkaHtmlFlavor` must be defined with `privateRelease` of `publicRelease`. For example, `./gradlew dokkaHtmlCollector -Pmapbox.dokkaHtmlFlavor=privateRelease`")
       }
       if (variantName == mapboxHtmlDokkaFlavor) {
@@ -119,9 +136,9 @@ public abstract class MapboxDokkaExtension @Inject constructor(objects: ObjectFa
       failOnWarning.set(true)
     }
   }
-}
 
-/**
- * Our own [DokkaTask] to differentiate it from the ones provided by the Dokka plugin
- */
-internal abstract class OwnDokkaTask : DokkaTask()
+  /**
+   * Our own [DokkaTask] to differentiate it from the ones provided by the Dokka plugin
+   */
+  internal abstract class OwnDokkaTask : DokkaTask()
+}

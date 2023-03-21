@@ -223,6 +223,23 @@ public interface MapInterface extends CameraManagerInterface {
      */
     @NonNull
     com.mapbox.common.Cancelable resetFeatureStates(@NonNull String sourceId, @Nullable String sourceLayerId, @NonNull FeatureStateOperationCallback callback);
+    /**
+     * The memory budget hint to be used by the map. The budget can be given in
+     * tile units or in megabytes. A Map will do the best effort to keep memory
+     * allocations for a non essential resources within the budget.
+     *
+     * Note! This is an experimental feature. The memory budget distribution and resource
+     * eviction logic is a subject to change. Current implementation sets memory budget
+     * hint per data source.
+     *
+     * If memory budget in megabytes is set, the engine will try to use ETC1 texture compression
+     * for raster layers, therefore, raster images with alpha channel will be rendered incorrectly.
+     *
+     * If null is set, the memory budget in tile units will be dynamically calculated based on
+     * the current viewport size.
+     *
+     * @param memoryBudget The memory budget hint to be used by the Map.
+     */
     void setMemoryBudget(@Nullable MapMemoryBudget memoryBudget);
     /** Reduces memory use. Useful to call when the application gets paused or sent to background. */
     void reduceMemoryUse();
@@ -246,15 +263,60 @@ public interface MapInterface extends CameraManagerInterface {
      */
     @Nullable
     Double getElevation(@NonNull Point coordinate);
+    /**
+     * Subscribe to the view annotations updates. The callback will be envoked whenever the position is updated. i.e. Camera changed, projection changed, projection transitions, etc.
+     *
+     * @param listener The listener that will be subscribed to view annotation postion updates.
+     *
+     * Note: If the user want to invalidate the listener, setViewAnnotationPositionsUpdateListener(nullptr) should be explicitly called.
+     */
     void setViewAnnotationPositionsUpdateListener(@Nullable ViewAnnotationPositionsUpdateListener listener);
+    /**
+     * Add a new view annotation.
+     *
+     * @param identifier An identifier for the annotation to be added.
+     * @param options The options for the annotation to be added.
+     *
+     * @return A string describing an error if the operation was not successful, empty otherwise.
+     */
     @NonNull
     Expected<String, com.mapbox.bindgen.None> addViewAnnotation(@NonNull String identifier, @NonNull ViewAnnotationOptions options);
+    /**
+     * Update view annotation if it exists.
+     *
+     * @param identifier An identifier for the annotation to be updated.
+     * @param options The options for the annotation to be updated.
+     *
+     * @return A string describing an error if the operation was not successful, empty otherwise.
+     */
     @NonNull
     Expected<String, com.mapbox.bindgen.None> updateViewAnnotation(@NonNull String identifier, @NonNull ViewAnnotationOptions options);
+    /**
+     * Remove view annotation if it exists.
+     *
+     * @param identifier An identifier for the annotation to be removed.
+     *
+     * @return A string describing an error if the operation was not successful, empty otherwise.
+     */
     @NonNull
     Expected<String, com.mapbox.bindgen.None> removeViewAnnotation(@NonNull String identifier);
+    /**
+     * Fetch the `ViewAnnotationOptions` that the identifier is binding to.
+     *
+     * @param identifier The identifier for the `ViewAnnotationOptions` that needs to be fetched.
+     *
+     * @return The `ViewAnnotationOptions` data if operation succeeded, otherwise a string describing an error if the operation was not successful.
+     */
     @NonNull
     Expected<String, ViewAnnotationOptions> getViewAnnotationOptions(@NonNull String identifier);
+    /**
+     * Returns tileIDs that cover current map camera
+     *
+     * Note! This is an experimental API and behavior might change in future.
+     *
+     * @param tileCoverOptions Options for the tile cover method
+     * @param cameraOptions This is an extra parameter for future use. Has no effect for now.
+     */
     @NonNull
     List<CanonicalTileID> tileCover(@NonNull TileCoverOptions tileCoverOptions, @Nullable CameraOptions cameraOptions);
 }

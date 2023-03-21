@@ -64,8 +64,8 @@ allprojects {
 }
 
 plugins {
-  // the IDE highlights `libs` as an error, see https://github.com/gradle/gradle/issues/22797
-  alias(libs.plugins.dokka)
+  id("com.mapbox.gradle.root")
+  // the IDE mistakenly highlights `libs` as an error, see https://github.com/gradle/gradle/issues/22797
   alias(libs.plugins.detekt) apply false
   id(Plugins.binaryCompatibilityValidatorId) version Versions.pluginBinaryCompatibilityValidator
   // Used to print dependency tree of the task, useful to debug gradle tasks
@@ -73,12 +73,6 @@ plugins {
   id(Plugins.taskTreeId) version Versions.pluginTaskTree
 }
 
-repositories {
-  maven(url = "https://dl.bintray.com/kotlin/dokka")
-}
-tasks.withType<org.jetbrains.dokka.gradle.DokkaTask>().configureEach {
-  outputDirectory.set(buildDir.resolve(this.name))
-}
 tasks.withType<Test> {
   maxParallelForks = (Runtime.getRuntime().availableProcessors() / 2).takeIf { it > 0 } ?: 1
 }

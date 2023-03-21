@@ -11,6 +11,10 @@ plugins {
 
 gradlePlugin {
   plugins {
+    register("MapboxRootPlugin") {
+      id = "com.mapbox.gradle.root"
+      implementationClass = "com.mapbox.maps.gradle.plugins.MapboxRootPlugin"
+    }
     register("MapboxLibraryPlugin") {
       id = "com.mapbox.gradle.library"
       implementationClass = "com.mapbox.maps.gradle.plugins.MapboxLibraryPlugin"
@@ -36,5 +40,5 @@ dependencies {
 
   // compileOnly because we want to leave versioning to the consumers
   compileOnly(libs.gradle)
-  compileOnly(libs.dokka)
+  implementation(libs.dokka)
 }
