@@ -4,6 +4,9 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 10.12.0
+## Bug fixes 🐞
+* Fix regression from `v10.11.0` when applying geojson from loaded style to the new style could cause the crash or no data applied.
 
 # 10.12.0-rc.1 March 09, 2023
 ## Bug fixes 🐞
