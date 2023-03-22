@@ -1,6 +1,5 @@
 plugins {
   id("com.mapbox.gradle.application")
-  id("com.mapbox.maps.token")
 }
 
 apply {
@@ -141,6 +140,3 @@ project.apply {
   from("$rootDir/gradle/detekt.gradle")
   from("$rootDir/gradle/dependency-updates.gradle")
 }
-
-val localPath:String = org.apache.commons.io.FilenameUtils.getFullPathNoEndSeparator(project.buildscript.sourceFile.toString())
-the<com.mapbox.AccessTokenExtension>().file = "${localPath}/src/main/res/values/developer-config.xml"

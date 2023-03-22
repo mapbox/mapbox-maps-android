@@ -3,6 +3,16 @@ import org.gradle.kotlin.dsl.`kotlin-dsl`
 repositories {
   google()
   mavenCentral()
+  maven {
+    url = uri("https://api.mapbox.com/downloads/v2/releases/maven")
+    credentials {
+      username = "mapbox"
+      password = System.getenv("SDK_REGISTRY_TOKEN") ?: project.property("SDK_REGISTRY_TOKEN") as String
+    }
+    authentication {
+      create<BasicAuthentication>("basic")
+    }
+  }
 }
 
 plugins {
@@ -41,4 +51,5 @@ dependencies {
   // compileOnly because we want to leave versioning to the consumers
   compileOnly(libs.gradle)
   implementation(libs.dokka)
+  implementation(libs.mapboxAccessToken)
 }

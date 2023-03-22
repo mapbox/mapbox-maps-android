@@ -3,11 +3,13 @@
 dokka = "1.8.10"
 gradle = "7.4.2"
 detekt = "1.22.0"
+mapboxAccessToken = "0.4.0"
 
 [libraries]
 dokka = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref = "dokka" }
 gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
 detekt = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt"}
+mapboxAccessToken = { module = "com.mapbox.gradle.plugins:access-token", version.ref = "mapboxAccessToken"}
 
 [plugins]
 dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }

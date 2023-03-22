@@ -1,8 +1,5 @@
 plugins {
-  id("com.android.application")
-  kotlin("android")
-  id("com.mapbox.maps.token")
-  id("io.gitlab.arturbosch.detekt").version(Versions.detekt)
+  id("com.mapbox.gradle.application")
 }
 
 val buildFromSource: String by project
@@ -34,17 +31,6 @@ android {
   packagingOptions {
     if (buildFromSource.toBoolean()) {
       jniLibs.pickFirsts.add("**/libc++_shared.so")
-    }
-  }
-
-  flavorDimensions.add("version")
-  productFlavors {
-    val private by creating {
-      dimension = "version"
-    }
-    val public by creating {
-      dimension = "version"
-      isDefault = true
     }
   }
 }
@@ -87,6 +73,3 @@ project.apply {
   from("$rootDir/gradle/detekt.gradle")
   from("$rootDir/gradle/dependency-updates.gradle")
 }
-
-val localPath:String = org.apache.commons.io.FilenameUtils.getFullPathNoEndSeparator(project.buildscript.sourceFile.toString())
-the<com.mapbox.AccessTokenExtension>().file = "${localPath}/src/main/res/values/developer-config.xml"
