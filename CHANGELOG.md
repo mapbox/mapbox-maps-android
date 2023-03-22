@@ -5,8 +5,27 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 
 # 10.12.0
+## Features ✨ and improvements 🏁
+* Add `data-id` argument to `GeoJsonSource` data update methods. `data-id` is later attached to the `SourceDataLoadedEventData` event and allows to track the specific `GeoJsonSource` update.
+* Reduce line gradient texture size if there is no color change.
+
 ## Bug fixes 🐞
 * Fix regression from `v10.11.0` when applying geojson from loaded style to the new style could cause the crash or no data applied.
+* Fix regression from `v10.11.0` when applying geojson data was not working when no style was available.
+* Do not fail on parsing vector tile when there are duplicate keys encoded in the tile data.
+* Fix a bug where camera change event is not emitted when using free camera options to set camera.
+* Fix network usage for the case when multiple access tokens are used.
+* Fix rendering glitches for symbols when animating the map caused by image atlas interfering.
+* Fix set geojson source data with null value.
+* Interrupt blocking disk cache database operations on application exit, so that the application does not hang.
+* Fix a bug where continuously dragging and changing zoom would lead to either very slow or very fast map dragging.
+* Avoid generation of the unneeded glyph textures.
+* Fix rendering errors when the closing point is missing in GeoJSON polygon features.
+* Fix a bug where taking consecutive snapshots had missing tiles.
+* Fix a bug where fill extrusions would flicker when crossing a certain zoom threshold.
+
+## Dependencies
+* Update gl-native to v10.12.0 and common to v23.4.0.
 
 # 10.11.2 March 10, 2023
 ## Bug fixes 🐞
