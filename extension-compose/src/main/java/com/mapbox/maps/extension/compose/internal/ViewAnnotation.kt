@@ -20,7 +20,7 @@ internal class ViewAnnotationNode(
   val viewAnnotationManager: ViewAnnotationManager,
   val view: View,
   var updatedListener: OnViewAnnotationUpdatedListener?,
-) : MapNode {
+) : MapNode() {
   override fun onAttached() {
     viewAnnotationManager.apply {
       updatedListener?.let {
@@ -46,6 +46,14 @@ internal class ViewAnnotationNode(
   }
 }
 
+/**
+ * Composable function to add a [ViewAnnotation] to the Map.
+ *
+ * @param options Various options needed for displaying view annotation.
+ * @param modifier Modifier that will be applied to the [ComposeView] where the view annotation is created.
+ * @param onUpdatedListener A listener to be invoked when the [ViewAnnotation] is updated.
+ * @param content The content to draw in the [ViewAnnotation]
+ */
 @Composable
 @MapboxMapComposable
 public fun ViewAnnotation(

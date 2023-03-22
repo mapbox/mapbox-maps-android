@@ -62,6 +62,7 @@ dependencies {
   implementation(Dependencies.composeUiToolingPreview)
   debugImplementation(Dependencies.composeUiTooling)
 
+  implementation(Dependencies.squareRetrofit)
   implementation(Dependencies.androidxAppCompat)
   implementation(Dependencies.androidxCoreKtx)
   implementation(Dependencies.androidxMultidex)

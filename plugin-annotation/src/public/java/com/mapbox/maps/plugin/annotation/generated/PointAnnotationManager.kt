@@ -400,7 +400,7 @@ class PointAnnotationManager(
   /**
    * The IconPadding property
    *
-   * Size of the additional area around the icon bounding box used for detecting symbol collisions.
+   * Size of the additional area around the icon bounding box used for detecting symbol collisions. The unit of iconPadding is in density-independent pixels.
    */
   var iconPadding: Double?
     /**
@@ -504,7 +504,7 @@ class PointAnnotationManager(
   /**
    * The IconTextFitPadding property
    *
-   * Size of the additional area added to dimensions determined by {@link Property.ICON_TEXT_FIT}, in clockwise order: top, right, bottom, left.
+   * Size of the additional area added to dimensions determined by {@link Property.ICON_TEXT_FIT}, in clockwise order: top, right, bottom, left. The unit of iconTextFitPadding is in density-independent pixels.
    */
   var iconTextFitPadding: List<Double>?
     /**
@@ -582,7 +582,7 @@ class PointAnnotationManager(
   /**
    * The SymbolSpacing property
    *
-   * Distance between two symbol anchors.
+   * Distance between two symbol anchors. The unit of symbolSpacing is in density-independent pixels.
    */
   var symbolSpacing: Double?
     /**
@@ -738,7 +738,7 @@ class PointAnnotationManager(
   /**
    * The TextMaxAngle property
    *
-   * Maximum angle change between adjacent characters.
+   * Maximum angle change between adjacent characters. The unit of textMaxAngle is in degrees.
    */
   var textMaxAngle: Double?
     /**
@@ -790,7 +790,7 @@ class PointAnnotationManager(
   /**
    * The TextPadding property
    *
-   * Size of the additional area around the text bounding box used for detecting symbol collisions.
+   * Size of the additional area around the text bounding box used for detecting symbol collisions. The unit of textPadding is in density-independent pixels.
    */
   var textPadding: Double?
     /**
@@ -920,7 +920,7 @@ class PointAnnotationManager(
   /**
    * The IconTranslate property
    *
-   * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up.
+   * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. The unit of iconTranslate is in density-independent pixels.
    */
   var iconTranslate: List<Double>?
     /**
@@ -972,7 +972,7 @@ class PointAnnotationManager(
   /**
    * The TextTranslate property
    *
-   * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up.
+   * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. The unit of textTranslate is in density-independent pixels.
    */
   var textTranslate: List<Double>?
     /**

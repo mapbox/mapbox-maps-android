@@ -163,7 +163,7 @@ class PolygonAnnotationManager(
   /**
    * The FillTranslate property
    *
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. The unit of fillTranslate is in density-independent pixels.
    */
   var fillTranslate: List<Double>?
     /**

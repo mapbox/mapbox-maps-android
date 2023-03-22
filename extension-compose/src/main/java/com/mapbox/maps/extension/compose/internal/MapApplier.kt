@@ -1,17 +1,22 @@
 package com.mapbox.maps.extension.compose.internal
 
 import androidx.compose.runtime.AbstractApplier
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Composition
+import androidx.compose.runtime.CompositionContext
 import com.mapbox.maps.MapView
 
 /**
  * Defines the contract of a MapNode, the MapNode will be notified when it's added/moved/removed from
  * the node tree.
  */
-internal interface MapNode {
+internal abstract class MapNode {
+  val children = mutableListOf<MapNode>()
+
   /**
-   * Invoked when the [MapNode] is attached to the MapboxMap node tree.
+   * Invoked when the [MapNode] is attached to the node tree.
    */
-  fun onAttached() {}
+  open fun onAttached() {}
 
   /**
    * Invoked when the [MapNode] is moved inside the node tree.
@@ -19,23 +24,23 @@ internal interface MapNode {
    * @param from original position
    * @param to the target position
    */
-  fun onMoved(from: Int, to: Int) {}
+  open fun onMoved(from: Int, to: Int) {}
 
   /**
-   * Invoked when the [MapNode] is removed from the MapboxMap node tree.
+   * Invoked when the [MapNode] is removed from the node tree.
    */
-  fun onRemoved() {}
+  open fun onRemoved() {}
 
   /**
-   * Invoked when the MapboxMap node tree is cleared.
+   * Invoked when the node tree is cleared.
    */
-  fun onClear() {}
+  open fun onClear() {}
 }
 
 /**
  * Root level [MapNode] for MapboxMap composable function.
  */
-private object RootMapNode : MapNode
+internal object RootMapNode : MapNode()
 
 /**
  * MapApplier is responsible for applying the tree-based operations on MapboxMap, that get emitted
@@ -47,15 +52,14 @@ internal class MapApplier(
    */
   val mapView: MapView
 ) : AbstractApplier<MapNode>(RootMapNode) {
-  private val decorations = mutableListOf<MapNode>()
 
   override fun onClear() {
-    decorations.forEach { it.onClear() }
-    decorations.clear()
+    root.children.forEach { it.onClear() }
+    root.children.clear()
   }
 
   override fun insertBottomUp(index: Int, instance: MapNode) {
-    decorations.add(index, instance)
+    current.children.add(index, instance)
     instance.onAttached()
   }
 
@@ -71,13 +75,23 @@ internal class MapApplier(
 
   override fun move(from: Int, to: Int, count: Int) {
     // TODO: Notify the nodes that has been moved
-    decorations.move(from, to, count)
+    current.children.move(from, to, count)
   }
 
   override fun remove(index: Int, count: Int) {
     repeat(count) { offset ->
-      decorations[index + offset].onRemoved()
+      current.children[index + offset].onRemoved()
     }
-    decorations.remove(index, count)
+    current.children.remove(index, count)
+  }
+}
+
+internal fun MapNode.setContent(
+  mapView: MapView,
+  parent: CompositionContext,
+  content: @Composable () -> Unit
+): Composition {
+  return Composition(MapApplier(mapView), parent).apply {
+    setContent(content)
   }
 }

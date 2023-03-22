@@ -103,7 +103,7 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   /**
    * Set icon-rotate to initialise the pointAnnotation with.
    *
-   * Rotates the icon clockwise.
+   * Rotates the icon clockwise. The unit of iconRotate is in degrees.
    *
    * @param iconRotate the icon-rotate value
    * @return this
@@ -121,7 +121,7 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   /**
    * Set icon-size to initialise the pointAnnotation with.
    *
-   * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by {@link PropertyFactory#iconSize}. 1 is the original size; 3 triples the size of the image.
+   * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by {@link PropertyFactory#iconSize}. 1 is the original size; 3 triples the size of the image. The unit of iconSize is in factor of the original icon size.
    *
    * @param iconSize the icon-size value
    * @return this
@@ -211,7 +211,7 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   /**
    * Set text-letter-spacing to initialise the pointAnnotation with.
    *
-   * Text tracking amount.
+   * Text tracking amount. The unit of textLetterSpacing is in ems.
    *
    * @param textLetterSpacing the text-letter-spacing value
    * @return this
@@ -229,7 +229,7 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   /**
    * Set text-line-height to initialise the pointAnnotation with.
    *
-   * Text leading value for multi-line text.
+   * Text leading value for multi-line text. The unit of textLineHeight is in ems.
    *
    * @param textLineHeight the text-line-height value
    * @return this
@@ -247,7 +247,7 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   /**
    * Set text-max-width to initialise the pointAnnotation with.
    *
-   * The maximum line width for text wrapping.
+   * The maximum line width for text wrapping. The unit of textMaxWidth is in ems.
    *
    * @param textMaxWidth the text-max-width value
    * @return this
@@ -265,7 +265,7 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   /**
    * Set text-offset to initialise the pointAnnotation with.
    *
-   * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position.
+   * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position. The unit of textOffset is in ems.
    *
    * @param textOffset the text-offset value
    * @return this
@@ -283,7 +283,7 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   /**
    * Set text-radial-offset to initialise the pointAnnotation with.
    *
-   * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with {@link PropertyFactory#textVariableAnchor}, which defaults to using the two-dimensional {@link PropertyFactory#textOffset} if present.
+   * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with {@link PropertyFactory#textVariableAnchor}, which defaults to using the two-dimensional {@link PropertyFactory#textOffset} if present. The unit of textRadialOffset is in ems.
    *
    * @param textRadialOffset the text-radial-offset value
    * @return this
@@ -301,7 +301,7 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   /**
    * Set text-rotate to initialise the pointAnnotation with.
    *
-   * Rotates the text clockwise.
+   * Rotates the text clockwise. The unit of textRotate is in degrees.
    *
    * @param textRotate the text-rotate value
    * @return this
@@ -319,7 +319,7 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   /**
    * Set text-size to initialise the pointAnnotation with.
    *
-   * Font size.
+   * Font size. The unit of textSize is in density-independent pixels.
    *
    * @param textSize the text-size value
    * @return this
@@ -386,7 +386,7 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   /**
    * Set icon-halo-blur to initialise the pointAnnotation with.
    *
-   * Fade out the halo towards the outside.
+   * Fade out the halo towards the outside. The unit of iconHaloBlur is in density-independent pixels.
    *
    * @param iconHaloBlur the icon-halo-blur value
    * @return this
@@ -435,7 +435,7 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   /**
    * Set icon-halo-width to initialise the pointAnnotation with.
    *
-   * Distance of halo to the icon outline.
+   * Distance of halo to the icon outline. The unit of iconHaloWidth is in density-independent pixels.
    *
    * @param iconHaloWidth the icon-halo-width value
    * @return this
@@ -502,7 +502,7 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   /**
    * Set text-halo-blur to initialise the pointAnnotation with.
    *
-   * The halo's fadeout distance towards the outside.
+   * The halo's fadeout distance towards the outside. The unit of textHaloBlur is in density-independent pixels.
    *
    * @param textHaloBlur the text-halo-blur value
    * @return this
@@ -551,7 +551,7 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   /**
    * Set text-halo-width to initialise the pointAnnotation with.
    *
-   * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size.
+   * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. The unit of textHaloWidth is in density-independent pixels.
    *
    * @param textHaloWidth the text-halo-width value
    * @return this

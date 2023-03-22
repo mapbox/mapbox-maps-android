@@ -44,7 +44,50 @@
           android:name="@string/category"
           android:value="@string/category_basic" />
     </activity>
-
+    <activity
+        android:name=".examples.annotation.CircleAnnotationActivity"
+        android:description="@string/description_circle_annotation"
+        android:exported="true"
+        android:parentActivityName=".ExampleOverviewActivity"
+        android:configChanges="orientation|screenSize|screenLayout"
+        android:label="@string/activity_circle_annotation">
+      <meta-data
+          android:name="@string/category"
+          android:value="@string/category_annotation" />
+    </activity>
+    <activity
+        android:name=".examples.annotation.PointAnnotationClusterActivity"
+        android:description="@string/description_point_annotation_cluster"
+        android:exported="true"
+        android:parentActivityName=".ExampleOverviewActivity"
+        android:configChanges="orientation|screenSize|screenLayout"
+        android:label="@string/activity_point_annotation_cluster">
+      <meta-data
+          android:name="@string/category"
+          android:value="@string/category_annotation" />
+    </activity>
+    <activity
+        android:name=".examples.annotation.PolygonAnnotationActivity"
+        android:description="@string/description_polygon_annotation"
+        android:exported="true"
+        android:parentActivityName=".ExampleOverviewActivity"
+        android:configChanges="orientation|screenSize|screenLayout"
+        android:label="@string/activity_polygon_annotation">
+      <meta-data
+          android:name="@string/category"
+          android:value="@string/category_annotation" />
+    </activity>
+    <activity
+        android:name=".examples.annotation.PolylineAnnotationActivity"
+        android:description="@string/description_polyline_annotation"
+        android:exported="true"
+        android:parentActivityName=".ExampleOverviewActivity"
+        android:configChanges="orientation|screenSize|screenLayout"
+        android:label="@string/activity_polyline_annotation">
+      <meta-data
+          android:name="@string/category"
+          android:value="@string/category_annotation" />
+    </activity>
     <activity
         android:name=".examples.basic.ViewAnnotationActivity"
         android:description="@string/description_view_annotation"

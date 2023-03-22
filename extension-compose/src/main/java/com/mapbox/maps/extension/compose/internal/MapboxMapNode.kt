@@ -37,7 +37,7 @@ private class MapboxMapNode(
   initialClickListener: OnMapClickListener,
   initialLongClickListener: OnMapLongClickListener,
   var onCameraStateChange: (CameraState) -> Unit
-) : MapNode {
+) : MapNode() {
   init {
     controller.getMapboxMap().apply {
       addOnCameraChangeListener {

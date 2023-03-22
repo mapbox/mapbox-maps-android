@@ -1,5 +1,7 @@
 package com.mapbox.maps.extension.compose
 
+import androidx.compose.runtime.ComposableTargetMarker
+
 /**
  * Marks a composable function being expected to be used inside another composable function marked as
  * [MapboxMapComposable].
@@ -8,8 +10,7 @@ package com.mapbox.maps.extension.compose
  * of a [MapboxMapComposable] content lambda, and vice versa.
  */
 @Retention(AnnotationRetention.BINARY)
-// Only available after Compose Version 1.2.0-alpha04
-// @ComposableTargetMarker(description = "Mapbox Map Composable")
+@ComposableTargetMarker(description = "Mapbox Map Composable")
 @Target(
   AnnotationTarget.FILE,
   AnnotationTarget.FUNCTION,
