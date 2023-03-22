@@ -10,6 +10,7 @@ import com.mapbox.geojson.Point;
 import com.mapbox.maps.MapView;
 import com.mapbox.maps.MapboxMap;
 import com.mapbox.maps.QueriedFeature;
+import com.mapbox.maps.QueriedRenderedFeature;
 import com.mapbox.maps.RenderedQueryGeometry;
 import com.mapbox.maps.RenderedQueryOptions;
 import com.mapbox.maps.ScreenBox;
@@ -130,9 +131,9 @@ public class DSLStylingJavaActivity extends AppCompatActivity implements OnMapCl
                         new ScreenCoordinate(clicked.getX() + 50, clicked.getY() + 50)
                 )),
                 new RenderedQueryOptions(QUERY_LIST, literal(true)), features -> {
-                    List<QueriedFeature> featureList = features.getValue();
+                    List<QueriedRenderedFeature> featureList = features.getValue();
                     if (featureList != null && !featureList.isEmpty()) {
-                        Number time = featureList.get(0).getFeature().getNumberProperty("time");
+                        Number time = featureList.get(0).getQueriedFeature().getFeature().getNumberProperty("time");
                         Toast.makeText(DSLStylingJavaActivity.this, getDateTime(time.longValue()), Toast.LENGTH_SHORT).show();
                     }
                 });

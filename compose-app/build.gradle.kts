@@ -1,8 +1,5 @@
 plugins {
-  id("com.android.application")
-  kotlin("android")
-  id("com.mapbox.maps.token")
-  id("io.gitlab.arturbosch.detekt").version(Versions.detekt)
+  id("com.mapbox.gradle.application")
   id("org.jetbrains.kotlin.plugin.parcelize")
 }
 
@@ -52,17 +49,6 @@ android {
   buildFeatures {
     compose = true
   }
-
-  flavorDimensions.add("version")
-  productFlavors {
-    val private by creating {
-      dimension = "version"
-    }
-    val public by creating {
-      dimension = "version"
-      isDefault = true
-    }
-  }
 }
 
 dependencies {
@@ -96,6 +82,3 @@ project.apply {
   from("$rootDir/gradle/detekt.gradle")
   from("$rootDir/gradle/dependency-updates.gradle")
 }
-
-val localPath:String = org.apache.commons.io.FilenameUtils.getFullPathNoEndSeparator(project.buildscript.sourceFile.toString())
-the<com.mapbox.AccessTokenExtension>().file = "${localPath}/src/main/res/values/developer-config.xml"

@@ -1,5 +1,6 @@
 package com.mapbox.maps
 
+import com.mapbox.maps.shadows.ShadowObservable
 import io.mockk.*
 import org.junit.After
 import org.junit.Assert
@@ -11,11 +12,19 @@ import org.robolectric.annotation.Config
 import java.lang.IllegalStateException
 
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowMap::class])
+@Config(
+  shadows = [
+    ShadowMap::class,
+    ShadowMapSnapshotter::class,
+    ShadowObservable::class,
+    ShadowCameraManager::class,
+    ShadowStyleManager::class,
+  ]
+)
 class SnapshotterTest {
 
   private lateinit var snapshotter: Snapshotter
-  private lateinit var coreSnapshotter: MapSnapshotterInterface
+  private lateinit var coreSnapshotter: MapSnapshotter
   private val mapSnapshotOptions = mockk<MapSnapshotOptions>(relaxed = true)
   private val resourceOptions = mockk<ResourceOptions>(relaxed = true)
 

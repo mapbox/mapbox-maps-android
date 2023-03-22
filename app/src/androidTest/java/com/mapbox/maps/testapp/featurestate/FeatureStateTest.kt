@@ -9,12 +9,11 @@ import com.mapbox.maps.extension.style.layers.generated.circleLayer
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.testapp.BaseMapTest
-import org.junit.Assert
+import com.mapbox.maps.testapp.runOnUiThread
+import com.mapbox.maps.testapp.withLatch
+import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.util.concurrent.CountDownLatch
-import java.util.concurrent.TimeUnit
-import java.util.concurrent.TimeoutException
 
 /**
  * Instrumented test for FeatureState api.
@@ -25,13 +24,12 @@ import java.util.concurrent.TimeoutException
 class FeatureStateTest : BaseMapTest() {
 
   override fun loadMap() {
-    val countDownLatch = CountDownLatch(1)
-    rule.scenario.onActivity {
-      it.runOnUiThread {
+    withLatch { latch ->
+      rule.runOnUiThread {
         mapboxMap = mapView.getMapboxMap()
         mapboxMap.loadStyle(
           style(Style.MAPBOX_STREETS) {
-            +geoJsonSource("source") {
+            +geoJsonSource(SOURCE_ID) {
               feature(
                 Feature.fromGeometry(
                   Point.fromLngLat(0.0, 0.0),
@@ -40,71 +38,119 @@ class FeatureStateTest : BaseMapTest() {
                 )
               )
             }
-            +circleLayer("layer", "source") {
+            +circleLayer("layer", SOURCE_ID) {
               circleColor("#000000")
               circleRadius(10.0)
             }
           }
         ) {
-          // set feature state { "hover": true } to the first feature using feature ID
-          mapView.postDelayed(
-            {
-              setFeatureState()
-              countDownLatch.countDown()
-            },
-            1_000L
-          )
+          latch.countDown()
         }
       }
-    }
-    mapView.onStart()
-    if (!countDownLatch.await(5, TimeUnit.SECONDS)) {
-      throw TimeoutException()
     }
   }
 
   /**
    * set feature state {hover : true} to test.
    */
-  private fun setFeatureState() {
-    mapboxMap.setFeatureState(
-      sourceId = "source",
-      featureId = FEATURE_ID,
-      state = Value(
-        hashMapOf(
-          "hover" to Value(true)
-        )
-      )
-    )
+  @Test
+  fun testEmptyFeatureState() {
+    rule.runOnUiThread {
+      mapboxMap.getFeatureState(
+        sourceId = SOURCE_ID,
+        featureId = FEATURE_ID,
+      ) { stateMap ->
+        assertEquals(STATE_EMPTY, stateMap.value)
+      }
+    }
   }
 
   /**
    * verify feature state value.
    */
   @Test
-  fun testHoverFeatureState() {
-    val countDownLatch = CountDownLatch(1)
-    rule.scenario.onActivity {
-      it.runOnUiThread {
-        mapboxMap.getFeatureState(
-          sourceId = "source",
-          featureId = FEATURE_ID
-        ) { stateMap ->
-          stateMap.value?.let { value ->
-            Assert.assertEquals(
-              hashMapOf("hover" to true).toString(), value.toString()
-            )
-            countDownLatch.countDown()
+  fun testSetFeatureState() {
+    withLatch { latch ->
+      rule.runOnUiThread {
+        mapboxMap.setFeatureState(
+          sourceId = SOURCE_ID,
+          featureId = FEATURE_ID,
+          state = Value(hashMapOf("hover" to Value(true)))
+        ) {
+          mapboxMap.getFeatureState(
+            sourceId = SOURCE_ID,
+            featureId = FEATURE_ID
+          ) { stateMap ->
+            assertEquals(STATE_HOVER, stateMap.value)
+
+            latch.countDown()
           }
         }
       }
     }
-    if (!countDownLatch.await(5, TimeUnit.SECONDS)) {
-      throw TimeoutException()
+  }
+
+  @Test
+  fun testRemoveFeatureState() {
+    withLatch { latch ->
+      rule.runOnUiThread {
+        mapboxMap.setFeatureState(
+          sourceId = SOURCE_ID,
+          featureId = FEATURE_ID,
+          state = Value(hashMapOf("hover" to Value(true)))
+        ) {
+          mapboxMap.removeFeatureState(
+            sourceId = SOURCE_ID,
+            featureId = FEATURE_ID
+          ) {
+            mapboxMap.getFeatureState(
+              sourceId = SOURCE_ID,
+              featureId = FEATURE_ID
+            ) { stateMap ->
+              assertEquals(STATE_EMPTY, stateMap.value)
+
+              latch.countDown()
+            }
+
+            latch.countDown()
+          }
+        }
+      }
+    }
+  }
+
+  @Test
+  fun testResetFeatureState() {
+    withLatch { latch ->
+      rule.runOnUiThread {
+        mapboxMap.setFeatureState(
+          sourceId = SOURCE_ID,
+          featureId = FEATURE_ID,
+          state = Value(hashMapOf("hover" to Value(true)))
+        ) {
+          mapboxMap.resetFeatureStates(
+            sourceId = SOURCE_ID,
+          ) {
+            mapboxMap.getFeatureState(
+              sourceId = SOURCE_ID,
+              featureId = FEATURE_ID
+            ) { stateMap ->
+              assertEquals(STATE_EMPTY, stateMap.value)
+
+              latch.countDown()
+            }
+
+            latch.countDown()
+          }
+        }
+      }
     }
   }
 
   companion object {
     private const val FEATURE_ID = "0"
+    private const val SOURCE_ID = "source"
+    private val STATE_EMPTY = Value(hashMapOf())
+    private val STATE_HOVER = Value(hashMapOf("hover" to Value(true)))
   }
 }

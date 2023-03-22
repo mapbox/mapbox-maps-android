@@ -93,16 +93,12 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
         RenderEvent(
           { fpsManager.fpsChangedListener = new },
           false,
-          EventType.DEFAULT
         )
       )
     }
   }
 
   private val fpsManager: FpsManager
-
-  // TODO needed for workaround until issue is fixed in gl-native
-  internal var renderDestroyCallChain = false
 
   /**
    * Modified from render thread only, needed to understand when exactly to swap buffers
@@ -342,9 +338,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   }
 
   private fun releaseAll(tryRecreate: Boolean = false) {
-    renderDestroyCallChain = true
     mapboxRenderer.destroyRenderer()
-    renderDestroyCallChain = false
     renderEventQueue.clear()
     nonRenderEventQueue.clear()
     renderCreated = false
@@ -424,7 +418,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
             // TODO https://github.com/mapbox/mapbox-maps-android/issues/607
             if (renderCreated && mapboxRenderer is MapboxTextureViewRenderer) {
               releaseAll()
-              renderHandlerThread.clearDefaultMessages()
+              renderHandlerThread.clearRenderEventQueue()
             } else {
               releaseEglSurface()
             }
@@ -522,7 +516,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       renderHandlerThread.postDelayed(
         {
           when {
-            renderThreadPrepared || renderEvent.eventType == EventType.DESTROY_RENDERER -> {
+            renderThreadPrepared -> {
               renderEvent.runnable?.run()
             }
             paused -> {
@@ -535,7 +529,6 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
           }
         },
         delayMillis,
-        renderEvent.eventType
       )
     }
   }
@@ -564,7 +557,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
             if (renderCreated) {
               releaseAll()
             }
-            renderHandlerThread.clearDefaultMessages()
+            renderHandlerThread.clearRenderEventQueue()
             fpsManager.destroy()
             eglCore.clearRendererStateListeners()
             destroyCondition.signal()

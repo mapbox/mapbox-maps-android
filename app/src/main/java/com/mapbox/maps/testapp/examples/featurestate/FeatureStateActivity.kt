@@ -66,9 +66,9 @@ class FeatureStateActivity : AppCompatActivity(), OnCameraChangeListener {
         )
       ),
       RenderedQueryOptions(listOf(LAYER_ID), literal(true))
-    ) { expected: Expected<String, MutableList<QueriedFeature>> ->
+    ) { expected: Expected<String, MutableList<QueriedRenderedFeature>> ->
       expected.value?.takeIf { it.isNotEmpty() }?.let {
-        val selectedFeature = it.first().feature
+        val selectedFeature = it.first().queriedFeature.feature
         val featureId = selectedFeature.id()!!
         lastFeatureId?.let { lastId ->
           if (featureId != lastId) {
@@ -100,7 +100,7 @@ class FeatureStateActivity : AppCompatActivity(), OnCameraChangeListener {
   }
 
   private fun setHoverFeatureState(featureId: String, hover: Boolean) {
-    mapboxMap.setFeatureState(
+    val cancelable = mapboxMap.setFeatureState(
       sourceId = SOURCE_ID,
       featureId = featureId,
       state = Value(
@@ -108,7 +108,15 @@ class FeatureStateActivity : AppCompatActivity(), OnCameraChangeListener {
           "hover" to Value(hover)
         )
       )
-    )
+    ) {
+      // print the feature state
+      mapboxMap.getFeatureState(
+        sourceId = SOURCE_ID,
+        featureId = featureId,
+      ) {
+        logD(TAG, "getFeatureState: ${it.value}")
+      }
+    }
   }
 
   private fun showCrosshair() {

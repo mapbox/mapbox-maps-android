@@ -10,9 +10,6 @@ import com.mapbox.maps.R
 import org.junit.Before
 import org.junit.Rule
 import org.junit.runner.RunWith
-import java.util.concurrent.CountDownLatch
-import java.util.concurrent.TimeUnit
-import java.util.concurrent.TimeoutException
 
 /**
  * Instrumentation test for Layers to test Layer properties.
@@ -38,37 +35,33 @@ abstract class BaseMapTest {
   }
 
   protected open fun initialiseMapView() {
-    val latch = CountDownLatch(1)
-    rule.scenario.onActivity {
-      it.runOnUiThread {
+    withLatch(
+      timeoutMillis = 10000
+    ) { latch ->
+      rule.runOnUiThread {
         mapView = MapView(context)
         mapView.id = R.id.mapView
         it.setContentView(mapView)
+        mapView.onStart()
         latch.countDown()
       }
-    }
-    if (!latch.await(10000, TimeUnit.MILLISECONDS)) {
-      throw TimeoutException()
     }
   }
 
   protected open fun loadMap() {
-    val latch = CountDownLatch(1)
-    rule.scenario.onActivity {
-      it.runOnUiThread {
+    withLatch(
+      timeoutMillis = 10000
+    ) { latch ->
+      rule.runOnUiThread {
         mapboxMap = mapView.getMapboxMap()
         mapboxMap.loadStyleUri(
           Style.MAPBOX_STREETS
         ) { style ->
           this@BaseMapTest.style = style
+
           latch.countDown()
         }
-        mapView.onStart()
       }
-    }
-
-    if (!latch.await(10000, TimeUnit.MILLISECONDS)) {
-      throw TimeoutException()
     }
   }
 }

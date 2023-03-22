@@ -30,7 +30,7 @@ import kotlin.math.min
 open class Snapshotter {
 
   private val context: WeakReference<Context>
-  private val coreSnapshotter: MapSnapshotterInterface
+  private val coreSnapshotter: MapSnapshotter
   private val pixelRatio: Float
   private val mapSnapshotOptions: MapSnapshotOptions
 
@@ -107,7 +107,7 @@ open class Snapshotter {
     context: WeakReference<Context>,
     options: MapSnapshotOptions,
     overlayOptions: SnapshotOverlayOptions,
-    coreSnapshotter: MapSnapshotterInterface,
+    coreSnapshotter: MapSnapshotter,
     observer: Observer
   ) {
     this.context = context

@@ -40,14 +40,14 @@ class GeoJsonSource : Source {
   constructor(builder: Builder) : super(builder.sourceId) {
     sourceProperties.putAll(builder.properties)
     volatileSourceProperties.putAll(builder.volatileProperties)
-    initGeoJson = builder.geoJson
-    initData = builder.data
-    initDataId = builder.dataId
+    currentGeoJson = builder.geoJson
+    currentData = builder.data
+    currentDataId = builder.dataId
   }
 
-  private var initGeoJson: GeoJson?
-  private var initData: String?
-  private var initDataId: String?
+  private var currentGeoJson: GeoJson?
+  private var currentData: String?
+  private var currentDataId: String?
 
   private val workerHandler by lazy {
     Handler(workerThread.looper)
@@ -70,11 +70,10 @@ class GeoJsonSource : Source {
           )
         }
       }
-    } ?: run {
-      initGeoJson = geoJson
-      initDataId = dataId
-      initData = null
     }
+    currentGeoJson = geoJson
+    currentDataId = dataId
+    currentData = null
   }
 
   private fun setData(data: String, dataId: String? = null) {
@@ -94,11 +93,10 @@ class GeoJsonSource : Source {
           )
         }
       }
-    } ?: run {
-      initData = data
-      initDataId = dataId
-      initGeoJson = null
     }
+    currentData = data
+    currentDataId = dataId
+    currentGeoJson = null
   }
 
   /**
@@ -108,15 +106,11 @@ class GeoJsonSource : Source {
    */
   override fun bindTo(delegate: StyleInterface) {
     super.bindTo(delegate)
-    initGeoJson?.let {
-      setGeoJson(it, initDataId)
-      initGeoJson = null
-      initDataId = null
+    currentGeoJson?.let {
+      setGeoJson(it, currentDataId)
     }
-    initData?.let {
-      setData(it, initDataId)
-      initData = null
-      initDataId = null
+    currentData?.let {
+      setData(it, currentDataId)
     }
   }
 

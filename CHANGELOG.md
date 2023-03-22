@@ -6,9 +6,16 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 * Remove deprecated `MapboxMap.queryRenderedFeatures` methods.
 * Remove `Snapshotter.setTileMode`, `Snapshotter.isInTileMode` methods.
-
-## Features ✨ and improvements 🏁
-* Update SDK's targetSdkVersion and CompileSdkVersion to 33.
+* Remove deprecated `MapStyleStateDelegate` and `isFullyLoaded` method.
+* Remove experimental `setRenderCacheOptions`, `getRenderCacheOptions` apis.
+* Update SDK's `targetSdkVersion` and `compileSdkVersion` to 33.
+* Add `callback` argument to the `MapboxMap` methods `getFeatureState`, `setFeatureState`, `removeFeatureState`.
+* Add the `MapboxMap.resetFeatureState` method.
+* Use different callback types for the `MapboxMap.queryRenderedFeatures` and the `MapboxMap.querySourceFeatures` methods.
+* Return `cancelable` from the `MapboxMap` methods : `getFeatureState`, `setFeatureState`, `removeFeatureState`, `querySourceFeatures`, `getGeoJsonClusterLeaves`, `getGeoJsonClusterChildren`, `getGeoJsonClusterExpansionZoom`.
+* Remove the deprecated `MapboxMap.queryFeatureExtensions` method.
+* Make padding optional for `MapboxMap.cameraForCoordinateBounds`, `MapboxMap.cameraForCoordinates`, `MapboxMap.cameraForGeometry` methods.
+* Add `FreeCameraOptions.getLocation` and `FreeCameraOptions.getAltitude` methods.
 
 ## Dependencies
 * Update dependencies
@@ -45,6 +52,10 @@ Mapbox welcomes participation and contributions from everyone.
 | composeOptions -> kotlinCompilerExtensionVersion | 1.1.0-beta03 | 1.4.3 |
 | androidx.compose:compose-bom |  | 2023.01.00 |
 | com.pinterest:ktlint | 0.39.0 | 0.48.2 |
+
+# 10.12.0
+## Bug fixes 🐞
+* Fix regression from `v10.11.0` when applying geojson from loaded style to the new style could cause the crash or no data applied.
 
 # 10.12.0-rc.1
 ## Bug fixes 🐞

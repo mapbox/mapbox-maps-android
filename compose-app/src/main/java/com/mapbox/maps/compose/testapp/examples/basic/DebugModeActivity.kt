@@ -65,7 +65,6 @@ public class DebugModeActivity : ComponentActivity() {
               MapDebugOptions.COLLISION,
               MapDebugOptions.STENCIL_CLIP,
               MapDebugOptions.DEPTH_BUFFER,
-              MapDebugOptions.RENDER_CACHE,
               MapDebugOptions.MODEL_BOUNDS,
               MapDebugOptions.TERRAIN_WIREFRAME,
             ),

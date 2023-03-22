@@ -4,13 +4,27 @@ import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
+import com.mapbox.maps.shadows.ShadowObservable
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 
+@RunWith(RobolectricTestRunner::class)
+@Config(
+  shadows = [
+    ShadowMap::class,
+    ShadowMapSnapshotter::class,
+    ShadowObservable::class,
+    ShadowCameraManager::class,
+    ShadowStyleManager::class,
+  ]
+)
 class NativeMapTest {
 
-  private val map = mockk<MapInterface>(relaxed = true)
+  private val map = mockk<Map>(relaxed = true)
 
   @Test
   fun subscribe() {
@@ -598,13 +612,6 @@ class NativeMapTest {
   }
 
   @Test
-  fun isMapFullyLoaded() {
-    val nativeMap = NativeMapImpl(map)
-    nativeMap.isMapLoaded
-    verify { map.isMapLoaded }
-  }
-
-  @Test
   fun isStyleFullyLoaded() {
     val nativeMap = NativeMapImpl(map)
     nativeMap.isStyleLoaded
@@ -612,8 +619,8 @@ class NativeMapTest {
   }
 
   @Test
-  fun queryRenderedFeaturesGeometry() {
-    val callback = mockk<QueryFeaturesCallback>()
+  fun queryRenderedFeatures() {
+    val callback = mockk<QueryRenderedFeaturesCallback>()
     val value = mockk<RenderedQueryGeometry>()
     val queryOptions = mockk<RenderedQueryOptions>()
     val nativeMap = NativeMapImpl(map)
@@ -623,7 +630,7 @@ class NativeMapTest {
 
   @Test
   fun querySourceFeatures() {
-    val callback = mockk<QueryFeaturesCallback>()
+    val callback = mockk<QuerySourceFeaturesCallback>()
     val queryOptions = mockk<SourceQueryOptions>()
     val nativeMap = NativeMapImpl(map)
     nativeMap.querySourceFeatures("foo", queryOptions, callback)
@@ -653,14 +660,15 @@ class NativeMapTest {
   fun setFeatureState() {
     val value = mockk<Value>()
     val nativeMap = NativeMapImpl(map)
-    nativeMap.setFeatureState("foo", "bar", "id", value)
-    verify { map.setFeatureState("foo", "bar", "id", value) }
+    val callback = mockk<FeatureStateOperationCallback>()
+    nativeMap.setFeatureState("foo", "bar", "id", value, callback)
+    verify { map.setFeatureState("foo", "bar", "id", any(), callback) }
   }
 
   @Test
   fun getFeatureState() {
-    val callback = mockk<QueryFeatureStateCallback>()
     val nativeMap = NativeMapImpl(map)
+    val callback = mockk<QueryFeatureStateCallback>()
     nativeMap.getFeatureState("foo", "bar", "id", callback)
     verify { map.getFeatureState("foo", "bar", "id", callback) }
   }
@@ -668,8 +676,17 @@ class NativeMapTest {
   @Test
   fun removeFeatureState() {
     val nativeMap = NativeMapImpl(map)
-    nativeMap.removeFeatureState("foo", "bar", "id", "key")
-    verify { map.removeFeatureState("foo", "bar", "id", "key") }
+    val callback = mockk<FeatureStateOperationCallback>()
+    nativeMap.removeFeatureState("foo", "bar", "id", "key", callback)
+    verify { map.removeFeatureState("foo", "bar", "id", "key", callback) }
+  }
+
+  @Test
+  fun resetFeatureStates() {
+    val nativeMap = NativeMapImpl(map)
+    val callback = mockk<FeatureStateOperationCallback>()
+    nativeMap.resetFeatureStates("foo", "bar", callback)
+    verify { map.resetFeatureStates("foo", "bar", callback) }
   }
 
   @Test
@@ -778,5 +795,29 @@ class NativeMapTest {
     val nativeMap = NativeMapImpl(map)
     nativeMap.renderWorldCopies
     verify { map.renderWorldCopies }
+  }
+
+  @Test
+  fun cameraForCoordinateBoundsWithoutPadding() {
+    val bounds = mockk<CoordinateBounds>()
+    val nativeMap = NativeMapImpl(map)
+    nativeMap.cameraForCoordinateBounds(bounds, null, 1.0, 2.0)
+    verify { map.cameraForCoordinateBounds(bounds, null, 1.0, 2.0) }
+  }
+
+  @Test
+  fun cameraForCoordinatesWithoutPadding() {
+    val points = mockk<MutableList<Point>>()
+    val nativeMap = NativeMapImpl(map)
+    nativeMap.cameraForCoordinates(points, null, 1.0, 2.0)
+    verify { map.cameraForCoordinates(points, null, 1.0, 2.0) }
+  }
+
+  @Test
+  fun cameraForGeometryWithoutPadding() {
+    val geometry = mockk<Geometry>()
+    val nativeMap = NativeMapImpl(map)
+    nativeMap.cameraForGeometry(geometry, null, 1.0, 2.0)
+    verify { map.cameraForGeometry(geometry, null, 1.0, 2.0) }
   }
 }

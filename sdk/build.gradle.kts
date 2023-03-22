@@ -1,13 +1,20 @@
-import org.jetbrains.dokka.gradle.DokkaTask
-
 plugins {
-  id("com.android.library")
-  kotlin("android")
+  id("com.mapbox.gradle.library")
   id("com.jaredsburrows.license")
-  id("org.jetbrains.dokka")
   // FIXME https://mapbox.atlassian.net/browse/MAPSAND-794
   //id("com.mapbox.android.sdk.versions")
-  id("io.gitlab.arturbosch.detekt").version(Versions.detekt)
+}
+
+val buildFromSource: String by project
+
+mapboxLibrary {
+  dokka {
+    if (buildFromSource.toBoolean()) {
+      // when building from source we include the files in "upstream-api-doc-list.txt" which might not have docs
+      extraListOfSources = File("upstream-api-doc-list.txt").readLines()
+      reportUndocumented = false
+    }
+  }
 }
 
 android {
@@ -39,26 +46,7 @@ android {
       targetCompatibility = JavaVersion.VERSION_1_8
     }
   }
-
-  flavorDimensions.add("version")
-  productFlavors {
-    val private by creating {
-      dimension = "version"
-    }
-    val public by creating {
-      dimension = "version"
-      isDefault = true
-    }
-  }
-
-  sourceSets {
-    // limit amount of exposed library resources
-    getByName("public").res.srcDirs("src/public/res-public")
-    getByName("private").res.srcDirs("src/private/res-public")
-  }
 }
-
-val buildFromSource: String by project
 
 dependencies {
   api(Dependencies.mapboxBase)
@@ -106,52 +94,6 @@ dependencies {
   androidTestImplementation(Dependencies.coroutines)
   androidTestUtil(Dependencies.androidxOrchestrator)
   detektPlugins(Dependencies.detektFormatting)
-}
-
-// let's register different Dokka Javadoc tasks per flavor
-android.productFlavors.all {
-  val flavor = name
-  tasks.register("${flavor}ReleaseDokkaJavadoc", DokkaTask::class.java) {
-    // We want to generate Javadoc so we copy the `dokkaJavadoc` task plugins/runtime
-    val dokkaJavadocTask = tasks.findByName("dokkaJavadoc") as DokkaTask
-    plugins.setExtendsFrom(listOf(dokkaJavadocTask.plugins))
-    runtime.setExtendsFrom(listOf(dokkaJavadocTask.runtime))
-
-    dokkaSourceSets {
-      // To avoid undocumented inherited methods/classes we need to join all the source roots
-      // related to the flavor release variant into one source set (`${flavor}Release`).
-      named("${flavor}Release") {
-        listOf("java", "kotlin").forEach { lang ->
-          sourceRoots.from(
-            file("src/main/$lang"),
-            file("src/${flavor}/$lang"),
-            file("src/${flavor}Release/$lang"),
-          )
-        }
-        if (buildFromSource.toBoolean()) {
-          File("upstream-api-doc-list.txt").forEachLine {
-            if (!it.startsWith("//")) {
-              sourceRoots.from(file("../../$it"))
-            }
-          }
-        }
-      }
-      configureEach {
-        // Make sure we disable all the source sets not related to this flavour release variant.
-        // Otherwise, we would have duplicate classes or undocumented entries.
-        if (name != "${flavor}Release") {
-          suppress.set(true)
-        }
-        if (buildFromSource.toBoolean()) {
-          // when building from source we inlude the files in "upstream-api-doc-list.txt" which might not have docs
-          reportUndocumented.set(false)
-        } else {
-          reportUndocumented.set(true)
-        }
-        failOnWarning.set(true)
-      }
-    }
-  }
 }
 
 project.apply {

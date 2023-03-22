@@ -513,6 +513,13 @@ class MapboxMapTest {
   }
 
   @Test
+  fun cameraForCoordinateBoundsWithoutPadding() {
+    val bounds = mockk<CoordinateBounds>()
+    mapboxMap.cameraForCoordinateBounds(bounds)
+    verify { nativeMap.cameraForCoordinateBounds(bounds, null, null, null) }
+  }
+
+  @Test
   fun cameraForCoordinateBoundsOverloadBearing() {
     val bounds = mockk<CoordinateBounds>()
     mapboxMap.cameraForCoordinateBounds(bounds, bearing = 2.0)
@@ -593,6 +600,13 @@ class MapboxMapTest {
   }
 
   @Test
+  fun cameraForCoordinatesWithoutPadding() {
+    val points = mockk<List<Point>>()
+    mapboxMap.cameraForCoordinates(points)
+    verify { nativeMap.cameraForCoordinates(points, null, null, null) }
+  }
+
+  @Test
   fun cameraForCoordinatesOverloadBearing() {
     val points = mockk<List<Point>>()
     mapboxMap.cameraForCoordinates(points, bearing = 2.0)
@@ -619,6 +633,13 @@ class MapboxMapTest {
     val point = mockk<Point>()
     mapboxMap.cameraForGeometry(point)
     verify { nativeMap.cameraForGeometry(point, EdgeInsets(0.0, 0.0, 0.0, 0.0), null, null) }
+  }
+
+  @Test
+  fun cameraForGeometryWithoutPadding() {
+    val point = mockk<Point>()
+    mapboxMap.cameraForGeometry(point)
+    verify { nativeMap.cameraForGeometry(point, null, null, null) }
   }
 
   @Test
@@ -944,15 +965,6 @@ class MapboxMapTest {
     val point = mockk<Point>()
     mapboxMap.getElevation(point)
     verify { nativeMap.getElevation(point) }
-  }
-
-  @Test
-  fun isFullyLoaded() {
-    val style = mockk<Style>(relaxed = true)
-    mapboxMap.style = style
-    every { style.isStyleLoaded } returns true
-    assertTrue(mapboxMap.isFullyLoaded())
-    verify { style.isStyleLoaded }
   }
 
   @Test

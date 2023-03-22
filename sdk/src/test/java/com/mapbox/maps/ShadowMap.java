@@ -1,7 +1,6 @@
 package com.mapbox.maps;
 
 import androidx.annotation.NonNull;
-
 import org.robolectric.annotation.Implementation;
 import org.robolectric.annotation.Implements;
 

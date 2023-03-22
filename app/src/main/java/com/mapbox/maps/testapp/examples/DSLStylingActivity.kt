@@ -8,7 +8,7 @@ import com.mapbox.bindgen.Expected
 import com.mapbox.geojson.Point
 import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxMap
-import com.mapbox.maps.QueriedFeature
+import com.mapbox.maps.QueriedRenderedFeature
 import com.mapbox.maps.RenderedQueryGeometry
 import com.mapbox.maps.RenderedQueryOptions
 import com.mapbox.maps.ScreenBox
@@ -59,10 +59,10 @@ class DSLStylingActivity : AppCompatActivity(), OnMapClickListener {
         )
       ),
       RenderedQueryOptions(listOf("earthquakeCircle", "earthquakeText"), literal(true))
-    ) { expected: Expected<String, MutableList<QueriedFeature>> ->
+    ) { expected: Expected<String, MutableList<QueriedRenderedFeature>> ->
       val features = expected.value!!
       features.takeIf { it.isNotEmpty() }?.let {
-        val time = it.first().feature.getNumberProperty("time")
+        val time = it.first().queriedFeature.feature.getNumberProperty("time")
         Toast.makeText(this, getDateTime(time.toLong()), Toast.LENGTH_SHORT).show()
       }
     }

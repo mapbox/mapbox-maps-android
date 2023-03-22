@@ -19,13 +19,12 @@ internal class RenderHandlerThread {
     get() = handler != null && handlerThread.isAlive
 
   fun post(task: () -> Unit) {
-    postDelayed(task, 0, EventType.DEFAULT)
+    postDelayed(task, 0)
   }
 
-  fun postDelayed(task: () -> Unit, delayMillis: Long, eventType: EventType = EventType.DEFAULT) {
+  fun postDelayed(task: () -> Unit, delayMillis: Long) {
     handler?.let {
       val message = Message.obtain(it, task)
-      message.obj = eventType
       it.sendMessageDelayed(message, delayMillis)
     } ?: logW(TAG, "Thread $HANDLE_THREAD_NAME was not started, ignoring event")
   }
@@ -38,18 +37,15 @@ internal class RenderHandlerThread {
   }
 
   fun stop() {
-    // quit safely to guarantee all DESTROY_RENDERER messages
-    // that may be in the queue will be executed
-    handlerThread.quitSafely()
+    handlerThread.quit()
     handler = null
   }
 
   /**
-   * Clears all messages except of [EventType.DESTROY_RENDERER] messages, since they clear
-   * various resources allocated in core and we don't want to leak those resources.
+   * Clears all messages.
    */
-  fun clearDefaultMessages() {
-    handler?.removeCallbacksAndMessages(EventType.DEFAULT)
+  fun clearRenderEventQueue() {
+    handler?.removeCallbacksAndMessages(null)
   }
 
   companion object {

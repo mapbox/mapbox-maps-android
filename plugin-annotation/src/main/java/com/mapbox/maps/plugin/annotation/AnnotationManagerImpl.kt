@@ -51,7 +51,6 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     delegateProvider.mapCameraManagerDelegate
   private var mapFeatureQueryDelegate: MapFeatureQueryDelegate =
     delegateProvider.mapFeatureQueryDelegate
-  private var styleStateDelegate: MapStyleStateDelegate = delegateProvider.styleStateDelegate
   private var mapListenerDelegate: MapListenerDelegate = delegateProvider.mapListenerDelegate
   protected val dataDrivenPropertyUsageMap: MutableMap<String, Boolean> = HashMap()
   private var currentId = 0L
@@ -795,7 +794,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
           literal(true)
         )
       ) { features ->
-        features.value?.firstOrNull()?.feature?.getProperty(getAnnotationIdKey())
+        features.value?.firstOrNull()?.queriedFeature?.feature?.getProperty(getAnnotationIdKey())
           ?.let { annotationId ->
             val id = annotationId.asLong
             when {

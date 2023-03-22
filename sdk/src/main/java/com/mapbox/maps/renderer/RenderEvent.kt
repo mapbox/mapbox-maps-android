@@ -21,8 +21,4 @@ internal data class RenderEvent(
    * only if render thread is in fully prepared state.
    */
   val needRender: Boolean,
-  /**
-   * Render event type.
-   */
-  val eventType: EventType,
 )

@@ -4,6 +4,7 @@ pluginManagement {
     gradlePluginPortal()
     mavenCentral()
   }
+  includeBuild("mapbox-convention-plugin")
 }
 
 include(

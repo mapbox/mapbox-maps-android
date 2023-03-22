@@ -8,7 +8,7 @@ import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
 
-internal class NativeMapImpl(val map: MapInterface) :
+internal class NativeMapImpl(val map: Map) :
   MapInterface, StyleManagerInterface, ObservableInterface {
 
   override fun setSize(size: Size) {
@@ -60,7 +60,7 @@ internal class NativeMapImpl(val map: MapInterface) :
 
   override fun cameraForCoordinateBounds(
     coordinateBounds: CoordinateBounds,
-    padding: EdgeInsets,
+    padding: EdgeInsets?,
     zoom: Double?,
     pitch: Double?
   ): CameraOptions {
@@ -104,7 +104,7 @@ internal class NativeMapImpl(val map: MapInterface) :
 
   override fun cameraForCoordinates(
     points: List<Point>,
-    padding: EdgeInsets,
+    padding: EdgeInsets?,
     zoom: Double?,
     pitch: Double?
   ): CameraOptions {
@@ -121,7 +121,7 @@ internal class NativeMapImpl(val map: MapInterface) :
 
   override fun cameraForGeometry(
     geometry: Geometry,
-    padding: EdgeInsets,
+    padding: EdgeInsets?,
     zoom: Double?,
     pitch: Double?
   ): CameraOptions {
@@ -130,14 +130,6 @@ internal class NativeMapImpl(val map: MapInterface) :
 
   override fun getElevation(point: Point): Double? {
     return map.getElevation(point)
-  }
-
-  override fun setRenderCacheOptions(options: RenderCacheOptions) {
-    map.renderCacheOptions = options
-  }
-
-  override fun getRenderCacheOptions(): RenderCacheOptions {
-    return map.renderCacheOptions
   }
 
   override fun setViewAnnotationPositionsUpdateListener(listener: ViewAnnotationPositionsUpdateListener?) {
@@ -449,18 +441,14 @@ internal class NativeMapImpl(val map: MapInterface) :
   override fun queryRenderedFeatures(
     geometry: RenderedQueryGeometry,
     options: RenderedQueryOptions,
-    callback: QueryFeaturesCallback
-  ): Cancelable {
-    return map.queryRenderedFeatures(geometry, options, callback)
-  }
+    callback: QueryRenderedFeaturesCallback
+  ): Cancelable = map.queryRenderedFeatures(geometry, options, callback)
 
   override fun querySourceFeatures(
     sourceId: String,
     options: SourceQueryOptions,
-    callback: QueryFeaturesCallback
-  ) {
-    map.querySourceFeatures(sourceId, options, callback)
-  }
+    callback: QuerySourceFeaturesCallback
+  ): Cancelable = map.querySourceFeatures(sourceId, options, callback)
 
   override fun queryFeatureExtensions(
     sourceIdentifier: String,
@@ -469,27 +457,22 @@ internal class NativeMapImpl(val map: MapInterface) :
     extensionField: String,
     args: HashMap<String, Value>?,
     callback: QueryFeatureExtensionCallback
-  ) {
-    map.queryFeatureExtensions(sourceIdentifier, feature, extension, extensionField, args, callback)
-  }
+  ): Cancelable = map.queryFeatureExtensions(sourceIdentifier, feature, extension, extensionField, args, callback)
 
   override fun setFeatureState(
     sourceId: String,
     sourceLayerId: String?,
     featureId: String,
-    state: Value
-  ) {
-    map.setFeatureState(sourceId, sourceLayerId, featureId, state)
-  }
+    state: Value,
+    callback: FeatureStateOperationCallback,
+  ): Cancelable = map.setFeatureState(sourceId, sourceLayerId, featureId, state, callback)
 
   override fun getFeatureState(
     sourceId: String,
     sourceLayerId: String?,
     featureId: String,
     callback: QueryFeatureStateCallback
-  ) {
-    map.getFeatureState(sourceId, sourceLayerId, featureId, callback)
-  }
+  ): Cancelable = map.getFeatureState(sourceId, sourceLayerId, featureId, callback)
 
   override fun getFreeCameraOptions(): FreeCameraOptions {
     return map.freeCameraOptions
@@ -529,9 +512,18 @@ internal class NativeMapImpl(val map: MapInterface) :
     sourceId: String,
     sourceLayerId: String?,
     featureId: String,
-    stateKey: String?
-  ) {
-    return map.removeFeatureState(sourceId, sourceLayerId, featureId, stateKey)
+    stateKey: String?,
+    callback: FeatureStateOperationCallback,
+  ): Cancelable {
+    return map.removeFeatureState(sourceId, sourceLayerId, featureId, stateKey, callback)
+  }
+
+  override fun resetFeatureStates(
+    sourceId: String,
+    sourceLayerId: String?,
+    callback: FeatureStateOperationCallback
+  ): Cancelable {
+    return map.resetFeatureStates(sourceId, sourceLayerId, callback)
   }
 
   override fun setMemoryBudget(memoryBudget: MapMemoryBudget?) {
@@ -571,10 +563,6 @@ internal class NativeMapImpl(val map: MapInterface) :
 
   override fun isStyleLoaded(): Boolean {
     return map.isStyleLoaded
-  }
-
-  override fun isMapLoaded(): Boolean {
-    return map.isMapLoaded
   }
 
   override fun setStyleSourceProperty(

@@ -1457,7 +1457,6 @@ public abstract interface class com/mapbox/maps/plugin/delegates/MapDelegateProv
 	public abstract fun getMapProjectionDelegate ()Lcom/mapbox/maps/plugin/delegates/MapProjectionDelegate;
 	public abstract fun getMapTransformDelegate ()Lcom/mapbox/maps/plugin/delegates/MapTransformDelegate;
 	public abstract fun getStyle (Lkotlin/jvm/functions/Function1;)V
-	public abstract fun getStyleStateDelegate ()Lcom/mapbox/maps/plugin/delegates/MapStyleStateDelegate;
 }
 
 public abstract interface class com/mapbox/maps/plugin/delegates/MapFeatureQueryDelegate {
@@ -1514,10 +1513,6 @@ public abstract interface class com/mapbox/maps/plugin/delegates/MapProjectionDe
 	public abstract fun project (Lcom/mapbox/geojson/Point;D)Lcom/mapbox/maps/MercatorCoordinate;
 	public abstract fun projectedMetersForCoordinate (Lcom/mapbox/geojson/Point;)Lcom/mapbox/maps/ProjectedMeters;
 	public abstract fun unproject (Lcom/mapbox/maps/MercatorCoordinate;D)Lcom/mapbox/geojson/Point;
-}
-
-public abstract interface class com/mapbox/maps/plugin/delegates/MapStyleStateDelegate {
-	public abstract fun isFullyLoaded ()Z
 }
 
 public abstract interface class com/mapbox/maps/plugin/delegates/MapTransformDelegate {
