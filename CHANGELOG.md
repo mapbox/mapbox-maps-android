@@ -4,7 +4,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-# 10.12.0
+
+# 10.12.0 March 23, 2023
 ## Features ✨ and improvements 🏁
 * Add `data-id` argument to `GeoJsonSource` data update methods. `data-id` is later attached to the `SourceDataLoadedEventData` event and allows to track the specific `GeoJsonSource` update.
 * Reduce line gradient texture size if there is no color change.
@@ -26,6 +27,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v10.12.0 and common to v23.4.0.
+
 
 # 10.11.2 March 10, 2023
 ## Bug fixes 🐞
