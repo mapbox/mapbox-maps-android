@@ -4,16 +4,16 @@ set -Eeuo pipefail
 
 # Usage:
 #   ./java-api-check.sh
-#     <current release tag (empty for branches)>
+#     <current release tag (empty for branches)> follows convention `vXX.yy.zz` (e.g. `v10.11.2`)
 #     <path to current aar>
 #     <module name>
 #     <last stable release>
 #     <optional, path to previously released aar>
 #
-echo "\$1:$1"
-echo "\$2:$2"
-echo "\$3:$3"
-echo "\$4:$4"
+echo "current release tag: [$1]"
+echo "path to current aar: [$2]"
+echo "module name: [$3]"
+echo "last stable release: [$4]"
 
 if [[ ! -f $2 ]]
 then
@@ -24,6 +24,11 @@ fi
 
 AAR_PATH=$2
 MODULE_NAME=$3
+# By default public variant doesn't need a suffix
+VARIANT_SUFFIX=""
+if [[ $AAR_PATH == *"private-release.aar" ]]; then
+  VARIANT_SUFFIX="-private"
+fi
 
 if [ -z "$MODULE_NAME" ]
 then
@@ -32,8 +37,8 @@ then
 fi
 
 CURRENT_DIR=$(dirname "$0")
-TMPDIR=`mktemp -d`
-REPORT_DIR=${CURRENT_DIR}/../api_compat_report/$MODULE_NAME
+TMPDIR=$(mktemp -d)
+REPORT_DIR=${CURRENT_DIR}/../api_compat_report/$MODULE_NAME$VARIANT_SUFFIX
 MAJOR_CHANGE_FILE=${CURRENT_DIR}/../api_compat_report/major.txt
 mkdir -p "${REPORT_DIR}"
 mkdir -p "${TMPDIR}"
@@ -45,14 +50,11 @@ fi
 # Fetched by parent script from circle-ci CIRCLE_TAG env variable,
 # if CIRCLE_TAG is not set, TAGGED_RELEASE_VERSION would be empty (branch build).
 TAGGED_RELEASE_VERSION=$1
-TAGGED_RELEASE_VERSION=${TAGGED_RELEASE_VERSION:8}
 
 mkdir "${TMPDIR}"/current "${TMPDIR}"/previous
 CURRENT_RELEASE=${TMPDIR}/current/sdk-release.aar
 cp "$2" "${CURRENT_RELEASE}"
 PREVIOUS_RELEASE=${TMPDIR}/previous/sdk-release.aar
-CURRENT_RELEASE_DIR=$(dirname "${CURRENT_RELEASE}")
-PREVIOUS_RELEASE_DIR=$(dirname "${PREVIOUS_RELEASE}")
 
 LAST_STABLE_VERSION_TAG=$4 #v10.3.0
 LAST_STABLE_VERSION_TAG_ARRAY=($LAST_STABLE_VERSION_TAG)
@@ -91,10 +93,11 @@ if [[ -z $RELEASE_TAG ]]; then
     exit 1;
   fi
 
-  AAR_PATH="https://api.mapbox.com/downloads/v2/releases/maven/com/mapbox/${AAR_GROUP_NAME}/"${AAR_MODULE_NAME}"/"${LAST_STABLE_VERSION}"/"${AAR_MODULE_NAME}"-"${LAST_STABLE_VERSION}".aar"
+  AAR_PATH="https://api.mapbox.com/downloads/v2/releases/maven/com/mapbox/${AAR_GROUP_NAME}/${AAR_MODULE_NAME}/${LAST_STABLE_VERSION}${VARIANT_SUFFIX}/${AAR_MODULE_NAME}-${LAST_STABLE_VERSION}${VARIANT_SUFFIX}.aar"
+  echo "Fetching from $AAR_PATH"
 
   # -fL0 will fail if aar is not present on the sdk registry
-  curl -fL0 --user mapbox:${SDK_REGISTRY_TOKEN} ${AAR_PATH} --output "${PREVIOUS_RELEASE}"
+  curl -fL0 --user mapbox:"${SDK_REGISTRY_TOKEN}" "${AAR_PATH}" --output "${PREVIOUS_RELEASE}"
 else
   echo "Using the prebuilt ${RELEASE_TAG} to check api compatibility with revapi."
   cp "$RELEASE_TAG" "$PREVIOUS_RELEASE"
@@ -187,7 +190,7 @@ rm -rf "${TMPDIR}"
 echo "Compare result: $api_compat"
 
 if [[ $api_compat == major ]]; then
-  echo "======================== ${MODULE_NAME} ========================" >> "${MAJOR_CHANGE_FILE}"
+  echo "======================== ${MODULE_NAME}${VARIANT_SUFFIX} ========================" >> "${MAJOR_CHANGE_FILE}"
   cat ${REPORT_DIR}/api_compat.txt >> "${MAJOR_CHANGE_FILE}"
 fi
 

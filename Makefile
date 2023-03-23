@@ -8,25 +8,10 @@ check:
 test:
 	./gradlew test -i
 
-.PHONY: build
-build:
-	./gradlew sdk-base:assembleRelease;
-	./gradlew sdk:assembleRelease;
-	./gradlew extension-style:assembleRelease;
-	./gradlew extension-localization:assembleRelease;
-	./gradlew extension-androidauto:assembleRelease;
-	./gradlew module-telemetry:assembleRelease;
-	./gradlew plugin-animation:assembleRelease;
-	./gradlew plugin-annotation:assembleRelease;
-	./gradlew plugin-attribution:assembleRelease;
-	./gradlew plugin-compass:assembleRelease;
-	./gradlew plugin-gestures:assembleRelease;
-	./gradlew plugin-locationcomponent:assembleRelease;
-	./gradlew plugin-logo:assembleRelease;
-	./gradlew plugin-overlay:assembleRelease;
-	./gradlew plugin-scalebar:assembleRelease;
-	./gradlew plugin-lifecycle:assembleRelease;
-	./gradlew plugin-viewport:assembleRelease;
+.PHONY: sdk-build
+sdk-build:
+	./gradlew assembleRelease -x app:assembleRelease -x android-auto-app:assembleRelease\
+		-x compose-app:assembleRelease -x extension-style-app:assembleRelease
 
 # Use `make checkApi TAG=ReleaseTag` to check the release tag or `make checkApi` to check current branch while running locally.
 # Note: if run locally, execute `mbx env` and `./gradlew assembleRelease` first.
