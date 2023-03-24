@@ -905,12 +905,12 @@ package com.mapbox.maps.plugin.animation {
     method public android.animation.ValueAnimator createPaddingAnimator(com.mapbox.maps.plugin.animation.CameraAnimatorOptions<com.mapbox.maps.EdgeInsets> options, kotlin.jvm.functions.Function1<? super android.animation.ValueAnimator,kotlin.Unit>? block = null);
     method public android.animation.ValueAnimator createPitchAnimator(com.mapbox.maps.plugin.animation.CameraAnimatorOptions<java.lang.Double> options, kotlin.jvm.functions.Function1<? super android.animation.ValueAnimator,kotlin.Unit>? block = null);
     method public android.animation.ValueAnimator createZoomAnimator(com.mapbox.maps.plugin.animation.CameraAnimatorOptions<java.lang.Double> options, kotlin.jvm.functions.Function1<? super android.animation.ValueAnimator,kotlin.Unit>? block = null);
-    method public com.mapbox.maps.plugin.animation.Cancelable easeTo(com.mapbox.maps.CameraOptions cameraOptions, com.mapbox.maps.plugin.animation.MapAnimationOptions? animationOptions = null);
-    method public com.mapbox.maps.plugin.animation.Cancelable flyTo(com.mapbox.maps.CameraOptions cameraOptions, com.mapbox.maps.plugin.animation.MapAnimationOptions? animationOptions = null);
+    method public com.mapbox.maps.plugin.animation.Cancelable easeTo(com.mapbox.maps.CameraOptions cameraOptions, com.mapbox.maps.plugin.animation.MapAnimationOptions? animationOptions = null, android.animation.Animator.AnimatorListener? animatorListener = null);
+    method public com.mapbox.maps.plugin.animation.Cancelable flyTo(com.mapbox.maps.CameraOptions cameraOptions, com.mapbox.maps.plugin.animation.MapAnimationOptions? animationOptions = null, android.animation.Animator.AnimatorListener? animatorListener = null);
     method public com.mapbox.maps.ScreenCoordinate? getAnchor();
     method public boolean getDebugMode();
-    method public com.mapbox.maps.plugin.animation.Cancelable moveBy(com.mapbox.maps.ScreenCoordinate screenCoordinate, com.mapbox.maps.plugin.animation.MapAnimationOptions? animationOptions = null);
-    method public com.mapbox.maps.plugin.animation.Cancelable pitchBy(double pitch, com.mapbox.maps.plugin.animation.MapAnimationOptions? animationOptions = null);
+    method public com.mapbox.maps.plugin.animation.Cancelable moveBy(com.mapbox.maps.ScreenCoordinate screenCoordinate, com.mapbox.maps.plugin.animation.MapAnimationOptions? animationOptions = null, android.animation.Animator.AnimatorListener? animatorListener = null);
+    method public com.mapbox.maps.plugin.animation.Cancelable pitchBy(double pitch, com.mapbox.maps.plugin.animation.MapAnimationOptions? animationOptions = null, android.animation.Animator.AnimatorListener? animatorListener = null);
     method public void playAnimatorsSequentially(android.animation.ValueAnimator... animators);
     method public void playAnimatorsTogether(android.animation.ValueAnimator... animators);
     method public void registerAnimators(android.animation.ValueAnimator... cameraAnimators);
@@ -921,8 +921,8 @@ package com.mapbox.maps.plugin.animation {
     method public void removeCameraPaddingChangeListener(com.mapbox.maps.plugin.animation.CameraAnimatorChangeListener<com.mapbox.maps.EdgeInsets> listener);
     method public void removeCameraPitchChangeListener(com.mapbox.maps.plugin.animation.CameraAnimatorChangeListener<java.lang.Double> listener);
     method public void removeCameraZoomChangeListener(com.mapbox.maps.plugin.animation.CameraAnimatorChangeListener<java.lang.Double> listener);
-    method public com.mapbox.maps.plugin.animation.Cancelable rotateBy(com.mapbox.maps.ScreenCoordinate first, com.mapbox.maps.ScreenCoordinate second, com.mapbox.maps.plugin.animation.MapAnimationOptions? animationOptions = null);
-    method public com.mapbox.maps.plugin.animation.Cancelable scaleBy(double amount, com.mapbox.maps.ScreenCoordinate? screenCoordinate, com.mapbox.maps.plugin.animation.MapAnimationOptions? animationOptions = null);
+    method public com.mapbox.maps.plugin.animation.Cancelable rotateBy(com.mapbox.maps.ScreenCoordinate first, com.mapbox.maps.ScreenCoordinate second, com.mapbox.maps.plugin.animation.MapAnimationOptions? animationOptions = null, android.animation.Animator.AnimatorListener? animatorListener = null);
+    method public com.mapbox.maps.plugin.animation.Cancelable scaleBy(double amount, com.mapbox.maps.ScreenCoordinate? screenCoordinate, com.mapbox.maps.plugin.animation.MapAnimationOptions? animationOptions = null, android.animation.Animator.AnimatorListener? animatorListener = null);
     method public void setAnchor(com.mapbox.maps.ScreenCoordinate?);
     method public void setDebugMode(boolean);
     method public void unregisterAnimators(android.animation.ValueAnimator![] cameraAnimators, boolean cancelAnimators = true);
@@ -975,12 +975,10 @@ package com.mapbox.maps.plugin.animation {
   }
 
   public final class MapAnimationOptions {
-    method public android.animation.Animator.AnimatorListener? getAnimatorListener();
     method public Long? getDuration();
     method public android.animation.TimeInterpolator? getInterpolator();
     method public String? getOwner();
     method public Long? getStartDelay();
-    property public final android.animation.Animator.AnimatorListener? animatorListener;
     property public final Long? duration;
     property public final android.animation.TimeInterpolator? interpolator;
     property public final String? owner;
@@ -990,7 +988,6 @@ package com.mapbox.maps.plugin.animation {
 
   public static final class MapAnimationOptions.Builder {
     ctor public MapAnimationOptions.Builder();
-    method public com.mapbox.maps.plugin.animation.MapAnimationOptions.Builder animatorListener(android.animation.Animator.AnimatorListener animatorListener);
     method public com.mapbox.maps.plugin.animation.MapAnimationOptions build();
     method public com.mapbox.maps.plugin.animation.MapAnimationOptions.Builder duration(long duration);
     method public com.mapbox.maps.plugin.animation.MapAnimationOptions.Builder interpolator(android.animation.TimeInterpolator interpolator);

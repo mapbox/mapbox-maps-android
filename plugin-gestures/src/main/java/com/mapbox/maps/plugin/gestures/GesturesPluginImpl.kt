@@ -122,12 +122,12 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
         mapAnimationOptions {
           duration(0)
           owner(MapAnimationOwnerRegistry.GESTURES)
-          animatorListener(object : AnimatorListenerAdapter() {
-            override fun onAnimationEnd(animation: Animator) {
-              actionAfter?.invoke()
-              immediateEaseInProcess = false
-            }
-          })
+        },
+        animatorListener = object : AnimatorListenerAdapter() {
+          override fun onAnimationEnd(animation: Animator) {
+            actionAfter?.invoke()
+            immediateEaseInProcess = false
+          }
         }
       )
     }
@@ -1351,13 +1351,12 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
         owner(MapAnimationOwnerRegistry.GESTURES)
         duration(animationTime)
         interpolator(gesturesInterpolator)
-        animatorListener(object : AnimatorListenerAdapter() {
-
-          override fun onAnimationEnd(animation: Animator) {
-            super.onAnimationEnd(animation)
-            postOnMainThread { mapCameraManagerDelegate.dragEnd() }
-          }
-        })
+      },
+      animatorListener = object : AnimatorListenerAdapter() {
+        override fun onAnimationEnd(animation: Animator) {
+          super.onAnimationEnd(animation)
+          postOnMainThread { mapCameraManagerDelegate.dragEnd() }
+        }
       }
     )
     return true

@@ -15,6 +15,7 @@ import static com.mapbox.maps.plugin.annotation.generated.PointAnnotationManager
 import static com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationManagerKt.createPolygonAnnotationManager;
 import static com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationManagerKt.createPolylineAnnotationManager;
 
+import android.animation.Animator;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -420,15 +421,35 @@ public class JavaInterfaceChecker {
     final MapboxMap mapboxMap = mapView.getMapboxMap();
     final CameraOptions cameraOptions = new CameraOptions.Builder().build();
     final MapAnimationOptions mapAnimationOptions = new MapAnimationOptions.Builder().build();
+    Animator.AnimatorListener animationListener = new Animator.AnimatorListener() {
+      @Override
+      public void onAnimationStart(Animator animation) {
 
+      }
+
+      @Override
+      public void onAnimationEnd(Animator animation) {
+
+      }
+
+      @Override
+      public void onAnimationCancel(Animator animation) {
+
+      }
+
+      @Override
+      public void onAnimationRepeat(Animator animation) {
+
+      }
+    };
     // plugin itself
     final CameraAnimationsPlugin plugin = CameraAnimationsUtils.getCamera(mapView);
-    plugin.easeTo(cameraOptions, mapAnimationOptions);
-    plugin.flyTo(cameraOptions, mapAnimationOptions);
-    plugin.moveBy(new ScreenCoordinate(0.0, 1.1), mapAnimationOptions);
-    plugin.pitchBy(1, mapAnimationOptions);
-    plugin.scaleBy(1, new ScreenCoordinate(0.0, 1.1), mapAnimationOptions);
-    plugin.rotateBy(new ScreenCoordinate(0.0, 1.1), new ScreenCoordinate(1.1, 0.0), mapAnimationOptions);
+    plugin.easeTo(cameraOptions, mapAnimationOptions, animationListener);
+    plugin.flyTo(cameraOptions, mapAnimationOptions, animationListener);
+    plugin.moveBy(new ScreenCoordinate(0.0, 1.1), mapAnimationOptions, animationListener);
+    plugin.pitchBy(1, mapAnimationOptions, animationListener);
+    plugin.scaleBy(1, new ScreenCoordinate(0.0, 1.1), mapAnimationOptions, animationListener);
+    plugin.rotateBy(new ScreenCoordinate(0.0, 1.1), new ScreenCoordinate(1.1, 0.0), mapAnimationOptions, animationListener);
 
     // animation utils
     easeTo(mapboxMap, cameraOptions, mapAnimationOptions);

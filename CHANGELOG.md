@@ -16,7 +16,8 @@ Mapbox welcomes participation and contributions from everyone.
 * Remove the deprecated `MapboxMap.queryFeatureExtensions` method.
 * Make padding optional for `MapboxMap.cameraForCoordinateBounds`, `MapboxMap.cameraForCoordinates`, `MapboxMap.cameraForGeometry` methods.
 * Add `FreeCameraOptions.getLocation` and `FreeCameraOptions.getAltitude` methods.
-
+* Remove `MapAnimationOptions.animatorListener` property. In order to subscribe to animations, provide `Animator.animatorListener` with `flyTo`, `easeTo`, `pitchBy`, `scaleBy`, `moveBy`, `rotateBy` apis.
+ 
 ## Dependencies
 * Update dependencies
 

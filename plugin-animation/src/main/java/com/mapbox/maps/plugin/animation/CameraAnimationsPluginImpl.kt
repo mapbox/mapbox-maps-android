@@ -723,10 +723,12 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlugin {
    */
   override fun easeTo(
     cameraOptions: CameraOptions,
-    animationOptions: MapAnimationOptions?
+    animationOptions: MapAnimationOptions?,
+    animatorListener: Animator.AnimatorListener?
   ) = startHighLevelAnimation(
     cameraAnimationsFactory.getEaseTo(cameraOptions),
-    animationOptions
+    animationOptions,
+    animatorListener
   )
 
   /**
@@ -739,10 +741,12 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlugin {
    */
   override fun moveBy(
     screenCoordinate: ScreenCoordinate,
-    animationOptions: MapAnimationOptions?
+    animationOptions: MapAnimationOptions?,
+    animatorListener: Animator.AnimatorListener?
   ) = startHighLevelAnimation(
     cameraAnimationsFactory.getMoveBy(screenCoordinate),
-    animationOptions
+    animationOptions,
+    animatorListener
   )
 
   /**
@@ -757,10 +761,12 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlugin {
   override fun scaleBy(
     amount: Double,
     screenCoordinate: ScreenCoordinate?,
-    animationOptions: MapAnimationOptions?
+    animationOptions: MapAnimationOptions?,
+    animatorListener: Animator.AnimatorListener?
   ) = startHighLevelAnimation(
     cameraAnimationsFactory.getScaleBy(amount, screenCoordinate),
-    animationOptions
+    animationOptions,
+    animatorListener
   )
 
   /**
@@ -786,10 +792,12 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlugin {
   override fun rotateBy(
     first: ScreenCoordinate,
     second: ScreenCoordinate,
-    animationOptions: MapAnimationOptions?
+    animationOptions: MapAnimationOptions?,
+    animatorListener: Animator.AnimatorListener?
   ) = startHighLevelAnimation(
     cameraAnimationsFactory.getRotateBy(first, second),
-    animationOptions
+    animationOptions,
+    animatorListener
   )
 
   /**
@@ -802,10 +810,12 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlugin {
    */
   override fun pitchBy(
     pitch: Double,
-    animationOptions: MapAnimationOptions?
+    animationOptions: MapAnimationOptions?,
+    animatorListener: Animator.AnimatorListener?
   ) = startHighLevelAnimation(
     cameraAnimationsFactory.getPitchBy(pitch),
-    animationOptions
+    animationOptions,
+    animatorListener
   )
 
   /**
@@ -825,10 +835,12 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlugin {
    */
   override fun flyTo(
     cameraOptions: CameraOptions,
-    animationOptions: MapAnimationOptions?
+    animationOptions: MapAnimationOptions?,
+    animatorListener: Animator.AnimatorListener?
   ) = startHighLevelAnimation(
     cameraAnimationsFactory.getFlyTo(cameraOptions),
-    animationOptions
+    animationOptions,
+    animatorListener
   )
 
   /**
@@ -953,7 +965,8 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlugin {
 
   private fun startHighLevelAnimation(
     animators: Array<CameraAnimator<*>>,
-    animationOptions: MapAnimationOptions?
+    animationOptions: MapAnimationOptions?,
+    animatorListener: Animator.AnimatorListener?
   ): Cancelable {
     animators.forEach {
       it.isInternal = true
@@ -971,7 +984,7 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlugin {
       animationOptions?.interpolator?.let {
         interpolator = it
       }
-      animationOptions?.animatorListener?.let {
+      animatorListener?.let {
         // listeners in Android SDK use non thread safe lists
         postOnAnimatorThread {
           addListener(object : AnimatorListenerAdapter() {

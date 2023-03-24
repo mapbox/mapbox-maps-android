@@ -733,8 +733,8 @@ class CameraAnimationsPluginImplTest {
       cameraState.toCameraOptions(),
       mapAnimationOptions {
         duration(100L)
-        animatorListener(listener)
-      }
+      },
+      listener
     )
     shadowOf(getMainLooper()).idle()
     assertEquals(true, listener.started)
@@ -753,8 +753,8 @@ class CameraAnimationsPluginImplTest {
       cameraState.toCameraOptions(),
       mapAnimationOptions {
         duration(10L)
-        animatorListener(listener)
-      }
+      },
+      listener
     )
     handler.postDelayed(
       {
@@ -836,8 +836,8 @@ class CameraAnimationsPluginImplTest {
       cameraState.toCameraOptions(),
       mapAnimationOptions {
         duration(10L)
-        animatorListener(listenerOne)
-      }
+      },
+      listenerOne
     )
     handler.postDelayed(
       {
@@ -845,8 +845,8 @@ class CameraAnimationsPluginImplTest {
           cameraState.toCameraOptions(),
           mapAnimationOptions {
             duration(10L)
-            animatorListener(listenerTwo)
-          }
+          },
+          listenerTwo
         )
       },
       5L
@@ -934,8 +934,8 @@ class CameraAnimationsPluginImplTest {
         .build(),
       mapAnimationOptions {
         duration(50L)
-        animatorListener(listener)
-      }
+      },
+      listener
     )
     cancelable.cancel()
     shadowOf(getMainLooper()).idle()
@@ -977,21 +977,21 @@ class CameraAnimationsPluginImplTest {
         .build(),
       mapAnimationOptions {
         duration(50L)
-        animatorListener(object : AnimatorListenerAdapter() {
-          override fun onAnimationEnd(animation: Animator) {
-            super.onAnimationEnd(animation)
-            cameraAnimationsPluginImpl.flyTo(
-              CameraOptions.Builder()
-                .center(Point.fromLngLat(VALUE, VALUE))
-                .bearing(VALUE)
-                .build(),
-              mapAnimationOptions {
-                duration(50L)
-                animatorListener(listener)
-              }
-            )
-          }
-        })
+      },
+      object : AnimatorListenerAdapter() {
+        override fun onAnimationEnd(animation: Animator) {
+          super.onAnimationEnd(animation)
+          cameraAnimationsPluginImpl.flyTo(
+            CameraOptions.Builder()
+              .center(Point.fromLngLat(VALUE, VALUE))
+              .bearing(VALUE)
+              .build(),
+            mapAnimationOptions {
+              duration(50L)
+            },
+            listener
+          )
+        }
       }
     )
     shadowOf(getMainLooper()).idle()
