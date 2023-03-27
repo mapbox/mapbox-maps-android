@@ -3,7 +3,8 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
-
+## Bug fixes 🐞
+* Fix the crash when identifying if device is connected to WiFi.
 
 # 10.12.0 March 23, 2023
 ## Features ✨ and improvements 🏁

@@ -1,8 +1,11 @@
 package com.mapbox.maps.module.telemetry
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Configuration
-import android.net.wifi.WifiManager
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import android.telephony.TelephonyManager
 import android.text.TextUtils
 import android.util.DisplayMetrics
@@ -78,13 +81,23 @@ internal class PhoneState {
     return displayMetrics.density
   }
 
+  @SuppressLint("MissingPermission")
   private fun isConnectedToWifi(context: Context): Boolean {
-    return try {
-      val wifiMgr = context.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
-      val wifiInfo = wifiMgr.connectionInfo
-      wifiMgr.isWifiEnabled && wifiInfo.networkId != NO_NETWORK
+    try {
+      val connectivityManager =
+        context.applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        val activeNetwork = connectivityManager.activeNetwork ?: return false
+        val networkCapabilities = connectivityManager.getNetworkCapabilities(activeNetwork) ?: return false
+        return networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
+      } else {
+        @Suppress("DEPRECATION")
+        val activeNetworkInfo = connectivityManager.activeNetworkInfo ?: return false
+        @Suppress("DEPRECATION")
+        return activeNetworkInfo.isConnected && activeNetworkInfo.type == ConnectivityManager.TYPE_WIFI
+      }
     } catch (exception: Exception) {
-      false
+      return false
     }
   }
 
