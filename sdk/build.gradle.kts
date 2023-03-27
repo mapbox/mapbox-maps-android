@@ -128,13 +128,6 @@ android.productFlavors.all {
             file("src/${flavor}Release/$lang"),
           )
         }
-        if (buildFromSource.toBoolean()) {
-          File("upstream-api-doc-list.txt").forEachLine {
-            if (!it.startsWith("//")) {
-              sourceRoots.from(file("../../$it"))
-            }
-          }
-        }
       }
       configureEach {
         // Make sure we disable all the source sets not related to this flavour release variant.
@@ -142,13 +135,24 @@ android.productFlavors.all {
         if (name != "${flavor}Release") {
           suppress.set(true)
         }
-        if (buildFromSource.toBoolean()) {
-          // when building from source we inlude the files in "upstream-api-doc-list.txt" which might not have docs
-          reportUndocumented.set(false)
-        } else {
-          reportUndocumented.set(true)
-        }
+        reportUndocumented.set(true)
         failOnWarning.set(true)
+      }
+    }
+  }
+  tasks.withType<DokkaTask>().configureEach {
+    dokkaSourceSets {
+      named("${flavor}Release") {
+        val upstreamApiDocFile = rootProject.file("upstream-api-doc-list.txt")
+        if (upstreamApiDocFile.exists()) {
+          // We include the files in "upstream-api-doc-list.txt" which might not have docs
+          reportUndocumented.set(false)
+          upstreamApiDocFile.forEachLine {
+            if (!it.startsWith("//")) {
+              sourceRoots.from(file("../../$it"))
+            }
+          }
+        }
       }
     }
   }
