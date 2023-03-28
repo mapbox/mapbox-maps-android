@@ -6,12 +6,14 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * Fix the crash when identifying if device is connected to WiFi.
 
-# 10.12.1
+
+# 10.12.1 March 28, 2023
 ## Bug fixes 🐞
 * Fix missing data id in `source-data-loaded` event for empty GeoJSON data.
 
 ## Dependencies
 * Update gl-native to v10.12.1.
+
 
 # 10.12.0 March 23, 2023
 ## Features ✨ and improvements 🏁
