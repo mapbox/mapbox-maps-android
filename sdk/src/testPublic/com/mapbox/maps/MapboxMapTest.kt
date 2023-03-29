@@ -1,5 +1,6 @@
 package com.mapbox.maps
 
+import android.graphics.RectF
 import android.os.Looper
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
@@ -675,6 +676,25 @@ class MapboxMapTest {
     val points = mockk<List<ScreenCoordinate>>()
     mapboxMap.coordinatesForPixels(points)
     verify { nativeMap.coordinatesForPixels(points) }
+  }
+
+  @Test(expected = IllegalArgumentException::class)
+  fun coordinatesForRectWithEmptyRect() {
+    val rect = RectF()
+    mapboxMap.coordinatesForRect(rect)
+  }
+
+  @Test
+  fun coordinatesForRectWithValidRect() {
+    val rect = RectF(0f, 0f, 100f, 100f)
+    val screenCoordinates = listOf(
+      ScreenCoordinate(0.0, 0.0),
+      ScreenCoordinate(100.0, 0.0),
+      ScreenCoordinate(100.0, 100.0),
+      ScreenCoordinate(0.0, 100.0),
+    )
+    mapboxMap.coordinatesForRect(rect)
+    verify { nativeMap.coordinatesForPixels(screenCoordinates) }
   }
 
   @Test
