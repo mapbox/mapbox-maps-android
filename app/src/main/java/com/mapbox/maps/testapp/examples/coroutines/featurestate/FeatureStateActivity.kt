@@ -1,4 +1,4 @@
-package com.mapbox.maps.testapp.examples.featurestate
+package com.mapbox.maps.testapp.examples.coroutines.featurestate
 
 import android.graphics.Color
 import android.graphics.Rect
@@ -7,20 +7,26 @@ import android.view.Gravity
 import android.view.View
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
-import com.mapbox.bindgen.Expected
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
+import com.mapbox.maps.coroutine.cameraChanges
+import com.mapbox.maps.coroutine.getFeatureState
+import com.mapbox.maps.coroutine.queryRenderedFeatures
+import com.mapbox.maps.coroutine.setFeatureState
 import com.mapbox.maps.dsl.cameraOptions
-import com.mapbox.maps.extension.observable.eventdata.CameraChangedEventData
 import com.mapbox.maps.extension.style.expressions.dsl.generated.literal
 import com.mapbox.maps.extension.style.expressions.dsl.generated.switchCase
 import com.mapbox.maps.extension.style.layers.generated.circleLayer
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.style
-import com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener
 import com.mapbox.maps.plugin.scalebar.scalebar
 import com.mapbox.maps.testapp.databinding.ActivityFeatureStateBinding
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import java.text.DateFormat.getDateTimeInstance
 import java.text.SimpleDateFormat
 import java.util.*
@@ -28,10 +34,9 @@ import java.util.*
 /**
  * Example showcasing usage of feature state.
  */
-class FeatureStateActivity : AppCompatActivity(), OnCameraChangeListener {
+class FeatureStateActivity : AppCompatActivity() {
 
   private lateinit var mapboxMap: MapboxMap
-  private var lastFeatureId: String? = null
   private lateinit var crosshair: View
   private lateinit var binding: ActivityFeatureStateBinding
 
@@ -51,56 +56,68 @@ class FeatureStateActivity : AppCompatActivity(), OnCameraChangeListener {
       )
     }
     showCrosshair()
-    mapboxMap.addOnCameraChangeListener(this)
-  }
 
-  override fun onCameraChanged(eventData: CameraChangedEventData) {
-    val offsetViewBounds = Rect()
-    crosshair.getDrawingRect(offsetViewBounds)
-    binding.mapView.offsetDescendantRectToMyCoords(crosshair, offsetViewBounds)
-    mapboxMap.queryRenderedFeatures(
-      RenderedQueryGeometry(
-        ScreenBox(
-          ScreenCoordinate(offsetViewBounds.left.toDouble(), offsetViewBounds.top.toDouble()),
-          ScreenCoordinate(offsetViewBounds.right.toDouble(), offsetViewBounds.bottom.toDouble())
-        )
-      ),
-      RenderedQueryOptions(listOf(LAYER_ID), literal(true))
-    ) { expected: Expected<String, MutableList<QueriedRenderedFeature>> ->
-      expected.value?.takeIf { it.isNotEmpty() }?.let {
-        val selectedFeature = it.first().queriedFeature.feature
-        val featureId = selectedFeature.id()!!
-        lastFeatureId?.let { lastId ->
-          if (featureId != lastId) {
-            setHoverFeatureState(lastId, false)
-          }
-        }
-        lastFeatureId = featureId
-        setHoverFeatureState(featureId, true)
-        mapboxMap.getFeatureState(
-          sourceId = SOURCE_ID,
-          featureId = featureId
-        ) { stateMap ->
-          logD(
-            TAG,
-            "getFeatureState: ${stateMap.value!!}"
-          )
-        }
-        // Update Magnitude, location and date text view.
-        val time = selectedFeature.getNumberProperty("time")
-        binding.date.text = getDateTime(time.toLong())
-        binding.location.text = selectedFeature.getStringProperty("place")
-        binding.magnitude.text = selectedFeature.getNumberProperty("mag").toString()
-      } ?: let {
-        lastFeatureId?.let {
-          setHoverFeatureState(it, false)
-        }
+    lifecycleScope.launch {
+      repeatOnLifecycle(Lifecycle.State.STARTED) {
+        highlightFeatureOnHover()
       }
     }
   }
 
-  private fun setHoverFeatureState(featureId: String, hover: Boolean) {
-    val cancelable = mapboxMap.setFeatureState(
+  private suspend fun highlightFeatureOnHover() {
+    var lastFeatureId: String? = null
+    mapboxMap
+      .cameraChanges()
+      .map {
+        Rect().apply {
+          crosshair.getDrawingRect(this)
+          binding.mapView.offsetDescendantRectToMyCoords(crosshair, this)
+        }
+      }
+      .map { offsetViewBounds ->
+        mapboxMap
+          .queryRenderedFeatures(
+            RenderedQueryGeometry(
+              ScreenBox(
+                ScreenCoordinate(offsetViewBounds.left.toDouble(), offsetViewBounds.top.toDouble()),
+                ScreenCoordinate(
+                  offsetViewBounds.right.toDouble(),
+                  offsetViewBounds.bottom.toDouble()
+                )
+              )
+            ),
+            RenderedQueryOptions(listOf(LAYER_ID), literal(true))
+          )
+      }
+      .map { expected ->
+        expected.value?.firstOrNull()
+      }
+      .distinctUntilChangedBy { renderedFeature ->
+        renderedFeature?.queriedFeature?.feature?.id()
+      }
+      .collect { renderedFeature ->
+        val selectedFeature = renderedFeature?.queriedFeature?.feature
+        val selectedFeatureId = selectedFeature?.id()
+        lastFeatureId?.let { lastId ->
+          setHoverFeatureState(lastId, false)
+        }
+        lastFeatureId = selectedFeatureId
+
+        if (selectedFeatureId != null) {
+          setHoverFeatureState(selectedFeatureId, true)
+          logHoverFeatureState(selectedFeatureId)
+
+          // Update Magnitude, location and date text view.
+          val time = selectedFeature.getNumberProperty("time")
+          binding.date.text = getDateTime(time.toLong())
+          binding.location.text = selectedFeature.getStringProperty("place")
+          binding.magnitude.text = selectedFeature.getNumberProperty("mag").toString()
+        }
+      }
+  }
+
+  private suspend fun setHoverFeatureState(featureId: String, hover: Boolean) {
+    mapboxMap.setFeatureState(
       sourceId = SOURCE_ID,
       featureId = featureId,
       state = Value(
@@ -108,15 +125,16 @@ class FeatureStateActivity : AppCompatActivity(), OnCameraChangeListener {
           "hover" to Value(hover)
         )
       )
-    ) {
-      // print the feature state
-      mapboxMap.getFeatureState(
-        sourceId = SOURCE_ID,
-        featureId = featureId,
-      ) {
-        logD(TAG, "getFeatureState: ${it.value}")
-      }
-    }
+    )
+  }
+
+  private suspend fun logHoverFeatureState(featureId: String) {
+    val featureState = mapboxMap.getFeatureState(
+      sourceId = SOURCE_ID,
+      featureId = featureId,
+    )
+
+    logD(TAG, "getFeatureState: ${featureState.value}")
   }
 
   private fun showCrosshair() {
@@ -261,16 +279,17 @@ class FeatureStateActivity : AppCompatActivity(), OnCameraChangeListener {
      * Use data from the USGS Earthquake Catalog API, which returns information about recent earthquakes,
      * including the magnitude, location, and the time at which the earthquake happened.
      */
-    private val GEOJSON_URL = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&eventtype=earthquake&minmagnitude=1&starttime=${
-    // Get the date seven days ago as an ISO 8601 timestamp, as required by the USGS Earthquake Catalog API.
-    SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US).apply {
-      timeZone = TimeZone.getTimeZone("UTC")
-    }.format(
-      Calendar.getInstance().apply {
-        add(Calendar.DATE, -7)
-      }.time
-    )
-    }"
+    private val GEOJSON_URL =
+      "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&eventtype=earthquake&minmagnitude=1&starttime=${
+        // Get the date seven days ago as an ISO 8601 timestamp, as required by the USGS Earthquake Catalog API.
+        SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US).apply {
+          timeZone = TimeZone.getTimeZone("UTC")
+        }.format(
+          Calendar.getInstance().apply {
+            add(Calendar.DATE, -7)
+          }.time
+        )
+      }"
     private const val LAYER_ID = "earthquakes-viz"
     private const val SOURCE_ID = "earthquakes"
     private val CAMERA_CENTER = Point.fromLngLat(-122.44121, 37.76132)

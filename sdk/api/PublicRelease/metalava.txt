@@ -489,6 +489,27 @@ package com.mapbox.maps.attribution {
 
 }
 
+package com.mapbox.maps.coroutine {
+
+  public final class MapboxMapExtKt {
+    method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.maps.Style! awaitLoadStyle(com.mapbox.maps.MapboxMap, com.mapbox.maps.extension.style.StyleContract.StyleExtension styleExtension, com.mapbox.maps.TransitionOptions? transitionOptions = null);
+    method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.maps.Style! awaitLoadStyleJson(com.mapbox.maps.MapboxMap, String styleJson, com.mapbox.maps.TransitionOptions? styleTransitionOptions = null);
+    method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.maps.Style! awaitLoadStyleUri(com.mapbox.maps.MapboxMap, String styleUri, com.mapbox.maps.TransitionOptions? styleTransitionOptions = null);
+    method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.maps.Style! awaitStyle(com.mapbox.maps.MapboxMap);
+    method @kotlin.jvm.JvmSynthetic public static kotlinx.coroutines.flow.Flow<? extends com.mapbox.maps.extension.observable.eventdata.CameraChangedEventData>! cameraChanges(com.mapbox.maps.MapboxMap);
+    method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.Value>! getFeatureState(com.mapbox.maps.MapboxMap, String sourceId, String sourceLayerId = null, String featureId);
+    method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.maps.FeatureExtensionValue>! getGeoJsonClusterChildren(com.mapbox.maps.MapboxMap, String sourceIdentifier, com.mapbox.geojson.Feature cluster);
+    method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.maps.FeatureExtensionValue>! getGeoJsonClusterExpansionZoom(com.mapbox.maps.MapboxMap, String sourceIdentifier, com.mapbox.geojson.Feature cluster);
+    method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.maps.FeatureExtensionValue>! getGeoJsonClusterLeaves(com.mapbox.maps.MapboxMap, String sourceIdentifier, com.mapbox.geojson.Feature cluster, long limit, long offset);
+    method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.bindgen.Expected<java.lang.String,java.util.List<? extends com.mapbox.maps.QueriedRenderedFeature>>! queryRenderedFeatures(com.mapbox.maps.MapboxMap, com.mapbox.maps.RenderedQueryGeometry geometry, com.mapbox.maps.RenderedQueryOptions options);
+    method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.bindgen.Expected<java.lang.String,java.util.List<? extends com.mapbox.maps.QueriedSourceFeature>>! querySourceFeatures(com.mapbox.maps.MapboxMap, String sourceId, com.mapbox.maps.SourceQueryOptions options);
+    method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None>! removeFeatureState(com.mapbox.maps.MapboxMap, String sourceId, String sourceLayerId = null, String featureId, String stateKey = null);
+    method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None>! resetFeatureStates(com.mapbox.maps.MapboxMap, String sourceId, String sourceLayerId = null);
+    method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None>! setFeatureState(com.mapbox.maps.MapboxMap, String sourceId, String sourceLayerId = null, String featureId, com.mapbox.bindgen.Value state);
+  }
+
+}
+
 package com.mapbox.maps.exception {
 
   public final class WorkerThreadException extends java.lang.RuntimeException {

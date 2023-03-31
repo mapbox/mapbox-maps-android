@@ -1064,7 +1064,7 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
-            android:name=".examples.featurestate.FeatureStateActivity"
+            android:name=".examples.coroutines.featurestate.FeatureStateActivity"
             android:description="@string/description_feature_state"
             android:exported="true"
             android:label="@string/activity_feature_state">

@@ -104,6 +104,7 @@ dependencies {
   implementation(Dependencies.androidxRecyclerView)
   implementation(Dependencies.androidxConstraintLayout)
   implementation(Dependencies.androidxMultidex)
+  implementation(Dependencies.androidxLifecycleKtx)
   implementation(Dependencies.googleMaterialDesign)
   implementation(Dependencies.squareRetrofit)
   implementation(Dependencies.androidxFragmentTest)

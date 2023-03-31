@@ -81,7 +81,7 @@ object Dependencies {
   const val squareRetrofit = "com.squareup.retrofit2:retrofit:${Versions.squareRetrofit}"
   const val squareRetrofitGsonConverter = "com.squareup.retrofit2:converter-gson:${Versions.squareRetrofit}"
   const val kotlin = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.pluginKotlin}"
-  const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.kotlinCoroutines}"
+  const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.kotlinCoroutines}"
   const val coroutinesTest = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.kotlinCoroutines}"
   const val junit = "junit:junit:${Versions.junit}"
   const val mockk = "io.mockk:mockk:${Versions.mockk}"
