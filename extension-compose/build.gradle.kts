@@ -44,6 +44,9 @@ dependencies {
     androidTestImplementation(Dependencies.androidxTestJUnit)
     androidTestImplementation(Dependencies.androidxEspresso)
     androidTestImplementation(Dependencies.androidxUiAutomator)
+    androidTestImplementation(project(":sdk"))
+    androidTestImplementation(Dependencies.composeUITest)
+    debugImplementation(Dependencies.composeUITestManifest)
     testImplementation(Dependencies.junit)
     detektPlugins(Dependencies.detektFormatting)
   }

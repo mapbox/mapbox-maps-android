@@ -105,6 +105,8 @@ object Dependencies {
   const val composeMaterial = "androidx.compose.material:material"
   const val composeUiToolingPreview = "androidx.compose.ui:ui-tooling-preview"
   const val composeUiTooling = "androidx.compose.ui:ui-tooling"
+  const val composeUITest = "androidx.compose.ui:ui-test-junit4"
+  const val composeUITestManifest = "androidx.compose.ui:ui-test-manifest"
 }
 
 object Versions {
@@ -164,6 +166,7 @@ object Versions {
   const val pitest = "0.2.8"
   const val detekt = "1.22.0"
   const val compose = "1.4.3"
+  const val composeTest = "1.4.0"
   const val composeBom = "2023.01.00"
   const val pluginPlayPublisher = "3.7.0"
   const val gradleVersionsPlugin = "0.42.0"
