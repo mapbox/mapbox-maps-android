@@ -3,6 +3,8 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
+
+# 10.13.0-beta.1 April 05, 2023
 ## Features ✨ and improvements 🏁
 * Deprecate `Snapshotter.setTileMode` and `Snapshotter.isInTileMode`.
 * Deprecate `Style.setStyleGeoJSONSourceData(sourceId, data)`.
@@ -16,6 +18,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v10.13.0-beta.1 and common to v23.5.0-beta.1.
+
 
 
 # 10.12.1 March 28, 2023
