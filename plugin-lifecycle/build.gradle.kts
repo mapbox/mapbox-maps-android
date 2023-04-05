@@ -30,7 +30,7 @@ dependencies {
   androidTestImplementation(Dependencies.androidxTestRunner)
   androidTestImplementation(Dependencies.androidxJUnitTestRules)
   androidTestImplementation(Dependencies.androidxEspresso)
-  lintPublish(project(":mapbox-lint"))
+  lintPublish(project(":plugin-lifecycle-lint-rules"))
   detektPlugins(Dependencies.detektFormatting)
 }
 
