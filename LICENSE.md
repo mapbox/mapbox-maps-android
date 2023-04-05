@@ -372,7 +372,7 @@ License: [The Apache Software License, Version 2.0](http://www.apache.org/licens
 
 ===========================================================================
 
-### MapboxCoreMaps,10.12.1,Mapbox ToS,Mapbox,https://www.mapbox.com/
+### MapboxCoreMaps,10.13.0-beta.1,Mapbox ToS,Mapbox,https://www.mapbox.com/
 
 ```
 Mapbox Core Maps version 10.0

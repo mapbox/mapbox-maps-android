@@ -194,6 +194,7 @@ open class Snapshotter {
    *
    * @param set Bool representing if the snapshotter is in the tile mode.
    */
+  @Deprecated("This method will be removed in the next major release.")
   fun setTileMode(set: Boolean) {
     coreSnapshotter.setTileMode(set)
   }
@@ -232,6 +233,7 @@ open class Snapshotter {
   /**
    *  Returns TRUE if the snapshotter is in the tile mode.
    */
+  @Deprecated("This method will be removed in the next major release.")
   fun isInTileMode(): Boolean {
     return coreSnapshotter.isInTileMode
   }

@@ -537,6 +537,10 @@ internal class NativeMapImpl(val map: MapInterface) :
     return map.setStyleSourceProperties(sourceId, properties)
   }
 
+  @Deprecated(
+    "This method will be removed in the next major release.",
+    replaceWith = ReplaceWith("setStyleGeoJSONSourceData(sourceId, dataId, data)")
+  )
   override fun setStyleGeoJSONSourceData(sourceId: String, data: GeoJSONSourceData): Expected<String, None> {
     return map.setStyleGeoJSONSourceData(sourceId, data)
   }

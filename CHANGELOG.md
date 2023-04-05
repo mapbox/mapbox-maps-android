@@ -2,9 +2,20 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# main
+# 10.13.0-beta.1
+## Features ✨ and improvements 🏁
+* Deprecate `Snapshotter.setTileMode` and `Snapshotter.isInTileMode`.
+* Deprecate `Style.setStyleGeoJSONSourceData(sourceId, data)`.
+* Use flat screen coordinate conversion functions with zero exaggeration terrain.
+* Share similar image and glyph atlases across tiles and thus avoid unnecessary textures creation.
+* Render single color gradient as solid line.
+
 ## Bug fixes 🐞
 * Fix the crash when identifying if device is connected to WiFi.
+* Fix a crash when a hillshade bucket was created with disabled terrain, but the terrain got enabled afterwards.
+
+## Dependencies
+* Update gl-native to v10.13.0-beta.1 and common to v23.5.0-beta.1.
 
 
 # 10.12.1 March 28, 2023

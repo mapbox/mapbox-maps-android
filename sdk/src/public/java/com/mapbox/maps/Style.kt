@@ -1006,6 +1006,10 @@ class Style internal constructor(
    * This method is for internal use.
    */
   @WorkerThread
+  @Deprecated(
+    "This method will be removed in the next major release.",
+    replaceWith = ReplaceWith("setStyleGeoJSONSourceData(sourceId, dataId, data)")
+  )
   override fun setStyleGeoJSONSourceData(
     sourceId: String,
     data: GeoJSONSourceData
