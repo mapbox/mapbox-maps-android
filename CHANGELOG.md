@@ -2,7 +2,7 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# 10.13.0-beta.1
+# main
 ## Features ✨ and improvements 🏁
 * Deprecate `Snapshotter.setTileMode` and `Snapshotter.isInTileMode`.
 * Deprecate `Style.setStyleGeoJSONSourceData(sourceId, data)`.
