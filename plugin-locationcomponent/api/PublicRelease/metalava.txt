@@ -50,6 +50,7 @@ package com.mapbox.maps.plugin.locationcomponent {
     method public void onAccuracyRadiusUpdated(double[] radius, kotlin.jvm.functions.Function1<? super android.animation.ValueAnimator,kotlin.Unit>? options);
     method public void onBearingUpdated(double[] bearing, kotlin.jvm.functions.Function1<? super android.animation.ValueAnimator,kotlin.Unit>? options);
     method public void onDelegateProvider(com.mapbox.maps.plugin.delegates.MapDelegateProvider delegateProvider);
+    method public void onError(com.mapbox.common.location.LocationError error);
     method public void onLocationUpdated(com.mapbox.geojson.Point![] location, kotlin.jvm.functions.Function1<? super android.animation.ValueAnimator,kotlin.Unit>? options);
     method public void onPuckAccuracyRadiusAnimatorDefaultOptionsUpdated(kotlin.jvm.functions.Function1<? super android.animation.ValueAnimator,kotlin.Unit> options);
     method public void onPuckBearingAnimatorDefaultOptionsUpdated(kotlin.jvm.functions.Function1<? super android.animation.ValueAnimator,kotlin.Unit> options);
@@ -77,6 +78,35 @@ package com.mapbox.maps.plugin.locationcomponent {
   }
 
   public final class LocationPuckManagerKt {
+  }
+
+  public interface PermissionsListener {
+    method public void onExplanationNeeded(java.util.List<java.lang.String> permissionsToExplain);
+    method public void onPermissionResult(boolean granted);
+  }
+
+  public final class PermissionsManager {
+    ctor public PermissionsManager(com.mapbox.maps.plugin.locationcomponent.PermissionsListener listener);
+    method public static com.mapbox.maps.plugin.locationcomponent.PermissionsManager.AccuracyAuthorization accuracyAuthorization(android.content.Context context);
+    method public static boolean areLocationPermissionsGranted(android.content.Context context);
+    method @ChecksSdkIntAtLeast(api=android.os.Build.VERSION_CODES.M) public static boolean areRuntimePermissionsRequired();
+    method public static boolean isBackgroundLocationPermissionGranted(android.content.Context context);
+    method public void onRequestPermissionsResult(int requestCode, String![] permissions, int[] grantResults);
+    method public void requestLocationPermissions(android.app.Activity activity);
+    field public static final com.mapbox.maps.plugin.locationcomponent.PermissionsManager.Companion Companion;
+  }
+
+  public enum PermissionsManager.AccuracyAuthorization {
+    enum_constant public static final com.mapbox.maps.plugin.locationcomponent.PermissionsManager.AccuracyAuthorization APPROXIMATE;
+    enum_constant public static final com.mapbox.maps.plugin.locationcomponent.PermissionsManager.AccuracyAuthorization NONE;
+    enum_constant public static final com.mapbox.maps.plugin.locationcomponent.PermissionsManager.AccuracyAuthorization PRECISE;
+  }
+
+  public static final class PermissionsManager.Companion {
+    method public com.mapbox.maps.plugin.locationcomponent.PermissionsManager.AccuracyAuthorization accuracyAuthorization(android.content.Context context);
+    method public boolean areLocationPermissionsGranted(android.content.Context context);
+    method @ChecksSdkIntAtLeast(api=android.os.Build.VERSION_CODES.M) public boolean areRuntimePermissionsRequired();
+    method public boolean isBackgroundLocationPermissionGranted(android.content.Context context);
   }
 
 }

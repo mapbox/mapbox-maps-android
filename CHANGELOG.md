@@ -21,6 +21,8 @@ Mapbox welcomes participation and contributions from everyone.
 * Add `suspend` variants for the async `MapboxMap` functions : `queryRenderedFeatures`, `querySourceFeatures`, `setFeatureState`, `getFeatureState`, `removeFeatureState`, `getGeoJsonClusterLeaves`, `getGeoJsonClusterChildren`, `getGeoJsonClusterExpansionZoom`.
 * Add `MapboxMap.cameraChanges` returning Flow of camera updates.
 * Introduce custom lint rules to check illegal usage of literals in Expression DSL and suggest auto fix.
+* Replace `LocationEngine` use with `LocationService` in `DefaultProvider`.
+* Add new `LocationConsumer.onError` method to allow consumers handle location errors.
  
 ## Dependencies
 * Update dependencies.

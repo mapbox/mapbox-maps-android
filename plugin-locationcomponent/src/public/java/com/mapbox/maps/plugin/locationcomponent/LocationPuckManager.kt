@@ -6,10 +6,12 @@ import androidx.annotation.VisibleForTesting.PRIVATE
 import androidx.core.animation.doOnEnd
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.Value
+import com.mapbox.common.location.LocationError
 import com.mapbox.geojson.Point
 import com.mapbox.maps.MapboxLocationComponentException
 import com.mapbox.maps.StylePropertyValueKind
 import com.mapbox.maps.extension.style.StyleInterface
+import com.mapbox.maps.logW
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.LocationPuck3D
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
@@ -248,6 +250,10 @@ internal class LocationPuckManager(
     animationManager.updateAccuracyRadiusAnimator(block)
   }
 
+  fun onLocationError(error: LocationError) {
+    logW(TAG, "Location error: $error")
+  }
+
   //
   // Layer action
   //
@@ -362,6 +368,7 @@ internal class LocationPuckManager(
     // scale expression too frequently and cause performance issues.
     const val MERCATOR_SCALE_THRESHOLD = 0.01
     const val BEARING_UPDATE_THRESHOLD = 0.01
+    const val TAG = "LocationPuckManager"
   }
 }
 

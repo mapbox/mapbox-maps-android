@@ -5,6 +5,7 @@ import android.content.Context
 import android.util.AttributeSet
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
+import com.mapbox.common.location.LocationError
 import com.mapbox.geojson.Point
 import com.mapbox.maps.MapboxLocationComponentException
 import com.mapbox.maps.RenderedQueryGeometry
@@ -14,8 +15,11 @@ import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.LOCATION_INDICATOR_LAYER
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.MODEL_LAYER
 import com.mapbox.maps.plugin.locationcomponent.animators.PuckAnimatorManager
-import com.mapbox.maps.plugin.locationcomponent.generated.*
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentAttributeParser
+import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentAttributeParser2
+import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
+import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings2
+import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettingsBase2
 import java.lang.ref.WeakReference
 import java.util.concurrent.CopyOnWriteArraySet
 
@@ -336,6 +340,14 @@ class LocationComponentPluginImpl : LocationComponentPlugin2, LocationConsumer2,
    */
   override fun onPuckBearingAnimatorDefaultOptionsUpdated(options: ValueAnimator.() -> Unit) {
     locationPuckManager?.updateBearingAnimator(options)
+  }
+
+  /**
+   * Called whenever there is an error with the location provider.
+   * @param error The actual [LocationError]
+   */
+  override fun onError(error: LocationError) {
+    locationPuckManager?.onLocationError(error)
   }
 
   /**
