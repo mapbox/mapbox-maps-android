@@ -3,12 +3,14 @@ package com.mapbox.maps.plugin.compass
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.drawable.BitmapDrawable
 import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.animation.doOnEnd
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.plugin.InvalidPluginConfigurationException
@@ -43,7 +45,7 @@ open class CompassViewPlugin(
 
   private var isHidden = false
 
-  override var internalSettings: CompassSettings = CompassSettings()
+  override var internalSettings: CompassSettings = CompassSettings { }
 
   private val compassClickListeners: CopyOnWriteArraySet<OnCompassClickListener> =
     CopyOnWriteArraySet()
@@ -67,8 +69,16 @@ open class CompassViewPlugin(
   override fun applySettings() {
     compassView.apply {
       compassGravity = internalSettings.position
-      internalSettings.image?.let { drawable ->
-        compassImage = drawable
+      internalSettings.image?.let { imageHolder ->
+        val context = (this as CompassViewImpl).context
+        imageHolder.bitmap?.let {
+          compassImage = BitmapDrawable(context.resources, it)
+        }
+        imageHolder.drawableId?.let { id ->
+          if (id != -1) {
+            compassImage = AppCompatResources.getDrawable(context, id)!!
+          }
+        }
       }
       compassRotation = internalSettings.rotation
       isCompassEnabled = internalSettings.enabled
@@ -90,7 +100,7 @@ open class CompassViewPlugin(
   override var enabled: Boolean
     get() = compassView.isCompassEnabled
     set(value) {
-      internalSettings.enabled = value
+      internalSettings = internalSettings.toBuilder().setEnabled(value).build()
       compassView.isCompassEnabled = value
       update(bearing)
       if (value && !shouldHideCompass()) {

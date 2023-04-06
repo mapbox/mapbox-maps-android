@@ -5,7 +5,6 @@ package com.mapbox.maps.plugin.attribution.generated
 import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.Color
-import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import io.mockk.Runs
 import io.mockk.clearAllMocks
@@ -26,8 +25,6 @@ class AttributionAttributeParserTest {
 
   private val typedArray: TypedArray = mockk(relaxUnitFun = true)
 
-  private val drawable = mockk<Drawable>(relaxed = true)
-
   @Before
   fun setUp() {
     mockkStatic(Color::class)
@@ -39,7 +36,7 @@ class AttributionAttributeParserTest {
     every { typedArray.getColor(any(), any()) } returns Color.RED
     every { typedArray.getDimension(any(), any()) } returns 10.0f
     every { typedArray.getFloat(any(), any()) } returns 10.0f
-    every { typedArray.getDrawable(any()) } returns drawable
+    every { typedArray.getResourceId(any(), -1) } returns 1
     every { typedArray.hasValue(any()) } returns true
     every { typedArray.recycle() } just Runs
   }

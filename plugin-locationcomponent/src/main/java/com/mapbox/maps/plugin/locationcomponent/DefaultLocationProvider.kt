@@ -255,11 +255,9 @@ class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal c
       }
 
       // Finally, notify about accuracy changes if the consumer supports it
-      if (locationConsumer is LocationConsumer2) {
-        launch {
-          locationFlow.collect { location: Location ->
-            location.horizontalAccuracy?.let { locationConsumer.onAccuracyRadiusUpdated(it) }
-          }
+      launch {
+        locationFlow.collect { location: Location ->
+          location.horizontalAccuracy?.let { locationConsumer.onAccuracyRadiusUpdated(it) }
         }
       }
     }

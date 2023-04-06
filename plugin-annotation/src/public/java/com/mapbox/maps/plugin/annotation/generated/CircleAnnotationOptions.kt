@@ -113,7 +113,7 @@ class CircleAnnotationOptions : AnnotationOptions<Point, CircleAnnotation> {
   /**
    * Set circle-radius to initialise the circleAnnotation with.
    *
-   * Circle radius.
+   * Circle radius. The unit of circleRadius is in density-independent pixels.
    *
    * @param circleRadius the circle-radius value
    * @return this
@@ -180,7 +180,7 @@ class CircleAnnotationOptions : AnnotationOptions<Point, CircleAnnotation> {
   /**
    * Set circle-stroke-width to initialise the circleAnnotation with.
    *
-   * The width of the circle's stroke. Strokes are placed outside of the {@link PropertyFactory#circleRadius}.
+   * The width of the circle's stroke. Strokes are placed outside of the {@link PropertyFactory#circleRadius}. The unit of circleStrokeWidth is in density-independent pixels.
    *
    * @param circleStrokeWidth the circle-stroke-width value
    * @return this

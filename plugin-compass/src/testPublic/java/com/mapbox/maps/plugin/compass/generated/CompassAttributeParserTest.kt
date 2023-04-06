@@ -5,7 +5,6 @@ package com.mapbox.maps.plugin.compass.generated
 import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.Color
-import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import io.mockk.Runs
 import io.mockk.clearAllMocks
@@ -25,8 +24,6 @@ class CompassAttributeParserTest {
 
   private val typedArray: TypedArray = mockk(relaxUnitFun = true)
 
-  private val drawable = mockk<Drawable>(relaxed = true)
-
   @Before
   fun setUp() {
     every { context.obtainStyledAttributes(any(), any(), 0, 0) } returns typedArray
@@ -36,7 +33,7 @@ class CompassAttributeParserTest {
     every { typedArray.getColor(any(), any()) } returns Color.RED
     every { typedArray.getDimension(any(), any()) } returns 10.0f
     every { typedArray.getFloat(any(), any()) } returns 10.0f
-    every { typedArray.getDrawable(any()) } returns drawable
+    every { typedArray.getResourceId(any(), -1) } returns 1
     every { typedArray.hasValue(any()) } returns true
     every { typedArray.recycle() } just Runs
   }
@@ -177,9 +174,9 @@ class CompassAttributeParserTest {
 
   @Test
   fun imageTest() {
-    every { typedArray.getDrawable(any()) } returns drawable
+    every { typedArray.getResourceId(any(), any()) } returns 1
     val settings = CompassAttributeParser.parseCompassSettings(context, attrs, 1.2f)
-    assertEquals(drawable, settings.image)
+    assertEquals(1, settings.image?.drawableId)
   }
 }
 

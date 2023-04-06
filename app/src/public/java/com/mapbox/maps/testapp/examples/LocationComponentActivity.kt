@@ -5,8 +5,8 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.content.res.AppCompatResources
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.ImageHolder
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.expressions.dsl.generated.interpolate
 import com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName
@@ -21,7 +21,6 @@ import com.mapbox.maps.plugin.locationcomponent.DefaultLocationProvider
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener
 import com.mapbox.maps.plugin.locationcomponent.createDefault2DPuck
 import com.mapbox.maps.plugin.locationcomponent.location
-import com.mapbox.maps.plugin.locationcomponent.location2
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityLocationComponentBinding
 import com.mapbox.maps.testapp.utils.LocationPermissionHelper
@@ -120,22 +119,22 @@ class LocationComponentActivity : AppCompatActivity() {
         return true
       }
       R.id.heading -> {
-        binding.mapView.location2.puckBearingSource = PuckBearingSource.HEADING
+        binding.mapView.location.puckBearingSource = PuckBearingSource.HEADING
         item.isChecked = true
         return true
       }
       R.id.course -> {
-        binding.mapView.location2.puckBearingSource = PuckBearingSource.COURSE
+        binding.mapView.location.puckBearingSource = PuckBearingSource.COURSE
         item.isChecked = true
         return true
       }
       R.id.action_accuracy_enabled -> {
-        binding.mapView.location2.showAccuracyRing = true
+        binding.mapView.location.showAccuracyRing = true
         item.isChecked = true
         return true
       }
       R.id.action_accuracy_disable -> {
-        binding.mapView.location2.showAccuracyRing = false
+        binding.mapView.location.showAccuracyRing = false
         item.isChecked = true
         return true
       }
@@ -157,18 +156,9 @@ class LocationComponentActivity : AppCompatActivity() {
     binding.mapView.location.let {
       when (it.locationPuck) {
         is LocationPuck3D -> it.locationPuck = LocationPuck2D(
-          topImage = AppCompatResources.getDrawable(
-            this,
-            com.mapbox.maps.plugin.locationcomponent.R.drawable.mapbox_user_icon
-          ),
-          bearingImage = AppCompatResources.getDrawable(
-            this,
-            com.mapbox.maps.plugin.locationcomponent.R.drawable.mapbox_user_bearing_icon
-          ),
-          shadowImage = AppCompatResources.getDrawable(
-            this,
-            com.mapbox.maps.plugin.locationcomponent.R.drawable.mapbox_user_stroke_icon
-          ),
+          topImage = ImageHolder.from(com.mapbox.maps.plugin.locationcomponent.R.drawable.mapbox_user_icon),
+          bearingImage = ImageHolder.from(com.mapbox.maps.plugin.locationcomponent.R.drawable.mapbox_user_bearing_icon),
+          shadowImage = ImageHolder.from(com.mapbox.maps.plugin.locationcomponent.R.drawable.mapbox_user_stroke_icon),
           scaleExpression = interpolate {
             linear()
             zoom()

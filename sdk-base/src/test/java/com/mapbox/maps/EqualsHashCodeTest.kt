@@ -3,6 +3,12 @@ package com.mapbox.maps
 import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOptions
+import com.mapbox.maps.plugin.attribution.generated.AttributionSettings
+import com.mapbox.maps.plugin.compass.generated.CompassSettings
+import com.mapbox.maps.plugin.gestures.generated.GesturesSettings
+import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
+import com.mapbox.maps.plugin.logo.generated.LogoSettings
+import com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings
 import com.mapbox.maps.plugin.viewport.ViewportStatus
 import com.mapbox.maps.plugin.viewport.data.DefaultViewportTransitionOptions
 import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateBearing
@@ -11,6 +17,7 @@ import com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions
 import com.mapbox.maps.plugin.viewport.data.ViewportOptions
 import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning
+import org.junit.Ignore
 import org.junit.Test
 
 class EqualsHashCodeTest {
@@ -80,6 +87,60 @@ class EqualsHashCodeTest {
     EqualsVerifier.forClass(ViewportOptions::class.java)
       .usingGetClass()
       .suppress(Warning.INHERITED_DIRECTLY_FROM_OBJECT)
+      .verify()
+  }
+  @Test
+  fun `ImageHolder hashCode and equals test`() {
+    EqualsVerifier.forClass(ImageHolder::class.java)
+      .usingGetClass()
+      .verify()
+  }
+
+  @Ignore("https://mapbox.atlassian.net/browse/MAPSAND-956")
+  @Test
+  fun `AttributionSettings hashCode and equals test`() {
+    EqualsVerifier.forClass(AttributionSettings::class.java)
+      .usingGetClass()
+      .verify()
+  }
+
+  @Ignore("https://mapbox.atlassian.net/browse/MAPSAND-956")
+  @Test
+  fun `CompassSettings hashCode and equals test`() {
+    EqualsVerifier.forClass(CompassSettings::class.java)
+      .usingGetClass()
+      .verify()
+  }
+
+  @Ignore("https://mapbox.atlassian.net/browse/MAPSAND-956")
+  @Test
+  fun `GesturesSettings hashCode and equals test`() {
+    EqualsVerifier.forClass(GesturesSettings::class.java)
+      .usingGetClass()
+      .verify()
+  }
+
+  @Ignore("https://mapbox.atlassian.net/browse/MAPSAND-956")
+  @Test
+  fun `LocationComponentSettings hashCode and equals test`() {
+    EqualsVerifier.forClass(LocationComponentSettings::class.java)
+      .usingGetClass()
+      .verify()
+  }
+
+  @Ignore("https://mapbox.atlassian.net/browse/MAPSAND-956")
+  @Test
+  fun `LogoSettings hashCode and equals test`() {
+    EqualsVerifier.forClass(LogoSettings::class.java)
+      .usingGetClass()
+      .verify()
+  }
+
+  @Ignore("https://mapbox.atlassian.net/browse/MAPSAND-956")
+  @Test
+  fun `ScaleBarSettings hashCode and equals test`() {
+    EqualsVerifier.forClass(ScaleBarSettings::class.java)
+      .usingGetClass()
       .verify()
   }
 }

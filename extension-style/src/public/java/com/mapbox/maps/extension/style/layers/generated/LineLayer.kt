@@ -14,7 +14,6 @@ import com.mapbox.maps.extension.style.utils.ColorUtils.colorIntToRgbaExpression
 import com.mapbox.maps.extension.style.utils.ColorUtils.rgbaExpressionToColorInt
 import com.mapbox.maps.extension.style.utils.ColorUtils.rgbaExpressionToColorString
 import com.mapbox.maps.extension.style.utils.silentUnwrap
-import com.mapbox.maps.logE
 import java.util.*
 
 /**
@@ -818,43 +817,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * Transition options for LineDasharray.
-   */
-  @Deprecated("This property has been deprecated and will do no operations")
-  val lineDasharrayTransition: StyleTransition?
-    /**
-     * Get the LineDasharray property transition options
-     *
-     * Use static method [LineLayer.defaultLineDasharrayTransition] to get the default property.
-     *
-     * @return transition options for List<Double>
-     */
-    get() {
-      logE("LineLayer", "This property has been deprecated and will return null.")
-      return null
-    }
-
-  /**
-   * Set the LineDasharray property transition options
-   *
-   * Use static method [LineLayer.defaultLineDasharrayTransition] to set the default property.
-   *
-   * @param options transition options for List<Double>
-   */
-  @Deprecated("This property has been deprecated and will do no operations")
-  override fun lineDasharrayTransition(options: StyleTransition): LineLayer = apply {
-    // no-op
-  }
-
-  /**
-   * DSL for [lineDasharrayTransition].
-   */
-  @Deprecated("This property has been deprecated and will do no operations")
-  override fun lineDasharrayTransition(block: StyleTransition.Builder.() -> Unit): LineLayer = apply {
-    // no-op
-  }
-
-  /**
    * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap.
    */
   val lineGapWidth: Double?
@@ -1241,43 +1203,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   override fun linePattern(linePattern: Expression): LineLayer = apply {
     val propertyValue = PropertyValue("line-pattern", linePattern)
     setProperty(propertyValue)
-  }
-
-  /**
-   * Transition options for LinePattern.
-   */
-  @Deprecated("This property has been deprecated and will do no operations")
-  val linePatternTransition: StyleTransition?
-    /**
-     * Get the LinePattern property transition options
-     *
-     * Use static method [LineLayer.defaultLinePatternTransition] to get the default property.
-     *
-     * @return transition options for String
-     */
-    get() {
-      logE("LineLayer", "This property has been deprecated and will return null.")
-      return null
-    }
-
-  /**
-   * Set the LinePattern property transition options
-   *
-   * Use static method [LineLayer.defaultLinePatternTransition] to set the default property.
-   *
-   * @param options transition options for String
-   */
-  @Deprecated("This property has been deprecated and will do no operations")
-  override fun linePatternTransition(options: StyleTransition): LineLayer = apply {
-    // no-op
-  }
-
-  /**
-   * DSL for [linePatternTransition].
-   */
-  @Deprecated("This property has been deprecated and will do no operations")
-  override fun linePatternTransition(block: StyleTransition.Builder.() -> Unit): LineLayer = apply {
-    // no-op
   }
 
   /**
@@ -2014,21 +1939,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * Transition options for LineDasharray.
-     */
-    @Deprecated("This property has been deprecated and will do no operations")
-    val defaultLineDasharrayTransition: StyleTransition?
-      /**
-       * Get the LineDasharray property transition options
-       *
-       * @return transition options for List<Double>
-       */
-      get() {
-        logE("LineLayer", "This property has been deprecated and will return null.")
-        return null
-      }
-
-    /**
      * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap.
      */
     val defaultLineGapWidth: Double?
@@ -2206,21 +2116,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
         defaultLinePattern?.let {
           return Expression.literal(it)
         }
-        return null
-      }
-
-    /**
-     * Transition options for LinePattern.
-     */
-    @Deprecated("This property has been deprecated and will do no operations")
-    val defaultLinePatternTransition: StyleTransition?
-      /**
-       * Get the LinePattern property transition options
-       *
-       * @return transition options for String
-       */
-      get() {
-        logE("LineLayer", "This property has been deprecated and will return null.")
         return null
       }
 
@@ -2611,22 +2506,6 @@ interface LineLayerDsl {
   fun lineDasharray(lineDasharray: Expression): LineLayer
 
   /**
-   * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels.
-   *
-   * Set the LineDasharray property transition options
-   *
-   * @param options transition options for List<Double>
-   */
-  fun lineDasharrayTransition(options: StyleTransition): LineLayer
-
-  /**
-   * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels.
-   *
-   * DSL for [lineDasharrayTransition].
-   */
-  fun lineDasharrayTransition(block: StyleTransition.Builder.() -> Unit): LineLayer
-
-  /**
    * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap.
    *
    * @param lineGapWidth value of lineGapWidth
@@ -2736,22 +2615,6 @@ interface LineLayerDsl {
    * @param linePattern value of linePattern as Expression
    */
   fun linePattern(linePattern: Expression): LineLayer
-
-  /**
-   * Name of image in sprite to use for drawing image lines. For seamless patterns, image width must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
-   *
-   * Set the LinePattern property transition options
-   *
-   * @param options transition options for String
-   */
-  fun linePatternTransition(options: StyleTransition): LineLayer
-
-  /**
-   * Name of image in sprite to use for drawing image lines. For seamless patterns, image width must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
-   *
-   * DSL for [linePatternTransition].
-   */
-  fun linePatternTransition(block: StyleTransition.Builder.() -> Unit): LineLayer
 
   /**
    * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.

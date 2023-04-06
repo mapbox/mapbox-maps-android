@@ -5,6 +5,7 @@ import com.mapbox.maps.plugin.LocationPuck3D
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.LOCATION_INDICATOR_LAYER
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.MODEL_LAYER
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.MODEL_SOURCE
+import io.mockk.mockk
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Before
@@ -60,7 +61,7 @@ class LayerSourceProviderTest {
   @Test
   fun testGetLocationIndicatorLayerRenderer() {
     val locationPuck2D = LocationPuck2D()
-    val locationIndicatorLayerRenderer = layerSourceProvider.getLocationIndicatorLayerRenderer(locationPuck2D)
+    val locationIndicatorLayerRenderer = layerSourceProvider.getLocationIndicatorLayerRenderer(locationPuck2D, mockk())
     assertNotNull(locationIndicatorLayerRenderer)
   }
 

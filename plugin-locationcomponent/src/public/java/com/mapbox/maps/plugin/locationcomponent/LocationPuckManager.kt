@@ -1,6 +1,7 @@
 package com.mapbox.maps.plugin.locationcomponent
 
 import android.animation.ValueAnimator
+import android.content.Context
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
 import androidx.core.animation.doOnEnd
@@ -17,14 +18,14 @@ import com.mapbox.maps.plugin.LocationPuck3D
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.locationcomponent.animators.PuckAnimatorManager
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
-import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings2
+import java.lang.ref.WeakReference
 import kotlin.math.abs
 import kotlin.math.cos
 import kotlin.math.pow
 
 internal class LocationPuckManager(
   var settings: LocationComponentSettings,
-  var settings2: LocationComponentSettings2,
+  private val weakContext: WeakReference<Context>,
   private val delegateProvider: MapDelegateProvider,
   private val positionManager: LocationComponentPositionManager,
   private val layerSourceProvider: LayerSourceProvider,
@@ -76,7 +77,7 @@ internal class LocationPuckManager(
   internal var locationLayerRenderer =
     when (val puck = settings.locationPuck) {
       is LocationPuck2D -> {
-        layerSourceProvider.getLocationIndicatorLayerRenderer(puck)
+        layerSourceProvider.getLocationIndicatorLayerRenderer(puck, weakContext)
       }
       is LocationPuck3D -> {
         layerSourceProvider.getModelLayerRenderer(puck)
@@ -96,8 +97,7 @@ internal class LocationPuckManager(
         onAccuracyRadiusUpdated
       )
       animationManager.setLocationLayerRenderer(locationLayerRenderer)
-      animationManager.applyPulsingAnimationSettings(settings)
-      animationManager.applySettings2(settings2)
+      animationManager.applySettings(settings)
       lastLocation?.let {
         updateCurrentPosition(it)
       }
@@ -132,7 +132,7 @@ internal class LocationPuckManager(
     locationLayerRenderer.removeLayers()
     locationLayerRenderer = when (val locationPuck = settings.locationPuck) {
       is LocationPuck2D -> {
-        layerSourceProvider.getLocationIndicatorLayerRenderer(locationPuck)
+        layerSourceProvider.getLocationIndicatorLayerRenderer(locationPuck, weakContext)
       }
       is LocationPuck3D -> {
         layerSourceProvider.getModelLayerRenderer(locationPuck)
@@ -141,11 +141,6 @@ internal class LocationPuckManager(
     delegateProvider.getStyle {
       initialize(it)
     }
-  }
-
-  fun updateSettings2(settings2: LocationComponentSettings2) {
-    this.settings2 = settings2
-    animationManager.applySettings2(settings2)
   }
 
   //
@@ -178,7 +173,7 @@ internal class LocationPuckManager(
     options: (ValueAnimator.() -> Unit)? = null,
     forceUpdate: Boolean = false
   ) {
-    if (settings2.puckBearingEnabled) {
+    if (settings.puckBearingEnabled) {
       animationManager.puckAnimationEnabled = true
       animateToBearing(bearings, options, forceUpdate)
     } else if (animationManager.puckAnimationEnabled) {

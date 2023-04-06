@@ -18,7 +18,7 @@ interface ScaleBarSettingsInterface {
    *
    * @param block the receiver function of ScaleBarSettings
    */
-  fun updateSettings(block: ScaleBarSettings.() -> Unit)
+  fun updateSettings(block: ScaleBarSettings.Builder.() -> Unit)
 
   /**
    * Whether the scale is visible on the map.

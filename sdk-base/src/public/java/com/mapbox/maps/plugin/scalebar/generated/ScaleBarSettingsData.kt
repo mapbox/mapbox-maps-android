@@ -1,108 +1,139 @@
 // This file is generated.
+// This class is annotated with `DataCompat`.
+// Therefore, it is used to auto-generate `ScaleBarSettings`.
 
 package com.mapbox.maps.plugin.scalebar.generated
 
-import android.graphics.Color
-import android.view.Gravity
+import android.os.Parcelable
+import com.tobrun.datacompat.annotation.DataCompat
+import com.tobrun.datacompat.annotation.Default
+import kotlinx.parcelize.Parcelize
+
 /**
  * Shows the scale bar on the map.
  */
-data class ScaleBarSettings @JvmOverloads constructor(
+@Parcelize
+@DataCompat(
+    importsForDefaults = [
+        "android.graphics.Color",
+        "android.view.Gravity",
+    ]
+)
+private data class ScaleBarSettingsData(
 
   /**
    * Whether the scale is visible on the map.
    */
-  var enabled: Boolean = true,
+  @Default("true")
+  var enabled: Boolean,
 
   /**
    * Defines where the scale bar is positioned on the map
    */
-  var position: Int = Gravity.TOP or Gravity.START,
+  @Default("Gravity.TOP or Gravity.START")
+  var position: Int,
 
   /**
    * Defines the margin to the left that the scale bar honors. This property is specified in pixels.
    */
-  var marginLeft: Float = 4f,
+  @Default("4f")
+  var marginLeft: Float,
 
   /**
    * Defines the margin to the top that the scale bar honors. This property is specified in pixels.
    */
-  var marginTop: Float = 4f,
+  @Default("4f")
+  var marginTop: Float,
 
   /**
    * Defines the margin to the right that the scale bar honors. This property is specified in pixels.
    */
-  var marginRight: Float = 4f,
+  @Default("4f")
+  var marginRight: Float,
 
   /**
    * Defines the margin to the bottom that the scale bar honors. This property is specified in pixels.
    */
-  var marginBottom: Float = 4f,
+  @Default("4f")
+  var marginBottom: Float,
 
   /**
    * Defines text color of the scale bar.
    */
-  var textColor: Int = Color.BLACK,
+  @Default("Color.BLACK")
+  var textColor: Int,
 
   /**
    * Defines primary color of the scale bar.
    */
-  var primaryColor: Int = Color.BLACK,
+  @Default("Color.BLACK")
+  var primaryColor: Int,
 
   /**
    * Defines secondary color of the scale bar.
    */
-  var secondaryColor: Int = Color.WHITE,
+  @Default("Color.WHITE")
+  var secondaryColor: Int,
 
   /**
    * Defines width of the border for the scale bar. This property is specified in pixels.
    */
-  var borderWidth: Float = 2f,
+  @Default("2f")
+  var borderWidth: Float,
 
   /**
    * Defines height of the scale bar. This property is specified in pixels.
    */
-  var height: Float = 2f,
+  @Default("2f")
+  var height: Float,
 
   /**
    * Defines margin of the text bar of the scale bar. This property is specified in pixels.
    */
-  var textBarMargin: Float = 8f,
+  @Default("8f")
+  var textBarMargin: Float,
 
   /**
    * Defines text border width of the scale bar. This property is specified in pixels.
    */
-  var textBorderWidth: Float = 2f,
+  @Default("2f")
+  var textBorderWidth: Float,
 
   /**
    * Defines text size of the scale bar. This property is specified in pixels.
    */
-  var textSize: Float = 8f,
+  @Default("8f")
+  var textSize: Float,
 
   /**
    * Whether the scale bar is using metric unit. True if the scale bar is using metric system, false if the scale bar is using imperial units.
    */
-  var isMetricUnits: Boolean = true,
+  @Default("true")
+  var isMetricUnits: Boolean,
 
   /**
    * Configures minimum refresh interval, in millisecond, default is 15.
    */
-  var refreshInterval: Long = 15,
+  @Default("15")
+  var refreshInterval: Long,
 
   /**
    * Configures whether to show the text border or not, default is true.
    */
-  var showTextBorder: Boolean = true,
+  @Default("true")
+  var showTextBorder: Boolean,
 
   /**
    * configures ratio of scale bar max width compared with MapView width, default is 0.5.
    */
-  var ratio: Float = 0.5f,
+  @Default("0.5f")
+  var ratio: Float,
 
   /**
    * If set to True scale bar will be triggering onDraw depending on [ScaleBarSettings.refreshInterval] even if actual data did not change. If set to False scale bar will redraw only on demand. Defaults to False and should not be changed explicitly in most cases. Could be set to True to produce correct GPU frame metrics when running gfxinfo command.
    */
-  var useContinuousRendering: Boolean = false,
-)
+  @Default("false")
+  var useContinuousRendering: Boolean,
+) : Parcelable
 
 // End of generated file.

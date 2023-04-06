@@ -1,10 +1,12 @@
 package com.mapbox.maps.plugin.locationcomponent.utils
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
+import androidx.annotation.DrawableRes
 import androidx.annotation.VisibleForTesting
+import androidx.appcompat.content.res.AppCompatResources
 import java.nio.ByteBuffer
 import java.util.*
 
@@ -15,13 +17,13 @@ internal object BitmapUtils {
   /**
    * Extract an underlying bitmap from a drawable
    *
-   * @param sourceDrawable The source drawable
+   * @param context The context
+   * @param sourceDrawableId The source drawable id
    * @return The underlying bitmap
    */
-  fun getBitmapFromDrawable(sourceDrawable: Drawable?): Bitmap? {
-    if (sourceDrawable == null) {
-      return null
-    }
+  fun getBitmapFromDrawableRes(context: Context, @DrawableRes sourceDrawableId: Int): Bitmap? {
+    val sourceDrawable = AppCompatResources.getDrawable(context, sourceDrawableId)
+      ?: return null
     return if (sourceDrawable is BitmapDrawable) {
       sourceDrawable.bitmap
     } else {

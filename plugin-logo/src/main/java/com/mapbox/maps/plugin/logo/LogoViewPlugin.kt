@@ -18,7 +18,7 @@ open class LogoViewPlugin(
 
   private lateinit var logoView: LogoView
 
-  override var internalSettings: LogoSettings = LogoSettings()
+  override var internalSettings: LogoSettings = LogoSettings { }
 
   override fun applySettings() {
     logoView.setLogoMargins(

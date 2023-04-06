@@ -12,11 +12,11 @@ import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.common.location.LiveTrackingClient
 import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.style.StyleInterface
+import com.mapbox.maps.logE
 import com.mapbox.maps.logW
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentAttributeParser
-import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentAttributeParser2
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
 import io.mockk.*
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -59,7 +59,6 @@ class LocationComponentPluginImplTest {
   @Before
   fun setup() {
     mockkObject(LocationComponentAttributeParser)
-    mockkObject(LocationComponentAttributeParser2)
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logW(any(), any()) } just Runs
 
@@ -95,7 +94,10 @@ class LocationComponentPluginImplTest {
         attrs,
         1f
       )
-    } returns LocationComponentSettings(enabled = true, locationPuck = LocationPuck2D())
+    } returns LocationComponentSettings {
+      enabled = true
+      locationPuck = LocationPuck2D()
+    }
 
     every { delegateProvider.getStyle(capture(styleCallbackSlot)) } returns Unit
     locationComponentPlugin.bind(context, attrs, 1f, locationProvider, locationPuckManager)
@@ -114,7 +116,10 @@ class LocationComponentPluginImplTest {
         attrs,
         1f
       )
-    } returns LocationComponentSettings(enabled = false, locationPuck = LocationPuck2D())
+    } returns LocationComponentSettings {
+      enabled = false
+      locationPuck = LocationPuck2D()
+    }
 
     every { delegateProvider.getStyle(capture(styleCallbackSlot)) } returns Unit
     locationComponentPlugin.bind(context, attrs, 1f, locationProvider, locationPuckManager)
@@ -133,7 +138,10 @@ class LocationComponentPluginImplTest {
         attrs,
         1f
       )
-    } returns LocationComponentSettings(enabled = false, locationPuck = LocationPuck2D())
+    } returns LocationComponentSettings {
+      enabled = false
+      locationPuck = LocationPuck2D()
+    }
     locationComponentPlugin.bind(context, attrs, 1f)
     assertNull(locationComponentPlugin.getLocationProvider())
   }
@@ -146,7 +154,10 @@ class LocationComponentPluginImplTest {
         attrs,
         1.0f
       )
-    } returns LocationComponentSettings(enabled = true, locationPuck = LocationPuck2D())
+    } returns LocationComponentSettings {
+      enabled = true
+      locationPuck = LocationPuck2D()
+    }
     locationComponentPlugin.bind(context, attrs, 1.0f)
     assertNotNull(locationComponentPlugin.getLocationProvider())
   }
@@ -364,6 +375,7 @@ class LocationComponentPluginImplTest {
 
   @Test
   fun testLocationProviderRegisterDisableEnable() {
+    every { logE(any(), any()) } just Runs
     every { style.addPersistentStyleLayer(any(), any()) } returns ExpectedFactory.createNone()
 
     preparePluginInitialisationWithEnabled()

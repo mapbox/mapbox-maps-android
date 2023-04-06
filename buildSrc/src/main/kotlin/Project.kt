@@ -104,7 +104,8 @@ object Dependencies {
   const val composeUi = "androidx.compose.ui:ui"
   const val composeMaterial = "androidx.compose.material:material"
   const val composeUiToolingPreview = "androidx.compose.ui:ui-tooling-preview"
-
+  const val kotlinDataCompatAnnotation = "com.github.tobrun.kotlin-data-compat:annotation:${Versions.kotlinDataCompat}"
+  const val kotlinDataCompatProcessor = "com.github.tobrun.kotlin-data-compat:processor:${Versions.kotlinDataCompat}"
 }
 
 object Versions {
@@ -167,6 +168,8 @@ object Versions {
   const val composeBom = "2023.01.00"
   const val pluginPlayPublisher = "3.7.0"
   const val gradleVersionsPlugin = "0.42.0"
+  const val ksp = "1.0.9"
+  const val kotlinDataCompat = "0.5.2"
 }
 
 /**

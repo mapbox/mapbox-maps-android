@@ -78,7 +78,7 @@ class GesturesPluginTest {
         attrs,
         any()
       )
-    } returns GesturesSettings()
+    } returns GesturesSettings { }
 
     every { context.obtainStyledAttributes(any(), any(), 0, 0) } returns typedArray
     every { context.packageName } returns pack
@@ -1274,7 +1274,7 @@ class IsPointAboveHorizonTest(
         attrs,
         any()
       )
-    } returns GesturesSettings()
+    } returns GesturesSettings { }
 
     every { context.obtainStyledAttributes(any(), any(), 0, 0) } returns typedArray
     every { context.packageName } returns pack
@@ -1515,7 +1515,7 @@ class FlingGestureTest(
         attrs,
         any()
       )
-    } returns GesturesSettings()
+    } returns GesturesSettings { }
 
     every { context.obtainStyledAttributes(any(), any(), 0, 0) } returns typedArray
     every { context.packageName } returns pack

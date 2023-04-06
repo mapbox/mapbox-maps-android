@@ -2,7 +2,9 @@
 
 package com.mapbox.maps.plugin
 
-import android.graphics.drawable.Drawable
+import android.os.Parcelable
+import com.mapbox.maps.ImageHolder
+import kotlinx.parcelize.Parcelize
 
 /**
  * Configures the directions in which the map is allowed to move during a scroll gesture.
@@ -43,7 +45,8 @@ enum class PuckBearingSource(val value: String) {
 /**
  * Sealed class representing a location-puck.
  */
-sealed class LocationPuck
+@Parcelize
+sealed class LocationPuck : Parcelable
 
 /**
  * Definition of a location_puck_2_d.
@@ -52,15 +55,15 @@ data class LocationPuck2D @JvmOverloads constructor(
   /**
    * Name of image in sprite to use as the top of the location indicator.
    */
-  var topImage: Drawable? = null,
+  var topImage: ImageHolder? = null,
   /**
    * Name of image in sprite to use as the middle of the location indicator.
    */
-  var bearingImage: Drawable? = null,
+  var bearingImage: ImageHolder? = null,
   /**
    * Name of image in sprite to use as the background of the location indicator.
    */
-  var shadowImage: Drawable? = null,
+  var shadowImage: ImageHolder? = null,
   /**
    * The scale expression of the images. If defined, it will be applied to all the three images.
    */

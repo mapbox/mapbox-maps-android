@@ -6,7 +6,6 @@ import android.content.res.Resources
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.content.res.AppCompatResources
 import com.mapbox.api.directions.v5.models.DirectionsResponse
 import com.mapbox.core.constants.Constants
 import com.mapbox.geojson.LineString
@@ -107,10 +106,7 @@ class ViewportShowcaseActivity : AppCompatActivity() {
           setLocationProvider(simulateRouteLocationProvider)
           updateSettings {
             locationPuck = LocationPuck2D(
-              bearingImage = AppCompatResources.getDrawable(
-                this@ViewportShowcaseActivity,
-                R.drawable.mapbox_mylocation_icon_bearing,
-              )
+              bearingImage = ImageHolder.from(R.drawable.mapbox_mylocation_icon_bearing)
             )
           }
         }

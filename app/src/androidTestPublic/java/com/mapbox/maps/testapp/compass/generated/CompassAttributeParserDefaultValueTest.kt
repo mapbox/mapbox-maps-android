@@ -78,9 +78,9 @@ class CompassAttributeParserDefaultValueTest : BaseMapTest() {
     )
     assertEquals(
       "image test failed..",
-      null,
-      mapView.compass.getSettings().image
-    )
+      -1,
+      mapView.compass.getSettings().image?.drawableId
+  )
   }
 }
 

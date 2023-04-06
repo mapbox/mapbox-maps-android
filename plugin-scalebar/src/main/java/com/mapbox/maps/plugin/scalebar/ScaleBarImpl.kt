@@ -94,7 +94,7 @@ class ScaleBarImpl : ScaleBar, View {
   /**
    * Current settings will be used to draw ScaleBar
    */
-  override var settings: ScaleBarSettings = ScaleBarSettings()
+  override var settings: ScaleBarSettings = ScaleBarSettings { }
     set(value) {
       textPaint.color = value.textColor
       textPaint.textSize = value.textSize

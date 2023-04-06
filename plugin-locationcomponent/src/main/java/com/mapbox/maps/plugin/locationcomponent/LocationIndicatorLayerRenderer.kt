@@ -1,21 +1,26 @@
 package com.mapbox.maps.plugin.locationcomponent
 
+import android.content.Context
 import androidx.annotation.ColorInt
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
+import com.mapbox.maps.ImageHolder
 import com.mapbox.maps.extension.style.StyleInterface
+import com.mapbox.maps.logE
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.BEARING_ICON
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.LOCATION_INDICATOR_LAYER
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.SHADOW_ICON
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.TOP_ICON
 import com.mapbox.maps.plugin.locationcomponent.utils.BitmapUtils
+import java.lang.ref.WeakReference
 import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.util.Locale
 
 internal class LocationIndicatorLayerRenderer(
   private val puckOptions: LocationPuck2D,
+  private val weakContext: WeakReference<Context>,
   layerSourceProvider: LayerSourceProvider
 ) : LocationLayerRenderer {
 
@@ -75,17 +80,31 @@ internal class LocationIndicatorLayerRenderer(
   }
 
   private fun setupBitmaps() {
-    puckOptions.topImage?.let { BitmapUtils.getBitmapFromDrawable(it) }
-      ?.let { style?.addImage(TOP_ICON, it) }
-    puckOptions.bearingImage?.let { BitmapUtils.getBitmapFromDrawable(it) }
-      ?.let { style?.addImage(BEARING_ICON, it) }
-
-    puckOptions.shadowImage?.let { BitmapUtils.getBitmapFromDrawable(it) }
-      ?.let { style?.addImage(SHADOW_ICON, it) }
+    addPuckImageToStyle(TOP_ICON, puckOptions.topImage)
+    addPuckImageToStyle(BEARING_ICON, puckOptions.bearingImage)
+    addPuckImageToStyle(SHADOW_ICON, puckOptions.shadowImage)
     layer.topImage(TOP_ICON)
     layer.bearingImage(BEARING_ICON)
     layer.shadowImage(SHADOW_ICON)
     layer.opacity(puckOptions.opacity.toDouble())
+  }
+
+  private fun addPuckImageToStyle(iconId: String, imageHolder: ImageHolder?) {
+    imageHolder?.bitmap?.let { bitmap ->
+      style?.addImage(TOP_ICON, bitmap)
+      return@let
+    }
+    weakContext.get()?.let { context ->
+      imageHolder?.drawableId?.let { drawableRes ->
+        BitmapUtils.getBitmapFromDrawableRes(context, drawableRes)?.let { bitmap ->
+          style?.addImage(iconId, bitmap)
+        }
+      } ?: logE(TAG, "No image holder data for $iconId!")
+    } ?: logE(
+      TAG,
+      "Could not set 2D puck image as drawable for $iconId" +
+        " because there is no Android Context!"
+    )
   }
 
   override fun clearBitmaps() {
@@ -137,6 +156,8 @@ internal class LocationIndicatorLayerRenderer(
   }
 
   companion object {
+
+    private const val TAG = "LocationPuck2D"
 
     fun buildRGBAExpression(colorArray: FloatArray): List<Value> {
       return arrayListOf(

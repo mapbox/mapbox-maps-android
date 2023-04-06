@@ -2,7 +2,7 @@
 
 package com.mapbox.maps.plugin.compass.generated
 
-import android.graphics.drawable.Drawable
+import com.mapbox.maps.ImageHolder
 
 /**
  * Interface that defines the public settings interface for CompassPlugin.
@@ -20,7 +20,7 @@ interface CompassSettingsInterface {
    *
    * @param block the receiver function of CompassSettings
    */
-  fun updateSettings(block: CompassSettings.() -> Unit)
+  fun updateSettings(block: CompassSettings.Builder.() -> Unit)
 
   /**
    * Whether the compass is visible on the map.
@@ -80,7 +80,7 @@ interface CompassSettingsInterface {
   /**
    * The compass image, the visual representation of the compass.
    */
-  var image: Drawable?
+  var image: ImageHolder?
 }
 
 // End of generated file.

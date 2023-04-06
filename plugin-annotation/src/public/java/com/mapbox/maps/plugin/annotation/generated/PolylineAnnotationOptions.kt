@@ -66,7 +66,7 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
   /**
    * Set line-blur to initialise the polylineAnnotation with.
    *
-   * Blur applied to the line, in density-independent pixels.
+   * Blur applied to the line, in density-independent pixels. The unit of lineBlur is in pixels.
    *
    * @param lineBlur the line-blur value
    * @return this
@@ -115,7 +115,7 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
   /**
    * Set line-gap-width to initialise the polylineAnnotation with.
    *
-   * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap.
+   * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. The unit of lineGapWidth is in density-independent pixels.
    *
    * @param lineGapWidth the line-gap-width value
    * @return this
@@ -133,7 +133,7 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
   /**
    * Set line-offset to initialise the polylineAnnotation with.
    *
-   * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset.
+   * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. The unit of lineOffset is in density-independent pixels.
    *
    * @param lineOffset the line-offset value
    * @return this
@@ -187,7 +187,7 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
   /**
    * Set line-width to initialise the polylineAnnotation with.
    *
-   * Stroke thickness.
+   * Stroke thickness. The unit of lineWidth is in density-independent pixels.
    *
    * @param lineWidth the line-width value
    * @return this

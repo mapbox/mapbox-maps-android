@@ -24,7 +24,11 @@ Mapbox welcomes participation and contributions from everyone.
 * Introduce custom lint rules to check illegal number of arguments within given Expression DSL.
 * Replace `LocationEngine` use with `LocationService` in `DefaultProvider`.
 * Add new `LocationConsumer.onError` method to allow consumers handle location errors.
- 
+* Remove `MapView#location2` related interfaces and move `showAccuracyRing`, `accuracyRingColor`, `accuracyRingBorderColor`, `puckBearingEnabled` and `puckBearingSource` to `MapView#location`.
+* Make `AttributionSettings`, `CompassSettings`, `GesturesSettings`, `LocationComponentSettings`, `LogoSettings`, `ScaleBarSettings` not Kotlin `data class`, better binary compatible and implementing `Parcelable`.
+* Change `CompassSettings#image`, `LocationPuck2D#topImage`, `LocationPuck2D#bearingImage`, `LocationPuck2D#shadowImage` to `ImageHolder` allowing to pass either drawable id or `Bitmap`.
+* Remove deprecated `backgroundPatternTransition`, `lineDasharrayTransition`, `linePatternTransition`, `fillPatternTransition` properties.
+
 ## Dependencies
 * Update dependencies.
 

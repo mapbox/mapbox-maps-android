@@ -28,7 +28,7 @@ open class ScaleBarPluginImpl(
   private lateinit var mapTransformDelegate: MapTransformDelegate
   private lateinit var mapCameraManagerDelegate: MapCameraManagerDelegate
 
-  override var internalSettings: ScaleBarSettings = ScaleBarSettings()
+  override var internalSettings: ScaleBarSettings = ScaleBarSettings { }
 
   private val cameraChangeListener = OnCameraChangeListener {
     invalidateScaleBar()
@@ -125,7 +125,7 @@ open class ScaleBarPluginImpl(
       } else {
         mapListenerDelegate.removeOnCameraChangeListener(cameraChangeListener)
       }
-      internalSettings.enabled = value
+      internalSettings = internalSettings.toBuilder().setEnabled(value).build()
       scaleBar.enable = value
     }
 

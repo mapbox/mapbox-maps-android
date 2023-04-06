@@ -14,7 +14,6 @@ import com.mapbox.maps.extension.style.utils.ColorUtils.colorIntToRgbaExpression
 import com.mapbox.maps.extension.style.utils.ColorUtils.rgbaExpressionToColorInt
 import com.mapbox.maps.extension.style.utils.ColorUtils.rgbaExpressionToColorString
 import com.mapbox.maps.extension.style.utils.silentUnwrap
-import com.mapbox.maps.logE
 import java.util.*
 
 /**
@@ -883,43 +882,6 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * Transition options for FillExtrusionPattern.
-   */
-  @Deprecated("This property has been deprecated and will do no operations")
-  val fillExtrusionPatternTransition: StyleTransition?
-    /**
-     * Get the FillExtrusionPattern property transition options
-     *
-     * Use static method [FillExtrusionLayer.defaultFillExtrusionPatternTransition] to get the default property.
-     *
-     * @return transition options for String
-     */
-    get() {
-      logE("FillExtrusionLayer", "This property has been deprecated and will return null.")
-      return null
-    }
-
-  /**
-   * Set the FillExtrusionPattern property transition options
-   *
-   * Use static method [FillExtrusionLayer.defaultFillExtrusionPatternTransition] to set the default property.
-   *
-   * @param options transition options for String
-   */
-  @Deprecated("This property has been deprecated and will do no operations")
-  override fun fillExtrusionPatternTransition(options: StyleTransition): FillExtrusionLayer = apply {
-    // no-op
-  }
-
-  /**
-   * DSL for [fillExtrusionPatternTransition].
-   */
-  @Deprecated("This property has been deprecated and will do no operations")
-  override fun fillExtrusionPatternTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer = apply {
-    // no-op
-  }
-
-  /**
    * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively.
    */
   val fillExtrusionTranslate: List<Double>?
@@ -1555,21 +1517,6 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * Transition options for FillExtrusionPattern.
-     */
-    @Deprecated("This property has been deprecated and will do no operations")
-    val defaultFillExtrusionPatternTransition: StyleTransition?
-      /**
-       * Get the FillExtrusionPattern property transition options
-       *
-       * @return transition options for String
-       */
-      get() {
-        logE("FillExtrusionLayer", "This property has been deprecated and will return null.")
-        return null
-      }
-
-    /**
      * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively.
      */
     val defaultFillExtrusionTranslate: List<Double>?
@@ -1956,22 +1903,6 @@ interface FillExtrusionLayerDsl {
    * @param fillExtrusionPattern value of fillExtrusionPattern as Expression
    */
   fun fillExtrusionPattern(fillExtrusionPattern: Expression): FillExtrusionLayer
-
-  /**
-   * Name of image in sprite to use for drawing images on extruded fills. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
-   *
-   * Set the FillExtrusionPattern property transition options
-   *
-   * @param options transition options for String
-   */
-  fun fillExtrusionPatternTransition(options: StyleTransition): FillExtrusionLayer
-
-  /**
-   * Name of image in sprite to use for drawing images on extruded fills. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
-   *
-   * DSL for [fillExtrusionPatternTransition].
-   */
-  fun fillExtrusionPatternTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer
 
   /**
    * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively.

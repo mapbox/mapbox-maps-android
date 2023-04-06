@@ -121,7 +121,7 @@ class PolylineAnnotation(
   /**
    * The lineBlur property
    *
-   * Blur applied to the line, in density-independent pixels.
+   * Blur applied to the line, in density-independent pixels. The unit of lineBlur is in pixels.
    */
   var lineBlur: Double?
     /**
@@ -220,7 +220,7 @@ class PolylineAnnotation(
   /**
    * The lineGapWidth property
    *
-   * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap.
+   * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. The unit of lineGapWidth is in density-independent pixels.
    */
   var lineGapWidth: Double?
     /**
@@ -253,7 +253,7 @@ class PolylineAnnotation(
   /**
    * The lineOffset property
    *
-   * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset.
+   * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset. The unit of lineOffset is in density-independent pixels.
    */
   var lineOffset: Double?
     /**
@@ -352,7 +352,7 @@ class PolylineAnnotation(
   /**
    * The lineWidth property
    *
-   * Stroke thickness.
+   * Stroke thickness. The unit of lineWidth is in density-independent pixels.
    */
   var lineWidth: Double?
     /**

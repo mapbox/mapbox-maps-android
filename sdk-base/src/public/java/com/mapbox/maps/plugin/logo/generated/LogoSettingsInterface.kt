@@ -18,7 +18,7 @@ interface LogoSettingsInterface {
    *
    * @param block the receiver function of LogoSettings
    */
-  fun updateSettings(block: LogoSettings.() -> Unit)
+  fun updateSettings(block: LogoSettings.Builder.() -> Unit)
 
   /**
    * Whether the logo is visible on the map.

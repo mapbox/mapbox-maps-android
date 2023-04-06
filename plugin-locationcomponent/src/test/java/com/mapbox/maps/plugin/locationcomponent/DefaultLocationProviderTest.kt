@@ -273,6 +273,7 @@ class DefaultLocationProviderTest {
       every { latitude } returns 22.0
       every { altitude } returns 33.0
       every { bearing } returns 44.0
+      every { horizontalAccuracy } returns 3.0
     }
     val locationUpdate: LocationUpdate = ExpectedFactory.createValue(listOf(location2))
     // Use the captured live tracking client observer to send a second location
@@ -400,7 +401,7 @@ class DefaultLocationProviderTest {
   }
 }
 
-private open class EmptyLocationConsumer : LocationConsumer2 {
+private open class EmptyLocationConsumer : LocationConsumer {
   override fun onLocationUpdated(vararg location: Point, options: (ValueAnimator.() -> Unit)?) {
   }
 

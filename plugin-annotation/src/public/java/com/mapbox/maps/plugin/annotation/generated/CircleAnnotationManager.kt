@@ -210,7 +210,7 @@ class CircleAnnotationManager(
   /**
    * The CircleTranslate property
    *
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. The unit of circleTranslate is in density-independent pixels.
    */
   var circleTranslate: List<Double>?
     /**

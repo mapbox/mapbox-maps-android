@@ -1,53 +1,73 @@
 // This file is generated.
+// This class is annotated with `DataCompat`.
+// Therefore, it is used to auto-generate `AttributionSettings`.
 
 package com.mapbox.maps.plugin.attribution.generated
 
-import android.graphics.Color
-import android.view.Gravity
+import android.os.Parcelable
+import com.tobrun.datacompat.annotation.DataCompat
+import com.tobrun.datacompat.annotation.Default
+import kotlinx.parcelize.Parcelize
+
 /**
  * Shows the attribution icon on the map.
  */
-data class AttributionSettings @JvmOverloads constructor(
+@Parcelize
+@DataCompat(
+    importsForDefaults = [
+        "android.graphics.Color",
+        "android.view.Gravity",
+    ]
+)
+private data class AttributionSettingsData(
 
   /**
    * Whether the attribution icon is visible on the map.
    */
-  var enabled: Boolean = true,
+  @Default("true")
+  var enabled: Boolean,
 
   /**
    * Defines text color of the attribution icon.
    */
-  var iconColor: Int = Color.parseColor("#FF1E8CAB"),
+  @Default("Color.parseColor(\"#FF1E8CAB\")")
+  var iconColor: Int,
 
   /**
    * Defines where the attribution icon is positioned on the map
    */
-  var position: Int = Gravity.BOTTOM or Gravity.START,
+  @Default("Gravity.BOTTOM or Gravity.START")
+  var position: Int,
 
   /**
    * Defines the margin to the left that the attribution icon honors. This property is specified in pixels.
    */
-  var marginLeft: Float = 92f,
+  @Default("92f")
+  var marginLeft: Float,
 
   /**
    * Defines the margin to the top that the attribution icon honors. This property is specified in pixels.
    */
-  var marginTop: Float = 4f,
+  @Default("4f")
+  var marginTop: Float,
 
   /**
    * Defines the margin to the right that the attribution icon honors. This property is specified in pixels.
    */
-  var marginRight: Float = 4f,
+  @Default("4f")
+  var marginRight: Float,
 
   /**
    * Defines the margin to the bottom that the attribution icon honors. This property is specified in pixels.
    */
-  var marginBottom: Float = 4f,
+  @Default("4f")
+  var marginBottom: Float,
 
   /**
    * Whether the attribution can be clicked and click events can be registered.
    */
-  var clickable: Boolean = true,
-)
+  @Default("true")
+  var clickable: Boolean,
+) : Parcelable
 
 // End of generated file.

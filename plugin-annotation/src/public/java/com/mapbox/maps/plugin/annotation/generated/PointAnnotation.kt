@@ -175,7 +175,7 @@ class PointAnnotation(
   /**
    * The iconRotate property
    *
-   * Rotates the icon clockwise.
+   * Rotates the icon clockwise. The unit of iconRotate is in degrees.
    */
   var iconRotate: Double?
     /**
@@ -208,7 +208,7 @@ class PointAnnotation(
   /**
    * The iconSize property
    *
-   * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by {@link PropertyFactory#iconSize}. 1 is the original size; 3 triples the size of the image.
+   * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by {@link PropertyFactory#iconSize}. 1 is the original size; 3 triples the size of the image. The unit of iconSize is in factor of the original icon size.
    */
   var iconSize: Double?
     /**
@@ -373,7 +373,7 @@ class PointAnnotation(
   /**
    * The textLetterSpacing property
    *
-   * Text tracking amount.
+   * Text tracking amount. The unit of textLetterSpacing is in ems.
    */
   var textLetterSpacing: Double?
     /**
@@ -406,7 +406,7 @@ class PointAnnotation(
   /**
    * The textLineHeight property
    *
-   * Text leading value for multi-line text.
+   * Text leading value for multi-line text. The unit of textLineHeight is in ems.
    */
   var textLineHeight: Double?
     /**
@@ -439,7 +439,7 @@ class PointAnnotation(
   /**
    * The textMaxWidth property
    *
-   * The maximum line width for text wrapping.
+   * The maximum line width for text wrapping. The unit of textMaxWidth is in ems.
    */
   var textMaxWidth: Double?
     /**
@@ -472,7 +472,7 @@ class PointAnnotation(
   /**
    * The textOffset property
    *
-   * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position.
+   * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position. The unit of textOffset is in ems.
    */
   var textOffset: List<Double>?
     /**
@@ -504,7 +504,7 @@ class PointAnnotation(
   /**
    * The textRadialOffset property
    *
-   * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with {@link PropertyFactory#textVariableAnchor}, which defaults to using the two-dimensional {@link PropertyFactory#textOffset} if present.
+   * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with {@link PropertyFactory#textVariableAnchor}, which defaults to using the two-dimensional {@link PropertyFactory#textOffset} if present. The unit of textRadialOffset is in ems.
    */
   var textRadialOffset: Double?
     /**
@@ -537,7 +537,7 @@ class PointAnnotation(
   /**
    * The textRotate property
    *
-   * Rotates the text clockwise.
+   * Rotates the text clockwise. The unit of textRotate is in degrees.
    */
   var textRotate: Double?
     /**
@@ -570,7 +570,7 @@ class PointAnnotation(
   /**
    * The textSize property
    *
-   * Font size.
+   * Font size. The unit of textSize is in density-independent pixels.
    */
   var textSize: Double?
     /**
@@ -702,7 +702,7 @@ class PointAnnotation(
   /**
    * The iconHaloBlur property
    *
-   * Fade out the halo towards the outside.
+   * Fade out the halo towards the outside. The unit of iconHaloBlur is in density-independent pixels.
    */
   var iconHaloBlur: Double?
     /**
@@ -801,7 +801,7 @@ class PointAnnotation(
   /**
    * The iconHaloWidth property
    *
-   * Distance of halo to the icon outline.
+   * Distance of halo to the icon outline. The unit of iconHaloWidth is in density-independent pixels.
    */
   var iconHaloWidth: Double?
     /**
@@ -933,7 +933,7 @@ class PointAnnotation(
   /**
    * The textHaloBlur property
    *
-   * The halo's fadeout distance towards the outside.
+   * The halo's fadeout distance towards the outside. The unit of textHaloBlur is in density-independent pixels.
    */
   var textHaloBlur: Double?
     /**
@@ -1032,7 +1032,7 @@ class PointAnnotation(
   /**
    * The textHaloWidth property
    *
-   * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size.
+   * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size. The unit of textHaloWidth is in density-independent pixels.
    */
   var textHaloWidth: Double?
     /**

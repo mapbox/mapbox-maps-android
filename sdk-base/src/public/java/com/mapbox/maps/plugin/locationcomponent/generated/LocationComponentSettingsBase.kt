@@ -3,6 +3,7 @@
 package com.mapbox.maps.plugin.locationcomponent.generated
 
 import com.mapbox.maps.plugin.LocationPuck
+import com.mapbox.maps.plugin.PuckBearingSource
 
 /**
  * Abstract settings class for LocationComponentPlugin.
@@ -26,7 +27,7 @@ abstract class LocationComponentSettingsBase : LocationComponentSettingsInterfac
    * @return locationcomponent settings
    */
   override fun getSettings(): LocationComponentSettings {
-    return internalSettings.copy()
+    return internalSettings.toBuilder().build()
   }
 
   /**
@@ -34,8 +35,8 @@ abstract class LocationComponentSettingsBase : LocationComponentSettingsInterfac
    *
    * @param block the receiver function of LocationComponentSettings
    */
-  override fun updateSettings(block: LocationComponentSettings.() -> Unit) {
-    this.internalSettings.apply(block)
+  override fun updateSettings(block: LocationComponentSettings.Builder.() -> Unit) {
+    this.internalSettings = this.internalSettings.toBuilder().apply(block).build()
     applySettings()
   }
 
@@ -48,7 +49,7 @@ abstract class LocationComponentSettingsBase : LocationComponentSettingsInterfac
     }
     set(value) {
       if (this.internalSettings.enabled != value) {
-        this.internalSettings.enabled = value
+        this.internalSettings = this.internalSettings.toBuilder().setEnabled(value).build()
         applySettings()
       }
     }
@@ -62,7 +63,7 @@ abstract class LocationComponentSettingsBase : LocationComponentSettingsInterfac
     }
     set(value) {
       if (this.internalSettings.pulsingEnabled != value) {
-        this.internalSettings.pulsingEnabled = value
+        this.internalSettings = this.internalSettings.toBuilder().setPulsingEnabled(value).build()
         applySettings()
       }
     }
@@ -76,7 +77,7 @@ abstract class LocationComponentSettingsBase : LocationComponentSettingsInterfac
     }
     set(value) {
       if (this.internalSettings.pulsingColor != value) {
-        this.internalSettings.pulsingColor = value
+        this.internalSettings = this.internalSettings.toBuilder().setPulsingColor(value).build()
         applySettings()
       }
     }
@@ -90,7 +91,49 @@ abstract class LocationComponentSettingsBase : LocationComponentSettingsInterfac
     }
     set(value) {
       if (this.internalSettings.pulsingMaxRadius != value) {
-        this.internalSettings.pulsingMaxRadius = value
+        this.internalSettings = this.internalSettings.toBuilder().setPulsingMaxRadius(value).build()
+        applySettings()
+      }
+    }
+
+  /**
+   * Whether show accuracy ring with location puck. Works for 2D location puck only.
+   */
+  override var showAccuracyRing: Boolean
+    get() {
+      return this.internalSettings.showAccuracyRing
+    }
+    set(value) {
+      if (this.internalSettings.showAccuracyRing != value) {
+        this.internalSettings = this.internalSettings.toBuilder().setShowAccuracyRing(value).build()
+        applySettings()
+      }
+    }
+
+  /**
+   * The color of the accuracy ring. Works for 2D location puck only.
+   */
+  override var accuracyRingColor: Int
+    get() {
+      return this.internalSettings.accuracyRingColor
+    }
+    set(value) {
+      if (this.internalSettings.accuracyRingColor != value) {
+        this.internalSettings = this.internalSettings.toBuilder().setAccuracyRingColor(value).build()
+        applySettings()
+      }
+    }
+
+  /**
+   * The color of the accuracy ring border. Works for 2D location puck only.
+   */
+  override var accuracyRingBorderColor: Int
+    get() {
+      return this.internalSettings.accuracyRingBorderColor
+    }
+    set(value) {
+      if (this.internalSettings.accuracyRingBorderColor != value) {
+        this.internalSettings = this.internalSettings.toBuilder().setAccuracyRingBorderColor(value).build()
         applySettings()
       }
     }
@@ -104,7 +147,7 @@ abstract class LocationComponentSettingsBase : LocationComponentSettingsInterfac
     }
     set(value) {
       if (this.internalSettings.layerAbove != value) {
-        this.internalSettings.layerAbove = value
+        this.internalSettings = this.internalSettings.toBuilder().setLayerAbove(value).build()
         applySettings()
       }
     }
@@ -118,7 +161,35 @@ abstract class LocationComponentSettingsBase : LocationComponentSettingsInterfac
     }
     set(value) {
       if (this.internalSettings.layerBelow != value) {
-        this.internalSettings.layerBelow = value
+        this.internalSettings = this.internalSettings.toBuilder().setLayerBelow(value).build()
+        applySettings()
+      }
+    }
+
+  /**
+   * Whether the puck rotates to track the bearing source.
+   */
+  override var puckBearingEnabled: Boolean
+    get() {
+      return this.internalSettings.puckBearingEnabled
+    }
+    set(value) {
+      if (this.internalSettings.puckBearingEnabled != value) {
+        this.internalSettings = this.internalSettings.toBuilder().setPuckBearingEnabled(value).build()
+        applySettings()
+      }
+    }
+
+  /**
+   * The enum controls how the puck is oriented
+   */
+  override var puckBearingSource: PuckBearingSource
+    get() {
+      return this.internalSettings.puckBearingSource
+    }
+    set(value) {
+      if (this.internalSettings.puckBearingSource != value) {
+        this.internalSettings = this.internalSettings.toBuilder().setPuckBearingSource(value).build()
         applySettings()
       }
     }
@@ -132,7 +203,7 @@ abstract class LocationComponentSettingsBase : LocationComponentSettingsInterfac
     }
     set(value) {
       if (this.internalSettings.locationPuck != value) {
-        this.internalSettings.locationPuck = value
+        this.internalSettings = this.internalSettings.toBuilder().setLocationPuck(value).build()
         applySettings()
       }
     }

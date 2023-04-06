@@ -284,6 +284,22 @@ License: [The Apache Software License, Version 2.0](http://www.apache.org/licens
 
 ===========================================================================
 
+Mapbox Maps Android uses portions of the Kotlin Android Extensions Runtime.
+
+URL: [https://kotlinlang.org/](https://kotlinlang.org/)
+
+License: [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+===========================================================================
+
+Mapbox Maps Android uses portions of the Kotlin Data Compat.
+
+URL: [https://github.com/tobrun/data-compat](https://github.com/tobrun/data-compat)
+
+License: [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0)
+
+===========================================================================
+
 Mapbox Maps Android uses portions of the Kotlin Stdlib.
 
 URL: [https://kotlinlang.org/](https://kotlinlang.org/)
@@ -393,6 +409,14 @@ Mapbox Maps Android uses portions of the Okio.
 URL: [https://github.com/square/okio/](https://github.com/square/okio/)
 
 License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+===========================================================================
+
+Mapbox Maps Android uses portions of the Parcelize Runtime.
+
+URL: [https://kotlinlang.org/](https://kotlinlang.org/)
+
+License: [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ===========================================================================
 

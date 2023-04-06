@@ -2,7 +2,6 @@ package com.mapbox.maps.testapp.examples.viewport
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.content.res.AppCompatResources
 import com.mapbox.android.gestures.RotateGestureDetector
 import com.mapbox.android.gestures.ShoveGestureDetector
 import com.mapbox.android.gestures.StandardScaleGestureDetector
@@ -10,6 +9,7 @@ import com.mapbox.api.directions.v5.models.DirectionsResponse
 import com.mapbox.core.constants.Constants
 import com.mapbox.geojson.LineString
 import com.mapbox.maps.EdgeInsets
+import com.mapbox.maps.ImageHolder
 import com.mapbox.maps.MapView
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.expressions.dsl.generated.interpolate
@@ -240,10 +240,7 @@ class AdvancedViewportGesturesExample : AppCompatActivity() {
     mapView.location.apply {
       enabled = true
       locationPuck = LocationPuck2D(
-        bearingImage = AppCompatResources.getDrawable(
-          mapView.context,
-          R.drawable.mapbox_user_puck_icon,
-        ),
+        bearingImage = ImageHolder.from(R.drawable.mapbox_user_puck_icon),
         scaleExpression = interpolate {
           linear()
           zoom()

@@ -218,7 +218,7 @@ class CircleAnnotation(
   /**
    * The circleRadius property
    *
-   * Circle radius.
+   * Circle radius. The unit of circleRadius is in density-independent pixels.
    */
   var circleRadius: Double?
     /**
@@ -350,7 +350,7 @@ class CircleAnnotation(
   /**
    * The circleStrokeWidth property
    *
-   * The width of the circle's stroke. Strokes are placed outside of the {@link PropertyFactory#circleRadius}.
+   * The width of the circle's stroke. Strokes are placed outside of the {@link PropertyFactory#circleRadius}. The unit of circleStrokeWidth is in density-independent pixels.
    */
   var circleStrokeWidth: Double?
     /**

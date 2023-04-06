@@ -19,11 +19,13 @@ import android.animation.Animator;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.Surface;
 
+import androidx.annotation.DrawableRes;
 import androidx.annotation.Nullable;
 
 import com.mapbox.android.gestures.AndroidGesturesManager;
@@ -37,6 +39,7 @@ import com.mapbox.maps.CameraOptions;
 import com.mapbox.maps.CameraState;
 import com.mapbox.maps.ExtensionUtils;
 import com.mapbox.maps.FeatureStateOperationCallback;
+import com.mapbox.maps.ImageHolder;
 import com.mapbox.maps.LayerPosition;
 import com.mapbox.maps.MapInitOptions;
 import com.mapbox.maps.MapOptions;
@@ -88,7 +91,6 @@ import com.mapbox.maps.plugin.gestures.generated.GesturesSettings;
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentPlugin;
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentUtils;
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings;
-import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings2;
 import com.mapbox.maps.plugin.logo.LogoPlugin;
 import com.mapbox.maps.plugin.logo.LogoUtils;
 import com.mapbox.maps.plugin.logo.generated.LogoSettings;
@@ -121,53 +123,51 @@ public class JavaInterfaceChecker {
   }
 
   private void scaleBarSettings() {
-    ScaleBarSettings scaleBarSettings = new ScaleBarSettings();
-    scaleBarSettings = new ScaleBarSettings(true);
-    scaleBarSettings = new ScaleBarSettings(true, 1);
-    scaleBarSettings = new ScaleBarSettings(true, 1, 1f);
-    scaleBarSettings = new ScaleBarSettings(true, 1, 1f, 1f);
-    scaleBarSettings = new ScaleBarSettings(true, 1, 1f, 1f, 1f);
-    scaleBarSettings = new ScaleBarSettings(true, 1, 1f, 1f, 1f, 1f);
-    scaleBarSettings = new ScaleBarSettings(true, 1, 1f, 1f, 1f, 1f, Color.BLACK);
-    scaleBarSettings = new ScaleBarSettings(true, 1, 1f, 1f, 1f, 1f, Color.BLACK, Color.BLACK);
-    scaleBarSettings = new ScaleBarSettings(true, 1, 1f, 1f, 1f, 1f, Color.BLACK, Color.BLACK, Color.BLACK);
-    scaleBarSettings = new ScaleBarSettings(true, 1, 1f, 1f, 1f, 1f, Color.BLACK, Color.BLACK, Color.BLACK, 1f);
-    scaleBarSettings = new ScaleBarSettings(true, 1, 1f, 1f, 1f, 1f, Color.BLACK, Color.BLACK, Color.BLACK, 1f, 1f);
-    scaleBarSettings = new ScaleBarSettings(true, 1, 1f, 1f, 1f, 1f, Color.BLACK, Color.BLACK, Color.BLACK, 1f, 1f, 1f);
-    scaleBarSettings = new ScaleBarSettings(true, 1, 1f, 1f, 1f, 1f, Color.BLACK, Color.BLACK, Color.BLACK, 1f, 1f, 1f, 1f);
-    scaleBarSettings = new ScaleBarSettings(true, 1, 1f, 1f, 1f, 1f, Color.BLACK, Color.BLACK, Color.BLACK, 1f, 1f, 1f, 1f, 1f);
-    scaleBarSettings = new ScaleBarSettings(true, 1, 1f, 1f, 1f, 1f, Color.BLACK, Color.BLACK, Color.BLACK, 1f, 1f, 1f, 1f, 1f, true);
-    scaleBarSettings = new ScaleBarSettings(true, 1, 1f, 1f, 1f, 1f, Color.BLACK, Color.BLACK, Color.BLACK, 1f, 1f, 1f, 1f, 1f, true, 1L);
-    scaleBarSettings = new ScaleBarSettings(true, 1, 1f, 1f, 1f, 1f, Color.BLACK, Color.BLACK, Color.BLACK, 1f, 1f, 1f, 1f, 1f, true, 1L, true);
-    scaleBarSettings = new ScaleBarSettings(true, 1, 1f, 1f, 1f, 1f, Color.BLACK, Color.BLACK, Color.BLACK, 1f, 1f, 1f, 1f, 1f, true, 1L, true, 1f);
-    scaleBarSettings = new ScaleBarSettings(true, 1, 1f, 1f, 1f, 1f, Color.BLACK, Color.BLACK, Color.BLACK, 1f, 1f, 1f, 1f, 1f, true, 1L, true, 1f, true);
+    ScaleBarSettings scaleBarSettings = new ScaleBarSettings.Builder()
+            .setEnabled(true)
+            .setPosition(1)
+            .setMarginLeft(1f)
+            .setMarginTop(1f)
+            .setMarginRight(1f)
+            .setMarginBottom(1f)
+            .setPrimaryColor(Color.BLACK)
+            .setSecondaryColor(Color.BLACK)
+            .setTextColor(Color.BLACK)
+            .setBorderWidth(1f)
+            .setHeight(1f)
+            .setTextBarMargin(1f)
+            .setTextBorderWidth(1f)
+            .setTextSize(1f)
+            .setIsMetricUnits(true)
+            .setRefreshInterval(1L)
+            .setShowTextBorder(true)
+            .setRatio(1f)
+            .setUseContinuousRendering(true)
+            .build();
   }
 
   private void logoSettings() {
-    LogoSettings logoSettings = new LogoSettings();
-    logoSettings = new LogoSettings(true);
-    logoSettings = new LogoSettings(true, 1);
-    logoSettings = new LogoSettings(true, 1, 1f);
-    logoSettings = new LogoSettings(true, 1, 1f, 1f);
-    logoSettings = new LogoSettings(true, 1, 1f, 1f, 1f);
-    logoSettings = new LogoSettings(true, 1, 1f, 1f, 1f, 1f);
+    LogoSettings logoSettings = new LogoSettings.Builder()
+            .setEnabled(true)
+            .setPosition(1)
+            .setMarginLeft(1f)
+            .setMarginTop(1f)
+            .setMarginRight(1f)
+            .setMarginBottom(1f)
+            .build();
   }
 
   private void locationComponentSettings(LocationPuck locationPuck) {
-    LocationComponentSettings locationComponentSettings = new LocationComponentSettings(locationPuck);
-    locationComponentSettings = new LocationComponentSettings(true, locationPuck);
-    locationComponentSettings = new LocationComponentSettings(true, true, locationPuck);
-    locationComponentSettings = new LocationComponentSettings(true, true, Color.BLACK, locationPuck);
-    locationComponentSettings = new LocationComponentSettings(true, true, Color.BLACK, 1f, locationPuck);
-    locationComponentSettings = new LocationComponentSettings(true, true, Color.BLACK, 1f, "id", locationPuck);
-    locationComponentSettings = new LocationComponentSettings(true, true, Color.BLACK, 1f, "id", "id", locationPuck);
-  }
-
-  private void locationComponentSettings2() {
-    LocationComponentSettings2 locationComponentSettings2 = new LocationComponentSettings2();
-    locationComponentSettings2 = new LocationComponentSettings2(true);
-    locationComponentSettings2 = new LocationComponentSettings2(true, Color.BLUE);
-    locationComponentSettings2 = new LocationComponentSettings2(true, Color.BLUE, Color.RED);
+    LocationComponentSettings locationComponentSettings = new LocationComponentSettings.Builder()
+            .setLocationPuck(locationPuck)
+            .setEnabled(true)
+            .setPulsingColor(Color.BLACK)
+            .setPulsingMaxRadius(1f)
+            .setAccuracyRingColor(Color.BLACK)
+            .setAccuracyRingBorderColor(Color.BLACK)
+            .setLayerAbove("id1")
+            .setLayerBelow("id2")
+            .build();
   }
 
   private void locationComponent(Context context, MapView mapView) {
@@ -177,52 +177,57 @@ public class JavaInterfaceChecker {
   }
 
   private void gesturesSettings(ScrollMode scrollMode, ScreenCoordinate screenCoordinate) {
-    GesturesSettings gesturesSettings = new GesturesSettings();
-    gesturesSettings = new GesturesSettings(true);
-    gesturesSettings = new GesturesSettings(true, true);
-    gesturesSettings = new GesturesSettings(true, true, true);
-    gesturesSettings = new GesturesSettings(true, true, true, true);
-    gesturesSettings = new GesturesSettings(true, true, true, true, true);
-    gesturesSettings = new GesturesSettings(true, true, true, true, true, scrollMode);
-    gesturesSettings = new GesturesSettings(true, true, true, true, true, scrollMode, true);
-    gesturesSettings = new GesturesSettings(true, true, true, true, true, scrollMode, true, true);
-    gesturesSettings = new GesturesSettings(true, true, true, true, true, scrollMode, true, true, true);
-    gesturesSettings = new GesturesSettings(true, true, true, true, true, scrollMode, true, true, true, screenCoordinate);
-    gesturesSettings = new GesturesSettings(true, true, true, true, true, scrollMode, true, true, true, screenCoordinate, true);
-    gesturesSettings = new GesturesSettings(true, true, true, true, true, scrollMode, true, true, true, screenCoordinate, true, true);
-    gesturesSettings = new GesturesSettings(true, true, true, true, true, scrollMode, true, true, true, screenCoordinate, true, true, true);
-    gesturesSettings = new GesturesSettings(true, true, true, true, true, scrollMode, true, true, true, screenCoordinate, true, true, true, true);
-    gesturesSettings = new GesturesSettings(true, true, true, true, true, scrollMode, true, true, true, screenCoordinate, true, true, true, true, true);
-    gesturesSettings = new GesturesSettings(true, true, true, true, true, scrollMode, true, true, true, screenCoordinate, true, true, true, true, true, 1f);
-    gesturesSettings = new GesturesSettings(true, true, true, true, true, scrollMode, true, true, true, screenCoordinate, true, true, true, true, true, 1f, true);
+    GesturesSettings gesturesSettings = new GesturesSettings.Builder()
+            .setDoubleTapToZoomInEnabled(true)
+            .setDoubleTouchToZoomOutEnabled(true)
+            .setFocalPoint(screenCoordinate)
+            .setIncreasePinchToZoomThresholdWhenRotating(true)
+            .setIncreaseRotateThresholdWhenPinchingToZoom(true)
+            .setPinchScrollEnabled(true)
+            .setPinchToZoomDecelerationEnabled(true)
+            .setPinchToZoomEnabled(true)
+            .setPitchEnabled(true)
+            .setQuickZoomEnabled(true)
+            .setRotateDecelerationEnabled(true)
+            .setRotateEnabled(true)
+            .setScrollDecelerationEnabled(true)
+            .setScrollEnabled(true)
+            .setScrollMode(scrollMode)
+            .setSimultaneousRotateAndPinchToZoomEnabled(true)
+            .setZoomAnimationAmount(1f)
+            .build();
+
   }
 
   private void compassSettings(Drawable drawable) {
-    CompassSettings compassSettings = new CompassSettings();
-    compassSettings = new CompassSettings(true);
-    compassSettings = new CompassSettings(true, 0);
-    compassSettings = new CompassSettings(true, 0, 1f);
-    compassSettings = new CompassSettings(true, 0, 1f, 1f);
-    compassSettings = new CompassSettings(true, 0, 1f, 1f, 1f);
-    compassSettings = new CompassSettings(true, 0, 1f, 1f, 1f, 1f);
-    compassSettings = new CompassSettings(true, 0, 1f, 1f, 1f, 1f, 0f);
-    compassSettings = new CompassSettings(true, 0, 1f, 1f, 1f, 1f, 0f, 0f);
-    compassSettings = new CompassSettings(true, 0, 1f, 1f, 1f, 1f, 0f, 0f, true);
-    compassSettings = new CompassSettings(true, 0, 1f, 1f, 1f, 1f, 0f, 0f, true, true);
-    compassSettings = new CompassSettings(true, 0, 1f, 1f, 1f, 1f, 0f, 0f, true, true, true);
-    compassSettings = new CompassSettings(true, 0, 1f, 1f, 1f, 1f, 0f, 0f, true, true, true, drawable);
+    CompassSettings compassSettings = new CompassSettings.Builder()
+            .setEnabled(true)
+            .setMarginBottom(1f)
+            .setClickable(true)
+            .setFadeWhenFacingNorth(true)
+            .setMarginLeft(1f)
+            .setImage(ImageHolder.from(((BitmapDrawable)drawable).getBitmap()))
+            .setMarginRight(1f)
+            .setMarginTop(1f)
+            .setPosition(1)
+            .setOpacity(1f)
+            .setVisibility(true)
+            .setRotation(1f)
+            .build();
   }
 
   private void attributionSettings() {
-    AttributionSettings attributionSettings = new AttributionSettings();
-    attributionSettings = new AttributionSettings(true);
-    attributionSettings = new AttributionSettings(true, Color.BLACK);
-    attributionSettings = new AttributionSettings(true, Color.BLACK, 0);
-    attributionSettings = new AttributionSettings(true, Color.BLACK, 0, 1f);
-    attributionSettings = new AttributionSettings(true, Color.BLACK, 0, 1f, 1f);
-    attributionSettings = new AttributionSettings(true, Color.BLACK, 0, 1f, 1f, 1f);
-    attributionSettings = new AttributionSettings(true, Color.BLACK, 0, 1f, 1f, 1f, 1f);
-    attributionSettings = new AttributionSettings(true, Color.BLACK, 0, 1f, 1f, 1f, 1f, true);
+    AttributionSettings attributionSettings = new AttributionSettings.Builder()
+            .setEnabled(true)
+            .setClickable(true)
+            .setMarginBottom(1f)
+            .setMarginLeft(1f)
+            .setIconColor(Color.BLACK)
+            .setMarginRight(1f)
+            .setMarginTop(1f)
+            .setPosition(1)
+            .setEnabled(true)
+            .build();
   }
 
   private void annotationManager(AnnotationPlugin annotationPlugin, MapView mapView, AnnotationConfig annotationConfig) {
@@ -339,12 +344,12 @@ public class JavaInterfaceChecker {
     mapSurface = new MapSurface(context, surface, mapInitOptions);
   }
 
-  private void locationPuck(Drawable image, List<Float> floatList) {
+  private void locationPuck(@DrawableRes int imageId, List<Float> floatList) {
     LocationPuck2D locationPuck2D = new LocationPuck2D();
-    locationPuck2D = new LocationPuck2D(image);
-    locationPuck2D = new LocationPuck2D(image, image);
-    locationPuck2D = new LocationPuck2D(image, image, image);
-    locationPuck2D = new LocationPuck2D(image, image, image, "scale");
+    locationPuck2D = new LocationPuck2D(ImageHolder.from(imageId));
+    locationPuck2D = new LocationPuck2D(ImageHolder.from(imageId), ImageHolder.from(imageId));
+    locationPuck2D = new LocationPuck2D(ImageHolder.from(imageId), ImageHolder.from(imageId), ImageHolder.from(imageId));
+    locationPuck2D = new LocationPuck2D(ImageHolder.from(imageId), ImageHolder.from(imageId), ImageHolder.from(imageId), "scale");
 
     LocationPuck3D locationPuck3D = new LocationPuck3D("uri");
     locationPuck3D = new LocationPuck3D("uri", floatList);

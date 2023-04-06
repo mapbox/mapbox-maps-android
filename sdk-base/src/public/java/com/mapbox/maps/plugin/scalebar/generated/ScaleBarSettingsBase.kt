@@ -24,7 +24,7 @@ abstract class ScaleBarSettingsBase : ScaleBarSettingsInterface {
    * @return scalebar settings
    */
   override fun getSettings(): ScaleBarSettings {
-    return internalSettings.copy()
+    return internalSettings.toBuilder().build()
   }
 
   /**
@@ -32,8 +32,8 @@ abstract class ScaleBarSettingsBase : ScaleBarSettingsInterface {
    *
    * @param block the receiver function of ScaleBarSettings
    */
-  override fun updateSettings(block: ScaleBarSettings.() -> Unit) {
-    this.internalSettings.apply(block)
+  override fun updateSettings(block: ScaleBarSettings.Builder.() -> Unit) {
+    this.internalSettings = this.internalSettings.toBuilder().apply(block).build()
     applySettings()
   }
 
@@ -46,7 +46,7 @@ abstract class ScaleBarSettingsBase : ScaleBarSettingsInterface {
     }
     set(value) {
       if (this.internalSettings.enabled != value) {
-        this.internalSettings.enabled = value
+        this.internalSettings = this.internalSettings.toBuilder().setEnabled(value).build()
         applySettings()
       }
     }
@@ -60,7 +60,7 @@ abstract class ScaleBarSettingsBase : ScaleBarSettingsInterface {
     }
     set(value) {
       if (this.internalSettings.position != value) {
-        this.internalSettings.position = value
+        this.internalSettings = this.internalSettings.toBuilder().setPosition(value).build()
         applySettings()
       }
     }
@@ -74,7 +74,7 @@ abstract class ScaleBarSettingsBase : ScaleBarSettingsInterface {
     }
     set(value) {
       if (this.internalSettings.marginLeft != value) {
-        this.internalSettings.marginLeft = value
+        this.internalSettings = this.internalSettings.toBuilder().setMarginLeft(value).build()
         applySettings()
       }
     }
@@ -88,7 +88,7 @@ abstract class ScaleBarSettingsBase : ScaleBarSettingsInterface {
     }
     set(value) {
       if (this.internalSettings.marginTop != value) {
-        this.internalSettings.marginTop = value
+        this.internalSettings = this.internalSettings.toBuilder().setMarginTop(value).build()
         applySettings()
       }
     }
@@ -102,7 +102,7 @@ abstract class ScaleBarSettingsBase : ScaleBarSettingsInterface {
     }
     set(value) {
       if (this.internalSettings.marginRight != value) {
-        this.internalSettings.marginRight = value
+        this.internalSettings = this.internalSettings.toBuilder().setMarginRight(value).build()
         applySettings()
       }
     }
@@ -116,7 +116,7 @@ abstract class ScaleBarSettingsBase : ScaleBarSettingsInterface {
     }
     set(value) {
       if (this.internalSettings.marginBottom != value) {
-        this.internalSettings.marginBottom = value
+        this.internalSettings = this.internalSettings.toBuilder().setMarginBottom(value).build()
         applySettings()
       }
     }
@@ -130,7 +130,7 @@ abstract class ScaleBarSettingsBase : ScaleBarSettingsInterface {
     }
     set(value) {
       if (this.internalSettings.textColor != value) {
-        this.internalSettings.textColor = value
+        this.internalSettings = this.internalSettings.toBuilder().setTextColor(value).build()
         applySettings()
       }
     }
@@ -144,7 +144,7 @@ abstract class ScaleBarSettingsBase : ScaleBarSettingsInterface {
     }
     set(value) {
       if (this.internalSettings.primaryColor != value) {
-        this.internalSettings.primaryColor = value
+        this.internalSettings = this.internalSettings.toBuilder().setPrimaryColor(value).build()
         applySettings()
       }
     }
@@ -158,7 +158,7 @@ abstract class ScaleBarSettingsBase : ScaleBarSettingsInterface {
     }
     set(value) {
       if (this.internalSettings.secondaryColor != value) {
-        this.internalSettings.secondaryColor = value
+        this.internalSettings = this.internalSettings.toBuilder().setSecondaryColor(value).build()
         applySettings()
       }
     }
@@ -172,7 +172,7 @@ abstract class ScaleBarSettingsBase : ScaleBarSettingsInterface {
     }
     set(value) {
       if (this.internalSettings.borderWidth != value) {
-        this.internalSettings.borderWidth = value
+        this.internalSettings = this.internalSettings.toBuilder().setBorderWidth(value).build()
         applySettings()
       }
     }
@@ -186,7 +186,7 @@ abstract class ScaleBarSettingsBase : ScaleBarSettingsInterface {
     }
     set(value) {
       if (this.internalSettings.height != value) {
-        this.internalSettings.height = value
+        this.internalSettings = this.internalSettings.toBuilder().setHeight(value).build()
         applySettings()
       }
     }
@@ -200,7 +200,7 @@ abstract class ScaleBarSettingsBase : ScaleBarSettingsInterface {
     }
     set(value) {
       if (this.internalSettings.textBarMargin != value) {
-        this.internalSettings.textBarMargin = value
+        this.internalSettings = this.internalSettings.toBuilder().setTextBarMargin(value).build()
         applySettings()
       }
     }
@@ -214,7 +214,7 @@ abstract class ScaleBarSettingsBase : ScaleBarSettingsInterface {
     }
     set(value) {
       if (this.internalSettings.textBorderWidth != value) {
-        this.internalSettings.textBorderWidth = value
+        this.internalSettings = this.internalSettings.toBuilder().setTextBorderWidth(value).build()
         applySettings()
       }
     }
@@ -228,7 +228,7 @@ abstract class ScaleBarSettingsBase : ScaleBarSettingsInterface {
     }
     set(value) {
       if (this.internalSettings.textSize != value) {
-        this.internalSettings.textSize = value
+        this.internalSettings = this.internalSettings.toBuilder().setTextSize(value).build()
         applySettings()
       }
     }
@@ -242,7 +242,7 @@ abstract class ScaleBarSettingsBase : ScaleBarSettingsInterface {
     }
     set(value) {
       if (this.internalSettings.isMetricUnits != value) {
-        this.internalSettings.isMetricUnits = value
+        this.internalSettings = this.internalSettings.toBuilder().setIsMetricUnits(value).build()
         applySettings()
       }
     }
@@ -256,7 +256,7 @@ abstract class ScaleBarSettingsBase : ScaleBarSettingsInterface {
     }
     set(value) {
       if (this.internalSettings.refreshInterval != value) {
-        this.internalSettings.refreshInterval = value
+        this.internalSettings = this.internalSettings.toBuilder().setRefreshInterval(value).build()
         applySettings()
       }
     }
@@ -270,7 +270,7 @@ abstract class ScaleBarSettingsBase : ScaleBarSettingsInterface {
     }
     set(value) {
       if (this.internalSettings.showTextBorder != value) {
-        this.internalSettings.showTextBorder = value
+        this.internalSettings = this.internalSettings.toBuilder().setShowTextBorder(value).build()
         applySettings()
       }
     }
@@ -284,7 +284,7 @@ abstract class ScaleBarSettingsBase : ScaleBarSettingsInterface {
     }
     set(value) {
       if (this.internalSettings.ratio != value) {
-        this.internalSettings.ratio = value
+        this.internalSettings = this.internalSettings.toBuilder().setRatio(value).build()
         applySettings()
       }
     }
@@ -298,7 +298,7 @@ abstract class ScaleBarSettingsBase : ScaleBarSettingsInterface {
     }
     set(value) {
       if (this.internalSettings.useContinuousRendering != value) {
-        this.internalSettings.useContinuousRendering = value
+        this.internalSettings = this.internalSettings.toBuilder().setUseContinuousRendering(value).build()
         applySettings()
       }
     }

@@ -16,10 +16,8 @@ import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.LOCAT
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.MODEL_LAYER
 import com.mapbox.maps.plugin.locationcomponent.animators.PuckAnimatorManager
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentAttributeParser
-import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentAttributeParser2
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
-import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings2
-import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettingsBase2
+import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettingsBase
 import java.lang.ref.WeakReference
 import java.util.concurrent.CopyOnWriteArraySet
 
@@ -27,11 +25,11 @@ import java.util.concurrent.CopyOnWriteArraySet
  * Default implementation of the LocationComponentPlugin, it renders the configured location puck
  * to the user's current location.
  */
-class LocationComponentPluginImpl : LocationComponentPlugin2, LocationConsumer2,
-  LocationComponentSettingsBase2() {
+class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
+  LocationComponentSettingsBase() {
   private lateinit var delegateProvider: MapDelegateProvider
 
-  private lateinit var context: WeakReference<Context>
+  private lateinit var weakContext: WeakReference<Context>
 
   @VisibleForTesting(otherwise = PRIVATE)
   internal var locationPuckManager: LocationPuckManager? = null
@@ -210,7 +208,7 @@ class LocationComponentPluginImpl : LocationComponentPlugin2, LocationConsumer2,
         if (locationPuckManager == null) {
           locationPuckManager = LocationPuckManager(
             settings = internalSettings,
-            settings2 = internalSettings2,
+            weakContext = weakContext,
             delegateProvider = delegateProvider,
             positionManager = LocationComponentPositionManager(
               style,
@@ -260,15 +258,13 @@ class LocationComponentPluginImpl : LocationComponentPlugin2, LocationConsumer2,
    * @return View that will be added to the MapView
    */
   override fun bind(context: Context, attrs: AttributeSet?, pixelRatio: Float) {
-    this.context = WeakReference(context)
+    this.weakContext = WeakReference(context)
     internalSettings =
       LocationComponentAttributeParser.parseLocationComponentSettings(context, attrs, pixelRatio)
-    internalSettings2 =
-      LocationComponentAttributeParser2.parseLocationComponentSettings2(context, attrs, pixelRatio)
 
     if (internalSettings.enabled && locationProvider == null) {
       locationProvider = DefaultLocationProvider(context.applicationContext).apply {
-        updatePuckBearingSource(internalSettings2.puckBearingSource)
+        updatePuckBearingSource(internalSettings.puckBearingSource)
       }
     }
   }
@@ -281,11 +277,9 @@ class LocationComponentPluginImpl : LocationComponentPlugin2, LocationConsumer2,
     locationProvider: LocationProvider,
     locationPuckManager: LocationPuckManager
   ) {
-    this.context = WeakReference(context)
+    this.weakContext = WeakReference(context)
     this.internalSettings =
       LocationComponentAttributeParser.parseLocationComponentSettings(context, attrs, pixelRatio)
-    this.internalSettings2 =
-      LocationComponentAttributeParser2.parseLocationComponentSettings2(context, attrs, pixelRatio)
     this.locationProvider = locationProvider
     this.locationPuckManager = locationPuckManager
   }
@@ -381,7 +375,7 @@ class LocationComponentPluginImpl : LocationComponentPlugin2, LocationConsumer2,
    */
   override fun applySettings() {
     if (internalSettings.enabled && !isLocationComponentActivated) {
-      context.get()?.let {
+      weakContext.get()?.let {
         if (locationProvider == null) {
           locationProvider = DefaultLocationProvider(it)
         }
@@ -392,15 +386,6 @@ class LocationComponentPluginImpl : LocationComponentPlugin2, LocationConsumer2,
       locationPuckManager?.updateSettings(internalSettings)
     } else {
       deactivateLocationComponent()
-    }
-  }
-
-  override lateinit var internalSettings2: LocationComponentSettings2
-
-  override fun applySettings2() {
-    if (internalSettings.enabled) {
-      locationPuckManager?.updateSettings2(internalSettings2)
-      (locationProvider as? DefaultLocationProvider)?.updatePuckBearingSource(internalSettings2.puckBearingSource)
     }
   }
 }
