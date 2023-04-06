@@ -1076,6 +1076,14 @@ class MapboxMapTest {
 
     verify { style.styleTransition = options }
   }
+
+  @Test
+  fun tileCover() {
+    val tileCoverOptions = TileCoverOptions.Builder().build()
+    val cameraOptions = CameraOptions.Builder().build()
+    mapboxMap.tileCover(tileCoverOptions, cameraOptions)
+    verify { nativeMap.tileCover(tileCoverOptions, cameraOptions) }
+  }
 }
 
 @RunWith(ParameterizedRobolectricTestRunner::class)

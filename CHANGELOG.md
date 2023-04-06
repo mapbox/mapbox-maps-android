@@ -2,6 +2,10 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
+# 10.12.2
+## Features ✨ and improvements 🏁
+* Introduce `MapboxMap.tileCover` experimental API to get the tileIDs that cover current map camera.
+
 
 # 10.12.1 March 28, 2023
 ## Bug fixes 🐞
