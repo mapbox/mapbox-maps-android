@@ -1,4 +1,4 @@
-package com.mapbox.maps
+package com.mapbox.maps.viewannotation
 
 import android.graphics.Rect
 import android.os.Looper
@@ -10,12 +10,10 @@ import androidx.asynclayoutinflater.view.AsyncLayoutInflater
 import androidx.core.view.isVisible
 import com.mapbox.bindgen.Expected
 import com.mapbox.geojson.Point
+import com.mapbox.maps.*
 import com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName
 import com.mapbox.maps.extension.style.projection.generated.getProjection
-import com.mapbox.maps.viewannotation.*
-import com.mapbox.maps.viewannotation.ViewAnnotation
 import com.mapbox.maps.viewannotation.ViewAnnotation.Companion.USER_FIXED_DIMENSION
-import com.mapbox.maps.viewannotation.ViewAnnotationVisibility
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.CopyOnWriteArraySet
 import kotlin.collections.Map
@@ -24,7 +22,7 @@ import kotlin.math.abs
 internal class ViewAnnotationManagerImpl(
   mapView: MapView,
   private val viewAnnotationsLayout: FrameLayout = FrameLayout(mapView.context),
-) : ViewAnnotationManager, ViewAnnotationPositionsUpdateListener {
+) : ViewAnnotationManager, DelegatingViewAnnotationPositionsUpdateListener() {
   private val mapboxMap: MapboxMap = mapView.getMapboxMap()
   private val renderThread = mapView.mapController.renderer.renderThread
   private val pixelRatio = mapView.resources.displayMetrics.density
@@ -52,7 +50,7 @@ internal class ViewAnnotationManagerImpl(
   internal val viewUpdatedListenerSet = CopyOnWriteArraySet<OnViewAnnotationUpdatedListener>()
 
   @Volatile
-  private var updatedPositionsList: MutableList<ViewAnnotationPositionDescriptor> = mutableListOf()
+  private var updatedPositionsList: List<DelegatingViewAnnotationPositionDescriptor> = listOf()
 
   override fun addViewAnnotation(
     @LayoutRes resId: Int,
@@ -361,7 +359,7 @@ internal class ViewAnnotationManagerImpl(
    * then rescheduling using Java handler.
    */
   @AnyThread
-  override fun onViewAnnotationPositionsUpdate(positions: MutableList<ViewAnnotationPositionDescriptor>) {
+  override fun onDelegatingViewAnnotationPositionsUpdate(positions: List<DelegatingViewAnnotationPositionDescriptor>) {
     // When called from render thread it means we're in the end of [MapInterface.render] call if positions did change.
     // It's crucial to notify render thread in this callback as depending on mode we're using we need
     // either swap buffers the same or the next frame.
@@ -521,9 +519,9 @@ internal class ViewAnnotationManagerImpl(
     return null to null
   }
 
-  private var positionDescriptorCurrentList = emptyList<ViewAnnotationPositionDescriptor>()
+  private var positionDescriptorCurrentList = emptyList<DelegatingViewAnnotationPositionDescriptor>()
   private fun positionAnnotationViews(
-    positionDescriptorUpdatedList: List<ViewAnnotationPositionDescriptor>
+    positionDescriptorUpdatedList: List<DelegatingViewAnnotationPositionDescriptor>
   ) {
     val needToReorderZ = needToReorderZ(
       positionDescriptorCurrentList,
@@ -674,8 +672,8 @@ internal class ViewAnnotationManagerImpl(
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     internal fun needToReorderZ(
-      positionDescriptorCurrentList: List<ViewAnnotationPositionDescriptor>,
-      positionDescriptorUpdatedList: List<ViewAnnotationPositionDescriptor>
+      positionDescriptorCurrentList: List<DelegatingViewAnnotationPositionDescriptor>,
+      positionDescriptorUpdatedList: List<DelegatingViewAnnotationPositionDescriptor>
     ): Boolean {
       when {
         // new annotations will be added to layout and trigger on measure anyway

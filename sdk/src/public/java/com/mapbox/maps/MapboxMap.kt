@@ -1738,7 +1738,7 @@ class MapboxMap :
     return nativeMap.getViewAnnotationOptions(identifier)
   }
 
-  internal fun setViewAnnotationPositionsUpdateListener(listener: ViewAnnotationPositionsUpdateListener?) {
+  internal fun setViewAnnotationPositionsUpdateListener(listener: DelegatingViewAnnotationPositionsUpdateListener?) {
     checkNativeMap("setViewAnnotationPositionsUpdateListener")
     return nativeMap.setViewAnnotationPositionsUpdateListener(listener)
   }
