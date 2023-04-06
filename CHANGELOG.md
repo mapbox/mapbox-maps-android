@@ -2,9 +2,12 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# 10.12.2
+# 10.12.2 April 6, 2023
 ## Features ✨ and improvements 🏁
 * Introduce `MapboxMap.tileCover` experimental API to get the tileIDs that cover current map camera.
+
+## Dependencies
+* Update gl-native to v10.12.2.
 
 
 # 10.12.1 March 28, 2023
