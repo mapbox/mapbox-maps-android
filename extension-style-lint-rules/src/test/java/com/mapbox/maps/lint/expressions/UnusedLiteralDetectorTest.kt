@@ -29,28 +29,43 @@ class UnusedLiteralDetectorTest(
           val expression = Expression.concat {
             $testInput
           }
+          val interpolateExpression = Expression.interpolate {
+            $testInput
+          }
         """.trimIndent()
         )
       )
       .issues(UnusedLiteralDetector.ISSUE)
       .skipTestModes(TestMode.UI_INJECTION_HOST)
       .run()
-      .expectErrorCount(1)
+      .expectErrorCount(2)
       .expect(
         """
          |src/com/mapbox/maps/style/test/test.kt:6: Error: ${
           UnusedLiteralDetector.ISSUE.getExplanation(
             TextFormat.RAW
           )
-        } [${UnusedLiteralDetector.ISSUE_ID}]
+        } [${UnusedLiteralDetector.ISSUE.id}]
          |  $testInput
          |  ${"~".repeat(testInput.length)}
-         |1 errors, 0 warnings
+         |src/com/mapbox/maps/style/test/test.kt:9: Error: ${
+          UnusedLiteralDetector.ISSUE.getExplanation(
+            TextFormat.RAW
+          )
+        } [${UnusedLiteralDetector.ISSUE.id}]
+         |  $testInput
+         |  ${"~".repeat(testInput.length)}
+         |2 errors, 0 warnings
         """.trimMargin()
-      ).expectFixDiffs(
+      )
+      .expectFixDiffs(
         """
           Autofix for src/com/mapbox/maps/style/test/test.kt line 6: Wrap unused literal with literal():
           @@ -6 +6
+          -   $testInput
+          +   $expectedAutoFix
+          Autofix for src/com/mapbox/maps/style/test/test.kt line 9: Wrap unused literal with literal():
+          @@ -9 +9
           -   $testInput
           +   $expectedAutoFix
         """.trimIndent()

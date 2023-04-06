@@ -6,7 +6,8 @@ import com.android.tools.lint.client.api.Vendor
 class ExpressionIssueRegistry : IssueRegistry() {
 
   override val issues = listOf(
-    UnusedLiteralDetector.ISSUE
+    UnusedLiteralDetector.ISSUE,
+    IllegalNumberOfArgumentsDetector.ISSUE,
   )
 
   override val api: Int = com.android.tools.lint.detector.api.CURRENT_API

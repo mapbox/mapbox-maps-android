@@ -1,8 +1,10 @@
 package com.mapbox.maps.lint.expressions
 
-import com.android.tools.lint.client.api.UElementHandler
 import com.android.tools.lint.detector.api.*
-import org.jetbrains.uast.*
+import org.jetbrains.uast.UBlockExpression
+import org.jetbrains.uast.UExpression
+import org.jetbrains.uast.ULambdaExpression
+import org.jetbrains.uast.ULiteralExpression
 
 /**
  * A detector to scan through the source code and find the lambdas that applies to the ExpressionBuilder,
@@ -11,22 +13,16 @@ import org.jetbrains.uast.*
  *
  * We also suggest user to convert the int to long to match literal expression's signature.
  */
-class UnusedLiteralDetector : Detector(), Detector.UastScanner {
-
-  override fun getApplicableUastTypes(): List<Class<out UElement>>? {
-    return listOf(
-      ULambdaExpression::class.java
-    )
-  }
-
-  override fun createUastHandler(context: JavaContext): UElementHandler? {
-    return object : UElementHandler() {
-      override fun visitLambdaExpression(node: ULambdaExpression) {
-        val receiverType = node.getExpressionType()?.canonicalText
-        if (receiverType?.contains(EXPRESSION_BUILDER_CLASS_NAME) == true) {
-          checkUnusedLiteralsInLambda(context, node)
-        }
-      }
+class UnusedLiteralDetector : MapboxExpressionDetector() {
+  override fun visitMapboxExpressionLambda(
+    context: JavaContext,
+    lambda: ULambdaExpression,
+    receiverClass: String
+  ) {
+    // We only care about ExpressionBuilder and InterpolatorBuilder here, as literal is only available
+    // under ExpressionBuilder, and InterpolatorBuilder extends ExpressionBuilder.
+    if (isGenericExpressionClass(receiverClass)) {
+      checkUnusedLiteralsInLambda(context, lambda)
     }
   }
 
@@ -112,15 +108,12 @@ class UnusedLiteralDetector : Detector(), Detector.UastScanner {
   }
 
   companion object {
-    internal const val ISSUE_ID = "IllegalExpressionLiteralUsage"
+    private const val ISSUE_ID = "IllegalExpressionLiteralUsage"
     private const val BRIEF_DESCRIPTION =
       "This check detects unused literal expressions within a code block that's applied to a Expression.ExpressionBuilder class."
     private const val PRIORITY = 8
     private const val REPORT_MESSAGE =
       "Unused literal expression within ExpressionBuilder, wrap it within literal()."
-
-    private const val EXPRESSION_BUILDER_CLASS_NAME =
-      "com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder"
 
     private val IMPLEMENTATION = Implementation(
       UnusedLiteralDetector::class.java, Scope.JAVA_FILE_SCOPE
