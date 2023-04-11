@@ -1,33 +1,35 @@
-# Changelog for Mapbox Maps SDK v10 for Android
+# Changelog for Mapbox Maps SDK for Android
 
 Mapbox welcomes participation and contributions from everyone.
 
-#develop
-## Features ✨ and improvements 🏁
+# develop
+## Breaking changes ⚠️
 * Remove deprecated `MapboxMap.queryRenderedFeatures` methods.
 * Remove `Snapshotter.setTileMode`, `Snapshotter.isInTileMode` methods.
 * Remove deprecated `MapStyleStateDelegate` and `isFullyLoaded` method.
 * Remove experimental `setRenderCacheOptions`, `getRenderCacheOptions` apis.
 * Update SDK's `targetSdkVersion` and `compileSdkVersion` to 33.
 * Add `callback` argument to the `MapboxMap` methods `getFeatureState`, `setFeatureState`, `removeFeatureState`.
-* Add the `MapboxMap.resetFeatureState` method.
 * Use different callback types for the `MapboxMap.queryRenderedFeatures` and the `MapboxMap.querySourceFeatures` methods.
 * Return `cancelable` from the `MapboxMap` methods : `getFeatureState`, `setFeatureState`, `removeFeatureState`, `querySourceFeatures`, `getGeoJsonClusterLeaves`, `getGeoJsonClusterChildren`, `getGeoJsonClusterExpansionZoom`.
 * Remove the deprecated `MapboxMap.queryFeatureExtensions` method.
-* Make padding optional for `MapboxMap.cameraForCoordinateBounds`, `MapboxMap.cameraForCoordinates`, `MapboxMap.cameraForGeometry` methods.
-* Add `FreeCameraOptions.getLocation` and `FreeCameraOptions.getAltitude` methods.
 * Remove `MapAnimationOptions.animatorListener` property. In order to subscribe to animations, provide `Animator.animatorListener` with `flyTo`, `easeTo`, `pitchBy`, `scaleBy`, `moveBy`, `rotateBy` apis.
-* Add `MapboxMap.coordinatesForRect(rectF: RectF)` to support rectangle parameters.
-* Add `suspend` variants for the async `MapboxMap` functions : `queryRenderedFeatures`, `querySourceFeatures`, `setFeatureState`, `getFeatureState`, `removeFeatureState`, `getGeoJsonClusterLeaves`, `getGeoJsonClusterChildren`, `getGeoJsonClusterExpansionZoom`.
-* Add `MapboxMap.cameraChanges` returning Flow of camera updates.
-* Introduce custom lint rules to check illegal usage of literals in Expression DSL and suggest auto fix.
-* Introduce custom lint rules to check illegal number of arguments within given Expression DSL.
 * Replace `LocationEngine` use with `LocationService` in `DefaultProvider`.
 * Add new `LocationConsumer.onError` method to allow consumers handle location errors.
 * Remove `MapView#location2` related interfaces and move `showAccuracyRing`, `accuracyRingColor`, `accuracyRingBorderColor`, `puckBearingEnabled` and `puckBearingSource` to `MapView#location`.
 * Make `AttributionSettings`, `CompassSettings`, `GesturesSettings`, `LocationComponentSettings`, `LogoSettings`, `ScaleBarSettings` not Kotlin `data class`, better binary compatible and implementing `Parcelable`.
 * Change `CompassSettings#image`, `LocationPuck2D#topImage`, `LocationPuck2D#bearingImage`, `LocationPuck2D#shadowImage` to `ImageHolder` allowing to pass either drawable id or `Bitmap`.
 * Remove deprecated `backgroundPatternTransition`, `lineDasharrayTransition`, `linePatternTransition`, `fillPatternTransition` properties.
+
+## Features ✨ and improvements 🏁
+* Add the `MapboxMap.resetFeatureState` method.
+* Make padding optional for `MapboxMap.cameraForCoordinateBounds`, `MapboxMap.cameraForCoordinates`, `MapboxMap.cameraForGeometry` methods.
+* Add `FreeCameraOptions.getLocation` and `FreeCameraOptions.getAltitude` methods.
+* Add `MapboxMap.coordinatesForRect(rectF: RectF)` to support rectangle parameters.
+* Add `suspend` variants for the async `MapboxMap` functions : `queryRenderedFeatures`, `querySourceFeatures`, `setFeatureState`, `getFeatureState`, `removeFeatureState`, `getGeoJsonClusterLeaves`, `getGeoJsonClusterChildren`, `getGeoJsonClusterExpansionZoom`.
+* Add `MapboxMap.cameraChanges` returning Flow of camera updates.
+* Introduce custom lint rules to check illegal usage of literals in Expression DSL and suggest auto fix.
+* Introduce custom lint rules to check illegal number of arguments within given Expression DSL.
 
 ## Dependencies
 * Update dependencies.
