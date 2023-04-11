@@ -1,9 +1,10 @@
-package com.mapbox.maps.lint.expressions
+package com.mapbox.maps.lint.style.expressions
 
 import com.android.tools.lint.checks.infrastructure.TestFiles
 import com.android.tools.lint.checks.infrastructure.TestLintTask
 import com.android.tools.lint.checks.infrastructure.TestMode
 import com.android.tools.lint.detector.api.TextFormat
+import com.mapbox.maps.lint.style.Stubs
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized

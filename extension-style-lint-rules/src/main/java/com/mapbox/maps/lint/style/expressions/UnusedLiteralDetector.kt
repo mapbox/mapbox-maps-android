@@ -1,4 +1,4 @@
-package com.mapbox.maps.lint.expressions
+package com.mapbox.maps.lint.style.expressions
 
 import com.android.tools.lint.detector.api.*
 import org.jetbrains.uast.UBlockExpression
@@ -13,7 +13,7 @@ import org.jetbrains.uast.ULiteralExpression
  *
  * We also suggest user to convert the int to long to match literal expression's signature.
  */
-class UnusedLiteralDetector : MapboxExpressionDetector() {
+class UnusedLiteralDetector : MapboxExpressionDslDetector() {
   override fun visitMapboxExpressionLambda(
     context: JavaContext,
     lambda: ULambdaExpression,

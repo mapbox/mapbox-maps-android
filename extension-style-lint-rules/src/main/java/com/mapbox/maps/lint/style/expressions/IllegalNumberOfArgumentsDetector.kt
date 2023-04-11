@@ -1,4 +1,4 @@
-package com.mapbox.maps.lint.expressions
+package com.mapbox.maps.lint.style.expressions
 
 import com.android.tools.lint.detector.api.*
 import org.jetbrains.uast.UBlockExpression
@@ -12,7 +12,7 @@ import org.jetbrains.uast.ULambdaExpression
  * Mapbox expression. In the end, we compares it to the expected number of arguments map, and report errors
  * for the incorrect number of arguments for the given expression.
  */
-class IllegalNumberOfArgumentsDetector : MapboxExpressionDetector() {
+class IllegalNumberOfArgumentsDetector : MapboxExpressionDslDetector() {
   override fun visitMapboxExpressionLambda(
     context: JavaContext,
     lambda: ULambdaExpression,

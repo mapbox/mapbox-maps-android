@@ -1,4 +1,4 @@
-package com.mapbox.maps.lint.expressions
+package com.mapbox.maps.lint.style.expressions
 
 import com.android.tools.lint.client.api.UElementHandler
 import com.android.tools.lint.detector.api.Detector
@@ -9,7 +9,7 @@ import org.jetbrains.uast.ULambdaExpression
 /**
  * A detector to scan through the source code and find the lambdas that applies to the ExpressionBuilder.
  */
-abstract class MapboxExpressionDetector : Detector(), Detector.UastScanner {
+abstract class MapboxExpressionDslDetector : Detector(), Detector.UastScanner {
 
   /**
    * Called when a Mapbox Expression lambda is visited

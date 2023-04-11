@@ -39,6 +39,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Add `MapboxMap.cameraChanges` returning Flow of camera updates.
 * Introduce custom lint rules to check illegal usage of literals in Expression DSL and suggest auto fix.
 * Introduce custom lint rules to check illegal number of arguments within given Expression DSL.
+* Introduce custom lint rules to check unused layer/source/light/terrain/atmosphere/projection objects in the Style DSL, and suggest auto fix to add it to the style using unaryPlus(+) operator.
 
 ## Dependencies
 * Update dependencies.
