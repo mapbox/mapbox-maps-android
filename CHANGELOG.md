@@ -20,6 +20,15 @@ Mapbox welcomes participation and contributions from everyone.
 * Make `AttributionSettings`, `CompassSettings`, `GesturesSettings`, `LocationComponentSettings`, `LogoSettings`, `ScaleBarSettings` not Kotlin `data class`, better binary compatible and implementing `Parcelable`.
 * Change `CompassSettings#image`, `LocationPuck2D#topImage`, `LocationPuck2D#bearingImage`, `LocationPuck2D#shadowImage` to `ImageHolder` allowing to pass either drawable id or `Bitmap`.
 * Remove deprecated `backgroundPatternTransition`, `lineDasharrayTransition`, `linePatternTransition`, `fillPatternTransition` properties.
+* Update Mapbox styles to latest versions.
+
+| Style                 | Before                                       | After |
+|-----------------------|----------------------------------------------| ----- |
+| MAPBOX_STREETS | mapbox://styles/mapbox/streets-v11           | mapbox://styles/mapbox/streets-v12 |
+| SATELLITE_STREETS | mapbox://styles/mapbox/satellite-streets-v11 | mapbox://styles/mapbox/satellite-streets-v12 |
+| OUTDOORS | mapbox://styles/mapbox/outdoors-v11          | mapbox://styles/mapbox/outdoors-v12 |
+| LIGHT | mapbox://styles/mapbox/light-v10             | mapbox://styles/mapbox/light-v11 |
+| DARK | mapbox://styles/mapbox/dark-v10              | mapbox://styles/mapbox/dark-v11 |
 
 ## Features ✨ and improvements 🏁
 * Add the `MapboxMap.resetFeatureState` method.

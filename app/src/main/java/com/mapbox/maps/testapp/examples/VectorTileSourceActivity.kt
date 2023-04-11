@@ -33,7 +33,7 @@ class VectorTileSourceActivity : AppCompatActivity() {
             lineColor(Color.parseColor("#ff69b4"))
             lineWidth(1.9)
           },
-          below = "road-label"
+          below = "road-label-simple"
         )
       }
     )

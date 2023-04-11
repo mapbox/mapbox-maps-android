@@ -226,7 +226,7 @@ class MovingIconWithTrailingLineActivity : AppCompatActivity() {
   }
 
   /**
-   * Add the LineLayer for the marker icon's travel route. Adding it under the "road-label" layer, so that the
+   * Add the LineLayer for the marker icon's travel route. Adding it under the "road-label-simple" layer, so that the
    * this LineLayer doesn't block the street name.
    */
   private fun initDotLinePath(style: Style) {
@@ -237,7 +237,7 @@ class MovingIconWithTrailingLineActivity : AppCompatActivity() {
         lineJoin(LineJoin.ROUND)
         lineWidth(4.0)
       },
-      below = "road-label"
+      below = "road-label-simple"
     )
   }
 

@@ -18,9 +18,9 @@ package com.mapbox.maps {
   }
 
   public final class MapInitOptions {
-    ctor public MapInitOptions(android.content.Context context, com.mapbox.maps.ResourceOptions resourceOptions = getDefaultResourceOptions(context), com.mapbox.maps.MapOptions mapOptions = getDefaultMapOptions(context), java.util.List<? extends com.mapbox.maps.plugin.Plugin> plugins = defaultPluginList, com.mapbox.maps.CameraOptions? cameraOptions = null, boolean textureView = false, String? styleUri = "mapbox://styles/mapbox/streets-v11", android.util.AttributeSet? attrs = null, int antialiasingSampleCount = 1);
-    ctor public MapInitOptions(android.content.Context context, com.mapbox.maps.ResourceOptions resourceOptions = getDefaultResourceOptions(context), com.mapbox.maps.MapOptions mapOptions = getDefaultMapOptions(context), java.util.List<? extends com.mapbox.maps.plugin.Plugin> plugins = defaultPluginList, com.mapbox.maps.CameraOptions? cameraOptions = null, boolean textureView = false, String? styleUri = "mapbox://styles/mapbox/streets-v11", android.util.AttributeSet? attrs = null);
-    ctor public MapInitOptions(android.content.Context context, com.mapbox.maps.ResourceOptions resourceOptions = getDefaultResourceOptions(context), com.mapbox.maps.MapOptions mapOptions = getDefaultMapOptions(context), java.util.List<? extends com.mapbox.maps.plugin.Plugin> plugins = defaultPluginList, com.mapbox.maps.CameraOptions? cameraOptions = null, boolean textureView = false, String? styleUri = "mapbox://styles/mapbox/streets-v11");
+    ctor public MapInitOptions(android.content.Context context, com.mapbox.maps.ResourceOptions resourceOptions = getDefaultResourceOptions(context), com.mapbox.maps.MapOptions mapOptions = getDefaultMapOptions(context), java.util.List<? extends com.mapbox.maps.plugin.Plugin> plugins = defaultPluginList, com.mapbox.maps.CameraOptions? cameraOptions = null, boolean textureView = false, String? styleUri = "mapbox://styles/mapbox/streets-v12", android.util.AttributeSet? attrs = null, int antialiasingSampleCount = 1);
+    ctor public MapInitOptions(android.content.Context context, com.mapbox.maps.ResourceOptions resourceOptions = getDefaultResourceOptions(context), com.mapbox.maps.MapOptions mapOptions = getDefaultMapOptions(context), java.util.List<? extends com.mapbox.maps.plugin.Plugin> plugins = defaultPluginList, com.mapbox.maps.CameraOptions? cameraOptions = null, boolean textureView = false, String? styleUri = "mapbox://styles/mapbox/streets-v12", android.util.AttributeSet? attrs = null);
+    ctor public MapInitOptions(android.content.Context context, com.mapbox.maps.ResourceOptions resourceOptions = getDefaultResourceOptions(context), com.mapbox.maps.MapOptions mapOptions = getDefaultMapOptions(context), java.util.List<? extends com.mapbox.maps.plugin.Plugin> plugins = defaultPluginList, com.mapbox.maps.CameraOptions? cameraOptions = null, boolean textureView = false, String? styleUri = "mapbox://styles/mapbox/streets-v12");
     ctor public MapInitOptions(android.content.Context context, com.mapbox.maps.ResourceOptions resourceOptions = getDefaultResourceOptions(context), com.mapbox.maps.MapOptions mapOptions = getDefaultMapOptions(context), java.util.List<? extends com.mapbox.maps.plugin.Plugin> plugins = defaultPluginList, com.mapbox.maps.CameraOptions? cameraOptions = null, boolean textureView = false);
     ctor public MapInitOptions(android.content.Context context, com.mapbox.maps.ResourceOptions resourceOptions = getDefaultResourceOptions(context), com.mapbox.maps.MapOptions mapOptions = getDefaultMapOptions(context), java.util.List<? extends com.mapbox.maps.plugin.Plugin> plugins = defaultPluginList, com.mapbox.maps.CameraOptions? cameraOptions = null);
     ctor public MapInitOptions(android.content.Context context, com.mapbox.maps.ResourceOptions resourceOptions = getDefaultResourceOptions(context), com.mapbox.maps.MapOptions mapOptions = getDefaultMapOptions(context), java.util.List<? extends com.mapbox.maps.plugin.Plugin> plugins = defaultPluginList);
@@ -416,12 +416,12 @@ package com.mapbox.maps {
     method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> updateStyleImageSourceImage(String sourceId, com.mapbox.maps.Image image);
     property public float pixelRatio;
     field public static final com.mapbox.maps.Style.Companion Companion;
-    field public static final String DARK = "mapbox://styles/mapbox/dark-v10";
-    field public static final String LIGHT = "mapbox://styles/mapbox/light-v10";
-    field public static final String MAPBOX_STREETS = "mapbox://styles/mapbox/streets-v11";
-    field public static final String OUTDOORS = "mapbox://styles/mapbox/outdoors-v11";
+    field public static final String DARK = "mapbox://styles/mapbox/dark-v11";
+    field public static final String LIGHT = "mapbox://styles/mapbox/light-v11";
+    field public static final String MAPBOX_STREETS = "mapbox://styles/mapbox/streets-v12";
+    field public static final String OUTDOORS = "mapbox://styles/mapbox/outdoors-v12";
     field public static final String SATELLITE = "mapbox://styles/mapbox/satellite-v9";
-    field public static final String SATELLITE_STREETS = "mapbox://styles/mapbox/satellite-streets-v11";
+    field public static final String SATELLITE_STREETS = "mapbox://styles/mapbox/satellite-streets-v12";
     field public static final String TRAFFIC_DAY = "mapbox://styles/mapbox/traffic-day-v2";
     field public static final String TRAFFIC_NIGHT = "mapbox://styles/mapbox/traffic-night-v2";
   }

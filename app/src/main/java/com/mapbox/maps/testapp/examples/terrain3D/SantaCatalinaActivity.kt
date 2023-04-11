@@ -250,8 +250,8 @@ class SantaCatalinaActivity : AppCompatActivity() {
     private const val TERRAIN_EXEGERATION = 1.7
     private const val FOREGROUND_ICON = "mapbox-location-icon"
     private const val BACKGROUND_ICON = "mapbox-location-stroke-icon"
-    private const val LAYER_ABOVE_ID = "bridge-oneway-arrow-white"
-    private const val LAYER_ROAD_ID = "road-label"
+    private const val LAYER_ABOVE_ID = "bridge-motorway-trunk-2"
+    private const val LAYER_ROAD_ID = "road-label-simple"
 
     // Camera animation constants
     private const val ANIMATION_DURATION = 75000.0
