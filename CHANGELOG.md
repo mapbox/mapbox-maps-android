@@ -2,7 +2,14 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# 10.10.2
+# 10.10.3 April 13, 2023
+## Bug fixes 🐞
+* Fix tileset descriptor resolving failure when the disk cache is full. ([2071](https://github.com/mapbox/mapbox-maps-android/pull/2071))
+
+## Dependencies
+* Update gl-native to v10.10.2. ([2071](https://github.com/mapbox/mapbox-maps-android/pull/2071))
+
+# 10.10.2 February 16, 2023
 ## Bug fixes 🐞
 * [tile store] Remove token from TileStore Logs. ([2011](https://github.com/mapbox/mapbox-maps-android/pull/2011))
 
