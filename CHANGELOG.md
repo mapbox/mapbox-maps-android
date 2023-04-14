@@ -4,6 +4,10 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 10.13.0-rc.1
+## Features ✨ and improvements 🏁
+* Add overloaded methods to `CameraAnimatorsFactory` allowing to set camera animator owner.
+
 # 10.13.0-beta.1 April 05, 2023
 ## Features ✨ and improvements 🏁
 * Deprecate `Snapshotter.setTileMode` and `Snapshotter.isInTileMode`.
