@@ -14,7 +14,7 @@ import com.mapbox.maps.plugin.locationcomponent.LocationConsumer
 import com.mapbox.maps.plugin.locationcomponent.LocationProvider
 import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.testapp.R
-import com.mapbox.maps.testapp.databinding.ActivityLocationComponentAmimationBinding
+import com.mapbox.maps.testapp.databinding.ActivityLocationComponentAnimationBinding
 
 /**
  * Example that demonstrates using custom [LocationProvider] and sending custom location updates
@@ -96,7 +96,7 @@ class LocationComponentAnimationActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    val binding = ActivityLocationComponentAmimationBinding.inflate(layoutInflater)
+    val binding = ActivityLocationComponentAnimationBinding.inflate(layoutInflater)
     setContentView(binding.root)
     mapboxMap = binding.mapView.getMapboxMap().apply {
       loadStyleUri(
