@@ -78,12 +78,19 @@ package com.mapbox.maps.plugin.animation {
   }
 
   public final class CameraAnimatorsFactory {
+    method public com.mapbox.maps.plugin.animation.animator.CameraAnimator<?>![] getEaseTo(com.mapbox.maps.CameraOptions cameraOptions, String? owner = null);
     method public com.mapbox.maps.plugin.animation.animator.CameraAnimator<?>![] getEaseTo(com.mapbox.maps.CameraOptions cameraOptions);
+    method public com.mapbox.maps.plugin.animation.animator.CameraAnimator<?>![] getFlyTo(com.mapbox.maps.CameraOptions cameraOptions, String? owner = null);
     method public com.mapbox.maps.plugin.animation.animator.CameraAnimator<?>![] getFlyTo(com.mapbox.maps.CameraOptions cameraOptions);
+    method public com.mapbox.maps.plugin.animation.animator.CameraAnimator<?>![] getMoveBy(com.mapbox.maps.ScreenCoordinate offset, String? owner = null);
     method public com.mapbox.maps.plugin.animation.animator.CameraAnimator<?>![] getMoveBy(com.mapbox.maps.ScreenCoordinate offset);
+    method public com.mapbox.maps.plugin.animation.animator.CameraAnimator<?>![] getPitchBy(double pitch, String? owner = null);
     method public com.mapbox.maps.plugin.animation.animator.CameraAnimator<?>![] getPitchBy(double pitch);
+    method public com.mapbox.maps.plugin.animation.animator.CameraAnimator<?>![] getRotateBy(com.mapbox.maps.ScreenCoordinate first, com.mapbox.maps.ScreenCoordinate second, String? owner = null);
     method public com.mapbox.maps.plugin.animation.animator.CameraAnimator<?>![] getRotateBy(com.mapbox.maps.ScreenCoordinate first, com.mapbox.maps.ScreenCoordinate second);
+    method public com.mapbox.maps.plugin.animation.animator.CameraAnimator<?>![] getScaleBy(double amount, com.mapbox.maps.ScreenCoordinate? anchor = null, String? owner = null);
     method public com.mapbox.maps.plugin.animation.animator.CameraAnimator<?>![] getScaleBy(double amount, com.mapbox.maps.ScreenCoordinate? anchor = null);
+    method public com.mapbox.maps.plugin.animation.animator.CameraAnimator<?>![] getScaleBy(double amount);
     method public static void setDefaultAnimatorOptions(com.mapbox.maps.plugin.animation.CameraAnimatorType type, kotlin.jvm.functions.Function1<? super android.animation.ValueAnimator,kotlin.Unit> block);
     method public static void setDefaultAnimatorOptions(kotlin.jvm.functions.Function1<? super android.animation.ValueAnimator,kotlin.Unit> block);
     field public static final android.view.animation.Interpolator CUBIC_BEZIER_INTERPOLATOR;
