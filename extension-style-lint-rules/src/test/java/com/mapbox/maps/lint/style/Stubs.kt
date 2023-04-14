@@ -45,6 +45,9 @@ object Stubs {
              */
             fun literal(value: List<Any>) {
             }
+            // stop expression that groups 2 argument as a pair
+            fun stop(block: ExpressionBuilder.() -> Unit) {
+            }
         }
 
         class InterpolatorBuilder(operator: String) : ExpressionBuilder(operator) {

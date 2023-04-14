@@ -52,8 +52,19 @@ class IllegalNumberOfArgumentsDetector : MapboxExpressionDslDetector() {
 
   private fun countNumberOfArguments(blockExpression: UBlockExpression): Int {
     return blockExpression.expressions.filterIsInstance<UCallExpression>().filter {
-      isGenericExpressionClass(it.receiverType?.canonicalText)
-    }.size
+      it.isGenericExpression()
+    }.fold(initial = 0) { acc, uCallExpression ->
+      // count stop expression as 2 arguments as it simply wraps a pair
+      acc + if (uCallExpression.isStopExpression()) 2 else 1
+    }
+  }
+
+  private fun UCallExpression.isStopExpression(): Boolean {
+    return isGenericExpressionClass(receiverType?.canonicalText) && this.methodName == "stop"
+  }
+
+  private fun UCallExpression.isGenericExpression(): Boolean {
+    return isGenericExpressionClass(this.receiverType?.canonicalText)
   }
 
   companion object {

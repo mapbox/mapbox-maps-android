@@ -19,6 +19,22 @@ class IllegalNumberOfArgumentsDetectorTest(
   fun testIllegalNumberOfArgument() {
     val testContent =
       List(testNumberOfArguments) { "literal(0)" }.joinToString(separator = "\n            ")
+    // add a stop expression to the even/odd number of argument tests to validate the proper handling of stop
+    // adding a stop expression should add 2 arguments to the parent expression and should not affect parity
+    val stopExpressionTestContent =
+      if (
+        IllegalNumberOfArgumentsDetector.ARGUMENT_COUNT_MAP[testExpressionName]?.first() == IllegalNumberOfArgumentsDetector.ODD_NUMBER ||
+        IllegalNumberOfArgumentsDetector.ARGUMENT_COUNT_MAP[testExpressionName]?.first() == IllegalNumberOfArgumentsDetector.EVEN_NUMBER
+      ) {
+        """
+            stop {
+              literal(0)
+              literal(0)
+            }
+        """
+      } else {
+        ""
+      }
     val testLintResult = TestLintTask
       .lint()
       .files(
@@ -31,6 +47,7 @@ class IllegalNumberOfArgumentsDetectorTest(
 
           val expression = Expression.$testExpressionName {
             $testContent
+            $stopExpressionTestContent
           }
         """.trimIndent()
         )
@@ -40,13 +57,14 @@ class IllegalNumberOfArgumentsDetectorTest(
       .run()
 
     if (expectError) {
-      testLintResult.expectErrorCount(1)
+      testLintResult
+        .expectErrorCount(1)
         .expect(
           """
          |src/com/mapbox/maps/style/test/test.kt:5: Error: ${
             IllegalNumberOfArgumentsDetector.getReportMessage(
               testExpressionName,
-              testNumberOfArguments
+              if (stopExpressionTestContent.isEmpty()) testNumberOfArguments else testNumberOfArguments + 2
             )
           } [${IllegalNumberOfArgumentsDetector.ISSUE.id}]
          |val expression = Expression.$testExpressionName {
