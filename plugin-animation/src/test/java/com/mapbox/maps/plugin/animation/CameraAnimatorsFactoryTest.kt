@@ -47,6 +47,7 @@ class CameraAnimatorsFactoryTest {
   private val decelerateInterpolatorNew = DecelerateInterpolator()
   private val delayNew = 20L
   private val durationNew = 50L
+  private val customOwner = "customOwner"
 
   private val emptyListener = object : Animator.AnimatorListener {
     override fun onAnimationStart(animation: Animator?) {
@@ -91,7 +92,7 @@ class CameraAnimatorsFactoryTest {
       .bearing(-180.0)
       .pitch(30.0)
       .build()
-    val animators = cameraAnimatorsFactory.getEaseTo(targetEaseToPosition)
+    val animators = cameraAnimatorsFactory.getEaseTo(targetEaseToPosition, owner = customOwner)
     testAnimators(animators, targetEaseToPosition)
   }
 
@@ -102,7 +103,7 @@ class CameraAnimatorsFactoryTest {
     every { mapCameraManagerDelegate.coordinateForPixel(any()) } returns targetCenter
     val offset = ScreenCoordinate(500.0, 500.0)
     val target = CameraOptions.Builder().center(targetCenter).build()
-    val animators = cameraAnimatorsFactory.getMoveBy(offset)
+    val animators = cameraAnimatorsFactory.getMoveBy(offset, owner = customOwner)
     testAnimators(animators, target)
   }
 
@@ -111,7 +112,11 @@ class CameraAnimatorsFactoryTest {
     every { mapCameraManagerDelegate.cameraState } returns initialCameraPosition
     every { mapTransformDelegate.getMapOptions() } returns MapOptions.Builder().size(Size(1078.875f, 1698.375f)).build()
     val target = CameraOptions.Builder().bearing(-25.981604850040434).build()
-    val animators = cameraAnimatorsFactory.getRotateBy(ScreenCoordinate(0.0, 0.0), ScreenCoordinate(500.0, 500.0))
+    val animators = cameraAnimatorsFactory.getRotateBy(
+      ScreenCoordinate(0.0, 0.0),
+      ScreenCoordinate(500.0, 500.0),
+      owner = customOwner
+    )
     testAnimators(animators, target)
   }
 
@@ -126,7 +131,7 @@ class CameraAnimatorsFactoryTest {
       .bearing(90.0)
       .padding(EdgeInsets(300.0, 400.0, 300.0, 400.0))
       .build()
-    val animators = cameraAnimatorsFactory.getFlyTo(target)
+    val animators = cameraAnimatorsFactory.getFlyTo(target, owner = customOwner)
     testAnimators(animators, target)
   }
 
@@ -136,7 +141,7 @@ class CameraAnimatorsFactoryTest {
     val scaleBy = 15.0
     val zoomTarget = CameraTransform.calculateScaleBy(scaleBy, initialCameraPosition.zoom)
     val target = CameraOptions.Builder().zoom(zoomTarget).anchor(ScreenCoordinate(10.0, 10.0)).build()
-    val animators = cameraAnimatorsFactory.getScaleBy(scaleBy, target.anchor)
+    val animators = cameraAnimatorsFactory.getScaleBy(scaleBy, target.anchor, owner = customOwner)
     testAnimators(animators, target)
   }
 
@@ -145,7 +150,7 @@ class CameraAnimatorsFactoryTest {
     every { mapCameraManagerDelegate.cameraState } returns initialCameraPosition
     val pitchBy = 20.0
     val target = CameraOptions.Builder().pitch(initialCameraPosition.pitch + pitchBy).build()
-    val animators = cameraAnimatorsFactory.getPitchBy(pitchBy)
+    val animators = cameraAnimatorsFactory.getPitchBy(pitchBy, owner = customOwner)
     testAnimators(animators, target)
   }
 
@@ -154,6 +159,7 @@ class CameraAnimatorsFactoryTest {
       Assert.assertEquals(it.interpolator, decelerateInterpolatorNew)
       Assert.assertEquals(it.startDelay, delayNew)
       Assert.assertEquals(it.duration, durationNew)
+      Assert.assertEquals(it.owner, customOwner)
 
       val startValue = it.startValue
       val targetValue = it.targets.first()

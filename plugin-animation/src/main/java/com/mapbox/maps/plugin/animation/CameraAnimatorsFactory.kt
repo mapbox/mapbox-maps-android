@@ -37,7 +37,8 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
    *
    * @param cameraOptions Camera options values to animate
    */
-  fun getEaseTo(cameraOptions: CameraOptions): Array<CameraAnimator<*>> {
+  @JvmOverloads
+  fun getEaseTo(cameraOptions: CameraOptions, owner: String? = null): Array<CameraAnimator<*>> {
     val animationList = mutableListOf<ValueAnimator>()
     val currentCameraState = mapCameraManagerDelegate.cameraState
 
@@ -48,7 +49,11 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
             startValue(currentCameraState.center)
           },
           block = defaultAnimationParameters[CameraAnimatorType.CENTER]
-        )
+        ).apply {
+          owner?.let { customOwner ->
+            this.owner = customOwner
+          }
+        }
       )
     }
 
@@ -59,7 +64,11 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
             startValue(it)
           },
           block = defaultAnimationParameters[CameraAnimatorType.ANCHOR]
-        )
+        ).apply {
+          owner?.let { customOwner ->
+            this.owner = customOwner
+          }
+        }
       )
     }
 
@@ -71,7 +80,11 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
           },
           useShortestPath = true,
           block = defaultAnimationParameters[CameraAnimatorType.BEARING]
-        )
+        ).apply {
+          owner?.let { customOwner ->
+            this.owner = customOwner
+          }
+        }
       )
     }
 
@@ -82,7 +95,11 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
             startValue(currentCameraState.padding)
           },
           block = defaultAnimationParameters[CameraAnimatorType.PADDING]
-        )
+        ).apply {
+          owner?.let { customOwner ->
+            this.owner = customOwner
+          }
+        }
       )
     }
 
@@ -93,7 +110,11 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
             startValue(currentCameraState.pitch)
           },
           block = defaultAnimationParameters[CameraAnimatorType.PITCH]
-        )
+        ).apply {
+          owner?.let { customOwner ->
+            this.owner = customOwner
+          }
+        }
       )
     }
 
@@ -104,7 +125,11 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
             startValue(currentCameraState.zoom)
           },
           block = defaultAnimationParameters[CameraAnimatorType.ZOOM]
-        )
+        ).apply {
+          owner?.let { customOwner ->
+            this.owner = customOwner
+          }
+        }
       )
     }
 
@@ -118,7 +143,8 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
    * @param pitch The amount to pitch by in degrees
    * @return Array of the created animators
    */
-  fun getPitchBy(pitch: Double): Array<CameraAnimator<*>> {
+  @JvmOverloads
+  fun getPitchBy(pitch: Double, owner: String? = null): Array<CameraAnimator<*>> {
     val startPitch = mapCameraManagerDelegate.cameraState.pitch
     return Array(1) {
       CameraPitchAnimator(
@@ -126,7 +152,11 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
           startValue(startPitch)
         },
         block = defaultAnimationParameters[CameraAnimatorType.PITCH]
-      )
+      ).apply {
+        owner?.let { customOwner ->
+          this.owner = customOwner
+        }
+      }
     }
   }
 
@@ -138,9 +168,11 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
    * @param anchor The optional focal point to scale on
    * @return Array of the created animators
    */
+  @JvmOverloads
   fun getScaleBy(
     amount: Double,
-    anchor: ScreenCoordinate? = null
+    anchor: ScreenCoordinate? = null,
+    owner: String? = null
   ): Array<CameraAnimator<*>> {
     val animationList = mutableListOf<ValueAnimator>()
     anchor?.let {
@@ -150,7 +182,11 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
             startValue(it)
           },
           block = defaultAnimationParameters[CameraAnimatorType.ANCHOR]
-        )
+        ).apply {
+          owner?.let { customOwner ->
+            this.owner = customOwner
+          }
+        }
       )
     }
     val currentZoom = mapCameraManagerDelegate.cameraState.zoom
@@ -161,7 +197,11 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
           startValue(currentZoom)
         },
         block = defaultAnimationParameters[CameraAnimatorType.ZOOM]
-      )
+      ).apply {
+        owner?.let { customOwner ->
+          this.owner = customOwner
+        }
+      }
     )
     return animationList.map { it as CameraAnimator<*> }.toTypedArray()
   }
@@ -173,9 +213,8 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
    * @param offset The screen coordinate distance to move by
    * @return Array of the created animators
    */
-  fun getMoveBy(
-    offset: ScreenCoordinate
-  ): Array<CameraAnimator<*>> {
+  @JvmOverloads
+  fun getMoveBy(offset: ScreenCoordinate, owner: String? = null): Array<CameraAnimator<*>> {
     val cameraState = mapCameraManagerDelegate.cameraState
     val centerTarget = CameraTransform.calculateLatLngMoveBy(
       offset,
@@ -189,7 +228,11 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
           startValue(cameraState.center)
         },
         block = defaultAnimationParameters[CameraAnimatorType.CENTER]
-      )
+      ).apply {
+        owner?.let { customOwner ->
+          this.owner = customOwner
+        }
+      }
     }
   }
 
@@ -200,9 +243,11 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
    * @param second The second pointer to rotate on
    * @return Array of the created animators
    */
+  @JvmOverloads
   fun getRotateBy(
     first: ScreenCoordinate,
-    second: ScreenCoordinate
+    second: ScreenCoordinate,
+    owner: String? = null
   ): Array<CameraAnimator<*>> {
     val cameraOptions = mapCameraManagerDelegate.cameraState
     val mapSizePixels = mapTransformDelegate.getMapOptions().size
@@ -240,7 +285,11 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
           },
           useShortestPath = true,
           block = defaultAnimationParameters[CameraAnimatorType.BEARING]
-        )
+        ).apply {
+          owner?.let { customOwner ->
+            this.owner = customOwner
+          }
+        }
       }
     }
     return emptyArray()
@@ -251,7 +300,8 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
    *
    * @param cameraOptions Camera options values to animate
    */
-  fun getFlyTo(cameraOptions: CameraOptions): Array<CameraAnimator<*>> {
+  @JvmOverloads
+  fun getFlyTo(cameraOptions: CameraOptions, owner: String? = null): Array<CameraAnimator<*>> {
 
     val currentCameraState = mapCameraManagerDelegate.cameraState
 
@@ -371,14 +421,22 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
           startValue(startPointRaw)
         },
         block = defaultAnimationParameters[CameraAnimatorType.CENTER]
-      ),
+      ).apply {
+        owner?.let { customOwner ->
+          this.owner = customOwner
+        }
+      },
       CameraBearingAnimator(
         options = cameraAnimatorOptions(endBearing) {
           startValue(startBearing)
         },
         useShortestPath = true,
         block = defaultAnimationParameters[CameraAnimatorType.BEARING]
-      ),
+      ).apply {
+        owner?.let { customOwner ->
+          this.owner = customOwner
+        }
+      },
       CameraZoomAnimator(
         evaluator = { fraction, _, _ ->
           // s: The distance traveled along the flight path, measured in
@@ -390,7 +448,11 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
           startValue(startZoom)
         },
         block = defaultAnimationParameters[CameraAnimatorType.ZOOM]
-      )
+      ).apply {
+        owner?.let { customOwner ->
+          this.owner = customOwner
+        }
+      }
     )
 
     animators.add(
@@ -399,7 +461,11 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
           startValue(currentCameraState.pitch)
         },
         block = defaultAnimationParameters[CameraAnimatorType.PITCH]
-      )
+      ).apply {
+        owner?.let { customOwner ->
+          this.owner = customOwner
+        }
+      }
     )
 
     animators.add(
@@ -408,7 +474,11 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
           startValue(currentCameraState.padding)
         },
         block = defaultAnimationParameters[CameraAnimatorType.PADDING]
-      )
+      ).apply {
+        owner?.let { customOwner ->
+          this.owner = customOwner
+        }
+      }
     )
 
     return animators.toTypedArray()
