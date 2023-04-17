@@ -1875,6 +1875,23 @@ class ExpressionTest : BaseStyleTest() {
   }
 
   /**
+   * Test constructing an match Expression from raw string.
+   */
+  @Test
+  @UiThreadTest
+  fun rawMatchExpressionTest() {
+    val expressionString = """
+      ["match",["get","data_property"],[0,1],true,false]
+    """.trimIndent()
+    val expression = Expression.fromRaw(expressionString)
+    val layer = symbolLayer("id", "source") {
+      filter(expression)
+    }
+    setupLayer(layer)
+    assertEquals(expressionString, layer.filter!!.toJson())
+  }
+
+  /**
    * Returns the shortest distance in meters between the evaluated feature and the input geometry. The input value can be a valid GeoJSON of type Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon, Feature, or FeatureCollection. Distance values returned may vary in precision due to loss in precision from encoding geometries, particularly below zoom level 13.
    */
   @Test
