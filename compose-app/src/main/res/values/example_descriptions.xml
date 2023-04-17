@@ -6,5 +6,7 @@
     <string name="description_point_annotation_cluster">Add PointAnnotation cluster on the Map</string>
     <string name="description_polygon_annotation">Add PolygonAnnotation on the Map</string>
     <string name="description_polyline_annotation">Add PolylineAnnotation on the Map</string>
-    <string name="description_view_annotation">Use variations of debug modes of the Map</string>
+    <string name="description_view_annotation">Add ViewAnnotation on the Map</string>
+    <string name="description_camera_animation">Use camera animations</string>
+    <string name="description_advanced_camera_animation">Use advanced camera animations</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.mapbox.maps.extension.compose.internal
+package com.mapbox.maps.extension.compose.annotation
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Text

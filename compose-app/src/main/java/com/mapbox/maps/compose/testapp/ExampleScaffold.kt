@@ -19,6 +19,8 @@ import androidx.compose.ui.platform.LocalContext
 @Composable
 public fun ExampleScaffold(
   modifier: Modifier = Modifier,
+  floatingActionButton: @Composable () -> Unit = {},
+  floatingActionButtonPosition: FabPosition = FabPosition.End,
   content: @Composable (PaddingValues) -> Unit
 ) {
   val activity = LocalContext.current as? Activity
@@ -30,6 +32,8 @@ public fun ExampleScaffold(
   }
   Scaffold(
     modifier = modifier,
+    floatingActionButton = floatingActionButton,
+    floatingActionButtonPosition = floatingActionButtonPosition,
     topBar = {
       TopAppBar(
         title = {

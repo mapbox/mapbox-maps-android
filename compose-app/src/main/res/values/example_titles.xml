@@ -7,4 +7,6 @@
     <string name="activity_polygon_annotation">Polygon Annotation</string>
     <string name="activity_polyline_annotation">Polyline Annotation</string>
     <string name="activity_view_annotation">View annotation</string>
+    <string name="activity_camera_animation">Camera animation</string>
+    <string name="activity_advanced_camera_animation">Advanced camera animation</string>
 </resources>

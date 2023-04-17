@@ -1,4 +1,4 @@
-package com.mapbox.maps.extension.compose.internal
+package com.mapbox.maps.extension.compose.annotation
 
 import android.view.View
 import android.widget.FrameLayout
@@ -13,6 +13,8 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import com.mapbox.maps.ViewAnnotationOptions
 import com.mapbox.maps.extension.compose.MapboxMapComposable
+import com.mapbox.maps.extension.compose.internal.MapApplier
+import com.mapbox.maps.extension.compose.internal.MapNode
 import com.mapbox.maps.viewannotation.OnViewAnnotationUpdatedListener
 import com.mapbox.maps.viewannotation.ViewAnnotationManager
 
@@ -68,7 +70,7 @@ public fun ViewAnnotation(
   ComposeNode<ViewAnnotationNode, MapApplier>(
     factory = {
       val viewAnnotationManager =
-        mapApplier?.mapView?.viewAnnotationManager ?: error("Error adding circle annotation")
+        mapApplier?.mapView?.viewAnnotationManager ?: error("Error adding view annotation")
 
       val composeView = ComposeView(mapApplier.mapView.context).apply {
         layoutParams = FrameLayout.LayoutParams(

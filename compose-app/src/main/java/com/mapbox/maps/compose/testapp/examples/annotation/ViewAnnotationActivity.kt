@@ -1,4 +1,4 @@
-package com.mapbox.maps.compose.testapp.examples.basic
+package com.mapbox.maps.compose.testapp.examples.annotation
 
 import android.os.Bundle
 import android.widget.Toast
@@ -22,7 +22,7 @@ import com.mapbox.maps.compose.testapp.examples.utils.CityLocations.HELSINKI
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
 import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.extension.compose.MapboxMap
-import com.mapbox.maps.extension.compose.internal.ViewAnnotation
+import com.mapbox.maps.extension.compose.annotation.ViewAnnotation
 import com.mapbox.maps.viewannotation.viewAnnotationOptions
 import java.util.*
 
