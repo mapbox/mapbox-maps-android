@@ -632,5 +632,15 @@ class TypeUtilsTest {
     assertEquals(Value.valueOf(featureString), actual)
   }
 
+  @Test
+  fun unwrapRawExpression() {
+    val expressionString = """
+      ["match",["get","data_property"],[0],true,false]
+    """.trimIndent()
+    val value = Value.fromJson(expressionString)
+    val expression = value.value!!.unwrapToExpression()
+    assertEquals(expressionString, expression.toJson())
+  }
+
   internal data class MockData(val a: Int, val b: String)
 }

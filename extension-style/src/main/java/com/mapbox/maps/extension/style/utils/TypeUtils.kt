@@ -232,7 +232,7 @@ fun Value.unwrapToExpression(): Expression {
     is List<*> -> {
       @Suppress("UNCHECKED_CAST")
       val listValue = input as List<Value>
-      val operator = listValue.first().contents as String
+      val operator = listValue.first().contents as? String ?: return Expression(input)
       if ("literal" == operator) {
         when (val literalValue = listValue.last().contents) {
           is List<*> -> {
