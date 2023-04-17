@@ -154,7 +154,7 @@ object Versions {
   // Use kotlinCoroutines to 1.6.1 to be compatible with platform runtime.
   const val kotlinCoroutines = "1.6.1"
   const val junit = "4.13.2"
-  const val mockk = "1.13.4"
+  const val mockk = "1.13.5"
   const val robolectric = "4.9.2"
   const val robolectricEgl = "gl1.1-android-2.1_r1"
   const val lint = "30.4.2"
