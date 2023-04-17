@@ -30,9 +30,19 @@ class LayerSourceProviderTest {
     val locationPuck3D = LocationPuck3D(modelUri = "testurl")
     val modelSource = layerSourceProvider.getModelSource(locationPuck3D)
     assertEquals(MODEL_SOURCE, modelSource.sourceId)
+
     assertEquals(
-      "{models={defaultModel={orientation=[0.0, 0.0, 0.0], position=[0.0, 0.0], uri=testurl}}, type=model}",
-      modelSource.toValue().toString()
+      mapOf(
+        "models" to mapOf(
+          "defaultModel" to mapOf(
+            "orientation" to listOf(0.0, 0.0, 0.0),
+            "position" to listOf(0.0, 0.0),
+            "uri" to "testurl"
+          )
+        ),
+        "type" to "model",
+      ).toValue(),
+      modelSource.toValue(),
     )
   }
 
@@ -45,9 +55,21 @@ class LayerSourceProviderTest {
     )
     val modelLayer = layerSourceProvider.getModelLayer(locationPuck3D)
     assertEquals(MODEL_LAYER, modelLayer.layerId)
+
     assertEquals(
-      "{model-type=location-indicator, model-rotation=[3.0, 2.0, 1.0], id=mapbox-location-model-layer, source=mapbox-location-model-source, type=model, model-opacity=1.0, model-scale=[1.0, 2.0, 3.0], model-translation=[0.0, 0.0, 0.0]}",
-      modelLayer.toValue().toString()
+      hashMapOf(
+        "model-type" to "location-indicator",
+        "model-rotation" to listOf(3.0, 2.0, 1.0),
+        "id" to "mapbox-location-model-layer",
+        "source" to "mapbox-location-model-source",
+        "type" to "model",
+        "model-opacity" to 1.0,
+        "model-scale" to listOf(1.0, 2.0, 3.0),
+        "model-translation" to listOf(0.0, 0.0, 0.0),
+        "model-scale-transition" to hashMapOf("duration" to 0, "delay" to 0),
+        "model-rotation-transition" to hashMapOf("duration" to 0, "delay" to 0),
+      ).toValue(),
+      modelLayer.toValue()
     )
   }
 
@@ -60,7 +82,8 @@ class LayerSourceProviderTest {
   @Test
   fun testGetLocationIndicatorLayerRenderer() {
     val locationPuck2D = LocationPuck2D()
-    val locationIndicatorLayerRenderer = layerSourceProvider.getLocationIndicatorLayerRenderer(locationPuck2D)
+    val locationIndicatorLayerRenderer =
+      layerSourceProvider.getLocationIndicatorLayerRenderer(locationPuck2D)
     assertNotNull(locationIndicatorLayerRenderer)
   }
 
