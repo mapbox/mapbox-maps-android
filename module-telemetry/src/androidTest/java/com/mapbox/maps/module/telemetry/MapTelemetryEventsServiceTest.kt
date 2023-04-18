@@ -26,7 +26,7 @@ class MapTelemetryEventsServiceTest {
     eventsService = EventsService.getOrCreate(options)
     val telemetryService = TelemetryService.getOrCreate(options)
 
-    telemetry = MapTelemetryImpl(context, "sk.foobar", eventsService, telemetryService)
+    telemetry = MapTelemetryImpl(context, "sk.foobar", eventsService, telemetryService, options)
   }
 
   @Test
