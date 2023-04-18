@@ -6,13 +6,7 @@ import com.mapbox.bindgen.Value
 import com.mapbox.maps.StyleManagerInterface
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.logW
-import io.mockk.Runs
-import io.mockk.every
-import io.mockk.just
-import io.mockk.mockk
-import io.mockk.mockkStatic
-import io.mockk.unmockkStatic
-import io.mockk.verify
+import io.mockk.*
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -52,8 +46,21 @@ class ModelLayerWrapperTest {
 
   @Test
   fun testInitialProperties() {
-    val value = layer.toValue()
-    assertEquals("{model-type=location-indicator, model-rotation=[8.0], id=modelLayerId, source=modelSourceId, type=model, model-opacity=1.0, model-scale=[6.0], model-translation=[0.0]}", value.toString())
+    assertEquals(
+      hashMapOf(
+        "model-type" to "location-indicator",
+        "model-rotation" to INITIAL_ROTATION,
+        "model-scale" to INITIAL_SCALE,
+        "model-translation" to INITIAL_TRANSLATION,
+        "model-opacity" to INITIAL_OPACITY,
+        "id" to MODEL_LAYER_ID,
+        "source" to MODEL_SOURCE_ID,
+        "type" to "model",
+        "model-scale-transition" to hashMapOf("duration" to 0, "delay" to 0),
+        "model-rotation-transition" to hashMapOf("duration" to 0, "delay" to 0),
+      ).toValue(),
+      layer.toValue(),
+    )
   }
 
   @Test
@@ -67,14 +74,26 @@ class ModelLayerWrapperTest {
   fun testRotation() {
     val rotation = arrayListOf(1.0, 2.0)
     layer.modelRotation(rotation)
-    verify { style.setStyleLayerProperty(MODEL_LAYER_ID, "model-rotation", Value(rotation.map(::Value))) }
+    verify {
+      style.setStyleLayerProperty(
+        MODEL_LAYER_ID,
+        "model-rotation",
+        Value(rotation.map(::Value))
+      )
+    }
   }
 
   @Test
   fun testTranslation() {
     val translation = arrayListOf(1.0, 2.0)
     layer.modelTranslation(translation)
-    verify { style.setStyleLayerProperty(MODEL_LAYER_ID, "model-translation", Value(translation.map(::Value))) }
+    verify {
+      style.setStyleLayerProperty(
+        MODEL_LAYER_ID,
+        "model-translation",
+        Value(translation.map(::Value))
+      )
+    }
   }
 
   @Test
@@ -82,7 +101,13 @@ class ModelLayerWrapperTest {
     every { style.styleLayerExists(any()) } returns false
     val scale = arrayListOf(1.0, 2.0)
     layer.modelScale(scale)
-    verify(exactly = 0) { style.setStyleLayerProperty(MODEL_LAYER_ID, "model-scale", Value(scale.map(::Value))) }
+    verify(exactly = 0) {
+      style.setStyleLayerProperty(
+        MODEL_LAYER_ID,
+        "model-scale",
+        Value(scale.map(::Value))
+      )
+    }
   }
 
   @Test
@@ -93,8 +118,20 @@ class ModelLayerWrapperTest {
     layer.updateStyle(newStyle)
     val scale = listOf(1.0, 2.0, 3.0)
     layer.modelScale(scale)
-    verify(exactly = 0) { style.setStyleLayerProperty(MODEL_LAYER_ID, "model-scale", Value(scale.map(::Value))) }
-    verify(exactly = 1) { newStyle.setStyleLayerProperty(MODEL_LAYER_ID, "model-scale", Value(scale.map(::Value))) }
+    verify(exactly = 0) {
+      style.setStyleLayerProperty(
+        MODEL_LAYER_ID,
+        "model-scale",
+        Value(scale.map(::Value))
+      )
+    }
+    verify(exactly = 1) {
+      newStyle.setStyleLayerProperty(
+        MODEL_LAYER_ID,
+        "model-scale",
+        Value(scale.map(::Value))
+      )
+    }
   }
 
   @Test

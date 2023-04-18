@@ -40,6 +40,23 @@ Mapbox welcomes participation and contributions from everyone.
 * Introduce custom lint rules to check illegal usage of literals in Expression DSL and suggest auto fix.
 * Introduce custom lint rules to check illegal number of arguments within given Expression DSL.
 * Introduce custom lint rules to check unused layer/source/light/terrain/atmosphere/projection objects in the Style DSL, and suggest auto fix to add it to the style using unaryPlus(+) operator.
+* Add overloaded methods to `CameraAnimatorsFactory` allowing to set camera animator owner.
+
+## Bug fixes 🐞
+* Fix 3d location layer properties `model-scale-transition` and `model-rotation-transition`, made them non-transitionable.
+
+
+# 10.13.0-beta.1 April 05, 2023
+## Features ✨ and improvements 🏁
+* Deprecate `Snapshotter.setTileMode` and `Snapshotter.isInTileMode`.
+* Deprecate `Style.setStyleGeoJSONSourceData(sourceId, data)`.
+* Use flat screen coordinate conversion functions with zero exaggeration terrain.
+* Share similar image and glyph atlases across tiles and thus avoid unnecessary textures creation.
+* Render single color gradient as solid line.
+
+## Bug fixes 🐞
+* Fix the crash when identifying if device is connected to WiFi.
+* Fix a crash when a hillshade bucket was created with disabled terrain, but the terrain got enabled afterwards.
 
 ## Dependencies
 * Update dependencies.
