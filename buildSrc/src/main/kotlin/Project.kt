@@ -169,7 +169,7 @@ object Versions {
   const val pluginPlayPublisher = "3.7.0"
   const val gradleVersionsPlugin = "0.42.0"
   const val ksp = "1.0.9"
-  const val kotlinDataCompat = "0.5.2"
+  const val kotlinDataCompat = "0.6.0"
 }
 
 /**

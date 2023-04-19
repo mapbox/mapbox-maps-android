@@ -17,7 +17,6 @@ import com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions
 import com.mapbox.maps.plugin.viewport.data.ViewportOptions
 import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning
-import org.junit.Ignore
 import org.junit.Test
 
 class EqualsHashCodeTest {
@@ -96,7 +95,6 @@ class EqualsHashCodeTest {
       .verify()
   }
 
-  @Ignore("https://mapbox.atlassian.net/browse/MAPSAND-956")
   @Test
   fun `AttributionSettings hashCode and equals test`() {
     EqualsVerifier.forClass(AttributionSettings::class.java)
@@ -104,7 +102,6 @@ class EqualsHashCodeTest {
       .verify()
   }
 
-  @Ignore("https://mapbox.atlassian.net/browse/MAPSAND-956")
   @Test
   fun `CompassSettings hashCode and equals test`() {
     EqualsVerifier.forClass(CompassSettings::class.java)
@@ -112,7 +109,6 @@ class EqualsHashCodeTest {
       .verify()
   }
 
-  @Ignore("https://mapbox.atlassian.net/browse/MAPSAND-956")
   @Test
   fun `GesturesSettings hashCode and equals test`() {
     EqualsVerifier.forClass(GesturesSettings::class.java)
@@ -120,7 +116,6 @@ class EqualsHashCodeTest {
       .verify()
   }
 
-  @Ignore("https://mapbox.atlassian.net/browse/MAPSAND-956")
   @Test
   fun `LocationComponentSettings hashCode and equals test`() {
     EqualsVerifier.forClass(LocationComponentSettings::class.java)
@@ -128,7 +123,6 @@ class EqualsHashCodeTest {
       .verify()
   }
 
-  @Ignore("https://mapbox.atlassian.net/browse/MAPSAND-956")
   @Test
   fun `LogoSettings hashCode and equals test`() {
     EqualsVerifier.forClass(LogoSettings::class.java)
@@ -136,7 +130,6 @@ class EqualsHashCodeTest {
       .verify()
   }
 
-  @Ignore("https://mapbox.atlassian.net/browse/MAPSAND-956")
   @Test
   fun `ScaleBarSettings hashCode and equals test`() {
     EqualsVerifier.forClass(ScaleBarSettings::class.java)

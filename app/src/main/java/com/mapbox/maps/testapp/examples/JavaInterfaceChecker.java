@@ -158,8 +158,7 @@ public class JavaInterfaceChecker {
   }
 
   private void locationComponentSettings(LocationPuck locationPuck) {
-    LocationComponentSettings locationComponentSettings = new LocationComponentSettings.Builder()
-            .setLocationPuck(locationPuck)
+    LocationComponentSettings locationComponentSettings = new LocationComponentSettings.Builder(locationPuck)
             .setEnabled(true)
             .setPulsingColor(Color.BLACK)
             .setPulsingMaxRadius(1f)

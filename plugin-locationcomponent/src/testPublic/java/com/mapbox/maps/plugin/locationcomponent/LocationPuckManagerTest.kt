@@ -433,8 +433,7 @@ class LocationPuckManagerTest {
   fun testDisablePuckBearingSnapsToNorth() {
     val lastBearing = 180.0
     val newBearing = 90.0
-    val settings = LocationComponentSettings {
-      locationPuck = LocationPuck2D()
+    val settings = LocationComponentSettings(LocationPuck2D()) {
       puckBearingEnabled = false
     }
     val bearings = mutableListOf<Double>()

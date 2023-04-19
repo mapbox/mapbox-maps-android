@@ -94,9 +94,8 @@ class LocationComponentPluginImplTest {
         attrs,
         1f
       )
-    } returns LocationComponentSettings {
+    } returns LocationComponentSettings(LocationPuck2D()) {
       enabled = true
-      locationPuck = LocationPuck2D()
     }
 
     every { delegateProvider.getStyle(capture(styleCallbackSlot)) } returns Unit
@@ -116,9 +115,8 @@ class LocationComponentPluginImplTest {
         attrs,
         1f
       )
-    } returns LocationComponentSettings {
+    } returns LocationComponentSettings(LocationPuck2D()) {
       enabled = false
-      locationPuck = LocationPuck2D()
     }
 
     every { delegateProvider.getStyle(capture(styleCallbackSlot)) } returns Unit
@@ -138,9 +136,8 @@ class LocationComponentPluginImplTest {
         attrs,
         1f
       )
-    } returns LocationComponentSettings {
+    } returns LocationComponentSettings(LocationPuck2D()) {
       enabled = false
-      locationPuck = LocationPuck2D()
     }
     locationComponentPlugin.bind(context, attrs, 1f)
     assertNull(locationComponentPlugin.getLocationProvider())
@@ -154,9 +151,8 @@ class LocationComponentPluginImplTest {
         attrs,
         1.0f
       )
-    } returns LocationComponentSettings {
+    } returns LocationComponentSettings(LocationPuck2D()) {
       enabled = true
-      locationPuck = LocationPuck2D()
     }
     locationComponentPlugin.bind(context, attrs, 1.0f)
     assertNotNull(locationComponentPlugin.getLocationProvider())

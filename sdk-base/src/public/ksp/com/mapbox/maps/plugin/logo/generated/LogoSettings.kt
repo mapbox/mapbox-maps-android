@@ -1,3 +1,5 @@
+@file:Suppress("RedundantVisibilityModifier")
+
 package com.mapbox.maps.plugin.logo.generated
 
 import android.os.Parcelable
@@ -17,35 +19,29 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 public class LogoSettings private constructor(
   /**
-   * Enabled
    * Whether the logo is visible on the map.
    */
   public val enabled: Boolean,
   /**
-   * Position
    * Defines where the logo is positioned on the map
    */
   public val position: Int,
   /**
-   * MarginLeft
    * Defines the margin to the left that the attribution icon honors. This property is specified in
    * pixels.
    */
   public val marginLeft: Float,
   /**
-   * MarginTop
    * Defines the margin to the top that the attribution icon honors. This property is specified in
    * pixels.
    */
   public val marginTop: Float,
   /**
-   * MarginRight
    * Defines the margin to the right that the attribution icon honors. This property is specified in
    * pixels.
    */
   public val marginRight: Float,
   /**
-   * MarginBottom
    * Defines the margin to the bottom that the attribution icon honors. This property is specified
    * in pixels.
    */
@@ -66,8 +62,9 @@ public class LogoSettings private constructor(
     if (javaClass != other?.javaClass) return false
     other as LogoSettings
     return enabled == other.enabled && position == other.position &&
-        marginLeft == other.marginLeft && marginTop == other.marginTop &&
-        marginRight == other.marginRight && marginBottom == other.marginBottom
+        marginLeft.compareTo(other.marginLeft) == 0 && marginTop.compareTo(other.marginTop) == 0 &&
+        marginRight.compareTo(other.marginRight) == 0 &&
+        marginBottom.compareTo(other.marginBottom) == 0
   }
 
   /**
@@ -90,123 +87,111 @@ public class LogoSettings private constructor(
    */
   public class Builder {
     /**
-     * Enabled
      * Whether the logo is visible on the map.
      */
     @set:JvmSynthetic
-    public var enabled: Boolean? = true
+    public var enabled: Boolean = true
 
     /**
-     * Position
      * Defines where the logo is positioned on the map
      */
     @set:JvmSynthetic
-    public var position: Int? = Gravity.BOTTOM or Gravity.START
+    public var position: Int = Gravity.BOTTOM or Gravity.START
 
     /**
-     * MarginLeft
      * Defines the margin to the left that the attribution icon honors. This property is specified
      * in pixels.
      */
     @set:JvmSynthetic
-    public var marginLeft: Float? = 4f
+    public var marginLeft: Float = 4f
 
     /**
-     * MarginTop
      * Defines the margin to the top that the attribution icon honors. This property is specified in
      * pixels.
      */
     @set:JvmSynthetic
-    public var marginTop: Float? = 4f
+    public var marginTop: Float = 4f
 
     /**
-     * MarginRight
      * Defines the margin to the right that the attribution icon honors. This property is specified
      * in pixels.
      */
     @set:JvmSynthetic
-    public var marginRight: Float? = 4f
+    public var marginRight: Float = 4f
 
     /**
-     * MarginBottom
      * Defines the margin to the bottom that the attribution icon honors. This property is specified
      * in pixels.
      */
     @set:JvmSynthetic
-    public var marginBottom: Float? = 4f
+    public var marginBottom: Float = 4f
 
     /**
-     * Set enabled
-     * Whether the logo is visible on the map.
+     * Setter for enabled: whether the logo is visible on the map.
      *
-     * @param enabled enabled
+     * @param enabled
      * @return Builder
      */
-    public fun setEnabled(enabled: Boolean?): Builder {
+    public fun setEnabled(enabled: Boolean): Builder {
       this.enabled = enabled
       return this
     }
 
     /**
-     * Set position
-     * Defines where the logo is positioned on the map
+     * Setter for position: defines where the logo is positioned on the map.
      *
-     * @param position position
+     * @param position
      * @return Builder
      */
-    public fun setPosition(position: Int?): Builder {
+    public fun setPosition(position: Int): Builder {
       this.position = position
       return this
     }
 
     /**
-     * Set marginLeft
-     * Defines the margin to the left that the attribution icon honors. This property is specified
-     * in pixels.
+     * Setter for marginLeft: defines the margin to the left that the attribution icon honors. This
+     * property is specified in pixels.
      *
-     * @param marginLeft marginLeft
+     * @param marginLeft
      * @return Builder
      */
-    public fun setMarginLeft(marginLeft: Float?): Builder {
+    public fun setMarginLeft(marginLeft: Float): Builder {
       this.marginLeft = marginLeft
       return this
     }
 
     /**
-     * Set marginTop
-     * Defines the margin to the top that the attribution icon honors. This property is specified in
-     * pixels.
+     * Setter for marginTop: defines the margin to the top that the attribution icon honors. This
+     * property is specified in pixels.
      *
-     * @param marginTop marginTop
+     * @param marginTop
      * @return Builder
      */
-    public fun setMarginTop(marginTop: Float?): Builder {
+    public fun setMarginTop(marginTop: Float): Builder {
       this.marginTop = marginTop
       return this
     }
 
     /**
-     * Set marginRight
-     * Defines the margin to the right that the attribution icon honors. This property is specified
-     * in pixels.
+     * Setter for marginRight: defines the margin to the right that the attribution icon honors.
+     * This property is specified in pixels.
      *
-     * @param marginRight marginRight
+     * @param marginRight
      * @return Builder
      */
-    public fun setMarginRight(marginRight: Float?): Builder {
+    public fun setMarginRight(marginRight: Float): Builder {
       this.marginRight = marginRight
       return this
     }
 
     /**
-     * Set marginBottom
-     * Defines the margin to the bottom that the attribution icon honors. This property is specified
-     * in pixels.
+     * Setter for marginBottom: defines the margin to the bottom that the attribution icon honors.
+     * This property is specified in pixels.
      *
-     * @param marginBottom marginBottom
+     * @param marginBottom
      * @return Builder
      */
-    public fun setMarginBottom(marginBottom: Float?): Builder {
+    public fun setMarginBottom(marginBottom: Float): Builder {
       this.marginBottom = marginBottom
       return this
     }
@@ -214,38 +199,10 @@ public class LogoSettings private constructor(
     /**
      * Returns a [LogoSettings] reference to the object being constructed by the builder.
      *
-     * Throws an [IllegalArgumentException] when a non-null property wasn't initialised.
-     *
      * @return LogoSettings
      */
-    public fun build(): LogoSettings {
-      if (enabled==null) {
-      	throw IllegalArgumentException("""Null enabled found when building
-          LogoSettings.""".trimIndent())
-      }
-      if (position==null) {
-      	throw IllegalArgumentException("""Null position found when building
-          LogoSettings.""".trimIndent())
-      }
-      if (marginLeft==null) {
-      	throw IllegalArgumentException("""Null marginLeft found when building
-          LogoSettings.""".trimIndent())
-      }
-      if (marginTop==null) {
-      	throw IllegalArgumentException("""Null marginTop found when building
-          LogoSettings.""".trimIndent())
-      }
-      if (marginRight==null) {
-      	throw IllegalArgumentException("""Null marginRight found when building
-          LogoSettings.""".trimIndent())
-      }
-      if (marginBottom==null) {
-      	throw IllegalArgumentException("""Null marginBottom found when building
-          LogoSettings.""".trimIndent())
-      }
-      return LogoSettings(enabled!!, position!!, marginLeft!!, marginTop!!, marginRight!!,
-          marginBottom!!)
-    }
+    public fun build(): LogoSettings = LogoSettings(enabled, position, marginLeft, marginTop,
+        marginRight, marginBottom)
   }
 }
 
