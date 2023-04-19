@@ -249,6 +249,14 @@ internal class NativeMapImpl(val map: MapInterface) :
     return map.coordinateForPixel(screenCoordinate)
   }
 
+  override fun coordinateInfoForPixel(pixel: ScreenCoordinate): CoordinateInfo {
+    return map.coordinateInfoForPixel(pixel)
+  }
+
+  override fun coordinatesInfoForPixels(pixels: List<ScreenCoordinate>): List<CoordinateInfo> {
+    return map.coordinatesInfoForPixels(pixels)
+  }
+
   override fun getDebug(): List<MapDebugOptions> {
     return map.debug
   }

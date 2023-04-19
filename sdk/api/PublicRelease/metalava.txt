@@ -181,7 +181,9 @@ package com.mapbox.maps {
     method public com.mapbox.maps.CoordinateBoundsZoom coordinateBoundsZoomForCameraUnwrapped(com.mapbox.maps.CameraOptions camera);
     method public com.mapbox.geojson.Point coordinateForPixel(com.mapbox.maps.ScreenCoordinate pixel);
     method public com.mapbox.geojson.Point coordinateForProjectedMeters(com.mapbox.maps.ProjectedMeters projectedMeters);
+    method public com.mapbox.maps.CoordinateInfo coordinateInfoForPixel(com.mapbox.maps.ScreenCoordinate pixel);
     method public java.util.List<com.mapbox.geojson.Point> coordinatesForPixels(java.util.List<com.mapbox.maps.ScreenCoordinate> pixels);
+    method public java.util.List<com.mapbox.maps.CoordinateInfo> coordinatesInfoForPixels(java.util.List<com.mapbox.maps.ScreenCoordinate> pixels);
     method public void dragEnd();
     method public void dragStart(com.mapbox.maps.ScreenCoordinate point);
     method public void executeOnRenderThread(Runnable runnable);

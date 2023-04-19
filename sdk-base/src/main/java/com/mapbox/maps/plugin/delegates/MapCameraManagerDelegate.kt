@@ -184,6 +184,21 @@ interface MapCameraManagerDelegate {
   fun coordinateForPixel(pixel: ScreenCoordinate): Point
 
   /**
+   * Calculates the geographical coordinate information that corresponds to a given screen coordinate.
+   *
+   * The screen coordinate is in platform pixels, relative to the top left corner of the map (not the whole screen).
+   *
+   * The returned coordinate will be the closest position projected onto the map surface,
+   * in case the screen coordinate does not intersect with the map surface.
+   *
+   * @param pixel The screen coordinate on the map, in platform pixels.
+   *
+   * @return A [CoordinateInfo] record containing information about the geographical coordinate corresponding to the given screen coordinate, including whether it is on the map surface.
+   *
+   */
+  fun coordinateInfoForPixel(pixel: ScreenCoordinate): CoordinateInfo
+
+  /**
    * Calculates screen coordinates that corresponds to geographical coordinates
    * (i.e., longitude-latitude pair).
    *
@@ -213,6 +228,21 @@ interface MapCameraManagerDelegate {
    * on the screen.
    */
   fun coordinatesForPixels(pixels: List<ScreenCoordinate>): List<Point>
+
+  /**
+   * Calculates the geographical coordinates information that corresponds to the given screen coordinates.
+   *
+   * The screen coordinates are in platform pixels, relative to the top left corner of the map (not the whole screen).
+   *
+   * The returned coordinate will be the closest position projected onto the map surface,
+   * in case the screen coordinate does not intersect with the map surface.
+   *
+   * @param pixels The screen coordinates on the map, in platform pixels.
+   *
+   * @return The [CoordinateInfo] records containing information about the geographical coordinates corresponding to the given screen coordinates, including whether they are on the map surface.
+   *
+   */
+  fun coordinatesInfoForPixels(pixels: List<ScreenCoordinate>): List<CoordinateInfo>
 
   /**
    * Changes the map view by any combination of center, zoom, bearing, and pitch, without an animated transition.

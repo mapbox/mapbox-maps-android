@@ -567,6 +567,22 @@ class NativeMapTest {
   }
 
   @Test
+  fun coordinateInfoForPixel() {
+    val value = mockk<ScreenCoordinate>()
+    val nativeMap = NativeMapImpl(map)
+    nativeMap.coordinateInfoForPixel(value)
+    verify { map.coordinateInfoForPixel(value) }
+  }
+
+  @Test
+  fun coordinatesInfoForPixel() {
+    val value = mockk<List<ScreenCoordinate>>()
+    val nativeMap = NativeMapImpl(map)
+    nativeMap.coordinatesInfoForPixels(value)
+    verify { map.coordinatesInfoForPixels(value) }
+  }
+
+  @Test
   fun pixelsForCoordinates() {
     val value = mockk<MutableList<Point>>()
     val nativeMap = NativeMapImpl(map)

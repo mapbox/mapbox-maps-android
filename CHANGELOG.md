@@ -7,10 +7,16 @@ Mapbox welcomes participation and contributions from everyone.
 # 10.13.0-rc.1
 ## Features ✨ and improvements 🏁
 * Add overloaded methods to `CameraAnimatorsFactory` allowing to set camera animator owner.
+* Improve startup performance by calculating the style expressions dependencies lazily.
+* Introduce a new APIs `coordinateInfoForPixel(pixel: ScreenCoordinate): CoordinateInfo` and `coordinatesInfoForPixels(pixels: List<ScreenCoordinate>): List<CoordinateInfo>` which will return record(s) containing both `coordinate` and `isOnSurface` info.
 
 ## Bug fixes 🐞
 * Fix 3d location layer properties `model-scale-transition` and `model-rotation-transition`, made them non-transitionable.
 * Fix raw expression parsing for list literal.
+* Fix text flickering while symbol layer update if `text-field` contains `text-color` property inside the format expression.
+
+## Dependencies
+* Update gl-native to v10.13.0-rc.1 and common to v23.5.0-rc.1.
 
 
 # 10.13.0-beta.1 April 05, 2023
