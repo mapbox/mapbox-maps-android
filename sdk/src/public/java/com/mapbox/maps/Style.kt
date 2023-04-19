@@ -8,7 +8,6 @@ import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
 import com.mapbox.maps.extension.style.StyleInterface
-import java.nio.ByteBuffer
 
 /**
  * The general class to interact with Styles in the Modular Mapbox Maps SDK for Android.
@@ -651,11 +650,9 @@ class Style internal constructor(
     bitmap: Bitmap,
     sdf: Boolean
   ): Expected<String, None> {
-    val byteBuffer = ByteBuffer.allocate(bitmap.byteCount)
-    bitmap.copyPixelsToBuffer(byteBuffer)
     return addImage(
       imageId,
-      Image(bitmap.width, bitmap.height, byteBuffer.array()),
+      bitmap.toMapboxImage(),
       sdf
     )
   }

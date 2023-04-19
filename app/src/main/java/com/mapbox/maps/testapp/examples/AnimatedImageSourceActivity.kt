@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
-import com.mapbox.maps.Image
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.layers.generated.rasterLayer
@@ -18,7 +17,6 @@ import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityAnimatedImagesourceBinding
 import com.mapbox.maps.testapp.utils.BitmapUtils.bitmapFromDrawableRes
-import java.nio.ByteBuffer
 
 /**
  * Load a raster image to a style using ImageSource and display it on a map as
@@ -79,9 +77,7 @@ class AnimatedImageSourceActivity : AppCompatActivity() {
 
     override fun run() {
       drawables[drawableIndex++]?.let { bitmap ->
-        val byteBuffer = ByteBuffer.allocate(bitmap.byteCount)
-        bitmap.copyPixelsToBuffer(byteBuffer)
-        imageSource.updateImage(Image(bitmap.width, bitmap.height, byteBuffer.array()))
+        imageSource.updateImage(bitmap)
         if (drawableIndex > 3) {
           drawableIndex = 0
         }

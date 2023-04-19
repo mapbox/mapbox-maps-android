@@ -20,6 +20,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Make `AttributionSettings`, `CompassSettings`, `GesturesSettings`, `LocationComponentSettings`, `LogoSettings`, `ScaleBarSettings` not Kotlin `data class`, better binary compatible and implementing `Parcelable`.
 * Change `CompassSettings#image`, `LocationPuck2D#topImage`, `LocationPuck2D#bearingImage`, `LocationPuck2D#shadowImage` to `ImageHolder` allowing to pass either drawable id or `Bitmap`.
 * Remove deprecated `backgroundPatternTransition`, `lineDasharrayTransition`, `linePatternTransition`, `fillPatternTransition` properties.
+* Replace `MapSnapshotInterface` interface with `MapSnapshotResult` abstract class and remove `image()` method, `bitmap()` should be used instead.
 * Update Mapbox styles to latest versions.
 
 | Style             | Before                                       | After                                        |
@@ -40,7 +41,8 @@ Mapbox welcomes participation and contributions from everyone.
 * Introduce custom lint rules to check illegal usage of literals in Expression DSL and suggest auto fix.
 * Introduce custom lint rules to check illegal number of arguments within given Expression DSL.
 * Introduce custom lint rules to check unused layer/source/light/terrain/atmosphere/projection objects in the Style DSL, and suggest auto fix to add it to the style using unaryPlus(+) operator.
-* Add overloaded methods to `CameraAnimatorsFactory` allowing to set camera animator owner.
+* Improve performance for `Snapshotter` when obtaining the bitmap.
+* Add `ImageSource.updateImage(Bitmap)` method.
 
 ## Bug fixes 🐞
 * Fix 3d location layer properties `model-scale-transition` and `model-rotation-transition`, made them non-transitionable.

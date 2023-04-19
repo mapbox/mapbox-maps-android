@@ -1,6 +1,7 @@
 package com.mapbox.maps.extension.style.image
 
 import android.graphics.Bitmap
+import com.mapbox.bindgen.DataRef
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.None
 import com.mapbox.maps.Image
@@ -24,17 +25,22 @@ class ImageNinePatchExtensionImplTest {
   private val imageContent = ImageContent(1f, 1f, 1f, 1f)
   private val stretchX = listOf(ImageStretches(1f, 1f))
   private val stretchY = listOf(ImageStretches(2f, 2f))
-  val image = Image(20, 20, byteArrayOf())
-  private val ninePatchImage = NinePatchImage(
-    image,
-    stretchX,
-    stretchY,
-    imageContent
-  )
+  private lateinit var image: Image
+  private lateinit var ninePatchImage: NinePatchImage
 
   @Before
   fun prepareTest() {
     mockkStatic("com.mapbox.maps.extension.style.image.NinePatchUtils")
+    mockkStatic(DataRef::class)
+    val nativeDataRef = mockk<DataRef>(relaxed = true)
+    every { DataRef.allocateNative(any()) } returns nativeDataRef
+    image = Image(20, 20, nativeDataRef)
+    ninePatchImage = NinePatchImage(
+      image,
+      stretchX,
+      stretchY,
+      imageContent
+    )
     every { style.pixelRatio } returns pixelRatio
     every { style.addStyleImage(any(), any(), any(), any(), any(), any(), any()) } returns expected
     every { expected.error } returns null

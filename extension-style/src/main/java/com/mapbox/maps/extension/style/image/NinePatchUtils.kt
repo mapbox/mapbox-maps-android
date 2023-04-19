@@ -4,10 +4,10 @@ package com.mapbox.maps.extension.style.image
 import android.graphics.Bitmap
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.None
-import com.mapbox.maps.Image
 import com.mapbox.maps.ImageContent
 import com.mapbox.maps.ImageStretches
 import com.mapbox.maps.extension.style.StyleInterface
+import com.mapbox.maps.toMapboxImage
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 
@@ -83,12 +83,8 @@ private fun decodeNinePatchChunk(bitmap: Bitmap): NinePatchImage {
     yCoordinates.add(buffer.int)
   }
 
-  val byteBuffer = ByteBuffer.allocate(bitmap.byteCount)
-  bitmap.copyPixelsToBuffer(byteBuffer)
-  val internalImage = Image(bitmap.width, bitmap.height, byteBuffer.array())
-
   return NinePatchImage(
-    internalImage = internalImage,
+    internalImage = bitmap.toMapboxImage(),
     stretchX = xCoordinates
       .map { it.toFloat() }
       .zipWithNext(::ImageStretches),

@@ -1,6 +1,7 @@
 package com.mapbox.maps
 
 import android.graphics.Bitmap
+import com.mapbox.bindgen.DataRef
 import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
@@ -84,21 +85,51 @@ class StyleTest {
   @Test
   fun addBitmap() {
     val bitmap: Bitmap = mockk(relaxed = true)
+    mockkStatic(DataRef::class)
+    val nativeDataRef = mockk<DataRef>(relaxed = true)
+    every { DataRef.allocateNative(any()) } returns nativeDataRef
+    every { bitmap.config } returns Bitmap.Config.ARGB_8888
     style.addImage("foobar", bitmap)
     verify { bitmap.height }
     verify { bitmap.width }
     verify { bitmap.byteCount }
-    verify { nativeMap.addStyleImage("foobar", 1.0f, any(), false, listOf(), listOf(), null) }
+    verify(exactly = 1) {
+      nativeMap.addStyleImage(
+        "foobar",
+        1.0f,
+        Image(bitmap.width, bitmap.height, nativeDataRef),
+        false,
+        listOf(),
+        listOf(),
+        null
+      )
+    }
+    unmockkStatic(DataRef::class)
   }
 
   @Test
   fun addBitmapSdf() {
     val bitmap: Bitmap = mockk(relaxed = true)
+    mockkStatic(DataRef::class)
+    val nativeDataRef = mockk<DataRef>(relaxed = true)
+    every { DataRef.allocateNative(any()) } returns nativeDataRef
+    every { bitmap.config } returns Bitmap.Config.ARGB_8888
     style.addImage("foobar", bitmap, true)
     verify { bitmap.height }
     verify { bitmap.width }
     verify { bitmap.byteCount }
-    verify { nativeMap.addStyleImage("foobar", 1.0f, any(), true, listOf(), listOf(), null) }
+    verify(exactly = 1) {
+      nativeMap.addStyleImage(
+        "foobar",
+        1.0f,
+        Image(bitmap.width, bitmap.height, nativeDataRef),
+        true,
+        listOf(),
+        listOf(),
+        null
+      )
+    }
+    unmockkStatic(DataRef::class)
   }
 
   @Test

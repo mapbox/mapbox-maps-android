@@ -27,6 +27,7 @@ import kotlin.math.min
 /**
  * [Snapshotter] is high-level component responsible for taking map snapshot with given [MapSnapshotOptions].
  */
+@OptIn(MapboxInternal::class)
 open class Snapshotter {
 
   private val context: WeakReference<Context>
@@ -63,7 +64,7 @@ open class Snapshotter {
           MapEvents.STYLE_DATA_LOADED -> if (event.getStyleDataLoadedEventData().type == StyleDataType.STYLE) {
             snapshotStyleCallback?.onDidFinishLoadingStyle(
               Style(
-                coreSnapshotter as StyleManagerInterface,
+                MapSnapshotterWrapper(coreSnapshotter),
                 pixelRatio
               )
             )
@@ -71,7 +72,7 @@ open class Snapshotter {
           MapEvents.STYLE_LOADED -> {
             snapshotStyleCallback?.onDidFullyLoadStyle(
               Style(
-                coreSnapshotter as StyleManagerInterface,
+                MapSnapshotterWrapper(coreSnapshotter),
                 pixelRatio
               )
             )
@@ -139,8 +140,43 @@ open class Snapshotter {
 
     coreSnapshotter.start { result ->
       if (result.isValue) {
-        result.value?.let {
-          snapshotCreatedCallback?.onSnapshotResult(addOverlay(Snapshot(it)) as MapSnapshotInterface)
+        result.value?.let { coreMapSnapshot ->
+          snapshotCreatedCallback?.onSnapshotResult(
+            addOverlay(
+              object : MapSnapshotResult() {
+
+                private var cachedBitmap: Bitmap? = null
+
+                override fun screenCoordinate(coordinate: Point): ScreenCoordinate {
+                  return coreMapSnapshot.screenCoordinate(coordinate)
+                }
+
+                override fun coordinate(screenCoordinate: ScreenCoordinate): Point {
+                  return coreMapSnapshot.coordinate(screenCoordinate)
+                }
+
+                override fun attributions(): List<String> {
+                  return coreMapSnapshot.attributions()
+                }
+
+                override fun bitmap(): Bitmap {
+                  cachedBitmap?.let {
+                    return it
+                  }
+                  coreMapSnapshot.moveImage()!!.let { coreImage ->
+                    return Bitmap.createBitmap(
+                      coreImage.width,
+                      coreImage.height,
+                      Bitmap.Config.ARGB_8888
+                    ).apply {
+                      copyPixelsFromBuffer(coreImage.data.buffer)
+                      cachedBitmap = this
+                    }
+                  }
+                }
+              }
+            )
+          )
         } ?: run {
           logE(TAG, result.error ?: "Snapshot is empty.")
           snapshotCreatedCallback?.onSnapshotResult(null)
@@ -322,7 +358,7 @@ open class Snapshotter {
   }
 
   private fun drawAttribution(
-    mapSnapshot: Snapshot,
+    mapSnapshot: MapSnapshotResult,
     canvas: Canvas,
     measure: AttributionMeasure,
     layout: AttributionLayout
@@ -332,7 +368,7 @@ open class Snapshotter {
     if (anchorPoint != null) {
       drawAttribution(canvas, measure, anchorPoint)
     } else {
-      val snapshot: Bitmap = mapSnapshot.bitmap
+      val snapshot: Bitmap = mapSnapshot.bitmap()
       logE(
         TAG,
         "Could not generate attribution for snapshot size: ${snapshot.width}x${snapshot.height}." +
@@ -348,16 +384,16 @@ open class Snapshotter {
     canvas.restore()
   }
 
-  private fun addOverlay(mapSnapshot: Snapshot): Snapshot {
+  private fun addOverlay(mapSnapshot: MapSnapshotResult): MapSnapshotResult {
     context.get()?.apply {
-      val canvas = Canvas(mapSnapshot.bitmap)
+      val canvas = Canvas(mapSnapshot.bitmap())
       val margin: Int = this.resources.displayMetrics.density.toInt() * 4
-      drawOverlay(mapSnapshot, mapSnapshot.bitmap, canvas, margin)
+      drawOverlay(mapSnapshot, mapSnapshot.bitmap(), canvas, margin)
     }
     return mapSnapshot
   }
 
-  private fun drawOverlay(mapSnapshot: Snapshot, snapshot: Bitmap, canvas: Canvas, margin: Int) {
+  private fun drawOverlay(mapSnapshot: MapSnapshotResult, snapshot: Bitmap, canvas: Canvas, margin: Int) {
     context.get()?.let {
       val measure: AttributionMeasure = getAttributionMeasure(it, mapSnapshot, snapshot, margin)
       val layout = measure.measure()
@@ -374,7 +410,7 @@ open class Snapshotter {
 
   private fun getAttributionMeasure(
     context: Context,
-    mapSnapshot: Snapshot,
+    mapSnapshot: MapSnapshotResult,
     snapshot: Bitmap,
     margin: Int
   ): AttributionMeasure {
@@ -391,7 +427,7 @@ open class Snapshotter {
 
   private fun createTextView(
     context: Context,
-    mapSnapshot: Snapshot,
+    mapSnapshot: MapSnapshotResult,
     shortText: Boolean,
     scale: Float
   ): TextView {
@@ -409,7 +445,7 @@ open class Snapshotter {
     )
     val attributionString = createAttributionString(mapSnapshot, shortText)
     if (attributionString.isNotEmpty()) {
-      textView.setSingleLine(true)
+      textView.isSingleLine = true
       textView.textSize = 10 * scale
       textView.setTextColor(textColor)
       textView.setBackgroundResource(R.drawable.mapbox_rounded_corner)
@@ -421,7 +457,7 @@ open class Snapshotter {
   }
 
   private fun createAttributionString(
-    mapSnapshot: Snapshot,
+    mapSnapshot: MapSnapshotResult,
     shortText: Boolean
   ): String {
     context.get()?.apply {
@@ -436,12 +472,12 @@ open class Snapshotter {
   }
 
   private fun drawLogo(
-    mapSnapshot: Snapshot,
+    mapSnapshot: MapSnapshotResult,
     canvas: Canvas,
     margin: Int,
     layout: AttributionLayout
   ) {
-    drawLogo(mapSnapshot.bitmap, canvas, margin, layout)
+    drawLogo(mapSnapshot.bitmap(), canvas, margin, layout)
   }
 
   private fun drawLogo(

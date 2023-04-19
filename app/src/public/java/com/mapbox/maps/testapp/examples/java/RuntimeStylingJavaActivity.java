@@ -13,7 +13,7 @@ import com.mapbox.bindgen.Expected;
 import com.mapbox.bindgen.None;
 import com.mapbox.bindgen.Value;
 import com.mapbox.geojson.FeatureCollection;
-import com.mapbox.maps.Image;
+import com.mapbox.maps.ExtensionUtils;
 import com.mapbox.maps.MapView;
 import com.mapbox.maps.MapboxMap;
 import com.mapbox.maps.Style;
@@ -36,7 +36,6 @@ import com.mapbox.maps.extension.style.sources.generated.ImageSource;
 import com.mapbox.maps.extension.style.sources.generated.VectorSource;
 import com.mapbox.maps.testapp.R;
 
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -347,12 +346,10 @@ public class RuntimeStylingJavaActivity extends AppCompatActivity {
     private void addLayerWithoutStyleExtension(Style style) {
         final Drawable drawable = ContextCompat.getDrawable(this, R.drawable.android_symbol);
         final Bitmap bitmap = DrawableKt.toBitmap(drawable, 64, 64, null);
-        final ByteBuffer byteBuffer = ByteBuffer.allocate(bitmap.getByteCount());
-        bitmap.copyPixelsToBuffer(byteBuffer);
         final Expected<String, None> expected = style.addStyleImage(
                 IMAGE_ID,
                 1f,
-                new Image(64, 64, byteBuffer.array()),
+                ExtensionUtils.toMapboxImage(bitmap),
                 false,
                 new ArrayList<>(),
                 new ArrayList<>(),

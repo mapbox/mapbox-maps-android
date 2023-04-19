@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.graphics.PointF
 import com.mapbox.android.gestures.MoveDistancesObject
 import com.mapbox.android.gestures.MoveGestureDetector
+import com.mapbox.bindgen.DataRef
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.bindgen.None
@@ -295,6 +296,8 @@ class PointAnnotationManagerTest {
   fun iconImageBitmapWithoutIconImage() {
     every { style.styleSourceExists(any()) } returns true
     every { style.styleLayerExists(any()) } returns true
+    mockkStatic(DataRef::class)
+    every { DataRef.allocateNative(any()) } returns mockk(relaxed = true)
     val annotation = manager.create(
       PointAnnotationOptions()
         .withIconImage(bitmap)
@@ -303,12 +306,15 @@ class PointAnnotationManagerTest {
     assertEquals(PointAnnotation.ICON_DEFAULT_NAME_PREFIX + bitmap.hashCode(), annotation.iconImage)
 
     verify(exactly = 1) { style.addStyleImage(any(), any(), any(), any(), any(), any(), any()) }
+    unmockkStatic(DataRef::class)
   }
 
   @Test
   fun iconImageBitmapWithSameImage() {
     every { style.styleSourceExists(any()) } returns true
     every { style.styleLayerExists(any()) } returns true
+    mockkStatic(DataRef::class)
+    every { DataRef.allocateNative(any()) } returns mockk(relaxed = true)
     val annotation = manager.create(
       PointAnnotationOptions()
         .withIconImage(bitmap)
@@ -326,12 +332,15 @@ class PointAnnotationManagerTest {
     assertEquals(PointAnnotation.ICON_DEFAULT_NAME_PREFIX + bitmap.hashCode(), annotation2.iconImage)
     // The first one will trigger twice and the second one once.
     verify(exactly = 3) { style.addStyleImage(PointAnnotation.ICON_DEFAULT_NAME_PREFIX + bitmap.hashCode(), any(), any(), any(), any(), any(), any()) }
+    unmockkStatic(DataRef::class)
   }
 
   @Test
   fun updateIconImageBitmap() {
     every { style.styleSourceExists(any()) } returns true
     every { style.styleLayerExists(any()) } returns true
+    mockkStatic(DataRef::class)
+    every { DataRef.allocateNative(any()) } returns mockk(relaxed = true)
     val annotation = manager.create(
       PointAnnotationOptions()
         .withIconImage(bitmap)
@@ -343,6 +352,7 @@ class PointAnnotationManagerTest {
     manager.update(annotation)
     assertEquals(PointAnnotation.ICON_DEFAULT_NAME_PREFIX + createBitmap.hashCode(), annotation.iconImage)
     verify(exactly = 1) { style.addStyleImage(PointAnnotation.ICON_DEFAULT_NAME_PREFIX + createBitmap.hashCode(), any(), any(), any(), any(), any(), any()) }
+    unmockkStatic(DataRef::class)
   }
   @Test
   fun create() {

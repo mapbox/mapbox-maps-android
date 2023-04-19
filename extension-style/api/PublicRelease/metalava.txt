@@ -4304,6 +4304,7 @@ package com.mapbox.maps.extension.style.sources {
   }
 
   public final class ImageSourceExtKt {
+    method public static void updateImage(com.mapbox.maps.extension.style.sources.generated.ImageSource, android.graphics.Bitmap bitmap);
     method public static void updateImage(com.mapbox.maps.extension.style.sources.generated.ImageSource, com.mapbox.maps.Image image);
   }
 

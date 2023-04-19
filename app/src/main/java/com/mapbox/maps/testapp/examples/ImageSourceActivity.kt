@@ -2,7 +2,6 @@ package com.mapbox.maps.testapp.examples
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.mapbox.maps.Image
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.layers.generated.rasterLayer
 import com.mapbox.maps.extension.style.sources.generated.ImageSource
@@ -13,7 +12,6 @@ import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityImageSourceBinding
 import com.mapbox.maps.testapp.utils.BitmapUtils.bitmapFromDrawableRes
-import java.nio.ByteBuffer
 
 class ImageSourceActivity : AppCompatActivity() {
 
@@ -40,9 +38,7 @@ class ImageSourceActivity : AppCompatActivity() {
     ) {
       bitmapFromDrawableRes(this, R.drawable.miami_beach)?.let { bitmap ->
         val imageSource: ImageSource = it.getSourceAs(ID_IMAGE_SOURCE)!!
-        val byteBuffer = ByteBuffer.allocate(bitmap.byteCount)
-        bitmap.copyPixelsToBuffer(byteBuffer)
-        imageSource.updateImage(Image(bitmap.width, bitmap.height, byteBuffer.array()))
+        imageSource.updateImage(bitmap)
       }
     }
   }

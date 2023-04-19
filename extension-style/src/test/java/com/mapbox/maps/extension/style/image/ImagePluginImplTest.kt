@@ -1,6 +1,7 @@
 package com.mapbox.maps.extension.style.image
 
 import android.graphics.Bitmap
+import com.mapbox.bindgen.DataRef
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.None
 import com.mapbox.maps.Image
@@ -61,7 +62,13 @@ class ImagePluginImplTest {
   fun bitmapDefaultScaleTest() {
     val imageSlot = slot<Image>()
     val bitmap = Bitmap.createBitmap(400, 400, Bitmap.Config.ARGB_8888)
-
+    mockkStatic(DataRef::class)
+    val nativeDataRef = mockk<DataRef>(relaxed = true)
+    var allocatedByteCount = 0
+    every { DataRef.allocateNative(any()) } answers {
+      allocatedByteCount = firstArg()
+      nativeDataRef
+    }
     val imagePlugin = image("imageId") {
       bitmap(bitmap)
     }
@@ -79,7 +86,8 @@ class ImagePluginImplTest {
     }
     assertEquals(400, imageSlot.captured.width)
     assertEquals(400, imageSlot.captured.height)
-    assertEquals(bitmap.byteCount, imageSlot.captured.data.size)
+    assertEquals(bitmap.byteCount, allocatedByteCount)
+    unmockkStatic(DataRef::class)
   }
 
   /**
@@ -89,7 +97,13 @@ class ImagePluginImplTest {
   fun bitmapCustomScaleTest() {
     val imageSlot = slot<Image>()
     val bitmap = Bitmap.createBitmap(400, 400, Bitmap.Config.ARGB_8888)
-
+    mockkStatic(DataRef::class)
+    val nativeDataRef = mockk<DataRef>(relaxed = true)
+    var allocatedByteCount = 0
+    every { DataRef.allocateNative(any()) } answers {
+      allocatedByteCount = firstArg()
+      nativeDataRef
+    }
     val imagePlugin = image("imageId") {
       bitmap(bitmap)
       scale(1.5f)
@@ -108,7 +122,8 @@ class ImagePluginImplTest {
     }
     assertEquals(400, imageSlot.captured.width)
     assertEquals(400, imageSlot.captured.height)
-    assertEquals(bitmap.byteCount, imageSlot.captured.data.size)
+    assertEquals(bitmap.byteCount, allocatedByteCount)
+    unmockkStatic(DataRef::class)
   }
 
   @Test(expected = RuntimeException::class)

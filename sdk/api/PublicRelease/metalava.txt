@@ -77,6 +77,13 @@ package com.mapbox.maps {
     method public static com.mapbox.maps.ResourceOptions.Builder applyDefaultParams(com.mapbox.maps.ResourceOptions.Builder, android.content.Context context);
   }
 
+  public abstract class MapSnapshotResult {
+    method public abstract java.util.List<java.lang.String> attributions();
+    method public abstract android.graphics.Bitmap bitmap();
+    method public abstract com.mapbox.geojson.Point coordinate(com.mapbox.maps.ScreenCoordinate screenCoordinate);
+    method public abstract com.mapbox.maps.ScreenCoordinate screenCoordinate(com.mapbox.geojson.Point coordinate);
+  }
+
   public final class MapSurface implements com.mapbox.maps.MapControllable com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate {
     ctor public MapSurface(android.content.Context context, android.view.Surface surface, com.mapbox.maps.MapInitOptions mapInitOptions = com.mapbox.maps.MapInitOptions(context));
     ctor public MapSurface(android.content.Context context, android.view.Surface surface);
@@ -294,7 +301,7 @@ package com.mapbox.maps {
   }
 
   public fun interface SnapshotCreatedListener {
-    method public void onSnapshotResult(com.mapbox.maps.MapSnapshotInterface? snapshot);
+    method public void onSnapshotResult(com.mapbox.maps.MapSnapshotResult? snapshot);
   }
 
   public final class SnapshotOverlayOptions {

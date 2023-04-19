@@ -28,9 +28,9 @@ package com.mapbox.maps {
   }
 
   public final class ExtensionUtils {
-    method public static android.graphics.Bitmap bitmap(com.mapbox.maps.MapSnapshotInterface);
     method public static com.mapbox.maps.CameraOptions toCameraOptions(com.mapbox.maps.CameraState, com.mapbox.maps.ScreenCoordinate? anchor = null);
     method public static com.mapbox.maps.CameraOptions toCameraOptions(com.mapbox.maps.CameraState);
+    method public static com.mapbox.maps.Image toMapboxImage(android.graphics.Bitmap);
   }
 
   @kotlinx.parcelize.Parcelize public final class ImageHolder implements android.os.Parcelable {
@@ -84,13 +84,6 @@ package com.mapbox.maps {
     method public java.util.List<com.mapbox.maps.CanonicalTileID!> tileCover(com.mapbox.maps.TileCoverOptions, com.mapbox.maps.CameraOptions?);
     method public void triggerRepaint();
     method public com.mapbox.bindgen.Expected<java.lang.String!,com.mapbox.bindgen.None!> updateViewAnnotation(String, com.mapbox.maps.ViewAnnotationOptions);
-  }
-
-  @com.mapbox.maps.MapboxInternal public interface MapSnapshotInterface {
-    method public java.util.List<java.lang.String!> attributions();
-    method public com.mapbox.geojson.Point coordinate(com.mapbox.maps.ScreenCoordinate);
-    method public com.mapbox.maps.Image image();
-    method public com.mapbox.maps.ScreenCoordinate screenCoordinate(com.mapbox.geojson.Point);
   }
 
   public final class MapboxAnnotationException extends java.lang.RuntimeException {
