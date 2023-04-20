@@ -4,7 +4,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-# 10.13.0-rc.1
+
+# 10.13.0-rc.1 April 20, 2023
 ## Features ✨ and improvements 🏁
 * Add overloaded methods to `CameraAnimatorsFactory` allowing to set camera animator owner.
 * Improve startup performance by calculating the style expressions dependencies lazily.
@@ -17,6 +18,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v10.13.0-rc.1 and common to v23.5.0-rc.1.
+
 
 
 # 10.13.0-beta.1 April 05, 2023
