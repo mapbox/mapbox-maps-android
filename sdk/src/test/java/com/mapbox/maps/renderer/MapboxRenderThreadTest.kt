@@ -57,7 +57,6 @@ class MapboxRenderThreadTest {
       fpsManager,
       textureRenderer,
     )
-    mapboxRenderThread.skipTextureFloatExtensionCheck = true
     renderHandlerThread.start()
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logE(any(), any()) } just Runs
