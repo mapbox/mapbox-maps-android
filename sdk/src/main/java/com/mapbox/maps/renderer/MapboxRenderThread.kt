@@ -1,13 +1,9 @@
 package com.mapbox.maps.renderer
 
 import android.opengl.GLES20
-import android.opengl.GLES20.glGetString
 import android.view.Choreographer
 import android.view.Surface
 import androidx.annotation.*
-import com.mapbox.bindgen.Value
-import com.mapbox.common.SettingsServiceFactory
-import com.mapbox.common.SettingsServiceStorageType
 import com.mapbox.maps.logE
 import com.mapbox.maps.logI
 import com.mapbox.maps.logW
@@ -175,10 +171,6 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
             // finally we can create native renderer if needed or just report OK
             if (eglContextCreated) {
               if (!renderCreated) {
-                // FIXME temporary solution to fix terrain not rendered on recent Mali GPUs
-                // remove before 10.12.0 release, https://mapbox.atlassian.net/browse/MAPSSDK-253
-                disableTextureFloatExtensionIfItsUnavailable()
-
                 // we set `renderCreated` as `true` before creating native render as core could potentially
                 // schedule task in the same callchain and we need to make sure that `renderThreadPrepared` is already `true`
                 // so that we do not drop this task
@@ -582,25 +574,6 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     while (event != null) {
       event.runnable?.run()
       event = originalQueue.poll()
-    }
-  }
-
-  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  internal var skipTextureFloatExtensionCheck = false
-  /*
-   * Force disabling extension texture float if the device doesn't support both `OES_texture_float`
-   * and `OES_texture_float_linear`.
-   */
-  private fun disableTextureFloatExtensionIfItsUnavailable() {
-    if (skipTextureFloatExtensionCheck) return
-    val extensions = "${glGetString(GLES20.GL_EXTENSIONS) ?: ""} "
-    if (
-      extensions.contains("OES_texture_float ").not() ||
-      extensions.contains("OES_texture_float_linear").not()
-    ) {
-      SettingsServiceFactory
-        .getInstance(SettingsServiceStorageType.NON_PERSISTENT)
-        .set("mapbox_opengl_extension_texture_float", Value.valueOf(false))
     }
   }
 
