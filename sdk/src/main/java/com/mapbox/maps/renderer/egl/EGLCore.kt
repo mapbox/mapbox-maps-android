@@ -1,5 +1,6 @@
 package com.mapbox.maps.renderer.egl
 
+import android.opengl.*
 import android.os.Handler
 import android.os.Looper
 import android.view.Surface
@@ -11,8 +12,6 @@ import com.mapbox.maps.logW
 import com.mapbox.maps.renderer.RendererError
 import com.mapbox.maps.renderer.RendererSetupErrorListener
 import java.util.*
-import javax.microedition.khronos.egl.*
-import kotlin.collections.HashSet
 
 /**
  * Core EGL state (display, context, config).
@@ -24,14 +23,13 @@ import kotlin.collections.HashSet
 internal class EGLCore(
   private val translucentSurface: Boolean,
   private val antialiasingSampleCount: Int,
-  private val sharedContext: EGLContext = EGL10.EGL_NO_CONTEXT,
+  private val sharedContext: EGLContext = EGL14.EGL_NO_CONTEXT,
 ) {
-  private lateinit var egl: EGL10
   private lateinit var eglConfig: EGLConfig
-  private var eglDisplay: EGLDisplay = EGL10.EGL_NO_DISPLAY
-  internal var eglContext: EGLContext = EGL10.EGL_NO_CONTEXT
+  private var eglDisplay: EGLDisplay = EGL14.EGL_NO_DISPLAY
+  internal var eglContext: EGLContext = EGL14.EGL_NO_CONTEXT
 
-  internal val eglNoSurface: EGLSurface = EGL10.EGL_NO_SURFACE
+  internal val eglNoSurface: EGLSurface = EGL14.EGL_NO_SURFACE
 
   /**
    * For user convenience we will deliver [RendererSetupErrorListener] on main thread.
@@ -47,44 +45,71 @@ internal class EGLCore(
   private val rendererSetupErrorListenerSet = HashSet<RendererSetupErrorListener>()
 
   fun prepareEgl(): Boolean {
-    egl = EGLContext.getEGL() as EGL10
-    eglDisplay = egl.eglGetDisplay(EGL10.EGL_DEFAULT_DISPLAY)
-    if (eglDisplay == EGL10.EGL_NO_DISPLAY) {
+    eglDisplay = EGL14.eglGetDisplay(EGL14.EGL_DEFAULT_DISPLAY)
+    if (eglDisplay == EGL14.EGL_NO_DISPLAY) {
       // no need to report error upstream here due to https://www.khronos.org/registry/EGL/sdk/docs/man/html/eglGetDisplay.xhtml
       logW(TAG, "Unable to get default display, eglInitialize will most likely fail shortly.")
     }
     val versions = IntArray(2)
-    if (!egl.eglInitialize(eglDisplay, versions)) {
+    if (!EGL14.eglInitialize(
+        /* dpy = */ eglDisplay,
+        /* major = */ versions,
+        /* majorOffset = */ 0,
+        /* minor = */ versions,
+        /* minorOffset = */ 1
+      )
+    ) {
       checkEglErrorAndNotify("eglInitialize")
       return false
     }
-    EGLConfigChooser(translucentSurface, antialiasingSampleCount).chooseConfig(egl, eglDisplay)?.let {
+
+    EGLConfigChooser(translucentSurface, antialiasingSampleCount).chooseConfig(eglDisplay)?.let {
       eglConfig = it
     } ?: run {
       notifyListeners(RendererError.NO_VALID_EGL_CONFIG_FOUND)
       return false
     }
-    val context = egl.eglCreateContext(
-      eglDisplay,
-      eglConfig,
-      sharedContext,
-      intArrayOf(EGL_CONTEXT_CLIENT_VERSION, 2, EGL10.EGL_NONE)
+    val contextEgl3 = EGL14.eglCreateContext(
+      /* dpy = */ eglDisplay,
+      /* config = */ eglConfig,
+      /* share_context = */ sharedContext,
+      /* attrib_list = */ attribsEgl3,
+      /* offset = */ 0,
     )
-    checkEglErrorAndNotify("eglCreateContext")
-    eglContext = context
-    // Confirm with query.
+
+    val notSupportingEglContext3 = checkEglError("eglCreateContext") != null
+    eglContext = if (notSupportingEglContext3) {
+      val contextEgl2 = EGL14.eglCreateContext(
+        /* dpy = */ eglDisplay,
+        /* config = */ eglConfig,
+        /* share_context = */ sharedContext,
+        /* attrib_list = */ attribsEgl2,
+        /* offset = */ 0,
+      )
+      checkEglErrorAndNotify("eglCreateContext")
+      contextEgl2
+    } else {
+      contextEgl3
+    }
+
+    val eglVersion = queryContextVersion()
+    logI(TAG, "EGLContext created, client version $eglVersion")
+    return true
+  }
+
+  fun queryContextVersion(): Int {
     val values = IntArray(1)
-    val eglQueryContextSuccess = egl.eglQueryContext(
-      eglDisplay,
-      eglContext,
-      EGL_CONTEXT_CLIENT_VERSION,
-      values
+    val eglQueryContextSuccess = EGL14.eglQueryContext(
+      /* dpy = */ eglDisplay,
+      /* ctx = */ eglContext,
+      /* attribute = */ EGL14.EGL_CONTEXT_CLIENT_VERSION,
+      /* value = */ values,
+      /* offset = */ 0,
     )
     if (!eglQueryContextSuccess) {
       checkEglErrorAndNotify("eglQueryContext")
     }
-    logI(TAG, "EGLContext created, client version ${values[0]}")
-    return true
+    return values[0]
   }
 
   /**
@@ -94,15 +119,15 @@ internal class EGLCore(
    * On completion, no context will be current.
    */
   fun release() {
-    if (eglDisplay != EGL10.EGL_NO_DISPLAY) {
+    if (eglDisplay != EGL14.EGL_NO_DISPLAY) {
       // Android is unusual in that it uses a reference-counted EGLDisplay.  So for
       // every eglInitialize() we need an eglTerminate().
       makeNothingCurrent()
-      egl.eglDestroyContext(eglDisplay, eglContext)
-      egl.eglTerminate(eglDisplay)
+      EGL14.eglDestroyContext(eglDisplay, eglContext)
+      EGL14.eglTerminate(eglDisplay)
     }
-    eglDisplay = EGL10.EGL_NO_DISPLAY
-    eglContext = EGL10.EGL_NO_CONTEXT
+    eglDisplay = EGL14.EGL_NO_DISPLAY
+    eglContext = EGL14.EGL_NO_CONTEXT
   }
 
   /**
@@ -110,8 +135,8 @@ internal class EGLCore(
    * still current in a context.
    */
   fun releaseSurface(eglSurface: EGLSurface) {
-    if (eglSurface != EGL10.EGL_NO_SURFACE && eglDisplay != EGL10.EGL_NO_DISPLAY) {
-      egl.eglDestroySurface(eglDisplay, eglSurface)
+    if (eglSurface != EGL14.EGL_NO_SURFACE && eglDisplay != EGL14.EGL_NO_DISPLAY) {
+      EGL14.eglDestroySurface(eglDisplay, eglSurface)
     }
   }
 
@@ -121,13 +146,14 @@ internal class EGLCore(
   fun createWindowSurface(surface: Surface): EGLSurface {
     try {
       // Create a window surface, and attach it to the Surface we received.
-      val surfaceAttribs = intArrayOf(EGL10.EGL_NONE)
+      val surfaceAttribs = intArrayOf(EGL14.EGL_NONE)
       // may throw java.lang.IllegalArgumentException even when surface is valid
-      val eglSurface = egl.eglCreateWindowSurface(
-        eglDisplay,
-        eglConfig,
-        surface,
-        surfaceAttribs
+      val eglSurface = EGL14.eglCreateWindowSurface(
+        /* dpy = */ eglDisplay,
+        /* config = */ eglConfig,
+        /* win = */ surface,
+        /* attrib_list = */ surfaceAttribs,
+        /* offset = */ 0,
       )
       val eglWindowCreatedError = checkEglErrorAndNotify("eglCreateWindowSurface")
       if (eglWindowCreatedError != null || eglSurface == null) {
@@ -145,11 +171,12 @@ internal class EGLCore(
    */
   fun createOffscreenSurface(width: Int, height: Int): EGLSurface {
     val surfaceAttribs =
-      intArrayOf(EGL10.EGL_WIDTH, width, EGL10.EGL_HEIGHT, height, EGL10.EGL_NONE)
-    val eglSurface = egl.eglCreatePbufferSurface(
-      eglDisplay,
-      eglConfig,
-      surfaceAttribs
+      intArrayOf(EGL14.EGL_WIDTH, width, EGL14.EGL_HEIGHT, height, EGL14.EGL_NONE)
+    val eglSurface = EGL14.eglCreatePbufferSurface(
+      /* dpy = */ eglDisplay,
+      /* config = */ eglConfig,
+      /* attrib_list = */ surfaceAttribs,
+      /* offset = */ 0,
     )
     val eglCreatePbufferSurfaceError = checkEglErrorAndNotify("eglCreatePbufferSurface")
     if (eglCreatePbufferSurfaceError != null || eglSurface == null) {
@@ -162,7 +189,13 @@ internal class EGLCore(
    * Makes no context current.
    */
   fun makeNothingCurrent(): Boolean {
-    if (!egl.eglMakeCurrent(eglDisplay, EGL10.EGL_NO_SURFACE, EGL10.EGL_NO_SURFACE, EGL10.EGL_NO_CONTEXT)) {
+    if (!EGL14.eglMakeCurrent(
+        /* dpy = */ eglDisplay,
+        /* draw = */ EGL14.EGL_NO_SURFACE,
+        /* read = */ EGL14.EGL_NO_SURFACE,
+        /* ctx = */ EGL14.EGL_NO_CONTEXT
+      )
+    ) {
       checkEglErrorAndNotify("makeNothingCurrent")
       return false
     }
@@ -174,13 +207,19 @@ internal class EGLCore(
    */
   fun makeCurrent(eglSurface: EGLSurface): Boolean {
     // do nothing if current context is applied before
-    if (egl.eglGetCurrentContext() == eglContext) {
+    if (EGL14.eglGetCurrentContext() == eglContext) {
       return true
     }
-    if (eglDisplay == EGL10.EGL_NO_DISPLAY) {
-      logI(TAG, "NOTE: makeCurrent w/o display")
+    if (eglDisplay == EGL14.EGL_NO_DISPLAY) {
+      logI(TAG, "NOTE: makeCurrent but eglDisplay is EGL_NO_DISPLAY")
     }
-    if (!egl.eglMakeCurrent(eglDisplay, eglSurface, eglSurface, eglContext)) {
+    if (!EGL14.eglMakeCurrent(
+        /* dpy = */ eglDisplay,
+        /* draw = */ eglSurface,
+        /* read = */ eglSurface,
+        /* ctx = */ eglContext
+      )
+    ) {
       checkEglErrorAndNotify("eglMakeCurrent")
       return false
     }
@@ -191,11 +230,11 @@ internal class EGLCore(
    * Calls eglSwapBuffers. Use this to "publish" the current frame.
    */
   fun swapBuffers(eglSurface: EGLSurface): Int {
-    val swapStatus = egl.eglSwapBuffers(eglDisplay, eglSurface)
+    val swapStatus = EGL14.eglSwapBuffers(eglDisplay, eglSurface)
     if (!swapStatus) {
-      return egl.eglGetError()
+      return EGL14.eglGetError()
     }
-    return EGL10.EGL_SUCCESS
+    return EGL14.EGL_SUCCESS
   }
 
   @WorkerThread
@@ -225,7 +264,7 @@ internal class EGLCore(
   private fun checkEglErrorAndNotify(functionName: String): Int? {
     val eglError = checkEglError(functionName)
     if (eglError != null) {
-      val mappedError = if (eglError == EGL10.EGL_BAD_ALLOC)
+      val mappedError = if (eglError == EGL14.EGL_BAD_ALLOC)
         RendererError.OUT_OF_MEMORY
       else
         RendererError(eglError)
@@ -236,8 +275,8 @@ internal class EGLCore(
   }
 
   private fun checkEglError(msg: String): Int? {
-    val error = egl.eglGetError()
-    if (error != EGL10.EGL_SUCCESS) {
+    val error = EGL14.eglGetError()
+    if (error != EGL14.EGL_SUCCESS) {
       logE(TAG, msg + ": EGL error: 0x${Integer.toHexString(error)}")
       return error
     }
@@ -258,6 +297,7 @@ internal class EGLCore(
 
   companion object {
     private const val TAG = "Mbgl-EglCore"
-    private const val EGL_CONTEXT_CLIENT_VERSION = 0x3098
+    private val attribsEgl3 = intArrayOf(EGL14.EGL_CONTEXT_CLIENT_VERSION, 3, EGL14.EGL_NONE)
+    private val attribsEgl2 = intArrayOf(EGL14.EGL_CONTEXT_CLIENT_VERSION, 2, EGL14.EGL_NONE)
   }
 }

@@ -61,7 +61,9 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix a crash when a hillshade bucket was created with disabled terrain, but the terrain got enabled afterwards.
 
 ## Dependencies
-* Update dependencies.
+* Instantiate OpenGL ES context 3.0, if available, otherwise fallback to 2.0.
+* Use EGL 1.4 instead of EGL 1.0.
+* Update dependencies : 
 
 | Dependency                                       | Before       | After      |
 |--------------------------------------------------|--------------|------------|

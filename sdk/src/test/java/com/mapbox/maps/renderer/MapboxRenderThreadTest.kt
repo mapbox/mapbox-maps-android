@@ -1,5 +1,7 @@
 package com.mapbox.maps.renderer
 
+import android.opengl.EGL14
+import android.opengl.EGLContext
 import android.view.Surface
 import com.mapbox.countDownEvery
 import com.mapbox.maps.logE
@@ -24,9 +26,6 @@ import org.robolectric.annotation.LooperMode
 import org.robolectric.shadows.ShadowChoreographer
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
-import javax.microedition.khronos.egl.EGL10
-import javax.microedition.khronos.egl.EGL11
-import javax.microedition.khronos.egl.EGLContext
 
 @RunWith(RobolectricTestRunner::class)
 @LooperMode(LooperMode.Mode.PAUSED)
@@ -86,7 +85,7 @@ class MapboxRenderThreadTest {
     every { eglCore.createWindowSurface(any()) } returns mockk(relaxed = true)
     every { eglCore.makeNothingCurrent() } returns true
     every { eglCore.makeCurrent(any()) } returns true
-    every { eglCore.swapBuffers(any()) } returns EGL10.EGL_SUCCESS
+    every { eglCore.swapBuffers(any()) } returns EGL14.EGL_SUCCESS
   }
 
   private fun pauseHandler() = Shadows.shadowOf(renderHandlerThread.handler?.looper).pause()
@@ -830,10 +829,10 @@ class MapboxRenderThreadTest {
     initRenderThread()
     provideValidSurface()
     pauseHandler()
-    every { eglCore.swapBuffers(any()) } returns EGL11.EGL_CONTEXT_LOST
+    every { eglCore.swapBuffers(any()) } returns EGL14.EGL_CONTEXT_LOST
     mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
     idleHandler()
-    every { eglCore.swapBuffers(any()) } returns EGL11.EGL_SUCCESS
+    every { eglCore.swapBuffers(any()) } returns EGL14.EGL_SUCCESS
     mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
     idleHandler()
     verifyOrder {

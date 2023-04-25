@@ -1,5 +1,7 @@
 package com.mapbox.maps.renderer
 
+import android.opengl.EGL14
+import android.opengl.EGLSurface
 import android.opengl.GLES20
 import android.view.Choreographer
 import android.view.Surface
@@ -14,9 +16,6 @@ import com.mapbox.maps.viewannotation.ViewAnnotationManager
 import com.mapbox.maps.viewannotation.ViewAnnotationUpdateMode
 import java.util.concurrent.ConcurrentLinkedQueue
 import java.util.concurrent.locks.ReentrantLock
-import javax.microedition.khronos.egl.EGL10
-import javax.microedition.khronos.egl.EGL11
-import javax.microedition.khronos.egl.EGLSurface
 import kotlin.concurrent.withLock
 import kotlin.properties.Delegates
 
@@ -155,7 +154,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
         val eglConfigOk = checkEglConfig()
         val androidSurfaceOk = checkAndroidSurface()
         if (eglConfigOk && androidSurfaceOk) {
-          // on Android SDK <= 23 at least on x86 emulators we need to force set EGL10.EGL_NO_CONTEXT
+          // on Android SDK <= 23 at least on x86 emulators we need to force set EGL14.EGL_NO_CONTEXT
           // when resuming activity
           if (creatingSurface) {
             eglCore.makeNothingCurrent()
@@ -304,8 +303,8 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
 
   private fun swapBuffers() {
     when (val swapStatus = eglCore.swapBuffers(eglSurface)) {
-      EGL10.EGL_SUCCESS -> { }
-      EGL11.EGL_CONTEXT_LOST -> {
+      EGL14.EGL_SUCCESS -> { }
+      EGL14.EGL_CONTEXT_LOST -> {
         logW(TAG, "Context lost. Waiting for re-acquire")
         // release all resources but not release Android surface
         // as it still potentially may be valid - then it could be re-used to recreate EGL;
