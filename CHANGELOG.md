@@ -4,6 +4,9 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 10.13.0
+## Bug fixes 🐞
+* Fix rare issue in renderer which could freeze the device when bringing the `MapView` back to front.
 
 # 10.13.0-rc.1 April 20, 2023
 ## Features ✨ and improvements 🏁
