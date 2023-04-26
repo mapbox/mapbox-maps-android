@@ -137,6 +137,9 @@ internal class EGLCore(
   fun releaseSurface(eglSurface: EGLSurface) {
     if (eglSurface != EGL14.EGL_NO_SURFACE && eglDisplay != EGL14.EGL_NO_DISPLAY) {
       EGL14.eglDestroySurface(eglDisplay, eglSurface)
+      logI(TAG, "EGL surface was destroyed.")
+    } else {
+      logI(TAG, "EGL surface was already destroyed before.")
     }
   }
 

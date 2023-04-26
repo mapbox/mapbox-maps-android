@@ -897,4 +897,46 @@ class MapboxRenderThreadTest {
     verifyOnce { mapboxRenderer.destroyRenderer() }
     assertFalse(renderHandlerThread.isRunning)
   }
+
+  @Test(timeout = 10000) // Added timeout to ensure that if test fails, test does not hang forever.
+  fun newAndroidSurfaceArriveWhenWaitingVsyncTest() {
+    initRenderThread()
+    val choreographerCallbackDelayMs = 16L
+    ShadowChoreographer.setPostFrameCallbackDelay(choreographerCallbackDelayMs.toInt())
+    mockSurface()
+    mapboxRenderThread.onSurfaceCreated(surface, 1, 1)
+    // make sure we prepareRenderFrame but do not yet swap buffers
+    idleHandler(choreographerCallbackDelayMs / 2)
+    // current surface becomes invalid
+    every { surface.isValid } returns false
+    // new valid surface arrives from Android
+    val validSurface = mockk<Surface>()
+    every { validSurface.isValid } returns true
+    mapboxRenderThread.onSurfaceCreated(
+      validSurface,
+      2,
+      2
+    )
+    // and we have time to process this new valid surface before doFrame is called on VSYNC
+    idleHandler(choreographerCallbackDelayMs / 4)
+    // finally we get to doFrame
+    idleHandler(choreographerCallbackDelayMs)
+    verifyOrder {
+      // initially we have created the native renderer instance as well as EGL
+      eglCore.prepareEgl()
+      eglCore.createWindowSurface(surface)
+      eglCore.makeCurrent(any())
+      mapboxRenderer.createRenderer()
+      // as new Android surface != current one - we perform releaseAll()
+      mapboxRenderer.destroyRenderer()
+      eglCore.release()
+      // and then recreate native renderer and EGL before scheduled swap
+      eglCore.prepareEgl()
+      eglCore.createWindowSurface(validSurface)
+      eglCore.makeCurrent(any())
+      mapboxRenderer.createRenderer()
+      // swap works OK with new EGLSurface already
+      eglCore.swapBuffers(any())
+    }
+  }
 }
