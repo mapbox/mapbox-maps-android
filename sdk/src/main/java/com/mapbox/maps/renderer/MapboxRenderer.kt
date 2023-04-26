@@ -46,7 +46,6 @@ internal abstract class MapboxRenderer : MapClient {
 
   @UiThread
   fun onDestroy() {
-    logI(TAG, "onDestroy")
     widgetRenderer.cleanUpAllWidgets()
     renderThread.destroy()
     renderThread.fpsChangedListener = null
@@ -113,7 +112,6 @@ internal abstract class MapboxRenderer : MapClient {
 
   @WorkerThread
   fun destroyRenderer() {
-    logI(TAG, "Destroy renderer")
     map?.destroyRenderer()
     // additionally it's correct moment to release pixel reader while we still have EGL context
     pixelReader?.release()
