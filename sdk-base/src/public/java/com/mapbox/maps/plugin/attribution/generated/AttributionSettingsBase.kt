@@ -24,7 +24,7 @@ abstract class AttributionSettingsBase : AttributionSettingsInterface {
    * @return attribution settings
    */
   override fun getSettings(): AttributionSettings {
-    return internalSettings.copy()
+    return internalSettings.toBuilder().build()
   }
 
   /**
@@ -32,8 +32,8 @@ abstract class AttributionSettingsBase : AttributionSettingsInterface {
    *
    * @param block the receiver function of AttributionSettings
    */
-  override fun updateSettings(block: AttributionSettings.() -> Unit) {
-    this.internalSettings.apply(block)
+  override fun updateSettings(block: AttributionSettings.Builder.() -> Unit) {
+    this.internalSettings = this.internalSettings.toBuilder().apply(block).build()
     applySettings()
   }
 
@@ -46,7 +46,7 @@ abstract class AttributionSettingsBase : AttributionSettingsInterface {
     }
     set(value) {
       if (this.internalSettings.enabled != value) {
-        this.internalSettings.enabled = value
+        this.internalSettings = this.internalSettings.toBuilder().setEnabled(value).build()
         applySettings()
       }
     }
@@ -60,7 +60,7 @@ abstract class AttributionSettingsBase : AttributionSettingsInterface {
     }
     set(value) {
       if (this.internalSettings.iconColor != value) {
-        this.internalSettings.iconColor = value
+        this.internalSettings = this.internalSettings.toBuilder().setIconColor(value).build()
         applySettings()
       }
     }
@@ -74,7 +74,7 @@ abstract class AttributionSettingsBase : AttributionSettingsInterface {
     }
     set(value) {
       if (this.internalSettings.position != value) {
-        this.internalSettings.position = value
+        this.internalSettings = this.internalSettings.toBuilder().setPosition(value).build()
         applySettings()
       }
     }
@@ -88,7 +88,7 @@ abstract class AttributionSettingsBase : AttributionSettingsInterface {
     }
     set(value) {
       if (this.internalSettings.marginLeft != value) {
-        this.internalSettings.marginLeft = value
+        this.internalSettings = this.internalSettings.toBuilder().setMarginLeft(value).build()
         applySettings()
       }
     }
@@ -102,7 +102,7 @@ abstract class AttributionSettingsBase : AttributionSettingsInterface {
     }
     set(value) {
       if (this.internalSettings.marginTop != value) {
-        this.internalSettings.marginTop = value
+        this.internalSettings = this.internalSettings.toBuilder().setMarginTop(value).build()
         applySettings()
       }
     }
@@ -116,7 +116,7 @@ abstract class AttributionSettingsBase : AttributionSettingsInterface {
     }
     set(value) {
       if (this.internalSettings.marginRight != value) {
-        this.internalSettings.marginRight = value
+        this.internalSettings = this.internalSettings.toBuilder().setMarginRight(value).build()
         applySettings()
       }
     }
@@ -130,7 +130,7 @@ abstract class AttributionSettingsBase : AttributionSettingsInterface {
     }
     set(value) {
       if (this.internalSettings.marginBottom != value) {
-        this.internalSettings.marginBottom = value
+        this.internalSettings = this.internalSettings.toBuilder().setMarginBottom(value).build()
         applySettings()
       }
     }
@@ -144,7 +144,7 @@ abstract class AttributionSettingsBase : AttributionSettingsInterface {
     }
     set(value) {
       if (this.internalSettings.clickable != value) {
-        this.internalSettings.clickable = value
+        this.internalSettings = this.internalSettings.toBuilder().setClickable(value).build()
         applySettings()
       }
     }

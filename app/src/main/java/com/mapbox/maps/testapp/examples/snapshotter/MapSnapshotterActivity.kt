@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.Snapshotter
-import com.mapbox.maps.bitmap
 
 /**
  * Example demonstrating taking simple snapshot using [Snapshotter].

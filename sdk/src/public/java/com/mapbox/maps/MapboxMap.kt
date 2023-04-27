@@ -1,6 +1,7 @@
 package com.mapbox.maps
 
 import android.app.Activity
+import android.graphics.RectF
 import android.os.Handler
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
@@ -866,6 +867,46 @@ class MapboxMap :
   }
 
   /**
+   * Calculates geographical `coordinates` (i.e., longitude-latitude pairs) that correspond
+   * to a [RectF] that holds four screen points.
+   *
+   * The screen points are in `platform pixels` relative to the top left corner
+   * of the map (not of the whole screen).
+   *
+   * This API isn't supported by Globe projection.
+   *
+   * @param rectF Rectangle with 4 edges (left, top, right, bottom).
+   *
+   * @return List of `geographical coordinates` that corresponds to given edges of RectF
+   * in clockwise direction starting from topLeft. if provided [RectF] is empty, an
+   * [IllegalArgumentException] will be thrown.
+   */
+  override fun coordinatesForRect(rectF: RectF): List<Point> {
+    checkNativeMap("coordinatesForRect")
+    if (rectF.isEmpty) throw IllegalArgumentException("RectF must not be empty")
+    val screenCoordinateTopLeft = ScreenCoordinate(
+      rectF.left.toDouble(), rectF.top.toDouble()
+    )
+    val screenCoordinateTopRight = ScreenCoordinate(
+      rectF.right.toDouble(), rectF.top.toDouble()
+    )
+    val screenCoordinateBottomRight = ScreenCoordinate(
+      rectF.right.toDouble(), rectF.bottom.toDouble()
+    )
+    val screenCoordinateBottomLeft = ScreenCoordinate(
+      rectF.left.toDouble(), rectF.bottom.toDouble()
+    )
+    return nativeMap.coordinatesForPixels(
+      listOf(
+        screenCoordinateTopLeft,
+        screenCoordinateTopRight,
+        screenCoordinateBottomRight,
+        screenCoordinateBottomLeft
+      )
+    )
+  }
+
+  /**
    * Calculate distance spanned by one pixel at the specified latitude
    * and zoom level.
    *
@@ -1697,7 +1738,7 @@ class MapboxMap :
     return nativeMap.getViewAnnotationOptions(identifier)
   }
 
-  internal fun setViewAnnotationPositionsUpdateListener(listener: ViewAnnotationPositionsUpdateListener?) {
+  internal fun setViewAnnotationPositionsUpdateListener(listener: DelegatingViewAnnotationPositionsUpdateListener?) {
     checkNativeMap("setViewAnnotationPositionsUpdateListener")
     return nativeMap.setViewAnnotationPositionsUpdateListener(listener)
   }

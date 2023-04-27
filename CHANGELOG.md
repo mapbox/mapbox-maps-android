@@ -1,57 +1,105 @@
-# Changelog for Mapbox Maps SDK v10 for Android
+# Changelog for Mapbox Maps SDK for Android
 
 Mapbox welcomes participation and contributions from everyone.
 
-#develop
-## Features ✨ and improvements 🏁
+# develop
+## Breaking changes ⚠️
 * Remove deprecated `MapboxMap.queryRenderedFeatures` methods.
 * Remove `Snapshotter.setTileMode`, `Snapshotter.isInTileMode` methods.
 * Remove deprecated `MapStyleStateDelegate` and `isFullyLoaded` method.
 * Remove experimental `setRenderCacheOptions`, `getRenderCacheOptions` apis.
 * Update SDK's `targetSdkVersion` and `compileSdkVersion` to 33.
 * Add `callback` argument to the `MapboxMap` methods `getFeatureState`, `setFeatureState`, `removeFeatureState`.
-* Add the `MapboxMap.resetFeatureState` method.
 * Use different callback types for the `MapboxMap.queryRenderedFeatures` and the `MapboxMap.querySourceFeatures` methods.
 * Return `cancelable` from the `MapboxMap` methods : `getFeatureState`, `setFeatureState`, `removeFeatureState`, `querySourceFeatures`, `getGeoJsonClusterLeaves`, `getGeoJsonClusterChildren`, `getGeoJsonClusterExpansionZoom`.
 * Remove the deprecated `MapboxMap.queryFeatureExtensions` method.
+* Remove `MapAnimationOptions.animatorListener` property. In order to subscribe to animations, provide `Animator.animatorListener` with `flyTo`, `easeTo`, `pitchBy`, `scaleBy`, `moveBy`, `rotateBy` apis.
+* Replace `LocationEngine` use with `LocationService` in `DefaultProvider`.
+* Add new `LocationConsumer.onError` method to allow consumers handle location errors.
+* Remove `MapView#location2` related interfaces and move `showAccuracyRing`, `accuracyRingColor`, `accuracyRingBorderColor`, `puckBearingEnabled` and `puckBearingSource` to `MapView#location`.
+* Make `AttributionSettings`, `CompassSettings`, `GesturesSettings`, `LocationComponentSettings`, `LogoSettings`, `ScaleBarSettings` not Kotlin `data class`, better binary compatible and implementing `Parcelable`.
+* Change `CompassSettings#image`, `LocationPuck2D#topImage`, `LocationPuck2D#bearingImage`, `LocationPuck2D#shadowImage` to `ImageHolder` allowing to pass either drawable id or `Bitmap`.
+* Remove deprecated `backgroundPatternTransition`, `lineDasharrayTransition`, `linePatternTransition`, `fillPatternTransition` properties.
+* Replace `MapSnapshotInterface` interface with `MapSnapshotResult` abstract class and remove `image()` method, `bitmap()` should be used instead.
+* Update Mapbox styles to latest versions.
+
+| Style             | Before                                       | After                                        |
+|-------------------|----------------------------------------------|----------------------------------------------|
+| MAPBOX_STREETS    | mapbox://styles/mapbox/streets-v11           | mapbox://styles/mapbox/streets-v12           |
+| SATELLITE_STREETS | mapbox://styles/mapbox/satellite-streets-v11 | mapbox://styles/mapbox/satellite-streets-v12 |
+| OUTDOORS          | mapbox://styles/mapbox/outdoors-v11          | mapbox://styles/mapbox/outdoors-v12          |
+| LIGHT             | mapbox://styles/mapbox/light-v10             | mapbox://styles/mapbox/light-v11             |
+| DARK              | mapbox://styles/mapbox/dark-v10              | mapbox://styles/mapbox/dark-v11              |
+
+## Features ✨ and improvements 🏁
+* Add the `MapboxMap.resetFeatureState` method.
 * Make padding optional for `MapboxMap.cameraForCoordinateBounds`, `MapboxMap.cameraForCoordinates`, `MapboxMap.cameraForGeometry` methods.
 * Add `FreeCameraOptions.getLocation` and `FreeCameraOptions.getAltitude` methods.
+* Add `MapboxMap.coordinatesForRect(rectF: RectF)` to support rectangle parameters.
+* Add `suspend` variants for the async `MapboxMap` functions : `queryRenderedFeatures`, `querySourceFeatures`, `setFeatureState`, `getFeatureState`, `removeFeatureState`, `getGeoJsonClusterLeaves`, `getGeoJsonClusterChildren`, `getGeoJsonClusterExpansionZoom`.
+* Add `MapboxMap.cameraChanges` returning Flow of camera updates.
+* Introduce custom lint rules to check illegal usage of literals in Expression DSL and suggest auto fix.
+* Introduce custom lint rules to check illegal number of arguments within given Expression DSL.
+* Introduce custom lint rules to check unused layer/source/light/terrain/atmosphere/projection objects in the Style DSL, and suggest auto fix to add it to the style using unaryPlus(+) operator.
+* Improve performance for `Snapshotter` when obtaining the bitmap.
+* Add `ImageSource.updateImage(Bitmap)` method.
+
+## Bug fixes 🐞
+* Fix 3d location layer properties `model-scale-transition` and `model-rotation-transition`, made them non-transitionable.
+
+
+# 10.13.0-beta.1 April 05, 2023
+## Features ✨ and improvements 🏁
+* Deprecate `Snapshotter.setTileMode` and `Snapshotter.isInTileMode`.
+* Deprecate `Style.setStyleGeoJSONSourceData(sourceId, data)`.
+* Use flat screen coordinate conversion functions with zero exaggeration terrain.
+* Share similar image and glyph atlases across tiles and thus avoid unnecessary textures creation.
+* Render single color gradient as solid line.
+
+## Bug fixes 🐞
+* Fix the crash when identifying if device is connected to WiFi.
+* Fix a crash when a hillshade bucket was created with disabled terrain, but the terrain got enabled afterwards.
 
 ## Dependencies
-* Update dependencies
+* Instantiate OpenGL ES context 3.0, if available, otherwise fallback to 2.0.
+* Use EGL 1.4 instead of EGL 1.0.
+* Update dependencies : 
 
-| Dependency | Before | After |
-| ----- | ----- | ----- |
-| Android Gradle Plugin | 7.0.4 | 7.4.2 |
-| Kotlin | 1.5.31 | 1.8.10 |
-| org.jetbrains.kotlin:kotlin-stdlib-jdk7 | 1.5.31 |  |
-| org.jetbrains.kotlin:kotlin-stdlib-jdk8 |  | 1.8.10 |
-| Dokka plugin | 1.5.31 | 1.8.10 |
-| androidx.core:core-ktx | 1.7.0 | 1.9.0 |
-| androidx.appcompat:appcompat | 1.3.0 | 1.6.1 |
-| androidx.test:rules | 1.4.0 | 1.5.0 |
-| androidx.test:core | 1.4.0 | 1.5.0 |
-| androidx.test:runner | 1.4.0 | 1.5.2 |
-| androidx.test:orchestrator | 1.4.0 | 1.4.2 |
-| androidx.test:monitor | 1.4.0 | 1.6.1 |
-| androidx.test.espresso:espresso-core | 3.4.0 | 3.5.1 |
-| androidx.test.ext:junit | 1.1.3 | 1.1.5 |
-| org.jetbrains.kotlinx:kotlinx-coroutines-android | 1.3.9 | 1.6.1 |
-| org.jetbrains.kotlinx:kotlinx-coroutines-test | 1.3.9 | 1.6.1 |
-| io.mockk:mockk | 1.12.3 | 1.13.4 |
-| io.mockk:mockk-agent-api | 1.12.3 | 1.13.4 |
-| io.mockk:mockk-agent-jvm | 1.12.3 | 1.13.4 |
-| org.robolectric:robolectric | 4.8.1 | 4.9.2 |
-| com.android.tools.lint:lint-api | 30.0.4 | 30.4.2 |
-| com.android.tools.lint:lint-checks | 30.0.4 | 30.4.2 |
-| com.android.tools.lint:lint | 30.0.4 | 30.4.2 |
-| com.android.tools.lint:lint-tests | 30.0.4 | 30.4.2 |
-| com.android.tools:testutils | 30.0.4 | 30.4.2 |
-| nl.jqno.equalsverifier:equalsverifier | 3.10.1 | 3.14 |
-| io.gitlab.arturbosch.detekt:detekt-formatting | 1.20.0 | 1.22.0 |
-| composeOptions -> kotlinCompilerExtensionVersion | 1.1.0-beta03 | 1.4.3 |
-| androidx.compose:compose-bom |  | 2023.01.00 |
-| com.pinterest:ktlint | 0.39.0 | 0.48.2 |
+| Dependency                                       | Before       | After      |
+|--------------------------------------------------|--------------|------------|
+| Android Gradle Plugin                            | 7.0.4        | 7.4.2      |
+| Kotlin                                           | 1.5.31       | 1.8.10     |
+| org.jetbrains.kotlin:kotlin-stdlib-jdk7          | 1.5.31       |            |
+| org.jetbrains.kotlin:kotlin-stdlib-jdk8          |              | 1.8.10     |
+| Dokka plugin                                     | 1.5.31       | 1.8.10     |
+| androidx.core:core-ktx                           | 1.7.0        | 1.9.0      |
+| androidx.appcompat:appcompat                     | 1.3.0        | 1.6.1      |
+| androidx.test:rules                              | 1.4.0        | 1.5.0      |
+| androidx.test:core                               | 1.4.0        | 1.5.0      |
+| androidx.test:runner                             | 1.4.0        | 1.5.2      |
+| androidx.test:orchestrator                       | 1.4.0        | 1.4.2      |
+| androidx.test:monitor                            | 1.4.0        | 1.6.1      |
+| androidx.test.espresso:espresso-core             | 3.4.0        | 3.5.1      |
+| androidx.test.ext:junit                          | 1.1.3        | 1.1.5      |
+| org.jetbrains.kotlinx:kotlinx-coroutines-core    | 1.3.9        | 1.6.1      |
+| org.jetbrains.kotlinx:kotlinx-coroutines-test    | 1.3.9        | 1.6.1      |
+| io.mockk:mockk                                   | 1.12.3       | 1.13.4     |
+| io.mockk:mockk-agent-api                         | 1.12.3       | 1.13.4     |
+| io.mockk:mockk-agent-jvm                         | 1.12.3       | 1.13.4     |
+| org.robolectric:robolectric                      | 4.8.1        | 4.9.2      |
+| com.android.tools.lint:lint-api                  | 30.0.4       | 30.4.2     |
+| com.android.tools.lint:lint-checks               | 30.0.4       | 30.4.2     |
+| com.android.tools.lint:lint                      | 30.0.4       | 30.4.2     |
+| com.android.tools.lint:lint-tests                | 30.0.4       | 30.4.2     |
+| com.android.tools:testutils                      | 30.0.4       | 30.4.2     |
+| nl.jqno.equalsverifier:equalsverifier            | 3.10.1       | 3.14       |
+| io.gitlab.arturbosch.detekt:detekt-formatting    | 1.20.0       | 1.22.0     |
+| composeOptions -> kotlinCompilerExtensionVersion | 1.1.0-beta03 | 1.4.3      |
+| androidx.compose:compose-bom                     |              | 2023.01.00 |
+| com.pinterest:ktlint                             | 0.39.0       | 0.48.2     |
+
+## Bug fixes 🐞
+* Fix raw expression parsing for list literal.
 
 # 10.12.0
 ## Bug fixes 🐞

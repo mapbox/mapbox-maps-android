@@ -3,7 +3,6 @@
 package com.mapbox.maps.testapp.compass.generated
 
 import android.view.Gravity
-import androidx.core.graphics.drawable.toBitmap
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.mapbox.maps.R
@@ -89,9 +88,8 @@ class CompassAttributeParserTest : BaseMapTest() {
     )
     assertEquals(
       "image test failed..",
-      true,
-      context.resources.getDrawable(R.drawable.mapbox_logo_icon, null).toBitmap()
-        .sameAs(mapView.compass.getSettings().image?.toBitmap())
+      R.drawable.mapbox_logo_icon,
+      mapView.compass.getSettings().image?.drawableId
     )
   }
 }

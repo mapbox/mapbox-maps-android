@@ -21,7 +21,7 @@ interface GesturesSettingsInterface {
    *
    * @param block the receiver function of GesturesSettings
    */
-  fun updateSettings(block: GesturesSettings.() -> Unit)
+  fun updateSettings(block: GesturesSettings.Builder.() -> Unit)
 
   /**
    * Whether the rotate gesture is enabled.

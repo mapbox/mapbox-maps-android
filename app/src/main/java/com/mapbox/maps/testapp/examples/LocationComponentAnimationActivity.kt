@@ -3,10 +3,10 @@ package com.mapbox.maps.testapp.examples
 import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.ImageHolder
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
 import com.mapbox.maps.plugin.LocationPuck2D
@@ -14,7 +14,7 @@ import com.mapbox.maps.plugin.locationcomponent.LocationConsumer
 import com.mapbox.maps.plugin.locationcomponent.LocationProvider
 import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.testapp.R
-import com.mapbox.maps.testapp.databinding.ActivityLocationComponentAmimationBinding
+import com.mapbox.maps.testapp.databinding.ActivityLocationComponentAnimationBinding
 
 /**
  * Example that demonstrates using custom [LocationProvider] and sending custom location updates
@@ -96,7 +96,7 @@ class LocationComponentAnimationActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    val binding = ActivityLocationComponentAmimationBinding.inflate(layoutInflater)
+    val binding = ActivityLocationComponentAnimationBinding.inflate(layoutInflater)
     setContentView(binding.root)
     mapboxMap = binding.mapView.getMapboxMap().apply {
       loadStyleUri(
@@ -112,10 +112,7 @@ class LocationComponentAnimationActivity : AppCompatActivity() {
           setLocationProvider(FakeLocationProvider())
           updateSettings {
             locationPuck = LocationPuck2D(
-              bearingImage = AppCompatResources.getDrawable(
-                this@LocationComponentAnimationActivity,
-                R.drawable.mapbox_mylocation_icon_bearing,
-              ),
+              bearingImage = ImageHolder.from(R.drawable.mapbox_mylocation_icon_bearing),
             )
           }
         }

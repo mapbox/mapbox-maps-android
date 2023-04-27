@@ -9,11 +9,11 @@ import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
-import com.mapbox.maps.ViewAnnotationManagerImpl.Companion.EXCEPTION_TEXT_ASSOCIATED_FEATURE_ID_ALREADY_EXISTS
 import com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName
 import com.mapbox.maps.renderer.MapboxRenderThread
 import com.mapbox.maps.shadows.ShadowCoordinateBounds
 import com.mapbox.maps.viewannotation.*
+import com.mapbox.maps.viewannotation.ViewAnnotationManagerImpl.Companion.EXCEPTION_TEXT_ASSOCIATED_FEATURE_ID_ALREADY_EXISTS
 import io.mockk.*
 import org.junit.After
 import org.junit.Assert.*

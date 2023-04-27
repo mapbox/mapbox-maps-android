@@ -14,7 +14,6 @@ import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.locationcomponent.animators.PuckAnimatorManager
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
-import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings2
 import com.mapbox.maps.util.captureVararg
 import io.mockk.*
 import org.junit.Assert.*
@@ -28,7 +27,6 @@ import kotlin.math.abs
 class LocationPuckManagerTest {
 
   private val settings = mockk<LocationComponentSettings>(relaxed = true)
-  private val accuracyRadiusSettings = mockk<LocationComponentSettings2>(relaxed = true)
   private val delegateProvider = mockk<MapDelegateProvider>(relaxed = true)
   private val mapCameraDelegate = mockk<MapCameraManagerDelegate>(relaxed = true)
   private val style = mockk<StyleInterface>(relaxed = true)
@@ -56,10 +54,10 @@ class LocationPuckManagerTest {
     )
     every { settings.locationPuck } returns LocationPuck2D()
     every { settings.enabled } returns true
-    every { accuracyRadiusSettings.puckBearingEnabled } returns true
+    every { settings.puckBearingEnabled } returns true
     locationPuckManager = LocationPuckManager(
       settings,
-      accuracyRadiusSettings,
+      mockk(),
       delegateProvider,
       positionManager,
       layerSourceProvider,
@@ -73,7 +71,6 @@ class LocationPuckManagerTest {
     locationPuckManager.initialize(style)
     verify { animationManager.setLocationLayerRenderer(locationLayerRenderer) }
     verify { animationManager.setUpdateListeners(any(), any(), any()) }
-    verify { animationManager.applyPulsingAnimationSettings(settings) }
     verify { locationLayerRenderer.addLayers(positionManager) }
     verify { locationLayerRenderer.initializeComponents(style) }
     verify { locationLayerRenderer.hide() }
@@ -85,7 +82,6 @@ class LocationPuckManagerTest {
     locationPuckManager.initialize(style)
     verify { animationManager.setLocationLayerRenderer(locationLayerRenderer) }
     verify { animationManager.setUpdateListeners(any(), any(), any()) }
-    verify { animationManager.applyPulsingAnimationSettings(settings) }
     verify { locationLayerRenderer.addLayers(positionManager) }
     verify { locationLayerRenderer.initializeComponents(style) }
     verify { locationLayerRenderer.show() }
@@ -404,7 +400,6 @@ class LocationPuckManagerTest {
 
     verify(exactly = 0) { animationManager.setLocationLayerRenderer(locationLayerRenderer) }
     verify(exactly = 0) { animationManager.setUpdateListeners(any(), any(), any()) }
-    verify(exactly = 0) { animationManager.applyPulsingAnimationSettings(settings) }
     verify(exactly = 0) { locationLayerRenderer.addLayers(positionManager) }
     verify(exactly = 0) { locationLayerRenderer.initializeComponents(style) }
     verify(exactly = 0) { locationLayerRenderer.hide() }
@@ -438,12 +433,14 @@ class LocationPuckManagerTest {
   fun testDisablePuckBearingSnapsToNorth() {
     val lastBearing = 180.0
     val newBearing = 90.0
-    val settings2 = LocationComponentSettings2().apply { puckBearingEnabled = false }
+    val settings = LocationComponentSettings(LocationPuck2D()) {
+      puckBearingEnabled = false
+    }
     val bearings = mutableListOf<Double>()
     every { animationManager.puckAnimationEnabled } returns true
 
     locationPuckManager.lastBearing = lastBearing
-    locationPuckManager.updateSettings2(settings2)
+    locationPuckManager.updateSettings(settings)
     locationPuckManager.updateCurrentBearing(newBearing)
 
     verify {

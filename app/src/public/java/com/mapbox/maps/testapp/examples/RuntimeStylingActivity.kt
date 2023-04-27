@@ -21,7 +21,6 @@ import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.*
 import com.mapbox.maps.extension.style.sources.getSource
 import com.mapbox.maps.testapp.R
-import java.nio.ByteBuffer
 
 /**
  * Example showcasing usage of style extension.
@@ -334,12 +333,10 @@ class RuntimeStylingActivity : AppCompatActivity() {
 
   private fun addLayerWithoutStyleExtension(style: Style) {
     val bitmap = ContextCompat.getDrawable(this, R.drawable.android_symbol)?.toBitmap(64, 64)
-    val byteBuffer = ByteBuffer.allocate(bitmap!!.byteCount)
-    bitmap.copyPixelsToBuffer(byteBuffer)
     val expected = style.addStyleImage(
       "myImage",
       1f,
-      Image(64, 64, byteBuffer.array()),
+      bitmap!!.toMapboxImage(),
       false,
       mutableListOf(),
       mutableListOf(),

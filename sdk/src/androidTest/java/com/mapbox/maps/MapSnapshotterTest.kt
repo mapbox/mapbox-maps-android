@@ -41,8 +41,8 @@ class MapSnapshotterTest {
         styleURI = Style.MAPBOX_STREETS
         start {
           if (it.isValue) {
-            val image = it.value!!.image()
-            if (image.data.isNotEmpty() && image.width == 600 && image.height == 512) {
+            val image = it.value!!.moveImage()!!
+            if (image.data.buffer.hasRemaining() && image.width == 600 && image.height == 512) {
               latch.countDown()
             }
           }

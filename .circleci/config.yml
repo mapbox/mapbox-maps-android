@@ -475,7 +475,7 @@ jobs:
                 no_output_timeout: 30m
                 name: verify-api-revapi
                 command: |
-                  make build
+                  make sdk-build
                   echo "$(./mbx-ci github reader token)" > gh_token.txt
                   if [[ $CIRCLE_TAG =~ << pipeline.parameters.git_release_tag >> ]]; then
                     ./scripts/java-api-check-all.sh "${CIRCLE_TAG}"

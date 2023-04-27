@@ -7,7 +7,7 @@ import com.mapbox.maps.ImageStretches
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.utils.check
-import java.nio.ByteBuffer
+import com.mapbox.maps.toMapboxImage
 
 /**
  * Concrete implementation of ImagePlugin, the plugin is used to add an image to be used in the style.
@@ -90,12 +90,7 @@ class ImageExtensionImpl(private val builder: Builder) : StyleContract.StyleImag
      * Set bitmap data of the image.
      */
     fun bitmap(bitmap: Bitmap): Builder = apply {
-      if (bitmap.config != Bitmap.Config.ARGB_8888) {
-        throw IllegalArgumentException("Only ARGB_8888 bitmap config is supported!")
-      }
-      val byteBuffer = ByteBuffer.allocate(bitmap.byteCount)
-      bitmap.copyPixelsToBuffer(byteBuffer)
-      this.internalImage = Image(bitmap.width, bitmap.height, byteBuffer.array())
+      this.internalImage = bitmap.toMapboxImage()
     }
 
     /**

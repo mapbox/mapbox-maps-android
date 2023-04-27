@@ -24,7 +24,7 @@ open class AttributionViewPlugin(
   private lateinit var mapAttributionDelegate: MapAttributionDelegate
   private lateinit var dialogManager: AttributionDialogManager
 
-  override var internalSettings: AttributionSettings = AttributionSettings()
+  override var internalSettings: AttributionSettings = AttributionSettings { }
 
   override fun applySettings() {
     attributionView.setGravity(internalSettings.position)

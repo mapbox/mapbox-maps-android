@@ -1,10 +1,12 @@
 package com.mapbox.maps.plugin.locationcomponent
 
+import android.content.Context
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.LocationPuck3D
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.LOCATION_INDICATOR_LAYER
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.MODEL_LAYER
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.MODEL_SOURCE
+import java.lang.ref.WeakReference
 
 internal class LayerSourceProvider {
 
@@ -31,8 +33,8 @@ internal class LayerSourceProvider {
 
   fun getLocationIndicatorLayer() = LocationIndicatorLayerWrapper(LOCATION_INDICATOR_LAYER)
 
-  fun getLocationIndicatorLayerRenderer(puckOptions: LocationPuck2D) =
-    LocationIndicatorLayerRenderer(puckOptions, this)
+  fun getLocationIndicatorLayerRenderer(puckOptions: LocationPuck2D, weakContext: WeakReference<Context>) =
+    LocationIndicatorLayerRenderer(puckOptions, weakContext, this)
 
   fun getModelLayerRenderer(locationModelLayerOptions: LocationPuck3D) =
     ModelLayerRenderer(this, locationModelLayerOptions)

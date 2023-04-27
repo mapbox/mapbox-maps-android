@@ -8,7 +8,6 @@ import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
 import com.mapbox.maps.extension.style.StyleInterface
-import java.nio.ByteBuffer
 
 /**
  * The general class to interact with Styles in the Modular Mapbox Maps SDK for Android.
@@ -651,11 +650,9 @@ class Style internal constructor(
     bitmap: Bitmap,
     sdf: Boolean
   ): Expected<String, None> {
-    val byteBuffer = ByteBuffer.allocate(bitmap.byteCount)
-    bitmap.copyPixelsToBuffer(byteBuffer)
     return addImage(
       imageId,
-      Image(bitmap.width, bitmap.height, byteBuffer.array()),
+      bitmap.toMapboxImage(),
       sdf
     )
   }
@@ -1060,25 +1057,25 @@ class Style internal constructor(
      * constant means your map style will always use the latest version and may change as we
      * improve the style.
      */
-    const val MAPBOX_STREETS = "mapbox://styles/mapbox/streets-v11"
+    const val MAPBOX_STREETS = "mapbox://styles/mapbox/streets-v12"
 
     /**
      * Outdoors: A general-purpose style tailored to outdoor activities. Using this constant means
      * your map style will always use the latest version and may change as we improve the style.
      */
-    const val OUTDOORS = "mapbox://styles/mapbox/outdoors-v11"
+    const val OUTDOORS = "mapbox://styles/mapbox/outdoors-v12"
 
     /**
      * Light: Subtle light backdrop for data visualizations. Using this constant means your map
      * style will always use the latest version and may change as we improve the style.
      */
-    const val LIGHT = "mapbox://styles/mapbox/light-v10"
+    const val LIGHT = "mapbox://styles/mapbox/light-v11"
 
     /**
      * Dark: Subtle dark backdrop for data visualizations. Using this constant means your map style
      * will always use the latest version and may change as we improve the style.
      */
-    const val DARK = "mapbox://styles/mapbox/dark-v10"
+    const val DARK = "mapbox://styles/mapbox/dark-v11"
 
     /**
      * Satellite: A beautiful global satellite and aerial imagery layer. Using this constant means
@@ -1091,7 +1088,7 @@ class Style internal constructor(
      * constant means your map style will always use the latest version and may change as we
      * improve the style.
      */
-    const val SATELLITE_STREETS = "mapbox://styles/mapbox/satellite-streets-v11"
+    const val SATELLITE_STREETS = "mapbox://styles/mapbox/satellite-streets-v12"
 
     /**
      * Traffic Day: Color-coded roads based on live traffic congestion data. Traffic data is currently

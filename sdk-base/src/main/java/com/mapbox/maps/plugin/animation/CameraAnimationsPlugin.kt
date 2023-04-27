@@ -1,5 +1,6 @@
 package com.mapbox.maps.plugin.animation
 
+import android.animation.Animator
 import android.animation.ValueAnimator
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
@@ -42,7 +43,8 @@ interface CameraAnimationsPlugin : MapPlugin {
    */
   fun easeTo(
     cameraOptions: CameraOptions,
-    animationOptions: MapAnimationOptions? = null
+    animationOptions: MapAnimationOptions? = null,
+    animatorListener: Animator.AnimatorListener? = null
   ): Cancelable
 
   /**
@@ -57,7 +59,8 @@ interface CameraAnimationsPlugin : MapPlugin {
   fun scaleBy(
     amount: Double,
     screenCoordinate: ScreenCoordinate?,
-    animationOptions: MapAnimationOptions? = null
+    animationOptions: MapAnimationOptions? = null,
+    animatorListener: Animator.AnimatorListener? = null
   ): Cancelable
 
   /**
@@ -70,7 +73,8 @@ interface CameraAnimationsPlugin : MapPlugin {
    */
   fun moveBy(
     screenCoordinate: ScreenCoordinate,
-    animationOptions: MapAnimationOptions? = null
+    animationOptions: MapAnimationOptions? = null,
+    animatorListener: Animator.AnimatorListener? = null
   ): Cancelable
 
   /**
@@ -85,7 +89,8 @@ interface CameraAnimationsPlugin : MapPlugin {
   fun rotateBy(
     first: ScreenCoordinate,
     second: ScreenCoordinate,
-    animationOptions: MapAnimationOptions? = null
+    animationOptions: MapAnimationOptions? = null,
+    animatorListener: Animator.AnimatorListener? = null
   ): Cancelable
 
   /**
@@ -98,7 +103,8 @@ interface CameraAnimationsPlugin : MapPlugin {
    */
   fun pitchBy(
     pitch: Double,
-    animationOptions: MapAnimationOptions? = null
+    animationOptions: MapAnimationOptions? = null,
+    animatorListener: Animator.AnimatorListener? = null
   ): Cancelable
 
   /**
@@ -120,7 +126,8 @@ interface CameraAnimationsPlugin : MapPlugin {
    */
   fun flyTo(
     cameraOptions: CameraOptions,
-    animationOptions: MapAnimationOptions? = null
+    animationOptions: MapAnimationOptions? = null,
+    animatorListener: Animator.AnimatorListener? = null
   ): Cancelable
 
   /**

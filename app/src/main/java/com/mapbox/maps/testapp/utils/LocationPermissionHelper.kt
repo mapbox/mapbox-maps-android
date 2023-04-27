@@ -2,34 +2,41 @@ package com.mapbox.maps.testapp.utils
 
 import android.app.Activity
 import android.widget.Toast
-import com.mapbox.android.core.permissions.PermissionsListener
-import com.mapbox.android.core.permissions.PermissionsManager
+import com.mapbox.maps.plugin.locationcomponent.PermissionsListener
+import com.mapbox.maps.plugin.locationcomponent.PermissionsManager
 import java.lang.ref.WeakReference
 
-class LocationPermissionHelper(val activity: WeakReference<Activity>) {
+class LocationPermissionHelper(val activityRef: WeakReference<Activity>) {
   private lateinit var permissionsManager: PermissionsManager
 
   fun checkPermissions(onMapReady: () -> Unit) {
-    if (PermissionsManager.areLocationPermissionsGranted(activity.get())) {
-      onMapReady()
-    } else {
-      permissionsManager = PermissionsManager(object : PermissionsListener {
-        override fun onExplanationNeeded(permissionsToExplain: List<String>) {
-          Toast.makeText(
-            activity.get(), "You need to accept location permissions.",
-            Toast.LENGTH_SHORT
-          ).show()
-        }
+    activityRef.get()?.let { activity: Activity ->
+      if (PermissionsManager.areLocationPermissionsGranted(activity)) {
+        onMapReady()
+      } else {
+        permissionsManager = PermissionsManager(object : PermissionsListener {
 
-        override fun onPermissionResult(granted: Boolean) {
-          if (granted) {
-            onMapReady()
-          } else {
-            activity.get()?.finish()
+          override fun onExplanationNeeded(permissionsToExplain: List<String>) {
+            activityRef.get()?.let {
+              Toast.makeText(
+                it, "You need to accept location permissions.",
+                Toast.LENGTH_SHORT
+              ).show()
+            }
           }
-        }
-      })
-      permissionsManager.requestLocationPermissions(activity.get())
+
+          override fun onPermissionResult(granted: Boolean) {
+            activityRef.get()?.let {
+              if (granted) {
+                onMapReady()
+              } else {
+                it.finish()
+              }
+            }
+          }
+        })
+        permissionsManager.requestLocationPermissions(activity)
+      }
     }
   }
 

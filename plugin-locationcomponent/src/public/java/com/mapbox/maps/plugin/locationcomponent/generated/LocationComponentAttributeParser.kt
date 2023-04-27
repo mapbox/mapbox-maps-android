@@ -5,9 +5,10 @@ package com.mapbox.maps.plugin.locationcomponent.generated
 import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
-import androidx.core.content.res.ResourcesCompat
+import com.mapbox.maps.ImageHolder
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.LocationPuck3D
+import com.mapbox.maps.plugin.PuckBearingSource
 import com.mapbox.maps.plugin.locationcomponent.R
 
 /**
@@ -24,17 +25,11 @@ internal object LocationComponentAttributeParser {
     val typedArray = context.obtainStyledAttributes(attrs, R.styleable.mapbox_MapView, 0, 0)
     try {
       return LocationComponentSettings(
-        enabled = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_locationComponentEnabled, false),
-        pulsingEnabled = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_locationComponentPulsingEnabled, false),
-        pulsingColor = typedArray.getColor(R.styleable.mapbox_MapView_mapbox_locationComponentPulsingColor, Color.parseColor("#4A90E2")),
-        pulsingMaxRadius = typedArray.getDimension(R.styleable.mapbox_MapView_mapbox_locationComponentPulsingMaxRadius, 10f * pixelRatio),
-        layerAbove = typedArray.getString(R.styleable.mapbox_MapView_mapbox_locationComponentLayerAbove),
-        layerBelow = typedArray.getString(R.styleable.mapbox_MapView_mapbox_locationComponentLayerBelow),
         locationPuck = when (typedArray.getInt(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuck, -1)) {
           0 -> LocationPuck2D(
-            topImage = typedArray.getDrawable(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck2DTopImage),
-            bearingImage = typedArray.getDrawable(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck2DBearingImage),
-            shadowImage = typedArray.getDrawable(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck2DShadowImage),
+            topImage = ImageHolder.from(typedArray.getResourceId(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck2DTopImage, -1)),
+            bearingImage = ImageHolder.from(typedArray.getResourceId(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck2DBearingImage, -1)),
+            shadowImage = ImageHolder.from(typedArray.getResourceId(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck2DShadowImage, -1)),
             scaleExpression = typedArray.getString(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck2DScaleExpression),
             opacity = typedArray.getFloat(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck2DOpacity, 1f),
           )
@@ -64,12 +59,24 @@ internal object LocationComponentAttributeParser {
             ),
           )
           else -> LocationPuck2D(
-            topImage = ResourcesCompat.getDrawable(context.resources, R.drawable.mapbox_user_icon, null),
-            bearingImage = ResourcesCompat.getDrawable(context.resources, R.drawable.mapbox_user_stroke_icon, null),
-            shadowImage = ResourcesCompat.getDrawable(context.resources, R.drawable.mapbox_user_icon_shadow, null),
+            topImage = ImageHolder.from(R.drawable.mapbox_user_icon),
+            bearingImage = ImageHolder.from(R.drawable.mapbox_user_stroke_icon),
+            shadowImage = ImageHolder.from(R.drawable.mapbox_user_icon_shadow),
           )
-        },
-      )
+        }
+    ) {
+        enabled = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_locationComponentEnabled, false)
+        pulsingEnabled = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_locationComponentPulsingEnabled, false)
+        pulsingColor = typedArray.getColor(R.styleable.mapbox_MapView_mapbox_locationComponentPulsingColor, Color.parseColor("#4A90E2"))
+        pulsingMaxRadius = typedArray.getDimension(R.styleable.mapbox_MapView_mapbox_locationComponentPulsingMaxRadius, 10f * pixelRatio)
+        showAccuracyRing = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_locationComponentShowAccuracyRing, false)
+        accuracyRingColor = typedArray.getColor(R.styleable.mapbox_MapView_mapbox_locationComponentAccuracyRingColor, Color.parseColor("#4d89cff0"))
+        accuracyRingBorderColor = typedArray.getColor(R.styleable.mapbox_MapView_mapbox_locationComponentAccuracyRingBorderColor, Color.parseColor("#4d89cff0"))
+        layerAbove = typedArray.getString(R.styleable.mapbox_MapView_mapbox_locationComponentLayerAbove)
+        layerBelow = typedArray.getString(R.styleable.mapbox_MapView_mapbox_locationComponentLayerBelow)
+        puckBearingEnabled = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_locationComponentPuckBearingEnabled, true)
+        puckBearingSource = PuckBearingSource.values()[typedArray.getInt(R.styleable.mapbox_MapView_mapbox_locationComponentPuckBearingSource, 0)]
+      }
     } finally {
       typedArray.recycle()
     }

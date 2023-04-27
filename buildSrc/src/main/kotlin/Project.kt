@@ -81,7 +81,7 @@ object Dependencies {
   const val squareRetrofit = "com.squareup.retrofit2:retrofit:${Versions.squareRetrofit}"
   const val squareRetrofitGsonConverter = "com.squareup.retrofit2:converter-gson:${Versions.squareRetrofit}"
   const val kotlin = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.pluginKotlin}"
-  const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.kotlinCoroutines}"
+  const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.kotlinCoroutines}"
   const val coroutinesTest = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.kotlinCoroutines}"
   const val junit = "junit:junit:${Versions.junit}"
   const val mockk = "io.mockk:mockk:${Versions.mockk}"
@@ -107,6 +107,8 @@ object Dependencies {
   const val composeUiTooling = "androidx.compose.ui:ui-tooling"
   const val composeUITest = "androidx.compose.ui:ui-test-junit4"
   const val composeUITestManifest = "androidx.compose.ui:ui-test-manifest"
+  const val kotlinDataCompatAnnotation = "com.github.tobrun.kotlin-data-compat:annotation:${Versions.kotlinDataCompat}"
+  const val kotlinDataCompatProcessor = "com.github.tobrun.kotlin-data-compat:processor:${Versions.kotlinDataCompat}"
 }
 
 object Versions {
@@ -122,8 +124,8 @@ object Versions {
   const val mapboxGestures = "0.8.0"
   const val mapboxJavaServices = "5.4.1"
   const val mapboxBase = "0.8.0"
-  const val mapboxGlNative = "11.0.0-SNAPSHOT.0317T1053Z.c380f94"
-  const val mapboxCommon = "23.4.0-beta.1"
+  const val mapboxGlNative = "11.0.0-SNAPSHOT.0418T1856Z.c0107ce"
+  const val mapboxCommon = "23.5.0-SNAPSHOT.0406T1327Z.57bf717"
   const val androidxCore = "1.9.0" // last version compatible with kotlin 1.8.10
   const val androidxFragmentTesting = "1.5.0"
   // can not bump to v1.6.0, due to incompatible
@@ -155,7 +157,7 @@ object Versions {
   // Use kotlinCoroutines to 1.6.1 to be compatible with platform runtime.
   const val kotlinCoroutines = "1.6.1"
   const val junit = "4.13.2"
-  const val mockk = "1.13.4"
+  const val mockk = "1.13.5"
   const val robolectric = "4.9.2"
   const val robolectricEgl = "gl1.1-android-2.1_r1"
   const val lint = "30.4.2"
@@ -170,6 +172,8 @@ object Versions {
   const val composeBom = "2023.01.00"
   const val pluginPlayPublisher = "3.7.0"
   const val gradleVersionsPlugin = "0.42.0"
+  const val ksp = "1.0.9"
+  const val kotlinDataCompat = "0.6.0"
 }
 
 /**

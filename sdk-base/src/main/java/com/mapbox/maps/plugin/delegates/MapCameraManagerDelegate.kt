@@ -1,5 +1,6 @@
 package com.mapbox.maps.plugin.delegates
 
+import android.graphics.RectF
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.None
 import com.mapbox.geojson.Geometry
@@ -213,6 +214,22 @@ interface MapCameraManagerDelegate {
    * on the screen.
    */
   fun coordinatesForPixels(pixels: List<ScreenCoordinate>): List<Point>
+
+  /**
+   * Calculates geographical `coordinates` (i.e., longitude-latitude pairs) that correspond
+   * to a [RectF] that holds four screen points.
+   *
+   * The screen points are in `platform pixels` relative to the top left corner
+   * of the map (not of the whole screen).
+   *
+   * This API isn't supported by Globe projection.
+   *
+   * @param rectF Rectangle with 4 edges (left, top, right, bottom).
+   *
+   * @return List of `geographical coordinates` that corresponds to given edges of RectF
+   * in clockwise direction starting from topLeft.
+   */
+  fun coordinatesForRect(rectF: RectF): List<Point>
 
   /**
    * Changes the map view by any combination of center, zoom, bearing, and pitch, without an animated transition.

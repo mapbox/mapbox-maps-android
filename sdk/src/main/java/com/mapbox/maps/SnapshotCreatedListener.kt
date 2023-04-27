@@ -11,5 +11,5 @@ fun interface SnapshotCreatedListener {
    * @param snapshot An image snapshot of a map rendered by MapSnapshotter.
    * If [snapshot] = NULL it means snapshot was not successful and error message may be found in log.
    */
-  fun onSnapshotResult(snapshot: MapSnapshotInterface?)
+  fun onSnapshotResult(snapshot: MapSnapshotResult?)
 }

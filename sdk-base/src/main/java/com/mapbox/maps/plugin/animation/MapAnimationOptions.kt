@@ -1,6 +1,5 @@
 package com.mapbox.maps.plugin.animation
 
-import android.animation.Animator
 import android.animation.TimeInterpolator
 
 /**
@@ -26,10 +25,6 @@ class MapAnimationOptions private constructor(
    * If not set explicitly default interpolator will be taken (CameraAnimatorsFactory.DEFAULT_INTERPOLATOR if using plugin-animation).
    */
   val interpolator: TimeInterpolator?,
-  /**
-   * Animator start / cancel / end listener.
-   */
-  val animatorListener: Animator.AnimatorListener?
 ) {
 
   /**
@@ -58,11 +53,6 @@ class MapAnimationOptions private constructor(
     private var interpolator: TimeInterpolator? = null
 
     /**
-     * Animator start / cancel / end listener.
-     */
-    private var animatorListener: Animator.AnimatorListener? = null
-
-    /**
      * Set the owner or creator this animation.
      */
     fun owner(owner: String): Builder = apply { this.owner = owner }
@@ -84,16 +74,10 @@ class MapAnimationOptions private constructor(
       apply { this.interpolator = interpolator }
 
     /**
-     * Set the animator start / cancel / end listener.
-     */
-    fun animatorListener(animatorListener: Animator.AnimatorListener): Builder =
-      apply { this.animatorListener = animatorListener }
-
-    /**
      * Build an actual [MapAnimationOptions] object.
      */
     fun build(): MapAnimationOptions =
-      MapAnimationOptions(owner, duration, startDelay, interpolator, animatorListener)
+      MapAnimationOptions(owner, duration, startDelay, interpolator)
   }
 
   /**
@@ -109,7 +93,6 @@ class MapAnimationOptions private constructor(
     if (duration != other.duration) return false
     if (startDelay != other.startDelay) return false
     if (interpolator != other.interpolator) return false
-    if (animatorListener != other.animatorListener) return false
 
     return true
   }
@@ -122,7 +105,6 @@ class MapAnimationOptions private constructor(
     result = 31 * result + (duration?.hashCode() ?: 0)
     result = 31 * result + (startDelay?.hashCode() ?: 0)
     result = 31 * result + (interpolator?.hashCode() ?: 0)
-    result = 31 * result + (animatorListener?.hashCode() ?: 0)
     return result
   }
 

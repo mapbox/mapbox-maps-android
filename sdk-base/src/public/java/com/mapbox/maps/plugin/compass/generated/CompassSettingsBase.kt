@@ -2,7 +2,7 @@
 
 package com.mapbox.maps.plugin.compass.generated
 
-import android.graphics.drawable.Drawable
+import com.mapbox.maps.ImageHolder
 
 /**
  * Abstract settings class for CompassPlugin.
@@ -26,7 +26,7 @@ abstract class CompassSettingsBase : CompassSettingsInterface {
    * @return compass settings
    */
   override fun getSettings(): CompassSettings {
-    return internalSettings.copy()
+    return internalSettings.toBuilder().build()
   }
 
   /**
@@ -34,8 +34,8 @@ abstract class CompassSettingsBase : CompassSettingsInterface {
    *
    * @param block the receiver function of CompassSettings
    */
-  override fun updateSettings(block: CompassSettings.() -> Unit) {
-    this.internalSettings.apply(block)
+  override fun updateSettings(block: CompassSettings.Builder.() -> Unit) {
+    this.internalSettings = this.internalSettings.toBuilder().apply(block).build()
     applySettings()
   }
 
@@ -48,7 +48,7 @@ abstract class CompassSettingsBase : CompassSettingsInterface {
     }
     set(value) {
       if (this.internalSettings.enabled != value) {
-        this.internalSettings.enabled = value
+        this.internalSettings = this.internalSettings.toBuilder().setEnabled(value).build()
         applySettings()
       }
     }
@@ -62,7 +62,7 @@ abstract class CompassSettingsBase : CompassSettingsInterface {
     }
     set(value) {
       if (this.internalSettings.position != value) {
-        this.internalSettings.position = value
+        this.internalSettings = this.internalSettings.toBuilder().setPosition(value).build()
         applySettings()
       }
     }
@@ -76,7 +76,7 @@ abstract class CompassSettingsBase : CompassSettingsInterface {
     }
     set(value) {
       if (this.internalSettings.marginLeft != value) {
-        this.internalSettings.marginLeft = value
+        this.internalSettings = this.internalSettings.toBuilder().setMarginLeft(value).build()
         applySettings()
       }
     }
@@ -90,7 +90,7 @@ abstract class CompassSettingsBase : CompassSettingsInterface {
     }
     set(value) {
       if (this.internalSettings.marginTop != value) {
-        this.internalSettings.marginTop = value
+        this.internalSettings = this.internalSettings.toBuilder().setMarginTop(value).build()
         applySettings()
       }
     }
@@ -104,7 +104,7 @@ abstract class CompassSettingsBase : CompassSettingsInterface {
     }
     set(value) {
       if (this.internalSettings.marginRight != value) {
-        this.internalSettings.marginRight = value
+        this.internalSettings = this.internalSettings.toBuilder().setMarginRight(value).build()
         applySettings()
       }
     }
@@ -118,7 +118,7 @@ abstract class CompassSettingsBase : CompassSettingsInterface {
     }
     set(value) {
       if (this.internalSettings.marginBottom != value) {
-        this.internalSettings.marginBottom = value
+        this.internalSettings = this.internalSettings.toBuilder().setMarginBottom(value).build()
         applySettings()
       }
     }
@@ -132,7 +132,7 @@ abstract class CompassSettingsBase : CompassSettingsInterface {
     }
     set(value) {
       if (this.internalSettings.opacity != value) {
-        this.internalSettings.opacity = value
+        this.internalSettings = this.internalSettings.toBuilder().setOpacity(value).build()
         applySettings()
       }
     }
@@ -146,7 +146,7 @@ abstract class CompassSettingsBase : CompassSettingsInterface {
     }
     set(value) {
       if (this.internalSettings.rotation != value) {
-        this.internalSettings.rotation = value
+        this.internalSettings = this.internalSettings.toBuilder().setRotation(value).build()
         applySettings()
       }
     }
@@ -160,7 +160,7 @@ abstract class CompassSettingsBase : CompassSettingsInterface {
     }
     set(value) {
       if (this.internalSettings.visibility != value) {
-        this.internalSettings.visibility = value
+        this.internalSettings = this.internalSettings.toBuilder().setVisibility(value).build()
         applySettings()
       }
     }
@@ -174,7 +174,7 @@ abstract class CompassSettingsBase : CompassSettingsInterface {
     }
     set(value) {
       if (this.internalSettings.fadeWhenFacingNorth != value) {
-        this.internalSettings.fadeWhenFacingNorth = value
+        this.internalSettings = this.internalSettings.toBuilder().setFadeWhenFacingNorth(value).build()
         applySettings()
       }
     }
@@ -188,7 +188,7 @@ abstract class CompassSettingsBase : CompassSettingsInterface {
     }
     set(value) {
       if (this.internalSettings.clickable != value) {
-        this.internalSettings.clickable = value
+        this.internalSettings = this.internalSettings.toBuilder().setClickable(value).build()
         applySettings()
       }
     }
@@ -196,13 +196,13 @@ abstract class CompassSettingsBase : CompassSettingsInterface {
   /**
    * The compass image, the visual representation of the compass.
    */
-  override var image: Drawable?
+  override var image: ImageHolder?
     get() {
       return this.internalSettings.image
     }
     set(value) {
       if (this.internalSettings.image != value) {
-        this.internalSettings.image = value
+        this.internalSettings = this.internalSettings.toBuilder().setImage(value).build()
         applySettings()
       }
     }

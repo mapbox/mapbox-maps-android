@@ -15,7 +15,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.locks.ReentrantLock
 import kotlin.concurrent.withLock
 
-internal abstract class MapboxRenderer : MapClient {
+internal abstract class MapboxRenderer : DelegatingMapClient {
 
   internal lateinit var renderThread: MapboxRenderThread
   internal abstract val widgetRenderer: MapboxWidgetRenderer
@@ -46,7 +46,6 @@ internal abstract class MapboxRenderer : MapClient {
 
   @UiThread
   fun onDestroy() {
-    logI(TAG, "onDestroy")
     widgetRenderer.cleanUpAllWidgets()
     renderThread.destroy()
     renderThread.fpsChangedListener = null
@@ -100,7 +99,6 @@ internal abstract class MapboxRenderer : MapClient {
 
   @WorkerThread
   fun destroyRenderer() {
-    logI(TAG, "Destroy renderer")
     map?.destroyRenderer()
     // additionally it's correct moment to release pixel reader while we still have EGL context
     pixelReader?.release()

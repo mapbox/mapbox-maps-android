@@ -16,7 +16,6 @@ import com.mapbox.maps.plugin.gestures.OnMapClickListener
 import com.mapbox.maps.plugin.gestures.OnMapLongClickListener
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettings
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
-import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings2
 import com.mapbox.maps.plugin.logo.generated.LogoSettings
 import com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings
 import kotlinx.coroutines.awaitCancellation
@@ -60,10 +59,6 @@ public fun MapboxMap(
   locationComponentSettings: LocationComponentSettings = DefaultSettingsProvider.defaultLocationComponentSettings(
     LocalContext.current.applicationContext,
   ),
-  /**
-   * Additional settings for showing a location puck on the map.
-   */
-  locationComponentSettings2: LocationComponentSettings2 = DefaultSettingsProvider.defaultLocationComponentSettings2,
   /**
    * Settings for showing the Mapbox logo on the map.
    */
@@ -122,7 +117,6 @@ public fun MapboxMap(
   val currentCompassSettings by rememberUpdatedState(compassSettings)
   val currentGesturesSettings by rememberUpdatedState(gesturesSettings)
   val currentLocationComponentSettings by rememberUpdatedState(locationComponentSettings)
-  val currentLocationComponentSettings2 by rememberUpdatedState(locationComponentSettings2)
   val currentLogoSettings by rememberUpdatedState(logoSettings)
   val currentScaleBarSettings by rememberUpdatedState(scaleBarSettings)
   val currentCameraOptions by rememberUpdatedState(cameraOptions)
@@ -143,7 +137,6 @@ public fun MapboxMap(
             currentCompassSettings,
             currentGesturesSettings,
             currentLocationComponentSettings,
-            currentLocationComponentSettings2,
             currentLogoSettings,
             currentScaleBarSettings,
             currentCameraOptions,

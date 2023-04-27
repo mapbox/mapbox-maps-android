@@ -14,9 +14,9 @@ import com.mapbox.maps.extension.style.utils.TypeUtils
 import com.mapbox.maps.extension.style.utils.take
 import com.mapbox.maps.extension.style.utils.unwrapFromLiteralArray
 import com.mapbox.maps.extension.style.utils.unwrapToExpression
-import java.util.*
+import java.util.HashMap
+import java.util.Locale
 import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 /**
  * An expression defines a formula for computing the value of any layout property, paint property,
@@ -1692,15 +1692,12 @@ class Expression : Value {
     fun locale(locale: Locale): CollatorBuilder = apply {
       val localeStringBuilder = StringBuilder()
 
-      val language = locale.language
-      language?.takeIf { it.isNotEmpty() }?.let {
-        localeStringBuilder.append(it)
-      }
+      localeStringBuilder.append(locale.language)
 
       val country = locale.country
-      country?.takeIf { it.isNotEmpty() }?.let {
+      if (country.isNotEmpty()) {
         localeStringBuilder.append("-")
-        localeStringBuilder.append(it)
+        localeStringBuilder.append(country)
       }
 
       options["locale"] = literal(localeStringBuilder.toString())

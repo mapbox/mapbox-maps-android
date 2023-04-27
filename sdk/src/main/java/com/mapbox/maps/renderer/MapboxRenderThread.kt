@@ -1,13 +1,11 @@
 package com.mapbox.maps.renderer
 
+import android.opengl.EGL14
+import android.opengl.EGLSurface
 import android.opengl.GLES20
-import android.opengl.GLES20.glGetString
 import android.view.Choreographer
 import android.view.Surface
 import androidx.annotation.*
-import com.mapbox.bindgen.Value
-import com.mapbox.common.SettingsServiceFactory
-import com.mapbox.common.SettingsServiceStorageType
 import com.mapbox.maps.logE
 import com.mapbox.maps.logI
 import com.mapbox.maps.logW
@@ -18,9 +16,6 @@ import com.mapbox.maps.viewannotation.ViewAnnotationManager
 import com.mapbox.maps.viewannotation.ViewAnnotationUpdateMode
 import java.util.concurrent.ConcurrentLinkedQueue
 import java.util.concurrent.locks.ReentrantLock
-import javax.microedition.khronos.egl.EGL10
-import javax.microedition.khronos.egl.EGL11
-import javax.microedition.khronos.egl.EGLSurface
 import kotlin.concurrent.withLock
 import kotlin.properties.Delegates
 
@@ -66,18 +61,30 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   /**
    * We track moment when native renderer is prepared.
    */
-  private var renderCreated = false
+  private var nativeRenderCreated = false
+    // no need for synchronized getter, getting value for this var happens on render thread only
+    set(value) = renderThreadPreparedLock.withLock {
+      field = value
+    }
 
   /**
    * We track moment when EGL context is created and associated with current Android surface.
    */
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal var eglContextCreated = false
+    // no need for synchronized getter, getting value for this var happens on render thread only
+    set(value) = renderThreadPreparedLock.withLock {
+      field = value
+    }
 
+  private val renderThreadPreparedLock = ReentrantLock()
   /**
    * Render thread should be treated as valid (prepared to render a map) when both flags are true.
+   * Getter is thread-safe as this flag could be accessed from any thread.
    */
-  private val renderThreadPrepared get() = eglContextCreated && renderCreated
+  private val renderThreadPrepared get() = renderThreadPreparedLock.withLock {
+    eglContextCreated && nativeRenderCreated
+  }
   private var eglPrepared = false
   private var renderNotSupported = false
 
@@ -156,10 +163,19 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   private fun setUpRenderThread(creatingSurface: Boolean): Boolean {
     lock.withLock {
       try {
+        logI(
+          TAG,
+          "Setting up render thread, flags:" +
+            " creatingSurface=$creatingSurface," +
+            " nativeRenderCreated=$nativeRenderCreated," +
+            " eglContextCreated=$eglContextCreated," +
+            " eglPrepared=$eglPrepared," +
+            " paused=$paused"
+        )
         val eglConfigOk = checkEglConfig()
         val androidSurfaceOk = checkAndroidSurface()
         if (eglConfigOk && androidSurfaceOk) {
-          // on Android SDK <= 23 at least on x86 emulators we need to force set EGL10.EGL_NO_CONTEXT
+          // on Android SDK <= 23 at least on x86 emulators we need to force set EGL14.EGL_NO_CONTEXT
           // when resuming activity
           if (creatingSurface) {
             eglCore.makeNothingCurrent()
@@ -170,16 +186,13 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
             eglContextCreated = checkEglContextCurrent()
             // finally we can create native renderer if needed or just report OK
             if (eglContextCreated) {
-              if (!renderCreated) {
-                // FIXME temporary solution to fix terrain not rendered on recent Mali GPUs
-                // remove before 10.12.0 release, https://mapbox.atlassian.net/browse/MAPSSDK-253
-                disableTextureFloatExtensionIfItsUnavailable()
-
-                // we set `renderCreated` as `true` before creating native render as core could potentially
+              if (!nativeRenderCreated) {
+                // we set `nativeRenderCreated` as `true` before creating native render as core could potentially
                 // schedule task in the same callchain and we need to make sure that `renderThreadPrepared` is already `true`
                 // so that we do not drop this task
-                renderCreated = true
+                nativeRenderCreated = true
                 mapboxRenderer.createRenderer()
+                logI(TAG, "Native renderer created.")
                 mapboxRenderer.onSurfaceChanged(
                   width = width,
                   height = height
@@ -312,8 +325,8 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
 
   private fun swapBuffers() {
     when (val swapStatus = eglCore.swapBuffers(eglSurface)) {
-      EGL10.EGL_SUCCESS -> { }
-      EGL11.EGL_CONTEXT_LOST -> {
+      EGL14.EGL_SUCCESS -> { }
+      EGL14.EGL_CONTEXT_LOST -> {
         logW(TAG, "Context lost. Waiting for re-acquire")
         // release all resources but not release Android surface
         // as it still potentially may be valid - then it could be re-used to recreate EGL;
@@ -339,9 +352,10 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
 
   private fun releaseAll(tryRecreate: Boolean = false) {
     mapboxRenderer.destroyRenderer()
+    logI(TAG, "Native renderer destroyed.")
     renderEventQueue.clear()
     nonRenderEventQueue.clear()
-    renderCreated = false
+    nativeRenderCreated = false
     releaseEglSurface()
     if (eglPrepared) {
       eglCore.release()
@@ -355,8 +369,10 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   }
 
   private fun prepareRenderFrame(creatingSurface: Boolean = false) {
-    // no need to do anything if we're waiting for next VSYNC already
-    if (awaitingNextVsync) {
+    // no need to do anything if we're waiting for next VSYNC already;
+    // however if Android has sent us new surface - we must proceed up to `setUpRenderThread` or
+    // otherwise main thread will end up having deadlock
+    if (awaitingNextVsync && !creatingSurface) {
       return
     }
     // Check first if we have to stop rendering at all (even if there was no EGL config) and cleanup EGL.
@@ -407,7 +423,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
 
   @UiThread
   fun onSurfaceDestroyed() {
-    logI(TAG, "RenderThread : surface destroyed")
+    logI(TAG, "onSurfaceDestroyed")
     lock.withLock {
       // in some situations `destroy` is called earlier than onSurfaceDestroyed - in that case no need to clean up
       if (renderHandlerThread.isRunning) {
@@ -416,7 +432,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
           Choreographer.getInstance().removeFrameCallback(this)
           lock.withLock {
             // TODO https://github.com/mapbox/mapbox-maps-android/issues/607
-            if (renderCreated && mapboxRenderer is MapboxTextureViewRenderer) {
+            if (nativeRenderCreated && mapboxRenderer is MapboxTextureViewRenderer) {
               releaseAll()
               renderHandlerThread.clearRenderEventQueue()
             } else {
@@ -426,7 +442,9 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
             destroyCondition.signal()
           }
         }
+        logI(TAG, "onSurfaceDestroyed: waiting until EGL will be cleaned up...")
         destroyCondition.await()
+        logI(TAG, "onSurfaceDestroyed: EGL resources were cleaned up.")
       }
     }
   }
@@ -465,11 +483,16 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
 
   @UiThread
   fun onSurfaceCreated(surface: Surface, width: Int, height: Int) {
+    logI(TAG, "onSurfaceCreated")
     lock.withLock {
-      renderHandlerThread.post {
-        processAndroidSurface(surface, width, height)
+      if (renderHandlerThread.isRunning) {
+        renderHandlerThread.post {
+          processAndroidSurface(surface, width, height)
+        }
+        logI(TAG, "onSurfaceCreated: waiting Android surface to be processed...")
+        createCondition.await()
+        logI(TAG, "onSurfaceCreated: Android surface was processed.")
       }
-      createCondition.await()
     }
   }
 
@@ -536,11 +559,13 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   @UiThread
   fun pause() {
     paused = true
+    logI(TAG, "Renderer paused")
   }
 
   @UiThread
   fun resume() {
     paused = false
+    logI(TAG, "Renderer resumed, renderThreadPrepared=$renderThreadPrepared")
     // schedule render if we resume not after first create (e.g. bring map back to front)
     if (renderThreadPrepared) {
       postPrepareRenderFrame()
@@ -549,12 +574,13 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
 
   @UiThread
   internal fun destroy() {
+    logI(TAG, "destroy")
     lock.withLock {
       // do nothing if destroy for some reason called more than once to avoid deadlock
       if (renderHandlerThread.isRunning) {
         renderHandlerThread.post {
           lock.withLock {
-            if (renderCreated) {
+            if (nativeRenderCreated) {
               releaseAll()
             }
             renderHandlerThread.clearRenderEventQueue()
@@ -563,7 +589,9 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
             destroyCondition.signal()
           }
         }
+        logI(TAG, "destroy: waiting until all resources will be cleaned up...")
         destroyCondition.await()
+        logI(TAG, "destroy: all resources were cleaned up.")
       }
     }
     renderHandlerThread.stop()
@@ -575,25 +603,6 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     while (event != null) {
       event.runnable?.run()
       event = originalQueue.poll()
-    }
-  }
-
-  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  internal var skipTextureFloatExtensionCheck = false
-  /*
-   * Force disabling extension texture float if the device doesn't support both `OES_texture_float`
-   * and `OES_texture_float_linear`.
-   */
-  private fun disableTextureFloatExtensionIfItsUnavailable() {
-    if (skipTextureFloatExtensionCheck) return
-    val extensions = "${glGetString(GLES20.GL_EXTENSIONS) ?: ""} "
-    if (
-      extensions.contains("OES_texture_float ").not() ||
-      extensions.contains("OES_texture_float_linear").not()
-    ) {
-      SettingsServiceFactory
-        .getInstance(SettingsServiceStorageType.NON_PERSISTENT)
-        .set("mapbox_opengl_extension_texture_float", Value.valueOf(false))
     }
   }
 

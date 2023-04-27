@@ -1,5 +1,7 @@
 package com.mapbox.maps.renderer
 
+import android.opengl.EGL14
+import android.opengl.EGLContext
 import android.view.Surface
 import com.mapbox.countDownEvery
 import com.mapbox.maps.logE
@@ -24,9 +26,6 @@ import org.robolectric.annotation.LooperMode
 import org.robolectric.shadows.ShadowChoreographer
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
-import javax.microedition.khronos.egl.EGL10
-import javax.microedition.khronos.egl.EGL11
-import javax.microedition.khronos.egl.EGLContext
 
 @RunWith(RobolectricTestRunner::class)
 @LooperMode(LooperMode.Mode.PAUSED)
@@ -57,7 +56,6 @@ class MapboxRenderThreadTest {
       fpsManager,
       textureRenderer,
     )
-    mapboxRenderThread.skipTextureFloatExtensionCheck = true
     renderHandlerThread.start()
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logE(any(), any()) } just Runs
@@ -87,7 +85,7 @@ class MapboxRenderThreadTest {
     every { eglCore.createWindowSurface(any()) } returns mockk(relaxed = true)
     every { eglCore.makeNothingCurrent() } returns true
     every { eglCore.makeCurrent(any()) } returns true
-    every { eglCore.swapBuffers(any()) } returns EGL10.EGL_SUCCESS
+    every { eglCore.swapBuffers(any()) } returns EGL14.EGL_SUCCESS
   }
 
   private fun pauseHandler() = Shadows.shadowOf(renderHandlerThread.handler?.looper).pause()
@@ -831,10 +829,10 @@ class MapboxRenderThreadTest {
     initRenderThread()
     provideValidSurface()
     pauseHandler()
-    every { eglCore.swapBuffers(any()) } returns EGL11.EGL_CONTEXT_LOST
+    every { eglCore.swapBuffers(any()) } returns EGL14.EGL_CONTEXT_LOST
     mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
     idleHandler()
-    every { eglCore.swapBuffers(any()) } returns EGL11.EGL_SUCCESS
+    every { eglCore.swapBuffers(any()) } returns EGL14.EGL_SUCCESS
     mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
     idleHandler()
     verifyOrder {
@@ -898,5 +896,47 @@ class MapboxRenderThreadTest {
     verifyOnce { eglCore.release() }
     verifyOnce { mapboxRenderer.destroyRenderer() }
     assertFalse(renderHandlerThread.isRunning)
+  }
+
+  @Test(timeout = 10000) // Added timeout to ensure that if test fails, test does not hang forever.
+  fun newAndroidSurfaceArriveWhenWaitingVsyncTest() {
+    initRenderThread()
+    val choreographerCallbackDelayMs = 16L
+    ShadowChoreographer.setPostFrameCallbackDelay(choreographerCallbackDelayMs.toInt())
+    mockSurface()
+    mapboxRenderThread.onSurfaceCreated(surface, 1, 1)
+    // make sure we prepareRenderFrame but do not yet swap buffers
+    idleHandler(choreographerCallbackDelayMs / 2)
+    // current surface becomes invalid
+    every { surface.isValid } returns false
+    // new valid surface arrives from Android
+    val validSurface = mockk<Surface>()
+    every { validSurface.isValid } returns true
+    mapboxRenderThread.onSurfaceCreated(
+      validSurface,
+      2,
+      2
+    )
+    // and we have time to process this new valid surface before doFrame is called on VSYNC
+    idleHandler(choreographerCallbackDelayMs / 4)
+    // finally we get to doFrame
+    idleHandler(choreographerCallbackDelayMs)
+    verifyOrder {
+      // initially we have created the native renderer instance as well as EGL
+      eglCore.prepareEgl()
+      eglCore.createWindowSurface(surface)
+      eglCore.makeCurrent(any())
+      mapboxRenderer.createRenderer()
+      // as new Android surface != current one - we perform releaseAll()
+      mapboxRenderer.destroyRenderer()
+      eglCore.release()
+      // and then recreate native renderer and EGL before scheduled swap
+      eglCore.prepareEgl()
+      eglCore.createWindowSurface(validSurface)
+      eglCore.makeCurrent(any())
+      mapboxRenderer.createRenderer()
+      // swap works OK with new EGLSurface already
+      eglCore.swapBuffers(any())
+    }
   }
 }

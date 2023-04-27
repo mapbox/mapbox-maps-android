@@ -7,7 +7,6 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.plugin.locationcomponent.*
 import com.mapbox.maps.plugin.locationcomponent.LocationLayerRenderer
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
-import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings2
 import com.mapbox.maps.util.MathUtils
 
 internal class PuckAnimatorManager(
@@ -116,15 +115,7 @@ internal class PuckAnimatorManager(
     }
   }
 
-  fun applySettings2(settings2: LocationComponentSettings2) {
-    accuracyRadiusAnimator.apply {
-      enabled = settings2.showAccuracyRing
-      accuracyCircleColor = settings2.accuracyRingColor
-      accuracyCircleBorderColor = settings2.accuracyRingBorderColor
-    }
-  }
-
-  fun applyPulsingAnimationSettings(settings: LocationComponentSettings) {
+  fun applySettings(settings: LocationComponentSettings) {
     pulsingAnimator.apply {
       enabled = settings.pulsingEnabled
       maxRadius = settings.pulsingMaxRadius.toDouble()
@@ -134,6 +125,11 @@ internal class PuckAnimatorManager(
       } else {
         cancelRunning()
       }
+    }
+    accuracyRadiusAnimator.apply {
+      enabled = settings.showAccuracyRing
+      accuracyCircleColor = settings.accuracyRingColor
+      accuracyCircleBorderColor = settings.accuracyRingBorderColor
     }
   }
 

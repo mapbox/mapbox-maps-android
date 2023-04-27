@@ -11,7 +11,6 @@ import com.mapbox.maps.Style
 import com.mapbox.maps.plugin.gestures.gestures
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants
 import com.mapbox.maps.plugin.locationcomponent.location
-import com.mapbox.maps.plugin.locationcomponent.location2
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityLocationLayerBasicPulsingCircleBinding
 import com.mapbox.maps.testapp.utils.LocationPermissionHelper
@@ -83,8 +82,8 @@ class BasicLocationPulsingCircleActivity : AppCompatActivity() {
         return true
       }
       R.id.action_pulsing_follow_accuracy_radius -> {
-        binding.mapView.location2.showAccuracyRing = true
         binding.mapView.location.apply {
+          showAccuracyRing = true
           pulsingEnabled = true
           pulsingMaxRadius = LocationComponentConstants.PULSING_MAX_RADIUS_FOLLOW_ACCURACY
         }

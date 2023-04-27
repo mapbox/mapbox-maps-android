@@ -77,7 +77,7 @@ After first compilation, a gitignored file, is generated in `app/src/main/res/va
 To verify if everything has been correctly setup so far, you can run the following make command to compile the project:
 
 ```
-$ make build
+$ make sdk-build
 ```
 
 ## Checks

@@ -5,8 +5,8 @@ package com.mapbox.maps.plugin.locationcomponent.generated
 import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.Color
-import android.graphics.drawable.Drawable
 import android.util.AttributeSet
+import com.mapbox.maps.plugin.PuckBearingSource
 import io.mockk.Runs
 import io.mockk.clearAllMocks
 import io.mockk.every
@@ -26,8 +26,6 @@ class LocationComponentAttributeParserTest {
 
   private val typedArray: TypedArray = mockk(relaxUnitFun = true)
 
-  private val drawable = mockk<Drawable>(relaxed = true)
-
   @Before
   fun setUp() {
     mockkStatic(Color::class)
@@ -39,7 +37,7 @@ class LocationComponentAttributeParserTest {
     every { typedArray.getColor(any(), any()) } returns Color.RED
     every { typedArray.getDimension(any(), any()) } returns 10.0f
     every { typedArray.getFloat(any(), any()) } returns 10.0f
-    every { typedArray.getDrawable(any()) } returns drawable
+    every { typedArray.getResourceId(any(), -1) } returns 1
     every { typedArray.hasValue(any()) } returns true
     every { typedArray.recycle() } just Runs
   }
@@ -111,6 +109,32 @@ class LocationComponentAttributeParserTest {
   }
 
   @Test
+  fun showAccuracyRingTestTrue() {
+    every { typedArray.getBoolean(any(), any()) } returns true
+    val settings = LocationComponentAttributeParser.parseLocationComponentSettings(context, attrs, 1.2f)
+    assertEquals(true, settings.showAccuracyRing)
+  }
+
+  @Test
+  fun showAccuracyRingTestFalse() {
+    every { typedArray.getBoolean(any(), any()) } returns false
+    val settings = LocationComponentAttributeParser.parseLocationComponentSettings(context, attrs, 1.2f)
+    assertEquals(false, settings.showAccuracyRing)
+  }
+  @Test
+  fun accuracyRingColorTest() {
+    every { typedArray.getColor(any(), any()) } returns Color.parseColor("#4d89cff0")
+    val settings = LocationComponentAttributeParser.parseLocationComponentSettings(context, attrs, 1.2f)
+    assertEquals(Color.parseColor("#4d89cff0"), settings.accuracyRingColor)
+  }
+  @Test
+  fun accuracyRingBorderColorTest() {
+    every { typedArray.getColor(any(), any()) } returns Color.parseColor("#4d89cff0")
+    val settings = LocationComponentAttributeParser.parseLocationComponentSettings(context, attrs, 1.2f)
+    assertEquals(Color.parseColor("#4d89cff0"), settings.accuracyRingBorderColor)
+  }
+
+  @Test
   fun layerAboveTest() {
     every { typedArray.getString(any()) } returns null
     val settings = LocationComponentAttributeParser.parseLocationComponentSettings(context, attrs, 1.2f)
@@ -122,6 +146,34 @@ class LocationComponentAttributeParserTest {
     every { typedArray.getString(any()) } returns null
     val settings = LocationComponentAttributeParser.parseLocationComponentSettings(context, attrs, 1.2f)
     assertEquals(null, settings.layerBelow)
+  }
+
+  @Test
+  fun puckBearingEnabledTestTrue() {
+    every { typedArray.getBoolean(any(), any()) } returns true
+    val settings = LocationComponentAttributeParser.parseLocationComponentSettings(context, attrs, 1.2f)
+    assertEquals(true, settings.puckBearingEnabled)
+  }
+
+  @Test
+  fun puckBearingEnabledTestFalse() {
+    every { typedArray.getBoolean(any(), any()) } returns false
+    val settings = LocationComponentAttributeParser.parseLocationComponentSettings(context, attrs, 1.2f)
+    assertEquals(false, settings.puckBearingEnabled)
+  }
+
+  @Test
+  fun puckBearingSourceTestHEADING() {
+    every { typedArray.getInt(any(), any()) } returns PuckBearingSource.HEADING.ordinal
+    val settings = LocationComponentAttributeParser.parseLocationComponentSettings(context, attrs, 1.2f)
+    assertEquals(PuckBearingSource.HEADING, settings.puckBearingSource)
+  }
+
+  @Test
+  fun puckBearingSourceTestCOURSE() {
+    every { typedArray.getInt(any(), any()) } returns PuckBearingSource.COURSE.ordinal
+    val settings = LocationComponentAttributeParser.parseLocationComponentSettings(context, attrs, 1.2f)
+    assertEquals(PuckBearingSource.COURSE, settings.puckBearingSource)
   }
 }
 

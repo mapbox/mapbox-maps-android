@@ -65,7 +65,7 @@ class GesturesPluginTest {
   private val pack = "com.mapbox.maps"
 
   private val gestureListener = slot<StandardGestureDetector.StandardOnGestureListener>()
-
+  private val animatorListenerSlot = slot<Animator.AnimatorListener>()
   private lateinit var presenter: GesturesPluginImpl
 
   @MapboxExperimental
@@ -78,7 +78,7 @@ class GesturesPluginTest {
         attrs,
         any()
       )
-    } returns GesturesSettings()
+    } returns GesturesSettings { }
 
     every { context.obtainStyledAttributes(any(), any(), 0, 0) } returns typedArray
     every { context.packageName } returns pack
@@ -202,7 +202,7 @@ class GesturesPluginTest {
     )
     every { cameraAnimationsPlugin.calculateScaleBy(any(), any()) } returns 2.0
     assert(presenter.onGenericMotionEvent(obtainMotionEventButton(BUTTON_SECONDARY)))
-    verify(exactly = 1) { cameraAnimationsPlugin.easeTo(any(), any()) }
+    verify(exactly = 1) { cameraAnimationsPlugin.easeTo(any(), any(), any()) }
   }
 
   @Test
@@ -507,7 +507,7 @@ class GesturesPluginTest {
         ScreenCoordinate(-50.0, -50.0)
       )
     }
-    verify(exactly = 1) { cameraAnimationsPlugin.easeTo(any(), any()) }
+    verify(exactly = 1) { cameraAnimationsPlugin.easeTo(any(), any(), any()) }
   }
 
   @Test
@@ -543,9 +543,9 @@ class GesturesPluginTest {
     assert(handled)
     val mapAnimationOptionsSlot = slot<MapAnimationOptions>()
     verify(exactly = 1) {
-      cameraAnimationsPlugin.easeTo(any(), capture(mapAnimationOptionsSlot))
+      cameraAnimationsPlugin.easeTo(any(), capture(mapAnimationOptionsSlot), capture(animatorListenerSlot))
     }
-    mapAnimationOptionsSlot.captured.animatorListener!!.onAnimationEnd(mockk())
+    animatorListenerSlot.captured.onAnimationEnd(mockk())
 
     every { moveGestureDetector.pointersCount } returns 1
     handled = presenter.handleMove(moveGestureDetector, 50.0f, 50.0f)
@@ -559,7 +559,7 @@ class GesturesPluginTest {
         ScreenCoordinate(-50.0, -50.0)
       )
     }
-    verify(exactly = 2) { cameraAnimationsPlugin.easeTo(any(), any()) }
+    verify(exactly = 2) { cameraAnimationsPlugin.easeTo(any(), any(), any()) }
   }
 
   @Test
@@ -671,7 +671,7 @@ class GesturesPluginTest {
     val result = presenter.handleScale(scaleDetector)
     assert(result)
     // setMoveDetectorEnabled
-    verify(exactly = 1) { cameraAnimationsPlugin.easeTo(any(), any()) }
+    verify(exactly = 1) { cameraAnimationsPlugin.easeTo(any(), any(), any()) }
   }
 
   @Test
@@ -735,7 +735,7 @@ class GesturesPluginTest {
     val result = presenter.handleScale(scaleDetector)
     assert(result)
     // setMoveDetectorEnabled
-    verify(exactly = 1) { cameraAnimationsPlugin.easeTo(any(), any()) }
+    verify(exactly = 1) { cameraAnimationsPlugin.easeTo(any(), any(), any()) }
   }
 
   @Test
@@ -827,7 +827,7 @@ class GesturesPluginTest {
     every { rotateGestureDetector.focalPoint } returns PointF(0.0f, 0.0f)
     val result = presenter.handleRotate(rotateGestureDetector, 34.0f)
     assert(result)
-    verify(exactly = 1) { cameraAnimationsPlugin.easeTo(any(), any()) }
+    verify(exactly = 1) { cameraAnimationsPlugin.easeTo(any(), any(), any()) }
   }
 
   @Test
@@ -908,7 +908,13 @@ class GesturesPluginTest {
     val result = presenter.handleShove(gestureDetector, -15.0f)
     val resultCameraOptions = slot<CameraOptions>()
     assert(result)
-    verify(exactly = 1) { cameraAnimationsPlugin.easeTo(capture(resultCameraOptions), any()) }
+    verify(exactly = 1) {
+      cameraAnimationsPlugin.easeTo(
+        capture(resultCameraOptions),
+        any(),
+        capture(animatorListenerSlot)
+      )
+    }
     assertEquals(resultCameraOptions.captured.pitch!!, 2.5, EPS)
     assertEquals(resultCameraOptions.captured.anchor, centerScreen)
   }
@@ -1003,7 +1009,11 @@ class GesturesPluginTest {
     val mapAnimationOptionsSlot = slot<MapAnimationOptions>()
     val cameraOptionsSlot = slot<CameraOptions>()
     verify(exactly = 1) {
-      cameraAnimationsPlugin.easeTo(capture(cameraOptionsSlot), capture(mapAnimationOptionsSlot))
+      cameraAnimationsPlugin.easeTo(
+        capture(cameraOptionsSlot),
+        capture(mapAnimationOptionsSlot),
+        capture(animatorListenerSlot)
+      )
     }
     assertEquals(-distanceX, cameraOptionsSlot.captured.center!!.longitude(), EPS)
     assertEquals(-distanceY, cameraOptionsSlot.captured.center!!.latitude(), EPS)
@@ -1014,13 +1024,17 @@ class GesturesPluginTest {
     presenter.handleMove(moveGestureDetector, distanceX.toFloat(), distanceY.toFloat())
     presenter.handleMove(moveGestureDetector, distanceX.toFloat(), distanceY.toFloat())
     verify(exactly = 0) {
-      cameraAnimationsPlugin.easeTo(any(), any())
+      cameraAnimationsPlugin.easeTo(any(), any(), any())
     }
 
-    mapAnimationOptionsSlot.captured.animatorListener!!.onAnimationEnd(mockk())
+    animatorListenerSlot.captured.onAnimationEnd(mockk())
     presenter.handleMove(moveGestureDetector, distanceX.toFloat(), distanceY.toFloat())
     verify(exactly = 1) {
-      cameraAnimationsPlugin.easeTo(capture(cameraOptionsSlot), capture(mapAnimationOptionsSlot))
+      cameraAnimationsPlugin.easeTo(
+        capture(cameraOptionsSlot),
+        capture(mapAnimationOptionsSlot),
+        capture(animatorListenerSlot)
+      )
     }
     // all the 3 last moves are animated together
     assertEquals(-distanceX * 3, cameraOptionsSlot.captured.center!!.longitude(), EPS)
@@ -1038,7 +1052,11 @@ class GesturesPluginTest {
     val mapAnimationOptionsSlot = slot<MapAnimationOptions>()
     val cameraOptionsSlot = slot<CameraOptions>()
     verify(exactly = 1) {
-      cameraAnimationsPlugin.easeTo(capture(cameraOptionsSlot), capture(mapAnimationOptionsSlot))
+      cameraAnimationsPlugin.easeTo(
+        capture(cameraOptionsSlot),
+        capture(mapAnimationOptionsSlot),
+        capture(animatorListenerSlot)
+      )
     }
     assertEquals(startPitch + expectedPitchDelta, cameraOptionsSlot.captured.pitch!!, EPS)
 
@@ -1048,13 +1066,17 @@ class GesturesPluginTest {
     presenter.handleShove(shoveGestureDetector, shoveDistance.toFloat())
     presenter.handleShove(shoveGestureDetector, shoveDistance.toFloat())
     verify(exactly = 0) {
-      cameraAnimationsPlugin.easeTo(any(), any())
+      cameraAnimationsPlugin.easeTo(any(), any(), any())
     }
 
-    mapAnimationOptionsSlot.captured.animatorListener!!.onAnimationEnd(mockk())
+    animatorListenerSlot.captured.onAnimationEnd(mockk())
     presenter.handleShove(shoveGestureDetector, shoveDistance.toFloat())
     verify(exactly = 1) {
-      cameraAnimationsPlugin.easeTo(capture(cameraOptionsSlot), capture(mapAnimationOptionsSlot))
+      cameraAnimationsPlugin.easeTo(
+        capture(cameraOptionsSlot),
+        capture(mapAnimationOptionsSlot),
+        capture(animatorListenerSlot)
+      )
     }
     // all the 3 last shoves are animated together
     assertEquals(startPitch + expectedPitchDelta * 3, cameraOptionsSlot.captured.pitch!!, EPS)
@@ -1076,7 +1098,11 @@ class GesturesPluginTest {
     val mapAnimationOptionsSlot = slot<MapAnimationOptions>()
     val cameraOptionsSlot = slot<CameraOptions>()
     verify(exactly = 1) {
-      cameraAnimationsPlugin.easeTo(capture(cameraOptionsSlot), capture(mapAnimationOptionsSlot))
+      cameraAnimationsPlugin.easeTo(
+        capture(cameraOptionsSlot),
+        capture(mapAnimationOptionsSlot),
+        capture(animatorListenerSlot)
+      )
     }
     assertEquals(startBearing + rotateAngle, cameraOptionsSlot.captured.bearing!!, EPS)
 
@@ -1086,13 +1112,17 @@ class GesturesPluginTest {
     presenter.handleRotate(rotateGestureDetector, rotateAngle.toFloat())
     presenter.handleRotate(rotateGestureDetector, rotateAngle.toFloat())
     verify(exactly = 0) {
-      cameraAnimationsPlugin.easeTo(any(), any())
+      cameraAnimationsPlugin.easeTo(any(), any(), any())
     }
 
-    mapAnimationOptionsSlot.captured.animatorListener!!.onAnimationEnd(mockk())
+    animatorListenerSlot.captured.onAnimationEnd(mockk())
     presenter.handleRotate(rotateGestureDetector, rotateAngle.toFloat())
     verify(exactly = 1) {
-      cameraAnimationsPlugin.easeTo(capture(cameraOptionsSlot), capture(mapAnimationOptionsSlot))
+      cameraAnimationsPlugin.easeTo(
+        capture(cameraOptionsSlot),
+        capture(mapAnimationOptionsSlot),
+        capture(animatorListenerSlot)
+      )
     }
     // all the 3 last rotates are animated together
     assertEquals(startBearing + rotateAngle * 3, cameraOptionsSlot.captured.bearing!!, EPS)
@@ -1146,7 +1176,7 @@ class GesturesPluginTest {
     val mapAnimationOptionsSlot = slot<MapAnimationOptions>()
     val cameraOptionsSlot = slot<CameraOptions>()
     verify(exactly = 1) {
-      cameraAnimationsPlugin.easeTo(capture(cameraOptionsSlot), capture(mapAnimationOptionsSlot))
+      cameraAnimationsPlugin.easeTo(capture(cameraOptionsSlot), capture(mapAnimationOptionsSlot), capture(animatorListenerSlot))
     }
     assertEquals(cameraOptionsSlot.captured.zoom!!, startZoom + expectedZoomDelta, EPS)
 
@@ -1156,13 +1186,13 @@ class GesturesPluginTest {
     presenter.handleScale(scaleGestureDetector)
     presenter.handleScale(scaleGestureDetector)
     verify(exactly = 0) {
-      cameraAnimationsPlugin.easeTo(any(), any())
+      cameraAnimationsPlugin.easeTo(any(), any(), any())
     }
 
-    mapAnimationOptionsSlot.captured.animatorListener!!.onAnimationEnd(mockk())
+    animatorListenerSlot.captured.onAnimationEnd(mockk())
     presenter.handleScale(scaleGestureDetector)
     verify(exactly = 1) {
-      cameraAnimationsPlugin.easeTo(capture(cameraOptionsSlot), capture(mapAnimationOptionsSlot))
+      cameraAnimationsPlugin.easeTo(capture(cameraOptionsSlot), capture(mapAnimationOptionsSlot), capture(animatorListenerSlot))
     }
     // all the 3 last scales are animated together
     assertEquals(cameraOptionsSlot.captured.zoom!!, startZoom + expectedZoomDelta * 3, EPS)
@@ -1244,7 +1274,7 @@ class IsPointAboveHorizonTest(
         attrs,
         any()
       )
-    } returns GesturesSettings()
+    } returns GesturesSettings { }
 
     every { context.obtainStyledAttributes(any(), any(), 0, 0) } returns typedArray
     every { context.packageName } returns pack
@@ -1337,6 +1367,7 @@ class IsPointAboveHorizonTest(
     verify(exactly = if (expectedResult) 0 else 1) { listener.onFling() }
     verify(exactly = if (expectedResult) 0 else 1) {
       cameraAnimationsPlugin.easeTo(
+        any(),
         any(),
         any()
       )
@@ -1484,7 +1515,7 @@ class FlingGestureTest(
         attrs,
         any()
       )
-    } returns GesturesSettings()
+    } returns GesturesSettings { }
 
     every { context.obtainStyledAttributes(any(), any(), 0, 0) } returns typedArray
     every { context.packageName } returns pack
@@ -1556,7 +1587,8 @@ class FlingGestureTest(
     verify(exactly = 1) {
       cameraAnimationsPlugin.easeTo(
         CameraOptions.Builder().build(),
-        capture(mapAnimationOptionsSlot)
+        capture(mapAnimationOptionsSlot),
+        any()
       )
     }
     assert(result)

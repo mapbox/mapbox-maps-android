@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.annotation.DrawableRes
 import androidx.core.content.res.ResourcesCompat
 import com.mapbox.maps.CameraState
+import com.mapbox.maps.ImageHolder
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.attribution.generated.AttributionSettings
 import com.mapbox.maps.plugin.compass.generated.CompassSettings
@@ -12,7 +13,6 @@ import com.mapbox.maps.plugin.gestures.OnMapLongClickListener
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettings
 import com.mapbox.maps.plugin.locationcomponent.R
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
-import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings2
 import com.mapbox.maps.plugin.logo.generated.LogoSettings
 import com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings
 
@@ -30,7 +30,7 @@ public object DefaultSettingsProvider {
     context: Context,
     pixelRatio: Float = context.resources.displayMetrics.density
   ): AttributionSettings {
-    return AttributionSettings().apply {
+    return AttributionSettings {
       marginLeft *= pixelRatio
       marginTop *= pixelRatio
       marginRight *= pixelRatio
@@ -48,7 +48,7 @@ public object DefaultSettingsProvider {
     context: Context,
     pixelRatio: Float = context.resources.displayMetrics.density
   ): CompassSettings {
-    return CompassSettings().apply {
+    return CompassSettings {
       marginLeft *= pixelRatio
       marginTop *= pixelRatio
       marginRight *= pixelRatio
@@ -59,7 +59,7 @@ public object DefaultSettingsProvider {
   /**
    * Get the default [GesturesSettings].
    */
-  public val defaultGesturesSettings: GesturesSettings = GesturesSettings()
+  public val defaultGesturesSettings: GesturesSettings = GesturesSettings {}
 
   private fun Context.getCompatDrawable(@DrawableRes resId: Int) = ResourcesCompat.getDrawable(
     this.resources,
@@ -78,14 +78,14 @@ public object DefaultSettingsProvider {
     context: Context,
     withBearing: Boolean = false
   ): LocationPuck2D = LocationPuck2D(
-    topImage = context.getCompatDrawable(R.drawable.mapbox_user_icon),
-    bearingImage = context.getCompatDrawable(
+    topImage = ImageHolder.from(R.drawable.mapbox_user_icon),
+    bearingImage = ImageHolder.from(
       if (withBearing)
         R.drawable.mapbox_user_bearing_icon
       else
         R.drawable.mapbox_user_stroke_icon
     ),
-    shadowImage = context.getCompatDrawable(
+    shadowImage = ImageHolder.from(
       if (withBearing)
         R.drawable.mapbox_user_stroke_icon
       else
@@ -105,16 +105,10 @@ public object DefaultSettingsProvider {
   ): LocationComponentSettings {
     return LocationComponentSettings(
       locationPuck = createDefault2DPuck(context)
-    ).apply {
+    ) {
       pulsingMaxRadius *= pixelRatio
     }
   }
-
-  /**
-   * Get the default [LocationComponentSettings2].
-   */
-  public val defaultLocationComponentSettings2: LocationComponentSettings2 =
-    LocationComponentSettings2()
 
   /**
    * Create a default [LogoSettings].
@@ -126,7 +120,7 @@ public object DefaultSettingsProvider {
     context: Context,
     pixelRatio: Float = context.resources.displayMetrics.density
   ): LogoSettings {
-    return LogoSettings().apply {
+    return LogoSettings {
       marginLeft *= pixelRatio
       marginTop *= pixelRatio
       marginRight *= pixelRatio
@@ -144,7 +138,7 @@ public object DefaultSettingsProvider {
     context: Context,
     pixelRatio: Float = context.resources.displayMetrics.density
   ): ScaleBarSettings {
-    return ScaleBarSettings().apply {
+    return ScaleBarSettings {
       marginLeft *= pixelRatio
       marginTop *= pixelRatio
       marginRight *= pixelRatio

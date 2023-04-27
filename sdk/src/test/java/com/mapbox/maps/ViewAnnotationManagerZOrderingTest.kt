@@ -1,5 +1,6 @@
 package com.mapbox.maps
 
+import com.mapbox.maps.viewannotation.ViewAnnotationManagerImpl
 import io.mockk.*
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -8,8 +9,8 @@ import org.junit.runners.Parameterized
 
 @RunWith(Parameterized::class)
 internal class ViewAnnotationManagerZOrderingTest(
-  private val oldDescriptors: List<ViewAnnotationPositionDescriptor>,
-  private val newDescriptors: List<ViewAnnotationPositionDescriptor>,
+  private val oldDescriptors: List<DelegatingViewAnnotationPositionDescriptor>,
+  private val newDescriptors: List<DelegatingViewAnnotationPositionDescriptor>,
   private val shouldChangeZOrder: Boolean,
 ) {
 
@@ -25,7 +26,7 @@ internal class ViewAnnotationManagerZOrderingTest(
 
   companion object {
     private fun descriptors(vararg identifiers: String) = identifiers.map {
-      ViewAnnotationPositionDescriptor(
+      DelegatingViewAnnotationPositionDescriptor(
         it,
         0,
         0,

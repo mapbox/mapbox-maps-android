@@ -40,6 +40,28 @@ class CameraPredefinedAnimatorsActivity : AppCompatActivity() {
   private var currentAnimators: Array<CameraAnimator<Any>> = arrayOf()
   private var runningCancelableAnimator: Cancelable? = null
   private lateinit var binding: ActivityCameraPredefinedAnimatorsBinding
+  private val animatorListener = object : AnimatorListenerAdapter() {
+    override fun onAnimationStart(animation: Animator) {
+      super.onAnimationStart(animation)
+      runOnUiThread {
+        binding.buttonCancel.visibility = View.VISIBLE
+      }
+    }
+
+    override fun onAnimationEnd(animation: Animator) {
+      super.onAnimationEnd(animation)
+      runOnUiThread {
+        binding.buttonCancel.visibility = View.INVISIBLE
+      }
+    }
+
+    override fun onAnimationCancel(animation: Animator) {
+      super.onAnimationCancel(animation)
+      runOnUiThread {
+        binding.buttonCancel.visibility = View.INVISIBLE
+      }
+    }
+  }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -143,29 +165,6 @@ class CameraPredefinedAnimatorsActivity : AppCompatActivity() {
 
   private fun prepareAnimationOptions(duration: Long) = mapAnimationOptions {
     duration(duration)
-    animatorListener(object : AnimatorListenerAdapter() {
-
-      override fun onAnimationStart(animation: Animator) {
-        super.onAnimationStart(animation)
-        runOnUiThread {
-          binding.buttonCancel.visibility = View.VISIBLE
-        }
-      }
-
-      override fun onAnimationEnd(animation: Animator) {
-        super.onAnimationEnd(animation)
-        runOnUiThread {
-          binding.buttonCancel.visibility = View.INVISIBLE
-        }
-      }
-
-      override fun onAnimationCancel(animation: Animator) {
-        super.onAnimationCancel(animation)
-        runOnUiThread {
-          binding.buttonCancel.visibility = View.INVISIBLE
-        }
-      }
-    })
   }
 
   private fun playAnimation(itemId: Int) {
@@ -178,34 +177,40 @@ class CameraPredefinedAnimatorsActivity : AppCompatActivity() {
       R.id.menu_action_ease_to ->
         mapboxMap.easeTo(
           EASE_TO_TARGET_CAMERA_POSITION,
-          prepareAnimationOptions(2000)
+          prepareAnimationOptions(2000),
+          animatorListener
         )
       R.id.menu_action_fly_to ->
         mapboxMap.flyTo(
           EASE_TO_TARGET_CAMERA_POSITION,
-          prepareAnimationOptions(2000)
+          prepareAnimationOptions(2000),
+          animatorListener
         )
       R.id.menu_action_pitch_by ->
         mapboxMap.pitchBy(
           70.0,
-          prepareAnimationOptions(2000)
+          prepareAnimationOptions(2000),
+          animatorListener
         )
       R.id.menu_action_scale_by ->
         mapboxMap.scaleBy(
           15.0,
           ScreenCoordinate(10.0, 10.0),
-          prepareAnimationOptions(2000)
+          prepareAnimationOptions(2000),
+          animatorListener
         )
       R.id.menu_action_move_by ->
         mapboxMap.moveBy(
           ScreenCoordinate(500.0, 500.0),
-          prepareAnimationOptions(3000)
+          prepareAnimationOptions(3000),
+          animatorListener
         )
       R.id.menu_action_rotate_by ->
         mapboxMap.rotateBy(
           ScreenCoordinate(0.0, 0.0),
           ScreenCoordinate(500.0, 500.0),
-          prepareAnimationOptions(7000)
+          prepareAnimationOptions(7000),
+          animatorListener
         )
       else -> null
     }

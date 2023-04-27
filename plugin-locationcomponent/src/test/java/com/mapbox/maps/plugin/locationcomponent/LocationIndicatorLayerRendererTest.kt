@@ -1,12 +1,13 @@
 package com.mapbox.maps.plugin.locationcomponent
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Color
-import android.graphics.drawable.Drawable
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
+import com.mapbox.maps.ImageHolder
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.BEARING_ICON
@@ -20,6 +21,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import java.lang.ref.WeakReference
 
 @RunWith(RobolectricTestRunner::class)
 class LocationIndicatorLayerRendererTest {
@@ -34,25 +36,29 @@ class LocationIndicatorLayerRendererTest {
 
   private val puckOptions = mockk<LocationPuck2D>(relaxed = true)
   private val bitmap = mockk<Bitmap>(relaxed = true)
-  private val drawable = mockk<Drawable>(relaxed = true)
+  private val imageHolder = ImageHolder.from(1)
 
   private lateinit var locationLayerRenderer: LocationIndicatorLayerRenderer
 
   @Before
   fun setup() {
     mockkObject(BitmapUtils)
-    every { puckOptions.topImage } returns drawable
-    every { puckOptions.bearingImage } returns drawable
-    every { puckOptions.shadowImage } returns drawable
+    every { puckOptions.topImage } returns imageHolder
+    every { puckOptions.bearingImage } returns imageHolder
+    every { puckOptions.shadowImage } returns imageHolder
     every { puckOptions.opacity } returns 0.5f
-    every { BitmapUtils.getBitmapFromDrawable(drawable) } returns bitmap
+    every { BitmapUtils.getBitmapFromDrawableRes(any(), any()) } returns bitmap
     every { style.removeStyleLayer(any()) } returns expected
     every { style.styleLayerExists(any()) } returns true
     every { expected.error } returns null
     every { layerSourceProvider.getLocationIndicatorLayer() } returns layerWrapper
     every { layerWrapper.layerId } returns "id"
 
-    locationLayerRenderer = LocationIndicatorLayerRenderer(puckOptions, layerSourceProvider)
+    locationLayerRenderer = LocationIndicatorLayerRenderer(
+      puckOptions,
+      WeakReference(mockk<Context>(relaxed = true)),
+      layerSourceProvider
+    )
     locationLayerRenderer.initializeComponents(style)
   }
 

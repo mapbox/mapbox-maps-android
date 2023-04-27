@@ -7,8 +7,9 @@ import android.widget.FrameLayout
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater
 import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.geojson.Point
-import com.mapbox.maps.ViewAnnotationManagerImpl.Companion.EXCEPTION_TEXT_GEOMETRY_IS_NULL
 import com.mapbox.maps.renderer.MapboxRenderThread
+import com.mapbox.maps.viewannotation.ViewAnnotationManagerImpl
+import com.mapbox.maps.viewannotation.ViewAnnotationManagerImpl.Companion.EXCEPTION_TEXT_GEOMETRY_IS_NULL
 import com.mapbox.maps.viewannotation.viewAnnotationOptions
 import io.mockk.*
 import org.junit.After

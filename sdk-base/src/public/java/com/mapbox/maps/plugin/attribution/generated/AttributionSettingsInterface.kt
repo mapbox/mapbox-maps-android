@@ -18,7 +18,7 @@ interface AttributionSettingsInterface {
    *
    * @param block the receiver function of AttributionSettings
    */
-  fun updateSettings(block: AttributionSettings.() -> Unit)
+  fun updateSettings(block: AttributionSettings.Builder.() -> Unit)
 
   /**
    * Whether the attribution icon is visible on the map.

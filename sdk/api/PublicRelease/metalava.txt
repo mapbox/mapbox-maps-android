@@ -18,9 +18,9 @@ package com.mapbox.maps {
   }
 
   public final class MapInitOptions {
-    ctor public MapInitOptions(android.content.Context context, com.mapbox.maps.ResourceOptions resourceOptions = getDefaultResourceOptions(context), com.mapbox.maps.MapOptions mapOptions = getDefaultMapOptions(context), java.util.List<? extends com.mapbox.maps.plugin.Plugin> plugins = defaultPluginList, com.mapbox.maps.CameraOptions? cameraOptions = null, boolean textureView = false, String? styleUri = "mapbox://styles/mapbox/streets-v11", android.util.AttributeSet? attrs = null, int antialiasingSampleCount = 1);
-    ctor public MapInitOptions(android.content.Context context, com.mapbox.maps.ResourceOptions resourceOptions = getDefaultResourceOptions(context), com.mapbox.maps.MapOptions mapOptions = getDefaultMapOptions(context), java.util.List<? extends com.mapbox.maps.plugin.Plugin> plugins = defaultPluginList, com.mapbox.maps.CameraOptions? cameraOptions = null, boolean textureView = false, String? styleUri = "mapbox://styles/mapbox/streets-v11", android.util.AttributeSet? attrs = null);
-    ctor public MapInitOptions(android.content.Context context, com.mapbox.maps.ResourceOptions resourceOptions = getDefaultResourceOptions(context), com.mapbox.maps.MapOptions mapOptions = getDefaultMapOptions(context), java.util.List<? extends com.mapbox.maps.plugin.Plugin> plugins = defaultPluginList, com.mapbox.maps.CameraOptions? cameraOptions = null, boolean textureView = false, String? styleUri = "mapbox://styles/mapbox/streets-v11");
+    ctor public MapInitOptions(android.content.Context context, com.mapbox.maps.ResourceOptions resourceOptions = getDefaultResourceOptions(context), com.mapbox.maps.MapOptions mapOptions = getDefaultMapOptions(context), java.util.List<? extends com.mapbox.maps.plugin.Plugin> plugins = defaultPluginList, com.mapbox.maps.CameraOptions? cameraOptions = null, boolean textureView = false, String? styleUri = "mapbox://styles/mapbox/streets-v12", android.util.AttributeSet? attrs = null, int antialiasingSampleCount = 1);
+    ctor public MapInitOptions(android.content.Context context, com.mapbox.maps.ResourceOptions resourceOptions = getDefaultResourceOptions(context), com.mapbox.maps.MapOptions mapOptions = getDefaultMapOptions(context), java.util.List<? extends com.mapbox.maps.plugin.Plugin> plugins = defaultPluginList, com.mapbox.maps.CameraOptions? cameraOptions = null, boolean textureView = false, String? styleUri = "mapbox://styles/mapbox/streets-v12", android.util.AttributeSet? attrs = null);
+    ctor public MapInitOptions(android.content.Context context, com.mapbox.maps.ResourceOptions resourceOptions = getDefaultResourceOptions(context), com.mapbox.maps.MapOptions mapOptions = getDefaultMapOptions(context), java.util.List<? extends com.mapbox.maps.plugin.Plugin> plugins = defaultPluginList, com.mapbox.maps.CameraOptions? cameraOptions = null, boolean textureView = false, String? styleUri = "mapbox://styles/mapbox/streets-v12");
     ctor public MapInitOptions(android.content.Context context, com.mapbox.maps.ResourceOptions resourceOptions = getDefaultResourceOptions(context), com.mapbox.maps.MapOptions mapOptions = getDefaultMapOptions(context), java.util.List<? extends com.mapbox.maps.plugin.Plugin> plugins = defaultPluginList, com.mapbox.maps.CameraOptions? cameraOptions = null, boolean textureView = false);
     ctor public MapInitOptions(android.content.Context context, com.mapbox.maps.ResourceOptions resourceOptions = getDefaultResourceOptions(context), com.mapbox.maps.MapOptions mapOptions = getDefaultMapOptions(context), java.util.List<? extends com.mapbox.maps.plugin.Plugin> plugins = defaultPluginList, com.mapbox.maps.CameraOptions? cameraOptions = null);
     ctor public MapInitOptions(android.content.Context context, com.mapbox.maps.ResourceOptions resourceOptions = getDefaultResourceOptions(context), com.mapbox.maps.MapOptions mapOptions = getDefaultMapOptions(context), java.util.List<? extends com.mapbox.maps.plugin.Plugin> plugins = defaultPluginList);
@@ -75,6 +75,13 @@ package com.mapbox.maps {
   public final class MapInitOptionsKt {
     method public static com.mapbox.maps.MapOptions.Builder applyDefaultParams(com.mapbox.maps.MapOptions.Builder, android.content.Context context);
     method public static com.mapbox.maps.ResourceOptions.Builder applyDefaultParams(com.mapbox.maps.ResourceOptions.Builder, android.content.Context context);
+  }
+
+  public abstract class MapSnapshotResult {
+    method public abstract java.util.List<java.lang.String> attributions();
+    method public abstract android.graphics.Bitmap bitmap();
+    method public abstract com.mapbox.geojson.Point coordinate(com.mapbox.maps.ScreenCoordinate screenCoordinate);
+    method public abstract com.mapbox.maps.ScreenCoordinate screenCoordinate(com.mapbox.geojson.Point coordinate);
   }
 
   public final class MapSurface implements com.mapbox.maps.MapControllable com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate {
@@ -183,6 +190,7 @@ package com.mapbox.maps {
     method public com.mapbox.geojson.Point coordinateForPixel(com.mapbox.maps.ScreenCoordinate pixel);
     method public com.mapbox.geojson.Point coordinateForProjectedMeters(com.mapbox.maps.ProjectedMeters projectedMeters);
     method public java.util.List<com.mapbox.geojson.Point> coordinatesForPixels(java.util.List<com.mapbox.maps.ScreenCoordinate> pixels);
+    method public java.util.List<com.mapbox.geojson.Point> coordinatesForRect(android.graphics.RectF rectF);
     method public void dragEnd();
     method public void dragStart(com.mapbox.maps.ScreenCoordinate point);
     method public void executeOnRenderThread(Runnable runnable);
@@ -293,7 +301,7 @@ package com.mapbox.maps {
   }
 
   public fun interface SnapshotCreatedListener {
-    method public void onSnapshotResult(com.mapbox.maps.MapSnapshotInterface? snapshot);
+    method public void onSnapshotResult(com.mapbox.maps.MapSnapshotResult? snapshot);
   }
 
   public final class SnapshotOverlayOptions {
@@ -415,12 +423,12 @@ package com.mapbox.maps {
     method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> updateStyleImageSourceImage(String sourceId, com.mapbox.maps.Image image);
     property public float pixelRatio;
     field public static final com.mapbox.maps.Style.Companion Companion;
-    field public static final String DARK = "mapbox://styles/mapbox/dark-v10";
-    field public static final String LIGHT = "mapbox://styles/mapbox/light-v10";
-    field public static final String MAPBOX_STREETS = "mapbox://styles/mapbox/streets-v11";
-    field public static final String OUTDOORS = "mapbox://styles/mapbox/outdoors-v11";
+    field public static final String DARK = "mapbox://styles/mapbox/dark-v11";
+    field public static final String LIGHT = "mapbox://styles/mapbox/light-v11";
+    field public static final String MAPBOX_STREETS = "mapbox://styles/mapbox/streets-v12";
+    field public static final String OUTDOORS = "mapbox://styles/mapbox/outdoors-v12";
     field public static final String SATELLITE = "mapbox://styles/mapbox/satellite-v9";
-    field public static final String SATELLITE_STREETS = "mapbox://styles/mapbox/satellite-streets-v11";
+    field public static final String SATELLITE_STREETS = "mapbox://styles/mapbox/satellite-streets-v12";
     field public static final String TRAFFIC_DAY = "mapbox://styles/mapbox/traffic-day-v2";
     field public static final String TRAFFIC_NIGHT = "mapbox://styles/mapbox/traffic-night-v2";
   }
@@ -484,6 +492,27 @@ package com.mapbox.maps.attribution {
     method public com.mapbox.maps.attribution.AttributionParser.Options withMapboxAttribution(boolean withMapboxAttribution);
     method public com.mapbox.maps.attribution.AttributionParser.Options withTelemetryAttribution(boolean withTelemetryAttribution);
     field public static final String HTML_STYLE_REGEX = "<(\"[^\"]*\"|\'[^\']*\'|[^\'\">])*>";
+  }
+
+}
+
+package com.mapbox.maps.coroutine {
+
+  public final class MapboxMapExtKt {
+    method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.maps.Style! awaitLoadStyle(com.mapbox.maps.MapboxMap, com.mapbox.maps.extension.style.StyleContract.StyleExtension styleExtension, com.mapbox.maps.TransitionOptions? transitionOptions = null);
+    method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.maps.Style! awaitLoadStyleJson(com.mapbox.maps.MapboxMap, String styleJson, com.mapbox.maps.TransitionOptions? styleTransitionOptions = null);
+    method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.maps.Style! awaitLoadStyleUri(com.mapbox.maps.MapboxMap, String styleUri, com.mapbox.maps.TransitionOptions? styleTransitionOptions = null);
+    method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.maps.Style! awaitStyle(com.mapbox.maps.MapboxMap);
+    method @kotlin.jvm.JvmSynthetic public static kotlinx.coroutines.flow.Flow<? extends com.mapbox.maps.extension.observable.eventdata.CameraChangedEventData>! cameraChanges(com.mapbox.maps.MapboxMap);
+    method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.Value>! getFeatureState(com.mapbox.maps.MapboxMap, String sourceId, String sourceLayerId = null, String featureId);
+    method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.maps.FeatureExtensionValue>! getGeoJsonClusterChildren(com.mapbox.maps.MapboxMap, String sourceIdentifier, com.mapbox.geojson.Feature cluster);
+    method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.maps.FeatureExtensionValue>! getGeoJsonClusterExpansionZoom(com.mapbox.maps.MapboxMap, String sourceIdentifier, com.mapbox.geojson.Feature cluster);
+    method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.maps.FeatureExtensionValue>! getGeoJsonClusterLeaves(com.mapbox.maps.MapboxMap, String sourceIdentifier, com.mapbox.geojson.Feature cluster, long limit, long offset);
+    method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.bindgen.Expected<java.lang.String,java.util.List<? extends com.mapbox.maps.QueriedRenderedFeature>>! queryRenderedFeatures(com.mapbox.maps.MapboxMap, com.mapbox.maps.RenderedQueryGeometry geometry, com.mapbox.maps.RenderedQueryOptions options);
+    method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.bindgen.Expected<java.lang.String,java.util.List<? extends com.mapbox.maps.QueriedSourceFeature>>! querySourceFeatures(com.mapbox.maps.MapboxMap, String sourceId, com.mapbox.maps.SourceQueryOptions options);
+    method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None>! removeFeatureState(com.mapbox.maps.MapboxMap, String sourceId, String sourceLayerId = null, String featureId, String stateKey = null);
+    method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None>! resetFeatureStates(com.mapbox.maps.MapboxMap, String sourceId, String sourceLayerId = null);
+    method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None>! setFeatureState(com.mapbox.maps.MapboxMap, String sourceId, String sourceLayerId = null, String featureId, com.mapbox.bindgen.Value state);
   }
 
 }

@@ -1,5 +1,8 @@
 package com.mapbox.maps.renderer.egl
 
+import android.opengl.EGL14
+import android.opengl.EGLConfig
+import android.opengl.EGLDisplay
 import android.os.Build
 import androidx.annotation.VisibleForTesting
 import com.mapbox.maps.MAPBOX_LOCALE
@@ -10,10 +13,6 @@ import com.mapbox.maps.logW
 import java.lang.Boolean.compare
 import java.lang.Integer.compare
 import java.util.*
-import javax.microedition.khronos.egl.EGL10
-import javax.microedition.khronos.egl.EGL10.*
-import javax.microedition.khronos.egl.EGLConfig
-import javax.microedition.khronos.egl.EGLDisplay
 
 internal class EGLConfigChooser constructor(
   private val translucentSurface: Boolean,
@@ -27,21 +26,21 @@ internal class EGLConfigChooser constructor(
       val emulator = inEmulator() || inGenymotion()
       logI(TAG, "In emulator: $emulator")
       return intArrayOf(
-        EGL_CONFIG_CAVEAT, EGL_NONE,
-        EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
-        EGL_BUFFER_SIZE, 16,
-        EGL_RED_SIZE, 5,
-        EGL_GREEN_SIZE, 6,
-        EGL_BLUE_SIZE, 5,
-        EGL_ALPHA_SIZE, if (translucentSurface) 8 else 0,
-        EGL_DEPTH_SIZE, 16,
-        EGL_STENCIL_SIZE, STENCIL_SIZE,
-        EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT
+        EGL14.EGL_CONFIG_CAVEAT, EGL14.EGL_NONE,
+        EGL14.EGL_SURFACE_TYPE, EGL14.EGL_WINDOW_BIT,
+        EGL14.EGL_BUFFER_SIZE, 16,
+        EGL14.EGL_RED_SIZE, 5,
+        EGL14.EGL_GREEN_SIZE, 6,
+        EGL14.EGL_BLUE_SIZE, 5,
+        EGL14.EGL_ALPHA_SIZE, if (translucentSurface) 8 else 0,
+        EGL14.EGL_DEPTH_SIZE, 16,
+        EGL14.EGL_STENCIL_SIZE, STENCIL_SIZE,
+        EGL14.EGL_RENDERABLE_TYPE, EGL14.EGL_OPENGL_ES2_BIT
       ).plus(
         if (antialiasingEnabled) {
           intArrayOf(
-            EGL_SAMPLE_BUFFERS, 1,
-            EGL_SAMPLES, antialiasingSampleCount
+            EGL14.EGL_SAMPLE_BUFFERS, 1,
+            EGL14.EGL_SAMPLES, antialiasingSampleCount
           )
         } else {
           intArrayOf()
@@ -49,19 +48,19 @@ internal class EGLConfigChooser constructor(
       ).plus(
         if (emulator) {
           intArrayOf(
-            EGL_CONFORMANT, EGL_OPENGL_ES2_BIT,
-            EGL_COLOR_BUFFER_TYPE, EGL_RGB_BUFFER,
+            EGL14.EGL_CONFORMANT, EGL14.EGL_OPENGL_ES2_BIT,
+            EGL14.EGL_COLOR_BUFFER_TYPE, EGL14.EGL_RGB_BUFFER,
           )
         } else {
           intArrayOf()
         }
-      ).plus(EGL_NONE)
+      ).plus(EGL14.EGL_NONE)
     }
   private var eglChooserSuccess = true
 
-  fun chooseConfig(egl: EGL10, display: EGLDisplay): EGLConfig? {
+  fun chooseConfig(display: EGLDisplay): EGLConfig? {
     // Determine number of possible configurations
-    val numConfigs = getNumberOfConfigurations(egl, display)
+    val numConfigs = getNumberOfConfigurations(display)
     if (!eglChooserSuccess) {
       return null
     }
@@ -71,7 +70,6 @@ internal class EGLConfigChooser constructor(
     }
     // Get all possible configurations
     val possibleConfigurations = getPossibleConfigurations(
-      egl,
       display,
       numConfigs
     )
@@ -79,7 +77,7 @@ internal class EGLConfigChooser constructor(
       return null
     }
     // Choose best match
-    val config = chooseBestMatchConfig(egl, display, possibleConfigurations)
+    val config = chooseBestMatchConfig(display, possibleConfigurations)
     if (config == null) {
       logE(TAG, "No config chosen, see log above for concrete error.")
       return null
@@ -87,22 +85,28 @@ internal class EGLConfigChooser constructor(
     return config
   }
 
-  private fun getNumberOfConfigurations(
-    egl: EGL10,
-    display: EGLDisplay
-  ): IntArray {
+  private fun getNumberOfConfigurations(display: EGLDisplay): IntArray {
     val numConfigs = IntArray(1)
     val initialSampleCount = antialiasingSampleCount
     var suitableConfigsFound = false
     while (!suitableConfigsFound) {
-      val success = egl.eglChooseConfig(display, configAttributes, null, 0, numConfigs)
+      val success = EGL14.eglChooseConfig(
+          /* dpy */ display,
+          /* attrib_list */ configAttributes,
+          /* attrib_listOffset */ 0,
+          /* configs */ null,
+          /* configsOffset */ 0,
+          /* config_size */ 0,
+          /* num_config */ numConfigs,
+          /* num_configOffset */ 0,
+      )
       if (!success || numConfigs[0] < 1) {
         logE(
           TAG,
           String.format(
             MAPBOX_LOCALE,
             "eglChooseConfig returned error %d",
-            egl.eglGetError()
+            EGL14.eglGetError()
           )
         )
         if (antialiasingSampleCount > 1) {
@@ -131,18 +135,29 @@ internal class EGLConfigChooser constructor(
   }
 
   private fun getPossibleConfigurations(
-    egl: EGL10,
     display: EGLDisplay,
     numConfigs: IntArray
   ): Array<EGLConfig> {
     val configs = arrayOfNulls<EGLConfig>(numConfigs[0])
-    if (!egl.eglChooseConfig(display, configAttributes, configs, numConfigs[0], numConfigs)) {
+
+    val success = EGL14.eglChooseConfig(
+      /* dpy */ display,
+      /* attrib_list */ configAttributes,
+      /* attrib_listOffset */ 0,
+      /* configs */ configs,
+      /* configsOffset */ 0,
+      /* config_size */ numConfigs[0],
+      /* num_config */ numConfigs,
+      /* num_configOffset */ 0,
+    )
+
+    if (!success) {
       logE(
         TAG,
         String.format(
           MAPBOX_LOCALE,
           "Weird: eglChooseConfig() returned error %d although ran fine before.",
-          egl.eglGetError()
+          EGL14.eglGetError()
         )
       )
       eglChooserSuccess = false
@@ -165,7 +180,6 @@ internal class EGLConfigChooser constructor(
   }
 
   private fun chooseBestMatchConfig(
-    egl: EGL10,
     display: EGLDisplay,
     configs: Array<EGLConfig>
   ): EGLConfig? {
@@ -212,20 +226,17 @@ internal class EGLConfigChooser constructor(
     for (config in configs) {
       i++
 
-      val caveat = getConfigAttr(egl, display, config, EGL_CONFIG_CAVEAT)
-      val conformant = getConfigAttr(
-        egl, display, config,
-        EGL_CONFORMANT
-      )
-      val bits = getConfigAttr(egl, display, config, EGL_BUFFER_SIZE)
-      val red = getConfigAttr(egl, display, config, EGL_RED_SIZE)
-      val green = getConfigAttr(egl, display, config, EGL_GREEN_SIZE)
-      val blue = getConfigAttr(egl, display, config, EGL_BLUE_SIZE)
-      val alpha = getConfigAttr(egl, display, config, EGL_ALPHA_SIZE)
-      val depth = getConfigAttr(egl, display, config, EGL_DEPTH_SIZE)
-      val stencil = getConfigAttr(egl, display, config, EGL_STENCIL_SIZE)
-      val sampleBuffers = getConfigAttr(egl, display, config, EGL_SAMPLE_BUFFERS)
-      val samples = getConfigAttr(egl, display, config, EGL_SAMPLES)
+      val caveat = getConfigAttr(display, config, EGL14.EGL_CONFIG_CAVEAT)
+      val conformant = getConfigAttr(display, config, EGL14.EGL_CONFORMANT)
+      val bits = getConfigAttr(display, config, EGL14.EGL_BUFFER_SIZE)
+      val red = getConfigAttr(display, config, EGL14.EGL_RED_SIZE)
+      val green = getConfigAttr(display, config, EGL14.EGL_GREEN_SIZE)
+      val blue = getConfigAttr(display, config, EGL14.EGL_BLUE_SIZE)
+      val alpha = getConfigAttr(display, config, EGL14.EGL_ALPHA_SIZE)
+      val depth = getConfigAttr(display, config, EGL14.EGL_DEPTH_SIZE)
+      val stencil = getConfigAttr(display, config, EGL14.EGL_STENCIL_SIZE)
+      val sampleBuffers = getConfigAttr(display, config, EGL14.EGL_SAMPLE_BUFFERS)
+      val samples = getConfigAttr(display, config, EGL14.EGL_SAMPLES)
 
       // validate every attribute is set correctly
       if (!eglChooserSuccess) {
@@ -267,20 +278,20 @@ internal class EGLConfigChooser constructor(
           DepthStencilFormat.Format24Depth8Stencil
         }
 
-        val isNotConformant = conformant and EGL_OPENGL_ES2_BIT != EGL_OPENGL_ES2_BIT
-        val isCaveat = caveat != EGL_NONE
+        val isNotConformant = (conformant and EGL14.EGL_OPENGL_ES2_BIT) != EGL14.EGL_OPENGL_ES2_BIT
+        val isCaveat = caveat != EGL14.EGL_NONE
 
         // Ignore formats we don't recognise
         if (bufferFormat != BufferFormat.Unknown) {
           matches.add(
             Config(
-              bufferFormat,
-              depthStencilFormat,
-              isNotConformant,
-              isCaveat,
-              i,
-              config,
-              samples,
+              bufferFormat = bufferFormat,
+              depthStencilFormat = depthStencilFormat,
+              isNotConformant = isNotConformant,
+              isCaveat = isCaveat,
+              index = i,
+              config = config,
+              samples = samples,
             )
           )
         }
@@ -312,20 +323,26 @@ internal class EGLConfigChooser constructor(
   }
 
   private fun getConfigAttr(
-    egl: EGL10,
     display: EGLDisplay,
     config: EGLConfig,
     attributeName: Int
   ): Int {
     val attributeValue = IntArray(1)
-    if (!egl.eglGetConfigAttrib(display, config, attributeName, attributeValue)) {
+    if (!EGL14.eglGetConfigAttrib(
+        /* dpy = */ display,
+        /* config = */ config,
+        /* attribute = */ attributeName,
+        /* value = */ attributeValue,
+        /* offset = */ 0
+      )
+    ) {
       logE(
         TAG,
         String.format(
           MAPBOX_LOCALE,
           "eglGetConfigAttrib(%d) returned error %d",
           attributeName,
-          egl.eglGetError()
+          EGL14.eglGetError()
         )
       )
       eglChooserSuccess = false
@@ -343,8 +360,9 @@ internal class EGLConfigChooser constructor(
         Build.MODEL.contains("google_sdk") ||
         Build.MODEL.contains("Emulator") ||
         Build.MODEL.contains("Android SDK built for x86") ||
-        Build.BRAND.startsWith("generic") || Build.DEVICE.startsWith("generic") ||
-        "google_sdk" == Build.PRODUCT ||
+        Build.BRAND.startsWith("generic") ||
+        Build.DEVICE.startsWith("generic") ||
+        Build.PRODUCT == "google_sdk" ||
         System.getProperty("ro.kernel.qemu") != null
       )
   }
@@ -359,20 +377,6 @@ internal class EGLConfigChooser constructor(
   companion object {
 
     private const val TAG = "Mbgl-EGLConfigChooser"
-
-    /**
-     * Requires API level 17
-     *
-     * @see android.opengl.EGL14.EGL_CONFORMANT;
-     */
-    private const val EGL_CONFORMANT = 0x3042
-
-    /**
-     * Requires API level 17
-     *
-     * @see android.opengl.EGL14.EGL_OPENGL_ES2_BIT;
-     */
-    private const val EGL_OPENGL_ES2_BIT = 0x0004
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     internal var STENCIL_SIZE = 8

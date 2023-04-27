@@ -60,4 +60,18 @@ interface LocationComponentPlugin :
    * @param listener Listener that gets invoked when the validation finished.
    */
   fun isLocatedAt(point: Point, listener: PuckLocatedAtPointListener)
+
+  /**
+   * Adds a listener that gets invoked when indicator accuracy radius changes.
+   *
+   * @param listener Listener that gets invoked when indicator accuracy radius changes
+   */
+  fun addOnIndicatorAccuracyRadiusChangedListener(listener: OnIndicatorAccuracyRadiusChangedListener)
+
+  /**
+   * Removes a listener that gets invoked when indicator accuracy radius changes.
+   *
+   * @param listener Listener that gets invoked when indicator accuracy radius changes.
+   */
+  fun removeOnIndicatorAccuracyRadiusChangedListener(listener: OnIndicatorAccuracyRadiusChangedListener)
 }

@@ -4,6 +4,7 @@ import android.graphics.BitmapFactory
 import androidx.annotation.UiThread
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
+import com.mapbox.bindgen.DataRef
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.dsl.cameraOptions
@@ -293,7 +294,7 @@ class ObservableExtensionTest : BaseMapTest() {
           printAllEventsForDebug()
           addOnStyleImageMissingListener {
             getStyle {
-              it.addImage(IMAGE_ID, Image(2048, 2048, ByteArray(2048 * 2048 * 4)))
+              it.addImage(IMAGE_ID, Image(2048, 2048, DataRef.allocateNative(2048 * 2048 * 4)))
               setCamera(cameraOptions { center(Point.fromLngLat(60.1733244, 24.9410248)) })
             }
           }

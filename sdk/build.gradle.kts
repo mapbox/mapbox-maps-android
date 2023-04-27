@@ -9,9 +9,11 @@ val buildFromSource: String by project
 
 mapboxLibrary {
   dokka {
-    if (buildFromSource.toBoolean()) {
-      // when building from source we include the files in "upstream-api-doc-list.txt" which might not have docs
-      extraListOfSources = File("upstream-api-doc-list.txt").readLines()
+    // Include the files in "upstream-api-doc-list.txt" if available
+    val upstreamApiDocFile = rootProject.file("upstream-api-doc-list.txt")
+    if (upstreamApiDocFile.exists()) {
+      extraListOfSources = upstreamApiDocFile.readLines()
+      // which might not have docs, so disable report undocumented
       reportUndocumented = false
     }
   }
@@ -73,7 +75,8 @@ dependencies {
   api(project(":plugin-lifecycle"))
   api(project(":plugin-viewport"))
   compileOnly(Dependencies.asyncInflater)
-  implementation(Dependencies.kotlin)
+  api(Dependencies.kotlin)
+  api(Dependencies.coroutines)
   implementation(Dependencies.androidxCoreKtx)
   implementation(Dependencies.androidxAnnotations)
   testImplementation(Dependencies.junit)

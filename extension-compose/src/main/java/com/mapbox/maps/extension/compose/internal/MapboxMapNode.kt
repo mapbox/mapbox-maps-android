@@ -21,9 +21,7 @@ import com.mapbox.maps.plugin.gestures.OnMapLongClickListener
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettings
 import com.mapbox.maps.plugin.gestures.gestures
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
-import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings2
 import com.mapbox.maps.plugin.locationcomponent.location
-import com.mapbox.maps.plugin.locationcomponent.location2
 import com.mapbox.maps.plugin.logo.generated.LogoSettings
 import com.mapbox.maps.plugin.logo.logo
 import com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings
@@ -97,7 +95,6 @@ internal fun MapboxMapComposeNode(
   compassSettings: CompassSettings,
   gesturesSettings: GesturesSettings,
   locationComponentSettings: LocationComponentSettings,
-  locationComponentSettings2: LocationComponentSettings2,
   logoSettings: LogoSettings,
   scaleBarSettings: ScaleBarSettings,
   cameraOptions: CameraOptions,
@@ -135,9 +132,6 @@ internal fun MapboxMapComposeNode(
       }
       set(locationComponentSettings) {
         this.controller.location.applySettings(it)
-      }
-      set(locationComponentSettings2) {
-        this.controller.location2.applySettings(it)
       }
       set(logoSettings) {
         this.controller.logo.applySettings(it)

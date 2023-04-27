@@ -28,6 +28,7 @@ dependencies {
   androidTestImplementation(Dependencies.androidxJUnitTestRules)
   androidTestImplementation(Dependencies.androidxEspresso)
   detektPlugins(Dependencies.detektFormatting)
+  lintPublish(project(":extension-style-lint-rules"))
 }
 
 project.apply {

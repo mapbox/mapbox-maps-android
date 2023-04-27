@@ -7,9 +7,7 @@ import com.mapbox.maps.plugin.compass.generated.CompassSettingsInterface
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettings
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettingsInterface
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
-import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings2
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettingsInterface
-import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettingsInterface2
 import com.mapbox.maps.plugin.logo.generated.LogoSettings
 import com.mapbox.maps.plugin.logo.generated.LogoSettingsInterface
 import com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings
@@ -95,20 +93,7 @@ internal fun LocationComponentSettingsInterface.applySettings(locationComponentS
 }
 
 /**
- * Apply [LocationComponentSettings2] to the [LocationComponentSettingsInterface2] in a single call.
- */
-internal fun LocationComponentSettingsInterface2.applySettings(locationComponentSettings2: LocationComponentSettings2) {
-  this.updateSettings {
-    showAccuracyRing = locationComponentSettings2.showAccuracyRing
-    accuracyRingColor = locationComponentSettings2.accuracyRingColor
-    accuracyRingBorderColor = locationComponentSettings2.accuracyRingBorderColor
-    puckBearingEnabled = locationComponentSettings2.puckBearingEnabled
-    puckBearingSource = locationComponentSettings2.puckBearingSource
-  }
-}
-
-/**
- * Apply [LocationComponentSettings2] to the [LocationComponentSettingsInterface2] in a single call.
+ * Apply [LocationComponentSettings] to the [LocationComponentSettingsInterface] in a single call.
  */
 internal fun LogoSettingsInterface.applySettings(logoSettings: LogoSettings) {
   this.updateSettings {

@@ -1,7 +1,7 @@
 package com.mapbox.maps.renderer
 
+import android.opengl.EGL14
 import com.mapbox.maps.MapView
-import javax.microedition.khronos.egl.EGL10
 
 /**
  * Typed enum wrapping up all the EGL error codes represented as ints.
@@ -44,12 +44,12 @@ class RendererError(
     val NO_VALID_EGL_CONFIG_FOUND = RendererError(0)
 
     /**
-     * Represents out of memory caused by [EGL10.EGL_BAD_ALLOC].
+     * Represents out of memory caused by [EGL14.EGL_BAD_ALLOC].
      *
      * Could be thrown when creating context, surface or display and system is running low on resources.
      * Best action will be try to release Android resources and re-create the [MapView].
      */
     @JvmField
-    val OUT_OF_MEMORY = RendererError(EGL10.EGL_BAD_ALLOC)
+    val OUT_OF_MEMORY = RendererError(EGL14.EGL_BAD_ALLOC)
   }
 }

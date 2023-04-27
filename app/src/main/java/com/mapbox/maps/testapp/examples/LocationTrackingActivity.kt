@@ -3,9 +3,9 @@ package com.mapbox.maps.testapp.examples
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.content.res.AppCompatResources
 import com.mapbox.android.gestures.MoveGestureDetector
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.ImageHolder
 import com.mapbox.maps.MapView
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.expressions.dsl.generated.interpolate
@@ -81,14 +81,8 @@ class LocationTrackingActivity : AppCompatActivity() {
     locationComponentPlugin.updateSettings {
       this.enabled = true
       this.locationPuck = LocationPuck2D(
-        bearingImage = AppCompatResources.getDrawable(
-          this@LocationTrackingActivity,
-          R.drawable.mapbox_user_puck_icon,
-        ),
-        shadowImage = AppCompatResources.getDrawable(
-          this@LocationTrackingActivity,
-          R.drawable.mapbox_user_icon_shadow,
-        ),
+        bearingImage = ImageHolder.from(R.drawable.mapbox_user_puck_icon),
+        shadowImage = ImageHolder.from(R.drawable.mapbox_user_icon_shadow),
         scaleExpression = interpolate {
           linear()
           zoom()

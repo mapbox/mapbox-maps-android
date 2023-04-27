@@ -19,6 +19,15 @@ internal class ModelLayerWrapper(
     layerProperties["model-rotation"] = Value(modelRotation.map(::Value))
     layerProperties["model-translation"] = Value(modelTranslation.map(::Value))
     layerProperties["model-opacity"] = Value(modelOpacity)
+    layerProperties["model-scale-transition"] = buildTransition(delay = 0, duration = 0)
+    layerProperties["model-rotation-transition"] = buildTransition(delay = 0, duration = 0)
+  }
+
+  private fun buildTransition(delay: Long, duration: Long): Value {
+    val transition = HashMap<String, Value>()
+    transition["delay"] = Value(delay)
+    transition["duration"] = Value(duration)
+    return Value(transition)
   }
 
   fun modelScale(scale: List<Double>) = updateProperty("model-scale", Value(scale.map(::Value)))

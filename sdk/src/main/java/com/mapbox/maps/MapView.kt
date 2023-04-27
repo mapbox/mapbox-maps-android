@@ -22,6 +22,7 @@ import com.mapbox.maps.renderer.RendererSetupErrorListener
 import com.mapbox.maps.renderer.egl.EGLCore
 import com.mapbox.maps.renderer.widget.Widget
 import com.mapbox.maps.viewannotation.ViewAnnotationManager
+import com.mapbox.maps.viewannotation.ViewAnnotationManagerImpl
 import java.nio.IntBuffer
 import kotlin.math.hypot
 

@@ -3,6 +3,7 @@
 package com.mapbox.maps.plugin.locationcomponent.generated
 
 import com.mapbox.maps.plugin.LocationPuck
+import com.mapbox.maps.plugin.PuckBearingSource
 
 /**
  * Interface that defines the public settings interface for LocationComponentPlugin.
@@ -20,7 +21,7 @@ interface LocationComponentSettingsInterface {
    *
    * @param block the receiver function of LocationComponentSettings
    */
-  fun updateSettings(block: LocationComponentSettings.() -> Unit)
+  fun updateSettings(block: LocationComponentSettings.Builder.() -> Unit)
 
   /**
    * Whether the user location is visible on the map.
@@ -43,6 +44,21 @@ interface LocationComponentSettingsInterface {
   var pulsingMaxRadius: Float
 
   /**
+   * Whether show accuracy ring with location puck. Works for 2D location puck only.
+   */
+  var showAccuracyRing: Boolean
+
+  /**
+   * The color of the accuracy ring. Works for 2D location puck only.
+   */
+  var accuracyRingColor: Int
+
+  /**
+   * The color of the accuracy ring border. Works for 2D location puck only.
+   */
+  var accuracyRingBorderColor: Int
+
+  /**
    * Sets the id of the layer that's added above to when placing the component on the map.
    */
   var layerAbove: String?
@@ -51,6 +67,16 @@ interface LocationComponentSettingsInterface {
    * Sets the id of the layer that's added below to when placing the component on the map.
    */
   var layerBelow: String?
+
+  /**
+   * Whether the puck rotates to track the bearing source.
+   */
+  var puckBearingEnabled: Boolean
+
+  /**
+   * The enum controls how the puck is oriented
+   */
+  var puckBearingSource: PuckBearingSource
 
   /**
    * Defines what the customised look of the location puck. Note that direct changes to the puck variables won't have any effect, a new puck needs to be set every time.

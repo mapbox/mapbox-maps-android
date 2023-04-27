@@ -2,7 +2,6 @@ package com.mapbox.maps.testapp.utils
 
 import android.os.Handler
 import android.os.Looper
-import androidx.appcompat.content.res.AppCompatResources
 import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
@@ -310,10 +309,7 @@ class NavigationSimulator(
     locationComponentPlugin.updateSettings {
       this.enabled = true
       this.locationPuck = LocationPuck2D(
-        bearingImage = AppCompatResources.getDrawable(
-          mapView.context,
-          R.drawable.mapbox_user_puck_icon,
-        ),
+        bearingImage = ImageHolder.from(R.drawable.mapbox_user_puck_icon),
         scaleExpression = interpolate {
           linear()
           zoom()
