@@ -99,7 +99,6 @@ class PolygonAnnotationManagerTest {
 
     every { queriedRenderedFeature.queriedFeature.feature } returns feature
     every { queriedRenderedFeaturesExpected.value } returns queriedRenderedFeatureList
-    every { feature.getProperty(any()).asLong } returns 0L
     every { mapFeatureQueryDelegate.executeOnRenderThread(capture(executeOnRenderThreadSlot)) } answers {
       executeOnRenderThreadSlot.captured.run()
     }
@@ -363,6 +362,7 @@ class PolygonAnnotationManagerTest {
         .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
     )
     assertEquals(annotation, manager.annotations[0])
+    every { feature.getProperty(any()).asString } returns annotation.id
 
     val listener = mockk<OnPolygonAnnotationClickListener>()
     every { listener.onAnnotationClick(any()) } returns false
@@ -396,6 +396,7 @@ class PolygonAnnotationManagerTest {
         .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
     )
     assertEquals(annotation, manager.annotations[0])
+    every { feature.getProperty(any()).asString } returns annotation.id
 
     val listener = mockk<OnPolygonAnnotationLongClickListener>()
     every { listener.onAnnotationLongClick(any()) } returns false
@@ -419,7 +420,7 @@ class PolygonAnnotationManagerTest {
     )
     assertEquals(annotation, manager.annotations[0])
 
-    every { feature.getProperty(any()).asLong } returns 0L
+    every { feature.getProperty(any()).asString } returns annotation.id
 
     val listener = mockk<OnPolygonAnnotationDragListener>(relaxed = true)
     manager.addDragListener(listener)

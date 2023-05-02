@@ -667,7 +667,7 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
    * @return the annotation that is built
    */
   override fun build(
-    id: Long,
+    id: String,
     annotationManager: AnnotationManager<Point, PointAnnotation, *, *, *, *, *>
   ): PointAnnotation {
     if (geometry == null) {

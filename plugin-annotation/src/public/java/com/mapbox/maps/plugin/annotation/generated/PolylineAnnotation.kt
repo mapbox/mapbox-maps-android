@@ -20,7 +20,7 @@ import java.util.Locale
  * Class for PolylineAnnotation
  */
 class PolylineAnnotation(
-  id: Long,
+  id: String,
   /** The annotation manager that manipulate this annotation */
   private val annotationManager: AnnotationManager<LineString, PolylineAnnotation, *, *, *, *, *>,
   jsonObject: JsonObject,

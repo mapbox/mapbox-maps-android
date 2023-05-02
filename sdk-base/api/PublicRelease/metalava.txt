@@ -1020,11 +1020,10 @@ package com.mapbox.maps.plugin.animation {
 package com.mapbox.maps.plugin.annotation {
 
   public abstract class Annotation<T extends com.mapbox.geojson.Geometry> {
-    ctor public Annotation(long id, com.google.gson.JsonObject jsonObject, T geometry);
+    ctor public Annotation(String id, com.google.gson.JsonObject jsonObject, T geometry);
     method public com.google.gson.JsonElement? getData();
-    method public final String getFeatureIdentifier();
     method public final T getGeometry();
-    method public final long getId();
+    method public final String getId();
     method protected final com.google.gson.JsonObject getJsonObject();
     method public final com.google.gson.JsonObject getJsonObjectCopy();
     method public abstract T? getOffsetGeometry(com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate mapCameraManagerDelegate, com.mapbox.android.gestures.MoveDistancesObject moveDistancesObject);
@@ -1036,9 +1035,8 @@ package com.mapbox.maps.plugin.annotation {
     method public final void setGeometry(T);
     method public final void setSelected(boolean);
     method public abstract void setUsedDataDrivenProperties();
-    property public final String featureIdentifier;
     property public final T geometry;
-    property public final long id;
+    property public final String id;
     property public final boolean isDraggable;
     property public final boolean isSelected;
     property protected final com.google.gson.JsonObject jsonObject;
@@ -1107,7 +1105,7 @@ package com.mapbox.maps.plugin.annotation {
   }
 
   public fun interface AnnotationOptions<G extends com.mapbox.geojson.Geometry, T extends com.mapbox.maps.plugin.annotation.Annotation<G>> {
-    method public T build(long id, com.mapbox.maps.plugin.annotation.AnnotationManager<G,T,?,?,?,?,?> annotationManager);
+    method public T build(String id, com.mapbox.maps.plugin.annotation.AnnotationManager<G,T,?,?,?,?,?> annotationManager);
   }
 
   public interface AnnotationPlugin extends com.mapbox.maps.plugin.MapPlugin com.mapbox.maps.plugin.MapSizePlugin com.mapbox.maps.plugin.MapStyleObserverPlugin {

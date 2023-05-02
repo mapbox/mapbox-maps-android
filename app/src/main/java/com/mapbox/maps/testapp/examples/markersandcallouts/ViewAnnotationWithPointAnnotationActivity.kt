@@ -120,7 +120,7 @@ class ViewAnnotationWithPointAnnotationActivity : AppCompatActivity() {
       resId = R.layout.item_callout_view,
       options = viewAnnotationOptions {
         geometry(POINT)
-        associatedFeatureId(pointAnnotation.featureIdentifier)
+        associatedFeatureId(pointAnnotation.id)
         anchor(ViewAnnotationAnchor.BOTTOM)
         offsetY((pointAnnotation.iconImageBitmap?.height!!).toInt())
       }

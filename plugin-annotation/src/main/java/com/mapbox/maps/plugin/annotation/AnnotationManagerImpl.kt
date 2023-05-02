@@ -1,6 +1,7 @@
 package com.mapbox.maps.plugin.annotation
 
 import android.graphics.PointF
+import androidx.annotation.MainThread
 import com.mapbox.android.gestures.MoveGestureDetector
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
@@ -35,13 +36,14 @@ import com.mapbox.maps.plugin.gestures.OnMapClickListener
 import com.mapbox.maps.plugin.gestures.OnMapLongClickListener
 import com.mapbox.maps.plugin.gestures.OnMoveListener
 import java.util.*
-import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
+import kotlin.collections.LinkedHashMap
 
 /**
  * Base class for annotation managers
  */
+@MainThread
 abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : AnnotationOptions<G, T>, D : OnAnnotationDragListener<T>, U : OnAnnotationClickListener<T>, V : OnAnnotationLongClickListener<T>, I : OnAnnotationInteractionListener<T>, L : Layer>(
   /** The delegateProvider */
   final override val delegateProvider: MapDelegateProvider,
@@ -53,15 +55,14 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     delegateProvider.mapFeatureQueryDelegate
   private var mapListenerDelegate: MapListenerDelegate = delegateProvider.mapListenerDelegate
   protected val dataDrivenPropertyUsageMap: MutableMap<String, Boolean> = HashMap()
-  private var currentId = 0L
   private var width = 0
   private var height = 0
   private val mapClickResolver = MapClick()
   private val mapLongClickResolver = MapLongClick()
   private val mapMoveResolver = MapMove()
   private var draggingAnnotation: T? = null
-  private val annotationMap = ConcurrentHashMap<Long, T>()
-  private val dragAnnotationMap = ConcurrentHashMap<Long, T>()
+  private val annotationMap = LinkedHashMap<String, T>()
+  private val dragAnnotationMap = LinkedHashMap<String, T>()
   protected abstract val layerId: String
   protected abstract val sourceId: String
   protected abstract val dragLayerId: String
@@ -91,7 +92,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
    */
   override val annotations: List<T>
     get() {
-      return annotationMap.values.toList().plus(dragAnnotationMap.values.toList())
+      return annotationMap.values.plus(dragAnnotationMap.values)
     }
 
   /**
@@ -308,9 +309,8 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
    * Create an annotation with the option
    */
   override fun create(option: S): T {
-    return option.build(currentId, this).also {
+    return option.build(UUID.randomUUID().toString(), this).also {
       annotationMap[it.id] = it
-      currentId++
       updateSource()
     }
   }
@@ -320,9 +320,8 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
    */
   override fun create(options: List<S>): List<T> {
     val list = options.map { option ->
-      option.build(currentId, this).also {
+      option.build(UUID.randomUUID().toString(), this).also {
         annotationMap[it.id] = it
-        currentId++
       }
     }
     updateSource()
@@ -451,7 +450,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   private fun convertAnnotationsToFeatures(annotations: Collection<T>): List<Feature> =
     annotations.map {
       it.setUsedDataDrivenProperties()
-      Feature.fromGeometry(it.geometry, it.getJsonObjectCopy(), it.featureIdentifier)
+      Feature.fromGeometry(it.geometry, it.getJsonObjectCopy(), it.id)
     }
 
   /**
@@ -796,7 +795,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
       ) { features ->
         features.value?.firstOrNull()?.queriedFeature?.feature?.getProperty(getAnnotationIdKey())
           ?.let { annotationId ->
-            val id = annotationId.asLong
+            val id = annotationId.asString
             when {
               annotationMap.containsKey(id) -> {
                 annotation = annotationMap[id]

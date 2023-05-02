@@ -94,7 +94,6 @@ class CircleAnnotationManagerTest {
 
     every { queriedRenderedFeature.queriedFeature.feature } returns feature
     every { queriedRenderedFeaturesExpected.value } returns queriedRenderedFeatureList
-    every { feature.getProperty(any()).asLong } returns 0L
     every { mapFeatureQueryDelegate.executeOnRenderThread(capture(executeOnRenderThreadSlot)) } answers {
       executeOnRenderThreadSlot.captured.run()
     }
@@ -379,6 +378,7 @@ class CircleAnnotationManagerTest {
         .withPoint(Point.fromLngLat(0.0, 0.0))
     )
     assertEquals(annotation, manager.annotations[0])
+    every { feature.getProperty(any()).asString } returns annotation.id
 
     val listener = mockk<OnCircleAnnotationClickListener>()
     every { listener.onAnnotationClick(any()) } returns false
@@ -412,6 +412,7 @@ class CircleAnnotationManagerTest {
         .withPoint(Point.fromLngLat(0.0, 0.0))
     )
     assertEquals(annotation, manager.annotations[0])
+    every { feature.getProperty(any()).asString } returns annotation.id
 
     val listener = mockk<OnCircleAnnotationLongClickListener>()
     every { listener.onAnnotationLongClick(any()) } returns false
@@ -435,7 +436,7 @@ class CircleAnnotationManagerTest {
     )
     assertEquals(annotation, manager.annotations[0])
 
-    every { feature.getProperty(any()).asLong } returns 0L
+    every { feature.getProperty(any()).asString } returns annotation.id
 
     val listener = mockk<OnCircleAnnotationDragListener>(relaxed = true)
     manager.addDragListener(listener)

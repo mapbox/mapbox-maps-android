@@ -99,7 +99,7 @@ package com.mapbox.maps.plugin.annotation {
 package com.mapbox.maps.plugin.annotation.generated {
 
   public final class CircleAnnotation extends com.mapbox.maps.plugin.annotation.Annotation<com.mapbox.geojson.Point> {
-    ctor public CircleAnnotation(long id, com.mapbox.maps.plugin.annotation.AnnotationManager<com.mapbox.geojson.Point,com.mapbox.maps.plugin.annotation.generated.CircleAnnotation,?,?,?,?,?> annotationManager, com.google.gson.JsonObject jsonObject, com.mapbox.geojson.Point geometry);
+    ctor public CircleAnnotation(String id, com.mapbox.maps.plugin.annotation.AnnotationManager<com.mapbox.geojson.Point,com.mapbox.maps.plugin.annotation.generated.CircleAnnotation,?,?,?,?,?> annotationManager, com.google.gson.JsonObject jsonObject, com.mapbox.geojson.Point geometry);
     method public Double? getCircleBlur();
     method @ColorInt public Integer? getCircleColorInt();
     method public String? getCircleColorString();
@@ -190,7 +190,7 @@ package com.mapbox.maps.plugin.annotation.generated {
 
   public final class CircleAnnotationOptions implements com.mapbox.maps.plugin.annotation.AnnotationOptions<com.mapbox.geojson.Point,com.mapbox.maps.plugin.annotation.generated.CircleAnnotation> {
     ctor public CircleAnnotationOptions();
-    method public com.mapbox.maps.plugin.annotation.generated.CircleAnnotation build(long id, com.mapbox.maps.plugin.annotation.AnnotationManager<com.mapbox.geojson.Point,com.mapbox.maps.plugin.annotation.generated.CircleAnnotation,?,?,?,?,?> annotationManager);
+    method public com.mapbox.maps.plugin.annotation.generated.CircleAnnotation build(String id, com.mapbox.maps.plugin.annotation.AnnotationManager<com.mapbox.geojson.Point,com.mapbox.maps.plugin.annotation.generated.CircleAnnotation,?,?,?,?,?> annotationManager);
     method public Double? getCircleBlur();
     method public String? getCircleColor();
     method public Double? getCircleOpacity();
@@ -297,7 +297,7 @@ package com.mapbox.maps.plugin.annotation.generated {
   }
 
   public final class PointAnnotation extends com.mapbox.maps.plugin.annotation.Annotation<com.mapbox.geojson.Point> {
-    ctor public PointAnnotation(long id, com.mapbox.maps.plugin.annotation.AnnotationManager<com.mapbox.geojson.Point,com.mapbox.maps.plugin.annotation.generated.PointAnnotation,?,?,?,?,?> annotationManager, com.google.gson.JsonObject jsonObject, com.mapbox.geojson.Point geometry);
+    ctor public PointAnnotation(String id, com.mapbox.maps.plugin.annotation.AnnotationManager<com.mapbox.geojson.Point,com.mapbox.maps.plugin.annotation.generated.PointAnnotation,?,?,?,?,?> annotationManager, com.google.gson.JsonObject jsonObject, com.mapbox.geojson.Point geometry);
     method public com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor? getIconAnchor();
     method @ColorInt public Integer? getIconColorInt();
     method public String? getIconColorString();
@@ -530,7 +530,7 @@ package com.mapbox.maps.plugin.annotation.generated {
 
   public final class PointAnnotationOptions implements com.mapbox.maps.plugin.annotation.AnnotationOptions<com.mapbox.geojson.Point,com.mapbox.maps.plugin.annotation.generated.PointAnnotation> {
     ctor public PointAnnotationOptions();
-    method public com.mapbox.maps.plugin.annotation.generated.PointAnnotation build(long id, com.mapbox.maps.plugin.annotation.AnnotationManager<com.mapbox.geojson.Point,com.mapbox.maps.plugin.annotation.generated.PointAnnotation,?,?,?,?,?> annotationManager);
+    method public com.mapbox.maps.plugin.annotation.generated.PointAnnotation build(String id, com.mapbox.maps.plugin.annotation.AnnotationManager<com.mapbox.geojson.Point,com.mapbox.maps.plugin.annotation.generated.PointAnnotation,?,?,?,?,?> annotationManager);
     method public com.google.gson.JsonElement? getData();
     method public boolean getDraggable();
     method public com.mapbox.geojson.Point? getGeometry();
@@ -687,7 +687,7 @@ package com.mapbox.maps.plugin.annotation.generated {
   }
 
   public final class PolygonAnnotation extends com.mapbox.maps.plugin.annotation.Annotation<com.mapbox.geojson.Polygon> {
-    ctor public PolygonAnnotation(long id, com.mapbox.maps.plugin.annotation.AnnotationManager<com.mapbox.geojson.Polygon,com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation,?,?,?,?,?> annotationManager, com.google.gson.JsonObject jsonObject, com.mapbox.geojson.Polygon geometry);
+    ctor public PolygonAnnotation(String id, com.mapbox.maps.plugin.annotation.AnnotationManager<com.mapbox.geojson.Polygon,com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation,?,?,?,?,?> annotationManager, com.google.gson.JsonObject jsonObject, com.mapbox.geojson.Polygon geometry);
     method @ColorInt public Integer? getFillColorInt();
     method public String? getFillColorString();
     method public Double? getFillOpacity();
@@ -766,7 +766,7 @@ package com.mapbox.maps.plugin.annotation.generated {
 
   public final class PolygonAnnotationOptions implements com.mapbox.maps.plugin.annotation.AnnotationOptions<com.mapbox.geojson.Polygon,com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation> {
     ctor public PolygonAnnotationOptions();
-    method public com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation build(long id, com.mapbox.maps.plugin.annotation.AnnotationManager<com.mapbox.geojson.Polygon,com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation,?,?,?,?,?> annotationManager);
+    method public com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation build(String id, com.mapbox.maps.plugin.annotation.AnnotationManager<com.mapbox.geojson.Polygon,com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation,?,?,?,?,?> annotationManager);
     method public com.google.gson.JsonElement? getData();
     method public boolean getDraggable();
     method public String? getFillColor();
@@ -810,7 +810,7 @@ package com.mapbox.maps.plugin.annotation.generated {
   }
 
   public final class PolylineAnnotation extends com.mapbox.maps.plugin.annotation.Annotation<com.mapbox.geojson.LineString> {
-    ctor public PolylineAnnotation(long id, com.mapbox.maps.plugin.annotation.AnnotationManager<com.mapbox.geojson.LineString,com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation,?,?,?,?,?> annotationManager, com.google.gson.JsonObject jsonObject, com.mapbox.geojson.LineString geometry);
+    ctor public PolylineAnnotation(String id, com.mapbox.maps.plugin.annotation.AnnotationManager<com.mapbox.geojson.LineString,com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation,?,?,?,?,?> annotationManager, com.google.gson.JsonObject jsonObject, com.mapbox.geojson.LineString geometry);
     method public Double? getLineBlur();
     method @ColorInt public Integer? getLineColorInt();
     method public String? getLineColorString();
@@ -910,7 +910,7 @@ package com.mapbox.maps.plugin.annotation.generated {
 
   public final class PolylineAnnotationOptions implements com.mapbox.maps.plugin.annotation.AnnotationOptions<com.mapbox.geojson.LineString,com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation> {
     ctor public PolylineAnnotationOptions();
-    method public com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation build(long id, com.mapbox.maps.plugin.annotation.AnnotationManager<com.mapbox.geojson.LineString,com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation,?,?,?,?,?> annotationManager);
+    method public com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation build(String id, com.mapbox.maps.plugin.annotation.AnnotationManager<com.mapbox.geojson.LineString,com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation,?,?,?,?,?> annotationManager);
     method public com.google.gson.JsonElement? getData();
     method public boolean getDraggable();
     method public com.mapbox.geojson.LineString? getGeometry();

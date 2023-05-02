@@ -21,6 +21,8 @@ Mapbox welcomes participation and contributions from everyone.
 * Change `CompassSettings#image`, `LocationPuck2D#topImage`, `LocationPuck2D#bearingImage`, `LocationPuck2D#shadowImage` to `ImageHolder` allowing to pass either drawable id or `Bitmap`.
 * Remove deprecated `backgroundPatternTransition`, `lineDasharrayTransition`, `linePatternTransition`, `fillPatternTransition` properties.
 * Replace `MapSnapshotInterface` interface with `MapSnapshotResult` abstract class and remove `image()` method, `bitmap()` should be used instead.
+* Change `Annotation.id` from monotonically increasing `Long` to UUID represented as `String`.
+* Remove `Annotation.featureIdentifier` used to connect with View Annotations, now `Annotation.id` should be used instead.
 * Update Mapbox styles to latest versions.
 
 | Style             | Before                                       | After                                        |

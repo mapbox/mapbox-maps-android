@@ -100,7 +100,6 @@ class PolylineAnnotationManagerTest {
 
     every { queriedRenderedFeature.queriedFeature.feature } returns feature
     every { queriedRenderedFeaturesExpected.value } returns queriedRenderedFeatureList
-    every { feature.getProperty(any()).asLong } returns 0L
     every { mapFeatureQueryDelegate.executeOnRenderThread(capture(executeOnRenderThreadSlot)) } answers {
       executeOnRenderThreadSlot.captured.run()
     }
@@ -387,6 +386,7 @@ class PolylineAnnotationManagerTest {
         .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
     )
     assertEquals(annotation, manager.annotations[0])
+    every { feature.getProperty(any()).asString } returns annotation.id
 
     val listener = mockk<OnPolylineAnnotationClickListener>()
     every { listener.onAnnotationClick(any()) } returns false
@@ -420,6 +420,7 @@ class PolylineAnnotationManagerTest {
         .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
     )
     assertEquals(annotation, manager.annotations[0])
+    every { feature.getProperty(any()).asString } returns annotation.id
 
     val listener = mockk<OnPolylineAnnotationLongClickListener>()
     every { listener.onAnnotationLongClick(any()) } returns false
@@ -443,7 +444,7 @@ class PolylineAnnotationManagerTest {
     )
     assertEquals(annotation, manager.annotations[0])
 
-    every { feature.getProperty(any()).asLong } returns 0L
+    every { feature.getProperty(any()).asString } returns annotation.id
 
     val listener = mockk<OnPolylineAnnotationDragListener>(relaxed = true)
     manager.addDragListener(listener)

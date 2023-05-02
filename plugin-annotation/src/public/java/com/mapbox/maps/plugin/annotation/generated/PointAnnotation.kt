@@ -20,7 +20,7 @@ import java.util.Locale
  * Class for PointAnnotation
  */
 class PointAnnotation(
-  id: Long,
+  id: String,
   /** The annotation manager that manipulate this annotation */
   private val annotationManager: AnnotationManager<Point, PointAnnotation, *, *, *, *, *>,
   jsonObject: JsonObject,

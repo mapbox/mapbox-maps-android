@@ -51,7 +51,7 @@ data class Marker(
       options = viewAnnotationOptions {
         geometry(position)
         // make info window automatically disappear when marker will disappear (e.g. due to a collision)
-        associatedFeatureId(pointAnnotation.featureIdentifier)
+        associatedFeatureId(pointAnnotation.id)
         // align anchor to be the same as for the marker
         anchor(ViewAnnotationAnchor.BOTTOM)
         // needed to display info window above the marker
