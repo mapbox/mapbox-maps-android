@@ -18,13 +18,14 @@ java {
 }
 
 dependencies {
-  compileOnly(Dependencies.lintApi)
-  compileOnly(Dependencies.lintChecks)
-  compileOnly(Dependencies.kotlin)
-  testImplementation(Dependencies.junit)
-  testImplementation(Dependencies.lint)
-  testImplementation(Dependencies.lintTests)
-  testImplementation(Dependencies.testUtils)
+  compileOnly(libs.lintApi)
+  compileOnly(libs.lintChecks)
+  compileOnly(libs.kotlin)
+  
+  testImplementation(libs.junit)
+  testImplementation(libs.lint)
+  testImplementation(libs.lintTests)
+  testImplementation(libs.testUtils)
 }
 project.apply {
   from("$rootDir/gradle/ktlint.gradle")

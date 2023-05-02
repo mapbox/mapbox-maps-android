@@ -3,10 +3,10 @@ plugins {
 }
 
 android {
-  compileSdk = AndroidVersions.compileSdkVersion
+  compileSdk = libs.versions.androidCompileSdkVersion.get().toInt()
   defaultConfig {
-    minSdk = AndroidVersions.minSdkVersion
-    targetSdk = AndroidVersions.targetSdkVersion
+    minSdk = libs.versions.androidMinSdkVersion.get().toInt()
+    targetSdk = libs.versions.androidTargetSdkVersion.get().toInt()
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
   testOptions {
@@ -16,22 +16,19 @@ android {
 
 dependencies {
   implementation(project(":sdk-base"))
-  implementation(Dependencies.mapboxBase)
-  implementation(Dependencies.kotlin)
-  implementation(Dependencies.androidxCoreKtx)
-  implementation(Dependencies.androidxLifecycle)
-  testImplementation(Dependencies.coroutinesTest)
-  testImplementation(Dependencies.junit)
-  testImplementation(Dependencies.mockk)
-  testImplementation(Dependencies.androidxTestCore)
-  testImplementation(Dependencies.robolectric)
-  testImplementation(Dependencies.androidxArchCoreTest)
-  testImplementation(Dependencies.androidxLifecycleRuntimeTesting)
-  androidTestImplementation(Dependencies.androidxTestRunner)
-  androidTestImplementation(Dependencies.androidxJUnitTestRules)
-  androidTestImplementation(Dependencies.androidxEspresso)
+  implementation(libs.mapbox.base)
+  implementation(libs.kotlin)
+  implementation(libs.androidx.coreKtx)
+  implementation(libs.androidx.lifecycle)
+
+  testImplementation(libs.coroutinesTest)
+  testImplementation(libs.bundles.base.dependenciesTests)
+  testImplementation(libs.androidx.archCoreTest)
+  testImplementation(libs.androidx.lifecycleRuntimeTesting)
+
+  androidTestImplementation(libs.bundles.base.dependenciesAndroidTests)
   lintPublish(project(":plugin-lifecycle-lint-rules"))
-  detektPlugins(Dependencies.detektFormatting)
+  detektPlugins(libs.detektFormatting)
 }
 
 project.apply {

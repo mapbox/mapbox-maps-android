@@ -23,7 +23,7 @@ checksum_file() {
 }
 
 add_files . build.gradle.kts
-add_files ./buildSrc/src/main/kotlin Project.kt
+add_files ./gradle/libs.versions.toml
 add_files ./gradle/wrapper gradle-wrapper.properties
 
 for FILE in ${FILES[@]}; do

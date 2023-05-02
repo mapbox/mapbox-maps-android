@@ -4,29 +4,25 @@ plugins {
 }
 
 android {
-  compileSdk = AndroidVersions.compileSdkVersion
+  compileSdk = libs.versions.androidCompileSdkVersion.get().toInt()
   defaultConfig {
-    minSdk = AndroidVersions.minSdkVersion
-    targetSdk = AndroidVersions.targetSdkVersion
+    minSdk = libs.versions.androidMinSdkVersion.get().toInt()
+    targetSdk = libs.versions.androidTargetSdkVersion.get().toInt()
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
 }
 
 dependencies {
   implementation(project(":sdk-base"))
-  implementation(Dependencies.mapboxBase)
-  compileOnly(Dependencies.mapboxAnnotations)
-  kapt(Dependencies.mapboxAnnotationsProcessor)
-  implementation(Dependencies.kotlin)
-  testImplementation(Dependencies.junit)
-  testImplementation(Dependencies.mockk)
-  testImplementation(Dependencies.robolectric)
-  testImplementation(Dependencies.equalsVerifier)
-  androidTestImplementation(Dependencies.androidxTestRunner)
-  androidTestImplementation(Dependencies.androidxJUnitTestRules)
-  androidTestImplementation(Dependencies.androidxEspresso)
-  androidTestImplementation(Dependencies.androidxTestJUnit)
-  detektPlugins(Dependencies.detektFormatting)
+  implementation(libs.mapbox.base)
+  compileOnly(libs.mapbox.annotations)
+  kapt(libs.mapbox.annotationsProcessor)
+  implementation(libs.kotlin)
+
+  testImplementation(libs.bundles.base.dependenciesTests)
+  androidTestImplementation(libs.bundles.base.dependenciesAndroidTests)
+  androidTestImplementation(libs.androidx.testJUnit)
+  detektPlugins(libs.detektFormatting)
 }
 
 project.apply {

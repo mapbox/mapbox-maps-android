@@ -3,36 +3,29 @@ plugins {
 }
 
 android {
-  compileSdk = AndroidVersions.compileSdkVersion
+  compileSdk = libs.versions.androidCompileSdkVersion.get().toInt()
   defaultConfig {
+    minSdk = libs.versions.androidMinSdkVersion.get().toInt()
+    targetSdk = libs.versions.androidTargetSdkVersion.get().toInt()
     vectorDrawables.useSupportLibrary = true
-    minSdk = AndroidVersions.minSdkVersion
-    targetSdk = AndroidVersions.targetSdkVersion
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
 }
 
 dependencies {
   implementation(project(":sdk-base"))
-  implementation(Dependencies.mapboxBase)
-  implementation(Dependencies.kotlin)
-  implementation(Dependencies.androidxAppCompat)
-  implementation(Dependencies.androidxCoreKtx)
-  implementation(Dependencies.androidxAnnotations)
-  implementation(Dependencies.mapboxJavaGeoJSON)
-  implementation(Dependencies.coroutines)
-  testImplementation(Dependencies.junit)
-  testImplementation(Dependencies.mockk)
-  testImplementation(Dependencies.androidxTestCore)
-  testImplementation(Dependencies.robolectric)
-  testImplementation(Dependencies.hamcrest)
+  implementation(libs.bundles.base.dependencies)
+  implementation(libs.mapbox.javaGeoJSON)
+  implementation(libs.coroutines)
+
+  testImplementation(libs.bundles.base.dependenciesTests)
+  testImplementation(libs.hamcrest)
   testImplementation(project(":plugin-gestures"))
   testImplementation(project(":plugin-animation"))
-  testImplementation(Dependencies.coroutinesTest)
-  androidTestImplementation(Dependencies.androidxTestRunner)
-  androidTestImplementation(Dependencies.androidxJUnitTestRules)
-  androidTestImplementation(Dependencies.androidxEspresso)
-  detektPlugins(Dependencies.detektFormatting)
+  testImplementation(libs.coroutinesTest)
+
+  androidTestImplementation(libs.bundles.base.dependenciesAndroidTests)
+  detektPlugins(libs.detektFormatting)
 }
 
 project.apply {
