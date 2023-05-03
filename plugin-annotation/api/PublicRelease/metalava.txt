@@ -1,7 +1,7 @@
 // Signature format: 3.0
 package com.mapbox.maps.plugin.annotation {
 
-  public abstract class AnnotationManagerImpl<G extends com.mapbox.geojson.Geometry, T extends com.mapbox.maps.plugin.annotation.Annotation<G>, S extends com.mapbox.maps.plugin.annotation.AnnotationOptions<G, T>, D extends com.mapbox.maps.plugin.annotation.OnAnnotationDragListener<? extends T>, U extends com.mapbox.maps.plugin.annotation.OnAnnotationClickListener<T>, V extends com.mapbox.maps.plugin.annotation.OnAnnotationLongClickListener<T>, I extends com.mapbox.maps.plugin.annotation.OnAnnotationInteractionListener<T>, L extends com.mapbox.maps.extension.style.layers.Layer> implements com.mapbox.maps.plugin.annotation.AnnotationManager<G,T,S,D,U,V,I> {
+  @MainThread public abstract class AnnotationManagerImpl<G extends com.mapbox.geojson.Geometry, T extends com.mapbox.maps.plugin.annotation.Annotation<G>, S extends com.mapbox.maps.plugin.annotation.AnnotationOptions<G, T>, D extends com.mapbox.maps.plugin.annotation.OnAnnotationDragListener<? extends T>, U extends com.mapbox.maps.plugin.annotation.OnAnnotationClickListener<T>, V extends com.mapbox.maps.plugin.annotation.OnAnnotationLongClickListener<T>, I extends com.mapbox.maps.plugin.annotation.OnAnnotationInteractionListener<T>, L extends com.mapbox.maps.extension.style.layers.Layer> implements com.mapbox.maps.plugin.annotation.AnnotationManager<G,T,S,D,U,V,I> {
     ctor public AnnotationManagerImpl(com.mapbox.maps.plugin.delegates.MapDelegateProvider delegateProvider, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig);
     method public T create(S option);
     method public java.util.List<T> create(java.util.List<? extends S> options);
