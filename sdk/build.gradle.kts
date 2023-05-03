@@ -147,11 +147,26 @@ android.productFlavors.all {
         if (upstreamApiDocFile.exists()) {
           // We include the files in "upstream-api-doc-list.txt" which might not have docs
           reportUndocumented.set(false)
+
+          val tmpJavaForDokkaFolder = getAndCreateJavaForDokkaFolder()
           upstreamApiDocFile.forEachLine {
             if (!it.startsWith("//")) {
-              sourceRoots.from(file("../../$it"))
+              val file = file("../../$it")
+              if (!file.exists()) {
+                throw GradleException("Unable to add ${file.absolutePath}")
+              } else if (!file.isDirectory && file.extension == "java") {
+                // Due to bug https://github.com/Kotlin/dokka/issues/2590 in 1.5.31 we copy the
+                // individual Java files to a separate folder that will be included as sourceRoot
+
+                // We use the full `it` to avoid collisions
+                file.copyTo(target = tmpJavaForDokkaFolder.resolve(it), overwrite = true)
+              } else {
+                sourceRoots.from(file)
+              }
             }
           }
+          // Always add the temporary folder to generate documentation
+          sourceRoot(tmpJavaForDokkaFolder)
         }
       }
     }
@@ -167,3 +182,11 @@ project.apply {
   from("$rootDir/gradle/detekt.gradle")
   from("$rootDir/gradle/dependency-updates.gradle")
 }
+
+fun getAndCreateJavaForDokkaFolder() =
+  buildDir.resolve("dokka/tmp_java_files").also {
+    if (!it.exists() && !it.mkdirs()) {
+      throw GradleException("Couldn't create folder $it")
+    }
+  }
+
