@@ -2,6 +2,8 @@
 
 package com.mapbox.maps.extension.style.layers.properties.generated
 
+import com.mapbox.maps.MapboxExperimental
+
 /**
  * Paint/Layout properties for Layer
  */
@@ -516,6 +518,40 @@ enum class SkyType(override val value: String) : LayerProperty {
    * Renders the sky with a simulated atmospheric scattering algorithm, the sun direction can be attached to the light position or explicitly set through {@link SKY_ATMOSPHERE_SUN}.
    */
   ATMOSPHERE("atmosphere"),
+}
+// MODEL_SCALE_MODE: Defines scaling mode. Only applies to location-indicator type layers.
+/**
+ * Defines scaling mode. Only applies to location-indicator type layers.
+ *
+ * @param value String value of this property
+ */
+@MapboxExperimental
+enum class ModelScaleMode(override val value: String) : LayerProperty {
+  /**
+   * Model is scaled so that it's always the same size relative to other map features. The property model-scale specifies how many meters each unit in the model file should cover.
+   */
+  MAP("map"),
+  /**
+   * Model is scaled so that it's always the same size on the screen. The property model-scale specifies how many pixels each unit in model file should cover.
+   */
+  VIEWPORT("viewport"),
+}
+// MODEL_TYPE: Defines rendering behavior of model in respect to other 3D scene objects.
+/**
+ * Defines rendering behavior of model in respect to other 3D scene objects.
+ *
+ * @param value String value of this property
+ */
+@MapboxExperimental
+enum class ModelType(override val value: String) : LayerProperty {
+  /**
+   * Integrated to 3D scene, using depth testing, along with terrain, fill-extrusions and custom layer.
+   */
+  COMMON_3D("common-3d"),
+  /**
+   * Displayed over other 3D content, occluded by terrain.
+   */
+  LOCATION_INDICATOR("location-indicator"),
 }
 // ANCHOR: Whether extruded geometries are lit relative to the map or viewport.
 /**
