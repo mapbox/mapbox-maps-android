@@ -1,6 +1,7 @@
 package com.mapbox.maps.extension.style
 
 import com.mapbox.maps.LayerPosition
+import com.mapbox.maps.MapboxExperimental
 
 /**
  * Define the common interfaces for the Style component.
@@ -24,6 +25,11 @@ interface StyleContract {
      * The images of the style.
      */
     val images: List<StyleImageExtension>
+
+    /**
+     * The models of the style.
+     */
+    val models: List<StyleModelExtension>
 
     /**
      * The layers of the style.
@@ -130,6 +136,19 @@ interface StyleContract {
   fun interface StyleImageExtension {
     /**
      * Bind the image to the Style.
+     *
+     * @param delegate The style delegate
+     */
+    fun bindTo(delegate: StyleInterface)
+  }
+
+  /**
+   * Define the interfaces for the model extension.
+   */
+  @MapboxExperimental
+  fun interface StyleModelExtension {
+    /**
+     * Bind the model to the Style.
      *
      * @param delegate The style delegate
      */
