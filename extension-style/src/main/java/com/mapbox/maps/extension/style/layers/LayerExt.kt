@@ -32,6 +32,7 @@ fun StyleManagerInterface.getLayer(layerId: String): Layer? {
     "line" -> LineLayer(layerId, source)
     "raster" -> RasterLayer(layerId, source)
     "symbol" -> SymbolLayer(layerId, source)
+    "model" -> ModelLayer(layerId, source)
     else -> {
       logE(TAG, "Layer type: $type unknown.")
       null
