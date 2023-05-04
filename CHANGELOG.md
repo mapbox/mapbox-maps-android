@@ -2,11 +2,34 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# main
-
 # 10.13.0
+## Features ✨ and improvements 🏁
+* Add overloaded methods to `CameraAnimatorsFactory` allowing to set camera animator owner.
+* Improve startup performance by calculating the style expressions dependencies lazily.
+* Introduce a new APIs `coordinateInfoForPixel(pixel: ScreenCoordinate): CoordinateInfo` and `coordinatesInfoForPixels(pixels: List<ScreenCoordinate>): List<CoordinateInfo>` which will return record(s) containing both `coordinate` and `isOnSurface` info.
+* Deprecate `Snapshotter.setTileMode` and `Snapshotter.isInTileMode`.
+* Deprecate `Style.setStyleGeoJSONSourceData(sourceId, data)`.
+* Deprecate `isMapLoaded` method.
+* Share similar image and glyph atlases across tiles and thus avoid unnecessary textures creation.
+* Render single color gradient as solid line.
+* Use flat screen coordinate conversion functions with zero exaggeration terrain.
+* Deprecate qRF APIs that use specific geometry types, which also are not cancelable.
+
 ## Bug fixes 🐞
 * Fix rare issue in renderer which could freeze the device when bringing the `MapView` back to front.
+* Fix artefacts caused by a race condition when style layers got updated during pending tiles layout.
+* Fix missing return unexpected result in model_loader processing, so the client could be aware of the error.
+* Fix text flickering while symbol layer update if text-field contains text-color property.
+* Fix 3d location layer properties `model-scale-transition` and `model-rotation-transition`, made them non-transitionable.
+* Fix raw expression parsing for list literal.
+* Fix text flickering while symbol layer update if `text-field` contains `text-color` property inside the format expression.
+* Fix a crash when a hillshade bucket was created with disabled terrain, but the terrain got enabled afterwards.
+* Fix the crash when identifying if device is connected to WiFi.
+
+## Dependencies
+* Update gl-native to v10.13.0 and common to v23.5.0.
+
+
 
 # 10.13.0-rc.1 April 20, 2023
 ## Features ✨ and improvements 🏁
