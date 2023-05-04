@@ -268,6 +268,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
     gesturesManager.rotateGestureDetector.angleThreshold = ROTATION_ANGLE_THRESHOLD
     gesturesManager.shoveGestureDetector.maxShoveAngle = MAX_SHOVE_ANGLE
     this.gesturesManager = gesturesManager
+    this.gestureState = GestureState(gesturesManager)
   }
 
   /**
@@ -1765,7 +1766,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
     bind(context, gesturesManager, attrs, pixelRatio)
   }
 
-  // For internal testing.
+  @VisibleForTesting(otherwise = PRIVATE)
   internal fun bind(
     context: Context,
     gesturesManager: AndroidGesturesManager,

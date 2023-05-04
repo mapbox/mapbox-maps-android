@@ -53,16 +53,15 @@ class GesturesPluginTest {
   private val cameraAnimationsPlugin: CameraAnimationsPlugin = mockk(relaxed = true)
 
   private val gesturesManager: AndroidGesturesManager = mockk(relaxed = true)
-  private var rotateGestureDetector: RotateGestureDetector = mockk(relaxUnitFun = true)
-  private var shoveGestureDetector: ShoveGestureDetector = mockk()
-  private var scaleGestureDetector: StandardScaleGestureDetector = mockk(relaxUnitFun = true)
-  private var moveGestureDetector: MoveGestureDetector = mockk(relaxUnitFun = true)
+  private val rotateGestureDetector: RotateGestureDetector = mockk(relaxed = true)
+  private val shoveGestureDetector: ShoveGestureDetector = mockk(relaxed = true)
+  private val scaleGestureDetector: StandardScaleGestureDetector = mockk(relaxed = true)
+  private val moveGestureDetector: MoveGestureDetector = mockk(relaxed = true)
 
   private val motionEvent1 = mockk<MotionEvent>()
   private val motionEvent2 = mockk<MotionEvent>()
 
   private val typedArray: TypedArray = mockk(relaxed = true)
-  private val pack = "com.mapbox.maps"
 
   private val gestureListener = slot<StandardGestureDetector.StandardOnGestureListener>()
 
@@ -112,19 +111,14 @@ class GesturesPluginTest {
     every { motionEvent2.x } returns 0.0f
     every { motionEvent2.y } returns 0.0f
 
-    presenter = GesturesPluginImpl(context, attrs, style)
-
-    presenter.bind(context, gesturesManager, attrs, 1f)
-    presenter.onDelegateProvider(mapDelegateProvider)
-    every {
-      gesturesManager.setStandardGestureListener(capture(gestureListener))
-    } just Runs
-    presenter.initialize()
-
     every { gesturesManager.rotateGestureDetector } returns rotateGestureDetector
     every { gesturesManager.standardScaleGestureDetector } returns scaleGestureDetector
     every { gesturesManager.shoveGestureDetector } returns shoveGestureDetector
     every { gesturesManager.moveGestureDetector } returns moveGestureDetector
+    every {
+      gesturesManager.setStandardGestureListener(capture(gestureListener))
+    } just Runs
+
     every { mapCameraManagerDelegate.cameraState } returns CameraState(
       Point.fromLngLat(0.0, 0.0),
       EdgeInsets(0.0, 0.0, 0.0, 0.0),
@@ -138,6 +132,11 @@ class GesturesPluginTest {
         any()
       )
     } returns CameraOptions.Builder().build()
+
+    presenter = GesturesPluginImpl(context, attrs, style)
+    presenter.bind(context, gesturesManager, attrs, 1f)
+    presenter.onDelegateProvider(mapDelegateProvider)
+    presenter.initialize()
   }
 
   private fun setupMoveListener(isEnabled: Boolean = true): OnMoveListener {
@@ -971,14 +970,14 @@ class GesturesPluginTest {
   @Test
   fun verifyDefaultShoveGestureAngle() {
     verify(exactly = 1) {
-      gesturesManager.shoveGestureDetector.maxShoveAngle = MAX_SHOVE_ANGLE
+      shoveGestureDetector.maxShoveAngle = MAX_SHOVE_ANGLE
     }
   }
 
   @Test
   fun verifyDefaultRotationAngleThreshold() {
     verify(exactly = 1) {
-      gesturesManager.rotateGestureDetector.angleThreshold = ROTATION_ANGLE_THRESHOLD
+      rotateGestureDetector.angleThreshold = ROTATION_ANGLE_THRESHOLD
     }
   }
 
@@ -1181,11 +1180,106 @@ class GesturesPluginTest {
     gestureListener.captured.onFling(null, null, 0f, 0f)
   }
 
+  @Test
+  fun testGestureState() {
+    presenter.handleShoveBegin(mockk(relaxed = true))
+    presenter.handleShoveEnd(mockk(relaxed = true))
+    presenter.handleRotateBegin(mockk(relaxed = true))
+    presenter.handleRotateEnd(mockk(relaxed = true), 0f, 0f, 0f)
+    presenter.handleScaleBegin(
+      mockk<StandardScaleGestureDetector>(relaxed = true).also {
+        every { it.pointersCount } returns 2
+        every { it.previousSpan } returns 10f
+        every { it.currentSpan } returns 20f
+        every { it.currentEvent } returns mockk<MotionEvent>(relaxed = true).also {
+          every { it.eventTime } returns 2L
+        }
+        every { it.previousEvent } returns mockk<MotionEvent>(relaxed = true).also {
+          every { it.eventTime } returns 1L
+        }
+      }
+    )
+    presenter.handleScaleEnd(mockk(relaxed = true), 0f, 0f)
+    presenter.handleDoubleTapEvent(
+      mockk<MotionEvent>(relaxed = true).also {
+        every { it.actionMasked } returns ACTION_DOWN
+      },
+      0f
+    )
+
+    verify {
+      moveGestureDetector.isEnabled = any()
+    }
+    verify {
+      rotateGestureDetector.isEnabled = any()
+    }
+  }
+
+  @Test
+  fun testExternalGestureManagerGestureState() {
+    val externalMoveGestureDetector = mockk<MoveGestureDetector>(relaxed = true)
+    val externalRotateGestureDetector = mockk<RotateGestureDetector>(relaxed = true)
+    val externalGestureManager = mockk<AndroidGesturesManager>(relaxed = true).also {
+      every { it.setStandardGestureListener(any()) } just Runs
+      every { it.rotateGestureDetector } returns externalRotateGestureDetector
+      every { it.moveGestureDetector } returns externalMoveGestureDetector
+      every { it.standardScaleGestureDetector } returns mockk(relaxed = true)
+      every { it.shoveGestureDetector } returns mockk(relaxed = true)
+    }
+
+    presenter.setGesturesManager(
+      externalGestureManager,
+      attachDefaultListeners = true,
+      setDefaultMutuallyExclusives = true
+    )
+
+    presenter.handleShoveBegin(mockk(relaxed = true))
+    presenter.handleShoveEnd(mockk(relaxed = true))
+    presenter.handleRotateBegin(mockk(relaxed = true))
+    presenter.handleRotateEnd(mockk(relaxed = true), 0f, 0f, 0f)
+    presenter.handleScaleBegin(
+      mockk<StandardScaleGestureDetector>(relaxed = true).also {
+        every { it.pointersCount } returns 2
+        every { it.previousSpan } returns 10f
+        every { it.currentSpan } returns 20f
+        every { it.currentEvent } returns mockk<MotionEvent>(relaxed = true).also {
+          every { it.eventTime } returns 2L
+        }
+        every { it.previousEvent } returns mockk<MotionEvent>(relaxed = true).also {
+          every { it.eventTime } returns 1L
+        }
+      }
+    )
+    presenter.handleScaleEnd(mockk(relaxed = true), 0f, 0f)
+    presenter.handleDoubleTapEvent(
+      mockk<MotionEvent>(relaxed = true).also {
+        every { it.actionMasked } returns ACTION_DOWN
+      },
+      0f
+    )
+
+    verify(exactly = 0) {
+      moveGestureDetector.isEnabled = any()
+    }
+    verify(exactly = 0) {
+      rotateGestureDetector.isEnabled = any()
+    }
+
+    verify {
+      externalRotateGestureDetector.isEnabled
+    }
+    verify {
+      externalMoveGestureDetector.isEnabled
+    }
+  }
+
   private companion object {
     const val ROTATION_ANGLE_THRESHOLD = 3.0f
     const val MAX_SHOVE_ANGLE = 45.0f
 
     const val EPS = 0.000001
+
+    const val pack = "com.mapbox.maps"
 
     fun obtainMotionEventButton(buttonType: Int): MotionEvent {
       return obtain(
