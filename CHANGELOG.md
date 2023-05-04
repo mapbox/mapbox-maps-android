@@ -25,6 +25,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix text flickering while symbol layer update if `text-field` contains `text-color` property inside the format expression.
 * Fix a crash when a hillshade bucket was created with disabled terrain, but the terrain got enabled afterwards.
 * Fix the crash when identifying if device is connected to WiFi.
+* Fix jumpy gestures when external `AndroidGestureManager` is added with `setGesturesManager`.
 
 ## Dependencies
 * Update gl-native to v10.13.0 and common to v23.5.0.
