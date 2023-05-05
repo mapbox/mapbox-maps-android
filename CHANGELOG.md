@@ -26,9 +26,11 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix a crash when a hillshade bucket was created with disabled terrain, but the terrain got enabled afterwards.
 * Fix the crash when identifying if device is connected to WiFi.
 * Fix jumpy gestures when external `AndroidGestureManager` is added with `setGesturesManager`.
+* Fix a bug that accidentally cleared icon images when `setMemoryBudget` was used with megabyte values.
+* Fix handling of Unicode characters in `slice`, `index-of`, `in` and `length` expressions.
 
 ## Dependencies
-* Update gl-native to v10.13.0 and common to v23.5.0.
+* Update gl-native to v10.13.1 and common to v23.5.0.
 
 
 
