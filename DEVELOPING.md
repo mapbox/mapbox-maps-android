@@ -401,6 +401,21 @@ stacktrace that was saved as a txt file.
 $ ndk-stack -sym obj/arm64-v8a -dump trace.txt
 ```
 
+Note that the stacktrace _must_ be formatted properly, otherwise ndk-stack will not be able to symbolicate
+the stacktrace. Different crash reporting tools often format stacktraces differently, so you might need to reformat the stacktrace.
+The stacktrace should be formatted as follows:
+
+```
+*** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
+  #00 pc acfed libmapbox-maps.so
+  ...
+  #12 pc 51f408 libmapbox-maps.so (BuildId: 331a309c6d4e90a8)
+```
+
+e.g. start with asterisks line, followed by stack entries. 
+Stack entries should start with at least one space, then a hash sign with a stack entry number, 
+then `pc`, then the address (_without_ the `0x` prefix), then the library name.
+
 ## Working with snapshots
 
 The Mapbox Maps SDK for Android publishes snapshot releases to our API downloads infrastructure. These
