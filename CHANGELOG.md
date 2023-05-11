@@ -23,6 +23,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Replace `MapSnapshotInterface` interface with `MapSnapshotResult` abstract class and remove `image()` method, `bitmap()` should be used instead.
 * Change `Annotation.id` from monotonically increasing `Long` to UUID represented as `String`.
 * Remove `Annotation.featureIdentifier` used to connect with View Annotations, now `Annotation.id` should be used instead.
+* Rename `PuckBearingSource` to `PuckBearing` in location component plugin.
 * Update Mapbox styles to latest versions.
 
 | Style             | Before                                       | After                                        |

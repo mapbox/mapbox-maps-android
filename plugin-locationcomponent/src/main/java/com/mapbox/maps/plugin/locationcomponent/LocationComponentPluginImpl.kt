@@ -264,7 +264,7 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
 
     if (internalSettings.enabled && locationProvider == null) {
       locationProvider = DefaultLocationProvider(context.applicationContext).apply {
-        updatePuckBearingSource(internalSettings.puckBearingSource)
+        updatePuckBearing(internalSettings.puckBearing)
       }
     }
   }

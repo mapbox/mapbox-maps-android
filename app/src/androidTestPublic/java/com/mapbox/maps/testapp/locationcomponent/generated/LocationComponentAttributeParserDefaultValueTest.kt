@@ -5,7 +5,7 @@ package com.mapbox.maps.testapp.locationcomponent.generated
 import android.graphics.Color
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
-import com.mapbox.maps.plugin.PuckBearingSource
+import com.mapbox.maps.plugin.PuckBearing
 import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.testapp.BaseMapTest
 import org.junit.Assert.assertEquals
@@ -73,9 +73,9 @@ class LocationComponentAttributeParserDefaultValueTest : BaseMapTest() {
       mapView.location.getSettings().puckBearingEnabled
     )
     assertEquals(
-      "puckBearingSource test failed..",
-      PuckBearingSource.HEADING,
-      mapView.location.getSettings().puckBearingSource
+      "puckBearing test failed..",
+      PuckBearing.HEADING,
+      mapView.location.getSettings().puckBearing
     )
   }
 }

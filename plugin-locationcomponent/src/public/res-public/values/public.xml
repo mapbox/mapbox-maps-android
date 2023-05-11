@@ -33,7 +33,7 @@
     <public name="mapbox_locationComponentPuckBearingEnabled" type="attr" />
 
     <!-- The enum controls how the puck is oriented -->
-    <public name="mapbox_locationComponentPuckBearingSource" type="attr" />
+    <public name="mapbox_locationComponentPuckBearing" type="attr" />
 
     <!-- Location puck definitions for location_puck_2_d.  -->
 

@@ -8,7 +8,7 @@ import android.util.AttributeSet
 import com.mapbox.maps.ImageHolder
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.LocationPuck3D
-import com.mapbox.maps.plugin.PuckBearingSource
+import com.mapbox.maps.plugin.PuckBearing
 import com.mapbox.maps.plugin.locationcomponent.R
 
 /**
@@ -75,7 +75,7 @@ internal object LocationComponentAttributeParser {
         layerAbove = typedArray.getString(R.styleable.mapbox_MapView_mapbox_locationComponentLayerAbove)
         layerBelow = typedArray.getString(R.styleable.mapbox_MapView_mapbox_locationComponentLayerBelow)
         puckBearingEnabled = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_locationComponentPuckBearingEnabled, true)
-        puckBearingSource = PuckBearingSource.values()[typedArray.getInt(R.styleable.mapbox_MapView_mapbox_locationComponentPuckBearingSource, 0)]
+        puckBearing = PuckBearing.values()[typedArray.getInt(R.styleable.mapbox_MapView_mapbox_locationComponentPuckBearing, 0)]
       }
     } finally {
       typedArray.recycle()

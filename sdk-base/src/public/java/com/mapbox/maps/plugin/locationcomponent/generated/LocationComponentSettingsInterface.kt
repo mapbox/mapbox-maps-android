@@ -3,7 +3,7 @@
 package com.mapbox.maps.plugin.locationcomponent.generated
 
 import com.mapbox.maps.plugin.LocationPuck
-import com.mapbox.maps.plugin.PuckBearingSource
+import com.mapbox.maps.plugin.PuckBearing
 
 /**
  * Interface that defines the public settings interface for LocationComponentPlugin.
@@ -76,7 +76,7 @@ interface LocationComponentSettingsInterface {
   /**
    * The enum controls how the puck is oriented
    */
-  var puckBearingSource: PuckBearingSource
+  var puckBearing: PuckBearing
 
   /**
    * Defines what the customised look of the location puck. Note that direct changes to the puck variables won't have any effect, a new puck needs to be set every time.

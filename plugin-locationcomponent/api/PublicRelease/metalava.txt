@@ -7,7 +7,7 @@ package com.mapbox.maps.plugin.locationcomponent {
     method public void registerLocationConsumer(com.mapbox.maps.plugin.locationcomponent.LocationConsumer locationConsumer);
     method public void removeCompassCalibrationListener(com.mapbox.maps.plugin.locationcomponent.LocationCompassCalibrationListener listener);
     method public void unRegisterLocationConsumer(com.mapbox.maps.plugin.locationcomponent.LocationConsumer locationConsumer);
-    method public void updatePuckBearingSource(com.mapbox.maps.plugin.PuckBearingSource source);
+    method public void updatePuckBearing(com.mapbox.maps.plugin.PuckBearing source);
   }
 
   public fun interface LocationCompassCalibrationListener {

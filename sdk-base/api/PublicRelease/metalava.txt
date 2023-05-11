@@ -858,11 +858,11 @@ package com.mapbox.maps.plugin {
     ctor public Plugin.Mapbox(String id);
   }
 
-  public enum PuckBearingSource {
+  public enum PuckBearing {
     method public final String! getValue();
     property public final String! value;
-    enum_constant public static final com.mapbox.maps.plugin.PuckBearingSource COURSE;
-    enum_constant public static final com.mapbox.maps.plugin.PuckBearingSource HEADING;
+    enum_constant public static final com.mapbox.maps.plugin.PuckBearing COURSE;
+    enum_constant public static final com.mapbox.maps.plugin.PuckBearing HEADING;
   }
 
   public enum ScrollMode {
@@ -2140,8 +2140,8 @@ package com.mapbox.maps.plugin.locationcomponent.generated {
     method public String? getLayerAbove();
     method public String? getLayerBelow();
     method public com.mapbox.maps.plugin.LocationPuck getLocationPuck();
+    method public com.mapbox.maps.plugin.PuckBearing getPuckBearing();
     method public boolean getPuckBearingEnabled();
-    method public com.mapbox.maps.plugin.PuckBearingSource getPuckBearingSource();
     method public int getPulsingColor();
     method public boolean getPulsingEnabled();
     method public float getPulsingMaxRadius();
@@ -2154,8 +2154,8 @@ package com.mapbox.maps.plugin.locationcomponent.generated {
     property public final String? layerAbove;
     property public final String? layerBelow;
     property public final com.mapbox.maps.plugin.LocationPuck locationPuck;
+    property public final com.mapbox.maps.plugin.PuckBearing puckBearing;
     property public final boolean puckBearingEnabled;
-    property public final com.mapbox.maps.plugin.PuckBearingSource puckBearingSource;
     property public final int pulsingColor;
     property public final boolean pulsingEnabled;
     property public final float pulsingMaxRadius;
@@ -2170,8 +2170,8 @@ package com.mapbox.maps.plugin.locationcomponent.generated {
     method public boolean getEnabled();
     method public String? getLayerAbove();
     method public String? getLayerBelow();
+    method public com.mapbox.maps.plugin.PuckBearing getPuckBearing();
     method public boolean getPuckBearingEnabled();
-    method public com.mapbox.maps.plugin.PuckBearingSource getPuckBearingSource();
     method public int getPulsingColor();
     method public boolean getPulsingEnabled();
     method public float getPulsingMaxRadius();
@@ -2182,8 +2182,8 @@ package com.mapbox.maps.plugin.locationcomponent.generated {
     method public com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings.Builder setLayerAbove(String? layerAbove);
     method public com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings.Builder setLayerBelow(String? layerBelow);
     method public com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings.Builder setLocationPuck(com.mapbox.maps.plugin.LocationPuck locationPuck);
+    method public com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings.Builder setPuckBearing(com.mapbox.maps.plugin.PuckBearing puckBearing);
     method public com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings.Builder setPuckBearingEnabled(boolean puckBearingEnabled);
-    method public com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings.Builder setPuckBearingSource(com.mapbox.maps.plugin.PuckBearingSource puckBearingSource);
     method public com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings.Builder setPulsingColor(int pulsingColor);
     method public com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings.Builder setPulsingEnabled(boolean pulsingEnabled);
     method public com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings.Builder setPulsingMaxRadius(float pulsingMaxRadius);
@@ -2193,8 +2193,8 @@ package com.mapbox.maps.plugin.locationcomponent.generated {
     property public final boolean enabled;
     property public final String? layerAbove;
     property public final String? layerBelow;
+    property public final com.mapbox.maps.plugin.PuckBearing puckBearing;
     property public final boolean puckBearingEnabled;
-    property public final com.mapbox.maps.plugin.PuckBearingSource puckBearingSource;
     property public final int pulsingColor;
     property public final boolean pulsingEnabled;
     property public final float pulsingMaxRadius;
@@ -2211,8 +2211,8 @@ package com.mapbox.maps.plugin.locationcomponent.generated {
     method public String? getLayerAbove();
     method public String? getLayerBelow();
     method public com.mapbox.maps.plugin.LocationPuck getLocationPuck();
+    method public com.mapbox.maps.plugin.PuckBearing getPuckBearing();
     method public boolean getPuckBearingEnabled();
-    method public com.mapbox.maps.plugin.PuckBearingSource getPuckBearingSource();
     method public int getPulsingColor();
     method public boolean getPulsingEnabled();
     method public float getPulsingMaxRadius();
@@ -2225,8 +2225,8 @@ package com.mapbox.maps.plugin.locationcomponent.generated {
     method public void setLayerAbove(String?);
     method public void setLayerBelow(String?);
     method public void setLocationPuck(com.mapbox.maps.plugin.LocationPuck);
+    method public void setPuckBearing(com.mapbox.maps.plugin.PuckBearing);
     method public void setPuckBearingEnabled(boolean);
-    method public void setPuckBearingSource(com.mapbox.maps.plugin.PuckBearingSource);
     method public void setPulsingColor(int);
     method public void setPulsingEnabled(boolean);
     method public void setPulsingMaxRadius(float);
@@ -2239,8 +2239,8 @@ package com.mapbox.maps.plugin.locationcomponent.generated {
     property public String? layerAbove;
     property public String? layerBelow;
     property public com.mapbox.maps.plugin.LocationPuck locationPuck;
+    property public com.mapbox.maps.plugin.PuckBearing puckBearing;
     property public boolean puckBearingEnabled;
-    property public com.mapbox.maps.plugin.PuckBearingSource puckBearingSource;
     property public int pulsingColor;
     property public boolean pulsingEnabled;
     property public float pulsingMaxRadius;
@@ -2254,8 +2254,8 @@ package com.mapbox.maps.plugin.locationcomponent.generated {
     method public String? getLayerAbove();
     method public String? getLayerBelow();
     method public com.mapbox.maps.plugin.LocationPuck getLocationPuck();
+    method public com.mapbox.maps.plugin.PuckBearing getPuckBearing();
     method public boolean getPuckBearingEnabled();
-    method public com.mapbox.maps.plugin.PuckBearingSource getPuckBearingSource();
     method public int getPulsingColor();
     method public boolean getPulsingEnabled();
     method public float getPulsingMaxRadius();
@@ -2267,8 +2267,8 @@ package com.mapbox.maps.plugin.locationcomponent.generated {
     method public void setLayerAbove(String?);
     method public void setLayerBelow(String?);
     method public void setLocationPuck(com.mapbox.maps.plugin.LocationPuck);
+    method public void setPuckBearing(com.mapbox.maps.plugin.PuckBearing);
     method public void setPuckBearingEnabled(boolean);
-    method public void setPuckBearingSource(com.mapbox.maps.plugin.PuckBearingSource);
     method public void setPulsingColor(int);
     method public void setPulsingEnabled(boolean);
     method public void setPulsingMaxRadius(float);
@@ -2280,8 +2280,8 @@ package com.mapbox.maps.plugin.locationcomponent.generated {
     property public abstract String? layerAbove;
     property public abstract String? layerBelow;
     property public abstract com.mapbox.maps.plugin.LocationPuck locationPuck;
+    property public abstract com.mapbox.maps.plugin.PuckBearing puckBearing;
     property public abstract boolean puckBearingEnabled;
-    property public abstract com.mapbox.maps.plugin.PuckBearingSource puckBearingSource;
     property public abstract int pulsingColor;
     property public abstract boolean pulsingEnabled;
     property public abstract float pulsingMaxRadius;

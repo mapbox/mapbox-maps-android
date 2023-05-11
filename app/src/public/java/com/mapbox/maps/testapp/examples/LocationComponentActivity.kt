@@ -15,7 +15,7 @@ import com.mapbox.maps.extension.style.projection.generated.projection
 import com.mapbox.maps.extension.style.projection.generated.setProjection
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.LocationPuck3D
-import com.mapbox.maps.plugin.PuckBearingSource
+import com.mapbox.maps.plugin.PuckBearing
 import com.mapbox.maps.plugin.gestures.gestures
 import com.mapbox.maps.plugin.locationcomponent.DefaultLocationProvider
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener
@@ -119,12 +119,12 @@ class LocationComponentActivity : AppCompatActivity() {
         return true
       }
       R.id.heading -> {
-        binding.mapView.location.puckBearingSource = PuckBearingSource.HEADING
+        binding.mapView.location.puckBearing = PuckBearing.HEADING
         item.isChecked = true
         return true
       }
       R.id.course -> {
-        binding.mapView.location.puckBearingSource = PuckBearingSource.COURSE
+        binding.mapView.location.puckBearing = PuckBearing.COURSE
         item.isChecked = true
         return true
       }

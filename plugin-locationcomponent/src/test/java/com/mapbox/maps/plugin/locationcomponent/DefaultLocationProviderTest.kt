@@ -17,7 +17,7 @@ import com.mapbox.common.location.LocationServiceFactory
 import com.mapbox.geojson.Point
 import com.mapbox.maps.logE
 import com.mapbox.maps.logW
-import com.mapbox.maps.plugin.PuckBearingSource
+import com.mapbox.maps.plugin.PuckBearing
 import io.mockk.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -112,7 +112,7 @@ class DefaultLocationProviderTest {
 
   @Test
   fun testAddLocationConsumerWithPermission() = runTest(dispatcher) {
-    defaultLocationProvider.updatePuckBearingSource(PuckBearingSource.HEADING)
+    defaultLocationProvider.updatePuckBearing(PuckBearing.HEADING)
     mockkObject(PermissionsManager)
     every { PermissionsManager.areLocationPermissionsGranted(context) } returns true
     defaultLocationProvider.registerLocationConsumer(locationConsumer1)
@@ -147,7 +147,7 @@ class DefaultLocationProviderTest {
 
   @Test
   fun testAddTwoLocationConsumer() = runTest(dispatcher) {
-    defaultLocationProvider.updatePuckBearingSource(PuckBearingSource.HEADING)
+    defaultLocationProvider.updatePuckBearing(PuckBearing.HEADING)
     defaultLocationProvider.registerLocationConsumer(locationConsumer1)
     advanceUntilIdle()
     defaultLocationProvider.registerLocationConsumer(locationConsumer2)
@@ -167,13 +167,13 @@ class DefaultLocationProviderTest {
   }
 
   @Test
-  fun testUpdatePuckBearingSourceWithConsumer() = runTest(dispatcher) {
+  fun testUpdatePuckBearingWithConsumer() = runTest(dispatcher) {
     defaultLocationProvider.registerLocationConsumer(locationConsumer1)
     advanceUntilIdle()
     verify(exactly = 0) {
       locationCompassEngine.addCompassListener(any())
     }
-    defaultLocationProvider.updatePuckBearingSource(PuckBearingSource.HEADING)
+    defaultLocationProvider.updatePuckBearing(PuckBearing.HEADING)
     advanceUntilIdle()
     verify(exactly = 1) {
       locationCompassEngine.addCompassListener(any())
@@ -201,7 +201,7 @@ class DefaultLocationProviderTest {
 
   @Test
   fun testRemoveAllLocationConsumer() = runTest(dispatcher) {
-    defaultLocationProvider.updatePuckBearingSource(PuckBearingSource.HEADING)
+    defaultLocationProvider.updatePuckBearing(PuckBearing.HEADING)
     defaultLocationProvider.registerLocationConsumer(locationConsumer1)
     advanceUntilIdle()
     defaultLocationProvider.registerLocationConsumer(locationConsumer2)
@@ -298,7 +298,7 @@ class DefaultLocationProviderTest {
 
   @Test
   fun testLocationUpdateWithCompass() = runTest(dispatcher) {
-    defaultLocationProvider.updatePuckBearingSource(PuckBearingSource.HEADING)
+    defaultLocationProvider.updatePuckBearing(PuckBearing.HEADING)
     val location = mockk<Location>(relaxed = true)
     every { location.longitude } returns 12.0
     every { location.latitude } returns 34.0

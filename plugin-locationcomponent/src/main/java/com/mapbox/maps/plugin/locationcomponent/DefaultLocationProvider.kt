@@ -19,7 +19,7 @@ import com.mapbox.common.location.LocationServiceFactory
 import com.mapbox.geojson.Point
 import com.mapbox.maps.logE
 import com.mapbox.maps.logW
-import com.mapbox.maps.plugin.PuckBearingSource
+import com.mapbox.maps.plugin.PuckBearing
 import com.mapbox.maps.plugin.locationcomponent.LocationCompassEngine.CompassListener
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -73,7 +73,7 @@ class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal c
   /**
    * A [MutableStateFlow] that holds the current puck bearing source.
    */
-  private val puckBearingSourceFlow = MutableStateFlow(PuckBearingSource.COURSE)
+  private val puckBearingFlow = MutableStateFlow(PuckBearing.COURSE)
 
   /**
    * A hot [Flow] that subscribes to the [locationCompassEngine] to receive device orientation.
@@ -190,11 +190,11 @@ class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal c
   /**
    * Update the data source that drives the bearing updates of the [LocationProvider].
    *
-   * @param source The [PuckBearingSource] used to drive the bearing updates.
+   * @param source The [PuckBearing] used to drive the bearing updates.
    */
-  fun updatePuckBearingSource(source: PuckBearingSource) {
+  fun updatePuckBearing(source: PuckBearing) {
     // emit the new source if it's different
-    puckBearingSourceFlow.value = source
+    puckBearingFlow.value = source
   }
 
   /**
@@ -244,10 +244,10 @@ class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal c
       // the locationCompassEngineFlow or the locationFlow
       launch {
         // Listen for changes in the puck bearing source and switch the flow based on it
-        puckBearingSourceFlow.flatMapLatest { puckBearingSource ->
-          when (puckBearingSource) {
-            PuckBearingSource.HEADING -> deviceOrientationFlow
-            PuckBearingSource.COURSE -> locationFlow.mapNotNull { it.bearing }
+        puckBearingFlow.flatMapLatest { puckBearing ->
+          when (puckBearing) {
+            PuckBearing.HEADING -> deviceOrientationFlow
+            PuckBearing.COURSE -> locationFlow.mapNotNull { it.bearing }
           }
         }.collect {
           locationConsumer.onBearingUpdated(it)
