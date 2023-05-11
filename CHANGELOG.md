@@ -46,6 +46,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Introduce custom lint rules to check unused layer/source/light/terrain/atmosphere/projection objects in the Style DSL, and suggest auto fix to add it to the style using unaryPlus(+) operator.
 * Improve performance for `Snapshotter` when obtaining the bitmap.
 * Add `ImageSource.updateImage(Bitmap)` method.
+* Introduce Expression overload functions `linearInterpolator`, `exponentialInterpolator`, `cubicBezierInterpolator`, `step`, `match` and `switchCase` to construct these expressions with strongly typed parameters.
 
 ## Bug fixes 🐞
 * Fix 3d location layer properties `model-scale-transition` and `model-rotation-transition`, made them non-transitionable.

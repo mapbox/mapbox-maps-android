@@ -115,6 +115,7 @@ class IllegalNumberOfArgumentsDetector : MapboxExpressionDslDetector() {
       "gt" to listOf(2, 3),
       "gte" to listOf(2, 3),
       "switchCase" to listOf(ODD_NUMBER),
+      "match" to listOf(EVEN_NUMBER),
       "within" to listOf(1),
       // Ramps, scales, curves https://docs.mapbox.com/mapbox-gl-js/style-spec/expressions/#ramps-scales-curves
       "interpolate" to listOf(EVEN_NUMBER),

@@ -172,14 +172,14 @@ class Expression : Value {
      * For two inputs, returns the result of subtracting the second input from the first. For a
      * single input, returns the result of subtracting it from 0.
      */
-    fun subtract(block: ExpressionBuilder.() -> Unit) {
+    fun subtract(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.subtract(block))
     }
 
     /**
      * Logical negation. Returns `true` if the input is `false`, and `false` if the input is `true`.
      */
-    fun not(block: ExpressionBuilder.() -> Unit) {
+    fun not(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.not(block))
     }
 
@@ -189,42 +189,42 @@ class Expression : Value {
      * be different at parse time are considered invalid and will produce a parse error. Accepts an
      * optional `collator` argument to control locale-dependent string comparisons.
      */
-    fun neq(block: ExpressionBuilder.() -> Unit) {
+    fun neq(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.neq(block))
     }
 
     /**
      * Returns the product of the inputs.
      */
-    fun product(block: ExpressionBuilder.() -> Unit) {
+    fun product(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.product(block))
     }
 
     /**
      * Returns the result of floating point division of the first input by the second.
      */
-    fun division(block: ExpressionBuilder.() -> Unit) {
+    fun division(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.division(block))
     }
 
     /**
      * Returns the remainder after integer division of the first input by the second.
      */
-    fun mod(block: ExpressionBuilder.() -> Unit) {
+    fun mod(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.mod(block))
     }
 
     /**
      * Returns the result of raising the first input to the power specified by the second.
      */
-    fun pow(block: ExpressionBuilder.() -> Unit) {
+    fun pow(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.pow(block))
     }
 
     /**
      * Returns the sum of the inputs.
      */
-    fun sum(block: ExpressionBuilder.() -> Unit) {
+    fun sum(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.sum(block))
     }
 
@@ -235,7 +235,7 @@ class Expression : Value {
      * time are considered in valid and will produce a parse error. Accepts an optional `collator` argument
      * to control locale-dependent string comparisons.
      */
-    fun lt(block: ExpressionBuilder.() -> Unit) {
+    fun lt(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.lt(block))
     }
 
@@ -246,7 +246,7 @@ class Expression : Value {
      * at parse time are considered in valid and will produce a parse error. Accepts an optional
      * `collator` argument to control locale-dependent string comparisons.
      */
-    fun lte(block: ExpressionBuilder.() -> Unit) {
+    fun lte(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.lte(block))
     }
 
@@ -256,7 +256,7 @@ class Expression : Value {
      * different at parse time are considered invalid and will produce a parse error. Accepts an optional
      * `collator` argument to control locale-dependent string comparisons.
      */
-    fun eq(block: ExpressionBuilder.() -> Unit) {
+    fun eq(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.eq(block))
     }
 
@@ -267,7 +267,7 @@ class Expression : Value {
      * time are considered in valid and will produce a parse error. Accepts an optional `collator` argument
      * to control locale-dependent string comparisons.
      */
-    fun gt(block: ExpressionBuilder.() -> Unit) {
+    fun gt(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.gt(block))
     }
 
@@ -278,14 +278,14 @@ class Expression : Value {
      * at parse time are considered in valid and will produce a parse error. Accepts an optional
      * `collator` argument to control locale-dependent string comparisons.
      */
-    fun gte(block: ExpressionBuilder.() -> Unit) {
+    fun gte(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.gte(block))
     }
 
     /**
      * Returns the absolute value of the input.
      */
-    fun abs(block: ExpressionBuilder.() -> Unit) {
+    fun abs(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.abs(block))
     }
 
@@ -293,14 +293,14 @@ class Expression : Value {
      * Returns the value of a cluster property accumulated so far. Can only be used in the
      * `clusterProperties` option of a clustered GeoJSON source.
      */
-    fun accumulated() {
+    fun accumulated(): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.accumulated())
     }
 
     /**
      * Returns the arccosine of the input.
      */
-    fun acos(block: ExpressionBuilder.() -> Unit) {
+    fun acos(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.acos(block))
     }
 
@@ -309,7 +309,7 @@ class Expression : Value {
      * and evaluation is short-circuiting: once an input expression evaluates to `false`, the result is `false` and
      * no further input expressions are evaluated.
      */
-    fun all(block: ExpressionBuilder.() -> Unit) {
+    fun all(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.all(block))
     }
 
@@ -318,7 +318,7 @@ class Expression : Value {
      * order, and evaluation is short-circuiting: once an input expression evaluates to `true`, the result is `true`
      * and no further input expressions are evaluated.
      */
-    fun any(block: ExpressionBuilder.() -> Unit) {
+    fun any(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.any(block))
     }
 
@@ -327,28 +327,28 @@ class Expression : Value {
      * If, when the input expression is evaluated, it is not of the asserted type, then this
      * assertion will cause the whole expression to be aborted.
      */
-    fun array(block: ExpressionBuilder.() -> Unit) {
+    fun array(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.array(block))
     }
 
     /**
      * Returns the arcsine of the input.
      */
-    fun asin(block: ExpressionBuilder.() -> Unit) {
+    fun asin(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.asin(block))
     }
 
     /**
      * Retrieves an item from an array.
      */
-    fun at(block: ExpressionBuilder.() -> Unit) {
+    fun at(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.at(block))
     }
 
     /**
      * Returns the arctangent of the input.
      */
-    fun atan(block: ExpressionBuilder.() -> Unit) {
+    fun atan(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.atan(block))
     }
 
@@ -357,21 +357,21 @@ class Expression : Value {
      * evaluated in order until a boolean is obtained. If none of the inputs are booleans, the
      * expression is an error.
      */
-    fun boolean(block: ExpressionBuilder.() -> Unit) {
+    fun boolean(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.boolean(block))
     }
 
     /**
      * Selects the first output whose corresponding test condition evaluates to true, or the fallback value otherwise.
      */
-    fun switchCase(block: ExpressionBuilder.() -> Unit) {
+    fun switchCase(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.switchCase(block))
     }
 
     /**
      * Returns the smallest integer that is greater than or equal to the input.
      */
-    fun ceil(block: ExpressionBuilder.() -> Unit) {
+    fun ceil(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.ceil(block))
     }
 
@@ -380,7 +380,7 @@ class Expression : Value {
      * and [`'image'`](#types-image) expressions that are unavailable in the style. If all values are invalid, `coalesce` returns
      * the first value listed.
      */
-    fun coalesce(block: ExpressionBuilder.() -> Unit) {
+    fun coalesce(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.coalesce(block))
     }
 
@@ -390,7 +390,7 @@ class Expression : Value {
      * is provided, the default locale is used. If the requested locale is not available, the `collator`
      * will use a system-defined fallback locale. Use `resolved-locale` to test the results of locale fallback behavior.
      */
-    fun collator(block: CollatorBuilder.() -> Unit) {
+    fun collator(block: CollatorBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(
         CollatorBuilder().apply(block).build()
       )
@@ -400,14 +400,14 @@ class Expression : Value {
      * Returns a `string` consisting of the concatenation of the inputs. Each input is converted to a
      * string as if by `to-string`.
      */
-    fun concat(block: ExpressionBuilder.() -> Unit) {
+    fun concat(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.concat(block))
     }
 
     /**
      * Returns the cosine of the input.
      */
-    fun cos(block: ExpressionBuilder.() -> Unit) {
+    fun cos(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.cos(block))
     }
 
@@ -417,7 +417,7 @@ class Expression : Value {
      * `FeatureCollection`. Distance values returned may vary in precision due to loss in precision from encoding geometries,
      * particularly below zoom level 13.
      */
-    fun distance(geojson: GeoJson) {
+    fun distance(geojson: GeoJson): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.distance(geojson))
     }
 
@@ -429,7 +429,7 @@ class Expression : Value {
      * the camera, and a value of 1 means a distance of 1000px away from the camera
      * from the center. `["distance-from-center"]` may only be used in the `filter` expression for a `symbol` layer.
      */
-    fun distanceFromCenter() {
+    fun distanceFromCenter(): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.distanceFromCenter())
     }
 
@@ -437,14 +437,14 @@ class Expression : Value {
      * Returns the input string converted to lowercase. Follows the Unicode Default Case Conversion algorithm and the
      * locale-insensitive case mappings in the Unicode Character Database.
      */
-    fun downcase(block: ExpressionBuilder.() -> Unit) {
+    fun downcase(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.downcase(block))
     }
 
     /**
      * Returns the mathematical constant e.
      */
-    fun e() {
+    fun e(): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.e())
     }
 
@@ -455,14 +455,14 @@ class Expression : Value {
      * `id` attribute, which must be an integer or a string that can be cast to an
      * integer. Note that ["feature-state"] can only be used with paint properties that support data-driven styling.
      */
-    fun featureState(block: ExpressionBuilder.() -> Unit) {
+    fun featureState(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.featureState(block))
     }
 
     /**
      * Returns the largest integer that is less than or equal to the input.
      */
-    fun floor(block: ExpressionBuilder.() -> Unit) {
+    fun floor(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.floor(block))
     }
 
@@ -474,14 +474,14 @@ class Expression : Value {
      * - `"text-color"`: Overrides the color specified by the root paint property.
      * - `"font-scale"`: Applies a scaling factor on `text-size` as specified by the root layout property.
      */
-    fun format(block: FormatBuilder.() -> Unit) {
+    fun format(block: FormatBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.format(block))
     }
 
     /**
      * Returns the feature's geometry type: `Point`, `LineString` or `Polygon`. `Multi-` feature types return the singular forms.
      */
-    fun geometryType() {
+    fun geometryType(): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.geometryType())
     }
 
@@ -489,7 +489,7 @@ class Expression : Value {
      * Retrieves a property value from the current feature's properties, or from another object if a second
      * argument is provided. Returns `null` if the requested property is missing.
      */
-    fun get(block: ExpressionBuilder.() -> Unit) {
+    fun get(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.get(block))
     }
 
@@ -497,7 +497,7 @@ class Expression : Value {
      * Tests for the presence of an property value in the current feature's properties, or from another
      * object if a second argument is provided.
      */
-    fun has(block: ExpressionBuilder.() -> Unit) {
+    fun has(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.has(block))
     }
 
@@ -506,14 +506,14 @@ class Expression : Value {
      * measure of how many data points are crowded around a particular pixel. Can only be used
      * in the `heatmap-color` property.
      */
-    fun heatmapDensity() {
+    fun heatmapDensity(): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.heatmapDensity())
     }
 
     /**
      * Returns the feature's id, if it has one.
      */
-    fun id() {
+    fun id(): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.id())
     }
 
@@ -523,7 +523,7 @@ class Expression : Value {
      * currently in the style. This validation process is synchronous and requires the image to have been
      * added to the style before requesting it in the `'image'` argument.
      */
-    fun image(block: ExpressionBuilder.() -> Unit) {
+    fun image(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.image(block))
     }
 
@@ -532,7 +532,7 @@ class Expression : Value {
      * the specific case when the second and third arguments are string literals, you must wrap at
      * least one of them in a [`literal`](#types-literal) expression to hint correct interpretation to the [type system](#type-system).
      */
-    fun inExpression(block: ExpressionBuilder.() -> Unit) {
+    fun inExpression(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.inExpression(block))
     }
 
@@ -541,7 +541,7 @@ class Expression : Value {
      * substring can be found in a string, or `-1` if the input cannot be found. Accepts
      * an optional index from where to begin the search.
      */
-    fun indexOf(block: ExpressionBuilder.() -> Unit) {
+    fun indexOf(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.indexOf(block))
     }
 
@@ -560,7 +560,7 @@ class Expression : Value {
      * - `["cubic-bezier", x1, y1, x2, y2]`: Interpolates using the cubic bezier curve defined by the given
      * control points.
      */
-    fun interpolate(block: InterpolatorBuilder.() -> Unit) {
+    fun interpolate(block: InterpolatorBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.interpolate(block))
     }
 
@@ -570,14 +570,14 @@ class Expression : Value {
      * require complex text shaping, or right-to-left scripts if the the `mapbox-gl-rtl-text` plugin is not in use
      * in Mapbox GL JS).
      */
-    fun isSupportedScript(block: ExpressionBuilder.() -> Unit) {
+    fun isSupportedScript(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.isSupportedScript(block))
     }
 
     /**
      * Returns the length of an array or string.
      */
-    fun length(block: ExpressionBuilder.() -> Unit) {
+    fun length(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.length(block))
     }
 
@@ -585,84 +585,84 @@ class Expression : Value {
      * Binds expressions to named variables, which can then be referenced in the result expression using ["var",
      * "variable_name"].
      */
-    fun letExpression(block: ExpressionBuilder.() -> Unit) {
+    fun letExpression(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.letExpression(block))
     }
 
     /**
      * Returns the progress along a gradient line. Can only be used in the `line-gradient` property.
      */
-    fun lineProgress() {
+    fun lineProgress(): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.lineProgress())
     }
 
     /**
      * Provides a literal array or object value.
      */
-    fun literal(value: Double) {
+    fun literal(value: Double): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression(value))
     }
 
     /**
      * Provides a literal array or object value.
      */
-    fun literal(value: Long) {
+    fun literal(value: Long): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression(value))
     }
 
     /**
      * Provides a literal array or object value.
      */
-    fun literal(value: Boolean) {
+    fun literal(value: Boolean): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression(value))
     }
 
     /**
      * Provides a literal array or object value.
      */
-    fun literal(value: String) {
+    fun literal(value: String): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression(value))
     }
 
     /**
      * Provides a literal array or object value.
      */
-    fun literal(value: HashMap<String, Any>) {
+    fun literal(value: HashMap<String, Any>): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Companion.literal(value))
     }
 
     /**
      * Provides a literal array or object value.
      */
-    fun literal(value: List<Any>) {
+    fun literal(value: List<Any>): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Companion.literal(value))
     }
 
     /**
      * Returns the natural logarithm of the input.
      */
-    fun ln(block: ExpressionBuilder.() -> Unit) {
+    fun ln(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.ln(block))
     }
 
     /**
      * Returns mathematical constant ln(2).
      */
-    fun ln2() {
+    fun ln2(): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.ln2())
     }
 
     /**
      * Returns the base-ten logarithm of the input.
      */
-    fun log10(block: ExpressionBuilder.() -> Unit) {
+    fun log10(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.log10(block))
     }
 
     /**
      * Returns the base-two logarithm of the input.
      */
-    fun log2(block: ExpressionBuilder.() -> Unit) {
+    fun log2(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.log2(block))
     }
 
@@ -679,21 +679,21 @@ class Expression : Value {
      * If the input type does not match the type of the labels, the result will be
      * the fallback value.
      */
-    fun match(block: ExpressionBuilder.() -> Unit) {
+    fun match(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.match(block))
     }
 
     /**
      * Returns the maximum value of the inputs.
      */
-    fun max(block: ExpressionBuilder.() -> Unit) {
+    fun max(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.max(block))
     }
 
     /**
      * Returns the minimum value of the inputs.
      */
-    fun min(block: ExpressionBuilder.() -> Unit) {
+    fun min(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.min(block))
     }
 
@@ -702,7 +702,7 @@ class Expression : Value {
      * evaluated in order until a number is obtained. If none of the inputs are numbers, the
      * expression is an error.
      */
-    fun number(block: ExpressionBuilder.() -> Unit) {
+    fun number(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.number(block))
     }
 
@@ -713,7 +713,7 @@ class Expression : Value {
      * argument specifies a [simple ECMAScript unit](https://tc39.es/proposal-unified-intl-numberformat/section6/locales-currencies-tz_proposed_out.html#sec-issanctionedsimpleunitidentifier) to use for unit-style formatting. If set, the `min-fraction-digits` and
      * `max-fraction-digits` arguments specify the minimum and maximum number of fractional digits to include.
      */
-    fun numberFormat(input: Expression, block: NumberFormatBuilder.() -> Unit) {
+    fun numberFormat(input: Expression, block: NumberFormatBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.numberFormat(input, block))
     }
 
@@ -722,14 +722,14 @@ class Expression : Value {
      * evaluated in order until an object is obtained. If none of the inputs are objects, the
      * expression is an error.
      */
-    fun objectExpression(block: ExpressionBuilder.() -> Unit) {
+    fun objectExpression(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.objectExpression(block))
     }
 
     /**
      * Returns the mathematical constant pi.
      */
-    fun pi() {
+    fun pi(): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.pi())
     }
 
@@ -737,7 +737,7 @@ class Expression : Value {
      * Returns the current pitch in degrees. `["pitch"]` may only be used in the `filter` expression for
      * a `symbol` layer.
      */
-    fun pitch() {
+    fun pitch(): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.pitch())
     }
 
@@ -745,7 +745,7 @@ class Expression : Value {
      * Returns the feature properties object.  Note that in some cases, it may be more efficient
      * to use `["get", "property_name"]` directly.
      */
-    fun properties() {
+    fun properties(): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.properties())
     }
 
@@ -753,7 +753,7 @@ class Expression : Value {
      * Returns the raster value of a pixel computed via `raster-color-mix`. Can only be used in the
      * `raster-color` property.
      */
-    fun rasterValue() {
+    fun rasterValue(): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.rasterValue())
     }
 
@@ -762,7 +762,7 @@ class Expression : Value {
      * be used to determine the default system locale, or to determine if a requested locale was
      * successfully loaded.
      */
-    fun resolvedLocale(block: ExpressionBuilder.() -> Unit) {
+    fun resolvedLocale(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.resolvedLocale(block))
     }
 
@@ -771,7 +771,7 @@ class Expression : Value {
      * 255, and an alpha component of 1. If any component is out of range, the expression
      * is an error.
      */
-    fun rgb(block: ExpressionBuilder.() -> Unit) {
+    fun rgb(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.rgb(block))
     }
 
@@ -780,7 +780,7 @@ class Expression : Value {
      * and an alpha component which must range between 0 and 1. If any component is out
      * of range, the expression is an error.
      */
-    fun rgba(block: ExpressionBuilder.() -> Unit) {
+    fun rgba(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.rgba(block))
     }
 
@@ -788,14 +788,14 @@ class Expression : Value {
      * Rounds the input to the nearest integer. Halfway values are rounded away from zero. For example,
      * `["round", -1.5]` evaluates to -2.
      */
-    fun round(block: ExpressionBuilder.() -> Unit) {
+    fun round(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.round(block))
     }
 
     /**
      * Returns the sine of the input.
      */
-    fun sin(block: ExpressionBuilder.() -> Unit) {
+    fun sin(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.sin(block))
     }
 
@@ -804,7 +804,7 @@ class Expression : Value {
      * sun position and 1 when the distance reaches `sky-gradient-radius`. Can only be used in the `sky-gradient`
      * property.
      */
-    fun skyRadialProgress() {
+    fun skyRadialProgress(): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.skyRadialProgress())
     }
 
@@ -813,14 +813,14 @@ class Expression : Value {
      * index, or between a start index and an end index if set. The return value is
      * inclusive of the start index but not of the end index.
      */
-    fun slice(block: ExpressionBuilder.() -> Unit) {
+    fun slice(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.slice(block))
     }
 
     /**
      * Returns the square root of the input.
      */
-    fun sqrt(block: ExpressionBuilder.() -> Unit) {
+    fun sqrt(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.sqrt(block))
     }
 
@@ -830,7 +830,7 @@ class Expression : Value {
      * numeric literals in strictly ascending order. Returns the output value of the stop just less than
      * the input, or the first output if the input is less than the first stop.
      */
-    fun step(block: ExpressionBuilder.() -> Unit) {
+    fun step(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.step(block))
     }
 
@@ -839,14 +839,14 @@ class Expression : Value {
      * evaluated in order until a string is obtained. If none of the inputs are strings, the
      * expression is an error.
      */
-    fun string(block: ExpressionBuilder.() -> Unit) {
+    fun string(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.string(block))
     }
 
     /**
      * Returns the tangent of the input.
      */
-    fun tan(block: ExpressionBuilder.() -> Unit) {
+    fun tan(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.tan(block))
     }
 
@@ -854,7 +854,7 @@ class Expression : Value {
      * Converts the input value to a boolean. The result is `false` when then input is an
      * empty string, 0, `false`, `null`, or `NaN`; otherwise it is `true`.
      */
-    fun toBoolean(block: ExpressionBuilder.() -> Unit) {
+    fun toBoolean(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.toBoolean(block))
     }
 
@@ -863,7 +863,7 @@ class Expression : Value {
      * in order until the first successful conversion is obtained. If none of the inputs can be
      * converted, the expression is an error.
      */
-    fun toColor(block: ExpressionBuilder.() -> Unit) {
+    fun toColor(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.toColor(block))
     }
 
@@ -875,7 +875,7 @@ class Expression : Value {
      * is evaluated in order until the first successful conversion is obtained. If none of the inputs
      * can be converted, the expression is an error.
      */
-    fun toNumber(block: ExpressionBuilder.() -> Unit) {
+    fun toNumber(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.toNumber(block))
     }
 
@@ -883,7 +883,7 @@ class Expression : Value {
      * Returns a four-element array containing the input color's red, green, blue, and alpha components, in that
      * order.
      */
-    fun toRgba(block: ExpressionBuilder.() -> Unit) {
+    fun toRgba(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.toRgba(block))
     }
 
@@ -897,14 +897,14 @@ class Expression : Value {
      * image name. Otherwise, the input is converted to a string in the format specified by the
      * [`JSON.stringify`](https://tc39.github.io/ecma262/#sec-json.stringify) function of the ECMAScript Language Specification.
      */
-    fun toString(block: ExpressionBuilder.() -> Unit) {
+    fun toString(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.toString(block))
     }
 
     /**
      * Returns a string describing the type of the given value.
      */
-    fun typeofExpression(block: ExpressionBuilder.() -> Unit) {
+    fun typeofExpression(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.typeofExpression(block))
     }
 
@@ -912,14 +912,14 @@ class Expression : Value {
      * Returns the input string converted to uppercase. Follows the Unicode Default Case Conversion algorithm and the
      * locale-insensitive case mappings in the Unicode Character Database.
      */
-    fun upcase(block: ExpressionBuilder.() -> Unit) {
+    fun upcase(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.upcase(block))
     }
 
     /**
      * References variable bound using "let".
      */
-    fun varExpression(block: ExpressionBuilder.() -> Unit) {
+    fun varExpression(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.varExpression(block))
     }
 
@@ -932,7 +932,7 @@ class Expression : Value {
      * intersects the boundary, or a line's endpoint is on the boundary.
      */
 
-    fun within(geometry: Geometry) {
+    fun within(geometry: Geometry): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.within(geometry))
     }
 
@@ -940,28 +940,28 @@ class Expression : Value {
      * Returns the current zoom level.  Note that in style layout and paint properties, ["zoom"] may
      * only appear as the input to a top-level "step" or "interpolate" expression.
      */
-    fun zoom() {
+    fun zoom(): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.zoom())
     }
 
     /**
      * Add a RGB color expression from numbers to the current expression builder.
      */
-    fun rgb(red: Double, green: Double, blue: Double) {
+    fun rgb(red: Double, green: Double, blue: Double): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.rgb(red, green, blue))
     }
 
     /**
      * Add a RGBA color expression from numbers to the current expression builder.
      */
-    fun rgba(red: Double, green: Double, blue: Double, alpha: Double) {
+    fun rgba(red: Double, green: Double, blue: Double, alpha: Double): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.rgba(red, green, blue, alpha))
     }
 
     /**
      * Add a color expression to the current expression builder.
      */
-    fun color(@ColorInt intColor: Int) {
+    fun color(@ColorInt intColor: Int): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.color(intColor))
     }
 
@@ -974,7 +974,7 @@ class Expression : Value {
      *
      * It is to be used as part of parameters in the step expression.
      */
-    fun stop(block: ExpressionBuilder.() -> Unit) {
+    fun stop(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.apply(block)
     }
 
@@ -984,19 +984,61 @@ class Expression : Value {
      * Stop inputs must be numeric literals in strictly ascending order.
      * Returns the output value of the stop just less than the input,
      * or the first output if the input is less than the first stop.
-     *
-     * @param key input as a double
      * It is to be used as part of parameters in the step expression.
+     *
+     * @param input as a double
+     * @param output as Expression DSL block
      */
-    fun stop(key: Double, block: ExpressionBuilder.() -> Unit) {
-      this@ExpressionBuilder.addArgument(Companion.literal(key)).apply(block)
+    fun stop(input: Double, block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
+      this@ExpressionBuilder.addArgument(Companion.literal(input)).apply(block)
+    }
+
+    /**
+     * Add a pair of input and output values.
+     * The `input` may be any numeric expression (e.g., `["get", "population"]`).
+     * Stop inputs must be numeric literals in strictly ascending order.
+     * Returns the output value of the stop just less than the input,
+     * or the first output if the input is less than the first stop.
+     *
+     * @param input as an Expression
+     * @param output as an Expression
+     */
+    fun stop(input: Expression, output: Expression): ExpressionBuilder = apply {
+      this@ExpressionBuilder.addArgument(input).addArgument(output)
+    }
+
+    /**
+     * Add a pair of input and output values.
+     * The `input` may be any numeric expression (e.g., `["get", "population"]`).
+     * Stop inputs must be numeric literals in strictly ascending order.
+     * Returns the output value of the stop just less than the input,
+     * or the first output if the input is less than the first stop.
+     *
+     * @param input as a double
+     * @param output as a double
+     */
+    fun stop(input: Double, output: Double): ExpressionBuilder = apply {
+      this@ExpressionBuilder.addArgument(Companion.literal(input)).addArgument(Companion.literal(output))
+    }
+
+    /**
+     * Add a pair of input and output values.
+     * The `input` may be any numeric expression (e.g., `["get", "population"]`).
+     * Stop inputs must be numeric literals in strictly ascending order.
+     * Returns the output value of the stop just less than the input,
+     * or the first output if the input is less than the first stop.
+     *
+     * @param pair an input and output argument pair
+     */
+    fun stop(pair: Pair<Expression, Expression>): ExpressionBuilder = apply {
+      this@ExpressionBuilder.addArgument(pair.first).addArgument(pair.second)
     }
 
     /**
      * Retrieves a property value from the current feature's properties.
      * Returns null if the requested property is missing.
      */
-    fun get(key: String) {
+    fun get(key: String): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.get(key))
     }
 
@@ -1004,35 +1046,35 @@ class Expression : Value {
      * Retrieves a property value from the current feature's properties, or from another object if a second
      * argument is provided. Returns null if the requested property is missing.
      */
-    fun get(key: String, expression: Expression) {
+    fun get(key: String, expression: Expression): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.get(key, expression))
     }
 
     /**
      * Logical negation. Returns `true` if the input is `false`, and `false` if the input is `true`.
      */
-    fun not(bool: Boolean) {
+    fun not(bool: Boolean): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.not(bool))
     }
 
     /**
      * Retrieves an item from an array.
      */
-    fun at(index: Double, array: Expression) {
+    fun at(index: Double, array: Expression): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.at(index, array))
     }
 
     /**
      * Determines whether an item exists in an array or a substring exists in a string.
      */
-    fun inExpression(needle: String, haystack: Expression) {
+    fun inExpression(needle: String, haystack: Expression): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.inExpression(needle, haystack))
     }
 
     /**
      * Determines whether an item exists in an array or a substring exists in a string.
      */
-    fun inExpression(needle: Double, haystack: Expression) {
+    fun inExpression(needle: Double, haystack: Expression): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.inExpression(needle, haystack))
     }
 
@@ -1040,154 +1082,154 @@ class Expression : Value {
      * Tests for the presence of an property value in the current feature's properties, or from another
      * object if a second argument is provided.
      */
-    fun has(string: String, expression: Expression) {
+    fun has(string: String, expression: Expression): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.has(string, expression))
     }
 
     /**
      * Tests for the presence of an property value in the current feature's properties
      */
-    fun has(string: String) {
+    fun has(string: String): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.has(string))
     }
 
     /**
      * Gets the length of an string.
      */
-    fun length(string: String) {
+    fun length(string: String): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.length(string))
     }
 
     /**
      * Returns the sum of the inputs.
      */
-    fun sum(vararg double: Double) {
+    fun sum(vararg double: Double): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.sum(*double))
     }
 
     /**
      * Returns the product of the inputs.
      */
-    fun product(vararg double: Double) {
+    fun product(vararg double: Double): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.product(*double))
     }
 
     /**
      * Returns the result of subtracting the second input from the first.
      */
-    fun subtract(first: Double, second: Double) {
+    fun subtract(first: Double, second: Double): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.subtract(first, second))
     }
 
     /**
      * Returns the result of subtracting it from 0.
      */
-    fun subtract(value: Double) {
+    fun subtract(value: Double): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.subtract(value))
     }
 
     /**
      * Returns the result of floating point division of the first input by the second.
      */
-    fun division(first: Double, second: Double) {
+    fun division(first: Double, second: Double): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.division(first, second))
     }
 
     /**
      * Returns the remainder after integer division of the first input by the second.
      */
-    fun mod(first: Double, second: Double) {
+    fun mod(first: Double, second: Double): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.mod(first, second))
     }
 
     /**
      * Returns the result of raising the first input to the power specified by the second.
      */
-    fun pow(first: Double, second: Double) {
+    fun pow(first: Double, second: Double): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.pow(first, second))
     }
 
     /**
      * Returns the square root of the input.
      */
-    fun sqrt(value: Double) {
+    fun sqrt(value: Double): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.sqrt(value))
     }
 
     /**
      * Returns the base-ten logarithm of the input.
      */
-    fun log10(value: Double) {
+    fun log10(value: Double): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.log10(value))
     }
 
     /**
      * Returns the natural logarithm of the input.
      */
-    fun ln(value: Double) {
+    fun ln(value: Double): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.ln(value))
     }
 
     /**
      * Returns the base-two logarithm of the input.
      */
-    fun log2(value: Double) {
+    fun log2(value: Double): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.log2(value))
     }
 
     /**
      * Returns the sine of the input.
      */
-    fun sin(value: Double) {
+    fun sin(value: Double): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.sin(value))
     }
 
     /**
      * Returns the cosine of the input.
      */
-    fun cos(value: Double) {
+    fun cos(value: Double): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.cos(value))
     }
 
     /**
      * Returns the tangent of the input.
      */
-    fun tan(value: Double) {
+    fun tan(value: Double): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.tan(value))
     }
 
     /**
      * Returns the arcsine of the input.
      */
-    fun asin(value: Double) {
+    fun asin(value: Double): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.asin(value))
     }
 
     /**
      * Returns the arccosine of the input.
      */
-    fun acos(value: Double) {
+    fun acos(value: Double): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.acos(value))
     }
 
     /**
      * Returns the arctangent of the input.
      */
-    fun atan(value: Double) {
+    fun atan(value: Double): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.atan(value))
     }
 
     /**
      * Returns the minimum value of the inputs.
      */
-    fun min(vararg values: Double) {
+    fun min(vararg values: Double): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.min(*values))
     }
 
     /**
      * Returns the maximum value of the inputs.
      */
-    fun max(vararg values: Double) {
+    fun max(vararg values: Double): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.max(*values))
     }
 
@@ -1195,28 +1237,28 @@ class Expression : Value {
      * Rounds the input to the nearest integer. Halfway values are rounded away from zero. For example,
      * `["round", -1.5]` evaluates to -2.
      */
-    fun round(value: Double) {
+    fun round(value: Double): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.round(value))
     }
 
     /**
      * Returns the absolute value of the input.
      */
-    fun abs(value: Double) {
+    fun abs(value: Double): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.abs(value))
     }
 
     /**
      * Returns the smallest integer that is greater than or equal to the input.
      */
-    fun ceil(value: Double) {
+    fun ceil(value: Double): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.ceil(value))
     }
 
     /**
      * Returns the largest integer that is less than or equal to the input.
      */
-    fun floor(value: Double) {
+    fun floor(value: Double): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.floor(value))
     }
 
@@ -1226,7 +1268,7 @@ class Expression : Value {
      * require complex text shaping, or right-to-left scripts if the the `mapbox-gl-rtl-text` plugin is not in use
      * in Mapbox GL JS).
      */
-    fun isSupportedScript(script: String) {
+    fun isSupportedScript(script: String): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.isSupportedScript(script))
     }
 
@@ -1234,7 +1276,7 @@ class Expression : Value {
      * Returns the input string converted to uppercase. Follows the Unicode Default Case Conversion algorithm and the
      * locale-insensitive case mappings in the Unicode Character Database.
      */
-    fun upcase(value: String) {
+    fun upcase(value: String): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.upcase(value))
     }
 
@@ -1242,14 +1284,14 @@ class Expression : Value {
      * Returns the input string converted to lowercase. Follows the Unicode Default Case Conversion algorithm and the
      * locale-insensitive case mappings in the Unicode Character Database.
      */
-    fun downcase(value: String) {
+    fun downcase(value: String): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.downcase(value))
     }
 
     /**
      * Returns a `string` consisting of the concatenation of the inputs.
      */
-    fun concat(vararg values: String) {
+    fun concat(vararg values: String): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.concat(*values))
     }
 
@@ -1259,14 +1301,14 @@ class Expression : Value {
      * `currency` argument specifies an ISO 4217 code to use for currency-style formatting. If set, the `min-fraction-digits`
      * and `max-fraction-digits` arguments specify the minimum and maximum number of fractional digits to include.
      */
-    fun numberFormat(value: Double, block: NumberFormatBuilder.() -> Unit) {
+    fun numberFormat(value: Double, block: NumberFormatBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.numberFormat(value, block))
     }
 
     /**
      * References variable bound using "let".
      */
-    fun varExpression(value: String) {
+    fun varExpression(value: String): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.varExpression(value))
     }
   }
@@ -1281,7 +1323,7 @@ class Expression : Value {
     /**
      * Interpolates linearly between the pair of stops just less than and just greater than the input.
      */
-    fun linear() {
+    fun linear(): InterpolatorBuilder = apply {
       this.arguments.add(Expression.linear())
     }
 
@@ -1291,15 +1333,49 @@ class Expression : Value {
      * higher values make the output increase more towards the high end of the range.
      * With values close to 1 the output increases linearly.
      */
-    fun exponential(block: ExpressionBuilder.() -> Unit) {
+    fun exponential(block: ExpressionBuilder.() -> Unit): InterpolatorBuilder = apply {
       this.arguments.add(Expression.exponential(block))
+    }
+
+    /**
+     * Interpolates exponentially between the stops just less than and just greater than the input.
+     * `base` controls the rate at which the output increases:
+     * higher values make the output increase more towards the high end of the range.
+     * With values close to 1 the output increases linearly.
+     */
+    fun exponential(value: Double): InterpolatorBuilder = apply {
+      this.arguments.add(Expression.exponential(value))
+    }
+
+    /**
+     * Interpolates exponentially between the stops just less than and just greater than the input.
+     * `base` controls the rate at which the output increases:
+     * higher values make the output increase more towards the high end of the range.
+     * With values close to 1 the output increases linearly.
+     */
+    fun exponential(value: Expression): InterpolatorBuilder = apply {
+      this.arguments.add(Expression.exponential(value))
     }
 
     /**
      * Interpolates using the cubic bezier curve defined by the given control points.
      */
-    fun cubicBezier(block: ExpressionBuilder.() -> Unit) {
+    fun cubicBezier(block: ExpressionBuilder.() -> Unit): InterpolatorBuilder = apply {
       this.arguments.add(Expression.cubicBezier(block))
+    }
+
+    /**
+     * Interpolates using the cubic bezier curve defined by the given control points.
+     */
+    fun cubicBezier(x1: Expression, x2: Expression, x3: Expression, x4: Expression): InterpolatorBuilder = apply {
+      this.arguments.add(Companion.cubicBezier(x1, x2, x3, x4))
+    }
+
+    /**
+     * Interpolates using the cubic bezier curve defined by the given control points.
+     */
+    fun cubicBezier(x1: Double, x2: Double, x3: Double, x4: Double): InterpolatorBuilder = apply {
+      this.arguments.add(Companion.cubicBezier(x1, x2, x3, x4))
     }
   }
 
@@ -3327,6 +3403,185 @@ class Expression : Value {
     }
 
     /**
+     * Produces discrete, stepped results by evaluating a piecewise-constant function defined by pairs of input and output
+     * values ("stops"). The `input` may be any numeric expression (e.g., `["get", "population"]`). Stop inputs must be
+     * numeric literals in strictly ascending order. Returns the output value of the stop just less than
+     * the input, or the first output if the input is less than the first stop.
+     */
+    @JvmStatic
+    fun step(input: Expression, output: Expression, vararg stops: Pair<Expression, Expression>): Expression {
+      val builder = ExpressionBuilder("step")
+        .addArgument(input)
+        .addArgument(output)
+      stops.forEach {
+        builder.addArgument(it.first)
+        builder.addArgument(it.second)
+      }
+      return builder.build()
+    }
+
+    /**
+     * Selects the first output whose corresponding test condition evaluates to true, or the fallback value otherwise.
+     */
+    @JvmStatic
+    fun switchCase(vararg stops: Pair<Expression, Expression>, fallback: Expression): Expression {
+      val builder = ExpressionBuilder("case")
+      stops.forEach {
+        builder.addArgument(it.first)
+        builder.addArgument(it.second)
+      }
+      builder.addArgument(fallback)
+      return builder.build()
+    }
+
+    /**
+     * Selects the output for which the label value matches the input value, or the fallback value
+     * if no match is found. The input can be any expression (for example, `["get", "building_type"]`). Each
+     * label must be unique, and must be either:
+     * - a single literal value; or
+     * - an array of literal values, the values of which must be all strings or
+     * all numbers (for example `[100, 101]` or `["c", "b"]`).
+     *
+     * The input matches if any of the values in the array matches using strict equality, similar
+     * to the `"in"` operator.
+     * If the input type does not match the type of the labels, the result will be
+     * the fallback value.
+     */
+    @JvmStatic
+    fun match(input: Expression, vararg stops: Pair<Expression, Expression>, fallback: Expression): Expression {
+      val builder = ExpressionBuilder("match")
+      builder.addArgument(input)
+      stops.forEach {
+        builder.addArgument(it.first)
+        builder.addArgument(it.second)
+      }
+      builder.addArgument(fallback)
+      return builder.build()
+    }
+
+    /**
+     * Produces continuous, smooth results by interpolating between pairs of input and output values ("stops"). The `input`
+     * may be any numeric expression (e.g., `["get", "population"]`). Stop inputs must be numeric literals in strictly
+     * ascending order. The output type must be `number`, `array<number>`, or `color`.
+     *
+     * [linearInterpolator] interpolates linearly between the pair of stops just less than and just greater than
+     * the input.
+     */
+    @JvmStatic
+    fun linearInterpolator(
+      input: Expression,
+      vararg stops: Pair<Expression, Expression>
+    ): Expression {
+      val builder = InterpolatorBuilder("interpolate").apply { linear() }
+      builder.addArgument(input)
+      stops.forEach {
+        builder.addArgument(it.first)
+        builder.addArgument(it.second)
+      }
+      return builder.build()
+    }
+
+    /**
+     * Produces continuous, smooth results by interpolating between pairs of input and output values ("stops"). The `input`
+     * may be any numeric expression (e.g., `["get", "population"]`). Stop inputs must be numeric literals in strictly
+     * ascending order. The output type must be `number`, `array<number>`, or `color`.
+     *
+     * [exponentialInterpolator] interpolates exponentially between the stops just less than and just greater than the
+     * input. `base` controls the rate at which the output increases: higher values make the output increase
+     * more towards the high end of the range. With values close to 1 the output increases
+     * linearly.
+     */
+    @JvmStatic
+    fun exponentialInterpolator(
+      base: Expression,
+      input: Expression,
+      vararg stops: Pair<Expression, Expression>
+    ): Expression {
+      val builder = InterpolatorBuilder("interpolate").apply { exponential(base) }
+      builder.addArgument(input)
+      stops.forEach {
+        builder.addArgument(it.first)
+        builder.addArgument(it.second)
+      }
+      return builder.build()
+    }
+
+    /**
+     * Produces continuous, smooth results by interpolating between pairs of input and output values ("stops"). The `input`
+     * may be any numeric expression (e.g., `["get", "population"]`). Stop inputs must be numeric literals in strictly
+     * ascending order. The output type must be `number`, `array<number>`, or `color`.
+     *
+     * [exponentialInterpolator] interpolates exponentially between the stops just less than and just greater than the
+     * input. `base` controls the rate at which the output increases: higher values make the output increase
+     * more towards the high end of the range. With values close to 1 the output increases
+     * linearly.
+     */
+    @JvmStatic
+    fun exponentialInterpolator(
+      base: Double,
+      input: Expression,
+      vararg stops: Pair<Expression, Expression>
+    ): Expression {
+      val builder = InterpolatorBuilder("interpolate").apply { exponential(base) }
+      builder.addArgument(input)
+      stops.forEach {
+        builder.addArgument(it.first)
+        builder.addArgument(it.second)
+      }
+      return builder.build()
+    }
+
+    /**
+     * Produces continuous, smooth results by interpolating between pairs of input and output values ("stops"). The `input`
+     * may be any numeric expression (e.g., `["get", "population"]`). Stop inputs must be numeric literals in strictly
+     * ascending order. The output type must be `number`, `array<number>`, or `color`.
+     *
+     * [cubicBezierInterpolator] interpolates using the cubic bezier curve defined by the given control points.
+     */
+    @JvmStatic
+    fun cubicBezierInterpolator(
+      x1: Expression,
+      y1: Expression,
+      x2: Expression,
+      y2: Expression,
+      input: Expression,
+      vararg stops: Pair<Expression, Expression>
+    ): Expression {
+      val builder = InterpolatorBuilder("interpolate").apply { cubicBezier(x1, y1, x2, y2) }
+      builder.addArgument(input)
+      stops.forEach {
+        builder.addArgument(it.first)
+        builder.addArgument(it.second)
+      }
+      return builder.build()
+    }
+
+    /**
+     * Produces continuous, smooth results by interpolating between pairs of input and output values ("stops"). The `input`
+     * may be any numeric expression (e.g., `["get", "population"]`). Stop inputs must be numeric literals in strictly
+     * ascending order. The output type must be `number`, `array<number>`, or `color`.
+     *
+     * [cubicBezierInterpolator] interpolates using the cubic bezier curve defined by the given control points.
+     */
+    @JvmStatic
+    fun cubicBezierInterpolator(
+      x1: Double,
+      y1: Double,
+      x2: Double,
+      y2: Double,
+      input: Expression,
+      vararg stops: Pair<Expression, Expression>
+    ): Expression {
+      val builder = InterpolatorBuilder("interpolate").apply { cubicBezier(x1, y1, x2, y2) }
+      builder.addArgument(input)
+      stops.forEach {
+        builder.addArgument(it.first)
+        builder.addArgument(it.second)
+      }
+      return builder.build()
+    }
+
+    /**
      * Interpolates linearly between the pair of stops just less than and just greater than the input.
      */
     @JvmStatic
@@ -3348,6 +3603,16 @@ class Expression : Value {
      * higher values make the output increase more towards the high end of the range.
      * With values close to 1 the output increases linearly.
      */
+    @JvmStatic
+    fun exponential(value: Double): Expression =
+      ExpressionBuilder("exponential").addArgument(literal(value)).build()
+
+    /**
+     * Interpolates exponentially between the stops just less than and just greater than the input.
+     * `base` controls the rate at which the output increases:
+     * higher values make the output increase more towards the high end of the range.
+     * With values close to 1 the output increases linearly.
+     */
     fun exponential(block: ExpressionBuilder.() -> Unit): Expression =
       ExpressionBuilder("exponential").apply(block).build()
 
@@ -3358,6 +3623,14 @@ class Expression : Value {
     fun cubicBezier(x1: Expression, x2: Expression, x3: Expression, x4: Expression): Expression =
       ExpressionBuilder("cubic-bezier").addArgument(x1).addArgument(x2)
         .addArgument(x3).addArgument(x4).build()
+
+    /**
+     * Interpolates using the cubic bezier curve defined by the given control points.
+     */
+    @JvmStatic
+    fun cubicBezier(x1: Double, x2: Double, x3: Double, x4: Double): Expression =
+      ExpressionBuilder("cubic-bezier").addArgument(literal(x1)).addArgument(literal(x2))
+        .addArgument(literal(x3)).addArgument(literal(x4)).build()
 
     /**
      * Interpolates using the cubic bezier curve defined by the given control points.

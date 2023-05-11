@@ -6,7 +6,9 @@ import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.expressions.dsl.generated.eq
-import com.mapbox.maps.extension.style.expressions.dsl.generated.interpolate
+import com.mapbox.maps.extension.style.expressions.dsl.generated.literal
+import com.mapbox.maps.extension.style.expressions.dsl.generated.zoom
+import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.linearInterpolator
 import com.mapbox.maps.extension.style.image.image
 import com.mapbox.maps.extension.style.layers.generated.fillLayer
 import com.mapbox.maps.extension.style.style
@@ -43,22 +45,14 @@ class TintFillPatternActivity : AppCompatActivity() {
           sourceLayer(SOURCE_LAYER)
           fillPattern(FILL_PATTERN_ID)
           fillOpacity(
-            interpolate {
-              linear()
-              zoom()
-              stop {
-                literal(13.0)
-                literal(0.0)
-              }
-              stop {
-                literal(15.0)
-                literal(0.5)
-              }
-              stop {
-                literal(17.0)
-                literal(0.75)
-              }
-            }
+            linearInterpolator(
+              input = zoom(),
+              stops = arrayOf(
+                literal(13.0) to literal(0.0),
+                literal(15.0) to literal(0.5),
+                literal(17.0) to literal(0.75)
+              )
+            )
           )
           filter(
             eq {

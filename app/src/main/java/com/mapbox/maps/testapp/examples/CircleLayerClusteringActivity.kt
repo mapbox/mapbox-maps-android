@@ -13,6 +13,7 @@ import com.mapbox.maps.TransitionOptions
 import com.mapbox.maps.extension.style.expressions.dsl.generated.*
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.division
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.interpolate
+import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.step
 import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.generated.circleLayer
 import com.mapbox.maps.extension.style.layers.generated.symbolLayer
@@ -145,18 +146,14 @@ class CircleLayerClusteringActivity : AppCompatActivity() {
     style.addLayer(
       circleLayer("clusters", GEOJSON_SOURCE_ID) {
         circleColor(
-          step {
-            get("point_count")
-            literal(ColorUtils.colorToRgbaString(layers[2][1]))
-            stop {
-              literal(layers[1][0].toDouble())
-              literal(ColorUtils.colorToRgbaString(layers[1][1]))
-            }
-            stop {
-              literal(layers[0][0].toDouble())
-              literal(ColorUtils.colorToRgbaString(layers[0][1]))
-            }
-          }
+          step(
+            input = get("point_count"),
+            output = literal(ColorUtils.colorToRgbaString(layers[2][1])),
+            stops = arrayOf(
+              literal(layers[1][0].toDouble()) to literal(ColorUtils.colorToRgbaString(layers[1][1])),
+              literal(layers[0][0].toDouble()) to literal(ColorUtils.colorToRgbaString(layers[0][1]))
+            )
+          )
         )
         circleRadius(18.0)
         filter(
