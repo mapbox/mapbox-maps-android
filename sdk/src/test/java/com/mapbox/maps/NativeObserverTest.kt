@@ -13,7 +13,7 @@ import org.robolectric.RobolectricTestRunner
 @RunWith(RobolectricTestRunner::class)
 class NativeObserverTest {
 
-  private val observableInterface = mockk<ObservableInterface>(relaxed = true)
+  private val observableInterface = mockk<NativeMapImpl>(relaxed = true)
   private lateinit var nativeObserver: NativeObserver
 
   @Before

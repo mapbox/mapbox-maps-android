@@ -11,12 +11,9 @@ import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.GeoJson
 import com.mapbox.geojson.Geometry
-import com.mapbox.maps.GeoJSONSourceData
-import com.mapbox.maps.MapEvents
-import com.mapbox.maps.MapboxConcurrentGeometryModificationException
+import com.mapbox.maps.*
 import com.mapbox.maps.Observer
 import com.mapbox.maps.StyleManager
-import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
 import com.mapbox.maps.extension.style.sources.Source
@@ -104,7 +101,7 @@ class GeoJsonSource : Source {
    *
    * @param delegate The style delegate
    */
-  override fun bindTo(delegate: StyleInterface) {
+  override fun bindTo(delegate: Style) {
     super.bindTo(delegate)
     currentGeoJson?.let {
       setGeoJson(it, currentDataId)

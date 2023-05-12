@@ -1,13 +1,9 @@
 package com.mapbox.maps.extension.style.image
 
 import android.graphics.Bitmap
-import com.mapbox.maps.Image
-import com.mapbox.maps.ImageContent
-import com.mapbox.maps.ImageStretches
+import com.mapbox.maps.*
 import com.mapbox.maps.extension.style.StyleContract
-import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.utils.check
-import com.mapbox.maps.toMapboxImage
 
 /**
  * Concrete implementation of ImagePlugin, the plugin is used to add an image to be used in the style.
@@ -24,7 +20,7 @@ class ImageExtensionImpl(private val builder: Builder) : StyleContract.StyleImag
   /**
    * Add the image to the style.
    */
-  override fun bindTo(delegate: StyleInterface) {
+  override fun bindTo(delegate: Style) {
     delegate.addStyleImage(
       builder.imageId,
       builder.scale ?: delegate.pixelRatio,

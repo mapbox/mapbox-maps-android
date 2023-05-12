@@ -8,7 +8,6 @@ import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
-import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.expressions.dsl.generated.literal
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.all
@@ -193,7 +192,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     }
   }
 
-  protected fun initLayerAndSource(style: StyleInterface) {
+  protected fun initLayerAndSource(style: Style) {
     if (layer == null || source == null) {
       initializeDataDrivenPropertyMap()
       source = createSource()
@@ -249,7 +248,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     updateSource()
   }
 
-  private fun initClusterLayers(style: StyleInterface) {
+  private fun initClusterLayers(style: Style) {
     annotationConfig?.annotationSourceOptions?.clusterOptions?.let {
       it.colorLevels.forEachIndexed { level, _ ->
         val clusterLevelLayer = createClusterLevelLayer(level, it.colorLevels)
@@ -428,7 +427,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     }
   }
 
-  private fun addIconToStyle(style: StyleInterface, annotations: Collection<T>) {
+  private fun addIconToStyle(style: Style, annotations: Collection<T>) {
     annotations
       .filter { it.getType() == AnnotationType.PointAnnotation }
       .forEach {

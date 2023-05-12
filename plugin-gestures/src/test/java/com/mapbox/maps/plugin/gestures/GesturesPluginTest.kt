@@ -16,7 +16,6 @@ import com.mapbox.android.gestures.*
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
-import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.plugin.ScrollMode
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
@@ -101,7 +100,7 @@ class GesturesPluginTest {
       0.0,
       -10.0
     )
-    val style = mockk<StyleInterface>()
+    val style = mockk<Style>()
     every { style.getStyleProjectionProperty("name") } returns StylePropertyValue(
       Value.valueOf("mercator"),
       StylePropertyValueKind.CONSTANT
@@ -1257,7 +1256,7 @@ class IsPointAboveHorizonTest(
   private val mapPluginProviderDelegate: MapPluginProviderDelegate = mockk(relaxUnitFun = true)
   private val mapProjectionDelegate: MapProjectionDelegate = mockk(relaxUnitFun = true)
   private val cameraAnimationsPlugin: CameraAnimationsPlugin = mockk(relaxed = true)
-  private val style: StyleInterface = mockk()
+  private val style: Style = mockk()
 
   private lateinit var presenter: GesturesPluginImpl
 
@@ -1538,7 +1537,7 @@ class FlingGestureTest(
       0.0,
       -10.0
     )
-    val style = mockk<StyleInterface>()
+    val style = mockk<Style>()
     every { style.getStyleProjectionProperty("name") } returns StylePropertyValue(
       Value.valueOf("mercator"),
       StylePropertyValueKind.CONSTANT

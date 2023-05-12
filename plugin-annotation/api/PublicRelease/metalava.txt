@@ -24,7 +24,7 @@ package com.mapbox.maps.plugin.annotation {
     method protected abstract String getLayerId();
     method public java.util.List<V> getLongClickListeners();
     method protected abstract String getSourceId();
-    method protected final void initLayerAndSource(com.mapbox.maps.extension.style.StyleInterface style);
+    method protected final void initLayerAndSource(com.mapbox.maps.Style style);
     method protected abstract void initializeDataDrivenPropertyMap();
     method public void onDestroy();
     method public void onSizeChanged(int width, int height);
@@ -72,7 +72,7 @@ package com.mapbox.maps.plugin.annotation {
     method public com.mapbox.maps.plugin.annotation.AnnotationManager<?,?,?,?,?,?,?> createAnnotationManager(com.mapbox.maps.plugin.annotation.AnnotationType type, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig);
     method public void onDelegateProvider(com.mapbox.maps.plugin.delegates.MapDelegateProvider delegateProvider);
     method public void onSizeChanged(int width, int height);
-    method public void onStyleChanged(com.mapbox.maps.extension.style.StyleInterface styleDelegate);
+    method public void onStyleChanged(com.mapbox.maps.Style style);
     method public void removeAnnotationManager(com.mapbox.maps.plugin.annotation.AnnotationManager<?,?,?,?,?,?,?> annotationManager);
   }
 

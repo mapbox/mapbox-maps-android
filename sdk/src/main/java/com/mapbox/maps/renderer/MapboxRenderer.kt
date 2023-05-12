@@ -20,7 +20,7 @@ internal abstract class MapboxRenderer : DelegatingMapClient {
   internal lateinit var renderThread: MapboxRenderThread
   internal abstract val widgetRenderer: MapboxWidgetRenderer
 
-  internal var map: MapInterface? = null
+  internal var map: NativeMapImpl? = null
 
   private var width: Int = 0
   private var height: Int = 0
@@ -53,7 +53,7 @@ internal abstract class MapboxRenderer : DelegatingMapClient {
 
   @AnyThread
   @Synchronized
-  fun setMap(map: MapInterface) {
+  fun setMap(map: NativeMapImpl) {
     this.map = map
   }
 
@@ -93,7 +93,7 @@ internal abstract class MapboxRenderer : DelegatingMapClient {
       this.width = width
       this.height = height
       GLES20.glViewport(0, 0, width, height)
-      map?.size = Size(width.toFloat(), height.toFloat())
+      map?.setSize(Size(width.toFloat(), height.toFloat()))
     }
   }
 
@@ -120,7 +120,7 @@ internal abstract class MapboxRenderer : DelegatingMapClient {
   @UiThread
   fun onStart() {
     renderThread.resume()
-    map?.subscribe(observer, listOf(MapEvents.RENDER_FRAME_FINISHED))
+    map?.subscribe(observer, listOf(MapEvents.RENDER_FRAME_FINISHED).toMutableList())
   }
 
   @WorkerThread

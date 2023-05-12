@@ -3,8 +3,7 @@ package com.mapbox.maps.plugin.locationcomponent
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
-import com.mapbox.maps.StyleManagerInterface
-import com.mapbox.maps.extension.style.StyleInterface
+import com.mapbox.maps.Style
 import com.mapbox.maps.logW
 import io.mockk.*
 import org.junit.After
@@ -17,7 +16,7 @@ import org.robolectric.RobolectricTestRunner
 @RunWith(RobolectricTestRunner::class)
 class ModelSourceWrapperTest {
 
-  private val style: StyleManagerInterface = mockk(relaxed = true)
+  private val style: Style = mockk(relaxed = true)
   private val expected: Expected<String, None> = mockk(relaxed = true)
 
   @Before
@@ -81,7 +80,7 @@ class ModelSourceWrapperTest {
   fun testUpdateStyle() {
     val modelSource = ModelSourceWrapper(SOURCE_ID, "uri", listOf(1.0, 2.0))
     modelSource.bindTo(style)
-    val newStyle = mockk<StyleInterface>()
+    val newStyle = mockk<Style>()
     every { newStyle.styleSourceExists(any()) } returns true
     every { newStyle.addStyleSource(any(), any()) } returns expected
     every { newStyle.setStyleSourceProperty(any(), any(), any()) } returns expected

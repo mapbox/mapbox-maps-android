@@ -2,6 +2,7 @@ package com.mapbox.maps
 
 import android.content.pm.PackageManager
 import android.os.Looper
+import androidx.annotation.RestrictTo
 import com.mapbox.common.MapboxSDKCommon
 import com.mapbox.maps.exception.WorkerThreadException
 
@@ -15,8 +16,10 @@ import com.mapbox.maps.exception.WorkerThreadException
  *    android:name="com.mapbox.maps.ThreadChecker"
  *    android:value="false" />
  * ```
+ * @suppress
  */
-internal object ThreadChecker {
+@RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
+object ThreadChecker {
 
   // Captures if the consumer application is running in debug
   private val enabled: Boolean

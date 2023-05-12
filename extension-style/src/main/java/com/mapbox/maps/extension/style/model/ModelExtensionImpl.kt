@@ -1,8 +1,8 @@
 package com.mapbox.maps.extension.style.model
 
 import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.StyleContract
-import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.utils.check
 
 /**
@@ -15,7 +15,7 @@ class ModelExtensionImpl(private val builder: Builder) : StyleContract.StyleMode
   /**
    * Add the model to the style.
    */
-  override fun bindTo(delegate: StyleInterface) {
+  override fun bindTo(delegate: Style) {
     delegate.addStyleModel(
       builder.modelId,
       builder.uri

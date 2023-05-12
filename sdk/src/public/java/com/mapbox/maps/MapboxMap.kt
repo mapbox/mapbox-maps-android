@@ -43,7 +43,7 @@ class MapboxMap :
   MapPluginExtensionsDelegate,
   MapCameraManagerDelegate {
 
-  private val nativeMap: MapInterface
+  private val nativeMap: NativeMapImpl
   private var isMapValid = true
 
   /**
@@ -73,7 +73,7 @@ class MapboxMap :
   override val cameraState: CameraState
     get() {
       checkNativeMap("cameraState")
-      return nativeMap.cameraState
+      return nativeMap.getCameraState()
     }
 
   @VisibleForTesting(otherwise = PRIVATE)
@@ -84,7 +84,7 @@ class MapboxMap :
 
   @VisibleForTesting(otherwise = PRIVATE)
   internal constructor(
-    nativeMap: MapInterface,
+    nativeMap: NativeMapImpl,
     nativeObserver: NativeObserver,
     styleObserver: StyleObserver
   ) {
@@ -94,14 +94,14 @@ class MapboxMap :
   }
 
   internal constructor(
-    nativeMap: MapInterface,
+    nativeMap: NativeMapImpl,
     nativeObserver: NativeObserver,
     pixelRatio: Float
   ) {
     this.nativeMap = nativeMap
     this.nativeObserver = nativeObserver
     this.styleObserver = StyleObserver(
-      nativeMap,
+      this.nativeMap.map,
       { style -> this.style = style },
       nativeObserver,
       pixelRatio
@@ -152,9 +152,9 @@ class MapboxMap :
       onMapLoadErrorListener = onMapLoadErrorListener,
     )
     if (styleUri.isEmpty()) {
-      nativeMap.styleJSON = EMPTY_STYLE_JSON
+      nativeMap.setStyleJSON(EMPTY_STYLE_JSON)
     } else {
-      nativeMap.styleURI = styleUri
+      nativeMap.setStyleURI(styleUri)
     }
   }
 
@@ -229,7 +229,7 @@ class MapboxMap :
       },
       onMapLoadErrorListener = onMapLoadErrorListener
     )
-    nativeMap.styleJSON = styleJson
+    nativeMap.setStyleJSON(styleJson)
   }
 
   /**
@@ -298,9 +298,9 @@ class MapboxMap :
       onMapLoadErrorListener = onMapLoadErrorListener,
     )
     if (styleExtension.styleUri.isEmpty()) {
-      nativeMap.styleJSON = EMPTY_STYLE_JSON
+      nativeMap.setStyleJSON(EMPTY_STYLE_JSON)
     } else {
-      nativeMap.styleURI = styleExtension.styleUri
+      nativeMap.setStyleURI(styleExtension.styleUri)
     }
   }
 
@@ -380,7 +380,7 @@ class MapboxMap :
    */
   fun getResourceOptions(): ResourceOptions {
     checkNativeMap("getResourceOptions")
-    return nativeMap.resourceOptions
+    return nativeMap.getResourceOptions()
   }
 
   /**
@@ -396,7 +396,7 @@ class MapboxMap :
    */
   fun clearData(callback: AsyncOperationResultCallback) {
     checkNativeMap("clearData")
-    Map.clearData(nativeMap.resourceOptions, callback)
+    Map.clearData(nativeMap.getResourceOptions(), callback)
   }
 
   /**
@@ -419,7 +419,7 @@ class MapboxMap :
    */
   override fun setGestureInProgress(inProgress: Boolean) {
     checkNativeMap("setGestureInProgress")
-    nativeMap.isGestureInProgress = inProgress
+    nativeMap.setGestureInProgress(inProgress)
   }
 
   /**
@@ -429,7 +429,7 @@ class MapboxMap :
    */
   override fun isGestureInProgress(): Boolean {
     checkNativeMap("isGestureInProgress")
-    return nativeMap.isGestureInProgress
+    return nativeMap.isGestureInProgress()
   }
 
   /**
@@ -479,7 +479,7 @@ class MapboxMap :
    */
   override fun getBounds(): CameraBounds {
     checkNativeMap("getBounds")
-    return nativeMap.bounds
+    return nativeMap.getBounds()
   }
 
   /**
@@ -491,7 +491,7 @@ class MapboxMap :
    */
   override fun setUserAnimationInProgress(inProgress: Boolean) {
     checkNativeMap("setUserAnimationInProgress")
-    nativeMap.isUserAnimationInProgress = inProgress
+    nativeMap.setUserAnimationInProgress(inProgress)
   }
 
   /**
@@ -501,7 +501,7 @@ class MapboxMap :
    */
   override fun isUserAnimationInProgress(): Boolean {
     checkNativeMap("isUserAnimationInProgress")
-    return nativeMap.isUserAnimationInProgress
+    return nativeMap.isUserAnimationInProgress()
   }
 
   /**
@@ -511,7 +511,7 @@ class MapboxMap :
    */
   fun setPrefetchZoomDelta(delta: Byte) {
     checkNativeMap("setPrefetchZoomDelta")
-    nativeMap.prefetchZoomDelta = delta
+    nativeMap.setPrefetchZoomDelta(delta)
   }
 
   /**
@@ -521,7 +521,7 @@ class MapboxMap :
    */
   fun getPrefetchZoomDelta(): Byte {
     checkNativeMap("getPrefetchZoomDelta")
-    return nativeMap.prefetchZoomDelta
+    return nativeMap.getPrefetchZoomDelta()
   }
 
   /**
@@ -531,7 +531,7 @@ class MapboxMap :
    */
   override fun getMapOptions(): MapOptions {
     checkNativeMap("getMapOptions")
-    return nativeMap.mapOptions
+    return nativeMap.getMapOptions()
   }
 
   /**
@@ -541,7 +541,7 @@ class MapboxMap :
    */
   override fun getSize(): Size {
     checkNativeMap("getSize")
-    return nativeMap.size
+    return nativeMap.getSize()
   }
 
   /**
@@ -549,7 +549,7 @@ class MapboxMap :
    */
   fun getDebug(): List<MapDebugOptions> {
     checkNativeMap("getDebug")
-    return nativeMap.debug
+    return nativeMap.getDebug()
   }
 
   /**
@@ -791,7 +791,7 @@ class MapboxMap :
   override fun pixelForCoordinate(coordinate: Point): ScreenCoordinate {
     checkNativeMap("pixelForCoordinate")
     val coordinate = nativeMap.pixelForCoordinate(coordinate)
-    val screenSize = nativeMap.size
+    val screenSize = nativeMap.getSize()
     return if (coordinate.x in 0.0..screenSize.width.toDouble() && coordinate.y in 0.0..screenSize.height.toDouble()) {
       coordinate
     } else {
@@ -819,7 +819,7 @@ class MapboxMap :
    */
   override fun pixelsForCoordinates(coordinates: List<Point>): List<ScreenCoordinate> {
     checkNativeMap("pixelsForCoordinates")
-    return nativeMap.pixelsForCoordinates(coordinates)
+    return nativeMap.pixelsForCoordinates(coordinates.toMutableList())
   }
 
   /**
@@ -867,7 +867,7 @@ class MapboxMap :
    */
   override fun coordinatesForPixels(pixels: List<ScreenCoordinate>): List<Point> {
     checkNativeMap("coordinatesForPixels")
-    return nativeMap.coordinatesForPixels(pixels)
+    return nativeMap.coordinatesForPixels(pixels.toMutableList())
   }
 
   /**
@@ -901,7 +901,7 @@ class MapboxMap :
       rectF.left.toDouble(), rectF.bottom.toDouble()
     )
     return nativeMap.coordinatesForPixels(
-      listOf(
+      mutableListOf(
         screenCoordinateTopLeft,
         screenCoordinateTopRight,
         screenCoordinateBottomRight,
@@ -1000,7 +1000,7 @@ class MapboxMap :
   override fun queryRenderedFeatures(
     geometry: RenderedQueryGeometry,
     options: RenderedQueryOptions,
-    callback: QueryRenderedFeaturesCallback
+    callback: QueryRenderedFeaturesCallback,
   ): Cancelable {
     checkNativeMap("queryRenderedFeatures", false)
     return nativeMap.queryRenderedFeatures(geometry, options, callback)
@@ -1269,7 +1269,7 @@ class MapboxMap :
   override fun subscribe(observer: Observer, events: List<String>) {
     checkNativeMap("subscribe")
     if (observers.add(observer)) {
-      nativeMap.subscribe(observer, events)
+      nativeMap.subscribe(observer, events.toMutableList())
     }
   }
 
@@ -1282,7 +1282,7 @@ class MapboxMap :
   override fun unsubscribe(observer: Observer, events: List<String>) {
     checkNativeMap("unsubscribe")
     if (observers.remove(observer)) {
-      nativeMap.unsubscribe(observer, events)
+      nativeMap.unsubscribe(observer, events.toMutableList())
     }
   }
 
@@ -1543,7 +1543,7 @@ class MapboxMap :
    */
   override fun getFreeCameraOptions(): FreeCameraOptions {
     checkNativeMap("getFreeCameraOptions")
-    return nativeMap.freeCameraOptions
+    return nativeMap.getFreeCameraOptions()
   }
 
   /**
@@ -1607,7 +1607,7 @@ class MapboxMap :
    */
   fun setRenderWorldCopies(renderWorldCopies: Boolean) {
     checkNativeMap("setRenderWorldCopies")
-    nativeMap.renderWorldCopies = renderWorldCopies
+    nativeMap.setRenderWorldCopies(renderWorldCopies)
   }
 
   /**
@@ -1617,7 +1617,7 @@ class MapboxMap :
    */
   fun getRenderWorldCopies(): Boolean {
     checkNativeMap("getRenderWorldCopies")
-    return nativeMap.renderWorldCopies
+    return nativeMap.getRenderWorldCopies()
   }
 
   /**

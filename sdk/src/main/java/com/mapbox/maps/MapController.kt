@@ -43,7 +43,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   internal val renderer: MapboxRenderer
   private val nativeObserver: NativeObserver
   private val mapInitOptions: MapInitOptions
-  private val nativeMap: MapInterface
+  private val nativeMap: NativeMapImpl
   private val mapboxMap: MapboxMap
   internal val pluginRegistry: MapPluginRegistry
   private val onStyleDataLoadedListener: OnStyleDataLoadedListener
@@ -80,7 +80,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
       )
     )
     this.onCameraChangedListener = OnCameraChangeListener {
-      pluginRegistry.onCameraMove(nativeMap.cameraState)
+      pluginRegistry.onCameraMove(nativeMap.getCameraState())
     }
     this.onStyleDataLoadedListener = OnStyleDataLoadedListener { eventData ->
       if (eventData.type == StyleDataType.STYLE) {
@@ -102,7 +102,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     nativeObserver: NativeObserver,
     mapInitOptions: MapInitOptions,
     contextMode: ContextMode?,
-    nativeMap: MapInterface,
+    nativeMap: NativeMapImpl,
     mapboxMap: MapboxMap,
     pluginRegistry: MapPluginRegistry,
     onStyleLoadingFinishedListener: OnStyleDataLoadedListener
@@ -115,12 +115,12 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     this.mapboxMap = mapboxMap
     this.pluginRegistry = pluginRegistry
     this.onCameraChangedListener = OnCameraChangeListener {
-      pluginRegistry.onCameraMove(nativeMap.cameraState)
+      pluginRegistry.onCameraMove(nativeMap.getCameraState())
     }
     this.onStyleDataLoadedListener = onStyleLoadingFinishedListener
   }
 
-  fun getNativeMap(): MapInterface {
+  fun getNativeMap(): NativeMapImpl {
     return nativeMap
   }
 

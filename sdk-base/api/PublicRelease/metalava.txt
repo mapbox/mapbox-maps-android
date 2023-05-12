@@ -1,32 +1,6 @@
 // Signature format: 3.0
 package com.mapbox.maps {
 
-  @com.mapbox.maps.MapboxInternal public interface CameraManagerInterface extends com.mapbox.maps.StyleManagerInterface {
-    method public com.mapbox.maps.CameraOptions cameraForCoordinateBounds(com.mapbox.maps.CoordinateBounds, com.mapbox.maps.EdgeInsets?, Double?, Double?);
-    method public com.mapbox.maps.CameraOptions cameraForCoordinates(java.util.List<com.mapbox.geojson.Point!>, com.mapbox.maps.EdgeInsets?, Double?, Double?);
-    method public com.mapbox.maps.CameraOptions cameraForCoordinates(java.util.List<com.mapbox.geojson.Point!>, com.mapbox.maps.CameraOptions, com.mapbox.maps.ScreenBox);
-    method public com.mapbox.maps.CameraOptions cameraForGeometry(com.mapbox.geojson.Geometry, com.mapbox.maps.EdgeInsets?, Double?, Double?);
-    method public com.mapbox.maps.CoordinateBounds coordinateBoundsForCamera(com.mapbox.maps.CameraOptions);
-    method public com.mapbox.maps.CoordinateBounds coordinateBoundsForCameraUnwrapped(com.mapbox.maps.CameraOptions);
-    method public com.mapbox.maps.CoordinateBoundsZoom coordinateBoundsZoomForCamera(com.mapbox.maps.CameraOptions);
-    method public com.mapbox.maps.CoordinateBoundsZoom coordinateBoundsZoomForCameraUnwrapped(com.mapbox.maps.CameraOptions);
-    method public com.mapbox.geojson.Point coordinateForPixel(com.mapbox.maps.ScreenCoordinate);
-    method public java.util.List<com.mapbox.geojson.Point!> coordinatesForPixels(java.util.List<com.mapbox.maps.ScreenCoordinate!>);
-    method public void dragEnd();
-    method public void dragStart(com.mapbox.maps.ScreenCoordinate);
-    method public com.mapbox.maps.CameraBounds getBounds();
-    method public com.mapbox.maps.CameraState getCameraState();
-    method public com.mapbox.maps.CameraOptions getDragCameraOptions(com.mapbox.maps.ScreenCoordinate, com.mapbox.maps.ScreenCoordinate);
-    method public com.mapbox.maps.FreeCameraOptions getFreeCameraOptions();
-    method public boolean getRenderWorldCopies();
-    method public com.mapbox.maps.ScreenCoordinate pixelForCoordinate(com.mapbox.geojson.Point);
-    method public java.util.List<com.mapbox.maps.ScreenCoordinate!> pixelsForCoordinates(java.util.List<com.mapbox.geojson.Point!>);
-    method public com.mapbox.bindgen.Expected<java.lang.String!,com.mapbox.bindgen.None!> setBounds(com.mapbox.maps.CameraBoundsOptions);
-    method public void setCamera(com.mapbox.maps.CameraOptions);
-    method public void setCamera(com.mapbox.maps.FreeCameraOptions);
-    method public void setRenderWorldCopies(boolean);
-  }
-
   public final class ExtensionUtils {
     method public static com.mapbox.maps.CameraOptions toCameraOptions(com.mapbox.maps.CameraState, com.mapbox.maps.ScreenCoordinate? anchor = null);
     method public static com.mapbox.maps.CameraOptions toCameraOptions(com.mapbox.maps.CameraState);
@@ -46,44 +20,6 @@ package com.mapbox.maps {
   public static final class ImageHolder.Companion {
     method public com.mapbox.maps.ImageHolder from(@DrawableRes int drawableId);
     method public com.mapbox.maps.ImageHolder from(android.graphics.Bitmap bitmap);
-  }
-
-  @com.mapbox.maps.MapboxInternal public interface MapInterface extends com.mapbox.maps.CameraManagerInterface {
-    method public com.mapbox.bindgen.Expected<java.lang.String!,com.mapbox.bindgen.None!> addViewAnnotation(String, com.mapbox.maps.ViewAnnotationOptions);
-    method public void createRenderer();
-    method public void destroyRenderer();
-    method public java.util.List<com.mapbox.maps.MapDebugOptions!> getDebug();
-    method public Double? getElevation(com.mapbox.geojson.Point);
-    method public com.mapbox.common.Cancelable getFeatureState(String, String?, String, com.mapbox.maps.QueryFeatureStateCallback);
-    method public com.mapbox.maps.MapOptions getMapOptions();
-    method public byte getPrefetchZoomDelta();
-    method public com.mapbox.maps.ResourceOptions getResourceOptions();
-    method public com.mapbox.maps.Size getSize();
-    method public com.mapbox.bindgen.Expected<java.lang.String!,com.mapbox.maps.ViewAnnotationOptions!> getViewAnnotationOptions(String);
-    method public boolean isGestureInProgress();
-    method public boolean isUserAnimationInProgress();
-    method public com.mapbox.common.Cancelable queryFeatureExtensions(String, com.mapbox.geojson.Feature, String, String, java.util.HashMap<java.lang.String!,com.mapbox.bindgen.Value!>?, com.mapbox.maps.QueryFeatureExtensionCallback);
-    method public com.mapbox.common.Cancelable queryRenderedFeatures(com.mapbox.maps.RenderedQueryGeometry, com.mapbox.maps.RenderedQueryOptions, com.mapbox.maps.QueryRenderedFeaturesCallback);
-    method public com.mapbox.common.Cancelable querySourceFeatures(String, com.mapbox.maps.SourceQueryOptions, com.mapbox.maps.QuerySourceFeaturesCallback);
-    method public void reduceMemoryUse();
-    method public com.mapbox.common.Cancelable removeFeatureState(String, String?, String, String?, com.mapbox.maps.FeatureStateOperationCallback);
-    method public com.mapbox.bindgen.Expected<java.lang.String!,com.mapbox.bindgen.None!> removeViewAnnotation(String);
-    method public void render();
-    method public com.mapbox.common.Cancelable resetFeatureStates(String, String?, com.mapbox.maps.FeatureStateOperationCallback);
-    method public void setConstrainMode(com.mapbox.maps.ConstrainMode);
-    method public void setDebug(java.util.List<com.mapbox.maps.MapDebugOptions!>, boolean);
-    method public com.mapbox.common.Cancelable setFeatureState(String, String?, String, com.mapbox.bindgen.Value, com.mapbox.maps.FeatureStateOperationCallback);
-    method public void setGestureInProgress(boolean);
-    method public void setMemoryBudget(com.mapbox.maps.MapMemoryBudget?);
-    method public void setNorthOrientation(com.mapbox.maps.NorthOrientation);
-    method public void setPrefetchZoomDelta(byte);
-    method public void setSize(com.mapbox.maps.Size);
-    method public void setUserAnimationInProgress(boolean);
-    method public void setViewAnnotationPositionsUpdateListener(com.mapbox.maps.ViewAnnotationPositionsUpdateListener?);
-    method public void setViewportMode(com.mapbox.maps.ViewportMode);
-    method public java.util.List<com.mapbox.maps.CanonicalTileID!> tileCover(com.mapbox.maps.TileCoverOptions, com.mapbox.maps.CameraOptions?);
-    method public void triggerRepaint();
-    method public com.mapbox.bindgen.Expected<java.lang.String!,com.mapbox.bindgen.None!> updateViewAnnotation(String, com.mapbox.maps.ViewAnnotationOptions);
   }
 
   public final class MapboxAnnotationException extends java.lang.RuntimeException {
@@ -140,66 +76,98 @@ package com.mapbox.maps {
     method public void unsubscribe(com.mapbox.maps.Observer);
   }
 
-  @com.mapbox.maps.MapboxInternal public interface StyleManagerInterface extends com.mapbox.maps.ObservableInterface {
-    method public com.mapbox.bindgen.Expected<java.lang.String!,com.mapbox.bindgen.None!> addPersistentStyleCustomLayer(String, com.mapbox.maps.CustomLayerHost, com.mapbox.maps.LayerPosition?);
-    method public com.mapbox.bindgen.Expected<java.lang.String!,com.mapbox.bindgen.None!> addPersistentStyleLayer(com.mapbox.bindgen.Value, com.mapbox.maps.LayerPosition?);
-    method public com.mapbox.bindgen.Expected<java.lang.String!,com.mapbox.bindgen.None!> addStyleCustomGeometrySource(String, com.mapbox.maps.CustomGeometrySourceOptions);
-    method public com.mapbox.bindgen.Expected<java.lang.String!,com.mapbox.bindgen.None!> addStyleCustomLayer(String, com.mapbox.maps.CustomLayerHost, com.mapbox.maps.LayerPosition?);
-    method public com.mapbox.bindgen.Expected<java.lang.String!,com.mapbox.bindgen.None!> addStyleImage(String, float, com.mapbox.maps.Image, boolean, java.util.List<com.mapbox.maps.ImageStretches!>, java.util.List<com.mapbox.maps.ImageStretches!>, com.mapbox.maps.ImageContent?);
-    method public com.mapbox.bindgen.Expected<java.lang.String!,com.mapbox.bindgen.None!> addStyleLayer(com.mapbox.bindgen.Value, com.mapbox.maps.LayerPosition?);
-    method public com.mapbox.bindgen.Expected<java.lang.String!,com.mapbox.bindgen.None!> addStyleModel(String, String);
-    method public com.mapbox.bindgen.Expected<java.lang.String!,com.mapbox.bindgen.None!> addStyleSource(String, com.mapbox.bindgen.Value);
-    method public com.mapbox.maps.StylePropertyValue getStyleAtmosphereProperty(String);
+  public final class Style {
+    method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addImage(String imageId, com.mapbox.maps.Image image, boolean sdf);
+    method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addImage(String imageId, com.mapbox.maps.Image image);
+    method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addImage(String imageId, android.graphics.Bitmap bitmap, boolean sdf);
+    method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addImage(String imageId, android.graphics.Bitmap bitmap);
+    method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addPersistentStyleCustomLayer(String layerId, com.mapbox.maps.CustomLayerHost layerHost, com.mapbox.maps.LayerPosition? layerPosition);
+    method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addPersistentStyleLayer(com.mapbox.bindgen.Value properties, com.mapbox.maps.LayerPosition? layerPosition);
+    method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addStyleCustomGeometrySource(String sourceId, com.mapbox.maps.CustomGeometrySourceOptions options);
+    method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addStyleCustomLayer(String layerId, com.mapbox.maps.CustomLayerHost layerHost, com.mapbox.maps.LayerPosition? layerPosition);
+    method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addStyleImage(String imageId, float scale, com.mapbox.maps.Image image, boolean sdf, java.util.List<com.mapbox.maps.ImageStretches> stretchX, java.util.List<com.mapbox.maps.ImageStretches> stretchY, com.mapbox.maps.ImageContent? content);
+    method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addStyleLayer(com.mapbox.bindgen.Value parameters, com.mapbox.maps.LayerPosition? position);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addStyleModel(String modelId, String modelUri);
+    method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addStyleSource(String sourceId, com.mapbox.bindgen.Value properties);
+    method public float getPixelRatio();
+    method public com.mapbox.maps.StylePropertyValue getStyleAtmosphereProperty(String property);
     method public com.mapbox.maps.CameraOptions getStyleDefaultCamera();
-    method public com.mapbox.maps.Image? getStyleImage(String);
+    method public com.mapbox.maps.Image? getStyleImage(String imageId);
     method public String getStyleJSON();
-    method public com.mapbox.bindgen.Expected<java.lang.String!,com.mapbox.bindgen.Value!> getStyleLayerProperties(String);
-    method public com.mapbox.maps.StylePropertyValue getStyleLayerProperty(String, String);
-    method public java.util.List<com.mapbox.maps.StyleObjectInfo!> getStyleLayers();
-    method public com.mapbox.maps.StylePropertyValue getStyleLightProperty(String);
-    method public com.mapbox.maps.StylePropertyValue getStyleLightProperty(String, String);
-    method public java.util.List<com.mapbox.maps.StyleObjectInfo!> getStyleLights();
-    method public com.mapbox.maps.StylePropertyValue getStyleProjectionProperty(String);
-    method public com.mapbox.bindgen.Expected<java.lang.String!,com.mapbox.bindgen.Value!> getStyleSourceProperties(String);
-    method public com.mapbox.maps.StylePropertyValue getStyleSourceProperty(String, String);
-    method public java.util.List<com.mapbox.maps.StyleObjectInfo!> getStyleSources();
-    method public com.mapbox.maps.StylePropertyValue getStyleTerrainProperty(String);
+    method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.Value> getStyleLayerProperties(String layerId);
+    method public com.mapbox.maps.StylePropertyValue getStyleLayerProperty(String layerId, String property);
+    method public java.util.List<com.mapbox.maps.StyleObjectInfo> getStyleLayers();
+    method public com.mapbox.maps.StylePropertyValue getStyleLightProperty(String property);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.StylePropertyValue getStyleLightProperty(String id, String property);
+    method @com.mapbox.maps.MapboxExperimental public java.util.List<com.mapbox.maps.StyleObjectInfo> getStyleLights();
+    method public com.mapbox.maps.StylePropertyValue getStyleProjectionProperty(String property);
+    method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.Value> getStyleSourceProperties(String sourceId);
+    method public com.mapbox.maps.StylePropertyValue getStyleSourceProperty(String sourceId, String property);
+    method public java.util.List<com.mapbox.maps.StyleObjectInfo> getStyleSources();
+    method public java.util.List<java.lang.String> getStyleSourcesAttribution();
+    method public com.mapbox.maps.StylePropertyValue getStyleTerrainProperty(String property);
     method public com.mapbox.maps.TransitionOptions getStyleTransition();
     method public String getStyleURI();
-    method public boolean hasStyleImage(String);
-    method public boolean hasStyleModel(String);
-    method public com.mapbox.bindgen.Expected<java.lang.String!,com.mapbox.bindgen.None!> invalidateStyleCustomGeometrySourceRegion(String, com.mapbox.maps.CoordinateBounds);
-    method public com.mapbox.bindgen.Expected<java.lang.String!,com.mapbox.bindgen.None!> invalidateStyleCustomGeometrySourceTile(String, com.mapbox.maps.CanonicalTileID);
-    method public com.mapbox.bindgen.Expected<java.lang.String!,java.lang.Boolean!> isStyleLayerPersistent(String);
+    method public boolean hasStyleImage(String imageId);
+    method @com.mapbox.maps.MapboxExperimental public boolean hasStyleModel(String modelId);
+    method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> invalidateStyleCustomGeometrySourceRegion(String sourceId, com.mapbox.maps.CoordinateBounds coordinateBounds);
+    method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> invalidateStyleCustomGeometrySourceTile(String sourceId, com.mapbox.maps.CanonicalTileID tileId);
+    method public com.mapbox.bindgen.Expected<java.lang.String,java.lang.Boolean> isStyleLayerPersistent(String layerId);
     method public boolean isStyleLoaded();
-    method public com.mapbox.bindgen.Expected<java.lang.String!,com.mapbox.bindgen.None!> moveStyleLayer(String, com.mapbox.maps.LayerPosition?);
-    method public com.mapbox.bindgen.Expected<java.lang.String!,com.mapbox.bindgen.None!> removeStyleImage(String);
-    method public com.mapbox.bindgen.Expected<java.lang.String!,com.mapbox.bindgen.None!> removeStyleLayer(String);
-    method public com.mapbox.bindgen.Expected<java.lang.String!,com.mapbox.bindgen.None!> removeStyleModel(String);
-    method public com.mapbox.bindgen.Expected<java.lang.String!,com.mapbox.bindgen.None!> removeStyleSource(String);
-    method public com.mapbox.bindgen.Expected<java.lang.String!,com.mapbox.bindgen.None!> setStyleAtmosphere(com.mapbox.bindgen.Value);
-    method public com.mapbox.bindgen.Expected<java.lang.String!,com.mapbox.bindgen.None!> setStyleAtmosphereProperty(String, com.mapbox.bindgen.Value);
-    method public com.mapbox.bindgen.Expected<java.lang.String!,com.mapbox.bindgen.None!> setStyleCustomGeometrySourceTileData(String, com.mapbox.maps.CanonicalTileID, java.util.List<com.mapbox.geojson.Feature!>);
-    method public com.mapbox.bindgen.Expected<java.lang.String!,com.mapbox.bindgen.None!> setStyleGeoJSONSourceData(String, com.mapbox.maps.GeoJSONSourceData);
-    method public com.mapbox.bindgen.Expected<java.lang.String!,com.mapbox.bindgen.None!> setStyleGeoJSONSourceData(String, String, com.mapbox.maps.GeoJSONSourceData);
+    method public boolean isValid();
+    method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> moveStyleLayer(String layerId, com.mapbox.maps.LayerPosition? layerPosition);
+    method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> removeStyleImage(String imageId);
+    method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> removeStyleLayer(String layerId);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> removeStyleModel(String modelId);
+    method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> removeStyleSource(String sourceId);
+    method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleAtmosphere(com.mapbox.bindgen.Value properties);
+    method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleAtmosphereProperty(String property, com.mapbox.bindgen.Value value);
+    method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleCustomGeometrySourceTileData(String sourceId, com.mapbox.maps.CanonicalTileID tileId, java.util.List<com.mapbox.geojson.Feature> featureCollection);
+    method @WorkerThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleGeoJSONSourceData(String sourceId, com.mapbox.maps.GeoJSONSourceData data);
+    method @WorkerThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleGeoJSONSourceData(String sourceId, String dataId, com.mapbox.maps.GeoJSONSourceData data);
     method public void setStyleJSON(String);
-    method public com.mapbox.bindgen.Expected<java.lang.String!,com.mapbox.bindgen.None!> setStyleLayerProperties(String, com.mapbox.bindgen.Value);
-    method public com.mapbox.bindgen.Expected<java.lang.String!,com.mapbox.bindgen.None!> setStyleLayerProperty(String, String, com.mapbox.bindgen.Value);
-    method public com.mapbox.bindgen.Expected<java.lang.String!,com.mapbox.bindgen.None!> setStyleLight(com.mapbox.bindgen.Value);
-    method public com.mapbox.bindgen.Expected<java.lang.String!,com.mapbox.bindgen.None!> setStyleLightProperty(String, com.mapbox.bindgen.Value);
-    method public com.mapbox.bindgen.Expected<java.lang.String!,com.mapbox.bindgen.None!> setStyleLightProperty(String, String, com.mapbox.bindgen.Value);
-    method public com.mapbox.bindgen.Expected<java.lang.String!,com.mapbox.bindgen.None!> setStyleLights(com.mapbox.bindgen.Value);
-    method public com.mapbox.bindgen.Expected<java.lang.String!,com.mapbox.bindgen.None!> setStyleProjection(com.mapbox.bindgen.Value);
-    method public com.mapbox.bindgen.Expected<java.lang.String!,com.mapbox.bindgen.None!> setStyleProjectionProperty(String, com.mapbox.bindgen.Value);
-    method public com.mapbox.bindgen.Expected<java.lang.String!,com.mapbox.bindgen.None!> setStyleSourceProperties(String, com.mapbox.bindgen.Value);
-    method public com.mapbox.bindgen.Expected<java.lang.String!,com.mapbox.bindgen.None!> setStyleSourceProperty(String, String, com.mapbox.bindgen.Value);
-    method public com.mapbox.bindgen.Expected<java.lang.String!,com.mapbox.bindgen.None!> setStyleTerrain(com.mapbox.bindgen.Value);
-    method public com.mapbox.bindgen.Expected<java.lang.String!,com.mapbox.bindgen.None!> setStyleTerrainProperty(String, com.mapbox.bindgen.Value);
-    method public void setStyleTransition(com.mapbox.maps.TransitionOptions);
+    method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleLayerProperties(String layerId, com.mapbox.bindgen.Value properties);
+    method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleLayerProperty(String layerId, String property, com.mapbox.bindgen.Value value);
+    method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleLight(com.mapbox.bindgen.Value parameters);
+    method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleLightProperty(String id, com.mapbox.bindgen.Value light);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleLightProperty(String id, String property, com.mapbox.bindgen.Value value);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleLights(com.mapbox.bindgen.Value lights);
+    method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleProjection(com.mapbox.bindgen.Value properties);
+    method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleProjectionProperty(String property, com.mapbox.bindgen.Value value);
+    method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleSourceProperties(String sourceId, com.mapbox.bindgen.Value properties);
+    method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleSourceProperty(String sourceId, String property, com.mapbox.bindgen.Value value);
+    method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleTerrain(com.mapbox.bindgen.Value properties);
+    method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleTerrainProperty(String property, com.mapbox.bindgen.Value value);
+    method public void setStyleTransition(com.mapbox.maps.TransitionOptions transitionOptions);
     method public void setStyleURI(String);
-    method public boolean styleLayerExists(String);
-    method public boolean styleSourceExists(String);
-    method public com.mapbox.bindgen.Expected<java.lang.String!,com.mapbox.bindgen.None!> updateStyleImageSourceImage(String, com.mapbox.maps.Image);
+    method public boolean styleLayerExists(String layerId);
+    method public boolean styleSourceExists(String sourceId);
+    method public void subscribe(com.mapbox.maps.Observer observer, java.util.List<java.lang.String> events);
+    method public void unsubscribe(com.mapbox.maps.Observer observer, java.util.List<java.lang.String> events);
+    method public void unsubscribe(com.mapbox.maps.Observer observer);
+    method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> updateStyleImageSourceImage(String sourceId, com.mapbox.maps.Image image);
+    property public final float pixelRatio;
+    property public final com.mapbox.maps.CameraOptions styleDefaultCamera;
+    property public final String styleJSON;
+    property public final java.util.List<com.mapbox.maps.StyleObjectInfo> styleLayers;
+    property public final java.util.List<com.mapbox.maps.StyleObjectInfo> styleSources;
+    property public final String styleURI;
+    field public static final com.mapbox.maps.Style.Companion Companion;
+    field public static final String DARK = "mapbox://styles/mapbox/dark-v11";
+    field public static final String LIGHT = "mapbox://styles/mapbox/light-v11";
+    field public static final String MAPBOX_STREETS = "mapbox://styles/mapbox/streets-v12";
+    field public static final String OUTDOORS = "mapbox://styles/mapbox/outdoors-v12";
+    field public static final String SATELLITE = "mapbox://styles/mapbox/satellite-v9";
+    field public static final String SATELLITE_STREETS = "mapbox://styles/mapbox/satellite-streets-v12";
+    field public static final String TRAFFIC_DAY = "mapbox://styles/mapbox/traffic-day-v2";
+    field public static final String TRAFFIC_NIGHT = "mapbox://styles/mapbox/traffic-night-v2";
+  }
+
+  public static final class Style.Companion {
+  }
+
+  public static fun interface Style.OnStyleLoaded {
+    method public void onStyleLoaded(com.mapbox.maps.Style style);
   }
 
 }
@@ -209,6 +177,14 @@ package com.mapbox.maps.dsl {
   public final class CameraOptionsKtxKt {
     method public static inline com.mapbox.maps.CameraOptions cameraOptions(kotlin.jvm.functions.Function1<? super com.mapbox.maps.CameraOptions.Builder,kotlin.Unit> block);
     method public static inline com.mapbox.maps.CameraOptions cameraOptions(com.mapbox.maps.CameraState cameraState, kotlin.jvm.functions.Function1<? super com.mapbox.maps.CameraOptions.Builder,kotlin.Unit> block);
+  }
+
+}
+
+package com.mapbox.maps.exception {
+
+  public final class WorkerThreadException extends java.lang.RuntimeException {
+    ctor public WorkerThreadException();
   }
 
 }
@@ -650,7 +626,7 @@ package com.mapbox.maps.extension.style {
   }
 
   public static fun interface StyleContract.StyleAtmosphereExtension {
-    method public void bindTo(com.mapbox.maps.extension.style.StyleInterface delegate);
+    method public void bindTo(com.mapbox.maps.Style delegate);
   }
 
   public static interface StyleContract.StyleExtension {
@@ -675,38 +651,31 @@ package com.mapbox.maps.extension.style {
   }
 
   public static fun interface StyleContract.StyleImageExtension {
-    method public void bindTo(com.mapbox.maps.extension.style.StyleInterface delegate);
+    method public void bindTo(com.mapbox.maps.Style delegate);
   }
 
   public static interface StyleContract.StyleLayerExtension {
-    method public void bindTo(com.mapbox.maps.extension.style.StyleInterface delegate, com.mapbox.maps.LayerPosition? position = null);
+    method public void bindTo(com.mapbox.maps.Style delegate, com.mapbox.maps.LayerPosition? position = null);
   }
 
   public static fun interface StyleContract.StyleLightExtension {
-    method public void bindTo(com.mapbox.maps.extension.style.StyleInterface delegate);
+    method public void bindTo(com.mapbox.maps.Style delegate);
   }
 
   @com.mapbox.maps.MapboxExperimental public static fun interface StyleContract.StyleModelExtension {
-    method public void bindTo(com.mapbox.maps.extension.style.StyleInterface delegate);
+    method public void bindTo(com.mapbox.maps.Style delegate);
   }
 
   public static fun interface StyleContract.StyleProjectionExtension {
-    method public void bindTo(com.mapbox.maps.extension.style.StyleInterface delegate);
+    method public void bindTo(com.mapbox.maps.Style delegate);
   }
 
   public static fun interface StyleContract.StyleSourceExtension {
-    method public void bindTo(com.mapbox.maps.extension.style.StyleInterface delegate);
+    method public void bindTo(com.mapbox.maps.Style delegate);
   }
 
   public static fun interface StyleContract.StyleTerrainExtension {
-    method public void bindTo(com.mapbox.maps.extension.style.StyleInterface delegate);
-  }
-
-  public interface StyleInterface extends com.mapbox.maps.StyleManagerInterface {
-    method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addImage(String imageId, android.graphics.Bitmap bitmap);
-    method public float getPixelRatio();
-    method public boolean isValid();
-    property public abstract float pixelRatio;
+    method public void bindTo(com.mapbox.maps.Style delegate);
   }
 
 }
@@ -825,7 +794,7 @@ package com.mapbox.maps.plugin {
   }
 
   public interface MapStyleObserverPlugin {
-    method public void onStyleChanged(com.mapbox.maps.extension.style.StyleInterface styleDelegate);
+    method public void onStyleChanged(com.mapbox.maps.Style style);
   }
 
   public abstract sealed class Plugin {
@@ -1660,7 +1629,7 @@ package com.mapbox.maps.plugin.delegates {
     method public com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate getMapPluginProviderDelegate();
     method public com.mapbox.maps.plugin.delegates.MapProjectionDelegate getMapProjectionDelegate();
     method public com.mapbox.maps.plugin.delegates.MapTransformDelegate getMapTransformDelegate();
-    method public void getStyle(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.StyleInterface,kotlin.Unit> callback);
+    method public void getStyle(kotlin.jvm.functions.Function1<? super com.mapbox.maps.Style,kotlin.Unit> callback);
     property public abstract com.mapbox.maps.plugin.delegates.MapAttributionDelegate mapAttributionDelegate;
     property public abstract com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate mapCameraManagerDelegate;
     property public abstract com.mapbox.maps.plugin.delegates.MapFeatureQueryDelegate mapFeatureQueryDelegate;

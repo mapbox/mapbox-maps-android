@@ -16,7 +16,6 @@ import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
-import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.addPersistentLayer
 import com.mapbox.maps.extension.style.layers.generated.SymbolLayer
@@ -42,7 +41,7 @@ import org.robolectric.RobolectricTestRunner
 @RunWith(RobolectricTestRunner::class)
 class PointAnnotationManagerTest {
   private val delegateProvider: MapDelegateProvider = mockk()
-  private val style: StyleInterface = mockk()
+  private val style: Style = mockk()
   private val mapCameraManagerDelegate: MapCameraManagerDelegate = mockk()
   private val mapFeatureQueryDelegate: MapFeatureQueryDelegate = mockk()
   private val mapListenerDelegate: MapListenerDelegate = mockk()
@@ -67,7 +66,7 @@ class PointAnnotationManagerTest {
     mockkStatic("com.mapbox.maps.extension.style.sources.SourceUtils")
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logE(any(), any()) } just Runs
-    val captureCallback = slot<(StyleInterface) -> Unit>()
+    val captureCallback = slot<(Style) -> Unit>()
     every { delegateProvider.getStyle(capture(captureCallback)) } answers {
       captureCallback.captured.invoke(style)
     }
@@ -216,7 +215,7 @@ class PointAnnotationManagerTest {
   @Test
   fun initializeBeforeStyleLoad() {
     every { style.styleLayerExists("test_layer") } returns true
-    val captureCallback = slot<(StyleInterface) -> Unit>()
+    val captureCallback = slot<(Style) -> Unit>()
     every { delegateProvider.getStyle(capture(captureCallback)) } just Runs
     manager = PointAnnotationManager(delegateProvider, AnnotationConfig("test_layer"))
     // Style is not loaded, can't create and add layer to style

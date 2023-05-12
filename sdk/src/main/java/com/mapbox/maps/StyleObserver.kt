@@ -14,7 +14,7 @@ import java.util.concurrent.CopyOnWriteArraySet
  * and maintains and invokes user added listeners.
  */
 internal class StyleObserver(
-  private val nativeMap: MapInterface,
+  private val styleManager: StyleManager,
   private val styleLoadedListener: Style.OnStyleLoaded,
   private val nativeObserver: NativeObserver,
   private val pixelRatio: Float
@@ -116,7 +116,7 @@ internal class StyleObserver(
   override fun onStyleDataLoaded(eventData: StyleDataLoadedEventData) {
     when (eventData.type) {
       StyleDataType.STYLE -> {
-        preLoadedStyle = Style(nativeMap, pixelRatio).also {
+        preLoadedStyle = Style(styleManager, pixelRatio).also {
           styleDataStyleLoadedListener?.onStyleLoaded(it)
         }
         styleDataStyleLoadedListener = null

@@ -52,42 +52,42 @@ class NativeMapTest {
   @Test
   fun getStyleURI() {
     val nativeMap = NativeMapImpl(map)
-    nativeMap.styleURI
+    nativeMap.getStyleURI()
     verify { map.styleURI }
   }
 
   @Test
   fun setStyleURI() {
     val nativeMap = NativeMapImpl(map)
-    nativeMap.styleURI = "foobar"
+    nativeMap.setStyleURI("foobar")
     verify { map.styleURI = "foobar" }
   }
 
   @Test
   fun getStyleJSON() {
     val nativeMap = NativeMapImpl(map)
-    nativeMap.styleJSON
+    nativeMap.getStyleJSON()
     verify { map.styleJSON }
   }
 
   @Test
   fun setStyleJSON() {
     val nativeMap = NativeMapImpl(map)
-    nativeMap.styleJSON = "foobar"
+    nativeMap.setStyleJSON("foobar")
     verify { map.styleJSON = "foobar" }
   }
 
   @Test
   fun getStyleDefaultCamera() {
     val nativeMap = NativeMapImpl(map)
-    nativeMap.styleDefaultCamera
+    nativeMap.getStyleDefaultCamera()
     verify { map.styleDefaultCamera }
   }
 
   @Test
   fun getStyleTransition() {
     val nativeMap = NativeMapImpl(map)
-    nativeMap.styleTransition
+    nativeMap.getStyleTransition()
     verify { map.styleTransition }
   }
 
@@ -95,7 +95,7 @@ class NativeMapTest {
   fun setStyleTransition() {
     val transitionOptions = TransitionOptions.Builder().build()
     val nativeMap = NativeMapImpl(map)
-    nativeMap.styleTransition = transitionOptions
+    nativeMap.setStyleTransition(transitionOptions)
     verify { map.styleTransition = transitionOptions }
   }
 
@@ -159,7 +159,7 @@ class NativeMapTest {
   @Test
   fun getStyleLayers() {
     val nativeMap = NativeMapImpl(map)
-    nativeMap.styleLayers
+    nativeMap.getStyleLayers()
     verify { map.styleLayers }
   }
 
@@ -256,7 +256,7 @@ class NativeMapTest {
   @Test
   fun getStyleSources() {
     val nativeMap = NativeMapImpl(map)
-    nativeMap.styleSources
+    nativeMap.getStyleSources()
     verify { map.styleSources }
   }
 
@@ -395,14 +395,14 @@ class NativeMapTest {
   fun setSize() {
     val size = Size(1.0f, 2.0f)
     val nativeMap = NativeMapImpl(map)
-    nativeMap.size = size
+    nativeMap.setSize(size)
     verify { map.size = size }
   }
 
   @Test
   fun getSize() {
     val nativeMap = NativeMapImpl(map)
-    nativeMap.size
+    nativeMap.getSize()
     verify { map.size }
   }
 
@@ -424,7 +424,7 @@ class NativeMapTest {
   @Test
   fun getCameraState() {
     val nativeMap = NativeMapImpl(map)
-    nativeMap.cameraState
+    nativeMap.getCameraState()
     verify { map.cameraState }
   }
 
@@ -482,28 +482,28 @@ class NativeMapTest {
   @Test
   fun setGestureInProgress() {
     val nativeMap = NativeMapImpl(map)
-    nativeMap.isGestureInProgress = true
+    nativeMap.setGestureInProgress(true)
     verify { map.isGestureInProgress = true }
   }
 
   @Test
   fun isGestureInProgress() {
     val nativeMap = NativeMapImpl(map)
-    nativeMap.isGestureInProgress
+    nativeMap.isGestureInProgress()
     verify { map.isGestureInProgress }
   }
 
   @Test
   fun setUserAnimationInProgress() {
     val nativeMap = NativeMapImpl(map)
-    nativeMap.isUserAnimationInProgress = true
+    nativeMap.setUserAnimationInProgress(true)
     verify { map.isUserAnimationInProgress = true }
   }
 
   @Test
   fun isUserAnimationInProgress() {
     val nativeMap = NativeMapImpl(map)
-    nativeMap.isUserAnimationInProgress
+    nativeMap.isUserAnimationInProgress()
     verify { map.isUserAnimationInProgress }
   }
 
@@ -518,21 +518,21 @@ class NativeMapTest {
   @Test
   fun getBounds() {
     val nativeMap = NativeMapImpl(map)
-    nativeMap.bounds
+    nativeMap.getBounds()
     verify { map.bounds }
   }
 
   @Test
   fun setPrefetchZoomDelta() {
     val nativeMap = NativeMapImpl(map)
-    nativeMap.prefetchZoomDelta = 2
+    nativeMap.setPrefetchZoomDelta(2)
     verify { map.prefetchZoomDelta = 2 }
   }
 
   @Test
   fun getPrefetchZoomDelta() {
     val nativeMap = NativeMapImpl(map)
-    nativeMap.prefetchZoomDelta
+    nativeMap.getPrefetchZoomDelta()
     verify { map.prefetchZoomDelta }
   }
 
@@ -560,7 +560,7 @@ class NativeMapTest {
   @Test
   fun getMapOptions() {
     val nativeMap = NativeMapImpl(map)
-    nativeMap.mapOptions
+    nativeMap.getMapOptions()
     verify { map.mapOptions }
   }
 
@@ -599,7 +599,7 @@ class NativeMapTest {
   @Test
   fun getDebug() {
     val nativeMap = NativeMapImpl(map)
-    nativeMap.debug
+    nativeMap.getDebug()
     verify { map.debug }
   }
 
@@ -614,7 +614,7 @@ class NativeMapTest {
   @Test
   fun isStyleFullyLoaded() {
     val nativeMap = NativeMapImpl(map)
-    nativeMap.isStyleLoaded
+    nativeMap.isStyleLoaded()
     verify { map.isStyleLoaded }
   }
 
@@ -699,7 +699,7 @@ class NativeMapTest {
   @Test
   fun getResourceOptions() {
     val nativeMap = NativeMapImpl(map)
-    nativeMap.resourceOptions
+    nativeMap.getResourceOptions()
     verify { map.resourceOptions }
   }
 
@@ -786,14 +786,14 @@ class NativeMapTest {
   @Test
   fun setRenderWorldCopiesProperty() {
     val nativeMap = NativeMapImpl(map)
-    nativeMap.renderWorldCopies = true
+    nativeMap.setRenderWorldCopies(true)
     verify { map.renderWorldCopies = true }
   }
 
   @Test
   fun getRenderWorldCopiesProperty() {
     val nativeMap = NativeMapImpl(map)
-    nativeMap.renderWorldCopies
+    nativeMap.getRenderWorldCopies()
     verify { map.renderWorldCopies }
   }
 

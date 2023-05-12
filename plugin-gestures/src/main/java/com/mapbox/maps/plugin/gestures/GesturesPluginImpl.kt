@@ -15,11 +15,7 @@ import androidx.annotation.VisibleForTesting.PRIVATE
 import androidx.core.animation.addListener
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import com.mapbox.android.gestures.*
-import com.mapbox.maps.CameraOptions
-import com.mapbox.maps.ScreenCoordinate
-import com.mapbox.maps.StylePropertyValueKind
-import com.mapbox.maps.extension.style.StyleInterface
-import com.mapbox.maps.logE
+import com.mapbox.maps.*
 import com.mapbox.maps.plugin.InvalidPluginConfigurationException
 import com.mapbox.maps.plugin.MapStyleObserverPlugin
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_CAMERA_PLUGIN_ID
@@ -48,7 +44,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
 
   private lateinit var gesturesManager: AndroidGesturesManager
   private lateinit var gestureState: GestureState
-  private var style: StyleInterface? = null
+  private var style: Style? = null
 
   private lateinit var mapTransformDelegate: MapTransformDelegate
   private lateinit var mapCameraManagerDelegate: MapCameraManagerDelegate
@@ -170,7 +166,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
   internal constructor(
     context: Context,
     attributeSet: AttributeSet,
-    style: StyleInterface
+    style: Style
   ) {
     this.context = context
     this.pixelRatio = 1.0f
@@ -1800,8 +1796,8 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
   /**
    * Called when new style is loaded.
    */
-  override fun onStyleChanged(styleDelegate: StyleInterface) {
-    style = styleDelegate
+  override fun onStyleChanged(style: Style) {
+    this.style = style
   }
 
   /**

@@ -31,7 +31,7 @@ import org.robolectric.annotation.LooperMode
 @Config(shadows = [ShadowMap::class])
 class MapboxMapTest {
 
-  private val nativeMap: MapInterface = mockk(relaxed = true)
+  private val nativeMap: NativeMapImpl = mockk(relaxed = true)
   private val nativeObserver: NativeObserver = mockk(relaxed = true)
   private val resourceOptions = mockk<ResourceOptions>(relaxed = true)
 
@@ -44,7 +44,7 @@ class MapboxMapTest {
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logI(any(), any()) } just Runs
     every { Map.clearData(any(), any()) } just runs
-    every { nativeMap.resourceOptions } returns resourceOptions
+    every { nativeMap.getResourceOptions() } returns resourceOptions
     styleObserver = mockk(relaxUnitFun = true)
     mapboxMap = MapboxMap(nativeMap, nativeObserver, styleObserver)
   }
@@ -71,7 +71,7 @@ class MapboxMapTest {
     assertFalse(mapboxMap.isStyleLoadInitiated)
     mapboxMap.loadStyleUri("foo")
     Shadows.shadowOf(Looper.getMainLooper()).idle()
-    verify { nativeMap.styleURI = "foo" }
+    verify { nativeMap.setStyleURI("foo") }
     assertTrue(mapboxMap.isStyleLoadInitiated)
   }
 
@@ -90,7 +90,7 @@ class MapboxMapTest {
     assertFalse(mapboxMap.isStyleLoadInitiated)
     mapboxMap.loadStyleJson("foo")
     Shadows.shadowOf(Looper.getMainLooper()).idle()
-    verify { nativeMap.styleJSON = "foo" }
+    verify { nativeMap.setStyleJSON("foo") }
     assertTrue(mapboxMap.isStyleLoadInitiated)
   }
 
@@ -100,7 +100,7 @@ class MapboxMapTest {
     assertFalse(mapboxMap.isStyleLoadInitiated)
     mapboxMap.loadStyleJson("foo") {}
     Shadows.shadowOf(Looper.getMainLooper()).idle()
-    verify { nativeMap.styleJSON = "foo" }
+    verify { nativeMap.setStyleJSON("foo") }
     assertTrue(mapboxMap.isStyleLoadInitiated)
   }
 
@@ -110,7 +110,7 @@ class MapboxMapTest {
     assertFalse(mapboxMap.isStyleLoadInitiated)
     mapboxMap.loadStyle(style("") {})
     Shadows.shadowOf(Looper.getMainLooper()).idle()
-    verify { nativeMap.styleJSON = "{}" }
+    verify { nativeMap.setStyleJSON("{}") }
     assertTrue(mapboxMap.isStyleLoadInitiated)
   }
 
@@ -124,7 +124,7 @@ class MapboxMapTest {
     assertFalse(mapboxMap.isStyleLoadInitiated)
     mapboxMap.loadStyle(styleExtension, onStyleLoadError, onMapLoadError)
     Shadows.shadowOf(Looper.getMainLooper()).idle()
-    verify { nativeMap.styleURI = "foobar" }
+    verify { nativeMap.setStyleURI("foobar") }
     assertTrue(mapboxMap.isStyleLoadInitiated)
   }
 
@@ -136,7 +136,7 @@ class MapboxMapTest {
     assertFalse(mapboxMap.isStyleLoadInitiated)
     mapboxMap.loadStyle(styleExtension) {}
     Shadows.shadowOf(Looper.getMainLooper()).idle()
-    verify { nativeMap.styleURI = "foobar" }
+    verify { nativeMap.setStyleURI("foobar") }
     assertTrue(mapboxMap.isStyleLoadInitiated)
   }
 
@@ -249,7 +249,7 @@ class MapboxMapTest {
   @Test
   fun getResourceOptions() {
     mapboxMap.getResourceOptions()
-    verify { nativeMap.resourceOptions }
+    verify { nativeMap.getResourceOptions() }
   }
 
   @Test
@@ -467,13 +467,13 @@ class MapboxMapTest {
   @Test
   fun setPrefetchZoomDelta() {
     mapboxMap.setPrefetchZoomDelta(3)
-    verify { nativeMap.prefetchZoomDelta = 3 }
+    verify { nativeMap.setPrefetchZoomDelta(3) }
   }
 
   @Test
   fun getPrefetchZoomDelta() {
     mapboxMap.getPrefetchZoomDelta()
-    verify { nativeMap.prefetchZoomDelta }
+    verify { nativeMap.getPrefetchZoomDelta() }
   }
 
   @Test
@@ -668,14 +668,14 @@ class MapboxMapTest {
   fun pixelsForCoordinates() {
     val points = mockk<List<Point>>()
     mapboxMap.pixelsForCoordinates(points)
-    verify { nativeMap.pixelsForCoordinates(points) }
+    verify { nativeMap.pixelsForCoordinates(points.toMutableList()) }
   }
 
   @Test
   fun coordinatesForPixels() {
     val points = mockk<List<ScreenCoordinate>>()
     mapboxMap.coordinatesForPixels(points)
-    verify { nativeMap.coordinatesForPixels(points) }
+    verify { nativeMap.coordinatesForPixels(points.toMutableList()) }
   }
 
   @Test(expected = IllegalArgumentException::class)
@@ -694,13 +694,13 @@ class MapboxMapTest {
       ScreenCoordinate(0.0, 100.0),
     )
     mapboxMap.coordinatesForRect(rect)
-    verify { nativeMap.coordinatesForPixels(screenCoordinates) }
+    verify { nativeMap.coordinatesForPixels(screenCoordinates.toMutableList()) }
   }
 
   @Test
   fun getBounds() {
     mapboxMap.getBounds()
-    verify { nativeMap.bounds }
+    verify { nativeMap.getBounds() }
   }
 
   @Test
@@ -713,13 +713,13 @@ class MapboxMapTest {
   @Test
   fun setGestureInProgress() {
     mapboxMap.setGestureInProgress(true)
-    verify { nativeMap.isGestureInProgress = true }
+    verify { nativeMap.setGestureInProgress(true) }
   }
 
   @Test
   fun isGestureInProgress() {
     mapboxMap.isGestureInProgress()
-    verify { nativeMap.isGestureInProgress }
+    verify { nativeMap.isGestureInProgress() }
   }
 
   @Test
@@ -868,7 +868,7 @@ class MapboxMapTest {
   @Test
   fun getCameraState() {
     mapboxMap.cameraState
-    verify { nativeMap.cameraState }
+    verify { nativeMap.getCameraState() }
   }
 
   @Test
@@ -881,7 +881,7 @@ class MapboxMapTest {
   @Test
   fun getDebug() {
     mapboxMap.getDebug()
-    verify { nativeMap.debug }
+    verify { nativeMap.getDebug() }
   }
 
   @Test
@@ -893,13 +893,13 @@ class MapboxMapTest {
   @Test
   fun setUserAnimationInProgress() {
     mapboxMap.setUserAnimationInProgress(true)
-    verify { nativeMap.isUserAnimationInProgress = true }
+    verify { nativeMap.setUserAnimationInProgress(true) }
   }
 
   @Test
   fun isUserAnimationInProgress() {
     mapboxMap.isUserAnimationInProgress()
-    verify { nativeMap.isUserAnimationInProgress }
+    verify { nativeMap.isUserAnimationInProgress() }
   }
 
   @Test
@@ -964,13 +964,13 @@ class MapboxMapTest {
   @Test
   fun getSize() {
     mapboxMap.getSize()
-    verify { nativeMap.size }
+    verify { nativeMap.getSize() }
   }
 
   @Test
   fun getFreeCameraOptions() {
     mapboxMap.getFreeCameraOptions()
-    verify { nativeMap.freeCameraOptions }
+    verify { nativeMap.getFreeCameraOptions() }
   }
 
   @Test
@@ -1071,7 +1071,7 @@ class MapboxMapTest {
   @Test
   fun cameraState() {
     mapboxMap.cameraState
-    verify { nativeMap.cameraState }
+    verify { nativeMap.getCameraState() }
   }
 
   @Test
@@ -1119,7 +1119,7 @@ class PixelForCoordinatesTest(
   private val expectedX: Double,
   private val expectedY: Double
 ) {
-  private val nativeMap: MapInterface = mockk(relaxed = true)
+  private val nativeMap: NativeMapImpl = mockk(relaxed = true)
   private val nativeObserver: NativeObserver = mockk(relaxed = true)
   private val resourceOptions = mockk<ResourceOptions>(relaxed = true)
 
@@ -1131,7 +1131,7 @@ class PixelForCoordinatesTest(
     mockkStatic(kotlin.collections.Map::class)
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logI(any(), any()) } just Runs
-    every { nativeMap.resourceOptions } returns resourceOptions
+    every { nativeMap.getResourceOptions() } returns resourceOptions
     styleObserver = mockk(relaxUnitFun = true)
     mapboxMap = MapboxMap(nativeMap, nativeObserver, styleObserver)
   }
@@ -1140,12 +1140,12 @@ class PixelForCoordinatesTest(
   fun pixelForCoordinate() {
     val point = mockk<Point>()
     val convertedScreenCoordinate = ScreenCoordinate(inputX, inputY)
-    every { nativeMap.size } returns Size(100f, 100f)
+    every { nativeMap.getSize() } returns Size(100f, 100f)
     every { nativeMap.pixelForCoordinate(point) } returns convertedScreenCoordinate
     val screenCoordinate = mapboxMap.pixelForCoordinate(point)
     verifySequence {
       nativeMap.pixelForCoordinate(point)
-      nativeMap.size
+      nativeMap.getSize()
     }
     assertEquals(ScreenCoordinate(expectedX, expectedY), screenCoordinate)
   }
@@ -1153,13 +1153,13 @@ class PixelForCoordinatesTest(
   @Test
   fun setRenderWorldCopies() {
     mapboxMap.setRenderWorldCopies(true)
-    verify { nativeMap.renderWorldCopies = true }
+    verify { nativeMap.setRenderWorldCopies(true) }
   }
 
   @Test
   fun getRenderWorldCopies() {
     mapboxMap.getRenderWorldCopies()
-    verify { nativeMap.renderWorldCopies }
+    verify { nativeMap.getRenderWorldCopies() }
   }
 
   @After

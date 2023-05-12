@@ -26,7 +26,7 @@ class StyleObserverTest {
 
     mainStyleLoadedListener = mockk(relaxed = true)
     styleObserver = StyleObserver(
-      nativeMap = mockk(relaxUnitFun = true),
+      styleManager = mockk(relaxUnitFun = true),
       styleLoadedListener = mainStyleLoadedListener,
       nativeObserver = mockk(relaxUnitFun = true),
       pixelRatio = 1.0f

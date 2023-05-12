@@ -55,7 +55,7 @@ package com.mapbox.maps.plugin.locationcomponent {
     method public void onPuckLocationAnimatorDefaultOptionsUpdated(kotlin.jvm.functions.Function1<? super android.animation.ValueAnimator,kotlin.Unit> options);
     method public void onStart();
     method public void onStop();
-    method public void onStyleChanged(com.mapbox.maps.extension.style.StyleInterface styleDelegate);
+    method public void onStyleChanged(com.mapbox.maps.Style style);
     method public void removeOnIndicatorAccuracyRadiusChangedListener(com.mapbox.maps.plugin.locationcomponent.OnIndicatorAccuracyRadiusChangedListener listener);
     method public void removeOnIndicatorBearingChangedListener(com.mapbox.maps.plugin.locationcomponent.OnIndicatorBearingChangedListener listener);
     method public void removeOnIndicatorPositionChangedListener(com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener listener);

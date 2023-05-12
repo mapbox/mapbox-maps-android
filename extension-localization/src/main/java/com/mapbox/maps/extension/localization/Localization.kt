@@ -1,7 +1,7 @@
 package com.mapbox.maps.extension.localization
 
+import com.mapbox.maps.Style
 import com.mapbox.maps.StyleObjectInfo
-import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.expressions.dsl.generated.get
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.generated.SymbolLayer
@@ -19,7 +19,7 @@ import java.util.*
  * `["format",["coalesce",["get","name_en"],["get","name"]],{}]` will be replaced by
  * `["format",["coalesce",["get","name_de"],["get","name"]],{}]`
  */
-internal fun setMapLanguage(locale: Locale, style: StyleInterface, layerIds: List<String>?) {
+internal fun setMapLanguage(locale: Locale, style: Style, layerIds: List<String>?) {
   var convertedLocale = "name_${locale.language}"
   if (!isSupportedLanguage(convertedLocale)) {
     logE(TAG, "Locale: $locale is not supported.")
@@ -66,13 +66,13 @@ private fun convertExpression(language: String, layer: SymbolLayer, textField: E
   }
 }
 
-private fun sourceIsStreetsV8(style: StyleInterface, source: StyleObjectInfo): Boolean =
+private fun sourceIsStreetsV8(style: Style, source: StyleObjectInfo): Boolean =
   sourceIsType(style, source, STREET_V8)
 
-private fun sourceIsStreetsV7(style: StyleInterface, source: StyleObjectInfo): Boolean =
+private fun sourceIsStreetsV7(style: Style, source: StyleObjectInfo): Boolean =
   sourceIsType(style, source, STREET_V7)
 
-private fun sourceIsType(style: StyleInterface, source: StyleObjectInfo, type: String): Boolean {
+private fun sourceIsType(style: Style, source: StyleObjectInfo, type: String): Boolean {
   if (source.type == SOURCE_TYPE_VECTOR) {
     style.getSourceAs<VectorSource>(source.id)?.url?.let {
       return it.contains(type)

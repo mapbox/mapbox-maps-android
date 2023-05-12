@@ -21,7 +21,7 @@ internal object MapProvider {
   fun getNativeMapWrapper(
     mapInitOptions: MapInitOptions,
     mapClient: MapClient,
-  ): MapInterface = NativeMapImpl(
+  ) = NativeMapImpl(
     Map(
       mapClient,
       mapInitOptions.mapOptions,
@@ -30,15 +30,14 @@ internal object MapProvider {
   )
 
   fun getNativeMapCore(mapView: MapView): Map {
-    return (mapView.getController().getNativeMap() as NativeMapImpl).map
+    return mapView.getController().getNativeMap().map
   }
 
   fun getMapboxMap(
-    nativeMap: MapInterface,
+    nativeMap: NativeMapImpl,
     nativeObserver: NativeObserver,
     pixelRatio: Float
-  ) =
-    MapboxMap(nativeMap, nativeObserver, pixelRatio)
+  ) = MapboxMap(nativeMap, nativeObserver, pixelRatio)
 
   fun getMapPluginRegistry(
     mapboxMap: MapboxMap,

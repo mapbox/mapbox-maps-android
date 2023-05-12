@@ -34,6 +34,8 @@ Mapbox welcomes participation and contributions from everyone.
 | LIGHT             | mapbox://styles/mapbox/light-v10             | mapbox://styles/mapbox/light-v11             |
 | DARK              | mapbox://styles/mapbox/dark-v10              | mapbox://styles/mapbox/dark-v11              |
 
+* Remove native interfaces `StyleManagerInterface`, `StyleInterface`, `CameraManagerInterface`, `MapInterface` and use only `Map` object to access native methods.
+
 ## Features ✨ and improvements 🏁
 * Add the `MapboxMap.resetFeatureState` method.
 * Make padding optional for `MapboxMap.cameraForCoordinateBounds`, `MapboxMap.cameraForCoordinates`, `MapboxMap.cameraForGeometry` methods.

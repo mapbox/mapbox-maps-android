@@ -10,7 +10,7 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.MapboxLocationComponentException
 import com.mapbox.maps.RenderedQueryGeometry
 import com.mapbox.maps.RenderedQueryOptions
-import com.mapbox.maps.extension.style.StyleInterface
+import com.mapbox.maps.Style
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.LOCATION_INDICATOR_LAYER
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.MODEL_LAYER
@@ -362,10 +362,10 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
   /**
    * Called when a new Style is loaded.
    *
-   * @param styleDelegate
+   * @param style
    */
-  override fun onStyleChanged(styleDelegate: StyleInterface) {
-    locationPuckManager?.updateStyle(styleDelegate)
+  override fun onStyleChanged(style: Style) {
+    locationPuckManager?.updateStyle(style)
   }
 
   override lateinit var internalSettings: LocationComponentSettings

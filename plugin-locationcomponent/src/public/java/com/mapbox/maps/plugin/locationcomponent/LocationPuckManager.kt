@@ -10,8 +10,8 @@ import com.mapbox.bindgen.Value
 import com.mapbox.common.location.LocationError
 import com.mapbox.geojson.Point
 import com.mapbox.maps.MapboxLocationComponentException
+import com.mapbox.maps.Style
 import com.mapbox.maps.StylePropertyValueKind
-import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.logW
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.LocationPuck3D
@@ -84,12 +84,12 @@ internal class LocationPuckManager(
       }
     }
 
-  fun updateStyle(style: StyleInterface) {
+  fun updateStyle(style: Style) {
     locationLayerRenderer.updateStyle(style)
     positionManager.updateStyle(style)
   }
 
-  fun initialize(style: StyleInterface) {
+  fun initialize(style: Style) {
     if (!locationLayerRenderer.isRendererInitialised()) {
       animationManager.setUpdateListeners(
         onLocationUpdated,
@@ -338,7 +338,7 @@ internal class LocationPuckManager(
     )
   }
 
-  private fun StyleInterface.isGlobeProjection(): Boolean {
+  private fun Style.isGlobeProjection(): Boolean {
     val projectionProperty = getStyleProjectionProperty("name")
     return projectionProperty.kind == StylePropertyValueKind.CONSTANT &&
       (projectionProperty.value.contents as String).uppercase() == "GLOBE"

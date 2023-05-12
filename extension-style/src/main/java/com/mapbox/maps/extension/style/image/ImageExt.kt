@@ -2,8 +2,8 @@
 package com.mapbox.maps.extension.style.image
 
 import android.graphics.Bitmap
+import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.StyleContract
-import com.mapbox.maps.extension.style.StyleInterface
 
 /**
  * DSL function for [ImageExtensionImpl].
@@ -16,7 +16,7 @@ fun image(imageId: String, block: ImageExtensionImpl.Builder.() -> Unit): ImageE
  *
  * @param image The image to be added
  */
-fun StyleInterface.addImage(image: StyleContract.StyleImageExtension) {
+fun Style.addImage(image: StyleContract.StyleImageExtension) {
   image.bindTo(this)
 }
 
@@ -38,6 +38,6 @@ fun image9Patch(imageId: String, bitmap: Bitmap, block: (ImageNinePatchExtension
  *
  * @param image The image to be added
  */
-fun StyleInterface.addImage9Patch(image: StyleContract.StyleImageExtension) {
+fun Style.addImage9Patch(image: StyleContract.StyleImageExtension) {
   image.bindTo(this)
 }

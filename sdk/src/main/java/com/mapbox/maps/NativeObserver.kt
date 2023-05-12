@@ -10,7 +10,7 @@ import java.util.concurrent.CopyOnWriteArraySet
 
 @UiThread
 internal class NativeObserver(
-  private val observable: ObservableInterface
+  private val observable: NativeMapImpl
 ) : Observer {
   val onCameraChangeListeners = CopyOnWriteArraySet<OnCameraChangeListener>()
 

@@ -88,14 +88,14 @@ class StyleLoadTest {
     rule.scenario.onActivity {
       it.runOnUiThread {
         mapboxMap.getStyle { style ->
-          assertTrue("Style should be fully loaded", style.isStyleLoaded)
+          assertTrue("Style should be fully loaded", style.isStyleLoaded())
           countDownLatch.countDown()
         }
 
         mapboxMap.loadStyleUri(
           Style.MAPBOX_STREETS
         ) { style ->
-          assertTrue("Style should be fully loaded", style.isStyleLoaded)
+          assertTrue("Style should be fully loaded", style.isStyleLoaded())
           countDownLatch.countDown()
         }
         mapView.onStart()
@@ -112,15 +112,15 @@ class StyleLoadTest {
         mapboxMap.loadStyleUri(
           Style.MAPBOX_STREETS
         ) { style ->
-          assertTrue("Style should be fully loaded", style.isStyleLoaded)
+          assertTrue("Style should be fully loaded", style.isStyleLoaded())
           mapboxMap.loadStyleUri(Style.SATELLITE) { style2 ->
-            assertTrue("Style should be still fully loaded although its flaw in our current implementation", style.isStyleLoaded)
-            assertTrue("Style should be fully loaded again", style2.isStyleLoaded)
+            assertTrue("Style should be still fully loaded although its flaw in our current implementation", style.isStyleLoaded())
+            assertTrue("Style should be fully loaded again", style2.isStyleLoaded())
             assertTrue("New style should be valid", style2.isValid())
             assertFalse("Old style should not be valid", style.isValid())
             countDownLatch.countDown()
           }
-          assertFalse("Map shouldn't be fully loaded", style.isStyleLoaded)
+          assertFalse("Map shouldn't be fully loaded", style.isStyleLoaded())
         }
         mapView.onStart()
       }
@@ -162,7 +162,7 @@ class StyleLoadTest {
         mapboxMap.loadStyleUri(Style.SATELLITE) { loadedStyles++ }
         mapboxMap.loadStyleUri(Style.MAPBOX_STREETS) { style ->
           loadedStyles++
-          assertTrue("Style should be fully loaded", style.isStyleLoaded)
+          assertTrue("Style should be fully loaded", style.isStyleLoaded())
           assertTrue("Style should be valid", style.isValid())
           countDownLatch.countDown()
         }

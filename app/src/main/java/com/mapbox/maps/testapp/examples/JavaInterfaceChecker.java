@@ -56,7 +56,6 @@ import com.mapbox.maps.Snapshotter;
 import com.mapbox.maps.Style;
 import com.mapbox.maps.TransitionOptions;
 import com.mapbox.maps.extension.style.StyleContract;
-import com.mapbox.maps.extension.style.StyleInterface;
 import com.mapbox.maps.extension.style.expressions.generated.Expression;
 import com.mapbox.maps.extension.style.expressions.types.FormatSection;
 import com.mapbox.maps.extension.style.layers.Layer;
@@ -291,12 +290,12 @@ public class JavaInterfaceChecker {
     terrain("id", receiver -> null);
   }
 
-  private void addLayer(StyleInterface style, Layer layer, LayerPosition position) {
+  private void addLayer(Style style, Layer layer, LayerPosition position) {
     addPersistentLayer(style, layer);
     addPersistentLayer(style, layer, position);
   }
 
-  private void image9PatchTest(StyleInterface style, Bitmap bitmap) {
+  private void image9PatchTest(Style style, Bitmap bitmap) {
     image9Patch("id", bitmap);
     image9Patch("id", bitmap, builder -> null);
     addImage9Patch(style, "id", bitmap);
@@ -311,7 +310,7 @@ public class JavaInterfaceChecker {
     formatSection = new FormatSection(expression, expression, expression, expression);
   }
 
-  private void localization(StyleInterface style, Locale locale, List<String> layerId) {
+  private void localization(Style style, Locale locale, List<String> layerId) {
     localizeLabels(style, locale);
     localizeLabels(style, locale, layerId);
   }

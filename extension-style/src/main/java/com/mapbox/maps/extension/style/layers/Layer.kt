@@ -4,9 +4,8 @@ import android.util.Log
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.LayerPosition
 import com.mapbox.maps.MapboxStyleException
-import com.mapbox.maps.StyleManagerInterface
+import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.StyleContract
-import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.layers.generated.BackgroundLayer
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
 import com.mapbox.maps.extension.style.layers.properties.generated.Visibility
@@ -26,7 +25,7 @@ abstract class Layer : StyleContract.StyleLayerExtension {
    */
   internal var internalSourceId: String? = null
 
-  internal var delegate: StyleManagerInterface? = null
+  internal var delegate: Style? = null
 
   internal var appliedLayerPropertiesValue: Value? = null
 
@@ -100,7 +99,7 @@ abstract class Layer : StyleContract.StyleLayerExtension {
    *
    * @param delegate The style controller
    */
-  fun bindTo(delegate: StyleInterface) {
+  fun bindTo(delegate: Style) {
     bindTo(delegate, null)
   }
 
@@ -110,7 +109,7 @@ abstract class Layer : StyleContract.StyleLayerExtension {
    * @param delegate The style controller
    * @param position the position that the current layer is added to
    */
-  override fun bindTo(delegate: StyleInterface, position: LayerPosition?) {
+  override fun bindTo(delegate: Style, position: LayerPosition?) {
     this.delegate = delegate
 
     val propertiesValue = appliedLayerPropertiesValue ?: getCachedLayerProperties()

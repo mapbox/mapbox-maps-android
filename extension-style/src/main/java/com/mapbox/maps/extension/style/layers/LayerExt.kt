@@ -4,9 +4,8 @@ package com.mapbox.maps.extension.style.layers
 
 import com.mapbox.maps.LayerPosition
 import com.mapbox.maps.MapboxStyleException
-import com.mapbox.maps.StyleManagerInterface
+import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.StyleContract
-import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.layers.generated.*
 import com.mapbox.maps.extension.style.utils.silentUnwrap
 import com.mapbox.maps.extension.style.utils.unwrap
@@ -18,7 +17,7 @@ import com.mapbox.maps.logE
  * @param layerId the layer id
  * @return StyleLayerPlugin
  */
-fun StyleManagerInterface.getLayer(layerId: String): Layer? {
+fun Style.getLayer(layerId: String): Layer? {
   val source by lazy { getStyleLayerProperty(layerId, "source").unwrap<String>() }
   return when (val type = getStyleLayerProperty(layerId, "type").silentUnwrap<String>()) {
     "background" -> BackgroundLayer(layerId)
@@ -50,7 +49,7 @@ fun StyleManagerInterface.getLayer(layerId: String): Layer? {
  * @return T if layer is T, otherwise null
  */
 @SuppressWarnings("ChangedType")
-inline fun <reified T : Layer> StyleManagerInterface.getLayerAs(layerId: String): T? {
+inline fun <reified T : Layer> Style.getLayerAs(layerId: String): T? {
   val layer = getLayer(layerId) as? T
   if (layer == null) {
     logE(TAG, "Given layerId = $layerId is not requested type in Layer")
@@ -65,7 +64,7 @@ inline fun <reified T : Layer> StyleManagerInterface.getLayerAs(layerId: String)
  * @param layer The layer to be added
  * @param below the layer id that the current layer is added below
  */
-fun StyleInterface.addLayerBelow(layer: StyleContract.StyleLayerExtension, below: String?) {
+fun Style.addLayerBelow(layer: StyleContract.StyleLayerExtension, below: String?) {
   layer.bindTo(this, LayerPosition(null, below, null))
 }
 
@@ -75,7 +74,7 @@ fun StyleInterface.addLayerBelow(layer: StyleContract.StyleLayerExtension, below
  * @param layer The layer to be added
  * @param above the layer id that the current layer is added above
  */
-fun StyleInterface.addLayerAbove(layer: StyleContract.StyleLayerExtension, above: String?) {
+fun Style.addLayerAbove(layer: StyleContract.StyleLayerExtension, above: String?) {
   layer.bindTo(this, LayerPosition(above, null, null))
 }
 
@@ -85,7 +84,7 @@ fun StyleInterface.addLayerAbove(layer: StyleContract.StyleLayerExtension, above
  * @param layer The layer to be added
  * @param index the index that the current layer is added on
  */
-fun StyleInterface.addLayerAt(layer: StyleContract.StyleLayerExtension, index: Int?) {
+fun Style.addLayerAt(layer: StyleContract.StyleLayerExtension, index: Int?) {
   layer.bindTo(this, LayerPosition(null, null, index))
 }
 
@@ -94,7 +93,7 @@ fun StyleInterface.addLayerAt(layer: StyleContract.StyleLayerExtension, index: I
  *
  * @param layer The layer to be added
  */
-fun StyleInterface.addLayer(layer: StyleContract.StyleLayerExtension) {
+fun Style.addLayer(layer: StyleContract.StyleLayerExtension) {
   layer.bindTo(this)
 }
 
@@ -113,7 +112,7 @@ fun StyleInterface.addLayer(layer: StyleContract.StyleLayerExtension) {
  * @param style The style
  * @param position the position that the current layer is added to
  */
-internal fun Layer.bindPersistentlyTo(style: StyleInterface, position: LayerPosition? = null) {
+internal fun Layer.bindPersistentlyTo(style: Style, position: LayerPosition? = null) {
   this.delegate = style
   val expected = style.addPersistentStyleLayer(getCachedLayerProperties(), position)
   expected.error?.let {
@@ -137,7 +136,7 @@ internal fun Layer.bindPersistentlyTo(style: StyleInterface, position: LayerPosi
  * @param position the position that the current layer is added to
  */
 @JvmOverloads
-fun StyleInterface.addPersistentLayer(layer: Layer, position: LayerPosition? = null) {
+fun Style.addPersistentLayer(layer: Layer, position: LayerPosition? = null) {
   layer.bindPersistentlyTo(this, position)
 }
 

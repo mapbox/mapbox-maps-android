@@ -2,8 +2,8 @@
 package com.mapbox.maps.extension.style.model
 
 import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.StyleContract
-import com.mapbox.maps.extension.style.StyleInterface
 
 /**
  * DSL function for [ModelExtensionImpl].
@@ -18,6 +18,6 @@ fun model(modelId: String, block: ModelExtensionImpl.Builder.() -> Unit): ModelE
  * @param model The model to be added
  */
 @MapboxExperimental
-fun StyleInterface.addModel(model: StyleContract.StyleModelExtension) {
+fun Style.addModel(model: StyleContract.StyleModelExtension) {
   model.bindTo(this)
 }

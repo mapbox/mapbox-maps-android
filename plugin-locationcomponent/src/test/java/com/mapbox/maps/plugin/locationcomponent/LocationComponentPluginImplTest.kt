@@ -11,7 +11,7 @@ import android.view.WindowManager
 import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.common.location.LiveTrackingClient
 import com.mapbox.geojson.Point
-import com.mapbox.maps.extension.style.StyleInterface
+import com.mapbox.maps.Style
 import com.mapbox.maps.logE
 import com.mapbox.maps.logW
 import com.mapbox.maps.plugin.LocationPuck2D
@@ -41,7 +41,7 @@ class LocationComponentPluginImplTest {
   private val locationPuckManager = mockk<LocationPuckManager>(relaxed = true)
   private val locationProvider = mockk<LocationProvider>(relaxed = true)
 
-  private val style = mockk<StyleInterface>(relaxed = true)
+  private val style = mockk<Style>(relaxed = true)
 
   private val context = mockk<Context>(relaxed = true)
   private val attrs = mockk<AttributeSet>(relaxUnitFun = true)
@@ -52,7 +52,7 @@ class LocationComponentPluginImplTest {
   private val sensorManager = mockk<SensorManager>(relaxed = true)
   private val liveTrackingClient = mockk<LiveTrackingClient>(relaxed = true)
 
-  private val styleCallbackSlot = slot<(StyleInterface) -> Unit>()
+  private val styleCallbackSlot = slot<(Style) -> Unit>()
 
   private lateinit var locationComponentPlugin: LocationComponentPluginImpl
 
@@ -394,7 +394,7 @@ class LocationComponentPluginImplTest {
 
   @Test
   fun testOnStyleChanged() {
-    val style = mockk<StyleInterface>()
+    val style = mockk<Style>()
     preparePluginInitialisationWithEnabled()
     locationComponentPlugin.onStyleChanged(style)
     verify { locationPuckManager.updateStyle(style) }

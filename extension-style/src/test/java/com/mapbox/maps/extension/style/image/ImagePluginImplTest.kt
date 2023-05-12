@@ -7,7 +7,7 @@ import com.mapbox.bindgen.None
 import com.mapbox.maps.Image
 import com.mapbox.maps.ImageContent
 import com.mapbox.maps.ImageStretches
-import com.mapbox.maps.extension.style.StyleInterface
+import com.mapbox.maps.Style
 import io.mockk.*
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -18,7 +18,7 @@ import org.robolectric.RobolectricTestRunner
 
 @RunWith(RobolectricTestRunner::class)
 class ImagePluginImplTest {
-  private val style = mockk<StyleInterface>(relaxUnitFun = true, relaxed = true)
+  private val style = mockk<Style>(relaxUnitFun = true, relaxed = true)
   private val pixelRatio = mockk<Float>(relaxUnitFun = true, relaxed = true)
   private val expected = mockk<Expected<String, None>>(relaxUnitFun = true, relaxed = true)
 

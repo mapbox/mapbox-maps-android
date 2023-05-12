@@ -6,8 +6,8 @@ import android.opengl.GLES20
 import androidx.annotation.UiThread
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxStyleException
+import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.StyleContract
-import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
 import com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName
 
@@ -33,7 +33,7 @@ import com.mapbox.maps.extension.style.layers.properties.generated.ProjectionNam
  */
 @UiThread
 class Projection(val name: ProjectionName) : StyleContract.StyleProjectionExtension {
-  internal var delegate: StyleInterface? = null
+  internal var delegate: Style? = null
   private val properties = HashMap<String, PropertyValue<*>>()
 
   init {
@@ -45,7 +45,7 @@ class Projection(val name: ProjectionName) : StyleContract.StyleProjectionExtens
    *
    * @param delegate The map controller
    */
-  override fun bindTo(delegate: StyleInterface) {
+  override fun bindTo(delegate: Style) {
     this.delegate = delegate
     val projectionParams = HashMap<String, Value>()
     properties.forEach {

@@ -3,7 +3,7 @@ package com.mapbox.maps.plugin.locationcomponent
 import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.LayerPosition
-import com.mapbox.maps.extension.style.StyleInterface
+import com.mapbox.maps.Style
 import com.mapbox.maps.logW
 import io.mockk.*
 import org.junit.After
@@ -17,7 +17,7 @@ import java.lang.RuntimeException
 class LocationLayerWrapperTest {
   private lateinit var locationLayerWrapper: LocationLayerWrapper
   private val layerId = "testLayerId"
-  private val mapStyleDelegate = mockk<StyleInterface>(relaxed = true)
+  private val mapStyleDelegate = mockk<Style>(relaxed = true)
 
   @Before
   fun setup() {
@@ -87,7 +87,7 @@ class LocationLayerWrapperTest {
     every { mapStyleDelegate.styleLayerExists(any()) } returns true
     val position = LayerPosition("above", "below", 0)
     locationLayerWrapper.bindTo(mapStyleDelegate, position)
-    val newStyle = mockk<StyleInterface>()
+    val newStyle = mockk<Style>()
     every { newStyle.setStyleLayerProperty(layerId, any(), any()) } returns ExpectedFactory.createNone()
     every { newStyle.styleLayerExists(any()) } returns true
     locationLayerWrapper.updateStyle(newStyle)

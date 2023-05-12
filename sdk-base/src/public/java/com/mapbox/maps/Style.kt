@@ -1,13 +1,14 @@
 package com.mapbox.maps
 
 import android.graphics.Bitmap
+import androidx.annotation.RestrictTo
+import androidx.annotation.RestrictTo.Scope
 import androidx.annotation.WorkerThread
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
-import com.mapbox.maps.extension.style.StyleInterface
 
 /**
  * The general class to interact with Styles in the Modular Mapbox Maps SDK for Android.
@@ -17,18 +18,39 @@ import com.mapbox.maps.extension.style.StyleInterface
  *
  * Note: Similar to a View object, a [Style] should only be read and modified
  * from the main thread.
- *
- * @property pixelRatio the scale ratio of the style, default the device pixel ratio
  */
-class Style internal constructor(
-  private var styleManager: StyleManagerInterface,
-  override val pixelRatio: Float
-) : StyleInterface {
+class Style {
+  private var styleManager: StyleManager
+  /**
+   * the pixel ratio of the device
+   */
+  val pixelRatio: Float
+
+  /**
+   * Creates a Style object.
+   *
+   * @param styleManager StyleManager.
+   * @param pixelRatio pixelRatio.
+   * @suppress
+   */
+  @RestrictTo(Scope.LIBRARY_GROUP_PREFIX)
+  constructor(
+    styleManager: StyleManager,
+    pixelRatio: Float
+  ) {
+    this.styleManager = styleManager
+    this.pixelRatio = pixelRatio
+  }
 
   @Volatile
   private var isStyleValid = true
 
-  internal fun markInvalid() {
+  /**
+   * Mark style invalid.
+   * @suppress
+   */
+  @RestrictTo(Scope.LIBRARY_GROUP_PREFIX)
+  fun markInvalid() {
     isStyleValid = false
   }
 
@@ -42,7 +64,7 @@ class Style internal constructor(
    *
    * @return True if Style is valid and false otherwise.
    */
-  override fun isValid(): Boolean {
+  fun isValid(): Boolean {
     return isStyleValid
   }
 
@@ -55,7 +77,7 @@ class Style internal constructor(
    * @param observer an Observer
    * @param events an array of event types to be subscribed to.
    */
-  override fun subscribe(observer: Observer, events: MutableList<String>) {
+  fun subscribe(observer: Observer, events: MutableList<String>) {
     checkNativeStyle("subscribe")
     styleManager.subscribe(observer, events)
   }
@@ -66,7 +88,7 @@ class Style internal constructor(
    * @param observer an Observer
    * @param events an array of event types to be unsubscribed from.
    */
-  override fun unsubscribe(observer: Observer, events: MutableList<String>) {
+  fun unsubscribe(observer: Observer, events: MutableList<String>) {
     checkNativeStyle("unsubscribe")
     styleManager.unsubscribe(observer, events)
   }
@@ -76,7 +98,7 @@ class Style internal constructor(
    *
    * @param observer an Observer
    */
-  override fun unsubscribe(observer: Observer) {
+  fun unsubscribe(observer: Observer) {
     checkNativeStyle("unsubscribe")
     styleManager.unsubscribe(observer)
   }
@@ -93,7 +115,8 @@ class Style internal constructor(
    *
    * @return Returns the map style default [camera][CameraOptions].
    */
-  override fun getStyleDefaultCamera(): CameraOptions {
+  val styleDefaultCamera: CameraOptions
+  get() {
     checkNativeStyle("getStyleDefaultCamera")
     return styleManager.styleDefaultCamera
   }
@@ -108,7 +131,7 @@ class Style internal constructor(
    *
    * @return Returns the map style [transition options][TransitionOptions].
    */
-  override fun getStyleTransition(): TransitionOptions {
+  fun getStyleTransition(): TransitionOptions {
     checkNativeStyle("getStyleTransition")
     return styleManager.styleTransition
   }
@@ -120,7 +143,7 @@ class Style internal constructor(
    *
    * @param transitionOptions Map style [transition options][TransitionOptions].
    */
-  override fun setStyleTransition(transitionOptions: TransitionOptions) {
+  fun setStyleTransition(transitionOptions: TransitionOptions) {
     checkNativeStyle("setStyleTransition")
     styleManager.styleTransition = transitionOptions
   }
@@ -128,22 +151,41 @@ class Style internal constructor(
   /**
    * Get the URI of the current Mapbox Style in use.
    *
-   * @return A string containing a Mapbox style URI.
+   * SetURI is an asynchronous call. In order to get result of this operation please use
+   * [MapboxMap.addOnStyleLoadedListener], [MapboxMap.addOnStyleDataLoadedListener] or
+   * [MapboxMap.addOnMapLoadErrorListener]. In case of successful style load you should get notified
+   * by [MapboxMap.addOnStyleLoadedListener].
+   *
+   * And in case of error @see MapLoadError#StyleLoadError will be generated.
+   *
+   * \attention This method should be called on the same thread where @see Map object is initialized.
+   *
+   * @param uri URI where the style should be loaded from.
    */
-  override fun getStyleURI(): String {
-    checkNativeStyle("getStyleURI")
-    return styleManager.styleURI
-  }
+  var styleURI: String
+    get() {
+      checkNativeStyle("getStyleURI")
+      return styleManager.styleURI
+    }
+    set(value) {
+      checkNativeStyle("setStyleURI")
+      styleManager.styleURI = value
+    }
 
   /**
    * Get the JSON serialization string of the current Mapbox Style in use.
    *
    * @return A JSON string containing a serialized Mapbox Style.
    */
-  override fun getStyleJSON(): String {
-    checkNativeStyle("getStyleJSON")
-    return styleManager.styleJSON
-  }
+  var styleJSON: String
+    get() {
+      checkNativeStyle("getStyleJSON")
+      return styleManager.styleJSON
+    }
+    set(value) {
+      checkNativeStyle("setStyleJSON")
+      styleManager.styleJSON = value
+    }
 
   /**
    * Adds a new style layer.
@@ -157,7 +199,7 @@ class Style internal constructor(
    *
    * @return A string describing an error if the operation was not successful, or empty otherwise.
    */
-  override fun addStyleLayer(parameters: Value, position: LayerPosition?): Expected<String, None> {
+  fun addStyleLayer(parameters: Value, position: LayerPosition?): Expected<String, None> {
     checkNativeStyle("addStyleLayer")
     return styleManager.addStyleLayer(parameters, position)
   }
@@ -171,7 +213,7 @@ class Style internal constructor(
    *
    * @return A string describing an error if the operation was not successful, or empty otherwise.
    */
-  override fun removeStyleLayer(layerId: String): Expected<String, None> {
+  fun removeStyleLayer(layerId: String): Expected<String, None> {
     checkNativeStyle("removeStyleLayer")
     return styleManager.removeStyleLayer(layerId)
   }
@@ -184,7 +226,7 @@ class Style internal constructor(
    *
    * @return A string describing an error if the operation was not successful, or empty otherwise.
    */
-  override fun moveStyleLayer(layerId: String, layerPosition: LayerPosition?): Expected<String, None> {
+  fun moveStyleLayer(layerId: String, layerPosition: LayerPosition?): Expected<String, None> {
     checkNativeStyle("moveStyleLayer")
     return styleManager.moveStyleLayer(layerId, layerPosition)
   }
@@ -198,28 +240,9 @@ class Style internal constructor(
    *
    * @return True if the given style layer exists, false otherwise.
    */
-  override fun styleLayerExists(layerId: String): Boolean {
+  fun styleLayerExists(layerId: String): Boolean {
     checkNativeStyle("styleLayerExists")
     return styleManager.styleLayerExists(layerId)
-  }
-
-  /**
-   * Load style from provided URI.
-   *
-   * This is an asynchronous call. In order to get result of this operation please use
-   * [MapboxMap.addOnStyleLoadedListener], [MapboxMap.addOnStyleDataLoadedListener] or
-   * [MapboxMap.addOnMapLoadErrorListener]. In case of successful style load you should get notified
-   * by [MapboxMap.addOnStyleLoadedListener].
-   *
-   * And in case of error @see MapLoadError#StyleLoadError will be generated.
-   *
-   * \attention This method should be called on the same thread where @see Map object is initialized.
-   *
-   * @param uri URI where the style should be loaded from.
-   */
-  override fun setStyleURI(uri: String) {
-    checkNativeStyle("setStyleURI")
-    styleManager.styleURI = uri
   }
 
   /**
@@ -229,7 +252,7 @@ class Style internal constructor(
    * @param property Style layer property name.
    * @return The property value in the layer with layerId.
    */
-  override fun getStyleLayerProperty(layerId: String, property: String): StylePropertyValue {
+  fun getStyleLayerProperty(layerId: String, property: String): StylePropertyValue {
     checkNativeStyle("getStyleLayerProperty")
     return styleManager.getStyleLayerProperty(layerId, property)
   }
@@ -243,7 +266,7 @@ class Style internal constructor(
    *
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
-  override fun setStyleLayerProperty(
+  fun setStyleLayerProperty(
     layerId: String,
     property: String,
     value: Value
@@ -262,7 +285,7 @@ class Style internal constructor(
    *
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
-  override fun addStyleSource(sourceId: String, properties: Value): Expected<String, None> {
+  fun addStyleSource(sourceId: String, properties: Value): Expected<String, None> {
     checkNativeStyle("addStyleSource")
     return styleManager.addStyleSource(sourceId, properties)
   }
@@ -275,7 +298,7 @@ class Style internal constructor(
    *
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
-  override fun invalidateStyleCustomGeometrySourceRegion(
+  fun invalidateStyleCustomGeometrySourceRegion(
     sourceId: String,
     coordinateBounds: CoordinateBounds
   ): Expected<String, None> {
@@ -291,7 +314,7 @@ class Style internal constructor(
    *
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
-  override fun invalidateStyleCustomGeometrySourceTile(
+  fun invalidateStyleCustomGeometrySourceTile(
     sourceId: String,
     tileId: CanonicalTileID
   ): Expected<String, None> {
@@ -309,7 +332,7 @@ class Style internal constructor(
    *
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
-  override fun updateStyleImageSourceImage(sourceId: String, image: Image): Expected<String, None> {
+  fun updateStyleImageSourceImage(sourceId: String, image: Image): Expected<String, None> {
     checkNativeStyle("updateStyleImageSourceImage")
     return styleManager.updateStyleImageSourceImage(sourceId, image)
   }
@@ -321,7 +344,7 @@ class Style internal constructor(
    *
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
-  override fun removeStyleSource(sourceId: String): Expected<String, None> {
+  fun removeStyleSource(sourceId: String): Expected<String, None> {
     checkNativeStyle("removeStyleSource")
     return styleManager.removeStyleSource(sourceId)
   }
@@ -333,7 +356,7 @@ class Style internal constructor(
    * @param tileId Identifier of the tile
    * @param featureCollection An array with the features to add
    */
-  override fun setStyleCustomGeometrySourceTileData(
+  fun setStyleCustomGeometrySourceTileData(
     sourceId: String,
     tileId: CanonicalTileID,
     featureCollection: MutableList<Feature>
@@ -349,7 +372,7 @@ class Style internal constructor(
    *
    * @return True if the given source exists, false otherwise.
    */
-  override fun styleSourceExists(sourceId: String): Boolean {
+  fun styleSourceExists(sourceId: String): Boolean {
     checkNativeStyle("styleSourceExists")
     return styleManager.styleSourceExists(sourceId)
   }
@@ -363,7 +386,7 @@ class Style internal constructor(
    *
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
-  override fun setStyleLight(parameters: Value): Expected<String, None> {
+  fun setStyleLight(parameters: Value): Expected<String, None> {
     checkNativeStyle("setStyleLight")
     return styleManager.setStyleLight(parameters)
   }
@@ -376,7 +399,7 @@ class Style internal constructor(
    *
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
-  override fun setStyleLightProperty(id: String, light: Value): Expected<String, None> {
+  fun setStyleLightProperty(id: String, light: Value): Expected<String, None> {
     checkNativeStyle("setStyleLightProperty")
     return styleManager.setStyleLightProperty(id, light)
   }
@@ -385,7 +408,7 @@ class Style internal constructor(
    * This API is for internal use only and will return a no-op result.
    */
   @MapboxExperimental
-  override fun setStyleLightProperty(
+  fun setStyleLightProperty(
     id: String,
     property: String,
     value: Value
@@ -397,7 +420,7 @@ class Style internal constructor(
    * This API is for internal use only and will return a no-op result.
    */
   @MapboxExperimental
-  override fun getStyleLights(): MutableList<StyleObjectInfo> {
+  fun getStyleLights(): MutableList<StyleObjectInfo> {
     return ArrayList(0)
   }
 
@@ -405,7 +428,7 @@ class Style internal constructor(
    * This API is for internal use only and will return a no-op result.
    */
   @MapboxExperimental
-  override fun setStyleLights(lights: Value): Expected<String, None> {
+  fun setStyleLights(lights: Value): Expected<String, None> {
     return ExpectedFactory.createNone()
   }
 
@@ -416,7 +439,7 @@ class Style internal constructor(
    *
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
-  override fun setStyleAtmosphere(properties: Value): Expected<String, None> {
+  fun setStyleAtmosphere(properties: Value): Expected<String, None> {
     checkNativeStyle("setStyleAtmosphere")
     return styleManager.setStyleAtmosphere(properties)
   }
@@ -427,7 +450,7 @@ class Style internal constructor(
    * @param property The style atmosphere property name.
    * @return The style atmosphere property value.
    */
-  override fun getStyleAtmosphereProperty(property: String): StylePropertyValue {
+  fun getStyleAtmosphereProperty(property: String): StylePropertyValue {
     checkNativeStyle("getStyleAtmosphereProperty")
     return styleManager.getStyleAtmosphereProperty(property)
   }
@@ -440,7 +463,7 @@ class Style internal constructor(
    *
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
-  override fun setStyleAtmosphereProperty(property: String, value: Value): Expected<String, None> {
+  fun setStyleAtmosphereProperty(property: String, value: Value): Expected<String, None> {
     checkNativeStyle("setStyleAtmosphereProperty")
     return styleManager.setStyleAtmosphereProperty(property, value)
   }
@@ -454,7 +477,7 @@ class Style internal constructor(
    *
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
-  override fun setStyleTerrain(properties: Value): Expected<String, None> {
+  fun setStyleTerrain(properties: Value): Expected<String, None> {
     checkNativeStyle("setStyleTerrain")
     return styleManager.setStyleTerrain(properties)
   }
@@ -465,7 +488,7 @@ class Style internal constructor(
    * @param property Style terrain property name.
    * @return Style terrain property value.
    */
-  override fun getStyleTerrainProperty(property: String): StylePropertyValue {
+  fun getStyleTerrainProperty(property: String): StylePropertyValue {
     checkNativeStyle("getStyleTerrainProperty")
     return styleManager.getStyleTerrainProperty(property)
   }
@@ -478,7 +501,7 @@ class Style internal constructor(
    *
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
-  override fun setStyleTerrainProperty(property: String, value: Value): Expected<String, None> {
+  fun setStyleTerrainProperty(property: String, value: Value): Expected<String, None> {
     checkNativeStyle("setStyleTerrainProperty")
     return styleManager.setStyleTerrainProperty(property, value)
   }
@@ -494,7 +517,7 @@ class Style internal constructor(
    *
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
-  override fun setStyleProjection(properties: Value): Expected<String, None> {
+  fun setStyleProjection(properties: Value): Expected<String, None> {
     checkNativeStyle("setStyleProjection")
     return styleManager.setStyleProjection(properties)
   }
@@ -505,7 +528,7 @@ class Style internal constructor(
    * @param property The style projection property name.
    * @return The style projection property value.
    */
-  override fun getStyleProjectionProperty(property: String): StylePropertyValue {
+  fun getStyleProjectionProperty(property: String): StylePropertyValue {
     checkNativeStyle("getStyleProjectionProperty")
     return styleManager.getStyleProjectionProperty(property)
   }
@@ -518,7 +541,7 @@ class Style internal constructor(
    *
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
-  override fun setStyleProjectionProperty(property: String, value: Value): Expected<String, None> {
+  fun setStyleProjectionProperty(property: String, value: Value): Expected<String, None> {
     checkNativeStyle("setStyleProjectionProperty")
     return styleManager.setStyleProjectionProperty(property, value)
   }
@@ -529,7 +552,7 @@ class Style internal constructor(
    * @param property Style light property name.
    * @return Style light property value.
    */
-  override fun getStyleLightProperty(property: String): StylePropertyValue {
+  fun getStyleLightProperty(property: String): StylePropertyValue {
     checkNativeStyle("getStyleLightProperty")
     return styleManager.getStyleLightProperty(property)
   }
@@ -538,7 +561,7 @@ class Style internal constructor(
    * This API is for internal use only and will return a no-op result.
    */
   @MapboxExperimental
-  override fun getStyleLightProperty(id: String, property: String): StylePropertyValue {
+  fun getStyleLightProperty(id: String, property: String): StylePropertyValue {
     return StylePropertyValue(Value.nullValue(), StylePropertyValueKind.UNDEFINED)
   }
 
@@ -566,7 +589,7 @@ class Style internal constructor(
    *
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
-  override fun addStyleImage(
+  fun addStyleImage(
     imageId: String,
     scale: Float,
     image: Image,
@@ -672,7 +695,7 @@ class Style internal constructor(
    *
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
-  override fun addImage(
+  fun addImage(
     imageId: String,
     bitmap: Bitmap
   ): Expected<String, None> = addImage(imageId, bitmap, false)
@@ -685,7 +708,7 @@ class Style internal constructor(
    * @return Image data associated with the given ID, or empty if no image is
    * associated with that ID.
    */
-  override fun getStyleImage(imageId: String): Image? {
+  fun getStyleImage(imageId: String): Image? {
     checkNativeStyle("getStyleImage")
     return styleManager.getStyleImage(imageId)
   }
@@ -697,7 +720,7 @@ class Style internal constructor(
    *
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
-  override fun removeStyleImage(imageId: String): Expected<String, None> {
+  fun removeStyleImage(imageId: String): Expected<String, None> {
     checkNativeStyle("removeStyleImage")
     return styleManager.removeStyleImage(imageId)
   }
@@ -709,7 +732,7 @@ class Style internal constructor(
    *
    * @return True if image exists, false otherwise.
    */
-  override fun hasStyleImage(imageId: String): Boolean {
+  fun hasStyleImage(imageId: String): Boolean {
     checkNativeStyle("hasStyleImage")
     return styleManager.hasStyleImage(imageId)
   }
@@ -726,7 +749,7 @@ class Style internal constructor(
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
   @MapboxExperimental
-  override fun addStyleModel(modelId: String, modelUri: String): Expected<String, None> {
+  fun addStyleModel(modelId: String, modelUri: String): Expected<String, None> {
     checkNativeStyle("addStyleModel")
     return styleManager.addStyleModel(modelId, modelUri)
   }
@@ -739,7 +762,7 @@ class Style internal constructor(
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
   @MapboxExperimental
-  override fun removeStyleModel(modelId: String): Expected<String, None> {
+  fun removeStyleModel(modelId: String): Expected<String, None> {
     checkNativeStyle("removeStyleModel")
     return styleManager.removeStyleModel(modelId)
   }
@@ -752,7 +775,7 @@ class Style internal constructor(
    * @return True if model exists, false otherwise.
    */
   @MapboxExperimental
-  override fun hasStyleModel(modelId: String): Boolean {
+  fun hasStyleModel(modelId: String): Boolean {
     checkNativeStyle("hasStyleModel")
     return styleManager.hasStyleModel(modelId)
   }
@@ -763,21 +786,9 @@ class Style internal constructor(
    * @param layerId A style layer identifier.
    * @return Style layer metadata or a string describing an error if the operation was not successful.
    */
-  override fun getStyleLayerProperties(layerId: String): Expected<String, Value> {
+  fun getStyleLayerProperties(layerId: String): Expected<String, Value> {
     checkNativeStyle("getStyleLayerProperties")
     return styleManager.getStyleLayerProperties(layerId)
-  }
-
-  /**
-   * Load the style from a provided JSON string.
-   *
-   * attention This method should be called on the same thread where Map object is initialized.
-   *
-   * @param json A JSON string containing a serialized Mapbox Style.
-   */
-  override fun setStyleJSON(json: String) {
-    checkNativeStyle("setStyleJSON")
-    styleManager.styleJSON = json
   }
 
   /**
@@ -787,7 +798,7 @@ class Style internal constructor(
    * @param properties the value wrapper around layer metadata
    * @return a string describing an error if the operation was not successful.
    */
-  override fun setStyleLayerProperties(layerId: String, properties: Value): Expected<String, None> {
+  fun setStyleLayerProperties(layerId: String, properties: Value): Expected<String, None> {
     checkNativeStyle("setStyleLayerProperties")
     return styleManager.setStyleLayerProperties(layerId, properties)
   }
@@ -799,7 +810,7 @@ class Style internal constructor(
    * @param property Style source property name.
    * @return The value of property in the source with sourceId.
    */
-  override fun getStyleSourceProperty(sourceId: String, property: String): StylePropertyValue {
+  fun getStyleSourceProperty(sourceId: String, property: String): StylePropertyValue {
     // TODO see #1105 issue in internal repo
 //    checkNativeStyle("getStyleSourceProperty")
     return styleManager.getStyleSourceProperty(sourceId, property)
@@ -814,7 +825,7 @@ class Style internal constructor(
    *
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
-  override fun setStyleSourceProperty(
+  fun setStyleSourceProperty(
     sourceId: String,
     property: String,
     value: Value
@@ -840,7 +851,7 @@ class Style internal constructor(
    *
    * @return A string describing an error if the operation was not successful, or empty otherwise.
    */
-  override fun addStyleCustomLayer(
+  fun addStyleCustomLayer(
     layerId: String,
     layerHost: CustomLayerHost,
     layerPosition: LayerPosition?
@@ -866,7 +877,7 @@ class Style internal constructor(
    *
    * @return A string describing an error if the operation was not successful, or empty otherwise.
    */
-  override fun addPersistentStyleLayer(
+  fun addPersistentStyleLayer(
     properties: Value,
     layerPosition: LayerPosition?
   ): Expected<String, None> {
@@ -892,7 +903,7 @@ class Style internal constructor(
    *
    * @return A string describing an error if the operation was not successful, or empty otherwise.
    */
-  override fun addPersistentStyleCustomLayer(
+  fun addPersistentStyleCustomLayer(
     layerId: String,
     layerHost: CustomLayerHost,
     layerPosition: LayerPosition?
@@ -907,7 +918,7 @@ class Style internal constructor(
    * @param layerId A style layer identifier.
    * @return A string describing an error if the operation was not successful, boolean representing state otherwise.
    */
-  override fun isStyleLayerPersistent(layerId: String): Expected<String, Boolean> {
+  fun isStyleLayerPersistent(layerId: String): Expected<String, Boolean> {
     checkNativeStyle("isStyleLayerPersistent")
     return styleManager.isStyleLayerPersistent(layerId)
   }
@@ -919,7 +930,7 @@ class Style internal constructor(
    * @param sourceId Style source identifier
    * @param options Settings for the custom geometry
    */
-  override fun addStyleCustomGeometrySource(
+  fun addStyleCustomGeometrySource(
     sourceId: String,
     options: CustomGeometrySourceOptions
   ): Expected<String, None> {
@@ -932,7 +943,8 @@ class Style internal constructor(
    *
    * @return The list containing the ids of the existing style sources.
    */
-  override fun getStyleSources(): List<StyleObjectInfo> {
+  val styleSources: List<StyleObjectInfo>
+  get() {
     checkNativeStyle("getStyleSources")
     return styleManager.styleSources
   }
@@ -961,10 +973,11 @@ class Style internal constructor(
    *
    * @return The list containing the ids of the existing style layers.
    */
-  override fun getStyleLayers(): List<StyleObjectInfo> {
-    checkNativeStyle("getStyleLayers")
-    return styleManager.styleLayers
-  }
+  val styleLayers: List<StyleObjectInfo>
+    get() {
+      checkNativeStyle("getStyleLayers")
+      return styleManager.styleLayers
+    }
 
   /**
    * Gets style source parameters.
@@ -974,7 +987,7 @@ class Style internal constructor(
    *
    * @return Style source parameters or a string describing an error if the operation was not successful.
    */
-  override fun getStyleSourceProperties(sourceId: String): Expected<String, Value> {
+  fun getStyleSourceProperties(sourceId: String): Expected<String, Value> {
     checkNativeStyle("getStyleSourceProperties")
     return styleManager.getStyleSourceProperties(sourceId)
   }
@@ -991,7 +1004,7 @@ class Style internal constructor(
    *
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
-  override fun setStyleSourceProperties(
+  fun setStyleSourceProperties(
     sourceId: String,
     properties: Value
   ): Expected<String, None> {
@@ -1003,7 +1016,7 @@ class Style internal constructor(
    * This method is for internal use.
    */
   @WorkerThread
-  override fun setStyleGeoJSONSourceData(
+  fun setStyleGeoJSONSourceData(
     sourceId: String,
     data: GeoJSONSourceData
   ): Expected<String, None> {
@@ -1017,7 +1030,7 @@ class Style internal constructor(
    * This method is for internal use.
    */
   @WorkerThread
-  override fun setStyleGeoJSONSourceData(
+  fun setStyleGeoJSONSourceData(
     sourceId: String,
     dataId: String,
     data: GeoJSONSourceData
@@ -1033,7 +1046,7 @@ class Style internal constructor(
    *
    * @return TRUE if and only if the style JSON contents, the style specified sprite and sources are all loaded, otherwise returns FALSE.
    */
-  override fun isStyleLoaded(): Boolean {
+  fun isStyleLoaded(): Boolean {
     checkNativeStyle("isStyleLoaded")
     return styleManager.isStyleLoaded
   }

@@ -14,7 +14,6 @@ import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
 import com.mapbox.geojson.Polygon
 import com.mapbox.maps.*
-import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.addPersistentLayer
 import com.mapbox.maps.extension.style.layers.generated.FillLayer
@@ -41,7 +40,7 @@ import org.robolectric.annotation.Config
 @Config(shadows = [ShadowProjection::class])
 class PolygonAnnotationManagerTest {
   private val delegateProvider: MapDelegateProvider = mockk()
-  private val style: StyleInterface = mockk()
+  private val style: Style = mockk()
   private val mapCameraManagerDelegate: MapCameraManagerDelegate = mockk()
   private val mapFeatureQueryDelegate: MapFeatureQueryDelegate = mockk()
   private val mapListenerDelegate: MapListenerDelegate = mockk()
@@ -66,7 +65,7 @@ class PolygonAnnotationManagerTest {
     mockkStatic(Projection::class)
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logE(any(), any()) } just Runs
-    val captureCallback = slot<(StyleInterface) -> Unit>()
+    val captureCallback = slot<(Style) -> Unit>()
     every { delegateProvider.getStyle(capture(captureCallback)) } answers {
       captureCallback.captured.invoke(style)
     }
@@ -169,7 +168,7 @@ class PolygonAnnotationManagerTest {
   @Test
   fun initializeBeforeStyleLoad() {
     every { style.styleLayerExists("test_layer") } returns true
-    val captureCallback = slot<(StyleInterface) -> Unit>()
+    val captureCallback = slot<(Style) -> Unit>()
     every { delegateProvider.getStyle(capture(captureCallback)) } just Runs
     manager = PolygonAnnotationManager(delegateProvider, AnnotationConfig("test_layer"))
     // Style is not loaded, can't create and add layer to style

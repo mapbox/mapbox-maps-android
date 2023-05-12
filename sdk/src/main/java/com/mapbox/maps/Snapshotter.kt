@@ -27,7 +27,6 @@ import kotlin.math.min
 /**
  * [Snapshotter] is high-level component responsible for taking map snapshot with given [MapSnapshotOptions].
  */
-@OptIn(MapboxInternal::class)
 open class Snapshotter {
 
   private val context: WeakReference<Context>
@@ -64,7 +63,7 @@ open class Snapshotter {
           MapEvents.STYLE_DATA_LOADED -> if (event.getStyleDataLoadedEventData().type == StyleDataType.STYLE) {
             snapshotStyleCallback?.onDidFinishLoadingStyle(
               Style(
-                MapSnapshotterWrapper(coreSnapshotter),
+                coreSnapshotter,
                 pixelRatio
               )
             )
@@ -72,7 +71,7 @@ open class Snapshotter {
           MapEvents.STYLE_LOADED -> {
             snapshotStyleCallback?.onDidFullyLoadStyle(
               Style(
-                MapSnapshotterWrapper(coreSnapshotter),
+                coreSnapshotter,
                 pixelRatio
               )
             )

@@ -3,8 +3,7 @@ package com.mapbox.maps.plugin.locationcomponent
 import android.util.Log
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxLocationComponentException
-import com.mapbox.maps.StyleManagerInterface
-import com.mapbox.maps.extension.style.StyleInterface
+import com.mapbox.maps.Style
 import com.mapbox.maps.logW
 
 internal class ModelSourceWrapper(
@@ -14,7 +13,7 @@ internal class ModelSourceWrapper(
 ) {
 
   private var sourceProperties = HashMap<String, Value>()
-  private var style: StyleManagerInterface? = null
+  private var style: Style? = null
 
   init {
     val modelProperties = HashMap<String, Value>()
@@ -29,11 +28,11 @@ internal class ModelSourceWrapper(
     sourceProperties[MODELS] = Value(models)
   }
 
-  fun updateStyle(style: StyleInterface) {
+  fun updateStyle(style: Style) {
     this.style = style
   }
 
-  fun bindTo(style: StyleManagerInterface) {
+  fun bindTo(style: Style) {
     this.style = style
     val expected = style.addStyleSource(sourceId, toValue())
     expected.error?.let {

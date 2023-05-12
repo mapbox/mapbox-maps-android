@@ -6,7 +6,6 @@ import android.view.MotionEvent
 import android.view.View
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
-import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import io.mockk.*
@@ -294,7 +293,7 @@ class MapPluginRegistryTest {
     override fun onDelegateProvider(delegateProvider: MapDelegateProvider) {
     }
 
-    override fun onStyleChanged(styleDelegate: StyleInterface) {
+    override fun onStyleChanged(style: Style) {
     }
   }
 }

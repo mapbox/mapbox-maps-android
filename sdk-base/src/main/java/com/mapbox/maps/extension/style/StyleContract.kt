@@ -2,6 +2,7 @@ package com.mapbox.maps.extension.style
 
 import com.mapbox.maps.LayerPosition
 import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.Style
 
 /**
  * Define the common interfaces for the Style component.
@@ -67,7 +68,7 @@ interface StyleContract {
      * @param delegate The style delegate
      * @param position the layer position
      */
-    fun bindTo(delegate: StyleInterface, position: LayerPosition? = null)
+    fun bindTo(delegate: Style, position: LayerPosition? = null)
   }
 
   /**
@@ -79,7 +80,7 @@ interface StyleContract {
      *
      * @param delegate The style delegate
      */
-    fun bindTo(delegate: StyleInterface)
+    fun bindTo(delegate: Style)
   }
 
   /**
@@ -91,7 +92,7 @@ interface StyleContract {
      *
      * @param delegate The style delegate
      */
-    fun bindTo(delegate: StyleInterface)
+    fun bindTo(delegate: Style)
   }
 
   /**
@@ -103,7 +104,7 @@ interface StyleContract {
      *
      * @param delegate The style delegate
      */
-    fun bindTo(delegate: StyleInterface)
+    fun bindTo(delegate: Style)
   }
 
   /**
@@ -115,7 +116,7 @@ interface StyleContract {
      *
      * @param delegate The style delegate
      */
-    fun bindTo(delegate: StyleInterface)
+    fun bindTo(delegate: Style)
   }
 
   /**
@@ -127,7 +128,7 @@ interface StyleContract {
      *
      * @param delegate The style delegate
      */
-    fun bindTo(delegate: StyleInterface)
+    fun bindTo(delegate: Style)
   }
 
   /**
@@ -139,7 +140,7 @@ interface StyleContract {
      *
      * @param delegate The style delegate
      */
-    fun bindTo(delegate: StyleInterface)
+    fun bindTo(delegate: Style)
   }
 
   /**
@@ -152,6 +153,6 @@ interface StyleContract {
      *
      * @param delegate The style delegate
      */
-    fun bindTo(delegate: StyleInterface)
+    fun bindTo(delegate: Style)
   }
 }

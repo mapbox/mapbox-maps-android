@@ -33,7 +33,7 @@ import org.robolectric.annotation.Config
 class MapControllerTest {
   private val mockRenderer: MapboxRenderer = mockk()
   private val mockNativeObserver: NativeObserver = mockk()
-  private val mockNativeMap: MapInterface = mockk()
+  private val mockNativeMap: NativeMapImpl = mockk()
   private val mockMapboxMap: MapboxMap = mockk()
   private val mockPluginRegistry: MapPluginRegistry = mockk()
   private val mockMapInitOptions: MapInitOptions = mockk()
@@ -248,7 +248,7 @@ class MapControllerTest {
     every { mockRenderer.onStart() } just Runs
     every { mockPluginRegistry.onCameraMove(mockCameraState) } just Runs
     every { mockMapboxMap.loadStyleUri(Style.MAPBOX_STREETS) } just Runs
-    every { mockNativeMap.cameraState } returns mockCameraState
+    every { mockNativeMap.getCameraState() } returns mockCameraState
     every { mockMapboxMap.isStyleLoadInitiated } returns false
     every { mockMapInitOptions.styleUri } answers { Style.MAPBOX_STREETS }
     every { mockMapboxMap.getStyle() } returns null
@@ -262,7 +262,7 @@ class MapControllerTest {
       mockMapboxMap.isStyleLoadInitiated
       mockMapboxMap.loadStyleUri(Style.MAPBOX_STREETS)
       mockPluginRegistry.onStart()
-      mockNativeMap.cameraState
+      mockNativeMap.getCameraState()
       mockPluginRegistry.onCameraMove(mockCameraState)
     }
   }
