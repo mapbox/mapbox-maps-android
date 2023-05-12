@@ -59,7 +59,7 @@ internal class MapAttributionDelegateImpl constructor(
   override fun buildMapBoxFeedbackUrl(context: Context): String {
     val builder = Uri.parse(MAP_FEEDBACK_URL).buildUpon()
     val cameraPosition = mapboxMap.cameraState
-    cameraPosition.center?.let {
+    cameraPosition.center.let {
       builder.encodedFragment(
         "/${it.longitude()}/${it.latitude()}/${cameraPosition.zoom}/${cameraPosition.bearing}/${cameraPosition.pitch}"
       )
@@ -74,8 +74,8 @@ internal class MapAttributionDelegateImpl constructor(
       val pattern: Pattern = Pattern.compile(MAP_FEEDBACK_STYLE_URI_REGEX)
       val matcher: Matcher = pattern.matcher(it.styleURI)
       if (matcher.find()) {
-        val styleOwner: String = matcher.group(2)
-        val styleId: String = matcher.group(3)
+        val styleOwner: String? = matcher.group(2)
+        val styleId: String? = matcher.group(3)
         builder.appendQueryParameter("owner", styleOwner)
           .appendQueryParameter("id", styleId)
       }

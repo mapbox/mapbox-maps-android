@@ -28,7 +28,7 @@ class CustomGeometrySource(
    * Set tile data of a custom geometry.
    *
    * @param tileID Identifier of the tile
-   * @param tileData JSON string representing the data in GeoJSON format. See RFC7946
+   * @param featureCollection An array with the features to add.
    */
   fun setTileData(tileID: CanonicalTileID, featureCollection: MutableList<Feature>) {
     delegate?.setStyleCustomGeometrySourceTileData(id, tileID, featureCollection).check()

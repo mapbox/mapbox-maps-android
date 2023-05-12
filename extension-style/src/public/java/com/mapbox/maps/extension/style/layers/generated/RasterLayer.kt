@@ -65,7 +65,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     get() {
       val property: String? = getPropertyValue("visibility")
       property?.let {
-        return Visibility.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+        return Visibility.valueOf(it.uppercase(Locale.US).replace('-', '_'))
       }
       return null
     }
@@ -110,7 +110,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
    *
    * Use static method [RasterLayer.defaultMinZoom] to get the default property value.
    *
-   * @param value value of minzoom
+   * @param minZoom value of minzoom
    */
   override fun minZoom(minZoom: Double): RasterLayer = apply {
     val param = PropertyValue("minzoom", minZoom)
@@ -145,7 +145,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
    *
    * Use static method [RasterLayer.defaultMaxZoom] to get the default property value.
    *
-   * @param value value of maxzoom
+   * @param maxZoom value of maxzoom
    */
   override fun maxZoom(maxZoom: Double): RasterLayer = apply {
     val param = PropertyValue("maxzoom", maxZoom)
@@ -952,7 +952,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
      */
     get() {
       getPropertyValue<String?>("raster-resampling")?.let {
-        return RasterResampling.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+        return RasterResampling.valueOf(it.uppercase(Locale.US).replace('-', '_'))
       }
       return null
     }
@@ -1130,7 +1130,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
        */
       get() {
         StyleManager.getStyleLayerPropertyDefaultValue("raster", "visibility").silentUnwrap<String>()?.let {
-          return Visibility.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+          return Visibility.valueOf(it.uppercase(Locale.US).replace('-', '_'))
         }
         return null
       }
@@ -1551,7 +1551,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
        */
       get() {
         StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-resampling").silentUnwrap<String>()?.let {
-          return RasterResampling.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+          return RasterResampling.valueOf(it.uppercase(Locale.US).replace('-', '_'))
         }
         return null
       }
@@ -1658,7 +1658,7 @@ interface RasterLayerDsl {
    *       minimum: 0
    *       maximum: 24
    *
-   * @param value value of minzoom
+   * @param minZoom value of minzoom
    */
   fun minZoom(minZoom: Double): RasterLayer
 
@@ -1669,7 +1669,7 @@ interface RasterLayerDsl {
    *       minimum: 0
    *       maximum: 24
    *
-   * @param value value of maxzoom
+   * @param maxZoom value of maxzoom
    */
   fun maxZoom(maxZoom: Double): RasterLayer
 

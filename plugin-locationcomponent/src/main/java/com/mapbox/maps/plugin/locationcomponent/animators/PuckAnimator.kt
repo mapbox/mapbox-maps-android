@@ -8,10 +8,12 @@ import android.annotation.SuppressLint
 import android.view.animation.LinearInterpolator
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants
 import com.mapbox.maps.plugin.locationcomponent.LocationLayerRenderer
 import com.mapbox.maps.threading.AnimationThreadController
 
+@OptIn(MapboxExperimental::class)
 @SuppressLint("Recycle")
 internal abstract class PuckAnimator<T>(
   evaluator: TypeEvaluator<T>

@@ -48,6 +48,7 @@ object ThreadChecker {
     try {
       val context = MapboxSDKCommon.getContext()
       val packageManager: PackageManager = context.packageManager
+      @Suppress("DEPRECATION")
       val appInfo = packageManager.getApplicationInfo(
         context.packageName,
         PackageManager.GET_META_DATA

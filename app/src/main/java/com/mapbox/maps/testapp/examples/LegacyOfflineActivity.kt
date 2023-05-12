@@ -11,6 +11,7 @@ import com.mapbox.maps.testapp.databinding.ActivityLegacyOfflineBinding
  * Example app that downloads an offline region and when succeeded
  * shows a button to load a map at the offline region definition.
  */
+@Suppress("DEPRECATION")
 class LegacyOfflineActivity : AppCompatActivity() {
 
   private lateinit var offlineManager: OfflineRegionManager

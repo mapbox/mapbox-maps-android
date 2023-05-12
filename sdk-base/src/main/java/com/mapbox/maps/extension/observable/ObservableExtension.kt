@@ -543,7 +543,7 @@ internal fun Map<String, Value>.nonNullString(name: String): String {
 }
 
 internal fun Map<String, Value>.validEnumValue(name: String): String {
-  return nonNullString(name).toUpperCase(Locale.US).replace(DASH, UNDERLINE)
+  return nonNullString(name).uppercase(Locale.US).replace(DASH, UNDERLINE)
 }
 
 internal fun Map<String, Value>.nullableString(name: String): String? {

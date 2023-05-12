@@ -10,6 +10,7 @@ val buildFromSource: String by project
 
 android {
   compileSdk = libs.versions.exampleCompileSdkVersion.get().toInt()
+  namespace = "com.mapbox.maps.testapp"
   signingConfigs {
     create("release") {
       storeFile = rootProject.file("$rootDir/testapp-release.keystore")

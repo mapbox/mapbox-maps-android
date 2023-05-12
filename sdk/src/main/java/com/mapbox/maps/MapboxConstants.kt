@@ -5,7 +5,7 @@ package com.mapbox.maps
 import java.util.*
 
 /**
- * Default Locale for data processing (ex: String.toLowerCase(com.mapbox.maps.getMAPBOX_LOCALE, "foo"))
+ * Default Locale for data processing
  */
 val MAPBOX_LOCALE: Locale = Locale.US
 

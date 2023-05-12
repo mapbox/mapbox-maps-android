@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.mapbox.maps.testapp.examples
 
 import android.os.Bundle

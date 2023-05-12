@@ -5,6 +5,7 @@ import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.os.Build
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.logW
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions
 import com.mapbox.maps.plugin.animation.CameraAnimatorType
@@ -14,6 +15,7 @@ import java.util.concurrent.CopyOnWriteArraySet
 /**
  * Base generic class for all camera animators.
  */
+@OptIn(MapboxExperimental::class)
 @SuppressLint("Recycle")
 abstract class CameraAnimator<out T> (
   /**

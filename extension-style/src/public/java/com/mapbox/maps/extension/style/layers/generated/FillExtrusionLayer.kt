@@ -102,7 +102,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     get() {
       val property: String? = getPropertyValue("visibility")
       property?.let {
-        return Visibility.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+        return Visibility.valueOf(it.uppercase(Locale.US).replace('-', '_'))
       }
       return null
     }
@@ -147,7 +147,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
    *
    * Use static method [FillExtrusionLayer.defaultMinZoom] to get the default property value.
    *
-   * @param value value of minzoom
+   * @param minZoom value of minzoom
    */
   override fun minZoom(minZoom: Double): FillExtrusionLayer = apply {
     val param = PropertyValue("minzoom", minZoom)
@@ -182,7 +182,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
    *
    * Use static method [FillExtrusionLayer.defaultMaxZoom] to get the default property value.
    *
-   * @param value value of maxzoom
+   * @param maxZoom value of maxzoom
    */
   override fun maxZoom(maxZoom: Double): FillExtrusionLayer = apply {
     val param = PropertyValue("maxzoom", maxZoom)
@@ -993,7 +993,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
      */
     get() {
       getPropertyValue<String?>("fill-extrusion-translate-anchor")?.let {
-        return FillExtrusionTranslateAnchor.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+        return FillExtrusionTranslateAnchor.valueOf(it.uppercase(Locale.US).replace('-', '_'))
       }
       return null
     }
@@ -1137,7 +1137,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
        */
       get() {
         StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "visibility").silentUnwrap<String>()?.let {
-          return Visibility.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+          return Visibility.valueOf(it.uppercase(Locale.US).replace('-', '_'))
         }
         return null
       }
@@ -1577,7 +1577,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
        */
       get() {
         StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-translate-anchor").silentUnwrap<String>()?.let {
-          return FillExtrusionTranslateAnchor.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+          return FillExtrusionTranslateAnchor.valueOf(it.uppercase(Locale.US).replace('-', '_'))
         }
         return null
       }
@@ -1686,7 +1686,7 @@ interface FillExtrusionLayerDsl {
    *       minimum: 0
    *       maximum: 24
    *
-   * @param value value of minzoom
+   * @param minZoom value of minzoom
    */
   fun minZoom(minZoom: Double): FillExtrusionLayer
 
@@ -1697,7 +1697,7 @@ interface FillExtrusionLayerDsl {
    *       minimum: 0
    *       maximum: 24
    *
-   * @param value value of maxzoom
+   * @param maxZoom value of maxzoom
    */
   fun maxZoom(maxZoom: Double): FillExtrusionLayer
 

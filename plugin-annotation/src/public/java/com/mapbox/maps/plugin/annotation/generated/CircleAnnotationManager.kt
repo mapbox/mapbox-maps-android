@@ -174,8 +174,8 @@ class CircleAnnotationManager(
      * @param value property wrapper value around CirclePitchAlignment
      */
     set(value) {
-      val newValue = value ?: CirclePitchAlignment.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-pitch-alignment").silentUnwrap<String>()!!.toUpperCase(Locale.US).replace('-', '_'))
-      newValue?.let {
+      val newValue = value ?: CirclePitchAlignment.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-pitch-alignment").silentUnwrap<String>()!!.uppercase(Locale.US).replace('-', '_'))
+      newValue.let {
         layer?.circlePitchAlignment(it)
         dragLayer?.circlePitchAlignment(it)
       }
@@ -200,8 +200,8 @@ class CircleAnnotationManager(
      * @param value property wrapper value around CirclePitchScale
      */
     set(value) {
-      val newValue = value ?: CirclePitchScale.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-pitch-scale").silentUnwrap<String>()!!.toUpperCase(Locale.US).replace('-', '_'))
-      newValue?.let {
+      val newValue = value ?: CirclePitchScale.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-pitch-scale").silentUnwrap<String>()!!.uppercase(Locale.US).replace('-', '_'))
+      newValue.let {
         layer?.circlePitchScale(it)
         dragLayer?.circlePitchScale(it)
       }
@@ -252,8 +252,8 @@ class CircleAnnotationManager(
      * @param value property wrapper value around CircleTranslateAnchor
      */
     set(value) {
-      val newValue = value ?: CircleTranslateAnchor.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-translate-anchor").silentUnwrap<String>()!!.toUpperCase(Locale.US).replace('-', '_'))
-      newValue?.let {
+      val newValue = value ?: CircleTranslateAnchor.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-translate-anchor").silentUnwrap<String>()!!.uppercase(Locale.US).replace('-', '_'))
+      newValue.let {
         layer?.circleTranslateAnchor(it)
         dragLayer?.circleTranslateAnchor(it)
       }
@@ -272,8 +272,6 @@ class CircleAnnotationManager(
   }
   /**
    * The filter on the managed circleAnnotations.
-   *
-   * @param expression expression
    */
   override var layerFilter: Expression?
     /**
@@ -285,7 +283,7 @@ class CircleAnnotationManager(
     /**
      * Set filter on the managed circleAnnotations.
      *
-     * @param expression expression
+     * @param value expression
      */
     set(value) {
       value?.let {

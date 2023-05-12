@@ -40,6 +40,7 @@ class LocalizationActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     val binding = ActivityMapLocalizationBinding.inflate(layoutInflater)
     setContentView(binding.root)
+    @Suppress("DEPRECATION")
     locale = resources.configuration.locale
     selectedLocale = locale
     applySelectedLanguage = false

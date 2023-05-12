@@ -1,5 +1,7 @@
 package com.mapbox.maps.renderer.widget
 
+import com.mapbox.maps.MapboxExperimental
+
 internal interface WidgetRenderer {
   val needRender: Boolean
 
@@ -10,6 +12,8 @@ internal interface WidgetRenderer {
 
   fun setRotation(angleDegrees: Float)
   fun getRotation(): Float
+  @MapboxExperimental
   fun setPosition(widgetPosition: WidgetPosition)
+  @MapboxExperimental
   fun getPosition(): WidgetPosition
 }

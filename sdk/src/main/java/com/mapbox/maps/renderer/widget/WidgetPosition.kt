@@ -179,6 +179,7 @@ class WidgetPosition private constructor(
  * @param initializer the initialisation block
  * @return [WidgetPosition]
  */
+@MapboxExperimental
 @JvmSynthetic
 fun WidgetPosition(initializer: WidgetPosition.Builder.() -> Unit): WidgetPosition {
   return WidgetPosition.Builder().apply(initializer).build()

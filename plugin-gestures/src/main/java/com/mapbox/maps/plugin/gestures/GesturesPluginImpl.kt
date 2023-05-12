@@ -144,7 +144,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
   ) {
     this.context = context
     this.pixelRatio = pixelRatio
-    internalSettings = GesturesAttributeParser.parseGesturesSettings(context, null, pixelRatio)
+    internalSettings = GesturesAttributeParser.parseGesturesSettings(context, null)
     mainHandler = Handler(Looper.getMainLooper())
     animationsTimeoutHandler = Handler(Looper.getMainLooper())
   }
@@ -157,7 +157,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
     this.context = context
     this.pixelRatio = pixelRatio
     internalSettings =
-      GesturesAttributeParser.parseGesturesSettings(context, attributeSet, pixelRatio)
+      GesturesAttributeParser.parseGesturesSettings(context, attributeSet)
     mainHandler = Handler(Looper.getMainLooper())
     animationsTimeoutHandler = Handler(Looper.getMainLooper())
   }
@@ -171,7 +171,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
     this.context = context
     this.pixelRatio = 1.0f
     internalSettings =
-      GesturesAttributeParser.parseGesturesSettings(context, attributeSet, pixelRatio)
+      GesturesAttributeParser.parseGesturesSettings(context, attributeSet)
     mainHandler = Handler(Looper.getMainLooper())
     animationsTimeoutHandler = Handler(Looper.getMainLooper())
     this.style = style
@@ -188,7 +188,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
     this.context = context
     this.pixelRatio = pixelRatio
     this.internalSettings =
-      GesturesAttributeParser.parseGesturesSettings(context, attributeSet, pixelRatio)
+      GesturesAttributeParser.parseGesturesSettings(context, attributeSet)
     this.mainHandler = mainHandler
     this.animationsTimeoutHandler = animationsTimeoutHandler
   }
@@ -438,6 +438,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
      * Called when an on single tap up confirmed gesture was detected.
      */
     override fun onSingleTapConfirmed(motionEvent: MotionEvent): Boolean {
+      @Suppress("SENSELESS_COMPARISON")
       if (motionEvent == null) {
         return false
       }
@@ -448,6 +449,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
      * Called when an on double tap gesture was detected.
      */
     override fun onDoubleTapEvent(motionEvent: MotionEvent): Boolean {
+      @Suppress("SENSELESS_COMPARISON")
       if (motionEvent == null) {
         return false
       }
@@ -460,6 +462,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
      * Called when an on long press gesture was detected.
      */
     override fun onLongPress(motionEvent: MotionEvent) {
+      @Suppress("SENSELESS_COMPARISON")
       if (motionEvent == null) {
         return
       }
@@ -476,6 +479,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
       velocityX: Float,
       velocityY: Float
     ): Boolean {
+      @Suppress("SENSELESS_COMPARISON")
       if (e1 == null || e2 == null) {
         return false
       }
@@ -1152,7 +1156,10 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
    * @param runImmediately if true, animation will be started right away, otherwise it will wait until
    * [MotionEvent.ACTION_UP] is registered.
    */
-  private fun animateZoomIn(zoomFocalPoint: ScreenCoordinate, runImmediately: Boolean) {
+  private fun animateZoomIn(
+    zoomFocalPoint: ScreenCoordinate,
+    @Suppress("SameParameterValue") runImmediately: Boolean
+  ) {
     handleZoomAnimation(true, zoomFocalPoint, runImmediately)
   }
 
@@ -1349,6 +1356,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
         interpolator(gesturesInterpolator)
       },
       animatorListener = object : AnimatorListenerAdapter() {
+        @OptIn(MapboxExperimental::class)
         override fun onAnimationEnd(animation: Animator) {
           super.onAnimationEnd(animation)
           postOnMainThread { mapCameraManagerDelegate.dragEnd() }
@@ -1724,6 +1732,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
     return min.coerceAtLeast(max.coerceAtMost(value))
   }
 
+  @Suppress("SameParameterValue")
   private fun clamp(value: Float, min: Float, max: Float): Float {
     return min.coerceAtLeast(max.coerceAtMost(value))
   }
@@ -1770,7 +1779,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
     this.gesturesManager = gesturesManager
     this.gestureState = GestureState(gesturesManager)
     this.pixelRatio = pixelRatio
-    internalSettings = GesturesAttributeParser.parseGesturesSettings(context, attrs, pixelRatio)
+    internalSettings = GesturesAttributeParser.parseGesturesSettings(context, attrs)
   }
 
   /**
@@ -1784,7 +1793,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
     this.mapCameraManagerDelegate = delegateProvider.mapCameraManagerDelegate
     this.mapProjectionDelegate = delegateProvider.mapProjectionDelegate
     this.mapPluginProviderDelegate = delegateProvider.mapPluginProviderDelegate
-    @Suppress("UNCHECKED_CAST")
     this.cameraAnimationsPlugin = delegateProvider.mapPluginProviderDelegate.getPlugin(
       MAPBOX_CAMERA_PLUGIN_ID
     ) ?: throw InvalidPluginConfigurationException(

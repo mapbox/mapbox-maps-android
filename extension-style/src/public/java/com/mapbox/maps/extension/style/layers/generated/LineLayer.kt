@@ -102,7 +102,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     get() {
       val property: String? = getPropertyValue("visibility")
       property?.let {
-        return Visibility.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+        return Visibility.valueOf(it.uppercase(Locale.US).replace('-', '_'))
       }
       return null
     }
@@ -147,7 +147,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * Use static method [LineLayer.defaultMinZoom] to get the default property value.
    *
-   * @param value value of minzoom
+   * @param minZoom value of minzoom
    */
   override fun minZoom(minZoom: Double): LineLayer = apply {
     val param = PropertyValue("minzoom", minZoom)
@@ -182,7 +182,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * Use static method [LineLayer.defaultMaxZoom] to get the default property value.
    *
-   * @param value value of maxzoom
+   * @param maxZoom value of maxzoom
    */
   override fun maxZoom(maxZoom: Double): LineLayer = apply {
     val param = PropertyValue("maxzoom", maxZoom)
@@ -204,7 +204,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      */
     get() {
       getPropertyValue<String?>("line-cap")?.let {
-        return LineCap.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+        return LineCap.valueOf(it.uppercase(Locale.US).replace('-', '_'))
       }
       return null
     }
@@ -272,7 +272,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      */
     get() {
       getPropertyValue<String?>("line-join")?.let {
-        return LineJoin.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+        return LineJoin.valueOf(it.uppercase(Locale.US).replace('-', '_'))
       }
       return null
     }
@@ -1317,7 +1317,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      */
     get() {
       getPropertyValue<String?>("line-translate-anchor")?.let {
-        return LineTranslateAnchor.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+        return LineTranslateAnchor.valueOf(it.uppercase(Locale.US).replace('-', '_'))
       }
       return null
     }
@@ -1560,7 +1560,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
        */
       get() {
         StyleManager.getStyleLayerPropertyDefaultValue("line", "visibility").silentUnwrap<String>()?.let {
-          return Visibility.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+          return Visibility.valueOf(it.uppercase(Locale.US).replace('-', '_'))
         }
         return null
       }
@@ -1608,7 +1608,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
        */
       get() {
         StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cap").silentUnwrap<String>()?.let {
-          return LineCap.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+          return LineCap.valueOf(it.uppercase(Locale.US).replace('-', '_'))
         }
         return null
       }
@@ -1648,7 +1648,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
        */
       get() {
         StyleManager.getStyleLayerPropertyDefaultValue("line", "line-join").silentUnwrap<String>()?.let {
-          return LineJoin.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+          return LineJoin.valueOf(it.uppercase(Locale.US).replace('-', '_'))
         }
         return null
       }
@@ -2180,7 +2180,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
        */
       get() {
         StyleManager.getStyleLayerPropertyDefaultValue("line", "line-translate-anchor").silentUnwrap<String>()?.let {
-          return LineTranslateAnchor.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+          return LineTranslateAnchor.valueOf(it.uppercase(Locale.US).replace('-', '_'))
         }
         return null
       }
@@ -2337,7 +2337,7 @@ interface LineLayerDsl {
    *       minimum: 0
    *       maximum: 24
    *
-   * @param value value of minzoom
+   * @param minZoom value of minzoom
    */
   fun minZoom(minZoom: Double): LineLayer
 
@@ -2348,7 +2348,7 @@ interface LineLayerDsl {
    *       minimum: 0
    *       maximum: 24
    *
-   * @param value value of maxzoom
+   * @param maxZoom value of maxzoom
    */
   fun maxZoom(maxZoom: Double): LineLayer
 

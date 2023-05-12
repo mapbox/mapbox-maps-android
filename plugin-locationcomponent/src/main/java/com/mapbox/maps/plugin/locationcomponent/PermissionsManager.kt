@@ -37,6 +37,7 @@ class PermissionsManager(private val listener: PermissionsListener) {
    */
   fun requestLocationPermissions(activity: Activity) {
     try {
+      @Suppress("DEPRECATION")
       val packageInfo = activity.packageManager.getPackageInfo(
         activity.packageName, PackageManager.GET_PERMISSIONS
       )
@@ -98,6 +99,7 @@ class PermissionsManager(private val listener: PermissionsListener) {
    */
   fun onRequestPermissionsResult(
     requestCode: Int,
+    @Suppress("UNUSED_PARAMETER")
     permissions: Array<String>,
     grantResults: IntArray
   ) {

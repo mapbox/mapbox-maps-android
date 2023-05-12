@@ -91,6 +91,7 @@ class SecondaryDisplayPresentationActivity : AppCompatActivity() {
   private fun updateDisplaysInfo() {
     clearDisplaysInfo()
 
+    @Suppress("DEPRECATION")
     val thisActivityDisplay = windowManager.defaultDisplay
     val displays = displayManager.displays
     val secondaryDisplays = displays.filterNot { it.displayId == thisActivityDisplay.displayId }

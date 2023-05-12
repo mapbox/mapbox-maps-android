@@ -28,7 +28,7 @@ package com.mapbox.maps.extension.style {
     method public operator void addImage9Patch(com.mapbox.maps.extension.style.image.ImageNinePatchExtensionImpl);
     method public operator void addLayer(com.mapbox.maps.extension.style.layers.Layer);
     method public operator void addLayerAtPosition(kotlin.Pair<? extends com.mapbox.maps.extension.style.layers.Layer,com.mapbox.maps.LayerPosition>);
-    method public operator void addModel(com.mapbox.maps.extension.style.model.ModelExtensionImpl);
+    method @com.mapbox.maps.MapboxExperimental public operator void addModel(com.mapbox.maps.extension.style.model.ModelExtensionImpl);
     method public operator void addSource(com.mapbox.maps.extension.style.sources.Source);
     method public com.mapbox.maps.extension.style.StyleContract.StyleExtension build();
     method public String getStyleUri();
@@ -2803,7 +2803,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final com.mapbox.maps.extension.style.layers.properties.generated.Visibility? defaultVisibility;
   }
 
-  @com.mapbox.maps.extension.style.types.LayersDsl public interface ModelLayerDsl {
+  @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.style.types.LayersDsl public interface ModelLayerDsl {
     method public com.mapbox.maps.extension.style.layers.generated.ModelLayer filter(com.mapbox.maps.extension.style.expressions.generated.Expression filter);
     method public com.mapbox.maps.extension.style.layers.generated.ModelLayer maxZoom(double maxZoom);
     method public com.mapbox.maps.extension.style.layers.generated.ModelLayer minZoom(double minZoom);

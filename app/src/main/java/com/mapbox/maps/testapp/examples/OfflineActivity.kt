@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -62,7 +63,7 @@ class OfflineActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     binding = ActivityOfflineBinding.inflate(layoutInflater)
     setContentView(binding.root)
-    handler = Handler()
+    handler = Handler(Looper.getMainLooper())
 
     // Initialize a logger that writes into the recycler view
     binding.recycler.layoutManager = LinearLayoutManager(this)
@@ -361,7 +362,7 @@ class OfflineActivity : AppCompatActivity() {
 
   private class OfflineLogsAdapter : RecyclerView.Adapter<OfflineLogsAdapter.ViewHolder>() {
     private var isUpdating: Boolean = false
-    private val updateHandler = Handler()
+    private val updateHandler = Handler(Looper.getMainLooper())
     private val logs = ArrayList<OfflineLog>()
 
     @SuppressLint("NotifyDataSetChanged")

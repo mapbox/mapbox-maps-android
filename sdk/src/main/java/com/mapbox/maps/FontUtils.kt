@@ -51,8 +51,8 @@ internal object FontUtils {
         val typeface = Typeface.create(Typeface.DEFAULT, Typeface.NORMAL)
         val fontField: Field = Typeface::class.java.getDeclaredField(TYPEFACE_FONTMAP_FIELD_NAME)
         fontField.isAccessible = true
-        val fontMap: Map<String, Typeface> =
-          fontField.get(typeface) as Map<String, Typeface>
+        @Suppress("UNCHECKED_CAST")
+        val fontMap: Map<String, Typeface> = fontField.get(typeface) as Map<String, Typeface>
         fonts.addAll(fontMap.keys)
       } catch (exception: Exception) {
         Log.e(TAG, "Couldn't load fonts from Typeface: $exception")

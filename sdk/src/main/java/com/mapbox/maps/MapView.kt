@@ -85,7 +85,6 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    * a [AttributeSet] object, an [Int] which represents a style attribute file,
    * and an [Int] which represents a style resource file.
    */
-  @Suppress("UNCHECKED_CAST")
   internal constructor(
     context: Context,
     attrs: AttributeSet?,

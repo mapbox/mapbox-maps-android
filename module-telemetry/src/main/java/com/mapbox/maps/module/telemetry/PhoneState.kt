@@ -76,6 +76,7 @@ internal class PhoneState {
 
   private fun obtainDisplayDensity(context: Context): Float {
     val displayMetrics = DisplayMetrics()
+    @Suppress("DEPRECATION")
     (context.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay
       .getMetrics(displayMetrics)
     return displayMetrics.density

@@ -45,7 +45,7 @@ class CircleAnnotationManagerAndroidTest : BaseMapTest() {
       circleAnnotationManager.circlePitchAlignment = expectedValue
       assertEquals(expectedValue, circleAnnotationManager.circlePitchAlignment)
       circleAnnotationManager.circlePitchAlignment = null
-      val expectedDefaultValue = CirclePitchAlignment.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-pitch-alignment").silentUnwrap<String>()!!.toUpperCase(Locale.US).replace('-', '_'))
+      val expectedDefaultValue = CirclePitchAlignment.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-pitch-alignment").silentUnwrap<String>()!!.uppercase(Locale.US).replace('-', '_'))
       assertEquals(expectedDefaultValue, circleAnnotationManager.circlePitchAlignment)
     }
   }
@@ -58,7 +58,7 @@ class CircleAnnotationManagerAndroidTest : BaseMapTest() {
       circleAnnotationManager.circlePitchScale = expectedValue
       assertEquals(expectedValue, circleAnnotationManager.circlePitchScale)
       circleAnnotationManager.circlePitchScale = null
-      val expectedDefaultValue = CirclePitchScale.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-pitch-scale").silentUnwrap<String>()!!.toUpperCase(Locale.US).replace('-', '_'))
+      val expectedDefaultValue = CirclePitchScale.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-pitch-scale").silentUnwrap<String>()!!.uppercase(Locale.US).replace('-', '_'))
       assertEquals(expectedDefaultValue, circleAnnotationManager.circlePitchScale)
     }
   }
@@ -83,7 +83,7 @@ class CircleAnnotationManagerAndroidTest : BaseMapTest() {
       circleAnnotationManager.circleTranslateAnchor = expectedValue
       assertEquals(expectedValue, circleAnnotationManager.circleTranslateAnchor)
       circleAnnotationManager.circleTranslateAnchor = null
-      val expectedDefaultValue = CircleTranslateAnchor.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-translate-anchor").silentUnwrap<String>()!!.toUpperCase(Locale.US).replace('-', '_'))
+      val expectedDefaultValue = CircleTranslateAnchor.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-translate-anchor").silentUnwrap<String>()!!.uppercase(Locale.US).replace('-', '_'))
       assertEquals(expectedDefaultValue, circleAnnotationManager.circleTranslateAnchor)
     }
   }

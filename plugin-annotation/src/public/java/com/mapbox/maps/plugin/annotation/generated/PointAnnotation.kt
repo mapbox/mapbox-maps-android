@@ -88,7 +88,7 @@ class PointAnnotation(
     get() {
       val value = jsonObject.get(PointAnnotationOptions.PROPERTY_ICON_ANCHOR)
       value?.let {
-        return IconAnchor.valueOf(it.asString.toUpperCase(Locale.US))
+        return IconAnchor.valueOf(it.asString.uppercase(Locale.US))
       }
       return null
     }
@@ -285,7 +285,7 @@ class PointAnnotation(
     get() {
       val value = jsonObject.get(PointAnnotationOptions.PROPERTY_TEXT_ANCHOR)
       value?.let {
-        return TextAnchor.valueOf(it.asString.toUpperCase(Locale.US))
+        return TextAnchor.valueOf(it.asString.uppercase(Locale.US))
       }
       return null
     }
@@ -351,7 +351,7 @@ class PointAnnotation(
     get() {
       val value = jsonObject.get(PointAnnotationOptions.PROPERTY_TEXT_JUSTIFY)
       value?.let {
-        return TextJustify.valueOf(it.asString.toUpperCase(Locale.US))
+        return TextJustify.valueOf(it.asString.uppercase(Locale.US))
       }
       return null
     }
@@ -614,7 +614,7 @@ class PointAnnotation(
     get() {
       val value = jsonObject.get(PointAnnotationOptions.PROPERTY_TEXT_TRANSFORM)
       value?.let {
-        return TextTransform.valueOf(it.asString.toUpperCase(Locale.US))
+        return TextTransform.valueOf(it.asString.uppercase(Locale.US))
       }
       return null
     }

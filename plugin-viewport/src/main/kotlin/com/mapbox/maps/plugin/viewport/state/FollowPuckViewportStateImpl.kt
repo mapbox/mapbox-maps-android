@@ -6,6 +6,7 @@ import android.animation.ValueAnimator
 import androidx.annotation.VisibleForTesting
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.logW
 import com.mapbox.maps.plugin.animation.Cancelable
 import com.mapbox.maps.plugin.animation.camera
@@ -131,7 +132,7 @@ internal class FollowPuckViewportStateImpl(
 
   /**
    * Observer the new camera options produced by the [ViewportState], it can be used to get the
-   * latest state [CameraOptions] for [ViewportTransition].
+   * latest state [CameraOptions] for [com.mapbox.maps.plugin.viewport.transition.ViewportTransition].
    *
    * @param viewportStateDataObserver observer that observe new viewport data.
    * @return a handle that cancels current observation.
@@ -176,6 +177,7 @@ internal class FollowPuckViewportStateImpl(
     removeIndicatorListenerIfNeeded()
   }
 
+  @OptIn(MapboxExperimental::class)
   private fun cancelAnimation() {
     AnimationThreadController.postOnAnimatorThread {
       runningAnimation?.apply {
@@ -188,6 +190,7 @@ internal class FollowPuckViewportStateImpl(
     }
   }
 
+  @OptIn(MapboxExperimental::class)
   private fun startAnimation(
     animatorSet: AnimatorSet,
     instant: Boolean,

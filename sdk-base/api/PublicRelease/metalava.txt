@@ -1929,7 +1929,7 @@ package com.mapbox.maps.plugin.gestures.generated {
     method public boolean getDoubleTouchToZoomOutEnabled();
     method public com.mapbox.maps.ScreenCoordinate? getFocalPoint();
     method public boolean getIncreasePinchToZoomThresholdWhenRotating();
-    method public boolean getIncreaseRotateThresholdWhenPinchingToZoom();
+    method @Deprecated public boolean getIncreaseRotateThresholdWhenPinchingToZoom();
     method protected abstract com.mapbox.maps.plugin.gestures.generated.GesturesSettings getInternalSettings();
     method public boolean getPinchScrollEnabled();
     method public boolean getPinchToZoomDecelerationEnabled();
@@ -1948,7 +1948,7 @@ package com.mapbox.maps.plugin.gestures.generated {
     method public void setDoubleTouchToZoomOutEnabled(boolean);
     method public void setFocalPoint(com.mapbox.maps.ScreenCoordinate?);
     method public void setIncreasePinchToZoomThresholdWhenRotating(boolean);
-    method public void setIncreaseRotateThresholdWhenPinchingToZoom(boolean);
+    method @Deprecated public void setIncreaseRotateThresholdWhenPinchingToZoom(boolean);
     method protected abstract void setInternalSettings(com.mapbox.maps.plugin.gestures.generated.GesturesSettings);
     method public void setPinchScrollEnabled(boolean);
     method public void setPinchToZoomDecelerationEnabled(boolean);
@@ -1967,7 +1967,7 @@ package com.mapbox.maps.plugin.gestures.generated {
     property public boolean doubleTouchToZoomOutEnabled;
     property public com.mapbox.maps.ScreenCoordinate? focalPoint;
     property public boolean increasePinchToZoomThresholdWhenRotating;
-    property public boolean increaseRotateThresholdWhenPinchingToZoom;
+    property @Deprecated public boolean increaseRotateThresholdWhenPinchingToZoom;
     property protected abstract com.mapbox.maps.plugin.gestures.generated.GesturesSettings internalSettings;
     property public boolean pinchScrollEnabled;
     property public boolean pinchToZoomDecelerationEnabled;

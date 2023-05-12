@@ -46,7 +46,7 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
       polylineAnnotationManager.lineCap = expectedValue
       assertEquals(expectedValue, polylineAnnotationManager.lineCap)
       polylineAnnotationManager.lineCap = null
-      val expectedDefaultValue = LineCap.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cap").silentUnwrap<String>()!!.toUpperCase(Locale.US).replace('-', '_'))
+      val expectedDefaultValue = LineCap.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cap").silentUnwrap<String>()!!.uppercase(Locale.US).replace('-', '_'))
       assertEquals(expectedDefaultValue, polylineAnnotationManager.lineCap)
     }
   }
@@ -107,7 +107,7 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
       polylineAnnotationManager.lineTranslateAnchor = expectedValue
       assertEquals(expectedValue, polylineAnnotationManager.lineTranslateAnchor)
       polylineAnnotationManager.lineTranslateAnchor = null
-      val expectedDefaultValue = LineTranslateAnchor.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-translate-anchor").silentUnwrap<String>()!!.toUpperCase(Locale.US).replace('-', '_'))
+      val expectedDefaultValue = LineTranslateAnchor.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-translate-anchor").silentUnwrap<String>()!!.uppercase(Locale.US).replace('-', '_'))
       assertEquals(expectedDefaultValue, polylineAnnotationManager.lineTranslateAnchor)
     }
   }

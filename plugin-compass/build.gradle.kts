@@ -4,6 +4,7 @@ plugins {
 
 android {
   compileSdk = libs.versions.androidCompileSdkVersion.get().toInt()
+  namespace = "com.mapbox.maps.plugin.compass"
   defaultConfig {
     minSdk = libs.versions.androidMinSdkVersion.get().toInt()
     targetSdk = libs.versions.androidTargetSdkVersion.get().toInt()

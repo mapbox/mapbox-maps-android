@@ -43,7 +43,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
      */
     get() {
       getPropertyValue<String>("anchor")?.let {
-        return Anchor.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+        return Anchor.valueOf(it.uppercase(Locale.US).replace('-', '_'))
       }
       return null
     }

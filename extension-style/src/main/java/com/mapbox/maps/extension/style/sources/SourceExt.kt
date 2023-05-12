@@ -1,4 +1,5 @@
 @file:JvmName("SourceUtils")
+
 package com.mapbox.maps.extension.style.sources
 
 import com.mapbox.maps.Style

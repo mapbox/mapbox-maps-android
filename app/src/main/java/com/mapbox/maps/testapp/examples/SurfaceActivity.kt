@@ -16,6 +16,7 @@ import com.mapbox.maps.testapp.databinding.ActivitySurfaceBinding
 /**
  * Example integration with MapSurface through using SurfaceView directly.
  */
+@OptIn(MapboxExperimental::class)
 class SurfaceActivity : AppCompatActivity(), SurfaceHolder.Callback {
 
   private lateinit var surfaceHolder: SurfaceHolder

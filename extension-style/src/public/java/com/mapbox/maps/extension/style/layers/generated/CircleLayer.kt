@@ -102,7 +102,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
     get() {
       val property: String? = getPropertyValue("visibility")
       property?.let {
-        return Visibility.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+        return Visibility.valueOf(it.uppercase(Locale.US).replace('-', '_'))
       }
       return null
     }
@@ -147,7 +147,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * Use static method [CircleLayer.defaultMinZoom] to get the default property value.
    *
-   * @param value value of minzoom
+   * @param minZoom value of minzoom
    */
   override fun minZoom(minZoom: Double): CircleLayer = apply {
     val param = PropertyValue("minzoom", minZoom)
@@ -182,7 +182,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * Use static method [CircleLayer.defaultMaxZoom] to get the default property value.
    *
-   * @param value value of maxzoom
+   * @param maxZoom value of maxzoom
    */
   override fun maxZoom(maxZoom: Double): CircleLayer = apply {
     val param = PropertyValue("maxzoom", maxZoom)
@@ -597,7 +597,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
      */
     get() {
       getPropertyValue<String?>("circle-pitch-alignment")?.let {
-        return CirclePitchAlignment.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+        return CirclePitchAlignment.valueOf(it.uppercase(Locale.US).replace('-', '_'))
       }
       return null
     }
@@ -665,7 +665,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
      */
     get() {
       getPropertyValue<String?>("circle-pitch-scale")?.let {
-        return CirclePitchScale.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+        return CirclePitchScale.valueOf(it.uppercase(Locale.US).replace('-', '_'))
       }
       return null
     }
@@ -1259,7 +1259,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
      */
     get() {
       getPropertyValue<String?>("circle-translate-anchor")?.let {
-        return CircleTranslateAnchor.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+        return CircleTranslateAnchor.valueOf(it.uppercase(Locale.US).replace('-', '_'))
       }
       return null
     }
@@ -1338,7 +1338,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
        */
       get() {
         StyleManager.getStyleLayerPropertyDefaultValue("circle", "visibility").silentUnwrap<String>()?.let {
-          return Visibility.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+          return Visibility.valueOf(it.uppercase(Locale.US).replace('-', '_'))
         }
         return null
       }
@@ -1586,7 +1586,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
        */
       get() {
         StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-pitch-alignment").silentUnwrap<String>()?.let {
-          return CirclePitchAlignment.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+          return CirclePitchAlignment.valueOf(it.uppercase(Locale.US).replace('-', '_'))
         }
         return null
       }
@@ -1626,7 +1626,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
        */
       get() {
         StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-pitch-scale").silentUnwrap<String>()?.let {
-          return CirclePitchScale.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+          return CirclePitchScale.valueOf(it.uppercase(Locale.US).replace('-', '_'))
         }
         return null
       }
@@ -1925,7 +1925,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
        */
       get() {
         StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-translate-anchor").silentUnwrap<String>()?.let {
-          return CircleTranslateAnchor.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+          return CircleTranslateAnchor.valueOf(it.uppercase(Locale.US).replace('-', '_'))
         }
         return null
       }
@@ -1997,7 +1997,7 @@ interface CircleLayerDsl {
    *       minimum: 0
    *       maximum: 24
    *
-   * @param value value of minzoom
+   * @param minZoom value of minzoom
    */
   fun minZoom(minZoom: Double): CircleLayer
 
@@ -2008,7 +2008,7 @@ interface CircleLayerDsl {
    *       minimum: 0
    *       maximum: 24
    *
-   * @param value value of maxzoom
+   * @param maxZoom value of maxzoom
    */
   fun maxZoom(maxZoom: Double): CircleLayer
 

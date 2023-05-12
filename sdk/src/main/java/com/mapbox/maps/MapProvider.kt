@@ -78,6 +78,7 @@ internal object MapProvider {
   private fun paramsProvider(
     context: Context,
     accessToken: String,
+    @Suppress("SameParameterValue")
     type: MapboxModuleType
   ): Array<ModuleProviderArgument> {
     return when (type) {

@@ -105,7 +105,7 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
       pointAnnotationManager.iconPitchAlignment = expectedValue
       assertEquals(expectedValue, pointAnnotationManager.iconPitchAlignment)
       pointAnnotationManager.iconPitchAlignment = null
-      val expectedDefaultValue = IconPitchAlignment.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-pitch-alignment").silentUnwrap<String>()!!.toUpperCase(Locale.US).replace('-', '_'))
+      val expectedDefaultValue = IconPitchAlignment.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-pitch-alignment").silentUnwrap<String>()!!.uppercase(Locale.US).replace('-', '_'))
       assertEquals(expectedDefaultValue, pointAnnotationManager.iconPitchAlignment)
     }
   }
@@ -118,7 +118,7 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
       pointAnnotationManager.iconRotationAlignment = expectedValue
       assertEquals(expectedValue, pointAnnotationManager.iconRotationAlignment)
       pointAnnotationManager.iconRotationAlignment = null
-      val expectedDefaultValue = IconRotationAlignment.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-rotation-alignment").silentUnwrap<String>()!!.toUpperCase(Locale.US).replace('-', '_'))
+      val expectedDefaultValue = IconRotationAlignment.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-rotation-alignment").silentUnwrap<String>()!!.uppercase(Locale.US).replace('-', '_'))
       assertEquals(expectedDefaultValue, pointAnnotationManager.iconRotationAlignment)
     }
   }
@@ -131,7 +131,7 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
       pointAnnotationManager.iconTextFit = expectedValue
       assertEquals(expectedValue, pointAnnotationManager.iconTextFit)
       pointAnnotationManager.iconTextFit = null
-      val expectedDefaultValue = IconTextFit.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-text-fit").silentUnwrap<String>()!!.toUpperCase(Locale.US).replace('-', '_'))
+      val expectedDefaultValue = IconTextFit.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-text-fit").silentUnwrap<String>()!!.uppercase(Locale.US).replace('-', '_'))
       assertEquals(expectedDefaultValue, pointAnnotationManager.iconTextFit)
     }
   }
@@ -168,7 +168,7 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
       pointAnnotationManager.symbolPlacement = expectedValue
       assertEquals(expectedValue, pointAnnotationManager.symbolPlacement)
       pointAnnotationManager.symbolPlacement = null
-      val expectedDefaultValue = SymbolPlacement.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "symbol-placement").silentUnwrap<String>()!!.toUpperCase(Locale.US).replace('-', '_'))
+      val expectedDefaultValue = SymbolPlacement.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "symbol-placement").silentUnwrap<String>()!!.uppercase(Locale.US).replace('-', '_'))
       assertEquals(expectedDefaultValue, pointAnnotationManager.symbolPlacement)
     }
   }
@@ -193,7 +193,7 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
       pointAnnotationManager.symbolZOrder = expectedValue
       assertEquals(expectedValue, pointAnnotationManager.symbolZOrder)
       pointAnnotationManager.symbolZOrder = null
-      val expectedDefaultValue = SymbolZOrder.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "symbol-z-order").silentUnwrap<String>()!!.toUpperCase(Locale.US).replace('-', '_'))
+      val expectedDefaultValue = SymbolZOrder.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "symbol-z-order").silentUnwrap<String>()!!.uppercase(Locale.US).replace('-', '_'))
       assertEquals(expectedDefaultValue, pointAnnotationManager.symbolZOrder)
     }
   }
@@ -290,7 +290,7 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
       pointAnnotationManager.textPitchAlignment = expectedValue
       assertEquals(expectedValue, pointAnnotationManager.textPitchAlignment)
       pointAnnotationManager.textPitchAlignment = null
-      val expectedDefaultValue = TextPitchAlignment.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-pitch-alignment").silentUnwrap<String>()!!.toUpperCase(Locale.US).replace('-', '_'))
+      val expectedDefaultValue = TextPitchAlignment.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-pitch-alignment").silentUnwrap<String>()!!.uppercase(Locale.US).replace('-', '_'))
       assertEquals(expectedDefaultValue, pointAnnotationManager.textPitchAlignment)
     }
   }
@@ -303,7 +303,7 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
       pointAnnotationManager.textRotationAlignment = expectedValue
       assertEquals(expectedValue, pointAnnotationManager.textRotationAlignment)
       pointAnnotationManager.textRotationAlignment = null
-      val expectedDefaultValue = TextRotationAlignment.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-rotation-alignment").silentUnwrap<String>()!!.toUpperCase(Locale.US).replace('-', '_'))
+      val expectedDefaultValue = TextRotationAlignment.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-rotation-alignment").silentUnwrap<String>()!!.uppercase(Locale.US).replace('-', '_'))
       assertEquals(expectedDefaultValue, pointAnnotationManager.textRotationAlignment)
     }
   }
@@ -352,7 +352,7 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
       pointAnnotationManager.iconTranslateAnchor = expectedValue
       assertEquals(expectedValue, pointAnnotationManager.iconTranslateAnchor)
       pointAnnotationManager.iconTranslateAnchor = null
-      val expectedDefaultValue = IconTranslateAnchor.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-translate-anchor").silentUnwrap<String>()!!.toUpperCase(Locale.US).replace('-', '_'))
+      val expectedDefaultValue = IconTranslateAnchor.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-translate-anchor").silentUnwrap<String>()!!.uppercase(Locale.US).replace('-', '_'))
       assertEquals(expectedDefaultValue, pointAnnotationManager.iconTranslateAnchor)
     }
   }
@@ -377,7 +377,7 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
       pointAnnotationManager.textTranslateAnchor = expectedValue
       assertEquals(expectedValue, pointAnnotationManager.textTranslateAnchor)
       pointAnnotationManager.textTranslateAnchor = null
-      val expectedDefaultValue = TextTranslateAnchor.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-translate-anchor").silentUnwrap<String>()!!.toUpperCase(Locale.US).replace('-', '_'))
+      val expectedDefaultValue = TextTranslateAnchor.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-translate-anchor").silentUnwrap<String>()!!.uppercase(Locale.US).replace('-', '_'))
       assertEquals(expectedDefaultValue, pointAnnotationManager.textTranslateAnchor)
     }
   }

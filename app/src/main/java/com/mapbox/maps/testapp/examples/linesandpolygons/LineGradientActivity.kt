@@ -27,9 +27,9 @@ class LineGradientActivity : AppCompatActivity() {
       logI(TAG, "Style loaded: ${style.styleURI}")
       // Increase trim offset when user click the increase trim offset button.
       binding.trimOffsetButton.setOnClickListener {
-        val linelayer = style.getLayerAs<LineLayer>(LAYER_ID)
-        val lastTrimPosition = linelayer?.lineTrimOffset?.last() ?: 0.0
-        linelayer?.lineTrimOffset(listOf(0.0, (lastTrimPosition + 0.05).coerceAtMost(1.0)))
+        val lineLayer = style.getLayerAs<LineLayer>(LAYER_ID)
+        val lastTrimPosition = lineLayer?.lineTrimOffset?.last() ?: 0.0
+        lineLayer?.lineTrimOffset(listOf(0.0, (lastTrimPosition + 0.05).coerceAtMost(1.0)))
       }
     }
   }

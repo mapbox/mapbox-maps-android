@@ -181,8 +181,8 @@ class PolylineAnnotationManager(
      * @param value property wrapper value around LineCap
      */
     set(value) {
-      val newValue = value ?: LineCap.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cap").silentUnwrap<String>()!!.toUpperCase(Locale.US).replace('-', '_'))
-      newValue?.let {
+      val newValue = value ?: LineCap.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cap").silentUnwrap<String>()!!.uppercase(Locale.US).replace('-', '_'))
+      newValue.let {
         layer?.lineCap(it)
         dragLayer?.lineCap(it)
       }
@@ -311,8 +311,8 @@ class PolylineAnnotationManager(
      * @param value property wrapper value around LineTranslateAnchor
      */
     set(value) {
-      val newValue = value ?: LineTranslateAnchor.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-translate-anchor").silentUnwrap<String>()!!.toUpperCase(Locale.US).replace('-', '_'))
-      newValue?.let {
+      val newValue = value ?: LineTranslateAnchor.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-translate-anchor").silentUnwrap<String>()!!.uppercase(Locale.US).replace('-', '_'))
+      newValue.let {
         layer?.lineTranslateAnchor(it)
         dragLayer?.lineTranslateAnchor(it)
       }
@@ -357,8 +357,6 @@ class PolylineAnnotationManager(
   }
   /**
    * The filter on the managed polylineAnnotations.
-   *
-   * @param expression expression
    */
   override var layerFilter: Expression?
     /**
@@ -370,7 +368,7 @@ class PolylineAnnotationManager(
     /**
      * Set filter on the managed polylineAnnotations.
      *
-     * @param expression expression
+     * @param value expression
      */
     set(value) {
       value?.let {

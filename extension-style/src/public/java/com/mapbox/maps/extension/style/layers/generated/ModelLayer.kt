@@ -98,7 +98,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     get() {
       val property: String? = getPropertyValue("visibility")
       property?.let {
-        return Visibility.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+        return Visibility.valueOf(it.uppercase(Locale.US).replace('-', '_'))
       }
       return null
     }
@@ -143,7 +143,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    *
    * Use static method [ModelLayer.defaultMinZoom] to get the default property value.
    *
-   * @param value value of minzoom
+   * @param minZoom value of minzoom
    */
   override fun minZoom(minZoom: Double): ModelLayer = apply {
     val param = PropertyValue("minzoom", minZoom)
@@ -178,7 +178,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    *
    * Use static method [ModelLayer.defaultMaxZoom] to get the default property value.
    *
-   * @param value value of maxzoom
+   * @param maxZoom value of maxzoom
    */
   override fun maxZoom(maxZoom: Double): ModelLayer = apply {
     val param = PropertyValue("maxzoom", maxZoom)
@@ -482,7 +482,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      */
     get() {
       getPropertyValue<String?>("model-type")?.let {
-        return ModelType.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+        return ModelType.valueOf(it.uppercase(Locale.US).replace('-', '_'))
       }
       return null
     }
@@ -564,7 +564,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
        */
       get() {
         StyleManager.getStyleLayerPropertyDefaultValue("model", "visibility").silentUnwrap<String>()?.let {
-          return Visibility.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+          return Visibility.valueOf(it.uppercase(Locale.US).replace('-', '_'))
         }
         return null
       }
@@ -754,7 +754,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
        */
       get() {
         StyleManager.getStyleLayerPropertyDefaultValue("model", "model-type").silentUnwrap<String>()?.let {
-          return ModelType.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+          return ModelType.valueOf(it.uppercase(Locale.US).replace('-', '_'))
         }
         return null
       }
@@ -790,6 +790,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
  * Separated the DSL receiver class to this interface to avoid IDE code suggestion for
  * property getters.
  */
+@MapboxExperimental
 @LayersDsl
 interface ModelLayerDsl {
   /**
@@ -827,7 +828,7 @@ interface ModelLayerDsl {
    *       minimum: 0
    *       maximum: 24
    *
-   * @param value value of minzoom
+   * @param minZoom value of minzoom
    */
   fun minZoom(minZoom: Double): ModelLayer
 
@@ -838,7 +839,7 @@ interface ModelLayerDsl {
    *       minimum: 0
    *       maximum: 24
    *
-   * @param value value of maxzoom
+   * @param maxZoom value of maxzoom
    */
   fun maxZoom(maxZoom: Double): ModelLayer
 

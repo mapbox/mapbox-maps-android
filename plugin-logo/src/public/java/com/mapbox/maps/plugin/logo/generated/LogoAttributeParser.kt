@@ -17,6 +17,7 @@ internal object LogoAttributeParser {
    * @param context Context
    * @param attrs AttributionSet
    */
+
   fun parseLogoSettings(context: Context, attrs: AttributeSet?, pixelRatio: Float = 1.0f): LogoSettings {
     val typedArray = context.obtainStyledAttributes(attrs, R.styleable.mapbox_MapView, 0, 0)
     try {

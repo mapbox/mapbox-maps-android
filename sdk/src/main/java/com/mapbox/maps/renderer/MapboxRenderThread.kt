@@ -6,6 +6,7 @@ import android.opengl.GLES20
 import android.view.Choreographer
 import android.view.Surface
 import androidx.annotation.*
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.logE
 import com.mapbox.maps.logI
 import com.mapbox.maps.logW
@@ -449,10 +450,12 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     }
   }
 
+  @OptIn(MapboxExperimental::class)
   fun addWidget(widget: Widget) {
     widgetRenderer.addWidget(widget)
   }
 
+  @OptIn(MapboxExperimental::class)
   fun removeWidget(widget: Widget) = widgetRenderer.removeWidget(widget)
 
   @WorkerThread

@@ -961,7 +961,8 @@ class Style {
     for (sourceId in sources) {
       val sourceParameters = getStyleSourceProperties(sourceId.id)
       if (sourceParameters.isValue) {
-        val parameterMap = sourceParameters.value?.contents as HashMap<String, Value>
+        @Suppress("UNCHECKED_CAST")
+        val parameterMap = sourceParameters.value!!.contents as HashMap<String, Value>
         sourceAttributions.add(parameterMap["attribution"].toString())
       }
     }

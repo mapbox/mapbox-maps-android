@@ -67,7 +67,6 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   protected abstract val dragLayerId: String
   protected abstract val dragSourceId: String
 
-  @Suppress("UNCHECKED_CAST")
   private var gesturesPlugin: GesturesPlugin = delegateProvider.mapPluginProviderDelegate.getPlugin(
     MAPBOX_GESTURES_PLUGIN_ID
   ) ?: throw InvalidPluginConfigurationException(

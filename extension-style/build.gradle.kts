@@ -9,6 +9,7 @@ android {
     targetSdk = libs.versions.androidTargetSdkVersion.get().toInt()
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
+  namespace = "com.mapbox.maps.extension.style"
 }
 
 dependencies {

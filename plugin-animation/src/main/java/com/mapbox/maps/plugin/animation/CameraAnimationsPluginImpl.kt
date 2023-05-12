@@ -37,6 +37,7 @@ import kotlin.properties.Delegates
  * However, it doesn't have to be the UI thread.
  */
 
+@OptIn(MapboxExperimental::class)
 class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlugin {
 
   @VisibleForTesting(otherwise = PRIVATE)
@@ -279,7 +280,6 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlugin {
       )
       return false
     }
-    @Suppress("IMPLICIT_CAST_TO_ANY")
     val startValue = cameraAnimator.startValue ?: when (cameraAnimator.type) {
       CameraAnimatorType.CENTER -> center ?: mapCameraManagerDelegate.cameraState.center
       CameraAnimatorType.ZOOM -> zoom ?: mapCameraManagerDelegate.cameraState.zoom

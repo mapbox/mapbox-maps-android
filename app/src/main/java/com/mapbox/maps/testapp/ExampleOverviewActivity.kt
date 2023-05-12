@@ -71,6 +71,7 @@ class ExampleOverviewActivity : AppCompatActivity(), CoroutineScope {
         loadExamples()
       }
     } else {
+      @Suppress("DEPRECATION")
       displayExampleList(savedInstanceState.getParcelableArrayList(KEY_STATE_EXAMPLES)!!)
     }
 
@@ -103,13 +104,13 @@ class ExampleOverviewActivity : AppCompatActivity(), CoroutineScope {
             binding.clearSearchImageview.visibility = View.VISIBLE
           }
           val lowercaseSearchText =
-            currentTextInEditText.toString().toLowerCase(Locale.getDefault())
+            currentTextInEditText.toString().lowercase(Locale.getDefault())
           val filteredList = allExampleList.filter {
             // Set search criteria
-            it.simpleName.toLowerCase(Locale.getDefault()).contains(lowercaseSearchText) ||
-              it.category.toLowerCase(Locale.getDefault()).contains(lowercaseSearchText) ||
-              it.getDescription().toLowerCase(Locale.getDefault()).contains(lowercaseSearchText) ||
-              it.getLabel().toLowerCase(Locale.getDefault()).contains(lowercaseSearchText)
+            it.simpleName.lowercase(Locale.getDefault()).contains(lowercaseSearchText) ||
+              it.category.lowercase(Locale.getDefault()).contains(lowercaseSearchText) ||
+              it.getDescription().lowercase(Locale.getDefault()).contains(lowercaseSearchText) ||
+              it.getLabel().lowercase(Locale.getDefault()).contains(lowercaseSearchText)
           }
           if (filteredList.isNotEmpty()) {
             displayExampleList(filteredList)
@@ -179,6 +180,7 @@ class ExampleOverviewActivity : AppCompatActivity(), CoroutineScope {
 
   private fun loadExamples() {
     val exampleListFromManifest = ArrayList<SpecificExample>()
+    @Suppress("DEPRECATION")
     val appPackageInfo = packageManager.getPackageInfo(
       packageName,
       PackageManager.GET_ACTIVITIES or PackageManager.GET_META_DATA

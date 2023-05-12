@@ -157,7 +157,7 @@ class RasterDemSource(builder: Builder) : Source(builder.sourceId) {
      */
     get() {
       getPropertyValue<String?>("encoding")?.let {
-        return Encoding.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+        return Encoding.valueOf(it.uppercase(Locale.US).replace('-', '_'))
       }
       return null
     }
@@ -521,7 +521,7 @@ class RasterDemSource(builder: Builder) : Source(builder.sourceId) {
        */
       get() {
         StyleManager.getStyleSourcePropertyDefaultValue("raster-dem", "encoding").silentUnwrap<String>()?.let {
-          return Encoding.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+          return Encoding.valueOf(it.uppercase(Locale.US).replace('-', '_'))
         }
         return null
       }

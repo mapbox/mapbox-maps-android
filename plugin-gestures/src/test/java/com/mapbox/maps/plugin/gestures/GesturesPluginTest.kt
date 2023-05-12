@@ -74,8 +74,7 @@ class GesturesPluginTest {
     every {
       GesturesAttributeParser.parseGesturesSettings(
         context,
-        attrs,
-        any()
+        attrs
       )
     } returns GesturesSettings { }
 
@@ -1270,8 +1269,7 @@ class IsPointAboveHorizonTest(
     every {
       GesturesAttributeParser.parseGesturesSettings(
         context,
-        attrs,
-        any()
+        attrs
       )
     } returns GesturesSettings { }
 
@@ -1511,8 +1509,7 @@ class FlingGestureTest(
     every {
       GesturesAttributeParser.parseGesturesSettings(
         context,
-        attrs,
-        any()
+        attrs
       )
     } returns GesturesSettings { }
 

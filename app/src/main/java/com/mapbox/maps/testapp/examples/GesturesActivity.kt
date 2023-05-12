@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.view.*
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -290,7 +291,7 @@ class GesturesActivity : AppCompatActivity() {
   private class GestureAlertsAdapter : RecyclerView.Adapter<GestureAlertsAdapter.ViewHolder>() {
 
     private var isUpdating: Boolean = false
-    private val updateHandler = Handler()
+    private val updateHandler = Handler(Looper.getMainLooper())
     private val alerts = ArrayList<GestureAlert>()
 
     @SuppressLint("NotifyDataSetChanged")

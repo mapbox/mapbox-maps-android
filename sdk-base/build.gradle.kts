@@ -12,6 +12,7 @@ val VERSION_NAME: String by project
 
 android {
   compileSdk = libs.versions.androidCompileSdkVersion.get().toInt()
+  namespace = "com.mapbox.maps.base"
   defaultConfig {
     minSdk = libs.versions.androidMinSdkVersion.get().toInt()
     targetSdk = libs.versions.androidTargetSdkVersion.get().toInt()

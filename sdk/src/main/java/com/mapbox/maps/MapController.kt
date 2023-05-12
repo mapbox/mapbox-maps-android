@@ -223,6 +223,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     renderer.setOnFpsChangedListener(listener)
   }
 
+  @OptIn(MapboxExperimental::class)
   override fun addWidget(widget: Widget) {
     if (contextMode != ContextMode.SHARED) {
       throw RuntimeException("Map view or map surface must be init with MapInitOptions.mapOptions.contextMode = ContextMode.SHARED when using widgets!")
@@ -234,6 +235,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     renderer.scheduleRepaint()
   }
 
+  @OptIn(MapboxExperimental::class)
   override fun removeWidget(widget: Widget): Boolean {
     val wasRemoved = renderer.renderThread.removeWidget(widget)
     if (wasRemoved) {
@@ -277,6 +279,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     plugin: Plugin
   ) = pluginRegistry.createPlugin(mapView, mapInitOptions, plugin)
 
+  @OptIn(MapboxExperimental::class)
   fun initializePlugins(
     options: MapInitOptions,
     mapView: MapView? = null,

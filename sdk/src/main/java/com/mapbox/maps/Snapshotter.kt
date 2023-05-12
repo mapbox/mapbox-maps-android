@@ -448,6 +448,7 @@ open class Snapshotter {
       textView.textSize = 10 * scale
       textView.setTextColor(textColor)
       textView.setBackgroundResource(R.drawable.mapbox_rounded_corner)
+      @Suppress("DEPRECATION")
       textView.text = Html.fromHtml(attributionString)
       textView.measure(widthMeasureSpec, heightMeasureSpec)
       textView.layout(0, 0, textView.measuredWidth, textView.measuredHeight)

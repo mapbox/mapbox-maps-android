@@ -90,7 +90,7 @@ class InsetMapActivity : AppCompatActivity(), OnCameraChangeListener {
         style.addLayer(layer)
         updateInsetMapLineLayerBounds(style)
       }
-      insetMapFragment.getMapView()?.apply {
+      insetMapFragment.getMapView().apply {
         logo.enabled = false
         scalebar.enabled = false
         attribution.enabled = false

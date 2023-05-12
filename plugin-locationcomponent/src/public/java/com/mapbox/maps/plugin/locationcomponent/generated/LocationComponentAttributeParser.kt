@@ -21,6 +21,7 @@ internal object LocationComponentAttributeParser {
    * @param context Context
    * @param attrs AttributionSet
    */
+
   fun parseLocationComponentSettings(context: Context, attrs: AttributeSet?, pixelRatio: Float = 1.0f): LocationComponentSettings {
     val typedArray = context.obtainStyledAttributes(attrs, R.styleable.mapbox_MapView, 0, 0)
     try {

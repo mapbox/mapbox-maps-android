@@ -476,7 +476,7 @@ package com.mapbox.maps.renderer.widget {
     method public float getRotation();
     method public void setPosition(com.mapbox.maps.renderer.widget.WidgetPosition widgetPosition);
     method public void setRotation(float angleDegrees);
-    method @Deprecated public void setTranslation(float translationX, float translationY);
+    method @Deprecated public void setTranslation(float translateX, float translateY);
     method public final void updateBitmap(android.graphics.Bitmap bitmap);
   }
 
@@ -535,7 +535,7 @@ package com.mapbox.maps.renderer.widget {
   }
 
   public final class WidgetPositionKt {
-    method @kotlin.jvm.JvmSynthetic public static com.mapbox.maps.renderer.widget.WidgetPosition! WidgetPosition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.renderer.widget.WidgetPosition.Builder,? extends kotlin.Unit> initializer);
+    method @com.mapbox.maps.MapboxExperimental @kotlin.jvm.JvmSynthetic public static com.mapbox.maps.renderer.widget.WidgetPosition! WidgetPosition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.renderer.widget.WidgetPosition.Builder,? extends kotlin.Unit> initializer);
   }
 
 }

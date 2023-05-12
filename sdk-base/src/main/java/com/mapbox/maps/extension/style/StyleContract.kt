@@ -30,6 +30,7 @@ interface StyleContract {
     /**
      * The models of the style.
      */
+    @MapboxExperimental
     val models: List<StyleModelExtension>
 
     /**

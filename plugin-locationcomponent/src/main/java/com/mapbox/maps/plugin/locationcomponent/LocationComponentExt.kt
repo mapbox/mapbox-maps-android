@@ -30,6 +30,7 @@ private fun Context.getCompatDrawable(@DrawableRes resId: Int) = ResourcesCompat
  */
 @JvmOverloads
 fun LocationComponentPlugin.createDefault2DPuck(
+  @Suppress("UNUSED_PARAMETER")
   context: Context,
   withBearing: Boolean = false
 ): LocationPuck2D = LocationPuck2D(

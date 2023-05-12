@@ -262,6 +262,7 @@ class MapboxMap :
   /**
    * Load the style from Style Extension.
    */
+  @OptIn(MapboxExperimental::class)
   fun loadStyle(
     styleExtension: StyleContract.StyleExtension,
     transitionOptions: TransitionOptions? = null,
@@ -790,10 +791,10 @@ class MapboxMap :
    */
   override fun pixelForCoordinate(coordinate: Point): ScreenCoordinate {
     checkNativeMap("pixelForCoordinate")
-    val coordinate = nativeMap.pixelForCoordinate(coordinate)
+    val screenCoordinate = nativeMap.pixelForCoordinate(coordinate)
     val screenSize = nativeMap.getSize()
-    return if (coordinate.x in 0.0..screenSize.width.toDouble() && coordinate.y in 0.0..screenSize.height.toDouble()) {
-      coordinate
+    return if (screenCoordinate.x in 0.0..screenSize.width.toDouble() && screenCoordinate.y in 0.0..screenSize.height.toDouble()) {
+      screenCoordinate
     } else {
       ScreenCoordinate(-1.0, -1.0)
     }

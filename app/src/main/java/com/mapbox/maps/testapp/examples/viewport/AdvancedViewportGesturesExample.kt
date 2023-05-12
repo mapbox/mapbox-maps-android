@@ -172,7 +172,7 @@ class AdvancedViewportGesturesExample : AppCompatActivity() {
           ROUTE_LINE_LAYER_ID,
           GEOJSON_SOURCE_ID
         ) {
-          lineColor(mapView.context.resources.getColor(R.color.mapbox_blue))
+          lineColor(mapView.context.getColor(R.color.mapbox_blue))
           lineWidth(10.0)
           lineCap(LineCap.ROUND)
           lineJoin(LineJoin.ROUND)

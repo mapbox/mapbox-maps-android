@@ -2,6 +2,7 @@ package com.mapbox.maps.extension.style
 
 import android.opengl.GLES20
 import com.mapbox.maps.LayerPosition
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.style.StyleExtensionImpl.*
 import com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere
 import com.mapbox.maps.extension.style.image.ImageExtensionImpl
@@ -39,6 +40,7 @@ class StyleExtensionImpl private constructor(
   /**
    * The models of the style.
    */
+  @OptIn(MapboxExperimental::class)
   override val models: List<StyleContract.StyleModelExtension> = builder.models.toList()
 
   /**
@@ -78,6 +80,7 @@ class StyleExtensionImpl private constructor(
     internal val layers = mutableListOf<Pair<Layer, LayerPosition>>()
     internal val sources = mutableListOf<Source>()
     internal val images = mutableListOf<StyleContract.StyleImageExtension>()
+    @OptIn(MapboxExperimental::class)
     internal val models = mutableListOf<StyleContract.StyleModelExtension>()
     internal var light: Light? = null
     internal var terrain: Terrain? = null
@@ -173,6 +176,7 @@ class StyleExtensionImpl private constructor(
      *
      * Apply +[ModelExtensionImpl] will add the source to the [StyleExtensionImpl].
      */
+    @MapboxExperimental
     @JvmName("addModel")
     operator fun ModelExtensionImpl.unaryPlus() {
       models.add(this)
