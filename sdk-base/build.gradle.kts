@@ -100,3 +100,20 @@ project.apply {
   from("$rootDir/gradle/detekt.gradle")
   from("$rootDir/gradle/dependency-updates.gradle")
 }
+
+tasks.withType<JacocoReport> {
+  afterEvaluate {
+    classDirectories.setFrom(files(classDirectories.files.map {
+      fileTree(it).apply {
+        exclude(
+          "**AttributionSettings**",
+          "**CompassSettings**",
+          "**GesturesSettings**",
+          "**LocationComponentSettings**",
+          "**LogoSettings**",
+          "**ScaleBarSettings**",
+        )
+      }
+    }))
+  }
+}
