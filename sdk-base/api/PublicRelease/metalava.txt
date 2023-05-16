@@ -2736,6 +2736,34 @@ package com.mapbox.maps.plugin.viewport.transition {
 
 package com.mapbox.maps.threading {
 
+  @com.mapbox.maps.MapboxExperimental public final class AnimationSynchronizer {
+    method public boolean getExpectingCamera();
+    method public boolean getExpectingPuckBearing();
+    method public boolean getExpectingPuckPosition();
+    method public com.mapbox.maps.threading.internal.PuckAnimatorDataApplier? getPuckAnimatorDataApplier();
+    method public void sendCameraUpdate(long frameTimeNanos, com.mapbox.maps.CameraOptions cameraOptions);
+    method public void sendPuckBearingUpdate(long frameTimeNanos, double bearing);
+    method public void sendPuckPositionUpdate(long frameTimeNanos, com.mapbox.geojson.Point position);
+    method public void setExpectingCamera(boolean value);
+    method public void setExpectingPuckBearing(boolean value);
+    method public void setExpectingPuckPosition(boolean value);
+    method public void setPuckAnimatorDataApplier(com.mapbox.maps.threading.internal.PuckAnimatorDataApplier? puckAnimatorDataApplier);
+    property public final boolean expectingCamera;
+    property public final boolean expectingPuckBearing;
+    property public final boolean expectingPuckPosition;
+    property public final com.mapbox.maps.threading.internal.PuckAnimatorDataApplier? puckAnimatorDataApplier;
+    field public static final com.mapbox.maps.threading.AnimationSynchronizer.Companion Companion;
+  }
+
+  public static final class AnimationSynchronizer.Companion {
+    method public boolean disableFor(com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate mapboxMap);
+    method public void enableFor(com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate mapboxMap, boolean enableLogs = false);
+    method public void enableFor(com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate mapboxMap);
+    method public com.mapbox.maps.threading.AnimationSynchronizer? get(com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate mapboxMap);
+    method public com.mapbox.maps.threading.AnimationSynchronizer? get(com.mapbox.maps.threading.internal.PuckAnimatorDataApplier? applier);
+    method public void remove(com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate mapboxMap);
+  }
+
   @com.mapbox.maps.MapboxExperimental public final class AnimationThreadController {
     method public boolean getUsingBackgroundThread();
     method public void postOnAnimatorThread(kotlin.jvm.functions.Function0<kotlin.Unit> function);
@@ -2744,6 +2772,15 @@ package com.mapbox.maps.threading {
     method public void useMainThread();
     property public final boolean usingBackgroundThread;
     field public static final com.mapbox.maps.threading.AnimationThreadController INSTANCE;
+  }
+
+}
+
+package com.mapbox.maps.threading.internal {
+
+  @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) @com.mapbox.maps.MapboxExperimental public interface PuckAnimatorDataApplier {
+    method public void setBearing(double bearing);
+    method public void setLatLng(com.mapbox.geojson.Point latLng);
   }
 
 }

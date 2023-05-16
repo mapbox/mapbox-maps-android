@@ -3,9 +3,12 @@ package com.mapbox.maps.plugin.locationcomponent
 import androidx.annotation.ColorInt
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.style.StyleInterface
+import com.mapbox.maps.threading.internal.PuckAnimatorDataApplier
 
-internal interface LocationLayerRenderer {
+@OptIn(MapboxExperimental::class)
+internal interface LocationLayerRenderer : PuckAnimatorDataApplier {
   fun initializeComponents(style: StyleInterface)
 
   fun isRendererInitialised(): Boolean
@@ -20,13 +23,13 @@ internal interface LocationLayerRenderer {
 
   fun styleAccuracy(accuracyColor: Int, accuracyBorderColor: Int)
 
-  fun setLatLng(latLng: Point)
-
-  fun setBearing(bearing: Double)
-
   fun setAccuracyRadius(accuracy: Float)
 
   fun styleScaling(scaleExpression: Value)
+
+  override fun setLatLng(latLng: Point)
+
+  override fun setBearing(bearing: Double)
 
   fun adjustPulsingCircleLayerVisibility(visible: Boolean)
 
