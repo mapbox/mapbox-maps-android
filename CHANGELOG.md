@@ -3,6 +3,8 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
+
+# 10.14.0-beta.1 May 17, 2023
 ## Features ✨ and improvements 🏁
 * Improve performance of setting puck style properties by removing redundant check if layer / source exists.
 * Improve performance of symbol layers with identical or no text.
@@ -14,6 +16,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v10.14.0-beta.1 and common to v23.6.0-beta.1.
+
 
 # 10.13.0 May 05, 2023
 ## Features ✨ and improvements 🏁
