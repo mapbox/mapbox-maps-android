@@ -2,7 +2,7 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# 10.14.0-beta.1
+# main
 ## Features ✨ and improvements 🏁
 * Improve performance of setting puck style properties by removing redundant check if layer / source exists.
 * Improve performance of symbol layers with identical or no text.
