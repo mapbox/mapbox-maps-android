@@ -22,14 +22,10 @@ internal open class LocationLayerWrapper(val layerId: String) {
 
   protected fun updateProperty(propertyName: String, value: Value) {
     layerProperties[propertyName] = value
-    style?.let { styleDelegate ->
-      if (styleDelegate.styleLayerExists(layerId)) {
-        val expected = styleDelegate.setStyleLayerProperty(layerId, propertyName, value)
-        expected.error?.let {
-          throw MapboxLocationComponentException("Set layer property \"${propertyName}\" failed:\n$it\n$value")
-        }
-      } else {
-        logW(TAG, "Skip updating layer property $propertyName, layer $layerId not ready yet.")
+    style?.let { style ->
+      val expected = style.setStyleLayerProperty(layerId, propertyName, value)
+      expected.error?.let {
+        logE(TAG, "Set layer property \"${propertyName}\" failed:\nError: $it\nValue set: $value")
       }
     }
   }

@@ -1,10 +1,11 @@
 package com.mapbox.maps.plugin.locationcomponent
 
 import com.mapbox.bindgen.Expected
+import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.Style
-import com.mapbox.maps.logW
+import com.mapbox.maps.logE
 import io.mockk.*
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -22,8 +23,7 @@ class ModelSourceWrapperTest {
   @Before
   fun setup() {
     mockkStatic("com.mapbox.maps.MapboxLogger")
-    every { logW(any(), any()) } just Runs
-    every { style.styleSourceExists(any()) } returns true
+    every { logE(any(), any()) } just Runs
     every { style.addStyleSource(any(), any()) } returns expected
     every { style.setStyleSourceProperty(any(), any(), any()) } returns expected
     every { expected.error } returns null
@@ -59,9 +59,9 @@ class ModelSourceWrapperTest {
   }
 
   @Test
-  fun testSourceNotReady() {
-    every { style.styleSourceExists(any()) } returns false
+  fun testSetPropertyFailed() {
     val modelSource = ModelSourceWrapper(SOURCE_ID, "uri", listOf(1.0, 2.0))
+    every { style.setStyleSourceProperty(any(), any(), any()) } returns ExpectedFactory.createError("error")
     modelSource.bindTo(style)
 
     val position = arrayListOf(5.0, 5.0)
@@ -73,7 +73,8 @@ class ModelSourceWrapperTest {
       Pair(ModelSourceWrapper.URL, Value("uri"))
     )
     val updateModel = hashMapOf(Pair(ModelSourceWrapper.DEFAULT_MODEL_NAME, Value(property)))
-    verify(exactly = 0) { style.setStyleSourceProperty(SOURCE_ID, ModelSourceWrapper.MODELS, Value(updateModel)) }
+    verify(exactly = 1) { style.setStyleSourceProperty(SOURCE_ID, ModelSourceWrapper.MODELS, Value(updateModel)) }
+    verify(exactly = 1) { logE(any(), any()) }
   }
 
   @Test
@@ -81,7 +82,6 @@ class ModelSourceWrapperTest {
     val modelSource = ModelSourceWrapper(SOURCE_ID, "uri", listOf(1.0, 2.0))
     modelSource.bindTo(style)
     val newStyle = mockk<Style>()
-    every { newStyle.styleSourceExists(any()) } returns true
     every { newStyle.addStyleSource(any(), any()) } returns expected
     every { newStyle.setStyleSourceProperty(any(), any(), any()) } returns expected
     modelSource.updateStyle(newStyle)
