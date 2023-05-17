@@ -2068,9 +2068,9 @@ package com.mapbox.maps.plugin.locationcomponent {
   }
 
   public interface LocationConsumer {
-    method public void onAccuracyRadiusUpdated(double[] radius, kotlin.jvm.functions.Function1<? super android.animation.ValueAnimator,kotlin.Unit>? options = null);
     method public void onBearingUpdated(double[] bearing, kotlin.jvm.functions.Function1<? super android.animation.ValueAnimator,kotlin.Unit>? options = null);
     method public void onError(com.mapbox.common.location.LocationError error);
+    method public void onHorizontalAccuracyRadiusUpdated(double[] radius, kotlin.jvm.functions.Function1<? super android.animation.ValueAnimator,kotlin.Unit>? options = null);
     method public void onLocationUpdated(com.mapbox.geojson.Point![] location, kotlin.jvm.functions.Function1<? super android.animation.ValueAnimator,kotlin.Unit>? options = null);
     method public void onPuckAccuracyRadiusAnimatorDefaultOptionsUpdated(kotlin.jvm.functions.Function1<? super android.animation.ValueAnimator,kotlin.Unit> options);
     method public void onPuckBearingAnimatorDefaultOptionsUpdated(kotlin.jvm.functions.Function1<? super android.animation.ValueAnimator,kotlin.Unit> options);

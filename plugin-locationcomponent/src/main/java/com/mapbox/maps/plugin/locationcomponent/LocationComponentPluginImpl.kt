@@ -307,17 +307,17 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
   }
 
   /**
-   * Called whenever the accuracy radius is updated.
+   * Called whenever the horizontal accuracy radius is updated.
    * @param radius - supports multiple radius value to create more complex animations with intermediate points.
    *  Last [radius] value will always be the animator target for next animation.
    * @param options - if specified explicitly will apply current animator option to radius animation.
    *  Otherwise default animator options will be used.
    */
-  override fun onAccuracyRadiusUpdated(
+  override fun onHorizontalAccuracyRadiusUpdated(
     vararg radius: Double,
     options: (ValueAnimator.() -> Unit)?
   ) {
-    locationPuckManager?.updateAccuracyRadius(*radius, options = options)
+    locationPuckManager?.updateHorizontalAccuracyRadius(*radius, options = options)
   }
 
   /**

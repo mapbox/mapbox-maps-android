@@ -40,13 +40,13 @@ interface LocationConsumer {
   fun onPuckBearingAnimatorDefaultOptionsUpdated(options: ValueAnimator.() -> Unit)
 
   /**
-   * Called whenever the accuracy radius is updated.
+   * Called whenever the horizontal accuracy radius is updated.
    * @param radius - supports multiple radius value to create more complex animations with intermediate points.
    *  Last [radius] value will always be the animator target for next animation.
    * @param options - if specified explicitly will apply current animator option to radius animation.
    *  Otherwise default animator options will be used.
    */
-  fun onAccuracyRadiusUpdated(
+  fun onHorizontalAccuracyRadiusUpdated(
     vararg radius: Double,
     options: (ValueAnimator.() -> Unit)? = null
   )

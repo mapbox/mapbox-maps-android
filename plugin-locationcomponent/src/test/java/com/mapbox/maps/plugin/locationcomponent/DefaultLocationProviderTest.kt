@@ -417,7 +417,7 @@ private open class EmptyLocationConsumer : LocationConsumer {
   override fun onError(error: LocationError) {
   }
 
-  override fun onAccuracyRadiusUpdated(
+  override fun onHorizontalAccuracyRadiusUpdated(
     vararg radius: Double,
     options: (ValueAnimator.() -> Unit)?
   ) {

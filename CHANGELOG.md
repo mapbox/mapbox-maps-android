@@ -35,6 +35,7 @@ Mapbox welcomes participation and contributions from everyone.
 | DARK              | mapbox://styles/mapbox/dark-v10              | mapbox://styles/mapbox/dark-v11              |
 
 * Remove native interfaces `StyleManagerInterface`, `StyleInterface`, `CameraManagerInterface`, `MapInterface` and use only `Map` object to access native methods.
+* Rename `LocationConsumer.onAccuracyRadiusUpdated` to `onHorizontalAccuracyRadiusUpdated`.
 
 ## Features ✨ and improvements 🏁
 * Add the `MapboxMap.resetFeatureState` method.

@@ -207,7 +207,7 @@ internal class LocationPuckManager(
     )
   }
 
-  fun updateAccuracyRadius(vararg radius: Double, options: (ValueAnimator.() -> Unit)? = null) {
+  fun updateHorizontalAccuracyRadius(vararg radius: Double, options: (ValueAnimator.() -> Unit)? = null) {
     val targets = doubleArrayOf(lastAccuracyRadius, *radius)
     animationManager.animateAccuracyRadius(
       *targets,
