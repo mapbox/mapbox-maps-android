@@ -5,6 +5,15 @@ Mapbox welcomes participation and contributions from everyone.
 # 10.14.0-beta.1
 ## Features ✨ and improvements 🏁
 * Improve performance of setting puck style properties by removing redundant check if layer / source exists.
+* Improve performance of symbol layers with identical or no text.
+* Hide line labels with too large an angle between two neighboring glyphs.
+
+## Bug fixes 🐞
+* Fix layer zoom range check so that the layer will be hidden when the zoom equals to layer's max zoom.
+* Fixes occasional rendering errors caused by long line layers and vertex data overflow.
+
+## Dependencies
+* Update gl-native to v10.14.0-beta.1 and common to v23.6.0-beta.1.
 
 # 10.13.0 May 05, 2023
 ## Features ✨ and improvements 🏁
