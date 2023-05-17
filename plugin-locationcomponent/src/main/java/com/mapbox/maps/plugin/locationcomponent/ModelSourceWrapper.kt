@@ -5,7 +5,7 @@ import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxLocationComponentException
 import com.mapbox.maps.StyleManagerInterface
 import com.mapbox.maps.extension.style.StyleInterface
-import com.mapbox.maps.logW
+import com.mapbox.maps.logE
 
 internal class ModelSourceWrapper(
   val sourceId: String,
@@ -57,20 +57,13 @@ internal class ModelSourceWrapper(
   private fun updateProperty(propertyName: String, value: Value) {
     sourceProperties[propertyName] = value
     style?.let { styleDelegate ->
-      if (styleDelegate.styleSourceExists(sourceId)) {
-        val expected = styleDelegate.setStyleSourceProperty(
-          sourceId,
-          propertyName,
-          value
-        )
-        expected.error?.let {
-          throw MapboxLocationComponentException("Set source property \"${propertyName}\" failed:\nError: $it\nValue set: $value")
-        }
-      } else {
-        logW(
-          TAG,
-          "Skip updating source property $propertyName, source $sourceId not ready yet."
-        )
+      val expected = styleDelegate.setStyleSourceProperty(
+        sourceId,
+        propertyName,
+        value
+      )
+      expected.error?.let {
+        logE(TAG, "Set source property \"${propertyName}\" failed:\nError: $it\nValue set: $value")
       }
     }
   }

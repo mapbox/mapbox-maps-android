@@ -5,7 +5,7 @@ import com.mapbox.maps.LayerPosition
 import com.mapbox.maps.MapboxLocationComponentException
 import com.mapbox.maps.StyleManagerInterface
 import com.mapbox.maps.extension.style.StyleInterface
-import com.mapbox.maps.logW
+import com.mapbox.maps.logE
 
 internal open class LocationLayerWrapper(val layerId: String) {
 
@@ -27,13 +27,9 @@ internal open class LocationLayerWrapper(val layerId: String) {
   protected fun updateProperty(propertyName: String, value: Value) {
     layerProperties[propertyName] = value
     mapStyleDelegate?.let { styleDelegate ->
-      if (styleDelegate.styleLayerExists(layerId)) {
-        val expected = styleDelegate.setStyleLayerProperty(layerId, propertyName, value)
-        expected.error?.let {
-          throw MapboxLocationComponentException("Set layer property \"${propertyName}\" failed:\n$it\n$value")
-        }
-      } else {
-        logW(TAG, "Skip updating layer property $propertyName, layer $layerId not ready yet.")
+      val expected = styleDelegate.setStyleLayerProperty(layerId, propertyName, value)
+      expected.error?.let {
+        logE(TAG, "Set layer property \"${propertyName}\" failed:\nError: $it\nValue set: $value")
       }
     }
   }

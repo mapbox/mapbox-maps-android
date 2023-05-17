@@ -1,11 +1,12 @@
 package com.mapbox.maps.plugin.locationcomponent
 
 import com.mapbox.bindgen.Expected
+import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.StyleManagerInterface
 import com.mapbox.maps.extension.style.StyleInterface
-import com.mapbox.maps.logW
+import com.mapbox.maps.logE
 import com.mapbox.maps.plugin.delegates.MapStyleStateDelegate
 import io.mockk.*
 import org.junit.After
@@ -32,8 +33,7 @@ class ModelLayerWrapperTest {
   @Before
   fun setup() {
     mockkStatic("com.mapbox.maps.MapboxLogger")
-    every { logW(any(), any()) } just Runs
-    every { style.styleLayerExists(any()) } returns true
+    every { logE(any(), any()) } just Runs
     every { style.addPersistentStyleLayer(any(), any()) } returns expected
     every { style.setStyleLayerProperty(any(), any(), any()) } returns expected
     every { expected.error } returns null
@@ -101,22 +101,22 @@ class ModelLayerWrapperTest {
 
   @Test
   fun testLayerNotReady() {
-    every { style.styleLayerExists(any()) } returns false
+    every { style.setStyleLayerProperty(any(), any(), any()) } returns ExpectedFactory.createError("error")
     val scale = arrayListOf(1.0, 2.0)
     layer.modelScale(scale)
-    verify(exactly = 0) {
+    verify(exactly = 1) {
       style.setStyleLayerProperty(
         MODEL_LAYER_ID,
         "model-scale",
         Value(scale.map(::Value))
       )
     }
+    verify(exactly = 1) { logE(any(), any()) }
   }
 
   @Test
   fun testUpdateStyle() {
     val newStyle = mockk<StyleInterface>(relaxed = true)
-    every { newStyle.styleLayerExists(any()) } returns true
     every { newStyle.setStyleLayerProperty(any(), any(), any()) } returns expected
     layer.updateStyle(newStyle)
     val scale = listOf(1.0, 2.0, 3.0)

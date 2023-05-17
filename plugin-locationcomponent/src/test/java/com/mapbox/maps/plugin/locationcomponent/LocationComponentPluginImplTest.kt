@@ -358,6 +358,7 @@ class LocationComponentPluginImplTest {
   @Test
   fun testLocationProviderRegisterDisableEnable() {
     every { style.addPersistentStyleLayer(any(), any()) } returns ExpectedFactory.createNone()
+    every { style.setStyleLayerProperty(any(), any(), any()) } returns ExpectedFactory.createNone()
 
     preparePluginInitialisationWithEnabled()
 
