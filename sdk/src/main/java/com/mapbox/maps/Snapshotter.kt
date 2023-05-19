@@ -79,7 +79,7 @@ open class Snapshotter {
     }
     cancelableEvents[MapEvent.STYLE_IMAGE_MISSING] = subscribeStyleImageMissing {
       weakSelf.get()?.apply {
-        snapshotStyleCallback?.onStyleImageMissing(it.imageID)
+        snapshotStyleCallback?.onStyleImageMissing(it.imageId)
       }
     }
   }

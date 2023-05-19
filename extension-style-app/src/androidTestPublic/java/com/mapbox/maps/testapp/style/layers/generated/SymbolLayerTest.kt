@@ -657,7 +657,7 @@ class SymbolLayerTest : BaseStyleTest() {
     }
     setupLayer(layer)
     assertEquals(
-      "[format, cyan, {font-scale=0.9, text-font=[literal, [Open Sans Regular, Arial Unicode MS Regular]], text-color=[rgba, 0.0, 255.0, 255.0, 1.0]}, black, {font-scale=[number, [get, scale]], text-font=[literal, [Open Sans Regular, Arial Unicode MS Regular]], text-color=[rgba, 0.0, 0.0, 0.0, 1.0]}]",
+      "[format, cyan, {text-color=[rgba, 0.0, 255.0, 255.0, 1.0], font-scale=0.9, text-font=[literal, [Open Sans Regular, Arial Unicode MS Regular]]}, black, {text-color=[rgba, 0.0, 0.0, 0.0, 1.0], font-scale=[number, [get, scale]], text-font=[literal, [Open Sans Regular, Arial Unicode MS Regular]]}]",
       layer.textFieldAsExpression?.toString()
     )
   }

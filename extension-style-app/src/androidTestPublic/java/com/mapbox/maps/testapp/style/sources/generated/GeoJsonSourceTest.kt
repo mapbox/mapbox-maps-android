@@ -46,7 +46,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
       url(TEST_URI)
     }
     val listener = SourceDataLoadedCallback {
-      if (it.type == SourceDataLoadedType.METADATA && it.sourceID == SOURCE_ID) {
+      if (it.type == SourceDataLoadedType.METADATA && it.sourceId == SOURCE_ID) {
         assertNotNull(testSource.data)
         latch.countDown()
       }
@@ -82,7 +82,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
       url(TEST_URI)
     }
     val listener = SourceDataLoadedCallback {
-      if (it.type == SourceDataLoadedType.METADATA && it.sourceID == SOURCE_ID) {
+      if (it.type == SourceDataLoadedType.METADATA && it.sourceId == SOURCE_ID) {
         answerList.add(testSource.data)
         latch.countDown()
       }
@@ -110,7 +110,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
     val answerList = mutableListOf<String?>()
     val testSource = geoJsonSource(SOURCE_ID) { }
     val listener = SourceDataLoadedCallback {
-      if (it.type == SourceDataLoadedType.METADATA && it.sourceID == SOURCE_ID) {
+      if (it.type == SourceDataLoadedType.METADATA && it.sourceId == SOURCE_ID) {
         answerList.add(testSource.data)
         latch.countDown()
       }
@@ -348,9 +348,9 @@ class GeoJsonSourceTest : BaseStyleTest() {
       feature(FEATURE, DATA_ID)
     }
     val listener = SourceDataLoadedCallback {
-      if (it.type == SourceDataLoadedType.METADATA && it.sourceID == SOURCE_ID) {
+      if (it.type == SourceDataLoadedType.METADATA && it.sourceId == SOURCE_ID) {
         answerList.add(testSource.data)
-        it.dataID?.let(dataIdList::add)
+        it.dataId?.let(dataIdList::add)
         latch.countDown()
       }
     }
@@ -383,9 +383,9 @@ class GeoJsonSourceTest : BaseStyleTest() {
       featureCollection(FEATURE_COLLECTION, DATA_ID)
     }
     val listener = SourceDataLoadedCallback {
-      if (it.type == SourceDataLoadedType.METADATA && it.sourceID == SOURCE_ID) {
+      if (it.type == SourceDataLoadedType.METADATA && it.sourceId == SOURCE_ID) {
         answerList.add(testSource.data)
-        it.dataID?.let(dataIdList::add)
+        it.dataId?.let(dataIdList::add)
         latch.countDown()
       }
     }
@@ -418,9 +418,9 @@ class GeoJsonSourceTest : BaseStyleTest() {
       geometry(FEATURE.geometry()!!, DATA_ID)
     }
     val listener = SourceDataLoadedCallback {
-      if (it.type == SourceDataLoadedType.METADATA && it.sourceID == SOURCE_ID) {
+      if (it.type == SourceDataLoadedType.METADATA && it.sourceId == SOURCE_ID) {
         answerList.add(testSource.data)
-        it.dataID?.let(dataIdList::add)
+        it.dataId?.let(dataIdList::add)
         latch.countDown()
       }
     }
@@ -453,9 +453,9 @@ class GeoJsonSourceTest : BaseStyleTest() {
       url(TEST_URI)
     }
     val listener = SourceDataLoadedCallback {
-      if (it.type == SourceDataLoadedType.METADATA && it.sourceID == SOURCE_ID) {
+      if (it.type == SourceDataLoadedType.METADATA && it.sourceId == SOURCE_ID) {
         answerList.add(testSource.data)
-        it.dataID?.let(dataIdList::add)
+        it.dataId?.let(dataIdList::add)
         latch.countDown()
       }
     }
@@ -489,10 +489,10 @@ class GeoJsonSourceTest : BaseStyleTest() {
       url(TEST_URI)
     }
     val listener = SourceDataLoadedCallback {
-      if (it.type == SourceDataLoadedType.METADATA && it.sourceID == SOURCE_ID) {
+      if (it.type == SourceDataLoadedType.METADATA && it.sourceId == SOURCE_ID) {
         answerList.add(testSource.data)
-        println("Data-id : ${it.dataID}")
-        it.dataID?.let(dataIdList::add)
+        println("Data-id : ${it.dataId}")
+        it.dataId?.let(dataIdList::add)
         latch.countDown()
       }
     }
@@ -526,9 +526,9 @@ class GeoJsonSourceTest : BaseStyleTest() {
       url(TEST_URI)
     }
     val listener = SourceDataLoadedCallback {
-      if (it.type == SourceDataLoadedType.METADATA && it.sourceID == SOURCE_ID) {
+      if (it.type == SourceDataLoadedType.METADATA && it.sourceId == SOURCE_ID) {
         answerList.add(testSource.data)
-        it.dataID?.let(dataIdList::add)
+        it.dataId?.let(dataIdList::add)
         latch.countDown()
       }
     }

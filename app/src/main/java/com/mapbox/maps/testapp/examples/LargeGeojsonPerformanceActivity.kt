@@ -42,9 +42,9 @@ class LargeGeojsonPerformanceActivity : AppCompatActivity() {
     mapView.getMapboxMap()
       .apply {
         addOnSourceDataLoadedListener {
-          if (it.dataID.isNullOrBlank().not()) {
+          if (it.dataId.isNullOrBlank().not()) {
             // log whenever update with corresponding data-id is rendered on the map
-            logI(TAG, "GeoJsonSource was updated, data-id : ${it.dataID}")
+            logI(TAG, "GeoJsonSource was updated, data-id : ${it.dataId}")
           }
         }
 

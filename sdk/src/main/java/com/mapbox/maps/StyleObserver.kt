@@ -100,7 +100,7 @@ internal class StyleObserver(
   override fun run(eventData: MapLoadingError) {
     logE(
       TAG,
-      "OnMapLoadError: ${eventData.type}, message: ${eventData.message}, sourceID: ${eventData.sourceID}, tileID: ${eventData.tileID}"
+      "OnMapLoadError: ${eventData.type}, message: ${eventData.message}, sourceID: ${eventData.sourceId}, tileID: ${eventData.tileId}"
     )
     loadStyleErrorListener?.run(eventData)
   }

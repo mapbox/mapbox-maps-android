@@ -243,7 +243,7 @@ class ObservableEventsTest : BaseMapTest() {
 
     val listener = StyleImageMissingCallback {
       assertNotNull(it.timestamp.time)
-      assertEquals(IMAGE_ID, it.imageID)
+      assertEquals(IMAGE_ID, it.imageId)
       latch.countDown()
     }
 
@@ -282,7 +282,7 @@ class ObservableEventsTest : BaseMapTest() {
 
     val listener = StyleImageRemoveUnusedCallback {
       assertNotNull(it.timestamp.time)
-      assertEquals(IMAGE_ID, it.imageID)
+      assertEquals(IMAGE_ID, it.imageId)
       latch.countDown()
     }
 
@@ -327,7 +327,7 @@ class ObservableEventsTest : BaseMapTest() {
     val latch = CountDownLatch(1)
 
     val listener = SourceDataLoadedCallback { eventData ->
-      assertNotNull(eventData.sourceID)
+      assertNotNull(eventData.sourceId)
       assertNotNull(eventData.type)
       assertNotNull(eventData.timeInterval.begin)
       assertNotNull(eventData.timeInterval.end)
@@ -360,7 +360,7 @@ class ObservableEventsTest : BaseMapTest() {
 
     val listener = SourceAddedCallback {
       assertNotNull(it.timestamp.time)
-      assertEquals(SOURCE_ID, it.sourceID)
+      assertEquals(SOURCE_ID, it.sourceId)
       latch.countDown()
     }
 
@@ -407,7 +407,7 @@ class ObservableEventsTest : BaseMapTest() {
 
     val listener = SourceRemovedCallback {
       assertNotNull(it.timestamp.time)
-      assertEquals(SOURCE_ID, it.sourceID)
+      assertEquals(SOURCE_ID, it.sourceId)
       latch.countDown()
     }
 
