@@ -1056,10 +1056,10 @@ class MapboxMapTest {
   }
 
   @Test
-  fun setMemoryBudget() {
-    val memoryBudget = mockk<MapMemoryBudget>()
-    mapboxMap.setMemoryBudget(memoryBudget)
-    verify { nativeMap.setMemoryBudget(memoryBudget) }
+  fun setTileCacheBudget() {
+    val tileCacheBudget = mockk<TileCacheBudget>()
+    mapboxMap.setTileCacheBudget(tileCacheBudget)
+    verify { nativeMap.setTileCacheBudget(tileCacheBudget) }
   }
 
   @Test

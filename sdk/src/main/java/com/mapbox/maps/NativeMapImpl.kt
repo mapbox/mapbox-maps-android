@@ -521,8 +521,8 @@ internal class NativeMapImpl(val map: Map) {
     return map.resetFeatureStates(sourceId, sourceLayerId, callback)
   }
 
-  fun setMemoryBudget(memoryBudget: MapMemoryBudget?) {
-    map.setMemoryBudget(memoryBudget)
+  fun setTileCacheBudget(tileCacheBudget: TileCacheBudget?) {
+    map.setTileCacheBudget(tileCacheBudget)
   }
 
   fun addStyleCustomGeometrySource(

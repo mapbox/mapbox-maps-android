@@ -265,10 +265,10 @@ package com.mapbox.maps {
     method public com.mapbox.common.Cancelable setFeatureState(String sourceId, String? sourceLayerId = null, String featureId, com.mapbox.bindgen.Value state, com.mapbox.maps.FeatureStateOperationCallback callback);
     method public com.mapbox.common.Cancelable setFeatureState(String sourceId, String featureId, com.mapbox.bindgen.Value state, com.mapbox.maps.FeatureStateOperationCallback callback);
     method public void setGestureInProgress(boolean inProgress);
-    method @com.mapbox.maps.MapboxExperimental public void setMemoryBudget(com.mapbox.maps.MapMemoryBudget? memoryBudget);
     method public void setNorthOrientation(com.mapbox.maps.NorthOrientation northOrientation);
     method public void setPrefetchZoomDelta(byte delta);
     method public void setRenderWorldCopies(boolean renderWorldCopies);
+    method public void setTileCacheBudget(com.mapbox.maps.TileCacheBudget? tileCacheBudget);
     method public void setUserAnimationInProgress(boolean inProgress);
     method public void setViewportMode(com.mapbox.maps.ViewportMode viewportMode);
     method public com.mapbox.common.Cancelable subscribeCameraChanged(com.mapbox.maps.CameraChangedCallback cameraChangedCallback);

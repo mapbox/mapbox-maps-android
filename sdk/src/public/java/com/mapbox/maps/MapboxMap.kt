@@ -1871,23 +1871,21 @@ class MapboxMap :
   }
 
   /**
-   * The memory budget hint to be used by the map. The budget can be given in
+   * The tile cache budget hint to be used by the map. The budget can be given in
    * tile units or in megabytes. A Map will do the best effort to keep memory
    * allocations for a non essential resources within the budget.
    *
-   * The memory budget distribution and resource
-   * eviction logic is a subject to change. Current implementation sets memory budget
-   * hint per data source.
+   * If tile cache budget in megabytes is set, the engine will try to use ETC1 texture compression
+   * for raster layers, therefore, raster images with alpha channel will be rendered incorrectly.
    *
-   * If null is set, the memory budget in tile units will be dynamically calculated based on
+   * If null is set, the tile cache budget in tile units will be dynamically calculated based on
    * the current viewport size.
    *
-   * @param memoryBudget The memory budget hint to be used by the Map.
+   * @param tileCacheBudget The tile cache budget hint to be used by the Map.
    */
-  @MapboxExperimental
-  fun setMemoryBudget(memoryBudget: MapMemoryBudget?) {
-    checkNativeMap("setMemoryBudget")
-    nativeMap.setMemoryBudget(memoryBudget)
+  fun setTileCacheBudget(tileCacheBudget: TileCacheBudget?) {
+    checkNativeMap("setTileCacheBudget")
+    nativeMap.setTileCacheBudget(tileCacheBudget)
   }
 
   /**
