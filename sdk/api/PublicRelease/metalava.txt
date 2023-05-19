@@ -286,6 +286,7 @@ package com.mapbox.maps {
     method public com.mapbox.common.Cancelable subscribeStyleImageMissing(com.mapbox.maps.StyleImageMissingCallback styleImageMissingCallback);
     method public com.mapbox.common.Cancelable subscribeStyleImageUnused(com.mapbox.maps.StyleImageRemoveUnusedCallback styleImageRemoveUnusedCallback);
     method public com.mapbox.common.Cancelable subscribeStyleLoaded(com.mapbox.maps.StyleLoadedCallback styleLoadedCallback);
+    method @com.mapbox.maps.MapboxExperimental public java.util.List<com.mapbox.maps.CanonicalTileID> tileCover(com.mapbox.maps.TileCoverOptions tileCoverOptions, com.mapbox.maps.CameraOptions? cameraOptions);
     method public void triggerRepaint();
     method public com.mapbox.geojson.Point unproject(com.mapbox.maps.MercatorCoordinate coordinate, double zoomScale);
     property public com.mapbox.maps.CameraState cameraState;
