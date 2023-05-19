@@ -4,6 +4,10 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 10.14.0-rc.1
+## Features ✨ and improvements 🏁
+* Introduce `MapboxMap.tileCover` experimental API to get the tileIDs that cover current map camera.
+ 
 # 10.14.0-beta.1 May 17, 2023
 ## Features ✨ and improvements 🏁
 * Improve performance of setting puck style properties by removing redundant check if layer / source exists.

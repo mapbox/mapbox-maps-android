@@ -270,6 +270,7 @@ package com.mapbox.maps {
     method public void setUserAnimationInProgress(boolean inProgress);
     method public void setViewportMode(com.mapbox.maps.ViewportMode viewportMode);
     method public void subscribe(com.mapbox.maps.Observer observer, java.util.List<java.lang.String> events);
+    method @com.mapbox.maps.MapboxExperimental public java.util.List<com.mapbox.maps.CanonicalTileID> tileCover(com.mapbox.maps.TileCoverOptions tileCoverOptions, com.mapbox.maps.CameraOptions? cameraOptions);
     method public void triggerRepaint();
     method public com.mapbox.geojson.Point unproject(com.mapbox.maps.MercatorCoordinate coordinate, double zoomScale);
     method public void unsubscribe(com.mapbox.maps.Observer observer, java.util.List<java.lang.String> events);
