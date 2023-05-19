@@ -5,19 +5,14 @@ import androidx.annotation.UiThread
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.mapbox.bindgen.DataRef
+import com.mapbox.common.Cancelable
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.dsl.cameraOptions
-import com.mapbox.maps.extension.observable.eventdata.MapLoadingErrorEventData
-import com.mapbox.maps.extension.observable.getResourceEventData
-import com.mapbox.maps.extension.observable.model.MapLoadErrorType
-import com.mapbox.maps.extension.observable.subscribeResourceRequest
-import com.mapbox.maps.extension.observable.unsubscribeResourceRequest
 import com.mapbox.maps.extension.style.image.image
 import com.mapbox.maps.extension.style.layers.generated.symbolLayer
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.style
-import com.mapbox.maps.plugin.delegates.listeners.*
 import com.mapbox.maps.testapp.BaseMapTest
 import com.mapbox.maps.testapp.R
 import org.junit.Assert.assertEquals
@@ -36,10 +31,12 @@ import java.util.concurrent.TimeoutException
  */
 @RunWith(AndroidJUnit4::class)
 @LargeTest
-class ObservableExtensionTest : BaseMapTest() {
+class ObservableEventsTest : BaseMapTest() {
 
   private val targetCameraOptions =
     CameraOptions.Builder().center(Point.fromLngLat(0.0, 0.0)).zoom(16.0).build()
+
+  private lateinit var cancelable: Cancelable
 
   @Before
   fun setUp() {
@@ -61,15 +58,16 @@ class ObservableExtensionTest : BaseMapTest() {
   fun subscribeResourceRequest() {
     val latch = CountDownLatch(1)
 
-    val observer = Observer { event ->
-      assertEquals("resource-request", event.type)
-      assertNotNull(event.getResourceEventData())
-      assertNotNull(event.getResourceEventData().begin)
+    val resourceRequestCallback = ResourceRequestCallback { event ->
+      assertNotNull(event.request)
+      assertNotNull(event.timeInterval.begin)
+      assertNotNull(event.timeInterval.end)
+      cancelable.cancel()
       latch.countDown()
     }
     rule.scenario.onActivity {
       it.runOnUiThread {
-        mapboxMap.subscribeResourceRequest(observer)
+        cancelable = mapboxMap.subscribeResourceRequest(resourceRequestCallback)
         mapboxMap.setCamera(targetCameraOptions)
       }
     }
@@ -80,7 +78,7 @@ class ObservableExtensionTest : BaseMapTest() {
 
     rule.scenario.onActivity { activity ->
       activity.runOnUiThread {
-        mapboxMap.unsubscribeResourceRequest(observer)
+        cancelable.cancel()
       }
     }
   }
@@ -89,8 +87,9 @@ class ObservableExtensionTest : BaseMapTest() {
   fun subscribeMapLoadedEvent() {
     val latch = CountDownLatch(1)
 
-    val listener = OnMapLoadedListener {
-      assertNotNull(it.begin)
+    val listener = MapLoadedCallback {
+      assertNotNull(it.timeInterval.begin)
+      assertNotNull(it.timeInterval.end)
       latch.countDown()
     }
 
@@ -118,18 +117,16 @@ class ObservableExtensionTest : BaseMapTest() {
   fun subscribeMapLoadingErrorEvent() {
     val latch = CountDownLatch(1)
 
-    val listener = object : OnMapLoadErrorListener {
-      override fun onMapLoadError(eventData: MapLoadingErrorEventData) {
-        assertNotNull(eventData.type)
-        assertNotNull(eventData.message)
-        assertNotNull(eventData.begin)
-        assertEquals(MapLoadErrorType.STYLE, eventData.type)
-        assertEquals(
-          "Failed to load style: Unable to resolve host \"wrongurl\": No address associated with hostname",
-          eventData.message
-        )
-        latch.countDown()
-      }
+    val listener = MapLoadingErrorCallback { eventData ->
+      assertNotNull(eventData.type)
+      assertNotNull(eventData.message)
+      assertNotNull(eventData.timestamp.time)
+      assertEquals(MapLoadingErrorType.STYLE, eventData.type)
+      assertEquals(
+        "Failed to load style: Unable to resolve host \"wrongurl\": No address associated with hostname",
+        eventData.message
+      )
+      latch.countDown()
     }
     rule.scenario.onActivity {
       it.runOnUiThread {
@@ -154,8 +151,8 @@ class ObservableExtensionTest : BaseMapTest() {
   fun subscribeMapIdleEvent() {
     val latch = CountDownLatch(1)
 
-    val listener = OnMapIdleListener {
-      assertNotNull(it.begin)
+    val listener = MapIdleCallback {
+      assertNotNull(it.timestamp.time)
       latch.countDown()
     }
 
@@ -181,14 +178,16 @@ class ObservableExtensionTest : BaseMapTest() {
 
   @Test
   fun subscribeStyleDataLoadedEvent() {
-    val latch = CountDownLatch(3)
+    val latch = CountDownLatch(1)
 
-    val listener = OnStyleDataLoadedListener {
+    val listener = StyleDataLoadedCallback {
       assertNotNull(it.type)
-      assertNotNull(it.begin)
+      assertNotNull(it.timeInterval.begin)
+      assertNotNull(it.timeInterval.end)
       latch.countDown()
     }
 
+    loadTestStyle()
     rule.scenario.onActivity {
       it.runOnUiThread {
         mapboxMap.apply {
@@ -197,7 +196,6 @@ class ObservableExtensionTest : BaseMapTest() {
         }
       }
     }
-    loadTestStyle()
     if (!latch.await(20000, TimeUnit.MILLISECONDS)) {
       throw TimeoutException()
     }
@@ -213,11 +211,13 @@ class ObservableExtensionTest : BaseMapTest() {
   fun subscribeStyleLoadedEvent() {
     val latch = CountDownLatch(1)
 
-    val listener = OnStyleLoadedListener {
-      assertNotNull(it.begin)
+    val listener = StyleLoadedCallback {
+      assertNotNull(it.timeInterval.begin)
+      assertNotNull(it.timeInterval.end)
       latch.countDown()
     }
 
+    loadTestStyle()
     rule.scenario.onActivity {
       it.runOnUiThread {
         mapboxMap.apply {
@@ -226,7 +226,6 @@ class ObservableExtensionTest : BaseMapTest() {
         }
       }
     }
-    loadTestStyle()
     if (!latch.await(20000, TimeUnit.MILLISECONDS)) {
       throw TimeoutException()
     }
@@ -242,9 +241,9 @@ class ObservableExtensionTest : BaseMapTest() {
   fun subscribeStyleImageMissingEvent() {
     val latch = CountDownLatch(1)
 
-    val listener = OnStyleImageMissingListener {
-      assertNotNull(it.begin)
-      assertEquals(IMAGE_ID, it.id)
+    val listener = StyleImageMissingCallback {
+      assertNotNull(it.timestamp.time)
+      assertEquals(IMAGE_ID, it.imageID)
       latch.countDown()
     }
 
@@ -281,9 +280,9 @@ class ObservableExtensionTest : BaseMapTest() {
   fun subscribeStyleImageUnusedEvent() {
     val latch = CountDownLatch(1)
 
-    val listener = OnStyleImageUnusedListener {
-      assertNotNull(it.begin)
-      assertEquals(IMAGE_ID, it.id)
+    val listener = StyleImageRemoveUnusedCallback {
+      assertNotNull(it.timestamp.time)
+      assertEquals(IMAGE_ID, it.imageID)
       latch.countDown()
     }
 
@@ -291,7 +290,6 @@ class ObservableExtensionTest : BaseMapTest() {
       activity.runOnUiThread {
         mapboxMap.apply {
           setCamera(targetCameraOptions)
-          printAllEventsForDebug()
           addOnStyleImageMissingListener {
             getStyle {
               it.addImage(IMAGE_ID, Image(2048, 2048, DataRef.allocateNative(2048 * 2048 * 4)))
@@ -328,10 +326,11 @@ class ObservableExtensionTest : BaseMapTest() {
   fun subscribeSourceDataLoadedEvent() {
     val latch = CountDownLatch(1)
 
-    val listener = OnSourceDataLoadedListener { eventData ->
-      assertNotNull(eventData.id)
+    val listener = SourceDataLoadedCallback { eventData ->
+      assertNotNull(eventData.sourceID)
       assertNotNull(eventData.type)
-      assertNotNull(eventData.begin)
+      assertNotNull(eventData.timeInterval.begin)
+      assertNotNull(eventData.timeInterval.end)
       latch.countDown()
     }
 
@@ -339,7 +338,6 @@ class ObservableExtensionTest : BaseMapTest() {
       activity.runOnUiThread {
         mapboxMap.apply {
           addOnSourceDataLoadedListener(listener)
-          printAllEventsForDebug()
           setCamera(targetCameraOptions)
           loadTestStyle()
         }
@@ -360,9 +358,9 @@ class ObservableExtensionTest : BaseMapTest() {
   fun subscribeSourceAddedEvent() {
     val latch = CountDownLatch(1)
 
-    val listener = OnSourceAddedListener {
-      assertNotNull(it.begin)
-      assertEquals(SOURCE_ID, it.id)
+    val listener = SourceAddedCallback {
+      assertNotNull(it.timestamp.time)
+      assertEquals(SOURCE_ID, it.sourceID)
       latch.countDown()
     }
 
@@ -407,9 +405,9 @@ class ObservableExtensionTest : BaseMapTest() {
   fun subscribeSourceRemovedEvent() {
     val latch = CountDownLatch(1)
 
-    val listener = OnSourceRemovedListener {
-      assertNotNull(it.begin)
-      assertEquals(SOURCE_ID, it.id)
+    val listener = SourceRemovedCallback {
+      assertNotNull(it.timestamp.time)
+      assertEquals(SOURCE_ID, it.sourceID)
       latch.countDown()
     }
 
@@ -461,8 +459,8 @@ class ObservableExtensionTest : BaseMapTest() {
   fun subscribeRenderFrameStartedEvent() {
     val latch = CountDownLatch(1)
 
-    val listener = OnRenderFrameStartedListener {
-      assertNotNull(it.begin)
+    val listener = RenderFrameStartedCallback {
+      assertNotNull(it.timestamp.time)
       latch.countDown()
     }
 
@@ -491,8 +489,9 @@ class ObservableExtensionTest : BaseMapTest() {
   fun subscribeRenderFrameFinishedEvent() {
     val latch = CountDownLatch(1)
 
-    val listener = OnRenderFrameFinishedListener { eventData ->
-      assertNotNull(eventData.begin)
+    val listener = RenderFrameFinishedCallback { eventData ->
+      assertNotNull(eventData.timeInterval.begin)
+      assertNotNull(eventData.timeInterval.end)
       assertNotNull(eventData.renderMode)
       assertNotNull(eventData.needsRepaint)
       assertNotNull(eventData.placementChanged)
@@ -524,8 +523,11 @@ class ObservableExtensionTest : BaseMapTest() {
   fun subscribeCameraChangedEvent() {
     val latch = CountDownLatch(1)
 
-    val listener = OnCameraChangeListener {
-      assertNotNull(it.begin)
+    val listener = CameraChangedCallback {
+      val actualCameraOption = it.cameraState.toCameraOptions()
+      assertNotNull(it.timestamp.time)
+      assertEquals(targetCameraOptions.center, actualCameraOption.center)
+      assertEquals(targetCameraOptions.zoom, actualCameraOption.zoom)
       latch.countDown()
     }
 
@@ -549,43 +551,10 @@ class ObservableExtensionTest : BaseMapTest() {
     }
   }
 
-  private fun printAllEventsForDebug() {
-    rule.scenario.onActivity { activity ->
-      activity.runOnUiThread {
-        mapboxMap.subscribe(
-          {
-            logE(TAG, it.toString())
-          },
-          SUPPORTED_EVENTS
-        )
-      }
-    }
-  }
-
   companion object {
     private const val TAG = "ObservableExtensionTest"
     private const val LAYER_ID = "layer_id"
     private const val SOURCE_ID = "source_id"
     private const val IMAGE_ID = "image_id"
-    private val SUPPORTED_EVENTS = listOf(
-      // Camera events
-      MapEvents.CAMERA_CHANGED,
-      // Map events
-      MapEvents.MAP_IDLE,
-      MapEvents.MAP_LOADING_ERROR,
-      MapEvents.MAP_LOADED,
-      // Style events
-      MapEvents.STYLE_DATA_LOADED,
-      MapEvents.STYLE_LOADED,
-      MapEvents.STYLE_IMAGE_MISSING,
-      MapEvents.STYLE_IMAGE_REMOVE_UNUSED,
-      // Render frame events
-      MapEvents.RENDER_FRAME_STARTED,
-      MapEvents.RENDER_FRAME_FINISHED,
-      // Source events
-      MapEvents.SOURCE_ADDED,
-      MapEvents.SOURCE_DATA_LOADED,
-      MapEvents.SOURCE_REMOVED
-    )
   }
 }

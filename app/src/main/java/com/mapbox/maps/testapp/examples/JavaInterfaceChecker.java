@@ -42,6 +42,7 @@ import com.mapbox.maps.FeatureStateOperationCallback;
 import com.mapbox.maps.ImageHolder;
 import com.mapbox.maps.LayerPosition;
 import com.mapbox.maps.MapInitOptions;
+import com.mapbox.maps.MapLoadingErrorCallback;
 import com.mapbox.maps.MapOptions;
 import com.mapbox.maps.MapSnapshotOptions;
 import com.mapbox.maps.MapSurface;
@@ -79,7 +80,6 @@ import com.mapbox.maps.plugin.annotation.ClusterOptions;
 import com.mapbox.maps.plugin.attribution.AttributionParserConfig;
 import com.mapbox.maps.plugin.attribution.generated.AttributionSettings;
 import com.mapbox.maps.plugin.compass.generated.CompassSettings;
-import com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener;
 import com.mapbox.maps.plugin.gestures.GesturesPlugin;
 import com.mapbox.maps.plugin.gestures.GesturesUtils;
 import com.mapbox.maps.plugin.gestures.OnMoveListener;
@@ -359,7 +359,7 @@ public class JavaInterfaceChecker {
   }
 
   private void mapboxMapOverLoad(MapView mapView, StyleContract.StyleExtension styleExtension, Style.OnStyleLoaded onStyleLoaded,
-                                 OnMapLoadErrorListener onMapLoadErrorListener) {
+                                 MapLoadingErrorCallback onMapLoadErrorListener) {
     final MapboxMap mapboxMap = mapView.getMapboxMap();
     mapboxMap.loadStyleUri(Style.MAPBOX_STREETS);
     mapboxMap.loadStyleUri(Style.MAPBOX_STREETS, onStyleLoaded);

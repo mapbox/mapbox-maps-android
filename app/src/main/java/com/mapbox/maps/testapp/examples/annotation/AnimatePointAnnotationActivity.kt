@@ -9,10 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.animation.addListener
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
-import com.mapbox.maps.extension.observable.eventdata.MapLoadedEventData
 import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.*
-import com.mapbox.maps.plugin.delegates.listeners.OnMapLoadedListener
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityAnnotationBinding
 import com.mapbox.maps.testapp.utils.BitmapUtils.bitmapFromDrawableRes
@@ -22,7 +20,7 @@ import java.util.*
 /**
  * Example showing how to add point annotations and animate them
  */
-class AnimatePointAnnotationActivity : AppCompatActivity(), OnMapLoadedListener {
+class AnimatePointAnnotationActivity : AppCompatActivity(), MapLoadedCallback {
   private var pointAnnotationManager: PointAnnotationManager? = null
   private var animateCarList = listOf<PointAnnotation>()
   private val animators: MutableList<ValueAnimator> = mutableListOf()
@@ -55,7 +53,7 @@ class AnimatePointAnnotationActivity : AppCompatActivity(), OnMapLoadedListener 
     binding.changeStyle.visibility = View.GONE
   }
 
-  override fun onMapLoaded(eventData: MapLoadedEventData) {
+  override fun run(eventData: MapLoaded) {
     pointAnnotationManager = binding.mapView.annotations.createPointAnnotationManager().apply {
       bitmapFromDrawableRes(
         this@AnimatePointAnnotationActivity,

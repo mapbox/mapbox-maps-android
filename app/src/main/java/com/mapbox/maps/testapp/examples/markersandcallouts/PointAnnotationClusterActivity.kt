@@ -118,7 +118,7 @@ class PointAnnotationClusterActivity : AppCompatActivity(), CoroutineScope {
 
   companion object {
     private const val AMOUNT = 10000
-    private const val ICON_FIRE_STATION = "fire-station-11"
+    private const val ICON_FIRE_STATION = "fire-station"
     private const val LONGITUDE = -77.00897
     private const val LATITUDE = 38.87031
     private const val POINTS_URL =

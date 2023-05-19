@@ -5,11 +5,7 @@ import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
 import com.mapbox.maps.*
-import com.mapbox.maps.extension.observable.eventdata.CameraChangedEventData
-import com.mapbox.maps.extension.observable.eventdata.MapLoadingErrorEventData
 import com.mapbox.maps.extension.style.StyleContract
-import com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener
-import com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.channels.trySendBlocking
 import kotlinx.coroutines.flow.Flow
@@ -33,9 +29,9 @@ suspend fun MapboxMap.awaitStyle(): Style = suspendCoroutine { continuation ->
  * [callbackFlow] of [CameraChangedEventData] updates from [MapboxMap.addOnCameraChangeListener].
  */
 @JvmSynthetic
-fun MapboxMap.cameraChanges(): Flow<CameraChangedEventData> =
+fun MapboxMap.cameraChanges(): Flow<CameraChanged> =
   callbackFlow {
-    val cameraCallback = OnCameraChangeListener { eventData ->
+    val cameraCallback = CameraChangedCallback { eventData ->
       trySendBlocking(eventData)
     }
     addOnCameraChangeListener(cameraCallback)
@@ -59,13 +55,8 @@ suspend fun MapboxMap.awaitLoadStyle(
   loadStyle(
     styleExtension,
     transitionOptions,
-    onStyleLoaded = continuation::resume,
-    onMapLoadErrorListener = object : OnMapLoadErrorListener {
-      override fun onMapLoadError(eventData: MapLoadingErrorEventData) {
-        continuation.resumeWithException(MapboxStyleException(eventData.message))
-      }
-    }
-  )
+    onStyleLoaded = continuation::resume
+  ) { mapLoadingError -> continuation.resumeWithException(MapboxStyleException(mapLoadingError.message)) }
 }
 
 /**
@@ -82,13 +73,8 @@ suspend fun MapboxMap.awaitLoadStyleUri(
   loadStyleUri(
     styleUri = styleUri,
     styleTransitionOptions = styleTransitionOptions,
-    onStyleLoaded = continuation::resume,
-    onMapLoadErrorListener = object : OnMapLoadErrorListener {
-      override fun onMapLoadError(eventData: MapLoadingErrorEventData) {
-        continuation.resumeWithException(MapboxStyleException(eventData.message))
-      }
-    }
-  )
+    onStyleLoaded = continuation::resume
+  ) { mapLoadingError -> continuation.resumeWithException(MapboxStyleException(mapLoadingError.message)) }
 }
 
 /**
@@ -105,13 +91,8 @@ suspend fun MapboxMap.awaitLoadStyleJson(
   loadStyleJson(
     styleJson = styleJson,
     styleTransitionOptions = styleTransitionOptions,
-    onStyleLoaded = continuation::resume,
-    onMapLoadErrorListener = object : OnMapLoadErrorListener {
-      override fun onMapLoadError(eventData: MapLoadingErrorEventData) {
-        continuation.resumeWithException(MapboxStyleException(eventData.message))
-      }
-    }
-  )
+    onStyleLoaded = continuation::resume
+  ) { mapLoadingError -> continuation.resumeWithException(MapboxStyleException(mapLoadingError.message)) }
 }
 
 /**

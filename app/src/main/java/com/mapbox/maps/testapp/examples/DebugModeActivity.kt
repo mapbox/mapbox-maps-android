@@ -4,12 +4,9 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import com.mapbox.common.Cancelable
 import com.mapbox.maps.*
-import com.mapbox.maps.extension.observable.eventdata.MapLoadingErrorEventData
-import com.mapbox.maps.extension.observable.getResourceEventData
-import com.mapbox.maps.extension.observable.subscribeResourceRequest
 import com.mapbox.maps.plugin.compass.compass
-import com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityDebugBinding
 
@@ -27,20 +24,8 @@ class DebugModeActivity : AppCompatActivity() {
     MapDebugOptions.STENCIL_CLIP,
     MapDebugOptions.DEPTH_BUFFER
   )
-  private val extensionObservable = Observer { event ->
-    val data = event.getResourceEventData()
-    logI(
-      TAG,
-      "extensionObservable DataSource: ${data.dataSource}\nRequest: ${data.request}\nResponse: ${data.response}\nCancelled: ${data.cancelled}"
-    )
-  }
-
-  private val observable = Observer { event ->
-    logI(
-      TAG,
-      "Type: ${event.type}\nValue: ${event.data.contents}"
-    )
-  }
+  private var resourceRequestCancelable: Cancelable? = null
+  private var untypedEventCancelable: Cancelable? = null
 
   private lateinit var binding: ActivityDebugBinding
 
@@ -50,9 +35,14 @@ class DebugModeActivity : AppCompatActivity() {
     setContentView(binding.root)
 
     mapboxMap = binding.mapView.getMapboxMap()
-    mapboxMap.subscribe(observable, listOf(MapEvents.RESOURCE_REQUEST))
-    // Using the extension method
-    mapboxMap.subscribeResourceRequest(extensionObservable)
+
+    mapboxMap.subscribeResourceRequest {
+      logI(
+        TAG,
+        "extensionObservable DataSource: ${it.source}\nRequest: ${it.request}\nResponse: ${it.response}\nCancelled: ${it.cancelled}"
+      )
+    }
+
     mapboxMap.loadStyleUri(Style.MAPBOX_STREETS)
     binding.mapView.compass.opacity = 0.5f
     mapboxMap.setDebug(debugOptions, true)
@@ -61,56 +51,57 @@ class DebugModeActivity : AppCompatActivity() {
 
   private fun registerListeners(mapboxMap: MapboxMap) {
     mapboxMap.addOnStyleLoadedListener {
-      logI(TAG, "OnStyleLoadedListener: $it")
+      logI(TAG, "StyleLoadedCallback: $it")
     }
     mapboxMap.addOnStyleDataLoadedListener {
-      logI(TAG, "OnStyleDataLoadedListener: $it")
+      logI(TAG, "StyleDataLoadedCallback: $it")
     }
     mapboxMap.addOnStyleImageMissingListener {
-      logI(TAG, "OnStyleImageMissingListener: $it")
+      logI(TAG, "StyleImageMissingCallback: $it")
     }
     mapboxMap.addOnStyleImageUnusedListener {
-      logI(TAG, "OnStyleImageUnusedListener: $it")
+      logI(TAG, "StyleImageRemoveUnusedCallback: $it")
     }
     mapboxMap.addOnMapIdleListener {
-      logI(TAG, "OnMapIdleListener: $it")
+      logI(TAG, "MapIdleCallback: $it")
     }
-    mapboxMap.addOnMapLoadErrorListener(object : OnMapLoadErrorListener {
-      override fun onMapLoadError(eventData: MapLoadingErrorEventData) {
-        logI(TAG, "OnMapLoadErrorListener: $eventData")
-      }
-    })
+    mapboxMap.addOnMapLoadErrorListener { eventData ->
+      logI(
+        TAG,
+        "MapLoadingErrorCallback: $eventData"
+      )
+    }
     mapboxMap.addOnMapLoadedListener {
-      logI(TAG, "OnMapLoadedListener: $it")
+      logI(TAG, "MapLoadedCallback: $it")
     }
     mapboxMap.addOnCameraChangeListener {
-      logI(TAG, "OnCameraChangeListener: $it")
+      logI(TAG, "CameraChangedCallback: $it")
     }
     mapboxMap.addOnRenderFrameStartedListener {
-      logI(TAG, "OnRenderFrameStartedListener: $it")
+      logI(TAG, "RenderFrameStartedCallback: $it")
     }
     mapboxMap.addOnRenderFrameFinishedListener {
       logI(
         TAG,
-        "OnRenderFrameFinishedListener: $it"
+        "RenderFrameFinishedCallback: $it"
       )
     }
     mapboxMap.addOnSourceAddedListener {
       logI(
         TAG,
-        "OnSourceAddedListener: $it"
+        "SourceAddedCallback: $it"
       )
     }
     mapboxMap.addOnSourceDataLoadedListener {
       logI(
         TAG,
-        "OnSourceDataLoadedListener: $it"
+        "SourceDataLoadedCallback: $it"
       )
     }
     mapboxMap.addOnSourceRemovedListener {
       logI(
         TAG,
-        "OnSourceRemovedListener: $it"
+        "SourceRemovedCallback: $it"
       )
     }
   }
@@ -171,6 +162,12 @@ class DebugModeActivity : AppCompatActivity() {
         binding.fpsView.text = getString(R.string.fps, String.format("%.2f", it))
       }
     }
+  }
+
+  override fun onStop() {
+    super.onStop()
+    resourceRequestCancelable?.cancel()
+    untypedEventCancelable?.cancel()
   }
 
   companion object {

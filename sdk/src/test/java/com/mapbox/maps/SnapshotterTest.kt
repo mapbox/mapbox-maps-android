@@ -40,8 +40,7 @@ class SnapshotterTest {
       mockk(relaxed = true),
       mapSnapshotOptions,
       mockk(relaxed = true),
-      coreSnapshotter,
-      mockk(relaxed = true)
+      coreSnapshotter
     )
   }
 
@@ -49,29 +48,6 @@ class SnapshotterTest {
   fun cleanUp() {
     unmockkStatic(Map::class)
     unmockkStatic("com.mapbox.maps.MapboxLogger")
-  }
-
-  @Test
-  fun subscribe() {
-    val observer = mockk<Observer>()
-    val list = mockk<MutableList<String>>()
-    snapshotter.subscribe(observer, list)
-    verify { coreSnapshotter.subscribe(observer, list) }
-  }
-
-  @Test
-  fun unsubscribe() {
-    val observer = mockk<Observer>()
-    val list = mockk<MutableList<String>>()
-    snapshotter.unsubscribe(observer, list)
-    verify { coreSnapshotter.unsubscribe(observer, list) }
-  }
-
-  @Test
-  fun unsubscribeSingle() {
-    val observer = mockk<Observer>()
-    snapshotter.unsubscribe(observer)
-    verify { coreSnapshotter.unsubscribe(observer) }
   }
 
   @Test
@@ -155,7 +131,6 @@ class SnapshotterTest {
   fun destroy() {
     snapshotter.destroy()
     verify { coreSnapshotter.cancel() }
-    verify { coreSnapshotter.unsubscribe(any()) }
     Assert.assertNull(snapshotter.snapshotStyleCallback)
     Assert.assertNull(snapshotter.snapshotCreatedCallback)
   }

@@ -4,47 +4,43 @@ import android.os.SystemClock
 import android.widget.Toast
 import com.google.gson.Gson
 import com.google.gson.JsonObject
+import com.mapbox.common.Cancelable
 import com.mapbox.maps.*
 import com.mapbox.maps.plugin.lifecycle.lifecycle
 import kotlin.math.pow
 import kotlin.math.sqrt
 
-class FrameStatsRecorder : Observer {
+class FrameStatsRecorder {
   private var renderFrameFinishCount = 0
   private var overtimeFrameCount = 0
   private val renderFrameIntervalsMs = mutableListOf<Float>()
   private val frameReport = mutableListOf<JsonObject>()
   private var startBenchmarkTime = 0L
   private var lastRenderedFrameTime = 0L
-
-  override fun notify(event: Event) {
-    if (event.type == MapEvents.RENDER_FRAME_FINISHED) {
-      renderFrameFinishCount++
-      val now = SystemClock.elapsedRealtimeNanos()
-      if (lastRenderedFrameTime != 0L) {
-        renderFrameIntervalsMs.add((now - lastRenderedFrameTime) * 1e-6f)
-        frameReport.add(
-          JsonObject().apply {
-            addProperty(TIME_FROM_START, (now - startBenchmarkTime) * 1e-6f)
-            addProperty(INTERVAL_FROM_LAST_FRAME, (now - lastRenderedFrameTime) * 1e-6f)
-          }
-        )
-        if (now - lastRenderedFrameTime > 1000_000L * TARGET_FRAME_TIME_MS) {
-          overtimeFrameCount++
+  private val renderFrameFinishedCancelable: Cancelable? = null
+  private val renderFrameFinishedCallback = RenderFrameFinishedCallback {
+    renderFrameFinishCount++
+    val now = SystemClock.elapsedRealtimeNanos()
+    if (lastRenderedFrameTime != 0L) {
+      renderFrameIntervalsMs.add((now - lastRenderedFrameTime) * 1e-6f)
+      frameReport.add(
+        JsonObject().apply {
+          addProperty(TIME_FROM_START, (now - startBenchmarkTime) * 1e-6f)
+          addProperty(INTERVAL_FROM_LAST_FRAME, (now - lastRenderedFrameTime) * 1e-6f)
         }
+      )
+      if (now - lastRenderedFrameTime > 1000_000L * TARGET_FRAME_TIME_MS) {
+        overtimeFrameCount++
       }
-      lastRenderedFrameTime = now
     }
+    lastRenderedFrameTime = now
   }
 
   /**
    * Start benchmarking the MapView's frame stats.
    */
   fun startBenchmarking(mapView: MapView) {
-    mapView.getMapboxMap().subscribe(
-      this@FrameStatsRecorder,
-      listOf(MapEvents.RENDER_FRAME_FINISHED)
-    )
+    mapView.getMapboxMap().subscribeRenderFrameFinished(renderFrameFinishedCallback)
     startBenchmarkTime = SystemClock.elapsedRealtimeNanos()
   }
 
@@ -70,7 +66,7 @@ class FrameStatsRecorder : Observer {
       """.trimIndent(),
       Toast.LENGTH_LONG
     ).show()
-    mapView.getMapboxMap().unsubscribe(this@FrameStatsRecorder)
+    renderFrameFinishedCancelable?.cancel()
   }
 
   private fun Number?.format(): String {

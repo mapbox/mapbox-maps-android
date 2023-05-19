@@ -5,13 +5,13 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import com.mapbox.maps.CameraChangedCallback
 import com.mapbox.maps.CameraState
 import com.mapbox.maps.Projection.getMetersPerPixelAtLatitude
 import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapListenerDelegate
 import com.mapbox.maps.plugin.delegates.MapTransformDelegate
-import com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener
 import com.mapbox.maps.plugin.scalebar.generated.ScaleBarAttributeParser
 import com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings
 import com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettingsBase
@@ -30,7 +30,7 @@ open class ScaleBarPluginImpl(
 
   override var internalSettings: ScaleBarSettings = ScaleBarSettings { }
 
-  private val cameraChangeListener = OnCameraChangeListener {
+  private val cameraChangeListener = CameraChangedCallback {
     invalidateScaleBar()
   }
 

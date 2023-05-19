@@ -9,8 +9,6 @@ import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.MapPluginRegistry
 import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
-import com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener
-import com.mapbox.maps.plugin.delegates.listeners.OnStyleDataLoadedListener
 import com.mapbox.maps.renderer.MapboxRenderThread
 import com.mapbox.maps.renderer.MapboxRenderer
 import com.mapbox.maps.renderer.OnFpsChangedListener
@@ -41,7 +39,7 @@ class MapControllerTest {
   private val mockMotionEvent: MotionEvent = mockk()
   private val mockContext: Context = mockk()
   private val mockMapView: MapView = mockk()
-  private val mockOnStyleDataLoadedListener: OnStyleDataLoadedListener = mockk()
+  private val mockOnStyleDataLoadedListener: StyleDataLoadedCallback = mockk()
   private val mockEventsService = mockk<EventsService>()
   private val mockTelemetryService = mockk<TelemetryService>()
 
@@ -241,7 +239,7 @@ class MapControllerTest {
 
   @Test
   fun cameraPluginNotified() {
-    val onCameraChangeListenerSlot = slot<OnCameraChangeListener>()
+    val onCameraChangeListenerSlot = slot<CameraChangedCallback>()
     every { mockNativeObserver.addOnCameraChangeListener(capture(onCameraChangeListenerSlot)) } just Runs
     every { mockNativeObserver.addOnStyleDataLoadedListener(any()) } just Runs
     every { mockPluginRegistry.onStart() } just Runs
@@ -254,8 +252,8 @@ class MapControllerTest {
     every { mockMapboxMap.getStyle() } returns null
 
     testMapController.onStart()
-    val onCameraChangeListener = onCameraChangeListenerSlot.captured
-    onCameraChangeListener.onCameraChanged(mockk())
+    val cameraChangedCallback = onCameraChangeListenerSlot.captured
+    cameraChangedCallback.run(mockk())
 
     verifySequence {
       mockMapboxMap.getStyle()

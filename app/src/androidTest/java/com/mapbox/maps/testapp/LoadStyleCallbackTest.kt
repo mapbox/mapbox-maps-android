@@ -6,8 +6,6 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.mapbox.maps.Style
-import com.mapbox.maps.extension.observable.eventdata.MapLoadingErrorEventData
-import com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -37,10 +35,8 @@ class LoadStyleCallbackTest {
         onStyleLoaded = {
           latch.countDown()
         },
-        onMapLoadErrorListener = object : OnMapLoadErrorListener {
-          override fun onMapLoadError(eventData: MapLoadingErrorEventData) {
-            throw AssertionError("onMapLoadError: $eventData")
-          }
+        mapLoadingErrorCallback = {
+          throw AssertionError("onMapLoadError: $it")
         }
       )
     }
@@ -65,10 +61,8 @@ class LoadStyleCallbackTest {
         onStyleLoaded = {
           latch.countDown()
         },
-        onMapLoadErrorListener = object : OnMapLoadErrorListener {
-          override fun onMapLoadError(eventData: MapLoadingErrorEventData) {
-            throw AssertionError("onMapLoadError: $eventData")
-          }
+        mapLoadingErrorCallback = {
+          throw AssertionError("onMapLoadError: $it")
         }
       )
 
@@ -109,10 +103,8 @@ class LoadStyleCallbackTest {
         onStyleLoaded = {
           latch.countDown()
         },
-        onMapLoadErrorListener = object : OnMapLoadErrorListener {
-          override fun onMapLoadError(eventData: MapLoadingErrorEventData) {
-            throw AssertionError("onMapLoadError: $eventData")
-          }
+        mapLoadingErrorCallback = {
+          throw AssertionError("onMapLoadError: $it")
         }
       )
     }

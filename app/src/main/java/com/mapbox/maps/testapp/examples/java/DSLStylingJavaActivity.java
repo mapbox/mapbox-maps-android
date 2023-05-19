@@ -4,12 +4,15 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.mapbox.geojson.Point;
+import com.mapbox.maps.MapIdleCallback;
+import com.mapbox.maps.MapLoadingError;
+import com.mapbox.maps.MapLoadingErrorCallback;
 import com.mapbox.maps.MapView;
 import com.mapbox.maps.MapboxMap;
-import com.mapbox.maps.QueriedFeature;
 import com.mapbox.maps.QueriedRenderedFeature;
 import com.mapbox.maps.RenderedQueryGeometry;
 import com.mapbox.maps.RenderedQueryOptions;
@@ -38,6 +41,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import static com.mapbox.maps.extension.style.expressions.generated.Expression.concat;
@@ -52,7 +56,7 @@ import static java.text.DateFormat.getDateTimeInstance;
 /**
  * Example showcasing usage of creating style with java codes.
  */
-public class DSLStylingJavaActivity extends AppCompatActivity implements OnMapClickListener {
+public class DSLStylingJavaActivity extends AppCompatActivity implements OnMapClickListener, MapLoadingErrorCallback {
     public static final ArrayList<ArrayList<Double>> POINT_LIST = new ArrayList<ArrayList<Double>>() {
         {
             add(new ArrayList<Double>() {
@@ -105,6 +109,7 @@ public class DSLStylingJavaActivity extends AppCompatActivity implements OnMapCl
     private MapboxMap mapboxMap;
     private MapView mapView;
 
+    private static final String TAG = "StylingJavaActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,8 +123,11 @@ public class DSLStylingJavaActivity extends AppCompatActivity implements OnMapCl
                 builder.build();
                 return null;
             });
-        }, null);
+        }, this);
         GesturesUtils.addOnMapClickListener(mapboxMap, this);
+
+        // subscribe to map idle event
+        mapboxMap.subscribeMapIdle(mapIdle -> Log.d(TAG, "mapIdle event : " + mapIdle.getTimestamp()));
     }
 
     @Override
@@ -201,5 +209,10 @@ public class DSLStylingJavaActivity extends AppCompatActivity implements OnMapCl
         builder.addLayerAtPosition(builder.layerAtPosition(symbolLayer, CIRCLE_LAYER_ID));
 
         return builder.build();
+    }
+
+    @Override
+    public void run(@NonNull MapLoadingError mapLoadingError) {
+
     }
 }

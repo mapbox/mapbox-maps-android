@@ -6,11 +6,11 @@ import androidx.test.annotation.UiThreadTest
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
-import com.mapbox.maps.extension.observable.model.SourceDataType
+import com.mapbox.maps.SourceDataLoadedCallback
+import com.mapbox.maps.SourceDataLoadedType
 import com.mapbox.maps.extension.style.expressions.dsl.generated.*
 import com.mapbox.maps.extension.style.sources.generated.*
 import com.mapbox.maps.extension.style.types.PromoteId
-import com.mapbox.maps.plugin.delegates.listeners.OnSourceDataLoadedListener
 import com.mapbox.maps.testapp.style.BaseStyleTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
@@ -45,8 +45,8 @@ class GeoJsonSourceTest : BaseStyleTest() {
     val testSource = geoJsonSource(SOURCE_ID) {
       url(TEST_URI)
     }
-    val listener = OnSourceDataLoadedListener {
-      if (it.type == SourceDataType.METADATA && it.id == SOURCE_ID) {
+    val listener = SourceDataLoadedCallback {
+      if (it.type == SourceDataLoadedType.METADATA && it.sourceID == SOURCE_ID) {
         assertNotNull(testSource.data)
         latch.countDown()
       }
@@ -81,8 +81,8 @@ class GeoJsonSourceTest : BaseStyleTest() {
     val testSource = geoJsonSource(SOURCE_ID) {
       url(TEST_URI)
     }
-    val listener = OnSourceDataLoadedListener {
-      if (it.type == SourceDataType.METADATA && it.id == SOURCE_ID) {
+    val listener = SourceDataLoadedCallback {
+      if (it.type == SourceDataLoadedType.METADATA && it.sourceID == SOURCE_ID) {
         answerList.add(testSource.data)
         latch.countDown()
       }
@@ -109,8 +109,8 @@ class GeoJsonSourceTest : BaseStyleTest() {
     val latch = CountDownLatch(2)
     val answerList = mutableListOf<String?>()
     val testSource = geoJsonSource(SOURCE_ID) { }
-    val listener = OnSourceDataLoadedListener {
-      if (it.type == SourceDataType.METADATA && it.id == SOURCE_ID) {
+    val listener = SourceDataLoadedCallback {
+      if (it.type == SourceDataLoadedType.METADATA && it.sourceID == SOURCE_ID) {
         answerList.add(testSource.data)
         latch.countDown()
       }
@@ -347,10 +347,10 @@ class GeoJsonSourceTest : BaseStyleTest() {
     val testSource = geoJsonSource(SOURCE_ID) {
       feature(FEATURE, DATA_ID)
     }
-    val listener = OnSourceDataLoadedListener {
-      if (it.type == SourceDataType.METADATA && it.id == SOURCE_ID) {
+    val listener = SourceDataLoadedCallback {
+      if (it.type == SourceDataLoadedType.METADATA && it.sourceID == SOURCE_ID) {
         answerList.add(testSource.data)
-        it.dataId?.let(dataIdList::add)
+        it.dataID?.let(dataIdList::add)
         latch.countDown()
       }
     }
@@ -382,10 +382,10 @@ class GeoJsonSourceTest : BaseStyleTest() {
     val testSource = geoJsonSource(SOURCE_ID) {
       featureCollection(FEATURE_COLLECTION, DATA_ID)
     }
-    val listener = OnSourceDataLoadedListener {
-      if (it.type == SourceDataType.METADATA && it.id == SOURCE_ID) {
+    val listener = SourceDataLoadedCallback {
+      if (it.type == SourceDataLoadedType.METADATA && it.sourceID == SOURCE_ID) {
         answerList.add(testSource.data)
-        it.dataId?.let(dataIdList::add)
+        it.dataID?.let(dataIdList::add)
         latch.countDown()
       }
     }
@@ -417,10 +417,10 @@ class GeoJsonSourceTest : BaseStyleTest() {
     val testSource = geoJsonSource(SOURCE_ID) {
       geometry(FEATURE.geometry()!!, DATA_ID)
     }
-    val listener = OnSourceDataLoadedListener {
-      if (it.type == SourceDataType.METADATA && it.id == SOURCE_ID) {
+    val listener = SourceDataLoadedCallback {
+      if (it.type == SourceDataLoadedType.METADATA && it.sourceID == SOURCE_ID) {
         answerList.add(testSource.data)
-        it.dataId?.let(dataIdList::add)
+        it.dataID?.let(dataIdList::add)
         latch.countDown()
       }
     }
@@ -452,10 +452,10 @@ class GeoJsonSourceTest : BaseStyleTest() {
     val testSource = geoJsonSource(SOURCE_ID) {
       url(TEST_URI)
     }
-    val listener = OnSourceDataLoadedListener {
-      if (it.type == SourceDataType.METADATA && it.id == SOURCE_ID) {
+    val listener = SourceDataLoadedCallback {
+      if (it.type == SourceDataLoadedType.METADATA && it.sourceID == SOURCE_ID) {
         answerList.add(testSource.data)
-        it.dataId?.let(dataIdList::add)
+        it.dataID?.let(dataIdList::add)
         latch.countDown()
       }
     }
@@ -488,11 +488,11 @@ class GeoJsonSourceTest : BaseStyleTest() {
     val testSource = geoJsonSource(SOURCE_ID) {
       url(TEST_URI)
     }
-    val listener = OnSourceDataLoadedListener {
-      if (it.type == SourceDataType.METADATA && it.id == SOURCE_ID) {
+    val listener = SourceDataLoadedCallback {
+      if (it.type == SourceDataLoadedType.METADATA && it.sourceID == SOURCE_ID) {
         answerList.add(testSource.data)
-        println("Data-id : ${it.dataId}")
-        it.dataId?.let(dataIdList::add)
+        println("Data-id : ${it.dataID}")
+        it.dataID?.let(dataIdList::add)
         latch.countDown()
       }
     }
@@ -525,10 +525,10 @@ class GeoJsonSourceTest : BaseStyleTest() {
     val testSource = geoJsonSource(SOURCE_ID) {
       url(TEST_URI)
     }
-    val listener = OnSourceDataLoadedListener {
-      if (it.type == SourceDataType.METADATA && it.id == SOURCE_ID) {
+    val listener = SourceDataLoadedCallback {
+      if (it.type == SourceDataLoadedType.METADATA && it.sourceID == SOURCE_ID) {
         answerList.add(testSource.data)
-        it.dataId?.let(dataIdList::add)
+        it.dataID?.let(dataIdList::add)
         latch.countDown()
       }
     }

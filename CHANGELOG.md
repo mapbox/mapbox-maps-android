@@ -34,7 +34,13 @@ Mapbox welcomes participation and contributions from everyone.
 | LIGHT             | mapbox://styles/mapbox/light-v10             | mapbox://styles/mapbox/light-v11             |
 | DARK              | mapbox://styles/mapbox/dark-v10              | mapbox://styles/mapbox/dark-v11              |
 
-* Remove native interfaces `StyleManagerInterface`, `StyleInterface`, `CameraManagerInterface`, `MapInterface` and use only `Map` object to access native methods.
+
+* Remove native interfaces `StyleManagerInterface`, `StyleInterface`, `CameraManagerInterface`, `MapInterface`, `ObservableInterface` and use only `Map` object to access native methods.
+* Make map events typed-safe, events are now have their own subscription methods. 
+  Following events are added as typed-safe, `CameraChanged`, `MapIdle`, `MapLoadingError`, `MapLoaded`, `StyleDataLoaded`, `StyleLoaded`, `StyleImageMissing`, `StyleImageRemovedUnunsed`,
+  `RenderFrameStarted`, `RenderFrameFinished`, `SourceAdded`, `SourceDataLoaded`, `SourceRemoved`, `ReourceRequest`.
+  All `subscribe` methods return `Cancelable` object, which users could store and call `cancel` when subscription is no longer needed. 
+  `MapboxMap.unsubscribe` methods were removed.
 * Rename `LocationConsumer.onAccuracyRadiusUpdated` to `onHorizontalAccuracyRadiusUpdated`.
 
 ## Features ✨ and improvements 🏁

@@ -69,41 +69,6 @@ class Style {
   }
 
   /**
-   * Subscribes an [Observer] to a provided list of event types.
-   * Observable will hold a strong reference to an Observer instance, therefore,
-   * in order to stop receiving notifications, caller must call unsubscribe with an
-   * Observer instance used for an initial subscription.
-   *
-   * @param observer an Observer
-   * @param events an array of event types to be subscribed to.
-   */
-  fun subscribe(observer: Observer, events: MutableList<String>) {
-    checkNativeStyle("subscribe")
-    styleManager.subscribe(observer, events)
-  }
-
-  /**
-   * Unsubscribes an [Observer] from a provided list of event types.
-   *
-   * @param observer an Observer
-   * @param events an array of event types to be unsubscribed from.
-   */
-  fun unsubscribe(observer: Observer, events: MutableList<String>) {
-    checkNativeStyle("unsubscribe")
-    styleManager.unsubscribe(observer, events)
-  }
-
-  /**
-   * Unsubscribes an [Observer] from all events.
-   *
-   * @param observer an Observer
-   */
-  fun unsubscribe(observer: Observer) {
-    checkNativeStyle("unsubscribe")
-    styleManager.unsubscribe(observer)
-  }
-
-  /**
    * Returns the map style's default camera, if any, or a default camera otherwise.
    * The map style default camera is defined as follows:
    * - [center](https://docs.mapbox.com/mapbox-gl-js/style-spec/#root-center)

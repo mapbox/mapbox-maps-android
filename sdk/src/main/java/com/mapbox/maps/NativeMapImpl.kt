@@ -584,23 +584,72 @@ internal class NativeMapImpl(val map: Map) {
     return map.styleSources
   }
 
-  fun subscribe(observer: Observer, events: List<String>) {
-    map.subscribe(observer, events)
-  }
-
-  fun unsubscribe(observer: Observer, events: List<String>) {
-    map.unsubscribe(observer, events)
-  }
-
-  fun unsubscribe(observer: Observer) {
-    map.unsubscribe(observer)
-  }
-
   fun setRenderWorldCopies(renderWorldCopies: Boolean) {
     map.renderWorldCopies = renderWorldCopies
   }
 
   fun getRenderWorldCopies(): Boolean {
     return map.renderWorldCopies
+  }
+
+  fun subscribe(mapLoadedCallback: MapLoadedCallback): Cancelable {
+    return map.subscribe(mapLoadedCallback)
+  }
+
+  fun subscribe(onMapIdleListener: MapIdleCallback): Cancelable {
+    return map.subscribe(onMapIdleListener)
+  }
+
+  fun subscribe(mapLoadingErrorCallback: MapLoadingErrorCallback): Cancelable {
+    return map.subscribe(mapLoadingErrorCallback)
+  }
+
+  fun subscribe(styleLoadedCallback: StyleLoadedCallback): Cancelable {
+    return map.subscribe(styleLoadedCallback)
+  }
+
+  fun subscribe(styleDataLoadedCallback: StyleDataLoadedCallback): Cancelable {
+    return map.subscribe(styleDataLoadedCallback)
+  }
+
+  fun subscribe(sourceDataLoadedCallback: SourceDataLoadedCallback): Cancelable {
+    return map.subscribe(sourceDataLoadedCallback)
+  }
+
+  fun subscribe(sourceAddedCallback: SourceAddedCallback): Cancelable {
+    return map.subscribe(sourceAddedCallback)
+  }
+
+  fun subscribe(sourceRemovedCallback: SourceRemovedCallback): Cancelable {
+    return map.subscribe(sourceRemovedCallback)
+  }
+
+  fun subscribe(styleImageMissingCallback: StyleImageMissingCallback): Cancelable {
+    return map.subscribe(styleImageMissingCallback)
+  }
+
+  fun subscribe(styleImageRemoveUnusedCallback: StyleImageRemoveUnusedCallback): Cancelable {
+    return map.subscribe(styleImageRemoveUnusedCallback)
+  }
+
+  fun subscribe(cameraChangedCallback: CameraChangedCallback): Cancelable {
+    return map.subscribe(cameraChangedCallback)
+  }
+
+  fun subscribe(renderFrameStartedCallback: RenderFrameStartedCallback): Cancelable {
+    return map.subscribe(renderFrameStartedCallback)
+  }
+
+  fun subscribe(renderFrameFinishedCallback: RenderFrameFinishedCallback): Cancelable {
+    return map.subscribe(renderFrameFinishedCallback)
+  }
+
+  fun subscribe(resourceRequestCallback: ResourceRequestCallback): Cancelable {
+    return map.subscribe(resourceRequestCallback)
+  }
+
+  @MapboxExperimental
+  fun subscribe(eventName: String, onGenericEventsListener: GenericEventCallback): Cancelable {
+    return map.subscribe(eventName, onGenericEventsListener)
   }
 }

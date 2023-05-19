@@ -37,7 +37,7 @@ detekt = "1.22.0"
 # Dependencies
 
 mapboxBase = "0.8.0"
-mapboxGlNative = "11.0.0-SNAPSHOT.0418T1856Z.c0107ce"
+mapboxGlNative = "11.0.0-SNAPSHOT.0505T0723Z.86e8615"
 mapboxCommon = "23.5.0-SNAPSHOT.0406T1327Z.57bf717"
 mapboxGestures = "0.8.0"
 mapboxJavaServices = "5.4.1"

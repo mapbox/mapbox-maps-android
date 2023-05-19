@@ -3,7 +3,6 @@ package com.mapbox.maps
 import android.view.MotionEvent
 import androidx.annotation.VisibleForTesting
 import com.mapbox.maps.assets.AssetManagerProvider
-import com.mapbox.maps.extension.observable.model.StyleDataType
 import com.mapbox.maps.plugin.InvalidViewPluginHostException
 import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.MapPluginRegistry
@@ -24,8 +23,6 @@ import com.mapbox.maps.plugin.annotation.AnnotationPluginImpl
 import com.mapbox.maps.plugin.attribution.AttributionViewPlugin
 import com.mapbox.maps.plugin.compass.CompassViewPlugin
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
-import com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener
-import com.mapbox.maps.plugin.delegates.listeners.OnStyleDataLoadedListener
 import com.mapbox.maps.plugin.gestures.GesturesPluginImpl
 import com.mapbox.maps.plugin.lifecycle.MapboxLifecyclePluginImpl
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentPluginImpl
@@ -46,8 +43,8 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   private val nativeMap: NativeMapImpl
   private val mapboxMap: MapboxMap
   internal val pluginRegistry: MapPluginRegistry
-  private val onStyleDataLoadedListener: OnStyleDataLoadedListener
-  private val onCameraChangedListener: OnCameraChangeListener
+  private val styleDataLoadedCallback: StyleDataLoadedCallback
+  private val cameraChangedCallback: CameraChangedCallback
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal var lifecycleState: LifecycleState = LifecycleState.STATE_STOPPED
@@ -79,11 +76,11 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
         mapInitOptions.resourceOptions.accessToken
       )
     )
-    this.onCameraChangedListener = OnCameraChangeListener {
+    this.cameraChangedCallback = CameraChangedCallback {
       pluginRegistry.onCameraMove(nativeMap.getCameraState())
     }
-    this.onStyleDataLoadedListener = OnStyleDataLoadedListener { eventData ->
-      if (eventData.type == StyleDataType.STYLE) {
+    this.styleDataLoadedCallback = StyleDataLoadedCallback { eventData ->
+      if (eventData.type == StyleDataLoadedType.STYLE) {
         mapboxMap.getStyle { style ->
           this.style = style
           pluginRegistry.onStyleChanged(style)
@@ -105,7 +102,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     nativeMap: NativeMapImpl,
     mapboxMap: MapboxMap,
     pluginRegistry: MapPluginRegistry,
-    onStyleLoadingFinishedListener: OnStyleDataLoadedListener
+    onStyleLoadingFinishedListener: StyleDataLoadedCallback
   ) {
     this.renderer = renderer
     this.nativeObserver = nativeObserver
@@ -114,10 +111,10 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     this.nativeMap = nativeMap
     this.mapboxMap = mapboxMap
     this.pluginRegistry = pluginRegistry
-    this.onCameraChangedListener = OnCameraChangeListener {
+    this.cameraChangedCallback = CameraChangedCallback {
       pluginRegistry.onCameraMove(nativeMap.getCameraState())
     }
-    this.onStyleDataLoadedListener = onStyleLoadingFinishedListener
+    this.styleDataLoadedCallback = onStyleLoadingFinishedListener
   }
 
   fun getNativeMap(): NativeMapImpl {
@@ -141,8 +138,8 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
       }
     }
     nativeObserver.apply {
-      addOnCameraChangeListener(onCameraChangedListener)
-      addOnStyleDataLoadedListener(onStyleDataLoadedListener)
+      addOnCameraChangeListener(cameraChangedCallback)
+      addOnStyleDataLoadedListener(styleDataLoadedCallback)
     }
     renderer.onStart()
     if (!mapboxMap.isStyleLoadInitiated) {
@@ -161,8 +158,8 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     lifecycleState = LifecycleState.STATE_STOPPED
 
     nativeObserver.apply {
-      removeOnCameraChangeListener(onCameraChangedListener)
-      removeOnStyleDataLoadedListener(onStyleDataLoadedListener)
+      removeOnCameraChangeListener(cameraChangedCallback)
+      removeOnStyleDataLoadedListener(styleDataLoadedCallback)
     }
     renderer.onStop()
     pluginRegistry.onStop()

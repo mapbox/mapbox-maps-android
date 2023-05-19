@@ -162,20 +162,20 @@ package com.mapbox.maps {
     field public static final String MAPBOX_ACCESS_TOKEN_RESOURCE_NAME = "mapbox_access_token";
   }
 
-  public final class MapboxMap implements com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate com.mapbox.maps.plugin.delegates.MapFeatureQueryDelegate com.mapbox.maps.plugin.delegates.MapListenerDelegate com.mapbox.maps.plugin.delegates.MapPluginExtensionsDelegate com.mapbox.maps.plugin.delegates.MapProjectionDelegate com.mapbox.maps.plugin.delegates.MapTransformDelegate com.mapbox.maps.ObservableInterface {
-    method public void addOnCameraChangeListener(com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener onCameraChangeListener);
-    method public void addOnMapIdleListener(com.mapbox.maps.plugin.delegates.listeners.OnMapIdleListener onMapIdleListener);
-    method public void addOnMapLoadErrorListener(com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener onMapLoadErrorListener);
-    method public void addOnMapLoadedListener(com.mapbox.maps.plugin.delegates.listeners.OnMapLoadedListener onMapLoadedListener);
-    method public void addOnRenderFrameFinishedListener(com.mapbox.maps.plugin.delegates.listeners.OnRenderFrameFinishedListener onRenderFrameFinishedListener);
-    method public void addOnRenderFrameStartedListener(com.mapbox.maps.plugin.delegates.listeners.OnRenderFrameStartedListener onRenderFrameStartedListener);
-    method public void addOnSourceAddedListener(com.mapbox.maps.plugin.delegates.listeners.OnSourceAddedListener onSourceAddedListener);
-    method public void addOnSourceDataLoadedListener(com.mapbox.maps.plugin.delegates.listeners.OnSourceDataLoadedListener onSourceDataLoadedListener);
-    method public void addOnSourceRemovedListener(com.mapbox.maps.plugin.delegates.listeners.OnSourceRemovedListener onSourceRemovedListener);
-    method public void addOnStyleDataLoadedListener(com.mapbox.maps.plugin.delegates.listeners.OnStyleDataLoadedListener onStyleDataLoadedListener);
-    method public void addOnStyleImageMissingListener(com.mapbox.maps.plugin.delegates.listeners.OnStyleImageMissingListener onStyleImageMissingListener);
-    method public void addOnStyleImageUnusedListener(com.mapbox.maps.plugin.delegates.listeners.OnStyleImageUnusedListener onStyleImageUnusedListener);
-    method public void addOnStyleLoadedListener(com.mapbox.maps.plugin.delegates.listeners.OnStyleLoadedListener onStyleLoadedListener);
+  public final class MapboxMap implements com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate com.mapbox.maps.plugin.delegates.MapFeatureQueryDelegate com.mapbox.maps.plugin.delegates.MapListenerDelegate com.mapbox.maps.plugin.delegates.MapPluginExtensionsDelegate com.mapbox.maps.plugin.delegates.MapProjectionDelegate com.mapbox.maps.plugin.delegates.MapTransformDelegate {
+    method @Deprecated public void addOnCameraChangeListener(com.mapbox.maps.CameraChangedCallback cameraChangedCallback);
+    method @Deprecated public void addOnMapIdleListener(com.mapbox.maps.MapIdleCallback mapIdleCallback);
+    method @Deprecated public void addOnMapLoadErrorListener(com.mapbox.maps.MapLoadingErrorCallback mapLoadingErrorCallback);
+    method @Deprecated public void addOnMapLoadedListener(com.mapbox.maps.MapLoadedCallback mapLoadedCallback);
+    method @Deprecated public void addOnRenderFrameFinishedListener(com.mapbox.maps.RenderFrameFinishedCallback renderFrameFinishedCallback);
+    method @Deprecated public void addOnRenderFrameStartedListener(com.mapbox.maps.RenderFrameStartedCallback renderFrameStartedCallback);
+    method @Deprecated public void addOnSourceAddedListener(com.mapbox.maps.SourceAddedCallback sourceAddedCallback);
+    method @Deprecated public void addOnSourceDataLoadedListener(com.mapbox.maps.SourceDataLoadedCallback sourceDataLoadedCallback);
+    method @Deprecated public void addOnSourceRemovedListener(com.mapbox.maps.SourceRemovedCallback sourceRemovedCallback);
+    method @Deprecated public void addOnStyleDataLoadedListener(com.mapbox.maps.StyleDataLoadedCallback styleDataLoadedCallback);
+    method @Deprecated public void addOnStyleImageMissingListener(com.mapbox.maps.StyleImageMissingCallback styleImageMissingCallback);
+    method @Deprecated public void addOnStyleImageUnusedListener(com.mapbox.maps.StyleImageRemoveUnusedCallback styleImageRemoveUnusedCallback);
+    method @Deprecated public void addOnStyleLoadedListener(com.mapbox.maps.StyleLoadedCallback styleLoadedCallback);
     method public Object? cameraAnimationsPlugin(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.animation.CameraAnimationsPlugin,?> function);
     method public com.mapbox.maps.CameraOptions cameraForCoordinateBounds(com.mapbox.maps.CoordinateBounds bounds, com.mapbox.maps.EdgeInsets? padding, Double? bearing, Double? pitch);
     method public com.mapbox.maps.CameraOptions cameraForCoordinates(java.util.List<com.mapbox.geojson.Point> coordinates, com.mapbox.maps.EdgeInsets? padding, Double? bearing, Double? pitch);
@@ -220,16 +220,16 @@ package com.mapbox.maps {
     method public boolean isGestureInProgress();
     method public boolean isUserAnimationInProgress();
     method public boolean isValid();
-    method public void loadStyle(com.mapbox.maps.extension.style.StyleContract.StyleExtension styleExtension, com.mapbox.maps.TransitionOptions? transitionOptions = null, com.mapbox.maps.Style.OnStyleLoaded? onStyleLoaded = null, com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener? onMapLoadErrorListener = null);
-    method public void loadStyle(com.mapbox.maps.extension.style.StyleContract.StyleExtension styleExtension, com.mapbox.maps.Style.OnStyleLoaded? onStyleLoaded = null, com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener? onMapLoadErrorListener = null);
+    method public void loadStyle(com.mapbox.maps.extension.style.StyleContract.StyleExtension styleExtension, com.mapbox.maps.TransitionOptions? transitionOptions = null, com.mapbox.maps.Style.OnStyleLoaded? onStyleLoaded = null, com.mapbox.maps.MapLoadingErrorCallback? mapLoadingErrorCallback = null);
+    method public void loadStyle(com.mapbox.maps.extension.style.StyleContract.StyleExtension styleExtension, com.mapbox.maps.Style.OnStyleLoaded? onStyleLoaded = null, com.mapbox.maps.MapLoadingErrorCallback? mapLoadingErrorCallback = null);
     method public void loadStyle(com.mapbox.maps.extension.style.StyleContract.StyleExtension styleExtension, com.mapbox.maps.Style.OnStyleLoaded onStyleLoaded);
     method public void loadStyle(com.mapbox.maps.extension.style.StyleContract.StyleExtension styleExtension);
-    method public void loadStyleJson(String styleJson, com.mapbox.maps.TransitionOptions? styleTransitionOptions = null, com.mapbox.maps.Style.OnStyleLoaded? onStyleLoaded = null, com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener? onMapLoadErrorListener = null);
-    method public void loadStyleJson(String styleJson, com.mapbox.maps.Style.OnStyleLoaded? onStyleLoaded = null, com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener? onMapLoadErrorListener = null);
+    method public void loadStyleJson(String styleJson, com.mapbox.maps.TransitionOptions? styleTransitionOptions = null, com.mapbox.maps.Style.OnStyleLoaded? onStyleLoaded = null, com.mapbox.maps.MapLoadingErrorCallback? mapLoadingErrorCallback = null);
+    method public void loadStyleJson(String styleJson, com.mapbox.maps.Style.OnStyleLoaded? onStyleLoaded = null, com.mapbox.maps.MapLoadingErrorCallback? mapLoadingErrorCallback = null);
     method public void loadStyleJson(String styleJson, com.mapbox.maps.Style.OnStyleLoaded onStyleLoaded);
     method public void loadStyleJson(String styleJson);
-    method public void loadStyleUri(String styleUri, com.mapbox.maps.TransitionOptions? styleTransitionOptions = null, com.mapbox.maps.Style.OnStyleLoaded? onStyleLoaded = null, com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener? onMapLoadErrorListener = null);
-    method public void loadStyleUri(String styleUri, com.mapbox.maps.Style.OnStyleLoaded? onStyleLoaded = null, com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener? onMapLoadErrorListener = null);
+    method public void loadStyleUri(String styleUri, com.mapbox.maps.TransitionOptions? styleTransitionOptions = null, com.mapbox.maps.Style.OnStyleLoaded? onStyleLoaded = null, com.mapbox.maps.MapLoadingErrorCallback? mapLoadingErrorCallback = null);
+    method public void loadStyleUri(String styleUri, com.mapbox.maps.Style.OnStyleLoaded? onStyleLoaded = null, com.mapbox.maps.MapLoadingErrorCallback? mapLoadingErrorCallback = null);
     method public void loadStyleUri(String styleUri, com.mapbox.maps.Style.OnStyleLoaded onStyleLoaded);
     method public void loadStyleUri(String styleUri);
     method public com.mapbox.maps.ScreenCoordinate pixelForCoordinate(com.mapbox.geojson.Point coordinate);
@@ -242,19 +242,19 @@ package com.mapbox.maps {
     method public com.mapbox.common.Cancelable removeFeatureState(String sourceId, String? sourceLayerId = null, String featureId, String? stateKey = null, com.mapbox.maps.FeatureStateOperationCallback callback);
     method public com.mapbox.common.Cancelable removeFeatureState(String sourceId, String? sourceLayerId = null, String featureId, com.mapbox.maps.FeatureStateOperationCallback callback);
     method public com.mapbox.common.Cancelable removeFeatureState(String sourceId, String featureId, com.mapbox.maps.FeatureStateOperationCallback callback);
-    method public void removeOnCameraChangeListener(com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener onCameraChangeListener);
-    method public void removeOnMapIdleListener(com.mapbox.maps.plugin.delegates.listeners.OnMapIdleListener onMapIdleListener);
-    method public void removeOnMapLoadErrorListener(com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener onMapLoadErrorListener);
-    method public void removeOnMapLoadedListener(com.mapbox.maps.plugin.delegates.listeners.OnMapLoadedListener onMapLoadedListener);
-    method public void removeOnRenderFrameFinishedListener(com.mapbox.maps.plugin.delegates.listeners.OnRenderFrameFinishedListener onRenderFrameFinishedListener);
-    method public void removeOnRenderFrameStartedListener(com.mapbox.maps.plugin.delegates.listeners.OnRenderFrameStartedListener onRenderFrameStartedListener);
-    method public void removeOnSourceAddedListener(com.mapbox.maps.plugin.delegates.listeners.OnSourceAddedListener onSourceAddedListener);
-    method public void removeOnSourceDataLoadedListener(com.mapbox.maps.plugin.delegates.listeners.OnSourceDataLoadedListener onSourceDataLoadedListener);
-    method public void removeOnSourceRemovedListener(com.mapbox.maps.plugin.delegates.listeners.OnSourceRemovedListener onSourceRemovedListener);
-    method public void removeOnStyleDataLoadedListener(com.mapbox.maps.plugin.delegates.listeners.OnStyleDataLoadedListener onStyleDataLoadedListener);
-    method public void removeOnStyleImageMissingListener(com.mapbox.maps.plugin.delegates.listeners.OnStyleImageMissingListener onStyleImageMissingListener);
-    method public void removeOnStyleImageUnusedListener(com.mapbox.maps.plugin.delegates.listeners.OnStyleImageUnusedListener onStyleImageUnusedListener);
-    method public void removeOnStyleLoadedListener(com.mapbox.maps.plugin.delegates.listeners.OnStyleLoadedListener onStyleLoadedListener);
+    method @Deprecated public void removeOnCameraChangeListener(com.mapbox.maps.CameraChangedCallback cameraChangedCallback);
+    method @Deprecated public void removeOnMapIdleListener(com.mapbox.maps.MapIdleCallback mapIdleCallback);
+    method @Deprecated public void removeOnMapLoadErrorListener(com.mapbox.maps.MapLoadingErrorCallback mapLoadingErrorCallback);
+    method @Deprecated public void removeOnMapLoadedListener(com.mapbox.maps.MapLoadedCallback mapLoadedCallback);
+    method @Deprecated public void removeOnRenderFrameFinishedListener(com.mapbox.maps.RenderFrameFinishedCallback renderFrameFinishedCallback);
+    method @Deprecated public void removeOnRenderFrameStartedListener(com.mapbox.maps.RenderFrameStartedCallback renderFrameStartedCallback);
+    method @Deprecated public void removeOnSourceAddedListener(com.mapbox.maps.SourceAddedCallback sourceAddedCallback);
+    method @Deprecated public void removeOnSourceDataLoadedListener(com.mapbox.maps.SourceDataLoadedCallback sourceDataLoadedCallback);
+    method @Deprecated public void removeOnSourceRemovedListener(com.mapbox.maps.SourceRemovedCallback sourceRemovedCallback);
+    method @Deprecated public void removeOnStyleDataLoadedListener(com.mapbox.maps.StyleDataLoadedCallback styleDataLoadedCallback);
+    method @Deprecated public void removeOnStyleImageMissingListener(com.mapbox.maps.StyleImageMissingCallback styleImageMissingCallback);
+    method @Deprecated public void removeOnStyleImageUnusedListener(com.mapbox.maps.StyleImageRemoveUnusedCallback styleImageRemoveUnusedCallback);
+    method @Deprecated public void removeOnStyleLoadedListener(com.mapbox.maps.StyleLoadedCallback styleLoadedCallback);
     method public com.mapbox.common.Cancelable resetFeatureStates(String sourceId, String? sourceLayerId = null, com.mapbox.maps.FeatureStateOperationCallback callback);
     method public com.mapbox.common.Cancelable resetFeatureStates(String sourceId, com.mapbox.maps.FeatureStateOperationCallback callback);
     method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setBounds(com.mapbox.maps.CameraBoundsOptions options);
@@ -271,11 +271,23 @@ package com.mapbox.maps {
     method public void setRenderWorldCopies(boolean renderWorldCopies);
     method public void setUserAnimationInProgress(boolean inProgress);
     method public void setViewportMode(com.mapbox.maps.ViewportMode viewportMode);
-    method public void subscribe(com.mapbox.maps.Observer observer, java.util.List<java.lang.String> events);
+    method public com.mapbox.common.Cancelable subscribeCameraChanged(com.mapbox.maps.CameraChangedCallback cameraChangedCallback);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.common.Cancelable subscribeGenericEvent(String eventName, com.mapbox.maps.GenericEventCallback genericEventCallback);
+    method public com.mapbox.common.Cancelable subscribeMapIdle(com.mapbox.maps.MapIdleCallback mapIdleCallback);
+    method public com.mapbox.common.Cancelable subscribeMapLoaded(com.mapbox.maps.MapLoadedCallback mapLoadedCallback);
+    method public com.mapbox.common.Cancelable subscribeMapLoadingError(com.mapbox.maps.MapLoadingErrorCallback mapLoadingErrorCallback);
+    method public com.mapbox.common.Cancelable subscribeRenderFrameFinished(com.mapbox.maps.RenderFrameFinishedCallback renderFrameFinishedCallback);
+    method public com.mapbox.common.Cancelable subscribeRenderFrameStarted(com.mapbox.maps.RenderFrameStartedCallback renderFrameStartedCallback);
+    method public com.mapbox.common.Cancelable subscribeResourceRequest(com.mapbox.maps.ResourceRequestCallback resourceRequestCallback);
+    method public com.mapbox.common.Cancelable subscribeSourceAdded(com.mapbox.maps.SourceAddedCallback sourceAddedCallback);
+    method public com.mapbox.common.Cancelable subscribeSourceDataLoaded(com.mapbox.maps.SourceDataLoadedCallback sourceDataLoadedCallback);
+    method public com.mapbox.common.Cancelable subscribeSourceRemoved(com.mapbox.maps.SourceRemovedCallback sourceRemovedCallback);
+    method public com.mapbox.common.Cancelable subscribeStyleDataLoaded(com.mapbox.maps.StyleDataLoadedCallback styleDataLoadedCallback);
+    method public com.mapbox.common.Cancelable subscribeStyleImageMissing(com.mapbox.maps.StyleImageMissingCallback styleImageMissingCallback);
+    method public com.mapbox.common.Cancelable subscribeStyleImageUnused(com.mapbox.maps.StyleImageRemoveUnusedCallback styleImageRemoveUnusedCallback);
+    method public com.mapbox.common.Cancelable subscribeStyleLoaded(com.mapbox.maps.StyleLoadedCallback styleLoadedCallback);
     method public void triggerRepaint();
     method public com.mapbox.geojson.Point unproject(com.mapbox.maps.MercatorCoordinate coordinate, double zoomScale);
-    method public void unsubscribe(com.mapbox.maps.Observer observer, java.util.List<java.lang.String> events);
-    method public void unsubscribe(com.mapbox.maps.Observer observer);
     property public com.mapbox.maps.CameraState cameraState;
     field public static final com.mapbox.maps.MapboxMap.Companion Companion;
   }
@@ -342,9 +354,6 @@ package com.mapbox.maps {
     method public final void setStyleListener(com.mapbox.maps.SnapshotStyleListener listener);
     method public final void setStyleUri(String styleUri);
     method public final void start(com.mapbox.maps.SnapshotCreatedListener callback);
-    method public final void subscribe(com.mapbox.maps.Observer observer, java.util.List<java.lang.String> events);
-    method public final void unsubscribe(com.mapbox.maps.Observer observer, java.util.List<java.lang.String> events);
-    method public final void unsubscribe(com.mapbox.maps.Observer observer);
     field public static final com.mapbox.maps.Snapshotter.Companion Companion;
   }
 
@@ -414,7 +423,7 @@ package com.mapbox.maps.coroutine {
     method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.maps.Style! awaitLoadStyleJson(com.mapbox.maps.MapboxMap, String styleJson, com.mapbox.maps.TransitionOptions? styleTransitionOptions = null);
     method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.maps.Style! awaitLoadStyleUri(com.mapbox.maps.MapboxMap, String styleUri, com.mapbox.maps.TransitionOptions? styleTransitionOptions = null);
     method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.maps.Style! awaitStyle(com.mapbox.maps.MapboxMap);
-    method @kotlin.jvm.JvmSynthetic public static kotlinx.coroutines.flow.Flow<? extends com.mapbox.maps.extension.observable.eventdata.CameraChangedEventData>! cameraChanges(com.mapbox.maps.MapboxMap);
+    method @kotlin.jvm.JvmSynthetic public static kotlinx.coroutines.flow.Flow<? extends com.mapbox.maps.CameraChanged>! cameraChanges(com.mapbox.maps.MapboxMap);
     method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.Value>! getFeatureState(com.mapbox.maps.MapboxMap, String sourceId, String sourceLayerId = null, String featureId);
     method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.maps.FeatureExtensionValue>! getGeoJsonClusterChildren(com.mapbox.maps.MapboxMap, String sourceIdentifier, com.mapbox.geojson.Feature cluster);
     method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.maps.FeatureExtensionValue>! getGeoJsonClusterExpansionZoom(com.mapbox.maps.MapboxMap, String sourceIdentifier, com.mapbox.geojson.Feature cluster);

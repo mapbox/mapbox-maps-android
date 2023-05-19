@@ -1,12 +1,5 @@
 package com.mapbox.maps
 
-import com.mapbox.maps.extension.observable.eventdata.MapLoadingErrorEventData
-import com.mapbox.maps.extension.observable.eventdata.StyleDataLoadedEventData
-import com.mapbox.maps.extension.observable.eventdata.StyleLoadedEventData
-import com.mapbox.maps.extension.observable.model.StyleDataType
-import com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener
-import com.mapbox.maps.plugin.delegates.listeners.OnStyleDataLoadedListener
-import com.mapbox.maps.plugin.delegates.listeners.OnStyleLoadedListener
 import java.util.concurrent.CopyOnWriteArraySet
 
 /**
@@ -18,10 +11,9 @@ internal class StyleObserver(
   private val styleLoadedListener: Style.OnStyleLoaded,
   private val nativeObserver: NativeObserver,
   private val pixelRatio: Float
-) : OnStyleLoadedListener, OnMapLoadErrorListener, OnStyleDataLoadedListener {
+) : StyleLoadedCallback, MapLoadingErrorCallback, StyleDataLoadedCallback {
 
   private var userStyleLoadedListener: Style.OnStyleLoaded? = null
-
   // fired when [StyleDataType.STYLE] arrives, first of all style data loaded events
   private var styleDataStyleLoadedListener: Style.OnStyleLoaded? = null
   // if the listener is not null - style load has been started
@@ -32,15 +24,15 @@ internal class StyleObserver(
   private var styleDataSpritesLoadedListener: Style.OnStyleLoaded? = null
   // fired when [StyleDataType.SOURCES] arrives
   private var styleDataSourcesLoadedListener: Style.OnStyleLoaded? = null
-
-  private var loadStyleErrorListener: OnMapLoadErrorListener? = null
-
+  private var loadStyleErrorListener: MapLoadingErrorCallback? = null
   private val getStyleListeners = CopyOnWriteArraySet<Style.OnStyleLoaded>()
-  /** Initialized after [MapEvents.STYLE_LOADED] event from [preLoadedStyle], sent to user and all plugins. */
+
+  /** Initialized after [MapEvent.STYLE_LOADED] event from [preLoadedStyle], sent to user and all plugins. */
   private var loadedStyle: Style? = null
-  /** Initialized after [MapEvents.STYLE_DATA_LOADED] event to notify [styleDataStyleLoadedListener]
+
+  /** Initialized after [MapEvent.STYLE_DATA_LOADED] event to notify [styleDataStyleLoadedListener]
    *  listener to apply style extension properties. They should be applied ASAP (before the final
-   *  [MapEvents.STYLE_LOADED] event) to make sure map is rendered correctly from the very beginning
+   *  [MapEvent.STYLE_LOADED] event) to make sure map is rendered correctly from the very beginning
    *  (e.g. with the correct [Projection]). */
   private var preLoadedStyle: Style? = null
 
@@ -60,15 +52,15 @@ internal class StyleObserver(
     styleDataStyleLoadedListener: Style.OnStyleLoaded,
     styleDataSpritesLoadedListener: Style.OnStyleLoaded? = null,
     styleDataSourcesLoadedListener: Style.OnStyleLoaded? = null,
-    onMapLoadErrorListener: OnMapLoadErrorListener?
+    mapLoadingErrorCallback: MapLoadingErrorCallback?
   ) {
     // needed to prevent receiving onStyleLoaded for the old style in some rare cases
-    nativeObserver.resubscribeStyleLoadListeners()
+    nativeObserver.resubscribeStyleLoadListeners(styleLoadedCallback = this, styleDataLoadedCallback = this)
     this.userStyleLoadedListener = userOnStyleLoaded
     this.styleDataStyleLoadedListener = styleDataStyleLoadedListener
     this.styleDataSpritesLoadedListener = styleDataSpritesLoadedListener
     this.styleDataSourcesLoadedListener = styleDataSourcesLoadedListener
-    this.loadStyleErrorListener = onMapLoadErrorListener
+    this.loadStyleErrorListener = mapLoadingErrorCallback
   }
 
   /**
@@ -82,7 +74,7 @@ internal class StyleObserver(
   /**
    * Invoked when a style has loaded
    */
-  override fun onStyleLoaded(eventData: StyleLoadedEventData) {
+  override fun run(eventData: StyleLoaded) {
     loadedStyle?.markInvalid()
     loadedStyle = preLoadedStyle
     val style = loadedStyle
@@ -105,30 +97,30 @@ internal class StyleObserver(
     getStyleListeners.clear()
   }
 
-  override fun onMapLoadError(eventData: MapLoadingErrorEventData) {
+  override fun run(eventData: MapLoadingError) {
     logE(
       TAG,
-      "OnMapLoadError: ${eventData.type}, message: ${eventData.message}, sourceID: ${eventData.sourceId}, tileID: ${eventData.tileId}"
+      "OnMapLoadError: ${eventData.type}, message: ${eventData.message}, sourceID: ${eventData.sourceID}, tileID: ${eventData.tileID}"
     )
-    loadStyleErrorListener?.onMapLoadError(eventData)
+    loadStyleErrorListener?.run(eventData)
   }
 
-  override fun onStyleDataLoaded(eventData: StyleDataLoadedEventData) {
+  override fun run(eventData: StyleDataLoaded) {
     when (eventData.type) {
-      StyleDataType.STYLE -> {
+      StyleDataLoadedType.STYLE -> {
         preLoadedStyle = Style(styleManager, pixelRatio).also {
           styleDataStyleLoadedListener?.onStyleLoaded(it)
         }
         styleDataStyleLoadedListener = null
       }
-      StyleDataType.SPRITE -> {
+      StyleDataLoadedType.SPRITE -> {
         // if we're waiting for the [StyleDataType.STYLE] event - then this [StyleDataType.SPRITE]
         // is related to the previously loaded style, don't notify style extension DSL about it
         if (!isWaitingStyleDataStyleEvent) {
           onStyleSpritesReady()
         }
       }
-      StyleDataType.SOURCES -> {
+      StyleDataLoadedType.SOURCES -> {
         // if we're waiting for the [StyleDataType.STYLE] event - then this [StyleDataType.SOURCES]
         // is related to the previously loaded style, don't notify style extension DSL about it
         if (!isWaitingStyleDataStyleEvent) {
