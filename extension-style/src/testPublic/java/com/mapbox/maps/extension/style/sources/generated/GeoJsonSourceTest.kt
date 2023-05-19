@@ -82,7 +82,7 @@ class GeoJsonSourceTest {
     testSource.bindTo(style)
     Shadows.shadowOf(GeoJsonSource.workerThread.looper).idle()
 
-    verify { style.setStyleGeoJSONSourceData("testId", capture(jsonSlot)) }
+    verify { style.setStyleGeoJSONSourceData("testId", "", capture(jsonSlot)) }
     assertTrue(jsonSlot.captured.string.contains("{\"type\":\"FeatureCollection\",\"features\":[]}"))
   }
 
@@ -109,7 +109,7 @@ class GeoJsonSourceTest {
     Shadows.shadowOf(GeoJsonSource.workerThread.looper).idle()
     Shadows.shadowOf(Looper.getMainLooper()).idle()
 
-    verify { style.setStyleGeoJSONSourceData("testId", capture(jsonSlot)) }
+    verify { style.setStyleGeoJSONSourceData("testId", "", capture(jsonSlot)) }
     assertEquals(jsonSlot.captured.string, "{\"type\":\"FeatureCollection\",\"features\":[]}")
 
     testSource.data(TEST_GEOJSON, DATA_ID)
@@ -139,7 +139,7 @@ class GeoJsonSourceTest {
     testSource.bindTo(style)
     Shadows.shadowOf(GeoJsonSource.workerThread.looper).idle()
 
-    verify { style.setStyleGeoJSONSourceData("testId", capture(jsonSlot)) }
+    verify { style.setStyleGeoJSONSourceData("testId", "", capture(jsonSlot)) }
     assertEquals(jsonSlot.captured.string, "testUrl")
   }
 
@@ -153,7 +153,7 @@ class GeoJsonSourceTest {
     Shadows.shadowOf(GeoJsonSource.workerThread.looper).idle()
     Shadows.shadowOf(Looper.getMainLooper()).idle()
 
-    verify { style.setStyleGeoJSONSourceData("testId", capture(jsonSlot)) }
+    verify { style.setStyleGeoJSONSourceData("testId", "", capture(jsonSlot)) }
     assertEquals(jsonSlot.captured.string, "testUrl")
   }
 
@@ -564,7 +564,7 @@ class GeoJsonSourceTest {
     testSource.feature(FEATURE)
     Shadows.shadowOf(GeoJsonSource.workerThread.looper).idle()
     Shadows.shadowOf(Looper.getMainLooper()).idle()
-    verify { style.setStyleGeoJSONSourceData("testId", any()) }
+    verify { style.setStyleGeoJSONSourceData("testId", "", any()) }
 
     testSource.feature(FEATURE, DATA_ID)
     Shadows.shadowOf(GeoJsonSource.workerThread.looper).idle()
@@ -581,7 +581,7 @@ class GeoJsonSourceTest {
     testSource.featureCollection(FEATURE_COLLECTION)
     Shadows.shadowOf(GeoJsonSource.workerThread.looper).idle()
     Shadows.shadowOf(Looper.getMainLooper()).idle()
-    verify { style.setStyleGeoJSONSourceData("testId", any()) }
+    verify { style.setStyleGeoJSONSourceData("testId", "", any()) }
 
     testSource.featureCollection(FEATURE_COLLECTION, DATA_ID)
     Shadows.shadowOf(GeoJsonSource.workerThread.looper).idle()
@@ -659,7 +659,7 @@ class GeoJsonSourceTest {
     testSource.geometry(FEATURE.geometry()!!)
     Shadows.shadowOf(GeoJsonSource.workerThread.looper).idle()
     Shadows.shadowOf(Looper.getMainLooper()).idle()
-    verify { style.setStyleGeoJSONSourceData("testId", any()) }
+    verify { style.setStyleGeoJSONSourceData("testId", "", any()) }
 
     testSource.geometry(FEATURE.geometry()!!, DATA_ID)
     Shadows.shadowOf(GeoJsonSource.workerThread.looper).idle()

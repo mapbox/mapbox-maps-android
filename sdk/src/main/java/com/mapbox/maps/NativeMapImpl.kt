@@ -495,10 +495,6 @@ internal class NativeMapImpl(val map: Map) {
     return map.setStyleSourceProperties(sourceId, properties)
   }
 
-  fun setStyleGeoJSONSourceData(sourceId: String, data: GeoJSONSourceData): Expected<String, None> {
-    return map.setStyleGeoJSONSourceData(sourceId, data)
-  }
-
   fun setStyleGeoJSONSourceData(
     sourceId: String,
     dataId: String,

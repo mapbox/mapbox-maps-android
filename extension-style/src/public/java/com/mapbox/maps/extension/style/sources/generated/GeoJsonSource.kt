@@ -13,7 +13,6 @@ import com.mapbox.geojson.GeoJson
 import com.mapbox.geojson.Geometry
 import com.mapbox.maps.*
 import com.mapbox.maps.GeoJSONSourceData
-import com.mapbox.maps.MapboxConcurrentGeometryModificationException
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
@@ -55,18 +54,11 @@ class GeoJsonSource : Source {
     delegate?.let { style ->
       workerHandler.removeCallbacksAndMessages(null)
       workerHandler.post {
-        if (dataId != null) {
-          style.setStyleGeoJSONSourceData(
-            /* sourceId = */ sourceId,
-            /* dataId = */ dataId,
-            /* data = */ toGeoJsonData(geoJson)
-          )
-        } else {
-          style.setStyleGeoJSONSourceData(
-            /* sourceId = */ sourceId,
-            /* data = */ toGeoJsonData(geoJson)
-          )
-        }
+        style.setStyleGeoJSONSourceData(
+          /* sourceId = */ sourceId,
+          /* dataId = */ dataId.orEmpty(),
+          /* data = */ toGeoJsonData(geoJson)
+        )
       }
     }
     currentGeoJson = geoJson
@@ -78,18 +70,11 @@ class GeoJsonSource : Source {
     delegate?.let { style ->
       workerHandler.removeCallbacksAndMessages(null)
       workerHandler.post {
-        if (dataId != null) {
-          style.setStyleGeoJSONSourceData(
-            /* sourceId = */ sourceId,
-            /* dataId = */ dataId,
-            /* data = */ GeoJSONSourceData.valueOf(data)
-          )
-        } else {
-          style.setStyleGeoJSONSourceData(
-            /* sourceId = */ sourceId,
-            /* data = */ GeoJSONSourceData.valueOf(data)
-          )
-        }
+        style.setStyleGeoJSONSourceData(
+          /* sourceId = */ sourceId,
+          /* dataId = */ dataId.orEmpty(),
+          /* data = */ GeoJSONSourceData.valueOf(data)
+        )
       }
     }
     currentData = data
@@ -121,7 +106,7 @@ class GeoJsonSource : Source {
 
   /**
    * @param value an URL to a GeoJSON file, or an inline GeoJSON.
-   * @param dataId optional metadata to filter the SOURCE_DATA_LOADED events later
+   * @param dataId optional metadata to filter the SOURCE_DATA_LOADED events later. Empty string is treated as no data id.
    */
   @JvmOverloads
   fun data(value: String, dataId: String? = null): GeoJsonSource = apply {
@@ -143,7 +128,7 @@ class GeoJsonSource : Source {
 
   /**
    * @param value an URL to a GeoJSON file, or an inline GeoJSON.
-   * @param dataId optional metadata to filter the SOURCE_DATA_LOADED events later
+   * @param dataId optional metadata to filter the SOURCE_DATA_LOADED events later. Empty string is treated as no data id.
    */
   @JvmOverloads
   fun url(value: String, dataId: String? = null): GeoJsonSource = apply {
@@ -357,8 +342,7 @@ class GeoJsonSource : Source {
    * the Feature is immutable as well as all collections that are used to build it.
    *
    * @param value the feature
-   * @param dataId optional metadata to filter the SOURCE_DATA_LOADED events later
-   * @throws [MapboxConcurrentGeometryModificationException]
+   * @param dataId optional metadata to filter the SOURCE_DATA_LOADED events later. Empty string is treated as no data id.
    */
   @JvmOverloads
   fun feature(value: Feature, dataId: String? = null): GeoJsonSource = applyGeoJsonData(value, dataId)
@@ -376,8 +360,7 @@ class GeoJsonSource : Source {
    * the FeatureCollection is immutable as well as all collections that are used to build it.
    *
    * @param value the feature collection
-   * @param dataId optional metadata to filter the SOURCE_DATA_LOADED events later
-   * @throws [MapboxConcurrentGeometryModificationException]
+   * @param dataId optional metadata to filter the SOURCE_DATA_LOADED events later. Empty string is treated as no data id.
    */
   @JvmOverloads
   fun featureCollection(value: FeatureCollection, dataId: String? = null): GeoJsonSource = applyGeoJsonData(value, dataId)
@@ -395,8 +378,7 @@ class GeoJsonSource : Source {
    * the Geometry is immutable as well as all collections that are used to build it.
    *
    * @param value the geometry
-   * @param dataId optional metadata to filter the SOURCE_DATA_LOADED events later
-   * @throws [MapboxConcurrentGeometryModificationException]
+   * @param dataId optional metadata to filter the SOURCE_DATA_LOADED events later. Empty string is treated as no data id.
    */
   @JvmOverloads
   fun geometry(value: Geometry, dataId: String? = null): GeoJsonSource = applyGeoJsonData(value, dataId)
@@ -425,7 +407,7 @@ class GeoJsonSource : Source {
 
     /**
      * @param value an URL to a GeoJSON file, or an inline GeoJSON.
-     * @param dataId optional metadata to filter the SOURCE_DATA_LOADED events later
+     * @param dataId optional metadata to filter the SOURCE_DATA_LOADED events later. Empty string is treated as no data id.
      */
     @JvmOverloads
     fun data(value: String, dataId: String? = null): Builder = apply {
@@ -436,7 +418,7 @@ class GeoJsonSource : Source {
 
     /**
      * @param value an URL to a GeoJSON file, or an inline GeoJSON.
-     * @param dataId optional metadata to filter the SOURCE_DATA_LOADED events later
+     * @param dataId optional metadata to filter the SOURCE_DATA_LOADED events later. Empty string is treated as no data id.
      */
     @JvmOverloads
     fun url(value: String, dataId: String? = null): Builder = apply {
@@ -630,7 +612,7 @@ class GeoJsonSource : Source {
      * Add a Feature to the GeojsonSource.
      *
      * @param value the feature
-     * @param dataId optional metadata to filter the SOURCE_DATA_LOADED events later
+     * @param dataId optional metadata to filter the SOURCE_DATA_LOADED events later. Empty string is treated as no data id.
      */
     @JvmOverloads
     fun feature(value: Feature, dataId: String? = null): Builder = apply {
@@ -641,7 +623,7 @@ class GeoJsonSource : Source {
      * Add a FeatureCollection to the GeojsonSource.
      *
      * @param value the feature collection
-     * @param dataId optional metadata to filter the SOURCE_DATA_LOADED events later
+     * @param dataId optional metadata to filter the SOURCE_DATA_LOADED events later. Empty string is treated as no data id.
      */
     @JvmOverloads
     fun featureCollection(value: FeatureCollection, dataId: String? = null): Builder = apply {
@@ -652,7 +634,7 @@ class GeoJsonSource : Source {
      * Add a Geometry to the GeojsonSource.
      *
      * @param value the geometry
-     * @param dataId optional metadata to filter the SOURCE_DATA_LOADED events later
+     * @param dataId optional metadata to filter the SOURCE_DATA_LOADED events later. Empty string is treated as no data id.
      */
     @JvmOverloads
     fun geometry(value: Geometry, dataId: String? = null): Builder = apply {

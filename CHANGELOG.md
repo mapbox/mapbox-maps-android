@@ -24,6 +24,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Change `Annotation.id` from monotonically increasing `Long` to UUID represented as `String`.
 * Remove `Annotation.featureIdentifier` used to connect with View Annotations, now `Annotation.id` should be used instead.
 * Rename `PuckBearingSource` to `PuckBearing` in location component plugin.
+* Remove deprecated overloaded `Style.setStyleGeoJSONSourceData(sourceId: String, data: GeoJSONSourceData)` method.
 * Update Mapbox styles to latest versions.
 
 | Style             | Before                                       | After                                        |

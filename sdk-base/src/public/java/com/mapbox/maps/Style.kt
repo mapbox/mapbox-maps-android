@@ -984,20 +984,6 @@ class Style {
   @WorkerThread
   fun setStyleGeoJSONSourceData(
     sourceId: String,
-    data: GeoJSONSourceData
-  ): Expected<String, None> {
-    if (!isStyleValid) {
-      logW(TAG, "Style object (accessing setStyleGeoJSONSourceData) should not be stored and used after MapView is destroyed or new style has been loaded.")
-    }
-    return styleManager.setStyleGeoJSONSourceData(sourceId, data)
-  }
-
-  /**
-   * This method is for internal use.
-   */
-  @WorkerThread
-  fun setStyleGeoJSONSourceData(
-    sourceId: String,
     dataId: String,
     data: GeoJSONSourceData
   ): Expected<String, None> {
