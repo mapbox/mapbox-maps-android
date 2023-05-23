@@ -60,10 +60,10 @@ internal class NativeMapImpl(val map: Map) {
   fun cameraForCoordinateBounds(
     coordinateBounds: CoordinateBounds,
     padding: EdgeInsets?,
-    zoom: Double?,
+    bearing: Double?,
     pitch: Double?
   ): CameraOptions {
-    return map.cameraForCoordinateBounds(coordinateBounds, padding, zoom, pitch)
+    return map.cameraForCoordinateBounds(coordinateBounds, padding, bearing, pitch)
   }
 
   fun setUserAnimationInProgress(inProgress: Boolean) {
@@ -104,10 +104,10 @@ internal class NativeMapImpl(val map: Map) {
   fun cameraForCoordinates(
     points: List<Point>,
     padding: EdgeInsets?,
-    zoom: Double?,
+    bearing: Double?,
     pitch: Double?
   ): CameraOptions {
-    return map.cameraForCoordinates(points, padding, zoom, pitch)
+    return map.cameraForCoordinates(points, padding, bearing, pitch)
   }
 
   fun cameraForCoordinates(
@@ -121,10 +121,10 @@ internal class NativeMapImpl(val map: Map) {
   fun cameraForGeometry(
     geometry: Geometry,
     padding: EdgeInsets?,
-    zoom: Double?,
+    bearing: Double?,
     pitch: Double?
   ): CameraOptions {
-    return map.cameraForGeometry(geometry, padding, zoom, pitch)
+    return map.cameraForGeometry(geometry, padding, bearing, pitch)
   }
 
   fun getElevation(point: Point): Double? {

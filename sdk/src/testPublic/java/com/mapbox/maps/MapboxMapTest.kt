@@ -9,7 +9,6 @@ import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.animation.CameraAnimationsPluginImpl
-import com.mapbox.maps.plugin.delegates.listeners.*
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import com.mapbox.maps.plugin.gestures.GesturesPluginImpl
 import com.mapbox.maps.plugin.gestures.OnMoveListener
@@ -25,6 +24,8 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.LooperMode
+
+private val ZERO_EDGE_INSETS = EdgeInsets(0.0, 0.0, 0.0, 0.0)
 
 @RunWith(RobolectricTestRunner::class)
 @LooperMode(LooperMode.Mode.PAUSED)
@@ -472,7 +473,7 @@ class MapboxMapTest {
     verify {
       nativeMap.cameraForCoordinateBounds(
         bounds,
-        EdgeInsets(0.0, 0.0, 0.0, 0.0),
+        null,
         null,
         null
       )
@@ -498,14 +499,7 @@ class MapboxMapTest {
   fun cameraForCoordinateBoundsOverloadBearing() {
     val bounds = mockk<CoordinateBounds>()
     mapboxMap.cameraForCoordinateBounds(bounds, bearing = 2.0)
-    verify {
-      nativeMap.cameraForCoordinateBounds(
-        bounds,
-        EdgeInsets(0.0, 0.0, 0.0, 0.0),
-        2.0,
-        null
-      )
-    }
+    verify { nativeMap.cameraForCoordinateBounds(bounds, null, 2.0, null) }
   }
 
   @Test
@@ -515,7 +509,7 @@ class MapboxMapTest {
     verify {
       nativeMap.cameraForCoordinateBounds(
         bounds,
-        EdgeInsets(0.0, 0.0, 0.0, 0.0),
+        null,
         null,
         2.0
       )
@@ -571,7 +565,7 @@ class MapboxMapTest {
   fun cameraForCoordinatesOverload() {
     val points = mockk<List<Point>>()
     mapboxMap.cameraForCoordinates(points)
-    verify { nativeMap.cameraForCoordinates(points, EdgeInsets(0.0, 0.0, 0.0, 0.0), null, null) }
+    verify { nativeMap.cameraForCoordinates(points, null, null, null) }
   }
 
   @Test
@@ -585,29 +579,28 @@ class MapboxMapTest {
   fun cameraForCoordinatesOverloadBearing() {
     val points = mockk<List<Point>>()
     mapboxMap.cameraForCoordinates(points, bearing = 2.0)
-    verify { nativeMap.cameraForCoordinates(points, EdgeInsets(0.0, 0.0, 0.0, 0.0), 2.0, null) }
+    verify { nativeMap.cameraForCoordinates(points, null, 2.0, null) }
   }
 
   @Test
   fun cameraForCoordinatesOverloadPitch() {
     val points = mockk<List<Point>>()
     mapboxMap.cameraForCoordinates(points, pitch = 2.0)
-    verify { nativeMap.cameraForCoordinates(points, EdgeInsets(0.0, 0.0, 0.0, 0.0), null, 2.0) }
+    verify { nativeMap.cameraForCoordinates(points, null, null, 2.0) }
   }
 
   @Test
   fun cameraForGeometry() {
     val point = mockk<Point>()
-    val edgeInsets = mockk<EdgeInsets>()
-    mapboxMap.cameraForGeometry(point, edgeInsets, 0.0, 1.0)
-    verify { nativeMap.cameraForGeometry(point, edgeInsets, 0.0, 1.0) }
+    mapboxMap.cameraForGeometry(point, ZERO_EDGE_INSETS, 0.0, 1.0)
+    verify { nativeMap.cameraForGeometry(point, ZERO_EDGE_INSETS, 0.0, 1.0) }
   }
 
   @Test
   fun cameraForGeometryOverload() {
     val point = mockk<Point>()
     mapboxMap.cameraForGeometry(point)
-    verify { nativeMap.cameraForGeometry(point, EdgeInsets(0.0, 0.0, 0.0, 0.0), null, null) }
+    verify { nativeMap.cameraForGeometry(point, null, null, null) }
   }
 
   @Test
@@ -621,14 +614,14 @@ class MapboxMapTest {
   fun cameraForGeometryOverloadBearing() {
     val point = mockk<Point>()
     mapboxMap.cameraForGeometry(point, bearing = 2.0)
-    verify { nativeMap.cameraForGeometry(point, EdgeInsets(0.0, 0.0, 0.0, 0.0), 2.0, null) }
+    verify { nativeMap.cameraForGeometry(point, null, 2.0, null) }
   }
 
   @Test
   fun cameraForGeometryOverloadPitch() {
     val point = mockk<Point>()
     mapboxMap.cameraForGeometry(point, pitch = 2.0)
-    verify { nativeMap.cameraForGeometry(point, EdgeInsets(0.0, 0.0, 0.0, 0.0), null, 2.0) }
+    verify { nativeMap.cameraForGeometry(point, null, null, 2.0) }
   }
 
   @Test
@@ -640,14 +633,14 @@ class MapboxMapTest {
 
   @Test
   fun pixelsForCoordinates() {
-    val points = mockk<List<Point>>()
+    val points: List<Point> = emptyList()
     mapboxMap.pixelsForCoordinates(points)
     verify { nativeMap.pixelsForCoordinates(points.toMutableList()) }
   }
 
   @Test
   fun coordinatesForPixels() {
-    val points = mockk<List<ScreenCoordinate>>()
+    val points: List<ScreenCoordinate> = emptyList()
     mapboxMap.coordinatesForPixels(points)
     verify { nativeMap.coordinatesForPixels(points.toMutableList()) }
   }
@@ -717,8 +710,9 @@ class MapboxMapTest {
   @Test
   fun setFeatureState() {
     val value = mockk<Value>()
-    mapboxMap.setFeatureState("id", "source-layer", "feature", value)
-    verify { nativeMap.setFeatureState("id", "source-layer", "feature", value) }
+    val callback = mockk<FeatureStateOperationCallback>()
+    mapboxMap.setFeatureState("id", "source-layer", "feature", value, callback)
+    verify { nativeMap.setFeatureState("id", "source-layer", "feature", value, callback) }
   }
 
   @Test
@@ -730,26 +724,9 @@ class MapboxMapTest {
 
   @Test
   fun removeFeatureState() {
-    mapboxMap.removeFeatureState("id", "source-layer", "feature", "state")
-    verify { nativeMap.removeFeatureState("id", "source-layer", "feature", "state") }
-  }
-
-  @Test
-  fun queryFeatureExtensions() {
-    val feature = mockk<Feature>()
-    val map = mockk<HashMap<String, Value>>()
-    val callback = mockk<QueryFeatureExtensionCallback>()
-    mapboxMap.queryFeatureExtensions("id", feature, "extension", "extensionField", map, callback)
-    verify {
-      nativeMap.queryFeatureExtensions(
-        "id",
-        feature,
-        "extension",
-        "extensionField",
-        map,
-        callback
-      )
-    }
+    val callback = mockk<FeatureStateOperationCallback>()
+    mapboxMap.removeFeatureState("id", "source-layer", "feature", "state", callback)
+    verify { nativeMap.removeFeatureState("id", "source-layer", "feature", "state", callback) }
   }
 
   @Test
@@ -884,42 +861,15 @@ class MapboxMapTest {
 
   @Test
   fun querySourceFeatures() {
-    val querySourceCallback = mockk<QueryFeaturesCallback>()
+    val querySourceCallback = mockk<QuerySourceFeaturesCallback>()
     val querySourceOptions = mockk<SourceQueryOptions>()
     mapboxMap.querySourceFeatures("id", querySourceOptions, querySourceCallback)
     verify { nativeMap.querySourceFeatures("id", querySourceOptions, querySourceCallback) }
   }
 
   @Test
-  fun queryRenderedFeaturesScreenBox() {
-    val queryCallback = mockk<QueryFeaturesCallback>()
-    val box = mockk<ScreenBox>()
-    val renderedQueryOptions = mockk<RenderedQueryOptions>()
-    mapboxMap.queryRenderedFeatures(box, renderedQueryOptions, queryCallback)
-    verify { nativeMap.queryRenderedFeatures(box, renderedQueryOptions, queryCallback) }
-  }
-
-  @Test
-  fun queryRenderedFeaturesScreenCoordinate() {
-    val queryCallback = mockk<QueryFeaturesCallback>()
-    val coordinate = mockk<ScreenCoordinate>()
-    val renderedQueryOptions = mockk<RenderedQueryOptions>()
-    mapboxMap.queryRenderedFeatures(coordinate, renderedQueryOptions, queryCallback)
-    verify { nativeMap.queryRenderedFeatures(coordinate, renderedQueryOptions, queryCallback) }
-  }
-
-  @Test
-  fun queryRenderedFeaturesShape() {
-    val queryCallback = mockk<QueryFeaturesCallback>()
-    val shape = mockk<List<ScreenCoordinate>>()
-    val renderedQueryOptions = mockk<RenderedQueryOptions>()
-    mapboxMap.queryRenderedFeatures(shape, renderedQueryOptions, queryCallback)
-    verify { nativeMap.queryRenderedFeatures(shape, renderedQueryOptions, queryCallback) }
-  }
-
-  @Test
   fun queryRenderedFeaturesGeometry() {
-    val queryCallback = mockk<QueryFeaturesCallback>()
+    val queryCallback = mockk<QueryRenderedFeaturesCallback>()
     val geometry = mockk<RenderedQueryGeometry>()
     val renderedQueryOptions = mockk<RenderedQueryOptions>()
     mapboxMap.queryRenderedFeatures(geometry, renderedQueryOptions, queryCallback)
@@ -928,7 +878,7 @@ class MapboxMapTest {
 
   @Test
   fun queryRenderedFeaturesRenderedQueryGeometry() {
-    val queryCallback = mockk<QueryFeaturesCallback>()
+    val queryCallback = mockk<QueryRenderedFeaturesCallback>()
     val geometry = mockk<RenderedQueryGeometry>()
     val renderedQueryOptions = mockk<RenderedQueryOptions>()
     mapboxMap.queryRenderedFeatures(geometry, renderedQueryOptions, queryCallback)
@@ -1080,16 +1030,16 @@ class MapboxMapTest {
 
     userCallbackStyleSlot.captured.onStyleLoaded(style)
 
-    verify { style.styleTransition = options }
+    verify { style.setStyleTransition(options) }
   }
-}
 
-@Test
-fun tileCover() {
-  val tileCoverOptions = TileCoverOptions.Builder().build()
-  val cameraOptions = CameraOptions.Builder().build()
-  mapboxMap.tileCover(tileCoverOptions, cameraOptions)
-  verify { nativeMap.tileCover(tileCoverOptions, cameraOptions) }
+  @Test
+  fun tileCover() {
+    val tileCoverOptions = TileCoverOptions.Builder().build()
+    val cameraOptions = CameraOptions.Builder().build()
+    mapboxMap.tileCover(tileCoverOptions, cameraOptions)
+    verify { nativeMap.tileCover(tileCoverOptions, cameraOptions) }
+  }
 }
 
 @RunWith(ParameterizedRobolectricTestRunner::class)
