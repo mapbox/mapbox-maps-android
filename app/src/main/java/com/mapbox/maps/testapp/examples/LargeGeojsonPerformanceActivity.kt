@@ -77,9 +77,7 @@ class LargeGeojsonPerformanceActivity : AppCompatActivity() {
               }
             }
             // add an icon that uses very small geojson source
-            +image("icon") {
-              bitmap(BitmapFactory.decodeResource(resources, R.drawable.blue_marker_view))
-            }
+            +image("icon", BitmapFactory.decodeResource(resources, R.drawable.blue_marker_view))
             +geoJsonSource("${SOURCE}_marker") {
               logI(TAG, "Update marker ${SOURCE}_marker, data-id : $jsonUpdateCounter")
               geometry(Point.fromLngLat(LONGITUDE, LATITUDE), jsonUpdateCounter++.toString())

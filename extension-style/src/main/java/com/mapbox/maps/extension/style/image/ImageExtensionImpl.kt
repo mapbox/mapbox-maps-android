@@ -35,16 +35,52 @@ class ImageExtensionImpl(private val builder: Builder) : StyleContract.StyleImag
   /**
    * Builder for the [ImageExtensionImpl].
    */
-  class Builder(
+  class Builder {
     /**
-     * ID of the image.
+     * The Id of the image.
      */
     val imageId: String
-  ) {
+
     /**
      * Pixel data of the image.
      */
     internal lateinit var internalImage: Image
+
+    /**
+     * Constructor for the [ImageExtensionImpl.Builder].
+     *
+     * @param imageId the Id of the image extension.
+     */
+    @Deprecated(
+      "Constructing `ImageExtensionImpl.Builder` without image or bitmap is deprecated, as the image or bitmap is a required field. " +
+        "Please switch to `Builder(imageId: String, image: Image)` or `Builder(imageId: String, bitmap: Bitmap)` instead.",
+      replaceWith = ReplaceWith("ImageExtensionImpl.Builder(imageId, image)")
+    )
+    constructor(imageId: String) {
+      this.imageId = imageId
+    }
+
+    /**
+     * Constructor for the [ImageExtensionImpl.Builder].
+     *
+     * @param imageId the id the the image extension
+     * @param image the pixel data of the image.
+     */
+    constructor(imageId: String, image: Image) {
+      this.imageId = imageId
+      this.internalImage = image
+    }
+
+    /**
+     * Constructor for the [ImageExtensionImpl.Builder].
+     *
+     * @param imageId the id the the image extension
+     * @param bitmap the bitmap data of the image.
+     */
+    constructor(imageId: String, bitmap: Bitmap) {
+      this.imageId = imageId
+      this.internalImage = bitmap.toMapboxImage()
+    }
 
     /**
      * Scale factor for the image.
@@ -78,6 +114,8 @@ class ImageExtensionImpl(private val builder: Builder) : StyleContract.StyleImag
     /**
      * Pixel data of the image.
      */
+    @Suppress("DeprecatedCallableAddReplaceWith")
+    @Deprecated("Configuring image through `image` function is deprecated, pass image to the `Builder(imageId: String, image: Image)` constructor instead.")
     fun image(image: Image): Builder = apply {
       this.internalImage = image
     }
@@ -85,6 +123,8 @@ class ImageExtensionImpl(private val builder: Builder) : StyleContract.StyleImag
     /**
      * Set bitmap data of the image.
      */
+    @Suppress("DeprecatedCallableAddReplaceWith")
+    @Deprecated("Configuring image through `bitmap` function is deprecated, pass image to the `Builder(imageId: String, bitmap: Bitmap)` constructor instead.")
     fun bitmap(bitmap: Bitmap): Builder = apply {
       this.internalImage = bitmap.toMapboxImage()
     }

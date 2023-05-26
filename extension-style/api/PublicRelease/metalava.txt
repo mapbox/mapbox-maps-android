@@ -924,12 +924,14 @@ package com.mapbox.maps.extension.style.image {
   }
 
   public static final class ImageExtensionImpl.Builder {
-    ctor public ImageExtensionImpl.Builder(String imageId);
-    method public com.mapbox.maps.extension.style.image.ImageExtensionImpl.Builder bitmap(android.graphics.Bitmap bitmap);
+    ctor @Deprecated public ImageExtensionImpl.Builder(String imageId);
+    ctor public ImageExtensionImpl.Builder(String imageId, com.mapbox.maps.Image image);
+    ctor public ImageExtensionImpl.Builder(String imageId, android.graphics.Bitmap bitmap);
+    method @Deprecated public com.mapbox.maps.extension.style.image.ImageExtensionImpl.Builder bitmap(android.graphics.Bitmap bitmap);
     method public com.mapbox.maps.extension.style.image.ImageExtensionImpl build();
     method public com.mapbox.maps.extension.style.image.ImageExtensionImpl.Builder content(com.mapbox.maps.ImageContent content);
     method public String getImageId();
-    method public com.mapbox.maps.extension.style.image.ImageExtensionImpl.Builder image(com.mapbox.maps.Image image);
+    method @Deprecated public com.mapbox.maps.extension.style.image.ImageExtensionImpl.Builder image(com.mapbox.maps.Image image);
     method public com.mapbox.maps.extension.style.image.ImageExtensionImpl.Builder scale(float scale);
     method public com.mapbox.maps.extension.style.image.ImageExtensionImpl.Builder sdf(boolean sdf = false);
     method public com.mapbox.maps.extension.style.image.ImageExtensionImpl.Builder stretchX(java.util.List<com.mapbox.maps.ImageStretches> stretchX = <anonymous class>());
@@ -956,7 +958,9 @@ package com.mapbox.maps.extension.style.image {
   public final class ImageUtils {
     method public static void addImage(com.mapbox.maps.Style, com.mapbox.maps.extension.style.StyleContract.StyleImageExtension image);
     method public static void addImage9Patch(com.mapbox.maps.Style, com.mapbox.maps.extension.style.StyleContract.StyleImageExtension image);
-    method public static com.mapbox.maps.extension.style.image.ImageExtensionImpl image(String imageId, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.image.ImageExtensionImpl.Builder,kotlin.Unit> block);
+    method @Deprecated public static com.mapbox.maps.extension.style.image.ImageExtensionImpl image(String imageId, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.image.ImageExtensionImpl.Builder,kotlin.Unit> block);
+    method public static com.mapbox.maps.extension.style.image.ImageExtensionImpl image(String imageId, com.mapbox.maps.Image image, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.image.ImageExtensionImpl.Builder,kotlin.Unit> block);
+    method public static com.mapbox.maps.extension.style.image.ImageExtensionImpl image(String imageId, android.graphics.Bitmap bitmap, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.image.ImageExtensionImpl.Builder,kotlin.Unit> block);
     method public static com.mapbox.maps.extension.style.image.ImageNinePatchExtensionImpl image9Patch(String imageId, android.graphics.Bitmap bitmap, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.image.ImageNinePatchExtensionImpl.Builder,kotlin.Unit>? block = null);
     method public static com.mapbox.maps.extension.style.image.ImageNinePatchExtensionImpl image9Patch(String imageId, android.graphics.Bitmap bitmap);
   }

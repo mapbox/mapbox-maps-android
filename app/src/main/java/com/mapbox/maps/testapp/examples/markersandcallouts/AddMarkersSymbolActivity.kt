@@ -29,13 +29,9 @@ class AddMarkersSymbolActivity : AppCompatActivity() {
     binding.mapView.getMapboxMap().loadStyle(
       styleExtension = style(Style.MAPBOX_STREETS) {
         // prepare red marker from resources
-        +image(RED_ICON_ID) {
-          bitmap(BitmapFactory.decodeResource(resources, R.drawable.red_marker))
-        }
+        +image(RED_ICON_ID, BitmapFactory.decodeResource(resources, R.drawable.red_marker))
         // prepare blue marker from resources
-        +image(BLUE_ICON_ID) {
-          bitmap(BitmapFactory.decodeResource(resources, R.drawable.blue_marker_view))
-        }
+        +image(BLUE_ICON_ID, BitmapFactory.decodeResource(resources, R.drawable.blue_marker_view))
         // prepare source that will hold icons and add extra string property to each of it
         // to identify what marker icon should be used
         +geoJsonSource(SOURCE_ID) {

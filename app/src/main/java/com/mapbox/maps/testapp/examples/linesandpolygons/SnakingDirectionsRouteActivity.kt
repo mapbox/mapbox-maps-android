@@ -54,9 +54,7 @@ class SnakingDirectionsRouteActivity : AppCompatActivity() {
 
     binding.mapView.getMapboxMap().loadStyle(
       style(Style.LIGHT) {
-        +image(ICON_ID) {
-          bitmap(BitmapFactory.decodeResource(resources, R.drawable.red_marker))
-        }
+        +image(ICON_ID, BitmapFactory.decodeResource(resources, R.drawable.red_marker))
         +geoJsonSource(SOURCE_ID) {
           featureCollection(
             FeatureCollection.fromFeatures(

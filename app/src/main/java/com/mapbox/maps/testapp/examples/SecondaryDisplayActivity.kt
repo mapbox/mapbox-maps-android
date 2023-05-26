@@ -28,8 +28,7 @@ class SecondaryDisplayActivity : AppCompatActivity() {
     setContentView(binding.root)
     binding.mapView.getMapboxMap().loadStyle(
       style(Style.MAPBOX_STREETS) {
-        +image(IMAGE_ID) {
-          bitmap(BitmapFactory.decodeResource(resources, R.drawable.red_marker))
+        +image(IMAGE_ID, BitmapFactory.decodeResource(resources, R.drawable.red_marker)) {
           // Note: The default scale doesn't work with secondary displays.
           // we need to manually set the scale to the pixel for the current context
           scale(this@SecondaryDisplayActivity.resources.displayMetrics.density)

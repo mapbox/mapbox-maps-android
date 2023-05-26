@@ -56,9 +56,7 @@ class MapOverlayActivity : AppCompatActivity(), OnMapClickListener {
           )
         }
         // Add the marker image to map
-        +image(imageId) {
-          bitmap(BitmapFactory.decodeResource(resources, R.drawable.blue_marker_view))
-        }
+        +image(imageId, BitmapFactory.decodeResource(resources, R.drawable.blue_marker_view))
         +symbolLayer(layerId, sourceId) {
           iconImage(imageId)
           iconAllowOverlap(true)

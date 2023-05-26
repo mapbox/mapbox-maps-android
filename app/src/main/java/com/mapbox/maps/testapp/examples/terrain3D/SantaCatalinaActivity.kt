@@ -82,22 +82,20 @@ class SantaCatalinaActivity : AppCompatActivity() {
           topImageSize(1.5)
           bearingImageSize(1.5)
         }
-        +image(FOREGROUND_ICON) {
-          bitmap(
-            bitmapFromDrawableRes(
-              this@SantaCatalinaActivity,
-              R.drawable.mapbox_mylocation_icon_default
-            )!!
-          )
-        }
-        +image(BACKGROUND_ICON) {
-          bitmap(
-            bitmapFromDrawableRes(
-              this@SantaCatalinaActivity,
-              R.drawable.mapbox_mylocation_bg_shape
-            )!!
-          )
-        }
+        +image(
+          FOREGROUND_ICON,
+          bitmapFromDrawableRes(
+            this@SantaCatalinaActivity,
+            R.drawable.mapbox_mylocation_icon_default
+          )!!
+        )
+        +image(
+          BACKGROUND_ICON,
+          bitmapFromDrawableRes(
+            this@SantaCatalinaActivity,
+            R.drawable.mapbox_mylocation_bg_shape
+          )!!
+        )
       }
     ) { style ->
       // hide road labels

@@ -435,9 +435,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
           if (image.startsWith(PointAnnotation.ICON_DEFAULT_NAME_PREFIX)) {
             // User set the bitmap icon, add the icon to style
             symbol.iconImageBitmap?.let { bitmap ->
-              val imagePlugin = image(image) {
-                bitmap(bitmap)
-              }
+              val imagePlugin = image(image, bitmap)
               style.addImage(imagePlugin)
             }
           }

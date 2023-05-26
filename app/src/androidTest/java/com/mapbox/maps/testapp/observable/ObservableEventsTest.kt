@@ -371,14 +371,13 @@ class ObservableEventsTest : BaseMapTest() {
           setCamera(targetCameraOptions)
           loadStyle(
             style(Style.MAPBOX_STREETS) {
-              +image(IMAGE_ID) {
-                bitmap(
-                  BitmapFactory.decodeResource(
-                    activity.resources,
-                    R.drawable.blue_marker_view
-                  )
+              +image(
+                IMAGE_ID,
+                BitmapFactory.decodeResource(
+                  activity.resources,
+                  R.drawable.blue_marker_view
                 )
-              }
+              )
               +geoJsonSource(SOURCE_ID) {
                 geometry(Point.fromLngLat(0.0, 0.0))
               }
@@ -418,14 +417,13 @@ class ObservableEventsTest : BaseMapTest() {
           setCamera(targetCameraOptions)
           loadStyle(
             style(Style.MAPBOX_STREETS) {
-              +image(IMAGE_ID) {
-                bitmap(
-                  BitmapFactory.decodeResource(
-                    activity.resources,
-                    R.drawable.blue_marker_view
-                  )
+              +image(
+                IMAGE_ID,
+                BitmapFactory.decodeResource(
+                  activity.resources,
+                  R.drawable.blue_marker_view
                 )
-              }
+              )
               +geoJsonSource(SOURCE_ID) {
                 geometry(Point.fromLngLat(0.0, 0.0))
               }

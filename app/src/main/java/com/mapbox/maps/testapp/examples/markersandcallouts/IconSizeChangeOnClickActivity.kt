@@ -43,9 +43,7 @@ class IconSizeChangeOnClickActivity : AppCompatActivity(), OnMapClickListener {
           )
         }
         // Add the marker image to map
-        +image("my-marker-image") {
-          bitmap(BitmapFactory.decodeResource(resources, R.drawable.blue_marker_view))
-        }
+        +image("my-marker-image", BitmapFactory.decodeResource(resources, R.drawable.blue_marker_view))
         // Adding an offset so that the bottom of the blue icon gets fixed to the coordinate, rather than the
         // middle of the icon being fixed to the coordinate point.
         +symbolLayer("marker-layer", "marker-source") {
