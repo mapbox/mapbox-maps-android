@@ -3,6 +3,7 @@ package com.mapbox.maps
 import android.app.Activity
 import android.graphics.RectF
 import android.os.Handler
+import android.webkit.URLUtil
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
 import com.mapbox.bindgen.Expected
@@ -13,6 +14,8 @@ import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.style.StyleContract
+import com.mapbox.maps.extension.style.style
+import com.mapbox.maps.extension.style.utils.transition
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.animation.CameraAnimationsPluginImpl
 import com.mapbox.maps.plugin.delegates.*
@@ -104,58 +107,23 @@ class MapboxMap :
     )
   }
 
-  /**
-   * Will load a new map style asynchronous from the specified URI.
-   *
-   * URI can take the following forms:
-   *
-   * - **Constants**: load one of the bundled styles in [Style].
-   *
-   * - **`mapbox://styles/<user>/<style>`**:
-   * loads the style from a [Mapbox account](https://www.mapbox.com/account/).
-   * *user* is your username. *style* is the ID of your custom
-   * style created in [Mapbox Studio](https://www.mapbox.com/studio).
-   *
-   * - **`http://...` or `https://...`**:
-   * loads the style over the Internet from any web server.
-   *
-   * - **`asset://...`**:
-   * loads the style from the APK *assets* directory.
-   * This is used to load a style bundled with your app.
-   *
-   * - **`file://...`**:
-   * loads the style from a file path. This is used to load a style from disk.
-   *
-   * Will load an empty json `{}` if the styleUri is empty.
-   *
-   * @param styleUri The style URI
-   * @param styleTransitionOptions style transition options applied when loading the style
-   * @param onStyleLoaded The OnStyleLoaded callback
-   * @param mapLoadingErrorCallback The MapLoadingErrorCallback callback
-   */
-  fun loadStyleUri(
-    styleUri: String,
-    styleTransitionOptions: TransitionOptions? = null,
-    onStyleLoaded: Style.OnStyleLoaded? = null,
-    mapLoadingErrorCallback: MapLoadingErrorCallback? = null,
-  ) {
-    checkNativeMap("loadStyleUri")
-    initializeStyleLoad(
-      onStyleLoaded,
-      styleDataStyleLoadedListener = {
-        styleTransitionOptions?.let(it::setStyleTransition)
-      },
-      mapLoadingErrorCallback = mapLoadingErrorCallback,
-    )
-    if (styleUri.isEmpty()) {
-      nativeMap.setStyleJSON(EMPTY_STYLE_JSON)
+  private fun String.isValidUri(): Boolean {
+    val isMapboxStyleUri = startsWith("mapbox://", ignoreCase = true)
+    val isMapboxAssetUri = startsWith("asset://", ignoreCase = true)
+    val isMapboxFileUri = startsWith("file://", ignoreCase = true)
+    return isMapboxStyleUri || isMapboxAssetUri || isMapboxFileUri || URLUtil.isValidUrl(this)
+  }
+
+  private fun applyStyle(style: String) {
+    if (style.isValidUri()) {
+      nativeMap.setStyleURI(style)
     } else {
-      nativeMap.setStyleURI(styleUri)
+      nativeMap.setStyleJSON(style.ifBlank { "{}" })
     }
   }
 
   /**
-   * Will load a new map style asynchronous from the specified URI.
+   * Loads the new map style either from a specified URI or from a JSON both represented as [String].
    *
    * URI can take the following forms:
    *
@@ -176,94 +144,207 @@ class MapboxMap :
    * - **`file://...`**:
    * loads the style from a file path. This is used to load a style from disk.
    *
-   * Will load an empty json `{}` if the styleUri is empty.
+   * If [style] is not the valid URI - it will be treated as style JSON string.
    *
-   * @param styleUri The style URI
-   * @param onStyleLoaded The OnStyleLoaded callback
-   * @param mapLoadingErrorCallback The MapLoadingErrorCallback callback
+   * ** Important notes comparing to Maps v10 **:
+   * 1. Parameter `onMapLoadErrorListener` was removed as it was not covering all the map / style loading errors.
+   *  Now if you need to listen to those errors you have to register specific listener in advance, e.g.
+   *  [OnMapLoadErrorListener] should now be registered with [subscribeMapLoadingError];
+   *  you could also subscribe to other events like [subscribeStyleImageMissing] or [subscribeStyleImageUnused].
+   *
+   * 2. Parameter `styleTransitionOptions` was removed from this overloaded method.
+   *  In order to apply it you should use more granular overloaded [loadStyle] taking [StyleContract.StyleExtension]
+   *  and add transition options in DSL block:
+   *
+   *  mapboxMap.loadStyle(style(Style.DARK) {
+   *   +transition {
+   *     duration(100L)
+   *     enablePlacementTransitions(false)
+   *    }
+   *   // other runtime styling
+   * }
+   *
+   * @param style specified URI or from JSON both represented as [String].
+   * @param onStyleLoaded callback triggered when the style is successfully loaded.
    */
+  @JvmOverloads
+  fun loadStyle(
+    style: String,
+    onStyleLoaded: Style.OnStyleLoaded? = null,
+  ) {
+    checkNativeMap("loadStyle")
+    initializeStyleLoad(
+      onStyleLoaded,
+      styleDataStyleLoadedListener = {},
+    )
+    applyStyle(style)
+  }
+
+  /**
+   * Legacy method to load style, please refer to deprecation message for more details.
+   */
+  @Deprecated(
+    message = "Loading style was revisited in v11, this method is deprecated." +
+      " IMPORTANT: onMapLoadErrorListener will not be triggered anymore," +
+      " please refer to documentation for new method to understand how to handle errors.",
+    replaceWith = ReplaceWith("loadStyle(style, onStyleLoaded)")
+  )
+  fun loadStyleUri(
+    styleUri: String,
+    styleTransitionOptions: TransitionOptions? = null,
+    onStyleLoaded: Style.OnStyleLoaded? = null,
+    onMapLoadErrorListener: OnMapLoadErrorListener? = null,
+  ) {
+    loadStyle(
+      style(styleUri) {
+        styleTransitionOptions?.let {
+          +transition {
+            it.toBuilder()
+          }
+        }
+      },
+      onStyleLoaded
+    )
+  }
+
+  /**
+   * Legacy method to load style, please refer to deprecation message for more details.
+   */
+  @Deprecated(
+    message = "Loading style was revisited in v11, this method is deprecated." +
+      " IMPORTANT: onMapLoadErrorListener will not be triggered anymore," +
+      " please refer to documentation for new method to understand how to handle errors.",
+    replaceWith = ReplaceWith("loadStyle(style, onStyleLoaded)")
+  )
   fun loadStyleUri(
     styleUri: String,
     onStyleLoaded: Style.OnStyleLoaded? = null,
-    mapLoadingErrorCallback: MapLoadingErrorCallback? = null
-  ) = loadStyleUri(styleUri, null, onStyleLoaded, mapLoadingErrorCallback)
+    onMapLoadErrorListener: OnMapLoadErrorListener? = null
+  ) {
+    loadStyleUri(styleUri, null, onStyleLoaded, onMapLoadErrorListener)
+  }
 
   /**
-   * Will load a new map style asynchronous from the specified URI.
-   *
-   * @param styleUri The style URI
-   * @param onStyleLoaded The OnStyleLoaded callback
+   * Legacy method to load style, please refer to deprecation message for more details.
    */
+  @Deprecated(
+    message = "Loading style was revisited in v11, this method is deprecated." +
+      " IMPORTANT: onMapLoadErrorListener will not be triggered anymore," +
+      " please refer to documentation for new method to understand how to handle errors.",
+    replaceWith = ReplaceWith("loadStyle(style, onStyleLoaded)")
+  )
   fun loadStyleUri(
     styleUri: String,
     onStyleLoaded: Style.OnStyleLoaded
   ) = loadStyleUri(styleUri, null, onStyleLoaded, null)
 
   /**
-   * Will load a new map style asynchronous from the specified URI.
-   *
-   * @param styleUri The style URI
+   * Legacy method to load style, please refer to deprecation message for more details.
    */
+  @Deprecated(
+    message = "Loading style was revisited in v11, this method is deprecated." +
+      " IMPORTANT: onMapLoadErrorListener will not be triggered anymore," +
+      " please refer to documentation for new method to understand how to handle errors.",
+    replaceWith = ReplaceWith("loadStyle(style)")
+  )
   fun loadStyleUri(
     styleUri: String,
   ) = loadStyleUri(styleUri, null, null, null)
 
   /**
-   * Load style JSON
+   * Legacy method to load style, please refer to deprecation message for more details.
    */
+  @Deprecated(
+    message = "Loading style was revisited in v11, this method is deprecated." +
+      " IMPORTANT: onMapLoadErrorListener will not be triggered anymore," +
+      " please refer to documentation for new method to understand how to handle errors.",
+    replaceWith = ReplaceWith("loadStyle(style, onStyleLoaded)")
+  )
   fun loadStyleJson(
     styleJson: String,
     styleTransitionOptions: TransitionOptions? = null,
     onStyleLoaded: Style.OnStyleLoaded? = null,
-    mapLoadingErrorCallback: MapLoadingErrorCallback? = null,
+    onMapLoadErrorListener: OnMapLoadErrorListener? = null,
   ) {
-    checkNativeMap("loadStyleJson")
-    initializeStyleLoad(
-      onStyleLoaded,
-      styleDataStyleLoadedListener = {
-        styleTransitionOptions?.let(it::setStyleTransition)
-      },
-      mapLoadingErrorCallback = mapLoadingErrorCallback
-    )
-    nativeMap.setStyleJSON(styleJson)
+    loadStyleUri(styleJson, styleTransitionOptions, onStyleLoaded, onMapLoadErrorListener)
   }
 
   /**
-   * Load style JSON
+   * Legacy method to load style, please refer to deprecation message for more details.
    */
+  @Deprecated(
+    message = "Loading style was revisited in v11, this method is deprecated." +
+      " IMPORTANT: onMapLoadErrorListener will not be triggered anymore," +
+      " please refer to documentation for new method to understand how to handle errors.",
+    replaceWith = ReplaceWith("loadStyle(style, onStyleLoaded)")
+  )
   fun loadStyleJson(
     styleJson: String,
     onStyleLoaded: Style.OnStyleLoaded? = null,
-    mapLoadingErrorCallback: MapLoadingErrorCallback? = null
-  ) = loadStyleJson(styleJson, null, onStyleLoaded, mapLoadingErrorCallback)
+    onMapLoadErrorListener: OnMapLoadErrorListener? = null
+  ) {
+    loadStyleUri(styleJson, null, onStyleLoaded, onMapLoadErrorListener)
+  }
 
   /**
-   * Load style JSON.
+   * Legacy method to load style, please refer to deprecation message for more details.
    */
+  @Deprecated(
+    message = "Loading style was revisited in v11, this method is deprecated.",
+    replaceWith = ReplaceWith("loadStyle(style, onStyleLoaded)")
+  )
   fun loadStyleJson(
     styleJson: String,
     onStyleLoaded: Style.OnStyleLoaded
-  ) = loadStyleJson(styleJson, null, onStyleLoaded, null)
+  ) = loadStyleUri(styleJson, null, onStyleLoaded, null)
 
   /**
-   * Load style JSON.
+   * Legacy method to load style, please refer to deprecation message for more details.
    */
+  @Deprecated(
+    message = "Loading style was revisited in v11, this method is deprecated.",
+    replaceWith = ReplaceWith("loadStyle(style)")
+  )
   fun loadStyleJson(
-    styleJson: String
-  ) {
-    checkNativeMap("loadStyleJson")
-    loadStyleJson(styleJson, null, null, null)
-  }
+    styleJson: String,
+  ) = loadStyleUri(styleJson, null, null, null)
 
   /**
-   * Load the style from Style Extension.
+   * Loads the new map style built from the specified style DSL block. For example:
+   *
+   * mapboxMap.loadStyle(style(Style.DARK) {
+   *   +geoJsonSource(SOURCE_ID) {
+   *     featureCollection(collection)
+   *   }
+   *   +symbolLayer(LAYER_ID, SOURCE_ID) {
+   *     iconImage(IMAGE_ID)
+   *   }
+   * }
+   *
+   * ** Important notes comparing to Maps v10 **:
+   * 1. Parameter `onMapLoadErrorListener` was removed as it was not covering all the map / style loading errors.
+   *  Now if you need to listen to those errors you have to register specific listener in advance, e.g.
+   *  [OnMapLoadErrorListener] should now be registered with [subscribeMapLoadingError];
+   *  you could also subscribe to other events like [subscribeStyleImageMissing] or [subscribeStyleImageUnused].
+   *
+   * 2. Parameter `styleTransitionOptions` was removed from this overloaded method. Instead you have to add transition options in the DSL block:
+   *
+   *  mapboxMap.loadStyle(style(Style.DARK) {
+   *   +transition {
+   *     duration(100L)
+   *     enablePlacementTransitions(false)
+   *    }
+   *   // other runtime styling
+   * }
+   *
+   * @param styleExtension The style DSL block used to describe the style with runtime styling on top of it.
+   * @param onStyleLoaded callback triggered when the style is successfully loaded.
    */
   @OptIn(MapboxExperimental::class)
+  @JvmOverloads
   fun loadStyle(
     styleExtension: StyleContract.StyleExtension,
-    transitionOptions: TransitionOptions? = null,
     onStyleLoaded: Style.OnStyleLoaded? = null,
-    mapLoadingErrorCallback: MapLoadingErrorCallback? = null,
   ) {
     checkNativeMap("loadStyle")
     initializeStyleLoad(
@@ -273,7 +354,7 @@ class MapboxMap :
         styleExtension.terrain?.bindTo(style)
         styleExtension.atmosphere?.bindTo(style)
         styleExtension.projection?.bindTo(style)
-        transitionOptions?.let(style::setStyleTransition)
+        styleExtension.transition?.let(style::setStyleTransition)
       },
       styleDataSourcesLoadedListener = { style ->
         styleExtension.sources.forEach {
@@ -292,45 +373,50 @@ class MapboxMap :
           it.bindTo(style)
         }
       },
-      mapLoadingErrorCallback = mapLoadingErrorCallback,
     )
-    if (styleExtension.styleUri.isEmpty()) {
-      nativeMap.setStyleJSON(EMPTY_STYLE_JSON)
-    } else {
-      nativeMap.setStyleURI(styleExtension.styleUri)
-    }
+    applyStyle(styleExtension.style)
   }
 
   /**
-   * Load the style from Style Extension.
+   * Legacy method to load style, please refer to deprecation message for more details.
    */
+  @Deprecated(
+    message = "Loading style was revisited in v11, this method is deprecated." +
+      " IMPORTANT: onMapLoadErrorListener and styleTransitionOptions will not be applied anymore," +
+      " please refer to documentation for new method to understand how to apply them properly.",
+    replaceWith = ReplaceWith("loadStyle(styleExtension, onStyleLoaded)")
+  )
+  fun loadStyle(
+    styleExtension: StyleContract.StyleExtension,
+    styleTransitionOptions: TransitionOptions? = null,
+    onStyleLoaded: Style.OnStyleLoaded? = null,
+    onMapLoadErrorListener: OnMapLoadErrorListener? = null,
+  ) {
+    loadStyle(styleExtension, onStyleLoaded)
+  }
+
+  /**
+   * Legacy method to load style, please refer to deprecation message for more details.
+   */
+  @Deprecated(
+    message = "Loading style was revisited in v11, this method is deprecated." +
+      " IMPORTANT: onMapLoadErrorListener will not be triggered anymore," +
+      " please refer to documentation for new method to understand how to handle errors.",
+    replaceWith = ReplaceWith("loadStyle(styleExtension, onStyleLoaded)")
+  )
   fun loadStyle(
     styleExtension: StyleContract.StyleExtension,
     onStyleLoaded: Style.OnStyleLoaded? = null,
-    mapLoadingErrorCallback: MapLoadingErrorCallback? = null,
-  ) = loadStyle(styleExtension, null, onStyleLoaded, mapLoadingErrorCallback)
-
-  /**
-   * Load the style from Style Extension.
-   */
-  fun loadStyle(
-    styleExtension: StyleContract.StyleExtension,
-    onStyleLoaded: Style.OnStyleLoaded
-  ) = loadStyle(styleExtension, null, onStyleLoaded, null)
-
-  /**
-   * Load the style from Style Extension.
-   */
-  fun loadStyle(
-    styleExtension: StyleContract.StyleExtension
-  ) = loadStyle(styleExtension, null, null, null)
+    onMapLoadErrorListener: OnMapLoadErrorListener? = null
+  ) {
+    loadStyle(styleExtension, onStyleLoaded)
+  }
 
   private fun initializeStyleLoad(
     onStyleLoaded: Style.OnStyleLoaded? = null,
     styleDataStyleLoadedListener: Style.OnStyleLoaded,
     styleDataSpritesLoadedListener: Style.OnStyleLoaded? = null,
     styleDataSourcesLoadedListener: Style.OnStyleLoaded? = null,
-    mapLoadingErrorCallback: MapLoadingErrorCallback? = null,
   ) {
     style = null
     styleObserver.setLoadStyleListener(
@@ -338,7 +424,6 @@ class MapboxMap :
       styleDataStyleLoadedListener = styleDataStyleLoadedListener,
       styleDataSpritesLoadedListener = styleDataSpritesLoadedListener,
       styleDataSourcesLoadedListener = styleDataSourcesLoadedListener,
-      mapLoadingErrorCallback = mapLoadingErrorCallback,
     )
     isStyleLoadInitiated = true
   }
@@ -2097,7 +2182,6 @@ class MapboxMap :
     }
 
     private const val TAG = "Mbgl-MapboxMap"
-    private const val EMPTY_STYLE_JSON = "{}"
     internal const val QFE_SUPER_CLUSTER = "supercluster"
     internal const val QFE_LEAVES = "leaves"
     internal const val QFE_LIMIT = "limit"

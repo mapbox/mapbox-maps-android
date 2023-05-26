@@ -3,6 +3,7 @@ package com.mapbox.maps.extension.style
 import com.mapbox.maps.LayerPosition
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.Style
+import com.mapbox.maps.TransitionOptions
 
 /**
  * Define the common interfaces for the Style component.
@@ -13,9 +14,9 @@ interface StyleContract {
    */
   interface StyleExtension {
     /**
-     * The style's Uri. Will load an empty json `{}` if the styleUri is empty.
+     * Style represented as JSON or URI.
      */
-    val styleUri: String
+    val style: String
 
     /**
      * The sources of the style.
@@ -57,6 +58,11 @@ interface StyleContract {
      * Map projection of the style.
      */
     val projection: StyleProjectionExtension?
+
+    /**
+     * Transition options applied when loading the style.
+     */
+    val transition: TransitionOptions?
   }
 
   /**

@@ -11,7 +11,6 @@ import kotlinx.coroutines.channels.trySendBlocking
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
 /**
@@ -50,49 +49,27 @@ fun MapboxMap.cameraChanges(): Flow<CameraChanged> =
 @JvmSynthetic
 suspend fun MapboxMap.awaitLoadStyle(
   styleExtension: StyleContract.StyleExtension,
-  transitionOptions: TransitionOptions? = null,
 ): Style = suspendCoroutine { continuation ->
   loadStyle(
     styleExtension,
-    transitionOptions,
     onStyleLoaded = continuation::resume
-  ) { mapLoadingError -> continuation.resumeWithException(MapboxStyleException(mapLoadingError.message)) }
+  )
 }
 
 /**
- * Load a new style from a style URI, suspends until style is loaded.
+ * Load a new style from a style URI or JSON, suspends until style is loaded.
  *
  * @param styleUri the style URI to load
  * @param transitionOptions the transition options to use when loading the style
  */
 @JvmSynthetic
-suspend fun MapboxMap.awaitLoadStyleUri(
-  styleUri: String,
-  styleTransitionOptions: TransitionOptions? = null,
+suspend fun MapboxMap.awaitLoadStyle(
+  style: String,
 ): Style = suspendCoroutine { continuation ->
-  loadStyleUri(
-    styleUri = styleUri,
-    styleTransitionOptions = styleTransitionOptions,
+  loadStyle(
+    style = style,
     onStyleLoaded = continuation::resume
-  ) { mapLoadingError -> continuation.resumeWithException(MapboxStyleException(mapLoadingError.message)) }
-}
-
-/**
- * Load a new style from a style JSON, suspends until style is loaded.
- *
- * @param styleJson the style JSON to load
- * @param transitionOptions the transition options to use when loading the style
- */
-@JvmSynthetic
-suspend fun MapboxMap.awaitLoadStyleJson(
-  styleJson: String,
-  styleTransitionOptions: TransitionOptions? = null,
-): Style = suspendCoroutine { continuation ->
-  loadStyleJson(
-    styleJson = styleJson,
-    styleTransitionOptions = styleTransitionOptions,
-    onStyleLoaded = continuation::resume
-  ) { mapLoadingError -> continuation.resumeWithException(MapboxStyleException(mapLoadingError.message)) }
+  )
 }
 
 /**

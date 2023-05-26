@@ -145,7 +145,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     if (!mapboxMap.isStyleLoadInitiated) {
       // Load the style in mapInitOptions if no style has loaded yet.
       mapInitOptions.styleUri?.let {
-        mapboxMap.loadStyleUri(it)
+        mapboxMap.loadStyle(it)
       }
     }
     pluginRegistry.onStart()

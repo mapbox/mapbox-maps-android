@@ -361,6 +361,14 @@ public class JavaInterfaceChecker {
   private void mapboxMapOverLoad(MapView mapView, StyleContract.StyleExtension styleExtension, Style.OnStyleLoaded onStyleLoaded,
                                  MapLoadingErrorCallback onMapLoadErrorListener) {
     final MapboxMap mapboxMap = mapView.getMapboxMap();
+    mapboxMap.loadStyle(Style.MAPBOX_STREETS);
+    mapboxMap.loadStyle(Style.MAPBOX_STREETS, onStyleLoaded);
+    mapboxMap.loadStyle("json");
+    mapboxMap.loadStyle("json", onStyleLoaded);
+    mapboxMap.loadStyle(styleExtension);
+    mapboxMap.loadStyle(styleExtension, onStyleLoaded);
+
+    // deprecated to confirm we don't introduce breaking changes
     mapboxMap.loadStyleUri(Style.MAPBOX_STREETS);
     mapboxMap.loadStyleUri(Style.MAPBOX_STREETS, onStyleLoaded);
     mapboxMap.loadStyleUri(Style.MAPBOX_STREETS, onStyleLoaded, onMapLoadErrorListener);
@@ -369,8 +377,6 @@ public class JavaInterfaceChecker {
     mapboxMap.loadStyleJson("json", onStyleLoaded);
     mapboxMap.loadStyleJson("json", onStyleLoaded, onMapLoadErrorListener);
     mapboxMap.loadStyleJson("json", new TransitionOptions.Builder().build(), onStyleLoaded, onMapLoadErrorListener);
-    mapboxMap.loadStyle(styleExtension);
-    mapboxMap.loadStyle(styleExtension, onStyleLoaded);
     mapboxMap.loadStyle(styleExtension, onStyleLoaded, onMapLoadErrorListener);
     mapboxMap.loadStyle(styleExtension, new TransitionOptions.Builder().build(), onStyleLoaded, onMapLoadErrorListener);
   }

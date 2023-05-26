@@ -83,7 +83,7 @@ class DSLStylingActivity : AppCompatActivity(), OnMapClickListener {
     e.toString()
   }
 
-  private fun createStyle() = style(styleUri = Style.TRAFFIC_DAY) {
+  private fun createStyle() = style(style = Style.TRAFFIC_DAY) {
     +imageSource("imag") {
       url(IMAGE_URL)
       coordinates(

@@ -30,15 +30,17 @@ class LoadStyleCallbackTest {
 
     val latch = CountDownLatch(1)
     testActivity.scenario.onActivity {
-      activity.mapView.getMapboxMap().loadStyleUri(
-        styleUri = Style.LIGHT,
-        onStyleLoaded = {
-          latch.countDown()
-        },
-        mapLoadingErrorCallback = {
+      activity.mapView.getMapboxMap().apply {
+        subscribeMapLoadingError {
           throw AssertionError("onMapLoadError: $it")
         }
-      )
+        loadStyle(
+          style = Style.LIGHT,
+          onStyleLoaded = {
+            latch.countDown()
+          }
+        )
+      }
     }
 
     if (!latch.await(10, TimeUnit.SECONDS)) {
@@ -56,15 +58,17 @@ class LoadStyleCallbackTest {
 
     val latch = CountDownLatch(1)
     testActivity.scenario.onActivity {
-      activity.mapView.getMapboxMap().loadStyleUri(
-        styleUri = Style.LIGHT,
-        onStyleLoaded = {
-          latch.countDown()
-        },
-        mapLoadingErrorCallback = {
+      activity.mapView.getMapboxMap().apply {
+        subscribeMapLoadingError {
           throw AssertionError("onMapLoadError: $it")
         }
-      )
+        loadStyle(
+          style = Style.LIGHT,
+          onStyleLoaded = {
+            latch.countDown()
+          }
+        )
+      }
 
       activity.mapView.onStop()
     }
@@ -98,15 +102,17 @@ class LoadStyleCallbackTest {
 
     val latch = CountDownLatch(1)
     testActivity.scenario.onActivity {
-      activity.mapView.getMapboxMap().loadStyleUri(
-        styleUri = Style.LIGHT,
-        onStyleLoaded = {
-          latch.countDown()
-        },
-        mapLoadingErrorCallback = {
+      activity.mapView.getMapboxMap().apply {
+        subscribeMapLoadingError {
           throw AssertionError("onMapLoadError: $it")
         }
-      )
+        loadStyle(
+          style = Style.LIGHT,
+          onStyleLoaded = {
+            latch.countDown()
+          }
+        )
+      }
     }
 
     Thread.sleep(100)

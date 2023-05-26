@@ -67,7 +67,7 @@ class StyleObserverTest {
   @Test
   fun onStyleLoadSuccess() {
     val styleLoaded = mockk<Style.OnStyleLoaded>(relaxed = true)
-    styleObserver.setLoadStyleListener(styleLoaded, mockk(relaxed = true), null, null, null)
+    styleObserver.setLoadStyleListener(styleLoaded, mockk(relaxed = true), null, null)
     styleObserver.run(
       StyleDataLoaded(
         StyleDataLoadedType.STYLE,
@@ -92,7 +92,6 @@ class StyleObserverTest {
       mockk(relaxed = true),
       null,
       null,
-      null
     )
     val getStyleListener = mockk<Style.OnStyleLoaded>(relaxed = true)
     styleObserver.addGetStyleListener(getStyleListener)
@@ -118,9 +117,9 @@ class StyleObserverTest {
   @Test
   fun onStyleLoadedOverwritten() {
     val styleLoadedFail = mockk<Style.OnStyleLoaded>(relaxed = true)
-    styleObserver.setLoadStyleListener(styleLoadedFail, mockk(relaxed = true), null, null, null)
+    styleObserver.setLoadStyleListener(styleLoadedFail, mockk(relaxed = true), null, null)
     val styleLoadedSuccess = mockk<Style.OnStyleLoaded>(relaxed = true)
-    styleObserver.setLoadStyleListener(styleLoadedSuccess, mockk(relaxed = true), null, null, null)
+    styleObserver.setLoadStyleListener(styleLoadedSuccess, mockk(relaxed = true), null, null)
     styleObserver.run(
       StyleDataLoaded(
         StyleDataLoadedType.STYLE,
@@ -132,37 +131,6 @@ class StyleObserverTest {
     styleObserver.run(mockk<StyleLoaded>())
     verifyNo { styleLoadedFail.onStyleLoaded(any()) }
     verify { styleLoadedSuccess.onStyleLoaded(any()) }
-  }
-
-  /**
-   * Verifies if the user provided MapLoadingErrorCallback is called when the style has produced an error
-   */
-  @Test
-  fun onStyleLoadError() {
-    val errorListener = mockk<MapLoadingErrorCallback>(relaxed = true)
-    styleObserver.setLoadStyleListener(null, mockk(relaxed = true), null, null, errorListener)
-    styleObserver.run(mockk<MapLoadingError>(relaxed = true))
-    verify { errorListener.run(any()) }
-  }
-
-  /**
-   * Verifies that loadStyle error callback is overwritten with the consecutive call
-   */
-  @Test
-  fun onStyleLoadErrorNotCalled() {
-    val errorListenerFail = mockk<MapLoadingErrorCallback>(relaxed = true)
-    styleObserver.setLoadStyleListener(null, mockk(relaxed = true), null, null, errorListenerFail)
-    val errorListenerSuccess = mockk<MapLoadingErrorCallback>(relaxed = true)
-    styleObserver.setLoadStyleListener(
-      null,
-      mockk(relaxed = true),
-      null,
-      null,
-      errorListenerSuccess
-    )
-    styleObserver.run(mockk<MapLoadingError>(relaxed = true))
-    verifyNo { errorListenerFail.run(any()) }
-    verify { errorListenerSuccess.run(any()) }
   }
 
   @Test
@@ -177,7 +145,6 @@ class StyleObserverTest {
       styleCallback,
       styleSpritesCallback,
       styleSourcesCallback,
-      null
     )
 
     styleObserver.run(
@@ -209,7 +176,6 @@ class StyleObserverTest {
       styleCallback,
       styleSpritesCallback,
       styleSourcesCallback,
-      null
     )
 
     // STYLE event arrives first and initializes Style object internally
@@ -253,7 +219,6 @@ class StyleObserverTest {
       styleCallback,
       styleSpritesCallback,
       styleSourcesCallback,
-      null
     )
 
     // STYLE event arrives first and initializes Style object internally
@@ -300,9 +265,8 @@ class StyleObserverTest {
       styleNotCalled,
       spritesNotCalled,
       sourcesNotCalled,
-      null
     )
-    styleObserver.setLoadStyleListener(null, styleCalled, spritesCalled, sourcesCalled, null)
+    styleObserver.setLoadStyleListener(null, styleCalled, spritesCalled, sourcesCalled)
 
     styleObserver.run(
       StyleDataLoaded(
@@ -348,7 +312,6 @@ class StyleObserverTest {
       styleCallback,
       styleSpritesCallback,
       styleSourcesCallback,
-      null
     )
 
     assertThrows(MapboxMapException::class.java) {
@@ -366,7 +329,6 @@ class StyleObserverTest {
       styleCallback,
       styleSpritesCallback,
       null,
-      null
     )
 
     styleObserver.run(
@@ -403,7 +365,6 @@ class StyleObserverTest {
       styleCallback,
       null,
       styleSourcesCallback,
-      null
     )
 
     styleObserver.run(
@@ -441,7 +402,6 @@ class StyleObserverTest {
       styleCallback,
       styleSpritesCallback,
       styleSourcesCallback,
-      null
     )
 
     styleObserver.run(

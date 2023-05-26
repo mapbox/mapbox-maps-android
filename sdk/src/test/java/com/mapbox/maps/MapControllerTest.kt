@@ -83,7 +83,7 @@ class MapControllerTest {
   @Test
   fun onStart() {
     every { mockPluginRegistry.onStart() } just Runs
-    every { mockMapboxMap.loadStyleUri(Style.MAPBOX_STREETS) } just Runs
+    every { mockMapboxMap.loadStyle(Style.MAPBOX_STREETS) } just Runs
     every { mockNativeObserver.addOnCameraChangeListener(any()) } just Runs
     every { mockNativeObserver.addOnStyleDataLoadedListener(any()) } just Runs
     every { mockRenderer.onStart() } just Runs
@@ -99,7 +99,7 @@ class MapControllerTest {
       mockNativeObserver.addOnStyleDataLoadedListener(any())
       mockRenderer.onStart()
       mockMapboxMap.isStyleLoadInitiated
-      mockMapboxMap.loadStyleUri(Style.MAPBOX_STREETS)
+      mockMapboxMap.loadStyle(Style.MAPBOX_STREETS)
       mockPluginRegistry.onStart()
     }
   }
@@ -151,7 +151,7 @@ class MapControllerTest {
     every { mockNativeObserver.removeOnCameraChangeListener(any()) } just Runs
     every { mockNativeObserver.removeOnStyleDataLoadedListener(any()) } just Runs
     every { mockMapboxMap.isStyleLoadInitiated } returns false
-    every { mockMapboxMap.loadStyleUri(any()) } just Runs
+    every { mockMapboxMap.loadStyle(any<String>()) } just Runs
     every { mockMapInitOptions.styleUri } returns "uri"
 
     val style1 = mockk<Style>()
@@ -245,7 +245,7 @@ class MapControllerTest {
     every { mockPluginRegistry.onStart() } just Runs
     every { mockRenderer.onStart() } just Runs
     every { mockPluginRegistry.onCameraMove(mockCameraState) } just Runs
-    every { mockMapboxMap.loadStyleUri(Style.MAPBOX_STREETS) } just Runs
+    every { mockMapboxMap.loadStyle(Style.MAPBOX_STREETS) } just Runs
     every { mockNativeMap.getCameraState() } returns mockCameraState
     every { mockMapboxMap.isStyleLoadInitiated } returns false
     every { mockMapInitOptions.styleUri } answers { Style.MAPBOX_STREETS }
@@ -258,7 +258,7 @@ class MapControllerTest {
     verifySequence {
       mockMapboxMap.getStyle()
       mockMapboxMap.isStyleLoadInitiated
-      mockMapboxMap.loadStyleUri(Style.MAPBOX_STREETS)
+      mockMapboxMap.loadStyle(Style.MAPBOX_STREETS)
       mockPluginRegistry.onStart()
       mockNativeMap.getCameraState()
       mockPluginRegistry.onCameraMove(mockCameraState)

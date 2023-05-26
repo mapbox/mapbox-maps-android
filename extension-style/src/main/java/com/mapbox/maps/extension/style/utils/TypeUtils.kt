@@ -7,6 +7,7 @@ import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Geometry
 import com.mapbox.maps.StylePropertyValue
 import com.mapbox.maps.StylePropertyValueKind
+import com.mapbox.maps.TransitionOptions
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.properties.generated.LayerProperty
 import com.mapbox.maps.extension.style.light.LightPosition
@@ -337,3 +338,9 @@ fun FeatureCollection.toValue(): Value {
 fun Geometry.toValue(): Value {
   return TypeUtils.wrapToValue(this.toJson())
 }
+
+/**
+ * DSL builder function to create [TransitionOptions] object.
+ */
+inline fun transition(block: TransitionOptions.Builder.() -> Unit): TransitionOptions =
+  TransitionOptions.Builder().apply(block).build()

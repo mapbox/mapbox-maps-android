@@ -114,7 +114,7 @@ class Style {
   }
 
   /**
-   * Get the URI of the current Mapbox Style in use.
+   * Get the styleURI of the current Mapbox Style in use.
    *
    * SetURI is an asynchronous call. In order to get result of this operation please use
    * [MapboxMap.addOnStyleLoadedListener], [MapboxMap.addOnStyleDataLoadedListener] or
@@ -123,9 +123,7 @@ class Style {
    *
    * And in case of error @see MapLoadError#StyleLoadError will be generated.
    *
-   * \attention This method should be called on the same thread where @see Map object is initialized.
-   *
-   * @param uri URI where the style should be loaded from.
+   * \attention This method should be called on the same thread where @see Map object is initialized.*
    */
   var styleURI: String
     get() {

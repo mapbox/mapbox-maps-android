@@ -220,18 +220,20 @@ package com.mapbox.maps {
     method public boolean isGestureInProgress();
     method public boolean isUserAnimationInProgress();
     method public boolean isValid();
-    method public void loadStyle(com.mapbox.maps.extension.style.StyleContract.StyleExtension styleExtension, com.mapbox.maps.TransitionOptions? transitionOptions = null, com.mapbox.maps.Style.OnStyleLoaded? onStyleLoaded = null, com.mapbox.maps.MapLoadingErrorCallback? mapLoadingErrorCallback = null);
-    method public void loadStyle(com.mapbox.maps.extension.style.StyleContract.StyleExtension styleExtension, com.mapbox.maps.Style.OnStyleLoaded? onStyleLoaded = null, com.mapbox.maps.MapLoadingErrorCallback? mapLoadingErrorCallback = null);
-    method public void loadStyle(com.mapbox.maps.extension.style.StyleContract.StyleExtension styleExtension, com.mapbox.maps.Style.OnStyleLoaded onStyleLoaded);
+    method public void loadStyle(String style, com.mapbox.maps.Style.OnStyleLoaded? onStyleLoaded = null);
+    method public void loadStyle(String style);
+    method public void loadStyle(com.mapbox.maps.extension.style.StyleContract.StyleExtension styleExtension, com.mapbox.maps.Style.OnStyleLoaded? onStyleLoaded = null);
     method public void loadStyle(com.mapbox.maps.extension.style.StyleContract.StyleExtension styleExtension);
-    method public void loadStyleJson(String styleJson, com.mapbox.maps.TransitionOptions? styleTransitionOptions = null, com.mapbox.maps.Style.OnStyleLoaded? onStyleLoaded = null, com.mapbox.maps.MapLoadingErrorCallback? mapLoadingErrorCallback = null);
-    method public void loadStyleJson(String styleJson, com.mapbox.maps.Style.OnStyleLoaded? onStyleLoaded = null, com.mapbox.maps.MapLoadingErrorCallback? mapLoadingErrorCallback = null);
-    method public void loadStyleJson(String styleJson, com.mapbox.maps.Style.OnStyleLoaded onStyleLoaded);
-    method public void loadStyleJson(String styleJson);
-    method public void loadStyleUri(String styleUri, com.mapbox.maps.TransitionOptions? styleTransitionOptions = null, com.mapbox.maps.Style.OnStyleLoaded? onStyleLoaded = null, com.mapbox.maps.MapLoadingErrorCallback? mapLoadingErrorCallback = null);
-    method public void loadStyleUri(String styleUri, com.mapbox.maps.Style.OnStyleLoaded? onStyleLoaded = null, com.mapbox.maps.MapLoadingErrorCallback? mapLoadingErrorCallback = null);
-    method public void loadStyleUri(String styleUri, com.mapbox.maps.Style.OnStyleLoaded onStyleLoaded);
-    method public void loadStyleUri(String styleUri);
+    method @Deprecated public void loadStyle(com.mapbox.maps.extension.style.StyleContract.StyleExtension styleExtension, com.mapbox.maps.TransitionOptions? styleTransitionOptions = null, com.mapbox.maps.Style.OnStyleLoaded? onStyleLoaded = null, error.NonExistentClass? onMapLoadErrorListener = null);
+    method @Deprecated public void loadStyle(com.mapbox.maps.extension.style.StyleContract.StyleExtension styleExtension, com.mapbox.maps.Style.OnStyleLoaded? onStyleLoaded = null, error.NonExistentClass? onMapLoadErrorListener = null);
+    method @Deprecated public void loadStyleJson(String styleJson, com.mapbox.maps.TransitionOptions? styleTransitionOptions = null, com.mapbox.maps.Style.OnStyleLoaded? onStyleLoaded = null, error.NonExistentClass? onMapLoadErrorListener = null);
+    method @Deprecated public void loadStyleJson(String styleJson, com.mapbox.maps.Style.OnStyleLoaded? onStyleLoaded = null, error.NonExistentClass? onMapLoadErrorListener = null);
+    method @Deprecated public void loadStyleJson(String styleJson, com.mapbox.maps.Style.OnStyleLoaded onStyleLoaded);
+    method @Deprecated public void loadStyleJson(String styleJson);
+    method @Deprecated public void loadStyleUri(String styleUri, com.mapbox.maps.TransitionOptions? styleTransitionOptions = null, com.mapbox.maps.Style.OnStyleLoaded? onStyleLoaded = null, error.NonExistentClass? onMapLoadErrorListener = null);
+    method @Deprecated public void loadStyleUri(String styleUri, com.mapbox.maps.Style.OnStyleLoaded? onStyleLoaded = null, error.NonExistentClass? onMapLoadErrorListener = null);
+    method @Deprecated public void loadStyleUri(String styleUri, com.mapbox.maps.Style.OnStyleLoaded onStyleLoaded);
+    method @Deprecated public void loadStyleUri(String styleUri);
     method public com.mapbox.maps.ScreenCoordinate pixelForCoordinate(com.mapbox.geojson.Point coordinate);
     method public java.util.List<com.mapbox.maps.ScreenCoordinate> pixelsForCoordinates(java.util.List<com.mapbox.geojson.Point> coordinates);
     method public com.mapbox.maps.MercatorCoordinate project(com.mapbox.geojson.Point point, double zoomScale);
@@ -420,9 +422,8 @@ package com.mapbox.maps.attribution {
 package com.mapbox.maps.coroutine {
 
   public final class MapboxMapExtKt {
-    method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.maps.Style! awaitLoadStyle(com.mapbox.maps.MapboxMap, com.mapbox.maps.extension.style.StyleContract.StyleExtension styleExtension, com.mapbox.maps.TransitionOptions? transitionOptions = null);
-    method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.maps.Style! awaitLoadStyleJson(com.mapbox.maps.MapboxMap, String styleJson, com.mapbox.maps.TransitionOptions? styleTransitionOptions = null);
-    method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.maps.Style! awaitLoadStyleUri(com.mapbox.maps.MapboxMap, String styleUri, com.mapbox.maps.TransitionOptions? styleTransitionOptions = null);
+    method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.maps.Style! awaitLoadStyle(com.mapbox.maps.MapboxMap, com.mapbox.maps.extension.style.StyleContract.StyleExtension styleExtension);
+    method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.maps.Style! awaitLoadStyle(com.mapbox.maps.MapboxMap, String style);
     method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.maps.Style! awaitStyle(com.mapbox.maps.MapboxMap);
     method @kotlin.jvm.JvmSynthetic public static kotlinx.coroutines.flow.Flow<? extends com.mapbox.maps.CameraChanged>! cameraChanges(com.mapbox.maps.MapboxMap);
     method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.Value>! getFeatureState(com.mapbox.maps.MapboxMap, String sourceId, String sourceLayerId = null, String featureId);

@@ -24,7 +24,6 @@ internal class StyleObserver(
   private var styleDataSpritesLoadedListener: Style.OnStyleLoaded? = null
   // fired when [StyleDataType.SOURCES] arrives
   private var styleDataSourcesLoadedListener: Style.OnStyleLoaded? = null
-  private var loadStyleErrorListener: MapLoadingErrorCallback? = null
   private val getStyleListeners = CopyOnWriteArraySet<Style.OnStyleLoaded>()
 
   /** Initialized after [MapEvent.STYLE_LOADED] event from [preLoadedStyle], sent to user and all plugins. */
@@ -52,7 +51,6 @@ internal class StyleObserver(
     styleDataStyleLoadedListener: Style.OnStyleLoaded,
     styleDataSpritesLoadedListener: Style.OnStyleLoaded? = null,
     styleDataSourcesLoadedListener: Style.OnStyleLoaded? = null,
-    mapLoadingErrorCallback: MapLoadingErrorCallback?
   ) {
     // needed to prevent receiving onStyleLoaded for the old style in some rare cases
     nativeObserver.resubscribeStyleLoadListeners(styleLoadedCallback = this, styleDataLoadedCallback = this)
@@ -60,7 +58,6 @@ internal class StyleObserver(
     this.styleDataStyleLoadedListener = styleDataStyleLoadedListener
     this.styleDataSpritesLoadedListener = styleDataSpritesLoadedListener
     this.styleDataSourcesLoadedListener = styleDataSourcesLoadedListener
-    this.loadStyleErrorListener = mapLoadingErrorCallback
   }
 
   /**
@@ -102,7 +99,6 @@ internal class StyleObserver(
       TAG,
       "OnMapLoadError: ${eventData.type}, message: ${eventData.message}, sourceID: ${eventData.sourceId}, tileID: ${eventData.tileId}"
     )
-    loadStyleErrorListener?.run(eventData)
   }
 
   override fun run(eventData: StyleDataLoaded) {
@@ -153,7 +149,6 @@ internal class StyleObserver(
     styleDataStyleLoadedListener = null
     styleDataSpritesLoadedListener = null
     styleDataSourcesLoadedListener = null
-    loadStyleErrorListener = null
     preLoadedStyle?.markInvalid()
     preLoadedStyle = null
     loadedStyle?.markInvalid()

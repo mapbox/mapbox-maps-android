@@ -9,8 +9,9 @@ package com.mapbox.maps.extension.style {
     method public java.util.List<com.mapbox.maps.extension.style.StyleContract.StyleModelExtension> getModels();
     method public com.mapbox.maps.extension.style.projection.generated.Projection? getProjection();
     method public java.util.List<com.mapbox.maps.extension.style.sources.Source> getSources();
-    method public String getStyleUri();
+    method public String getStyle();
     method public com.mapbox.maps.extension.style.terrain.generated.Terrain? getTerrain();
+    method public com.mapbox.maps.TransitionOptions? getTransition();
     property public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere? atmosphere;
     property public java.util.List<com.mapbox.maps.extension.style.StyleContract.StyleImageExtension> images;
     property public java.util.List<kotlin.Pair<com.mapbox.maps.extension.style.layers.Layer,com.mapbox.maps.LayerPosition>> layers;
@@ -18,12 +19,13 @@ package com.mapbox.maps.extension.style {
     property public java.util.List<com.mapbox.maps.extension.style.StyleContract.StyleModelExtension> models;
     property public com.mapbox.maps.extension.style.projection.generated.Projection? projection;
     property public java.util.List<com.mapbox.maps.extension.style.sources.Source> sources;
-    property public String styleUri;
+    property public String style;
     property public com.mapbox.maps.extension.style.terrain.generated.Terrain? terrain;
+    property public com.mapbox.maps.TransitionOptions? transition;
   }
 
   public static final class StyleExtensionImpl.Builder {
-    ctor public StyleExtensionImpl.Builder(String styleUri);
+    ctor public StyleExtensionImpl.Builder(String style);
     method public operator void addImage(com.mapbox.maps.extension.style.image.ImageExtensionImpl);
     method public operator void addImage9Patch(com.mapbox.maps.extension.style.image.ImageNinePatchExtensionImpl);
     method public operator void addLayer(com.mapbox.maps.extension.style.layers.Layer);
@@ -31,7 +33,7 @@ package com.mapbox.maps.extension.style {
     method @com.mapbox.maps.MapboxExperimental public operator void addModel(com.mapbox.maps.extension.style.model.ModelExtensionImpl);
     method public operator void addSource(com.mapbox.maps.extension.style.sources.Source);
     method public com.mapbox.maps.extension.style.StyleContract.StyleExtension build();
-    method public String getStyleUri();
+    method public String getStyle();
     method public kotlin.Pair<com.mapbox.maps.extension.style.layers.Layer,com.mapbox.maps.LayerPosition> layerAtPosition(com.mapbox.maps.extension.style.layers.Layer layer, String? above = null, String? below = null, Integer? at = null);
     method public kotlin.Pair<com.mapbox.maps.extension.style.layers.Layer,com.mapbox.maps.LayerPosition> layerAtPosition(com.mapbox.maps.extension.style.layers.Layer layer, String? above = null, String? below = null);
     method public kotlin.Pair<com.mapbox.maps.extension.style.layers.Layer,com.mapbox.maps.LayerPosition> layerAtPosition(com.mapbox.maps.extension.style.layers.Layer layer, String? above = null);
@@ -40,11 +42,12 @@ package com.mapbox.maps.extension.style {
     method public operator void setLight(com.mapbox.maps.extension.style.light.generated.Light);
     method public operator void setProjection(com.mapbox.maps.extension.style.projection.generated.Projection);
     method public operator void setTerrain(com.mapbox.maps.extension.style.terrain.generated.Terrain);
-    property public final String styleUri;
+    method public operator void setTransition(com.mapbox.maps.TransitionOptions);
+    property public final String style;
   }
 
   public final class StyleExtensionImplKt {
-    method public static com.mapbox.maps.extension.style.StyleContract.StyleExtension style(String styleUri = "", kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.StyleExtensionImpl.Builder,kotlin.Unit> block);
+    method public static com.mapbox.maps.extension.style.StyleContract.StyleExtension style(String style = "", kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.StyleExtensionImpl.Builder,kotlin.Unit> block);
   }
 
 }
@@ -5113,6 +5116,7 @@ package com.mapbox.maps.extension.style.utils {
     method public static com.mapbox.bindgen.Value toValue(com.mapbox.geojson.Feature);
     method public static com.mapbox.bindgen.Value toValue(com.mapbox.geojson.FeatureCollection);
     method public static com.mapbox.bindgen.Value toValue(com.mapbox.geojson.Geometry);
+    method public static inline com.mapbox.maps.TransitionOptions transition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.TransitionOptions.Builder,kotlin.Unit> block);
     method public static inline <reified T> T! unwrap(com.mapbox.maps.StylePropertyValue);
     method public static Object unwrapToAny(com.mapbox.bindgen.Value);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression unwrapToExpression(com.mapbox.bindgen.Value);

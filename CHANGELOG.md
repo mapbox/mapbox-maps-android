@@ -44,6 +44,8 @@ Mapbox welcomes participation and contributions from everyone.
   All `subscribe` methods return `Cancelable` object, which users could store and call `cancel` when subscription is no longer needed. 
   `MapboxMap.unsubscribe` methods were removed.
 * Rename `LocationConsumer.onAccuracyRadiusUpdated` to `onHorizontalAccuracyRadiusUpdated`.
+* Deprecate `MapboxMap.loadStyleUri`, `MapboxMap.loadStyleJson` and `MapboxMap.loadStyle` methods and introduce one `MapboxMap.loadStyle` accepting either URI / JSON or Style DSL block.
+    
 
 ## Features ✨ and improvements 🏁
 * Add the `MapboxMap.resetFeatureState` method.

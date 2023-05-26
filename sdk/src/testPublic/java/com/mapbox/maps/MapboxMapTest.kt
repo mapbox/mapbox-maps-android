@@ -67,12 +67,32 @@ class MapboxMapTest {
   }
 
   @Test
-  fun loadStyleUri() {
+  fun loadStyleMapboxUri() {
+    Shadows.shadowOf(Looper.getMainLooper()).pause()
+    assertFalse(mapboxMap.isStyleLoadInitiated)
+    mapboxMap.loadStyleUri("mapbox://foo")
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+    verify { nativeMap.setStyleURI("mapbox://foo") }
+    assertTrue(mapboxMap.isStyleLoadInitiated)
+  }
+
+  @Test
+  fun loadStyleMapboxFile() {
+    Shadows.shadowOf(Looper.getMainLooper()).pause()
+    assertFalse(mapboxMap.isStyleLoadInitiated)
+    mapboxMap.loadStyleUri("file://foo")
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+    verify { nativeMap.setStyleURI("file://foo") }
+    assertTrue(mapboxMap.isStyleLoadInitiated)
+  }
+
+  @Test
+  fun loadStyleInvalidUri() {
     Shadows.shadowOf(Looper.getMainLooper()).pause()
     assertFalse(mapboxMap.isStyleLoadInitiated)
     mapboxMap.loadStyleUri("foo")
     Shadows.shadowOf(Looper.getMainLooper()).idle()
-    verify { nativeMap.setStyleURI("foo") }
+    verify { nativeMap.setStyleJSON("foo") }
     assertTrue(mapboxMap.isStyleLoadInitiated)
   }
 
@@ -118,26 +138,26 @@ class MapboxMapTest {
   @Test
   fun loadStyle() {
     val styleExtension = mockk<StyleContract.StyleExtension>()
-    every { styleExtension.styleUri } returns "foobar"
+    every { styleExtension.style } returns "asset://foobar"
     val onMapLoadError = mockk<MapLoadingErrorCallback>()
     val onStyleLoadError = mockk<Style.OnStyleLoaded>()
     Shadows.shadowOf(Looper.getMainLooper()).pause()
     assertFalse(mapboxMap.isStyleLoadInitiated)
     mapboxMap.loadStyle(styleExtension, onStyleLoadError, onMapLoadError)
     Shadows.shadowOf(Looper.getMainLooper()).idle()
-    verify { nativeMap.setStyleURI("foobar") }
+    verify { nativeMap.setStyleURI("asset://foobar") }
     assertTrue(mapboxMap.isStyleLoadInitiated)
   }
 
   @Test
   fun loadStyleLambda() {
     val styleExtension = mockk<StyleContract.StyleExtension>()
-    every { styleExtension.styleUri } returns "foobar"
+    every { styleExtension.style } returns "asset://foobar"
     Shadows.shadowOf(Looper.getMainLooper()).pause()
     assertFalse(mapboxMap.isStyleLoadInitiated)
     mapboxMap.loadStyle(styleExtension) {}
     Shadows.shadowOf(Looper.getMainLooper()).idle()
-    verify { nativeMap.setStyleURI("foobar") }
+    verify { nativeMap.setStyleURI("asset://foobar") }
     assertTrue(mapboxMap.isStyleLoadInitiated)
   }
 
@@ -168,6 +188,10 @@ class MapboxMapTest {
     val projection = mockk<StyleContract.StyleProjectionExtension>(relaxed = true)
     every { styleExtension.projection } returns projection
 
+    val transition = mockk<TransitionOptions>(relaxed = true)
+    every { styleExtension.transition } returns transition
+    every { style.setStyleTransition(any()) } just Runs
+
     val styleLoadCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
 
     val userCallbackStyleSlots = mutableListOf<Style.OnStyleLoaded?>()
@@ -183,7 +207,6 @@ class MapboxMapTest {
         capture(callbackStyleSlots),
         captureNullable(callbackStyleSpritesSlots),
         captureNullable(callbackStyleSourcesSlots),
-        any(),
       )
     }
 
@@ -194,6 +217,7 @@ class MapboxMapTest {
     verifyNo { terrain.bindTo(style) }
     verifyNo { projection.bindTo(style) }
     verifyNo { atmosphere.bindTo(style) }
+    verifyNo { style.setStyleTransition(any()) }
     verifyNo { styleLoadCallback.onStyleLoaded(style) }
 
     callbackStyleSlots.first().onStyleLoaded(style)
@@ -202,6 +226,7 @@ class MapboxMapTest {
     verify { terrain.bindTo(style) }
     verify { projection.bindTo(style) }
     verify { atmosphere.bindTo(style) }
+    verify { style.setStyleTransition(any()) }
     verifyNo { source.bindTo(style) }
     verifyNo { image.bindTo(style) }
     verifyNo { layer.bindTo(style, layerPosition) }
@@ -1025,7 +1050,7 @@ class MapboxMapTest {
     val userCallbackStyleSlot = CapturingSlot<Style.OnStyleLoaded>()
 
     verify {
-      styleObserver.setLoadStyleListener(any(), capture(userCallbackStyleSlot), any(), any(), any())
+      styleObserver.setLoadStyleListener(any(), capture(userCallbackStyleSlot), any(), any())
     }
 
     userCallbackStyleSlot.captured.onStyleLoaded(style)

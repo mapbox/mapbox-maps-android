@@ -59,7 +59,7 @@ class SantaCatalinaActivity : AppCompatActivity() {
 
     // load satellite style and add terrain with a line layer to visualize the route
     mapboxMap.loadStyle(
-      style(styleUri = Style.SATELLITE_STREETS) {
+      style(style = Style.SATELLITE_STREETS) {
         +rasterDemSource(SOURCE) {
           url(TERRAIN_URL_TILE_RESOURCE)
           // 514 specifies padded DEM tile and provides better performance than 512 tiles.

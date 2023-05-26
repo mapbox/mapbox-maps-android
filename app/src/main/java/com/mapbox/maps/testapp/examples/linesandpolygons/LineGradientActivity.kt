@@ -34,7 +34,7 @@ class LineGradientActivity : AppCompatActivity() {
     }
   }
 
-  private fun createStyle() = style(styleUri = Style.TRAFFIC_DAY) {
+  private fun createStyle() = style(style = Style.TRAFFIC_DAY) {
     +geoJsonSource(id = SOURCE_ID) {
       feature(Feature.fromGeometry(LineString.fromLngLats(POINTS)))
       lineMetrics(true)

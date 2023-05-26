@@ -34,7 +34,7 @@ class AnimatedImageSourceActivity : AppCompatActivity() {
     setContentView(binding.root)
     mapboxMap = binding.mapView.getMapboxMap()
     mapboxMap.loadStyle(
-      style(styleUri = Style.MAPBOX_STREETS) {
+      style(style = Style.MAPBOX_STREETS) {
         +imageSource(ID_IMAGE_SOURCE) {
           coordinates(
             listOf(

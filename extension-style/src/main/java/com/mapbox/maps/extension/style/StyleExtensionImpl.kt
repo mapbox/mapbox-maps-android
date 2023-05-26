@@ -3,6 +3,7 @@ package com.mapbox.maps.extension.style
 import android.opengl.GLES20
 import com.mapbox.maps.LayerPosition
 import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.TransitionOptions
 import com.mapbox.maps.extension.style.StyleExtensionImpl.*
 import com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere
 import com.mapbox.maps.extension.style.image.ImageExtensionImpl
@@ -23,9 +24,9 @@ class StyleExtensionImpl private constructor(
 ) : StyleContract.StyleExtension {
 
   /**
-   * The style's Uri. Will load an empty json `{}` if the styleUri is empty.
+   * Style represented as JSON or URI.
    */
-  override val styleUri: String = builder.styleUri
+  override val style: String = builder.style
 
   /**
    * The sources of the style.
@@ -69,14 +70,20 @@ class StyleExtensionImpl private constructor(
   override val atmosphere: Atmosphere? = builder.atmosphere
 
   /**
+   * Transition options applied when loading the style.
+   */
+  override val transition: TransitionOptions? = builder.transition
+
+  /**
    * The builder for style extension.
    */
   class Builder(
     /**
-     * The Uri of the style to load.
+     * Style represented as JSON or URI.
      */
-    val styleUri: String
+    val style: String
   ) {
+
     internal val layers = mutableListOf<Pair<Layer, LayerPosition>>()
     internal val sources = mutableListOf<Source>()
     internal val images = mutableListOf<StyleContract.StyleImageExtension>()
@@ -86,6 +93,7 @@ class StyleExtensionImpl private constructor(
     internal var terrain: Terrain? = null
     internal var atmosphere: Atmosphere? = null
     internal var projection: Projection? = null
+    internal var transition: TransitionOptions? = null
 
     /**
      * Extension function for [Layer] to overload Unary operations.
@@ -162,6 +170,14 @@ class StyleExtensionImpl private constructor(
     }
 
     /**
+     * Extension function to add [TransitionOptions] to be applied when loading the style.
+     */
+    @JvmName("setTransition")
+    operator fun TransitionOptions.unaryPlus() {
+      transition = this
+    }
+
+    /**
      * Extension function for [ImageExtensionImpl] to overload Unary operations.
      *
      * Apply +[ImageExtensionImpl] will add the source to the [StyleExtensionImpl].
@@ -224,7 +240,7 @@ class StyleExtensionImpl private constructor(
 }
 
 /**
- * DSL function to construct a style extension.
+ * DSL function to construct a style extension from URI or JSON.
  */
-fun style(styleUri: String = "", block: Builder.() -> Unit): StyleContract.StyleExtension =
-  Builder(styleUri).apply(block).build()
+fun style(style: String = "", block: Builder.() -> Unit): StyleContract.StyleExtension =
+  Builder(style).apply(block).build()

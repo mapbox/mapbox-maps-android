@@ -116,6 +116,7 @@ public class DSLStylingJavaActivity extends AppCompatActivity implements OnMapCl
         mapView = new MapView(this);
         setContentView(mapView);
         mapboxMap = mapView.getMapboxMap();
+        mapboxMap.subscribeMapLoadingError(this);
         mapboxMap.loadStyle(createStyle(), style -> {
             Bitmap bitmap = BitmapFactory.decodeResource(DSLStylingJavaActivity.this.getResources(), R.drawable.blue_round_nine);
             ImageUtils.addImage9Patch(style, new ImageNinePatchExtensionImpl.Builder(IMAGE_9_PATCH_ID, bitmap).build());
@@ -123,7 +124,7 @@ public class DSLStylingJavaActivity extends AppCompatActivity implements OnMapCl
                 builder.build();
                 return null;
             });
-        }, this);
+        });
         GesturesUtils.addOnMapClickListener(mapboxMap, this);
 
         // subscribe to map idle event

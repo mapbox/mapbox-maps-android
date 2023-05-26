@@ -196,8 +196,9 @@ package com.mapbox.maps.extension.style {
     method public java.util.List<com.mapbox.maps.extension.style.StyleContract.StyleModelExtension> getModels();
     method public com.mapbox.maps.extension.style.StyleContract.StyleProjectionExtension? getProjection();
     method public java.util.List<com.mapbox.maps.extension.style.StyleContract.StyleSourceExtension> getSources();
-    method public String getStyleUri();
+    method public String getStyle();
     method public com.mapbox.maps.extension.style.StyleContract.StyleTerrainExtension? getTerrain();
+    method public com.mapbox.maps.TransitionOptions? getTransition();
     property public abstract com.mapbox.maps.extension.style.StyleContract.StyleAtmosphereExtension? atmosphere;
     property public abstract java.util.List<com.mapbox.maps.extension.style.StyleContract.StyleImageExtension> images;
     property public abstract java.util.List<kotlin.Pair<com.mapbox.maps.extension.style.StyleContract.StyleLayerExtension,com.mapbox.maps.LayerPosition>> layers;
@@ -205,8 +206,9 @@ package com.mapbox.maps.extension.style {
     property public abstract java.util.List<com.mapbox.maps.extension.style.StyleContract.StyleModelExtension> models;
     property public abstract com.mapbox.maps.extension.style.StyleContract.StyleProjectionExtension? projection;
     property public abstract java.util.List<com.mapbox.maps.extension.style.StyleContract.StyleSourceExtension> sources;
-    property public abstract String styleUri;
+    property public abstract String style;
     property public abstract com.mapbox.maps.extension.style.StyleContract.StyleTerrainExtension? terrain;
+    property public abstract com.mapbox.maps.TransitionOptions? transition;
   }
 
   public static fun interface StyleContract.StyleImageExtension {
