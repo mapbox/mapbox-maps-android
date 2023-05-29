@@ -2,6 +2,7 @@
 package com.mapbox.maps.plugin.animation
 
 import android.animation.Animator
+import com.mapbox.common.Cancelable
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.Plugin

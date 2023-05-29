@@ -1,6 +1,6 @@
 package com.mapbox.maps.plugin.viewport.transition
 
-import com.mapbox.maps.plugin.animation.Cancelable
+import com.mapbox.common.Cancelable
 import com.mapbox.maps.plugin.viewport.CompletionListener
 import com.mapbox.maps.plugin.viewport.ViewportPlugin
 import com.mapbox.maps.plugin.viewport.state.ViewportState

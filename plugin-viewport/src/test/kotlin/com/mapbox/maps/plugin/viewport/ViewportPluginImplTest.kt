@@ -1,9 +1,9 @@
 package com.mapbox.maps.plugin.viewport
 
 import android.os.Handler
+import com.mapbox.common.Cancelable
 import com.mapbox.geojson.Point
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
-import com.mapbox.maps.plugin.animation.Cancelable
 import com.mapbox.maps.plugin.animation.camera
 import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider

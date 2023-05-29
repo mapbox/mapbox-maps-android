@@ -8,6 +8,7 @@ import android.os.Handler
 import android.os.Looper
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
+import com.mapbox.common.Cancelable
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.plugin.MapCameraPlugin

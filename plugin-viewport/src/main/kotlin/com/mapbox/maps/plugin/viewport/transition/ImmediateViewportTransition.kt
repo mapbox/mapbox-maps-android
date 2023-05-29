@@ -1,7 +1,7 @@
 package com.mapbox.maps.plugin.viewport.transition
 
+import com.mapbox.common.Cancelable
 import com.mapbox.maps.ScreenCoordinate
-import com.mapbox.maps.plugin.animation.Cancelable
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
 import com.mapbox.maps.plugin.animation.camera
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider

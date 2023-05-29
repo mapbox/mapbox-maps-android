@@ -12,6 +12,7 @@ import com.mapbox.common.location.LiveTrackingClientObserver
 import com.mapbox.common.location.LiveTrackingClientSettings.*
 import com.mapbox.common.location.LiveTrackingState
 import com.mapbox.common.location.Location
+import com.mapbox.common.location.LocationCancelable
 import com.mapbox.common.location.LocationError
 import com.mapbox.common.location.LocationErrorCode
 import com.mapbox.common.location.LocationService
@@ -121,15 +122,17 @@ class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal c
         }
 
         // If possible send the most recent location available
-        locationService.lastLocation.onValue { location: Location ->
-          trySend(ExpectedFactory.createValue(location))
+        val lastLocationCancelable = locationService.getLastLocation { result ->
+          trySend(result)
         }
 
         // Then, register an observer that will emit the locations provided by the liveTrackingClient
-        val observer = liveTrackingClientObserver()
+        val observer = liveTrackingClientObserver(lastLocationCancelable)
         liveTrackingClient.registerObserver(observer)
         liveTrackingClient.start(liveTrackingCapabilities) {
           it?.let { error: LocationError ->
+            // Cancel any pending sending last location since we'll send an error
+            lastLocationCancelable?.cancel()
             trySendBlocking(ExpectedFactory.createError(error))
           }
         }
@@ -167,8 +170,12 @@ class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal c
   /**
    * @return a [LiveTrackingClientObserver] that emits the most recent [Location] or [LocationError].
    */
-  private fun ProducerScope<Expected<LocationError, Location>>.liveTrackingClientObserver() =
+  private fun ProducerScope<Expected<LocationError, Location>>.liveTrackingClientObserver(
+    lastLocationCancelable: LocationCancelable?
+  ) =
     object : LiveTrackingClientObserver {
+      // Keep track of being already canceled to avoid calling native per each location update
+      var lastLocationCanBeCanceled = lastLocationCancelable != null
       override fun onLiveTrackingStateChanged(state: LiveTrackingState, error: LocationError?) {
         error?.let {
           logW(TAG, "Live tracking error: $it")
@@ -176,6 +183,10 @@ class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal c
       }
 
       override fun onLocationUpdateReceived(locationUpdate: Expected<LocationError, MutableList<Location>>) {
+        if (lastLocationCanBeCanceled) {
+          lastLocationCancelable?.cancel()
+          lastLocationCanBeCanceled = false
+        }
         val update: Expected<LocationError, Location> =
           if (locationUpdate.isValue) {
             // For now we only forward the most recent location (last one)

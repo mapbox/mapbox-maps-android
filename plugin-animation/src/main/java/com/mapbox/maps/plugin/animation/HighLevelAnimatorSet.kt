@@ -1,6 +1,7 @@
 package com.mapbox.maps.plugin.animation
 
 import android.animation.AnimatorSet
+import com.mapbox.common.Cancelable
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.threading.AnimationThreadController
 

@@ -10,6 +10,7 @@ import com.mapbox.common.location.AccuracyAuthorization;
 import com.mapbox.common.location.GetLocationCallback;
 import com.mapbox.common.location.LiveTrackingClient;
 import com.mapbox.common.location.Location;
+import com.mapbox.common.location.LocationCancelable;
 import com.mapbox.common.location.LocationError;
 import com.mapbox.common.location.LocationService;
 import com.mapbox.common.location.LocationServiceFactory;
@@ -33,9 +34,15 @@ public class ShadowLocationServiceFactory {
                 return false;
             }
 
+            @Nullable
+            @Override
+            public LocationCancelable getLastLocation(@NonNull GetLocationCallback callback) {
+                return null;
+            }
+
             @NonNull
             @Override
-            public Expected<LocationError, Location> getLastLocation() {
+            public Expected<LocationError, LiveTrackingClient> getBestLiveTrackingClient() {
                 return null;
             }
 

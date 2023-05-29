@@ -5,11 +5,13 @@ import android.content.Context
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.bindgen.Value
+import com.mapbox.common.location.GetLocationCallback
 import com.mapbox.common.location.LiveTrackingClient
 import com.mapbox.common.location.LiveTrackingClientAccuracyCategory
 import com.mapbox.common.location.LiveTrackingClientObserver
 import com.mapbox.common.location.LiveTrackingClientSettings
 import com.mapbox.common.location.Location
+import com.mapbox.common.location.LocationCancelable
 import com.mapbox.common.location.LocationError
 import com.mapbox.common.location.LocationErrorCode.*
 import com.mapbox.common.location.LocationService
@@ -29,6 +31,7 @@ import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -48,6 +51,13 @@ class DefaultLocationProviderTest {
   private val locationConsumer2 = mockk<LocationConsumer>(relaxed = true)
   private val locationCompassEngine = mockk<LocationCompassEngine>(relaxed = true)
   private val locationEngineRequestSlot = CapturingSlot<Value>()
+
+  private val location = mockk<Location>(relaxed = true).apply {
+    every { longitude } returns 12.0
+    every { latitude } returns 34.0
+    every { altitude } returns 10.0
+    every { bearing } returns 90.0
+  }
 
   private lateinit var defaultLocationProvider: DefaultLocationProvider
 
@@ -98,7 +108,7 @@ class DefaultLocationProviderTest {
         liveTrackingClient.start(capture(locationEngineRequestSlot), any())
       }
       verify(exactly = 0) {
-        locationService.lastLocation
+        locationService.getLastLocation(any())
       }
       verify(exactly = 0) {
         locationCompassEngine.addCompassListener(any())
@@ -138,7 +148,7 @@ class DefaultLocationProviderTest {
       capturedValueMap[LiveTrackingClientSettings.ACCURACY_CATEGORY]!!.contents
     )
     verify(exactly = 1) {
-      locationService.lastLocation
+      locationService.getLastLocation(any())
     }
     verify(exactly = 1) {
       locationCompassEngine.addCompassListener(any())
@@ -159,7 +169,7 @@ class DefaultLocationProviderTest {
       liveTrackingClient.start(capture(locationEngineRequestSlot), any())
     }
     verify(exactly = 1) {
-      locationService.lastLocation
+      locationService.getLastLocation(any())
     }
     verify(exactly = 1) {
       locationCompassEngine.addCompassListener(any())
@@ -223,20 +233,21 @@ class DefaultLocationProviderTest {
 
   @Test
   fun testLocationUpdate() = runTest(dispatcher) {
-    val location = mockk<Location>(relaxed = true)
-    every { location.longitude } returns 12.0
-    every { location.latitude } returns 34.0
-    every { location.altitude } returns 10.0
-    every { location.bearing } returns 90.0
-
-    val lastLocationResult: LocationServiceUpdate = ExpectedFactory.createValue(location)
-    every { locationService.lastLocation } returns lastLocationResult
+    every { locationService.getLastLocation(any()) } returns LocationCancelable { }
 
     defaultLocationProvider.registerLocationConsumer(locationConsumer1)
     defaultLocationProvider.registerLocationConsumer(locationConsumer2)
+    // Advance to let the consumers register
     advanceUntilIdle()
     verify(exactly = 1) { liveTrackingClient.registerObserver(any()) }
-    verify(exactly = 1) { locationService.lastLocation }
+
+    val lastLocationResult: LocationServiceUpdate = ExpectedFactory.createValue(location)
+    val getLocationCallbackSlot = CapturingSlot<GetLocationCallback>()
+    verify(exactly = 1) { locationService.getLastLocation(capture(getLocationCallbackSlot)) }
+    getLocationCallbackSlot.captured.run(lastLocationResult)
+    // Advance to let the last location to be send through the Flow
+    advanceUntilIdle()
+
     verify { locationConsumer1.onLocationUpdated(Point.fromLngLat(12.0, 34.0, 10.0)) }
     verify { locationConsumer1.onBearingUpdated(90.0) }
     verify { locationConsumer2.onLocationUpdated(Point.fromLngLat(12.0, 34.0, 10.0)) }
@@ -244,24 +255,66 @@ class DefaultLocationProviderTest {
   }
 
   @Test
-  fun `second listener gets only most recent location`() = runTest(dispatcher) {
-    val location = mockk<Location>(relaxed = true).apply {
-      every { longitude } returns 12.0
-      every { latitude } returns 34.0
-      every { altitude } returns 10.0
-      every { bearing } returns 90.0
+  fun `last location is discarded if fresher is received`() = runTest(dispatcher) {
+    var lastLocationCancelled = false
+    every { locationService.getLastLocation(any()) } returns LocationCancelable {
+      lastLocationCancelled = true
     }
 
-    val lastLocationResult: LocationServiceUpdate =
-      ExpectedFactory.createValue(location)
-    every { locationService.lastLocation } returns lastLocationResult
-
     defaultLocationProvider.registerLocationConsumer(locationConsumer1)
+    // Let the first consumer register
     advanceUntilIdle()
 
     val liveTrackingClientObserverSlot = CapturingSlot<LiveTrackingClientObserver>()
     verify(exactly = 1) { liveTrackingClient.registerObserver(capture(liveTrackingClientObserverSlot)) }
-    verify(exactly = 1) { locationService.lastLocation }
+    advanceUntilIdle()
+
+    verify(exactly = 1) { locationService.getLastLocation(any()) }
+    // Advance to let the last location to be send through the Flow
+    advanceUntilIdle()
+
+    val lastLocationAsPoint =
+      Point.fromLngLat(location.longitude, location.latitude, location.altitude!!)
+    verify(exactly = 0) { locationConsumer1.onLocationUpdated(lastLocationAsPoint) }
+    verify(exactly = 0) { locationConsumer1.onBearingUpdated(90.0) }
+
+    val location2 = mockk<Location>().apply {
+      every { longitude } returns 11.0
+      every { latitude } returns 22.0
+      every { altitude } returns 33.0
+      every { bearing } returns 44.0
+      every { horizontalAccuracy } returns 3.0
+    }
+    val locationUpdate: LocationUpdate = ExpectedFactory.createValue(listOf(location2))
+    // Use the captured live tracking client observer to send a second location
+    liveTrackingClientObserverSlot.captured.onLocationUpdateReceived(locationUpdate)
+    advanceUntilIdle()
+
+    assertTrue(lastLocationCancelled)
+    val location2AsPoint =
+      Point.fromLngLat(location2.longitude, location2.latitude, location2.altitude!!)
+    // Verify that the second location is received by the first consumer
+    verify(exactly = 1) { locationConsumer1.onLocationUpdated(location2AsPoint) }
+    verify(exactly = 1) { locationConsumer1.onBearingUpdated(44.0) }
+  }
+
+  @Test
+  fun `second listener gets only most recent location`() = runTest(dispatcher) {
+    every { locationService.getLastLocation(any()) } returns LocationCancelable { }
+
+    defaultLocationProvider.registerLocationConsumer(locationConsumer1)
+    // Let the first consumer register
+    advanceUntilIdle()
+
+    val liveTrackingClientObserverSlot = CapturingSlot<LiveTrackingClientObserver>()
+    verify(exactly = 1) { liveTrackingClient.registerObserver(capture(liveTrackingClientObserverSlot)) }
+
+    val lastLocationResult: LocationServiceUpdate = ExpectedFactory.createValue(location)
+    val getLocationCallbackSlot = CapturingSlot<GetLocationCallback>()
+    verify(exactly = 1) { locationService.getLastLocation(capture(getLocationCallbackSlot)) }
+    getLocationCallbackSlot.captured.run(lastLocationResult)
+    // Advance to let the last location to be send through the Flow
+    advanceUntilIdle()
 
     val locationAsPoint =
       Point.fromLngLat(location.longitude, location.latitude, location.altitude!!)
@@ -288,6 +341,8 @@ class DefaultLocationProviderTest {
     // Finally, register the second consumer
     defaultLocationProvider.registerLocationConsumer(locationConsumer2)
     advanceUntilIdle()
+    // Verify that getting the last location has not been called a second time
+    verify(exactly = 1) { locationService.getLastLocation(any()) }
     // Verify that the first location is not received at all by the second consumer
     verify(exactly = 0) { locationConsumer2.onLocationUpdated(locationAsPoint) }
     verify(exactly = 0) { locationConsumer2.onBearingUpdated(90.0) }
@@ -299,12 +354,7 @@ class DefaultLocationProviderTest {
   @Test
   fun testLocationUpdateWithCompass() = runTest(dispatcher) {
     defaultLocationProvider.updatePuckBearing(PuckBearing.HEADING)
-    val location = mockk<Location>(relaxed = true)
-    every { location.longitude } returns 12.0
-    every { location.latitude } returns 34.0
-    every { location.altitude } returns 10.0
-    every { location.bearing } returns 89.0
-    every { locationService.lastLocation } returns ExpectedFactory.createValue(location)
+    every { locationService.getLastLocation(any()) } returns LocationCancelable { }
 
     defaultLocationProvider.registerLocationConsumer(locationConsumer1)
     advanceUntilIdle()
@@ -312,7 +362,13 @@ class DefaultLocationProviderTest {
 
     val compassListenerSlot = CapturingSlot<LocationCompassEngine.CompassListener>()
     verify(exactly = 1) { locationCompassEngine.addCompassListener(capture(compassListenerSlot)) }
-    verify(exactly = 1) { locationService.lastLocation }
+
+    val lastLocationResult: LocationServiceUpdate = ExpectedFactory.createValue(location)
+    val getLocationCallbackSlot = CapturingSlot<GetLocationCallback>()
+    verify(exactly = 1) { locationService.getLastLocation(capture(getLocationCallbackSlot)) }
+    getLocationCallbackSlot.captured.run(lastLocationResult)
+    // Advance to let the last location to be send through the Flow
+    advanceUntilIdle()
 
     verify {
       locationConsumer1.onLocationUpdated(Point.fromLngLat(12.0, 34.0, 10.0))
@@ -352,18 +408,13 @@ class DefaultLocationProviderTest {
         NOT_AVAILABLE,
         DefaultLocationProvider.LIVE_TRACKING_CLIENT_NOT_AVAILABLE
       ),
-        receivedError
+      receivedError
     )
   }
 
   @Test
   fun `live tracking client error`() = runTest(dispatcher) {
-    val location = mockk<Location>(relaxed = true)
-    every { location.longitude } returns 12.0
-    every { location.latitude } returns 34.0
-    every { location.altitude } returns 10.0
-    every { location.bearing } returns 89.0
-    every { locationService.lastLocation } returns ExpectedFactory.createValue(location)
+    every { locationService.getLastLocation(any()) } returns LocationCancelable { }
 
     var receivedPoint: Point? = null
     var receivedError: LocationError? = null
@@ -376,6 +427,13 @@ class DefaultLocationProviderTest {
         receivedError = error
       }
     })
+    advanceUntilIdle()
+
+    val lastLocationResult: LocationServiceUpdate = ExpectedFactory.createValue(location)
+    val getLocationCallbackSlot = CapturingSlot<GetLocationCallback>()
+    verify(exactly = 1) { locationService.getLastLocation(capture(getLocationCallbackSlot)) }
+    getLocationCallbackSlot.captured.run(lastLocationResult)
+    // Advance to let the last location to be send through the Flow
     advanceUntilIdle()
 
     val clientObserverSlot = CapturingSlot<LiveTrackingClientObserver>()
