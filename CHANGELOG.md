@@ -10,6 +10,11 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Bug fixes 🐞
 * Fix crash when running animations (e.g. gestures) on Android 14 beta.
+* Fix image and zoom dependent expression evaluation errors during style switching.
+* Avoid re-use of raw icon atlas buffers when images point to the different location in the atlas.
+
+## Dependencies
+* Update gl-native to v10.14.0-rc.1 and common to v23.6.0-rc.1.
  
 # 10.14.0-beta.1 May 17, 2023
 ## Features ✨ and improvements 🏁
