@@ -7,6 +7,9 @@ Mapbox welcomes participation and contributions from everyone.
 # 10.14.0-rc.1
 ## Features ✨ and improvements 🏁
 * Introduce `MapboxMap.tileCover` experimental API to get the tileIDs that cover current map camera.
+
+## Bug fixes 🐞
+* Fix crash when running animations (e.g. gestures) on Android 14 beta.
  
 # 10.14.0-beta.1 May 17, 2023
 ## Features ✨ and improvements 🏁
