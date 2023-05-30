@@ -84,7 +84,7 @@ dependencies {
     api(libs.mapbox.coreCommon)
   }
 
-  implementation(libs.kotlinDataCompatAnnotation)
+  compileOnly(libs.kotlinDataCompatAnnotation)
   ksp(libs.kotlinDataCompatProcessor)
 
   testImplementation(libs.bundles.base.dependenciesTests)

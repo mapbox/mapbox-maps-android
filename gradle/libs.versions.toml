@@ -87,7 +87,7 @@ compose = "1.4.3"
 composeBom = "2023.01.00"
 gradleVersionsPlugin = "0.42.0"
 ksp = "1.0.9"
-kotlinDataCompat = "0.6.0"
+kotlinDataCompat = "0.7.0"
 
 toster = "0.3.2"
 
