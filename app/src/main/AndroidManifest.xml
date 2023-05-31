@@ -1212,12 +1212,12 @@
             android:exported="true" />
         <activity
             android:name=".examples.SecondaryDisplayPresentationActivity"
-            android:description="@string/description_simple_map"
+            android:description="@string/description_secondary_display_presentation"
             android:exported="true"
-            android:label="@string/activity_simple_map">
+            android:label="@string/activity_secondary_display_presentation">
             <meta-data
                 android:name="@string/category"
-                android:value="@string/category_basic" />
+                android:value="@string/category_lab" />
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ExampleOverviewActivity" />
