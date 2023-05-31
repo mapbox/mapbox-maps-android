@@ -64,6 +64,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Bug fixes 🐞
 * Fix 3d location layer properties `model-scale-transition` and `model-rotation-transition`, made them non-transitionable.
+* Fix crash when running animations (e.g. gestures) on Android 14 beta.
 
 
 # 10.13.0-beta.1 April 05, 2023
