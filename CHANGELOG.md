@@ -4,7 +4,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-# 10.14.0-rc.1
+
+# 10.14.0-rc.1 May 31, 2023
 ## Features ✨ and improvements 🏁
 * Introduce `MapboxMap.tileCover` experimental API to get the tileIDs that cover current map camera.
 
@@ -16,6 +17,7 @@ Mapbox welcomes participation and contributions from everyone.
 ## Dependencies
 * Update gl-native to v10.14.0-rc.1 and common to v23.6.0-rc.1.
  
+
 # 10.14.0-beta.1 May 17, 2023
 ## Features ✨ and improvements 🏁
 * Improve performance of setting puck style properties by removing redundant check if layer / source exists.
