@@ -96,4 +96,5 @@
     <string name="activity_advanced_viewport">Advanced Viewport with gestures</string>
     <string name="activity_third_party_source">External Vector Source</string>
     <string name="activity_raster_colorization">Raster Colorization</string>
+    <string name="activity_secondary_display_presentation">Secondary Display using Presentation</string>
 </resources>
