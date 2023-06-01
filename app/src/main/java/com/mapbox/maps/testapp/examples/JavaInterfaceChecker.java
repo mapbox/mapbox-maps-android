@@ -34,6 +34,8 @@ import com.mapbox.android.gestures.RotateGestureDetector;
 import com.mapbox.android.gestures.ShoveGestureDetector;
 import com.mapbox.android.gestures.StandardScaleGestureDetector;
 import com.mapbox.bindgen.Value;
+import com.mapbox.common.MapboxOptions;
+import com.mapbox.common.TileStore;
 import com.mapbox.geojson.Feature;
 import com.mapbox.maps.CameraOptions;
 import com.mapbox.maps.CameraState;
@@ -48,13 +50,14 @@ import com.mapbox.maps.MapSnapshotOptions;
 import com.mapbox.maps.MapSurface;
 import com.mapbox.maps.MapView;
 import com.mapbox.maps.MapboxMap;
+import com.mapbox.maps.MapboxMapsOptions;
 import com.mapbox.maps.QueryFeatureExtensionCallback;
 import com.mapbox.maps.QueryFeatureStateCallback;
-import com.mapbox.maps.ResourceOptions;
 import com.mapbox.maps.ScreenCoordinate;
 import com.mapbox.maps.SnapshotOverlayOptions;
 import com.mapbox.maps.Snapshotter;
 import com.mapbox.maps.Style;
+import com.mapbox.maps.TileStoreUsageMode;
 import com.mapbox.maps.TransitionOptions;
 import com.mapbox.maps.extension.style.StyleContract;
 import com.mapbox.maps.extension.style.expressions.generated.Expression;
@@ -382,19 +385,32 @@ public class JavaInterfaceChecker {
   }
 
   private void mapInitOptionsOverloads(Context context,
-                                       ResourceOptions resourceOptions,
                                        MapOptions mapOptions, List<Plugin> plugins,
                                        CameraOptions cameraOptions,
                                        AttributeSet attrs) {
     MapInitOptions mapInitOptions = new MapInitOptions(context);
-    mapInitOptions = new MapInitOptions(context, resourceOptions);
-    mapInitOptions = new MapInitOptions(context, resourceOptions, mapOptions);
-    mapInitOptions = new MapInitOptions(context, resourceOptions, mapOptions, plugins);
-    mapInitOptions = new MapInitOptions(context, resourceOptions, mapOptions, plugins, cameraOptions);
-    mapInitOptions = new MapInitOptions(context, resourceOptions, mapOptions, plugins, cameraOptions, false);
-    mapInitOptions = new MapInitOptions(context, resourceOptions, mapOptions, plugins, cameraOptions, false, Style.MAPBOX_STREETS);
-    mapInitOptions = new MapInitOptions(context, resourceOptions, mapOptions, plugins, cameraOptions, false, Style.MAPBOX_STREETS, attrs);
-    mapInitOptions = new MapInitOptions(context, resourceOptions, mapOptions, plugins, cameraOptions, false, Style.MAPBOX_STREETS, attrs, 4);
+    mapInitOptions = new MapInitOptions(context);
+    mapInitOptions = new MapInitOptions(context, mapOptions);
+    mapInitOptions = new MapInitOptions(context, mapOptions, plugins);
+    mapInitOptions = new MapInitOptions(context, mapOptions, plugins, cameraOptions);
+    mapInitOptions = new MapInitOptions(context, mapOptions, plugins, cameraOptions, false);
+    mapInitOptions = new MapInitOptions(context, mapOptions, plugins, cameraOptions, false, Style.MAPBOX_STREETS);
+    mapInitOptions = new MapInitOptions(context, mapOptions, plugins, cameraOptions, false, Style.MAPBOX_STREETS, attrs);
+    mapInitOptions = new MapInitOptions(context, mapOptions, plugins, cameraOptions, false, Style.MAPBOX_STREETS, attrs, 4);
+  }
+
+  private void mapboxOptions() {
+    MapboxOptions.getAccessToken();
+    MapboxOptions.setAccessToken("");
+    MapboxMapsOptions.getBaseUrl();
+    MapboxMapsOptions.setBaseUrl("https://api.mapbox.com");
+    MapboxMapsOptions.getTileStoreUsageMode();
+    MapboxMapsOptions.setTileStoreUsageMode(TileStoreUsageMode.DISABLED);
+    MapboxMapsOptions.getTileStore();
+    MapboxMapsOptions.setTileStore(null);
+    MapboxMapsOptions.setTileStore(TileStore.create());
+    MapboxMapsOptions.getDataPath();
+    MapboxMapsOptions.setDataPath("/tmp/data");
   }
 
   private void snapshotter(Context context, MapSnapshotOptions options) {

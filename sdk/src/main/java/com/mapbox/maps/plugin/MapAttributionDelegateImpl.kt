@@ -2,6 +2,7 @@ package com.mapbox.maps.plugin
 
 import android.content.Context
 import android.net.Uri
+import com.mapbox.common.MapboxOptions
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.attribution.AttributionParser
 import com.mapbox.maps.module.MapTelemetry
@@ -68,7 +69,7 @@ internal class MapAttributionDelegateImpl constructor(
     if (packageName != null) {
       builder.appendQueryParameter("referrer", packageName)
     }
-    builder.appendQueryParameter("access_token", mapboxMap.getResourceOptions().accessToken)
+    builder.appendQueryParameter("access_token", MapboxOptions.accessToken)
 
     mapboxMap.getStyle()?.let {
       val pattern: Pattern = Pattern.compile(MAP_FEEDBACK_STYLE_URI_REGEX)

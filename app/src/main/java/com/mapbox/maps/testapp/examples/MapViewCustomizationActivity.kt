@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.bindgen.Value
+import com.mapbox.common.MapboxOptions
 import com.mapbox.common.TileDataDomain
 import com.mapbox.common.TileStore
 import com.mapbox.common.TileStoreOptions
@@ -12,7 +13,6 @@ import com.mapbox.maps.*
 import com.mapbox.maps.plugin.*
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_ATTRIBUTION_PLUGIN_ID
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_LOGO_PLUGIN_ID
-import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityMapViewCustomizationBinding
 
 /**
@@ -30,7 +30,7 @@ class MapViewCustomizationActivity : AppCompatActivity() {
       it.setOption(
         TileStoreOptions.MAPBOX_ACCESS_TOKEN,
         TileDataDomain.MAPS,
-        Value(ResourceOptionsManager.getDefault(this).resourceOptions.accessToken)
+        Value(MapboxOptions.accessToken)
       )
     }
   }
@@ -39,14 +39,12 @@ class MapViewCustomizationActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
-    binding = ActivityMapViewCustomizationBinding.inflate(layoutInflater)
+    // Set tile store and tile store usage mode so that all MapViews created from now on will apply
+    // these settings.
+    MapboxOptions.mapsOptions.tileStore = tileStore
+    MapboxOptions.mapsOptions.tileStoreUsageMode = TileStoreUsageMode.READ_ONLY
 
-    // Set the application-scoped ResourceOptionsManager with customised token, tile store and tile store usage mode
-    // so that all MapViews created with default config will apply these settings.
-    ResourceOptionsManager.getDefault(this, getString(R.string.mapbox_access_token)).update {
-      tileStore(tileStore)
-      tileStoreUsageMode(TileStoreUsageMode.READ_ONLY)
-    }
+    binding = ActivityMapViewCustomizationBinding.inflate(layoutInflater)
 
     setContentView(binding.root)
 
@@ -74,11 +72,10 @@ class MapViewCustomizationActivity : AppCompatActivity() {
       Plugin.Mapbox(MAPBOX_ATTRIBUTION_PLUGIN_ID)
     )
 
-    // set token and cache size for this particular map view, these settings will overwrite the default value.
-    val resourceOptions = ResourceOptions.Builder().applyDefaultParams(this)
-      .accessToken(getString(R.string.mapbox_access_token))
-      .tileStoreUsageMode(TileStoreUsageMode.DISABLED)
-      .build()
+    // Set tile store and tile store usage mode so that all MapViews created from now on will apply
+    // these settings.
+    MapboxOptions.mapsOptions.tileStore = tileStore
+    MapboxOptions.mapsOptions.tileStoreUsageMode = TileStoreUsageMode.DISABLED
 
     // set initial camera position
     val initialCameraOptions = CameraOptions.Builder()
@@ -88,7 +85,7 @@ class MapViewCustomizationActivity : AppCompatActivity() {
       .build()
 
     val mapInitOptions =
-      MapInitOptions(this, resourceOptions, mapOptions, plugins, initialCameraOptions, true)
+      MapInitOptions(this, mapOptions, plugins, initialCameraOptions, true)
 
     // create view programmatically and add to root layout
     customMapView = MapView(this, mapInitOptions)
@@ -120,7 +117,5 @@ class MapViewCustomizationActivity : AppCompatActivity() {
   override fun onDestroy() {
     super.onDestroy()
     customMapView.onDestroy()
-    // Restore the default application-scoped resource settings, otherwise it will affect other activities
-    ResourceOptionsManager.destroyDefault()
   }
 }

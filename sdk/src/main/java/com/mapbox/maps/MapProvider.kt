@@ -25,7 +25,6 @@ internal object MapProvider {
     Map(
       mapClient,
       mapInitOptions.mapOptions,
-      mapInitOptions.resourceOptions
     )
   )
 
@@ -45,10 +44,10 @@ internal object MapProvider {
     telemetry: MapTelemetry
   ) = MapPluginRegistry(MapDelegateProviderImpl(mapboxMap, mapController, telemetry))
 
-  fun getMapTelemetryInstance(context: Context, accessToken: String): MapTelemetry {
+  fun getMapTelemetryInstance(context: Context): MapTelemetry {
     if (!::mapTelemetry.isInitialized) {
       mapTelemetry = MapboxModuleProvider.createModule(MapboxModuleType.MapTelemetry) {
-        paramsProvider(context, accessToken, MapboxModuleType.MapTelemetry)
+        paramsProvider(context, MapboxModuleType.MapTelemetry)
       }
     }
     Handler(Looper.getMainLooper()).post {
@@ -57,15 +56,15 @@ internal object MapProvider {
     return mapTelemetry
   }
 
-  fun flushPendingEvents(accessToken: String) {
+  fun flushPendingEvents() {
     val eventsServerOptions =
-      EventsServerOptions(accessToken, BuildConfig.MAPBOX_EVENTS_USER_AGENT, null)
+      EventsServerOptions(BuildConfig.MAPBOX_EVENTS_USER_AGENT, null)
     EventsService.getOrCreate(eventsServerOptions).flush { expected ->
       expected.error?.let { error ->
         logE(MapController.TAG, "EventsService flush error: $error")
       }
     }
-    TelemetryService.getOrCreate(eventsServerOptions).flush { expected ->
+    TelemetryService.getOrCreate().flush { expected ->
       expected.error?.let { error ->
         logE(MapController.TAG, "TelemetryService flush error: $error")
       }
@@ -77,7 +76,6 @@ internal object MapProvider {
    */
   private fun paramsProvider(
     context: Context,
-    accessToken: String,
     @Suppress("SameParameterValue")
     type: MapboxModuleType
   ): Array<ModuleProviderArgument> {
@@ -87,7 +85,6 @@ internal object MapProvider {
           Context::class.java,
           context.applicationContext
         ),
-        ModuleProviderArgument(String::class.java, accessToken)
       )
       else -> throw IllegalArgumentException("${type.name} module is not supported by the Maps SDK")
     }

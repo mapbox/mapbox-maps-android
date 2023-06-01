@@ -2,6 +2,7 @@ package com.mapbox.maps
 
 import android.view.MotionEvent
 import androidx.annotation.VisibleForTesting
+import com.mapbox.common.MapboxOptions
 import com.mapbox.maps.assets.AssetManagerProvider
 import com.mapbox.maps.plugin.InvalidViewPluginHostException
 import com.mapbox.maps.plugin.MapPlugin
@@ -56,6 +57,10 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     renderer: MapboxRenderer,
     mapInitOptions: MapInitOptions,
   ) {
+    if (MapboxOptions.accessToken.isBlank()) {
+      throw MapboxConfigurationException()
+    }
+
     this.renderer = renderer
     this.mapInitOptions = mapInitOptions
     this.contextMode = mapInitOptions.mapOptions.contextMode
@@ -72,8 +77,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
       mapboxMap,
       this,
       MapProvider.getMapTelemetryInstance(
-        mapInitOptions.context,
-        mapInitOptions.resourceOptions.accessToken
+        mapInitOptions.context
       )
     )
     this.cameraChangedCallback = CameraChangedCallback {
@@ -164,7 +168,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     renderer.onStop()
     pluginRegistry.onStop()
     // flush the queued events before destroy to avoid lost telemetry events
-    MapProvider.flushPendingEvents(mapInitOptions.resourceOptions.accessToken)
+    MapProvider.flushPendingEvents()
   }
 
   override fun onDestroy() {

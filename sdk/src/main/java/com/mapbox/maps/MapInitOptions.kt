@@ -14,7 +14,6 @@ import com.mapbox.maps.plugin.*
  * using custom XML tags.
  *
  * @property context The context of the MapView.
- * @property resourceOptions Resource options when using a MapView. Access token required when using a Mapbox service. Please see [https://www.mapbox.com/help/create-api-access-token/](https://www.mapbox.com/help/create-api-access-token/) to learn how to create one.More information in this guide [https://www.mapbox.com/help/first-steps-android-sdk/#access-tokens](https://www.mapbox.com/help/first-steps-android-sdk/#access-tokens).
  * @property mapOptions Describes the map options value when using a MapView.
  * @property plugins The plugins, a list of strings representing class names, that will be loaded as part of MapView initialisation,
  * @property cameraOptions The Initial Camera options when creating a MapView.
@@ -25,7 +24,6 @@ import com.mapbox.maps.plugin.*
  */
 data class MapInitOptions @JvmOverloads constructor(
   val context: Context,
-  var resourceOptions: ResourceOptions = getDefaultResourceOptions(context),
   var mapOptions: MapOptions = getDefaultMapOptions(context),
   var plugins: List<Plugin> = defaultPluginList,
   var cameraOptions: CameraOptions? = null,
@@ -40,13 +38,6 @@ data class MapInitOptions @JvmOverloads constructor(
    */
   companion object {
     /**
-     * Get a default [ResourceOptions] instance.
-     * @property context the context of the application.
-     */
-    fun getDefaultResourceOptions(context: Context): ResourceOptions =
-      ResourceOptionsManager.getDefault(context).resourceOptions
-
-    /**
      * Get a default [MapOptions] with reasterization mode [GlyphsRasterizationMode#ALL_GLYPHS_RASTERIZED_LOCALLY]
      * @property context the context of the application.
      */
@@ -57,7 +48,7 @@ data class MapInitOptions @JvmOverloads constructor(
      * Default map view plugin registry. All Mapbox plugins are present in this list.
      *
      * If specific plugins are required to be added to [MapView] on startup
-     * consider creating [MapView] programmatically specifying [MapInitOptions.plugins].
+     * consider creating [MapView] programmatically specifying [plugins].
      *
      * If creating [MapView] from xml - all plugins listed here will be applied to given [MapView] on startup.
      */
@@ -96,21 +87,4 @@ fun MapOptions.Builder.applyDefaultParams(context: Context): MapOptions.Builder 
   viewportMode(ViewportMode.DEFAULT)
   crossSourceCollisions(true)
   optimizeForTerrain(true)
-}
-
-/**
- * Get a default [ResourceOptions.Builder] with Mapbox pre-defined options, and
- * with the access token taken from the Android resources(if available).
- *
- * @param context the context of the application.
- */
-fun ResourceOptions.Builder.applyDefaultParams(
-  context: Context
-): ResourceOptions.Builder = also {
-  // check in the resources
-  val tokenResId = ResourceOptionsManager.getTokenResId(context)
-  // Apply the token from resources.
-  if (tokenResId != 0) {
-    accessToken(context.getString(tokenResId))
-  }
 }

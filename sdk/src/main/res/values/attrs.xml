@@ -52,11 +52,6 @@
         <!-- MSAA sample count. Defaults to 1 meaning MSAA is disabled. Most common values are 4, 8 etc (stand for MSAA x4, x8 etc). Higher values result in better quality, but may reduce overall performance. -->
         <attr name="mapbox_mapAntialiasingSampleCount" format="integer"/>
 
-        <!-- A JSON Web token to associate API requests with your Mapbox account. -->
-        <attr name="mapbox_resourcesAccessToken" format="string" />
-        <!-- An URL that defines the base for API requests. -->
-        <attr name="mapbox_resourcesBaseUrl" format="string" />
-
         <!-- Font family to use as font fallback for client-side text renderings. -->
         <attr name="mapbox_mapFontFamily" format="string" />
         <!-- Describes glyphs rasterization modes. -->

@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.api.directions.v5.DirectionsCriteria
 import com.mapbox.api.directions.v5.MapboxDirections
 import com.mapbox.api.directions.v5.models.DirectionsResponse
+import com.mapbox.common.MapboxOptions
 import com.mapbox.core.constants.Constants.PRECISION_6
 import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
@@ -122,7 +123,7 @@ class SantaCatalinaActivity : AppCompatActivity() {
       .overview(DirectionsCriteria.OVERVIEW_SIMPLIFIED)
       .profile(DirectionsCriteria.PROFILE_WALKING)
       .steps(true)
-      .accessToken(getString(R.string.mapbox_access_token))
+      .accessToken(MapboxOptions.accessToken)
       .build()
     client.enqueueCall(object : Callback<DirectionsResponse> {
       override fun onResponse(

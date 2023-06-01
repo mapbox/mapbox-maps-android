@@ -11,6 +11,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.core.content.res.ResourcesCompat
 import com.mapbox.annotation.module.MapboxModuleType
 import com.mapbox.common.Cancelable
+import com.mapbox.common.MapboxOptions
 import com.mapbox.common.module.provider.MapboxModuleProvider
 import com.mapbox.common.module.provider.ModuleProviderArgument
 import com.mapbox.geojson.Point
@@ -41,12 +42,16 @@ open class Snapshotter {
     options: MapSnapshotOptions,
     overlayOptions: SnapshotOverlayOptions = SnapshotOverlayOptions()
   ) {
+    if (MapboxOptions.accessToken.isBlank()) {
+      throw MapboxConfigurationException()
+    }
+
     this.context = WeakReference(context)
     mapSnapshotOptions = options
     snapshotOverlayOptions = overlayOptions
     pixelRatio = context.resources.displayMetrics.density
     coreSnapshotter = MapSnapshotter(options)
-    dispatchTelemetryTurnstileEvent(context, options)
+    dispatchTelemetryTurnstileEvent(context)
     val weakSelf = WeakReference(this)
     cancelableEvents[MapEvent.MAP_LOADING_ERROR] = subscribeMapLoadingError {
       weakSelf.get()?.apply {
@@ -85,8 +90,7 @@ open class Snapshotter {
   }
 
   private fun dispatchTelemetryTurnstileEvent(
-    context: Context,
-    options: MapSnapshotOptions
+    context: Context
   ) {
     MapboxModuleProvider.createModule<MapTelemetry>(MapboxModuleType.MapTelemetry) {
       arrayOf(
@@ -94,7 +98,6 @@ open class Snapshotter {
           Context::class.java,
           context.applicationContext
         ),
-        ModuleProviderArgument(String::class.java, options.resourceOptions.accessToken)
       )
     }.onAppUserTurnstileEvent()
   }
@@ -317,21 +320,6 @@ open class Snapshotter {
     return coreSnapshotter.subscribe(styleImageMissingCallback)
   }
 
-  /**
-   * Clears temporary map data.
-   *
-   * Clears temporary map data from the data path defined in the given resource options.
-   * Useful to reduce the disk usage or in case the disk cache contains invalid data.
-   *
-   * Note that calling this API will affect all maps that use the same data path and does not
-   * affect persistent map data like offline style packages.
-   *
-   * @param callback Called once the request is complete or an error occurred.
-   */
-  fun clearData(callback: AsyncOperationResultCallback) {
-    return Map.clearData(mapSnapshotOptions.resourceOptions, callback)
-  }
-
   private fun drawAttribution(
     mapSnapshot: MapSnapshotResult,
     canvas: Canvas,
@@ -507,6 +495,22 @@ open class Snapshotter {
    * Static variables and methods.
    */
   companion object {
+    /**
+     * Clears temporary map data.
+     *
+     * Clears temporary map data from the data path defined in the current options.
+     * Useful to reduce the disk usage or in case the disk cache contains invalid data.
+     *
+     * Note that calling this API will affect all maps that use the same data path and does not
+     * affect persistent map data like offline style packages.
+     *
+     * @param callback Called once the request is complete or an error occurred.
+     */
+    @JvmStatic
+    fun clearData(callback: AsyncOperationResultCallback) {
+      MapsResourceOptions.clearData(callback)
+    }
+
     private const val TAG = "Snapshotter"
   }
 }

@@ -62,16 +62,13 @@ class MapControllerTest {
 
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logI(any(), any()) } just Runs
-    val mockResourceOptions = mockk<ResourceOptions>()
-    every { mockMapInitOptions.resourceOptions } returns mockResourceOptions
-    every { mockResourceOptions.accessToken } returns "access.token"
 
     mockkStatic(EventsService::class)
     every { EventsService.getOrCreate(any()) } returns mockEventsService
     every { mockEventsService.flush(any()) } just runs
 
     mockkStatic(TelemetryService::class)
-    every { TelemetryService.getOrCreate(any()) } returns mockTelemetryService
+    every { TelemetryService.getOrCreate() } returns mockTelemetryService
     every { mockTelemetryService.flush(any()) } just runs
   }
 

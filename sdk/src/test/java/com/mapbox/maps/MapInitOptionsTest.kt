@@ -11,7 +11,6 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import java.io.File
 
 @RunWith(RobolectricTestRunner::class)
 class MapInitOptionsTest {
@@ -21,16 +20,6 @@ class MapInitOptionsTest {
 
   @Before
   fun setUp() {
-    every { context.getString(-1) } returns "token"
-    every {
-      context.resources.getIdentifier(
-        "mapbox_access_token",
-        "string",
-        "com.mapbox.maps"
-      )
-    } returns -1
-    every { context.packageName } returns "com.mapbox.maps"
-    every { context.filesDir } returns File("foobar")
     every { context.resources.displayMetrics } returns displayMetrics
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logI(any(), any()) } just Runs
@@ -39,7 +28,6 @@ class MapInitOptionsTest {
 
   @After
   fun cleanUp() {
-    ResourceOptionsManager.destroyDefault()
     unmockkStatic("com.mapbox.maps.MapboxLogger")
   }
 
@@ -54,20 +42,6 @@ class MapInitOptionsTest {
     assertEquals(DEFAULT_ANTIALIASING_SAMPLE_COUNT, MapInitOptions(context).antialiasingSampleCount)
     assertEquals(0, MapInitOptions(context, antialiasingSampleCount = 0).antialiasingSampleCount)
     assertEquals(8, MapInitOptions(context, antialiasingSampleCount = 8).antialiasingSampleCount)
-  }
-
-  @Test
-  fun setInvalidToken() {
-    ResourceOptionsManager.getDefault(context).update { accessToken("") }
-    val mapboxMapOptions = MapInitOptions(context)
-    assertEquals("", mapboxMapOptions.resourceOptions.accessToken)
-  }
-
-  @Test
-  fun setValidToken() {
-    ResourceOptionsManager.getDefault(context).update { accessToken("token") }
-    val mapboxMapOptions = MapInitOptions(context)
-    assertEquals("token", mapboxMapOptions.resourceOptions.accessToken)
   }
 
   @Test
@@ -92,13 +66,6 @@ class MapInitOptionsTest {
     assertEquals(true, mapboxMapOptions.mapOptions.crossSourceCollisions)
     assertEquals(true, mapboxMapOptions.mapOptions.optimizeForTerrain)
     assertEquals(Style.MAPBOX_STREETS, mapboxMapOptions.styleUri)
-  }
-
-  @Test
-  fun defaultResourceOptions() {
-    val mapboxMapOptions = MapInitOptions(context)
-    assertEquals("token", mapboxMapOptions.resourceOptions.accessToken)
-    assertNull(mapboxMapOptions.resourceOptions.dataPath)
   }
 
   @Test

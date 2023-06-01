@@ -456,32 +456,6 @@ class MapboxMap :
   }
 
   /**
-   * Get the ResourceOptions the map was initialized with.
-   *
-   * @return resourceOptions The resource options of the map
-   */
-  fun getResourceOptions(): ResourceOptions {
-    checkNativeMap("getResourceOptions")
-    return nativeMap.getResourceOptions()
-  }
-
-  /**
-   * Clears temporary map data.
-   *
-   * Clears temporary map data from the data path defined in the given resource options.
-   * Useful to reduce the disk usage or in case the disk cache contains invalid data.
-   *
-   * Note that calling this API will affect all maps that use the same data path and does not
-   * affect persistent map data like offline style packages.
-   *
-   * @param callback Called once the request is complete or an error occurred.
-   */
-  fun clearData(callback: AsyncOperationResultCallback) {
-    checkNativeMap("clearData")
-    Map.clearData(nativeMap.getResourceOptions(), callback)
-  }
-
-  /**
    * Changes the map view by any combination of center, zoom, bearing, and pitch, without an animated transition.
    * The map will retain its current values for any details not passed via the camera options argument.
    * It is not guaranteed that the provided CameraOptions will be set, the map may apply constraints resulting in a
@@ -2167,18 +2141,17 @@ class MapboxMap :
     /**
      * Clears temporary map data.
      *
-     * Clears temporary map data from the data path defined in the given resource options.
+     * Clears temporary map data from the data path defined in the current options.
      * Useful to reduce the disk usage or in case the disk cache contains invalid data.
      *
      * Note that calling this API will affect all maps that use the same data path and does not
      * affect persistent map data like offline style packages.
      *
-     * @param resourceOptions The `resource options` that contain the map data path to be used
      * @param callback Called once the request is complete or an error occurred.
      */
     @JvmStatic
-    fun clearData(resourceOptions: ResourceOptions, callback: AsyncOperationResultCallback) {
-      Map.clearData(resourceOptions, callback)
+    fun clearData(callback: AsyncOperationResultCallback) {
+      MapsResourceOptions.clearData(callback)
     }
 
     private const val TAG = "Mbgl-MapboxMap"

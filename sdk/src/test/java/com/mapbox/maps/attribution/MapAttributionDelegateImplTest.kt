@@ -2,6 +2,7 @@ package com.mapbox.maps.attribution
 
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
+import com.mapbox.common.MapboxOptions
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.module.MapTelemetry
@@ -10,6 +11,7 @@ import com.mapbox.maps.plugin.attribution.AttributionParserConfig
 import com.mapbox.maps.plugin.delegates.MapAttributionDelegate
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.mockkStatic
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -46,9 +48,8 @@ class MapAttributionDelegateImplTest {
     every { camera.bearing } returns 0.0
     every { camera.pitch } returns 0.0
     every { mapboxMap.cameraState } returns camera
-    val resourceOptions: ResourceOptions = mockk()
-    every { resourceOptions.accessToken } returns TOKEN
-    every { mapboxMap.getResourceOptions() } returns resourceOptions
+    mockkStatic(MapboxOptions::class)
+    every { MapboxOptions.accessToken } returns TOKEN
     val url = mapAttributionDelegate.buildMapBoxFeedbackUrl(context)
     assertEquals(
       "https://apps.mapbox.com/feedback?referrer=com.mapbox.maps.test&access_token=$TOKEN&owner=mapbox&id=light-v10#/1.0/2.0/0.0/0.0/0.0",

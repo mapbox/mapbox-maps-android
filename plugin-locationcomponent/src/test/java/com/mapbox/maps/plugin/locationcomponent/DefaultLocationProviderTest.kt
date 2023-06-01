@@ -5,13 +5,13 @@ import android.content.Context
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.bindgen.Value
+import com.mapbox.common.Cancelable
 import com.mapbox.common.location.GetLocationCallback
 import com.mapbox.common.location.LiveTrackingClient
 import com.mapbox.common.location.LiveTrackingClientAccuracyCategory
 import com.mapbox.common.location.LiveTrackingClientObserver
 import com.mapbox.common.location.LiveTrackingClientSettings
 import com.mapbox.common.location.Location
-import com.mapbox.common.location.LocationCancelable
 import com.mapbox.common.location.LocationError
 import com.mapbox.common.location.LocationErrorCode.*
 import com.mapbox.common.location.LocationService
@@ -68,7 +68,7 @@ class DefaultLocationProviderTest {
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logW(any(), any()) } just Runs
     every { logE(any(), any()) } just Runs
-    every { locationService.getLiveTrackingClient(null, null) } returns ExpectedFactory.createValue(
+    every { locationService.getLiveTrackingClient(null, null, capture(locationEngineRequestSlot)) } returns ExpectedFactory.createValue(
       liveTrackingClient
     )
     every { context.applicationContext } returns context
@@ -105,9 +105,6 @@ class DefaultLocationProviderTest {
         liveTrackingClient.registerObserver(/* observer = */ any())
       }
       verify(exactly = 0) {
-        liveTrackingClient.start(capture(locationEngineRequestSlot), any())
-      }
-      verify(exactly = 0) {
         locationService.getLastLocation(any())
       }
       verify(exactly = 0) {
@@ -129,9 +126,6 @@ class DefaultLocationProviderTest {
     advanceUntilIdle()
     verify(exactly = 1) {
       liveTrackingClient.registerObserver(any())
-    }
-    verify(exactly = 1) {
-      liveTrackingClient.start(capture(locationEngineRequestSlot), any())
     }
     @Suppress("UNCHECKED_CAST")
     val capturedValueMap = locationEngineRequestSlot.captured.contents as Map<String, Value>
@@ -164,9 +158,6 @@ class DefaultLocationProviderTest {
     advanceUntilIdle()
     verify(exactly = 1) {
       liveTrackingClient.registerObserver(any())
-    }
-    verify(exactly = 1) {
-      liveTrackingClient.start(capture(locationEngineRequestSlot), any())
     }
     verify(exactly = 1) {
       locationService.getLastLocation(any())
@@ -202,9 +193,6 @@ class DefaultLocationProviderTest {
       liveTrackingClient.unregisterObserver(any())
     }
     verify(exactly = 0) {
-      liveTrackingClient.stop(any())
-    }
-    verify(exactly = 0) {
       locationCompassEngine.addCompassListener(any())
     }
   }
@@ -224,16 +212,13 @@ class DefaultLocationProviderTest {
       liveTrackingClient.unregisterObserver(any())
     }
     verify(exactly = 1) {
-      liveTrackingClient.stop(any())
-    }
-    verify(exactly = 1) {
       locationCompassEngine.addCompassListener(any())
     }
   }
 
   @Test
   fun testLocationUpdate() = runTest(dispatcher) {
-    every { locationService.getLastLocation(any()) } returns LocationCancelable { }
+    every { locationService.getLastLocation(any()) } returns Cancelable { }
 
     defaultLocationProvider.registerLocationConsumer(locationConsumer1)
     defaultLocationProvider.registerLocationConsumer(locationConsumer2)
@@ -257,7 +242,7 @@ class DefaultLocationProviderTest {
   @Test
   fun `last location is discarded if fresher is received`() = runTest(dispatcher) {
     var lastLocationCancelled = false
-    every { locationService.getLastLocation(any()) } returns LocationCancelable {
+    every { locationService.getLastLocation(any()) } returns Cancelable {
       lastLocationCancelled = true
     }
 
@@ -300,7 +285,7 @@ class DefaultLocationProviderTest {
 
   @Test
   fun `second listener gets only most recent location`() = runTest(dispatcher) {
-    every { locationService.getLastLocation(any()) } returns LocationCancelable { }
+    every { locationService.getLastLocation(any()) } returns Cancelable { }
 
     defaultLocationProvider.registerLocationConsumer(locationConsumer1)
     // Let the first consumer register
@@ -354,7 +339,7 @@ class DefaultLocationProviderTest {
   @Test
   fun testLocationUpdateWithCompass() = runTest(dispatcher) {
     defaultLocationProvider.updatePuckBearing(PuckBearing.HEADING)
-    every { locationService.getLastLocation(any()) } returns LocationCancelable { }
+    every { locationService.getLastLocation(any()) } returns Cancelable { }
 
     defaultLocationProvider.registerLocationConsumer(locationConsumer1)
     advanceUntilIdle()
@@ -386,10 +371,7 @@ class DefaultLocationProviderTest {
   fun `live tracking client not available`() = runTest(dispatcher) {
     val locationService = mockk<LocationService>(relaxed = true)
     every {
-      locationService.getLiveTrackingClient(
-        any(),
-        any()
-      )
+      locationService.getLiveTrackingClient(any(), any(), any())
     } returns ExpectedFactory.createError(
       LocationError(NOT_AVAILABLE, "Not available")
     )
@@ -414,7 +396,7 @@ class DefaultLocationProviderTest {
 
   @Test
   fun `live tracking client error`() = runTest(dispatcher) {
-    every { locationService.getLastLocation(any()) } returns LocationCancelable { }
+    every { locationService.getLastLocation(any()) } returns Cancelable { }
 
     var receivedPoint: Point? = null
     var receivedError: LocationError? = null

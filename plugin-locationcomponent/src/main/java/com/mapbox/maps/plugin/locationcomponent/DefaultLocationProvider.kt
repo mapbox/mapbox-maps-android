@@ -7,12 +7,12 @@ import androidx.annotation.VisibleForTesting.PRIVATE
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.bindgen.Value
+import com.mapbox.common.Cancelable
 import com.mapbox.common.location.LiveTrackingClientAccuracyCategory
 import com.mapbox.common.location.LiveTrackingClientObserver
 import com.mapbox.common.location.LiveTrackingClientSettings.*
 import com.mapbox.common.location.LiveTrackingState
 import com.mapbox.common.location.Location
-import com.mapbox.common.location.LocationCancelable
 import com.mapbox.common.location.LocationError
 import com.mapbox.common.location.LocationErrorCode
 import com.mapbox.common.location.LocationService
@@ -104,7 +104,8 @@ class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal c
   init {
     val result = locationService.getLiveTrackingClient(
       /* name = */ null,
-      /* capabilities = */ null
+      /* capabilities = */ null,
+      /* settings = */ liveTrackingCapabilities
     )
     // Depending on the result we either create a flow that will subscribe to the live tracking
     // client or create a flow that will emit a LocationError
@@ -129,21 +130,9 @@ class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal c
         // Then, register an observer that will emit the locations provided by the liveTrackingClient
         val observer = liveTrackingClientObserver(lastLocationCancelable)
         liveTrackingClient.registerObserver(observer)
-        liveTrackingClient.start(liveTrackingCapabilities) {
-          it?.let { error: LocationError ->
-            // Cancel any pending sending last location since we'll send an error
-            lastLocationCancelable?.cancel()
-            trySendBlocking(ExpectedFactory.createError(error))
-          }
-        }
         // Finally wait for the flow to close to unregister the observer and stop live tracking
         awaitClose {
           liveTrackingClient.unregisterObserver(observer)
-          liveTrackingClient.stop {
-            it?.let {
-              logW(TAG, "Error while stopping live tracking client: $it")
-            }
-          }
         }
       }
         // Convert this Flow into a hot flow so emissions are shared. That is, instead of each
@@ -171,7 +160,7 @@ class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal c
    * @return a [LiveTrackingClientObserver] that emits the most recent [Location] or [LocationError].
    */
   private fun ProducerScope<Expected<LocationError, Location>>.liveTrackingClientObserver(
-    lastLocationCancelable: LocationCancelable?
+    lastLocationCancelable: Cancelable?
   ) =
     object : LiveTrackingClientObserver {
       // Keep track of being already canceled to avoid calling native per each location update

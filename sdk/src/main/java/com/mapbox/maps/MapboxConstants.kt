@@ -9,11 +9,6 @@ import java.util.*
  */
 val MAPBOX_LOCALE: Locale = Locale.US
 
-/**
- * Resource name used to lookup the Mapbox access token.
- */
-const val MAPBOX_ACCESS_TOKEN_RESOURCE_NAME = "mapbox_access_token"
-
 internal const val CORE_SHARED_LIBRARY_NAME = "mapbox-common"
 
 internal const val MAP_SHARED_LIBRARY_NAME = "mapbox-maps"

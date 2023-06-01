@@ -84,7 +84,7 @@ class MapTelemetryTest {
     every { eventsService.sendEvent(any(), any()) } returns Unit
     every { eventsService.sendTurnstileEvent(any(), any()) } returns Unit
 
-    every { TelemetryService.getOrCreate(any()) } returns telemetryService
+    every { TelemetryService.getOrCreate() } returns telemetryService
 
     every { context.getSystemService(Context.TELEPHONY_SERVICE) } returns telephonyManager
     every { telephonyManager.networkType } returns TelephonyManager.NETWORK_TYPE_GPRS
@@ -93,7 +93,7 @@ class MapTelemetryTest {
     every { context.getSystemService(Context.WINDOW_SERVICE) } returns windowManager
     every { windowManager.defaultDisplay } returns display
 
-    telemetry = MapTelemetryImpl(context, "sk.foobar")
+    telemetry = MapTelemetryImpl(context)
   }
 
   @After
@@ -109,7 +109,7 @@ class MapTelemetryTest {
     // validate the event service is initialised
     verify { EventsService.getOrCreate(any()) }
     // validate the telemetry service is initialised
-    verify { TelemetryService.getOrCreate(any()) }
+    verify { TelemetryService.getOrCreate() }
   }
 
   @Test

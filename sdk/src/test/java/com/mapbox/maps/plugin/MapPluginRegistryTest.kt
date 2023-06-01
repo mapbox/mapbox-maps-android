@@ -25,13 +25,11 @@ class MapPluginRegistryTest {
   private lateinit var mapPluginRegistry: MapPluginRegistry
   private val mapInitOptions = mockk<MapInitOptions>()
   private val mapOptions = mockk<MapOptions>()
-  private val resourceOptions = mockk<ResourceOptions>()
 
   @Before
   fun setUp() {
     mapPluginRegistry = MapPluginRegistry(delegateProvider)
     every { mapInitOptions.mapOptions } returns mapOptions
-    every { mapInitOptions.resourceOptions } returns resourceOptions
     every { mapInitOptions.attrs } returns null
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logI(any(), any()) } just Runs

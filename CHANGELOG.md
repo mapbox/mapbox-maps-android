@@ -27,6 +27,8 @@ Mapbox welcomes participation and contributions from everyone.
 * Remove deprecated overloaded `Style.setStyleGeoJSONSourceData(sourceId: String, data: GeoJSONSourceData)` method.
 * Rename `MapboxMap.setMemoryBudget` to `MapboxMap.setTileCacheBudget` and make it non-experimental.
 * Update Mapbox styles to latest versions.
+* Remove `ResourceOptions` and `ResourceOptionsManager`. Introduce `MapboxOptions` and `MapboxMapsOptions` to handle application-level access token and other generic options.
+* Removed XML attributes `mapbox_resourcesAccessToken` and `mapbox_resourcesBaseUrl`.
 
 | Style             | Before                                       | After                                        |
 |-------------------|----------------------------------------------|----------------------------------------------|

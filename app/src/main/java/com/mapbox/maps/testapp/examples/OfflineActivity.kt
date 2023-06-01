@@ -10,7 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -41,15 +40,18 @@ class OfflineActivity : AppCompatActivity() {
       it.setOption(
         TileStoreOptions.MAPBOX_ACCESS_TOKEN,
         TileDataDomain.MAPS,
-        Value(getString(R.string.mapbox_access_token))
+        Value(MapboxOptions.accessToken)
       )
     }
   }
-  private val resourceOptions: ResourceOptions by lazy {
-    ResourceOptions.Builder().applyDefaultParams(this).tileStore(tileStore).build()
-  }
   private val offlineManager: OfflineManager by lazy {
-    OfflineManager(resourceOptions)
+    // Set application-scoped tile store so that all MapViews created from now on will apply these
+    // settings.
+    MapboxOptions.mapsOptions.tileStore = tileStore
+    OfflineManager().also {
+      // Revert setting custom tile store
+      MapboxOptions.mapsOptions.tileStore = null
+    }
   }
   private val offlineLogsAdapter: OfflineLogsAdapter by lazy {
     OfflineLogsAdapter()
@@ -299,7 +301,7 @@ class OfflineActivity : AppCompatActivity() {
     // not a part of the existing style pack. The resources still exists as disk cache.
     offlineManager.removeStylePack(Style.OUTDOORS)
 
-    MapboxMap.clearData(resourceOptions) {
+    MapboxMap.clearData {
       it.error?.let { error ->
         logErrorMessage(error)
       }
@@ -375,14 +377,13 @@ class OfflineActivity : AppCompatActivity() {
       internal var alertMessageTv: TextView = view.findViewById(R.id.alert_message)
     }
 
-    @NonNull
-    override fun onCreateViewHolder(@NonNull parent: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
       val view =
         LayoutInflater.from(parent.context).inflate(R.layout.item_gesture_alert, parent, false)
       return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(@NonNull holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
       val alert = logs[position]
       holder.alertMessageTv.text = alert.message
       holder.alertMessageTv.setTextColor(

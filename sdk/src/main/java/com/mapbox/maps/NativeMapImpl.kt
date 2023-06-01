@@ -289,10 +289,6 @@ internal class NativeMapImpl(val map: Map) {
     return map.moveStyleLayer(layerId, layerPosition)
   }
 
-  fun getResourceOptions(): ResourceOptions {
-    return map.resourceOptions
-  }
-
   fun setStyleJSON(json: String) {
     map.styleJSON = json
   }

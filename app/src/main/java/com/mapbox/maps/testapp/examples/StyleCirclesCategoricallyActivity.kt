@@ -2,6 +2,7 @@ package com.mapbox.maps.testapp.examples
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.mapbox.common.MapboxOptions
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapView
@@ -16,7 +17,6 @@ import com.mapbox.maps.extension.style.expressions.generated.Expression.Companio
 import com.mapbox.maps.extension.style.layers.generated.circleLayer
 import com.mapbox.maps.extension.style.sources.generated.vectorSource
 import com.mapbox.maps.extension.style.style
-import com.mapbox.maps.testapp.R
 
 /**
  * Add point data to a style from a vector tileset and use the match and
@@ -36,7 +36,7 @@ class StyleCirclesCategoricallyActivity : AppCompatActivity() {
       style(Style.LIGHT) {
 
         +vectorSource("ethnicity-source") {
-          url("http://api.mapbox.com/v4/examples.8fgz4egr.json?access_token=" + getString(R.string.mapbox_access_token))
+          url("http://api.mapbox.com/v4/examples.8fgz4egr.json?access_token=" + MapboxOptions.accessToken)
         }
 
         +circleLayer("population", "ethnicity-source") {

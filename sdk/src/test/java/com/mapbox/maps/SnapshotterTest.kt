@@ -26,16 +26,13 @@ class SnapshotterTest {
   private lateinit var snapshotter: Snapshotter
   private lateinit var coreSnapshotter: MapSnapshotter
   private val mapSnapshotOptions = mockk<MapSnapshotOptions>(relaxed = true)
-  private val resourceOptions = mockk<ResourceOptions>(relaxed = true)
 
   @Before
   fun setUp() {
     mockkStatic(Map::class)
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logI(any(), any()) } just Runs
-    every { Map.clearData(any(), any()) } just runs
     coreSnapshotter = mockk(relaxed = true)
-    every { mapSnapshotOptions.resourceOptions } returns resourceOptions
     snapshotter = Snapshotter(
       mockk(relaxed = true),
       mapSnapshotOptions,
@@ -133,12 +130,5 @@ class SnapshotterTest {
     verify { coreSnapshotter.cancel() }
     Assert.assertNull(snapshotter.snapshotStyleCallback)
     Assert.assertNull(snapshotter.snapshotCreatedCallback)
-  }
-
-  @Test
-  fun clearData() {
-    val callback = mockk<AsyncOperationResultCallback>(relaxed = true)
-    snapshotter.clearData(callback)
-    verify { Map.clearData(resourceOptions, callback) }
   }
 }

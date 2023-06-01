@@ -34,7 +34,6 @@ class MapboxMapTest {
 
   private val nativeMap: NativeMapImpl = mockk(relaxed = true)
   private val nativeObserver: NativeObserver = mockk(relaxed = true)
-  private val resourceOptions = mockk<ResourceOptions>(relaxed = true)
 
   private lateinit var styleObserver: StyleObserver
   private lateinit var mapboxMap: MapboxMap
@@ -44,8 +43,6 @@ class MapboxMapTest {
     mockkStatic(Map::class)
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logI(any(), any()) } just Runs
-    every { Map.clearData(any(), any()) } just runs
-    every { nativeMap.getResourceOptions() } returns resourceOptions
     styleObserver = mockk(relaxUnitFun = true)
     mapboxMap = MapboxMap(nativeMap, nativeObserver, styleObserver)
   }
@@ -270,12 +267,6 @@ class MapboxMapTest {
   @Test
   fun getStyleSynchronouslyNotReady() {
     assertNull(mapboxMap.getStyle())
-  }
-
-  @Test
-  fun getResourceOptions() {
-    mapboxMap.getResourceOptions()
-    verify { nativeMap.getResourceOptions() }
   }
 
   @Test
@@ -1024,13 +1015,6 @@ class MapboxMapTest {
   }
 
   @Test
-  fun clearData() {
-    val callback = mockk<AsyncOperationResultCallback>(relaxed = true)
-    mapboxMap.clearData(callback)
-    verify { Map.clearData(resourceOptions, callback) }
-  }
-
-  @Test
   fun setTileCacheBudget() {
     val tileCacheBudget = mockk<TileCacheBudget>()
     mapboxMap.setTileCacheBudget(tileCacheBudget)
@@ -1069,7 +1053,6 @@ class MapboxMapTest {
 
 @RunWith(ParameterizedRobolectricTestRunner::class)
 @LooperMode(LooperMode.Mode.PAUSED)
-@Config(shadows = [ShadowMap::class])
 class PixelForCoordinatesTest(
   private val inputX: Double,
   private val inputY: Double,
@@ -1078,7 +1061,6 @@ class PixelForCoordinatesTest(
 ) {
   private val nativeMap: NativeMapImpl = mockk(relaxed = true)
   private val nativeObserver: NativeObserver = mockk(relaxed = true)
-  private val resourceOptions = mockk<ResourceOptions>(relaxed = true)
 
   private lateinit var styleObserver: StyleObserver
   private lateinit var mapboxMap: MapboxMap
@@ -1088,7 +1070,6 @@ class PixelForCoordinatesTest(
     mockkStatic(kotlin.collections.Map::class)
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logI(any(), any()) } just Runs
-    every { nativeMap.getResourceOptions() } returns resourceOptions
     styleObserver = mockk(relaxUnitFun = true)
     mapboxMap = MapboxMap(nativeMap, nativeObserver, styleObserver)
   }

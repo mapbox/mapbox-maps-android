@@ -6,11 +6,10 @@ import androidx.annotation.Nullable;
 import com.mapbox.bindgen.Expected;
 import com.mapbox.bindgen.ExpectedFactory;
 import com.mapbox.bindgen.Value;
+import com.mapbox.common.Cancelable;
 import com.mapbox.common.location.AccuracyAuthorization;
 import com.mapbox.common.location.GetLocationCallback;
 import com.mapbox.common.location.LiveTrackingClient;
-import com.mapbox.common.location.Location;
-import com.mapbox.common.location.LocationCancelable;
 import com.mapbox.common.location.LocationError;
 import com.mapbox.common.location.LocationService;
 import com.mapbox.common.location.LocationServiceFactory;
@@ -36,7 +35,7 @@ public class ShadowLocationServiceFactory {
 
             @Nullable
             @Override
-            public LocationCancelable getLastLocation(@NonNull GetLocationCallback callback) {
+            public Cancelable getLastLocation(@NonNull GetLocationCallback callback) {
                 return null;
             }
 
@@ -98,7 +97,7 @@ public class ShadowLocationServiceFactory {
 
             @NonNull
             @Override
-            public Expected<LocationError, LiveTrackingClient> getLiveTrackingClient(@Nullable String name, @Nullable Value capabilities) {
+            public Expected<LocationError, LiveTrackingClient> getLiveTrackingClient(@Nullable String name, @Nullable Value capabilities, @Nullable Value settings) {
                 return ExpectedFactory.createValue(liveTrackingClient);
             }
         };
