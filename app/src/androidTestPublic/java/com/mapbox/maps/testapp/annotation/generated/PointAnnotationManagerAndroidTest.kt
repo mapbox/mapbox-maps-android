@@ -124,31 +124,6 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
   }
 
   @Test
-  fun testIconTextFit() {
-    rule.runOnUiThread {
-      val expectedValue = IconTextFit.NONE
-      val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
-      pointAnnotationManager.iconTextFit = expectedValue
-      assertEquals(expectedValue, pointAnnotationManager.iconTextFit)
-      pointAnnotationManager.iconTextFit = null
-      val expectedDefaultValue = IconTextFit.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-text-fit").silentUnwrap<String>()!!.uppercase(Locale.US).replace('-', '_'))
-      assertEquals(expectedDefaultValue, pointAnnotationManager.iconTextFit)
-    }
-  }
-
-  @Test
-  fun testIconTextFitPadding() {
-    rule.runOnUiThread {
-      val expectedValue = listOf(0.0, 1.0, 2.0, 3.0)
-      val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
-      pointAnnotationManager.iconTextFitPadding = expectedValue
-      assertEquals(expectedValue, pointAnnotationManager.iconTextFitPadding)
-      pointAnnotationManager.iconTextFitPadding = null
-      assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-text-fit-padding").silentUnwrap(), pointAnnotationManager.iconTextFitPadding)
-    }
-  }
-
-  @Test
   fun testSymbolAvoidEdges() {
     rule.runOnUiThread {
       val expectedValue = true
@@ -429,12 +404,14 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
       assertEquals(annotation, pointAnnotationManager.annotations[0])
       annotation.point = Point.fromLngLat(1.0, 1.0)
       annotation.iconAnchor = IconAnchor.CENTER
+      annotation.iconTextFit = IconTextFit.NONE
       annotation.textAnchor = TextAnchor.CENTER
       annotation.textJustify = TextJustify.AUTO
       annotation.textTransform = TextTransform.NONE
       pointAnnotationManager.update(annotation)
       assertEquals(annotation, pointAnnotationManager.annotations[0])
       assertEquals(IconAnchor.CENTER, annotation.iconAnchor)
+      assertEquals(IconTextFit.NONE, annotation.iconTextFit)
       assertEquals(TextAnchor.CENTER, annotation.textAnchor)
       assertEquals(TextJustify.AUTO, annotation.textJustify)
       assertEquals(TextTransform.NONE, annotation.textTransform)

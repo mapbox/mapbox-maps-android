@@ -50,6 +50,8 @@ class PointAnnotationManager(
     dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_ICON_OFFSET] = false
     dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_ICON_ROTATE] = false
     dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_ICON_SIZE] = false
+    dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_ICON_TEXT_FIT] = false
+    dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_ICON_TEXT_FIT_PADDING] = false
     dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_SYMBOL_SORT_KEY] = false
     dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_TEXT_ANCHOR] = false
     dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_TEXT_FIELD] = false
@@ -95,6 +97,14 @@ class PointAnnotationManager(
       PointAnnotationOptions.PROPERTY_ICON_SIZE -> {
         layer?.iconSize(get(PointAnnotationOptions.PROPERTY_ICON_SIZE))
         dragLayer?.iconSize(get(PointAnnotationOptions.PROPERTY_ICON_SIZE))
+      }
+      PointAnnotationOptions.PROPERTY_ICON_TEXT_FIT -> {
+        layer?.iconTextFit(get(PointAnnotationOptions.PROPERTY_ICON_TEXT_FIT))
+        dragLayer?.iconTextFit(get(PointAnnotationOptions.PROPERTY_ICON_TEXT_FIT))
+      }
+      PointAnnotationOptions.PROPERTY_ICON_TEXT_FIT_PADDING -> {
+        layer?.iconTextFitPadding(get(PointAnnotationOptions.PROPERTY_ICON_TEXT_FIT_PADDING))
+        dragLayer?.iconTextFitPadding(get(PointAnnotationOptions.PROPERTY_ICON_TEXT_FIT_PADDING))
       }
       PointAnnotationOptions.PROPERTY_SYMBOL_SORT_KEY -> {
         layer?.symbolSortKey(get(PointAnnotationOptions.PROPERTY_SYMBOL_SORT_KEY))
@@ -198,6 +208,8 @@ class PointAnnotationManager(
    * PointAnnotationOptions.PROPERTY_ICON_OFFSET - List<Double>
    * PointAnnotationOptions.PROPERTY_ICON_ROTATE - Double
    * PointAnnotationOptions.PROPERTY_ICON_SIZE - Double
+   * PointAnnotationOptions.PROPERTY_ICON_TEXT_FIT - IconTextFit
+   * PointAnnotationOptions.PROPERTY_ICON_TEXT_FIT_PADDING - List<Double>
    * PointAnnotationOptions.PROPERTY_SYMBOL_SORT_KEY - Double
    * PointAnnotationOptions.PROPERTY_TEXT_ANCHOR - TextAnchor
    * PointAnnotationOptions.PROPERTY_TEXT_FIELD - String
@@ -243,6 +255,8 @@ class PointAnnotationManager(
    * PointAnnotationOptions.PROPERTY_ICON_OFFSET - List<Double>
    * PointAnnotationOptions.PROPERTY_ICON_ROTATE - Double
    * PointAnnotationOptions.PROPERTY_ICON_SIZE - Double
+   * PointAnnotationOptions.PROPERTY_ICON_TEXT_FIT - IconTextFit
+   * PointAnnotationOptions.PROPERTY_ICON_TEXT_FIT_PADDING - List<Double>
    * PointAnnotationOptions.PROPERTY_SYMBOL_SORT_KEY - Double
    * PointAnnotationOptions.PROPERTY_TEXT_ANCHOR - TextAnchor
    * PointAnnotationOptions.PROPERTY_TEXT_FIELD - String
@@ -472,58 +486,6 @@ class PointAnnotationManager(
       newValue.let {
         layer?.iconRotationAlignment(it)
         dragLayer?.iconRotationAlignment(it)
-      }
-    }
-
-  /**
-   * The IconTextFit property
-   *
-   * Scales the icon to fit around the associated text.
-   */
-  var iconTextFit: IconTextFit?
-    /**
-     * Get the IconTextFit property
-     *
-     * @return property wrapper value around IconTextFit
-     */
-    get(): IconTextFit? {
-      return layer?.iconTextFit
-    }
-    /**
-     * Set the IconTextFit property
-     * @param value property wrapper value around IconTextFit
-     */
-    set(value) {
-      val newValue = value ?: IconTextFit.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-text-fit").silentUnwrap<String>()!!.uppercase(Locale.US).replace('-', '_'))
-      newValue.let {
-        layer?.iconTextFit(it)
-        dragLayer?.iconTextFit(it)
-      }
-    }
-
-  /**
-   * The IconTextFitPadding property
-   *
-   * Size of the additional area added to dimensions determined by {@link Property.ICON_TEXT_FIT}, in clockwise order: top, right, bottom, left. The unit of iconTextFitPadding is in density-independent pixels.
-   */
-  var iconTextFitPadding: List<Double>?
-    /**
-     * Get the IconTextFitPadding property
-     *
-     * @return property wrapper value around List<Double>
-     */
-    get(): List<Double>? {
-      return layer?.iconTextFitPadding
-    }
-    /**
-     * Set the IconTextFitPadding property
-     * @param value property wrapper value around List<Double>
-     */
-    set(value) {
-      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-text-fit-padding").silentUnwrap()
-      newValue?.let {
-        layer?.iconTextFitPadding(it)
-        dragLayer?.iconTextFitPadding(it)
       }
     }
 
@@ -1059,6 +1021,66 @@ class PointAnnotationManager(
       newValue?.let {
         layer?.textLineHeight(it)
         dragLayer?.textLineHeight(it)
+      }
+    }
+
+  /**
+   * The IconTextFit property
+   *
+   * Scales the icon to fit around the associated text.
+   */
+  @Deprecated(
+    "icon-text-fit property is now data driven, use `PointAnnotation.iconTextFit` instead.",
+    ReplaceWith("PointAnnotation.iconTextFit")
+  )
+  var iconTextFit: IconTextFit?
+    /**
+     * Get the IconTextFit property
+     *
+     * @return property wrapper value around IconTextFit
+     */
+    get(): IconTextFit? {
+      return layer?.iconTextFit
+    }
+    /**
+     * Set the IconTextFit property
+     * @param value property wrapper value around IconTextFit
+     */
+    set(value) {
+      val newValue = value ?: IconTextFit.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-text-fit").silentUnwrap<String>()!!.toUpperCase(Locale.US).replace('-', '_'))
+      newValue?.let {
+        layer?.iconTextFit(it)
+        dragLayer?.iconTextFit(it)
+      }
+    }
+
+  /**
+   * The IconTextFitPadding property
+   *
+   * Size of the additional area added to dimensions determined by {@link Property.ICON_TEXT_FIT}, in clockwise order: top, right, bottom, left.
+   */
+  @Deprecated(
+    "icon-text-fit-padding property is now data driven, use `PointAnnotation.iconTextFitPadding` instead.",
+    ReplaceWith("PointAnnotation.iconTextFitPadding")
+  )
+  var iconTextFitPadding: List<Double>?
+    /**
+     * Get the IconTextFitPadding property
+     *
+     * @return property wrapper value around List<Double>
+     */
+    get(): List<Double>? {
+      return layer?.iconTextFitPadding
+    }
+    /**
+     * Set the IconTextFitPadding property
+     * @param value property wrapper value around List<Double>
+     */
+    set(value) {
+      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-text-fit-padding").silentUnwrap()
+      newValue?.let {
+        layer?.iconTextFitPadding(it)
+        dragLayer?.iconTextFitPadding(it)
       }
     }
   /**

@@ -10,6 +10,7 @@ import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
 import com.mapbox.maps.MapboxAnnotationException
 import com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor
+import com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit
 import com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor
 import com.mapbox.maps.extension.style.layers.properties.generated.TextJustify
 import com.mapbox.maps.extension.style.layers.properties.generated.TextTransform
@@ -128,6 +129,42 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
    */
   fun withIconSize(iconSize: Double): PointAnnotationOptions {
     this.iconSize = iconSize
+    return this
+  }
+
+  /**
+   * Scales the icon to fit around the associated text.
+   */
+  var iconTextFit: IconTextFit? = null
+
+  /**
+   * Set icon-text-fit to initialise the pointAnnotation with.
+   *
+   * Scales the icon to fit around the associated text.
+   *
+   * @param iconTextFit the icon-text-fit value
+   * @return this
+   */
+  fun withIconTextFit(iconTextFit: IconTextFit): PointAnnotationOptions {
+    this.iconTextFit = iconTextFit
+    return this
+  }
+
+  /**
+   * Size of the additional area added to dimensions determined by `icon-text-fit`, in clockwise order: top, right, bottom, left.
+   */
+  var iconTextFitPadding: List<Double>? = null
+
+  /**
+   * Set icon-text-fit-padding to initialise the pointAnnotation with.
+   *
+   * Size of the additional area added to dimensions determined by {@link Property.ICON_TEXT_FIT}, in clockwise order: top, right, bottom, left. The unit of iconTextFitPadding is in density-independent pixels.
+   *
+   * @param iconTextFitPadding the icon-text-fit-padding value
+   * @return this
+   */
+  fun withIconTextFitPadding(iconTextFitPadding: List<Double>): PointAnnotationOptions {
+    this.iconTextFitPadding = iconTextFitPadding
     return this
   }
 
@@ -689,6 +726,12 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
     iconSize?.let {
       jsonObject.addProperty(PROPERTY_ICON_SIZE, it)
     }
+    iconTextFit?.let {
+      jsonObject.addProperty(PROPERTY_ICON_TEXT_FIT, it.value)
+    }
+    iconTextFitPadding?.let {
+      jsonObject.add(PROPERTY_ICON_TEXT_FIT_PADDING, convertDoubleArray(it))
+    }
     symbolSortKey?.let {
       jsonObject.addProperty(PROPERTY_SYMBOL_SORT_KEY, it)
     }
@@ -783,6 +826,12 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
 
     /** The property for icon-size */
     const val PROPERTY_ICON_SIZE = "icon-size"
+
+    /** The property for icon-text-fit */
+    const val PROPERTY_ICON_TEXT_FIT = "icon-text-fit"
+
+    /** The property for icon-text-fit-padding */
+    const val PROPERTY_ICON_TEXT_FIT_PADDING = "icon-text-fit-padding"
 
     /** The property for symbol-sort-key */
     const val PROPERTY_SYMBOL_SORT_KEY = "symbol-sort-key"
@@ -883,6 +932,12 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
       }
       if (feature.hasProperty(PROPERTY_ICON_SIZE)) {
         options.iconSize = feature.getProperty(PROPERTY_ICON_SIZE).asDouble
+      }
+      if (feature.hasProperty(PROPERTY_ICON_TEXT_FIT)) {
+        options.iconTextFit = IconTextFit.valueOf(feature.getProperty(PROPERTY_ICON_TEXT_FIT).asString)
+      }
+      if (feature.hasProperty(PROPERTY_ICON_TEXT_FIT_PADDING)) {
+        options.iconTextFitPadding = toDoubleArray(feature.getProperty(PROPERTY_ICON_TEXT_FIT_PADDING).asJsonArray)
       }
       if (feature.hasProperty(PROPERTY_SYMBOL_SORT_KEY)) {
         options.symbolSortKey = feature.getProperty(PROPERTY_SYMBOL_SORT_KEY).asDouble
