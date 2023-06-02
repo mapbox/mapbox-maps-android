@@ -5,7 +5,6 @@ import androidx.annotation.RestrictTo
 import androidx.annotation.RestrictTo.Scope
 import androidx.annotation.WorkerThread
 import com.mapbox.bindgen.Expected
-import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
@@ -368,7 +367,13 @@ class Style {
   }
 
   /**
-   * This API is for internal use only and will return a no-op result.
+   * Sets a value to the 3D light property.
+   *
+   * @param id 3D light id.
+   * @param property 3D light property name.
+   * @param value 3D light property value.
+   *
+   * @return A string describing an error if the operation was not successful, empty otherwise.
    */
   @MapboxExperimental
   fun setStyleLightProperty(
@@ -376,23 +381,32 @@ class Style {
     property: String,
     value: Value
   ): Expected<String, None> {
-    return ExpectedFactory.createNone()
+    checkNativeStyle("setStyleLightProperty")
+    return styleManager.setStyleLightProperty(id, property, value)
   }
 
   /**
-   * This API is for internal use only and will return a no-op result.
+   * Gets added 3D lights to the style.
+   *
+   * @return list of [StyleObjectInfo].
    */
   @MapboxExperimental
   fun getStyleLights(): MutableList<StyleObjectInfo> {
-    return ArrayList(0)
+    checkNativeStyle("getStyleLights")
+    return styleManager.styleLights
   }
 
   /**
-   * This API is for internal use only and will return a no-op result.
+   * Sets 3D lights to the style.
+   *
+   * @param lights 3D light value.
+   *
+   * @return A string describing an error if the operation was not successful, empty otherwise.
    */
   @MapboxExperimental
   fun setStyleLights(lights: Value): Expected<String, None> {
-    return ExpectedFactory.createNone()
+    checkNativeStyle("setStyleLights")
+    return styleManager.setStyleLights(lights)
   }
 
   /**
@@ -521,11 +535,17 @@ class Style {
   }
 
   /**
-   * This API is for internal use only and will return a no-op result.
+   * Gets a value to the 3D light property.
+   *
+   * @param id 3D light id.
+   * @param property 3D light property name.
+   *
+   * @return The value of property in the 3D light.
    */
   @MapboxExperimental
   fun getStyleLightProperty(id: String, property: String): StylePropertyValue {
-    return StylePropertyValue(Value.nullValue(), StylePropertyValueKind.UNDEFINED)
+    checkNativeStyle("getStyleLightProperty")
+    return styleManager.getStyleLightProperty(id, property)
   }
 
   /**
