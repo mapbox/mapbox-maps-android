@@ -5,19 +5,17 @@ import android.animation.AnimatorListenerAdapter
 import android.animation.TypeEvaluator
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
-import android.view.Choreographer
 import android.view.animation.LinearInterpolator
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants
 import com.mapbox.maps.plugin.locationcomponent.LocationLayerRenderer
-import com.mapbox.maps.threading.AnimationSynchronizer
 import com.mapbox.maps.threading.AnimationThreadController
 
 @SuppressLint("Recycle")
 internal abstract class PuckAnimator<T>(
   evaluator: TypeEvaluator<T>
-) : ValueAnimator(), Choreographer.FrameCallback {
+) : ValueAnimator() {
 
   @VisibleForTesting(otherwise = PRIVATE)
   internal var updateListener: ((T) -> Unit)? = null
@@ -26,23 +24,7 @@ internal abstract class PuckAnimator<T>(
   protected var locationRenderer: LocationLayerRenderer? = null
   internal open var enabled = false
 
-  protected var choreographerFrameTimeNanos = 0L
-
-  override fun doFrame(frameTimeNanos: Long) {
-    // triggered still after Choreographer#doFrame used by animator but frameTimeNanos will be the same
-    choreographerFrameTimeNanos = frameTimeNanos
-    if (isRunning || userConfiguredAnimator.isRunning) {
-      Choreographer.getInstance().postFrameCallback(this)
-    }
-  }
-
-  open fun updateLayer(fraction: Float, value: T) {
-    if (fraction >= 1.0f) {
-      AnimationThreadController.postOnAnimatorThread {
-        setExpectingPuckAnimator(false)
-      }
-    }
-  }
+  abstract fun updateLayer(fraction: Float, value: T)
 
   init {
     setObjectValues(emptyArray<Any>())
@@ -111,28 +93,13 @@ internal abstract class PuckAnimator<T>(
     if (options == null) {
       setObjectValues(*targets)
       AnimationThreadController.postOnAnimatorThread {
-        setExpectingPuckAnimator(true)
         start()
       }
     } else {
       options.invoke(userConfiguredAnimator)
       userConfiguredAnimator.setObjectValues(*targets)
       AnimationThreadController.postOnAnimatorThread {
-        setExpectingPuckAnimator(true)
         userConfiguredAnimator.start()
-      }
-    }
-  }
-
-  private fun setExpectingPuckAnimator(expecting: Boolean) {
-    AnimationSynchronizer.get(locationRenderer)?.let { synchronizer ->
-      if (expecting) {
-        Choreographer.getInstance().postFrameCallback(this)
-      }
-      if (this is PuckPositionAnimator) {
-        synchronizer.expectingPuckPosition = expecting
-      } else if (this is PuckBearingAnimator) {
-        synchronizer.expectingPuckBearing = expecting
       }
     }
   }
@@ -155,11 +122,9 @@ internal abstract class PuckAnimator<T>(
   fun cancelRunning() {
     AnimationThreadController.postOnAnimatorThread {
       if (isRunning) {
-        setExpectingPuckAnimator(false)
         cancel()
       }
       if (userConfiguredAnimator.isRunning) {
-        setExpectingPuckAnimator(false)
         userConfiguredAnimator.cancel()
       }
     }

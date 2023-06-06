@@ -6,7 +6,6 @@ import android.animation.AnimatorSet
 import android.animation.ValueAnimator
 import android.os.Handler
 import android.os.Looper
-import android.view.Choreographer
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
 import com.mapbox.geojson.Point
@@ -14,7 +13,6 @@ import com.mapbox.maps.*
 import com.mapbox.maps.plugin.MapCameraPlugin
 import com.mapbox.maps.plugin.animation.animator.*
 import com.mapbox.maps.plugin.delegates.*
-import com.mapbox.maps.threading.AnimationSynchronizer
 import com.mapbox.maps.threading.AnimationThreadController.postOnAnimatorThread
 import com.mapbox.maps.threading.AnimationThreadController.postOnMainThread
 import com.mapbox.maps.threading.AnimationThreadController.usingBackgroundThread
@@ -39,7 +37,7 @@ import kotlin.properties.Delegates
  * However, it doesn't have to be the UI thread.
  */
 
-class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlugin, Choreographer.FrameCallback {
+class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlugin {
 
   @VisibleForTesting(otherwise = PRIVATE)
   internal val animators = hashSetOf<CameraAnimator<*>>()
@@ -154,19 +152,6 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlugin, Chor
     ENDED
   }
 
-  private var frameTimeNanos = 0L
-  private var choreographerStarted = false
-
-  /**
-   * doFrame
-   */
-  override fun doFrame(frameTimeNanos: Long) {
-    this.frameTimeNanos = frameTimeNanos
-    if (choreographerStarted) {
-      Choreographer.getInstance().postFrameCallback(this)
-    }
-  }
-
   /**
    * Provides all map delegate instances.
    */
@@ -276,11 +261,7 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlugin, Chor
     // move native map to new position
     try {
       // setCamera triggers OnCameraMove that updates camera options and notifies listeners
-      AnimationSynchronizer.get(mapCameraManagerDelegate)?.let {
-        it.sendCameraUpdate(frameTimeNanos, cameraOptions)
-      } ?: run {
-        mapCameraManagerDelegate.setCamera(cameraOptions)
-      }
+      mapCameraManagerDelegate.setCamera(cameraOptions)
     } catch (e: Exception) {
       logE(
         TAG,
@@ -395,13 +376,6 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlugin, Chor
               startingAnimator.skipped = true
               return
             }
-            if (!choreographerStarted) {
-              choreographerStarted = true
-              AnimationSynchronizer.get(mapCameraManagerDelegate)?.let {
-                Choreographer.getInstance().postFrameCallback(this@CameraAnimationsPluginImpl)
-                it.expectingCamera = true
-              }
-            }
             lifecycleListeners.forEach {
               it.onAnimatorStarting(startingAnimator.type, startingAnimator, startingAnimator.owner)
             }
@@ -481,10 +455,6 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlugin, Chor
             }
             if (runningAnimatorsQueue.isEmpty()) {
               commitChanges()
-              choreographerStarted = false
-              AnimationSynchronizer.get(mapCameraManagerDelegate)?.let {
-                it.expectingCamera = false
-              }
             }
           } ?: throw MapboxCameraAnimationException(
             "Could not start animation as it must be an instance of CameraAnimator and not null!"
