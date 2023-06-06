@@ -16,7 +16,6 @@ import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.locationcomponent.animators.PuckAnimatorManager
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings2
-import com.mapbox.maps.threading.AnimationSynchronizer
 import kotlin.math.abs
 import kotlin.math.cos
 import kotlin.math.pow
@@ -108,14 +107,6 @@ internal class LocationPuckManager(
         show(forceUpdate = true)
       } else {
         hide()
-      }
-      AnimationSynchronizer.get(delegateProvider.mapCameraManagerDelegate)?.let {
-        it.puckAnimatorDataApplier = locationLayerRenderer
-      } ?: run {
-        AnimationSynchronizer.enableFor(delegateProvider.mapCameraManagerDelegate)
-        AnimationSynchronizer.get(delegateProvider.mapCameraManagerDelegate)
-          ?.puckAnimatorDataApplier = locationLayerRenderer
-        AnimationSynchronizer.disableFor(delegateProvider.mapCameraManagerDelegate)
       }
     }
   }

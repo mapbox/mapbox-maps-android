@@ -21,7 +21,6 @@ import com.mapbox.maps.renderer.OnFpsChangedListener
 import com.mapbox.maps.renderer.RendererSetupErrorListener
 import com.mapbox.maps.renderer.egl.EGLCore
 import com.mapbox.maps.renderer.widget.Widget
-import com.mapbox.maps.threading.AnimationSynchronizer
 import com.mapbox.maps.viewannotation.ViewAnnotationManager
 import java.nio.IntBuffer
 import kotlin.math.hypot
@@ -238,7 +237,6 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
       (viewAnnotationManager as ViewAnnotationManagerImpl).destroy()
     }
     mapController.onDestroy()
-    AnimationSynchronizer.remove(mapController.getMapboxMap())
   }
 
   /**

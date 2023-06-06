@@ -1,7 +1,7 @@
 // Signature format: 3.0
 package com.mapbox.maps.plugin.animation {
 
-  public final class CameraAnimationsPluginImpl implements com.mapbox.maps.plugin.animation.CameraAnimationsPlugin android.view.Choreographer.FrameCallback com.mapbox.maps.plugin.MapCameraPlugin {
+  public final class CameraAnimationsPluginImpl implements com.mapbox.maps.plugin.animation.CameraAnimationsPlugin com.mapbox.maps.plugin.MapCameraPlugin {
     ctor public CameraAnimationsPluginImpl();
     method public void addCameraAnchorChangeListener(com.mapbox.maps.plugin.animation.CameraAnimatorNullableChangeListener<com.mapbox.maps.ScreenCoordinate> listener);
     method public void addCameraAnimationsLifecycleListener(com.mapbox.maps.plugin.animation.CameraAnimationsLifecycleListener listener);
@@ -19,7 +19,6 @@ package com.mapbox.maps.plugin.animation {
     method public android.animation.ValueAnimator createPaddingAnimator(com.mapbox.maps.plugin.animation.CameraAnimatorOptions<com.mapbox.maps.EdgeInsets> options, kotlin.jvm.functions.Function1<? super android.animation.ValueAnimator,kotlin.Unit>? block);
     method public android.animation.ValueAnimator createPitchAnimator(com.mapbox.maps.plugin.animation.CameraAnimatorOptions<java.lang.Double> options, kotlin.jvm.functions.Function1<? super android.animation.ValueAnimator,kotlin.Unit>? block);
     method public android.animation.ValueAnimator createZoomAnimator(com.mapbox.maps.plugin.animation.CameraAnimatorOptions<java.lang.Double> options, kotlin.jvm.functions.Function1<? super android.animation.ValueAnimator,kotlin.Unit>? block);
-    method public void doFrame(long frameTimeNanos);
     method public com.mapbox.maps.plugin.animation.Cancelable easeTo(com.mapbox.maps.CameraOptions cameraOptions, com.mapbox.maps.plugin.animation.MapAnimationOptions? animationOptions);
     method public com.mapbox.maps.plugin.animation.Cancelable flyTo(com.mapbox.maps.CameraOptions cameraOptions, com.mapbox.maps.plugin.animation.MapAnimationOptions? animationOptions);
     method public com.mapbox.maps.ScreenCoordinate? getAnchor();
