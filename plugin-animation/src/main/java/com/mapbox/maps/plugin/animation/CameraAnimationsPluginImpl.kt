@@ -8,6 +8,8 @@ import android.os.Handler
 import android.os.Looper
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
+import com.mapbox.common.SettingsServiceFactory
+import com.mapbox.common.SettingsServiceStorageType
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.plugin.MapCameraPlugin
@@ -481,7 +483,7 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlugin {
       anchor = valueAnimator.animatedValue as ScreenCoordinate
     }
 
-    if (animator.hasUserListeners) {
+    if (animator.hasUserListeners || immediateCameraUpdatesEnabled()) {
       // If the animator have third-party listeners camera changes must be applied immediately
       // to be seen from the listeners.
       commitChanges()
@@ -1001,5 +1003,13 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlugin {
    */
   companion object {
     internal const val TAG = "Mbgl-CameraManager"
+
+    @VisibleForTesting(otherwise = PRIVATE)
+    internal fun immediateCameraUpdatesEnabled(): Boolean {
+      val settingValue = SettingsServiceFactory
+        .getInstance(SettingsServiceStorageType.NON_PERSISTENT)
+        .get("sync_camera_with_puck")
+      return settingValue.value?.contents as? Boolean ?: false
+    }
   }
 }

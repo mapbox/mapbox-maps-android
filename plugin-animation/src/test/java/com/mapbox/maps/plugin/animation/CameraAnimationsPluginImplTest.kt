@@ -85,12 +85,15 @@ class CameraAnimationsPluginImplTest {
     cameraAnimationsPluginImpl = CameraAnimationsPluginImpl().apply {
       onDelegateProvider(delegateProvider)
     }
+    mockkObject(CameraAnimationsPluginImpl)
+    every { CameraAnimationsPluginImpl.immediateCameraUpdatesEnabled() } returns false
   }
 
   @After
   fun cleanUp() {
     unmockkObject(CameraTransform)
     unmockkStatic("com.mapbox.maps.MapboxLogger")
+    unmockkObject(CameraAnimationsPluginImpl)
   }
 
   @Test
