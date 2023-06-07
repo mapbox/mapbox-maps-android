@@ -109,7 +109,7 @@ object Versions {
   const val pluginBinaryCompatibilityValidator = "0.8.0"
   const val pluginTaskTree = "2.1.0"
   const val mapboxAccessToken="0.4.0"
-  const val mapboxSdkRegistry="1.2.1"
+  const val mapboxSdkRegistry="1.2.2"
   const val mapboxGestures = "0.8.0"
   const val mapboxJavaServices = "5.4.1"
   const val mapboxBase = "0.8.0"
