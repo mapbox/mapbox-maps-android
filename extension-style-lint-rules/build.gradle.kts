@@ -31,3 +31,7 @@ project.apply {
   from("$rootDir/gradle/ktlint.gradle")
   from("$rootDir/gradle/dependency-updates.gradle")
 }
+
+tasks.withType<Test> {
+  maxParallelForks = (Runtime.getRuntime().availableProcessors()).takeIf { it > 0 } ?: 1
+}

@@ -77,7 +77,7 @@ plugins {
 }
 
 tasks.withType<Test> {
-  maxParallelForks = (Runtime.getRuntime().availableProcessors() / 2).takeIf { it > 0 } ?: 1
+  maxParallelForks = (Runtime.getRuntime().availableProcessors()).takeIf { it > 0 } ?: 1
 }
 
 apiValidation {
