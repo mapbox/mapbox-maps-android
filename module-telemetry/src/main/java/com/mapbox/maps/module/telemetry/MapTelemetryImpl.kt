@@ -69,9 +69,9 @@ class MapTelemetryImpl : MapTelemetry {
         BuildConfig.MAPBOX_SDK_IDENTIFIER,
         BuildConfig.MAPBOX_SDK_VERSION
       )
-    ) { eventsServiceError ->
-      eventsServiceError?.let {
-        logE(TAG, "EventsServiceError: $it")
+    ) { response ->
+      if (response.isError) {
+        logE(TAG, "sendTurnstileEvent error: ${response.error}")
       }
     }
 
@@ -81,24 +81,24 @@ class MapTelemetryImpl : MapTelemetry {
     }
   }
 
-  private fun shouldSendEvents() = TelemetryUtils.getClientServerEventsCollectionState(eventsServiceOptions) != TelemetryCollectionState.TURNSTILE_EVENTS_ONLY
+  private fun shouldSendEvents() = TelemetryUtils.getClientServerEventsCollectionState() != TelemetryCollectionState.TURNSTILE_EVENTS_ONLY
 
   private fun sendEvent(event: String) {
     val eventAttributes = Value.fromJson(event)
     val mapEvent = eventAttributes.value?.let { Event(EventPriority.QUEUED, it, null) }
     if (mapEvent != null) {
-      eventsService.sendEvent(mapEvent) { eventsServiceError ->
-        eventsServiceError?.let {
-          logE(TAG, "EventsServiceError: $it")
+      eventsService.sendEvent(mapEvent) { response ->
+        if (response.isError) {
+          logE(TAG, "sendEvent error: ${response.error}")
         }
       }
     }
   }
 
   private fun enableTelemetryCollection(enabled: Boolean) {
-    TelemetryUtils.setEventsCollectionState(enabled) { eventsServiceError ->
-      eventsServiceError?.let {
-        logE(TAG, "EventsServiceError: $it")
+    TelemetryUtils.setEventsCollectionState(enabled) { response ->
+      if (response.isError) {
+        logE(TAG, "setEventsCollectionState error: ${response.error}")
       }
     }
   }

@@ -78,7 +78,7 @@ class MapTelemetryTest {
     mockkStatic(TelemetryUtils::class)
     every { TelemetryUtils.setEventsCollectionState(any(), any()) } returns Unit
     every { TelemetryUtils.getEventsCollectionState() } returns true
-    every { TelemetryUtils.getClientServerEventsCollectionState(any()) } returns TelemetryCollectionState.ENABLED
+    every { TelemetryUtils.getClientServerEventsCollectionState() } returns TelemetryCollectionState.ENABLED
 
     every { EventsService.getOrCreate(any()) } returns eventsService
     every { eventsService.sendEvent(any(), any()) } returns Unit
@@ -129,7 +129,7 @@ class MapTelemetryTest {
 
   @Test
   fun testOnAppUserTurnstileStateTurnstileOnly() {
-    every { TelemetryUtils.getClientServerEventsCollectionState(any()) } returns TelemetryCollectionState.TURNSTILE_EVENTS_ONLY
+    every { TelemetryUtils.getClientServerEventsCollectionState() } returns TelemetryCollectionState.TURNSTILE_EVENTS_ONLY
     telemetry.onAppUserTurnstileEvent()
     verify {
       eventsService.sendTurnstileEvent(turnstileEvent, any())
@@ -139,7 +139,7 @@ class MapTelemetryTest {
 
   @Test
   fun testOnAppUserTurnstileStateUnknown() {
-    every { TelemetryUtils.getClientServerEventsCollectionState(any()) } returns TelemetryCollectionState.UNKNOWN
+    every { TelemetryUtils.getClientServerEventsCollectionState() } returns TelemetryCollectionState.UNKNOWN
     telemetry.onAppUserTurnstileEvent()
     verify {
       eventsService.sendTurnstileEvent(
@@ -178,14 +178,14 @@ class MapTelemetryTest {
 
   @Test
   fun testPerformanceEventDisabledStateTurnstileOnly() {
-    every { TelemetryUtils.getClientServerEventsCollectionState(any()) } returns TelemetryCollectionState.TURNSTILE_EVENTS_ONLY
+    every { TelemetryUtils.getClientServerEventsCollectionState() } returns TelemetryCollectionState.TURNSTILE_EVENTS_ONLY
     telemetry.onPerformanceEvent(null)
     verify(exactly = 0) { eventsService.sendEvent(any(), any()) }
   }
 
   @Test
   fun testPerformanceEventDisabledStateUnknown() {
-    every { TelemetryUtils.getClientServerEventsCollectionState(any()) } returns TelemetryCollectionState.UNKNOWN
+    every { TelemetryUtils.getClientServerEventsCollectionState() } returns TelemetryCollectionState.UNKNOWN
     telemetry.onPerformanceEvent(null)
     verify(exactly = 1) { eventsService.sendEvent(any(), any()) }
   }

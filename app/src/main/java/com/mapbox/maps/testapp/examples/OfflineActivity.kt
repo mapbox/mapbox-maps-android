@@ -34,16 +34,7 @@ import java.util.*
  * to change during the beta.
  */
 class OfflineActivity : AppCompatActivity() {
-  private val tileStore: TileStore by lazy {
-    TileStore.create().also {
-      // Set default access token for the created tile store instance
-      it.setOption(
-        TileStoreOptions.MAPBOX_ACCESS_TOKEN,
-        TileDataDomain.MAPS,
-        Value(MapboxOptions.accessToken)
-      )
-    }
-  }
+  private val tileStore: TileStore by lazy { TileStore.create() }
   private val offlineManager: OfflineManager by lazy {
     // Set application-scoped tile store so that all MapViews created from now on will apply these
     // settings.

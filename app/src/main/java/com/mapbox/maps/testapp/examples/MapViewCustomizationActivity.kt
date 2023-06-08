@@ -3,11 +3,8 @@ package com.mapbox.maps.testapp.examples
 import android.os.Bundle
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
-import com.mapbox.bindgen.Value
 import com.mapbox.common.MapboxOptions
-import com.mapbox.common.TileDataDomain
 import com.mapbox.common.TileStore
-import com.mapbox.common.TileStoreOptions
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.plugin.*
@@ -24,16 +21,7 @@ class MapViewCustomizationActivity : AppCompatActivity() {
 
   private lateinit var customMapView: MapView
   // Users should keep a reference to the customised tileStore instance (if there's any)
-  private val tileStore by lazy {
-    TileStore.create().also {
-      // Users need to make sure the custom TileStore is initialised properly with valid access token
-      it.setOption(
-        TileStoreOptions.MAPBOX_ACCESS_TOKEN,
-        TileDataDomain.MAPS,
-        Value(MapboxOptions.accessToken)
-      )
-    }
-  }
+  private val tileStore by lazy { TileStore.create() }
   private lateinit var binding: ActivityMapViewCustomizationBinding
 
   override fun onCreate(savedInstanceState: Bundle?) {
