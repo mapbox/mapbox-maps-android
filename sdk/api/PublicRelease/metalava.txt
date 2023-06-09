@@ -308,6 +308,14 @@ package com.mapbox.maps {
   public final class MapboxMapsOptionsKt {
   }
 
+  public final class MapboxTracing {
+    method public void disableAll();
+    method public void enableAll();
+    method public void enableCore();
+    method public void enablePlatform();
+    field public static final com.mapbox.maps.MapboxTracing INSTANCE;
+  }
+
   public fun interface SnapshotCreatedListener {
     method public void onSnapshotResult(com.mapbox.maps.MapSnapshotResult? snapshot);
   }
