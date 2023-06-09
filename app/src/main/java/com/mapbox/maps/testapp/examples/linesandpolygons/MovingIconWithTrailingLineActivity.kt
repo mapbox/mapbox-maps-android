@@ -246,6 +246,7 @@ class MovingIconWithTrailingLineActivity : AppCompatActivity() {
     super.onDestroy()
     directionsClient?.cancelCall()
     if (::currentAnimator.isInitialized) {
+      currentAnimator.removeAllListeners()
       currentAnimator.cancel()
     }
   }
