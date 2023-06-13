@@ -11,7 +11,7 @@ object LocaleUnitResolver {
    */
   val isMetricSystem: Boolean
     get() {
-      return when (Locale.getDefault().country.toUpperCase(Locale.getDefault())) {
+      return when (Locale.getDefault().country.uppercase(Locale.getDefault())) {
         ImperialCountryCode.US, ImperialCountryCode.LIBERIA, ImperialCountryCode.MYANMAR -> false
         else -> true
       }

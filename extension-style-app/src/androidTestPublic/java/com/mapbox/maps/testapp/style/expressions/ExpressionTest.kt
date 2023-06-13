@@ -574,7 +574,7 @@ class ExpressionTest : BaseStyleTest() {
     }
     setupLayer(layer)
     assertEquals(
-      "[case, [==, Abc, abc, [collator, {diacritic-sensitive=false, locale=en_us, case-sensitive=false}]], 1.0, 0.0]",
+      "[case, [==, Abc, abc, [collator, {diacritic-sensitive=false, case-sensitive=false, locale=en_us}]], 1.0, 0.0]",
       layer.textSizeAsExpression.toString()
     )
   }
@@ -705,7 +705,7 @@ class ExpressionTest : BaseStyleTest() {
     }
     setupLayer(layer)
     assertEquals(
-      "[format, text, {font-scale=1.0, text-font=[literal, [font1, font2]], text-color=[rgba, 0.0, 0.0, 255.0, 1.0]}, text2, {font-scale=2.0, text-font=[literal, [font1, font2]], text-color=[rgba, 255.0, 0.0, 0.0, 1.0]}]",
+      "[format, text, {text-color=[rgba, 0.0, 0.0, 255.0, 1.0], font-scale=1.0, text-font=[literal, [font1, font2]]}, text2, {text-color=[rgba, 255.0, 0.0, 0.0, 1.0], font-scale=2.0, text-font=[literal, [font1, font2]]}]",
       layer.textFieldAsExpression.toString()
     )
   }
@@ -1426,7 +1426,7 @@ class ExpressionTest : BaseStyleTest() {
     }
     setupLayer(layer)
     assertEquals(
-      "[number, [case, [==, it, [resolved-locale, [collator, {diacritic-sensitive=false, locale=en-us, case-sensitive=false}]]], 1.0, 2.0]]",
+      "[number, [case, [==, it, [resolved-locale, [collator, {diacritic-sensitive=false, case-sensitive=false, locale=en-us}]]], 1.0, 2.0]]",
       layer.textSizeAsExpression.toString()
     )
   }

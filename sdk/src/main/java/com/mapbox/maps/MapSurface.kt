@@ -83,6 +83,7 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
   fun surfaceCreated() {
     renderer.surfaceCreated()
     // display should not be null at this point but to be sure we will fallback to DEFAULT_FPS
+    @Suppress("DEPRECATION")
     val screenRefreshRate = (context.getSystemService(Context.WINDOW_SERVICE) as WindowManager?)
       ?.defaultDisplay?.refreshRate?.toInt() ?: MapView.DEFAULT_FPS
     mapController.setScreenRefreshRate(screenRefreshRate)

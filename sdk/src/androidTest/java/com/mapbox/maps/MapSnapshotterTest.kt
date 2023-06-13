@@ -23,9 +23,6 @@ class MapSnapshotterTest {
     Handler(Looper.getMainLooper()).post {
       val context = InstrumentationRegistry.getInstrumentation().targetContext
       val snapshotterOptions = MapSnapshotOptions.Builder()
-        .resourceOptions(
-          ResourceOptionsManager.getDefault(context).resourceOptions
-        )
         .size(Size(600.0f, 512.0f))
         .pixelRatio(1.0f)
         .build()

@@ -131,6 +131,7 @@ internal class LocationCompassEngine(context: Context) : SensorEventListener {
     compassUpdateNextTimestamp = currentTime + LocationComponentConstants.COMPASS_UPDATE_RATE_MS
   }
 
+  @Suppress("DEPRECATION")
   private fun adjustWorldAxis(
     orientation: FloatArray,
     worldAxisForDeviceAxisX: Int,
@@ -210,8 +211,9 @@ internal class LocationCompassEngine(context: Context) : SensorEventListener {
   }
 
   private fun getWorldAxisFromRotation(): Pair<Int, Int> {
-    var worldAxisForDeviceAxisX: Int
-    var worldAxisForDeviceAxisY: Int
+    val worldAxisForDeviceAxisX: Int
+    val worldAxisForDeviceAxisY: Int
+    @Suppress("DEPRECATION")
     when (windowManager.defaultDisplay.rotation) {
       Surface.ROTATION_90 -> {
         worldAxisForDeviceAxisX = SensorManager.AXIS_Y

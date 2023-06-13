@@ -7,6 +7,7 @@ import androidx.annotation.VisibleForTesting.PRIVATE
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.bindgen.Value
+import com.mapbox.common.Cancelable
 import com.mapbox.common.location.LiveTrackingClientAccuracyCategory
 import com.mapbox.common.location.LiveTrackingClientObserver
 import com.mapbox.common.location.LiveTrackingClientSettings.*
@@ -19,7 +20,7 @@ import com.mapbox.common.location.LocationServiceFactory
 import com.mapbox.geojson.Point
 import com.mapbox.maps.logE
 import com.mapbox.maps.logW
-import com.mapbox.maps.plugin.PuckBearingSource
+import com.mapbox.maps.plugin.PuckBearing
 import com.mapbox.maps.plugin.locationcomponent.LocationCompassEngine.CompassListener
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -73,7 +74,7 @@ class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal c
   /**
    * A [MutableStateFlow] that holds the current puck bearing source.
    */
-  private val puckBearingSourceFlow = MutableStateFlow(PuckBearingSource.COURSE)
+  private val puckBearingFlow = MutableStateFlow(PuckBearing.COURSE)
 
   /**
    * A hot [Flow] that subscribes to the [locationCompassEngine] to receive device orientation.
@@ -103,7 +104,8 @@ class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal c
   init {
     val result = locationService.getLiveTrackingClient(
       /* name = */ null,
-      /* capabilities = */ null
+      /* capabilities = */ null,
+      /* settings = */ liveTrackingCapabilities
     )
     // Depending on the result we either create a flow that will subscribe to the live tracking
     // client or create a flow that will emit a LocationError
@@ -121,26 +123,16 @@ class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal c
         }
 
         // If possible send the most recent location available
-        locationService.lastLocation.onValue { location: Location ->
-          trySend(ExpectedFactory.createValue(location))
+        val lastLocationCancelable = locationService.getLastLocation { result ->
+          trySend(result)
         }
 
         // Then, register an observer that will emit the locations provided by the liveTrackingClient
-        val observer = liveTrackingClientObserver()
+        val observer = liveTrackingClientObserver(lastLocationCancelable)
         liveTrackingClient.registerObserver(observer)
-        liveTrackingClient.start(liveTrackingCapabilities) {
-          it?.let { error: LocationError ->
-            trySendBlocking(ExpectedFactory.createError(error))
-          }
-        }
         // Finally wait for the flow to close to unregister the observer and stop live tracking
         awaitClose {
           liveTrackingClient.unregisterObserver(observer)
-          liveTrackingClient.stop {
-            it?.let {
-              logW(TAG, "Error while stopping live tracking client: $it")
-            }
-          }
         }
       }
         // Convert this Flow into a hot flow so emissions are shared. That is, instead of each
@@ -167,8 +159,12 @@ class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal c
   /**
    * @return a [LiveTrackingClientObserver] that emits the most recent [Location] or [LocationError].
    */
-  private fun ProducerScope<Expected<LocationError, Location>>.liveTrackingClientObserver() =
+  private fun ProducerScope<Expected<LocationError, Location>>.liveTrackingClientObserver(
+    lastLocationCancelable: Cancelable?
+  ) =
     object : LiveTrackingClientObserver {
+      // Keep track of being already canceled to avoid calling native per each location update
+      var lastLocationCanBeCanceled = lastLocationCancelable != null
       override fun onLiveTrackingStateChanged(state: LiveTrackingState, error: LocationError?) {
         error?.let {
           logW(TAG, "Live tracking error: $it")
@@ -176,6 +172,10 @@ class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal c
       }
 
       override fun onLocationUpdateReceived(locationUpdate: Expected<LocationError, MutableList<Location>>) {
+        if (lastLocationCanBeCanceled) {
+          lastLocationCancelable?.cancel()
+          lastLocationCanBeCanceled = false
+        }
         val update: Expected<LocationError, Location> =
           if (locationUpdate.isValue) {
             // For now we only forward the most recent location (last one)
@@ -190,11 +190,11 @@ class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal c
   /**
    * Update the data source that drives the bearing updates of the [LocationProvider].
    *
-   * @param source The [PuckBearingSource] used to drive the bearing updates.
+   * @param source The [PuckBearing] used to drive the bearing updates.
    */
-  fun updatePuckBearingSource(source: PuckBearingSource) {
+  fun updatePuckBearing(source: PuckBearing) {
     // emit the new source if it's different
-    puckBearingSourceFlow.value = source
+    puckBearingFlow.value = source
   }
 
   /**
@@ -244,10 +244,10 @@ class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal c
       // the locationCompassEngineFlow or the locationFlow
       launch {
         // Listen for changes in the puck bearing source and switch the flow based on it
-        puckBearingSourceFlow.flatMapLatest { puckBearingSource ->
-          when (puckBearingSource) {
-            PuckBearingSource.HEADING -> deviceOrientationFlow
-            PuckBearingSource.COURSE -> locationFlow.mapNotNull { it.bearing }
+        puckBearingFlow.flatMapLatest { puckBearing ->
+          when (puckBearing) {
+            PuckBearing.HEADING -> deviceOrientationFlow
+            PuckBearing.COURSE -> locationFlow.mapNotNull { it.bearing }
           }
         }.collect {
           locationConsumer.onBearingUpdated(it)
@@ -257,7 +257,7 @@ class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal c
       // Finally, notify about accuracy changes if the consumer supports it
       launch {
         locationFlow.collect { location: Location ->
-          location.horizontalAccuracy?.let { locationConsumer.onAccuracyRadiusUpdated(it) }
+          location.horizontalAccuracy?.let { locationConsumer.onHorizontalAccuracyRadiusUpdated(it) }
         }
       }
     }

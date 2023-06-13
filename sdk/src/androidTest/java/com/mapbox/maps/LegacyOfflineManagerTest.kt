@@ -4,7 +4,6 @@ import android.os.Handler
 import android.os.Looper
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
-import androidx.test.platform.app.InstrumentationRegistry
 import com.mapbox.geojson.Point
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -22,10 +21,7 @@ class LegacyOfflineManagerTest {
   fun sanity() {
     val latch = CountDownLatch(1)
     Handler(Looper.getMainLooper()).post {
-      val context = InstrumentationRegistry.getInstrumentation().targetContext
-      offlineManager = OfflineRegionManager(
-        ResourceOptionsManager.getDefault(context).resourceOptions
-      )
+      offlineManager = OfflineRegionManager()
       offlineManager.createOfflineRegion(
         OfflineRegionGeometryDefinition.Builder()
           .geometry(Point.fromLngLat(0.0, 0.0))

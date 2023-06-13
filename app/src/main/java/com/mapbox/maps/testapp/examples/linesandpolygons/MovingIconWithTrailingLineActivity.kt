@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.api.directions.v5.DirectionsCriteria
 import com.mapbox.api.directions.v5.MapboxDirections
 import com.mapbox.api.directions.v5.models.DirectionsResponse
+import com.mapbox.common.MapboxOptions
 import com.mapbox.core.constants.Constants.PRECISION_6
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
@@ -135,7 +136,7 @@ class MovingIconWithTrailingLineActivity : AppCompatActivity() {
       .destination(destinationPoint)
       .overview(DirectionsCriteria.OVERVIEW_FULL)
       .profile(DirectionsCriteria.PROFILE_WALKING)
-      .accessToken(getString(R.string.mapbox_access_token))
+      .accessToken(MapboxOptions.accessToken)
       .build()
 
     directionsClient?.enqueueCall(object : Callback<DirectionsResponse> {
@@ -245,6 +246,7 @@ class MovingIconWithTrailingLineActivity : AppCompatActivity() {
     super.onDestroy()
     directionsClient?.cancelCall()
     if (::currentAnimator.isInitialized) {
+      currentAnimator.removeAllListeners()
       currentAnimator.cancel()
     }
   }

@@ -4,11 +4,10 @@ import android.graphics.Bitmap
 import android.graphics.Matrix
 import android.opengl.GLES20
 import androidx.annotation.*
+import com.mapbox.common.Cancelable
 import com.mapbox.maps.*
 import com.mapbox.maps.MapView.OnSnapshotReady
 import com.mapbox.maps.Size
-import com.mapbox.maps.extension.observable.getRenderFrameFinishedEventData
-import com.mapbox.maps.extension.observable.model.RenderMode
 import com.mapbox.maps.renderer.gl.PixelReader
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicBoolean
@@ -20,7 +19,7 @@ internal abstract class MapboxRenderer : DelegatingMapClient {
   internal lateinit var renderThread: MapboxRenderThread
   internal abstract val widgetRenderer: MapboxWidgetRenderer
 
-  internal var map: MapInterface? = null
+  internal var map: NativeMapImpl? = null
 
   private var width: Int = 0
   private var height: Int = 0
@@ -32,15 +31,11 @@ internal abstract class MapboxRenderer : DelegatingMapClient {
   // when map is rendered fully
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal var readyForSnapshot = AtomicBoolean(false)
-  private val observer = object : Observer {
-    override fun notify(event: Event) {
-      if (event.type == MapEvents.RENDER_FRAME_FINISHED) {
-        val data = event.getRenderFrameFinishedEventData()
-        if (data.renderMode == RenderMode.FULL) {
-          readyForSnapshot.set(true)
-          map?.unsubscribe(this)
-        }
-      }
+  private var renderFrameCancelable: Cancelable? = null
+  private val renderFrameFinishedCallback = RenderFrameFinishedCallback { eventData ->
+    if (eventData.renderMode == RenderModeType.FULL) {
+      readyForSnapshot.set(true)
+      renderFrameCancelable?.cancel()
     }
   }
 
@@ -53,7 +48,7 @@ internal abstract class MapboxRenderer : DelegatingMapClient {
 
   @AnyThread
   @Synchronized
-  fun setMap(map: MapInterface) {
+  fun setMap(map: NativeMapImpl) {
     this.map = map
   }
 
@@ -93,7 +88,7 @@ internal abstract class MapboxRenderer : DelegatingMapClient {
       this.width = width
       this.height = height
       GLES20.glViewport(0, 0, width, height)
-      map?.size = Size(width.toFloat(), height.toFloat())
+      map?.setSize(Size(width.toFloat(), height.toFloat()))
     }
   }
 
@@ -113,14 +108,14 @@ internal abstract class MapboxRenderer : DelegatingMapClient {
   @UiThread
   fun onStop() {
     renderThread.pause()
-    map?.unsubscribe(observer)
+    renderFrameCancelable?.cancel()
     readyForSnapshot.set(false)
   }
 
   @UiThread
   fun onStart() {
     renderThread.resume()
-    map?.subscribe(observer, listOf(MapEvents.RENDER_FRAME_FINISHED))
+    renderFrameCancelable = map?.subscribe(renderFrameFinishedCallback)
   }
 
   @WorkerThread

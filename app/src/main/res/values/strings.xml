@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Mapbox Maps SDK Carbon Test App</string>
+    <string name="app_name">Mapbox Maps SDK Test App</string>
 
     <!--Default style names-->
     <string name="menu_map_style_streets">Streets</string>

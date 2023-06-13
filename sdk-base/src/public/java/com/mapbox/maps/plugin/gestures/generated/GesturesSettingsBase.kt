@@ -225,6 +225,7 @@ abstract class GesturesSettingsBase : GesturesSettingsInterface {
   /**
    * Whether rotate threshold increases when pinching to zoom. true by default.
    */
+  @Deprecated(message = "This property has no effect")
   override var increaseRotateThresholdWhenPinchingToZoom: Boolean
     get() {
       return this.internalSettings.increaseRotateThresholdWhenPinchingToZoom

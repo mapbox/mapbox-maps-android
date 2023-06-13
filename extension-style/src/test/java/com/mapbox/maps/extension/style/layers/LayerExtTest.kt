@@ -3,9 +3,9 @@ package com.mapbox.maps.extension.style.layers
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.bindgen.None
+import com.mapbox.maps.Style
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.ShadowStyleManager
-import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.layers.generated.symbolLayer
 import io.mockk.*
 import org.junit.After
@@ -19,7 +19,7 @@ import org.robolectric.annotation.Config
 @RunWith(RobolectricTestRunner::class)
 @Config(shadows = [ShadowStyleManager::class])
 class LayerExtTest {
-  private val style = mockk<StyleInterface>(relaxUnitFun = true, relaxed = true)
+  private val style = mockk<Style>(relaxUnitFun = true, relaxed = true)
   private val expected = mockk<Expected<String, None>>(relaxUnitFun = true, relaxed = true)
   private val booleanExpected =
     mockk<Expected<String, Boolean>>(relaxUnitFun = true, relaxed = true)

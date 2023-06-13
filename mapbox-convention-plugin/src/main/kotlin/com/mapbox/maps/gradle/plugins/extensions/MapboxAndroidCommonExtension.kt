@@ -30,6 +30,7 @@ public open class MapboxAndroidCommonExtension {
       res.srcDir("$privatePath$name/res")
       // limit amount of exposed library resources
       res.srcDir("$privatePath$name/res-public")
+      manifest.srcFile("$privatePath$name/AndroidManifest.xml")
     }
     sourceSets.getByName("test${PRIVATE_NAME.capitalized()}") {
       java.srcDir("$privatePath$name/java")

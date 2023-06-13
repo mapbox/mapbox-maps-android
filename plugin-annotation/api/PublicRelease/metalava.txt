@@ -1,7 +1,7 @@
 // Signature format: 3.0
 package com.mapbox.maps.plugin.annotation {
 
-  public abstract class AnnotationManagerImpl<G extends com.mapbox.geojson.Geometry, T extends com.mapbox.maps.plugin.annotation.Annotation<G>, S extends com.mapbox.maps.plugin.annotation.AnnotationOptions<G, T>, D extends com.mapbox.maps.plugin.annotation.OnAnnotationDragListener<? extends T>, U extends com.mapbox.maps.plugin.annotation.OnAnnotationClickListener<T>, V extends com.mapbox.maps.plugin.annotation.OnAnnotationLongClickListener<T>, I extends com.mapbox.maps.plugin.annotation.OnAnnotationInteractionListener<T>, L extends com.mapbox.maps.extension.style.layers.Layer> implements com.mapbox.maps.plugin.annotation.AnnotationManager<G,T,S,D,U,V,I> {
+  @MainThread public abstract class AnnotationManagerImpl<G extends com.mapbox.geojson.Geometry, T extends com.mapbox.maps.plugin.annotation.Annotation<G>, S extends com.mapbox.maps.plugin.annotation.AnnotationOptions<G, T>, D extends com.mapbox.maps.plugin.annotation.OnAnnotationDragListener<? extends T>, U extends com.mapbox.maps.plugin.annotation.OnAnnotationClickListener<T>, V extends com.mapbox.maps.plugin.annotation.OnAnnotationLongClickListener<T>, I extends com.mapbox.maps.plugin.annotation.OnAnnotationInteractionListener<T>, L extends com.mapbox.maps.extension.style.layers.Layer> implements com.mapbox.maps.plugin.annotation.AnnotationManager<G,T,S,D,U,V,I> {
     ctor public AnnotationManagerImpl(com.mapbox.maps.plugin.delegates.MapDelegateProvider delegateProvider, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig);
     method public T create(S option);
     method public java.util.List<T> create(java.util.List<? extends S> options);
@@ -24,7 +24,7 @@ package com.mapbox.maps.plugin.annotation {
     method protected abstract String getLayerId();
     method public java.util.List<V> getLongClickListeners();
     method protected abstract String getSourceId();
-    method protected final void initLayerAndSource(com.mapbox.maps.extension.style.StyleInterface style);
+    method protected final void initLayerAndSource(com.mapbox.maps.Style style);
     method protected abstract void initializeDataDrivenPropertyMap();
     method public void onDestroy();
     method public void onSizeChanged(int width, int height);
@@ -72,7 +72,7 @@ package com.mapbox.maps.plugin.annotation {
     method public com.mapbox.maps.plugin.annotation.AnnotationManager<?,?,?,?,?,?,?> createAnnotationManager(com.mapbox.maps.plugin.annotation.AnnotationType type, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig);
     method public void onDelegateProvider(com.mapbox.maps.plugin.delegates.MapDelegateProvider delegateProvider);
     method public void onSizeChanged(int width, int height);
-    method public void onStyleChanged(com.mapbox.maps.extension.style.StyleInterface styleDelegate);
+    method public void onStyleChanged(com.mapbox.maps.Style style);
     method public void removeAnnotationManager(com.mapbox.maps.plugin.annotation.AnnotationManager<?,?,?,?,?,?,?> annotationManager);
   }
 
@@ -99,7 +99,7 @@ package com.mapbox.maps.plugin.annotation {
 package com.mapbox.maps.plugin.annotation.generated {
 
   public final class CircleAnnotation extends com.mapbox.maps.plugin.annotation.Annotation<com.mapbox.geojson.Point> {
-    ctor public CircleAnnotation(long id, com.mapbox.maps.plugin.annotation.AnnotationManager<com.mapbox.geojson.Point,com.mapbox.maps.plugin.annotation.generated.CircleAnnotation,?,?,?,?,?> annotationManager, com.google.gson.JsonObject jsonObject, com.mapbox.geojson.Point geometry);
+    ctor public CircleAnnotation(String id, com.mapbox.maps.plugin.annotation.AnnotationManager<com.mapbox.geojson.Point,com.mapbox.maps.plugin.annotation.generated.CircleAnnotation,?,?,?,?,?> annotationManager, com.google.gson.JsonObject jsonObject, com.mapbox.geojson.Point geometry);
     method public Double? getCircleBlur();
     method @ColorInt public Integer? getCircleColorInt();
     method public String? getCircleColorString();
@@ -190,7 +190,7 @@ package com.mapbox.maps.plugin.annotation.generated {
 
   public final class CircleAnnotationOptions implements com.mapbox.maps.plugin.annotation.AnnotationOptions<com.mapbox.geojson.Point,com.mapbox.maps.plugin.annotation.generated.CircleAnnotation> {
     ctor public CircleAnnotationOptions();
-    method public com.mapbox.maps.plugin.annotation.generated.CircleAnnotation build(long id, com.mapbox.maps.plugin.annotation.AnnotationManager<com.mapbox.geojson.Point,com.mapbox.maps.plugin.annotation.generated.CircleAnnotation,?,?,?,?,?> annotationManager);
+    method public com.mapbox.maps.plugin.annotation.generated.CircleAnnotation build(String id, com.mapbox.maps.plugin.annotation.AnnotationManager<com.mapbox.geojson.Point,com.mapbox.maps.plugin.annotation.generated.CircleAnnotation,?,?,?,?,?> annotationManager);
     method public Double? getCircleBlur();
     method public String? getCircleColor();
     method public Double? getCircleOpacity();
@@ -297,7 +297,7 @@ package com.mapbox.maps.plugin.annotation.generated {
   }
 
   public final class PointAnnotation extends com.mapbox.maps.plugin.annotation.Annotation<com.mapbox.geojson.Point> {
-    ctor public PointAnnotation(long id, com.mapbox.maps.plugin.annotation.AnnotationManager<com.mapbox.geojson.Point,com.mapbox.maps.plugin.annotation.generated.PointAnnotation,?,?,?,?,?> annotationManager, com.google.gson.JsonObject jsonObject, com.mapbox.geojson.Point geometry);
+    ctor public PointAnnotation(String id, com.mapbox.maps.plugin.annotation.AnnotationManager<com.mapbox.geojson.Point,com.mapbox.maps.plugin.annotation.generated.PointAnnotation,?,?,?,?,?> annotationManager, com.google.gson.JsonObject jsonObject, com.mapbox.geojson.Point geometry);
     method public com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor? getIconAnchor();
     method @ColorInt public Integer? getIconColorInt();
     method public String? getIconColorString();
@@ -311,6 +311,8 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public Double? getIconOpacity();
     method public Double? getIconRotate();
     method public Double? getIconSize();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit? getIconTextFit();
+    method public java.util.List<java.lang.Double>? getIconTextFitPadding();
     method public com.mapbox.geojson.Point? getOffsetGeometry(com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate mapCameraManagerDelegate, com.mapbox.android.gestures.MoveDistancesObject moveDistancesObject);
     method public com.mapbox.geojson.Point getPoint();
     method public Double? getSymbolSortKey();
@@ -346,6 +348,8 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setIconOpacity(Double?);
     method public void setIconRotate(Double?);
     method public void setIconSize(Double?);
+    method public void setIconTextFit(com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit?);
+    method public void setIconTextFitPadding(java.util.List<java.lang.Double>?);
     method public void setPoint(com.mapbox.geojson.Point);
     method public void setSymbolSortKey(Double?);
     method public void setTextAnchor(com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor?);
@@ -380,6 +384,8 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final Double? iconOpacity;
     property public final Double? iconRotate;
     property public final Double? iconSize;
+    property public final com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit? iconTextFit;
+    property public final java.util.List<java.lang.Double>? iconTextFitPadding;
     property public final com.mapbox.geojson.Point point;
     property public final Double? symbolSortKey;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor? textAnchor;
@@ -424,8 +430,8 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public Double? getIconPadding();
     method public com.mapbox.maps.extension.style.layers.properties.generated.IconPitchAlignment? getIconPitchAlignment();
     method public com.mapbox.maps.extension.style.layers.properties.generated.IconRotationAlignment? getIconRotationAlignment();
-    method public com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit? getIconTextFit();
-    method public java.util.List<java.lang.Double>? getIconTextFitPadding();
+    method @Deprecated public com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit? getIconTextFit();
+    method @Deprecated public java.util.List<java.lang.Double>? getIconTextFitPadding();
     method public java.util.List<java.lang.Double>? getIconTranslate();
     method public com.mapbox.maps.extension.style.layers.properties.generated.IconTranslateAnchor? getIconTranslateAnchor();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getLayerFilter();
@@ -458,8 +464,8 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setIconPadding(Double?);
     method public void setIconPitchAlignment(com.mapbox.maps.extension.style.layers.properties.generated.IconPitchAlignment?);
     method public void setIconRotationAlignment(com.mapbox.maps.extension.style.layers.properties.generated.IconRotationAlignment?);
-    method public void setIconTextFit(com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit?);
-    method public void setIconTextFitPadding(java.util.List<java.lang.Double>?);
+    method @Deprecated public void setIconTextFit(com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit?);
+    method @Deprecated public void setIconTextFitPadding(java.util.List<java.lang.Double>?);
     method public void setIconTranslate(java.util.List<java.lang.Double>?);
     method public void setIconTranslateAnchor(com.mapbox.maps.extension.style.layers.properties.generated.IconTranslateAnchor?);
     method public void setLayerFilter(com.mapbox.maps.extension.style.expressions.generated.Expression?);
@@ -490,8 +496,8 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final Double? iconPadding;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.IconPitchAlignment? iconPitchAlignment;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.IconRotationAlignment? iconRotationAlignment;
-    property public final com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit? iconTextFit;
-    property public final java.util.List<java.lang.Double>? iconTextFitPadding;
+    property @Deprecated public final com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit? iconTextFit;
+    property @Deprecated public final java.util.List<java.lang.Double>? iconTextFitPadding;
     property public final java.util.List<java.lang.Double>? iconTranslate;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.IconTranslateAnchor? iconTranslateAnchor;
     property public com.mapbox.maps.extension.style.expressions.generated.Expression? layerFilter;
@@ -530,7 +536,7 @@ package com.mapbox.maps.plugin.annotation.generated {
 
   public final class PointAnnotationOptions implements com.mapbox.maps.plugin.annotation.AnnotationOptions<com.mapbox.geojson.Point,com.mapbox.maps.plugin.annotation.generated.PointAnnotation> {
     ctor public PointAnnotationOptions();
-    method public com.mapbox.maps.plugin.annotation.generated.PointAnnotation build(long id, com.mapbox.maps.plugin.annotation.AnnotationManager<com.mapbox.geojson.Point,com.mapbox.maps.plugin.annotation.generated.PointAnnotation,?,?,?,?,?> annotationManager);
+    method public com.mapbox.maps.plugin.annotation.generated.PointAnnotation build(String id, com.mapbox.maps.plugin.annotation.AnnotationManager<com.mapbox.geojson.Point,com.mapbox.maps.plugin.annotation.generated.PointAnnotation,?,?,?,?,?> annotationManager);
     method public com.google.gson.JsonElement? getData();
     method public boolean getDraggable();
     method public com.mapbox.geojson.Point? getGeometry();
@@ -544,6 +550,8 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public Double? getIconOpacity();
     method public Double? getIconRotate();
     method public Double? getIconSize();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit? getIconTextFit();
+    method public java.util.List<java.lang.Double>? getIconTextFitPadding();
     method public com.mapbox.geojson.Point? getPoint();
     method public Double? getSymbolSortKey();
     method public com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor? getTextAnchor();
@@ -572,6 +580,8 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setIconOpacity(Double?);
     method public void setIconRotate(Double?);
     method public void setIconSize(Double?);
+    method public void setIconTextFit(com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit?);
+    method public void setIconTextFitPadding(java.util.List<java.lang.Double>?);
     method public void setSymbolSortKey(Double?);
     method public void setTextAnchor(com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor?);
     method public void setTextColor(String?);
@@ -605,6 +615,8 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withIconOpacity(double iconOpacity);
     method public com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withIconRotate(double iconRotate);
     method public com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withIconSize(double iconSize);
+    method public com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withIconTextFit(com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit iconTextFit);
+    method public com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withIconTextFitPadding(java.util.List<java.lang.Double> iconTextFitPadding);
     method public com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withPoint(com.mapbox.geojson.Point point);
     method public com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withSymbolSortKey(double symbolSortKey);
     method public com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withTextAnchor(com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor textAnchor);
@@ -635,6 +647,8 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final Double? iconOpacity;
     property public final Double? iconRotate;
     property public final Double? iconSize;
+    property public final com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit? iconTextFit;
+    property public final java.util.List<java.lang.Double>? iconTextFitPadding;
     property public final Double? symbolSortKey;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor? textAnchor;
     property public final String? textColor;
@@ -663,6 +677,8 @@ package com.mapbox.maps.plugin.annotation.generated {
     field public static final String PROPERTY_ICON_OPACITY = "icon-opacity";
     field public static final String PROPERTY_ICON_ROTATE = "icon-rotate";
     field public static final String PROPERTY_ICON_SIZE = "icon-size";
+    field public static final String PROPERTY_ICON_TEXT_FIT = "icon-text-fit";
+    field public static final String PROPERTY_ICON_TEXT_FIT_PADDING = "icon-text-fit-padding";
     field public static final String PROPERTY_SYMBOL_SORT_KEY = "symbol-sort-key";
     field public static final String PROPERTY_TEXT_ANCHOR = "text-anchor";
     field public static final String PROPERTY_TEXT_COLOR = "text-color";
@@ -687,7 +703,7 @@ package com.mapbox.maps.plugin.annotation.generated {
   }
 
   public final class PolygonAnnotation extends com.mapbox.maps.plugin.annotation.Annotation<com.mapbox.geojson.Polygon> {
-    ctor public PolygonAnnotation(long id, com.mapbox.maps.plugin.annotation.AnnotationManager<com.mapbox.geojson.Polygon,com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation,?,?,?,?,?> annotationManager, com.google.gson.JsonObject jsonObject, com.mapbox.geojson.Polygon geometry);
+    ctor public PolygonAnnotation(String id, com.mapbox.maps.plugin.annotation.AnnotationManager<com.mapbox.geojson.Polygon,com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation,?,?,?,?,?> annotationManager, com.google.gson.JsonObject jsonObject, com.mapbox.geojson.Polygon geometry);
     method @ColorInt public Integer? getFillColorInt();
     method public String? getFillColorString();
     method public Double? getFillOpacity();
@@ -766,7 +782,7 @@ package com.mapbox.maps.plugin.annotation.generated {
 
   public final class PolygonAnnotationOptions implements com.mapbox.maps.plugin.annotation.AnnotationOptions<com.mapbox.geojson.Polygon,com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation> {
     ctor public PolygonAnnotationOptions();
-    method public com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation build(long id, com.mapbox.maps.plugin.annotation.AnnotationManager<com.mapbox.geojson.Polygon,com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation,?,?,?,?,?> annotationManager);
+    method public com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation build(String id, com.mapbox.maps.plugin.annotation.AnnotationManager<com.mapbox.geojson.Polygon,com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation,?,?,?,?,?> annotationManager);
     method public com.google.gson.JsonElement? getData();
     method public boolean getDraggable();
     method public String? getFillColor();
@@ -810,7 +826,7 @@ package com.mapbox.maps.plugin.annotation.generated {
   }
 
   public final class PolylineAnnotation extends com.mapbox.maps.plugin.annotation.Annotation<com.mapbox.geojson.LineString> {
-    ctor public PolylineAnnotation(long id, com.mapbox.maps.plugin.annotation.AnnotationManager<com.mapbox.geojson.LineString,com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation,?,?,?,?,?> annotationManager, com.google.gson.JsonObject jsonObject, com.mapbox.geojson.LineString geometry);
+    ctor public PolylineAnnotation(String id, com.mapbox.maps.plugin.annotation.AnnotationManager<com.mapbox.geojson.LineString,com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation,?,?,?,?,?> annotationManager, com.google.gson.JsonObject jsonObject, com.mapbox.geojson.LineString geometry);
     method public Double? getLineBlur();
     method @ColorInt public Integer? getLineColorInt();
     method public String? getLineColorString();
@@ -910,7 +926,7 @@ package com.mapbox.maps.plugin.annotation.generated {
 
   public final class PolylineAnnotationOptions implements com.mapbox.maps.plugin.annotation.AnnotationOptions<com.mapbox.geojson.LineString,com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation> {
     ctor public PolylineAnnotationOptions();
-    method public com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation build(long id, com.mapbox.maps.plugin.annotation.AnnotationManager<com.mapbox.geojson.LineString,com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation,?,?,?,?,?> annotationManager);
+    method public com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation build(String id, com.mapbox.maps.plugin.annotation.AnnotationManager<com.mapbox.geojson.LineString,com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation,?,?,?,?,?> annotationManager);
     method public com.google.gson.JsonElement? getData();
     method public boolean getDraggable();
     method public com.mapbox.geojson.LineString? getGeometry();

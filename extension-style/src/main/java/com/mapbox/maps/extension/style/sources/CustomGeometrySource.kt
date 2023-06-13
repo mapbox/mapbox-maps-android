@@ -1,12 +1,8 @@
 package com.mapbox.maps.extension.style.sources
 
 import com.mapbox.geojson.Feature
-import com.mapbox.maps.CanonicalTileID
-import com.mapbox.maps.CoordinateBounds
-import com.mapbox.maps.CustomGeometrySourceOptions
-import com.mapbox.maps.StyleManagerInterface
+import com.mapbox.maps.*
 import com.mapbox.maps.extension.style.StyleContract
-import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.utils.check
 
 /**
@@ -26,13 +22,13 @@ class CustomGeometrySource(
    */
   val options: CustomGeometrySourceOptions
 ) : StyleContract.StyleSourceExtension {
-  private var delegate: StyleManagerInterface? = null
+  private var delegate: Style? = null
 
   /**
    * Set tile data of a custom geometry.
    *
    * @param tileID Identifier of the tile
-   * @param tileData JSON string representing the data in GeoJSON format. See RFC7946
+   * @param featureCollection An array with the features to add.
    */
   fun setTileData(tileID: CanonicalTileID, featureCollection: MutableList<Feature>) {
     delegate?.setStyleCustomGeometrySourceTileData(id, tileID, featureCollection).check()
@@ -61,7 +57,7 @@ class CustomGeometrySource(
    *
    * @param delegate The style delegate
    */
-  override fun bindTo(delegate: StyleInterface) {
+  override fun bindTo(delegate: Style) {
     this.delegate = delegate
     delegate.addStyleCustomGeometrySource(id, options).check()
   }

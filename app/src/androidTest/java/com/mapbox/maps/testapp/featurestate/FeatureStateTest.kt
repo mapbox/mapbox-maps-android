@@ -43,8 +43,11 @@ class FeatureStateTest : BaseMapTest() {
               circleRadius(10.0)
             }
           }
-        ) {
-          latch.countDown()
+        )
+        mapboxMap.subscribeSourceDataLoaded {
+          if (it.loaded == true && it.sourceId == SOURCE_ID) {
+            latch.countDown()
+          }
         }
       }
     }

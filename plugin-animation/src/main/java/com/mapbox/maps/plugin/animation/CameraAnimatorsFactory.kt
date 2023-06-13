@@ -407,10 +407,11 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
     val animators = mutableListOf(
       CameraCenterAnimator(
         evaluator = { fraction, _, _ ->
+          val safeFraction = fraction.getSafeFraction()
           // s: The distance traveled along the flight path, measured in
           // ρ-screenfuls.
-          val s = fraction * S
-          val us = if (fraction == 1.0f) 1.0 else u(s)
+          val s = safeFraction * S
+          val us = if (safeFraction == 1.0f) 1.0 else u(s)
           val interpolated = MercatorCoordinate(
             startPoint.x + us * (endPoint.x - startPoint.x),
             startPoint.y + us * (endPoint.y - startPoint.y)
@@ -439,9 +440,10 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
       },
       CameraZoomAnimator(
         evaluator = { fraction, _, _ ->
+          val safeFraction = fraction.getSafeFraction()
           // s: The distance traveled along the flight path, measured in
           // ρ-screenfuls.
-          val s = fraction * S
+          val s = safeFraction * S
           startZoom + (1 / w(s)).scaleZoom()
         },
         options = cameraAnimatorOptions(endZoom) {
@@ -483,6 +485,9 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
 
     return animators.toTypedArray()
   }
+
+  // TODO: remove it after https://issuetracker.google.com/issues/280660517 will be fixed
+  private fun Float.getSafeFraction(): Float = if (this.isNaN()) 0f else this
 
   /**
    * Static variables and methods.

@@ -21,7 +21,6 @@ import java.util.*
 class MapTelemetryImpl : MapTelemetry {
 
   private val appContext: Context
-  private val accessToken: String
   private val eventsService: EventsServiceInterface
   // We need telemetryService for location and metrics events which will be sent automatically if telemetryService is initialized.
   private val telemetryService: TelemetryService
@@ -31,29 +30,30 @@ class MapTelemetryImpl : MapTelemetry {
    * Creates a map telemetry instance using application context and access token
    *
    * @param appContext the application context
-   * @param accessToken the mapbox access token
    */
-  constructor(appContext: Context, accessToken: String) {
+  constructor(appContext: Context) {
     this.appContext = appContext
-    this.accessToken = accessToken
 
-    eventsServiceOptions = EventsServerOptions(accessToken, BuildConfig.MAPBOX_EVENTS_USER_AGENT, null)
+    eventsServiceOptions = EventsServerOptions(BuildConfig.MAPBOX_EVENTS_USER_AGENT, null)
     this.eventsService = EventsService.getOrCreate(eventsServiceOptions)
-    this.telemetryService = TelemetryService.getOrCreate(eventsServiceOptions)
+    this.telemetryService = TelemetryService.getOrCreate()
   }
 
   /**
    * Creates a map telemetry instance using telemetry, application context and access token
    *
    * @param appContext the application context
-   * @param accessToken the mapbox access token
    * @param eventsService the mapbox EventsServiceInterface
    * @param telemetryService the mapbox TelemetryService
    */
   @VisibleForTesting(otherwise = PRIVATE)
-  internal constructor(appContext: Context, accessToken: String, eventsService: EventsServiceInterface, telemetryService: TelemetryService, eventsServerOptions: EventsServerOptions) {
+  internal constructor(
+    appContext: Context,
+    eventsService: EventsServiceInterface,
+    telemetryService: TelemetryService,
+    eventsServerOptions: EventsServerOptions
+  ) {
     this.appContext = appContext
-    this.accessToken = accessToken
     this.eventsService = eventsService
     this.telemetryService = telemetryService
     this.eventsServiceOptions = eventsServerOptions
@@ -69,9 +69,9 @@ class MapTelemetryImpl : MapTelemetry {
         BuildConfig.MAPBOX_SDK_IDENTIFIER,
         BuildConfig.MAPBOX_SDK_VERSION
       )
-    ) { eventsServiceError ->
-      eventsServiceError?.let {
-        logE(TAG, "EventsServiceError: $it")
+    ) { response ->
+      if (response.isError) {
+        logE(TAG, "sendTurnstileEvent error: ${response.error}")
       }
     }
 
@@ -81,24 +81,24 @@ class MapTelemetryImpl : MapTelemetry {
     }
   }
 
-  private fun shouldSendEvents() = TelemetryUtils.getClientServerEventsCollectionState(eventsServiceOptions) != TelemetryCollectionState.TURNSTILE_EVENTS_ONLY
+  private fun shouldSendEvents() = TelemetryUtils.getClientServerEventsCollectionState() != TelemetryCollectionState.TURNSTILE_EVENTS_ONLY
 
   private fun sendEvent(event: String) {
     val eventAttributes = Value.fromJson(event)
     val mapEvent = eventAttributes.value?.let { Event(EventPriority.QUEUED, it, null) }
     if (mapEvent != null) {
-      eventsService.sendEvent(mapEvent) { eventsServiceError ->
-        eventsServiceError?.let {
-          logE(TAG, "EventsServiceError: $it")
+      eventsService.sendEvent(mapEvent) { response ->
+        if (response.isError) {
+          logE(TAG, "sendEvent error: ${response.error}")
         }
       }
     }
   }
 
   private fun enableTelemetryCollection(enabled: Boolean) {
-    TelemetryUtils.setEventsCollectionState(enabled) { eventsServiceError ->
-      eventsServiceError?.let {
-        logE(TAG, "EventsServiceError: $it")
+    TelemetryUtils.setEventsCollectionState(enabled) { response ->
+      if (response.isError) {
+        logE(TAG, "setEventsCollectionState error: ${response.error}")
       }
     }
   }

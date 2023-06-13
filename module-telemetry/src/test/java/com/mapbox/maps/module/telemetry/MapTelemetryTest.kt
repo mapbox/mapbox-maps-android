@@ -78,13 +78,13 @@ class MapTelemetryTest {
     mockkStatic(TelemetryUtils::class)
     every { TelemetryUtils.setEventsCollectionState(any(), any()) } returns Unit
     every { TelemetryUtils.getEventsCollectionState() } returns true
-    every { TelemetryUtils.getClientServerEventsCollectionState(any()) } returns TelemetryCollectionState.ENABLED
+    every { TelemetryUtils.getClientServerEventsCollectionState() } returns TelemetryCollectionState.ENABLED
 
     every { EventsService.getOrCreate(any()) } returns eventsService
     every { eventsService.sendEvent(any(), any()) } returns Unit
     every { eventsService.sendTurnstileEvent(any(), any()) } returns Unit
 
-    every { TelemetryService.getOrCreate(any()) } returns telemetryService
+    every { TelemetryService.getOrCreate() } returns telemetryService
 
     every { context.getSystemService(Context.TELEPHONY_SERVICE) } returns telephonyManager
     every { telephonyManager.networkType } returns TelephonyManager.NETWORK_TYPE_GPRS
@@ -93,7 +93,7 @@ class MapTelemetryTest {
     every { context.getSystemService(Context.WINDOW_SERVICE) } returns windowManager
     every { windowManager.defaultDisplay } returns display
 
-    telemetry = MapTelemetryImpl(context, "sk.foobar")
+    telemetry = MapTelemetryImpl(context)
   }
 
   @After
@@ -109,7 +109,7 @@ class MapTelemetryTest {
     // validate the event service is initialised
     verify { EventsService.getOrCreate(any()) }
     // validate the telemetry service is initialised
-    verify { TelemetryService.getOrCreate(any()) }
+    verify { TelemetryService.getOrCreate() }
   }
 
   @Test
@@ -129,7 +129,7 @@ class MapTelemetryTest {
 
   @Test
   fun testOnAppUserTurnstileStateTurnstileOnly() {
-    every { TelemetryUtils.getClientServerEventsCollectionState(any()) } returns TelemetryCollectionState.TURNSTILE_EVENTS_ONLY
+    every { TelemetryUtils.getClientServerEventsCollectionState() } returns TelemetryCollectionState.TURNSTILE_EVENTS_ONLY
     telemetry.onAppUserTurnstileEvent()
     verify {
       eventsService.sendTurnstileEvent(turnstileEvent, any())
@@ -139,7 +139,7 @@ class MapTelemetryTest {
 
   @Test
   fun testOnAppUserTurnstileStateUnknown() {
-    every { TelemetryUtils.getClientServerEventsCollectionState(any()) } returns TelemetryCollectionState.UNKNOWN
+    every { TelemetryUtils.getClientServerEventsCollectionState() } returns TelemetryCollectionState.UNKNOWN
     telemetry.onAppUserTurnstileEvent()
     verify {
       eventsService.sendTurnstileEvent(
@@ -178,14 +178,14 @@ class MapTelemetryTest {
 
   @Test
   fun testPerformanceEventDisabledStateTurnstileOnly() {
-    every { TelemetryUtils.getClientServerEventsCollectionState(any()) } returns TelemetryCollectionState.TURNSTILE_EVENTS_ONLY
+    every { TelemetryUtils.getClientServerEventsCollectionState() } returns TelemetryCollectionState.TURNSTILE_EVENTS_ONLY
     telemetry.onPerformanceEvent(null)
     verify(exactly = 0) { eventsService.sendEvent(any(), any()) }
   }
 
   @Test
   fun testPerformanceEventDisabledStateUnknown() {
-    every { TelemetryUtils.getClientServerEventsCollectionState(any()) } returns TelemetryCollectionState.UNKNOWN
+    every { TelemetryUtils.getClientServerEventsCollectionState() } returns TelemetryCollectionState.UNKNOWN
     telemetry.onPerformanceEvent(null)
     verify(exactly = 1) { eventsService.sendEvent(any(), any()) }
   }

@@ -6,7 +6,6 @@ import android.view.MotionEvent
 import android.view.View
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
-import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import io.mockk.*
@@ -26,13 +25,11 @@ class MapPluginRegistryTest {
   private lateinit var mapPluginRegistry: MapPluginRegistry
   private val mapInitOptions = mockk<MapInitOptions>()
   private val mapOptions = mockk<MapOptions>()
-  private val resourceOptions = mockk<ResourceOptions>()
 
   @Before
   fun setUp() {
     mapPluginRegistry = MapPluginRegistry(delegateProvider)
     every { mapInitOptions.mapOptions } returns mapOptions
-    every { mapInitOptions.resourceOptions } returns resourceOptions
     every { mapInitOptions.attrs } returns null
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logI(any(), any()) } just Runs
@@ -294,7 +291,7 @@ class MapPluginRegistryTest {
     override fun onDelegateProvider(delegateProvider: MapDelegateProvider) {
     }
 
-    override fun onStyleChanged(styleDelegate: StyleInterface) {
+    override fun onStyleChanged(style: Style) {
     }
   }
 }

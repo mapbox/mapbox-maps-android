@@ -69,6 +69,7 @@ class MapboxCarMap {
    * @param carContext Android Auto CarContext
    * @param mapInitOptions parameter to initialize the head unit map
    */
+  @OptIn(MapboxExperimental::class)
   fun setup(
     carContext: CarContext,
     mapInitOptions: MapInitOptions,

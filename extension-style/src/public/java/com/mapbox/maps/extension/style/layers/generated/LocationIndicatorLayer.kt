@@ -40,7 +40,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
     get() {
       val property: String? = getPropertyValue("visibility")
       property?.let {
-        return Visibility.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+        return Visibility.valueOf(it.uppercase(Locale.US).replace('-', '_'))
       }
       return null
     }
@@ -85,7 +85,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    *
    * Use static method [LocationIndicatorLayer.defaultMinZoom] to get the default property value.
    *
-   * @param value value of minzoom
+   * @param minZoom value of minzoom
    */
   override fun minZoom(minZoom: Double): LocationIndicatorLayer = apply {
     val param = PropertyValue("minzoom", minZoom)
@@ -120,7 +120,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    *
    * Use static method [LocationIndicatorLayer.defaultMaxZoom] to get the default property value.
    *
-   * @param value value of maxzoom
+   * @param maxZoom value of maxzoom
    */
   override fun maxZoom(maxZoom: Double): LocationIndicatorLayer = apply {
     val param = PropertyValue("maxzoom", maxZoom)
@@ -1660,7 +1660,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
        */
       get() {
         StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "visibility").silentUnwrap<String>()?.let {
-          return Visibility.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+          return Visibility.valueOf(it.uppercase(Locale.US).replace('-', '_'))
         }
         return null
       }
@@ -2490,7 +2490,7 @@ interface LocationIndicatorLayerDsl {
    *       minimum: 0
    *       maximum: 24
    *
-   * @param value value of minzoom
+   * @param minZoom value of minzoom
    */
   fun minZoom(minZoom: Double): LocationIndicatorLayer
 
@@ -2501,7 +2501,7 @@ interface LocationIndicatorLayerDsl {
    *       minimum: 0
    *       maximum: 24
    *
-   * @param value value of maxzoom
+   * @param maxZoom value of maxzoom
    */
   fun maxZoom(maxZoom: Double): LocationIndicatorLayer
 

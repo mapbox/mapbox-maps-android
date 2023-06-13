@@ -5,14 +5,9 @@ package com.mapbox.maps
 import java.util.*
 
 /**
- * Default Locale for data processing (ex: String.toLowerCase(com.mapbox.maps.getMAPBOX_LOCALE, "foo"))
+ * Default Locale for data processing
  */
 val MAPBOX_LOCALE: Locale = Locale.US
-
-/**
- * Resource name used to lookup the Mapbox access token.
- */
-const val MAPBOX_ACCESS_TOKEN_RESOURCE_NAME = "mapbox_access_token"
 
 internal const val CORE_SHARED_LIBRARY_NAME = "mapbox-common"
 

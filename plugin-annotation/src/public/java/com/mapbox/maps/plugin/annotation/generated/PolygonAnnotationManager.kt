@@ -205,8 +205,8 @@ class PolygonAnnotationManager(
      * @param value property wrapper value around FillTranslateAnchor
      */
     set(value) {
-      val newValue = value ?: FillTranslateAnchor.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-translate-anchor").silentUnwrap<String>()!!.toUpperCase(Locale.US).replace('-', '_'))
-      newValue?.let {
+      val newValue = value ?: FillTranslateAnchor.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-translate-anchor").silentUnwrap<String>()!!.uppercase(Locale.US).replace('-', '_'))
+      newValue.let {
         layer?.fillTranslateAnchor(it)
         dragLayer?.fillTranslateAnchor(it)
       }
@@ -225,8 +225,6 @@ class PolygonAnnotationManager(
   }
   /**
    * The filter on the managed polygonAnnotations.
-   *
-   * @param expression expression
    */
   override var layerFilter: Expression?
     /**
@@ -238,7 +236,7 @@ class PolygonAnnotationManager(
     /**
      * Set filter on the managed polygonAnnotations.
      *
-     * @param expression expression
+     * @param value expression
      */
     set(value) {
       value?.let {

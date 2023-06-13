@@ -5,11 +5,11 @@ plugins {
 val buildFromSource: String by project
 
 android {
-  compileSdk = AndroidVersions.AndroidAuto.compileSdkVersion
+  compileSdk = libs.versions.autoCompileSdkVersion.get().toInt()
   defaultConfig {
+    minSdk = libs.versions.autoMinSdkVersion.get().toInt()
+    targetSdk = libs.versions.autoTargetSdkVersion.get().toInt()
     applicationId = "com.mapbox.maps.testapp.auto"
-    minSdk = AndroidVersions.AndroidAuto.minSdkVersion
-    targetSdk = AndroidVersions.AndroidAuto.targetSdkVersion
     versionCode = 1
     versionName = "0.1.0"
     multiDexEnabled = true
@@ -37,34 +37,33 @@ android {
 
 dependencies {
   implementation(project(":extension-androidauto"))
-  implementation(Dependencies.googleCarAppLibrary)
+  implementation(libs.googleCarAppLibrary)
 
   // Please review the compatibility guide. This app is showcasing the latest features.
   // https://github.com/mapbox/mapbox-maps-android/tree/main/extension-androidauto#compatibility-with-maps-sdk-v10
   implementation("com.mapbox.maps:android:10.10.0-beta.1")
 
-  implementation(Dependencies.kotlin)
-  implementation(Dependencies.androidxAppCompat)
-  implementation(Dependencies.androidxCoreKtx)
-  implementation(Dependencies.googleMaterialDesign)
-  implementation(Dependencies.androidxConstraintLayout)
+  implementation(libs.kotlin)
+  implementation(libs.androidx.appCompat)
+  implementation(libs.androidx.coreKtx)
+  implementation(libs.googleMaterialDesign)
+  implementation(libs.androidx.constraintLayout)
 
   // By default, the Maps SDK uses the Android Location Provider to obtain raw location updates.
   // And with Android 11, the raw location updates might suffer from precision issue.
   // The Maps SDK also comes pre-compiled with support for the [Google's Fused Location Provider](https://developers.google.com/location-context/fused-location-provider)
   // if that dependency is available. This means, that if your target devices support Google Play
   // Services, [we recommend adding the Google Play Location Services dependency to your project](https://developers.google.com/android/guides/setup).
-  implementation(Dependencies.googlePlayServicesLocation)
+  implementation(libs.googlePlayServicesLocation)
 
-  androidTestUtil(Dependencies.androidxOrchestrator)
-  androidTestImplementation(Dependencies.androidxTestRunner)
-  androidTestImplementation(Dependencies.androidxJUnitTestRules)
-  androidTestImplementation(Dependencies.androidxRules)
-  androidTestImplementation(Dependencies.androidxTestJUnit)
-  androidTestImplementation(Dependencies.androidxEspresso)
-  androidTestImplementation(Dependencies.androidxUiAutomator)
-  testImplementation(Dependencies.junit)
-  detektPlugins(Dependencies.detektFormatting)
+  androidTestUtil(libs.androidx.orchestrator)
+
+  androidTestImplementation(libs.bundles.base.dependenciesAndroidTests)
+  androidTestImplementation(libs.androidx.jUnitTestRules)
+  androidTestImplementation(libs.androidx.testJUnit)
+  androidTestImplementation(libs.androidx.uiAutomator)
+  testImplementation(libs.junit)
+  detektPlugins(libs.detektFormatting)
 }
 
 project.apply {

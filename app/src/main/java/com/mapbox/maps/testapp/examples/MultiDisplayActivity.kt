@@ -37,9 +37,7 @@ class MultiDisplayActivity : AppCompatActivity() {
     setContentView(binding.root)
     binding.mapView.getMapboxMap().loadStyle(
       style(Style.DARK) {
-        +image(IMAGE_ID) {
-          bitmap(BitmapFactory.decodeResource(resources, R.drawable.red_marker))
-        }
+        +image(IMAGE_ID, BitmapFactory.decodeResource(resources, R.drawable.red_marker))
         +geoJsonSource(SOURCE_ID) {
           geometry(HELSINKI)
         }

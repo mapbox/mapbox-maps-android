@@ -3,11 +3,7 @@ package com.mapbox.maps.plugin.locationcomponent
 import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
-import com.mapbox.maps.CameraState
-import com.mapbox.maps.EdgeInsets
-import com.mapbox.maps.StylePropertyValue
-import com.mapbox.maps.StylePropertyValueKind
-import com.mapbox.maps.extension.style.StyleInterface
+import com.mapbox.maps.*
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.LocationPuck3D
 import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
@@ -29,13 +25,13 @@ class LocationPuckManagerTest {
   private val settings = mockk<LocationComponentSettings>(relaxed = true)
   private val delegateProvider = mockk<MapDelegateProvider>(relaxed = true)
   private val mapCameraDelegate = mockk<MapCameraManagerDelegate>(relaxed = true)
-  private val style = mockk<StyleInterface>(relaxed = true)
+  private val style = mockk<Style>(relaxed = true)
   private val positionManager = mockk<LocationComponentPositionManager>(relaxed = true)
   private val layerSourceProvider = mockk<LayerSourceProvider>(relaxed = true)
   private val locationLayerRenderer = mockk<LocationLayerRenderer>(relaxed = true)
   private val animationManager = mockk<PuckAnimatorManager>(relaxed = true)
 
-  private val callbackSlot = CapturingSlot<(StyleInterface) -> Unit>()
+  private val callbackSlot = CapturingSlot<(Style) -> Unit>()
   private val valueSlot = CapturingSlot<Value>()
 
   private lateinit var locationPuckManager: LocationPuckManager
@@ -355,8 +351,8 @@ class LocationPuckManagerTest {
     expectedLastMercatorScaleString: String
   ) {
     val onLocationUpdatedSlot = slot<((Point) -> Unit)>()
-    val getStyleSlot = slot<((StyleInterface) -> Unit)>()
-    val style = mockk<StyleInterface>()
+    val getStyleSlot = slot<((Style) -> Unit)>()
+    val style = mockk<Style>()
     every { style.getStyleProjectionProperty("name") } returns
       StylePropertyValue(Value(actualProjection), StylePropertyValueKind.CONSTANT)
     val valueSlots = mutableListOf<Value>()
@@ -407,7 +403,7 @@ class LocationPuckManagerTest {
 
   @Test
   fun testUpdateStyle() {
-    val style = mockk<StyleInterface>()
+    val style = mockk<Style>()
     locationPuckManager.updateStyle(style)
     verify {
       locationLayerRenderer.updateStyle(style)

@@ -11,6 +11,7 @@ import com.mapbox.maps.testapp.databinding.ActivityLegacyOfflineBinding
  * Example app that downloads an offline region and when succeeded
  * shows a button to load a map at the offline region definition.
  */
+@Suppress("DEPRECATION")
 class LegacyOfflineActivity : AppCompatActivity() {
 
   private lateinit var offlineManager: OfflineRegionManager
@@ -19,8 +20,13 @@ class LegacyOfflineActivity : AppCompatActivity() {
   private lateinit var binding: ActivityLegacyOfflineBinding
 
   private val regionObserver: OfflineRegionObserver = object : OfflineRegionObserver {
-    override fun mapboxTileCountLimitExceeded(limit: Long) {
-      logE(TAG, "Mapbox tile count max (= $limit) has exceeded!")
+    override fun errorOccurred(error: OfflineRegionError) {
+      if (error.isFatal) {
+        logE(TAG, "Fatal error: ${error.type}, ${error.message}")
+      } else {
+        logW(TAG, "Error downloading some resources:  ${error.type}, ${error.message}")
+      }
+      offlineRegion.setOfflineRegionDownloadState(OfflineRegionDownloadState.INACTIVE)
     }
 
     override fun statusChanged(status: OfflineRegionStatus) {
@@ -32,11 +38,6 @@ class LegacyOfflineActivity : AppCompatActivity() {
         downloadComplete()
         return
       }
-    }
-
-    override fun responseError(error: ResponseError) {
-      logE(TAG, "onError: ${error.reason}, ${error.message}")
-      offlineRegion.setOfflineRegionDownloadState(OfflineRegionDownloadState.INACTIVE)
     }
   }
 
@@ -56,7 +57,7 @@ class LegacyOfflineActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     binding = ActivityLegacyOfflineBinding.inflate(layoutInflater)
     setContentView(binding.root)
-    offlineManager = OfflineRegionManager(MapInitOptions.getDefaultResourceOptions(this))
+    offlineManager = OfflineRegionManager()
     offlineManager.createOfflineRegion(
       OfflineRegionGeometryDefinition.Builder()
         .geometry(point)

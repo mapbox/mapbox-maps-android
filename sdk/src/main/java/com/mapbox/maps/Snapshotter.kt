@@ -10,16 +10,14 @@ import android.widget.TextView
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.res.ResourcesCompat
 import com.mapbox.annotation.module.MapboxModuleType
+import com.mapbox.common.Cancelable
+import com.mapbox.common.MapboxOptions
 import com.mapbox.common.module.provider.MapboxModuleProvider
 import com.mapbox.common.module.provider.ModuleProviderArgument
 import com.mapbox.geojson.Point
 import com.mapbox.maps.attribution.AttributionLayout
 import com.mapbox.maps.attribution.AttributionMeasure
 import com.mapbox.maps.attribution.AttributionParser
-import com.mapbox.maps.extension.observable.getMapLoadingErrorEventData
-import com.mapbox.maps.extension.observable.getStyleDataLoadedEventData
-import com.mapbox.maps.extension.observable.getStyleImageMissingEventData
-import com.mapbox.maps.extension.observable.model.StyleDataType
 import com.mapbox.maps.module.MapTelemetry
 import java.lang.ref.WeakReference
 import kotlin.math.min
@@ -27,19 +25,16 @@ import kotlin.math.min
 /**
  * [Snapshotter] is high-level component responsible for taking map snapshot with given [MapSnapshotOptions].
  */
-@OptIn(MapboxInternal::class)
 open class Snapshotter {
 
   private val context: WeakReference<Context>
   private val coreSnapshotter: MapSnapshotter
   private val pixelRatio: Float
   private val mapSnapshotOptions: MapSnapshotOptions
-
   internal var snapshotCreatedCallback: SnapshotCreatedListener? = null
   internal var snapshotStyleCallback: SnapshotStyleListener? = null
-
-  private val observer: Observer
   private val snapshotOverlayOptions: SnapshotOverlayOptions
+  private var cancelableEvents = HashMap<MapEvent, Cancelable>()
 
   @JvmOverloads
   constructor(
@@ -47,50 +42,55 @@ open class Snapshotter {
     options: MapSnapshotOptions,
     overlayOptions: SnapshotOverlayOptions = SnapshotOverlayOptions()
   ) {
+    if (MapboxOptions.accessToken.isBlank()) {
+      throw MapboxConfigurationException()
+    }
+
     this.context = WeakReference(context)
     mapSnapshotOptions = options
     snapshotOverlayOptions = overlayOptions
     pixelRatio = context.resources.displayMetrics.density
     coreSnapshotter = MapSnapshotter(options)
-    dispatchTelemetryTurnstileEvent(context, options)
+    dispatchTelemetryTurnstileEvent(context)
     val weakSelf = WeakReference(this)
-    observer = Observer { event ->
+    cancelableEvents[MapEvent.MAP_LOADING_ERROR] = subscribeMapLoadingError {
       weakSelf.get()?.apply {
-        when (event.type) {
-          MapEvents.MAP_LOADING_ERROR -> {
-            snapshotStyleCallback?.onDidFailLoadingStyle(event.getMapLoadingErrorEventData().message)
-            coreSnapshotter.unsubscribe(observer)
-          }
-          MapEvents.STYLE_DATA_LOADED -> if (event.getStyleDataLoadedEventData().type == StyleDataType.STYLE) {
-            snapshotStyleCallback?.onDidFinishLoadingStyle(
-              Style(
-                MapSnapshotterWrapper(coreSnapshotter),
-                pixelRatio
-              )
+        snapshotStyleCallback?.onDidFailLoadingStyle(it.message)
+        cancelableEvents[MapEvent.MAP_LOADING_ERROR]?.cancel()
+      }
+    }
+    cancelableEvents[MapEvent.STYLE_DATA_LOADED] = subscribeStyleDataLoaded {
+      if (it.type == StyleDataLoadedType.STYLE) {
+        weakSelf.get()?.apply {
+          snapshotStyleCallback?.onDidFinishLoadingStyle(
+            Style(
+              coreSnapshotter,
+              pixelRatio
             )
-          }
-          MapEvents.STYLE_LOADED -> {
-            snapshotStyleCallback?.onDidFullyLoadStyle(
-              Style(
-                MapSnapshotterWrapper(coreSnapshotter),
-                pixelRatio
-              )
-            )
-            coreSnapshotter.unsubscribe(observer)
-          }
-          MapEvents.STYLE_IMAGE_MISSING -> {
-            snapshotStyleCallback?.onStyleImageMissing(event.getStyleImageMissingEventData().id)
-          }
-          else -> Unit
+          )
         }
       }
     }
-    subscribe(observer, STYLE_LOAD_EVENTS_LIST)
+    cancelableEvents[MapEvent.STYLE_LOADED] = subscribeStyleLoaded {
+      weakSelf.get()?.apply {
+        snapshotStyleCallback?.onDidFullyLoadStyle(
+          Style(
+            coreSnapshotter,
+            pixelRatio
+          )
+        )
+        cancelableEvents[MapEvent.STYLE_LOADED]?.cancel()
+      }
+    }
+    cancelableEvents[MapEvent.STYLE_IMAGE_MISSING] = subscribeStyleImageMissing {
+      weakSelf.get()?.apply {
+        snapshotStyleCallback?.onStyleImageMissing(it.imageId)
+      }
+    }
   }
 
   private fun dispatchTelemetryTurnstileEvent(
-    context: Context,
-    options: MapSnapshotOptions
+    context: Context
   ) {
     MapboxModuleProvider.createModule<MapTelemetry>(MapboxModuleType.MapTelemetry) {
       arrayOf(
@@ -98,7 +98,6 @@ open class Snapshotter {
           Context::class.java,
           context.applicationContext
         ),
-        ModuleProviderArgument(String::class.java, options.resourceOptions.accessToken)
       )
     }.onAppUserTurnstileEvent()
   }
@@ -109,13 +108,11 @@ open class Snapshotter {
     options: MapSnapshotOptions,
     overlayOptions: SnapshotOverlayOptions,
     coreSnapshotter: MapSnapshotter,
-    observer: Observer
   ) {
     this.context = context
     mapSnapshotOptions = options
     snapshotOverlayOptions = overlayOptions
     this.coreSnapshotter = coreSnapshotter
-    this.observer = observer
     pixelRatio = 1f
   }
 
@@ -142,40 +139,36 @@ open class Snapshotter {
       if (result.isValue) {
         result.value?.let { coreMapSnapshot ->
           snapshotCreatedCallback?.onSnapshotResult(
-            addOverlay(
-              object : MapSnapshotResult() {
+            addOverlay(object : MapSnapshotResult() {
 
-                private var cachedBitmap: Bitmap? = null
+            private var cachedBitmap: Bitmap? = null
 
-                override fun screenCoordinate(coordinate: Point): ScreenCoordinate {
-                  return coreMapSnapshot.screenCoordinate(coordinate)
-                }
+            override fun screenCoordinate(coordinate: Point): ScreenCoordinate {
+              return coreMapSnapshot.screenCoordinate(coordinate)
+            }
 
-                override fun coordinate(screenCoordinate: ScreenCoordinate): Point {
-                  return coreMapSnapshot.coordinate(screenCoordinate)
-                }
+            override fun coordinate(screenCoordinate: ScreenCoordinate): Point {
+              return coreMapSnapshot.coordinate(screenCoordinate)
+            }
 
-                override fun attributions(): List<String> {
-                  return coreMapSnapshot.attributions()
-                }
+            override fun attributions(): List<String> {
+              return coreMapSnapshot.attributions()
+            }
 
-                override fun bitmap(): Bitmap {
-                  cachedBitmap?.let {
-                    return it
-                  }
-                  coreMapSnapshot.moveImage()!!.let { coreImage ->
-                    return Bitmap.createBitmap(
-                      coreImage.width,
-                      coreImage.height,
-                      Bitmap.Config.ARGB_8888
-                    ).apply {
-                      copyPixelsFromBuffer(coreImage.data.buffer)
-                      cachedBitmap = this
-                    }
-                  }
+            override fun bitmap(): Bitmap {
+              cachedBitmap?.let {
+                return it
+              }
+              coreMapSnapshot.moveImage()!!.let { coreImage ->
+                return Bitmap.createBitmap(
+                  coreImage.width, coreImage.height, Bitmap.Config.ARGB_8888
+                ).apply {
+                  copyPixelsFromBuffer(coreImage.data.buffer)
+                  cachedBitmap = this
                 }
               }
-            )
+            }
+          })
           )
         } ?: run {
           logE(TAG, result.error ?: "Snapshot is empty.")
@@ -201,7 +194,8 @@ open class Snapshotter {
    */
   fun destroy() {
     cancel()
-    coreSnapshotter.unsubscribe(observer)
+    cancelableEvents.values.forEach { it.cancel() }
+    cancelableEvents.clear()
     snapshotStyleCallback = null
   }
 
@@ -310,51 +304,20 @@ open class Snapshotter {
     return coreSnapshotter.styleURI
   }
 
-  /**
-   * Subscribes an Observer to a provided list of event types.
-   * Observable will hold a strong reference to an Observer instance, therefore,
-   * in order to stop receiving notifications, caller must call unsubscribe with an
-   * Observer instance used for an initial subscription.
-   *
-   * @param observer an Observer
-   * @param events an array of event types to be subscribed to.
-   */
-  fun subscribe(observer: Observer, events: List<String>) {
-    coreSnapshotter.subscribe(observer, events)
+  private fun subscribeMapLoadingError(mapLoadingErrorCallback: MapLoadingErrorCallback): Cancelable {
+    return coreSnapshotter.subscribe(mapLoadingErrorCallback)
   }
 
-  /**
-   * Unsubscribes an Observer from a provided list of event types.
-   *
-   * @param observer an Observer
-   * @param events an array of event types to be unsubscribed from.
-   */
-  fun unsubscribe(observer: Observer, events: List<String>) {
-    coreSnapshotter.unsubscribe(observer, events)
+  private fun subscribeStyleLoaded(styleLoadedCallback: StyleLoadedCallback): Cancelable {
+    return coreSnapshotter.subscribe(styleLoadedCallback)
   }
 
-  /**
-   * Unsubscribes an Observer from all events.
-   *
-   * @param observer an Observer
-   */
-  fun unsubscribe(observer: Observer) {
-    coreSnapshotter.unsubscribe(observer)
+  private fun subscribeStyleDataLoaded(styleDataLoadedCallback: StyleDataLoadedCallback): Cancelable {
+    return coreSnapshotter.subscribe(styleDataLoadedCallback)
   }
 
-  /**
-   * Clears temporary map data.
-   *
-   * Clears temporary map data from the data path defined in the given resource options.
-   * Useful to reduce the disk usage or in case the disk cache contains invalid data.
-   *
-   * Note that calling this API will affect all maps that use the same data path and does not
-   * affect persistent map data like offline style packages.
-   *
-   * @param callback Called once the request is complete or an error occurred.
-   */
-  fun clearData(callback: AsyncOperationResultCallback) {
-    return Map.clearData(mapSnapshotOptions.resourceOptions, callback)
+  private fun subscribeStyleImageMissing(styleImageMissingCallback: StyleImageMissingCallback): Cancelable {
+    return coreSnapshotter.subscribe(styleImageMissingCallback)
   }
 
   private fun drawAttribution(
@@ -371,8 +334,7 @@ open class Snapshotter {
       val snapshot: Bitmap = mapSnapshot.bitmap()
       logE(
         TAG,
-        "Could not generate attribution for snapshot size: ${snapshot.width}x${snapshot.height}." +
-          " You are required to provide your own attribution for the used sources: ${mapSnapshot.attributions()}"
+        "Could not generate attribution for snapshot size: ${snapshot.width}x${snapshot.height}." + " You are required to provide your own attribution for the used sources: ${mapSnapshot.attributions()}"
       )
     }
   }
@@ -393,7 +355,12 @@ open class Snapshotter {
     return mapSnapshot
   }
 
-  private fun drawOverlay(mapSnapshot: MapSnapshotResult, snapshot: Bitmap, canvas: Canvas, margin: Int) {
+  private fun drawOverlay(
+    mapSnapshot: MapSnapshotResult,
+    snapshot: Bitmap,
+    canvas: Canvas,
+    margin: Int
+  ) {
     context.get()?.let {
       val measure: AttributionMeasure = getAttributionMeasure(it, mapSnapshot, snapshot, margin)
       val layout = measure.measure()
@@ -432,16 +399,13 @@ open class Snapshotter {
     scale: Float
   ): TextView {
     val textColor: Int = ResourcesCompat.getColor(
-      context.resources,
-      R.color.mapbox_gray_dark,
-      context.theme
+      context.resources, R.color.mapbox_gray_dark, context.theme
     )
     val widthMeasureSpec: Int = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
     val heightMeasureSpec: Int = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
     val textView = TextView(context)
     textView.layoutParams = ViewGroup.LayoutParams(
-      ViewGroup.LayoutParams.WRAP_CONTENT,
-      ViewGroup.LayoutParams.WRAP_CONTENT
+      ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
     )
     val attributionString = createAttributionString(mapSnapshot, shortText)
     if (attributionString.isNotEmpty()) {
@@ -449,6 +413,7 @@ open class Snapshotter {
       textView.textSize = 10 * scale
       textView.setTextColor(textColor)
       textView.setBackgroundResource(R.drawable.mapbox_rounded_corner)
+      @Suppress("DEPRECATION")
       textView.text = Html.fromHtml(attributionString)
       textView.measure(widthMeasureSpec, heightMeasureSpec)
       textView.layout(0, 0, textView.measuredWidth, textView.measuredHeight)
@@ -462,10 +427,8 @@ open class Snapshotter {
   ): String {
     context.get()?.apply {
       val attributionParser: AttributionParser = AttributionParser.Options(this)
-        .withAttributionData(*mapSnapshot.attributions().toTypedArray())
-        .withCopyrightSign(false)
-        .withImproveMap(false)
-        .build()
+        .withAttributionData(*mapSnapshot.attributions().toTypedArray()).withCopyrightSign(false)
+        .withImproveMap(false).build()
       return attributionParser.createAttributionString(shortText)
     }
     return ""
@@ -488,10 +451,7 @@ open class Snapshotter {
   ) {
     placement.logo?.let {
       canvas.drawBitmap(
-        it,
-        margin.toFloat(),
-        (snapshot.height - it.height - margin).toFloat(),
-        null
+        it, margin.toFloat(), (snapshot.height - it.height - margin).toFloat(), null
       )
     }
   }
@@ -535,13 +495,22 @@ open class Snapshotter {
    * Static variables and methods.
    */
   companion object {
-    private const val TAG = "Snapshotter"
+    /**
+     * Clears temporary map data.
+     *
+     * Clears temporary map data from the data path defined in the current options.
+     * Useful to reduce the disk usage or in case the disk cache contains invalid data.
+     *
+     * Note that calling this API will affect all maps that use the same data path and does not
+     * affect persistent map data like offline style packages.
+     *
+     * @param callback Called once the request is complete or an error occurred.
+     */
+    @JvmStatic
+    fun clearData(callback: AsyncOperationResultCallback) {
+      MapsResourceOptions.clearData(callback)
+    }
 
-    private val STYLE_LOAD_EVENTS_LIST = listOf(
-      MapEvents.MAP_LOADING_ERROR,
-      MapEvents.STYLE_DATA_LOADED,
-      MapEvents.STYLE_LOADED,
-      MapEvents.STYLE_IMAGE_MISSING
-    )
+    private const val TAG = "Snapshotter"
   }
 }

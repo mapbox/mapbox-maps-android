@@ -20,10 +20,11 @@ mapboxLibrary {
 }
 
 android {
-  compileSdk = AndroidVersions.compileSdkVersion
+  compileSdk = libs.versions.androidCompileSdkVersion.get().toInt()
+  namespace = "com.mapbox.maps"
   defaultConfig {
-    minSdk = AndroidVersions.minSdkVersion
-    targetSdk = AndroidVersions.targetSdkVersion
+    minSdk = libs.versions.androidMinSdkVersion.get().toInt()
+    targetSdk = libs.versions.androidTargetSdkVersion.get().toInt()
     consumerProguardFiles("proguard-rules.pro")
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     testInstrumentationRunnerArguments(mapOf("clearPackageData" to "true"))
@@ -51,14 +52,14 @@ android {
 }
 
 dependencies {
-  api(Dependencies.mapboxBase)
+  api(libs.mapbox.base)
   if (buildFromSource.toBoolean()) {
     api(project(":okhttp"))
   } else {
-    api(Dependencies.mapboxOkHttp)
+    api(libs.mapbox.okHttp)
   }
 
-  implementation(Dependencies.mapboxAnnotations)
+  implementation(libs.mapbox.annotations)
   api(project(":sdk-base"))
   implementation(project(":module-telemetry"))
   api(project(":extension-style"))
@@ -74,29 +75,26 @@ dependencies {
   api(project(":extension-localization"))
   api(project(":plugin-lifecycle"))
   api(project(":plugin-viewport"))
-  compileOnly(Dependencies.asyncInflater)
-  api(Dependencies.kotlin)
-  api(Dependencies.coroutines)
-  implementation(Dependencies.androidxCoreKtx)
-  implementation(Dependencies.androidxAnnotations)
-  testImplementation(Dependencies.junit)
-  testImplementation(Dependencies.mockk)
-  testImplementation(Dependencies.androidxTestCore)
-  testImplementation(Dependencies.robolectric)
-  testImplementation(Dependencies.robolectricEgl)
-  testImplementation(Dependencies.asyncInflater)
-  testImplementation(Dependencies.equalsVerifier)
-  testImplementation(Dependencies.androidxTestJUnit)
-  debugImplementation(Dependencies.androidxAppCompat)
-  androidTestImplementation(Dependencies.androidxTestRunner)
-  androidTestImplementation(Dependencies.androidxTestJUnit)
-  androidTestImplementation(Dependencies.androidxRules)
-  androidTestImplementation(Dependencies.androidxJUnitTestRules)
-  androidTestImplementation(Dependencies.androidxEspresso)
-  androidTestImplementation(Dependencies.androidxUiAutomator)
-  androidTestImplementation(Dependencies.coroutines)
-  androidTestUtil(Dependencies.androidxOrchestrator)
-  detektPlugins(Dependencies.detektFormatting)
+  compileOnly(libs.asyncInflater)
+  api(libs.kotlin)
+  api(libs.coroutines)
+  implementation(libs.androidx.coreKtx)
+  implementation(libs.androidx.annotations)
+
+  testImplementation(libs.bundles.base.dependenciesTests)
+  testImplementation(libs.robolectricEgl)
+  testImplementation(libs.asyncInflater)
+  testImplementation(libs.androidx.testJUnit)
+  debugImplementation(libs.androidx.appCompat)
+
+  androidTestImplementation(libs.bundles.base.dependenciesAndroidTests)
+  androidTestImplementation(libs.androidx.testJUnit)
+  androidTestImplementation(libs.androidx.jUnitTestRules)
+  androidTestImplementation(libs.androidx.uiAutomator)
+  androidTestImplementation(libs.coroutines)
+  androidTestUtil(libs.androidx.orchestrator)
+
+  detektPlugins(libs.detektFormatting)
 }
 
 project.apply {

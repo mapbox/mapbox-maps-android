@@ -11,6 +11,8 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
+import java.util.*
+import kotlin.collections.HashMap
 
 @RunWith(RobolectricTestRunner::class)
 @Config(
@@ -26,68 +28,175 @@ class NativeMapTest {
 
   private val map = mockk<Map>(relaxed = true)
 
-  @Test
-  fun subscribe() {
+  private fun <T> subscribeMapEvent(event: MapEvent, callback: T, eventName: String = "") {
     val nativeMap = NativeMapImpl(map)
-    val list = mutableListOf("foobar")
-    nativeMap.subscribe({ }, list)
-    verify { map.subscribe(any(), list) }
+    when (event) {
+      MapEvent.CAMERA_CHANGED -> {
+        nativeMap.subscribe(callback as CameraChangedCallback)
+        verify { map.subscribe(callback) }
+      }
+      MapEvent.MAP_IDLE -> {
+        nativeMap.subscribe(callback as MapIdleCallback)
+        verify { map.subscribe(callback) }
+      }
+      MapEvent.MAP_LOADING_ERROR -> {
+        nativeMap.subscribe(callback as MapLoadingErrorCallback)
+        verify { map.subscribe(callback) }
+      }
+      MapEvent.MAP_LOADED -> {
+        nativeMap.subscribe(callback as MapLoadedCallback)
+        verify { map.subscribe(callback) }
+      }
+      MapEvent.STYLE_DATA_LOADED -> {
+        nativeMap.subscribe(callback as StyleDataLoadedCallback)
+        verify { map.subscribe(callback) }
+      }
+      MapEvent.STYLE_LOADED -> {
+        nativeMap.subscribe(callback as StyleLoadedCallback)
+        verify { map.subscribe(callback) }
+      }
+      MapEvent.STYLE_IMAGE_MISSING -> {
+        nativeMap.subscribe(callback as StyleImageMissingCallback)
+        verify { map.subscribe(callback) }
+      }
+      MapEvent.STYLE_IMAGE_REMOVE_UNUSED -> {
+        nativeMap.subscribe(callback as StyleImageRemoveUnusedCallback)
+        verify { map.subscribe(callback) }
+      }
+      MapEvent.RENDER_FRAME_STARTED -> {
+        nativeMap.subscribe(callback as RenderFrameStartedCallback)
+        verify { map.subscribe(callback) }
+      }
+      MapEvent.RENDER_FRAME_FINISHED -> {
+        nativeMap.subscribe(callback as RenderFrameFinishedCallback)
+        verify { map.subscribe(callback) }
+      }
+      MapEvent.SOURCE_ADDED -> {
+        nativeMap.subscribe(callback as SourceAddedCallback)
+        verify { map.subscribe(callback) }
+      }
+      MapEvent.SOURCE_DATA_LOADED -> {
+        nativeMap.subscribe(callback as SourceDataLoadedCallback)
+        verify { map.subscribe(callback) }
+      }
+      MapEvent.SOURCE_REMOVED -> {
+        nativeMap.subscribe(callback as SourceRemovedCallback)
+        verify { map.subscribe(callback) }
+      }
+      MapEvent.RESOURCE_REQUEST -> {
+        nativeMap.subscribe(callback as ResourceRequestCallback)
+        verify { map.subscribe(callback) }
+      }
+      MapEvent.GENERIC_EVENT -> {
+        nativeMap.subscribe(eventName, callback as GenericEventCallback)
+        verify { map.subscribe(eventName, callback) }
+      }
+    }
   }
 
   @Test
-  fun unsubscribe() {
-    val nativeMap = NativeMapImpl(map)
-    val list = mutableListOf("foobar")
-    nativeMap.unsubscribe({ }, list)
-    verify { map.unsubscribe(any(), list) }
+  fun subscribeCameraChangeEvent() {
+    subscribeMapEvent(MapEvent.CAMERA_CHANGED, mockk<CameraChangedCallback>())
   }
 
   @Test
-  fun unsubscribeSingle() {
-    val nativeMap = NativeMapImpl(map)
-    nativeMap.unsubscribe { }
-    verify { map.unsubscribe(any()) }
+  fun subscribeMapIdleEvent() {
+    subscribeMapEvent(MapEvent.MAP_IDLE, mockk<MapIdleCallback>())
+  }
+  @Test
+  fun subscribeStyleDataLoadedEvent() {
+    subscribeMapEvent(MapEvent.STYLE_DATA_LOADED, mockk<StyleDataLoadedCallback>())
+  }
+
+  @Test
+  fun subscribeStyleLoadedEvent() {
+    subscribeMapEvent(MapEvent.STYLE_LOADED, mockk<StyleLoadedCallback>())
+  }
+
+  @Test
+  fun subscribeImageMissingEvent() {
+    subscribeMapEvent(MapEvent.STYLE_IMAGE_MISSING, mockk<StyleImageMissingCallback>())
+  }
+
+  @Test
+  fun subscribeImageRemovedEvent() {
+    subscribeMapEvent(MapEvent.STYLE_IMAGE_REMOVE_UNUSED, mockk<StyleImageRemoveUnusedCallback>())
+  }
+
+  @Test
+  fun subscribeRenderFrameFinishedEvent() {
+    subscribeMapEvent(MapEvent.RENDER_FRAME_FINISHED, mockk<RenderFrameFinishedCallback>())
+  }
+
+  @Test
+  fun subscribeRenderFrameStartedEvent() {
+    subscribeMapEvent(MapEvent.RENDER_FRAME_STARTED, mockk<RenderFrameStartedCallback>())
+  }
+
+  @Test
+  fun subscribeSourceAddedEvent() {
+    subscribeMapEvent(MapEvent.SOURCE_ADDED, mockk<SourceAddedCallback>())
+  }
+
+  @Test
+  fun subscribeSourceDataLoadedEvent() {
+    subscribeMapEvent(MapEvent.SOURCE_DATA_LOADED, mockk<SourceDataLoadedCallback>())
+  }
+
+  @Test
+  fun subscribeSourceRemovedEvent() {
+    subscribeMapEvent(MapEvent.SOURCE_REMOVED, mockk<SourceRemovedCallback>())
+  }
+
+  @Test
+  fun subscribeResourceRequestEvent() {
+    subscribeMapEvent(MapEvent.RESOURCE_REQUEST, mockk<ResourceRequestCallback>())
+  }
+
+  @Test
+  fun subscribeUntypedEvent() {
+    subscribeMapEvent(MapEvent.GENERIC_EVENT, mockk<GenericEventCallback>(), "event")
   }
 
   @Test
   fun getStyleURI() {
     val nativeMap = NativeMapImpl(map)
-    nativeMap.styleURI
+    nativeMap.getStyleURI()
     verify { map.styleURI }
   }
 
   @Test
   fun setStyleURI() {
     val nativeMap = NativeMapImpl(map)
-    nativeMap.styleURI = "foobar"
+    nativeMap.setStyleURI("foobar")
     verify { map.styleURI = "foobar" }
   }
 
   @Test
   fun getStyleJSON() {
     val nativeMap = NativeMapImpl(map)
-    nativeMap.styleJSON
+    nativeMap.getStyleJSON()
     verify { map.styleJSON }
   }
 
   @Test
   fun setStyleJSON() {
     val nativeMap = NativeMapImpl(map)
-    nativeMap.styleJSON = "foobar"
+    nativeMap.setStyleJSON("foobar")
     verify { map.styleJSON = "foobar" }
   }
 
   @Test
   fun getStyleDefaultCamera() {
     val nativeMap = NativeMapImpl(map)
-    nativeMap.styleDefaultCamera
+    nativeMap.getStyleDefaultCamera()
     verify { map.styleDefaultCamera }
   }
 
   @Test
   fun getStyleTransition() {
     val nativeMap = NativeMapImpl(map)
-    nativeMap.styleTransition
+    nativeMap.getStyleTransition()
     verify { map.styleTransition }
   }
 
@@ -95,7 +204,7 @@ class NativeMapTest {
   fun setStyleTransition() {
     val transitionOptions = TransitionOptions.Builder().build()
     val nativeMap = NativeMapImpl(map)
-    nativeMap.styleTransition = transitionOptions
+    nativeMap.setStyleTransition(transitionOptions)
     verify { map.styleTransition = transitionOptions }
   }
 
@@ -159,7 +268,7 @@ class NativeMapTest {
   @Test
   fun getStyleLayers() {
     val nativeMap = NativeMapImpl(map)
-    nativeMap.styleLayers
+    nativeMap.getStyleLayers()
     verify { map.styleLayers }
   }
 
@@ -256,7 +365,7 @@ class NativeMapTest {
   @Test
   fun getStyleSources() {
     val nativeMap = NativeMapImpl(map)
-    nativeMap.styleSources
+    nativeMap.getStyleSources()
     verify { map.styleSources }
   }
 
@@ -395,14 +504,14 @@ class NativeMapTest {
   fun setSize() {
     val size = Size(1.0f, 2.0f)
     val nativeMap = NativeMapImpl(map)
-    nativeMap.size = size
+    nativeMap.setSize(size)
     verify { map.size = size }
   }
 
   @Test
   fun getSize() {
     val nativeMap = NativeMapImpl(map)
-    nativeMap.size
+    nativeMap.getSize()
     verify { map.size }
   }
 
@@ -424,7 +533,7 @@ class NativeMapTest {
   @Test
   fun getCameraState() {
     val nativeMap = NativeMapImpl(map)
-    nativeMap.cameraState
+    nativeMap.getCameraState()
     verify { map.cameraState }
   }
 
@@ -482,28 +591,28 @@ class NativeMapTest {
   @Test
   fun setGestureInProgress() {
     val nativeMap = NativeMapImpl(map)
-    nativeMap.isGestureInProgress = true
+    nativeMap.setGestureInProgress(true)
     verify { map.isGestureInProgress = true }
   }
 
   @Test
   fun isGestureInProgress() {
     val nativeMap = NativeMapImpl(map)
-    nativeMap.isGestureInProgress
+    nativeMap.isGestureInProgress()
     verify { map.isGestureInProgress }
   }
 
   @Test
   fun setUserAnimationInProgress() {
     val nativeMap = NativeMapImpl(map)
-    nativeMap.isUserAnimationInProgress = true
+    nativeMap.setUserAnimationInProgress(true)
     verify { map.isUserAnimationInProgress = true }
   }
 
   @Test
   fun isUserAnimationInProgress() {
     val nativeMap = NativeMapImpl(map)
-    nativeMap.isUserAnimationInProgress
+    nativeMap.isUserAnimationInProgress()
     verify { map.isUserAnimationInProgress }
   }
 
@@ -518,21 +627,21 @@ class NativeMapTest {
   @Test
   fun getBounds() {
     val nativeMap = NativeMapImpl(map)
-    nativeMap.bounds
+    nativeMap.getBounds()
     verify { map.bounds }
   }
 
   @Test
   fun setPrefetchZoomDelta() {
     val nativeMap = NativeMapImpl(map)
-    nativeMap.prefetchZoomDelta = 2
+    nativeMap.setPrefetchZoomDelta(2)
     verify { map.prefetchZoomDelta = 2 }
   }
 
   @Test
   fun getPrefetchZoomDelta() {
     val nativeMap = NativeMapImpl(map)
-    nativeMap.prefetchZoomDelta
+    nativeMap.getPrefetchZoomDelta()
     verify { map.prefetchZoomDelta }
   }
 
@@ -560,7 +669,7 @@ class NativeMapTest {
   @Test
   fun getMapOptions() {
     val nativeMap = NativeMapImpl(map)
-    nativeMap.mapOptions
+    nativeMap.getMapOptions()
     verify { map.mapOptions }
   }
 
@@ -599,7 +708,7 @@ class NativeMapTest {
   @Test
   fun getDebug() {
     val nativeMap = NativeMapImpl(map)
-    nativeMap.debug
+    nativeMap.getDebug()
     verify { map.debug }
   }
 
@@ -614,7 +723,7 @@ class NativeMapTest {
   @Test
   fun isStyleFullyLoaded() {
     val nativeMap = NativeMapImpl(map)
-    nativeMap.isStyleLoaded
+    nativeMap.isStyleLoaded()
     verify { map.isStyleLoaded }
   }
 
@@ -694,13 +803,6 @@ class NativeMapTest {
     val nativeMap = NativeMapImpl(map)
     nativeMap.reduceMemoryUse()
     verify { map.reduceMemoryUse() }
-  }
-
-  @Test
-  fun getResourceOptions() {
-    val nativeMap = NativeMapImpl(map)
-    nativeMap.resourceOptions
-    verify { map.resourceOptions }
   }
 
   @Test
@@ -786,14 +888,14 @@ class NativeMapTest {
   @Test
   fun setRenderWorldCopiesProperty() {
     val nativeMap = NativeMapImpl(map)
-    nativeMap.renderWorldCopies = true
+    nativeMap.setRenderWorldCopies(true)
     verify { map.renderWorldCopies = true }
   }
 
   @Test
   fun getRenderWorldCopiesProperty() {
     val nativeMap = NativeMapImpl(map)
-    nativeMap.renderWorldCopies
+    nativeMap.getRenderWorldCopies()
     verify { map.renderWorldCopies }
   }
 

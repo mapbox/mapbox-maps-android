@@ -3,8 +3,8 @@
 
 package com.mapbox.maps.extension.style.projection.generated
 
+import com.mapbox.maps.Style
 import com.mapbox.maps.StylePropertyValueKind
-import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName
 import com.mapbox.maps.extension.style.utils.unwrapToAny
 
@@ -13,7 +13,7 @@ import com.mapbox.maps.extension.style.utils.unwrapToAny
  *
  * @return projection [Projection] that is currently applied to the map
  */
-fun StyleInterface.getProjection(): Projection {
+fun Style.getProjection(): Projection {
   getStyleProjectionProperty("name").apply {
     return Projection(
       if (kind == StylePropertyValueKind.UNDEFINED) {
@@ -33,7 +33,7 @@ fun StyleInterface.getProjection(): Projection {
  *
  * @param projection The projection [Projection] to be set.
  */
-fun StyleInterface.setProjection(projection: Projection) {
+fun Style.setProjection(projection: Projection) {
   projection.bindTo(this)
 }
 

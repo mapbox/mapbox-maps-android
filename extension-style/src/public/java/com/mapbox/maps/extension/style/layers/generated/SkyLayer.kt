@@ -77,7 +77,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
     get() {
       val property: String? = getPropertyValue("visibility")
       property?.let {
-        return Visibility.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+        return Visibility.valueOf(it.uppercase(Locale.US).replace('-', '_'))
       }
       return null
     }
@@ -122,7 +122,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
    *
    * Use static method [SkyLayer.defaultMinZoom] to get the default property value.
    *
-   * @param value value of minzoom
+   * @param minZoom value of minzoom
    */
   override fun minZoom(minZoom: Double): SkyLayer = apply {
     val param = PropertyValue("minzoom", minZoom)
@@ -157,7 +157,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
    *
    * Use static method [SkyLayer.defaultMaxZoom] to get the default property value.
    *
-   * @param value value of maxzoom
+   * @param maxZoom value of maxzoom
    */
   override fun maxZoom(maxZoom: Double): SkyLayer = apply {
     val param = PropertyValue("maxzoom", maxZoom)
@@ -757,7 +757,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
      */
     get() {
       getPropertyValue<String?>("sky-type")?.let {
-        return SkyType.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+        return SkyType.valueOf(it.uppercase(Locale.US).replace('-', '_'))
       }
       return null
     }
@@ -836,7 +836,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
        */
       get() {
         StyleManager.getStyleLayerPropertyDefaultValue("sky", "visibility").silentUnwrap<String>()?.let {
-          return Visibility.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+          return Visibility.valueOf(it.uppercase(Locale.US).replace('-', '_'))
         }
         return null
       }
@@ -1207,7 +1207,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
        */
       get() {
         StyleManager.getStyleLayerPropertyDefaultValue("sky", "sky-type").silentUnwrap<String>()?.let {
-          return SkyType.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+          return SkyType.valueOf(it.uppercase(Locale.US).replace('-', '_'))
         }
         return null
       }
@@ -1272,7 +1272,7 @@ interface SkyLayerDsl {
    *       minimum: 0
    *       maximum: 24
    *
-   * @param value value of minzoom
+   * @param minZoom value of minzoom
    */
   fun minZoom(minZoom: Double): SkyLayer
 
@@ -1283,7 +1283,7 @@ interface SkyLayerDsl {
    *       minimum: 0
    *       maximum: 24
    *
-   * @param value value of maxzoom
+   * @param maxZoom value of maxzoom
    */
   fun maxZoom(maxZoom: Double): SkyLayer
 

@@ -9,8 +9,6 @@ import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.MapPluginRegistry
 import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
-import com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener
-import com.mapbox.maps.plugin.delegates.listeners.OnStyleDataLoadedListener
 import com.mapbox.maps.renderer.MapboxRenderThread
 import com.mapbox.maps.renderer.MapboxRenderer
 import com.mapbox.maps.renderer.OnFpsChangedListener
@@ -33,7 +31,7 @@ import org.robolectric.annotation.Config
 class MapControllerTest {
   private val mockRenderer: MapboxRenderer = mockk()
   private val mockNativeObserver: NativeObserver = mockk()
-  private val mockNativeMap: MapInterface = mockk()
+  private val mockNativeMap: NativeMapImpl = mockk()
   private val mockMapboxMap: MapboxMap = mockk()
   private val mockPluginRegistry: MapPluginRegistry = mockk()
   private val mockMapInitOptions: MapInitOptions = mockk()
@@ -41,7 +39,7 @@ class MapControllerTest {
   private val mockMotionEvent: MotionEvent = mockk()
   private val mockContext: Context = mockk()
   private val mockMapView: MapView = mockk()
-  private val mockOnStyleDataLoadedListener: OnStyleDataLoadedListener = mockk()
+  private val mockOnStyleDataLoadedListener: StyleDataLoadedCallback = mockk()
   private val mockEventsService = mockk<EventsService>()
   private val mockTelemetryService = mockk<TelemetryService>()
 
@@ -64,16 +62,13 @@ class MapControllerTest {
 
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logI(any(), any()) } just Runs
-    val mockResourceOptions = mockk<ResourceOptions>()
-    every { mockMapInitOptions.resourceOptions } returns mockResourceOptions
-    every { mockResourceOptions.accessToken } returns "access.token"
 
     mockkStatic(EventsService::class)
     every { EventsService.getOrCreate(any()) } returns mockEventsService
     every { mockEventsService.flush(any()) } just runs
 
     mockkStatic(TelemetryService::class)
-    every { TelemetryService.getOrCreate(any()) } returns mockTelemetryService
+    every { TelemetryService.getOrCreate() } returns mockTelemetryService
     every { mockTelemetryService.flush(any()) } just runs
   }
 
@@ -85,7 +80,7 @@ class MapControllerTest {
   @Test
   fun onStart() {
     every { mockPluginRegistry.onStart() } just Runs
-    every { mockMapboxMap.loadStyleUri(Style.MAPBOX_STREETS) } just Runs
+    every { mockMapboxMap.loadStyle(Style.MAPBOX_STREETS) } just Runs
     every { mockNativeObserver.addOnCameraChangeListener(any()) } just Runs
     every { mockNativeObserver.addOnStyleDataLoadedListener(any()) } just Runs
     every { mockRenderer.onStart() } just Runs
@@ -101,7 +96,7 @@ class MapControllerTest {
       mockNativeObserver.addOnStyleDataLoadedListener(any())
       mockRenderer.onStart()
       mockMapboxMap.isStyleLoadInitiated
-      mockMapboxMap.loadStyleUri(Style.MAPBOX_STREETS)
+      mockMapboxMap.loadStyle(Style.MAPBOX_STREETS)
       mockPluginRegistry.onStart()
     }
   }
@@ -153,7 +148,7 @@ class MapControllerTest {
     every { mockNativeObserver.removeOnCameraChangeListener(any()) } just Runs
     every { mockNativeObserver.removeOnStyleDataLoadedListener(any()) } just Runs
     every { mockMapboxMap.isStyleLoadInitiated } returns false
-    every { mockMapboxMap.loadStyleUri(any()) } just Runs
+    every { mockMapboxMap.loadStyle(any<String>()) } just Runs
     every { mockMapInitOptions.styleUri } returns "uri"
 
     val style1 = mockk<Style>()
@@ -241,28 +236,28 @@ class MapControllerTest {
 
   @Test
   fun cameraPluginNotified() {
-    val onCameraChangeListenerSlot = slot<OnCameraChangeListener>()
+    val onCameraChangeListenerSlot = slot<CameraChangedCallback>()
     every { mockNativeObserver.addOnCameraChangeListener(capture(onCameraChangeListenerSlot)) } just Runs
     every { mockNativeObserver.addOnStyleDataLoadedListener(any()) } just Runs
     every { mockPluginRegistry.onStart() } just Runs
     every { mockRenderer.onStart() } just Runs
     every { mockPluginRegistry.onCameraMove(mockCameraState) } just Runs
-    every { mockMapboxMap.loadStyleUri(Style.MAPBOX_STREETS) } just Runs
-    every { mockNativeMap.cameraState } returns mockCameraState
+    every { mockMapboxMap.loadStyle(Style.MAPBOX_STREETS) } just Runs
+    every { mockNativeMap.getCameraState() } returns mockCameraState
     every { mockMapboxMap.isStyleLoadInitiated } returns false
     every { mockMapInitOptions.styleUri } answers { Style.MAPBOX_STREETS }
     every { mockMapboxMap.getStyle() } returns null
 
     testMapController.onStart()
-    val onCameraChangeListener = onCameraChangeListenerSlot.captured
-    onCameraChangeListener.onCameraChanged(mockk())
+    val cameraChangedCallback = onCameraChangeListenerSlot.captured
+    cameraChangedCallback.run(mockk())
 
     verifySequence {
       mockMapboxMap.getStyle()
       mockMapboxMap.isStyleLoadInitiated
-      mockMapboxMap.loadStyleUri(Style.MAPBOX_STREETS)
+      mockMapboxMap.loadStyle(Style.MAPBOX_STREETS)
       mockPluginRegistry.onStart()
-      mockNativeMap.cameraState
+      mockNativeMap.getCameraState()
       mockPluginRegistry.onCameraMove(mockCameraState)
     }
   }

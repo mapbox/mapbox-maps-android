@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- A JSON Web token to associate API requests with your Mapbox account. -->
-    <public name="mapbox_resourcesAccessToken" type="attr" />
-
-    <!-- An URL that defines the base for API requests. -->
-    <public name="mapbox_resourcesBaseUrl" type="attr" />
-
     <!-- The map context mode. This can be used to optimizations if we know that the drawing context is not shared with other code. -->
     <public name="mapbox_mapContextMode" type="attr" />
 

@@ -16,7 +16,6 @@ import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
-import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.addPersistentLayer
 import com.mapbox.maps.extension.style.layers.generated.SymbolLayer
@@ -42,7 +41,7 @@ import org.robolectric.RobolectricTestRunner
 @RunWith(RobolectricTestRunner::class)
 class PointAnnotationManagerTest {
   private val delegateProvider: MapDelegateProvider = mockk()
-  private val style: StyleInterface = mockk()
+  private val style: Style = mockk()
   private val mapCameraManagerDelegate: MapCameraManagerDelegate = mockk()
   private val mapFeatureQueryDelegate: MapFeatureQueryDelegate = mockk()
   private val mapListenerDelegate: MapListenerDelegate = mockk()
@@ -67,7 +66,7 @@ class PointAnnotationManagerTest {
     mockkStatic("com.mapbox.maps.extension.style.sources.SourceUtils")
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logE(any(), any()) } just Runs
-    val captureCallback = slot<(StyleInterface) -> Unit>()
+    val captureCallback = slot<(Style) -> Unit>()
     every { delegateProvider.getStyle(capture(captureCallback)) } answers {
       captureCallback.captured.invoke(style)
     }
@@ -99,7 +98,6 @@ class PointAnnotationManagerTest {
 
     every { queriedRenderedFeature.queriedFeature.feature } returns feature
     every { queriedRenderedFeaturesExpected.value } returns queriedRenderedFeatureList
-    every { feature.getProperty(any()).asLong } returns 0L
     every { mapFeatureQueryDelegate.executeOnRenderThread(capture(executeOnRenderThreadSlot)) } answers {
       executeOnRenderThreadSlot.captured.run()
     }
@@ -132,6 +130,10 @@ class PointAnnotationManagerTest {
     every { dragLayer.iconRotate(any<Expression>()) } answers { dragLayer }
     every { layer.iconSize(any<Expression>()) } answers { layer }
     every { dragLayer.iconSize(any<Expression>()) } answers { dragLayer }
+    every { layer.iconTextFit(any<Expression>()) } answers { layer }
+    every { dragLayer.iconTextFit(any<Expression>()) } answers { dragLayer }
+    every { layer.iconTextFitPadding(any<Expression>()) } answers { layer }
+    every { dragLayer.iconTextFitPadding(any<Expression>()) } answers { dragLayer }
     every { layer.symbolSortKey(any<Expression>()) } answers { layer }
     every { dragLayer.symbolSortKey(any<Expression>()) } answers { dragLayer }
     every { layer.textAnchor(any<Expression>()) } answers { layer }
@@ -217,7 +219,7 @@ class PointAnnotationManagerTest {
   @Test
   fun initializeBeforeStyleLoad() {
     every { style.styleLayerExists("test_layer") } returns true
-    val captureCallback = slot<(StyleInterface) -> Unit>()
+    val captureCallback = slot<(Style) -> Unit>()
     every { delegateProvider.getStyle(capture(captureCallback)) } just Runs
     manager = PointAnnotationManager(delegateProvider, AnnotationConfig("test_layer"))
     // Style is not loaded, can't create and add layer to style
@@ -426,6 +428,16 @@ class PointAnnotationManagerTest {
     assertEquals(1.0, annotation.iconSize)
     annotation.iconSize = null
     assertNull(annotation.iconSize)
+
+    annotation.iconTextFit = IconTextFit.NONE
+    assertEquals(IconTextFit.NONE, annotation.iconTextFit)
+    annotation.iconTextFit = null
+    assertNull(annotation.iconTextFit)
+
+    annotation.iconTextFitPadding = listOf(0.0, 0.0, 0.0, 0.0)
+    assertEquals(listOf(0.0, 0.0, 0.0, 0.0), annotation.iconTextFitPadding)
+    annotation.iconTextFitPadding = null
+    assertNull(annotation.iconTextFitPadding)
 
     annotation.symbolSortKey = 1.0
     assertEquals(1.0, annotation.symbolSortKey)
@@ -638,6 +650,7 @@ class PointAnnotationManagerTest {
         .withPoint(Point.fromLngLat(0.0, 0.0))
     )
     assertEquals(annotation, manager.annotations[0])
+    every { feature.getProperty(any()).asString } returns annotation.id
 
     val listener = mockk<OnPointAnnotationClickListener>()
     every { listener.onAnnotationClick(any()) } returns false
@@ -671,6 +684,7 @@ class PointAnnotationManagerTest {
         .withPoint(Point.fromLngLat(0.0, 0.0))
     )
     assertEquals(annotation, manager.annotations[0])
+    every { feature.getProperty(any()).asString } returns annotation.id
 
     val listener = mockk<OnPointAnnotationLongClickListener>()
     every { listener.onAnnotationLongClick(any()) } returns false
@@ -694,7 +708,7 @@ class PointAnnotationManagerTest {
     )
     assertEquals(annotation, manager.annotations[0])
 
-    every { feature.getProperty(any()).asLong } returns 0L
+    every { feature.getProperty(any()).asString } returns annotation.id
 
     val listener = mockk<OnPointAnnotationDragListener>(relaxed = true)
     manager.addDragListener(listener)
@@ -814,6 +828,38 @@ class PointAnnotationManagerTest {
     manager.create(options)
     verify(exactly = 1) { manager.layer?.iconSize(Expression.get(PointAnnotationOptions.PROPERTY_ICON_SIZE)) }
     verify(exactly = 1) { manager.dragLayer?.iconSize(Expression.get(PointAnnotationOptions.PROPERTY_ICON_SIZE)) }
+  }
+
+  @Test
+  fun testIconTextFitLayerProperty() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer?.iconTextFit(Expression.get(PointAnnotationOptions.PROPERTY_ICON_TEXT_FIT)) }
+    val options = PointAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+      .withIconTextFit(IconTextFit.NONE)
+    manager.create(options)
+    verify(exactly = 1) { manager.layer?.iconTextFit(Expression.get(PointAnnotationOptions.PROPERTY_ICON_TEXT_FIT)) }
+    verify(exactly = 1) { manager.dragLayer?.iconTextFit(Expression.get(PointAnnotationOptions.PROPERTY_ICON_TEXT_FIT)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer?.iconTextFit(Expression.get(PointAnnotationOptions.PROPERTY_ICON_TEXT_FIT)) }
+    verify(exactly = 1) { manager.dragLayer?.iconTextFit(Expression.get(PointAnnotationOptions.PROPERTY_ICON_TEXT_FIT)) }
+  }
+
+  @Test
+  fun testIconTextFitPaddingLayerProperty() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer?.iconTextFitPadding(Expression.get(PointAnnotationOptions.PROPERTY_ICON_TEXT_FIT_PADDING)) }
+    val options = PointAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+      .withIconTextFitPadding(listOf(0.0, 0.0, 0.0, 0.0))
+    manager.create(options)
+    verify(exactly = 1) { manager.layer?.iconTextFitPadding(Expression.get(PointAnnotationOptions.PROPERTY_ICON_TEXT_FIT_PADDING)) }
+    verify(exactly = 1) { manager.dragLayer?.iconTextFitPadding(Expression.get(PointAnnotationOptions.PROPERTY_ICON_TEXT_FIT_PADDING)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer?.iconTextFitPadding(Expression.get(PointAnnotationOptions.PROPERTY_ICON_TEXT_FIT_PADDING)) }
+    verify(exactly = 1) { manager.dragLayer?.iconTextFitPadding(Expression.get(PointAnnotationOptions.PROPERTY_ICON_TEXT_FIT_PADDING)) }
   }
 
   @Test

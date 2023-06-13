@@ -3,6 +3,7 @@ package com.mapbox.maps.viewannotation
 import android.view.View
 import android.widget.FrameLayout
 import com.mapbox.maps.ViewAnnotationOptions
+import java.util.UUID
 
 internal data class ViewAnnotation(
   /**
@@ -36,9 +37,9 @@ internal data class ViewAnnotation(
   var measuredHeight: Int,
 ) {
   /**
-   * String id needed to call functions from gl-native
+   * UUID needed to call functions from gl-native.
    */
-  val id: String = (VIEW_ANNOTATION_CURRENT_ID++).toString()
+  val id: String = UUID.randomUUID().toString()
 
   /**
    * Helper function to understand if view is visible from Android visibility perspective.
@@ -47,7 +48,6 @@ internal data class ViewAnnotation(
     visibility == ViewAnnotationVisibility.VISIBLE_AND_NOT_POSITIONED
 
   companion object {
-    private var VIEW_ANNOTATION_CURRENT_ID = 42
     internal val USER_FIXED_DIMENSION = -1
   }
 }

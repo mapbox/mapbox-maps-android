@@ -4,7 +4,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
-import com.mapbox.maps.extension.style.StyleInterface
+import com.mapbox.maps.Style
 import com.mapbox.maps.plugin.LocationPuck3D
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.MODEL_LAYER
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.MODEL_SOURCE
@@ -14,7 +14,7 @@ internal class ModelLayerRenderer(
   private val locationModelLayerOptions: LocationPuck3D
 ) : LocationLayerRenderer {
 
-  private var style: StyleInterface? = null
+  private var style: Style? = null
 
   @VisibleForTesting(otherwise = PRIVATE)
   internal var lastLocation: Point? = null
@@ -22,7 +22,7 @@ internal class ModelLayerRenderer(
   private var modelLayer = layerSourceProvider.getModelLayer(locationModelLayerOptions)
   private var source = layerSourceProvider.getModelSource(locationModelLayerOptions)
 
-  override fun initializeComponents(style: StyleInterface) {
+  override fun initializeComponents(style: Style) {
     this.style = style
     source.bindTo(style)
   }
@@ -113,7 +113,7 @@ internal class ModelLayerRenderer(
   override fun clearBitmaps() {
   }
 
-  override fun updateStyle(style: StyleInterface) {
+  override fun updateStyle(style: Style) {
     this.style = style
     modelLayer.updateStyle(style)
     source.updateStyle(style)

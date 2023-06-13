@@ -225,7 +225,7 @@ class PolygonAnnotationOptions : AnnotationOptions<Polygon, PolygonAnnotation> {
    * @return the annotation that is built
    */
   override fun build(
-    id: Long,
+    id: String,
     annotationManager: AnnotationManager<Polygon, PolygonAnnotation, *, *, *, *, *>
   ): PolygonAnnotation {
     if (geometry == null) {

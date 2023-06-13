@@ -8,7 +8,7 @@ import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
 import com.mapbox.maps.ImageHolder
-import com.mapbox.maps.extension.style.StyleInterface
+import com.mapbox.maps.Style
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.BEARING_ICON
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.SHADOW_ICON
@@ -26,7 +26,7 @@ import java.lang.ref.WeakReference
 @RunWith(RobolectricTestRunner::class)
 class LocationIndicatorLayerRendererTest {
 
-  private val style: StyleInterface = mockk(relaxed = true)
+  private val style: Style = mockk(relaxed = true)
   private val layerSourceProvider: LayerSourceProvider = mockk(relaxed = true)
   private val layerWrapper: LocationIndicatorLayerWrapper = mockk(relaxed = true)
   private val expected: Expected<String, None> = mockk(relaxed = true)
@@ -185,26 +185,26 @@ class LocationIndicatorLayerRendererTest {
     verify {
       style.addImage(
         TOP_ICON,
-        any()
+        any() as Bitmap
       )
     }
     verify(exactly = 1) {
       style.addImage(
         BEARING_ICON,
-        any()
+        any() as Bitmap
       )
     }
     verify {
       style.addImage(
         SHADOW_ICON,
-        any()
+        any() as Bitmap
       )
     }
   }
 
   @Test
   fun updateStyle() {
-    val newStyle = mockk<StyleInterface>(relaxed = true)
+    val newStyle = mockk<Style>(relaxed = true)
     locationLayerRenderer.updateStyle(newStyle)
     verify { layerWrapper.updateStyle(newStyle) }
     locationLayerRenderer.removeLayers()

@@ -2,6 +2,7 @@ package com.mapbox.maps.plugin
 
 import android.content.Context
 import android.net.Uri
+import com.mapbox.common.MapboxOptions
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.attribution.AttributionParser
 import com.mapbox.maps.module.MapTelemetry
@@ -59,7 +60,7 @@ internal class MapAttributionDelegateImpl constructor(
   override fun buildMapBoxFeedbackUrl(context: Context): String {
     val builder = Uri.parse(MAP_FEEDBACK_URL).buildUpon()
     val cameraPosition = mapboxMap.cameraState
-    cameraPosition.center?.let {
+    cameraPosition.center.let {
       builder.encodedFragment(
         "/${it.longitude()}/${it.latitude()}/${cameraPosition.zoom}/${cameraPosition.bearing}/${cameraPosition.pitch}"
       )
@@ -68,14 +69,14 @@ internal class MapAttributionDelegateImpl constructor(
     if (packageName != null) {
       builder.appendQueryParameter("referrer", packageName)
     }
-    builder.appendQueryParameter("access_token", mapboxMap.getResourceOptions().accessToken)
+    builder.appendQueryParameter("access_token", MapboxOptions.accessToken)
 
     mapboxMap.getStyle()?.let {
       val pattern: Pattern = Pattern.compile(MAP_FEEDBACK_STYLE_URI_REGEX)
       val matcher: Matcher = pattern.matcher(it.styleURI)
       if (matcher.find()) {
-        val styleOwner: String = matcher.group(2)
-        val styleId: String = matcher.group(3)
+        val styleOwner: String? = matcher.group(2)
+        val styleId: String? = matcher.group(3)
         builder.appendQueryParameter("owner", styleOwner)
           .appendQueryParameter("id", styleId)
       }

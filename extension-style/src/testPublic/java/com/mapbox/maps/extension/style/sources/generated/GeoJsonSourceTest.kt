@@ -10,12 +10,8 @@ import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
-import com.mapbox.maps.GeoJSONSourceData
-import com.mapbox.maps.StyleManager
-import com.mapbox.maps.StylePropertyValue
-import com.mapbox.maps.StylePropertyValueKind
+import com.mapbox.maps.*
 import com.mapbox.maps.extension.style.ShadowStyleManager
-import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.expressions.dsl.generated.get
 import com.mapbox.maps.extension.style.expressions.dsl.generated.sum
 import com.mapbox.maps.extension.style.types.PromoteId
@@ -36,7 +32,7 @@ import java.util.concurrent.TimeoutException
 @RunWith(RobolectricTestRunner::class)
 @Config(shadows = [ShadowStyleManager::class])
 class GeoJsonSourceTest {
-  private val style = mockk<StyleInterface>(relaxUnitFun = true, relaxed = true)
+  private val style = mockk<Style>(relaxUnitFun = true, relaxed = true)
   private val valueSlot = slot<Value>()
   private val jsonSlot = slot<GeoJSONSourceData>()
   private val expected = mockk<Expected<String, None>>(relaxUnitFun = true, relaxed = true)
@@ -64,7 +60,7 @@ class GeoJsonSourceTest {
     }
   }
 
-  private fun mockkStyle(style: StyleInterface) {
+  private fun mockkStyle(style: Style) {
     every { style.addStyleSource(any(), any()) } returns expected
     every { style.setStyleSourceProperty(any(), any(), any()) } returns expected
     every { style.getStyleSourceProperty(any(), any()) } returns styleProperty
@@ -86,7 +82,7 @@ class GeoJsonSourceTest {
     testSource.bindTo(style)
     Shadows.shadowOf(GeoJsonSource.workerThread.looper).idle()
 
-    verify { style.setStyleGeoJSONSourceData("testId", capture(jsonSlot)) }
+    verify { style.setStyleGeoJSONSourceData("testId", "", capture(jsonSlot)) }
     assertTrue(jsonSlot.captured.string.contains("{\"type\":\"FeatureCollection\",\"features\":[]}"))
   }
 
@@ -113,7 +109,7 @@ class GeoJsonSourceTest {
     Shadows.shadowOf(GeoJsonSource.workerThread.looper).idle()
     Shadows.shadowOf(Looper.getMainLooper()).idle()
 
-    verify { style.setStyleGeoJSONSourceData("testId", capture(jsonSlot)) }
+    verify { style.setStyleGeoJSONSourceData("testId", "", capture(jsonSlot)) }
     assertEquals(jsonSlot.captured.string, "{\"type\":\"FeatureCollection\",\"features\":[]}")
 
     testSource.data(TEST_GEOJSON, DATA_ID)
@@ -143,7 +139,7 @@ class GeoJsonSourceTest {
     testSource.bindTo(style)
     Shadows.shadowOf(GeoJsonSource.workerThread.looper).idle()
 
-    verify { style.setStyleGeoJSONSourceData("testId", capture(jsonSlot)) }
+    verify { style.setStyleGeoJSONSourceData("testId", "", capture(jsonSlot)) }
     assertEquals(jsonSlot.captured.string, "testUrl")
   }
 
@@ -157,7 +153,7 @@ class GeoJsonSourceTest {
     Shadows.shadowOf(GeoJsonSource.workerThread.looper).idle()
     Shadows.shadowOf(Looper.getMainLooper()).idle()
 
-    verify { style.setStyleGeoJSONSourceData("testId", capture(jsonSlot)) }
+    verify { style.setStyleGeoJSONSourceData("testId", "", capture(jsonSlot)) }
     assertEquals(jsonSlot.captured.string, "testUrl")
   }
 
@@ -534,7 +530,7 @@ class GeoJsonSourceTest {
     Shadows.shadowOf(GeoJsonSource.workerThread.looper).idle()
     Shadows.shadowOf(Looper.getMainLooper()).idle()
 
-    val newStyle = mockk<StyleInterface>(relaxUnitFun = true, relaxed = true)
+    val newStyle = mockk<Style>(relaxUnitFun = true, relaxed = true)
     mockkStyle(newStyle)
     Shadows.shadowOf(Looper.getMainLooper()).pause()
     Shadows.shadowOf(GeoJsonSource.workerThread.looper).pause()
@@ -568,7 +564,7 @@ class GeoJsonSourceTest {
     testSource.feature(FEATURE)
     Shadows.shadowOf(GeoJsonSource.workerThread.looper).idle()
     Shadows.shadowOf(Looper.getMainLooper()).idle()
-    verify { style.setStyleGeoJSONSourceData("testId", any()) }
+    verify { style.setStyleGeoJSONSourceData("testId", "", any()) }
 
     testSource.feature(FEATURE, DATA_ID)
     Shadows.shadowOf(GeoJsonSource.workerThread.looper).idle()
@@ -585,7 +581,7 @@ class GeoJsonSourceTest {
     testSource.featureCollection(FEATURE_COLLECTION)
     Shadows.shadowOf(GeoJsonSource.workerThread.looper).idle()
     Shadows.shadowOf(Looper.getMainLooper()).idle()
-    verify { style.setStyleGeoJSONSourceData("testId", any()) }
+    verify { style.setStyleGeoJSONSourceData("testId", "", any()) }
 
     testSource.featureCollection(FEATURE_COLLECTION, DATA_ID)
     Shadows.shadowOf(GeoJsonSource.workerThread.looper).idle()
@@ -630,7 +626,7 @@ class GeoJsonSourceTest {
     Shadows.shadowOf(GeoJsonSource.workerThread.looper).idle()
     Shadows.shadowOf(Looper.getMainLooper()).idle()
 
-    val newStyle = mockk<StyleInterface>(relaxUnitFun = true, relaxed = true)
+    val newStyle = mockk<Style>(relaxUnitFun = true, relaxed = true)
     mockkStyle(newStyle)
     Shadows.shadowOf(Looper.getMainLooper()).pause()
     Shadows.shadowOf(GeoJsonSource.workerThread.looper).pause()
@@ -663,7 +659,7 @@ class GeoJsonSourceTest {
     testSource.geometry(FEATURE.geometry()!!)
     Shadows.shadowOf(GeoJsonSource.workerThread.looper).idle()
     Shadows.shadowOf(Looper.getMainLooper()).idle()
-    verify { style.setStyleGeoJSONSourceData("testId", any()) }
+    verify { style.setStyleGeoJSONSourceData("testId", "", any()) }
 
     testSource.geometry(FEATURE.geometry()!!, DATA_ID)
     Shadows.shadowOf(GeoJsonSource.workerThread.looper).idle()

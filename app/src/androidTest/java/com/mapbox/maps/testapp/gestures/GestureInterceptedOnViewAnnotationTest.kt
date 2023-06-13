@@ -8,9 +8,9 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
 import com.mapbox.geojson.Point
+import com.mapbox.maps.MapIdleCallback
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.dsl.cameraOptions
-import com.mapbox.maps.plugin.delegates.listeners.OnMapIdleListener
 import com.mapbox.maps.plugin.gestures.gestures
 import com.mapbox.maps.testapp.BaseMapTest
 import com.mapbox.maps.testapp.test.R
@@ -120,7 +120,7 @@ class GestureInterceptedOnViewAnnotationTest : BaseMapTest() {
 
     withLatch { latch ->
       rule.scenario.onActivity {
-        val listener = OnMapIdleListener {
+        val listener = MapIdleCallback {
           latch.countDown()
         }
 

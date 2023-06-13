@@ -8,6 +8,7 @@ import android.os.Handler
 import android.os.Looper
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
+import com.mapbox.common.Cancelable
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.plugin.MapCameraPlugin
@@ -37,6 +38,7 @@ import kotlin.properties.Delegates
  * However, it doesn't have to be the UI thread.
  */
 
+@OptIn(MapboxExperimental::class)
 class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlugin {
 
   @VisibleForTesting(otherwise = PRIVATE)
@@ -279,7 +281,6 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlugin {
       )
       return false
     }
-    @Suppress("IMPLICIT_CAST_TO_ANY")
     val startValue = cameraAnimator.startValue ?: when (cameraAnimator.type) {
       CameraAnimatorType.CENTER -> center ?: mapCameraManagerDelegate.cameraState.center
       CameraAnimatorType.ZOOM -> zoom ?: mapCameraManagerDelegate.cameraState.zoom

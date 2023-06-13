@@ -70,7 +70,7 @@ class PolygonAnnotationManagerAndroidTest : BaseMapTest() {
       polygonAnnotationManager.fillTranslateAnchor = expectedValue
       assertEquals(expectedValue, polygonAnnotationManager.fillTranslateAnchor)
       polygonAnnotationManager.fillTranslateAnchor = null
-      val expectedDefaultValue = FillTranslateAnchor.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-translate-anchor").silentUnwrap<String>()!!.toUpperCase(Locale.US).replace('-', '_'))
+      val expectedDefaultValue = FillTranslateAnchor.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-translate-anchor").silentUnwrap<String>()!!.uppercase(Locale.US).replace('-', '_'))
       assertEquals(expectedDefaultValue, polygonAnnotationManager.fillTranslateAnchor)
     }
   }

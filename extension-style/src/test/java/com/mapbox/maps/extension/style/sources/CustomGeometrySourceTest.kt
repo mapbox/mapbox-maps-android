@@ -5,7 +5,6 @@ import com.mapbox.bindgen.None
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
-import com.mapbox.maps.extension.style.StyleInterface
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -13,7 +12,7 @@ import org.junit.Before
 import org.junit.Test
 
 class CustomGeometrySourceTest {
-  private val style = mockk<StyleInterface>(relaxUnitFun = true, relaxed = true)
+  private val style = mockk<Style>(relaxUnitFun = true, relaxed = true)
   private val expected = mockk<Expected<String, None>>(relaxUnitFun = true, relaxed = true)
 
   private val fetchTileFunctionCallback: FetchTileFunctionCallback = mockk()

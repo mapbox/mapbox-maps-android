@@ -94,7 +94,7 @@ class VectorSource(builder: Builder) : Source(builder.sourceId) {
      */
     get() {
       getPropertyValue<String?>("scheme")?.let {
-        return Scheme.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+        return Scheme.valueOf(it.uppercase(Locale.US).replace('-', '_'))
       }
       return null
     }
@@ -511,7 +511,7 @@ class VectorSource(builder: Builder) : Source(builder.sourceId) {
        */
       get() {
         StyleManager.getStyleSourcePropertyDefaultValue("vector", "scheme").silentUnwrap<String>()?.let {
-          return Scheme.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+          return Scheme.valueOf(it.uppercase(Locale.US).replace('-', '_'))
         }
         return null
       }

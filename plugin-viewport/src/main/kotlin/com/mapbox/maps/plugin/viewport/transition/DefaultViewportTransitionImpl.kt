@@ -3,12 +3,13 @@ package com.mapbox.maps.plugin.viewport.transition
 import android.animation.Animator
 import android.animation.AnimatorSet
 import android.animation.ValueAnimator
+import com.mapbox.common.Cancelable
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.CameraState
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.plugin.animation.CameraAnimatorType
-import com.mapbox.maps.plugin.animation.Cancelable
 import com.mapbox.maps.plugin.animation.animator.CameraAnimator
 import com.mapbox.maps.plugin.animation.camera
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
@@ -133,7 +134,7 @@ internal class DefaultViewportTransitionImpl(
   private fun createAnimatorSet(cameraOptions: CameraOptions, maxDurationMs: Long): AnimatorSet {
     val currentZoom = cameraDelegate.cameraState.zoom
     return with(transitionFactory) {
-      if (currentZoom < cameraOptions.zoom ?: currentZoom) {
+      if (currentZoom < (cameraOptions.zoom ?: currentZoom)) {
         transitionFromLowZoomToHighZoom(cameraOptions, maxDurationMs)
       } else {
         transitionFromHighZoomToLowZoom(cameraOptions, maxDurationMs)
@@ -141,6 +142,7 @@ internal class DefaultViewportTransitionImpl(
     }
   }
 
+  @OptIn(MapboxExperimental::class)
   private fun cancelAnimation() {
     runningAnimation?.apply {
       AnimationThreadController.postOnAnimatorThread {
@@ -153,6 +155,7 @@ internal class DefaultViewportTransitionImpl(
     }
   }
 
+  @OptIn(MapboxExperimental::class)
   private fun startAnimation(
     animatorSet: AnimatorSet,
     instant: Boolean,

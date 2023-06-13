@@ -3,15 +3,15 @@
 
 package com.mapbox.maps.extension.style.light.generated
 
+import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.StyleContract
-import com.mapbox.maps.extension.style.StyleInterface
 
 /**
  * Extension function to get the light provided by the Style Extension.
  *
  * @return Light
  */
-fun StyleInterface.getLight(): Light {
+fun Style.getLight(): Light {
   return Light().also { it.delegate = this }
 }
 
@@ -20,7 +20,7 @@ fun StyleInterface.getLight(): Light {
  *
  * @param light The light to be added
  */
-fun StyleInterface.setLight(light: StyleContract.StyleLightExtension) {
+fun Style.setLight(light: StyleContract.StyleLightExtension) {
   light.bindTo(this)
 }
 

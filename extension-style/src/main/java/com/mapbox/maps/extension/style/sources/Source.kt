@@ -3,8 +3,8 @@ package com.mapbox.maps.extension.style.sources
 import android.util.Log
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxStyleException
+import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.StyleContract
-import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
 import com.mapbox.maps.extension.style.utils.unwrap
 import com.mapbox.maps.logE
@@ -45,14 +45,14 @@ abstract class Source(
     HashMap<String, PropertyValue<*>>()
   }
 
-  internal var delegate: StyleInterface? = null
+  internal var delegate: Style? = null
 
   /**
    * Add the source to the Style.
    *
    * @param delegate The style delegate
    */
-  override fun bindTo(delegate: StyleInterface) {
+  override fun bindTo(delegate: Style) {
     this.delegate = delegate
     val expected = delegate.addStyleSource(sourceId, getCachedSourceProperties())
     expected.error?.let {

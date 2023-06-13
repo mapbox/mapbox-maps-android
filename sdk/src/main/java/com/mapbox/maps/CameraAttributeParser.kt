@@ -19,6 +19,7 @@ internal object CameraAttributeParser {
    */
   fun parseCameraOptions(
     attrs: TypedArray,
+    @Suppress("UNUSED_PARAMETER")
     pixelRatio: Float = 1.0f
   ): CameraOptions? {
     with(attrs) {

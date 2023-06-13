@@ -5,16 +5,17 @@ plugins {
   id("com.jaredsburrows.license")
   //id("com.mapbox.maps.token") #mapbox-android-gradle-plugins/issues/29
   id("kotlin-parcelize")
-  id("com.google.devtools.ksp").version("${Versions.pluginKotlin}-${Versions.ksp}")
+  id("com.google.devtools.ksp").version("${libs.versions.kotlin.get()}-${libs.versions.ksp.get()}")
 }
 
 val VERSION_NAME: String by project
 
 android {
-  compileSdk = AndroidVersions.compileSdkVersion
+  compileSdk = libs.versions.androidCompileSdkVersion.get().toInt()
+  namespace = "com.mapbox.maps.base"
   defaultConfig {
-    minSdk = AndroidVersions.minSdkVersion
-    targetSdk = AndroidVersions.targetSdkVersion
+    minSdk = libs.versions.androidMinSdkVersion.get().toInt()
+    targetSdk = libs.versions.androidTargetSdkVersion.get().toInt()
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     buildConfigField("String", "MAPBOX_SDK_IDENTIFIER", String.format("\"%s\"", "mapbox-maps-android"))
     buildConfigField("String", "MAPBOX_SDK_VERSION", String.format("\"%s\"", VERSION_NAME))
@@ -71,26 +72,23 @@ android {
 val buildFromSource: String by project
 
 dependencies {
-  implementation(Dependencies.kotlin)
-  implementation(Dependencies.mapboxBase)
-  implementation(Dependencies.androidxAnnotations)
-  api(Dependencies.mapboxGestures)
+  implementation(libs.kotlin)
+  implementation(libs.mapbox.base)
+  implementation(libs.androidx.annotations)
+  api(libs.mapbox.gestures)
   if (buildFromSource.toBoolean()) {
     api(project(":maps-core"))
     api(project(":common"))
   } else {
-    api(Dependencies.mapboxGlNative)
-    api(Dependencies.mapboxCoreCommon)
+    api(libs.mapbox.glNative)
+    api(libs.mapbox.coreCommon)
   }
 
-  implementation(Dependencies.kotlinDataCompatAnnotation)
-  ksp(Dependencies.kotlinDataCompatProcessor)
+  compileOnly(libs.kotlinDataCompatAnnotation)
+  ksp(libs.kotlinDataCompatProcessor)
 
-  testImplementation(Dependencies.junit)
-  testImplementation(Dependencies.mockk)
-  testImplementation(Dependencies.androidxTestCore)
-  testImplementation(Dependencies.equalsVerifier)
-  detektPlugins(Dependencies.detektFormatting)
+  testImplementation(libs.bundles.base.dependenciesTests)
+  detektPlugins(libs.detektFormatting)
 }
 
 project.apply {
@@ -101,4 +99,21 @@ project.apply {
   from("$rootDir/gradle/track-public-apis.gradle")
   from("$rootDir/gradle/detekt.gradle")
   from("$rootDir/gradle/dependency-updates.gradle")
+}
+
+tasks.withType<JacocoReport> {
+  afterEvaluate {
+    classDirectories.setFrom(files(classDirectories.files.map {
+      fileTree(it).apply {
+        exclude(
+          "**AttributionSettings**",
+          "**CompassSettings**",
+          "**GesturesSettings**",
+          "**LocationComponentSettings**",
+          "**LogoSettings**",
+          "**ScaleBarSettings**",
+        )
+      }
+    }))
+  }
 }

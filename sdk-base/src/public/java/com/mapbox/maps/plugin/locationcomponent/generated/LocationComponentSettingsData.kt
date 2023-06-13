@@ -6,7 +6,7 @@ package com.mapbox.maps.plugin.locationcomponent.generated
 
 import android.os.Parcelable
 import com.mapbox.maps.plugin.LocationPuck
-import com.mapbox.maps.plugin.PuckBearingSource
+import com.mapbox.maps.plugin.PuckBearing
 import com.tobrun.datacompat.annotation.DataCompat
 import com.tobrun.datacompat.annotation.Default
 import kotlinx.parcelize.Parcelize
@@ -83,8 +83,8 @@ private data class LocationComponentSettingsData(
   /**
    * The enum controls how the puck is oriented
    */
-  @Default("PuckBearingSource.HEADING")
-  var puckBearingSource: PuckBearingSource,
+  @Default("PuckBearing.HEADING")
+  var puckBearing: PuckBearing,
 
   /**
    * Defines what the customised look of the location puck. Note that direct changes to the puck variables won't have any effect, a new puck needs to be set every time.

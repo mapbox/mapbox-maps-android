@@ -10,7 +10,7 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.MapboxLocationComponentException
 import com.mapbox.maps.RenderedQueryGeometry
 import com.mapbox.maps.RenderedQueryOptions
-import com.mapbox.maps.extension.style.StyleInterface
+import com.mapbox.maps.Style
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.LOCATION_INDICATOR_LAYER
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.MODEL_LAYER
@@ -264,7 +264,7 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
 
     if (internalSettings.enabled && locationProvider == null) {
       locationProvider = DefaultLocationProvider(context.applicationContext).apply {
-        updatePuckBearingSource(internalSettings.puckBearingSource)
+        updatePuckBearing(internalSettings.puckBearing)
       }
     }
   }
@@ -307,17 +307,17 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
   }
 
   /**
-   * Called whenever the accuracy radius is updated.
+   * Called whenever the horizontal accuracy radius is updated.
    * @param radius - supports multiple radius value to create more complex animations with intermediate points.
    *  Last [radius] value will always be the animator target for next animation.
    * @param options - if specified explicitly will apply current animator option to radius animation.
    *  Otherwise default animator options will be used.
    */
-  override fun onAccuracyRadiusUpdated(
+  override fun onHorizontalAccuracyRadiusUpdated(
     vararg radius: Double,
     options: (ValueAnimator.() -> Unit)?
   ) {
-    locationPuckManager?.updateAccuracyRadius(*radius, options = options)
+    locationPuckManager?.updateHorizontalAccuracyRadius(*radius, options = options)
   }
 
   /**
@@ -362,10 +362,10 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
   /**
    * Called when a new Style is loaded.
    *
-   * @param styleDelegate
+   * @param style
    */
-  override fun onStyleChanged(styleDelegate: StyleInterface) {
-    locationPuckManager?.updateStyle(styleDelegate)
+  override fun onStyleChanged(style: Style) {
+    locationPuckManager?.updateStyle(style)
   }
 
   override lateinit var internalSettings: LocationComponentSettings

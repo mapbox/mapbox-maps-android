@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.api.directions.v5.DirectionsCriteria
 import com.mapbox.api.directions.v5.MapboxDirections
 import com.mapbox.api.directions.v5.models.DirectionsResponse
+import com.mapbox.common.MapboxOptions
 import com.mapbox.core.constants.Constants.PRECISION_6
 import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
@@ -59,7 +60,7 @@ class SantaCatalinaActivity : AppCompatActivity() {
 
     // load satellite style and add terrain with a line layer to visualize the route
     mapboxMap.loadStyle(
-      style(styleUri = Style.SATELLITE_STREETS) {
+      style(style = Style.SATELLITE_STREETS) {
         +rasterDemSource(SOURCE) {
           url(TERRAIN_URL_TILE_RESOURCE)
           // 514 specifies padded DEM tile and provides better performance than 512 tiles.
@@ -82,22 +83,20 @@ class SantaCatalinaActivity : AppCompatActivity() {
           topImageSize(1.5)
           bearingImageSize(1.5)
         }
-        +image(FOREGROUND_ICON) {
-          bitmap(
-            bitmapFromDrawableRes(
-              this@SantaCatalinaActivity,
-              R.drawable.mapbox_mylocation_icon_default
-            )!!
-          )
-        }
-        +image(BACKGROUND_ICON) {
-          bitmap(
-            bitmapFromDrawableRes(
-              this@SantaCatalinaActivity,
-              R.drawable.mapbox_mylocation_bg_shape
-            )!!
-          )
-        }
+        +image(
+          FOREGROUND_ICON,
+          bitmapFromDrawableRes(
+            this@SantaCatalinaActivity,
+            R.drawable.mapbox_mylocation_icon_default
+          )!!
+        )
+        +image(
+          BACKGROUND_ICON,
+          bitmapFromDrawableRes(
+            this@SantaCatalinaActivity,
+            R.drawable.mapbox_mylocation_bg_shape
+          )!!
+        )
       }
     ) { style ->
       // hide road labels
@@ -124,7 +123,7 @@ class SantaCatalinaActivity : AppCompatActivity() {
       .overview(DirectionsCriteria.OVERVIEW_SIMPLIFIED)
       .profile(DirectionsCriteria.PROFILE_WALKING)
       .steps(true)
-      .accessToken(getString(R.string.mapbox_access_token))
+      .accessToken(MapboxOptions.accessToken)
       .build()
     client.enqueueCall(object : Callback<DirectionsResponse> {
       override fun onResponse(
@@ -251,7 +250,7 @@ class SantaCatalinaActivity : AppCompatActivity() {
     private const val FOREGROUND_ICON = "mapbox-location-icon"
     private const val BACKGROUND_ICON = "mapbox-location-stroke-icon"
     private const val LAYER_ABOVE_ID = "bridge-motorway-trunk-2"
-    private const val LAYER_ROAD_ID = "road-label-simple"
+    private const val LAYER_ROAD_ID = "road-label"
 
     // Camera animation constants
     private const val ANIMATION_DURATION = 75000.0

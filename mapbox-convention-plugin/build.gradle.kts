@@ -49,7 +49,7 @@ dependencies {
   compileOnly(gradleApi())
 
   // compileOnly because we want to leave versioning to the consumers
-  compileOnly(libs.gradle)
-  implementation(libs.dokka)
-  implementation(libs.mapboxAccessToken)
+  compileOnly(libs.plugin.gradle)
+  implementation(libs.plugin.dokka)
+  implementation(libs.plugin.mapbox.accessToken)
 }

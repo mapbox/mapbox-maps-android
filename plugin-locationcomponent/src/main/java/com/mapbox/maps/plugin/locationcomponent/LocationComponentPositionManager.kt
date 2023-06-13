@@ -1,11 +1,10 @@
 package com.mapbox.maps.plugin.locationcomponent
 
 import com.mapbox.maps.LayerPosition
-import com.mapbox.maps.StyleManagerInterface
-import com.mapbox.maps.extension.style.StyleInterface
+import com.mapbox.maps.Style
 
 internal class LocationComponentPositionManager(
-  private var style: StyleManagerInterface,
+  private var style: Style,
   internal var layerAbove: String?,
   internal var layerBelow: String?
 ) {
@@ -31,7 +30,7 @@ internal class LocationComponentPositionManager(
     }
   }
 
-  fun updateStyle(style: StyleInterface) {
+  fun updateStyle(style: Style) {
     this.style = style
   }
 }

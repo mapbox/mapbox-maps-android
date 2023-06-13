@@ -85,7 +85,6 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    * a [AttributeSet] object, an [Int] which represents a style attribute file,
    * and an [Int] which represents a style resource file.
    */
-  @Suppress("UNCHECKED_CAST")
   internal constructor(
     context: Context,
     attrs: AttributeSet?,
@@ -136,11 +135,6 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   internal fun parseTypedArray(context: Context, attrs: AttributeSet?): MapInitOptions {
     val typedArray = context.obtainStyledAttributes(attrs, R.styleable.mapbox_MapView, 0, 0)
     try {
-      val resourceOptions =
-        ResourcesAttributeParser.parseResourcesOptions(
-          context,
-          typedArray
-        )
       val mapOptions =
         MapAttributeParser.parseMapOptions(typedArray, context.resources.displayMetrics.density)
       val cameraOptions = CameraAttributeParser.parseCameraOptions(typedArray)
@@ -154,14 +148,13 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
 
       return MapInitOptions(
         context,
-        resourceOptions,
         mapOptions,
-        attrs = attrs,
         styleUri = if (styleUri.isEmpty()) {
           null
         } else {
           styleUri
         },
+        attrs = attrs,
         antialiasingSampleCount = antialiasingSampleCount
       ).also {
         it.cameraOptions = cameraOptions

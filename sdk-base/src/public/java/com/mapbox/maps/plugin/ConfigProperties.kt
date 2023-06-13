@@ -31,7 +31,7 @@ enum class ScrollMode(val value: String) {
  *
  * @param value String value of this property
  */
-enum class PuckBearingSource(val value: String) {
+enum class PuckBearing(val value: String) {
   /**
    * Orients the puck to match the direction in which the device is facing.
    */

@@ -98,7 +98,7 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
     get() {
       val property: String? = getPropertyValue("visibility")
       property?.let {
-        return Visibility.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+        return Visibility.valueOf(it.uppercase(Locale.US).replace('-', '_'))
       }
       return null
     }
@@ -143,7 +143,7 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
    *
    * Use static method [HeatmapLayer.defaultMinZoom] to get the default property value.
    *
-   * @param value value of minzoom
+   * @param minZoom value of minzoom
    */
   override fun minZoom(minZoom: Double): HeatmapLayer = apply {
     val param = PropertyValue("minzoom", minZoom)
@@ -178,7 +178,7 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
    *
    * Use static method [HeatmapLayer.defaultMaxZoom] to get the default property value.
    *
-   * @param value value of maxzoom
+   * @param maxZoom value of maxzoom
    */
   override fun maxZoom(maxZoom: Double): HeatmapLayer = apply {
     val param = PropertyValue("maxzoom", maxZoom)
@@ -600,7 +600,7 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
        */
       get() {
         StyleManager.getStyleLayerPropertyDefaultValue("heatmap", "visibility").silentUnwrap<String>()?.let {
-          return Visibility.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+          return Visibility.valueOf(it.uppercase(Locale.US).replace('-', '_'))
         }
         return null
       }
@@ -876,7 +876,7 @@ interface HeatmapLayerDsl {
    *       minimum: 0
    *       maximum: 24
    *
-   * @param value value of minzoom
+   * @param minZoom value of minzoom
    */
   fun minZoom(minZoom: Double): HeatmapLayer
 
@@ -887,7 +887,7 @@ interface HeatmapLayerDsl {
    *       minimum: 0
    *       maximum: 24
    *
-   * @param value value of maxzoom
+   * @param maxZoom value of maxzoom
    */
   fun maxZoom(maxZoom: Double): HeatmapLayer
 

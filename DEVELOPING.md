@@ -401,6 +401,21 @@ stacktrace that was saved as a txt file.
 $ ndk-stack -sym obj/arm64-v8a -dump trace.txt
 ```
 
+Note that the stacktrace _must_ be formatted properly, otherwise ndk-stack will not be able to symbolicate
+the stacktrace. Different crash reporting tools often format stacktraces differently, so you might need to reformat the stacktrace.
+The stacktrace should be formatted as follows:
+
+```
+*** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
+  #00 pc acfed libmapbox-maps.so
+  ...
+  #12 pc 51f408 libmapbox-maps.so (BuildId: 331a309c6d4e90a8)
+```
+
+e.g. start with asterisks line, followed by stack entries. 
+Stack entries should start with at least one space, then a hash sign with a stack entry number, 
+then `pc`, then the address (_without_ the `0x` prefix), then the library name.
+
 ## Working with snapshots
 
 The Mapbox Maps SDK for Android publishes snapshot releases to our API downloads infrastructure. These
@@ -459,3 +474,73 @@ allprojects {
 Where the password is the secret token and can be configured following the [installation guide](https://docs.mapbox.com/android/beta/maps/guides/install/#configure-credentials)
 
 And then update the Mapbox Maps SDK's version name to the snapshot version in your app's `build.gradle`.
+
+## Working with traces
+
+Mapbox Maps SDK for Android allows enabling additional Mapbox traces that could be of help troubleshooting performance issues.
+Working with traces is possible only when app is debuggable:
+
+```xml
+<application>
+    ...
+    android:debuggable="true"
+    ...
+</application>
+```
+
+If the app is not debuggable and `MapboxTracing` will be used - runtime exception will be thrown.
+
+### Enabling Mapbox traces
+
+There are 2 types of traces that could be enabled:
+ - Native rendering engine traces could be enabled with `MapboxTracing.enableCore()`. Those traces include native render calls, style loading, requesting tiles and more.
+ - Android platform traces could be enabled with `MapboxTracing.enablePlatform()`. Those traces include Android render thread calls such as preparing / destroying surface.
+
+It is also possible to enable all the traces with `MapboxTracing.enableAll()`. Tracing could be disabled with `MapboxTracing.disableAll()`.
+
+### Recording traces using Android studio
+
+There are several ways of capturing traces for Android which are described in [official documentation](https://developer.android.com/topic/performance/tracing). As a reference we will describe the steps of recording traces using Android Studio Profiler:
+
+1. Run your app in profile mode e.g. by clicking following icon in Android Studio.
+<img width="512" alt="image" src="https://github.com/mapbox/mapbox-maps-android/assets/15800566/67c0a0d9-73e3-48da-9691-0aa581790bfe">
+
+2. When app is run, click on CPU in Profiler window and select `System Trace` radio-button. When you are ready to actually record the traces, hit the `Record` button.
+<img width="512" alt="image" src="https://github.com/mapbox/mapbox-maps-android/assets/15800566/0dad3aac-d467-44f9-b3d6-2371ee896c28">
+
+3. When you are done with recording, press `Stop` button, wait Android Studio to parse your traces and hit `Export system trace recording` to save trace recording locally.
+<img width="512" alt="image" src="https://github.com/mapbox/mapbox-maps-android/assets/15800566/0a2ee849-e6bb-49b8-9d70-08f90f92d44b">
+
+### Reading Mapbox traces using Perfetto
+
+After we exported trace recording we could use [Perfetto](https://ui.perfetto.dev/) to investigate the Mapbox traces.
+
+1. Open [Perfetto](https://ui.perfetto.dev/) and drag-and-drop your local trace recording file there.
+2. When it is loaded - navigate to your application package and un-squash it.
+3. Mapbox native render engine traces added by `MapboxTracing.enableCore()` could be found at the bottom of your app process in separate groups. Those traces start with `mbx:`.
+<img width="1024" alt="image" src="https://github.com/mapbox/mapbox-maps-android/assets/15800566/957ff955-7cc0-4828-bb90-68f2458b63d9">
+
+4. Mapbox platform specific traces will be located inside other Android threads and not in dedicated groups, so you could use global search by `mbx:` to locate them.
+<img width="1024" alt="image" src="https://github.com/mapbox/mapbox-maps-android/assets/15800566/a80759ea-4ec1-4dbb-8285-c46534c15e73">
+
+### Other ways to record traces
+
+There are several other ways how to record traces.
+
+#### From ui.perfetto.dev over WebUSB
+
+<img width="240" alt="image" src="https://github.com/mapbox/mapbox-maps-android-internal/assets/1001009/ee1f1ff9-350a-436e-898a-8e0d05fae920">
+
+Enable Atrace events (other optional probes can be enabled if needed).
+
+<img width="70%" alt="image" src="https://github.com/mapbox/mapbox-maps-android-internal/assets/1001009/36cad2eb-9b0b-4545-ab4f-b3fb0cd5da7f">
+
+After `stop recording` is pressed, trace will be visible in the UI.
+
+#### Directly from the device (supported on Google Pixel devices)
+
+<img src="https://github.com/mapbox/mapbox-maps-android-internal/assets/1001009/f81f3217-55a6-4d07-a6c1-b40842cc1d83" width="60%">
+
+#### Using command line utility (/Library/Android/sdk/platform-tools/systrace)
+
+`python systrace.py -a "com.mapbox.maps.testapp" -o trace.html -b 20000`

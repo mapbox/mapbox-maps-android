@@ -128,6 +128,9 @@ object Stubs {
             fun switchCase(block: ExpressionBuilder.() -> Unit): Expression {
               return Expression()
             }
+            fun match(block: ExpressionBuilder.() -> Unit): Expression {
+              return Expression()
+            }
             fun within(block: ExpressionBuilder.() -> Unit): Expression {
               return Expression()
             }

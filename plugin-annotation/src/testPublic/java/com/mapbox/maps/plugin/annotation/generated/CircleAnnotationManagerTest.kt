@@ -13,7 +13,6 @@ import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
-import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.addPersistentLayer
 import com.mapbox.maps.extension.style.layers.generated.CircleLayer
@@ -38,7 +37,7 @@ import org.robolectric.RobolectricTestRunner
 @RunWith(RobolectricTestRunner::class)
 class CircleAnnotationManagerTest {
   private val delegateProvider: MapDelegateProvider = mockk()
-  private val style: StyleInterface = mockk()
+  private val style: Style = mockk()
   private val mapCameraManagerDelegate: MapCameraManagerDelegate = mockk()
   private val mapFeatureQueryDelegate: MapFeatureQueryDelegate = mockk()
   private val mapListenerDelegate: MapListenerDelegate = mockk()
@@ -62,7 +61,7 @@ class CircleAnnotationManagerTest {
     mockkStatic("com.mapbox.maps.extension.style.sources.SourceUtils")
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logE(any(), any()) } just Runs
-    val captureCallback = slot<(StyleInterface) -> Unit>()
+    val captureCallback = slot<(Style) -> Unit>()
     every { delegateProvider.getStyle(capture(captureCallback)) } answers {
       captureCallback.captured.invoke(style)
     }
@@ -94,7 +93,6 @@ class CircleAnnotationManagerTest {
 
     every { queriedRenderedFeature.queriedFeature.feature } returns feature
     every { queriedRenderedFeaturesExpected.value } returns queriedRenderedFeatureList
-    every { feature.getProperty(any()).asLong } returns 0L
     every { mapFeatureQueryDelegate.executeOnRenderThread(capture(executeOnRenderThreadSlot)) } answers {
       executeOnRenderThreadSlot.captured.run()
     }
@@ -171,7 +169,7 @@ class CircleAnnotationManagerTest {
   @Test
   fun initializeBeforeStyleLoad() {
     every { style.styleLayerExists("test_layer") } returns true
-    val captureCallback = slot<(StyleInterface) -> Unit>()
+    val captureCallback = slot<(Style) -> Unit>()
     every { delegateProvider.getStyle(capture(captureCallback)) } just Runs
     manager = CircleAnnotationManager(delegateProvider, AnnotationConfig("test_layer"))
     // Style is not loaded, can't create and add layer to style
@@ -379,6 +377,7 @@ class CircleAnnotationManagerTest {
         .withPoint(Point.fromLngLat(0.0, 0.0))
     )
     assertEquals(annotation, manager.annotations[0])
+    every { feature.getProperty(any()).asString } returns annotation.id
 
     val listener = mockk<OnCircleAnnotationClickListener>()
     every { listener.onAnnotationClick(any()) } returns false
@@ -412,6 +411,7 @@ class CircleAnnotationManagerTest {
         .withPoint(Point.fromLngLat(0.0, 0.0))
     )
     assertEquals(annotation, manager.annotations[0])
+    every { feature.getProperty(any()).asString } returns annotation.id
 
     val listener = mockk<OnCircleAnnotationLongClickListener>()
     every { listener.onAnnotationLongClick(any()) } returns false
@@ -435,7 +435,7 @@ class CircleAnnotationManagerTest {
     )
     assertEquals(annotation, manager.annotations[0])
 
-    every { feature.getProperty(any()).asLong } returns 0L
+    every { feature.getProperty(any()).asString } returns annotation.id
 
     val listener = mockk<OnCircleAnnotationDragListener>(relaxed = true)
     manager.addDragListener(listener)

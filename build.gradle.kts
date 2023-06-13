@@ -18,16 +18,16 @@ buildscript {
     gradlePluginPortal()
   }
   dependencies {
-    classpath(Plugins.android)
-    classpath(Plugins.kotlin)
-    classpath(Plugins.jacoco)
-    classpath(Plugins.license)
-    classpath(Plugins.mapboxAccessToken)
-    classpath(Plugins.mapboxSdkRegistry)
-    classpath(Plugins.mapboxSdkVersionsPlugin)
-    classpath(Plugins.pitestPlugin)
-    classpath(Plugins.playPublisher)
-    classpath(Plugins.gradleVersions)
+    classpath(libs.plugin.gradle)
+    classpath(libs.plugin.kotlin)
+    classpath(libs.plugin.jacoco)
+    classpath(libs.plugin.license)
+    classpath(libs.plugin.mapbox.accessToken)
+    classpath(libs.plugin.mapbox.sdkRegistry)
+    classpath(libs.plugin.mapbox.sdkVersions)
+    classpath(libs.plugin.pitest)
+    classpath(libs.plugin.playPublisher)
+    classpath(libs.plugin.gradleVersions)
   }
 }
 
@@ -70,14 +70,14 @@ plugins {
   id("com.mapbox.gradle.root")
   // the IDE mistakenly highlights `libs` as an error, see https://github.com/gradle/gradle/issues/22797
   alias(libs.plugins.detekt) apply false
-  id(Plugins.binaryCompatibilityValidatorId) version Versions.pluginBinaryCompatibilityValidator
+  alias(libs.plugins.binaryCompatibilityValidatorId)
   // Used to print dependency tree of the task, useful to debug gradle tasks
   // Ticket to track adding this feature to gradle officially: https://github.com/gradle/gradle/issues/980
-  id(Plugins.taskTreeId) version Versions.pluginTaskTree
+  alias(libs.plugins.taskTreeId)
 }
 
 tasks.withType<Test> {
-  maxParallelForks = (Runtime.getRuntime().availableProcessors() / 2).takeIf { it > 0 } ?: 1
+  maxParallelForks = (Runtime.getRuntime().availableProcessors()).takeIf { it > 0 } ?: 1
 }
 
 apiValidation {
@@ -130,3 +130,14 @@ apiValidation {
    */
   validationDisabled = false
 }
+
+/**
+ * @return True if this build is part of Circleci job triggered from a release tag
+ */
+public val isBuildingReleaseTag = "^v[0-9]+\\.[0-9]+\\.[0-9]+.*\$".toRegex().matches(System.getenv("CIRCLE_TAG") ?: "")
+
+/**
+ * @return True if this build is part of Circleci job triggered from a PR that targets a release branch
+ */
+public val isTargettingReleaseBranch = "^v[0-9]+\\.[0-9]+\$".toRegex().matches(System.getenv("PR_TARGET_BRANCH") ?: "")
+

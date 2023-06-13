@@ -9,7 +9,8 @@ apply {
 val buildFromSource: String by project
 
 android {
-  compileSdk = AndroidVersions.ExampleApp.compileSdkVersion
+  compileSdk = libs.versions.exampleCompileSdkVersion.get().toInt()
+  namespace = "com.mapbox.maps.testapp"
   signingConfigs {
     create("release") {
       storeFile = rootProject.file("$rootDir/testapp-release.keystore")
@@ -31,9 +32,9 @@ android {
     }
   }
   defaultConfig {
+    minSdk = libs.versions.exampleMinSdkVersion.get().toInt()
+    targetSdk = libs.versions.exampleTargetSdkVersion.get().toInt()
     applicationId = "com.mapbox.maps.testapp"
-    minSdk = AndroidVersions.ExampleApp.minSdkVersion
-    targetSdk = AndroidVersions.ExampleApp.targetSdkVersion
     versionCode = if (project.hasProperty("gitVersionCode")) project.property("gitVersionCode") as Int else 1
     versionName = if (project.hasProperty("gitVersionName")) project.property("gitVersionName") as String else "0.1.0"
     multiDexEnabled = true
@@ -83,7 +84,7 @@ android {
     }
   }
 
-  ndkVersion = AndroidVersions.ExampleApp.ndkVersion
+  ndkVersion = libs.versions.exampleNdkVersion.get()
 
   packagingOptions {
     if (buildFromSource.toBoolean()) {
@@ -94,21 +95,21 @@ android {
 
 dependencies {
   implementation(project(":sdk"))
-  implementation(Dependencies.kotlin)
-  implementation(Dependencies.mapboxJavaTurf)
-  implementation(Dependencies.mapboxJavaGeoJSON)
-  implementation(Dependencies.mapboxServices)
-  implementation(Dependencies.coroutines)
-  implementation(Dependencies.androidxAppCompat)
-  implementation(Dependencies.androidxCoreKtx)
-  implementation(Dependencies.androidxRecyclerView)
-  implementation(Dependencies.androidxConstraintLayout)
-  implementation(Dependencies.androidxMultidex)
-  implementation(Dependencies.androidxLifecycleKtx)
-  implementation(Dependencies.googleMaterialDesign)
-  implementation(Dependencies.squareRetrofit)
-  implementation(Dependencies.androidxFragmentTest)
-  implementation(Dependencies.squareRetrofitGsonConverter)
+  implementation(libs.kotlin)
+  implementation(libs.mapbox.javaTurf)
+  implementation(libs.mapbox.javaGeoJSON)
+  implementation(libs.mapbox.services)
+  implementation(libs.coroutines)
+  implementation(libs.androidx.appCompat)
+  implementation(libs.androidx.coreKtx)
+  implementation(libs.androidx.recyclerView)
+  implementation(libs.androidx.constraintLayout)
+  implementation(libs.androidx.multidex)
+  implementation(libs.androidx.lifecycleKtx)
+  implementation(libs.googleMaterialDesign)
+  implementation(libs.squareRetrofit)
+  implementation(libs.androidx.fragmentTest)
+  implementation(libs.squareRetrofitGsonConverter)
 
   // By default, the Maps SDK uses the Android Location Provider to obtain raw location updates.
   // And with Android 11, the raw location updates might suffer from precision issue.
@@ -116,23 +117,21 @@ dependencies {
   // The Maps SDK also comes pre-compiled with support for the [Google's Fused Location Provider](https://developers.google.com/location-context/fused-location-provider)
   // if that dependency is available. This means, that if your target devices support Google Play
   // Services, [we recommend adding the Google Play Location Services dependency to your project](https://developers.google.com/android/guides/setup).
-  implementation(Dependencies.googlePlayServicesLocation)
+  implementation(libs.googlePlayServicesLocation)
 
   // Maps SDK does not provide this dependency so adding explicitly to make use of
   // async view inflation for view annotation manager example
-  implementation(Dependencies.asyncInflater)
+  implementation(libs.asyncInflater)
 
-  debugImplementation(Dependencies.squareLeakCanary)
-  debugImplementation(Dependencies.androidxTestMonitor)
-  androidTestUtil(Dependencies.androidxOrchestrator)
-  androidTestImplementation(Dependencies.androidxTestRunner)
-  androidTestImplementation(Dependencies.androidxJUnitTestRules)
-  androidTestImplementation(Dependencies.androidxRules)
-  androidTestImplementation(Dependencies.androidxTestJUnit)
-  androidTestImplementation(Dependencies.androidxEspresso)
-  androidTestImplementation(Dependencies.androidxUiAutomator)
-  testImplementation(Dependencies.junit)
-  detektPlugins(Dependencies.detektFormatting)
+  debugImplementation(libs.squareLeakCanary)
+  debugImplementation(libs.androidx.testMonitor)
+  androidTestUtil(libs.androidx.orchestrator)
+  androidTestImplementation(libs.bundles.base.dependenciesAndroidTests)
+  androidTestImplementation(libs.androidx.jUnitTestRules)
+  androidTestImplementation(libs.androidx.testJUnit)
+  androidTestImplementation(libs.androidx.uiAutomator)
+  testImplementation(libs.junit)
+  detektPlugins(libs.detektFormatting)
 }
 
 project.apply {

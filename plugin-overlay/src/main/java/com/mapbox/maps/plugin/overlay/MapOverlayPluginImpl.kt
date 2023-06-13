@@ -137,11 +137,11 @@ class MapOverlayPluginImpl : MapOverlayPlugin {
       var south = 90.0
       var west = 180.0
       var east = -180.0
-      coordinates.forEach {
-        north = maxOf(north, it.latitude())
-        south = minOf(south, it.latitude())
-        west = minOf(west, it.longitude())
-        east = maxOf(east, it.longitude())
+      coordinates.forEach { point ->
+        north = maxOf(north, point.latitude())
+        south = minOf(south, point.latitude())
+        west = minOf(west, point.longitude())
+        east = maxOf(east, point.longitude())
       }
 
       val bounds = CoordinateBounds(Point.fromLngLat(west, south), Point.fromLngLat(east, north), false)
@@ -168,7 +168,7 @@ class MapOverlayPluginImpl : MapOverlayPlugin {
     }.forEach {
       var size = queue.size
       while (size > 0) {
-        val subMapRect = queue.pollFirst()
+        val subMapRect = queue.pollFirst()!!
         if (it.isOverLap(subMapRect)) {
           // insert the new subMapRect
           if (it.top - subMapRect.top < subMapRect.bottom - it.bottom) {

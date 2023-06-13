@@ -20,7 +20,7 @@ import java.util.Locale
  * Class for PointAnnotation
  */
 class PointAnnotation(
-  id: Long,
+  id: String,
   /** The annotation manager that manipulate this annotation */
   private val annotationManager: AnnotationManager<Point, PointAnnotation, *, *, *, *, *>,
   jsonObject: JsonObject,
@@ -88,7 +88,7 @@ class PointAnnotation(
     get() {
       val value = jsonObject.get(PointAnnotationOptions.PROPERTY_ICON_ANCHOR)
       value?.let {
-        return IconAnchor.valueOf(it.asString.toUpperCase(Locale.US))
+        return IconAnchor.valueOf(it.asString.uppercase(Locale.US))
       }
       return null
     }
@@ -239,6 +239,71 @@ class PointAnnotation(
     }
 
   /**
+   * The iconTextFit property
+   *
+   * Scales the icon to fit around the associated text.
+   */
+  var iconTextFit: IconTextFit?
+    /**
+     * Get the iconTextFit property
+     *
+     * @return property wrapper value around IconTextFit
+     */
+    get() {
+      val value = jsonObject.get(PointAnnotationOptions.PROPERTY_ICON_TEXT_FIT)
+      value?.let {
+        return IconTextFit.valueOf(it.asString.uppercase(Locale.US))
+      }
+      return null
+    }
+    /**
+     * Set the iconTextFit property
+     *
+     * To update the pointAnnotation on the map use {@link pointAnnotationManager#update(Annotation)}.
+     *
+     * @param value constant property value for IconTextFit
+     */
+    set(value) {
+      if (value != null) {
+        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_ICON_TEXT_FIT, value.value)
+      } else {
+        jsonObject.remove(PointAnnotationOptions.PROPERTY_ICON_TEXT_FIT)
+      }
+    }
+
+  /**
+   * The iconTextFitPadding property
+   *
+   * Size of the additional area added to dimensions determined by {@link Property.ICON_TEXT_FIT}, in clockwise order: top, right, bottom, left. The unit of iconTextFitPadding is in density-independent pixels.
+   */
+  var iconTextFitPadding: List<Double>?
+    /**
+     * Get the iconTextFitPadding property
+     *
+     * @return [Point] value for List<Double>
+     */
+    get() {
+      val value = jsonObject.get(PointAnnotationOptions.PROPERTY_ICON_TEXT_FIT_PADDING)
+      value?.let {
+        return (it as JsonArray).map { it.toString().toDouble() }
+      }
+      return null
+    }
+    /**
+     * Set the iconTextFitPadding property.
+     * To update the pointAnnotation on the map use {@link PointAnnotationManager#update(Annotation)}.
+     */
+    set(value) {
+      if (value != null) {
+        val jsonArray = JsonArray()
+        value.forEach { jsonArray.add(it) }
+        jsonObject.add(PointAnnotationOptions.PROPERTY_ICON_TEXT_FIT_PADDING, jsonArray)
+      } else {
+        jsonObject.remove(PointAnnotationOptions.PROPERTY_ICON_TEXT_FIT_PADDING)
+      }
+    }
+
+  /**
    * The symbolSortKey property
    *
    * Sorts features in ascending order based on this value. Features with lower sort keys are drawn and placed first.  When {@link PropertyFactory#iconAllowOverlap} or {@link PropertyFactory#textAllowOverlap} is `false`, features with a lower sort key will have priority during placement. When {@link PropertyFactory#iconAllowOverlap} or {@link PropertyFactory#textAllowOverlap} is set to `true`, features with a higher sort key will overlap over features with a lower sort key.
@@ -285,7 +350,7 @@ class PointAnnotation(
     get() {
       val value = jsonObject.get(PointAnnotationOptions.PROPERTY_TEXT_ANCHOR)
       value?.let {
-        return TextAnchor.valueOf(it.asString.toUpperCase(Locale.US))
+        return TextAnchor.valueOf(it.asString.uppercase(Locale.US))
       }
       return null
     }
@@ -351,7 +416,7 @@ class PointAnnotation(
     get() {
       val value = jsonObject.get(PointAnnotationOptions.PROPERTY_TEXT_JUSTIFY)
       value?.let {
-        return TextJustify.valueOf(it.asString.toUpperCase(Locale.US))
+        return TextJustify.valueOf(it.asString.uppercase(Locale.US))
       }
       return null
     }
@@ -614,7 +679,7 @@ class PointAnnotation(
     get() {
       val value = jsonObject.get(PointAnnotationOptions.PROPERTY_TEXT_TRANSFORM)
       value?.let {
-        return TextTransform.valueOf(it.asString.toUpperCase(Locale.US))
+        return TextTransform.valueOf(it.asString.uppercase(Locale.US))
       }
       return null
     }
@@ -1132,6 +1197,12 @@ class PointAnnotation(
     }
     jsonObject.get(PointAnnotationOptions.PROPERTY_ICON_SIZE)?.let {
       annotationManager.enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_ICON_SIZE)
+    }
+    jsonObject.get(PointAnnotationOptions.PROPERTY_ICON_TEXT_FIT)?.let {
+      annotationManager.enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_ICON_TEXT_FIT)
+    }
+    jsonObject.get(PointAnnotationOptions.PROPERTY_ICON_TEXT_FIT_PADDING)?.let {
+      annotationManager.enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_ICON_TEXT_FIT_PADDING)
     }
     jsonObject.get(PointAnnotationOptions.PROPERTY_SYMBOL_SORT_KEY)?.let {
       annotationManager.enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_SYMBOL_SORT_KEY)

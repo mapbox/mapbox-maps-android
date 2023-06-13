@@ -6,8 +6,6 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.mapbox.maps.Style
-import com.mapbox.maps.extension.observable.eventdata.MapLoadingErrorEventData
-import com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -32,17 +30,17 @@ class LoadStyleCallbackTest {
 
     val latch = CountDownLatch(1)
     testActivity.scenario.onActivity {
-      activity.mapView.getMapboxMap().loadStyleUri(
-        styleUri = Style.LIGHT,
-        onStyleLoaded = {
-          latch.countDown()
-        },
-        onMapLoadErrorListener = object : OnMapLoadErrorListener {
-          override fun onMapLoadError(eventData: MapLoadingErrorEventData) {
-            throw AssertionError("onMapLoadError: $eventData")
-          }
+      activity.mapView.getMapboxMap().apply {
+        subscribeMapLoadingError {
+          throw AssertionError("onMapLoadError: $it")
         }
-      )
+        loadStyle(
+          style = Style.LIGHT,
+          onStyleLoaded = {
+            latch.countDown()
+          }
+        )
+      }
     }
 
     if (!latch.await(10, TimeUnit.SECONDS)) {
@@ -60,17 +58,17 @@ class LoadStyleCallbackTest {
 
     val latch = CountDownLatch(1)
     testActivity.scenario.onActivity {
-      activity.mapView.getMapboxMap().loadStyleUri(
-        styleUri = Style.LIGHT,
-        onStyleLoaded = {
-          latch.countDown()
-        },
-        onMapLoadErrorListener = object : OnMapLoadErrorListener {
-          override fun onMapLoadError(eventData: MapLoadingErrorEventData) {
-            throw AssertionError("onMapLoadError: $eventData")
-          }
+      activity.mapView.getMapboxMap().apply {
+        subscribeMapLoadingError {
+          throw AssertionError("onMapLoadError: $it")
         }
-      )
+        loadStyle(
+          style = Style.LIGHT,
+          onStyleLoaded = {
+            latch.countDown()
+          }
+        )
+      }
 
       activity.mapView.onStop()
     }
@@ -104,17 +102,17 @@ class LoadStyleCallbackTest {
 
     val latch = CountDownLatch(1)
     testActivity.scenario.onActivity {
-      activity.mapView.getMapboxMap().loadStyleUri(
-        styleUri = Style.LIGHT,
-        onStyleLoaded = {
-          latch.countDown()
-        },
-        onMapLoadErrorListener = object : OnMapLoadErrorListener {
-          override fun onMapLoadError(eventData: MapLoadingErrorEventData) {
-            throw AssertionError("onMapLoadError: $eventData")
-          }
+      activity.mapView.getMapboxMap().apply {
+        subscribeMapLoadingError {
+          throw AssertionError("onMapLoadError: $it")
         }
-      )
+        loadStyle(
+          style = Style.LIGHT,
+          onStyleLoaded = {
+            latch.countDown()
+          }
+        )
+      }
     }
 
     Thread.sleep(100)

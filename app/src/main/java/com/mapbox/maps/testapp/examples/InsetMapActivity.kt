@@ -7,7 +7,6 @@ import com.mapbox.geojson.Feature
 import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
-import com.mapbox.maps.extension.observable.eventdata.CameraChangedEventData
 import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.generated.lineLayer
 import com.mapbox.maps.extension.style.layers.getLayer
@@ -20,7 +19,6 @@ import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.sources.getSource
 import com.mapbox.maps.plugin.attribution.attribution
 import com.mapbox.maps.plugin.compass.compass
-import com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener
 import com.mapbox.maps.plugin.gestures.gestures
 import com.mapbox.maps.plugin.logo.logo
 import com.mapbox.maps.plugin.scalebar.scalebar
@@ -32,7 +30,7 @@ import com.mapbox.maps.testapp.examples.fragment.MapFragment
  * Example demonstrating displaying two maps: main map and small map with lower zoom
  * in bottom-right corner with optional bounds showing what area is covered by main map.
  */
-class InsetMapActivity : AppCompatActivity(), OnCameraChangeListener {
+class InsetMapActivity : AppCompatActivity(), CameraChangedCallback {
 
   private lateinit var mainMapboxMap: MapboxMap
   private var insetMapboxMap: MapboxMap? = null
@@ -90,7 +88,7 @@ class InsetMapActivity : AppCompatActivity(), OnCameraChangeListener {
         style.addLayer(layer)
         updateInsetMapLineLayerBounds(style)
       }
-      insetMapFragment.getMapView()?.apply {
+      insetMapFragment.getMapView().apply {
         logo.enabled = false
         scalebar.enabled = false
         attribution.enabled = false
@@ -104,7 +102,7 @@ class InsetMapActivity : AppCompatActivity(), OnCameraChangeListener {
     }
   }
 
-  override fun onCameraChanged(eventData: CameraChangedEventData) {
+  override fun run(eventData: CameraChanged) {
     val mainCameraPosition = mainMapboxMap.cameraState
     val insetCameraPosition = CameraOptions.Builder()
       .zoom(mainCameraPosition.zoom.minus(ZOOM_DISTANCE_BETWEEN_MAIN_AND_INSET_MAPS))

@@ -278,7 +278,7 @@ class CircleAnnotationOptions : AnnotationOptions<Point, CircleAnnotation> {
    * @return the annotation that is built
    */
   override fun build(
-    id: Long,
+    id: String,
     annotationManager: AnnotationManager<Point, CircleAnnotation, *, *, *, *, *>
   ): CircleAnnotation {
     if (geometry == null) {

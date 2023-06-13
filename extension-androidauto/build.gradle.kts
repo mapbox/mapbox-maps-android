@@ -3,10 +3,10 @@ plugins {
 }
 
 android {
-  compileSdk = AndroidVersions.AndroidAuto.compileSdkVersion
+  compileSdk = libs.versions.autoCompileSdkVersion.get().toInt()
   defaultConfig {
-    minSdk = AndroidVersions.AndroidAuto.minSdkVersion
-    targetSdk = AndroidVersions.AndroidAuto.targetSdkVersion
+    minSdk = libs.versions.autoMinSdkVersion.get().toInt()
+    targetSdk = libs.versions.autoTargetSdkVersion.get().toInt()
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
 
@@ -18,22 +18,16 @@ android {
 }
 
 dependencies {
-  api(Dependencies.androidAutoMapboxMapSdk)
-  testImplementation(Dependencies.androidAutoMapboxMapSdk)
+  api(libs.android.autoMapboxMapSdk)
+  api(libs.googleCarAppLibrary)
+  implementation(libs.kotlin)
+  implementation(libs.androidx.coreKtx)
+  implementation(libs.androidx.annotations)
 
-  api(Dependencies.googleCarAppLibrary)
-  implementation(Dependencies.kotlin)
-  implementation(Dependencies.androidxCoreKtx)
-  implementation(Dependencies.androidxAnnotations)
-
-  testImplementation(Dependencies.junit)
-  testImplementation(Dependencies.mockk)
-  testImplementation(Dependencies.androidxTestCore)
-  testImplementation(Dependencies.robolectric)
-  androidTestImplementation(Dependencies.androidxTestRunner)
-  androidTestImplementation(Dependencies.androidxJUnitTestRules)
-  androidTestImplementation(Dependencies.androidxEspresso)
-  detektPlugins(Dependencies.detektFormatting)
+  testImplementation(libs.bundles.base.dependenciesTests)
+  testImplementation(libs.android.autoMapboxMapSdk)
+  androidTestImplementation(libs.bundles.base.dependenciesAndroidTests)
+  detektPlugins(libs.detektFormatting)
 }
 
 project.apply {

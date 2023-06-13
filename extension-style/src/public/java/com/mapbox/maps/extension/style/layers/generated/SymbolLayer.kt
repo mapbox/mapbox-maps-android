@@ -102,7 +102,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     get() {
       val property: String? = getPropertyValue("visibility")
       property?.let {
-        return Visibility.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+        return Visibility.valueOf(it.uppercase(Locale.US).replace('-', '_'))
       }
       return null
     }
@@ -147,7 +147,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * Use static method [SymbolLayer.defaultMinZoom] to get the default property value.
    *
-   * @param value value of minzoom
+   * @param minZoom value of minzoom
    */
   override fun minZoom(minZoom: Double): SymbolLayer = apply {
     val param = PropertyValue("minzoom", minZoom)
@@ -182,7 +182,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * Use static method [SymbolLayer.defaultMaxZoom] to get the default property value.
    *
-   * @param value value of maxzoom
+   * @param maxZoom value of maxzoom
    */
   override fun maxZoom(maxZoom: Double): SymbolLayer = apply {
     val param = PropertyValue("maxzoom", maxZoom)
@@ -269,7 +269,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      */
     get() {
       getPropertyValue<String?>("icon-anchor")?.let {
-        return IconAnchor.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+        return IconAnchor.valueOf(it.uppercase(Locale.US).replace('-', '_'))
       }
       return null
     }
@@ -727,7 +727,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      */
     get() {
       getPropertyValue<String?>("icon-pitch-alignment")?.let {
-        return IconPitchAlignment.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+        return IconPitchAlignment.valueOf(it.uppercase(Locale.US).replace('-', '_'))
       }
       return null
     }
@@ -860,7 +860,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      */
     get() {
       getPropertyValue<String?>("icon-rotation-alignment")?.let {
-        return IconRotationAlignment.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+        return IconRotationAlignment.valueOf(it.uppercase(Locale.US).replace('-', '_'))
       }
       return null
     }
@@ -993,7 +993,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      */
     get() {
       getPropertyValue<String?>("icon-text-fit")?.let {
-        return IconTextFit.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+        return IconTextFit.valueOf(it.uppercase(Locale.US).replace('-', '_'))
       }
       return null
     }
@@ -1191,7 +1191,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      */
     get() {
       getPropertyValue<String?>("symbol-placement")?.let {
-        return SymbolPlacement.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+        return SymbolPlacement.valueOf(it.uppercase(Locale.US).replace('-', '_'))
       }
       return null
     }
@@ -1389,7 +1389,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      */
     get() {
       getPropertyValue<String?>("symbol-z-order")?.let {
-        return SymbolZOrder.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+        return SymbolZOrder.valueOf(it.uppercase(Locale.US).replace('-', '_'))
       }
       return null
     }
@@ -1522,7 +1522,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      */
     get() {
       getPropertyValue<String?>("text-anchor")?.let {
-        return TextAnchor.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+        return TextAnchor.valueOf(it.uppercase(Locale.US).replace('-', '_'))
       }
       return null
     }
@@ -1824,7 +1824,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      */
     get() {
       getPropertyValue<String?>("text-justify")?.let {
-        return TextJustify.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+        return TextJustify.valueOf(it.uppercase(Locale.US).replace('-', '_'))
       }
       return null
     }
@@ -2412,7 +2412,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      */
     get() {
       getPropertyValue<String?>("text-pitch-alignment")?.let {
-        return TextPitchAlignment.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+        return TextPitchAlignment.valueOf(it.uppercase(Locale.US).replace('-', '_'))
       }
       return null
     }
@@ -2610,7 +2610,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      */
     get() {
       getPropertyValue<String?>("text-rotation-alignment")?.let {
-        return TextRotationAlignment.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+        return TextRotationAlignment.valueOf(it.uppercase(Locale.US).replace('-', '_'))
       }
       return null
     }
@@ -2743,7 +2743,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      */
     get() {
       getPropertyValue<String?>("text-transform")?.let {
-        return TextTransform.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+        return TextTransform.valueOf(it.uppercase(Locale.US).replace('-', '_'))
       }
       return null
     }
@@ -3597,7 +3597,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      */
     get() {
       getPropertyValue<String?>("icon-translate-anchor")?.let {
-        return IconTranslateAnchor.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+        return IconTranslateAnchor.valueOf(it.uppercase(Locale.US).replace('-', '_'))
       }
       return null
     }
@@ -4321,7 +4321,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      */
     get() {
       getPropertyValue<String?>("text-translate-anchor")?.let {
-        return TextTranslateAnchor.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+        return TextTranslateAnchor.valueOf(it.uppercase(Locale.US).replace('-', '_'))
       }
       return null
     }
@@ -4400,7 +4400,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
        */
       get() {
         StyleManager.getStyleLayerPropertyDefaultValue("symbol", "visibility").silentUnwrap<String>()?.let {
-          return Visibility.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+          return Visibility.valueOf(it.uppercase(Locale.US).replace('-', '_'))
         }
         return null
       }
@@ -4485,7 +4485,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
        */
       get() {
         StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-anchor").silentUnwrap<String>()?.let {
-          return IconAnchor.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+          return IconAnchor.valueOf(it.uppercase(Locale.US).replace('-', '_'))
         }
         return null
       }
@@ -4747,7 +4747,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
        */
       get() {
         StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-pitch-alignment").silentUnwrap<String>()?.let {
-          return IconPitchAlignment.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+          return IconPitchAlignment.valueOf(it.uppercase(Locale.US).replace('-', '_'))
         }
         return null
       }
@@ -4824,7 +4824,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
        */
       get() {
         StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-rotation-alignment").silentUnwrap<String>()?.let {
-          return IconRotationAlignment.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+          return IconRotationAlignment.valueOf(it.uppercase(Locale.US).replace('-', '_'))
         }
         return null
       }
@@ -4901,7 +4901,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
        */
       get() {
         StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-text-fit").silentUnwrap<String>()?.let {
-          return IconTextFit.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+          return IconTextFit.valueOf(it.uppercase(Locale.US).replace('-', '_'))
         }
         return null
       }
@@ -5015,7 +5015,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
        */
       get() {
         StyleManager.getStyleLayerPropertyDefaultValue("symbol", "symbol-placement").silentUnwrap<String>()?.let {
-          return SymbolPlacement.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+          return SymbolPlacement.valueOf(it.uppercase(Locale.US).replace('-', '_'))
         }
         return null
       }
@@ -5129,7 +5129,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
        */
       get() {
         StyleManager.getStyleLayerPropertyDefaultValue("symbol", "symbol-z-order").silentUnwrap<String>()?.let {
-          return SymbolZOrder.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+          return SymbolZOrder.valueOf(it.uppercase(Locale.US).replace('-', '_'))
         }
         return null
       }
@@ -5206,7 +5206,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
        */
       get() {
         StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-anchor").silentUnwrap<String>()?.let {
-          return TextAnchor.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+          return TextAnchor.valueOf(it.uppercase(Locale.US).replace('-', '_'))
         }
         return null
       }
@@ -5375,7 +5375,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
        */
       get() {
         StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-justify").silentUnwrap<String>()?.let {
-          return TextJustify.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+          return TextJustify.valueOf(it.uppercase(Locale.US).replace('-', '_'))
         }
         return null
       }
@@ -5711,7 +5711,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
        */
       get() {
         StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-pitch-alignment").silentUnwrap<String>()?.let {
-          return TextPitchAlignment.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+          return TextPitchAlignment.valueOf(it.uppercase(Locale.US).replace('-', '_'))
         }
         return null
       }
@@ -5825,7 +5825,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
        */
       get() {
         StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-rotation-alignment").silentUnwrap<String>()?.let {
-          return TextRotationAlignment.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+          return TextRotationAlignment.valueOf(it.uppercase(Locale.US).replace('-', '_'))
         }
         return null
       }
@@ -5902,7 +5902,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
        */
       get() {
         StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-transform").silentUnwrap<String>()?.let {
-          return TextTransform.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+          return TextTransform.valueOf(it.uppercase(Locale.US).replace('-', '_'))
         }
         return null
       }
@@ -6342,7 +6342,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
        */
       get() {
         StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-translate-anchor").silentUnwrap<String>()?.let {
-          return IconTranslateAnchor.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+          return IconTranslateAnchor.valueOf(it.uppercase(Locale.US).replace('-', '_'))
         }
         return null
       }
@@ -6708,7 +6708,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
        */
       get() {
         StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-translate-anchor").silentUnwrap<String>()?.let {
-          return TextTranslateAnchor.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+          return TextTranslateAnchor.valueOf(it.uppercase(Locale.US).replace('-', '_'))
         }
         return null
       }
@@ -6780,7 +6780,7 @@ interface SymbolLayerDsl {
    *       minimum: 0
    *       maximum: 24
    *
-   * @param value value of minzoom
+   * @param minZoom value of minzoom
    */
   fun minZoom(minZoom: Double): SymbolLayer
 
@@ -6791,7 +6791,7 @@ interface SymbolLayerDsl {
    *       minimum: 0
    *       maximum: 24
    *
-   * @param value value of maxzoom
+   * @param maxZoom value of maxzoom
    */
   fun maxZoom(maxZoom: Double): SymbolLayer
 

@@ -60,7 +60,6 @@ class SkyLayerSnapshotterActivity : AppCompatActivity() {
   private fun prepareSnapshotter() {
     val snapshotMapOptions = MapSnapshotOptions.Builder()
       .size(Size(512.0f, 512.0f))
-      .resourceOptions(MapInitOptions.getDefaultResourceOptions(this))
       .build()
 
     snapshotter = Snapshotter(this, snapshotMapOptions).apply {

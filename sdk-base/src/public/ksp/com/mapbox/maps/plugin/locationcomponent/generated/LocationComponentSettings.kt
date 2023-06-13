@@ -5,7 +5,7 @@ package com.mapbox.maps.plugin.locationcomponent.generated
 import android.graphics.Color
 import android.os.Parcelable
 import com.mapbox.maps.plugin.LocationPuck
-import com.mapbox.maps.plugin.PuckBearingSource
+import com.mapbox.maps.plugin.PuckBearing
 import java.util.Objects
 import kotlin.Any
 import kotlin.Boolean
@@ -67,7 +67,7 @@ public class LocationComponentSettings private constructor(
   /**
    * The enum controls how the puck is oriented
    */
-  public val puckBearingSource: PuckBearingSource,
+  public val puckBearing: PuckBearing,
   /**
    * Defines what the customised look of the location puck. Note that direct changes to the puck
    * variables won't have any effect, a new puck needs to be set every time.
@@ -82,7 +82,7 @@ public class LocationComponentSettings private constructor(
       pulsingMaxRadius=$pulsingMaxRadius, showAccuracyRing=$showAccuracyRing,
       accuracyRingColor=$accuracyRingColor, accuracyRingBorderColor=$accuracyRingBorderColor,
       layerAbove=$layerAbove, layerBelow=$layerBelow, puckBearingEnabled=$puckBearingEnabled,
-      puckBearingSource=$puckBearingSource, locationPuck=$locationPuck)""".trimIndent()
+      puckBearing=$puckBearing, locationPuck=$locationPuck)""".trimIndent()
 
   /**
    * Overloaded equals function.
@@ -98,8 +98,8 @@ public class LocationComponentSettings private constructor(
         accuracyRingColor == other.accuracyRingColor &&
         accuracyRingBorderColor == other.accuracyRingBorderColor &&
         layerAbove == other.layerAbove && layerBelow == other.layerBelow &&
-        puckBearingEnabled == other.puckBearingEnabled &&
-        puckBearingSource == other.puckBearingSource && locationPuck == other.locationPuck
+        puckBearingEnabled == other.puckBearingEnabled && puckBearing == other.puckBearing &&
+        locationPuck == other.locationPuck
   }
 
   /**
@@ -107,7 +107,7 @@ public class LocationComponentSettings private constructor(
    */
   public override fun hashCode(): Int = Objects.hash(enabled, pulsingEnabled, pulsingColor,
       pulsingMaxRadius, showAccuracyRing, accuracyRingColor, accuracyRingBorderColor, layerAbove,
-      layerBelow, puckBearingEnabled, puckBearingSource, locationPuck)
+      layerBelow, puckBearingEnabled, puckBearing, locationPuck)
 
   /**
    * Convert to Builder allowing to change class properties.
@@ -117,7 +117,7 @@ public class LocationComponentSettings private constructor(
       .setPulsingMaxRadius(pulsingMaxRadius) .setShowAccuracyRing(showAccuracyRing)
       .setAccuracyRingColor(accuracyRingColor) .setAccuracyRingBorderColor(accuracyRingBorderColor)
       .setLayerAbove(layerAbove) .setLayerBelow(layerBelow)
-      .setPuckBearingEnabled(puckBearingEnabled) .setPuckBearingSource(puckBearingSource)
+      .setPuckBearingEnabled(puckBearingEnabled) .setPuckBearing(puckBearing)
       .setLocationPuck(locationPuck)
 
   /**
@@ -200,7 +200,7 @@ public class LocationComponentSettings private constructor(
      * The enum controls how the puck is oriented
      */
     @set:JvmSynthetic
-    public var puckBearingSource: PuckBearingSource = PuckBearingSource.HEADING
+    public var puckBearing: PuckBearing = PuckBearing.HEADING
 
     /**
      * Setter for enabled: whether the user location is visible on the map.
@@ -322,13 +322,13 @@ public class LocationComponentSettings private constructor(
     }
 
     /**
-     * Setter for puckBearingSource: the enum controls how the puck is oriented.
+     * Setter for puckBearing: the enum controls how the puck is oriented.
      *
-     * @param puckBearingSource
+     * @param puckBearing
      * @return Builder
      */
-    public fun setPuckBearingSource(puckBearingSource: PuckBearingSource): Builder {
-      this.puckBearingSource = puckBearingSource
+    public fun setPuckBearing(puckBearing: PuckBearing): Builder {
+      this.puckBearing = puckBearing
       return this
     }
 
@@ -353,7 +353,7 @@ public class LocationComponentSettings private constructor(
      */
     public fun build(): LocationComponentSettings = LocationComponentSettings(enabled,
         pulsingEnabled, pulsingColor, pulsingMaxRadius, showAccuracyRing, accuracyRingColor,
-        accuracyRingBorderColor, layerAbove, layerBelow, puckBearingEnabled, puckBearingSource,
+        accuracyRingBorderColor, layerAbove, layerBelow, puckBearingEnabled, puckBearing,
         locationPuck)
   }
 }

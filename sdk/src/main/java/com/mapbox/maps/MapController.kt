@@ -2,8 +2,8 @@ package com.mapbox.maps
 
 import android.view.MotionEvent
 import androidx.annotation.VisibleForTesting
+import com.mapbox.common.MapboxOptions
 import com.mapbox.maps.assets.AssetManagerProvider
-import com.mapbox.maps.extension.observable.model.StyleDataType
 import com.mapbox.maps.plugin.InvalidViewPluginHostException
 import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.MapPluginRegistry
@@ -24,8 +24,6 @@ import com.mapbox.maps.plugin.annotation.AnnotationPluginImpl
 import com.mapbox.maps.plugin.attribution.AttributionViewPlugin
 import com.mapbox.maps.plugin.compass.CompassViewPlugin
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
-import com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener
-import com.mapbox.maps.plugin.delegates.listeners.OnStyleDataLoadedListener
 import com.mapbox.maps.plugin.gestures.GesturesPluginImpl
 import com.mapbox.maps.plugin.lifecycle.MapboxLifecyclePluginImpl
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentPluginImpl
@@ -43,11 +41,11 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   internal val renderer: MapboxRenderer
   private val nativeObserver: NativeObserver
   private val mapInitOptions: MapInitOptions
-  private val nativeMap: MapInterface
+  private val nativeMap: NativeMapImpl
   private val mapboxMap: MapboxMap
   internal val pluginRegistry: MapPluginRegistry
-  private val onStyleDataLoadedListener: OnStyleDataLoadedListener
-  private val onCameraChangedListener: OnCameraChangeListener
+  private val styleDataLoadedCallback: StyleDataLoadedCallback
+  private val cameraChangedCallback: CameraChangedCallback
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal var lifecycleState: LifecycleState = LifecycleState.STATE_STOPPED
@@ -59,6 +57,10 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     renderer: MapboxRenderer,
     mapInitOptions: MapInitOptions,
   ) {
+    if (MapboxOptions.accessToken.isBlank()) {
+      throw MapboxConfigurationException()
+    }
+
     this.renderer = renderer
     this.mapInitOptions = mapInitOptions
     this.contextMode = mapInitOptions.mapOptions.contextMode
@@ -75,15 +77,14 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
       mapboxMap,
       this,
       MapProvider.getMapTelemetryInstance(
-        mapInitOptions.context,
-        mapInitOptions.resourceOptions.accessToken
+        mapInitOptions.context
       )
     )
-    this.onCameraChangedListener = OnCameraChangeListener {
-      pluginRegistry.onCameraMove(nativeMap.cameraState)
+    this.cameraChangedCallback = CameraChangedCallback {
+      pluginRegistry.onCameraMove(nativeMap.getCameraState())
     }
-    this.onStyleDataLoadedListener = OnStyleDataLoadedListener { eventData ->
-      if (eventData.type == StyleDataType.STYLE) {
+    this.styleDataLoadedCallback = StyleDataLoadedCallback { eventData ->
+      if (eventData.type == StyleDataLoadedType.STYLE) {
         mapboxMap.getStyle { style ->
           this.style = style
           pluginRegistry.onStyleChanged(style)
@@ -102,10 +103,10 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     nativeObserver: NativeObserver,
     mapInitOptions: MapInitOptions,
     contextMode: ContextMode?,
-    nativeMap: MapInterface,
+    nativeMap: NativeMapImpl,
     mapboxMap: MapboxMap,
     pluginRegistry: MapPluginRegistry,
-    onStyleLoadingFinishedListener: OnStyleDataLoadedListener
+    onStyleLoadingFinishedListener: StyleDataLoadedCallback
   ) {
     this.renderer = renderer
     this.nativeObserver = nativeObserver
@@ -114,13 +115,13 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     this.nativeMap = nativeMap
     this.mapboxMap = mapboxMap
     this.pluginRegistry = pluginRegistry
-    this.onCameraChangedListener = OnCameraChangeListener {
-      pluginRegistry.onCameraMove(nativeMap.cameraState)
+    this.cameraChangedCallback = CameraChangedCallback {
+      pluginRegistry.onCameraMove(nativeMap.getCameraState())
     }
-    this.onStyleDataLoadedListener = onStyleLoadingFinishedListener
+    this.styleDataLoadedCallback = onStyleLoadingFinishedListener
   }
 
-  fun getNativeMap(): MapInterface {
+  fun getNativeMap(): NativeMapImpl {
     return nativeMap
   }
 
@@ -141,14 +142,14 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
       }
     }
     nativeObserver.apply {
-      addOnCameraChangeListener(onCameraChangedListener)
-      addOnStyleDataLoadedListener(onStyleDataLoadedListener)
+      addOnCameraChangeListener(cameraChangedCallback)
+      addOnStyleDataLoadedListener(styleDataLoadedCallback)
     }
     renderer.onStart()
     if (!mapboxMap.isStyleLoadInitiated) {
       // Load the style in mapInitOptions if no style has loaded yet.
       mapInitOptions.styleUri?.let {
-        mapboxMap.loadStyleUri(it)
+        mapboxMap.loadStyle(it)
       }
     }
     pluginRegistry.onStart()
@@ -161,13 +162,13 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     lifecycleState = LifecycleState.STATE_STOPPED
 
     nativeObserver.apply {
-      removeOnCameraChangeListener(onCameraChangedListener)
-      removeOnStyleDataLoadedListener(onStyleDataLoadedListener)
+      removeOnCameraChangeListener(cameraChangedCallback)
+      removeOnStyleDataLoadedListener(styleDataLoadedCallback)
     }
     renderer.onStop()
     pluginRegistry.onStop()
     // flush the queued events before destroy to avoid lost telemetry events
-    MapProvider.flushPendingEvents(mapInitOptions.resourceOptions.accessToken)
+    MapProvider.flushPendingEvents()
   }
 
   override fun onDestroy() {
@@ -223,6 +224,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     renderer.setOnFpsChangedListener(listener)
   }
 
+  @OptIn(MapboxExperimental::class)
   override fun addWidget(widget: Widget) {
     if (contextMode != ContextMode.SHARED) {
       throw RuntimeException("Map view or map surface must be init with MapInitOptions.mapOptions.contextMode = ContextMode.SHARED when using widgets!")
@@ -234,6 +236,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     renderer.scheduleRepaint()
   }
 
+  @OptIn(MapboxExperimental::class)
   override fun removeWidget(widget: Widget): Boolean {
     val wasRemoved = renderer.renderThread.removeWidget(widget)
     if (wasRemoved) {
@@ -277,6 +280,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     plugin: Plugin
   ) = pluginRegistry.createPlugin(mapView, mapInitOptions, plugin)
 
+  @OptIn(MapboxExperimental::class)
   fun initializePlugins(
     options: MapInitOptions,
     mapView: MapView? = null,

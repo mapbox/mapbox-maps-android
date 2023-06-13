@@ -28,6 +28,8 @@ import com.mapbox.maps.plugin.annotation.generated.createPointAnnotationManager
  * @param iconOffset Offset distance of icon from its anchor. Positive values indicate right and down, while negative values indicate left and up. Each component is multiplied by the value of {@link PropertyFactory#iconSize} to obtain the final offset in density-independent pixels. When combined with {@link PropertyFactory#iconRotate} the offset will be as if the rotated direction was up.
  * @param iconRotate Rotates the icon clockwise. The unit of iconRotate is in degrees.
  * @param iconSize Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by {@link PropertyFactory#iconSize}. 1 is the original size; 3 triples the size of the image. The unit of iconSize is in factor of the original icon size.
+ * @param iconTextFit Scales the icon to fit around the associated text.
+ * @param iconTextFitPadding Size of the additional area added to dimensions determined by {@link Property.ICON_TEXT_FIT}, in clockwise order: top, right, bottom, left. The unit of iconTextFitPadding is in density-independent pixels.
  * @param textAnchor Part of the text placed closest to the anchor.
  * @param textField Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options. SDF images are not supported in formatted text and will be ignored.
  * @param textJustify Text justification options.
@@ -65,6 +67,8 @@ public fun PointAnnotation(
   iconOffset: List<Double>? = null,
   iconRotate: Double? = null,
   iconSize: Double? = null,
+  iconTextFit: IconTextFit? = null,
+  iconTextFitPadding: List<Double>? = null,
   textAnchor: TextAnchor? = null,
   textField: String? = null,
   textJustify: TextJustify? = null,
@@ -121,6 +125,12 @@ public fun PointAnnotation(
       }
       iconSize?.let {
         annotationOptions.withIconSize(it)
+      }
+      iconTextFit?.let {
+        annotationOptions.withIconTextFit(it)
+      }
+      iconTextFitPadding?.let {
+        annotationOptions.withIconTextFitPadding(it)
       }
       textAnchor?.let {
         annotationOptions.withTextAnchor(it)
@@ -231,6 +241,14 @@ public fun PointAnnotation(
       }
       update(iconSize) {
         annotation.iconSize = it
+        annotationManager.update(annotation)
+      }
+      update(iconTextFit) {
+        annotation.iconTextFit = it
+        annotationManager.update(annotation)
+      }
+      update(iconTextFitPadding) {
+        annotation.iconTextFitPadding = it
         annotationManager.update(annotation)
       }
       update(textAnchor) {

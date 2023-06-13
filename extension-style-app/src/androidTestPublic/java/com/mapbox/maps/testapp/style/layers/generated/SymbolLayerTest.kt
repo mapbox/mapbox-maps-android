@@ -390,14 +390,18 @@ class SymbolLayerTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun iconTextFitAsExpressionTest() {
-    val expression = literal("none")
+    val expression = toString {
+      get {
+        literal("enum")
+      }
+    }
     val layer = symbolLayer("id", "source") {
       iconTextFit(expression)
     }
     setupLayer(layer)
 
     assertEquals(expression.toString(), layer.iconTextFitAsExpression.toString())
-    assertEquals(IconTextFit.NONE, layer.iconTextFit!!)
+    assertEquals(null, layer.iconTextFit)
   }
 
   @Test
@@ -414,14 +418,20 @@ class SymbolLayerTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun iconTextFitPaddingAsExpressionTest() {
-    val expression = literal(listOf(0.0, 1.0, 2.0, 3.0))
+    val expression = array {
+      literal("number")
+      literal(4)
+      get {
+        literal("array")
+      }
+    }
     val layer = symbolLayer("id", "source") {
       iconTextFitPadding(expression)
     }
     setupLayer(layer)
 
     assertEquals(expression.toString(), layer.iconTextFitPaddingAsExpression.toString())
-    assertEquals(listOf(0.0, 1.0, 2.0, 3.0), layer.iconTextFitPadding!!)
+    assertEquals(null, layer.iconTextFitPadding)
   }
 
   @Test
@@ -657,7 +667,7 @@ class SymbolLayerTest : BaseStyleTest() {
     }
     setupLayer(layer)
     assertEquals(
-      "[format, cyan, {font-scale=0.9, text-font=[literal, [Open Sans Regular, Arial Unicode MS Regular]], text-color=[rgba, 0.0, 255.0, 255.0, 1.0]}, black, {font-scale=[number, [get, scale]], text-font=[literal, [Open Sans Regular, Arial Unicode MS Regular]], text-color=[rgba, 0.0, 0.0, 0.0, 1.0]}]",
+      "[format, cyan, {text-color=[rgba, 0.0, 255.0, 255.0, 1.0], font-scale=0.9, text-font=[literal, [Open Sans Regular, Arial Unicode MS Regular]]}, black, {text-color=[rgba, 0.0, 0.0, 0.0, 1.0], font-scale=[number, [get, scale]], text-font=[literal, [Open Sans Regular, Arial Unicode MS Regular]]}]",
       layer.textFieldAsExpression?.toString()
     )
   }

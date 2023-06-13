@@ -6,29 +6,34 @@ package com.mapbox.maps.extension.style {
     method public java.util.List<com.mapbox.maps.extension.style.StyleContract.StyleImageExtension> getImages();
     method public java.util.List<kotlin.Pair<com.mapbox.maps.extension.style.layers.Layer,com.mapbox.maps.LayerPosition>> getLayers();
     method public com.mapbox.maps.extension.style.light.generated.Light? getLight();
+    method public java.util.List<com.mapbox.maps.extension.style.StyleContract.StyleModelExtension> getModels();
     method public com.mapbox.maps.extension.style.projection.generated.Projection? getProjection();
     method public java.util.List<com.mapbox.maps.extension.style.sources.Source> getSources();
-    method public String getStyleUri();
+    method public String getStyle();
     method public com.mapbox.maps.extension.style.terrain.generated.Terrain? getTerrain();
+    method public com.mapbox.maps.TransitionOptions? getTransition();
     property public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere? atmosphere;
     property public java.util.List<com.mapbox.maps.extension.style.StyleContract.StyleImageExtension> images;
     property public java.util.List<kotlin.Pair<com.mapbox.maps.extension.style.layers.Layer,com.mapbox.maps.LayerPosition>> layers;
     property public com.mapbox.maps.extension.style.light.generated.Light? light;
+    property public java.util.List<com.mapbox.maps.extension.style.StyleContract.StyleModelExtension> models;
     property public com.mapbox.maps.extension.style.projection.generated.Projection? projection;
     property public java.util.List<com.mapbox.maps.extension.style.sources.Source> sources;
-    property public String styleUri;
+    property public String style;
     property public com.mapbox.maps.extension.style.terrain.generated.Terrain? terrain;
+    property public com.mapbox.maps.TransitionOptions? transition;
   }
 
   public static final class StyleExtensionImpl.Builder {
-    ctor public StyleExtensionImpl.Builder(String styleUri);
+    ctor public StyleExtensionImpl.Builder(String style);
     method public operator void addImage(com.mapbox.maps.extension.style.image.ImageExtensionImpl);
     method public operator void addImage9Patch(com.mapbox.maps.extension.style.image.ImageNinePatchExtensionImpl);
     method public operator void addLayer(com.mapbox.maps.extension.style.layers.Layer);
     method public operator void addLayerAtPosition(kotlin.Pair<? extends com.mapbox.maps.extension.style.layers.Layer,com.mapbox.maps.LayerPosition>);
+    method @com.mapbox.maps.MapboxExperimental public operator void addModel(com.mapbox.maps.extension.style.model.ModelExtensionImpl);
     method public operator void addSource(com.mapbox.maps.extension.style.sources.Source);
     method public com.mapbox.maps.extension.style.StyleContract.StyleExtension build();
-    method public String getStyleUri();
+    method public String getStyle();
     method public kotlin.Pair<com.mapbox.maps.extension.style.layers.Layer,com.mapbox.maps.LayerPosition> layerAtPosition(com.mapbox.maps.extension.style.layers.Layer layer, String? above = null, String? below = null, Integer? at = null);
     method public kotlin.Pair<com.mapbox.maps.extension.style.layers.Layer,com.mapbox.maps.LayerPosition> layerAtPosition(com.mapbox.maps.extension.style.layers.Layer layer, String? above = null, String? below = null);
     method public kotlin.Pair<com.mapbox.maps.extension.style.layers.Layer,com.mapbox.maps.LayerPosition> layerAtPosition(com.mapbox.maps.extension.style.layers.Layer layer, String? above = null);
@@ -37,11 +42,12 @@ package com.mapbox.maps.extension.style {
     method public operator void setLight(com.mapbox.maps.extension.style.light.generated.Light);
     method public operator void setProjection(com.mapbox.maps.extension.style.projection.generated.Projection);
     method public operator void setTerrain(com.mapbox.maps.extension.style.terrain.generated.Terrain);
-    property public final String styleUri;
+    method public operator void setTransition(com.mapbox.maps.TransitionOptions);
+    property public final String style;
   }
 
   public final class StyleExtensionImplKt {
-    method public static com.mapbox.maps.extension.style.StyleContract.StyleExtension style(String styleUri = "", kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.StyleExtensionImpl.Builder,kotlin.Unit> block);
+    method public static com.mapbox.maps.extension.style.StyleContract.StyleExtension style(String style = "", kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.StyleExtensionImpl.Builder,kotlin.Unit> block);
   }
 
 }
@@ -50,7 +56,7 @@ package com.mapbox.maps.extension.style.atmosphere.generated {
 
   @UiThread public final class Atmosphere implements com.mapbox.maps.extension.style.atmosphere.generated.AtmosphereDslReceiver com.mapbox.maps.extension.style.StyleContract.StyleAtmosphereExtension {
     ctor public Atmosphere();
-    method public void bindTo(com.mapbox.maps.extension.style.StyleInterface delegate);
+    method public void bindTo(com.mapbox.maps.Style delegate);
     method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere color(@ColorInt int color);
     method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere color(String color);
     method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere color(com.mapbox.maps.extension.style.expressions.generated.Expression color);
@@ -157,9 +163,9 @@ package com.mapbox.maps.extension.style.atmosphere.generated {
   }
 
   public final class AtmosphereUtils {
-    method public static com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere getAtmosphere(com.mapbox.maps.extension.style.StyleInterface);
-    method public static void removeAtmosphere(com.mapbox.maps.extension.style.StyleInterface);
-    method public static void setAtmosphere(com.mapbox.maps.extension.style.StyleInterface, com.mapbox.maps.extension.style.StyleContract.StyleAtmosphereExtension atmosphere);
+    method public static com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere getAtmosphere(com.mapbox.maps.Style);
+    method public static void removeAtmosphere(com.mapbox.maps.Style);
+    method public static void setAtmosphere(com.mapbox.maps.Style, com.mapbox.maps.extension.style.StyleContract.StyleAtmosphereExtension atmosphere);
   }
 
 }
@@ -331,6 +337,9 @@ package com.mapbox.maps.extension.style.expressions.generated {
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression cos(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression cos(double value);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression cubicBezier(com.mapbox.maps.extension.style.expressions.generated.Expression x1, com.mapbox.maps.extension.style.expressions.generated.Expression x2, com.mapbox.maps.extension.style.expressions.generated.Expression x3, com.mapbox.maps.extension.style.expressions.generated.Expression x4);
+    method public static com.mapbox.maps.extension.style.expressions.generated.Expression cubicBezier(double x1, double x2, double x3, double x4);
+    method public static com.mapbox.maps.extension.style.expressions.generated.Expression cubicBezierInterpolator(com.mapbox.maps.extension.style.expressions.generated.Expression x1, com.mapbox.maps.extension.style.expressions.generated.Expression y1, com.mapbox.maps.extension.style.expressions.generated.Expression x2, com.mapbox.maps.extension.style.expressions.generated.Expression y2, com.mapbox.maps.extension.style.expressions.generated.Expression input, kotlin.Pair<com.mapbox.maps.extension.style.expressions.generated.Expression,com.mapbox.maps.extension.style.expressions.generated.Expression>... stops);
+    method public static com.mapbox.maps.extension.style.expressions.generated.Expression cubicBezierInterpolator(double x1, double y1, double x2, double y2, com.mapbox.maps.extension.style.expressions.generated.Expression input, kotlin.Pair<com.mapbox.maps.extension.style.expressions.generated.Expression,com.mapbox.maps.extension.style.expressions.generated.Expression>... stops);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression distance(com.mapbox.geojson.GeoJson geojson);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression distanceFromCenter();
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression division(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
@@ -340,6 +349,9 @@ package com.mapbox.maps.extension.style.expressions.generated {
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression e();
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression eq(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression exponential(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
+    method public static com.mapbox.maps.extension.style.expressions.generated.Expression exponential(double value);
+    method public static com.mapbox.maps.extension.style.expressions.generated.Expression exponentialInterpolator(com.mapbox.maps.extension.style.expressions.generated.Expression base, com.mapbox.maps.extension.style.expressions.generated.Expression input, kotlin.Pair<com.mapbox.maps.extension.style.expressions.generated.Expression,com.mapbox.maps.extension.style.expressions.generated.Expression>... stops);
+    method public static com.mapbox.maps.extension.style.expressions.generated.Expression exponentialInterpolator(double base, com.mapbox.maps.extension.style.expressions.generated.Expression input, kotlin.Pair<com.mapbox.maps.extension.style.expressions.generated.Expression,com.mapbox.maps.extension.style.expressions.generated.Expression>... stops);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression featureState(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression floor(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression floor(double value);
@@ -372,6 +384,7 @@ package com.mapbox.maps.extension.style.expressions.generated {
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression letExpression(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression lineProgress();
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression linear();
+    method public static com.mapbox.maps.extension.style.expressions.generated.Expression linearInterpolator(com.mapbox.maps.extension.style.expressions.generated.Expression input, kotlin.Pair<com.mapbox.maps.extension.style.expressions.generated.Expression,com.mapbox.maps.extension.style.expressions.generated.Expression>... stops);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression literal(double value);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression literal(long value);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression literal(boolean value);
@@ -386,6 +399,7 @@ package com.mapbox.maps.extension.style.expressions.generated {
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression lt(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression lte(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression match(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
+    method public static com.mapbox.maps.extension.style.expressions.generated.Expression match(com.mapbox.maps.extension.style.expressions.generated.Expression input, kotlin.Pair<com.mapbox.maps.extension.style.expressions.generated.Expression,com.mapbox.maps.extension.style.expressions.generated.Expression>![] stops, com.mapbox.maps.extension.style.expressions.generated.Expression fallback);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression max(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression max(double... values);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression min(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
@@ -421,6 +435,7 @@ package com.mapbox.maps.extension.style.expressions.generated {
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression sqrt(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression sqrt(double value);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression step(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
+    method public static com.mapbox.maps.extension.style.expressions.generated.Expression step(com.mapbox.maps.extension.style.expressions.generated.Expression input, com.mapbox.maps.extension.style.expressions.generated.Expression output, kotlin.Pair<com.mapbox.maps.extension.style.expressions.generated.Expression,com.mapbox.maps.extension.style.expressions.generated.Expression>... stops);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression string(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression subtract(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression subtract(double first, double second);
@@ -428,6 +443,7 @@ package com.mapbox.maps.extension.style.expressions.generated {
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression sum(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression sum(double... double);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression switchCase(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
+    method public static com.mapbox.maps.extension.style.expressions.generated.Expression switchCase(kotlin.Pair<com.mapbox.maps.extension.style.expressions.generated.Expression,com.mapbox.maps.extension.style.expressions.generated.Expression>![] stops, com.mapbox.maps.extension.style.expressions.generated.Expression fallback);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression tan(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression tan(double value);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression toBoolean(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
@@ -507,7 +523,10 @@ package com.mapbox.maps.extension.style.expressions.generated {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression cos(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression cos(double value);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression cubicBezier(com.mapbox.maps.extension.style.expressions.generated.Expression x1, com.mapbox.maps.extension.style.expressions.generated.Expression x2, com.mapbox.maps.extension.style.expressions.generated.Expression x3, com.mapbox.maps.extension.style.expressions.generated.Expression x4);
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression cubicBezier(double x1, double x2, double x3, double x4);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression cubicBezier(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression cubicBezierInterpolator(com.mapbox.maps.extension.style.expressions.generated.Expression x1, com.mapbox.maps.extension.style.expressions.generated.Expression y1, com.mapbox.maps.extension.style.expressions.generated.Expression x2, com.mapbox.maps.extension.style.expressions.generated.Expression y2, com.mapbox.maps.extension.style.expressions.generated.Expression input, kotlin.Pair<com.mapbox.maps.extension.style.expressions.generated.Expression,com.mapbox.maps.extension.style.expressions.generated.Expression>... stops);
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression cubicBezierInterpolator(double x1, double y1, double x2, double y2, com.mapbox.maps.extension.style.expressions.generated.Expression input, kotlin.Pair<com.mapbox.maps.extension.style.expressions.generated.Expression,com.mapbox.maps.extension.style.expressions.generated.Expression>... stops);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression distance(com.mapbox.geojson.GeoJson geojson);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression distanceFromCenter();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression division(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
@@ -520,7 +539,10 @@ package com.mapbox.maps.extension.style.expressions.generated {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression eq(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression eq(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression exponential(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression exponential(double value);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression exponential(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression exponentialInterpolator(com.mapbox.maps.extension.style.expressions.generated.Expression base, com.mapbox.maps.extension.style.expressions.generated.Expression input, kotlin.Pair<com.mapbox.maps.extension.style.expressions.generated.Expression,com.mapbox.maps.extension.style.expressions.generated.Expression>... stops);
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression exponentialInterpolator(double base, com.mapbox.maps.extension.style.expressions.generated.Expression input, kotlin.Pair<com.mapbox.maps.extension.style.expressions.generated.Expression,com.mapbox.maps.extension.style.expressions.generated.Expression>... stops);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression featureState(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression featureState(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression floor(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
@@ -564,6 +586,7 @@ package com.mapbox.maps.extension.style.expressions.generated {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression letExpression(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression lineProgress();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression linear();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression linearInterpolator(com.mapbox.maps.extension.style.expressions.generated.Expression input, kotlin.Pair<com.mapbox.maps.extension.style.expressions.generated.Expression,com.mapbox.maps.extension.style.expressions.generated.Expression>... stops);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression literal(double value);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression literal(long value);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression literal(boolean value);
@@ -584,6 +607,7 @@ package com.mapbox.maps.extension.style.expressions.generated {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression lte(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression match(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression match(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression match(com.mapbox.maps.extension.style.expressions.generated.Expression input, kotlin.Pair<com.mapbox.maps.extension.style.expressions.generated.Expression,com.mapbox.maps.extension.style.expressions.generated.Expression>![] stops, com.mapbox.maps.extension.style.expressions.generated.Expression fallback);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression max(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression max(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression max(double... values);
@@ -637,6 +661,7 @@ package com.mapbox.maps.extension.style.expressions.generated {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression sqrt(double value);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression step(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression step(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression step(com.mapbox.maps.extension.style.expressions.generated.Expression input, com.mapbox.maps.extension.style.expressions.generated.Expression output, kotlin.Pair<com.mapbox.maps.extension.style.expressions.generated.Expression,com.mapbox.maps.extension.style.expressions.generated.Expression>... stops);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression string(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression string(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression subtract(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
@@ -648,6 +673,7 @@ package com.mapbox.maps.extension.style.expressions.generated {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression sum(double... double);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression switchCase(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression switchCase(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression switchCase(kotlin.Pair<com.mapbox.maps.extension.style.expressions.generated.Expression,com.mapbox.maps.extension.style.expressions.generated.Expression>![] stops, com.mapbox.maps.extension.style.expressions.generated.Expression fallback);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression tan(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression tan(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression tan(double value);
@@ -675,140 +701,143 @@ package com.mapbox.maps.extension.style.expressions.generated {
 
   @com.mapbox.maps.extension.style.types.ExpressionDsl public static class Expression.ExpressionBuilder extends com.mapbox.maps.extension.style.expressions.generated.Expression.Builder {
     ctor public Expression.ExpressionBuilder(String operator);
-    method public final void abs(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void abs(double value);
-    method public final void accumulated();
-    method public final void acos(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void acos(double value);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder abs(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder abs(double value);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder accumulated();
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder acos(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder acos(double value);
     method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder addArgument(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
-    method public final void all(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void any(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void array(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void asin(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void asin(double value);
-    method public final void at(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void at(double index, com.mapbox.maps.extension.style.expressions.generated.Expression array);
-    method public final void atan(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void atan(double value);
-    method public final void boolean(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void ceil(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void ceil(double value);
-    method public final void coalesce(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void collator(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.CollatorBuilder,kotlin.Unit> block);
-    method public final void color(@ColorInt int intColor);
-    method public final void concat(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void concat(java.lang.String... values);
-    method public final void cos(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void cos(double value);
-    method public final void distance(com.mapbox.geojson.GeoJson geojson);
-    method public final void distanceFromCenter();
-    method public final void division(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void division(double first, double second);
-    method public final void downcase(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void downcase(String value);
-    method public final void e();
-    method public final void eq(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void featureState(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void floor(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void floor(double value);
-    method public final void format(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.FormatBuilder,kotlin.Unit> block);
-    method public final void geometryType();
-    method public final void get(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void get(String key);
-    method public final void get(String key, com.mapbox.maps.extension.style.expressions.generated.Expression expression);
-    method public final void gt(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void gte(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void has(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void has(String string, com.mapbox.maps.extension.style.expressions.generated.Expression expression);
-    method public final void has(String string);
-    method public final void heatmapDensity();
-    method public final void id();
-    method public final void image(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void inExpression(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void inExpression(String needle, com.mapbox.maps.extension.style.expressions.generated.Expression haystack);
-    method public final void inExpression(double needle, com.mapbox.maps.extension.style.expressions.generated.Expression haystack);
-    method public final void indexOf(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void interpolate(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.InterpolatorBuilder,kotlin.Unit> block);
-    method public final void isSupportedScript(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void isSupportedScript(String script);
-    method public final void length(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void length(String string);
-    method public final void letExpression(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void lineProgress();
-    method public final void literal(double value);
-    method public final void literal(long value);
-    method public final void literal(boolean value);
-    method public final void literal(String value);
-    method public final void literal(java.util.HashMap<java.lang.String,java.lang.Object> value);
-    method public final void literal(java.util.List<?> value);
-    method public final void ln(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void ln(double value);
-    method public final void ln2();
-    method public final void log10(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void log10(double value);
-    method public final void log2(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void log2(double value);
-    method public final void lt(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void lte(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void match(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void max(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void max(double... values);
-    method public final void min(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void min(double... values);
-    method public final void mod(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void mod(double first, double second);
-    method public final void neq(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void not(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void not(boolean bool);
-    method public final void number(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void numberFormat(com.mapbox.maps.extension.style.expressions.generated.Expression input, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.NumberFormatBuilder,kotlin.Unit> block);
-    method public final void numberFormat(double value, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.NumberFormatBuilder,kotlin.Unit> block);
-    method public final void objectExpression(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void pi();
-    method public final void pitch();
-    method public final void pow(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void pow(double first, double second);
-    method public final void product(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void product(double... double);
-    method public final void properties();
-    method public final void rasterValue();
-    method public final void resolvedLocale(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void rgb(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void rgb(double red, double green, double blue);
-    method public final void rgba(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void rgba(double red, double green, double blue, double alpha);
-    method public final void round(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void round(double value);
-    method public final void sin(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void sin(double value);
-    method public final void skyRadialProgress();
-    method public final void slice(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void sqrt(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void sqrt(double value);
-    method public final void step(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void stop(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void stop(double key, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void string(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void subtract(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void subtract(double first, double second);
-    method public final void subtract(double value);
-    method public final void sum(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void sum(double... double);
-    method public final void switchCase(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void tan(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void tan(double value);
-    method public final void toBoolean(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void toColor(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void toNumber(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void toRgba(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void toString(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void typeofExpression(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void upcase(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void upcase(String value);
-    method public final void varExpression(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void varExpression(String value);
-    method public final void within(com.mapbox.geojson.Geometry geometry);
-    method public final void zoom();
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder all(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder any(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder array(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder asin(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder asin(double value);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder at(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder at(double index, com.mapbox.maps.extension.style.expressions.generated.Expression array);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder atan(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder atan(double value);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder boolean(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder ceil(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder ceil(double value);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder coalesce(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder collator(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.CollatorBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder color(@ColorInt int intColor);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder concat(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder concat(java.lang.String... values);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder cos(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder cos(double value);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder distance(com.mapbox.geojson.GeoJson geojson);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder distanceFromCenter();
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder division(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder division(double first, double second);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder downcase(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder downcase(String value);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder e();
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder eq(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder featureState(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder floor(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder floor(double value);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder format(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.FormatBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder geometryType();
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder get(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder get(String key);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder get(String key, com.mapbox.maps.extension.style.expressions.generated.Expression expression);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder gt(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder gte(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder has(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder has(String string, com.mapbox.maps.extension.style.expressions.generated.Expression expression);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder has(String string);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder heatmapDensity();
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder id();
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder image(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder inExpression(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder inExpression(String needle, com.mapbox.maps.extension.style.expressions.generated.Expression haystack);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder inExpression(double needle, com.mapbox.maps.extension.style.expressions.generated.Expression haystack);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder indexOf(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder interpolate(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.InterpolatorBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder isSupportedScript(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder isSupportedScript(String script);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder length(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder length(String string);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder letExpression(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder lineProgress();
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder literal(double value);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder literal(long value);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder literal(boolean value);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder literal(String value);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder literal(java.util.HashMap<java.lang.String,java.lang.Object> value);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder literal(java.util.List<?> value);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder ln(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder ln(double value);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder ln2();
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder log10(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder log10(double value);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder log2(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder log2(double value);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder lt(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder lte(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder match(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder max(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder max(double... values);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder min(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder min(double... values);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder mod(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder mod(double first, double second);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder neq(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder not(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder not(boolean bool);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder number(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder numberFormat(com.mapbox.maps.extension.style.expressions.generated.Expression input, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.NumberFormatBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder numberFormat(double value, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.NumberFormatBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder objectExpression(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder pi();
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder pitch();
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder pow(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder pow(double first, double second);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder product(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder product(double... double);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder properties();
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder rasterValue();
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder resolvedLocale(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder rgb(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder rgb(double red, double green, double blue);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder rgba(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder rgba(double red, double green, double blue, double alpha);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder round(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder round(double value);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder sin(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder sin(double value);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder skyRadialProgress();
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder slice(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder sqrt(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder sqrt(double value);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder step(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder stop(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder stop(double input, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder stop(com.mapbox.maps.extension.style.expressions.generated.Expression input, com.mapbox.maps.extension.style.expressions.generated.Expression output);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder stop(double input, double output);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder stop(kotlin.Pair<com.mapbox.maps.extension.style.expressions.generated.Expression,com.mapbox.maps.extension.style.expressions.generated.Expression> pair);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder string(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder subtract(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder subtract(double first, double second);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder subtract(double value);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder sum(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder sum(double... double);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder switchCase(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder tan(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder tan(double value);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder toBoolean(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder toColor(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder toNumber(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder toRgba(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder toString(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder typeofExpression(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder upcase(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder upcase(String value);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder varExpression(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder varExpression(String value);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder within(com.mapbox.geojson.Geometry geometry);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder zoom();
   }
 
   @com.mapbox.maps.extension.style.types.ExpressionDsl public static final class Expression.FormatBuilder extends com.mapbox.maps.extension.style.expressions.generated.Expression.Builder {
@@ -836,9 +865,13 @@ package com.mapbox.maps.extension.style.expressions.generated {
 
   @com.mapbox.maps.extension.style.types.ExpressionDsl public static final class Expression.InterpolatorBuilder extends com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder {
     ctor public Expression.InterpolatorBuilder(String operator);
-    method public void cubicBezier(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public void exponential(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public void linear();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression.InterpolatorBuilder cubicBezier(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression.InterpolatorBuilder cubicBezier(com.mapbox.maps.extension.style.expressions.generated.Expression x1, com.mapbox.maps.extension.style.expressions.generated.Expression x2, com.mapbox.maps.extension.style.expressions.generated.Expression x3, com.mapbox.maps.extension.style.expressions.generated.Expression x4);
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression.InterpolatorBuilder cubicBezier(double x1, double x2, double x3, double x4);
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression.InterpolatorBuilder exponential(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression.InterpolatorBuilder exponential(double value);
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression.InterpolatorBuilder exponential(com.mapbox.maps.extension.style.expressions.generated.Expression value);
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression.InterpolatorBuilder linear();
   }
 
   @com.mapbox.maps.extension.style.types.ExpressionDsl public static final class Expression.NumberFormatBuilder extends com.mapbox.maps.extension.style.expressions.generated.Expression.Builder {
@@ -890,16 +923,18 @@ package com.mapbox.maps.extension.style.image {
 
   public final class ImageExtensionImpl implements com.mapbox.maps.extension.style.StyleContract.StyleImageExtension {
     ctor public ImageExtensionImpl(com.mapbox.maps.extension.style.image.ImageExtensionImpl.Builder builder);
-    method public void bindTo(com.mapbox.maps.extension.style.StyleInterface delegate);
+    method public void bindTo(com.mapbox.maps.Style delegate);
   }
 
   public static final class ImageExtensionImpl.Builder {
-    ctor public ImageExtensionImpl.Builder(String imageId);
-    method public com.mapbox.maps.extension.style.image.ImageExtensionImpl.Builder bitmap(android.graphics.Bitmap bitmap);
+    ctor @Deprecated public ImageExtensionImpl.Builder(String imageId);
+    ctor public ImageExtensionImpl.Builder(String imageId, com.mapbox.maps.Image image);
+    ctor public ImageExtensionImpl.Builder(String imageId, android.graphics.Bitmap bitmap);
+    method @Deprecated public com.mapbox.maps.extension.style.image.ImageExtensionImpl.Builder bitmap(android.graphics.Bitmap bitmap);
     method public com.mapbox.maps.extension.style.image.ImageExtensionImpl build();
     method public com.mapbox.maps.extension.style.image.ImageExtensionImpl.Builder content(com.mapbox.maps.ImageContent content);
     method public String getImageId();
-    method public com.mapbox.maps.extension.style.image.ImageExtensionImpl.Builder image(com.mapbox.maps.Image image);
+    method @Deprecated public com.mapbox.maps.extension.style.image.ImageExtensionImpl.Builder image(com.mapbox.maps.Image image);
     method public com.mapbox.maps.extension.style.image.ImageExtensionImpl.Builder scale(float scale);
     method public com.mapbox.maps.extension.style.image.ImageExtensionImpl.Builder sdf(boolean sdf = false);
     method public com.mapbox.maps.extension.style.image.ImageExtensionImpl.Builder stretchX(java.util.List<com.mapbox.maps.ImageStretches> stretchX = <anonymous class>());
@@ -909,7 +944,7 @@ package com.mapbox.maps.extension.style.image {
 
   public final class ImageNinePatchExtensionImpl implements com.mapbox.maps.extension.style.StyleContract.StyleImageExtension {
     ctor public ImageNinePatchExtensionImpl(com.mapbox.maps.extension.style.image.ImageNinePatchExtensionImpl.Builder builder);
-    method public void bindTo(com.mapbox.maps.extension.style.StyleInterface delegate);
+    method public void bindTo(com.mapbox.maps.Style delegate);
   }
 
   public static final class ImageNinePatchExtensionImpl.Builder {
@@ -924,9 +959,11 @@ package com.mapbox.maps.extension.style.image {
   }
 
   public final class ImageUtils {
-    method public static void addImage(com.mapbox.maps.extension.style.StyleInterface, com.mapbox.maps.extension.style.StyleContract.StyleImageExtension image);
-    method public static void addImage9Patch(com.mapbox.maps.extension.style.StyleInterface, com.mapbox.maps.extension.style.StyleContract.StyleImageExtension image);
-    method public static com.mapbox.maps.extension.style.image.ImageExtensionImpl image(String imageId, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.image.ImageExtensionImpl.Builder,kotlin.Unit> block);
+    method public static void addImage(com.mapbox.maps.Style, com.mapbox.maps.extension.style.StyleContract.StyleImageExtension image);
+    method public static void addImage9Patch(com.mapbox.maps.Style, com.mapbox.maps.extension.style.StyleContract.StyleImageExtension image);
+    method @Deprecated public static com.mapbox.maps.extension.style.image.ImageExtensionImpl image(String imageId, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.image.ImageExtensionImpl.Builder,kotlin.Unit> block);
+    method public static com.mapbox.maps.extension.style.image.ImageExtensionImpl image(String imageId, com.mapbox.maps.Image image, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.image.ImageExtensionImpl.Builder,kotlin.Unit> block = {});
+    method public static com.mapbox.maps.extension.style.image.ImageExtensionImpl image(String imageId, android.graphics.Bitmap bitmap, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.image.ImageExtensionImpl.Builder,kotlin.Unit> block = {});
     method public static com.mapbox.maps.extension.style.image.ImageNinePatchExtensionImpl image9Patch(String imageId, android.graphics.Bitmap bitmap, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.image.ImageNinePatchExtensionImpl.Builder,kotlin.Unit>? block = null);
     method public static com.mapbox.maps.extension.style.image.ImageNinePatchExtensionImpl image9Patch(String imageId, android.graphics.Bitmap bitmap);
   }
@@ -949,9 +986,9 @@ package com.mapbox.maps.extension.style.image {
   }
 
   public final class NinePatchUtils {
-    method public static com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addImage9Patch(com.mapbox.maps.extension.style.StyleInterface, String imageId, android.graphics.Bitmap bitmap, float scale = pixelRatio, boolean sdf = false);
-    method public static com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addImage9Patch(com.mapbox.maps.extension.style.StyleInterface, String imageId, android.graphics.Bitmap bitmap, float scale = pixelRatio);
-    method public static com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addImage9Patch(com.mapbox.maps.extension.style.StyleInterface, String imageId, android.graphics.Bitmap bitmap);
+    method public static com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addImage9Patch(com.mapbox.maps.Style, String imageId, android.graphics.Bitmap bitmap, float scale = com.mapbox.maps.Style.pixelRatio, boolean sdf = false);
+    method public static com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addImage9Patch(com.mapbox.maps.Style, String imageId, android.graphics.Bitmap bitmap, float scale = com.mapbox.maps.Style.pixelRatio);
+    method public static com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addImage9Patch(com.mapbox.maps.Style, String imageId, android.graphics.Bitmap bitmap);
     method public static com.mapbox.maps.extension.style.image.NinePatchImage parse9PatchBitmap(android.graphics.Bitmap);
   }
 
@@ -961,8 +998,8 @@ package com.mapbox.maps.extension.style.layers {
 
   public abstract class Layer implements com.mapbox.maps.extension.style.StyleContract.StyleLayerExtension {
     ctor public Layer();
-    method public final void bindTo(com.mapbox.maps.extension.style.StyleInterface delegate);
-    method public void bindTo(com.mapbox.maps.extension.style.StyleInterface delegate, com.mapbox.maps.LayerPosition? position);
+    method public final void bindTo(com.mapbox.maps.Style delegate);
+    method public void bindTo(com.mapbox.maps.Style delegate, com.mapbox.maps.LayerPosition? position);
     method public abstract String getLayerId();
     method public abstract Double? getMaxZoom();
     method public abstract Double? getMinZoom();
@@ -981,14 +1018,14 @@ package com.mapbox.maps.extension.style.layers {
   }
 
   public final class LayerUtils {
-    method public static void addLayer(com.mapbox.maps.extension.style.StyleInterface, com.mapbox.maps.extension.style.StyleContract.StyleLayerExtension layer);
-    method public static void addLayerAbove(com.mapbox.maps.extension.style.StyleInterface, com.mapbox.maps.extension.style.StyleContract.StyleLayerExtension layer, String? above);
-    method public static void addLayerAt(com.mapbox.maps.extension.style.StyleInterface, com.mapbox.maps.extension.style.StyleContract.StyleLayerExtension layer, Integer? index);
-    method public static void addLayerBelow(com.mapbox.maps.extension.style.StyleInterface, com.mapbox.maps.extension.style.StyleContract.StyleLayerExtension layer, String? below);
-    method public static void addPersistentLayer(com.mapbox.maps.extension.style.StyleInterface, com.mapbox.maps.extension.style.layers.Layer layer, com.mapbox.maps.LayerPosition? position = null);
-    method public static void addPersistentLayer(com.mapbox.maps.extension.style.StyleInterface, com.mapbox.maps.extension.style.layers.Layer layer);
-    method public static com.mapbox.maps.extension.style.layers.Layer? getLayer(com.mapbox.maps.StyleManagerInterface, String layerId);
-    method public static inline <reified T extends com.mapbox.maps.extension.style.layers.Layer> T! getLayerAs(com.mapbox.maps.StyleManagerInterface, String layerId);
+    method public static void addLayer(com.mapbox.maps.Style, com.mapbox.maps.extension.style.StyleContract.StyleLayerExtension layer);
+    method public static void addLayerAbove(com.mapbox.maps.Style, com.mapbox.maps.extension.style.StyleContract.StyleLayerExtension layer, String? above);
+    method public static void addLayerAt(com.mapbox.maps.Style, com.mapbox.maps.extension.style.StyleContract.StyleLayerExtension layer, Integer? index);
+    method public static void addLayerBelow(com.mapbox.maps.Style, com.mapbox.maps.extension.style.StyleContract.StyleLayerExtension layer, String? below);
+    method public static void addPersistentLayer(com.mapbox.maps.Style, com.mapbox.maps.extension.style.layers.Layer layer, com.mapbox.maps.LayerPosition? position = null);
+    method public static void addPersistentLayer(com.mapbox.maps.Style, com.mapbox.maps.extension.style.layers.Layer layer);
+    method public static com.mapbox.maps.extension.style.layers.Layer? getLayer(com.mapbox.maps.Style, String layerId);
+    method public static inline <reified T extends com.mapbox.maps.extension.style.layers.Layer> T! getLayerAs(com.mapbox.maps.Style, String layerId);
     method public static Boolean? isPersistent(com.mapbox.maps.extension.style.layers.Layer);
   }
 
@@ -2688,6 +2725,115 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public static com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer locationIndicatorLayer(String layerId, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayerDsl,kotlin.Unit> block);
   }
 
+  @UiThread @com.mapbox.maps.MapboxExperimental public final class ModelLayer extends com.mapbox.maps.extension.style.layers.Layer implements com.mapbox.maps.extension.style.layers.generated.ModelLayerDsl {
+    ctor public ModelLayer(String layerId, String sourceId);
+    method public com.mapbox.maps.extension.style.layers.generated.ModelLayer filter(com.mapbox.maps.extension.style.expressions.generated.Expression filter);
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getFilter();
+    method public String getLayerId();
+    method public Double? getMaxZoom();
+    method public Double? getMinZoom();
+    method public String? getModelId();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getModelIdAsExpression();
+    method public java.util.List<java.lang.Double>? getModelRotation();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getModelRotationAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getModelRotationTransition();
+    method public java.util.List<java.lang.Double>? getModelScale();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getModelScaleAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getModelScaleTransition();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.ModelType? getModelType();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getModelTypeAsExpression();
+    method public String getSourceId();
+    method public String? getSourceLayer();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.Visibility? getVisibility();
+    method public com.mapbox.maps.extension.style.layers.generated.ModelLayer maxZoom(double maxZoom);
+    method public com.mapbox.maps.extension.style.layers.generated.ModelLayer minZoom(double minZoom);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelId(String modelId);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelId(com.mapbox.maps.extension.style.expressions.generated.Expression modelId);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelRotation(java.util.List<java.lang.Double> modelRotation);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelRotation(com.mapbox.maps.extension.style.expressions.generated.Expression modelRotation);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelRotationTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelRotationTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelScale(java.util.List<java.lang.Double> modelScale);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelScale(com.mapbox.maps.extension.style.expressions.generated.Expression modelScale);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelScaleTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelScaleTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelType(com.mapbox.maps.extension.style.layers.properties.generated.ModelType modelType);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelType(com.mapbox.maps.extension.style.expressions.generated.Expression modelType);
+    method public com.mapbox.maps.extension.style.layers.generated.ModelLayer sourceLayer(String sourceLayer);
+    method public com.mapbox.maps.extension.style.layers.generated.ModelLayer visibility(com.mapbox.maps.extension.style.layers.properties.generated.Visibility visibility);
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? filter;
+    property public String layerId;
+    property public Double? maxZoom;
+    property public Double? minZoom;
+    property public final String? modelId;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? modelIdAsExpression;
+    property public final java.util.List<java.lang.Double>? modelRotation;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? modelRotationAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? modelRotationTransition;
+    property public final java.util.List<java.lang.Double>? modelScale;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? modelScaleAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? modelScaleTransition;
+    property public final com.mapbox.maps.extension.style.layers.properties.generated.ModelType? modelType;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? modelTypeAsExpression;
+    property public final String sourceId;
+    property public final String? sourceLayer;
+    property public com.mapbox.maps.extension.style.layers.properties.generated.Visibility? visibility;
+    field public static final com.mapbox.maps.extension.style.layers.generated.ModelLayer.Companion Companion;
+  }
+
+  public static final class ModelLayer.Companion {
+    method public Double? getDefaultMaxZoom();
+    method public Double? getDefaultMinZoom();
+    method public String? getDefaultModelId();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultModelIdAsExpression();
+    method public java.util.List<java.lang.Double>? getDefaultModelRotation();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultModelRotationAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultModelRotationTransition();
+    method public java.util.List<java.lang.Double>? getDefaultModelScale();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultModelScaleAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultModelScaleTransition();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.ModelType? getDefaultModelType();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultModelTypeAsExpression();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.Visibility? getDefaultVisibility();
+    property public final Double? defaultMaxZoom;
+    property public final Double? defaultMinZoom;
+    property public final String? defaultModelId;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultModelIdAsExpression;
+    property public final java.util.List<java.lang.Double>? defaultModelRotation;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultModelRotationAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultModelRotationTransition;
+    property public final java.util.List<java.lang.Double>? defaultModelScale;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultModelScaleAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultModelScaleTransition;
+    property public final com.mapbox.maps.extension.style.layers.properties.generated.ModelType? defaultModelType;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultModelTypeAsExpression;
+    property public final com.mapbox.maps.extension.style.layers.properties.generated.Visibility? defaultVisibility;
+  }
+
+  @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.style.types.LayersDsl public interface ModelLayerDsl {
+    method public com.mapbox.maps.extension.style.layers.generated.ModelLayer filter(com.mapbox.maps.extension.style.expressions.generated.Expression filter);
+    method public com.mapbox.maps.extension.style.layers.generated.ModelLayer maxZoom(double maxZoom);
+    method public com.mapbox.maps.extension.style.layers.generated.ModelLayer minZoom(double minZoom);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelId(String modelId);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelId(com.mapbox.maps.extension.style.expressions.generated.Expression modelId);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelRotation(java.util.List<java.lang.Double> modelRotation = <anonymous class>(0.0, 0.0, 0.0));
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelRotation(com.mapbox.maps.extension.style.expressions.generated.Expression modelRotation);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelRotationTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelRotationTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelScale(java.util.List<java.lang.Double> modelScale = <anonymous class>(1.0, 1.0, 1.0));
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelScale(com.mapbox.maps.extension.style.expressions.generated.Expression modelScale);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelScaleTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelScaleTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelType(com.mapbox.maps.extension.style.layers.properties.generated.ModelType modelType = com.mapbox.maps.extension.style.layers.properties.generated.ModelType.COMMON_3D);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelType(com.mapbox.maps.extension.style.expressions.generated.Expression modelType);
+    method public com.mapbox.maps.extension.style.layers.generated.ModelLayer sourceLayer(String sourceLayer);
+    method public com.mapbox.maps.extension.style.layers.generated.ModelLayer visibility(com.mapbox.maps.extension.style.layers.properties.generated.Visibility visibility);
+  }
+
+  public final class ModelLayerKt {
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.style.layers.generated.ModelLayer modelLayer(String layerId, String sourceId, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.layers.generated.ModelLayerDsl,kotlin.Unit> block);
+  }
+
   @UiThread public final class RasterLayer extends com.mapbox.maps.extension.style.layers.Layer implements com.mapbox.maps.extension.style.layers.generated.RasterLayerDsl {
     ctor public RasterLayer(String layerId, String sourceId);
     method public String getLayerId();
@@ -4059,6 +4205,13 @@ package com.mapbox.maps.extension.style.layers.properties.generated {
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.LineTranslateAnchor VIEWPORT;
   }
 
+  @com.mapbox.maps.MapboxExperimental public enum ModelType {
+    method public String! getValue();
+    property public String! value;
+    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.ModelType COMMON_3D;
+    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.ModelType LOCATION_INDICATOR;
+  }
+
   public enum ProjectionName {
     method public String! getValue();
     property public String! value;
@@ -4182,15 +4335,165 @@ package com.mapbox.maps.extension.style.light {
     method public com.mapbox.maps.extension.style.light.LightPosition fromList(java.util.List<java.lang.Double> positionList);
   }
 
+  @com.mapbox.maps.MapboxExperimental public abstract class Lights3D {
+    ctor public Lights3D();
+    method public abstract String getLightId();
+    property public abstract String lightId;
+    field public static final com.mapbox.maps.extension.style.light.Lights3D.Companion Companion;
+  }
+
+  public static final class Lights3D.Companion {
+  }
+
+  public final class Lights3DExtKt {
+    method @com.mapbox.maps.MapboxExperimental public static void addLights3D(com.mapbox.maps.Style, java.util.List<? extends com.mapbox.maps.extension.style.light.Lights3D> lights);
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.style.light.Lights3D? getLights3D(com.mapbox.maps.Style, String lightId);
+    method @com.mapbox.maps.MapboxExperimental public static void setup3DLights(com.mapbox.maps.Style, com.mapbox.maps.extension.style.light.generated.AmbientLight ambientLight, com.mapbox.maps.extension.style.light.generated.DirectionalLight directionalLight);
+  }
+
 }
 
 package com.mapbox.maps.extension.style.light.generated {
+
+  @UiThread @com.mapbox.maps.MapboxExperimental public final class AmbientLight extends com.mapbox.maps.extension.style.light.Lights3D implements com.mapbox.maps.extension.style.light.generated.AmbientLightDslReceiver {
+    ctor public AmbientLight(String lightId);
+    method public com.mapbox.maps.extension.style.light.generated.AmbientLight color(@ColorInt int color);
+    method public com.mapbox.maps.extension.style.light.generated.AmbientLight color(String color);
+    method public com.mapbox.maps.extension.style.light.generated.AmbientLight color(com.mapbox.maps.extension.style.expressions.generated.Expression color);
+    method public com.mapbox.maps.extension.style.light.generated.AmbientLight colorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.light.generated.AmbientLight colorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method public String? getColor();
+    method @ColorInt public Integer? getColorAsColorInt();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getColorAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getColorTransition();
+    method public Double? getIntensity();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getIntensityAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getIntensityTransition();
+    method public String getLightId();
+    method public com.mapbox.maps.extension.style.light.generated.AmbientLight intensity(double intensity);
+    method public com.mapbox.maps.extension.style.light.generated.AmbientLight intensity(com.mapbox.maps.extension.style.expressions.generated.Expression intensity);
+    method public com.mapbox.maps.extension.style.light.generated.AmbientLight intensityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.light.generated.AmbientLight intensityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    property public final String? color;
+    property @ColorInt public final Integer? colorAsColorInt;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? colorAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? colorTransition;
+    property public final Double? intensity;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? intensityAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? intensityTransition;
+    property public String lightId;
+    field public static final com.mapbox.maps.extension.style.light.generated.AmbientLight.Companion Companion;
+  }
+
+  public static final class AmbientLight.Companion {
+  }
+
+  @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.style.types.LightDsl public interface AmbientLightDslReceiver {
+    method public com.mapbox.maps.extension.style.light.generated.AmbientLight color(@ColorInt int color);
+    method public com.mapbox.maps.extension.style.light.generated.AmbientLight color(String color = "#ffffff");
+    method public com.mapbox.maps.extension.style.light.generated.AmbientLight color(com.mapbox.maps.extension.style.expressions.generated.Expression color);
+    method public com.mapbox.maps.extension.style.light.generated.AmbientLight colorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.light.generated.AmbientLight colorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method public com.mapbox.maps.extension.style.light.generated.AmbientLight intensity(double intensity = 0.5);
+    method public com.mapbox.maps.extension.style.light.generated.AmbientLight intensity(com.mapbox.maps.extension.style.expressions.generated.Expression intensity);
+    method public com.mapbox.maps.extension.style.light.generated.AmbientLight intensityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.light.generated.AmbientLight intensityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+  }
+
+  public final class AmbientLightKt {
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.style.light.generated.AmbientLight ambientLight(String id, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.light.generated.AmbientLightDslReceiver,kotlin.Unit> block);
+  }
+
+  @UiThread @com.mapbox.maps.MapboxExperimental public final class DirectionalLight extends com.mapbox.maps.extension.style.light.Lights3D implements com.mapbox.maps.extension.style.light.generated.DirectionalLightDslReceiver {
+    ctor public DirectionalLight(String lightId);
+    method public com.mapbox.maps.extension.style.light.generated.DirectionalLight castShadows(boolean castShadows);
+    method public com.mapbox.maps.extension.style.light.generated.DirectionalLight castShadows(com.mapbox.maps.extension.style.expressions.generated.Expression castShadows);
+    method public com.mapbox.maps.extension.style.light.generated.DirectionalLight color(@ColorInt int color);
+    method public com.mapbox.maps.extension.style.light.generated.DirectionalLight color(String color);
+    method public com.mapbox.maps.extension.style.light.generated.DirectionalLight color(com.mapbox.maps.extension.style.expressions.generated.Expression color);
+    method public com.mapbox.maps.extension.style.light.generated.DirectionalLight colorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.light.generated.DirectionalLight colorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method public com.mapbox.maps.extension.style.light.generated.DirectionalLight direction(java.util.List<java.lang.Double> direction);
+    method public com.mapbox.maps.extension.style.light.generated.DirectionalLight direction(com.mapbox.maps.extension.style.expressions.generated.Expression direction);
+    method public com.mapbox.maps.extension.style.light.generated.DirectionalLight directionTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.light.generated.DirectionalLight directionTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method public Boolean? getCastShadows();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getCastShadowsAsExpression();
+    method public String? getColor();
+    method @ColorInt public Integer? getColorAsColorInt();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getColorAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getColorTransition();
+    method public java.util.List<java.lang.Double>? getDirection();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDirectionAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getDirectionTransition();
+    method public Double? getIntensity();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getIntensityAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getIntensityTransition();
+    method public String getLightId();
+    method public Double? getShadowIntensity();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getShadowIntensityAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getShadowIntensityTransition();
+    method public com.mapbox.maps.extension.style.light.generated.DirectionalLight intensity(double intensity);
+    method public com.mapbox.maps.extension.style.light.generated.DirectionalLight intensity(com.mapbox.maps.extension.style.expressions.generated.Expression intensity);
+    method public com.mapbox.maps.extension.style.light.generated.DirectionalLight intensityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.light.generated.DirectionalLight intensityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method public com.mapbox.maps.extension.style.light.generated.DirectionalLight shadowIntensity(double shadowIntensity);
+    method public com.mapbox.maps.extension.style.light.generated.DirectionalLight shadowIntensity(com.mapbox.maps.extension.style.expressions.generated.Expression shadowIntensity);
+    method public com.mapbox.maps.extension.style.light.generated.DirectionalLight shadowIntensityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.light.generated.DirectionalLight shadowIntensityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    property public final Boolean? castShadows;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? castShadowsAsExpression;
+    property public final String? color;
+    property @ColorInt public final Integer? colorAsColorInt;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? colorAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? colorTransition;
+    property public final java.util.List<java.lang.Double>? direction;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? directionAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? directionTransition;
+    property public final Double? intensity;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? intensityAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? intensityTransition;
+    property public String lightId;
+    property public final Double? shadowIntensity;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? shadowIntensityAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? shadowIntensityTransition;
+    field public static final com.mapbox.maps.extension.style.light.generated.DirectionalLight.Companion Companion;
+  }
+
+  public static final class DirectionalLight.Companion {
+  }
+
+  @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.style.types.LightDsl public interface DirectionalLightDslReceiver {
+    method public com.mapbox.maps.extension.style.light.generated.DirectionalLight castShadows(boolean castShadows = false);
+    method public com.mapbox.maps.extension.style.light.generated.DirectionalLight castShadows(com.mapbox.maps.extension.style.expressions.generated.Expression castShadows);
+    method public com.mapbox.maps.extension.style.light.generated.DirectionalLight color(@ColorInt int color);
+    method public com.mapbox.maps.extension.style.light.generated.DirectionalLight color(String color = "#ffffff");
+    method public com.mapbox.maps.extension.style.light.generated.DirectionalLight color(com.mapbox.maps.extension.style.expressions.generated.Expression color);
+    method public com.mapbox.maps.extension.style.light.generated.DirectionalLight colorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.light.generated.DirectionalLight colorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method public com.mapbox.maps.extension.style.light.generated.DirectionalLight direction(java.util.List<java.lang.Double> direction = <anonymous class>(210.0, 30.0));
+    method public com.mapbox.maps.extension.style.light.generated.DirectionalLight direction(com.mapbox.maps.extension.style.expressions.generated.Expression direction);
+    method public com.mapbox.maps.extension.style.light.generated.DirectionalLight directionTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.light.generated.DirectionalLight directionTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method public com.mapbox.maps.extension.style.light.generated.DirectionalLight intensity(double intensity = 0.5);
+    method public com.mapbox.maps.extension.style.light.generated.DirectionalLight intensity(com.mapbox.maps.extension.style.expressions.generated.Expression intensity);
+    method public com.mapbox.maps.extension.style.light.generated.DirectionalLight intensityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.light.generated.DirectionalLight intensityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method public com.mapbox.maps.extension.style.light.generated.DirectionalLight shadowIntensity(double shadowIntensity = 1.0);
+    method public com.mapbox.maps.extension.style.light.generated.DirectionalLight shadowIntensity(com.mapbox.maps.extension.style.expressions.generated.Expression shadowIntensity);
+    method public com.mapbox.maps.extension.style.light.generated.DirectionalLight shadowIntensityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.light.generated.DirectionalLight shadowIntensityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+  }
+
+  public final class DirectionalLightKt {
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.style.light.generated.DirectionalLight directionalLight(String id, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.light.generated.DirectionalLightDslReceiver,kotlin.Unit> block);
+  }
 
   @UiThread public final class Light implements com.mapbox.maps.extension.style.light.generated.LightDslReceiver com.mapbox.maps.extension.style.StyleContract.StyleLightExtension {
     ctor public Light();
     method public com.mapbox.maps.extension.style.light.generated.Light anchor(com.mapbox.maps.extension.style.layers.properties.generated.Anchor anchor);
     method public com.mapbox.maps.extension.style.light.generated.Light anchor(com.mapbox.maps.extension.style.expressions.generated.Expression anchor);
-    method public void bindTo(com.mapbox.maps.extension.style.StyleInterface delegate);
+    method public void bindTo(com.mapbox.maps.Style delegate);
     method public com.mapbox.maps.extension.style.light.generated.Light color(@ColorInt int color);
     method public com.mapbox.maps.extension.style.light.generated.Light color(String color);
     method public com.mapbox.maps.extension.style.light.generated.Light color(com.mapbox.maps.extension.style.expressions.generated.Expression color);
@@ -4259,8 +4562,30 @@ package com.mapbox.maps.extension.style.light.generated {
   }
 
   public final class LightUtils {
-    method public static com.mapbox.maps.extension.style.light.generated.Light getLight(com.mapbox.maps.extension.style.StyleInterface);
-    method public static void setLight(com.mapbox.maps.extension.style.StyleInterface, com.mapbox.maps.extension.style.StyleContract.StyleLightExtension light);
+    method public static com.mapbox.maps.extension.style.light.generated.Light getLight(com.mapbox.maps.Style);
+    method public static void setLight(com.mapbox.maps.Style, com.mapbox.maps.extension.style.StyleContract.StyleLightExtension light);
+  }
+
+}
+
+package com.mapbox.maps.extension.style.model {
+
+  @com.mapbox.maps.MapboxExperimental public final class ModelExtensionImpl implements com.mapbox.maps.extension.style.StyleContract.StyleModelExtension {
+    ctor public ModelExtensionImpl(com.mapbox.maps.extension.style.model.ModelExtensionImpl.Builder builder);
+    method public void bindTo(com.mapbox.maps.Style delegate);
+  }
+
+  @com.mapbox.maps.MapboxExperimental public static final class ModelExtensionImpl.Builder {
+    ctor public ModelExtensionImpl.Builder(String modelId);
+    method public com.mapbox.maps.extension.style.model.ModelExtensionImpl build();
+    method public String getModelId();
+    method public com.mapbox.maps.extension.style.model.ModelExtensionImpl.Builder uri(String uri);
+    property public final String modelId;
+  }
+
+  public final class ModelUtils {
+    method @com.mapbox.maps.MapboxExperimental public static void addModel(com.mapbox.maps.Style, com.mapbox.maps.extension.style.StyleContract.StyleModelExtension model);
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.style.model.ModelExtensionImpl model(String modelId, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.model.ModelExtensionImpl.Builder,kotlin.Unit> block);
   }
 
 }
@@ -4269,7 +4594,7 @@ package com.mapbox.maps.extension.style.projection.generated {
 
   @UiThread public final class Projection implements com.mapbox.maps.extension.style.StyleContract.StyleProjectionExtension {
     ctor public Projection(com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName name);
-    method public void bindTo(com.mapbox.maps.extension.style.StyleInterface delegate);
+    method public void bindTo(com.mapbox.maps.Style delegate);
     method public com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName getName();
     property public final com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName name;
   }
@@ -4279,8 +4604,8 @@ package com.mapbox.maps.extension.style.projection.generated {
   }
 
   public final class StyleProjectionUtils {
-    method public static com.mapbox.maps.extension.style.projection.generated.Projection getProjection(com.mapbox.maps.extension.style.StyleInterface);
-    method public static void setProjection(com.mapbox.maps.extension.style.StyleInterface, com.mapbox.maps.extension.style.projection.generated.Projection projection);
+    method public static com.mapbox.maps.extension.style.projection.generated.Projection getProjection(com.mapbox.maps.Style);
+    method public static void setProjection(com.mapbox.maps.Style, com.mapbox.maps.extension.style.projection.generated.Projection projection);
   }
 
 }
@@ -4289,7 +4614,7 @@ package com.mapbox.maps.extension.style.sources {
 
   public final class CustomGeometrySource implements com.mapbox.maps.extension.style.StyleContract.StyleSourceExtension {
     ctor public CustomGeometrySource(String id, com.mapbox.maps.CustomGeometrySourceOptions options);
-    method public void bindTo(com.mapbox.maps.extension.style.StyleInterface delegate);
+    method public void bindTo(com.mapbox.maps.Style delegate);
     method public String getId();
     method public com.mapbox.maps.CustomGeometrySourceOptions getOptions();
     method public void invalidRegion(com.mapbox.maps.CoordinateBounds coordinateBounds);
@@ -4310,7 +4635,7 @@ package com.mapbox.maps.extension.style.sources {
 
   public abstract class Source implements com.mapbox.maps.extension.style.StyleContract.StyleSourceExtension {
     ctor public Source(String sourceId);
-    method public void bindTo(com.mapbox.maps.extension.style.StyleInterface delegate);
+    method public void bindTo(com.mapbox.maps.Style delegate);
     method public final String getSourceId();
     property public final String sourceId;
     field public static final com.mapbox.maps.extension.style.sources.Source.Companion Companion;
@@ -4320,9 +4645,9 @@ package com.mapbox.maps.extension.style.sources {
   }
 
   public final class SourceUtils {
-    method public static void addSource(com.mapbox.maps.extension.style.StyleInterface, com.mapbox.maps.extension.style.StyleContract.StyleSourceExtension source);
-    method public static com.mapbox.maps.extension.style.sources.Source? getSource(com.mapbox.maps.StyleManagerInterface, String sourceId);
-    method public static inline <reified T extends com.mapbox.maps.extension.style.sources.Source> T! getSourceAs(com.mapbox.maps.StyleManagerInterface, String sourceId);
+    method public static void addSource(com.mapbox.maps.Style, com.mapbox.maps.extension.style.StyleContract.StyleSourceExtension source);
+    method public static com.mapbox.maps.extension.style.sources.Source? getSource(com.mapbox.maps.Style, String sourceId);
+    method public static inline <reified T extends com.mapbox.maps.extension.style.sources.Source> T! getSourceAs(com.mapbox.maps.Style, String sourceId);
   }
 
   public final class TileSet extends java.util.HashMap<java.lang.String,com.mapbox.bindgen.Value> {
@@ -4778,7 +5103,7 @@ package com.mapbox.maps.extension.style.terrain.generated {
 
   @UiThread public final class Terrain implements com.mapbox.maps.extension.style.StyleContract.StyleTerrainExtension com.mapbox.maps.extension.style.terrain.generated.TerrainDslReceiver {
     ctor public Terrain(String sourceId);
-    method public void bindTo(com.mapbox.maps.extension.style.StyleInterface delegate);
+    method public void bindTo(com.mapbox.maps.Style delegate);
     method public com.mapbox.maps.extension.style.terrain.generated.Terrain exaggeration(double exaggeration);
     method public com.mapbox.maps.extension.style.terrain.generated.Terrain exaggeration(com.mapbox.maps.extension.style.expressions.generated.Expression exaggeration);
     method public com.mapbox.maps.extension.style.terrain.generated.Terrain exaggerationTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -4808,9 +5133,9 @@ package com.mapbox.maps.extension.style.terrain.generated {
   }
 
   public final class TerrainUtils {
-    method public static com.mapbox.maps.extension.style.terrain.generated.Terrain getTerrain(com.mapbox.maps.extension.style.StyleInterface, String sourceId);
-    method public static void removeTerrain(com.mapbox.maps.extension.style.StyleInterface);
-    method public static void setTerrain(com.mapbox.maps.extension.style.StyleInterface, com.mapbox.maps.extension.style.StyleContract.StyleTerrainExtension terrain);
+    method public static com.mapbox.maps.extension.style.terrain.generated.Terrain getTerrain(com.mapbox.maps.Style, String sourceId);
+    method public static void removeTerrain(com.mapbox.maps.Style);
+    method public static void setTerrain(com.mapbox.maps.Style, com.mapbox.maps.extension.style.StyleContract.StyleTerrainExtension terrain);
   }
 
 }
@@ -4941,6 +5266,7 @@ package com.mapbox.maps.extension.style.utils {
     method public static com.mapbox.bindgen.Value toValue(com.mapbox.geojson.Feature);
     method public static com.mapbox.bindgen.Value toValue(com.mapbox.geojson.FeatureCollection);
     method public static com.mapbox.bindgen.Value toValue(com.mapbox.geojson.Geometry);
+    method public static inline com.mapbox.maps.TransitionOptions transition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.TransitionOptions.Builder,kotlin.Unit> block);
     method public static inline <reified T> T! unwrap(com.mapbox.maps.StylePropertyValue);
     method public static Object unwrapToAny(com.mapbox.bindgen.Value);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression unwrapToExpression(com.mapbox.bindgen.Value);

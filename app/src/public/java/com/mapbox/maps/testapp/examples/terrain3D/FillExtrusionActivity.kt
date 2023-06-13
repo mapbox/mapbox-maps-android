@@ -5,19 +5,23 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.eq
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.get
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.literal
 import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer
-import com.mapbox.maps.extension.style.light.generated.getLight
+import com.mapbox.maps.extension.style.light.addLights3D
+import com.mapbox.maps.extension.style.light.generated.ambientLight
+import com.mapbox.maps.extension.style.light.generated.directionalLight
 import com.mapbox.maps.testapp.databinding.ActivityFillExtrusionBinding
 
 /**
  * Extrude the building layer in the Mapbox Light style using FillExtrusionLayer
  * and set up the light position.
  */
+@OptIn(MapboxExperimental::class)
 class FillExtrusionActivity : AppCompatActivity() {
 
   private var isRedColor: Boolean = false
@@ -29,7 +33,6 @@ class FillExtrusionActivity : AppCompatActivity() {
     binding = ActivityFillExtrusionBinding.inflate(layoutInflater)
     setContentView(binding.root)
     val mapboxMap = binding.mapView.getMapboxMap()
-
     mapboxMap.setCamera(
       CameraOptions.Builder()
         .center(Point.fromLngLat(-74.0066, 40.7135))
@@ -43,7 +46,40 @@ class FillExtrusionActivity : AppCompatActivity() {
       Style.LIGHT
     ) { style ->
       setupBuildings(style)
-      setupLight(style)
+      setupLights3D(style)
+    }
+  }
+
+  private fun setupLights3D(style: Style) {
+    // setup 3d light
+    val ambientLight = ambientLight(AMBIENT_LIGHT_ID) {
+      color(Color.BLUE)
+      intensity(0.9)
+    }
+    val directionalLight = directionalLight(DIRECTIONAL_LIGHT_ID) {
+      color(Color.YELLOW)
+      intensity(0.9)
+      castShadows(true)
+      direction(listOf(0.0, 15.0))
+    }
+    style.addLights3D(
+      listOf(
+        ambientLight,
+        directionalLight,
+      )
+    )
+    // change color on fab click
+    binding.fabLightColor.setOnClickListener {
+      isRedColor = !isRedColor
+      if (isRedColor) {
+        ambientLight.color(Color.RED)
+      } else {
+        ambientLight.color(Color.BLUE)
+      }
+    }
+
+    binding.fabLightPosition.setOnClickListener {
+      directionalLight.direction(listOf(0.0, (directionalLight.direction!![1] + 5.0) % 90.0))
     }
   }
 
@@ -61,24 +97,8 @@ class FillExtrusionActivity : AppCompatActivity() {
     style.addLayer(fillExtrusionLayer)
   }
 
-  private fun setupLight(style: Style) {
-    val light = style.getLight()
-    binding.fabLightPosition.setOnClickListener {
-      isInitPosition = !isInitPosition
-      if (isInitPosition) {
-        light.position(1.5, 90.0, 80.0)
-      } else {
-        light.position(1.15, 210.0, 30.0)
-      }
-    }
-
-    binding.fabLightColor.setOnClickListener {
-      isRedColor = !isRedColor
-      if (isRedColor) {
-        light.color(Color.RED)
-      } else {
-        light.color(Color.BLUE)
-      }
-    }
+  private companion object {
+    private const val AMBIENT_LIGHT_ID = "ambient_id"
+    private const val DIRECTIONAL_LIGHT_ID = "directional_id"
   }
 }

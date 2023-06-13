@@ -22,7 +22,7 @@ class ImageSourceActivity : AppCompatActivity() {
     val map = binding.mapView.getMapboxMap()
 
     map.loadStyle(
-      style(styleUri = Style.DARK) {
+      style(style = Style.DARK) {
         +imageSource(ID_IMAGE_SOURCE) {
           coordinates(
             listOf(

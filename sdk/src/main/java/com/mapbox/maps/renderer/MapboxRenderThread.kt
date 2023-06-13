@@ -3,9 +3,13 @@ package com.mapbox.maps.renderer
 import android.opengl.EGL14
 import android.opengl.EGLSurface
 import android.opengl.GLES20
+import android.os.Trace
 import android.view.Choreographer
 import android.view.Surface
 import androidx.annotation.*
+import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.MapboxTracing
+import com.mapbox.maps.MapboxTracing.MAPBOX_TRACE_ID
 import com.mapbox.maps.logE
 import com.mapbox.maps.logI
 import com.mapbox.maps.logW
@@ -114,6 +118,16 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   internal var needViewAnnotationSync = false
   @Volatile
   internal var viewAnnotationMode = ViewAnnotationManager.DEFAULT_UPDATE_MODE
+
+  private fun trace(sectionName: String, section: (() -> Unit)) {
+    if (MapboxTracing.platformTracingEnabled) {
+      Trace.beginSection("$MAPBOX_TRACE_ID: $sectionName")
+      section.invoke()
+      Trace.endSection()
+    } else {
+      section.invoke()
+    }
+  }
 
   constructor(
     mapboxRenderer: MapboxRenderer,
@@ -342,29 +356,33 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   }
 
   private fun releaseEglSurface() {
-    widgetTextureRenderer.release()
-    eglCore.releaseSurface(eglSurface)
-    eglContextCreated = false
-    eglSurface = eglCore.eglNoSurface
-    widgetRenderCreated = false
-    widgetRenderer.release()
+    trace("release-egl-surface") {
+      widgetTextureRenderer.release()
+      eglCore.releaseSurface(eglSurface)
+      eglContextCreated = false
+      eglSurface = eglCore.eglNoSurface
+      widgetRenderCreated = false
+      widgetRenderer.release()
+    }
   }
 
   private fun releaseAll(tryRecreate: Boolean = false) {
-    mapboxRenderer.destroyRenderer()
-    logI(TAG, "Native renderer destroyed.")
-    renderEventQueue.clear()
-    nonRenderEventQueue.clear()
-    nativeRenderCreated = false
-    releaseEglSurface()
-    if (eglPrepared) {
-      eglCore.release()
-    }
-    eglPrepared = false
-    if (tryRecreate) {
-      setUpRenderThread(creatingSurface = true)
-    } else {
-      surface?.release()
+    trace("release-egl-all") {
+      mapboxRenderer.destroyRenderer()
+      logI(TAG, "Native renderer destroyed.")
+      renderEventQueue.clear()
+      nonRenderEventQueue.clear()
+      nativeRenderCreated = false
+      releaseEglSurface()
+      if (eglPrepared) {
+        eglCore.release()
+      }
+      eglPrepared = false
+      if (tryRecreate) {
+        setUpRenderThread(creatingSurface = true)
+      } else {
+        surface?.release()
+      }
     }
   }
 
@@ -393,14 +411,16 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     }
     // check for creatingSurface flag to make sure we don't hit deadlock
     if (creatingSurface || !renderThreadPrepared) {
-      val renderThreadPreparedOk = setUpRenderThread(creatingSurface)
-      if (!renderThreadPreparedOk) {
-        logI(
-          TAG,
-          "Skip render frame - render thread NOT prepared although " +
-            "creatingSurface ($creatingSurface) || !renderThreadPrepared (${!renderThreadPrepared})"
-        )
-        return
+      trace("set-up-render-thread") {
+        val renderThreadPreparedOk = setUpRenderThread(creatingSurface)
+        if (!renderThreadPreparedOk) {
+          logI(
+            TAG,
+            "Skip render frame - render thread NOT prepared although " +
+              "creatingSurface ($creatingSurface) || !renderThreadPrepared (${!renderThreadPrepared})"
+          )
+          return@trace
+        }
       }
     }
     checkWidgetRender()
@@ -423,36 +443,40 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
 
   @UiThread
   fun onSurfaceDestroyed() {
-    logI(TAG, "onSurfaceDestroyed")
-    lock.withLock {
-      // in some situations `destroy` is called earlier than onSurfaceDestroyed - in that case no need to clean up
-      if (renderHandlerThread.isRunning) {
-        renderHandlerThread.post {
-          awaitingNextVsync = false
-          Choreographer.getInstance().removeFrameCallback(this)
-          lock.withLock {
-            // TODO https://github.com/mapbox/mapbox-maps-android/issues/607
-            if (nativeRenderCreated && mapboxRenderer is MapboxTextureViewRenderer) {
-              releaseAll()
-              renderHandlerThread.clearRenderEventQueue()
-            } else {
-              releaseEglSurface()
+    trace("surface-destroyed") {
+      logI(TAG, "onSurfaceDestroyed")
+      lock.withLock {
+        // in some situations `destroy` is called earlier than onSurfaceDestroyed - in that case no need to clean up
+        if (renderHandlerThread.isRunning) {
+          renderHandlerThread.post {
+            awaitingNextVsync = false
+            Choreographer.getInstance().removeFrameCallback(this)
+            lock.withLock {
+              // TODO https://github.com/mapbox/mapbox-maps-android/issues/607
+              if (nativeRenderCreated && mapboxRenderer is MapboxTextureViewRenderer) {
+                releaseAll()
+                renderHandlerThread.clearRenderEventQueue()
+              } else {
+                releaseEglSurface()
+              }
+              fpsManager.onSurfaceDestroyed()
+              destroyCondition.signal()
             }
-            fpsManager.onSurfaceDestroyed()
-            destroyCondition.signal()
           }
+          logI(TAG, "onSurfaceDestroyed: waiting until EGL will be cleaned up...")
+          destroyCondition.await()
+          logI(TAG, "onSurfaceDestroyed: EGL resources were cleaned up.")
         }
-        logI(TAG, "onSurfaceDestroyed: waiting until EGL will be cleaned up...")
-        destroyCondition.await()
-        logI(TAG, "onSurfaceDestroyed: EGL resources were cleaned up.")
       }
     }
   }
 
+  @OptIn(MapboxExperimental::class)
   fun addWidget(widget: Widget) {
     widgetRenderer.addWidget(widget)
   }
 
+  @OptIn(MapboxExperimental::class)
   fun removeWidget(widget: Widget) = widgetRenderer.removeWidget(widget)
 
   @WorkerThread
@@ -483,15 +507,17 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
 
   @UiThread
   fun onSurfaceCreated(surface: Surface, width: Int, height: Int) {
-    logI(TAG, "onSurfaceCreated")
-    lock.withLock {
-      if (renderHandlerThread.isRunning) {
-        renderHandlerThread.post {
-          processAndroidSurface(surface, width, height)
+    trace("surface-created") {
+      logI(TAG, "onSurfaceCreated")
+      lock.withLock {
+        if (renderHandlerThread.isRunning) {
+          renderHandlerThread.post {
+            processAndroidSurface(surface, width, height)
+          }
+          logI(TAG, "onSurfaceCreated: waiting Android surface to be processed...")
+          createCondition.await()
+          logI(TAG, "onSurfaceCreated: Android surface was processed.")
         }
-        logI(TAG, "onSurfaceCreated: waiting Android surface to be processed...")
-        createCondition.await()
-        logI(TAG, "onSurfaceCreated: Android surface was processed.")
       }
     }
   }
@@ -574,28 +600,30 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
 
   @UiThread
   internal fun destroy() {
-    logI(TAG, "destroy")
-    lock.withLock {
-      // do nothing if destroy for some reason called more than once to avoid deadlock
-      if (renderHandlerThread.isRunning) {
-        renderHandlerThread.post {
-          lock.withLock {
-            if (nativeRenderCreated) {
-              releaseAll()
+    trace("destroy") {
+      logI(TAG, "destroy")
+      lock.withLock {
+        // do nothing if destroy for some reason called more than once to avoid deadlock
+        if (renderHandlerThread.isRunning) {
+          renderHandlerThread.post {
+            lock.withLock {
+              if (nativeRenderCreated) {
+                releaseAll()
+              }
+              renderHandlerThread.clearRenderEventQueue()
+              fpsManager.destroy()
+              eglCore.clearRendererStateListeners()
+              destroyCondition.signal()
             }
-            renderHandlerThread.clearRenderEventQueue()
-            fpsManager.destroy()
-            eglCore.clearRendererStateListeners()
-            destroyCondition.signal()
           }
+          logI(TAG, "destroy: waiting until all resources will be cleaned up...")
+          destroyCondition.await()
+          logI(TAG, "destroy: all resources were cleaned up.")
         }
-        logI(TAG, "destroy: waiting until all resources will be cleaned up...")
-        destroyCondition.await()
-        logI(TAG, "destroy: all resources were cleaned up.")
       }
+      renderHandlerThread.stop()
+      mapboxRenderer.map = null
     }
-    renderHandlerThread.stop()
-    mapboxRenderer.map = null
   }
 
   private fun drainQueue(originalQueue: ConcurrentLinkedQueue<RenderEvent>) {

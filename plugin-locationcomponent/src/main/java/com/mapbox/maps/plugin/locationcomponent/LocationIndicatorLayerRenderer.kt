@@ -5,7 +5,7 @@ import androidx.annotation.ColorInt
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
 import com.mapbox.maps.ImageHolder
-import com.mapbox.maps.extension.style.StyleInterface
+import com.mapbox.maps.Style
 import com.mapbox.maps.logE
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.BEARING_ICON
@@ -24,10 +24,10 @@ internal class LocationIndicatorLayerRenderer(
   layerSourceProvider: LayerSourceProvider
 ) : LocationLayerRenderer {
 
-  private var style: StyleInterface? = null
+  private var style: Style? = null
   private var layer = layerSourceProvider.getLocationIndicatorLayer()
 
-  override fun initializeComponents(style: StyleInterface) {
+  override fun initializeComponents(style: Style) {
     this.style = style
     setupBitmaps()
   }
@@ -113,7 +113,7 @@ internal class LocationIndicatorLayerRenderer(
     style?.removeStyleImage(SHADOW_ICON)
   }
 
-  override fun updateStyle(style: StyleInterface) {
+  override fun updateStyle(style: Style) {
     this.style = style
     layer.updateStyle(style)
   }

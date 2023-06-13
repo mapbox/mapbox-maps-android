@@ -40,7 +40,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
     get() {
       val property: String? = getPropertyValue("visibility")
       property?.let {
-        return Visibility.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+        return Visibility.valueOf(it.uppercase(Locale.US).replace('-', '_'))
       }
       return null
     }
@@ -85,7 +85,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
    *
    * Use static method [BackgroundLayer.defaultMinZoom] to get the default property value.
    *
-   * @param value value of minzoom
+   * @param minZoom value of minzoom
    */
   override fun minZoom(minZoom: Double): BackgroundLayer = apply {
     val param = PropertyValue("minzoom", minZoom)
@@ -120,7 +120,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
    *
    * Use static method [BackgroundLayer.defaultMaxZoom] to get the default property value.
    *
-   * @param value value of maxzoom
+   * @param maxZoom value of maxzoom
    */
   override fun maxZoom(maxZoom: Double): BackgroundLayer = apply {
     val param = PropertyValue("maxzoom", maxZoom)
@@ -447,7 +447,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
        */
       get() {
         StyleManager.getStyleLayerPropertyDefaultValue("background", "visibility").silentUnwrap<String>()?.let {
-          return Visibility.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+          return Visibility.valueOf(it.uppercase(Locale.US).replace('-', '_'))
         }
         return null
       }
@@ -659,7 +659,7 @@ interface BackgroundLayerDsl {
    *       minimum: 0
    *       maximum: 24
    *
-   * @param value value of minzoom
+   * @param minZoom value of minzoom
    */
   fun minZoom(minZoom: Double): BackgroundLayer
 
@@ -670,7 +670,7 @@ interface BackgroundLayerDsl {
    *       minimum: 0
    *       maximum: 24
    *
-   * @param value value of maxzoom
+   * @param maxZoom value of maxzoom
    */
   fun maxZoom(maxZoom: Double): BackgroundLayer
 

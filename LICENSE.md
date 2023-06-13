@@ -292,14 +292,6 @@ License: [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENS
 
 ===========================================================================
 
-Mapbox Maps Android uses portions of the Kotlin Data Compat.
-
-URL: [https://github.com/tobrun/data-compat](https://github.com/tobrun/data-compat)
-
-License: [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0)
-
-===========================================================================
-
 Mapbox Maps Android uses portions of the Kotlin Stdlib.
 
 URL: [https://kotlinlang.org/](https://kotlinlang.org/)
@@ -473,7 +465,7 @@ https://www.mapbox.com/legal/tos/
 
 ---
 
-### jni.hpp,4.0.1,ISC,Mapbox,https://github.com/mapbox/jni.hpp
+### jni-hpp-internal,4.0.1,ISC,Mapbox,https://github.com/mapbox/jni-hpp-internal
 
 ```
 Copyright © 2016, Mapbox
@@ -1002,7 +994,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 ---
 
-### cheap-ruler-cpp,2.5.4,ISC,Mapbox,https://github.com/mapbox/cheap-ruler-cpp
+### cheap-ruler-cpp-internal,2.5.4,ISC,Mapbox,https://github.com/mapbox/cheap-ruler-cpp-internal
 
 ```
 ISC License
@@ -1048,7 +1040,7 @@ THIS SOFTWARE.
 
 ---
 
-### supercluster.hpp,0.5.0,ISC,Mapbox,https://github.com/mapbox/supercluster.hpp
+### supercluster-hpp-internal,0.5.0,ISC,Mapbox,https://github.com/mapbox/supercluster-hpp-internal
 
 ```
 Copyright (c) 2016, Mapbox
@@ -1698,7 +1690,7 @@ SOFTWARE.
 
 ---
 
-### mapbox-base,dev,BSD-3-Clause,Mapbox,https://github.com/mapbox/mapbox-base
+### mapbox-base-internal,dev,BSD-3-Clause,Mapbox,https://github.com/mapbox/mapbox-base-internal
 
 ```
 Copyright (c) MapBox
@@ -1826,7 +1818,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 ---
 
-### geojson.hpp,0.5.1,ISC,Mapbox,https://github.com/mapbox/geojson-cpp
+### geojson-cpp-internal,0.5.1,ISC,Mapbox,https://github.com/mapbox/geojson-cpp-internal
 
 ```
 Copyright (c) 2016, Mapbox
@@ -1847,7 +1839,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 ---
 
-### geometry.hpp,1.1.0,ISC,Mapbox,https://github.com/mapbox/geometry.hpp
+### geometry-hpp-internal,1.1.0,ISC,Mapbox,https://github.com/mapbox/geometry-hpp-internal
 
 ```
 Copyright (c) 2016, Mapbox
@@ -1863,38 +1855,6 @@ ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
 WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
 ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-```
-
----
-
-### variant,1.1.6,BSD-3-Clause,Mapbox,https://github.com/mapbox/variant
-
-```
-Copyright (c) MapBox
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without modification,
-are permitted provided that the following conditions are met:
-
-- Redistributions of source code must retain the above copyright notice, this
-  list of conditions and the following disclaimer.
-- Redistributions in binary form must reproduce the above copyright notice, this
-  list of conditions and the following disclaimer in the documentation and/or
-  other materials provided with the distribution.
-- Neither the name "MapBox" nor the names of its contributors may be
-  used to endorse or promote products derived from this software without
-  specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
-ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES
-LOSS OF USE, DATA, OR PROFITS OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
-ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
 ---

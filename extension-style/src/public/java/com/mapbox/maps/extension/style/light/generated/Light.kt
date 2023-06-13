@@ -7,8 +7,8 @@ import androidx.annotation.ColorInt
 import androidx.annotation.UiThread
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxStyleException
+import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.StyleContract
-import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
 import com.mapbox.maps.extension.style.layers.properties.generated.Anchor
@@ -29,7 +29,7 @@ import kotlin.collections.HashMap
  */
 @UiThread
 class Light : LightDslReceiver, StyleContract.StyleLightExtension {
-  internal var delegate: StyleInterface? = null
+  internal var delegate: Style? = null
   private val properties = HashMap<String, PropertyValue<*>>()
 
   /**
@@ -43,7 +43,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
      */
     get() {
       getPropertyValue<String>("anchor")?.let {
-        return Anchor.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+        return Anchor.valueOf(it.uppercase(Locale.US).replace('-', '_'))
       }
       return null
     }
@@ -370,7 +370,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
    *
    * @param delegate The map controller
    */
-  override fun bindTo(delegate: StyleInterface) {
+  override fun bindTo(delegate: Style) {
     this.delegate = delegate
     val lightParams = HashMap<String, Value>()
     properties.forEach {

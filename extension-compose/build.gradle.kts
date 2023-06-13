@@ -3,10 +3,10 @@ plugins {
 }
 
 android {
-  compileSdk = AndroidVersions.Compose.compileSdkVersion
+  compileSdk = libs.versions.composeCompileSdkVersion.get().toInt()
   defaultConfig {
-    minSdk = AndroidVersions.Compose.minSdkVersion
-    targetSdk = AndroidVersions.Compose.targetSdkVersion
+    minSdk = libs.versions.composeMinSdkVersion.get().toInt()
+    targetSdk = libs.versions.composeTargetSdkVersion.get().toInt()
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
 
@@ -17,7 +17,7 @@ android {
   }
 
   composeOptions {
-    kotlinCompilerExtensionVersion = Versions.compose
+    kotlinCompilerExtensionVersion = libs.versions.compose.get()
   }
 
   buildFeatures {
@@ -32,23 +32,22 @@ android {
 dependencies {
   dependencies {
     compileOnly(project(":sdk"))
-    implementation(platform(Dependencies.composeBom))
-    implementation(Dependencies.composeUi)
-    implementation(Dependencies.composeMaterial)
+    implementation(platform(libs.compose.bom))
+    implementation(libs.compose.ui)
+    implementation(libs.compose.material)
 
-    implementation(Dependencies.androidxCoreKtx)
-    androidTestUtil(Dependencies.androidxOrchestrator)
-    androidTestImplementation(Dependencies.androidxTestRunner)
-    androidTestImplementation(Dependencies.androidxJUnitTestRules)
-    androidTestImplementation(Dependencies.androidxRules)
-    androidTestImplementation(Dependencies.androidxTestJUnit)
-    androidTestImplementation(Dependencies.androidxEspresso)
-    androidTestImplementation(Dependencies.androidxUiAutomator)
+    implementation(libs.androidx.coreKtx)
+    androidTestUtil(libs.androidx.orchestrator)
+    androidTestImplementation(libs.androidx.testRunner)
+    androidTestImplementation(libs.androidx.jUnitTestRules)
+    androidTestImplementation(libs.androidx.testJUnit)
+    androidTestImplementation(libs.androidx.espresso)
+    androidTestImplementation(libs.androidx.uiAutomator)
     androidTestImplementation(project(":sdk"))
-    androidTestImplementation(Dependencies.composeUITest)
-    debugImplementation(Dependencies.composeUITestManifest)
-    testImplementation(Dependencies.junit)
-    detektPlugins(Dependencies.detektFormatting)
+    androidTestImplementation(libs.compose.uiTest)
+    debugImplementation(libs.compose.uiTestManifest)
+    testImplementation(libs.junit)
+    detektPlugins(libs.detektFormatting)
   }
 }
 

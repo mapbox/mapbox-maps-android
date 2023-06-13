@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.mapbox.maps.testapp">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -1212,12 +1211,12 @@
             android:exported="true" />
         <activity
             android:name=".examples.SecondaryDisplayPresentationActivity"
-            android:description="@string/description_simple_map"
+            android:description="@string/description_secondary_display_presentation"
             android:exported="true"
-            android:label="@string/activity_simple_map">
+            android:label="@string/activity_secondary_display_presentation">
             <meta-data
                 android:name="@string/category"
-                android:value="@string/category_basic" />
+                android:value="@string/category_lab" />
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ExampleOverviewActivity" />

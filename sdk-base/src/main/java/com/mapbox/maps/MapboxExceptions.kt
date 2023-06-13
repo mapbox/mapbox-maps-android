@@ -47,5 +47,6 @@ class MapboxStyleException(
  */
 class MapboxConcurrentGeometryModificationException(
   exceptionText: String,
+  @Suppress("UNUSED_PARAMETER")
   sourceId: String
 ) : ConcurrentModificationException(exceptionText)

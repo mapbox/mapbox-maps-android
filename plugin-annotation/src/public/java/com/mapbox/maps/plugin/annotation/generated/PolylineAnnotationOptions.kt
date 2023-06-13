@@ -285,7 +285,7 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
    * @return the annotation that is built
    */
   override fun build(
-    id: Long,
+    id: String,
     annotationManager: AnnotationManager<LineString, PolylineAnnotation, *, *, *, *, *>
   ): PolylineAnnotation {
     if (geometry == null) {

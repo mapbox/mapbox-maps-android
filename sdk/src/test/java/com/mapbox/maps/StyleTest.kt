@@ -11,17 +11,26 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 
+@Config(
+  shadows = [
+    ShadowStyleManager::class,
+  ]
+)
+@RunWith(RobolectricTestRunner::class)
 class StyleTest {
 
   private lateinit var style: Style
-  private val nativeMap: MapInterface = mockk(relaxed = true)
+  private val styleManager: StyleManager = mockk(relaxed = true)
 
   @Before
   fun setUp() {
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logI(any(), any()) } just Runs
-    style = Style(nativeMap as StyleManagerInterface, 1.0f)
+    style = Style(styleManager, 1.0f)
   }
 
   @After
@@ -40,14 +49,34 @@ class StyleTest {
   fun addImage() {
     val image: Image = mockk()
     style.addImage("foobar", image)
-    verify { nativeMap.addStyleImage("foobar", 1.0f, image, false, listOf(), listOf(), null) }
+    verify {
+      styleManager.addStyleImage(
+        "foobar",
+        1.0f,
+        image,
+        false,
+        mutableListOf(),
+        mutableListOf(),
+        null
+      )
+    }
   }
 
   @Test
   fun addImageSdf() {
     val image: Image = mockk()
     style.addImage("foobar", image, true)
-    verify { nativeMap.addStyleImage("foobar", 1.0f, image, true, listOf(), listOf(), null) }
+    verify {
+      styleManager.addStyleImage(
+        "foobar",
+        1.0f,
+        image,
+        true,
+        mutableListOf(),
+        mutableListOf(),
+        null
+      )
+    }
   }
 
   @Test
@@ -58,7 +87,7 @@ class StyleTest {
     val imageContent = ImageContent(1.0f, 2.0f, 3.0f, 4.0f)
     style.addStyleImage("foobar", 2.0f, image, true, stretchesLeft, stretchesRight, imageContent)
     verify {
-      nativeMap.addStyleImage(
+      styleManager.addStyleImage(
         "foobar",
         2.0f,
         image,
@@ -73,34 +102,35 @@ class StyleTest {
   @Test
   fun removeImage() {
     style.removeStyleImage("id")
-    verify { nativeMap.removeStyleImage("id") }
+    verify { styleManager.removeStyleImage("id") }
   }
 
   @Test
   fun hasImage() {
     style.hasStyleImage("id")
-    verify { nativeMap.hasStyleImage("id") }
+    verify { styleManager.hasStyleImage("id") }
   }
 
   @Test
   fun addBitmap() {
-    val bitmap: Bitmap = mockk(relaxed = true)
+    val bitmapWidth = 1
+    val bitmapHeight = 2
+    val bitmap = spyk(Bitmap.createBitmap(bitmapWidth, bitmapHeight, Bitmap.Config.ARGB_8888))
     mockkStatic(DataRef::class)
     val nativeDataRef = mockk<DataRef>(relaxed = true)
     every { DataRef.allocateNative(any()) } returns nativeDataRef
-    every { bitmap.config } returns Bitmap.Config.ARGB_8888
     style.addImage("foobar", bitmap)
     verify { bitmap.height }
     verify { bitmap.width }
     verify { bitmap.byteCount }
     verify(exactly = 1) {
-      nativeMap.addStyleImage(
+      styleManager.addStyleImage(
         "foobar",
         1.0f,
-        Image(bitmap.width, bitmap.height, nativeDataRef),
+        Image(bitmapWidth, bitmapHeight, nativeDataRef),
         false,
-        listOf(),
-        listOf(),
+        mutableListOf(),
+        mutableListOf(),
         null
       )
     }
@@ -109,23 +139,24 @@ class StyleTest {
 
   @Test
   fun addBitmapSdf() {
-    val bitmap: Bitmap = mockk(relaxed = true)
+    val bitmapWidth = 1
+    val bitmapHeight = 2
+    val bitmap = spyk(Bitmap.createBitmap(bitmapWidth, bitmapHeight, Bitmap.Config.ARGB_8888))
     mockkStatic(DataRef::class)
     val nativeDataRef = mockk<DataRef>(relaxed = true)
     every { DataRef.allocateNative(any()) } returns nativeDataRef
-    every { bitmap.config } returns Bitmap.Config.ARGB_8888
     style.addImage("foobar", bitmap, true)
     verify { bitmap.height }
     verify { bitmap.width }
     verify { bitmap.byteCount }
     verify(exactly = 1) {
-      nativeMap.addStyleImage(
+      styleManager.addStyleImage(
         "foobar",
         1.0f,
-        Image(bitmap.width, bitmap.height, nativeDataRef),
+        Image(bitmapWidth, bitmapHeight, nativeDataRef),
         true,
-        listOf(),
-        listOf(),
+        mutableListOf(),
+        mutableListOf(),
         null
       )
     }
@@ -137,64 +168,64 @@ class StyleTest {
     val value = mockk<Value>()
     val position = mockk<LayerPosition>()
     style.addStyleLayer(value, position)
-    verify { nativeMap.addStyleLayer(value, position) }
+    verify { styleManager.addStyleLayer(value, position) }
   }
 
   @Test
   fun getLayers() {
     style.styleLayers
-    verify { nativeMap.styleLayers }
+    verify { styleManager.styleLayers }
   }
 
   @Test
   fun removeLayer() {
     style.removeStyleLayer("id")
-    verify { nativeMap.removeStyleLayer("id") }
+    verify { styleManager.removeStyleLayer("id") }
   }
 
   @Test
   fun layerExist() {
     style.styleLayerExists("id")
-    verify { nativeMap.styleLayerExists("id") }
+    verify { styleManager.styleLayerExists("id") }
   }
 
   @Test
   fun setLayerProperty() {
     val value = mockk<Value>()
     style.setStyleLayerProperty("id", "foobar", value)
-    verify { nativeMap.setStyleLayerProperty("id", "foobar", value) }
+    verify { styleManager.setStyleLayerProperty("id", "foobar", value) }
   }
 
   @Test
   fun getLayerProperty() {
     style.getStyleLayerProperty("id", "foobar")
-    verify { nativeMap.getStyleLayerProperty("id", "foobar") }
+    verify { styleManager.getStyleLayerProperty("id", "foobar") }
   }
 
   @Test
   fun setLayerProperties() {
     val properties = mockk<Value>()
     style.setStyleLayerProperties("id", properties)
-    verify { nativeMap.setStyleLayerProperties("id", properties) }
+    verify { styleManager.setStyleLayerProperties("id", properties) }
   }
 
   @Test
   fun getLayerProperties() {
     style.getStyleLayerProperties("id")
-    verify { nativeMap.getStyleLayerProperties("id") }
+    verify { styleManager.getStyleLayerProperties("id") }
   }
 
   @Test
   fun addSource() {
     val properties = mockk<Value>()
     style.addStyleSource("id", properties)
-    verify { nativeMap.addStyleSource("id", properties) }
+    verify { styleManager.addStyleSource("id", properties) }
   }
 
   @Test
   fun getSources() {
     style.styleSources
-    verify { nativeMap.styleSources }
+    verify { styleManager.styleSources }
   }
 
   @Test
@@ -206,56 +237,56 @@ class StyleTest {
   @Test
   fun sourceExist() {
     style.styleSourceExists("id")
-    verify { nativeMap.styleSourceExists("id") }
+    verify { styleManager.styleSourceExists("id") }
   }
 
   @Test
   fun setSourceProperties() {
     val value = mockk<Value>()
     style.setStyleSourceProperties("id", value)
-    verify { nativeMap.setStyleSourceProperties("id", value) }
+    verify { styleManager.setStyleSourceProperties("id", value) }
   }
 
   @Test
   fun getSourceProperties() {
     style.getStyleSourceProperties("id")
-    verify { nativeMap.getStyleSourceProperties("id") }
+    verify { styleManager.getStyleSourceProperties("id") }
   }
 
   @Test
   fun setSourceProperty() {
     val value = mockk<Value>()
     style.setStyleSourceProperty("id", "foobar", value)
-    verify { nativeMap.setStyleSourceProperty("id", "foobar", value) }
+    verify { styleManager.setStyleSourceProperty("id", "foobar", value) }
   }
 
   @Test
   fun getSourceProperty() {
     style.getStyleSourceProperty("id", "foobar")
-    verify { nativeMap.getStyleSourceProperty("id", "foobar") }
+    verify { styleManager.getStyleSourceProperty("id", "foobar") }
   }
 
   @Test
   fun getSourcesAttribution() {
     val source = mockk<StyleObjectInfo>()
     every { source.id } returns "id"
-    every { nativeMap.styleSources } returns listOf(source)
+    every { styleManager.styleSources } returns listOf(source)
     val valueMap = HashMap<String, Value>()
     valueMap.put("attribution", mockk())
-    every { nativeMap.getStyleSourceProperties(any()) } returns ExpectedFactory.createValue(
+    every { styleManager.getStyleSourceProperties(any()) } returns ExpectedFactory.createValue(
       Value.valueOf(
         valueMap
       )
     )
     style.getStyleSourcesAttribution()
-    verify { nativeMap.getStyleSourceProperties("id") }
+    verify { styleManager.getStyleSourceProperties("id") }
   }
 
   @Test
   fun updateImageSourceImage() {
     val image = mockk<Image>()
     style.updateStyleImageSourceImage("id", image)
-    verify { nativeMap.updateStyleImageSourceImage("id", image) }
+    verify { styleManager.updateStyleImageSourceImage("id", image) }
   }
 
   @Test
@@ -276,21 +307,21 @@ class StyleTest {
   fun addCustomGeometrySource() {
     val options = mockk<CustomGeometrySourceOptions>()
     style.addStyleCustomGeometrySource("id", options)
-    verify { nativeMap.addStyleCustomGeometrySource("id", options) }
+    verify { styleManager.addStyleCustomGeometrySource("id", options) }
   }
 
   @Test
   fun invalidateCustomGeometrySourceBounds() {
     val bounds = mockk<CoordinateBounds>()
     style.invalidateStyleCustomGeometrySourceRegion("id", bounds)
-    verify { nativeMap.invalidateStyleCustomGeometrySourceRegion("id", bounds) }
+    verify { styleManager.invalidateStyleCustomGeometrySourceRegion("id", bounds) }
   }
 
   @Test
   fun invalidateCustomGeometrySourceId() {
     val tileId = mockk<CanonicalTileID>()
     style.invalidateStyleCustomGeometrySourceTile("id", tileId)
-    verify { nativeMap.invalidateStyleCustomGeometrySourceTile("id", tileId) }
+    verify { styleManager.invalidateStyleCustomGeometrySourceTile("id", tileId) }
   }
 
   @Test
@@ -298,7 +329,7 @@ class StyleTest {
     val value = mockk<Value>()
     val position = mockk<LayerPosition>()
     style.addPersistentStyleLayer(value, position)
-    verify { nativeMap.addPersistentStyleLayer(value, position) }
+    verify { styleManager.addPersistentStyleLayer(value, position) }
   }
 
   @Test
@@ -306,122 +337,122 @@ class StyleTest {
     val layerHost = mockk<CustomLayerHost>()
     val layerPosition = mockk<LayerPosition>()
     style.addPersistentStyleCustomLayer("id", layerHost, layerPosition)
-    verify { nativeMap.addPersistentStyleCustomLayer("id", layerHost, layerPosition) }
+    verify { styleManager.addPersistentStyleCustomLayer("id", layerHost, layerPosition) }
   }
 
   @Test
   fun isStyleLayerPersistent() {
     style.isStyleLayerPersistent("id")
-    verify { nativeMap.isStyleLayerPersistent("id") }
+    verify { styleManager.isStyleLayerPersistent("id") }
   }
 
   @Test
   fun setJson() {
     style.styleJSON = "foobar"
-    verify { nativeMap.styleJSON = "foobar" }
+    verify { styleManager.styleJSON = "foobar" }
   }
 
   @Test
   fun getJson() {
     style.styleJSON
-    verify { nativeMap.styleJSON }
+    verify { styleManager.styleJSON }
   }
 
   @Test
   fun setUri() {
     style.styleURI = "foobar"
-    verify { nativeMap.styleURI = "foobar" }
+    verify { styleManager.styleURI = "foobar" }
   }
 
   @Test
   fun getUri() {
     style.styleURI
-    verify { nativeMap.styleURI }
+    verify { styleManager.styleURI }
   }
 
   @Test
   fun setTransition() {
     val transition = mockk<TransitionOptions>()
-    style.styleTransition = transition
-    verify { nativeMap.styleTransition = transition }
+    style.setStyleTransition(transition)
+    verify { styleManager.styleTransition = transition }
   }
 
   @Test
   fun getTransition() {
-    style.styleTransition
-    verify { nativeMap.styleTransition }
+    style.getStyleTransition()
+    verify { styleManager.styleTransition }
   }
 
   @Test
   fun getDefaultCamera() {
     style.styleDefaultCamera
-    verify { nativeMap.styleDefaultCamera }
+    verify { styleManager.styleDefaultCamera }
   }
 
   @Test
   fun getImage() {
     style.getStyleImage("foobar")
-    verify { nativeMap.getStyleImage("foobar") }
+    verify { styleManager.getStyleImage("foobar") }
   }
 
   @Test
   fun setLight() {
     val value = mockk<Value>()
     style.setStyleLight(value)
-    verify { nativeMap.setStyleLight(value) }
+    verify { styleManager.setStyleLight(value) }
   }
 
   @Test
   fun getLight() {
     style.getStyleLightProperty("id")
-    verify { nativeMap.getStyleLightProperty("id") }
+    verify { styleManager.getStyleLightProperty("id") }
   }
 
   @Test
   fun setLightProperty() {
     val value = mockk<Value>()
     style.setStyleLightProperty("id", value)
-    verify { nativeMap.setStyleLightProperty("id", value) }
+    verify { styleManager.setStyleLightProperty("id", value) }
   }
 
   @Test
   fun setStyleTerrain() {
     val value = mockk<Value>()
     style.setStyleTerrain(value)
-    verify { nativeMap.setStyleTerrain(value) }
+    verify { styleManager.setStyleTerrain(value) }
   }
 
   @Test
   fun getStyleTerrainProperty() {
     style.getStyleTerrainProperty("id")
-    verify { nativeMap.getStyleTerrainProperty("id") }
+    verify { styleManager.getStyleTerrainProperty("id") }
   }
 
   @Test
   fun setStyleTerrainProperty() {
     val value = mockk<Value>()
     style.setStyleTerrainProperty("id", value)
-    verify { nativeMap.setStyleTerrainProperty("id", value) }
+    verify { styleManager.setStyleTerrainProperty("id", value) }
   }
 
   @Test
   fun setStyleProjection() {
     val value = mockk<Value>()
     style.setStyleProjection(value)
-    verify { nativeMap.setStyleProjection(value) }
+    verify { styleManager.setStyleProjection(value) }
   }
 
   @Test
   fun getStyleProjectionProperty() {
     style.getStyleProjectionProperty("foo")
-    verify { nativeMap.getStyleProjectionProperty("foo") }
+    verify { styleManager.getStyleProjectionProperty("foo") }
   }
 
   @Test
   fun setStyleProjectionProperty() {
     val value = mockk<Value>()
     style.setStyleProjectionProperty("foo", value)
-    verify { nativeMap.setStyleProjectionProperty("foo", value) }
+    verify { styleManager.setStyleProjectionProperty("foo", value) }
   }
 
   @Test
@@ -429,28 +460,28 @@ class StyleTest {
     val modelId = "modelId"
     val modelUri = "modelUri"
     style.addStyleModel(modelId, modelUri)
-    verify { nativeMap.addStyleModel(modelId, modelUri) }
+    verify { styleManager.addStyleModel(modelId, modelUri) }
   }
 
   @Test
   fun removeStyleModel() {
     val modelId = "modelId"
     style.removeStyleModel(modelId)
-    verify { nativeMap.removeStyleModel(modelId) }
+    verify { styleManager.removeStyleModel(modelId) }
   }
 
   @Test
   fun hasStyleModel() {
     val modelId = "modelId"
     style.hasStyleModel(modelId)
-    verify { nativeMap.hasStyleModel(modelId) }
+    verify { styleManager.hasStyleModel(modelId) }
   }
 
   @Test
   fun setStyleAtmosphere() {
     val atmosphereValue = mockk<Value>()
     style.setStyleAtmosphere(atmosphereValue)
-    verify { nativeMap.setStyleAtmosphere(atmosphereValue) }
+    verify { styleManager.setStyleAtmosphere(atmosphereValue) }
   }
 
   @Test
@@ -458,13 +489,13 @@ class StyleTest {
     val property = "property"
     val atmosphereValueProperty = mockk<Value>()
     style.setStyleAtmosphereProperty(property, atmosphereValueProperty)
-    verify { nativeMap.setStyleAtmosphereProperty(property, atmosphereValueProperty) }
+    verify { styleManager.setStyleAtmosphereProperty(property, atmosphereValueProperty) }
   }
 
   @Test
   fun getStyleAtmosphereProperty() {
     val property = "property"
     style.getStyleAtmosphereProperty(property)
-    verify { nativeMap.getStyleAtmosphereProperty(property) }
+    verify { styleManager.getStyleAtmosphereProperty(property) }
   }
 }

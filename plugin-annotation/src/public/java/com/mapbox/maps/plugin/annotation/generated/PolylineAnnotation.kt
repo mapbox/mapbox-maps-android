@@ -20,7 +20,7 @@ import java.util.Locale
  * Class for PolylineAnnotation
  */
 class PolylineAnnotation(
-  id: Long,
+  id: String,
   /** The annotation manager that manipulate this annotation */
   private val annotationManager: AnnotationManager<LineString, PolylineAnnotation, *, *, *, *, *>,
   jsonObject: JsonObject,
@@ -66,7 +66,7 @@ class PolylineAnnotation(
     get() {
       val value = jsonObject.get(PolylineAnnotationOptions.PROPERTY_LINE_JOIN)
       value?.let {
-        return LineJoin.valueOf(it.asString.toUpperCase(Locale.US))
+        return LineJoin.valueOf(it.asString.uppercase(Locale.US))
       }
       return null
     }

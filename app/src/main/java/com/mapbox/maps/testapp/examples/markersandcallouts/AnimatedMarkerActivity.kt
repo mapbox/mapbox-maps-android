@@ -42,9 +42,7 @@ class AnimatedMarkerActivity : AppCompatActivity(), OnMapClickListener {
     val mapboxMap = binding.mapView.getMapboxMap()
     mapboxMap.loadStyle(
       style(Style.SATELLITE_STREETS) {
-        +image("marker_icon") {
-          bitmap(BitmapFactory.decodeResource(resources, R.drawable.red_marker))
-        }
+        +image("marker_icon", BitmapFactory.decodeResource(resources, R.drawable.red_marker))
         +geojsonSource
         +symbolLayer(layerId = "layer-id", sourceId = "source-id") {
           iconImage("marker_icon")

@@ -34,6 +34,7 @@ open class BitmapWidget @JvmOverloads constructor(
   )
   constructor(
     bitmap: Bitmap,
+    @Suppress("DEPRECATION")
     position: WidgetPosition = WidgetPosition(
       vertical = WidgetPosition.Vertical.TOP,
       horizontal = WidgetPosition.Horizontal.LEFT,
@@ -69,6 +70,7 @@ open class BitmapWidget @JvmOverloads constructor(
    * @param position position of widget
    * @param marginX horizontal margin in pixels
    */
+  @Suppress("DEPRECATION")
   @Deprecated(
     message = "Constructor with margins is deprecated, the offset parameters has been merged into " +
       "the WidgetPosition class, and the legacy constructor might be removed in future releases.",
@@ -76,6 +78,7 @@ open class BitmapWidget @JvmOverloads constructor(
   )
   constructor(
     bitmap: Bitmap,
+    @Suppress("DEPRECATION")
     position: WidgetPosition = WidgetPosition(
       vertical = WidgetPosition.Vertical.TOP,
       horizontal = WidgetPosition.Horizontal.LEFT,
@@ -121,13 +124,13 @@ open class BitmapWidget @JvmOverloads constructor(
     message = "setTranslation is deprecated, please use setPosition instead.",
     replaceWith = ReplaceWith("setPosition")
   )
-  override fun setTranslation(translationX: Float, translationY: Float) {
+  override fun setTranslation(translateX: Float, translateY: Float) {
     setPosition(
       WidgetPosition {
         horizontalAlignment = originalPosition.horizontalAlignment
         verticalAlignment = originalPosition.verticalAlignment
-        offsetX = originalPosition.offsetX + translationX
-        offsetY = originalPosition.offsetY + translationY
+        offsetX = originalPosition.offsetX + translateX
+        offsetY = originalPosition.offsetY + translateY
       }
     )
   }

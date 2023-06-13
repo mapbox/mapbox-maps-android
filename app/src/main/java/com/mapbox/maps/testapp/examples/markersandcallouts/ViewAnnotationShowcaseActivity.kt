@@ -101,11 +101,8 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
       else -> super.onOptionsItemSelected(item)
     }
   }
-
   private fun prepareStyle(styleUri: String, bitmap: Bitmap) = style(styleUri) {
-    +image(BLUE_ICON_ID) {
-      bitmap(bitmap)
-    }
+    +image(BLUE_ICON_ID, bitmap)
     +geoJsonSource(SOURCE_ID) {
       featureCollection(FeatureCollection.fromFeatures(pointList))
     }

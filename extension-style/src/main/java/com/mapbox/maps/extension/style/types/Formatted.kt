@@ -92,6 +92,7 @@ class Formatted : ArrayList<FormattedSection>() {
                   "text-font" -> {
                     val textFontExpressionList = optionsMap[key] as ArrayList<*>
                     if (textFontExpressionList.removeFirst() == "literal") {
+                      @Suppress("UNCHECKED_CAST")
                       formattedSection.fontStack =
                         textFontExpressionList.last() as ArrayList<String>
                     }

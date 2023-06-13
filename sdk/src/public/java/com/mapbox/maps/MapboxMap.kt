@@ -3,6 +3,7 @@ package com.mapbox.maps
 import android.app.Activity
 import android.graphics.RectF
 import android.os.Handler
+import android.webkit.URLUtil
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
 import com.mapbox.bindgen.Expected
@@ -13,13 +14,13 @@ import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.style.StyleContract
+import com.mapbox.maps.extension.style.style
+import com.mapbox.maps.extension.style.utils.transition
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.animation.CameraAnimationsPluginImpl
 import com.mapbox.maps.plugin.delegates.*
-import com.mapbox.maps.plugin.delegates.listeners.*
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import com.mapbox.maps.plugin.gestures.GesturesPluginImpl
-import java.util.*
 import java.util.concurrent.CopyOnWriteArraySet
 
 /**
@@ -38,12 +39,11 @@ class MapboxMap :
   MapTransformDelegate,
   MapProjectionDelegate,
   MapFeatureQueryDelegate,
-  ObservableInterface,
   MapListenerDelegate,
   MapPluginExtensionsDelegate,
   MapCameraManagerDelegate {
 
-  private val nativeMap: MapInterface
+  private val nativeMap: NativeMapImpl
   private var isMapValid = true
 
   /**
@@ -61,19 +61,18 @@ class MapboxMap :
   }
 
   private val nativeObserver: NativeObserver
-  private val observers = CopyOnWriteArraySet<Observer>()
   internal var style: Style? = null
   internal var isStyleLoadInitiated = false
   private val styleObserver: StyleObserver
   internal var renderHandler: Handler? = null
-
+  private val cancelableSubscriberSet = CopyOnWriteArraySet<Cancelable>()
   /**
    * Represents current camera state.
    */
   override val cameraState: CameraState
     get() {
       checkNativeMap("cameraState")
-      return nativeMap.cameraState
+      return nativeMap.getCameraState()
     }
 
   @VisibleForTesting(otherwise = PRIVATE)
@@ -84,7 +83,7 @@ class MapboxMap :
 
   @VisibleForTesting(otherwise = PRIVATE)
   internal constructor(
-    nativeMap: MapInterface,
+    nativeMap: NativeMapImpl,
     nativeObserver: NativeObserver,
     styleObserver: StyleObserver
   ) {
@@ -94,22 +93,37 @@ class MapboxMap :
   }
 
   internal constructor(
-    nativeMap: MapInterface,
+    nativeMap: NativeMapImpl,
     nativeObserver: NativeObserver,
     pixelRatio: Float
   ) {
     this.nativeMap = nativeMap
     this.nativeObserver = nativeObserver
     this.styleObserver = StyleObserver(
-      nativeMap,
+      this.nativeMap.map,
       { style -> this.style = style },
       nativeObserver,
       pixelRatio
     )
   }
 
+  private fun String.isValidUri(): Boolean {
+    val isMapboxStyleUri = startsWith("mapbox://", ignoreCase = true)
+    val isMapboxAssetUri = startsWith("asset://", ignoreCase = true)
+    val isMapboxFileUri = startsWith("file://", ignoreCase = true)
+    return isMapboxStyleUri || isMapboxAssetUri || isMapboxFileUri || URLUtil.isValidUrl(this)
+  }
+
+  private fun applyStyle(style: String) {
+    if (style.isValidUri()) {
+      nativeMap.setStyleURI(style)
+    } else {
+      nativeMap.setStyleJSON(style.ifBlank { "{}" })
+    }
+  }
+
   /**
-   * Will load a new map style asynchronous from the specified URI.
+   * Loads the new map style either from a specified URI or from a JSON both represented as [String].
    *
    * URI can take the following forms:
    *
@@ -130,143 +144,207 @@ class MapboxMap :
    * - **`file://...`**:
    * loads the style from a file path. This is used to load a style from disk.
    *
-   * Will load an empty json `{}` if the styleUri is empty.
+   * If [style] is not the valid URI - it will be treated as style JSON string.
    *
-   * @param styleUri The style URI
-   * @param styleTransitionOptions style transition options applied when loading the style
-   * @param onStyleLoaded The OnStyleLoaded callback
-   * @param onMapLoadErrorListener The OnMapLoadErrorListener callback
+   * ** Important notes comparing to Maps v10 **:
+   * 1. Parameter `onMapLoadErrorListener` was removed as it was not covering all the map / style loading errors.
+   *  Now if you need to listen to those errors you have to register specific listener in advance, e.g.
+   *  [OnMapLoadErrorListener] should now be registered with [subscribeMapLoadingError];
+   *  you could also subscribe to other events like [subscribeStyleImageMissing] or [subscribeStyleImageUnused].
+   *
+   * 2. Parameter `styleTransitionOptions` was removed from this overloaded method.
+   *  In order to apply it you should use more granular overloaded [loadStyle] taking [StyleContract.StyleExtension]
+   *  and add transition options in DSL block:
+   *
+   *  mapboxMap.loadStyle(style(Style.DARK) {
+   *   +transition {
+   *     duration(100L)
+   *     enablePlacementTransitions(false)
+   *    }
+   *   // other runtime styling
+   * }
+   *
+   * @param style specified URI or from JSON both represented as [String].
+   * @param onStyleLoaded callback triggered when the style is successfully loaded.
    */
+  @JvmOverloads
+  fun loadStyle(
+    style: String,
+    onStyleLoaded: Style.OnStyleLoaded? = null,
+  ) {
+    checkNativeMap("loadStyle")
+    initializeStyleLoad(
+      onStyleLoaded,
+      styleDataStyleLoadedListener = {},
+    )
+    applyStyle(style)
+  }
+
+  /**
+   * Legacy method to load style, please refer to deprecation message for more details.
+   */
+  @Deprecated(
+    message = "Loading style was revisited in v11, this method is deprecated." +
+      " IMPORTANT: onMapLoadErrorListener will not be triggered anymore," +
+      " please refer to documentation for new method to understand how to handle errors.",
+    replaceWith = ReplaceWith("loadStyle(style, onStyleLoaded)")
+  )
   fun loadStyleUri(
     styleUri: String,
     styleTransitionOptions: TransitionOptions? = null,
     onStyleLoaded: Style.OnStyleLoaded? = null,
     onMapLoadErrorListener: OnMapLoadErrorListener? = null,
   ) {
-    checkNativeMap("loadStyleUri")
-    initializeStyleLoad(
-      onStyleLoaded,
-      styleDataStyleLoadedListener = {
-        styleTransitionOptions?.let(it::setStyleTransition)
+    loadStyle(
+      style(styleUri) {
+        styleTransitionOptions?.let {
+          +transition {
+            it.toBuilder()
+          }
+        }
       },
-      onMapLoadErrorListener = onMapLoadErrorListener,
+      onStyleLoaded
     )
-    if (styleUri.isEmpty()) {
-      nativeMap.styleJSON = EMPTY_STYLE_JSON
-    } else {
-      nativeMap.styleURI = styleUri
-    }
   }
 
   /**
-   * Will load a new map style asynchronous from the specified URI.
-   *
-   * URI can take the following forms:
-   *
-   * - **Constants**: load one of the bundled styles in [Style].
-   *
-   * - **`mapbox://styles/<user>/<style>`**:
-   * loads the style from a [Mapbox account](https://www.mapbox.com/account/).
-   * *user* is your username. *style* is the ID of your custom
-   * style created in [Mapbox Studio](https://www.mapbox.com/studio).
-   *
-   * - **`http://...` or `https://...`**:
-   * loads the style over the Internet from any web server.
-   *
-   * - **`asset://...`**:
-   * loads the style from the APK *assets* directory.
-   * This is used to load a style bundled with your app.
-   *
-   * - **`file://...`**:
-   * loads the style from a file path. This is used to load a style from disk.
-   *
-   * Will load an empty json `{}` if the styleUri is empty.
-   *
-   * @param styleUri The style URI
-   * @param onStyleLoaded The OnStyleLoaded callback
-   * @param onMapLoadErrorListener The OnMapLoadErrorListener callback
+   * Legacy method to load style, please refer to deprecation message for more details.
    */
+  @Deprecated(
+    message = "Loading style was revisited in v11, this method is deprecated." +
+      " IMPORTANT: onMapLoadErrorListener will not be triggered anymore," +
+      " please refer to documentation for new method to understand how to handle errors.",
+    replaceWith = ReplaceWith("loadStyle(style, onStyleLoaded)")
+  )
   fun loadStyleUri(
     styleUri: String,
     onStyleLoaded: Style.OnStyleLoaded? = null,
     onMapLoadErrorListener: OnMapLoadErrorListener? = null
-  ) = loadStyleUri(styleUri, null, onStyleLoaded, onMapLoadErrorListener)
+  ) {
+    loadStyleUri(styleUri, null, onStyleLoaded, onMapLoadErrorListener)
+  }
 
   /**
-   * Will load a new map style asynchronous from the specified URI.
-   *
-   * @param styleUri The style URI
-   * @param onStyleLoaded The OnStyleLoaded callback
+   * Legacy method to load style, please refer to deprecation message for more details.
    */
+  @Deprecated(
+    message = "Loading style was revisited in v11, this method is deprecated." +
+      " IMPORTANT: onMapLoadErrorListener will not be triggered anymore," +
+      " please refer to documentation for new method to understand how to handle errors.",
+    replaceWith = ReplaceWith("loadStyle(style, onStyleLoaded)")
+  )
   fun loadStyleUri(
     styleUri: String,
     onStyleLoaded: Style.OnStyleLoaded
   ) = loadStyleUri(styleUri, null, onStyleLoaded, null)
 
   /**
-   * Will load a new map style asynchronous from the specified URI.
-   *
-   * @param styleUri The style URI
+   * Legacy method to load style, please refer to deprecation message for more details.
    */
+  @Deprecated(
+    message = "Loading style was revisited in v11, this method is deprecated." +
+      " IMPORTANT: onMapLoadErrorListener will not be triggered anymore," +
+      " please refer to documentation for new method to understand how to handle errors.",
+    replaceWith = ReplaceWith("loadStyle(style)")
+  )
   fun loadStyleUri(
     styleUri: String,
   ) = loadStyleUri(styleUri, null, null, null)
 
   /**
-   * Load style JSON
+   * Legacy method to load style, please refer to deprecation message for more details.
    */
+  @Deprecated(
+    message = "Loading style was revisited in v11, this method is deprecated." +
+      " IMPORTANT: onMapLoadErrorListener will not be triggered anymore," +
+      " please refer to documentation for new method to understand how to handle errors.",
+    replaceWith = ReplaceWith("loadStyle(style, onStyleLoaded)")
+  )
   fun loadStyleJson(
     styleJson: String,
     styleTransitionOptions: TransitionOptions? = null,
     onStyleLoaded: Style.OnStyleLoaded? = null,
     onMapLoadErrorListener: OnMapLoadErrorListener? = null,
   ) {
-    checkNativeMap("loadStyleJson")
-    initializeStyleLoad(
-      onStyleLoaded,
-      styleDataStyleLoadedListener = {
-        styleTransitionOptions?.let(it::setStyleTransition)
-      },
-      onMapLoadErrorListener = onMapLoadErrorListener
-    )
-    nativeMap.styleJSON = styleJson
+    loadStyleUri(styleJson, styleTransitionOptions, onStyleLoaded, onMapLoadErrorListener)
   }
 
   /**
-   * Load style JSON
+   * Legacy method to load style, please refer to deprecation message for more details.
    */
+  @Deprecated(
+    message = "Loading style was revisited in v11, this method is deprecated." +
+      " IMPORTANT: onMapLoadErrorListener will not be triggered anymore," +
+      " please refer to documentation for new method to understand how to handle errors.",
+    replaceWith = ReplaceWith("loadStyle(style, onStyleLoaded)")
+  )
   fun loadStyleJson(
     styleJson: String,
     onStyleLoaded: Style.OnStyleLoaded? = null,
     onMapLoadErrorListener: OnMapLoadErrorListener? = null
-  ) = loadStyleJson(styleJson, null, onStyleLoaded, onMapLoadErrorListener)
-
-  /**
-   * Load style JSON.
-   */
-  fun loadStyleJson(
-    styleJson: String,
-    onStyleLoaded: Style.OnStyleLoaded
-  ) = loadStyleJson(styleJson, null, onStyleLoaded, null)
-
-  /**
-   * Load style JSON.
-   */
-  fun loadStyleJson(
-    styleJson: String
   ) {
-    checkNativeMap("loadStyleJson")
-    loadStyleJson(styleJson, null, null, null)
+    loadStyleUri(styleJson, null, onStyleLoaded, onMapLoadErrorListener)
   }
 
   /**
-   * Load the style from Style Extension.
+   * Legacy method to load style, please refer to deprecation message for more details.
    */
+  @Deprecated(
+    message = "Loading style was revisited in v11, this method is deprecated.",
+    replaceWith = ReplaceWith("loadStyle(style, onStyleLoaded)")
+  )
+  fun loadStyleJson(
+    styleJson: String,
+    onStyleLoaded: Style.OnStyleLoaded
+  ) = loadStyleUri(styleJson, null, onStyleLoaded, null)
+
+  /**
+   * Legacy method to load style, please refer to deprecation message for more details.
+   */
+  @Deprecated(
+    message = "Loading style was revisited in v11, this method is deprecated.",
+    replaceWith = ReplaceWith("loadStyle(style)")
+  )
+  fun loadStyleJson(
+    styleJson: String,
+  ) = loadStyleUri(styleJson, null, null, null)
+
+  /**
+   * Loads the new map style built from the specified style DSL block. For example:
+   *
+   * mapboxMap.loadStyle(style(Style.DARK) {
+   *   +geoJsonSource(SOURCE_ID) {
+   *     featureCollection(collection)
+   *   }
+   *   +symbolLayer(LAYER_ID, SOURCE_ID) {
+   *     iconImage(IMAGE_ID)
+   *   }
+   * }
+   *
+   * ** Important notes comparing to Maps v10 **:
+   * 1. Parameter `onMapLoadErrorListener` was removed as it was not covering all the map / style loading errors.
+   *  Now if you need to listen to those errors you have to register specific listener in advance, e.g.
+   *  [OnMapLoadErrorListener] should now be registered with [subscribeMapLoadingError];
+   *  you could also subscribe to other events like [subscribeStyleImageMissing] or [subscribeStyleImageUnused].
+   *
+   * 2. Parameter `styleTransitionOptions` was removed from this overloaded method. Instead you have to add transition options in the DSL block:
+   *
+   *  mapboxMap.loadStyle(style(Style.DARK) {
+   *   +transition {
+   *     duration(100L)
+   *     enablePlacementTransitions(false)
+   *    }
+   *   // other runtime styling
+   * }
+   *
+   * @param styleExtension The style DSL block used to describe the style with runtime styling on top of it.
+   * @param onStyleLoaded callback triggered when the style is successfully loaded.
+   */
+  @OptIn(MapboxExperimental::class)
+  @JvmOverloads
   fun loadStyle(
     styleExtension: StyleContract.StyleExtension,
-    transitionOptions: TransitionOptions? = null,
     onStyleLoaded: Style.OnStyleLoaded? = null,
-    onMapLoadErrorListener: OnMapLoadErrorListener? = null,
   ) {
     checkNativeMap("loadStyle")
     initializeStyleLoad(
@@ -276,7 +354,7 @@ class MapboxMap :
         styleExtension.terrain?.bindTo(style)
         styleExtension.atmosphere?.bindTo(style)
         styleExtension.projection?.bindTo(style)
-        transitionOptions?.let(style::setStyleTransition)
+        styleExtension.transition?.let(style::setStyleTransition)
       },
       styleDataSourcesLoadedListener = { style ->
         styleExtension.sources.forEach {
@@ -290,46 +368,55 @@ class MapboxMap :
         styleExtension.images.forEach {
           it.bindTo(style)
         }
+        // note - it is not strictly required to load models here, models can be loaded anytime during style load flow
+        styleExtension.models.forEach {
+          it.bindTo(style)
+        }
       },
-      onMapLoadErrorListener = onMapLoadErrorListener,
     )
-    if (styleExtension.styleUri.isEmpty()) {
-      nativeMap.styleJSON = EMPTY_STYLE_JSON
-    } else {
-      nativeMap.styleURI = styleExtension.styleUri
-    }
+    applyStyle(styleExtension.style)
   }
 
   /**
-   * Load the style from Style Extension.
+   * Legacy method to load style, please refer to deprecation message for more details.
    */
+  @Deprecated(
+    message = "Loading style was revisited in v11, this method is deprecated." +
+      " IMPORTANT: onMapLoadErrorListener and styleTransitionOptions will not be applied anymore," +
+      " please refer to documentation for new method to understand how to apply them properly.",
+    replaceWith = ReplaceWith("loadStyle(styleExtension, onStyleLoaded)")
+  )
+  fun loadStyle(
+    styleExtension: StyleContract.StyleExtension,
+    styleTransitionOptions: TransitionOptions? = null,
+    onStyleLoaded: Style.OnStyleLoaded? = null,
+    onMapLoadErrorListener: OnMapLoadErrorListener? = null,
+  ) {
+    loadStyle(styleExtension, onStyleLoaded)
+  }
+
+  /**
+   * Legacy method to load style, please refer to deprecation message for more details.
+   */
+  @Deprecated(
+    message = "Loading style was revisited in v11, this method is deprecated." +
+      " IMPORTANT: onMapLoadErrorListener will not be triggered anymore," +
+      " please refer to documentation for new method to understand how to handle errors.",
+    replaceWith = ReplaceWith("loadStyle(styleExtension, onStyleLoaded)")
+  )
   fun loadStyle(
     styleExtension: StyleContract.StyleExtension,
     onStyleLoaded: Style.OnStyleLoaded? = null,
-    onMapLoadErrorListener: OnMapLoadErrorListener? = null,
-  ) = loadStyle(styleExtension, null, onStyleLoaded, onMapLoadErrorListener)
-
-  /**
-   * Load the style from Style Extension.
-   */
-  fun loadStyle(
-    styleExtension: StyleContract.StyleExtension,
-    onStyleLoaded: Style.OnStyleLoaded
-  ) = loadStyle(styleExtension, null, onStyleLoaded, null)
-
-  /**
-   * Load the style from Style Extension.
-   */
-  fun loadStyle(
-    styleExtension: StyleContract.StyleExtension
-  ) = loadStyle(styleExtension, null, null, null)
+    onMapLoadErrorListener: OnMapLoadErrorListener? = null
+  ) {
+    loadStyle(styleExtension, onStyleLoaded)
+  }
 
   private fun initializeStyleLoad(
     onStyleLoaded: Style.OnStyleLoaded? = null,
     styleDataStyleLoadedListener: Style.OnStyleLoaded,
     styleDataSpritesLoadedListener: Style.OnStyleLoaded? = null,
     styleDataSourcesLoadedListener: Style.OnStyleLoaded? = null,
-    onMapLoadErrorListener: OnMapLoadErrorListener? = null,
   ) {
     style = null
     styleObserver.setLoadStyleListener(
@@ -337,7 +424,6 @@ class MapboxMap :
       styleDataStyleLoadedListener = styleDataStyleLoadedListener,
       styleDataSpritesLoadedListener = styleDataSpritesLoadedListener,
       styleDataSourcesLoadedListener = styleDataSourcesLoadedListener,
-      onMapLoadErrorListener = onMapLoadErrorListener,
     )
     isStyleLoadInitiated = true
   }
@@ -370,32 +456,6 @@ class MapboxMap :
   }
 
   /**
-   * Get the ResourceOptions the map was initialized with.
-   *
-   * @return resourceOptions The resource options of the map
-   */
-  fun getResourceOptions(): ResourceOptions {
-    checkNativeMap("getResourceOptions")
-    return nativeMap.resourceOptions
-  }
-
-  /**
-   * Clears temporary map data.
-   *
-   * Clears temporary map data from the data path defined in the given resource options.
-   * Useful to reduce the disk usage or in case the disk cache contains invalid data.
-   *
-   * Note that calling this API will affect all maps that use the same data path and does not
-   * affect persistent map data like offline style packages.
-   *
-   * @param callback Called once the request is complete or an error occurred.
-   */
-  fun clearData(callback: AsyncOperationResultCallback) {
-    checkNativeMap("clearData")
-    Map.clearData(nativeMap.resourceOptions, callback)
-  }
-
-  /**
    * Changes the map view by any combination of center, zoom, bearing, and pitch, without an animated transition.
    * The map will retain its current values for any details not passed via the camera options argument.
    * It is not guaranteed that the provided CameraOptions will be set, the map may apply constraints resulting in a
@@ -415,7 +475,7 @@ class MapboxMap :
    */
   override fun setGestureInProgress(inProgress: Boolean) {
     checkNativeMap("setGestureInProgress")
-    nativeMap.isGestureInProgress = inProgress
+    nativeMap.setGestureInProgress(inProgress)
   }
 
   /**
@@ -425,7 +485,7 @@ class MapboxMap :
    */
   override fun isGestureInProgress(): Boolean {
     checkNativeMap("isGestureInProgress")
-    return nativeMap.isGestureInProgress
+    return nativeMap.isGestureInProgress()
   }
 
   /**
@@ -475,7 +535,7 @@ class MapboxMap :
    */
   override fun getBounds(): CameraBounds {
     checkNativeMap("getBounds")
-    return nativeMap.bounds
+    return nativeMap.getBounds()
   }
 
   /**
@@ -487,7 +547,7 @@ class MapboxMap :
    */
   override fun setUserAnimationInProgress(inProgress: Boolean) {
     checkNativeMap("setUserAnimationInProgress")
-    nativeMap.isUserAnimationInProgress = inProgress
+    nativeMap.setUserAnimationInProgress(inProgress)
   }
 
   /**
@@ -497,7 +557,7 @@ class MapboxMap :
    */
   override fun isUserAnimationInProgress(): Boolean {
     checkNativeMap("isUserAnimationInProgress")
-    return nativeMap.isUserAnimationInProgress
+    return nativeMap.isUserAnimationInProgress()
   }
 
   /**
@@ -507,7 +567,7 @@ class MapboxMap :
    */
   fun setPrefetchZoomDelta(delta: Byte) {
     checkNativeMap("setPrefetchZoomDelta")
-    nativeMap.prefetchZoomDelta = delta
+    nativeMap.setPrefetchZoomDelta(delta)
   }
 
   /**
@@ -517,7 +577,7 @@ class MapboxMap :
    */
   fun getPrefetchZoomDelta(): Byte {
     checkNativeMap("getPrefetchZoomDelta")
-    return nativeMap.prefetchZoomDelta
+    return nativeMap.getPrefetchZoomDelta()
   }
 
   /**
@@ -527,7 +587,7 @@ class MapboxMap :
    */
   override fun getMapOptions(): MapOptions {
     checkNativeMap("getMapOptions")
-    return nativeMap.mapOptions
+    return nativeMap.getMapOptions()
   }
 
   /**
@@ -537,7 +597,7 @@ class MapboxMap :
    */
   override fun getSize(): Size {
     checkNativeMap("getSize")
-    return nativeMap.size
+    return nativeMap.getSize()
   }
 
   /**
@@ -545,7 +605,7 @@ class MapboxMap :
    */
   fun getDebug(): List<MapDebugOptions> {
     checkNativeMap("getDebug")
-    return nativeMap.debug
+    return nativeMap.getDebug()
   }
 
   /**
@@ -786,10 +846,10 @@ class MapboxMap :
    */
   override fun pixelForCoordinate(coordinate: Point): ScreenCoordinate {
     checkNativeMap("pixelForCoordinate")
-    val coordinate = nativeMap.pixelForCoordinate(coordinate)
-    val screenSize = nativeMap.size
-    return if (coordinate.x in 0.0..screenSize.width.toDouble() && coordinate.y in 0.0..screenSize.height.toDouble()) {
-      coordinate
+    val screenCoordinate = nativeMap.pixelForCoordinate(coordinate)
+    val screenSize = nativeMap.getSize()
+    return if (screenCoordinate.x in 0.0..screenSize.width.toDouble() && screenCoordinate.y in 0.0..screenSize.height.toDouble()) {
+      screenCoordinate
     } else {
       ScreenCoordinate(-1.0, -1.0)
     }
@@ -815,7 +875,7 @@ class MapboxMap :
    */
   override fun pixelsForCoordinates(coordinates: List<Point>): List<ScreenCoordinate> {
     checkNativeMap("pixelsForCoordinates")
-    return nativeMap.pixelsForCoordinates(coordinates)
+    return nativeMap.pixelsForCoordinates(coordinates.toMutableList())
   }
 
   /**
@@ -863,7 +923,7 @@ class MapboxMap :
    */
   override fun coordinatesForPixels(pixels: List<ScreenCoordinate>): List<Point> {
     checkNativeMap("coordinatesForPixels")
-    return nativeMap.coordinatesForPixels(pixels)
+    return nativeMap.coordinatesForPixels(pixels.toMutableList())
   }
 
   /**
@@ -897,7 +957,7 @@ class MapboxMap :
       rectF.left.toDouble(), rectF.bottom.toDouble()
     )
     return nativeMap.coordinatesForPixels(
-      listOf(
+      mutableListOf(
         screenCoordinateTopLeft,
         screenCoordinateTopRight,
         screenCoordinateBottomRight,
@@ -996,7 +1056,7 @@ class MapboxMap :
   override fun queryRenderedFeatures(
     geometry: RenderedQueryGeometry,
     options: RenderedQueryOptions,
-    callback: QueryRenderedFeaturesCallback
+    callback: QueryRenderedFeaturesCallback,
   ): Cancelable {
     checkNativeMap("queryRenderedFeatures", false)
     return nativeMap.queryRenderedFeatures(geometry, options, callback)
@@ -1218,11 +1278,16 @@ class MapboxMap :
   ): Cancelable {
     checkNativeMap("removeFeatureState")
     return nativeMap.removeFeatureState(
-      /* sourceId = */ sourceId,
-      /* sourceLayerId = */ sourceLayerId,
-      /* featureId = */ featureId,
-      /* stateKey = */ stateKey,
-      /* callback = */ callback,
+      /* sourceId = */
+      sourceId,
+      /* sourceLayerId = */
+      sourceLayerId,
+      /* featureId = */
+      featureId,
+      /* stateKey = */
+      stateKey,
+      /* callback = */
+      callback,
     )
   }
 
@@ -1240,7 +1305,11 @@ class MapboxMap :
    * @return A `cancelable` object that could be used to cancel the pending operation.
    */
   @JvmOverloads
-  fun resetFeatureStates(sourceId: String, sourceLayerId: String? = null, callback: FeatureStateOperationCallback): Cancelable {
+  fun resetFeatureStates(
+    sourceId: String,
+    sourceLayerId: String? = null,
+    callback: FeatureStateOperationCallback
+  ): Cancelable {
     checkNativeMap("resetFeatureState")
     return nativeMap.resetFeatureStates(sourceId, sourceLayerId, callback)
   }
@@ -1254,60 +1323,242 @@ class MapboxMap :
   }
 
   /**
-   * Subscribes an Observer to a provided list of event types.
-   * Observable will hold a strong reference to an \sa Observer instance, therefore,
-   * in order to stop receiving notifications, caller must call unsubscribe with an
-   * \sa Observer instance used for an initial subscription.
+   * Subscribes to `MapLoaded` event.
    *
-   * @param observer an \sa Observer
-   * @param events an array of event types to be subscribed to.
+   * @return cancellation object.
+   *
+   * @see MapLoadedCallback
    */
-  override fun subscribe(observer: Observer, events: List<String>) {
-    checkNativeMap("subscribe")
-    if (observers.add(observer)) {
-      nativeMap.subscribe(observer, events)
+  fun subscribeMapLoaded(mapLoadedCallback: MapLoadedCallback): Cancelable {
+    checkNativeMap("subscribeMapLoaded")
+    return nativeMap.subscribe(mapLoadedCallback).also {
+      cancelableSubscriberSet.add(it)
     }
   }
 
   /**
-   * Unsubscribes an Observer from a provided list of event types.
+   * Subscribes to `MapIdle` event.
    *
-   * @param observer an Observer
-   * @param events an array of event types to be unsubscribed from.
+   * @return cancellation object.
+   *
+   * @see MapIdleCallback
    */
-  override fun unsubscribe(observer: Observer, events: List<String>) {
-    checkNativeMap("unsubscribe")
-    if (observers.remove(observer)) {
-      nativeMap.unsubscribe(observer, events)
+  fun subscribeMapIdle(mapIdleCallback: MapIdleCallback): Cancelable {
+    checkNativeMap("subscribeMapIdle")
+    return nativeMap.subscribe(mapIdleCallback).also {
+      cancelableSubscriberSet.add(it)
     }
   }
 
   /**
-   * Unsubscribes an Observer from all events.
+   * Subscribes to `MapLoadingError` event.
    *
-   * @param observer an Observer
+   * @return cancellation object.
+   *
+   * @see MapLoadingErrorCallback
    */
-  override fun unsubscribe(observer: Observer) {
-    checkNativeMap("unsubscribe")
-    if (observers.remove(observer)) {
-      nativeMap.unsubscribe(observer)
+  fun subscribeMapLoadingError(mapLoadingErrorCallback: MapLoadingErrorCallback): Cancelable {
+    checkNativeMap("subscribeMapLoadingError")
+    return nativeMap.subscribe(mapLoadingErrorCallback).also {
+      cancelableSubscriberSet.add(it)
+    }
+  }
+
+  /**
+   * Subscribes to `StyleLoaded` event.
+   *
+   * @return cancellation object.
+   *
+   * @see StyleLoadedCallback
+   */
+  fun subscribeStyleLoaded(styleLoadedCallback: StyleLoadedCallback): Cancelable {
+    checkNativeMap("subscribeStyleLoaded")
+    return nativeMap.subscribe(styleLoadedCallback).also {
+      cancelableSubscriberSet.add(it)
+    }
+  }
+
+  /**
+   * Subscribes to `StyleDataLoaded` event.
+   *
+   * @return cancellation object.
+   *
+   * @see StyleDataLoadedCallback
+   */
+  fun subscribeStyleDataLoaded(styleDataLoadedCallback: StyleDataLoadedCallback): Cancelable {
+    checkNativeMap("subscribeStyleDataLoaded")
+    return nativeMap.subscribe(styleDataLoadedCallback).also {
+      cancelableSubscriberSet.add(it)
+    }
+  }
+
+  /**
+   * Subscribes to `SourceDataLoaded` event.
+   *
+   * @return cancellation object.
+   *
+   * @see SourceDataLoadedCallback
+   */
+  fun subscribeSourceDataLoaded(sourceDataLoadedCallback: SourceDataLoadedCallback): Cancelable {
+    checkNativeMap("subscribeSourceDataLoaded")
+    return nativeMap.subscribe(sourceDataLoadedCallback).also {
+      cancelableSubscriberSet.add(it)
+    }
+  }
+
+  /**
+   * Subscribes to `SourceAdded` event.
+   *
+   * @return cancellation object.
+   *
+   * @see SourceAddedCallback
+   */
+  fun subscribeSourceAdded(sourceAddedCallback: SourceAddedCallback): Cancelable {
+    checkNativeMap("subscribeSourceAdded")
+    return nativeMap.subscribe(sourceAddedCallback).also {
+      cancelableSubscriberSet.add(it)
+    }
+  }
+
+  /**
+   * Subscribes to `SourceRemoved` event.
+   *
+   * @return cancellation object.
+   *
+   * @see SourceRemovedCallback
+   */
+  fun subscribeSourceRemoved(sourceRemovedCallback: SourceRemovedCallback): Cancelable {
+    checkNativeMap("subscribeSourceRemoved")
+    return nativeMap.subscribe(sourceRemovedCallback).also {
+      cancelableSubscriberSet.add(it)
+    }
+  }
+
+  /**
+   * Subscribes to `StyleImageMissing` event.
+   *
+   * @return cancellation object.
+   *
+   * @see StyleImageMissingCallback
+   */
+  fun subscribeStyleImageMissing(styleImageMissingCallback: StyleImageMissingCallback): Cancelable {
+    checkNativeMap("subscribeStyleImageMissing")
+    return nativeMap.subscribe(styleImageMissingCallback).also {
+      cancelableSubscriberSet.add(it)
+    }
+  }
+
+  /**
+   * Subscribes to `StyleImageRemoveUnused` event.
+   *
+   * @return cancellation object.
+   *
+   * @see StyleImageRemoveUnusedCallback
+   */
+  fun subscribeStyleImageUnused(styleImageRemoveUnusedCallback: StyleImageRemoveUnusedCallback): Cancelable {
+    checkNativeMap("subscribeStyleImageRemoveUnused")
+    return nativeMap.subscribe(styleImageRemoveUnusedCallback).also {
+      cancelableSubscriberSet.add(it)
+    }
+  }
+
+  /**
+   * Subscribes to `CameraChanged` event.
+   *
+   * @return cancellation object.
+   *
+   * @see CameraChangedCallback
+   */
+  fun subscribeCameraChanged(cameraChangedCallback: CameraChangedCallback): Cancelable {
+    checkNativeMap("subscribeCameraChanged")
+    return nativeMap.subscribe(cameraChangedCallback).also {
+      cancelableSubscriberSet.add(it)
+    }
+  }
+
+  /**
+   * Subscribes to `RenderFrameStarted` event.
+   *
+   * @return cancellation object.
+   *
+   * @see RenderFrameStartedCallback
+   */
+  fun subscribeRenderFrameStarted(renderFrameStartedCallback: RenderFrameStartedCallback): Cancelable {
+    checkNativeMap("subscribeRenderFrameStarted")
+    return nativeMap.subscribe(renderFrameStartedCallback).also {
+      cancelableSubscriberSet.add(it)
+    }
+  }
+
+  /**
+   * Subscribes to `RenderFrameFinished` event.
+   *
+   * @return cancellation object.
+   *
+   * @see RenderFrameFinishedCallback
+   */
+  fun subscribeRenderFrameFinished(renderFrameFinishedCallback: RenderFrameFinishedCallback): Cancelable {
+    checkNativeMap("subscribeRenderFrameFinished")
+    return nativeMap.subscribe(renderFrameFinishedCallback).also {
+      cancelableSubscriberSet.add(it)
+    }
+  }
+
+  /**
+   * Subscribes to `ResourceRequest` event.
+   *
+   * @return cancellation object.
+   *
+   * @see ResourceRequestCallback
+   */
+  fun subscribeResourceRequest(resourceRequestCallback: ResourceRequestCallback): Cancelable {
+    checkNativeMap("subscribeResourceRequest")
+    return nativeMap.subscribe(resourceRequestCallback).also {
+      cancelableSubscriberSet.add(it)
+    }
+  }
+
+  /**
+   * Subscribes to an experimental `GenericEvent` event.
+   *
+   * @return cancellation object.
+   *
+   * @see GenericEventCallback
+   */
+  @MapboxExperimental
+  fun subscribeGenericEvent(
+    eventName: String,
+    genericEventCallback: GenericEventCallback
+  ): Cancelable {
+    checkNativeMap("subscribeGenericEvent")
+    return nativeMap.subscribe(eventName, genericEventCallback).also {
+      cancelableSubscriberSet.add(it)
     }
   }
 
   /**
    * Add a listener that's going to be invoked whenever map camera changes.
    */
-  override fun addOnCameraChangeListener(onCameraChangeListener: OnCameraChangeListener) {
+  @Deprecated(
+    message = "This method is deprecated, and will be removed in next major release. use [subscribeCameraChange] instead.",
+    replaceWith = ReplaceWith("subscribeCameraChanged(cameraChangedCallback)"),
+    level = DeprecationLevel.WARNING
+  )
+  override fun addOnCameraChangeListener(cameraChangedCallback: CameraChangedCallback) {
     checkNativeMap("addOnCameraChangeListener")
-    nativeObserver.addOnCameraChangeListener(onCameraChangeListener)
+    nativeObserver.addOnCameraChangeListener(cameraChangedCallback)
   }
 
   /**
    * Remove the camera change listener.
    */
-  override fun removeOnCameraChangeListener(onCameraChangeListener: OnCameraChangeListener) {
+  @Deprecated(
+    message = "This method is deprecated, and will be removed in next major release. use cancelable returned from [subscribeCameraChange] to remove the listener.",
+    level = DeprecationLevel.WARNING
+  )
+  override fun removeOnCameraChangeListener(cameraChangedCallback: CameraChangedCallback) {
     checkNativeMap("removeOnCameraChangeListener")
-    nativeObserver.removeOnCameraChangeListener(onCameraChangeListener)
+    nativeObserver.removeOnCameraChangeListener(cameraChangedCallback)
   }
 
   // Map events
@@ -1317,67 +1568,103 @@ class MapboxMap :
    * The Map is in the idle state when there are no ongoing transitions and the Map has rendered all
    * available tiles.
    */
-  override fun addOnMapIdleListener(onMapIdleListener: OnMapIdleListener) {
+  @Deprecated(
+    message = "This method is deprecated, and will be removed in next major release. use [subscribeMapIdle] instead.",
+    replaceWith = ReplaceWith("subscribeMapIdle(mapIdleCallback)"),
+    level = DeprecationLevel.WARNING
+  )
+  override fun addOnMapIdleListener(mapIdleCallback: MapIdleCallback) {
     checkNativeMap("addOnMapIdleListener")
-    nativeObserver.addOnMapIdleListener(onMapIdleListener)
+    nativeObserver.addOnMapIdleListener(mapIdleCallback)
   }
 
   /**
    * Remove the map idle listener.
    */
-  override fun removeOnMapIdleListener(onMapIdleListener: OnMapIdleListener) {
+  @Deprecated(
+    message = "This method is deprecated, and will be removed in next major release. use cancelable returned from [subscribeMapIdle] to remove the listener.",
+    level = DeprecationLevel.WARNING
+  )
+  override fun removeOnMapIdleListener(mapIdleCallback: MapIdleCallback) {
     checkNativeMap("removeOnMapIdleListener")
-    nativeObserver.removeOnMapIdleListener(onMapIdleListener)
+    nativeObserver.removeOnMapIdleListener(mapIdleCallback)
   }
 
   /**
    * Add a listener that's going to be invoked whenever there's a map load error.
    */
-  override fun addOnMapLoadErrorListener(onMapLoadErrorListener: OnMapLoadErrorListener) {
+  @Deprecated(
+    message = "This method is deprecated, and will be removed in next major release. use [subscribeMapLoadingError] instead.",
+    replaceWith = ReplaceWith("subscribeMapLoadingError(mapLoadingErrorCallback)"),
+    level = DeprecationLevel.WARNING
+  )
+  override fun addOnMapLoadErrorListener(mapLoadingErrorCallback: MapLoadingErrorCallback) {
     checkNativeMap("addOnMapLoadErrorListener")
-    nativeObserver.addOnMapLoadErrorListener(onMapLoadErrorListener)
+    nativeObserver.addOnMapLoadErrorListener(mapLoadingErrorCallback)
   }
 
   /**
    * Remove the map error listener.
    */
-  override fun removeOnMapLoadErrorListener(onMapLoadErrorListener: OnMapLoadErrorListener) {
+  @Deprecated(
+    message = "This method is deprecated, and will be removed in next major release. use cancelable returned from [subscribeMapLoadingError] to remove the listener.",
+    level = DeprecationLevel.WARNING
+  )
+  override fun removeOnMapLoadErrorListener(mapLoadingErrorCallback: MapLoadingErrorCallback) {
     checkNativeMap("removeOnMapLoadErrorListener")
-    nativeObserver.removeOnMapLoadErrorListener(onMapLoadErrorListener)
+    nativeObserver.removeOnMapLoadErrorListener(mapLoadingErrorCallback)
   }
 
   /**
    * Add a listener that's going to be invoked whenever the Map's style has been fully loaded, and
    * the Map has rendered all visible tiles.
    */
-  override fun addOnMapLoadedListener(onMapLoadedListener: OnMapLoadedListener) {
+  @Deprecated(
+    message = "This method is deprecated, and will be removed in next major release. use [subscribeMapLoaded] instead.",
+    replaceWith = ReplaceWith("subscribeMapLoaded(mapLoadedCallback)"),
+    level = DeprecationLevel.WARNING
+  )
+  override fun addOnMapLoadedListener(mapLoadedCallback: MapLoadedCallback) {
     checkNativeMap("addOnMapLoadedListener")
-    nativeObserver.addOnMapLoadedListener(onMapLoadedListener)
+    nativeObserver.addOnMapLoadedListener(mapLoadedCallback)
   }
 
   /**
    * Remove the map loaded listener.
    */
-  override fun removeOnMapLoadedListener(onMapLoadedListener: OnMapLoadedListener) {
+  @Deprecated(
+    message = "This method is deprecated, and will be removed in next major release. use cancelable returned from [subscribeMapLoaded] to remove the listener.",
+    level = DeprecationLevel.WARNING
+  )
+  override fun removeOnMapLoadedListener(mapLoadedCallback: MapLoadedCallback) {
     checkNativeMap("removeOnMapLoadedListener")
-    nativeObserver.removeOnMapLoadedListener(onMapLoadedListener)
+    nativeObserver.removeOnMapLoadedListener(mapLoadedCallback)
   }
 
   // Render frame events
   /**
    * Add a listener that's going to be invoked whenever the Map started rendering a frame.
    */
-  override fun addOnRenderFrameStartedListener(onRenderFrameStartedListener: OnRenderFrameStartedListener) {
+  @Deprecated(
+    message = "This method is deprecated, and will be removed in next major release. use [subscribeRenderFrameStarted] instead.",
+    replaceWith = ReplaceWith("subscribeRenderFrameStarted(renderFrameStartedCallback)"),
+    level = DeprecationLevel.WARNING
+  )
+  override fun addOnRenderFrameStartedListener(renderFrameStartedCallback: RenderFrameStartedCallback) {
     checkNativeMap("addOnRenderFrameStartedListener")
-    nativeObserver.addOnRenderFrameStartedListener(onRenderFrameStartedListener)
+    nativeObserver.addOnRenderFrameStartedListener(renderFrameStartedCallback)
   }
 
   /**
    * Remove the render frame started listener.
    */
-  override fun removeOnRenderFrameStartedListener(onRenderFrameStartedListener: OnRenderFrameStartedListener) {
+  @Deprecated(
+    message = "This method is deprecated, and will be removed in next major release. use cancelable returned from [subscribeRenderFrameStarted] to remove the listener.",
+    level = DeprecationLevel.WARNING
+  )
+  override fun removeOnRenderFrameStartedListener(renderFrameStartedCallback: RenderFrameStartedCallback) {
     checkNativeMap("removeOnRenderFrameStartedListener")
-    nativeObserver.removeOnRenderFrameStartedListener(onRenderFrameStartedListener)
+    nativeObserver.removeOnRenderFrameStartedListener(renderFrameStartedCallback)
   }
 
   /**
@@ -1387,17 +1674,26 @@ class MapboxMap :
    * The needs-repaint value provides information about ongoing transitions that trigger Map repaint.
    * The placement-changed value tells if the symbol placement has been changed in the visible viewport.
    */
-  override fun addOnRenderFrameFinishedListener(onRenderFrameFinishedListener: OnRenderFrameFinishedListener) {
+  @Deprecated(
+    message = "This method is deprecated, and will be removed in next major release. use [subscribeRenderFrameFinished] instead.",
+    replaceWith = ReplaceWith("subscribeRenderFrameFinished(renderFrameFinishedCallback)"),
+    level = DeprecationLevel.WARNING
+  )
+  override fun addOnRenderFrameFinishedListener(renderFrameFinishedCallback: RenderFrameFinishedCallback) {
     checkNativeMap("addOnRenderFrameFinishedListener")
-    nativeObserver.addOnRenderFrameFinishedListener(onRenderFrameFinishedListener)
+    nativeObserver.addOnRenderFrameFinishedListener(renderFrameFinishedCallback)
   }
 
   /**
    * Remove the render frame finished listener.
    */
-  override fun removeOnRenderFrameFinishedListener(onRenderFrameFinishedListener: OnRenderFrameFinishedListener) {
+  @Deprecated(
+    message = "This method is deprecated, and will be removed in next major release. use cancelable returned from [subscribeRenderFrameFinished] to remove the listener.",
+    level = DeprecationLevel.WARNING
+  )
+  override fun removeOnRenderFrameFinishedListener(renderFrameFinishedCallback: RenderFrameFinishedCallback) {
     checkNativeMap("removeOnRenderFrameFinishedListener")
-    nativeObserver.removeOnRenderFrameFinishedListener(onRenderFrameFinishedListener)
+    nativeObserver.removeOnRenderFrameFinishedListener(renderFrameFinishedCallback)
   }
 
   // Source events
@@ -1405,50 +1701,77 @@ class MapboxMap :
    * Add a listener that's going to be invoked whenever a source has been added with StyleManager#addStyleSource
    * runtime API.
    */
-  override fun addOnSourceAddedListener(onSourceAddedListener: OnSourceAddedListener) {
+  @Deprecated(
+    message = "This method is deprecated, and will be removed in next major release. use [subscribeSourceAdded] instead.",
+    replaceWith = ReplaceWith("subscribeSourceAdded(sourceAddedCallback)"),
+    level = DeprecationLevel.WARNING
+  )
+  override fun addOnSourceAddedListener(sourceAddedCallback: SourceAddedCallback) {
     checkNativeMap("addOnSourceAddedListener")
-    nativeObserver.addOnSourceAddedListener(onSourceAddedListener)
+    nativeObserver.addOnSourceAddedListener(sourceAddedCallback)
   }
 
   /**
    * Remove the source added listener.
    */
-  override fun removeOnSourceAddedListener(onSourceAddedListener: OnSourceAddedListener) {
+  @Deprecated(
+    message = "This method is deprecated, and will be removed in next major release. use cancelable returned from [subscribeSourceAdded] to remove the listener.",
+    level = DeprecationLevel.WARNING
+  )
+  override fun removeOnSourceAddedListener(sourceAddedCallback: SourceAddedCallback) {
     checkNativeMap("removeOnSourceAddedListener")
-    nativeObserver.removeOnSourceAddedListener(onSourceAddedListener)
+    nativeObserver.removeOnSourceAddedListener(sourceAddedCallback)
   }
 
   /**
    * Add a listener that's going to be invoked whenever the source data has been loaded.
    */
-  override fun addOnSourceDataLoadedListener(onSourceDataLoadedListener: OnSourceDataLoadedListener) {
+  @Deprecated(
+    message = "This method is deprecated, and will be removed in next major release. use [subscribeSourceDataLoaded] instead.",
+    replaceWith = ReplaceWith("subscribeSourceDataLoaded(sourceDataLoadedCallback)"),
+    level = DeprecationLevel.WARNING
+  )
+  override fun addOnSourceDataLoadedListener(sourceDataLoadedCallback: SourceDataLoadedCallback) {
     checkNativeMap("addOnSourceDataLoadedListener")
-    nativeObserver.addOnSourceDataLoadedListener(onSourceDataLoadedListener)
+    nativeObserver.addOnSourceDataLoadedListener(sourceDataLoadedCallback)
   }
 
   /**
    * Remove the source data loaded listener.
    */
-  override fun removeOnSourceDataLoadedListener(onSourceDataLoadedListener: OnSourceDataLoadedListener) {
+  @Deprecated(
+    message = "This method is deprecated, and will be removed in next major release. use cancelable returned from [subscribeSourceDataLoaded] to remove the listener.",
+    level = DeprecationLevel.WARNING
+  )
+  override fun removeOnSourceDataLoadedListener(sourceDataLoadedCallback: SourceDataLoadedCallback) {
     checkNativeMap("removeOnSourceDataLoadedListener")
-    nativeObserver.removeOnSourceDataLoadedListener(onSourceDataLoadedListener)
+    nativeObserver.removeOnSourceDataLoadedListener(sourceDataLoadedCallback)
   }
 
   /**
    * Add a listener that's going to be invoked whenever a source has been removed with StyleManager#removeStyleSource
    * runtime API.
    */
-  override fun addOnSourceRemovedListener(onSourceRemovedListener: OnSourceRemovedListener) {
+  @Deprecated(
+    message = "This method is deprecated, and will be removed in next major release. use [subscribeSourceRemoved] instead.",
+    replaceWith = ReplaceWith("subscribeSourceRemoved(sourceRemovedCallback)"),
+    level = DeprecationLevel.WARNING
+  )
+  override fun addOnSourceRemovedListener(sourceRemovedCallback: SourceRemovedCallback) {
     checkNativeMap("addOnSourceRemovedListener")
-    nativeObserver.addOnSourceRemovedListener(onSourceRemovedListener)
+    nativeObserver.addOnSourceRemovedListener(sourceRemovedCallback)
   }
 
   /**
    * Remove the source removed listener.
    */
-  override fun removeOnSourceRemovedListener(onSourceRemovedListener: OnSourceRemovedListener) {
+  @Deprecated(
+    message = "This method is deprecated, and will be removed in next major release. use cancelable returned from [subscribeSourceRemoved] to remove the listener.",
+    level = DeprecationLevel.WARNING
+  )
+  override fun removeOnSourceRemovedListener(sourceRemovedCallback: SourceRemovedCallback) {
     checkNativeMap("removeOnSourceRemovedListener")
-    nativeObserver.removeOnSourceRemovedListener(onSourceRemovedListener)
+    nativeObserver.removeOnSourceRemovedListener(sourceRemovedCallback)
   }
 
   // Style events
@@ -1456,17 +1779,26 @@ class MapboxMap :
    * Add a listener that's going to be invoked whenever the requested style has been fully loaded,
    * including the style specified sprite and sources.
    */
-  override fun addOnStyleLoadedListener(onStyleLoadedListener: OnStyleLoadedListener) {
+  @Deprecated(
+    message = "This method is deprecated, and will be removed in next major release. use [subscribeStyleLoaded] instead.",
+    replaceWith = ReplaceWith("subscribeStyleLoaded(styleLoadedCallback)"),
+    level = DeprecationLevel.WARNING
+  )
+  override fun addOnStyleLoadedListener(styleLoadedCallback: StyleLoadedCallback) {
     checkNativeMap("addOnStyleLoadedListener")
-    nativeObserver.addOnStyleLoadedListener(onStyleLoadedListener)
+    nativeObserver.addOnStyleLoadedListener(styleLoadedCallback)
   }
 
   /**
    * Remove the style loaded listener.
    */
-  override fun removeOnStyleLoadedListener(onStyleLoadedListener: OnStyleLoadedListener) {
+  @Deprecated(
+    message = "This method is deprecated, and will be removed in next major release. use cancelable returned from [subscribeStyleLoaded] to remove the listener.",
+    level = DeprecationLevel.WARNING
+  )
+  override fun removeOnStyleLoadedListener(styleLoadedCallback: StyleLoadedCallback) {
     checkNativeMap("removeOnStyleLoadedListener")
-    nativeObserver.removeOnStyleLoadedListener(onStyleLoadedListener)
+    nativeObserver.removeOnStyleLoadedListener(styleLoadedCallback)
   }
 
   /**
@@ -1476,17 +1808,26 @@ class MapboxMap :
    * This event may be useful when application needs to modify style layers or sources and add or remove sources
    * before style is fully loaded.
    */
-  override fun addOnStyleDataLoadedListener(onStyleDataLoadedListener: OnStyleDataLoadedListener) {
+  @Deprecated(
+    message = "This method is deprecated, and will be removed in next major release. use [subscribeStyleDataLoaded] instead.",
+    replaceWith = ReplaceWith("subscribeStyleDataLoaded(styleDataLoadedCallback)"),
+    level = DeprecationLevel.WARNING
+  )
+  override fun addOnStyleDataLoadedListener(styleDataLoadedCallback: StyleDataLoadedCallback) {
     checkNativeMap("addOnStyleDataLoadedListener")
-    nativeObserver.addOnStyleDataLoadedListener(onStyleDataLoadedListener)
+    nativeObserver.addOnStyleDataLoadedListener(styleDataLoadedCallback)
   }
 
   /**
    * Remove the style data loaded listener
    */
-  override fun removeOnStyleDataLoadedListener(onStyleDataLoadedListener: OnStyleDataLoadedListener) {
+  @Deprecated(
+    message = "This method is deprecated, and will be removed in next major release. use cancelable returned from [subscribeStyleDataLoaded] to remove the listener.",
+    level = DeprecationLevel.WARNING
+  )
+  override fun removeOnStyleDataLoadedListener(styleDataLoadedCallback: StyleDataLoadedCallback) {
     checkNativeMap("removeOnStyleDataLoadedListener")
-    nativeObserver.removeOnStyleDataLoadedListener(onStyleDataLoadedListener)
+    nativeObserver.removeOnStyleDataLoadedListener(styleDataLoadedCallback)
   }
 
   /**
@@ -1495,34 +1836,52 @@ class MapboxMap :
    * This event is emitted when the Map renders visible tiles and one of the required images is
    * missing in the sprite sheet.
    */
-  override fun addOnStyleImageMissingListener(onStyleImageMissingListener: OnStyleImageMissingListener) {
+  @Deprecated(
+    message = "This method is deprecated, and will be removed in next major release. use [subscribeStyleImageMissing] instead.",
+    replaceWith = ReplaceWith("subscribeStyleImageMissing(styleImageMissingCallback)"),
+    level = DeprecationLevel.WARNING
+  )
+  override fun addOnStyleImageMissingListener(styleImageMissingCallback: StyleImageMissingCallback) {
     checkNativeMap("addOnStyleImageMissingListener")
-    nativeObserver.addOnStyleImageMissingListener(onStyleImageMissingListener)
+    nativeObserver.addOnStyleImageMissingListener(styleImageMissingCallback)
   }
 
   /**
    * Remove the style image missing listener.
    */
-  override fun removeOnStyleImageMissingListener(onStyleImageMissingListener: OnStyleImageMissingListener) {
+  @Deprecated(
+    message = "This method is deprecated, and will be removed in next major release. use cancelable returned from [subscribeStyleImageMissing] to remove the listener.",
+    level = DeprecationLevel.WARNING
+  )
+  override fun removeOnStyleImageMissingListener(styleImageMissingCallback: StyleImageMissingCallback) {
     checkNativeMap("removeOnStyleImageMissingListener")
-    nativeObserver.removeOnStyleImageMissingListener(onStyleImageMissingListener)
+    nativeObserver.removeOnStyleImageMissingListener(styleImageMissingCallback)
   }
 
   /**
    * Add a listener that's going to be invoked whenever an image added to the Style is no longer
    * needed and can be removed using StyleManager#removeStyleImage method.
    */
-  override fun addOnStyleImageUnusedListener(onStyleImageUnusedListener: OnStyleImageUnusedListener) {
+  @Deprecated(
+    message = "This method is deprecated, and will be removed in next major release. use [subscribeStyleImageUnused] instead.",
+    replaceWith = ReplaceWith("subscribeStyleImageUnused(styleImageRemoveUnusedCallback)"),
+    level = DeprecationLevel.WARNING
+  )
+  override fun addOnStyleImageUnusedListener(styleImageRemoveUnusedCallback: StyleImageRemoveUnusedCallback) {
     checkNativeMap("addOnStyleImageUnusedListener")
-    nativeObserver.addOnStyleImageUnusedListener(onStyleImageUnusedListener)
+    nativeObserver.addOnStyleImageUnusedListener(styleImageRemoveUnusedCallback)
   }
 
   /**
    * Remove the style image unused listener.
    */
-  override fun removeOnStyleImageUnusedListener(onStyleImageUnusedListener: OnStyleImageUnusedListener) {
+  @Deprecated(
+    message = "This method is deprecated, and will be removed in next major release. use cancelable returned from [subscribeStyleImageUnused] to remove the listener.",
+    level = DeprecationLevel.WARNING
+  )
+  override fun removeOnStyleImageUnusedListener(styleImageRemoveUnusedCallback: StyleImageRemoveUnusedCallback) {
     checkNativeMap("removeOnStyleImageUnusedListener")
-    nativeObserver.removeOnStyleImageUnusedListener(onStyleImageUnusedListener)
+    nativeObserver.removeOnStyleImageUnusedListener(styleImageRemoveUnusedCallback)
   }
 
   /**
@@ -1539,7 +1898,7 @@ class MapboxMap :
    */
   override fun getFreeCameraOptions(): FreeCameraOptions {
     checkNativeMap("getFreeCameraOptions")
-    return nativeMap.freeCameraOptions
+    return nativeMap.getFreeCameraOptions()
   }
 
   /**
@@ -1571,23 +1930,21 @@ class MapboxMap :
   }
 
   /**
-   * The memory budget hint to be used by the map. The budget can be given in
+   * The tile cache budget hint to be used by the map. The budget can be given in
    * tile units or in megabytes. A Map will do the best effort to keep memory
    * allocations for a non essential resources within the budget.
    *
-   * The memory budget distribution and resource
-   * eviction logic is a subject to change. Current implementation sets memory budget
-   * hint per data source.
+   * If tile cache budget in megabytes is set, the engine will try to use ETC1 texture compression
+   * for raster layers, therefore, raster images with alpha channel will be rendered incorrectly.
    *
-   * If null is set, the memory budget in tile units will be dynamically calculated based on
+   * If null is set, the tile cache budget in tile units will be dynamically calculated based on
    * the current viewport size.
    *
-   * @param memoryBudget The memory budget hint to be used by the Map.
+   * @param tileCacheBudget The tile cache budget hint to be used by the Map.
    */
-  @MapboxExperimental
-  fun setMemoryBudget(memoryBudget: MapMemoryBudget?) {
-    checkNativeMap("setMemoryBudget")
-    nativeMap.setMemoryBudget(memoryBudget)
+  fun setTileCacheBudget(tileCacheBudget: TileCacheBudget?) {
+    checkNativeMap("setTileCacheBudget")
+    nativeMap.setTileCacheBudget(tileCacheBudget)
   }
 
   /**
@@ -1603,7 +1960,7 @@ class MapboxMap :
    */
   fun setRenderWorldCopies(renderWorldCopies: Boolean) {
     checkNativeMap("setRenderWorldCopies")
-    nativeMap.renderWorldCopies = renderWorldCopies
+    nativeMap.setRenderWorldCopies(renderWorldCopies)
   }
 
   /**
@@ -1613,7 +1970,7 @@ class MapboxMap :
    */
   fun getRenderWorldCopies(): Boolean {
     checkNativeMap("getRenderWorldCopies")
-    return nativeMap.renderWorldCopies
+    return nativeMap.getRenderWorldCopies()
   }
 
   /**
@@ -1657,7 +2014,10 @@ class MapboxMap :
     if (cameraAnimationsPlugin is CameraAnimationsPluginImpl) {
       this.cameraAnimationsPlugin = cameraAnimationsPlugin
     } else {
-      logW(TAG, "MapboxMap camera extension functions could work only with Mapbox developed plugin!")
+      logW(
+        TAG,
+        "MapboxMap camera extension functions could work only with Mapbox developed plugin!"
+      )
     }
   }
 
@@ -1681,7 +2041,10 @@ class MapboxMap :
     if (gesturesPlugin is GesturesPluginImpl) {
       this.gesturesPlugin = gesturesPlugin
     } else {
-      logW(TAG, "MapboxMap gestures extension functions could work only with Mapbox developed plugin!")
+      logW(
+        TAG,
+        "MapboxMap gestures extension functions could work only with Mapbox developed plugin!"
+      )
     }
   }
 
@@ -1704,12 +2067,28 @@ class MapboxMap :
   internal fun onDestroy() {
     cameraAnimationsPlugin = null
     gesturesPlugin = null
-    observers.forEach {
-      nativeMap.unsubscribe(it)
+    cancelableSubscriberSet.forEach {
+      it.cancel()
     }
-    observers.clear()
+    cancelableSubscriberSet.clear()
     styleObserver.onDestroy()
     isMapValid = false
+  }
+
+  /**
+   * Returns tileIDs that cover current map camera
+   *
+   * Note! This is an experimental API and behavior might change in future.
+   *
+   * @param tileCoverOptions Options for the tile cover method
+   * @param cameraOptions This is an extra parameter for future use. Has no effect for now.
+   */
+  @MapboxExperimental
+  fun tileCover(
+    tileCoverOptions: TileCoverOptions,
+    cameraOptions: CameraOptions?
+  ): List<CanonicalTileID> {
+    return nativeMap.tileCover(tileCoverOptions, cameraOptions)
   }
 
   internal fun addViewAnnotation(
@@ -1762,22 +2141,20 @@ class MapboxMap :
     /**
      * Clears temporary map data.
      *
-     * Clears temporary map data from the data path defined in the given resource options.
+     * Clears temporary map data from the data path defined in the current options.
      * Useful to reduce the disk usage or in case the disk cache contains invalid data.
      *
      * Note that calling this API will affect all maps that use the same data path and does not
      * affect persistent map data like offline style packages.
      *
-     * @param resourceOptions The `resource options` that contain the map data path to be used
      * @param callback Called once the request is complete or an error occurred.
      */
     @JvmStatic
-    fun clearData(resourceOptions: ResourceOptions, callback: AsyncOperationResultCallback) {
-      Map.clearData(resourceOptions, callback)
+    fun clearData(callback: AsyncOperationResultCallback) {
+      MapsResourceOptions.clearData(callback)
     }
 
     private const val TAG = "Mbgl-MapboxMap"
-    private const val EMPTY_STYLE_JSON = "{}"
     internal const val QFE_SUPER_CLUSTER = "supercluster"
     internal const val QFE_LEAVES = "leaves"
     internal const val QFE_LIMIT = "limit"

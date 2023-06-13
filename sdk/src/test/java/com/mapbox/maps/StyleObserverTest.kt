@@ -1,8 +1,5 @@
 package com.mapbox.maps
 
-import com.mapbox.maps.extension.observable.eventdata.StyleDataLoadedEventData
-import com.mapbox.maps.extension.observable.model.StyleDataType
-import com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener
 import com.mapbox.verifyNo
 import com.mapbox.verifyOnce
 import io.mockk.*
@@ -12,6 +9,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import java.util.Date
 
 @RunWith(RobolectricTestRunner::class)
 class StyleObserverTest {
@@ -26,7 +24,7 @@ class StyleObserverTest {
 
     mainStyleLoadedListener = mockk(relaxed = true)
     styleObserver = StyleObserver(
-      nativeMap = mockk(relaxUnitFun = true),
+      styleManager = mockk(relaxUnitFun = true),
       styleLoadedListener = mainStyleLoadedListener,
       nativeObserver = mockk(relaxUnitFun = true),
       pixelRatio = 1.0f
@@ -69,9 +67,16 @@ class StyleObserverTest {
   @Test
   fun onStyleLoadSuccess() {
     val styleLoaded = mockk<Style.OnStyleLoaded>(relaxed = true)
-    styleObserver.setLoadStyleListener(styleLoaded, mockk(relaxed = true), null, null, null)
-    styleObserver.onStyleDataLoaded(StyleDataLoadedEventData(0, 0, StyleDataType.STYLE)) // needed to initialize style internally
-    styleObserver.onStyleLoaded(mockk())
+    styleObserver.setLoadStyleListener(styleLoaded, mockk(relaxed = true), null, null)
+    styleObserver.run(
+      StyleDataLoaded(
+        StyleDataLoadedType.STYLE,
+        EventTimeInterval(
+          Date(0), Date(0)
+        )
+      )
+    ) // needed to initialize style internally
+    styleObserver.run(mockk<StyleLoaded>())
     verify { styleLoaded.onStyleLoaded(any()) }
     verify { mainStyleLoadedListener.onStyleLoaded(any()) }
   }
@@ -87,14 +92,20 @@ class StyleObserverTest {
       mockk(relaxed = true),
       null,
       null,
-      null
     )
     val getStyleListener = mockk<Style.OnStyleLoaded>(relaxed = true)
     styleObserver.addGetStyleListener(getStyleListener)
     val getStyleListener2 = mockk<Style.OnStyleLoaded>(relaxed = true)
     styleObserver.addGetStyleListener(getStyleListener2)
-    styleObserver.onStyleDataLoaded(StyleDataLoadedEventData(0, 0, StyleDataType.STYLE)) // needed to initialize style internally
-    styleObserver.onStyleLoaded(mockk())
+    styleObserver.run(
+      StyleDataLoaded(
+        StyleDataLoadedType.STYLE,
+        EventTimeInterval(
+          Date(0), Date(0)
+        )
+      )
+    ) // needed to initialize style internally
+    styleObserver.run(mockk<StyleLoaded>())
     verify { userLoadStyleListener.onStyleLoaded(any()) }
     verify { getStyleListener.onStyleLoaded(any()) }
     verify { getStyleListener2.onStyleLoaded(any()) }
@@ -106,38 +117,20 @@ class StyleObserverTest {
   @Test
   fun onStyleLoadedOverwritten() {
     val styleLoadedFail = mockk<Style.OnStyleLoaded>(relaxed = true)
-    styleObserver.setLoadStyleListener(styleLoadedFail, mockk(relaxed = true), null, null, null)
+    styleObserver.setLoadStyleListener(styleLoadedFail, mockk(relaxed = true), null, null)
     val styleLoadedSuccess = mockk<Style.OnStyleLoaded>(relaxed = true)
-    styleObserver.setLoadStyleListener(styleLoadedSuccess, mockk(relaxed = true), null, null, null)
-    styleObserver.onStyleDataLoaded(StyleDataLoadedEventData(0, 0, StyleDataType.STYLE)) // needed to initialize style internally
-    styleObserver.onStyleLoaded(mockk())
+    styleObserver.setLoadStyleListener(styleLoadedSuccess, mockk(relaxed = true), null, null)
+    styleObserver.run(
+      StyleDataLoaded(
+        StyleDataLoadedType.STYLE,
+        EventTimeInterval(
+          Date(0), Date(0)
+        )
+      )
+    ) // needed to initialize style internally
+    styleObserver.run(mockk<StyleLoaded>())
     verifyNo { styleLoadedFail.onStyleLoaded(any()) }
     verify { styleLoadedSuccess.onStyleLoaded(any()) }
-  }
-
-  /**
-   * Verifies if the user provided OnMapLoadErrorListener is called when the style has produced an error
-   */
-  @Test
-  fun onStyleLoadError() {
-    val errorListener = mockk<OnMapLoadErrorListener>(relaxed = true)
-    styleObserver.setLoadStyleListener(null, mockk(relaxed = true), null, null, errorListener)
-    styleObserver.onMapLoadError(mockk(relaxed = true))
-    verify { errorListener.onMapLoadError(any()) }
-  }
-
-  /**
-   * Verifies that loadStyle error callback is overwritten with the consecutive call
-   */
-  @Test
-  fun onStyleLoadErrorNotCalled() {
-    val errorListenerFail = mockk<OnMapLoadErrorListener>(relaxed = true)
-    styleObserver.setLoadStyleListener(null, mockk(relaxed = true), null, null, errorListenerFail)
-    val errorListenerSuccess = mockk<OnMapLoadErrorListener>(relaxed = true)
-    styleObserver.setLoadStyleListener(null, mockk(relaxed = true), null, null, errorListenerSuccess)
-    styleObserver.onMapLoadError(mockk(relaxed = true))
-    verifyNo { errorListenerFail.onMapLoadError(any()) }
-    verify { errorListenerSuccess.onMapLoadError(any()) }
   }
 
   @Test
@@ -152,10 +145,16 @@ class StyleObserverTest {
       styleCallback,
       styleSpritesCallback,
       styleSourcesCallback,
-      null
     )
 
-    styleObserver.onStyleDataLoaded(StyleDataLoadedEventData(0, 0, StyleDataType.STYLE))
+    styleObserver.run(
+      StyleDataLoaded(
+        StyleDataLoadedType.STYLE,
+        EventTimeInterval(
+          Date(0), Date(0)
+        )
+      )
+    )
 
     verify { styleCallback.onStyleLoaded(any()) }
     verifyNo { styleSpritesCallback.onStyleLoaded(any()) }
@@ -177,16 +176,29 @@ class StyleObserverTest {
       styleCallback,
       styleSpritesCallback,
       styleSourcesCallback,
-      null
     )
 
     // STYLE event arrives first and initializes Style object internally
-    styleObserver.onStyleDataLoaded(StyleDataLoadedEventData(0, 0, StyleDataType.STYLE))
+    styleObserver.run(
+      StyleDataLoaded(
+        StyleDataLoadedType.STYLE,
+        EventTimeInterval(
+          Date(0), Date(0)
+        )
+      )
+    )
 
     verify { styleCallback.onStyleLoaded(any()) }
     verifyNo { styleSpritesCallback.onStyleLoaded(any()) }
 
-    styleObserver.onStyleDataLoaded(StyleDataLoadedEventData(0, 0, StyleDataType.SPRITE))
+    styleObserver.run(
+      StyleDataLoaded(
+        StyleDataLoadedType.SPRITE,
+        EventTimeInterval(
+          Date(0), Date(0)
+        )
+      )
+    )
 
     verify { styleSpritesCallback.onStyleLoaded(any()) }
     verifyNo { styleSourcesCallback.onStyleLoaded(any()) }
@@ -207,15 +219,28 @@ class StyleObserverTest {
       styleCallback,
       styleSpritesCallback,
       styleSourcesCallback,
-      null
     )
 
     // STYLE event arrives first and initializes Style object internally
-    styleObserver.onStyleDataLoaded(StyleDataLoadedEventData(0, 0, StyleDataType.STYLE))
+    styleObserver.run(
+      StyleDataLoaded(
+        StyleDataLoadedType.STYLE,
+        EventTimeInterval(
+          Date(0), Date(0)
+        )
+      )
+    )
 
     verifyNo { styleSourcesCallback.onStyleLoaded(any()) }
 
-    styleObserver.onStyleDataLoaded(StyleDataLoadedEventData(0, 0, StyleDataType.SOURCES))
+    styleObserver.run(
+      StyleDataLoaded(
+        StyleDataLoadedType.SOURCES,
+        EventTimeInterval(
+          Date(0), Date(0)
+        )
+      )
+    )
 
     verify { styleSourcesCallback.onStyleLoaded(any()) }
     verify { styleCallback.onStyleLoaded(any()) }
@@ -235,13 +260,38 @@ class StyleObserverTest {
     val spritesCalled = mockk<Style.OnStyleLoaded>(relaxed = true)
     val sourcesCalled = mockk<Style.OnStyleLoaded>(relaxed = true)
 
-    styleObserver.setLoadStyleListener(null, styleNotCalled, spritesNotCalled, sourcesNotCalled, null)
-    styleObserver.setLoadStyleListener(null, styleCalled, spritesCalled, sourcesCalled, null)
+    styleObserver.setLoadStyleListener(
+      null,
+      styleNotCalled,
+      spritesNotCalled,
+      sourcesNotCalled,
+    )
+    styleObserver.setLoadStyleListener(null, styleCalled, spritesCalled, sourcesCalled)
 
-    styleObserver.onStyleDataLoaded(StyleDataLoadedEventData(0, 0, StyleDataType.STYLE))
-    styleObserver.onStyleDataLoaded(StyleDataLoadedEventData(0, 0, StyleDataType.SOURCES))
-    styleObserver.onStyleDataLoaded(StyleDataLoadedEventData(0, 0, StyleDataType.SPRITE))
-
+    styleObserver.run(
+      StyleDataLoaded(
+        StyleDataLoadedType.STYLE,
+        EventTimeInterval(
+          Date(0), Date(0)
+        )
+      )
+    )
+    styleObserver.run(
+      StyleDataLoaded(
+        StyleDataLoadedType.SOURCES,
+        EventTimeInterval(
+          Date(0), Date(0)
+        )
+      )
+    )
+    styleObserver.run(
+      StyleDataLoaded(
+        StyleDataLoadedType.SPRITE,
+        EventTimeInterval(
+          Date(0), Date(0)
+        )
+      )
+    )
     verifyNo { styleNotCalled.onStyleLoaded(any()) }
     verifyNo { spritesNotCalled.onStyleLoaded(any()) }
     verifyNo { sourcesNotCalled.onStyleLoaded(any()) }
@@ -262,11 +312,10 @@ class StyleObserverTest {
       styleCallback,
       styleSpritesCallback,
       styleSourcesCallback,
-      null
     )
 
     assertThrows(MapboxMapException::class.java) {
-      styleObserver.onStyleLoaded(mockk())
+      styleObserver.run(mockk<StyleLoaded>())
     }
   }
 
@@ -280,15 +329,28 @@ class StyleObserverTest {
       styleCallback,
       styleSpritesCallback,
       null,
-      null
     )
 
-    styleObserver.onStyleDataLoaded(StyleDataLoadedEventData(0, 0, StyleDataType.STYLE))
-    styleObserver.onStyleDataLoaded(StyleDataLoadedEventData(0, 0, StyleDataType.SOURCES))
+    styleObserver.run(
+      StyleDataLoaded(
+        StyleDataLoadedType.STYLE,
+        EventTimeInterval(
+          Date(0), Date(0)
+        )
+      )
+    )
+    styleObserver.run(
+      StyleDataLoaded(
+        StyleDataLoadedType.SOURCES,
+        EventTimeInterval(
+          Date(0), Date(0)
+        )
+      )
+    )
 
     verifyNo { styleSpritesCallback.onStyleLoaded(any()) }
 
-    styleObserver.onStyleLoaded(mockk())
+    styleObserver.run(mockk<StyleLoaded>())
 
     verify { styleSpritesCallback.onStyleLoaded(any()) }
   }
@@ -303,15 +365,28 @@ class StyleObserverTest {
       styleCallback,
       null,
       styleSourcesCallback,
-      null
     )
 
-    styleObserver.onStyleDataLoaded(StyleDataLoadedEventData(0, 0, StyleDataType.STYLE))
-    styleObserver.onStyleDataLoaded(StyleDataLoadedEventData(0, 0, StyleDataType.SPRITE))
+    styleObserver.run(
+      StyleDataLoaded(
+        StyleDataLoadedType.STYLE,
+        EventTimeInterval(
+          Date(0), Date(0)
+        )
+      )
+    )
+    styleObserver.run(
+      StyleDataLoaded(
+        StyleDataLoadedType.SPRITE,
+        EventTimeInterval(
+          Date(0), Date(0)
+        )
+      )
+    )
 
     verifyNo { styleSourcesCallback.onStyleLoaded(any()) }
 
-    styleObserver.onStyleLoaded(mockk())
+    styleObserver.run(mockk<StyleLoaded>())
 
     verify { styleSourcesCallback.onStyleLoaded(any()) }
   }
@@ -327,18 +402,52 @@ class StyleObserverTest {
       styleCallback,
       styleSpritesCallback,
       styleSourcesCallback,
-      null
     )
 
-    styleObserver.onStyleDataLoaded(StyleDataLoadedEventData(0, 0, StyleDataType.SOURCES))
-    styleObserver.onStyleDataLoaded(StyleDataLoadedEventData(0, 0, StyleDataType.SPRITE))
+    styleObserver.run(
+      StyleDataLoaded(
+        StyleDataLoadedType.SOURCES,
+        EventTimeInterval(
+          Date(0), Date(0)
+        )
+      )
+    )
+    styleObserver.run(
+      StyleDataLoaded(
+        StyleDataLoadedType.SPRITE,
+        EventTimeInterval(
+          Date(0), Date(0)
+        )
+      )
+    )
 
     verifyNo { styleSourcesCallback.onStyleLoaded(any()) }
     verifyNo { styleSpritesCallback.onStyleLoaded(any()) }
 
-    styleObserver.onStyleDataLoaded(StyleDataLoadedEventData(0, 0, StyleDataType.STYLE))
-    styleObserver.onStyleDataLoaded(StyleDataLoadedEventData(0, 0, StyleDataType.SOURCES))
-    styleObserver.onStyleDataLoaded(StyleDataLoadedEventData(0, 0, StyleDataType.SPRITE))
+    styleObserver.run(
+      StyleDataLoaded(
+        StyleDataLoadedType.STYLE,
+        EventTimeInterval(
+          Date(0), Date(0)
+        )
+      )
+    )
+    styleObserver.run(
+      StyleDataLoaded(
+        StyleDataLoadedType.SOURCES,
+        EventTimeInterval(
+          Date(0), Date(0)
+        )
+      )
+    )
+    styleObserver.run(
+      StyleDataLoaded(
+        StyleDataLoadedType.SPRITE,
+        EventTimeInterval(
+          Date(0), Date(0)
+        )
+      )
+    )
 
     verifyOnce { styleCallback.onStyleLoaded(any()) }
     verifyOnce { styleSourcesCallback.onStyleLoaded(any()) }

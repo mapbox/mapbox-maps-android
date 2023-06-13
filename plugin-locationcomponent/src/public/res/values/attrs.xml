@@ -23,7 +23,7 @@
         <!-- Whether the puck rotates to track the bearing source. -->
         <attr name="mapbox_locationComponentPuckBearingEnabled" format="boolean"/>
         <!-- The enum controls how the puck is oriented -->
-        <attr name="mapbox_locationComponentPuckBearingSource" format="enum">
+        <attr name="mapbox_locationComponentPuckBearing" format="enum">
           <!-- Orients the puck to match the direction in which the device is facing. -->
           <enum name="heading" value="0"/>
           <!-- Orients the puck to match the direction in which the device is moving. -->

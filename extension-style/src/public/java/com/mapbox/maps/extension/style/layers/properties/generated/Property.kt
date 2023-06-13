@@ -2,6 +2,8 @@
 
 package com.mapbox.maps.extension.style.layers.properties.generated
 
+import com.mapbox.maps.MapboxExperimental
+
 /**
  * Paint/Layout properties for Layer
  */
@@ -516,6 +518,23 @@ enum class SkyType(override val value: String) : LayerProperty {
    * Renders the sky with a simulated atmospheric scattering algorithm, the sun direction can be attached to the light position or explicitly set through {@link SKY_ATMOSPHERE_SUN}.
    */
   ATMOSPHERE("atmosphere"),
+}
+// MODEL_TYPE: Defines rendering behavior of model in respect to other 3D scene objects.
+/**
+ * Defines rendering behavior of model in respect to other 3D scene objects.
+ *
+ * @param value String value of this property
+ */
+@MapboxExperimental
+enum class ModelType(override val value: String) : LayerProperty {
+  /**
+   * Integrated to 3D scene, using depth testing, along with terrain, fill-extrusions and custom layer.
+   */
+  COMMON_3D("common-3d"),
+  /**
+   * Displayed over other 3D content, occluded by terrain.
+   */
+  LOCATION_INDICATOR("location-indicator"),
 }
 // ANCHOR: Whether extruded geometries are lit relative to the map or viewport.
 /**

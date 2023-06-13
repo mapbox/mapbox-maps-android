@@ -6,7 +6,7 @@ import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.Color
 import android.util.AttributeSet
-import com.mapbox.maps.plugin.PuckBearingSource
+import com.mapbox.maps.plugin.PuckBearing
 import io.mockk.Runs
 import io.mockk.clearAllMocks
 import io.mockk.every
@@ -163,17 +163,17 @@ class LocationComponentAttributeParserTest {
   }
 
   @Test
-  fun puckBearingSourceTestHEADING() {
-    every { typedArray.getInt(any(), any()) } returns PuckBearingSource.HEADING.ordinal
+  fun puckBearingTestHEADING() {
+    every { typedArray.getInt(any(), any()) } returns PuckBearing.HEADING.ordinal
     val settings = LocationComponentAttributeParser.parseLocationComponentSettings(context, attrs, 1.2f)
-    assertEquals(PuckBearingSource.HEADING, settings.puckBearingSource)
+    assertEquals(PuckBearing.HEADING, settings.puckBearing)
   }
 
   @Test
-  fun puckBearingSourceTestCOURSE() {
-    every { typedArray.getInt(any(), any()) } returns PuckBearingSource.COURSE.ordinal
+  fun puckBearingTestCOURSE() {
+    every { typedArray.getInt(any(), any()) } returns PuckBearing.COURSE.ordinal
     val settings = LocationComponentAttributeParser.parseLocationComponentSettings(context, attrs, 1.2f)
-    assertEquals(PuckBearingSource.COURSE, settings.puckBearingSource)
+    assertEquals(PuckBearing.COURSE, settings.puckBearing)
   }
 }
 

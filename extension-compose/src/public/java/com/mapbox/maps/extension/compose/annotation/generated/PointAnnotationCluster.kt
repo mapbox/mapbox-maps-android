@@ -27,8 +27,6 @@ import com.mapbox.maps.plugin.annotation.generated.createPointAnnotationManager
  * @param iconPadding Size of the additional area around the icon bounding box used for detecting symbol collisions. The unit of iconPadding is in density-independent pixels.
  * @param iconPitchAlignment Orientation of icon when map is pitched.
  * @param iconRotationAlignment In combination with {@link Property.SYMBOL_PLACEMENT}, determines the rotation behavior of icons.
- * @param iconTextFit Scales the icon to fit around the associated text.
- * @param iconTextFitPadding Size of the additional area added to dimensions determined by {@link Property.ICON_TEXT_FIT}, in clockwise order: top, right, bottom, left. The unit of iconTextFitPadding is in density-independent pixels.
  * @param symbolAvoidEdges If true, the symbols will not cross tile edges to avoid mutual collisions. Recommended in layers that don't have enough padding in the vector tile to prevent collisions, or if it is a point symbol layer placed after a line symbol layer. When using a client that supports global collision detection, like Mapbox GL JS version 0.42.0 or greater, enabling this property is not needed to prevent clipped labels at tile boundaries.
  * @param symbolPlacement Label placement relative to its geometry.
  * @param symbolSpacing Distance between two symbol anchors. The unit of symbolSpacing is in density-independent pixels.
@@ -62,8 +60,6 @@ public fun PointAnnotationCluster(
   iconPadding: Double? = null,
   iconPitchAlignment: IconPitchAlignment? = null,
   iconRotationAlignment: IconRotationAlignment? = null,
-  iconTextFit: IconTextFit? = null,
-  iconTextFitPadding: List<Double>? = null,
   symbolAvoidEdges: Boolean? = null,
   symbolPlacement: SymbolPlacement? = null,
   symbolSpacing: Double? = null,
@@ -119,12 +115,6 @@ public fun PointAnnotationCluster(
       }
       set(iconRotationAlignment) {
         annotationManager.iconRotationAlignment = it
-      }
-      set(iconTextFit) {
-        annotationManager.iconTextFit = it
-      }
-      set(iconTextFitPadding) {
-        annotationManager.iconTextFitPadding = it
       }
       set(symbolAvoidEdges) {
         annotationManager.symbolAvoidEdges = it

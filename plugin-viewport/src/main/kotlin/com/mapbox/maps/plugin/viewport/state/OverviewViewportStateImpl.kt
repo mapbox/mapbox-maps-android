@@ -4,8 +4,9 @@ import android.animation.AnimatorSet
 import android.animation.ValueAnimator
 import androidx.annotation.VisibleForTesting
 import androidx.core.animation.doOnEnd
+import com.mapbox.common.Cancelable
 import com.mapbox.maps.CameraOptions
-import com.mapbox.maps.plugin.animation.Cancelable
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.plugin.animation.camera
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions
@@ -64,7 +65,7 @@ internal class OverviewViewportStateImpl(
 
   /**
    * Observer the new camera options produced by the [ViewportState], it can be used to get the
-   * latest state [CameraOptions] for [ViewportTransition].
+   * latest state [CameraOptions] for [com.mapbox.maps.plugin.viewport.transition.ViewportTransition].
    *
    * @param viewportStateDataObserver observer that observe new viewport data.
    * @return a handle that cancels current observation.
@@ -94,6 +95,7 @@ internal class OverviewViewportStateImpl(
     cancelAnimation()
   }
 
+  @OptIn(MapboxExperimental::class)
   private fun cancelAnimation() {
     runningAnimation?.apply {
       AnimationThreadController.postOnAnimatorThread {
@@ -106,6 +108,7 @@ internal class OverviewViewportStateImpl(
     }
   }
 
+  @OptIn(MapboxExperimental::class)
   private fun startAnimation(
     animatorSet: AnimatorSet,
     instant: Boolean,

@@ -45,7 +45,7 @@ internal abstract class MapboxRendererTest {
 
   @Test
   fun setMapTest() {
-    val map = mockk<MapInterface>(relaxUnitFun = true)
+    val map = mockk<NativeMapImpl>(relaxUnitFun = true)
     mapboxRenderer.setMap(map)
     assert(mapboxRenderer.map == map)
   }
@@ -129,7 +129,7 @@ internal abstract class MapboxRendererTest {
 
   @Test
   fun onSurfaceCreatedTest() {
-    val map = mockk<MapInterface>(relaxUnitFun = true)
+    val map = mockk<NativeMapImpl>(relaxUnitFun = true)
     mapboxRenderer.map = map
     mapboxRenderer.createRenderer()
     verify { map.createRenderer() }
@@ -137,15 +137,15 @@ internal abstract class MapboxRendererTest {
 
   @Test
   fun onSurfaceChangedTest() {
-    val map = mockk<MapInterface>(relaxUnitFun = true)
+    val map = mockk<NativeMapImpl>(relaxUnitFun = true)
     mapboxRenderer.map = map
     mapboxRenderer.onSurfaceChanged(1, 1)
-    verify { map.size = Size(1f, 1f) }
+    verify { map.setSize(Size(1f, 1f)) }
   }
 
   @Test
   fun onSurfaceDestroyedTest() {
-    val map = mockk<MapInterface>(relaxUnitFun = true)
+    val map = mockk<NativeMapImpl>(relaxUnitFun = true)
     mapboxRenderer.map = map
     mapboxRenderer.destroyRenderer()
     verify { map.destroyRenderer() }
@@ -153,7 +153,7 @@ internal abstract class MapboxRendererTest {
 
   @Test
   fun onDrawFrameTest() {
-    val map = mockk<MapInterface>(relaxUnitFun = true)
+    val map = mockk<NativeMapImpl>(relaxUnitFun = true)
     mapboxRenderer.map = map
     mapboxRenderer.render()
     verify { map.render() }

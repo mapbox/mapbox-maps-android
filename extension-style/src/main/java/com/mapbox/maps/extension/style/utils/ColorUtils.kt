@@ -33,16 +33,17 @@ object ColorUtils {
     val m = c.matcher(value)
     return if (m.matches() && m.groupCount() == 3) {
       Color.rgb(
-        m.group(1).toFloat().toInt(), m.group(2).toFloat().toInt(),
-        m.group(3).toFloat().toInt()
+        m.group(1)!!.toFloat().toInt(), m.group(2)!!.toFloat().toInt(),
+        m.group(3)!!.toFloat().toInt()
       )
     } else if (m.matches() && m.groupCount() == 4) {
       Color.argb(
-        (m.group(4).toFloat() * 255).toInt(), m.group(1).toFloat().toInt(),
-        m.group(2).toFloat().toInt(), m.group(3).toFloat().toInt()
+        (m.group(4)!!.toFloat() * 255).toInt(), m.group(1)!!.toFloat().toInt(),
+        m.group(2)!!.toFloat().toInt(), m.group(3)!!.toFloat().toInt()
       )
     } else {
       Log.e(TAG, "Not a valid rgb/rgba value")
+      null
     }
   }
 
@@ -87,16 +88,17 @@ object ColorUtils {
     val m = c.matcher(value.toString())
     return if (m.matches() && m.groupCount() == 3) {
       Color.rgb(
-        m.group(1).toFloat().toInt(), m.group(2).toFloat().toInt(),
-        m.group(3).toFloat().toInt()
+        m.group(1)!!.toFloat().toInt(), m.group(2)!!.toFloat().toInt(),
+        m.group(3)!!.toFloat().toInt()
       )
     } else if (m.matches() && m.groupCount() == 4) {
       Color.argb(
-        (m.group(4).toFloat() * 255).toInt(), m.group(1).toFloat().toInt(),
-        m.group(2).toFloat().toInt(), m.group(3).toFloat().toInt()
+        (m.group(4)!!.toFloat() * 255).toInt(), m.group(1)!!.toFloat().toInt(),
+        m.group(2)!!.toFloat().toInt(), m.group(3)!!.toFloat().toInt()
       )
     } else {
       Log.e(TAG, "Not a valid rgb/rgba value")
+      null
     }
   }
 
@@ -119,9 +121,9 @@ object ColorUtils {
     return if (m.matches() && m.groupCount() == 3) {
       String.format(
         Locale.US, "rgba(%d, %d, %d, 1)",
-        m.group(1).toFloat().toInt(),
-        m.group(2).toFloat().toInt(),
-        m.group(3).toFloat().toInt()
+        m.group(1)!!.toFloat().toInt(),
+        m.group(2)!!.toFloat().toInt(),
+        m.group(3)!!.toFloat().toInt()
       )
     } else if (m.matches() && m.groupCount() == 4) {
       val numberFormat =
@@ -129,17 +131,17 @@ object ColorUtils {
       val decimalFormat = numberFormat as DecimalFormat
       decimalFormat.applyPattern("#.###")
       val alpha =
-        decimalFormat.format(m.group(4).toFloat())
+        decimalFormat.format(m.group(4)!!.toFloat())
       String.format(
         Locale.US, "rgba(%d, %d, %d, %s)",
-        m.group(1).toFloat().toInt(),
-        m.group(2).toFloat().toInt(),
-        m.group(3).toFloat().toInt(),
+        m.group(1)!!.toFloat().toInt(),
+        m.group(2)!!.toFloat().toInt(),
+        m.group(3)!!.toFloat().toInt(),
         alpha
       )
     } else {
       Log.e(TAG, "Not a valid rgb/rgba value")
-      return null
+      null
     }
   }
 

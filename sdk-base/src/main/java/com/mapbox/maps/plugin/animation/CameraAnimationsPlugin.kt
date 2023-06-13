@@ -2,6 +2,7 @@ package com.mapbox.maps.plugin.animation
 
 import android.animation.Animator
 import android.animation.ValueAnimator
+import com.mapbox.common.Cancelable
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.EdgeInsets

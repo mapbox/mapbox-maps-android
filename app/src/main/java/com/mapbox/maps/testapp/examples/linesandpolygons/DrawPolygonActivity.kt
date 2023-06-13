@@ -30,7 +30,7 @@ class DrawPolygonActivity : AppCompatActivity() {
       START_CAMERA_POSITION
     )
     binding.mapView.getMapboxMap().loadStyle(
-      style(styleUri = Style.LIGHT) {
+      style(style = Style.LIGHT) {
         +geoJsonSource(SOURCE_ID) {
           url(SOURCE_URL)
         }

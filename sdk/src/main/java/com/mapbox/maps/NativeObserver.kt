@@ -1,267 +1,280 @@
 package com.mapbox.maps
 
-import android.os.Handler
-import android.os.Looper
 import androidx.annotation.UiThread
-import com.mapbox.maps.extension.observable.*
-import com.mapbox.maps.extension.observable.eventdata.*
-import com.mapbox.maps.plugin.delegates.listeners.*
+import androidx.annotation.VisibleForTesting
+import com.mapbox.common.Cancelable
 import java.util.concurrent.CopyOnWriteArraySet
+
+@VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
+internal enum class MapEvent {
+  CAMERA_CHANGED,
+
+  // Map events
+  MAP_IDLE,
+  MAP_LOADING_ERROR,
+  MAP_LOADED,
+
+  // Style events
+  STYLE_DATA_LOADED,
+  STYLE_LOADED,
+  STYLE_IMAGE_MISSING,
+  STYLE_IMAGE_REMOVE_UNUSED,
+
+  // Render frame events
+  RENDER_FRAME_STARTED,
+  RENDER_FRAME_FINISHED,
+
+  // Source events
+  SOURCE_ADDED,
+  SOURCE_DATA_LOADED,
+  SOURCE_REMOVED,
+
+  // Resource request event
+  RESOURCE_REQUEST,
+  GENERIC_EVENT,
+}
 
 @UiThread
 internal class NativeObserver(
-  private val observable: ObservableInterface
-) : Observer {
-  val onCameraChangeListeners = CopyOnWriteArraySet<OnCameraChangeListener>()
+  private val observable: NativeMapImpl
+) {
+  val onCameraChangeListeners = CopyOnWriteArraySet<CameraChangedCallback>()
 
-  val onMapIdleListeners = CopyOnWriteArraySet<OnMapIdleListener>()
-  val onMapLoadErrorListeners = CopyOnWriteArraySet<OnMapLoadErrorListener>()
-  val onMapLoadedListeners = CopyOnWriteArraySet<OnMapLoadedListener>()
+  val onMapIdleListeners = CopyOnWriteArraySet<MapIdleCallback>()
+  val onMapLoadErrorListeners = CopyOnWriteArraySet<MapLoadingErrorCallback>()
+  val onMapLoadedListeners = CopyOnWriteArraySet<MapLoadedCallback>()
 
-  val onRenderFrameFinishedListeners = CopyOnWriteArraySet<OnRenderFrameFinishedListener>()
-  val onRenderFrameStartedListeners = CopyOnWriteArraySet<OnRenderFrameStartedListener>()
+  val onStyleDataLoadedListeners = CopyOnWriteArraySet<StyleDataLoadedCallback>()
+  val onStyleLoadedListeners = CopyOnWriteArraySet<StyleLoadedCallback>()
+  val onStyleImageMissingListeners = CopyOnWriteArraySet<StyleImageMissingCallback>()
+  val onStyleImageUnusedListeners = CopyOnWriteArraySet<StyleImageRemoveUnusedCallback>()
 
-  val onSourceAddedListeners = CopyOnWriteArraySet<OnSourceAddedListener>()
-  val onSourceRemovedListeners = CopyOnWriteArraySet<OnSourceRemovedListener>()
+  val onRenderFrameFinishedListeners = CopyOnWriteArraySet<RenderFrameFinishedCallback>()
+  val onRenderFrameStartedListeners = CopyOnWriteArraySet<RenderFrameStartedCallback>()
 
-  val onSourceDataLoadedListeners = CopyOnWriteArraySet<OnSourceDataLoadedListener>()
+  val onSourceAddedListeners = CopyOnWriteArraySet<SourceAddedCallback>()
+  val onSourceRemovedListeners = CopyOnWriteArraySet<SourceRemovedCallback>()
+  val onSourceDataLoadedListeners = CopyOnWriteArraySet<SourceDataLoadedCallback>()
 
-  val onStyleDataLoadedListeners = CopyOnWriteArraySet<OnStyleDataLoadedListener>()
-  val onStyleLoadedListeners = CopyOnWriteArraySet<OnStyleLoadedListener>()
-  val onStyleImageMissingListeners = CopyOnWriteArraySet<OnStyleImageMissingListener>()
-  val onStyleImageUnusedListeners = CopyOnWriteArraySet<OnStyleImageUnusedListener>()
+  val onResourceRequestListeners = CopyOnWriteArraySet<ResourceRequestCallback>()
+  val onGenericEventListeners = CopyOnWriteArraySet<GenericEventCallback>()
 
-  var observedEvents = CopyOnWriteArraySet<String>()
-  //
-  // Internal callbacks
-  //
-
-  override fun notify(event: Event) {
-    try {
-      when (event.type) {
-        // Camera events
-        MapEvents.CAMERA_CHANGED -> onCameraChangeListeners.forEach {
-          it.onCameraChanged(
-            event.getCameraChangedEventData()
-          )
-        }
-        // Map events
-        MapEvents.MAP_IDLE -> onMapIdleListeners.forEach { it.onMapIdle(event.getMapIdleEventData()) }
-        MapEvents.MAP_LOADING_ERROR -> if (onMapLoadErrorListeners.isNotEmpty()) {
-          onMapLoadErrorListeners.forEach {
-            it.onMapLoadError(event.getMapLoadingErrorEventData())
-          }
-        }
-        MapEvents.MAP_LOADED -> onMapLoadedListeners.forEach { it.onMapLoaded(event.getMapLoadedEventData()) }
-        // Style events
-        MapEvents.STYLE_DATA_LOADED -> if (onStyleDataLoadedListeners.isNotEmpty()) {
-          onStyleDataLoadedListeners.forEach {
-            it.onStyleDataLoaded(event.getStyleDataLoadedEventData())
-          }
-        }
-        MapEvents.STYLE_LOADED -> onStyleLoadedListeners.forEach {
-          it.onStyleLoaded(event.getStyleLoadedEventData())
-        }
-        MapEvents.STYLE_IMAGE_MISSING -> if (onStyleImageMissingListeners.isNotEmpty()) {
-          onStyleImageMissingListeners.forEach {
-            it.onStyleImageMissing(event.getStyleImageMissingEventData())
-          }
-        }
-        MapEvents.STYLE_IMAGE_REMOVE_UNUSED -> if (onStyleImageUnusedListeners.isNotEmpty()) {
-          onStyleImageUnusedListeners.forEach {
-            it.onStyleImageUnused(event.getStyleImageUnusedEventData())
-          }
-        }
-        // Render frame events
-        MapEvents.RENDER_FRAME_STARTED -> onRenderFrameStartedListeners.forEach {
-          it.onRenderFrameStarted(event.getRenderFrameStartedEventData())
-        }
-        MapEvents.RENDER_FRAME_FINISHED -> if (onRenderFrameFinishedListeners.isNotEmpty()) {
-          onRenderFrameFinishedListeners.forEach {
-            it.onRenderFrameFinished(event.getRenderFrameFinishedEventData())
-          }
-        }
-        // Source events
-        MapEvents.SOURCE_ADDED -> if (onSourceAddedListeners.isNotEmpty()) {
-          onSourceAddedListeners.forEach {
-            it.onSourceAdded(event.getSourceAddedEventData())
-          }
-        }
-        MapEvents.SOURCE_DATA_LOADED -> if (onSourceDataLoadedListeners.isNotEmpty()) {
-          onSourceDataLoadedListeners.forEach {
-            it.onSourceDataLoaded(event.getSourceDataLoadedEventData())
-          }
-        }
-        MapEvents.SOURCE_REMOVED -> if (onSourceRemovedListeners.isNotEmpty()) {
-          onSourceRemovedListeners.forEach {
-            it.onSourceRemoved(event.getSourceRemovedEventData())
-          }
-        }
-      }
-    } catch (exception: Exception) {
-      // Catching exception and rethrowing on main thread
-      // This avoids a native crash with a pending java exception
-      Handler(Looper.getMainLooper()).postAtFrontOfQueue {
-        throw exception
-      }
-    }
-  }
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal var cancelableEventsMap = HashMap<MapEvent, MutableList<Cancelable>>()
 
   //
   // Add / Remove
   //
+  private fun <T> subscribeToMapEvent(event: MapEvent, callback: T, eventName: String = "") {
+    when (event) {
+      MapEvent.CAMERA_CHANGED -> {
+        cancelableEventsMap.getOrPut(MapEvent.CAMERA_CHANGED) {
+          mutableListOf()
+        }.add(observable.subscribe(callback as CameraChangedCallback))
+      }
+      MapEvent.MAP_IDLE -> {
+        cancelableEventsMap.getOrPut(MapEvent.MAP_IDLE) {
+          mutableListOf()
+        }.add(observable.subscribe(callback as MapIdleCallback))
+      }
+      MapEvent.MAP_LOADING_ERROR -> {
+        cancelableEventsMap.getOrPut(MapEvent.MAP_LOADING_ERROR) {
+          mutableListOf()
+        }.add(observable.subscribe(callback as MapLoadingErrorCallback))
+      }
+      MapEvent.MAP_LOADED -> {
+        cancelableEventsMap.getOrPut(MapEvent.MAP_LOADED) {
+          mutableListOf()
+        }.add(observable.subscribe(callback as MapLoadedCallback))
+      }
+      MapEvent.STYLE_DATA_LOADED -> {
+        cancelableEventsMap.getOrPut(MapEvent.STYLE_DATA_LOADED) {
+          mutableListOf()
+        }.add(observable.subscribe(callback as StyleDataLoadedCallback))
+      }
+      MapEvent.STYLE_LOADED -> {
+        cancelableEventsMap.getOrPut(MapEvent.STYLE_LOADED) {
+          mutableListOf()
+        }.add(observable.subscribe(callback as StyleLoadedCallback))
+      }
+      MapEvent.STYLE_IMAGE_MISSING -> {
+        cancelableEventsMap.getOrPut(MapEvent.STYLE_IMAGE_MISSING) {
+          mutableListOf()
+        }.add(observable.subscribe(callback as StyleImageMissingCallback))
+      }
+      MapEvent.STYLE_IMAGE_REMOVE_UNUSED -> {
+        cancelableEventsMap.getOrPut(MapEvent.STYLE_IMAGE_REMOVE_UNUSED) {
+          mutableListOf()
+        }.add(observable.subscribe(callback as StyleImageRemoveUnusedCallback))
+      }
 
-  private fun subscribeNewEvent(eventType: String) {
-    observable.subscribe(this, listOf(eventType))
-    observedEvents.add(eventType)
-  }
+      MapEvent.RENDER_FRAME_FINISHED -> {
+        cancelableEventsMap.getOrPut(MapEvent.RENDER_FRAME_FINISHED) {
+          mutableListOf()
+        }.add(observable.subscribe(callback as RenderFrameFinishedCallback))
+      }
+      MapEvent.RENDER_FRAME_STARTED -> {
+        cancelableEventsMap.getOrPut(MapEvent.RENDER_FRAME_STARTED) {
+          mutableListOf()
+        }.add(observable.subscribe(callback as RenderFrameStartedCallback))
+      }
 
-  private fun unsubscribeUnusedEvent(eventType: String) {
-    observable.unsubscribe(this, listOf(eventType))
-    observedEvents.remove(eventType)
-  }
+      MapEvent.SOURCE_ADDED -> {
+        cancelableEventsMap.getOrPut(MapEvent.SOURCE_ADDED) {
+          mutableListOf()
+        }.add(observable.subscribe(callback as SourceAddedCallback))
+      }
+      MapEvent.SOURCE_DATA_LOADED -> {
+        cancelableEventsMap.getOrPut(MapEvent.SOURCE_DATA_LOADED) {
+          mutableListOf()
+        }.add(observable.subscribe(callback as SourceDataLoadedCallback))
+      }
+      MapEvent.SOURCE_REMOVED -> {
+        cancelableEventsMap.getOrPut(MapEvent.SOURCE_REMOVED) {
+          mutableListOf()
+        }.add(observable.subscribe(callback as SourceRemovedCallback))
+      }
 
-  fun addOnCameraChangeListener(onCameraChangeListener: OnCameraChangeListener) {
-    if (onCameraChangeListeners.isEmpty()) {
-      subscribeNewEvent(MapEvents.CAMERA_CHANGED)
+      MapEvent.RESOURCE_REQUEST -> {
+        cancelableEventsMap.getOrPut(MapEvent.RESOURCE_REQUEST) {
+          mutableListOf()
+        }.add(observable.subscribe(callback as ResourceRequestCallback))
+      }
+      MapEvent.GENERIC_EVENT -> {
+        cancelableEventsMap.getOrPut(MapEvent.GENERIC_EVENT) {
+          mutableListOf()
+        }.add(observable.subscribe(eventName, callback as GenericEventCallback))
+      }
     }
-    onCameraChangeListeners.add(onCameraChangeListener)
   }
 
-  fun removeOnCameraChangeListener(onCameraChangeListener: OnCameraChangeListener) {
-    onCameraChangeListeners.remove(onCameraChangeListener)
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal fun unsubscribeUnusedEvent(event: MapEvent) {
+    cancelableEventsMap[event]?.forEach { it.cancel() }
+    cancelableEventsMap.remove(event)
+  }
+
+  fun addOnCameraChangeListener(cameraChangedCallback: CameraChangedCallback) {
+    subscribeToMapEvent(MapEvent.CAMERA_CHANGED, cameraChangedCallback)
+    onCameraChangeListeners.add(cameraChangedCallback)
+  }
+
+  fun removeOnCameraChangeListener(cameraChangedCallback: CameraChangedCallback) {
+    onCameraChangeListeners.remove(cameraChangedCallback)
     if (onCameraChangeListeners.isEmpty()) {
-      unsubscribeUnusedEvent(MapEvents.CAMERA_CHANGED)
+      unsubscribeUnusedEvent(MapEvent.CAMERA_CHANGED)
     }
   }
 
   // Map events
-  fun addOnMapIdleListener(onMapIdleListener: OnMapIdleListener) {
+  fun addOnMapIdleListener(mapIdleCallback: MapIdleCallback) {
+    subscribeToMapEvent(MapEvent.MAP_IDLE, mapIdleCallback)
+    onMapIdleListeners.add(mapIdleCallback)
+  }
+
+  fun removeOnMapIdleListener(mapIdleCallback: MapIdleCallback) {
+    onMapIdleListeners.remove(mapIdleCallback)
     if (onMapIdleListeners.isEmpty()) {
-      subscribeNewEvent(MapEvents.MAP_IDLE)
-    }
-    onMapIdleListeners.add(onMapIdleListener)
-  }
-
-  fun removeOnMapIdleListener(onMapIdleListener: OnMapIdleListener) {
-    onMapIdleListeners.remove(onMapIdleListener)
-    if (onMapIdleListeners.isEmpty()) {
-      unsubscribeUnusedEvent(MapEvents.MAP_IDLE)
+      unsubscribeUnusedEvent(MapEvent.MAP_IDLE)
     }
   }
 
-  fun addOnMapLoadErrorListener(onMapLoadErrorListener: OnMapLoadErrorListener) {
+  fun addOnMapLoadErrorListener(mapLoadingErrorCallback: MapLoadingErrorCallback) {
+    subscribeToMapEvent(MapEvent.MAP_LOADING_ERROR, mapLoadingErrorCallback)
+    onMapLoadErrorListeners.add(mapLoadingErrorCallback)
+  }
+
+  fun removeOnMapLoadErrorListener(mapLoadingErrorCallback: MapLoadingErrorCallback) {
+    onMapLoadErrorListeners.remove(mapLoadingErrorCallback)
     if (onMapLoadErrorListeners.isEmpty()) {
-      subscribeNewEvent(MapEvents.MAP_LOADING_ERROR)
-    }
-    onMapLoadErrorListeners.add(onMapLoadErrorListener)
-  }
-
-  fun removeOnMapLoadErrorListener(onMapLoadErrorListener: OnMapLoadErrorListener) {
-    onMapLoadErrorListeners.remove(onMapLoadErrorListener)
-    if (onMapLoadErrorListeners.isEmpty()) {
-      unsubscribeUnusedEvent(MapEvents.MAP_LOADING_ERROR)
+      unsubscribeUnusedEvent(MapEvent.MAP_LOADING_ERROR)
     }
   }
 
-  fun addOnMapLoadedListener(onMapLoadedListener: OnMapLoadedListener) {
+  fun addOnMapLoadedListener(mapLoadedCallback: MapLoadedCallback) {
+    subscribeToMapEvent(MapEvent.MAP_LOADED, mapLoadedCallback)
+    onMapLoadedListeners.add(mapLoadedCallback)
+  }
+
+  fun removeOnMapLoadedListener(mapLoadedCallback: MapLoadedCallback) {
+    onMapLoadedListeners.remove(mapLoadedCallback)
     if (onMapLoadedListeners.isEmpty()) {
-      subscribeNewEvent(MapEvents.MAP_LOADED)
-    }
-    onMapLoadedListeners.add(onMapLoadedListener)
-  }
-
-  fun removeOnMapLoadedListener(onMapLoadedListener: OnMapLoadedListener) {
-    onMapLoadedListeners.remove(onMapLoadedListener)
-    if (onMapLoadedListeners.isEmpty()) {
-      unsubscribeUnusedEvent(MapEvents.MAP_LOADED)
+      unsubscribeUnusedEvent(MapEvent.MAP_LOADED)
     }
   }
 
   // Render frame events
-  fun addOnRenderFrameFinishedListener(onRenderFrameFinishedListener: OnRenderFrameFinishedListener) {
+  fun addOnRenderFrameFinishedListener(renderFrameFinishedCallback: RenderFrameFinishedCallback) {
+    subscribeToMapEvent(MapEvent.RENDER_FRAME_FINISHED, renderFrameFinishedCallback)
+    onRenderFrameFinishedListeners.add(renderFrameFinishedCallback)
+  }
+
+  fun removeOnRenderFrameFinishedListener(renderFrameFinishedCallback: RenderFrameFinishedCallback) {
+    onRenderFrameFinishedListeners.remove(renderFrameFinishedCallback)
     if (onRenderFrameFinishedListeners.isEmpty()) {
-      subscribeNewEvent(MapEvents.RENDER_FRAME_FINISHED)
-    }
-    onRenderFrameFinishedListeners.add(onRenderFrameFinishedListener)
-  }
-
-  fun removeOnRenderFrameFinishedListener(onRenderFrameFinishedListener: OnRenderFrameFinishedListener) {
-    onRenderFrameFinishedListeners.remove(onRenderFrameFinishedListener)
-    if (onRenderFrameFinishedListeners.isEmpty()) {
-      unsubscribeUnusedEvent(MapEvents.RENDER_FRAME_FINISHED)
+      unsubscribeUnusedEvent(MapEvent.RENDER_FRAME_FINISHED)
     }
   }
 
-  fun addOnRenderFrameStartedListener(onRenderFrameStartedListener: OnRenderFrameStartedListener) {
+  fun addOnRenderFrameStartedListener(renderFrameStartedCallback: RenderFrameStartedCallback) {
+    subscribeToMapEvent(MapEvent.RENDER_FRAME_STARTED, renderFrameStartedCallback)
+    onRenderFrameStartedListeners.add(renderFrameStartedCallback)
+  }
+
+  fun removeOnRenderFrameStartedListener(renderFrameStartedCallback: RenderFrameStartedCallback) {
+    onRenderFrameStartedListeners.remove(renderFrameStartedCallback)
     if (onRenderFrameStartedListeners.isEmpty()) {
-      subscribeNewEvent(MapEvents.RENDER_FRAME_STARTED)
-    }
-    onRenderFrameStartedListeners.add(onRenderFrameStartedListener)
-  }
-
-  fun removeOnRenderFrameStartedListener(onRenderFrameStartedListener: OnRenderFrameStartedListener) {
-    onRenderFrameStartedListeners.remove(onRenderFrameStartedListener)
-    if (onRenderFrameStartedListeners.isEmpty()) {
-      unsubscribeUnusedEvent(MapEvents.RENDER_FRAME_STARTED)
+      unsubscribeUnusedEvent(MapEvent.RENDER_FRAME_STARTED)
     }
   }
 
   // Source events
-  fun addOnSourceAddedListener(onSourceAddedListener: OnSourceAddedListener) {
+  fun addOnSourceAddedListener(sourceAddedCallback: SourceAddedCallback) {
+    subscribeToMapEvent(MapEvent.SOURCE_ADDED, sourceAddedCallback)
+    onSourceAddedListeners.add(sourceAddedCallback)
+  }
+
+  fun removeOnSourceAddedListener(sourceAddedCallback: SourceAddedCallback) {
+    onSourceAddedListeners.remove(sourceAddedCallback)
     if (onSourceAddedListeners.isEmpty()) {
-      subscribeNewEvent(MapEvents.SOURCE_ADDED)
-    }
-    onSourceAddedListeners.add(onSourceAddedListener)
-  }
-
-  fun removeOnSourceAddedListener(onSourceAddedListener: OnSourceAddedListener) {
-    onSourceAddedListeners.remove(onSourceAddedListener)
-    if (onSourceAddedListeners.isEmpty()) {
-      unsubscribeUnusedEvent(MapEvents.SOURCE_ADDED)
+      unsubscribeUnusedEvent(MapEvent.SOURCE_ADDED)
     }
   }
 
-  fun addOnSourceDataLoadedListener(onSourceDataLoadedListener: OnSourceDataLoadedListener) {
+  fun addOnSourceDataLoadedListener(sourceDataLoadedCallback: SourceDataLoadedCallback) {
+    subscribeToMapEvent(MapEvent.SOURCE_DATA_LOADED, sourceDataLoadedCallback)
+    onSourceDataLoadedListeners.add(sourceDataLoadedCallback)
+  }
+
+  fun removeOnSourceDataLoadedListener(sourceDataLoadedCallback: SourceDataLoadedCallback) {
+    onSourceDataLoadedListeners.remove(sourceDataLoadedCallback)
     if (onSourceDataLoadedListeners.isEmpty()) {
-      subscribeNewEvent(MapEvents.SOURCE_DATA_LOADED)
-    }
-    onSourceDataLoadedListeners.add(onSourceDataLoadedListener)
-  }
-
-  fun removeOnSourceDataLoadedListener(onSourceDataLoadedListener: OnSourceDataLoadedListener) {
-    onSourceDataLoadedListeners.remove(onSourceDataLoadedListener)
-    if (onSourceDataLoadedListeners.isEmpty()) {
-      unsubscribeUnusedEvent(MapEvents.SOURCE_DATA_LOADED)
+      unsubscribeUnusedEvent(MapEvent.SOURCE_DATA_LOADED)
     }
   }
 
-  fun addOnSourceRemovedListener(onSourceRemovedListener: OnSourceRemovedListener) {
+  fun addOnSourceRemovedListener(sourceRemovedCallback: SourceRemovedCallback) {
+    subscribeToMapEvent(MapEvent.SOURCE_REMOVED, sourceRemovedCallback)
+    onSourceRemovedListeners.add(sourceRemovedCallback)
+  }
+
+  fun removeOnSourceRemovedListener(sourceRemovedCallback: SourceRemovedCallback) {
+    onSourceRemovedListeners.remove(sourceRemovedCallback)
     if (onSourceRemovedListeners.isEmpty()) {
-      subscribeNewEvent(MapEvents.SOURCE_REMOVED)
-    }
-    onSourceRemovedListeners.add(onSourceRemovedListener)
-  }
-
-  fun removeOnSourceRemovedListener(onSourceRemovedListener: OnSourceRemovedListener) {
-    onSourceRemovedListeners.remove(onSourceRemovedListener)
-    if (onSourceRemovedListeners.isEmpty()) {
-      unsubscribeUnusedEvent(MapEvents.SOURCE_REMOVED)
+      unsubscribeUnusedEvent(MapEvent.SOURCE_REMOVED)
     }
   }
 
   // Style events
-  fun addOnStyleLoadedListener(onStyleLoadedListener: OnStyleLoadedListener) {
-    if (onStyleLoadedListeners.isEmpty()) {
-      subscribeNewEvent(MapEvents.STYLE_LOADED)
-    }
-    onStyleLoadedListeners.add(onStyleLoadedListener)
+  fun addOnStyleLoadedListener(styleLoadedCallback: StyleLoadedCallback) {
+    subscribeToMapEvent(MapEvent.STYLE_LOADED, styleLoadedCallback)
+    onStyleLoadedListeners.add(styleLoadedCallback)
   }
 
-  fun removeOnStyleLoadedListener(onStyleLoadedListener: OnStyleLoadedListener) {
-    onStyleLoadedListeners.remove(onStyleLoadedListener)
+  fun removeOnStyleLoadedListener(styleLoadedCallback: StyleLoadedCallback) {
+    onStyleLoadedListeners.remove(styleLoadedCallback)
     if (onStyleLoadedListeners.isEmpty()) {
-      unsubscribeUnusedEvent(MapEvents.STYLE_LOADED)
+      unsubscribeUnusedEvent(MapEvent.STYLE_LOADED)
     }
   }
 
@@ -269,58 +282,81 @@ internal class NativeObserver(
   // when new style is loaded. For example loading empty style and another style immediately after
   // that will notify STYLE_LOADED event for the first style after second style has already started
   // loading
-  fun resubscribeStyleLoadListeners() {
-    unsubscribeUnusedEvent(MapEvents.STYLE_LOADED)
-    subscribeNewEvent(MapEvents.STYLE_LOADED)
-    unsubscribeUnusedEvent(MapEvents.STYLE_DATA_LOADED)
-    subscribeNewEvent(MapEvents.STYLE_DATA_LOADED)
+  fun resubscribeStyleLoadListeners(
+    styleLoadedCallback: StyleLoadedCallback,
+    styleDataLoadedCallback: StyleDataLoadedCallback
+  ) {
+    unsubscribeUnusedEvent(MapEvent.STYLE_LOADED)
+    unsubscribeUnusedEvent(MapEvent.STYLE_DATA_LOADED)
+    subscribeToMapEvent(MapEvent.STYLE_LOADED, styleLoadedCallback)
+    subscribeToMapEvent(MapEvent.STYLE_DATA_LOADED, styleDataLoadedCallback)
   }
 
-  fun addOnStyleDataLoadedListener(onStyleDataLoadedListener: OnStyleDataLoadedListener) {
+  fun addOnStyleDataLoadedListener(styleDataLoadedCallback: StyleDataLoadedCallback) {
+    subscribeToMapEvent(MapEvent.STYLE_DATA_LOADED, styleDataLoadedCallback)
+    onStyleDataLoadedListeners.add(styleDataLoadedCallback)
+  }
+
+  fun removeOnStyleDataLoadedListener(styleDataLoadedCallback: StyleDataLoadedCallback) {
+    onStyleDataLoadedListeners.remove(styleDataLoadedCallback)
     if (onStyleDataLoadedListeners.isEmpty()) {
-      subscribeNewEvent(MapEvents.STYLE_DATA_LOADED)
-    }
-    onStyleDataLoadedListeners.add(onStyleDataLoadedListener)
-  }
-
-  fun removeOnStyleDataLoadedListener(onStyleDataLoadedListener: OnStyleDataLoadedListener) {
-    onStyleDataLoadedListeners.remove(onStyleDataLoadedListener)
-    if (onStyleDataLoadedListeners.isEmpty()) {
-      unsubscribeUnusedEvent(MapEvents.STYLE_DATA_LOADED)
+      unsubscribeUnusedEvent(MapEvent.STYLE_DATA_LOADED)
     }
   }
 
-  fun addOnStyleImageMissingListener(onStyleImageMissingListener: OnStyleImageMissingListener) {
+  fun addOnStyleImageMissingListener(styleImageMissingCallback: StyleImageMissingCallback) {
+    subscribeToMapEvent(MapEvent.STYLE_IMAGE_MISSING, styleImageMissingCallback)
+    onStyleImageMissingListeners.add(styleImageMissingCallback)
+  }
+
+  fun removeOnStyleImageMissingListener(styleImageMissingCallback: StyleImageMissingCallback) {
+    onStyleImageMissingListeners.remove(styleImageMissingCallback)
     if (onStyleImageMissingListeners.isEmpty()) {
-      subscribeNewEvent(MapEvents.STYLE_IMAGE_MISSING)
-    }
-    onStyleImageMissingListeners.add(onStyleImageMissingListener)
-  }
-
-  fun removeOnStyleImageMissingListener(onStyleImageMissingListener: OnStyleImageMissingListener) {
-    onStyleImageMissingListeners.remove(onStyleImageMissingListener)
-    if (onStyleImageMissingListeners.isEmpty()) {
-      unsubscribeUnusedEvent(MapEvents.STYLE_IMAGE_MISSING)
+      unsubscribeUnusedEvent(MapEvent.STYLE_IMAGE_MISSING)
     }
   }
 
-  fun addOnStyleImageUnusedListener(onStyleImageUnusedListener: OnStyleImageUnusedListener) {
+  fun addOnStyleImageUnusedListener(styleImageRemoveUnusedCallback: StyleImageRemoveUnusedCallback) {
+    subscribeToMapEvent(MapEvent.STYLE_IMAGE_REMOVE_UNUSED, styleImageRemoveUnusedCallback)
+    onStyleImageUnusedListeners.add(styleImageRemoveUnusedCallback)
+  }
+
+  fun removeOnStyleImageUnusedListener(styleImageRemoveUnusedCallback: StyleImageRemoveUnusedCallback) {
+    onStyleImageUnusedListeners.remove(styleImageRemoveUnusedCallback)
     if (onStyleImageUnusedListeners.isEmpty()) {
-      subscribeNewEvent(MapEvents.STYLE_IMAGE_REMOVE_UNUSED)
+      unsubscribeUnusedEvent(MapEvent.STYLE_IMAGE_REMOVE_UNUSED)
     }
-    onStyleImageUnusedListeners.add(onStyleImageUnusedListener)
   }
 
-  fun removeOnStyleImageUnusedListener(onStyleImageUnusedListener: OnStyleImageUnusedListener) {
-    onStyleImageUnusedListeners.remove(onStyleImageUnusedListener)
+  fun addOnResourceRequestListener(resourceRequestCallback: ResourceRequestCallback) {
+    subscribeToMapEvent(MapEvent.RESOURCE_REQUEST, resourceRequestCallback)
+    onResourceRequestListeners.add(resourceRequestCallback)
+  }
+
+  fun removeOnResourceRequestListener(resourceRequestCallback: ResourceRequestCallback) {
+    onResourceRequestListeners.remove(resourceRequestCallback)
     if (onStyleImageUnusedListeners.isEmpty()) {
-      unsubscribeUnusedEvent(MapEvents.STYLE_IMAGE_REMOVE_UNUSED)
+      unsubscribeUnusedEvent(MapEvent.RESOURCE_REQUEST)
+    }
+  }
+
+  fun addOnGenericEventListener(eventName: String, onUntypedEventCallback: GenericEventCallback) {
+    subscribeToMapEvent(MapEvent.GENERIC_EVENT, onUntypedEventCallback, eventName)
+    onGenericEventListeners.add(onUntypedEventCallback)
+  }
+
+  fun removeOnGenericEventListener(genericEventCallback: GenericEventCallback) {
+    onGenericEventListeners.remove(genericEventCallback)
+    if (onGenericEventListeners.isEmpty()) {
+      unsubscribeUnusedEvent(MapEvent.GENERIC_EVENT)
     }
   }
 
   fun onDestroy() {
-    observable.unsubscribe(this)
+    // cancel all cancelable
+    cancelableEventsMap.values.flatten().forEach { it.cancel() }
 
+    cancelableEventsMap.clear()
     onCameraChangeListeners.clear()
 
     onMapIdleListeners.clear()
@@ -338,29 +374,12 @@ internal class NativeObserver(
     onStyleDataLoadedListeners.clear()
     onStyleImageMissingListeners.clear()
     onStyleImageUnusedListeners.clear()
+
+    onResourceRequestListeners.clear()
+    onGenericEventListeners.clear()
   }
 
   companion object {
     private const val TAG = "Mapbox-NativeObserver"
-    val SUPPORTED_EVENTS = listOf(
-      // Camera events
-      MapEvents.CAMERA_CHANGED,
-      // Map events
-      MapEvents.MAP_IDLE,
-      MapEvents.MAP_LOADING_ERROR,
-      MapEvents.MAP_LOADED,
-      // Style events
-      MapEvents.STYLE_DATA_LOADED,
-      MapEvents.STYLE_LOADED,
-      MapEvents.STYLE_IMAGE_MISSING,
-      MapEvents.STYLE_IMAGE_REMOVE_UNUSED,
-      // Render frame events
-      MapEvents.RENDER_FRAME_STARTED,
-      MapEvents.RENDER_FRAME_FINISHED,
-      // Source events
-      MapEvents.SOURCE_ADDED,
-      MapEvents.SOURCE_DATA_LOADED,
-      MapEvents.SOURCE_REMOVED
-    )
   }
 }

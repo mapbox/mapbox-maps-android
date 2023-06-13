@@ -69,7 +69,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
     get() {
       val property: String? = getPropertyValue("visibility")
       property?.let {
-        return Visibility.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+        return Visibility.valueOf(it.uppercase(Locale.US).replace('-', '_'))
       }
       return null
     }
@@ -114,7 +114,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
    *
    * Use static method [HillshadeLayer.defaultMinZoom] to get the default property value.
    *
-   * @param value value of minzoom
+   * @param minZoom value of minzoom
    */
   override fun minZoom(minZoom: Double): HillshadeLayer = apply {
     val param = PropertyValue("minzoom", minZoom)
@@ -149,7 +149,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
    *
    * Use static method [HillshadeLayer.defaultMaxZoom] to get the default property value.
    *
-   * @param value value of maxzoom
+   * @param maxZoom value of maxzoom
    */
   override fun maxZoom(maxZoom: Double): HillshadeLayer = apply {
     val param = PropertyValue("maxzoom", maxZoom)
@@ -530,7 +530,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
      */
     get() {
       getPropertyValue<String?>("hillshade-illumination-anchor")?.let {
-        return HillshadeIlluminationAnchor.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+        return HillshadeIlluminationAnchor.valueOf(it.uppercase(Locale.US).replace('-', '_'))
       }
       return null
     }
@@ -804,7 +804,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
        */
       get() {
         StyleManager.getStyleLayerPropertyDefaultValue("hillshade", "visibility").silentUnwrap<String>()?.let {
-          return Visibility.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+          return Visibility.valueOf(it.uppercase(Locale.US).replace('-', '_'))
         }
         return null
       }
@@ -1034,7 +1034,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
        */
       get() {
         StyleManager.getStyleLayerPropertyDefaultValue("hillshade", "hillshade-illumination-anchor").silentUnwrap<String>()?.let {
-          return HillshadeIlluminationAnchor.valueOf(it.toUpperCase(Locale.US).replace('-', '_'))
+          return HillshadeIlluminationAnchor.valueOf(it.uppercase(Locale.US).replace('-', '_'))
         }
         return null
       }
@@ -1197,7 +1197,7 @@ interface HillshadeLayerDsl {
    *       minimum: 0
    *       maximum: 24
    *
-   * @param value value of minzoom
+   * @param minZoom value of minzoom
    */
   fun minZoom(minZoom: Double): HillshadeLayer
 
@@ -1208,7 +1208,7 @@ interface HillshadeLayerDsl {
    *       minimum: 0
    *       maximum: 24
    *
-   * @param value value of maxzoom
+   * @param maxZoom value of maxzoom
    */
   fun maxZoom(maxZoom: Double): HillshadeLayer
 

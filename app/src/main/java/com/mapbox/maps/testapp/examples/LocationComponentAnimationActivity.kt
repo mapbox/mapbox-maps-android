@@ -2,6 +2,7 @@ package com.mapbox.maps.testapp.examples
 
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import com.mapbox.geojson.Point
@@ -26,7 +27,7 @@ class LocationComponentAnimationActivity : AppCompatActivity() {
 
   private var emitCount = 0
   private var delta = 0f
-  private val handler = Handler()
+  private val handler = Handler(Looper.getMainLooper())
 
   private inner class FakeLocationProvider : LocationProvider {
 

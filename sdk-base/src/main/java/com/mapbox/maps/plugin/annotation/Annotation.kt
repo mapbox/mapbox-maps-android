@@ -3,6 +3,7 @@ package com.mapbox.maps.plugin.annotation
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.mapbox.android.gestures.MoveDistancesObject
+import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Geometry
 import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 
@@ -10,8 +11,11 @@ import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
  * Base class for annotations
  */
 abstract class Annotation<T : Geometry>(
-  /** The id for annotation */
-  val id: Long,
+  /**
+   *  Annotation id generated as UUID.
+   *  This id is used to generate underlying [Feature] for the annotation.
+   */
+  val id: String,
   /** The jsonObject of annotation, saves all the property values of this annotation */
   protected val jsonObject: JsonObject,
   /** The geometry that determines the location/shape of this annotation */
@@ -70,11 +74,6 @@ abstract class Annotation<T : Geometry>(
    * Whether or not this annotation has been selected, either via a tap gesture or programmatically.
    */
   var isSelected: Boolean = false
-
-  /**
-   * Unique feature identifier. May be useful to connect an annotation with view annotation.
-   */
-  val featureIdentifier = FEATURE_IDENTIFIER_PREFIX + id.toString()
 
   /**
    * Static variables and methods.

@@ -11,6 +11,7 @@ import com.mapbox.api.directions.v5.DirectionsCriteria.GEOMETRY_POLYLINE
 import com.mapbox.api.directions.v5.MapboxDirections
 import com.mapbox.api.directions.v5.models.DirectionsResponse
 import com.mapbox.api.directions.v5.models.LegStep
+import com.mapbox.common.MapboxOptions
 import com.mapbox.core.constants.Constants.PRECISION_5
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
@@ -54,9 +55,7 @@ class SnakingDirectionsRouteActivity : AppCompatActivity() {
 
     binding.mapView.getMapboxMap().loadStyle(
       style(Style.LIGHT) {
-        +image(ICON_ID) {
-          bitmap(BitmapFactory.decodeResource(resources, R.drawable.red_marker))
-        }
+        +image(ICON_ID, BitmapFactory.decodeResource(resources, R.drawable.red_marker))
         +geoJsonSource(SOURCE_ID) {
           featureCollection(
             FeatureCollection.fromFeatures(
@@ -101,7 +100,7 @@ class SnakingDirectionsRouteActivity : AppCompatActivity() {
       .geometries(GEOMETRY_POLYLINE)
       .alternatives(true)
       .steps(true)
-      .accessToken(getString(R.string.mapbox_access_token))
+      .accessToken(MapboxOptions.accessToken)
       .build()
 
     mapboxDirectionsClient.enqueueCall(object : Callback<DirectionsResponse> {

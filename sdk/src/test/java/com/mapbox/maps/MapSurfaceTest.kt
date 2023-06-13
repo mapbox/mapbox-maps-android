@@ -90,7 +90,7 @@ class MapSurfaceTest {
 
   @Test
   fun testGetMapboxMap() {
-    val nativeMap: MapInterface = mockk(relaxed = true)
+    val nativeMap: NativeMapImpl = mockk(relaxed = true)
     val nativeObserver: NativeObserver = mockk(relaxed = true)
     val styleObserver: StyleObserver = mockk(relaxUnitFun = true)
     val mapboxMap = MapboxMap(nativeMap, nativeObserver, styleObserver)

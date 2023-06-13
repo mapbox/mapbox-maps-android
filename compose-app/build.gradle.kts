@@ -6,11 +6,11 @@ plugins {
 val buildFromSource: String by project
 
 android {
-  compileSdk = AndroidVersions.Compose.compileSdkVersion
+  compileSdk = libs.versions.composeCompileSdkVersion.get().toInt()
   defaultConfig {
+    minSdk = libs.versions.composeMinSdkVersion.get().toInt()
+    targetSdk = libs.versions.composeTargetSdkVersion.get().toInt()
     applicationId = "com.mapbox.maps.compose.testapp"
-    minSdk = AndroidVersions.Compose.minSdkVersion
-    targetSdk = AndroidVersions.Compose.targetSdkVersion
     versionCode = 1
     versionName = "0.1.0"
     multiDexEnabled = true
@@ -27,7 +27,7 @@ android {
   }
 
   composeOptions {
-    kotlinCompilerExtensionVersion = Versions.compose
+    kotlinCompilerExtensionVersion = libs.versions.compose.get()
   }
 
   kotlinOptions {
@@ -54,27 +54,24 @@ android {
 dependencies {
   implementation(project(":sdk"))
   implementation(project(":extension-compose"))
-  implementation(platform(Dependencies.composeBom))
-  implementation(Dependencies.composeUi)
-  implementation(Dependencies.composeMaterial)
-  implementation(Dependencies.androidxActivityCompose)
-  implementation(Dependencies.googleMaterialDesign)
-  implementation(Dependencies.composeUiToolingPreview)
-  debugImplementation(Dependencies.composeUiTooling)
+  implementation(platform(libs.compose.bom))
+  implementation(libs.compose.ui)
+  implementation(libs.compose.material)
+  implementation(libs.androidx.activityCompose)
+  implementation(libs.googleMaterialDesign)
+  implementation(libs.compose.uiToolingPreview)
+  implementation(libs.compose.uiTooling)
 
-  implementation(Dependencies.squareRetrofit)
-  implementation(Dependencies.androidxAppCompat)
-  implementation(Dependencies.androidxCoreKtx)
-  implementation(Dependencies.androidxMultidex)
-  androidTestUtil(Dependencies.androidxOrchestrator)
-  androidTestImplementation(Dependencies.androidxTestRunner)
-  androidTestImplementation(Dependencies.androidxJUnitTestRules)
-  androidTestImplementation(Dependencies.androidxRules)
-  androidTestImplementation(Dependencies.androidxTestJUnit)
-  androidTestImplementation(Dependencies.androidxEspresso)
-  androidTestImplementation(Dependencies.androidxUiAutomator)
-  testImplementation(Dependencies.junit)
-  detektPlugins(Dependencies.detektFormatting)
+  implementation(libs.squareRetrofit)
+  implementation(libs.androidx.appCompat)
+  implementation(libs.androidx.coreKtx)
+  implementation(libs.androidx.multidex)
+  androidTestUtil(libs.androidx.orchestrator)
+  androidTestImplementation(libs.bundles.base.dependenciesAndroidTests)
+  androidTestImplementation(libs.androidx.testJUnit)
+  androidTestImplementation(libs.androidx.uiAutomator)
+  testImplementation(libs.junit)
+  detektPlugins(libs.detektFormatting)
 }
 
 project.apply {
