@@ -9,7 +9,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Improve performance of setting puck style properties by removing redundant check if layer / source exists.
 * Improve performance of symbol layers with identical or no text.
 * Hide line labels with too large an angle between two neighboring glyphs.
-* Introduce `MapboxMap.tileCover` experimental API to get the tileIDs that cover current map camera.
+* Introduce `MapboxMap.tileCover` and `Snapshotter.tileCover` experimental API to get the tileIDs that cover current map camera.
 
 ## Bug fixes 🐞
 * Fix layer zoom range check so that the layer will be hidden when the zoom equals to layer's max zoom.

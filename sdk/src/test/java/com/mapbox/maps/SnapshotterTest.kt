@@ -149,6 +149,14 @@ class SnapshotterTest {
   }
 
   @Test
+  fun tileCover() {
+    val tileCoverOptions = TileCoverOptions.Builder().build()
+    val cameraOptions = CameraOptions.Builder().build()
+    snapshotter.tileCover(tileCoverOptions, cameraOptions)
+    verify { coreSnapshotter.tileCover(tileCoverOptions, cameraOptions) }
+  }
+
+  @Test
   fun cancel() {
     snapshotter.cancel()
     verify { coreSnapshotter.cancel() }
