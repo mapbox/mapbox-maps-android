@@ -4,6 +4,25 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 10.14.0
+## Features ✨ and improvements 🏁
+* Improve performance of setting puck style properties by removing redundant check if layer / source exists.
+* Improve performance of symbol layers with identical or no text.
+* Hide line labels with too large an angle between two neighboring glyphs.
+* Introduce `MapboxMap.tileCover` and `Snapshotter.tileCover` experimental API to get the tileIDs that cover current map camera.
+* Introduce `MapboxMap.tileCover` experimental API to get the tileIDs that cover current map camera.
+
+## Bug fixes 🐞
+* Fix layer zoom range check so that the layer will be hidden when the zoom equals to layer's max zoom.
+* Fixes occasional rendering errors caused by long line layers and vertex data overflow.
+* Fix crash when running animations (e.g. gestures) on Android 14 beta.
+* Fix image and zoom dependent expression evaluation errors during style switching.
+* Avoid re-use of raw icon atlas buffers when images point to the different location in the atlas.
+* Fix flickering of symbols on high zoom level.
+* Fix ineffective `tilesize` setting in `CustomGeometrySourceOptions`. Now the generated tiles accurately reflect the specified `tilesize` setting.
+
+## Dependencies
+* Update gl-native to v10.14.0 and common to v23.6.0.
 
 # 10.14.0-rc.1 May 31, 2023
 ## Features ✨ and improvements 🏁

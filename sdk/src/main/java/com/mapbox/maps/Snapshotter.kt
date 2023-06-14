@@ -509,6 +509,22 @@ open class Snapshotter {
     return calculatedScale
   }
 
+  /**
+   * Returns tileIDs that cover current map camera
+   *
+   * Note! This is an experimental API and behavior might change in future.
+   *
+   * @param tileCoverOptions Options for the tile cover method
+   * @param cameraOptions This is an extra parameter for future use. Has no effect for now.
+   */
+  @MapboxExperimental
+  fun tileCover(
+    tileCoverOptions: TileCoverOptions,
+    cameraOptions: CameraOptions?
+  ): MutableList<CanonicalTileID> {
+    return coreSnapshotter.tileCover(tileCoverOptions, cameraOptions)
+  }
+
   private data class Logo constructor(
     val large: Bitmap,
     val small: Bitmap,
