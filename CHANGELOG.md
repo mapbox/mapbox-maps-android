@@ -4,13 +4,13 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-# 10.14.0
+
+# 10.14.0 June 14, 2023
 ## Features ✨ and improvements 🏁
 * Improve performance of setting puck style properties by removing redundant check if layer / source exists.
 * Improve performance of symbol layers with identical or no text.
 * Hide line labels with too large an angle between two neighboring glyphs.
 * Introduce `MapboxMap.tileCover` and `Snapshotter.tileCover` experimental API to get the tileIDs that cover current map camera.
-* Introduce `MapboxMap.tileCover` experimental API to get the tileIDs that cover current map camera.
 
 ## Bug fixes 🐞
 * Fix layer zoom range check so that the layer will be hidden when the zoom equals to layer's max zoom.
@@ -23,6 +23,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v10.14.0 and common to v23.6.0.
+
 
 # 10.14.0-rc.1 May 31, 2023
 ## Features ✨ and improvements 🏁
