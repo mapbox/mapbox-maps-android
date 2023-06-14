@@ -88,6 +88,18 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
   }
 
   @Test
+  fun testLineDepthOcclusionFactor() {
+    rule.runOnUiThread {
+      val expectedValue = 1.0
+      val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
+      polylineAnnotationManager.lineDepthOcclusionFactor = expectedValue
+      assertEquals(expectedValue, polylineAnnotationManager.lineDepthOcclusionFactor)
+      polylineAnnotationManager.lineDepthOcclusionFactor = null
+      assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-depth-occlusion-factor").silentUnwrap(), polylineAnnotationManager.lineDepthOcclusionFactor)
+    }
+  }
+
+  @Test
   fun testLineTranslate() {
     rule.runOnUiThread {
       val expectedValue = listOf(0.0, 1.0)

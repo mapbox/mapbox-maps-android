@@ -4,6 +4,7 @@ package com.mapbox.maps.extension.style.layers.generated
 
 import androidx.annotation.ColorInt
 import androidx.annotation.UiThread
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.Layer
@@ -190,6 +191,75 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   // Property getters and setters
+
+  /**
+   * Radius of a fill extrusion edge in meters. If not zero, rounds extrusion edges for a smoother appearance.
+   */
+  @MapboxExperimental
+  val fillExtrusionEdgeRadius: Double?
+    /**
+     * Radius of a fill extrusion edge in meters. If not zero, rounds extrusion edges for a smoother appearance.
+     *
+     * Use static method [FillExtrusionLayer.defaultFillExtrusionEdgeRadius] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      return getPropertyValue("fill-extrusion-edge-radius")
+    }
+
+  /**
+   * Radius of a fill extrusion edge in meters. If not zero, rounds extrusion edges for a smoother appearance.
+   *
+   * Use static method [FillExtrusionLayer.defaultFillExtrusionEdgeRadius] to set the default property.
+   *
+   * @param fillExtrusionEdgeRadius value of fillExtrusionEdgeRadius
+   */
+  @MapboxExperimental
+  override fun fillExtrusionEdgeRadius(fillExtrusionEdgeRadius: Double): FillExtrusionLayer = apply {
+    val propertyValue = PropertyValue("fill-extrusion-edge-radius", fillExtrusionEdgeRadius)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Radius of a fill extrusion edge in meters. If not zero, rounds extrusion edges for a smoother appearance.
+   *
+   * This is an Expression representation of "fill-extrusion-edge-radius".
+   *
+   */
+  @MapboxExperimental
+  val fillExtrusionEdgeRadiusAsExpression: Expression?
+    /**
+     * Radius of a fill extrusion edge in meters. If not zero, rounds extrusion edges for a smoother appearance.
+     *
+     * Get the FillExtrusionEdgeRadius property as an Expression
+     *
+     * Use static method [FillExtrusionLayer.defaultFillExtrusionEdgeRadiusAsExpression] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      getPropertyValue<Expression>("fill-extrusion-edge-radius")?.let {
+        return it
+      }
+      fillExtrusionEdgeRadius?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * Radius of a fill extrusion edge in meters. If not zero, rounds extrusion edges for a smoother appearance.
+   *
+   * Use static method [FillExtrusionLayer.defaultFillExtrusionEdgeRadiusAsExpression] to set the default property.
+   *
+   * @param fillExtrusionEdgeRadius value of fillExtrusionEdgeRadius as Expression
+   */
+  @MapboxExperimental
+  override fun fillExtrusionEdgeRadius(fillExtrusionEdgeRadius: Expression): FillExtrusionLayer = apply {
+    val propertyValue = PropertyValue("fill-extrusion-edge-radius", fillExtrusionEdgeRadius)
+    setProperty(propertyValue)
+  }
 
   /**
    * Controls the intensity of shading near ground and concave angles between walls. Default value 0.0 disables ambient occlusion and values around 0.3 provide the most plausible results for buildings.
@@ -882,6 +952,71 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
+   * Indicates whether top edges should be rounded when fill-extrusion-edge-radius has a value greater than 0. If false, rounded edges are only applied to the sides. Default is true.
+   */
+  val fillExtrusionRoundedRoof: Boolean?
+    /**
+     * Indicates whether top edges should be rounded when fill-extrusion-edge-radius has a value greater than 0. If false, rounded edges are only applied to the sides. Default is true.
+     *
+     * Use static method [FillExtrusionLayer.defaultFillExtrusionRoundedRoof] to get the default property.
+     *
+     * @return Boolean
+     */
+    get() {
+      return getPropertyValue("fill-extrusion-rounded-roof")
+    }
+
+  /**
+   * Indicates whether top edges should be rounded when fill-extrusion-edge-radius has a value greater than 0. If false, rounded edges are only applied to the sides. Default is true.
+   *
+   * Use static method [FillExtrusionLayer.defaultFillExtrusionRoundedRoof] to set the default property.
+   *
+   * @param fillExtrusionRoundedRoof value of fillExtrusionRoundedRoof
+   */
+  override fun fillExtrusionRoundedRoof(fillExtrusionRoundedRoof: Boolean): FillExtrusionLayer = apply {
+    val propertyValue = PropertyValue("fill-extrusion-rounded-roof", fillExtrusionRoundedRoof)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Indicates whether top edges should be rounded when fill-extrusion-edge-radius has a value greater than 0. If false, rounded edges are only applied to the sides. Default is true.
+   *
+   * This is an Expression representation of "fill-extrusion-rounded-roof".
+   *
+   */
+  val fillExtrusionRoundedRoofAsExpression: Expression?
+    /**
+     * Indicates whether top edges should be rounded when fill-extrusion-edge-radius has a value greater than 0. If false, rounded edges are only applied to the sides. Default is true.
+     *
+     * Get the FillExtrusionRoundedRoof property as an Expression
+     *
+     * Use static method [FillExtrusionLayer.defaultFillExtrusionRoundedRoofAsExpression] to get the default property.
+     *
+     * @return Boolean
+     */
+    get() {
+      getPropertyValue<Expression>("fill-extrusion-rounded-roof")?.let {
+        return it
+      }
+      fillExtrusionRoundedRoof?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * Indicates whether top edges should be rounded when fill-extrusion-edge-radius has a value greater than 0. If false, rounded edges are only applied to the sides. Default is true.
+   *
+   * Use static method [FillExtrusionLayer.defaultFillExtrusionRoundedRoofAsExpression] to set the default property.
+   *
+   * @param fillExtrusionRoundedRoof value of fillExtrusionRoundedRoof as Expression
+   */
+  override fun fillExtrusionRoundedRoof(fillExtrusionRoundedRoof: Expression): FillExtrusionLayer = apply {
+    val propertyValue = PropertyValue("fill-extrusion-rounded-roof", fillExtrusionRoundedRoof)
+    setProperty(propertyValue)
+  }
+
+  /**
    * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively.
    */
   val fillExtrusionTranslate: List<Double>?
@@ -1171,6 +1306,45 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
        * @return maxzoom
        */
       get() = StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "maxzoom").silentUnwrap()
+
+    /**
+     * Radius of a fill extrusion edge in meters. If not zero, rounds extrusion edges for a smoother appearance.
+     */
+    @MapboxExperimental
+    val defaultFillExtrusionEdgeRadius: Double?
+      /**
+       * Radius of a fill extrusion edge in meters. If not zero, rounds extrusion edges for a smoother appearance.
+       *
+       * Get the default value of FillExtrusionEdgeRadius property
+       *
+       * @return Double
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-edge-radius").silentUnwrap()
+      }
+
+    /**
+     * Radius of a fill extrusion edge in meters. If not zero, rounds extrusion edges for a smoother appearance.
+     *
+     * This is an Expression representation of "fill-extrusion-edge-radius".
+     *
+     */
+    @MapboxExperimental
+    val defaultFillExtrusionEdgeRadiusAsExpression: Expression?
+      /**
+       * Get default value of the FillExtrusionEdgeRadius property as an Expression
+       *
+       * @return Double
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-edge-radius").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultFillExtrusionEdgeRadius?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
 
     /**
      * Controls the intensity of shading near ground and concave angles between walls. Default value 0.0 disables ambient occlusion and values around 0.3 provide the most plausible results for buildings.
@@ -1517,6 +1691,43 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
+     * Indicates whether top edges should be rounded when fill-extrusion-edge-radius has a value greater than 0. If false, rounded edges are only applied to the sides. Default is true.
+     */
+    val defaultFillExtrusionRoundedRoof: Boolean?
+      /**
+       * Indicates whether top edges should be rounded when fill-extrusion-edge-radius has a value greater than 0. If false, rounded edges are only applied to the sides. Default is true.
+       *
+       * Get the default value of FillExtrusionRoundedRoof property
+       *
+       * @return Boolean
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-rounded-roof").silentUnwrap()
+      }
+
+    /**
+     * Indicates whether top edges should be rounded when fill-extrusion-edge-radius has a value greater than 0. If false, rounded edges are only applied to the sides. Default is true.
+     *
+     * This is an Expression representation of "fill-extrusion-rounded-roof".
+     *
+     */
+    val defaultFillExtrusionRoundedRoofAsExpression: Expression?
+      /**
+       * Get default value of the FillExtrusionRoundedRoof property as an Expression
+       *
+       * @return Boolean
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-rounded-roof").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultFillExtrusionRoundedRoof?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
+
+    /**
      * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively.
      */
     val defaultFillExtrusionTranslate: List<Double>?
@@ -1702,6 +1913,22 @@ interface FillExtrusionLayerDsl {
   fun maxZoom(maxZoom: Double): FillExtrusionLayer
 
   // Property getters and setters
+
+  /**
+   * Radius of a fill extrusion edge in meters. If not zero, rounds extrusion edges for a smoother appearance.
+   *
+   * @param fillExtrusionEdgeRadius value of fillExtrusionEdgeRadius
+   */
+  @MapboxExperimental
+  fun fillExtrusionEdgeRadius(fillExtrusionEdgeRadius: Double = 0.0): FillExtrusionLayer
+
+  /**
+   * Radius of a fill extrusion edge in meters. If not zero, rounds extrusion edges for a smoother appearance.
+   *
+   * @param fillExtrusionEdgeRadius value of fillExtrusionEdgeRadius as Expression
+   */
+  @MapboxExperimental
+  fun fillExtrusionEdgeRadius(fillExtrusionEdgeRadius: Expression): FillExtrusionLayer
 
   /**
    * Controls the intensity of shading near ground and concave angles between walls. Default value 0.0 disables ambient occlusion and values around 0.3 provide the most plausible results for buildings.
@@ -1903,6 +2130,20 @@ interface FillExtrusionLayerDsl {
    * @param fillExtrusionPattern value of fillExtrusionPattern as Expression
    */
   fun fillExtrusionPattern(fillExtrusionPattern: Expression): FillExtrusionLayer
+
+  /**
+   * Indicates whether top edges should be rounded when fill-extrusion-edge-radius has a value greater than 0. If false, rounded edges are only applied to the sides. Default is true.
+   *
+   * @param fillExtrusionRoundedRoof value of fillExtrusionRoundedRoof
+   */
+  fun fillExtrusionRoundedRoof(fillExtrusionRoundedRoof: Boolean = true): FillExtrusionLayer
+
+  /**
+   * Indicates whether top edges should be rounded when fill-extrusion-edge-radius has a value greater than 0. If false, rounded edges are only applied to the sides. Default is true.
+   *
+   * @param fillExtrusionRoundedRoof value of fillExtrusionRoundedRoof as Expression
+   */
+  fun fillExtrusionRoundedRoof(fillExtrusionRoundedRoof: Expression): FillExtrusionLayer
 
   /**
    * The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively.

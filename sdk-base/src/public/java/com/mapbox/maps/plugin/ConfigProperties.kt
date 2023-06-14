@@ -4,6 +4,7 @@ package com.mapbox.maps.plugin
 
 import android.os.Parcelable
 import com.mapbox.maps.ImageHolder
+import com.mapbox.maps.MapboxExperimental
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -77,6 +78,7 @@ data class LocationPuck2D @JvmOverloads constructor(
 /**
  * Definition of a location_puck_3_d.
  */
+@OptIn(MapboxExperimental::class)
 data class LocationPuck3D @JvmOverloads constructor(
   /**
    * An URL for the model file in gltf format.
@@ -106,6 +108,38 @@ data class LocationPuck3D @JvmOverloads constructor(
    * The rotation of the model.
    */
   var modelRotation: List<Float> = listOf(0f, 0f, 90f),
+  /**
+   * Enable/Disable shadow casting for the 3D location puck.
+   */
+  @MapboxExperimental
+  var modelCastShadows: Boolean = true,
+  /**
+   * Enable/Disable shadow receiving for the 3D location puck.
+   */
+  @MapboxExperimental
+  var modelReceiveShadows: Boolean = true,
+  /**
+   * Defines scaling mode. Only applies to location-indicator type layers.
+   */
+  @MapboxExperimental
+  var modelScaleMode: ModelScaleMode = ModelScaleMode.VIEWPORT,
 ) : LocationPuck()
+
+/**
+ * Defines scaling mode. Only applies to location-indicator type layers.
+ *
+ * @param value String value of this property
+ */
+@MapboxExperimental
+enum class ModelScaleMode(val value: String) {
+  /**
+   * Model is scaled so that it's always the same size relative to other map features. The property model-scale specifies how many meters each unit in the model file should cover.
+   */
+  MAP("map"),
+  /**
+   * Model is scaled so that it's always the same size on the screen. The property model-scale specifies how many pixels each unit in model file should cover.
+   */
+  VIEWPORT("viewport"),
+}
 
 // End of generated file.

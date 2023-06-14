@@ -19,7 +19,6 @@ internal object ScaleBarAttributeParser {
    * @param context Context
    * @param attrs AttributionSet
    */
-
   fun parseScaleBarSettings(context: Context, attrs: AttributeSet?, pixelRatio: Float = 1.0f): ScaleBarSettings {
     val typedArray = context.obtainStyledAttributes(attrs, R.styleable.mapbox_MapView, 0, 0)
     try {

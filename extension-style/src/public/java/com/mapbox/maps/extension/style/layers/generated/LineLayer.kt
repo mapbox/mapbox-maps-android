@@ -817,6 +817,105 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
+   * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded.
+   */
+  val lineDepthOcclusionFactor: Double?
+    /**
+     * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded.
+     *
+     * Use static method [LineLayer.defaultLineDepthOcclusionFactor] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      return getPropertyValue("line-depth-occlusion-factor")
+    }
+
+  /**
+   * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded.
+   *
+   * Use static method [LineLayer.defaultLineDepthOcclusionFactor] to set the default property.
+   *
+   * @param lineDepthOcclusionFactor value of lineDepthOcclusionFactor
+   */
+  override fun lineDepthOcclusionFactor(lineDepthOcclusionFactor: Double): LineLayer = apply {
+    val propertyValue = PropertyValue("line-depth-occlusion-factor", lineDepthOcclusionFactor)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded.
+   *
+   * This is an Expression representation of "line-depth-occlusion-factor".
+   *
+   */
+  val lineDepthOcclusionFactorAsExpression: Expression?
+    /**
+     * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded.
+     *
+     * Get the LineDepthOcclusionFactor property as an Expression
+     *
+     * Use static method [LineLayer.defaultLineDepthOcclusionFactorAsExpression] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      getPropertyValue<Expression>("line-depth-occlusion-factor")?.let {
+        return it
+      }
+      lineDepthOcclusionFactor?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded.
+   *
+   * Use static method [LineLayer.defaultLineDepthOcclusionFactorAsExpression] to set the default property.
+   *
+   * @param lineDepthOcclusionFactor value of lineDepthOcclusionFactor as Expression
+   */
+  override fun lineDepthOcclusionFactor(lineDepthOcclusionFactor: Expression): LineLayer = apply {
+    val propertyValue = PropertyValue("line-depth-occlusion-factor", lineDepthOcclusionFactor)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Transition options for LineDepthOcclusionFactor.
+   */
+  val lineDepthOcclusionFactorTransition: StyleTransition?
+    /**
+     * Get the LineDepthOcclusionFactor property transition options
+     *
+     * Use static method [LineLayer.defaultLineDepthOcclusionFactorTransition] to get the default property.
+     *
+     * @return transition options for Double
+     */
+    get() {
+      return getPropertyValue("line-depth-occlusion-factor-transition")
+    }
+
+  /**
+   * Set the LineDepthOcclusionFactor property transition options
+   *
+   * Use static method [LineLayer.defaultLineDepthOcclusionFactorTransition] to set the default property.
+   *
+   * @param options transition options for Double
+   */
+  override fun lineDepthOcclusionFactorTransition(options: StyleTransition): LineLayer = apply {
+    val propertyValue = PropertyValue("line-depth-occlusion-factor-transition", options)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * DSL for [lineDepthOcclusionFactorTransition].
+   */
+  override fun lineDepthOcclusionFactorTransition(block: StyleTransition.Builder.() -> Unit): LineLayer = apply {
+    lineDepthOcclusionFactorTransition(StyleTransition.Builder().apply(block).build())
+  }
+
+  /**
    * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap.
    */
   val lineGapWidth: Double?
@@ -1939,6 +2038,54 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
+     * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded.
+     */
+    val defaultLineDepthOcclusionFactor: Double?
+      /**
+       * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded.
+       *
+       * Get the default value of LineDepthOcclusionFactor property
+       *
+       * @return Double
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("line", "line-depth-occlusion-factor").silentUnwrap()
+      }
+
+    /**
+     * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded.
+     *
+     * This is an Expression representation of "line-depth-occlusion-factor".
+     *
+     */
+    val defaultLineDepthOcclusionFactorAsExpression: Expression?
+      /**
+       * Get default value of the LineDepthOcclusionFactor property as an Expression
+       *
+       * @return Double
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("line", "line-depth-occlusion-factor").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultLineDepthOcclusionFactor?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
+
+    /**
+     * Transition options for LineDepthOcclusionFactor.
+     */
+    val defaultLineDepthOcclusionFactorTransition: StyleTransition?
+      /**
+       * Get the LineDepthOcclusionFactor property transition options
+       *
+       * @return transition options for Double
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("line", "line-depth-occlusion-factor-transition").silentUnwrap()
+
+    /**
      * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap.
      */
     val defaultLineGapWidth: Double?
@@ -2504,6 +2651,36 @@ interface LineLayerDsl {
    * @param lineDasharray value of lineDasharray as Expression
    */
   fun lineDasharray(lineDasharray: Expression): LineLayer
+
+  /**
+   * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded.
+   *
+   * @param lineDepthOcclusionFactor value of lineDepthOcclusionFactor
+   */
+  fun lineDepthOcclusionFactor(lineDepthOcclusionFactor: Double = 1.0): LineLayer
+
+  /**
+   * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded.
+   *
+   * @param lineDepthOcclusionFactor value of lineDepthOcclusionFactor as Expression
+   */
+  fun lineDepthOcclusionFactor(lineDepthOcclusionFactor: Expression): LineLayer
+
+  /**
+   * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded.
+   *
+   * Set the LineDepthOcclusionFactor property transition options
+   *
+   * @param options transition options for Double
+   */
+  fun lineDepthOcclusionFactorTransition(options: StyleTransition): LineLayer
+
+  /**
+   * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded.
+   *
+   * DSL for [lineDepthOcclusionFactorTransition].
+   */
+  fun lineDepthOcclusionFactorTransition(block: StyleTransition.Builder.() -> Unit): LineLayer
 
   /**
    * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap.

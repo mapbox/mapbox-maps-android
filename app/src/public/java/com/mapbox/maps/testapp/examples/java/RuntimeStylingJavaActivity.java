@@ -4,11 +4,9 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableKt;
-
 import com.mapbox.bindgen.Expected;
 import com.mapbox.bindgen.None;
 import com.mapbox.bindgen.Value;
@@ -35,22 +33,16 @@ import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource;
 import com.mapbox.maps.extension.style.sources.generated.ImageSource;
 import com.mapbox.maps.extension.style.sources.generated.VectorSource;
 import com.mapbox.maps.testapp.R;
-
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import static com.mapbox.maps.MapboxLogger.logD;
 import static com.mapbox.maps.MapboxLogger.logE;
 import static com.mapbox.maps.MapboxLogger.logI;
-import static com.mapbox.maps.extension.style.expressions.generated.Expression.color;
 import static com.mapbox.maps.extension.style.expressions.generated.Expression.eq;
 import static com.mapbox.maps.extension.style.expressions.generated.Expression.get;
 import static com.mapbox.maps.extension.style.expressions.generated.Expression.image;
 import static com.mapbox.maps.extension.style.expressions.generated.Expression.literal;
 import static com.mapbox.maps.extension.style.expressions.generated.Expression.subtract;
-import static com.mapbox.maps.extension.style.expressions.generated.Expression.zoom;
-
-import kotlin.Pair;
 
 /**
  * Example showcasing usage of creating runtime style with java codes.
@@ -294,22 +286,28 @@ public class RuntimeStylingJavaActivity extends AppCompatActivity {
 
     private void setFillLayer(Style style) {
         final FillLayer fillLayer = (FillLayer) LayerUtils.getLayer(style, "water");
-        final Expression expression = Expression.exponentialInterpolator(
-                0.5,
-                zoom(),
-                new Pair<>(literal(1.0), color(Color.RED)),
-                new Pair<>(literal(5.0), color(Color.BLUE)),
-                new Pair<>(literal(10.0), color(Color.GREEN))
-        );
-        final Expression expressionByBuilder = new Expression.InterpolatorBuilder("interpolate")
-                .exponential(0.5)
-                .zoom()
-                .stop(literal(1.0), color(Color.RED))
-                .stop(literal(5.0), color(Color.BLUE))
-                .stop(literal(10.0), color(Color.GREEN))
-                .build();
-        fillLayer.fillColor(expression);
-        fillLayer.fillOutlineColor(expressionByBuilder);
+        final Expression.InterpolatorBuilder interpolateBuilder = new Expression.InterpolatorBuilder("interpolate");
+        interpolateBuilder.exponential(builder -> {
+            builder.literal(0.5);
+            return null;
+        });
+        interpolateBuilder.zoom();
+        interpolateBuilder.stop(builder -> {
+            builder.literal(1.0);
+            builder.color(Color.RED);
+            return null;
+        });
+        interpolateBuilder.stop(builder -> {
+            builder.literal(5.0);
+            builder.color(Color.BLUE);
+            return null;
+        });
+        interpolateBuilder.stop(builder -> {
+            builder.literal(10.0);
+            builder.color(Color.GREEN);
+            return null;
+        });
+        fillLayer.fillColor(interpolateBuilder.build());
         fillLayer.visibility(Visibility.VISIBLE);
         logI(TAG, fillLayer.getFillColorAsExpression().toString());
     }
@@ -328,7 +326,6 @@ public class RuntimeStylingJavaActivity extends AppCompatActivity {
         light.anchor(Anchor.MAP);
         light.color(Color.YELLOW);
         light.position(10.0, 40.0, 50.0);
-
         LightUtils.setLight(style, light);
     }
 

@@ -267,6 +267,32 @@ class PolylineAnnotationManager(
     }
 
   /**
+   * The LineDepthOcclusionFactor property
+   *
+   * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded.
+   */
+  var lineDepthOcclusionFactor: Double?
+    /**
+     * Get the LineDepthOcclusionFactor property
+     *
+     * @return property wrapper value around Double
+     */
+    get(): Double? {
+      return layer?.lineDepthOcclusionFactor
+    }
+    /**
+     * Set the LineDepthOcclusionFactor property
+     * @param value property wrapper value around Double
+     */
+    set(value) {
+      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("line", "line-depth-occlusion-factor").silentUnwrap()
+      newValue?.let {
+        layer?.lineDepthOcclusionFactor(it)
+        dragLayer?.lineDepthOcclusionFactor(it)
+      }
+    }
+
+  /**
    * The LineTranslate property
    *
    * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. The unit of lineTranslate is in density-independent pixels.

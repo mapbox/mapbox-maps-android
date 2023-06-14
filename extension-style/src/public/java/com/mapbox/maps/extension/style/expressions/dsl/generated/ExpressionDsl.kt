@@ -5,6 +5,7 @@ package com.mapbox.maps.extension.style.expressions.dsl.generated
 import androidx.annotation.ColorInt
 import com.mapbox.geojson.GeoJson
 import com.mapbox.geojson.Geometry
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import java.util.HashMap
 
@@ -89,6 +90,12 @@ fun accumulated(): Expression = Expression.accumulated()
  * Returns the arccosine of the input.
  */
 fun acos(block: Expression.ExpressionBuilder.() -> Unit): Expression = Expression.acos(block)
+
+/**
+ * Returns a string which matches one of the values specified in the text-anchor layout property, depending on the best-fit anchor for the symbol during rendering. Using this expression the content of the layer can be dynamically configured for the specific anchor type.
+ */
+@MapboxExperimental
+fun activeAnchor(): Expression = Expression.activeAnchor()
 
 /**
  * Returns `true` if all the inputs are `true`, `false` otherwise. The inputs are evaluated in order, and evaluation is short-circuiting: once an input expression evaluates to `false`, the result is `false` and no further input expressions are evaluated.

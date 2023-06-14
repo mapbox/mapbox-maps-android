@@ -8,6 +8,7 @@ import android.util.AttributeSet
 import com.mapbox.maps.ImageHolder
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.LocationPuck3D
+import com.mapbox.maps.plugin.ModelScaleMode
 import com.mapbox.maps.plugin.PuckBearing
 import com.mapbox.maps.plugin.locationcomponent.R
 
@@ -21,7 +22,7 @@ internal object LocationComponentAttributeParser {
    * @param context Context
    * @param attrs AttributionSet
    */
-
+  @OptIn(com.mapbox.maps.MapboxExperimental::class)
   fun parseLocationComponentSettings(context: Context, attrs: AttributeSet?, pixelRatio: Float = 1.0f): LocationComponentSettings {
     val typedArray = context.obtainStyledAttributes(attrs, R.styleable.mapbox_MapView, 0, 0)
     try {
@@ -58,6 +59,9 @@ internal object LocationComponentAttributeParser {
               typedArray.getFloat(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck3DModelRotation_y, 0.0f),
               typedArray.getFloat(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck3DModelRotation_z, 90.0f),
             ),
+            modelCastShadows = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck3DModelCastShadows, true),
+            modelReceiveShadows = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck3DModelReceiveShadows, true),
+            modelScaleMode = ModelScaleMode.values()[typedArray.getInt(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck3DModelScaleMode, ModelScaleMode.VIEWPORT.ordinal)],
           )
           else -> LocationPuck2D(
             topImage = ImageHolder.from(R.drawable.mapbox_user_icon),

@@ -6,6 +6,7 @@ import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.Style
 import com.mapbox.maps.logE
+import com.mapbox.maps.plugin.ModelScaleMode
 import io.mockk.*
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -25,6 +26,7 @@ class ModelLayerWrapperTest {
     INITIAL_ROTATION,
     INITIAL_TRANSLATION,
     INITIAL_OPACITY,
+    INITIAL_SCALE_MODE
   )
   private val expected: Expected<String, None> = mockk(relaxed = true)
 
@@ -52,6 +54,7 @@ class ModelLayerWrapperTest {
         "model-scale" to INITIAL_SCALE,
         "model-translation" to INITIAL_TRANSLATION,
         "model-opacity" to INITIAL_OPACITY,
+        "model-scale-mode" to INITIAL_SCALE_MODE.value,
         "id" to MODEL_LAYER_ID,
         "source" to MODEL_SOURCE_ID,
         "type" to "model",
@@ -139,6 +142,21 @@ class ModelLayerWrapperTest {
     verify { style.setStyleLayerProperty(MODEL_LAYER_ID, "model-opacity", Value(0.8)) }
   }
 
+  @Test
+  fun testModelScaleModeViewPort() {
+    setModelScaleMode(ModelScaleMode.VIEWPORT)
+  }
+
+  @Test
+  fun testModelScaleModeMap() {
+    setModelScaleMode(ModelScaleMode.MAP)
+  }
+
+  private fun setModelScaleMode(mode: ModelScaleMode) {
+    layer.modelScaleMode(mode)
+    verify { style.setStyleLayerProperty(MODEL_LAYER_ID, "model-scale-mode", Value(mode.value)) }
+  }
+
   companion object {
     private const val MODEL_LAYER_ID = "modelLayerId"
     private const val MODEL_SOURCE_ID = "modelSourceId"
@@ -146,5 +164,6 @@ class ModelLayerWrapperTest {
     private val INITIAL_ROTATION = arrayListOf(8.0)
     private val INITIAL_TRANSLATION = arrayListOf(0.0)
     private const val INITIAL_OPACITY = 1.0
+    private val INITIAL_SCALE_MODE = ModelScaleMode.VIEWPORT
   }
 }

@@ -18,7 +18,6 @@ internal object GesturesAttributeParser {
    * @param context Context
    * @param attrs AttributionSet
    */
-
   fun parseGesturesSettings(context: Context, attrs: AttributeSet?): GesturesSettings {
     val typedArray = context.obtainStyledAttributes(attrs, R.styleable.mapbox_MapView, 0, 0)
     try {

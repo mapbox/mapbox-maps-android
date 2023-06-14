@@ -24,6 +24,7 @@ import com.mapbox.maps.plugin.annotation.generated.createPolylineAnnotationManag
  * @param lineMiterLimit Used to automatically convert miter joins to bevel joins for sharp angles.
  * @param lineRoundLimit Used to automatically convert round joins to miter joins for shallow angles.
  * @param lineDasharray Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to density-independent pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels. The unit of lineDasharray is in line widths.
+ * @param lineDepthOcclusionFactor Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded.
  * @param lineTranslate The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. The unit of lineTranslate is in density-independent pixels.
  * @param lineTranslateAnchor Controls the frame of reference for {@link PropertyFactory#lineTranslate}.
  * @param lineTrimOffset The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. The line trim-off offset is based on the whole line range [0.0, 1.0].
@@ -38,6 +39,7 @@ public fun PolylineAnnotationCluster(
   lineMiterLimit: Double? = null,
   lineRoundLimit: Double? = null,
   lineDasharray: List<Double>? = null,
+  lineDepthOcclusionFactor: Double? = null,
   lineTranslate: List<Double>? = null,
   lineTranslateAnchor: LineTranslateAnchor? = null,
   lineTrimOffset: List<Double>? = null,
@@ -68,6 +70,9 @@ public fun PolylineAnnotationCluster(
       }
       set(lineDasharray) {
         annotationManager.lineDasharray = it
+      }
+      set(lineDepthOcclusionFactor) {
+        annotationManager.lineDepthOcclusionFactor = it
       }
       set(lineTranslate) {
         annotationManager.lineTranslate = it

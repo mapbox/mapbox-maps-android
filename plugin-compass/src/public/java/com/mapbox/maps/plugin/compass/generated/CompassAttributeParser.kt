@@ -18,7 +18,6 @@ internal object CompassAttributeParser {
    * @param context Context
    * @param attrs AttributionSet
    */
-
   fun parseCompassSettings(context: Context, attrs: AttributeSet?, pixelRatio: Float = 1.0f): CompassSettings {
     val typedArray = context.obtainStyledAttributes(attrs, R.styleable.mapbox_MapView, 0, 0)
     try {

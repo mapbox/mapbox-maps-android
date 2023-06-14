@@ -158,6 +158,73 @@ class FillExtrusionLayerTest {
   // Property getters and setters
 
   @Test
+  fun fillExtrusionEdgeRadiusSet() {
+    val layer = fillExtrusionLayer("id", "source") {}
+    val testValue = 1.0
+    layer.bindTo(style)
+    layer.fillExtrusionEdgeRadius(testValue)
+    verify { style.setStyleLayerProperty("id", "fill-extrusion-edge-radius", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "1.0")
+  }
+
+  @Test
+  fun fillExtrusionEdgeRadiusGet() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = fillExtrusionLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), layer.fillExtrusionEdgeRadius?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-edge-radius") }
+  }
+  // Expression Tests
+
+  @Test
+  fun fillExtrusionEdgeRadiusAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = fillExtrusionLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.fillExtrusionEdgeRadius(expression)
+    verify { style.setStyleLayerProperty("id", "fill-extrusion-edge-radius", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun fillExtrusionEdgeRadiusAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = fillExtrusionLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.fillExtrusionEdgeRadiusAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-edge-radius") }
+  }
+
+  @Test
+  fun fillExtrusionEdgeRadiusAsExpressionGetNull() {
+    val layer = fillExtrusionLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.fillExtrusionEdgeRadiusAsExpression)
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-edge-radius") }
+  }
+
+  @Test
+  fun fillExtrusionEdgeRadiusAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    val layer = fillExtrusionLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(1.0, layer.fillExtrusionEdgeRadiusAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.fillExtrusionEdgeRadius!!, 1E-5)
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-edge-radius") }
+  }
+
+  @Test
   fun fillExtrusionAmbientOcclusionIntensitySet() {
     val layer = fillExtrusionLayer("id", "source") {}
     val testValue = 1.0
@@ -908,6 +975,74 @@ class FillExtrusionLayerTest {
   }
 
   @Test
+  fun fillExtrusionRoundedRoofSet() {
+    val layer = fillExtrusionLayer("id", "source") {}
+    val testValue = true
+    layer.bindTo(style)
+    layer.fillExtrusionRoundedRoof(testValue)
+    verify { style.setStyleLayerProperty("id", "fill-extrusion-rounded-roof", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "true")
+  }
+
+  @Test
+  fun fillExtrusionRoundedRoofGet() {
+    val testValue = true
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = fillExtrusionLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = true
+    assertEquals(expectedValue.toString(), layer.fillExtrusionRoundedRoof?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-rounded-roof") }
+  }
+  // Expression Tests
+
+  @Test
+  fun fillExtrusionRoundedRoofAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = fillExtrusionLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.fillExtrusionRoundedRoof(expression)
+    verify { style.setStyleLayerProperty("id", "fill-extrusion-rounded-roof", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun fillExtrusionRoundedRoofAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = fillExtrusionLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.fillExtrusionRoundedRoofAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-rounded-roof") }
+  }
+
+  @Test
+  fun fillExtrusionRoundedRoofAsExpressionGetNull() {
+    val layer = fillExtrusionLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.fillExtrusionRoundedRoofAsExpression)
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-rounded-roof") }
+  }
+
+  @Test
+  fun fillExtrusionRoundedRoofAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(true)
+    val layer = fillExtrusionLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals("true", layer.fillExtrusionRoundedRoofAsExpression.toString())
+    val expectedValue = true
+    assertEquals(expectedValue, layer.fillExtrusionRoundedRoof)
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-rounded-roof") }
+  }
+
+  @Test
   fun fillExtrusionTranslateSet() {
     val layer = fillExtrusionLayer("id", "source") {}
     val testValue = listOf(0.0, 1.0)
@@ -1197,6 +1332,37 @@ class FillExtrusionLayerTest {
   }
 
   // Default property getter tests
+
+  @Test
+  fun defaultFillExtrusionEdgeRadiusTest() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), FillExtrusionLayer.defaultFillExtrusionEdgeRadius?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-edge-radius") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultFillExtrusionEdgeRadiusAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), FillExtrusionLayer.defaultFillExtrusionEdgeRadiusAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-edge-radius") }
+  }
+
+  @Test
+  fun defaultFillExtrusionEdgeRadiusAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    assertEquals(1.0, FillExtrusionLayer.defaultFillExtrusionEdgeRadiusAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, FillExtrusionLayer.defaultFillExtrusionEdgeRadius!!, 1E-5)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-edge-radius") }
+  }
 
   @Test
   fun defaultFillExtrusionAmbientOcclusionIntensityTest() {
@@ -1523,6 +1689,38 @@ class FillExtrusionLayerTest {
     assertEquals("abc", FillExtrusionLayer.defaultFillExtrusionPatternAsExpression.toString())
     assertEquals("abc", FillExtrusionLayer.defaultFillExtrusionPattern)
     verify { StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-pattern") }
+  }
+
+  @Test
+  fun defaultFillExtrusionRoundedRoofTest() {
+    val testValue = true
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = true
+    assertEquals(expectedValue.toString(), FillExtrusionLayer.defaultFillExtrusionRoundedRoof?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-rounded-roof") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultFillExtrusionRoundedRoofAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), FillExtrusionLayer.defaultFillExtrusionRoundedRoofAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-rounded-roof") }
+  }
+
+  @Test
+  fun defaultFillExtrusionRoundedRoofAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(true)
+    assertEquals("true", FillExtrusionLayer.defaultFillExtrusionRoundedRoofAsExpression.toString())
+    val expectedValue = true
+    assertEquals(expectedValue, FillExtrusionLayer.defaultFillExtrusionRoundedRoof)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-rounded-roof") }
   }
 
   @Test

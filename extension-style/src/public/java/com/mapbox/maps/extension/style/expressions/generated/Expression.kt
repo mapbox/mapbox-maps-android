@@ -6,6 +6,7 @@ import androidx.annotation.ColorInt
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.GeoJson
 import com.mapbox.geojson.Geometry
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxStyleException
 import com.mapbox.maps.extension.style.expressions.types.FormatSection
 import com.mapbox.maps.extension.style.types.ExpressionDsl
@@ -302,6 +303,16 @@ class Expression : Value {
      */
     fun acos(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.acos(block))
+    }
+
+    /**
+     * Returns a string which matches one of the values specified in the text-anchor layout property, depending
+     * on the best-fit anchor for the symbol during rendering. Using this expression the content of the
+     * layer can be dynamically configured for the specific anchor type.
+     */
+    @MapboxExperimental
+    fun activeAnchor(): ExpressionBuilder = apply {
+      this@ExpressionBuilder.arguments.add(Expression.activeAnchor())
     }
 
     /**
@@ -2098,6 +2109,15 @@ class Expression : Value {
      */
     fun acos(block: ExpressionBuilder.() -> Unit): Expression =
       ExpressionBuilder("acos").apply(block).build()
+
+    /**
+     * Returns a string which matches one of the values specified in the text-anchor layout property, depending
+     * on the best-fit anchor for the symbol during rendering. Using this expression the content of the
+     * layer can be dynamically configured for the specific anchor type.
+     */
+    @JvmStatic
+    @MapboxExperimental
+    fun activeAnchor(): Expression = ExpressionBuilder("active-anchor").build()
 
     /**
      * Returns `true` if all the inputs are `true`, `false` otherwise. The inputs are evaluated in order,

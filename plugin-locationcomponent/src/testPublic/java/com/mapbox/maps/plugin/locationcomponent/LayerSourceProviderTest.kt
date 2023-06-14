@@ -65,6 +65,7 @@ class LayerSourceProviderTest {
         "source" to "mapbox-location-model-source",
         "type" to "model",
         "model-opacity" to 1.0,
+        "model-scale-mode" to "viewport",
         "model-scale" to listOf(1.0, 2.0, 3.0),
         "model-translation" to listOf(0.0, 0.0, 0.0),
         "model-scale-transition" to hashMapOf("duration" to 0, "delay" to 0),

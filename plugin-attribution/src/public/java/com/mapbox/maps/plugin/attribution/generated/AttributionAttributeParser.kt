@@ -18,7 +18,6 @@ internal object AttributionAttributeParser {
    * @param context Context
    * @param attrs AttributionSet
    */
-
   fun parseAttributionSettings(context: Context, attrs: AttributeSet?, pixelRatio: Float = 1.0f): AttributionSettings {
     val typedArray = context.obtainStyledAttributes(attrs, R.styleable.mapbox_MapView, 0, 0)
     try {

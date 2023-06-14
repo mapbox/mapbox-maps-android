@@ -73,6 +73,12 @@
         <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelRotation_x" format="float"/>
         <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelRotation_y" format="float"/>
         <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelRotation_z" format="float"/>
+        <!-- Enable/Disable shadow casting for the 3D location puck. -->
+        <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelCastShadows" format="boolean"/>
+        <!-- Enable/Disable shadow receiving for the 3D location puck. -->
+        <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelReceiveShadows" format="boolean"/>
+        <!-- Defines scaling mode. Only applies to location-indicator type layers. -->
+        <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelScaleMode" format="enum"/>
     </declare-styleable>
 </resources>
 <!-- End of generated file. -->

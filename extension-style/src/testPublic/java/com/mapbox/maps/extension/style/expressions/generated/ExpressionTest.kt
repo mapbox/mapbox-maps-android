@@ -262,6 +262,12 @@ class ExpressionTest {
   }
 
   @Test
+  fun expression_activeAnchor() {
+    val expression = activeAnchor()
+    assertEquals("assert active-anchor expression", "[active-anchor]", expression.toString())
+  }
+
+  @Test
   fun dsl_expression_all() {
     val expression = all {
       // test builder function

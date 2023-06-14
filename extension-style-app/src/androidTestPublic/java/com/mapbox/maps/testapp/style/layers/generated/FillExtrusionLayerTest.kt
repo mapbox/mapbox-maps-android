@@ -70,6 +70,30 @@ class FillExtrusionLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun fillExtrusionEdgeRadiusTest() {
+    val testValue = 1.0
+    val layer = fillExtrusionLayer("id", "source") {
+      fillExtrusionEdgeRadius(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(testValue, layer.fillExtrusionEdgeRadius!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun fillExtrusionEdgeRadiusAsExpressionTest() {
+    val expression = literal(1.0)
+    val layer = fillExtrusionLayer("id", "source") {
+      fillExtrusionEdgeRadius(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(1.0, layer.fillExtrusionEdgeRadiusAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.fillExtrusionEdgeRadius!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
   fun fillExtrusionAmbientOcclusionIntensityTest() {
     val testValue = 1.0
     val layer = fillExtrusionLayer("id", "source") {
@@ -452,6 +476,30 @@ class FillExtrusionLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun fillExtrusionRoundedRoofTest() {
+    val testValue = true
+    val layer = fillExtrusionLayer("id", "source") {
+      fillExtrusionRoundedRoof(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(testValue.toString(), layer.fillExtrusionRoundedRoof?.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun fillExtrusionRoundedRoofAsExpressionTest() {
+    val expression = literal(true)
+    val layer = fillExtrusionLayer("id", "source") {
+      fillExtrusionRoundedRoof(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(expression.toString(), layer.fillExtrusionRoundedRoofAsExpression.toString())
+    assertEquals(true, layer.fillExtrusionRoundedRoof!!)
+  }
+
+  @Test
+  @UiThreadTest
   fun fillExtrusionTranslateTest() {
     val testValue = listOf(0.0, 1.0)
     val layer = fillExtrusionLayer("id", "source") {
@@ -570,6 +618,8 @@ class FillExtrusionLayerTest : BaseStyleTest() {
     assertNotNull("defaultVisibility should not be null", FillExtrusionLayer.defaultVisibility)
     assertNotNull("defaultMinZoom should not be null", FillExtrusionLayer.defaultMinZoom)
     assertNotNull("defaultMaxZoom should not be null", FillExtrusionLayer.defaultMaxZoom)
+    assertNotNull("defaultFillExtrusionEdgeRadius should not be null", FillExtrusionLayer.defaultFillExtrusionEdgeRadius)
+    assertNotNull("defaultFillExtrusionEdgeRadiusAsExpression should not be null", FillExtrusionLayer.defaultFillExtrusionEdgeRadiusAsExpression)
     assertNotNull("defaultFillExtrusionAmbientOcclusionIntensity should not be null", FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionIntensity)
     assertNotNull("defaultFillExtrusionAmbientOcclusionIntensityAsExpression should not be null", FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionIntensityAsExpression)
     assertNotNull("defaultFillExtrusionAmbientOcclusionIntensityTransition should not be null", FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionIntensityTransition)
@@ -591,6 +641,8 @@ class FillExtrusionLayerTest : BaseStyleTest() {
     assertNotNull("defaultFillExtrusionOpacityTransition should not be null", FillExtrusionLayer.defaultFillExtrusionOpacityTransition)
     assertNotNull("defaultFillExtrusionPattern should not be null", FillExtrusionLayer.defaultFillExtrusionPattern)
     assertNotNull("defaultFillExtrusionPatternAsExpression should not be null", FillExtrusionLayer.defaultFillExtrusionPatternAsExpression)
+    assertNotNull("defaultFillExtrusionRoundedRoof should not be null", FillExtrusionLayer.defaultFillExtrusionRoundedRoof)
+    assertNotNull("defaultFillExtrusionRoundedRoofAsExpression should not be null", FillExtrusionLayer.defaultFillExtrusionRoundedRoofAsExpression)
     assertNotNull("defaultFillExtrusionTranslate should not be null", FillExtrusionLayer.defaultFillExtrusionTranslate)
     assertNotNull("defaultFillExtrusionTranslateAsExpression should not be null", FillExtrusionLayer.defaultFillExtrusionTranslateAsExpression)
     assertNotNull("defaultFillExtrusionTranslateTransition should not be null", FillExtrusionLayer.defaultFillExtrusionTranslateTransition)
@@ -609,6 +661,7 @@ class FillExtrusionLayerTest : BaseStyleTest() {
       }
       literal(1.0)
     }
+    val fillExtrusionEdgeRadiusTestValue = 1.0
     val fillExtrusionAmbientOcclusionIntensityTestValue = 1.0
     val fillExtrusionAmbientOcclusionRadiusTestValue = 1.0
     val fillExtrusionBaseTestValue = 1.0
@@ -616,6 +669,7 @@ class FillExtrusionLayerTest : BaseStyleTest() {
     val fillExtrusionHeightTestValue = 1.0
     val fillExtrusionOpacityTestValue = 1.0
     val fillExtrusionPatternTestValue = "abc"
+    val fillExtrusionRoundedRoofTestValue = true
     val fillExtrusionTranslateTestValue = listOf(0.0, 1.0)
     val fillExtrusionTranslateAnchorTestValue = FillExtrusionTranslateAnchor.MAP
     val fillExtrusionVerticalGradientTestValue = true
@@ -627,6 +681,7 @@ class FillExtrusionLayerTest : BaseStyleTest() {
       minZoom(minZoomTestValue)
       maxZoom(maxZoomTestValue)
       filter(filterTestValue)
+      fillExtrusionEdgeRadius(fillExtrusionEdgeRadiusTestValue)
       fillExtrusionAmbientOcclusionIntensity(fillExtrusionAmbientOcclusionIntensityTestValue)
       fillExtrusionAmbientOcclusionRadius(fillExtrusionAmbientOcclusionRadiusTestValue)
       fillExtrusionBase(fillExtrusionBaseTestValue)
@@ -634,6 +689,7 @@ class FillExtrusionLayerTest : BaseStyleTest() {
       fillExtrusionHeight(fillExtrusionHeightTestValue)
       fillExtrusionOpacity(fillExtrusionOpacityTestValue)
       fillExtrusionPattern(fillExtrusionPatternTestValue)
+      fillExtrusionRoundedRoof(fillExtrusionRoundedRoofTestValue)
       fillExtrusionTranslate(fillExtrusionTranslateTestValue)
       fillExtrusionTranslateAnchor(fillExtrusionTranslateAnchorTestValue)
       fillExtrusionVerticalGradient(fillExtrusionVerticalGradientTestValue)
@@ -650,6 +706,7 @@ class FillExtrusionLayerTest : BaseStyleTest() {
     assertEquals(minZoomTestValue, cachedLayer.minZoom)
     assertEquals(maxZoomTestValue, cachedLayer.maxZoom)
     assertEquals(filterTestValue.toString(), cachedLayer.filter.toString())
+    assertEquals(fillExtrusionEdgeRadiusTestValue, cachedLayer.fillExtrusionEdgeRadius)
     assertEquals(fillExtrusionAmbientOcclusionIntensityTestValue, cachedLayer.fillExtrusionAmbientOcclusionIntensity)
     assertEquals(fillExtrusionAmbientOcclusionRadiusTestValue, cachedLayer.fillExtrusionAmbientOcclusionRadius)
     assertEquals(fillExtrusionBaseTestValue, cachedLayer.fillExtrusionBase)
@@ -657,6 +714,7 @@ class FillExtrusionLayerTest : BaseStyleTest() {
     assertEquals(fillExtrusionHeightTestValue, cachedLayer.fillExtrusionHeight)
     assertEquals(fillExtrusionOpacityTestValue, cachedLayer.fillExtrusionOpacity)
     assertEquals(fillExtrusionPatternTestValue, cachedLayer.fillExtrusionPattern)
+    assertEquals(fillExtrusionRoundedRoofTestValue, cachedLayer.fillExtrusionRoundedRoof)
     assertEquals(fillExtrusionTranslateTestValue, cachedLayer.fillExtrusionTranslate)
     assertEquals(fillExtrusionTranslateAnchorTestValue, cachedLayer.fillExtrusionTranslateAnchor)
     assertEquals(fillExtrusionVerticalGradientTestValue, cachedLayer.fillExtrusionVerticalGradient)

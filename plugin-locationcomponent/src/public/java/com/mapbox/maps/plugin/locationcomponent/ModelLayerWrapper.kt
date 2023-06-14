@@ -1,6 +1,7 @@
 package com.mapbox.maps.plugin.locationcomponent
 
 import com.mapbox.bindgen.Value
+import com.mapbox.maps.plugin.ModelScaleMode
 
 internal class ModelLayerWrapper(
   layerId: String,
@@ -9,6 +10,7 @@ internal class ModelLayerWrapper(
   modelRotation: List<Double>,
   modelTranslation: List<Double>,
   modelOpacity: Double,
+  modelScaleMode: ModelScaleMode,
 ) : LocationLayerWrapper(layerId) {
   init {
     layerProperties["id"] = Value(layerId)
@@ -21,6 +23,7 @@ internal class ModelLayerWrapper(
     layerProperties["model-opacity"] = Value(modelOpacity)
     layerProperties["model-scale-transition"] = buildTransition(delay = 0, duration = 0)
     layerProperties["model-rotation-transition"] = buildTransition(delay = 0, duration = 0)
+    layerProperties["model-scale-mode"] = Value(modelScaleMode.value)
   }
 
   private fun buildTransition(delay: Long, duration: Long): Value {
@@ -39,4 +42,6 @@ internal class ModelLayerWrapper(
   fun modelTranslation(translation: List<Double>) = updateProperty("model-translation", Value(translation.map(::Value)))
 
   fun modelOpacity(opacity: Double) = updateProperty("model-opacity", Value(opacity))
+
+  fun modelScaleMode(modelScaleMode: ModelScaleMode) = updateProperty("model-scale-mode", Value(modelScaleMode.value))
 }

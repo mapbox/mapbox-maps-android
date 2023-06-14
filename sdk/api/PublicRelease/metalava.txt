@@ -168,6 +168,7 @@ package com.mapbox.maps {
     method @Deprecated public void addOnStyleImageMissingListener(com.mapbox.maps.StyleImageMissingCallback styleImageMissingCallback);
     method @Deprecated public void addOnStyleImageUnusedListener(com.mapbox.maps.StyleImageRemoveUnusedCallback styleImageRemoveUnusedCallback);
     method @Deprecated public void addOnStyleLoadedListener(com.mapbox.maps.StyleLoadedCallback styleLoadedCallback);
+    method @com.mapbox.maps.MapboxExperimental public void addStyleModel(String modelId, String modelUri);
     method public Object? cameraAnimationsPlugin(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.animation.CameraAnimationsPlugin,?> function);
     method public com.mapbox.maps.CameraOptions cameraForCoordinateBounds(com.mapbox.maps.CoordinateBounds bounds, com.mapbox.maps.EdgeInsets? padding, Double? bearing, Double? pitch);
     method public com.mapbox.maps.CameraOptions cameraForCoordinates(java.util.List<com.mapbox.geojson.Point> coordinates, com.mapbox.maps.EdgeInsets? padding, Double? bearing, Double? pitch);
@@ -207,6 +208,7 @@ package com.mapbox.maps {
     method public com.mapbox.maps.Size getSize();
     method public void getStyle(com.mapbox.maps.Style.OnStyleLoaded onStyleLoaded);
     method public com.mapbox.maps.Style? getStyle();
+    method @com.mapbox.maps.MapboxExperimental public boolean hasStyleModel(String modelId);
     method public boolean isGestureInProgress();
     method public boolean isUserAnimationInProgress();
     method public boolean isValid();
@@ -247,6 +249,7 @@ package com.mapbox.maps {
     method @Deprecated public void removeOnStyleImageMissingListener(com.mapbox.maps.StyleImageMissingCallback styleImageMissingCallback);
     method @Deprecated public void removeOnStyleImageUnusedListener(com.mapbox.maps.StyleImageRemoveUnusedCallback styleImageRemoveUnusedCallback);
     method @Deprecated public void removeOnStyleLoadedListener(com.mapbox.maps.StyleLoadedCallback styleLoadedCallback);
+    method @com.mapbox.maps.MapboxExperimental public void removeStyleModel(String modelId);
     method public com.mapbox.common.Cancelable resetFeatureStates(String sourceId, String? sourceLayerId = null, com.mapbox.maps.FeatureStateOperationCallback callback);
     method public com.mapbox.common.Cancelable resetFeatureStates(String sourceId, com.mapbox.maps.FeatureStateOperationCallback callback);
     method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setBounds(com.mapbox.maps.CameraBoundsOptions options);

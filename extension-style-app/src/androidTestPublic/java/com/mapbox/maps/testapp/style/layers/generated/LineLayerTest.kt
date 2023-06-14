@@ -348,6 +348,61 @@ class LineLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun lineDepthOcclusionFactorTest() {
+    val testValue = 1.0
+    val layer = lineLayer("id", "source") {
+      lineDepthOcclusionFactor(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(testValue, layer.lineDepthOcclusionFactor!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineDepthOcclusionFactorAsExpressionTest() {
+    val expression = literal(1.0)
+    val layer = lineLayer("id", "source") {
+      lineDepthOcclusionFactor(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(1.0, layer.lineDepthOcclusionFactorAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.lineDepthOcclusionFactor!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineDepthOcclusionFactorTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = lineLayer("id", "source") {
+      lineDepthOcclusionFactorTransition(transition)
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.lineDepthOcclusionFactorTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineDepthOcclusionFactorTransitionSetDslTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = lineLayer("id", "source") {
+      lineDepthOcclusionFactorTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.lineDepthOcclusionFactorTransition)
+  }
+
+  @Test
+  @UiThreadTest
   fun lineGapWidthTest() {
     val testValue = 1.0
     val layer = lineLayer("id", "source") {
@@ -783,6 +838,9 @@ class LineLayerTest : BaseStyleTest() {
     assertNotNull("defaultLineColorTransition should not be null", LineLayer.defaultLineColorTransition)
     assertNotNull("defaultLineDasharray should not be null", LineLayer.defaultLineDasharray)
     assertNotNull("defaultLineDasharrayAsExpression should not be null", LineLayer.defaultLineDasharrayAsExpression)
+    assertNotNull("defaultLineDepthOcclusionFactor should not be null", LineLayer.defaultLineDepthOcclusionFactor)
+    assertNotNull("defaultLineDepthOcclusionFactorAsExpression should not be null", LineLayer.defaultLineDepthOcclusionFactorAsExpression)
+    assertNotNull("defaultLineDepthOcclusionFactorTransition should not be null", LineLayer.defaultLineDepthOcclusionFactorTransition)
     assertNotNull("defaultLineGapWidth should not be null", LineLayer.defaultLineGapWidth)
     assertNotNull("defaultLineGapWidthAsExpression should not be null", LineLayer.defaultLineGapWidthAsExpression)
     assertNotNull("defaultLineGapWidthTransition should not be null", LineLayer.defaultLineGapWidthTransition)
@@ -823,6 +881,7 @@ class LineLayerTest : BaseStyleTest() {
     val lineBlurTestValue = 1.0
     val lineColorTestValue = "rgba(0, 0, 0, 1)"
     val lineDasharrayTestValue = listOf(1.0, 2.0)
+    val lineDepthOcclusionFactorTestValue = 1.0
     val lineGapWidthTestValue = 1.0
     val lineGradientTestValue = interpolate {
       linear()
@@ -869,6 +928,7 @@ class LineLayerTest : BaseStyleTest() {
       lineBlur(lineBlurTestValue)
       lineColor(lineColorTestValue)
       lineDasharray(lineDasharrayTestValue)
+      lineDepthOcclusionFactor(lineDepthOcclusionFactorTestValue)
       lineGapWidth(lineGapWidthTestValue)
       lineGradient(lineGradientTestValue)
       lineOffset(lineOffsetTestValue)
@@ -899,6 +959,7 @@ class LineLayerTest : BaseStyleTest() {
     assertEquals(lineBlurTestValue, cachedLayer.lineBlur)
     assertEquals(lineColorTestValue, cachedLayer.lineColor)
     assertEquals(lineDasharrayTestValue, cachedLayer.lineDasharray)
+    assertEquals(lineDepthOcclusionFactorTestValue, cachedLayer.lineDepthOcclusionFactor)
     assertEquals(lineGapWidthTestValue, cachedLayer.lineGapWidth)
     assertEquals(lineGradientTestValue, cachedLayer.lineGradient)
     assertEquals(lineOffsetTestValue, cachedLayer.lineOffset)

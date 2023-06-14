@@ -818,6 +818,113 @@ class LineLayerTest {
   }
 
   @Test
+  fun lineDepthOcclusionFactorSet() {
+    val layer = lineLayer("id", "source") {}
+    val testValue = 1.0
+    layer.bindTo(style)
+    layer.lineDepthOcclusionFactor(testValue)
+    verify { style.setStyleLayerProperty("id", "line-depth-occlusion-factor", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "1.0")
+  }
+
+  @Test
+  fun lineDepthOcclusionFactorGet() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), layer.lineDepthOcclusionFactor?.toString())
+    verify { style.getStyleLayerProperty("id", "line-depth-occlusion-factor") }
+  }
+  // Expression Tests
+
+  @Test
+  fun lineDepthOcclusionFactorAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.lineDepthOcclusionFactor(expression)
+    verify { style.setStyleLayerProperty("id", "line-depth-occlusion-factor", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun lineDepthOcclusionFactorAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.lineDepthOcclusionFactorAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "line-depth-occlusion-factor") }
+  }
+
+  @Test
+  fun lineDepthOcclusionFactorAsExpressionGetNull() {
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.lineDepthOcclusionFactorAsExpression)
+    verify { style.getStyleLayerProperty("id", "line-depth-occlusion-factor") }
+  }
+
+  @Test
+  fun lineDepthOcclusionFactorAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(1.0, layer.lineDepthOcclusionFactorAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.lineDepthOcclusionFactor!!, 1E-5)
+    verify { style.getStyleLayerProperty("id", "line-depth-occlusion-factor") }
+  }
+
+  @Test
+  fun lineDepthOcclusionFactorTransitionSet() {
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.lineDepthOcclusionFactorTransition(
+      transitionOptions {
+        duration(100)
+        delay(200)
+      }
+    )
+    verify { style.setStyleLayerProperty("id", "line-depth-occlusion-factor-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
+  fun lineDepthOcclusionFactorTransitionGet() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(transition.toValue().toString(), layer.lineDepthOcclusionFactorTransition?.toValue().toString())
+    verify { style.getStyleLayerProperty("id", "line-depth-occlusion-factor-transition") }
+  }
+
+  @Test
+  fun lineDepthOcclusionFactorTransitionSetDsl() {
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.lineDepthOcclusionFactorTransition {
+      duration(100)
+      delay(200)
+    }
+    verify { style.setStyleLayerProperty("id", "line-depth-occlusion-factor-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
   fun lineGapWidthSet() {
     val layer = lineLayer("id", "source") {}
     val testValue = 1.0
@@ -1994,6 +2101,50 @@ class LineLayerTest {
     assertEquals("[literal, [1.0, 2.0]]", LineLayer.defaultLineDasharrayAsExpression.toString())
     assertEquals(listOf(1.0, 2.0), LineLayer.defaultLineDasharray!!)
     verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-dasharray") }
+  }
+
+  @Test
+  fun defaultLineDepthOcclusionFactorTest() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), LineLayer.defaultLineDepthOcclusionFactor?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-depth-occlusion-factor") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultLineDepthOcclusionFactorAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), LineLayer.defaultLineDepthOcclusionFactorAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-depth-occlusion-factor") }
+  }
+
+  @Test
+  fun defaultLineDepthOcclusionFactorAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    assertEquals(1.0, LineLayer.defaultLineDepthOcclusionFactorAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, LineLayer.defaultLineDepthOcclusionFactor!!, 1E-5)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-depth-occlusion-factor") }
+  }
+
+  @Test
+  fun defaultLineDepthOcclusionFactorTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+
+    assertEquals(transition.toValue().toString(), LineLayer.defaultLineDepthOcclusionFactorTransition?.toValue().toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-depth-occlusion-factor-transition") }
   }
 
   @Test
