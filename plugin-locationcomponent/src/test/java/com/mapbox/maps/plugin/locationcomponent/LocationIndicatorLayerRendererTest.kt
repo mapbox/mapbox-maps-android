@@ -35,19 +35,28 @@ class LocationIndicatorLayerRendererTest {
   private val doubleListSlot = CapturingSlot<List<Double>>()
 
   private val puckOptions = mockk<LocationPuck2D>(relaxed = true)
-  private val bitmap = mockk<Bitmap>(relaxed = true)
-  private val imageHolder = ImageHolder.from(1)
+  private val topBitmap = mockk<Bitmap>(relaxed = true)
+  private val bearingBitmap = mockk<Bitmap>(relaxed = true)
+  private val shadowBitmap = mockk<Bitmap>(relaxed = true)
+  private val topDrawableResId = 1
+  private val bearingDrawableResId = 2
+  private val shadowDrawableResId = 3
+  private val topImageHolder = ImageHolder.from(topDrawableResId)
+  private val bearingImageHolder = ImageHolder.from(bearingDrawableResId)
+  private val shadowImageHolder = ImageHolder.from(shadowDrawableResId)
 
   private lateinit var locationLayerRenderer: LocationIndicatorLayerRenderer
 
   @Before
   fun setup() {
     mockkObject(BitmapUtils)
-    every { puckOptions.topImage } returns imageHolder
-    every { puckOptions.bearingImage } returns imageHolder
-    every { puckOptions.shadowImage } returns imageHolder
+    every { puckOptions.topImage } returns topImageHolder
+    every { puckOptions.bearingImage } returns bearingImageHolder
+    every { puckOptions.shadowImage } returns shadowImageHolder
     every { puckOptions.opacity } returns 0.5f
-    every { BitmapUtils.getBitmapFromDrawableRes(any(), any()) } returns bitmap
+    every { BitmapUtils.getBitmapFromDrawableRes(any(), topDrawableResId) } returns topBitmap
+    every { BitmapUtils.getBitmapFromDrawableRes(any(), bearingDrawableResId) } returns bearingBitmap
+    every { BitmapUtils.getBitmapFromDrawableRes(any(), shadowDrawableResId) } returns shadowBitmap
     every { style.removeStyleLayer(any()) } returns expected
     every { style.styleLayerExists(any()) } returns true
     every { expected.error } returns null
@@ -74,15 +83,38 @@ class LocationIndicatorLayerRendererTest {
   @Test
   fun initializeComponents() {
     verify(exactly = 1) { layerWrapper.topImage(TOP_ICON) }
-    verify(exactly = 1) { style.addImage(TOP_ICON, bitmap) }
+    verify(exactly = 1) { style.addImage(TOP_ICON, topBitmap) }
 
     verify(exactly = 1) { layerWrapper.bearingImage(BEARING_ICON) }
-    verify(exactly = 1) { style.addImage(BEARING_ICON, bitmap) }
+    verify(exactly = 1) { style.addImage(BEARING_ICON, bearingBitmap) }
 
     verify(exactly = 1) { layerWrapper.shadowImage(SHADOW_ICON) }
-    verify(exactly = 1) { style.addImage(SHADOW_ICON, bitmap) }
+    verify(exactly = 1) { style.addImage(SHADOW_ICON, shadowBitmap) }
 
     verify(exactly = 1) { layerWrapper.opacity(eq(0.5)) }
+  }
+
+  @Test
+  fun verifyUseBitmapImage() {
+    val topBitmap2 = mockk<Bitmap>(relaxed = true)
+    val bearingBitmap2 = mockk<Bitmap>(relaxed = true)
+    val shadowBitmap2 = mockk<Bitmap>(relaxed = true)
+    val puckOptions2 = mockk<LocationPuck2D>(relaxed = true) {
+      every { topImage } returns ImageHolder.from(topBitmap2)
+      every { bearingImage } returns ImageHolder.from(bearingBitmap2)
+      every { shadowImage } returns ImageHolder.from(shadowBitmap2)
+      every { opacity } returns 0.3F
+    }
+    val locationLayerRenderer2 = LocationIndicatorLayerRenderer(
+      puckOptions2,
+      WeakReference(mockk<Context>(relaxed = true)),
+      layerSourceProvider
+    )
+    locationLayerRenderer2.initializeComponents(style)
+
+    verify(exactly = 1) { style.addImage(TOP_ICON, topBitmap2) }
+    verify(exactly = 1) { style.addImage(BEARING_ICON, bearingBitmap2) }
+    verify(exactly = 1) { style.addImage(SHADOW_ICON, shadowBitmap2) }
   }
 
   @Test

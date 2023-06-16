@@ -29,7 +29,7 @@ internal class LocationIndicatorLayerRenderer(
 
   override fun initializeComponents(style: Style) {
     this.style = style
-    setupBitmaps()
+    setupBitmaps(style)
   }
 
   override fun isRendererInitialised(): Boolean {
@@ -79,25 +79,27 @@ internal class LocationIndicatorLayerRenderer(
     layer.topImageSize(scaleExpression)
   }
 
-  private fun setupBitmaps() {
-    addPuckImageToStyle(TOP_ICON, puckOptions.topImage)
-    addPuckImageToStyle(BEARING_ICON, puckOptions.bearingImage)
-    addPuckImageToStyle(SHADOW_ICON, puckOptions.shadowImage)
+  private fun setupBitmaps(style: Style) {
+    addImageToStyle(style, TOP_ICON, puckOptions.topImage)
+    addImageToStyle(style, BEARING_ICON, puckOptions.bearingImage)
+    addImageToStyle(style, SHADOW_ICON, puckOptions.shadowImage)
     layer.topImage(TOP_ICON)
     layer.bearingImage(BEARING_ICON)
     layer.shadowImage(SHADOW_ICON)
     layer.opacity(puckOptions.opacity.toDouble())
   }
 
-  private fun addPuckImageToStyle(iconId: String, imageHolder: ImageHolder?) {
+  private fun addImageToStyle(style: Style, iconId: String, imageHolder: ImageHolder?) {
+    // First try to use the bitmap directly
     imageHolder?.bitmap?.let { bitmap ->
-      style?.addImage(TOP_ICON, bitmap)
-      return@let
+      style.addImage(iconId, bitmap)
+      return
     }
+    // Otherwise, let's try to get the bitmap from the drawable resource ID
     weakContext.get()?.let { context ->
       imageHolder?.drawableId?.let { drawableRes ->
         BitmapUtils.getBitmapFromDrawableRes(context, drawableRes)?.let { bitmap ->
-          style?.addImage(iconId, bitmap)
+          style.addImage(iconId, bitmap)
         }
       } ?: logE(TAG, "No image holder data for $iconId!")
     } ?: logE(
