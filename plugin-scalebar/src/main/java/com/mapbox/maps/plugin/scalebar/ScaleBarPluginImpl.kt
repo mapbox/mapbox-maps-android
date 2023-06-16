@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import com.mapbox.common.Cancelable
 import com.mapbox.maps.CameraChangedCallback
 import com.mapbox.maps.CameraState
 import com.mapbox.maps.Projection.getMetersPerPixelAtLatitude
@@ -27,12 +28,11 @@ open class ScaleBarPluginImpl(
   private lateinit var mapListenerDelegate: MapListenerDelegate
   private lateinit var mapTransformDelegate: MapTransformDelegate
   private lateinit var mapCameraManagerDelegate: MapCameraManagerDelegate
-
   override var internalSettings: ScaleBarSettings = ScaleBarSettings { }
-
   private val cameraChangeListener = CameraChangedCallback {
     invalidateScaleBar()
   }
+  private var cancelable: Cancelable? = null
 
   override fun applySettings() {
     scaleBar.settings = internalSettings
@@ -70,7 +70,7 @@ open class ScaleBarPluginImpl(
    * Called when the map is destroyed. Should be used to cleanup plugin resources for that map.
    */
   override fun cleanup() {
-    mapListenerDelegate.removeOnCameraChangeListener(cameraChangeListener)
+    cancelable?.cancel()
   }
 
   /**
@@ -78,7 +78,7 @@ open class ScaleBarPluginImpl(
    */
   override fun initialize() {
     applySettings()
-    mapListenerDelegate.addOnCameraChangeListener(cameraChangeListener)
+    mapListenerDelegate.subscribeCameraChanged(cameraChangeListener)
   }
 
   /**
@@ -120,10 +120,10 @@ open class ScaleBarPluginImpl(
     get() = internalSettings.enabled
     set(value) {
       if (value) {
-        mapListenerDelegate.addOnCameraChangeListener(cameraChangeListener)
+        cancelable = mapListenerDelegate.subscribeCameraChanged(cameraChangeListener)
         invalidateScaleBar()
       } else {
-        mapListenerDelegate.removeOnCameraChangeListener(cameraChangeListener)
+        cancelable?.cancel()
       }
       internalSettings = internalSettings.toBuilder().setEnabled(value).build()
       scaleBar.enable = value

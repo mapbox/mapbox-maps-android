@@ -25,7 +25,7 @@ suspend fun MapboxMap.awaitStyle(): Style = suspendCoroutine { continuation ->
 }
 
 /**
- * [callbackFlow] of [CameraChangedEventData] updates from [MapboxMap.addOnCameraChangeListener].
+ * [callbackFlow] of [CameraChangedEventData] updates from [MapboxMap.subscribeCameraChanged].
  */
 @JvmSynthetic
 fun MapboxMap.cameraChanges(): Flow<CameraChanged> =
@@ -33,9 +33,9 @@ fun MapboxMap.cameraChanges(): Flow<CameraChanged> =
     val cameraCallback = CameraChangedCallback { eventData ->
       trySendBlocking(eventData)
     }
-    addOnCameraChangeListener(cameraCallback)
+    val cancelable = subscribeCameraChanged(cameraCallback)
     awaitClose {
-      removeOnCameraChangeListener(cameraCallback)
+      cancelable.cancel()
     }
   }
 

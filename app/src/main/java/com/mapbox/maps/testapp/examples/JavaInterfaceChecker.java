@@ -44,7 +44,6 @@ import com.mapbox.maps.FeatureStateOperationCallback;
 import com.mapbox.maps.ImageHolder;
 import com.mapbox.maps.LayerPosition;
 import com.mapbox.maps.MapInitOptions;
-import com.mapbox.maps.MapLoadingErrorCallback;
 import com.mapbox.maps.MapOptions;
 import com.mapbox.maps.MapSnapshotOptions;
 import com.mapbox.maps.MapSurface;
@@ -83,6 +82,7 @@ import com.mapbox.maps.plugin.annotation.ClusterOptions;
 import com.mapbox.maps.plugin.attribution.AttributionParserConfig;
 import com.mapbox.maps.plugin.attribution.generated.AttributionSettings;
 import com.mapbox.maps.plugin.compass.generated.CompassSettings;
+import com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener;
 import com.mapbox.maps.plugin.gestures.GesturesPlugin;
 import com.mapbox.maps.plugin.gestures.GesturesUtils;
 import com.mapbox.maps.plugin.gestures.OnMoveListener;
@@ -102,8 +102,6 @@ import com.mapbox.maps.plugin.scalebar.ScaleBarPlugin;
 import com.mapbox.maps.plugin.scalebar.ScaleBarUtils;
 import com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings;
 import com.mapbox.maps.plugin.viewport.ViewportPlugin;
-import com.mapbox.maps.plugin.viewport.ViewportStatus;
-import com.mapbox.maps.plugin.viewport.ViewportStatusObserver;
 import com.mapbox.maps.plugin.viewport.ViewportUtils;
 import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions;
 import com.mapbox.maps.plugin.viewport.data.ViewportStatusChangeReason;
@@ -361,8 +359,9 @@ public class JavaInterfaceChecker {
     locationPuck3D = new LocationPuck3D("uri", floatList, 1.0f, floatList, "scale", floatList, floatList);
   }
 
-  private void mapboxMapOverLoad(MapView mapView, StyleContract.StyleExtension styleExtension, Style.OnStyleLoaded onStyleLoaded,
-                                 MapLoadingErrorCallback onMapLoadErrorListener) {
+  private void mapboxMapOverLoad(MapView mapView, StyleContract.StyleExtension styleExtension,
+                                 Style.OnStyleLoaded onStyleLoaded,
+                                 OnMapLoadErrorListener onMapLoadErrorListener) {
     final MapboxMap mapboxMap = mapView.getMapboxMap();
     mapboxMap.loadStyle(Style.MAPBOX_STREETS);
     mapboxMap.loadStyle(Style.MAPBOX_STREETS, onStyleLoaded);

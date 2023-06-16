@@ -1,10 +1,12 @@
 package com.mapbox.maps
 
+import com.mapbox.common.Cancelable
 import com.mapbox.verifyNo
 import com.mapbox.verifyOnce
 import io.mockk.*
 import org.junit.After
 import org.junit.Assert.assertThrows
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -16,17 +18,23 @@ class StyleObserverTest {
 
   private lateinit var mainStyleLoadedListener: Style.OnStyleLoaded
   private lateinit var styleObserver: StyleObserver
+  private lateinit var nativeObserver: NativeObserver
+  private val cancelable = mockk<Cancelable>(relaxUnitFun = true)
 
   @Before
   fun setUp() {
     mockkStatic("com.mapbox.maps.MapboxLogger")
+    nativeObserver = mockk(relaxUnitFun = true)
+    every { nativeObserver.subscribeStyleLoaded(any()) } returns cancelable
+    every { nativeObserver.subscribeStyleDataLoaded(any()) } returns cancelable
+    every { nativeObserver.subscribeMapLoadingError(any()) } returns cancelable
+    every { cancelable.cancel() } just Runs
     every { logE(any(), any()) } just Runs
-
     mainStyleLoadedListener = mockk(relaxed = true)
     styleObserver = StyleObserver(
       styleManager = mockk(relaxUnitFun = true),
       styleLoadedListener = mainStyleLoadedListener,
-      nativeObserver = mockk(relaxUnitFun = true),
+      nativeObserver = nativeObserver,
       pixelRatio = 1.0f
     )
   }
@@ -41,11 +49,10 @@ class StyleObserverTest {
    */
   @Test
   fun onStyleObserverCreate() {
-    val nativeObserver = mockk<NativeObserver>(relaxed = true)
     StyleObserver(mockk(), mockk(relaxed = true), nativeObserver, 1.0f)
-    verify { nativeObserver.addOnStyleLoadedListener(any()) }
-    verify { nativeObserver.addOnMapLoadErrorListener(any()) }
-    verify { nativeObserver.addOnStyleDataLoadedListener(any()) }
+    verify { nativeObserver.subscribeStyleLoaded(any()) }
+    verify { nativeObserver.subscribeMapLoadingError(any()) }
+    verify { nativeObserver.subscribeStyleDataLoaded(any()) }
   }
 
   /**
@@ -53,11 +60,9 @@ class StyleObserverTest {
    */
   @Test
   fun onStyleObserverDestroy() {
-    val nativeObserver = mockk<NativeObserver>(relaxed = true)
-    StyleObserver(mockk(), mockk(relaxed = true), nativeObserver, 1.0f).onDestroy()
-    verify { nativeObserver.removeOnStyleLoadedListener(any()) }
-    verify { nativeObserver.removeOnMapLoadErrorListener(any()) }
-    verify { nativeObserver.removeOnStyleDataLoadedListener(any()) }
+    val styleObserver = StyleObserver(mockk(), mockk(relaxed = true), nativeObserver, 1.0f)
+    styleObserver.onDestroy()
+    assertTrue(styleObserver.cancelableList.isEmpty())
   }
 
   /**

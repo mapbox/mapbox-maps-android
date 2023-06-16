@@ -127,7 +127,7 @@ class GestureInterceptedOnViewAnnotationTest : BaseMapTest() {
         rule.scenario.onActivity {
           it.runOnUiThread {
             mapboxMap.apply {
-              addOnMapIdleListener(listener)
+              subscribeMapIdle(listener)
             }
           }
         }

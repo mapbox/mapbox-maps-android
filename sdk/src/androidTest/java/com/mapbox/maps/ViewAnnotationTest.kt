@@ -94,7 +94,7 @@ class ViewAnnotationTest(
             .zoom(CAMERA_ZOOM)
             .build()
         )
-        addOnMapIdleListener {
+        subscribeMapIdle {
           latch.countDown()
         }
       }

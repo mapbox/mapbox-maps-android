@@ -50,55 +50,49 @@ class DebugModeActivity : AppCompatActivity() {
   }
 
   private fun registerListeners(mapboxMap: MapboxMap) {
-    mapboxMap.addOnStyleLoadedListener {
+    mapboxMap.subscribeStyleLoaded {
       logI(TAG, "StyleLoadedCallback: $it")
     }
-    mapboxMap.addOnStyleDataLoadedListener {
+    mapboxMap.subscribeStyleDataLoaded {
       logI(TAG, "StyleDataLoadedCallback: $it")
     }
-    mapboxMap.addOnStyleImageMissingListener {
+    mapboxMap.subscribeStyleImageMissing {
       logI(TAG, "StyleImageMissingCallback: $it")
     }
-    mapboxMap.addOnStyleImageUnusedListener {
+    mapboxMap.subscribeStyleImageUnused {
       logI(TAG, "StyleImageRemoveUnusedCallback: $it")
     }
-    mapboxMap.addOnMapIdleListener {
+    mapboxMap.subscribeMapIdle {
       logI(TAG, "MapIdleCallback: $it")
     }
-    mapboxMap.addOnMapLoadErrorListener { eventData ->
-      logI(
-        TAG,
-        "MapLoadingErrorCallback: $eventData"
-      )
+    mapboxMap.subscribeMapLoadingError {
+      logE(TAG, "MapLoadingErrorCallback: $it")
     }
-    mapboxMap.addOnMapLoadedListener {
+    mapboxMap.subscribeMapLoaded {
       logI(TAG, "MapLoadedCallback: $it")
     }
-    mapboxMap.addOnCameraChangeListener {
+    mapboxMap.subscribeCameraChanged {
       logI(TAG, "CameraChangedCallback: $it")
     }
-    mapboxMap.addOnRenderFrameStartedListener {
+    mapboxMap.subscribeRenderFrameStarted {
       logI(TAG, "RenderFrameStartedCallback: $it")
     }
-    mapboxMap.addOnRenderFrameFinishedListener {
-      logI(
-        TAG,
-        "RenderFrameFinishedCallback: $it"
-      )
+    mapboxMap.subscribeRenderFrameFinished {
+      logI(TAG, "RenderFrameFinishedCallback: $it")
     }
-    mapboxMap.addOnSourceAddedListener {
+    mapboxMap.subscribeSourceAdded {
       logI(
         TAG,
         "SourceAddedCallback: $it"
       )
     }
-    mapboxMap.addOnSourceDataLoadedListener {
+    mapboxMap.subscribeSourceDataLoaded {
       logI(
         TAG,
         "SourceDataLoadedCallback: $it"
       )
     }
-    mapboxMap.addOnSourceRemovedListener {
+    mapboxMap.subscribeSourceRemoved {
       logI(
         TAG,
         "SourceRemovedCallback: $it"

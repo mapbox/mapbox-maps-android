@@ -1,9 +1,6 @@
 // Signature format: 3.0
 package com.mapbox.maps {
 
-  public final class EventTypeAliasKt {
-  }
-
   public final class ExtensionUtils {
     method public static com.mapbox.maps.CameraOptions toCameraOptions(com.mapbox.maps.CameraState, com.mapbox.maps.ScreenCoordinate? anchor = null);
     method public static com.mapbox.maps.CameraOptions toCameraOptions(com.mapbox.maps.CameraState);
@@ -175,6 +172,406 @@ package com.mapbox.maps.exception {
 
   public final class WorkerThreadException extends java.lang.RuntimeException {
     ctor public WorkerThreadException();
+  }
+
+}
+
+package com.mapbox.maps.extension.observable {
+
+  public final class EventsExtensionKt {
+    method @Deprecated public static com.mapbox.maps.extension.observable.eventdata.StyleImageMissingEventData getStyleImageMissingEventData(com.mapbox.maps.StyleImageMissing);
+    method @Deprecated public static com.mapbox.maps.extension.observable.eventdata.CameraChangedEventData toCameraChangedEventData(com.mapbox.maps.CameraChanged);
+    method @Deprecated public static com.mapbox.maps.extension.observable.eventdata.MapIdleEventData toMapIdleEventData(com.mapbox.maps.MapIdle);
+    method @Deprecated public static com.mapbox.maps.extension.observable.eventdata.MapLoadedEventData toMapLoadedEventData(com.mapbox.maps.MapLoaded);
+    method @Deprecated public static com.mapbox.maps.extension.observable.eventdata.MapLoadingErrorEventData toMapLoadingErrorEventData(com.mapbox.maps.MapLoadingError);
+    method @Deprecated public static com.mapbox.maps.extension.observable.eventdata.RenderFrameFinishedEventData toRenderFrameFinishedEventData(com.mapbox.maps.RenderFrameFinished);
+    method @Deprecated public static com.mapbox.maps.extension.observable.eventdata.RenderFrameStartedEventData toRenderFrameStartedEventData(com.mapbox.maps.RenderFrameStarted);
+    method @Deprecated public static com.mapbox.maps.extension.observable.eventdata.SourceAddedEventData toSourceAddedEventData(com.mapbox.maps.SourceAdded);
+    method @Deprecated public static com.mapbox.maps.extension.observable.eventdata.SourceDataLoadedEventData toSourceDataLoadedEventData(com.mapbox.maps.SourceDataLoaded);
+    method @Deprecated public static com.mapbox.maps.extension.observable.eventdata.SourceRemovedEventData toSourceRemovedEventData(com.mapbox.maps.SourceRemoved);
+    method @Deprecated public static com.mapbox.maps.extension.observable.eventdata.StyleDataLoadedEventData toStyleDataLoadedEventData(com.mapbox.maps.StyleDataLoaded);
+    method @Deprecated public static com.mapbox.maps.extension.observable.eventdata.StyleImageUnusedEventData toStyleImageUnusedEventData(com.mapbox.maps.StyleImageRemoveUnused);
+    method @Deprecated public static com.mapbox.maps.extension.observable.eventdata.StyleLoadedEventData toStyleLoadedEventData(com.mapbox.maps.StyleLoaded);
+    method @Deprecated public static com.mapbox.maps.extension.observable.model.TileID toTileId(com.mapbox.maps.CanonicalTileID);
+  }
+
+}
+
+package com.mapbox.maps.extension.observable.eventdata {
+
+  @Deprecated public final class CameraChangedEventData {
+    ctor @Deprecated public CameraChangedEventData(@com.google.gson.annotations.SerializedName("begin") long begin, @com.google.gson.annotations.SerializedName("end") Long? end);
+    method @Deprecated public long component1();
+    method @Deprecated public Long? component2();
+    method @Deprecated public com.mapbox.maps.extension.observable.eventdata.CameraChangedEventData copy(long begin, Long? end);
+    method @Deprecated public long getBegin();
+    method @Deprecated public Long? getEnd();
+    property public final long begin;
+    property public final Long? end;
+  }
+
+  @Deprecated public final class MapIdleEventData {
+    ctor @Deprecated public MapIdleEventData(@com.google.gson.annotations.SerializedName("begin") long begin, @com.google.gson.annotations.SerializedName("end") Long? end);
+    method @Deprecated public long component1();
+    method @Deprecated public Long? component2();
+    method @Deprecated public com.mapbox.maps.extension.observable.eventdata.MapIdleEventData copy(long begin, Long? end);
+    method @Deprecated public long getBegin();
+    method @Deprecated public Long? getEnd();
+    property public final long begin;
+    property public final Long? end;
+  }
+
+  @Deprecated public final class MapLoadedEventData {
+    ctor @Deprecated public MapLoadedEventData(@com.google.gson.annotations.SerializedName("begin") long begin, @com.google.gson.annotations.SerializedName("end") Long? end);
+    method @Deprecated public long component1();
+    method @Deprecated public Long? component2();
+    method @Deprecated public com.mapbox.maps.extension.observable.eventdata.MapLoadedEventData copy(long begin, Long? end);
+    method @Deprecated public long getBegin();
+    method @Deprecated public Long? getEnd();
+    property public final long begin;
+    property public final Long? end;
+  }
+
+  @Deprecated public final class MapLoadingErrorEventData {
+    ctor @Deprecated public MapLoadingErrorEventData(@com.google.gson.annotations.SerializedName("begin") long begin, @com.google.gson.annotations.SerializedName("end") Long? end, @com.google.gson.annotations.SerializedName("type") com.mapbox.maps.extension.observable.model.MapLoadErrorType type, @com.google.gson.annotations.SerializedName("message") String message, @com.google.gson.annotations.SerializedName("source-id") String? sourceId, @com.google.gson.annotations.SerializedName("tile-id") com.mapbox.maps.extension.observable.model.TileID? tileId);
+    method @Deprecated public long component1();
+    method @Deprecated public Long? component2();
+    method @Deprecated public com.mapbox.maps.extension.observable.model.MapLoadErrorType component3();
+    method @Deprecated public String component4();
+    method @Deprecated public String? component5();
+    method @Deprecated public com.mapbox.maps.extension.observable.model.TileID? component6();
+    method @Deprecated public com.mapbox.maps.extension.observable.eventdata.MapLoadingErrorEventData copy(long begin, Long? end, com.mapbox.maps.extension.observable.model.MapLoadErrorType type, String message, String? sourceId, com.mapbox.maps.extension.observable.model.TileID? tileId);
+    method @Deprecated public long getBegin();
+    method @Deprecated public Long? getEnd();
+    method @Deprecated public String getMessage();
+    method @Deprecated public String? getSourceId();
+    method @Deprecated public com.mapbox.maps.extension.observable.model.TileID? getTileId();
+    method @Deprecated public com.mapbox.maps.extension.observable.model.MapLoadErrorType getType();
+    property public final long begin;
+    property public final Long? end;
+    property public final String message;
+    property public final String? sourceId;
+    property public final com.mapbox.maps.extension.observable.model.TileID? tileId;
+    property public final com.mapbox.maps.extension.observable.model.MapLoadErrorType type;
+  }
+
+  @Deprecated public final class RenderFrameFinishedEventData {
+    ctor @Deprecated public RenderFrameFinishedEventData(@com.google.gson.annotations.SerializedName("begin") long begin, @com.google.gson.annotations.SerializedName("end") Long? end, @com.google.gson.annotations.SerializedName("render-mode") com.mapbox.maps.extension.observable.model.RenderMode renderMode, @com.google.gson.annotations.SerializedName("needs-repaint") boolean needsRepaint, @com.google.gson.annotations.SerializedName("placement-changed") boolean placementChanged);
+    method @Deprecated public long component1();
+    method @Deprecated public Long? component2();
+    method @Deprecated public com.mapbox.maps.extension.observable.model.RenderMode component3();
+    method @Deprecated public boolean component4();
+    method @Deprecated public boolean component5();
+    method @Deprecated public com.mapbox.maps.extension.observable.eventdata.RenderFrameFinishedEventData copy(long begin, Long? end, com.mapbox.maps.extension.observable.model.RenderMode renderMode, boolean needsRepaint, boolean placementChanged);
+    method @Deprecated public long getBegin();
+    method @Deprecated public Long? getEnd();
+    method @Deprecated public boolean getNeedsRepaint();
+    method @Deprecated public boolean getPlacementChanged();
+    method @Deprecated public com.mapbox.maps.extension.observable.model.RenderMode getRenderMode();
+    property public final long begin;
+    property public final Long? end;
+    property public final boolean needsRepaint;
+    property public final boolean placementChanged;
+    property public final com.mapbox.maps.extension.observable.model.RenderMode renderMode;
+  }
+
+  @Deprecated public final class RenderFrameStartedEventData {
+    ctor @Deprecated public RenderFrameStartedEventData(@com.google.gson.annotations.SerializedName("begin") long begin, @com.google.gson.annotations.SerializedName("end") Long? end);
+    method @Deprecated public long component1();
+    method @Deprecated public Long? component2();
+    method @Deprecated public com.mapbox.maps.extension.observable.eventdata.RenderFrameStartedEventData copy(long begin, Long? end);
+    method @Deprecated public long getBegin();
+    method @Deprecated public Long? getEnd();
+    property public final long begin;
+    property public final Long? end;
+  }
+
+  @Deprecated public final class ResourceEventData {
+    ctor @Deprecated public ResourceEventData(@com.google.gson.annotations.SerializedName("begin") long begin, @com.google.gson.annotations.SerializedName("end") Long? end, @com.google.gson.annotations.SerializedName("data-source") com.mapbox.maps.extension.observable.model.DataSourceType dataSource, @com.google.gson.annotations.SerializedName("request") com.mapbox.maps.extension.observable.model.Request request, @com.google.gson.annotations.SerializedName("response") com.mapbox.maps.extension.observable.model.Response? response, @com.google.gson.annotations.SerializedName("cancelled") boolean cancelled);
+    method @Deprecated public long component1();
+    method @Deprecated public Long? component2();
+    method @Deprecated public com.mapbox.maps.extension.observable.model.DataSourceType component3();
+    method @Deprecated public com.mapbox.maps.extension.observable.model.Request component4();
+    method @Deprecated public com.mapbox.maps.extension.observable.model.Response? component5();
+    method @Deprecated public boolean component6();
+    method @Deprecated public com.mapbox.maps.extension.observable.eventdata.ResourceEventData copy(long begin, Long? end, com.mapbox.maps.extension.observable.model.DataSourceType dataSource, com.mapbox.maps.extension.observable.model.Request request, com.mapbox.maps.extension.observable.model.Response? response, boolean cancelled);
+    method @Deprecated public long getBegin();
+    method @Deprecated public boolean getCancelled();
+    method @Deprecated public com.mapbox.maps.extension.observable.model.DataSourceType getDataSource();
+    method @Deprecated public Long? getEnd();
+    method @Deprecated public com.mapbox.maps.extension.observable.model.Request getRequest();
+    method @Deprecated public com.mapbox.maps.extension.observable.model.Response? getResponse();
+    property public final long begin;
+    property public final boolean cancelled;
+    property public final com.mapbox.maps.extension.observable.model.DataSourceType dataSource;
+    property public final Long? end;
+    property public final com.mapbox.maps.extension.observable.model.Request request;
+    property public final com.mapbox.maps.extension.observable.model.Response? response;
+  }
+
+  @Deprecated public final class SourceAddedEventData {
+    ctor @Deprecated public SourceAddedEventData(@com.google.gson.annotations.SerializedName("begin") long begin, @com.google.gson.annotations.SerializedName("end") Long? end, @com.google.gson.annotations.SerializedName("id") String id);
+    method @Deprecated public long component1();
+    method @Deprecated public Long? component2();
+    method @Deprecated public String component3();
+    method @Deprecated public com.mapbox.maps.extension.observable.eventdata.SourceAddedEventData copy(long begin, Long? end, String id);
+    method @Deprecated public long getBegin();
+    method @Deprecated public Long? getEnd();
+    method @Deprecated public String getId();
+    property public final long begin;
+    property public final Long? end;
+    property public final String id;
+  }
+
+  @Deprecated public final class SourceDataLoadedEventData {
+    ctor @Deprecated public SourceDataLoadedEventData(@com.google.gson.annotations.SerializedName("begin") long begin, @com.google.gson.annotations.SerializedName("end") Long? end, @com.google.gson.annotations.SerializedName("id") String id, @com.google.gson.annotations.SerializedName("type") com.mapbox.maps.extension.observable.model.SourceDataType type, @com.google.gson.annotations.SerializedName("loaded") Boolean? loaded, @com.google.gson.annotations.SerializedName("tile-id") com.mapbox.maps.extension.observable.model.TileID? tileID);
+    method @Deprecated public long component1();
+    method @Deprecated public Long? component2();
+    method @Deprecated public String component3();
+    method @Deprecated public com.mapbox.maps.extension.observable.model.SourceDataType component4();
+    method @Deprecated public Boolean? component5();
+    method @Deprecated public com.mapbox.maps.extension.observable.model.TileID? component6();
+    method @Deprecated public com.mapbox.maps.extension.observable.eventdata.SourceDataLoadedEventData copy(long begin, Long? end, String id, com.mapbox.maps.extension.observable.model.SourceDataType type, Boolean? loaded, com.mapbox.maps.extension.observable.model.TileID? tileID);
+    method @Deprecated public long getBegin();
+    method @Deprecated public Long? getEnd();
+    method @Deprecated public String getId();
+    method @Deprecated public Boolean? getLoaded();
+    method @Deprecated public com.mapbox.maps.extension.observable.model.TileID? getTileID();
+    method @Deprecated public com.mapbox.maps.extension.observable.model.SourceDataType getType();
+    property public final long begin;
+    property public final Long? end;
+    property public final String id;
+    property public final Boolean? loaded;
+    property public final com.mapbox.maps.extension.observable.model.TileID? tileID;
+    property public final com.mapbox.maps.extension.observable.model.SourceDataType type;
+  }
+
+  @Deprecated public final class SourceRemovedEventData {
+    ctor @Deprecated public SourceRemovedEventData(@com.google.gson.annotations.SerializedName("begin") long begin, @com.google.gson.annotations.SerializedName("end") Long? end, @com.google.gson.annotations.SerializedName("id") String id);
+    method @Deprecated public long component1();
+    method @Deprecated public Long? component2();
+    method @Deprecated public String component3();
+    method @Deprecated public com.mapbox.maps.extension.observable.eventdata.SourceRemovedEventData copy(long begin, Long? end, String id);
+    method @Deprecated public long getBegin();
+    method @Deprecated public Long? getEnd();
+    method @Deprecated public String getId();
+    property public final long begin;
+    property public final Long? end;
+    property public final String id;
+  }
+
+  @Deprecated public final class StyleDataLoadedEventData {
+    ctor @Deprecated public StyleDataLoadedEventData(@com.google.gson.annotations.SerializedName("begin") long begin, @com.google.gson.annotations.SerializedName("end") Long? end, @com.google.gson.annotations.SerializedName("type") com.mapbox.maps.extension.observable.model.StyleDataType type);
+    method @Deprecated public long component1();
+    method @Deprecated public Long? component2();
+    method @Deprecated public com.mapbox.maps.extension.observable.model.StyleDataType component3();
+    method @Deprecated public com.mapbox.maps.extension.observable.eventdata.StyleDataLoadedEventData copy(long begin, Long? end, com.mapbox.maps.extension.observable.model.StyleDataType type);
+    method @Deprecated public long getBegin();
+    method @Deprecated public Long? getEnd();
+    method @Deprecated public com.mapbox.maps.extension.observable.model.StyleDataType getType();
+    property public final long begin;
+    property public final Long? end;
+    property public final com.mapbox.maps.extension.observable.model.StyleDataType type;
+  }
+
+  @Deprecated public final class StyleImageMissingEventData {
+    ctor @Deprecated public StyleImageMissingEventData(@com.google.gson.annotations.SerializedName("begin") long begin, @com.google.gson.annotations.SerializedName("end") Long? end, @com.google.gson.annotations.SerializedName("id") String id);
+    method @Deprecated public long component1();
+    method @Deprecated public Long? component2();
+    method @Deprecated public String component3();
+    method @Deprecated public com.mapbox.maps.extension.observable.eventdata.StyleImageMissingEventData copy(long begin, Long? end, String id);
+    method @Deprecated public long getBegin();
+    method @Deprecated public Long? getEnd();
+    method @Deprecated public String getId();
+    property public final long begin;
+    property public final Long? end;
+    property public final String id;
+  }
+
+  @Deprecated public final class StyleImageUnusedEventData {
+    ctor @Deprecated public StyleImageUnusedEventData(@com.google.gson.annotations.SerializedName("begin") long begin, @com.google.gson.annotations.SerializedName("end") Long? end, @com.google.gson.annotations.SerializedName("id") String id);
+    method @Deprecated public long component1();
+    method @Deprecated public Long? component2();
+    method @Deprecated public String component3();
+    method @Deprecated public com.mapbox.maps.extension.observable.eventdata.StyleImageUnusedEventData copy(long begin, Long? end, String id);
+    method @Deprecated public long getBegin();
+    method @Deprecated public Long? getEnd();
+    method @Deprecated public String getId();
+    property public final long begin;
+    property public final Long? end;
+    property public final String id;
+  }
+
+  @Deprecated public final class StyleLoadedEventData {
+    ctor @Deprecated public StyleLoadedEventData(@com.google.gson.annotations.SerializedName("begin") long begin, @com.google.gson.annotations.SerializedName("end") Long? end);
+    method @Deprecated public long component1();
+    method @Deprecated public Long? component2();
+    method @Deprecated public com.mapbox.maps.extension.observable.eventdata.StyleLoadedEventData copy(long begin, Long? end);
+    method @Deprecated public long getBegin();
+    method @Deprecated public Long? getEnd();
+    property public final long begin;
+    property public final Long? end;
+  }
+
+}
+
+package com.mapbox.maps.extension.observable.model {
+
+  @Deprecated public enum DataSourceType {
+    method @Deprecated public final String! getValue();
+    property public final String! value;
+    enum_constant @Deprecated @com.google.gson.annotations.SerializedName("asset") public static final com.mapbox.maps.extension.observable.model.DataSourceType ASSET;
+    enum_constant @Deprecated @com.google.gson.annotations.SerializedName("database") public static final com.mapbox.maps.extension.observable.model.DataSourceType DATABASE;
+    enum_constant @Deprecated @com.google.gson.annotations.SerializedName("file-system") public static final com.mapbox.maps.extension.observable.model.DataSourceType FILE_SYSTEM;
+    enum_constant @Deprecated @com.google.gson.annotations.SerializedName("network") public static final com.mapbox.maps.extension.observable.model.DataSourceType NETWORK;
+    enum_constant @Deprecated @com.google.gson.annotations.SerializedName("resource-loader") public static final com.mapbox.maps.extension.observable.model.DataSourceType RESOURCE_LOADER;
+  }
+
+  @Deprecated public final class Error {
+    ctor @Deprecated public Error(@com.google.gson.annotations.SerializedName("reason") com.mapbox.maps.extension.observable.model.ResponseErrorReason reason, @com.google.gson.annotations.SerializedName("message") String message);
+    method @Deprecated public com.mapbox.maps.extension.observable.model.ResponseErrorReason component1();
+    method @Deprecated public String component2();
+    method @Deprecated public com.mapbox.maps.extension.observable.model.Error copy(com.mapbox.maps.extension.observable.model.ResponseErrorReason reason, String message);
+    method @Deprecated public String getMessage();
+    method @Deprecated public com.mapbox.maps.extension.observable.model.ResponseErrorReason getReason();
+    property public final String message;
+    property public final com.mapbox.maps.extension.observable.model.ResponseErrorReason reason;
+  }
+
+  @Deprecated public enum MapLoadErrorType {
+    method @Deprecated public final String! getValue();
+    property public final String! value;
+    enum_constant @Deprecated @com.google.gson.annotations.SerializedName("glyphs") public static final com.mapbox.maps.extension.observable.model.MapLoadErrorType GLYPHS;
+    enum_constant @Deprecated @com.google.gson.annotations.SerializedName("source") public static final com.mapbox.maps.extension.observable.model.MapLoadErrorType SOURCE;
+    enum_constant @Deprecated @com.google.gson.annotations.SerializedName("sprite") public static final com.mapbox.maps.extension.observable.model.MapLoadErrorType SPRITE;
+    enum_constant @Deprecated @com.google.gson.annotations.SerializedName("style") public static final com.mapbox.maps.extension.observable.model.MapLoadErrorType STYLE;
+    enum_constant @Deprecated @com.google.gson.annotations.SerializedName("tile") public static final com.mapbox.maps.extension.observable.model.MapLoadErrorType TILE;
+  }
+
+  @Deprecated public enum RenderMode {
+    method @Deprecated public final String! getValue();
+    property public final String! value;
+    enum_constant @Deprecated @com.google.gson.annotations.SerializedName("full") public static final com.mapbox.maps.extension.observable.model.RenderMode FULL;
+    enum_constant @Deprecated @com.google.gson.annotations.SerializedName("partial") public static final com.mapbox.maps.extension.observable.model.RenderMode PARTIAL;
+  }
+
+  @Deprecated public final class Request {
+    ctor @Deprecated public Request(@com.google.gson.annotations.SerializedName("loading-method") java.util.List<java.lang.String> loadingMethod, @com.google.gson.annotations.SerializedName("url") String url, @com.google.gson.annotations.SerializedName("kind") com.mapbox.maps.extension.observable.model.RequestType kind, @com.google.gson.annotations.SerializedName("priority") com.mapbox.maps.extension.observable.model.RequestPriority priority);
+    method @Deprecated public java.util.List<java.lang.String> component1();
+    method @Deprecated public String component2();
+    method @Deprecated public com.mapbox.maps.extension.observable.model.RequestType component3();
+    method @Deprecated public com.mapbox.maps.extension.observable.model.RequestPriority component4();
+    method @Deprecated public com.mapbox.maps.extension.observable.model.Request copy(java.util.List<java.lang.String> loadingMethod, String url, com.mapbox.maps.extension.observable.model.RequestType kind, com.mapbox.maps.extension.observable.model.RequestPriority priority);
+    method @Deprecated public com.mapbox.maps.extension.observable.model.RequestType getKind();
+    method @Deprecated public java.util.List<java.lang.String> getLoadingMethod();
+    method @Deprecated public com.mapbox.maps.extension.observable.model.RequestPriority getPriority();
+    method @Deprecated public String getUrl();
+    property public final com.mapbox.maps.extension.observable.model.RequestType kind;
+    property public final java.util.List<java.lang.String> loadingMethod;
+    property public final com.mapbox.maps.extension.observable.model.RequestPriority priority;
+    property public final String url;
+  }
+
+  @Deprecated public enum RequestPriority {
+    method @Deprecated public final String! getValue();
+    property public final String! value;
+    enum_constant @Deprecated @com.google.gson.annotations.SerializedName("low") public static final com.mapbox.maps.extension.observable.model.RequestPriority LOW;
+    enum_constant @Deprecated @com.google.gson.annotations.SerializedName("regular") public static final com.mapbox.maps.extension.observable.model.RequestPriority REGULAR;
+  }
+
+  @Deprecated public enum RequestType {
+    method @Deprecated public final String! getValue();
+    property public final String! value;
+    enum_constant @Deprecated @com.google.gson.annotations.SerializedName("glyphs") public static final com.mapbox.maps.extension.observable.model.RequestType GLYPHS;
+    enum_constant @Deprecated @com.google.gson.annotations.SerializedName("image") public static final com.mapbox.maps.extension.observable.model.RequestType IMAGE;
+    enum_constant @Deprecated @com.google.gson.annotations.SerializedName("source") public static final com.mapbox.maps.extension.observable.model.RequestType SOURCE;
+    enum_constant @Deprecated @com.google.gson.annotations.SerializedName("sprite-image") public static final com.mapbox.maps.extension.observable.model.RequestType SPRITE_IMAGE;
+    enum_constant @Deprecated @com.google.gson.annotations.SerializedName("sprite-json") public static final com.mapbox.maps.extension.observable.model.RequestType SPRITE_JSON;
+    enum_constant @Deprecated @com.google.gson.annotations.SerializedName("style") public static final com.mapbox.maps.extension.observable.model.RequestType STYLE;
+    enum_constant @Deprecated @com.google.gson.annotations.SerializedName("tile") public static final com.mapbox.maps.extension.observable.model.RequestType TILE;
+    enum_constant @Deprecated @com.google.gson.annotations.SerializedName("unknown") public static final com.mapbox.maps.extension.observable.model.RequestType UNKNOWN;
+  }
+
+  @Deprecated public final class Response {
+    ctor @Deprecated public Response(@com.google.gson.annotations.SerializedName("etag") String? eTag, @com.google.gson.annotations.SerializedName("must-revalidate") boolean mustRevalidate, @com.google.gson.annotations.SerializedName("no-content") boolean noContent, @com.google.gson.annotations.SerializedName("modified") String? modified, @com.google.gson.annotations.SerializedName("source") com.mapbox.maps.extension.observable.model.ResponseSourceType source, @com.google.gson.annotations.SerializedName("not-modified") boolean notModified, @com.google.gson.annotations.SerializedName("expires") String? expires, @com.google.gson.annotations.SerializedName("size") int size, @com.google.gson.annotations.SerializedName("error") com.mapbox.maps.extension.observable.model.Error? error);
+    method @Deprecated public String? component1();
+    method @Deprecated public boolean component2();
+    method @Deprecated public boolean component3();
+    method @Deprecated public String? component4();
+    method @Deprecated public com.mapbox.maps.extension.observable.model.ResponseSourceType component5();
+    method @Deprecated public boolean component6();
+    method @Deprecated public String? component7();
+    method @Deprecated public int component8();
+    method @Deprecated public com.mapbox.maps.extension.observable.model.Error? component9();
+    method @Deprecated public com.mapbox.maps.extension.observable.model.Response copy(String? eTag, boolean mustRevalidate, boolean noContent, String? modified, com.mapbox.maps.extension.observable.model.ResponseSourceType source, boolean notModified, String? expires, int size, com.mapbox.maps.extension.observable.model.Error? error);
+    method @Deprecated public String? getETag();
+    method @Deprecated public com.mapbox.maps.extension.observable.model.Error? getError();
+    method @Deprecated public String? getExpires();
+    method @Deprecated public String? getModified();
+    method @Deprecated public boolean getMustRevalidate();
+    method @Deprecated public boolean getNoContent();
+    method @Deprecated public boolean getNotModified();
+    method @Deprecated public int getSize();
+    method @Deprecated public com.mapbox.maps.extension.observable.model.ResponseSourceType getSource();
+    property public final String? eTag;
+    property public final com.mapbox.maps.extension.observable.model.Error? error;
+    property public final String? expires;
+    property public final String? modified;
+    property public final boolean mustRevalidate;
+    property public final boolean noContent;
+    property public final boolean notModified;
+    property public final int size;
+    property public final com.mapbox.maps.extension.observable.model.ResponseSourceType source;
+  }
+
+  @Deprecated public enum ResponseErrorReason {
+    method @Deprecated public final String! getValue();
+    property public final String! value;
+    enum_constant @Deprecated @com.google.gson.annotations.SerializedName("connection") public static final com.mapbox.maps.extension.observable.model.ResponseErrorReason CONNECTION;
+    enum_constant @Deprecated @com.google.gson.annotations.SerializedName("in-offline-mode") public static final com.mapbox.maps.extension.observable.model.ResponseErrorReason IN_OFFLINE_MODE;
+    enum_constant @Deprecated @com.google.gson.annotations.SerializedName("not-found") public static final com.mapbox.maps.extension.observable.model.ResponseErrorReason NOT_FOUND;
+    enum_constant @Deprecated @com.google.gson.annotations.SerializedName("other") public static final com.mapbox.maps.extension.observable.model.ResponseErrorReason OTHER;
+    enum_constant @Deprecated @com.google.gson.annotations.SerializedName("rate-limit") public static final com.mapbox.maps.extension.observable.model.ResponseErrorReason RATE_LIMIT;
+    enum_constant @Deprecated @com.google.gson.annotations.SerializedName("server") public static final com.mapbox.maps.extension.observable.model.ResponseErrorReason SERVER;
+    enum_constant @Deprecated @com.google.gson.annotations.SerializedName("success") public static final com.mapbox.maps.extension.observable.model.ResponseErrorReason SUCCESS;
+  }
+
+  @Deprecated public enum ResponseSourceType {
+    method @Deprecated public final String! getValue();
+    property public final String! value;
+    enum_constant @Deprecated @com.google.gson.annotations.SerializedName("cache") public static final com.mapbox.maps.extension.observable.model.ResponseSourceType CACHE;
+    enum_constant @Deprecated @com.google.gson.annotations.SerializedName("local-file") public static final com.mapbox.maps.extension.observable.model.ResponseSourceType LOCAL_FILE;
+    enum_constant @Deprecated @com.google.gson.annotations.SerializedName("network") public static final com.mapbox.maps.extension.observable.model.ResponseSourceType NETWORK;
+    enum_constant @Deprecated @com.google.gson.annotations.SerializedName("tile-store") public static final com.mapbox.maps.extension.observable.model.ResponseSourceType TILE_STORE;
+  }
+
+  @Deprecated public enum SourceDataType {
+    method @Deprecated public final String! getValue();
+    property public final String! value;
+    enum_constant @Deprecated @com.google.gson.annotations.SerializedName("metadata") public static final com.mapbox.maps.extension.observable.model.SourceDataType METADATA;
+    enum_constant @Deprecated @com.google.gson.annotations.SerializedName("tile") public static final com.mapbox.maps.extension.observable.model.SourceDataType TILE;
+  }
+
+  @Deprecated public enum StyleDataType {
+    method @Deprecated public final String! getValue();
+    property public final String! value;
+    enum_constant @Deprecated @com.google.gson.annotations.SerializedName("sources") public static final com.mapbox.maps.extension.observable.model.StyleDataType SOURCES;
+    enum_constant @Deprecated @com.google.gson.annotations.SerializedName("sprite") public static final com.mapbox.maps.extension.observable.model.StyleDataType SPRITE;
+    enum_constant @Deprecated @com.google.gson.annotations.SerializedName("style") public static final com.mapbox.maps.extension.observable.model.StyleDataType STYLE;
+  }
+
+  @Deprecated public final class TileID {
+    ctor @Deprecated public TileID(@com.google.gson.annotations.SerializedName("z") long zoom, @com.google.gson.annotations.SerializedName("x") long x, @com.google.gson.annotations.SerializedName("y") long y);
+    method @Deprecated public long component1();
+    method @Deprecated public long component2();
+    method @Deprecated public long component3();
+    method @Deprecated public com.mapbox.maps.extension.observable.model.TileID copy(long zoom, long x, long y);
+    method @Deprecated public long getX();
+    method @Deprecated public long getY();
+    method @Deprecated public long getZoom();
+    property public final long x;
+    property public final long y;
+    property public final long zoom;
   }
 
 }
@@ -1225,32 +1622,47 @@ package com.mapbox.maps.plugin.delegates {
   }
 
   public interface MapListenerDelegate {
-    method @Deprecated public void addOnCameraChangeListener(com.mapbox.maps.CameraChangedCallback cameraChangedCallback);
-    method @Deprecated public void addOnMapIdleListener(com.mapbox.maps.MapIdleCallback mapIdleCallback);
-    method @Deprecated public void addOnMapLoadErrorListener(com.mapbox.maps.MapLoadingErrorCallback mapLoadingErrorCallback);
-    method @Deprecated public void addOnMapLoadedListener(com.mapbox.maps.MapLoadedCallback mapLoadedCallback);
-    method @Deprecated public void addOnRenderFrameFinishedListener(com.mapbox.maps.RenderFrameFinishedCallback renderFrameFinishedCallback);
-    method @Deprecated public void addOnRenderFrameStartedListener(com.mapbox.maps.RenderFrameStartedCallback renderFrameStartedCallback);
-    method @Deprecated public void addOnSourceAddedListener(com.mapbox.maps.SourceAddedCallback sourceAddedCallback);
-    method @Deprecated public void addOnSourceDataLoadedListener(com.mapbox.maps.SourceDataLoadedCallback sourceDataLoadedCallback);
-    method @Deprecated public void addOnSourceRemovedListener(com.mapbox.maps.SourceRemovedCallback sourceRemovedCallback);
-    method @Deprecated public void addOnStyleDataLoadedListener(com.mapbox.maps.StyleDataLoadedCallback styleDataLoadedCallback);
-    method @Deprecated public void addOnStyleImageMissingListener(com.mapbox.maps.StyleImageMissingCallback styleImageMissingCallback);
-    method @Deprecated public void addOnStyleImageUnusedListener(com.mapbox.maps.StyleImageRemoveUnusedCallback styleImageRemoveUnusedCallback);
-    method @Deprecated public void addOnStyleLoadedListener(com.mapbox.maps.StyleLoadedCallback styleLoadedCallback);
-    method @Deprecated public void removeOnCameraChangeListener(com.mapbox.maps.CameraChangedCallback cameraChangedCallback);
-    method @Deprecated public void removeOnMapIdleListener(com.mapbox.maps.MapIdleCallback mapIdleCallback);
-    method @Deprecated public void removeOnMapLoadErrorListener(com.mapbox.maps.MapLoadingErrorCallback mapLoadingErrorCallback);
-    method @Deprecated public void removeOnMapLoadedListener(com.mapbox.maps.MapLoadedCallback mapLoadedCallback);
-    method @Deprecated public void removeOnRenderFrameFinishedListener(com.mapbox.maps.RenderFrameFinishedCallback renderFrameFinishedCallback);
-    method @Deprecated public void removeOnRenderFrameStartedListener(com.mapbox.maps.RenderFrameStartedCallback renderFrameStartedCallback);
-    method @Deprecated public void removeOnSourceAddedListener(com.mapbox.maps.SourceAddedCallback sourceAddedCallback);
-    method @Deprecated public void removeOnSourceDataLoadedListener(com.mapbox.maps.SourceDataLoadedCallback sourceDataLoadedCallback);
-    method @Deprecated public void removeOnSourceRemovedListener(com.mapbox.maps.SourceRemovedCallback sourceRemovedCallback);
-    method @Deprecated public void removeOnStyleDataLoadedListener(com.mapbox.maps.StyleDataLoadedCallback styleDataLoadedCallback);
-    method @Deprecated public void removeOnStyleImageMissingListener(com.mapbox.maps.StyleImageMissingCallback styleImageMissingCallback);
-    method @Deprecated public void removeOnStyleImageUnusedListener(com.mapbox.maps.StyleImageRemoveUnusedCallback styleImageRemoveUnusedCallback);
-    method @Deprecated public void removeOnStyleLoadedListener(com.mapbox.maps.StyleLoadedCallback styleLoadedCallback);
+    method @Deprecated public void addOnCameraChangeListener(com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener onCameraChangeListener);
+    method @Deprecated public void addOnMapIdleListener(com.mapbox.maps.plugin.delegates.listeners.OnMapIdleListener onMapIdleListener);
+    method @Deprecated public void addOnMapLoadErrorListener(com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener onMapLoadErrorListener);
+    method @Deprecated public void addOnMapLoadedListener(com.mapbox.maps.plugin.delegates.listeners.OnMapLoadedListener onMapLoadedListener);
+    method @Deprecated public void addOnRenderFrameFinishedListener(com.mapbox.maps.plugin.delegates.listeners.OnRenderFrameFinishedListener onRenderFrameFinishedListener);
+    method @Deprecated public void addOnRenderFrameStartedListener(com.mapbox.maps.plugin.delegates.listeners.OnRenderFrameStartedListener onRenderFrameStartedListener);
+    method @Deprecated public void addOnSourceAddedListener(com.mapbox.maps.plugin.delegates.listeners.OnSourceAddedListener onSourceAddedListener);
+    method @Deprecated public void addOnSourceDataLoadedListener(com.mapbox.maps.plugin.delegates.listeners.OnSourceDataLoadedListener onSourceDataLoadedListener);
+    method @Deprecated public void addOnSourceRemovedListener(com.mapbox.maps.plugin.delegates.listeners.OnSourceRemovedListener onSourceRemovedListener);
+    method @Deprecated public void addOnStyleDataLoadedListener(com.mapbox.maps.plugin.delegates.listeners.OnStyleDataLoadedListener onStyleDataLoadedListener);
+    method @Deprecated public void addOnStyleImageMissingListener(com.mapbox.maps.plugin.delegates.listeners.OnStyleImageMissingListener onStyleImageMissingListener);
+    method @Deprecated public void addOnStyleImageUnusedListener(com.mapbox.maps.plugin.delegates.listeners.OnStyleImageUnusedListener onStyleImageUnusedListener);
+    method @Deprecated public void addOnStyleLoadedListener(com.mapbox.maps.plugin.delegates.listeners.OnStyleLoadedListener onStyleLoadedListener);
+    method @Deprecated public void removeOnCameraChangeListener(com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener onCameraChangeListener);
+    method @Deprecated public void removeOnMapIdleListener(com.mapbox.maps.plugin.delegates.listeners.OnMapIdleListener onMapIdleListener);
+    method @Deprecated public void removeOnMapLoadErrorListener(com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener onMapLoadErrorListener);
+    method @Deprecated public void removeOnMapLoadedListener(com.mapbox.maps.plugin.delegates.listeners.OnMapLoadedListener onMapLoadedListener);
+    method @Deprecated public void removeOnRenderFrameFinishedListener(com.mapbox.maps.plugin.delegates.listeners.OnRenderFrameFinishedListener onRenderFrameFinishedListener);
+    method @Deprecated public void removeOnRenderFrameStartedListener(com.mapbox.maps.plugin.delegates.listeners.OnRenderFrameStartedListener onRenderFrameStartedListener);
+    method @Deprecated public void removeOnSourceAddedListener(com.mapbox.maps.plugin.delegates.listeners.OnSourceAddedListener onSourceAddedListener);
+    method @Deprecated public void removeOnSourceDataLoadedListener(com.mapbox.maps.plugin.delegates.listeners.OnSourceDataLoadedListener onSourceDataLoadedListener);
+    method @Deprecated public void removeOnSourceRemovedListener(com.mapbox.maps.plugin.delegates.listeners.OnSourceRemovedListener onSourceRemovedListener);
+    method @Deprecated public void removeOnStyleDataLoadedListener(com.mapbox.maps.plugin.delegates.listeners.OnStyleDataLoadedListener onStyleDataLoadedListener);
+    method @Deprecated public void removeOnStyleImageMissingListener(com.mapbox.maps.plugin.delegates.listeners.OnStyleImageMissingListener onStyleImageMissingListener);
+    method @Deprecated public void removeOnStyleImageUnusedListener(com.mapbox.maps.plugin.delegates.listeners.OnStyleImageUnusedListener onStyleImageUnusedListener);
+    method @Deprecated public void removeOnStyleLoadedListener(com.mapbox.maps.plugin.delegates.listeners.OnStyleLoadedListener onStyleLoadedListener);
+    method public com.mapbox.common.Cancelable subscribeCameraChanged(com.mapbox.maps.CameraChangedCallback cameraChangedCallback);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.common.Cancelable subscribeGenericEvent(String eventName, com.mapbox.maps.GenericEventCallback genericEventCallback);
+    method public com.mapbox.common.Cancelable subscribeMapIdle(com.mapbox.maps.MapIdleCallback mapIdleCallback);
+    method public com.mapbox.common.Cancelable subscribeMapLoaded(com.mapbox.maps.MapLoadedCallback mapLoadedCallback);
+    method public com.mapbox.common.Cancelable subscribeMapLoadingError(com.mapbox.maps.MapLoadingErrorCallback mapLoadingErrorCallback);
+    method public com.mapbox.common.Cancelable subscribeRenderFrameFinished(com.mapbox.maps.RenderFrameFinishedCallback renderFrameFinishedCallback);
+    method public com.mapbox.common.Cancelable subscribeRenderFrameStarted(com.mapbox.maps.RenderFrameStartedCallback renderFrameStartedCallback);
+    method public com.mapbox.common.Cancelable subscribeResourceRequest(com.mapbox.maps.ResourceRequestCallback resourceRequestCallback);
+    method public com.mapbox.common.Cancelable subscribeSourceAdded(com.mapbox.maps.SourceAddedCallback sourceAddedCallback);
+    method public com.mapbox.common.Cancelable subscribeSourceDataLoaded(com.mapbox.maps.SourceDataLoadedCallback sourceDataLoadedCallback);
+    method public com.mapbox.common.Cancelable subscribeSourceRemoved(com.mapbox.maps.SourceRemovedCallback sourceRemovedCallback);
+    method public com.mapbox.common.Cancelable subscribeStyleDataLoaded(com.mapbox.maps.StyleDataLoadedCallback styleDataLoadedCallback);
+    method public com.mapbox.common.Cancelable subscribeStyleImageMissing(com.mapbox.maps.StyleImageMissingCallback styleImageMissingCallback);
+    method public com.mapbox.common.Cancelable subscribeStyleImageUnused(com.mapbox.maps.StyleImageRemoveUnusedCallback styleImageRemoveUnusedCallback);
+    method public com.mapbox.common.Cancelable subscribeStyleLoaded(com.mapbox.maps.StyleLoadedCallback styleLoadedCallback);
   }
 
   public interface MapPluginExtensionsDelegate {
@@ -1281,6 +1693,62 @@ package com.mapbox.maps.plugin.delegates {
     method public void setNorthOrientation(com.mapbox.maps.NorthOrientation northOrientation);
     method public void setUserAnimationInProgress(boolean inProgress);
     method public void setViewportMode(com.mapbox.maps.ViewportMode viewportMode);
+  }
+
+}
+
+package com.mapbox.maps.plugin.delegates.listeners {
+
+  @Deprecated public fun interface OnCameraChangeListener {
+    method @Deprecated public void onCameraChanged(com.mapbox.maps.extension.observable.eventdata.CameraChangedEventData eventData);
+  }
+
+  @Deprecated public fun interface OnMapIdleListener {
+    method @Deprecated public void onMapIdle(com.mapbox.maps.extension.observable.eventdata.MapIdleEventData eventData);
+  }
+
+  @Deprecated public interface OnMapLoadErrorListener {
+    method @Deprecated public void onMapLoadError(com.mapbox.maps.extension.observable.eventdata.MapLoadingErrorEventData eventData);
+  }
+
+  @Deprecated public fun interface OnMapLoadedListener {
+    method @Deprecated public void onMapLoaded(com.mapbox.maps.extension.observable.eventdata.MapLoadedEventData eventData);
+  }
+
+  @Deprecated public fun interface OnRenderFrameFinishedListener {
+    method @Deprecated public void onRenderFrameFinished(com.mapbox.maps.extension.observable.eventdata.RenderFrameFinishedEventData eventData);
+  }
+
+  @Deprecated public fun interface OnRenderFrameStartedListener {
+    method @Deprecated public void onRenderFrameStarted(com.mapbox.maps.extension.observable.eventdata.RenderFrameStartedEventData eventData);
+  }
+
+  @Deprecated public fun interface OnSourceAddedListener {
+    method @Deprecated public void onSourceAdded(com.mapbox.maps.extension.observable.eventdata.SourceAddedEventData eventData);
+  }
+
+  @Deprecated public fun interface OnSourceDataLoadedListener {
+    method @Deprecated public void onSourceDataLoaded(com.mapbox.maps.extension.observable.eventdata.SourceDataLoadedEventData eventData);
+  }
+
+  @Deprecated public fun interface OnSourceRemovedListener {
+    method @Deprecated public void onSourceRemoved(com.mapbox.maps.extension.observable.eventdata.SourceRemovedEventData eventData);
+  }
+
+  @Deprecated public fun interface OnStyleDataLoadedListener {
+    method @Deprecated public void onStyleDataLoaded(com.mapbox.maps.extension.observable.eventdata.StyleDataLoadedEventData eventData);
+  }
+
+  @Deprecated public fun interface OnStyleImageMissingListener {
+    method @Deprecated public void onStyleImageMissing(com.mapbox.maps.extension.observable.eventdata.StyleImageMissingEventData eventData);
+  }
+
+  @Deprecated public fun interface OnStyleImageUnusedListener {
+    method @Deprecated public void onStyleImageUnused(com.mapbox.maps.extension.observable.eventdata.StyleImageUnusedEventData eventData);
+  }
+
+  @Deprecated public fun interface OnStyleLoadedListener {
+    method @Deprecated public void onStyleLoaded(com.mapbox.maps.extension.observable.eventdata.StyleLoadedEventData eventData);
   }
 
 }

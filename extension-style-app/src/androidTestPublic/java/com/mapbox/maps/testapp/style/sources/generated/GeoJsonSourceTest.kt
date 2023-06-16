@@ -4,6 +4,7 @@ package com.mapbox.maps.testapp.style.sources.generated
 
 import androidx.test.annotation.UiThreadTest
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.mapbox.common.Cancelable
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.maps.SourceDataLoadedCallback
@@ -27,6 +28,7 @@ import java.util.concurrent.TimeoutException
  */
 @RunWith(AndroidJUnit4::class)
 class GeoJsonSourceTest : BaseStyleTest() {
+  private var cancelable: Cancelable? = null
 
   @Test
   @UiThreadTest
@@ -54,7 +56,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
     rule.scenario.onActivity {
       it.runOnUiThread {
         mapboxMap.apply {
-          addOnSourceDataLoadedListener(listener)
+          cancelable = subscribeSourceDataLoaded(listener)
           setupSource(testSource)
           testSource.data(TEST_GEOJSON)
         }
@@ -63,7 +65,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
     if (!latch.await(LATCH_MAX_TIME_MS, TimeUnit.MILLISECONDS)) {
       throw TimeoutException()
     }
-    mapboxMap.removeOnSourceDataLoadedListener(listener)
+    cancelable?.cancel()
   }
 
   @Test
@@ -90,7 +92,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
     rule.scenario.onActivity {
       it.runOnUiThread {
         mapboxMap.apply {
-          addOnSourceDataLoadedListener(listener)
+          cancelable = subscribeSourceDataLoaded(listener)
           setupSource(testSource)
         }
       }
@@ -101,7 +103,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
     assertEquals(2, answerList.size)
     assertEquals("", answerList[0])
     assertEquals(TEST_URI, answerList[1])
-    mapboxMap.removeOnSourceDataLoadedListener(listener)
+    cancelable?.cancel()
   }
 
   @Test
@@ -118,7 +120,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
     rule.scenario.onActivity {
       it.runOnUiThread {
         mapboxMap.apply {
-          addOnSourceDataLoadedListener(listener)
+          cancelable = subscribeSourceDataLoaded(listener)
           setupSource(testSource)
           testSource.url(TEST_URI)
         }
@@ -130,7 +132,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
     assertEquals(2, answerList.size)
     assertEquals("", answerList[0])
     assertEquals(TEST_URI, answerList[1])
-    mapboxMap.removeOnSourceDataLoadedListener(listener)
+    cancelable?.cancel()
   }
 
   @Test
@@ -357,7 +359,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
     rule.scenario.onActivity {
       it.runOnUiThread {
         mapboxMap.apply {
-          addOnSourceDataLoadedListener(listener)
+          cancelable = subscribeSourceDataLoaded(listener)
           setupSource(testSource)
         }
       }
@@ -371,7 +373,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
     assertNull(answerList[1])
     assertEquals(1, dataIdList.size)
     assertEquals(DATA_ID, dataIdList.first())
-    mapboxMap.removeOnSourceDataLoadedListener(listener)
+    cancelable?.cancel()
   }
 
   @Test
@@ -392,7 +394,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
     rule.scenario.onActivity {
       it.runOnUiThread {
         mapboxMap.apply {
-          addOnSourceDataLoadedListener(listener)
+          cancelable = subscribeSourceDataLoaded(listener)
           setupSource(testSource)
         }
       }
@@ -406,7 +408,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
     assertNull(answerList[1])
     assertEquals(1, dataIdList.size)
     assertEquals(DATA_ID, dataIdList.first())
-    mapboxMap.removeOnSourceDataLoadedListener(listener)
+    cancelable?.cancel()
   }
 
   @Test
@@ -427,7 +429,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
     rule.scenario.onActivity {
       it.runOnUiThread {
         mapboxMap.apply {
-          addOnSourceDataLoadedListener(listener)
+          cancelable = subscribeSourceDataLoaded(listener)
           setupSource(testSource)
         }
       }
@@ -441,7 +443,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
     assertNull(answerList[1])
     assertEquals(1, dataIdList.size)
     assertEquals(DATA_ID, dataIdList.first())
-    mapboxMap.removeOnSourceDataLoadedListener(listener)
+    cancelable?.cancel()
   }
 
   @Test
@@ -462,7 +464,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
     rule.scenario.onActivity {
       it.runOnUiThread {
         mapboxMap.apply {
-          addOnSourceDataLoadedListener(listener)
+          cancelable = subscribeSourceDataLoaded(listener)
           setupSource(testSource)
           testSource.feature(FEATURE, DATA_ID)
         }
@@ -477,7 +479,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
     assertNull(answerList[1])
     assertEquals(1, dataIdList.size)
     assertEquals(DATA_ID, dataIdList.first())
-    mapboxMap.removeOnSourceDataLoadedListener(listener)
+    cancelable?.cancel()
   }
 
   @Test
@@ -499,7 +501,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
     rule.scenario.onActivity {
       it.runOnUiThread {
         mapboxMap.apply {
-          addOnSourceDataLoadedListener(listener)
+          cancelable = subscribeSourceDataLoaded(listener)
           setupSource(testSource)
           testSource.featureCollection(FEATURE_COLLECTION, DATA_ID)
         }
@@ -514,7 +516,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
     assertNull(answerList[1])
     assertEquals(1, dataIdList.size)
     assertEquals(DATA_ID, dataIdList.first())
-    mapboxMap.removeOnSourceDataLoadedListener(listener)
+    cancelable?.cancel()
   }
 
   @Test
@@ -535,7 +537,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
     rule.scenario.onActivity {
       it.runOnUiThread {
         mapboxMap.apply {
-          addOnSourceDataLoadedListener(listener)
+          cancelable = subscribeSourceDataLoaded(listener)
           setupSource(testSource)
           testSource.geometry(FEATURE.geometry()!!, DATA_ID)
         }
@@ -550,7 +552,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
     assertNull(answerList[1])
     assertEquals(1, dataIdList.size)
     assertEquals(DATA_ID, dataIdList.first())
-    mapboxMap.removeOnSourceDataLoadedListener(listener)
+    cancelable?.cancel()
   }
 
   // Default source properties getter tests

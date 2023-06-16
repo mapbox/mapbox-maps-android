@@ -49,7 +49,7 @@ class MapFragment : Fragment() {
   fun loadMap(idleListener: OnMapIdle) {
     val map = mapView.getMapboxMap()
     map.loadStyleUri(Style.MAPBOX_STREETS)
-    map.addOnMapIdleListener {
+    map.subscribeMapIdle {
       idleListener.onIdle()
     }
   }

@@ -96,7 +96,7 @@ class ObservableEventsTest : BaseMapTest() {
     rule.scenario.onActivity {
       it.runOnUiThread {
         mapboxMap.apply {
-          addOnMapLoadedListener(listener)
+          cancelable = subscribeMapLoaded(listener)
           setCamera(targetCameraOptions)
         }
       }
@@ -108,7 +108,7 @@ class ObservableEventsTest : BaseMapTest() {
 
     rule.scenario.onActivity { activity ->
       activity.runOnUiThread {
-        mapboxMap.removeOnMapLoadedListener(listener)
+        cancelable.cancel()
       }
     }
   }
@@ -131,7 +131,7 @@ class ObservableEventsTest : BaseMapTest() {
     rule.scenario.onActivity {
       it.runOnUiThread {
         mapboxMap.apply {
-          addOnMapLoadErrorListener(listener)
+          cancelable = subscribeMapLoadingError(listener)
         }
       }
     }
@@ -142,7 +142,7 @@ class ObservableEventsTest : BaseMapTest() {
 
     rule.scenario.onActivity { activity ->
       activity.runOnUiThread {
-        mapboxMap.removeOnMapLoadErrorListener(listener)
+        cancelable.cancel()
       }
     }
   }
@@ -159,7 +159,7 @@ class ObservableEventsTest : BaseMapTest() {
     rule.scenario.onActivity {
       it.runOnUiThread {
         mapboxMap.apply {
-          addOnMapIdleListener(listener)
+          cancelable = subscribeMapIdle(listener)
           setCamera(targetCameraOptions)
         }
       }
@@ -171,7 +171,7 @@ class ObservableEventsTest : BaseMapTest() {
 
     rule.scenario.onActivity { activity ->
       activity.runOnUiThread {
-        mapboxMap.removeOnMapIdleListener(listener)
+        cancelable.cancel()
       }
     }
   }
@@ -191,7 +191,7 @@ class ObservableEventsTest : BaseMapTest() {
     rule.scenario.onActivity {
       it.runOnUiThread {
         mapboxMap.apply {
-          addOnStyleDataLoadedListener(listener)
+          cancelable = subscribeStyleDataLoaded(listener)
           setCamera(targetCameraOptions)
         }
       }
@@ -202,7 +202,7 @@ class ObservableEventsTest : BaseMapTest() {
 
     rule.scenario.onActivity { activity ->
       activity.runOnUiThread {
-        mapboxMap.removeOnStyleDataLoadedListener(listener)
+        cancelable.cancel()
       }
     }
   }
@@ -221,7 +221,7 @@ class ObservableEventsTest : BaseMapTest() {
     rule.scenario.onActivity {
       it.runOnUiThread {
         mapboxMap.apply {
-          addOnStyleLoadedListener(listener)
+          cancelable = subscribeStyleLoaded(listener)
           setCamera(targetCameraOptions)
         }
       }
@@ -232,7 +232,7 @@ class ObservableEventsTest : BaseMapTest() {
 
     rule.scenario.onActivity { activity ->
       activity.runOnUiThread {
-        mapboxMap.removeOnStyleLoadedListener(listener)
+        cancelable.cancel()
       }
     }
   }
@@ -250,7 +250,7 @@ class ObservableEventsTest : BaseMapTest() {
     rule.scenario.onActivity { activity ->
       activity.runOnUiThread {
         mapboxMap.apply {
-          addOnStyleImageMissingListener(listener)
+          cancelable = subscribeStyleImageMissing(listener)
           setCamera(targetCameraOptions)
           loadStyle(
             style(Style.MAPBOX_STREETS) {
@@ -271,7 +271,7 @@ class ObservableEventsTest : BaseMapTest() {
 
     rule.scenario.onActivity { activity ->
       activity.runOnUiThread {
-        mapboxMap.removeOnStyleImageMissingListener(listener)
+        cancelable.cancel()
       }
     }
   }
@@ -290,13 +290,13 @@ class ObservableEventsTest : BaseMapTest() {
       activity.runOnUiThread {
         mapboxMap.apply {
           setCamera(targetCameraOptions)
-          addOnStyleImageMissingListener {
+          cancelable = subscribeStyleImageMissing {
             getStyle {
               it.addImage(IMAGE_ID, Image(2048, 2048, DataRef.allocateNative(2048 * 2048 * 4)))
               setCamera(cameraOptions { center(Point.fromLngLat(60.1733244, 24.9410248)) })
             }
           }
-          addOnStyleImageUnusedListener(listener)
+          subscribeStyleImageUnused(listener)
           loadStyle(
             style(Style.MAPBOX_STREETS) {
               +geoJsonSource(SOURCE_ID) {
@@ -317,7 +317,7 @@ class ObservableEventsTest : BaseMapTest() {
 
     rule.scenario.onActivity { activity ->
       activity.runOnUiThread {
-        mapboxMap.removeOnStyleImageUnusedListener(listener)
+        cancelable.cancel()
       }
     }
   }
@@ -337,7 +337,7 @@ class ObservableEventsTest : BaseMapTest() {
     rule.scenario.onActivity { activity ->
       activity.runOnUiThread {
         mapboxMap.apply {
-          addOnSourceDataLoadedListener(listener)
+          cancelable = subscribeSourceDataLoaded(listener)
           setCamera(targetCameraOptions)
           loadTestStyle()
         }
@@ -349,7 +349,7 @@ class ObservableEventsTest : BaseMapTest() {
 
     rule.scenario.onActivity { activity ->
       activity.runOnUiThread {
-        mapboxMap.removeOnSourceDataLoadedListener(listener)
+        cancelable.cancel()
       }
     }
   }
@@ -367,7 +367,7 @@ class ObservableEventsTest : BaseMapTest() {
     rule.scenario.onActivity { activity ->
       activity.runOnUiThread {
         mapboxMap.apply {
-          addOnSourceAddedListener(listener)
+          cancelable = subscribeSourceAdded(listener)
           setCamera(targetCameraOptions)
           loadStyle(
             style(Style.MAPBOX_STREETS) {
@@ -395,7 +395,7 @@ class ObservableEventsTest : BaseMapTest() {
 
     rule.scenario.onActivity { activity ->
       activity.runOnUiThread {
-        mapboxMap.removeOnSourceAddedListener(listener)
+        cancelable.cancel()
       }
     }
   }
@@ -413,7 +413,7 @@ class ObservableEventsTest : BaseMapTest() {
     rule.scenario.onActivity { activity ->
       activity.runOnUiThread {
         mapboxMap.apply {
-          addOnSourceRemovedListener(listener)
+          cancelable = subscribeSourceRemoved(listener)
           setCamera(targetCameraOptions)
           loadStyle(
             style(Style.MAPBOX_STREETS) {
@@ -432,7 +432,7 @@ class ObservableEventsTest : BaseMapTest() {
               }
             }
           )
-          addOnMapIdleListener {
+          subscribeMapIdle {
             getStyle { style ->
               style.removeStyleLayer(LAYER_ID)
               style.removeStyleSource(SOURCE_ID)
@@ -447,7 +447,7 @@ class ObservableEventsTest : BaseMapTest() {
 
     rule.scenario.onActivity { activity ->
       activity.runOnUiThread {
-        mapboxMap.removeOnSourceRemovedListener(listener)
+        cancelable.cancel()
       }
     }
   }
@@ -465,7 +465,7 @@ class ObservableEventsTest : BaseMapTest() {
     rule.scenario.onActivity { activity ->
       activity.runOnUiThread {
         mapboxMap.apply {
-          addOnRenderFrameStartedListener(listener)
+          cancelable = subscribeRenderFrameStarted(listener)
           setCamera(targetCameraOptions)
         }
       }
@@ -477,7 +477,7 @@ class ObservableEventsTest : BaseMapTest() {
 
     rule.scenario.onActivity { activity ->
       activity.runOnUiThread {
-        mapboxMap.removeOnRenderFrameStartedListener(listener)
+        cancelable.cancel()
       }
     }
   }
@@ -499,7 +499,7 @@ class ObservableEventsTest : BaseMapTest() {
     rule.scenario.onActivity { activity ->
       activity.runOnUiThread {
         mapboxMap.apply {
-          addOnRenderFrameFinishedListener(listener)
+          cancelable = subscribeRenderFrameFinished(listener)
           setCamera(targetCameraOptions)
         }
       }
@@ -511,7 +511,7 @@ class ObservableEventsTest : BaseMapTest() {
 
     rule.scenario.onActivity { activity ->
       activity.runOnUiThread {
-        mapboxMap.removeOnRenderFrameFinishedListener(listener)
+        cancelable.cancel()
       }
     }
   }
@@ -532,7 +532,7 @@ class ObservableEventsTest : BaseMapTest() {
     rule.scenario.onActivity { activity ->
       activity.runOnUiThread {
         mapboxMap.apply {
-          addOnCameraChangeListener(listener)
+          cancelable = subscribeCameraChanged(listener)
           setCamera(targetCameraOptions)
         }
       }
@@ -544,7 +544,7 @@ class ObservableEventsTest : BaseMapTest() {
 
     rule.scenario.onActivity { activity ->
       activity.runOnUiThread {
-        mapboxMap.removeOnCameraChangeListener(listener)
+        cancelable.cancel()
       }
     }
   }

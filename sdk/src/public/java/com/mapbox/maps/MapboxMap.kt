@@ -19,6 +19,7 @@ import com.mapbox.maps.extension.style.utils.transition
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.animation.CameraAnimationsPluginImpl
 import com.mapbox.maps.plugin.delegates.*
+import com.mapbox.maps.plugin.delegates.listeners.*
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import com.mapbox.maps.plugin.gestures.GesturesPluginImpl
 import java.util.concurrent.CopyOnWriteArraySet
@@ -1325,11 +1326,11 @@ class MapboxMap :
   /**
    * Subscribes to `MapLoaded` event.
    *
-   * @return cancellation object.
+   * @return cancellable object to unsubscribe from the event.
    *
-   * @see MapLoadedCallback
+   * @param mapLoadedCallback
    */
-  fun subscribeMapLoaded(mapLoadedCallback: MapLoadedCallback): Cancelable {
+  override fun subscribeMapLoaded(mapLoadedCallback: MapLoadedCallback): Cancelable {
     checkNativeMap("subscribeMapLoaded")
     return nativeMap.subscribe(mapLoadedCallback).also {
       cancelableSubscriberSet.add(it)
@@ -1339,11 +1340,11 @@ class MapboxMap :
   /**
    * Subscribes to `MapIdle` event.
    *
-   * @return cancellation object.
+   * @return cancellable object to unsubscribe from the event.
    *
-   * @see MapIdleCallback
+   * @param mapIdleCallback
    */
-  fun subscribeMapIdle(mapIdleCallback: MapIdleCallback): Cancelable {
+  override fun subscribeMapIdle(mapIdleCallback: MapIdleCallback): Cancelable {
     checkNativeMap("subscribeMapIdle")
     return nativeMap.subscribe(mapIdleCallback).also {
       cancelableSubscriberSet.add(it)
@@ -1353,11 +1354,11 @@ class MapboxMap :
   /**
    * Subscribes to `MapLoadingError` event.
    *
-   * @return cancellation object.
+   * @return cancellable object to unsubscribe from the event.
    *
-   * @see MapLoadingErrorCallback
+   * @param mapLoadingErrorCallback
    */
-  fun subscribeMapLoadingError(mapLoadingErrorCallback: MapLoadingErrorCallback): Cancelable {
+  override fun subscribeMapLoadingError(mapLoadingErrorCallback: MapLoadingErrorCallback): Cancelable {
     checkNativeMap("subscribeMapLoadingError")
     return nativeMap.subscribe(mapLoadingErrorCallback).also {
       cancelableSubscriberSet.add(it)
@@ -1367,11 +1368,11 @@ class MapboxMap :
   /**
    * Subscribes to `StyleLoaded` event.
    *
-   * @return cancellation object.
+   * @return cancellable object to unsubscribe from the event.
    *
-   * @see StyleLoadedCallback
+   * @param styleLoadedCallback
    */
-  fun subscribeStyleLoaded(styleLoadedCallback: StyleLoadedCallback): Cancelable {
+  override fun subscribeStyleLoaded(styleLoadedCallback: StyleLoadedCallback): Cancelable {
     checkNativeMap("subscribeStyleLoaded")
     return nativeMap.subscribe(styleLoadedCallback).also {
       cancelableSubscriberSet.add(it)
@@ -1381,11 +1382,11 @@ class MapboxMap :
   /**
    * Subscribes to `StyleDataLoaded` event.
    *
-   * @return cancellation object.
+   * @return cancellable object to unsubscribe from the event.
    *
-   * @see StyleDataLoadedCallback
+   * @param styleDataLoadedCallback
    */
-  fun subscribeStyleDataLoaded(styleDataLoadedCallback: StyleDataLoadedCallback): Cancelable {
+  override fun subscribeStyleDataLoaded(styleDataLoadedCallback: StyleDataLoadedCallback): Cancelable {
     checkNativeMap("subscribeStyleDataLoaded")
     return nativeMap.subscribe(styleDataLoadedCallback).also {
       cancelableSubscriberSet.add(it)
@@ -1395,11 +1396,11 @@ class MapboxMap :
   /**
    * Subscribes to `SourceDataLoaded` event.
    *
-   * @return cancellation object.
+   * @return cancellable object to unsubscribe from the event.
    *
-   * @see SourceDataLoadedCallback
+   * @param sourceDataLoadedCallback
    */
-  fun subscribeSourceDataLoaded(sourceDataLoadedCallback: SourceDataLoadedCallback): Cancelable {
+  override fun subscribeSourceDataLoaded(sourceDataLoadedCallback: SourceDataLoadedCallback): Cancelable {
     checkNativeMap("subscribeSourceDataLoaded")
     return nativeMap.subscribe(sourceDataLoadedCallback).also {
       cancelableSubscriberSet.add(it)
@@ -1409,11 +1410,11 @@ class MapboxMap :
   /**
    * Subscribes to `SourceAdded` event.
    *
-   * @return cancellation object.
+   * @return cancellable object to unsubscribe from the event.
    *
-   * @see SourceAddedCallback
+   * @param sourceAddedCallback
    */
-  fun subscribeSourceAdded(sourceAddedCallback: SourceAddedCallback): Cancelable {
+  override fun subscribeSourceAdded(sourceAddedCallback: SourceAddedCallback): Cancelable {
     checkNativeMap("subscribeSourceAdded")
     return nativeMap.subscribe(sourceAddedCallback).also {
       cancelableSubscriberSet.add(it)
@@ -1423,11 +1424,11 @@ class MapboxMap :
   /**
    * Subscribes to `SourceRemoved` event.
    *
-   * @return cancellation object.
+   * @return cancellable object to unsubscribe from the event.
    *
-   * @see SourceRemovedCallback
+   * @param sourceRemovedCallback
    */
-  fun subscribeSourceRemoved(sourceRemovedCallback: SourceRemovedCallback): Cancelable {
+  override fun subscribeSourceRemoved(sourceRemovedCallback: SourceRemovedCallback): Cancelable {
     checkNativeMap("subscribeSourceRemoved")
     return nativeMap.subscribe(sourceRemovedCallback).also {
       cancelableSubscriberSet.add(it)
@@ -1437,11 +1438,11 @@ class MapboxMap :
   /**
    * Subscribes to `StyleImageMissing` event.
    *
-   * @return cancellation object.
+   * @return cancellable object to unsubscribe from the event.
    *
-   * @see StyleImageMissingCallback
+   * @param styleImageMissingCallback
    */
-  fun subscribeStyleImageMissing(styleImageMissingCallback: StyleImageMissingCallback): Cancelable {
+  override fun subscribeStyleImageMissing(styleImageMissingCallback: StyleImageMissingCallback): Cancelable {
     checkNativeMap("subscribeStyleImageMissing")
     return nativeMap.subscribe(styleImageMissingCallback).also {
       cancelableSubscriberSet.add(it)
@@ -1451,11 +1452,11 @@ class MapboxMap :
   /**
    * Subscribes to `StyleImageRemoveUnused` event.
    *
-   * @return cancellation object.
+   * @return cancellable object to unsubscribe from the event.
    *
-   * @see StyleImageRemoveUnusedCallback
+   * @param styleImageRemoveUnusedCallback
    */
-  fun subscribeStyleImageUnused(styleImageRemoveUnusedCallback: StyleImageRemoveUnusedCallback): Cancelable {
+  override fun subscribeStyleImageUnused(styleImageRemoveUnusedCallback: StyleImageRemoveUnusedCallback): Cancelable {
     checkNativeMap("subscribeStyleImageRemoveUnused")
     return nativeMap.subscribe(styleImageRemoveUnusedCallback).also {
       cancelableSubscriberSet.add(it)
@@ -1465,11 +1466,11 @@ class MapboxMap :
   /**
    * Subscribes to `CameraChanged` event.
    *
-   * @return cancellation object.
+   * @return cancellable object to unsubscribe from the event.
    *
-   * @see CameraChangedCallback
+   * @param cameraChangedCallback
    */
-  fun subscribeCameraChanged(cameraChangedCallback: CameraChangedCallback): Cancelable {
+  override fun subscribeCameraChanged(cameraChangedCallback: CameraChangedCallback): Cancelable {
     checkNativeMap("subscribeCameraChanged")
     return nativeMap.subscribe(cameraChangedCallback).also {
       cancelableSubscriberSet.add(it)
@@ -1479,11 +1480,11 @@ class MapboxMap :
   /**
    * Subscribes to `RenderFrameStarted` event.
    *
-   * @return cancellation object.
+   * @return cancellable object to unsubscribe from the event.
    *
-   * @see RenderFrameStartedCallback
+   * @param renderFrameStartedCallback
    */
-  fun subscribeRenderFrameStarted(renderFrameStartedCallback: RenderFrameStartedCallback): Cancelable {
+  override fun subscribeRenderFrameStarted(renderFrameStartedCallback: RenderFrameStartedCallback): Cancelable {
     checkNativeMap("subscribeRenderFrameStarted")
     return nativeMap.subscribe(renderFrameStartedCallback).also {
       cancelableSubscriberSet.add(it)
@@ -1493,11 +1494,11 @@ class MapboxMap :
   /**
    * Subscribes to `RenderFrameFinished` event.
    *
-   * @return cancellation object.
+   * @return cancellable object to unsubscribe from the event.
    *
-   * @see RenderFrameFinishedCallback
+   * @param renderFrameFinishedCallback
    */
-  fun subscribeRenderFrameFinished(renderFrameFinishedCallback: RenderFrameFinishedCallback): Cancelable {
+  override fun subscribeRenderFrameFinished(renderFrameFinishedCallback: RenderFrameFinishedCallback): Cancelable {
     checkNativeMap("subscribeRenderFrameFinished")
     return nativeMap.subscribe(renderFrameFinishedCallback).also {
       cancelableSubscriberSet.add(it)
@@ -1507,11 +1508,11 @@ class MapboxMap :
   /**
    * Subscribes to `ResourceRequest` event.
    *
-   * @return cancellation object.
+   * @return cancellable object to unsubscribe from the event.
    *
-   * @see ResourceRequestCallback
+   * @param resourceRequestCallback
    */
-  fun subscribeResourceRequest(resourceRequestCallback: ResourceRequestCallback): Cancelable {
+  override fun subscribeResourceRequest(resourceRequestCallback: ResourceRequestCallback): Cancelable {
     checkNativeMap("subscribeResourceRequest")
     return nativeMap.subscribe(resourceRequestCallback).also {
       cancelableSubscriberSet.add(it)
@@ -1521,12 +1522,13 @@ class MapboxMap :
   /**
    * Subscribes to an experimental `GenericEvent` event.
    *
-   * @return cancellation object.
+   * @return cancellable object to unsubscribe from the event.
    *
-   * @see GenericEventCallback
+   * @param eventName
+   * @param genericEventCallback
    */
   @MapboxExperimental
-  fun subscribeGenericEvent(
+  override fun subscribeGenericEvent(
     eventName: String,
     genericEventCallback: GenericEventCallback
   ): Cancelable {
@@ -1544,9 +1546,9 @@ class MapboxMap :
     replaceWith = ReplaceWith("subscribeCameraChanged(cameraChangedCallback)"),
     level = DeprecationLevel.WARNING
   )
-  override fun addOnCameraChangeListener(cameraChangedCallback: CameraChangedCallback) {
+  override fun addOnCameraChangeListener(onCameraChangeListener: OnCameraChangeListener) {
     checkNativeMap("addOnCameraChangeListener")
-    nativeObserver.addOnCameraChangeListener(cameraChangedCallback)
+    nativeObserver.addOnCameraChangeListener(onCameraChangeListener)
   }
 
   /**
@@ -1556,9 +1558,9 @@ class MapboxMap :
     message = "This method is deprecated, and will be removed in next major release. use cancelable returned from [subscribeCameraChange] to remove the listener.",
     level = DeprecationLevel.WARNING
   )
-  override fun removeOnCameraChangeListener(cameraChangedCallback: CameraChangedCallback) {
+  override fun removeOnCameraChangeListener(onCameraChangeListener: OnCameraChangeListener) {
     checkNativeMap("removeOnCameraChangeListener")
-    nativeObserver.removeOnCameraChangeListener(cameraChangedCallback)
+    nativeObserver.removeOnCameraChangeListener(onCameraChangeListener)
   }
 
   // Map events
@@ -1573,9 +1575,9 @@ class MapboxMap :
     replaceWith = ReplaceWith("subscribeMapIdle(mapIdleCallback)"),
     level = DeprecationLevel.WARNING
   )
-  override fun addOnMapIdleListener(mapIdleCallback: MapIdleCallback) {
+  override fun addOnMapIdleListener(onMapIdleListener: OnMapIdleListener) {
     checkNativeMap("addOnMapIdleListener")
-    nativeObserver.addOnMapIdleListener(mapIdleCallback)
+    nativeObserver.addOnMapIdleListener(onMapIdleListener)
   }
 
   /**
@@ -1585,9 +1587,9 @@ class MapboxMap :
     message = "This method is deprecated, and will be removed in next major release. use cancelable returned from [subscribeMapIdle] to remove the listener.",
     level = DeprecationLevel.WARNING
   )
-  override fun removeOnMapIdleListener(mapIdleCallback: MapIdleCallback) {
+  override fun removeOnMapIdleListener(onMapIdleListener: OnMapIdleListener) {
     checkNativeMap("removeOnMapIdleListener")
-    nativeObserver.removeOnMapIdleListener(mapIdleCallback)
+    nativeObserver.removeOnMapIdleListener(onMapIdleListener)
   }
 
   /**
@@ -1598,9 +1600,9 @@ class MapboxMap :
     replaceWith = ReplaceWith("subscribeMapLoadingError(mapLoadingErrorCallback)"),
     level = DeprecationLevel.WARNING
   )
-  override fun addOnMapLoadErrorListener(mapLoadingErrorCallback: MapLoadingErrorCallback) {
+  override fun addOnMapLoadErrorListener(onMapLoadErrorListener: OnMapLoadErrorListener) {
     checkNativeMap("addOnMapLoadErrorListener")
-    nativeObserver.addOnMapLoadErrorListener(mapLoadingErrorCallback)
+    nativeObserver.addOnMapLoadErrorListener(onMapLoadErrorListener)
   }
 
   /**
@@ -1610,9 +1612,9 @@ class MapboxMap :
     message = "This method is deprecated, and will be removed in next major release. use cancelable returned from [subscribeMapLoadingError] to remove the listener.",
     level = DeprecationLevel.WARNING
   )
-  override fun removeOnMapLoadErrorListener(mapLoadingErrorCallback: MapLoadingErrorCallback) {
+  override fun removeOnMapLoadErrorListener(onMapLoadErrorListener: OnMapLoadErrorListener) {
     checkNativeMap("removeOnMapLoadErrorListener")
-    nativeObserver.removeOnMapLoadErrorListener(mapLoadingErrorCallback)
+    nativeObserver.removeOnMapLoadErrorListener(onMapLoadErrorListener)
   }
 
   /**
@@ -1624,9 +1626,9 @@ class MapboxMap :
     replaceWith = ReplaceWith("subscribeMapLoaded(mapLoadedCallback)"),
     level = DeprecationLevel.WARNING
   )
-  override fun addOnMapLoadedListener(mapLoadedCallback: MapLoadedCallback) {
+  override fun addOnMapLoadedListener(onMapLoadedListener: OnMapLoadedListener) {
     checkNativeMap("addOnMapLoadedListener")
-    nativeObserver.addOnMapLoadedListener(mapLoadedCallback)
+    nativeObserver.addOnMapLoadedListener(onMapLoadedListener)
   }
 
   /**
@@ -1636,9 +1638,9 @@ class MapboxMap :
     message = "This method is deprecated, and will be removed in next major release. use cancelable returned from [subscribeMapLoaded] to remove the listener.",
     level = DeprecationLevel.WARNING
   )
-  override fun removeOnMapLoadedListener(mapLoadedCallback: MapLoadedCallback) {
+  override fun removeOnMapLoadedListener(onMapLoadedListener: OnMapLoadedListener) {
     checkNativeMap("removeOnMapLoadedListener")
-    nativeObserver.removeOnMapLoadedListener(mapLoadedCallback)
+    nativeObserver.removeOnMapLoadedListener(onMapLoadedListener)
   }
 
   // Render frame events
@@ -1650,9 +1652,9 @@ class MapboxMap :
     replaceWith = ReplaceWith("subscribeRenderFrameStarted(renderFrameStartedCallback)"),
     level = DeprecationLevel.WARNING
   )
-  override fun addOnRenderFrameStartedListener(renderFrameStartedCallback: RenderFrameStartedCallback) {
+  override fun addOnRenderFrameStartedListener(onRenderFrameStartedListener: OnRenderFrameStartedListener) {
     checkNativeMap("addOnRenderFrameStartedListener")
-    nativeObserver.addOnRenderFrameStartedListener(renderFrameStartedCallback)
+    nativeObserver.addOnRenderFrameStartedListener(onRenderFrameStartedListener)
   }
 
   /**
@@ -1662,9 +1664,9 @@ class MapboxMap :
     message = "This method is deprecated, and will be removed in next major release. use cancelable returned from [subscribeRenderFrameStarted] to remove the listener.",
     level = DeprecationLevel.WARNING
   )
-  override fun removeOnRenderFrameStartedListener(renderFrameStartedCallback: RenderFrameStartedCallback) {
+  override fun removeOnRenderFrameStartedListener(onRenderFrameStartedListener: OnRenderFrameStartedListener) {
     checkNativeMap("removeOnRenderFrameStartedListener")
-    nativeObserver.removeOnRenderFrameStartedListener(renderFrameStartedCallback)
+    nativeObserver.removeOnRenderFrameStartedListener(onRenderFrameStartedListener)
   }
 
   /**
@@ -1679,9 +1681,9 @@ class MapboxMap :
     replaceWith = ReplaceWith("subscribeRenderFrameFinished(renderFrameFinishedCallback)"),
     level = DeprecationLevel.WARNING
   )
-  override fun addOnRenderFrameFinishedListener(renderFrameFinishedCallback: RenderFrameFinishedCallback) {
+  override fun addOnRenderFrameFinishedListener(onRenderFrameFinishedListener: OnRenderFrameFinishedListener) {
     checkNativeMap("addOnRenderFrameFinishedListener")
-    nativeObserver.addOnRenderFrameFinishedListener(renderFrameFinishedCallback)
+    nativeObserver.addOnRenderFrameFinishedListener(onRenderFrameFinishedListener)
   }
 
   /**
@@ -1691,9 +1693,9 @@ class MapboxMap :
     message = "This method is deprecated, and will be removed in next major release. use cancelable returned from [subscribeRenderFrameFinished] to remove the listener.",
     level = DeprecationLevel.WARNING
   )
-  override fun removeOnRenderFrameFinishedListener(renderFrameFinishedCallback: RenderFrameFinishedCallback) {
+  override fun removeOnRenderFrameFinishedListener(onRenderFrameFinishedListener: OnRenderFrameFinishedListener) {
     checkNativeMap("removeOnRenderFrameFinishedListener")
-    nativeObserver.removeOnRenderFrameFinishedListener(renderFrameFinishedCallback)
+    nativeObserver.removeOnRenderFrameFinishedListener(onRenderFrameFinishedListener)
   }
 
   // Source events
@@ -1706,9 +1708,9 @@ class MapboxMap :
     replaceWith = ReplaceWith("subscribeSourceAdded(sourceAddedCallback)"),
     level = DeprecationLevel.WARNING
   )
-  override fun addOnSourceAddedListener(sourceAddedCallback: SourceAddedCallback) {
+  override fun addOnSourceAddedListener(onSourceAddedListener: OnSourceAddedListener) {
     checkNativeMap("addOnSourceAddedListener")
-    nativeObserver.addOnSourceAddedListener(sourceAddedCallback)
+    nativeObserver.addOnSourceAddedListener(onSourceAddedListener)
   }
 
   /**
@@ -1718,9 +1720,9 @@ class MapboxMap :
     message = "This method is deprecated, and will be removed in next major release. use cancelable returned from [subscribeSourceAdded] to remove the listener.",
     level = DeprecationLevel.WARNING
   )
-  override fun removeOnSourceAddedListener(sourceAddedCallback: SourceAddedCallback) {
+  override fun removeOnSourceAddedListener(onSourceAddedListener: OnSourceAddedListener) {
     checkNativeMap("removeOnSourceAddedListener")
-    nativeObserver.removeOnSourceAddedListener(sourceAddedCallback)
+    nativeObserver.removeOnSourceAddedListener(onSourceAddedListener)
   }
 
   /**
@@ -1731,9 +1733,9 @@ class MapboxMap :
     replaceWith = ReplaceWith("subscribeSourceDataLoaded(sourceDataLoadedCallback)"),
     level = DeprecationLevel.WARNING
   )
-  override fun addOnSourceDataLoadedListener(sourceDataLoadedCallback: SourceDataLoadedCallback) {
+  override fun addOnSourceDataLoadedListener(onSourceDataLoadedListener: OnSourceDataLoadedListener) {
     checkNativeMap("addOnSourceDataLoadedListener")
-    nativeObserver.addOnSourceDataLoadedListener(sourceDataLoadedCallback)
+    nativeObserver.addOnSourceDataLoadedListener(onSourceDataLoadedListener)
   }
 
   /**
@@ -1743,9 +1745,9 @@ class MapboxMap :
     message = "This method is deprecated, and will be removed in next major release. use cancelable returned from [subscribeSourceDataLoaded] to remove the listener.",
     level = DeprecationLevel.WARNING
   )
-  override fun removeOnSourceDataLoadedListener(sourceDataLoadedCallback: SourceDataLoadedCallback) {
+  override fun removeOnSourceDataLoadedListener(onSourceDataLoadedListener: OnSourceDataLoadedListener) {
     checkNativeMap("removeOnSourceDataLoadedListener")
-    nativeObserver.removeOnSourceDataLoadedListener(sourceDataLoadedCallback)
+    nativeObserver.removeOnSourceDataLoadedListener(onSourceDataLoadedListener)
   }
 
   /**
@@ -1757,9 +1759,9 @@ class MapboxMap :
     replaceWith = ReplaceWith("subscribeSourceRemoved(sourceRemovedCallback)"),
     level = DeprecationLevel.WARNING
   )
-  override fun addOnSourceRemovedListener(sourceRemovedCallback: SourceRemovedCallback) {
+  override fun addOnSourceRemovedListener(onSourceRemovedListener: OnSourceRemovedListener) {
     checkNativeMap("addOnSourceRemovedListener")
-    nativeObserver.addOnSourceRemovedListener(sourceRemovedCallback)
+    nativeObserver.addOnSourceRemovedListener(onSourceRemovedListener)
   }
 
   /**
@@ -1769,9 +1771,9 @@ class MapboxMap :
     message = "This method is deprecated, and will be removed in next major release. use cancelable returned from [subscribeSourceRemoved] to remove the listener.",
     level = DeprecationLevel.WARNING
   )
-  override fun removeOnSourceRemovedListener(sourceRemovedCallback: SourceRemovedCallback) {
+  override fun removeOnSourceRemovedListener(onSourceRemovedListener: OnSourceRemovedListener) {
     checkNativeMap("removeOnSourceRemovedListener")
-    nativeObserver.removeOnSourceRemovedListener(sourceRemovedCallback)
+    nativeObserver.removeOnSourceRemovedListener(onSourceRemovedListener)
   }
 
   // Style events
@@ -1784,9 +1786,9 @@ class MapboxMap :
     replaceWith = ReplaceWith("subscribeStyleLoaded(styleLoadedCallback)"),
     level = DeprecationLevel.WARNING
   )
-  override fun addOnStyleLoadedListener(styleLoadedCallback: StyleLoadedCallback) {
+  override fun addOnStyleLoadedListener(onStyleLoadedListener: OnStyleLoadedListener) {
     checkNativeMap("addOnStyleLoadedListener")
-    nativeObserver.addOnStyleLoadedListener(styleLoadedCallback)
+    nativeObserver.addOnStyleLoadedListener(onStyleLoadedListener)
   }
 
   /**
@@ -1796,9 +1798,9 @@ class MapboxMap :
     message = "This method is deprecated, and will be removed in next major release. use cancelable returned from [subscribeStyleLoaded] to remove the listener.",
     level = DeprecationLevel.WARNING
   )
-  override fun removeOnStyleLoadedListener(styleLoadedCallback: StyleLoadedCallback) {
+  override fun removeOnStyleLoadedListener(onStyleLoadedListener: OnStyleLoadedListener) {
     checkNativeMap("removeOnStyleLoadedListener")
-    nativeObserver.removeOnStyleLoadedListener(styleLoadedCallback)
+    nativeObserver.removeOnStyleLoadedListener(onStyleLoadedListener)
   }
 
   /**
@@ -1813,9 +1815,9 @@ class MapboxMap :
     replaceWith = ReplaceWith("subscribeStyleDataLoaded(styleDataLoadedCallback)"),
     level = DeprecationLevel.WARNING
   )
-  override fun addOnStyleDataLoadedListener(styleDataLoadedCallback: StyleDataLoadedCallback) {
+  override fun addOnStyleDataLoadedListener(onStyleDataLoadedListener: OnStyleDataLoadedListener) {
     checkNativeMap("addOnStyleDataLoadedListener")
-    nativeObserver.addOnStyleDataLoadedListener(styleDataLoadedCallback)
+    nativeObserver.addOnStyleDataLoadedListener(onStyleDataLoadedListener)
   }
 
   /**
@@ -1825,9 +1827,9 @@ class MapboxMap :
     message = "This method is deprecated, and will be removed in next major release. use cancelable returned from [subscribeStyleDataLoaded] to remove the listener.",
     level = DeprecationLevel.WARNING
   )
-  override fun removeOnStyleDataLoadedListener(styleDataLoadedCallback: StyleDataLoadedCallback) {
+  override fun removeOnStyleDataLoadedListener(onStyleDataLoadedListener: OnStyleDataLoadedListener) {
     checkNativeMap("removeOnStyleDataLoadedListener")
-    nativeObserver.removeOnStyleDataLoadedListener(styleDataLoadedCallback)
+    nativeObserver.removeOnStyleDataLoadedListener(onStyleDataLoadedListener)
   }
 
   /**
@@ -1841,9 +1843,9 @@ class MapboxMap :
     replaceWith = ReplaceWith("subscribeStyleImageMissing(styleImageMissingCallback)"),
     level = DeprecationLevel.WARNING
   )
-  override fun addOnStyleImageMissingListener(styleImageMissingCallback: StyleImageMissingCallback) {
+  override fun addOnStyleImageMissingListener(onStyleImageMissingListener: OnStyleImageMissingListener) {
     checkNativeMap("addOnStyleImageMissingListener")
-    nativeObserver.addOnStyleImageMissingListener(styleImageMissingCallback)
+    nativeObserver.addOnStyleImageMissingListener(onStyleImageMissingListener)
   }
 
   /**
@@ -1853,9 +1855,9 @@ class MapboxMap :
     message = "This method is deprecated, and will be removed in next major release. use cancelable returned from [subscribeStyleImageMissing] to remove the listener.",
     level = DeprecationLevel.WARNING
   )
-  override fun removeOnStyleImageMissingListener(styleImageMissingCallback: StyleImageMissingCallback) {
+  override fun removeOnStyleImageMissingListener(onStyleImageMissingListener: OnStyleImageMissingListener) {
     checkNativeMap("removeOnStyleImageMissingListener")
-    nativeObserver.removeOnStyleImageMissingListener(styleImageMissingCallback)
+    nativeObserver.removeOnStyleImageMissingListener(onStyleImageMissingListener)
   }
 
   /**
@@ -1867,9 +1869,9 @@ class MapboxMap :
     replaceWith = ReplaceWith("subscribeStyleImageUnused(styleImageRemoveUnusedCallback)"),
     level = DeprecationLevel.WARNING
   )
-  override fun addOnStyleImageUnusedListener(styleImageRemoveUnusedCallback: StyleImageRemoveUnusedCallback) {
+  override fun addOnStyleImageUnusedListener(onStyleImageUnusedListener: OnStyleImageUnusedListener) {
     checkNativeMap("addOnStyleImageUnusedListener")
-    nativeObserver.addOnStyleImageUnusedListener(styleImageRemoveUnusedCallback)
+    nativeObserver.addOnStyleImageUnusedListener(onStyleImageUnusedListener)
   }
 
   /**
@@ -1879,9 +1881,9 @@ class MapboxMap :
     message = "This method is deprecated, and will be removed in next major release. use cancelable returned from [subscribeStyleImageUnused] to remove the listener.",
     level = DeprecationLevel.WARNING
   )
-  override fun removeOnStyleImageUnusedListener(styleImageRemoveUnusedCallback: StyleImageRemoveUnusedCallback) {
+  override fun removeOnStyleImageUnusedListener(onStyleImageUnusedListener: OnStyleImageUnusedListener) {
     checkNativeMap("removeOnStyleImageUnusedListener")
-    nativeObserver.removeOnStyleImageUnusedListener(styleImageRemoveUnusedCallback)
+    nativeObserver.removeOnStyleImageUnusedListener(onStyleImageUnusedListener)
   }
 
   /**

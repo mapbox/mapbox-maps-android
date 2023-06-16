@@ -1,5 +1,7 @@
 package com.mapbox.maps
 
+import androidx.annotation.VisibleForTesting
+import com.mapbox.common.Cancelable
 import java.util.concurrent.CopyOnWriteArraySet
 
 /**
@@ -34,11 +36,15 @@ internal class StyleObserver(
    *  [MapEvent.STYLE_LOADED] event) to make sure map is rendered correctly from the very beginning
    *  (e.g. with the correct [Projection]). */
   private var preLoadedStyle: Style? = null
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  val cancelableList = CopyOnWriteArraySet<Cancelable>()
 
   init {
-    nativeObserver.addOnStyleLoadedListener(this)
-    nativeObserver.addOnMapLoadErrorListener(this)
-    nativeObserver.addOnStyleDataLoadedListener(this)
+    cancelableList.apply {
+      add(nativeObserver.subscribeStyleLoaded(this@StyleObserver))
+      add(nativeObserver.subscribeMapLoadingError(this@StyleObserver))
+      add(nativeObserver.subscribeStyleDataLoaded(this@StyleObserver))
+    }
   }
 
   /**
@@ -94,6 +100,9 @@ internal class StyleObserver(
     getStyleListeners.clear()
   }
 
+  /**
+   * Invoked when map loading error occurred.
+   */
   override fun run(eventData: MapLoadingError) {
     logE(
       TAG,
@@ -101,6 +110,9 @@ internal class StyleObserver(
     )
   }
 
+  /**
+   * Invoked when style data is loaded.
+   */
   override fun run(eventData: StyleDataLoaded) {
     when (eventData.type) {
       StyleDataLoadedType.STYLE -> {
@@ -154,9 +166,8 @@ internal class StyleObserver(
     loadedStyle?.markInvalid()
     loadedStyle = null
     getStyleListeners.clear()
-    nativeObserver.removeOnMapLoadErrorListener(this)
-    nativeObserver.removeOnStyleLoadedListener(this)
-    nativeObserver.removeOnStyleDataLoadedListener(this)
+    cancelableList.forEach { it.cancel() }
+    cancelableList.clear()
   }
 
   companion object {

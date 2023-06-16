@@ -1,6 +1,8 @@
 package com.mapbox.maps.plugin.delegates
 
+import com.mapbox.common.Cancelable
 import com.mapbox.maps.*
+import com.mapbox.maps.plugin.delegates.listeners.*
 
 /**
  * Definition of a listener manager delegate to manage all kinds of listeners.
@@ -15,7 +17,7 @@ interface MapListenerDelegate {
     replaceWith = ReplaceWith("subscribeCameraChanged(cameraChangedCallback)"),
     level = DeprecationLevel.WARNING
   )
-  fun addOnCameraChangeListener(cameraChangedCallback: CameraChangedCallback)
+  fun addOnCameraChangeListener(onCameraChangeListener: OnCameraChangeListener)
 
   /**
    * Remove the camera change listener.
@@ -24,7 +26,7 @@ interface MapListenerDelegate {
     message = "This method is deprecated, and will be removed in next major release. use cancelable returned from [subscribeCameraChange] to remove the listener.",
     level = DeprecationLevel.WARNING
   )
-  fun removeOnCameraChangeListener(cameraChangedCallback: CameraChangedCallback)
+  fun removeOnCameraChangeListener(onCameraChangeListener: OnCameraChangeListener)
 
   // Map events
   /**
@@ -38,7 +40,7 @@ interface MapListenerDelegate {
     replaceWith = ReplaceWith("subscribeMapIdle(mapIdleCallback)"),
     level = DeprecationLevel.WARNING
   )
-  fun addOnMapIdleListener(mapIdleCallback: MapIdleCallback)
+  fun addOnMapIdleListener(onMapIdleListener: OnMapIdleListener)
 
   /**
    * Remove the map idle listener.
@@ -47,7 +49,7 @@ interface MapListenerDelegate {
     message = "This method is deprecated, and will be removed in next major release. use cancelable returned from [subscribeMapIdle] to remove the listener.",
     level = DeprecationLevel.WARNING
   )
-  fun removeOnMapIdleListener(mapIdleCallback: MapIdleCallback)
+  fun removeOnMapIdleListener(onMapIdleListener: OnMapIdleListener)
 
   /**
    * Add a listener that's going to be invoked whenever there's a map load error.
@@ -57,7 +59,7 @@ interface MapListenerDelegate {
     replaceWith = ReplaceWith("subscribeMapLoadingError(mapLoadingErrorCallback)"),
     level = DeprecationLevel.WARNING
   )
-  fun addOnMapLoadErrorListener(mapLoadingErrorCallback: MapLoadingErrorCallback)
+  fun addOnMapLoadErrorListener(onMapLoadErrorListener: OnMapLoadErrorListener)
 
   /**
    * Remove the map error listener.
@@ -66,7 +68,7 @@ interface MapListenerDelegate {
     message = "This method is deprecated, and will be removed in next major release. use cancelable returned from [subscribeMapLoadingError] to remove the listener.",
     level = DeprecationLevel.WARNING
   )
-  fun removeOnMapLoadErrorListener(mapLoadingErrorCallback: MapLoadingErrorCallback)
+  fun removeOnMapLoadErrorListener(onMapLoadErrorListener: OnMapLoadErrorListener)
 
   /**
    * Add a listener that's going to be invoked whenever the Map's style has been fully loaded, and
@@ -77,7 +79,7 @@ interface MapListenerDelegate {
     replaceWith = ReplaceWith("subscribeMapLoaded(mapLoadedCallback)"),
     level = DeprecationLevel.WARNING
   )
-  fun addOnMapLoadedListener(mapLoadedCallback: MapLoadedCallback)
+  fun addOnMapLoadedListener(onMapLoadedListener: OnMapLoadedListener)
 
   /**
    * Remove the map loaded listener.
@@ -86,7 +88,7 @@ interface MapListenerDelegate {
     message = "This method is deprecated, and will be removed in next major release. use cancelable returned from [subscribeMapLoaded] to remove the listener.",
     level = DeprecationLevel.WARNING
   )
-  fun removeOnMapLoadedListener(mapLoadedCallback: MapLoadedCallback)
+  fun removeOnMapLoadedListener(onMapLoadedListener: OnMapLoadedListener)
 
   // Render frame events
   /**
@@ -97,7 +99,7 @@ interface MapListenerDelegate {
     replaceWith = ReplaceWith("subscribeRenderFrameStarted(renderFrameStartedCallback)"),
     level = DeprecationLevel.WARNING
   )
-  fun addOnRenderFrameStartedListener(renderFrameStartedCallback: RenderFrameStartedCallback)
+  fun addOnRenderFrameStartedListener(onRenderFrameStartedListener: OnRenderFrameStartedListener)
 
   /**
    * Remove the render frame started listener.
@@ -106,7 +108,7 @@ interface MapListenerDelegate {
     message = "This method is deprecated, and will be removed in next major release. use cancelable returned from [subscribeRenderFrameStarted] to remove the listener.",
     level = DeprecationLevel.WARNING
   )
-  fun removeOnRenderFrameStartedListener(renderFrameStartedCallback: RenderFrameStartedCallback)
+  fun removeOnRenderFrameStartedListener(onRenderFrameStartedListener: OnRenderFrameStartedListener)
 
   /**
    * Add a listener that's going to be invoked whenever the Map finished rendering a frame.
@@ -120,7 +122,7 @@ interface MapListenerDelegate {
     replaceWith = ReplaceWith("subscribeRenderFrameFinished(renderFrameFinishedCallback)"),
     level = DeprecationLevel.WARNING
   )
-  fun addOnRenderFrameFinishedListener(renderFrameFinishedCallback: RenderFrameFinishedCallback)
+  fun addOnRenderFrameFinishedListener(onRenderFrameFinishedListener: OnRenderFrameFinishedListener)
 
   /**
    * Remove the render frame finished listener.
@@ -129,7 +131,7 @@ interface MapListenerDelegate {
     message = "This method is deprecated, and will be removed in next major release. use cancelable returned from [subscribeRenderFrameFinished] to remove the listener.",
     level = DeprecationLevel.WARNING
   )
-  fun removeOnRenderFrameFinishedListener(renderFrameFinishedCallback: RenderFrameFinishedCallback)
+  fun removeOnRenderFrameFinishedListener(onRenderFrameFinishedListener: OnRenderFrameFinishedListener)
 
   // Source events
   /**
@@ -141,7 +143,7 @@ interface MapListenerDelegate {
     replaceWith = ReplaceWith("subscribeSourceAdded(sourceAddedCallback)"),
     level = DeprecationLevel.WARNING
   )
-  fun addOnSourceAddedListener(sourceAddedCallback: SourceAddedCallback)
+  fun addOnSourceAddedListener(onSourceAddedListener: OnSourceAddedListener)
 
   /**
    * Remove the source added listener.
@@ -150,7 +152,7 @@ interface MapListenerDelegate {
     message = "This method is deprecated, and will be removed in next major release. use cancelable returned from [subscribeSourceAdded] to remove the listener.",
     level = DeprecationLevel.WARNING
   )
-  fun removeOnSourceAddedListener(sourceAddedCallback: SourceAddedCallback)
+  fun removeOnSourceAddedListener(onSourceAddedListener: OnSourceAddedListener)
 
   /**
    * Add a listener that's going to be invoked whenever the source data has been loaded.
@@ -160,7 +162,7 @@ interface MapListenerDelegate {
     replaceWith = ReplaceWith("subscribeSourceDataLoaded(sourceDataLoadedCallback)"),
     level = DeprecationLevel.WARNING
   )
-  fun addOnSourceDataLoadedListener(sourceDataLoadedCallback: SourceDataLoadedCallback)
+  fun addOnSourceDataLoadedListener(onSourceDataLoadedListener: OnSourceDataLoadedListener)
 
   /**
    * Remove the source data loaded listener.
@@ -169,7 +171,7 @@ interface MapListenerDelegate {
     message = "This method is deprecated, and will be removed in next major release. use cancelable returned from [subscribeSourceDataLoaded] to remove the listener.",
     level = DeprecationLevel.WARNING
   )
-  fun removeOnSourceDataLoadedListener(sourceDataLoadedCallback: SourceDataLoadedCallback)
+  fun removeOnSourceDataLoadedListener(onSourceDataLoadedListener: OnSourceDataLoadedListener)
 
   /**
    * Add a listener that's going to be invoked whenever a source has been removed with StyleManager#removeStyleSource
@@ -180,7 +182,7 @@ interface MapListenerDelegate {
     replaceWith = ReplaceWith("subscribeSourceRemoved(sourceRemovedCallback)"),
     level = DeprecationLevel.WARNING
   )
-  fun addOnSourceRemovedListener(sourceRemovedCallback: SourceRemovedCallback)
+  fun addOnSourceRemovedListener(onSourceRemovedListener: OnSourceRemovedListener)
 
   /**
    * Remove the source removed listener.
@@ -189,7 +191,7 @@ interface MapListenerDelegate {
     message = "This method is deprecated, and will be removed in next major release. use cancelable returned from [subscribeSourceRemoved] to remove the listener.",
     level = DeprecationLevel.WARNING
   )
-  fun removeOnSourceRemovedListener(sourceRemovedCallback: SourceRemovedCallback)
+  fun removeOnSourceRemovedListener(onSourceRemovedListener: OnSourceRemovedListener)
 
   // Style events
   /**
@@ -204,7 +206,7 @@ interface MapListenerDelegate {
     replaceWith = ReplaceWith("subscribeStyleLoaded(styleDataLoadedCallback)"),
     level = DeprecationLevel.WARNING
   )
-  fun addOnStyleDataLoadedListener(styleDataLoadedCallback: StyleDataLoadedCallback)
+  fun addOnStyleDataLoadedListener(onStyleDataLoadedListener: OnStyleDataLoadedListener)
 
   /**
    * Remove the style data loaded listener
@@ -213,7 +215,7 @@ interface MapListenerDelegate {
     message = "This method is deprecated, and will be removed in next major release. use cancelable returned from [subscribeStyleLoaded] to remove the listener.",
     level = DeprecationLevel.WARNING
   )
-  fun removeOnStyleDataLoadedListener(styleDataLoadedCallback: StyleDataLoadedCallback)
+  fun removeOnStyleDataLoadedListener(onStyleDataLoadedListener: OnStyleDataLoadedListener)
 
   /**
    * Add a listener that's going to be invoked whenever the requested style has been fully loaded,
@@ -224,7 +226,7 @@ interface MapListenerDelegate {
     replaceWith = ReplaceWith("subscribeStyleDataLoaded(styleLoadedCallback)"),
     level = DeprecationLevel.WARNING
   )
-  fun addOnStyleLoadedListener(styleLoadedCallback: StyleLoadedCallback)
+  fun addOnStyleLoadedListener(onStyleLoadedListener: OnStyleLoadedListener)
 
   /**
    * Remove the style loaded listener.
@@ -233,7 +235,7 @@ interface MapListenerDelegate {
     message = "This method is deprecated, and will be removed in next major release. use cancelable returned from [subscribeStyleDataLoaded] to remove the listener.",
     level = DeprecationLevel.WARNING
   )
-  fun removeOnStyleLoadedListener(styleLoadedCallback: StyleLoadedCallback)
+  fun removeOnStyleLoadedListener(onStyleLoadedListener: OnStyleLoadedListener)
 
   /**
    * Add a listener that's going to be invoked whenever a style has a missing image.
@@ -246,7 +248,7 @@ interface MapListenerDelegate {
     replaceWith = ReplaceWith("subscribeStyleImageMissing(styleImageMissingCallback)"),
     level = DeprecationLevel.WARNING
   )
-  fun addOnStyleImageMissingListener(styleImageMissingCallback: StyleImageMissingCallback)
+  fun addOnStyleImageMissingListener(onStyleImageMissingListener: OnStyleImageMissingListener)
 
   /**
    * Remove the style image missing listener.
@@ -255,7 +257,7 @@ interface MapListenerDelegate {
     message = "This method is deprecated, and will be removed in next major release. use cancelable returned from [subscribeStyleImageMissing] to remove the listener.",
     level = DeprecationLevel.WARNING
   )
-  fun removeOnStyleImageMissingListener(styleImageMissingCallback: StyleImageMissingCallback)
+  fun removeOnStyleImageMissingListener(onStyleImageMissingListener: OnStyleImageMissingListener)
 
   /**
    * Add a listener that's going to be invoked whenever an image added to the Style is no longer
@@ -266,7 +268,7 @@ interface MapListenerDelegate {
     replaceWith = ReplaceWith("subscribeStyleImageUnused(styleImageRemoveUnusedCallback)"),
     level = DeprecationLevel.WARNING
   )
-  fun addOnStyleImageUnusedListener(styleImageRemoveUnusedCallback: StyleImageRemoveUnusedCallback)
+  fun addOnStyleImageUnusedListener(onStyleImageUnusedListener: OnStyleImageUnusedListener)
 
   /**
    * Remove the style image unused listener.
@@ -275,5 +277,142 @@ interface MapListenerDelegate {
     message = "This method is deprecated, and will be removed in next major release. use cancelable returned from [subscribeStyleImageUnused] to remove the listener.",
     level = DeprecationLevel.WARNING
   )
-  fun removeOnStyleImageUnusedListener(styleImageRemoveUnusedCallback: StyleImageRemoveUnusedCallback)
+  fun removeOnStyleImageUnusedListener(onStyleImageUnusedListener: OnStyleImageUnusedListener)
+
+  /**
+   * Subscribes to `CameraChanged` event.
+   *
+   * @return cancellable object to unsubscribe from the event.
+   *
+   * @param cameraChangedCallback
+   */
+  fun subscribeCameraChanged(cameraChangedCallback: CameraChangedCallback): Cancelable
+
+  /**
+   * Subscribes to `MapLoaded` event.
+   *
+   * @return cancellable object to unsubscribe from the event.
+   *
+   * @param mapLoadedCallback
+   */
+  fun subscribeMapLoaded(mapLoadedCallback: MapLoadedCallback): Cancelable
+
+  /**
+   * Subscribes to `MapIdle` event.
+   *
+   * @return cancellable object to unsubscribe from the event.
+   *
+   * @param mapIdleCallback
+   */
+  fun subscribeMapIdle(mapIdleCallback: MapIdleCallback): Cancelable
+
+  /**
+   * Subscribes to `MapLoadingError` event.
+   *
+   * @return cancellable object to unsubscribe from the event.
+   *
+   * @param mapLoadingErrorCallback
+   */
+  fun subscribeMapLoadingError(mapLoadingErrorCallback: MapLoadingErrorCallback): Cancelable
+
+  /**
+   * Subscribes to `StyleLoaded` event.
+   *
+   * @return cancellable object to unsubscribe from the event.
+   *
+   * @param styleLoadedCallback
+   */
+  fun subscribeStyleLoaded(styleLoadedCallback: StyleLoadedCallback): Cancelable
+
+  /**
+   * Subscribes to `StyleDataLoaded` event.
+   *
+   * @return cancellable object to unsubscribe from the event.
+   *
+   * @param styleDataLoadedCallback
+   */
+  fun subscribeStyleDataLoaded(styleDataLoadedCallback: StyleDataLoadedCallback): Cancelable
+
+  /**
+   * Subscribes to `SourceDataLoaded` event.
+   *
+   * @return cancellable object to unsubscribe from the event.
+   *
+   * @param sourceDataLoadedCallback
+   */
+  fun subscribeSourceDataLoaded(sourceDataLoadedCallback: SourceDataLoadedCallback): Cancelable
+
+  /**
+   * Subscribes to `SourceAdded` event.
+   *
+   * @return cancellable object to unsubscribe from the event.
+   *
+   * @param sourceAddedCallback
+   */
+  fun subscribeSourceAdded(sourceAddedCallback: SourceAddedCallback): Cancelable
+
+  /**
+   * Subscribes to `SourceRemoved` event.
+   *
+   * @return cancellable object to unsubscribe from the event.
+   *
+   * @param sourceRemovedCallback
+   */
+  fun subscribeSourceRemoved(sourceRemovedCallback: SourceRemovedCallback): Cancelable
+
+  /**
+   * Subscribes to `StyleImageMissing` event.
+   *
+   * @return cancellable object to unsubscribe from the event.
+   *
+   * @param styleImageMissingCallback
+   */
+  fun subscribeStyleImageMissing(styleImageMissingCallback: StyleImageMissingCallback): Cancelable
+
+  /**
+   * Subscribes to `StyleImageRemoveUnused` event.
+   *
+   * @return cancellable object to unsubscribe from the event.
+   *
+   * @param styleImageRemoveUnusedCallback
+   */
+  fun subscribeStyleImageUnused(styleImageRemoveUnusedCallback: StyleImageRemoveUnusedCallback): Cancelable
+
+  /**
+   * Subscribes to `RenderFrameStarted` event.
+   *
+   * @return cancellable object to unsubscribe from the event.
+   *
+   * @param renderFrameStartedCallback
+   */
+  fun subscribeRenderFrameStarted(renderFrameStartedCallback: RenderFrameStartedCallback): Cancelable
+
+  /**
+   * Subscribes to `RenderFrameFinished` event.
+   *
+   * @return cancellable object to unsubscribe from the event.
+   *
+   * @param renderFrameFinishedCallback
+   */
+  fun subscribeRenderFrameFinished(renderFrameFinishedCallback: RenderFrameFinishedCallback): Cancelable
+
+  /**
+   * Subscribes to `ResourceRequest` event.
+   *
+   * @return cancellable object to unsubscribe from the event.
+   *
+   * @param resourceRequestCallback
+   */
+  fun subscribeResourceRequest(resourceRequestCallback: ResourceRequestCallback): Cancelable
+
+  /**
+   * Subscribes to an experimental `GenericEvent` event.
+   *
+   * @return cancellable object to unsubscribe from the event.
+   *
+   * @param eventName
+   * @param genericEventCallback
+   */
+  @MapboxExperimental
+  fun subscribeGenericEvent(eventName: String, genericEventCallback: GenericEventCallback): Cancelable
 }

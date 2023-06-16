@@ -127,7 +127,7 @@ class RendererSetupTest {
     withDelayMs: Long,
   ) {
     mapView.onStart()
-    mapView.getMapboxMap().addOnMapLoadedListener {
+    mapView.getMapboxMap().subscribeMapLoaded {
       eventList.add(Event.MAP_LOAD_SUCCESS)
       mapView.onStop()
       mapView.onDestroy()

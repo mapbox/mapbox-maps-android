@@ -95,7 +95,7 @@ class ViewportShowcaseActivity : AppCompatActivity() {
     viewportButton = binding.switchButton
     mapView = binding.mapView
     mapboxMap = binding.mapView.getMapboxMap().apply {
-      addOnStyleLoadedListener {
+      subscribeStyleLoaded {
         setCamera(
           CameraOptions.Builder()
             .zoom(14.0)

@@ -42,7 +42,7 @@ class InsetMapActivity : AppCompatActivity(), CameraChangedCallback {
     mainMapboxMap = binding.mapView.getMapboxMap()
     mainMapboxMap.loadStyleUri(
       styleUri = STYLE_URL
-    ) { mainMapboxMap.addOnCameraChangeListener(this@InsetMapActivity) }
+    ) { mainMapboxMap.subscribeCameraChanged(this@InsetMapActivity) }
 
     var insetMapFragment: MapFragment? =
       supportFragmentManager.findFragmentByTag(INSET_FRAGMENT_TAG) as? MapFragment
@@ -102,7 +102,7 @@ class InsetMapActivity : AppCompatActivity(), CameraChangedCallback {
     }
   }
 
-  override fun run(eventData: CameraChanged) {
+  override fun run(cameraChanged: CameraChanged) {
     val mainCameraPosition = mainMapboxMap.cameraState
     val insetCameraPosition = CameraOptions.Builder()
       .zoom(mainCameraPosition.zoom.minus(ZOOM_DISTANCE_BETWEEN_MAIN_AND_INSET_MAPS))

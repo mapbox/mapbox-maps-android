@@ -2,6 +2,7 @@ package com.mapbox.maps
 
 import android.view.MotionEvent
 import androidx.annotation.VisibleForTesting
+import com.mapbox.common.Cancelable
 import com.mapbox.common.MapboxOptions
 import com.mapbox.maps.assets.AssetManagerProvider
 import com.mapbox.maps.plugin.InvalidViewPluginHostException
@@ -35,6 +36,7 @@ import com.mapbox.maps.renderer.MapboxRenderer
 import com.mapbox.maps.renderer.OnFpsChangedListener
 import com.mapbox.maps.renderer.RendererSetupErrorListener
 import com.mapbox.maps.renderer.widget.Widget
+import java.util.concurrent.CopyOnWriteArraySet
 
 internal class MapController : MapPluginProviderDelegate, MapControllable {
 
@@ -46,6 +48,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   internal val pluginRegistry: MapPluginRegistry
   private val styleDataLoadedCallback: StyleDataLoadedCallback
   private val cameraChangedCallback: CameraChangedCallback
+  private val cancelableSubscriberSet = CopyOnWriteArraySet<Cancelable>()
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal var lifecycleState: LifecycleState = LifecycleState.STATE_STOPPED
@@ -142,8 +145,8 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
       }
     }
     nativeObserver.apply {
-      addOnCameraChangeListener(cameraChangedCallback)
-      addOnStyleDataLoadedListener(styleDataLoadedCallback)
+      cancelableSubscriberSet.add(subscribeCameraChanged(cameraChangedCallback))
+      cancelableSubscriberSet.add(subscribeStyleDataLoaded(styleDataLoadedCallback))
     }
     renderer.onStart()
     if (!mapboxMap.isStyleLoadInitiated) {
@@ -161,10 +164,10 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     }
     lifecycleState = LifecycleState.STATE_STOPPED
 
-    nativeObserver.apply {
-      removeOnCameraChangeListener(cameraChangedCallback)
-      removeOnStyleDataLoadedListener(styleDataLoadedCallback)
+    cancelableSubscriberSet.forEach {
+      it.cancel()
     }
+    cancelableSubscriberSet.clear()
     renderer.onStop()
     pluginRegistry.onStop()
     // flush the queued events before destroy to avoid lost telemetry events

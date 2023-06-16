@@ -53,7 +53,7 @@ abstract class BaseAnimationMapTest {
             this@BaseAnimationMapTest.style = style
             latch.countDown()
           }
-          addOnMapIdleListener {
+          subscribeMapIdle {
             latch.countDown()
           }
         }
