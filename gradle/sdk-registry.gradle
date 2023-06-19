@@ -6,11 +6,9 @@ version = project.ext.versionName
 group = project.ext.mapboxArtifactGroupId
 afterEvaluate {
     def isSnapshot = project.ext.versionName.contains("-SNAPSHOT")
-    components.findAll { it.name.endsWith("Release") }.forEach { currentComponent ->
-        def flavor = currentComponent.name.substring(0, currentComponent.name.length() - "Release".length())
-        // Append `-private` if we're publishing a privateRelease variant
+    components.findAll { it.name.endsWithIgnoreCase("Release") }.forEach { currentComponent ->
         // Append `-preview` for v11 private preview releases
-        def componentRegistrySdkName = project.ext.mapboxRegistrySdkName + "-preview" + (flavor == "private" ? "-private" : "")
+        def componentRegistrySdkName = project.ext.mapboxRegistrySdkName + "-preview"
         registry {
             registryPublications {
                 "${currentComponent.name}" {
@@ -27,9 +25,9 @@ afterEvaluate {
                     // infrastructure.
                     // As a result, for now, we will skip releasing v11 private flavor release.
 
-                    // As a temporary placeholder, we will use `mobile_maps_private_beta` feature
-                    // flag v11 private flavor release. but we shouldn't do private release with this settings.
-                    featureFlag = (flavor == "private" ? "mobile_maps_private_beta" : "maps_sdk_private_preview")
+                    // As a temporary placeholder, we will use `maps_sdk_private_preview` feature
+                    // flag v11 flavor release.
+                    featureFlag = "maps_sdk_private_preview"
                     excludeFromRootProject = project.ext.mapboxRegistryExcludeFromRootProject
                 }
             }
@@ -48,8 +46,8 @@ afterEvaluate {
             // We always add the `main` kotlin which already includes the java in it
             from android.sourceSets.main.kotlin.srcDirs
             android.sourceSets.each {
-                // then let's add the flavor specific folders (i.e. `public` and `publicRelease`) for current component
-                if (it.name == flavor || it.name == currentComponent.name) {
+                // then let's add the flavor specific folders (i.e. `release`) for current component
+                if (it.name == currentComponent.name) {
                     from it.kotlin.srcDirs
                 }
             }

@@ -556,7 +556,7 @@ jobs:
             - restore-gradle-cache
             - run:
                 name: lintRelease
-                command: ./gradlew lintPublicRelease
+                command: ./gradlew lintRelease
       - run: exit 0
 
   run-robo-test:

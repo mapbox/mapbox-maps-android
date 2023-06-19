@@ -14,11 +14,7 @@ function validate {
 }
 
 echo Started docs validation, it may take some time...
-gradle_command="./gradlew clean dokkaHtml -Pmapbox.dokkaHtmlFlavor=publicRelease"
-echo $gradle_command
-gradle_output="$( $gradle_command 2>&1)"
-validate $gradle_output
-gradle_command="./gradlew clean dokkaHtml -Pmapbox.dokkaHtmlFlavor=privateRelease"
+gradle_command="./gradlew clean dokkaHtml -Pmapbox.dokkaHtmlFlavor=release"
 echo $gradle_command
 gradle_output="$( $gradle_command 2>&1)"
 validate $gradle_output

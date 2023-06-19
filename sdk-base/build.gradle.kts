@@ -1,4 +1,5 @@
 import com.google.devtools.ksp.gradle.KspTaskJvm
+import java.util.Locale
 
 plugins {
   id("com.mapbox.gradle.library")
@@ -23,32 +24,30 @@ android {
     buildConfigField("String", "MAPBOX_EVENTS_USER_AGENT", String.format("\"mapbox-maps-android/%s\"", VERSION_NAME))
   }
 
-  val privateKspDestinationPath =
-    "${project.projectDir.path}/../../mapbox-maps-android-private/sdk-base/src/private/ksp"
-  sourceSets {
-    getByName("public").java.srcDirs(
-      "src/public/ksp"
-    )
-    getByName("private").java.srcDirs(
-      privateKspDestinationPath
-    )
+  // Add the `ksp` folder to each variant. Regardless if it exists or not.
+  sourceSets.all {
+    java.srcDirs("src/$name/ksp")
   }
 
-  // moving generated KSP files to sources
+  // moving generated KSP files from build folder to `src/<variant_name>/ksp`
   afterEvaluate {
     tasks.withType(KspTaskJvm::class.java).all {
+      val generatedKspFilesFolder = destination.get()
+      var lastFolder = generatedKspFilesFolder.toPath().fileName.toString()
+      // We handle "debug" and "release" build types as equal so remove them
+      buildTypes.names.forEach {
+        lastFolder = lastFolder.replaceFirst(it, "", true)
+      }
+      // If it's blank then it means that it should go to the default "main" source set
+      if (lastFolder.isBlank()) {
+        lastFolder = "main"
+      }
+      lastFolder = lastFolder.decapitalize(Locale.US)
+      val destinationPath = projectDir.resolve("src/$lastFolder/ksp")
       // dropping first 3 symbols which are `ksp`
       val variantName = name.drop(3)
-      val destinationPath = if (variantName.startsWith("Public")) {
-        "${projectDir.path}${File.separator}src${File.separator}public${File.separator}ksp"
-      } else if (variantName.startsWith("Private")) {
-        privateKspDestinationPath
-      } else {
-        throw RuntimeException("Flavour for variant=$variantName is not supported!")
-      }
-      // using Sync task to clean destination directory first
       val copyTask = tasks.register("moveKsp${variantName}Task", Sync::class.java) {
-        val sourcePath = "${destination.get().absolutePath}${File.separator}kotlin"
+        val sourcePath = "${generatedKspFilesFolder.absolutePath}${File.separator}kotlin"
         // make sure we always execute this task when KSP build folder is not empty
         outputs.upToDateWhen {
           File(sourcePath).exists().not()
@@ -62,7 +61,7 @@ android {
           // https://github.com/google/ksp/blob/main/gradle-plugin/src/main/kotlin/com/google/devtools/ksp/gradle/KspSubplugin.kt#L90
           // to contain bytecode BUT all KSP bytecode is actually located in the same place as other bytecode;
           // so to allow metalava run successfully we simply create an empty dir where metalava expects it
-          destination.get().resolve("classes").mkdir()
+          generatedKspFilesFolder.resolve("classes").mkdir()
         }
       }
       tasks.findByName("compile${variantName}")!!.dependsOn(copyTask)

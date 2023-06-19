@@ -1,15 +1,11 @@
 package com.mapbox.maps.gradle.plugins.extensions
 
-import com.android.build.api.dsl.ApplicationExtension
 import com.mapbox.AccessTokenExtension
 import org.gradle.api.Project
 
-public abstract class MapboxApplicationExtension : MapboxAndroidCommonExtension() {
+public abstract class MapboxApplicationExtension {
   internal fun applyTo(project: Project) {
     project.applyRequiredPlugins()
-    val applicationExtension = project.extensions.getByName("android") as ApplicationExtension
-    applicationExtension.configureFlavors(project)
-
     project.configureAccessTokenExtension()
   }
 

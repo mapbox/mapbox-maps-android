@@ -43,41 +43,33 @@ fix:
 sdkRegistryUpload:
 	./gradlew mapboxSDKRegistryUpload -x extension-androidauto:mapboxSDKRegistryUpload -x extension-compose:mapboxSDKRegistryUpload --no-parallel --no-daemon;
 
-.PHONY: sdkRegistryPublicReleaseUpload
-sdkRegistryPublicReleaseUpload:
-	./gradlew mapboxSDKRegistryPublicReleaseUpload -x extension-androidauto:mapboxSDKRegistryPublicReleaseUpload -x extension-compose:mapboxSDKRegistryPublicReleaseUpload --no-parallel --no-daemon;
-
-.PHONY: sdkRegistryPrivateReleaseUpload
-sdkRegistryPrivateReleaseUpload:
-	./gradlew mapboxSDKRegistryPrivateReleaseUpload -x extension-androidauto:mapboxSDKRegistryPrivateReleaseUpload -x extension-compose:mapboxSDKRegistryPrivateReleaseUpload --no-parallel --no-daemon;
+.PHONY: sdkRegistryReleaseUpload
+sdkRegistryReleaseUpload:
+	./gradlew mapboxSDKRegistryReleaseUpload -x extension-androidauto:mapboxSDKRegistryReleaseUpload -x extension-compose:mapboxSDKRegistryReleaseUpload --no-parallel --no-daemon;
 
 .PHONY: sdkRegistryPublish
 sdkRegistryPublish:
 	./gradlew mapboxSDKRegistryPublishAll;
 
-.PHONY: sdkRegistryPublicReleasePublish
-sdkRegistryPublicReleasePublish:
-	./gradlew mapboxSDKRegistryPublicReleasePublishAll;
+.PHONY: sdkRegistryReleasePublish
+sdkRegistryReleasePublish:
+	./gradlew mapboxSDKRegistryReleasePublishAll;
 
-.PHONY: sdkRegistryPrivateReleasePublish
-sdkRegistryPrivateReleasePublish:
-	./gradlew mapboxSDKRegistryPrivateReleasePublishAll;
+.PHONY: sdkRegistryUploadReleaseAndroidAutoExtension
+sdkRegistryUploadReleaseAndroidAutoExtension:
+	./gradlew extension-androidauto:mapboxSDKRegistryReleaseUpload;
 
-.PHONY: sdkRegistryUploadPublicReleaseAndroidAutoExtension
-sdkRegistryUploadPublicReleaseAndroidAutoExtension:
-	./gradlew extension-androidauto:mapboxSDKRegistryPublicReleaseUpload;
+.PHONY: sdkRegistryPublishReleaseAndroidAutoExtension
+sdkRegistryPublishReleaseAndroidAutoExtension:
+	./gradlew extension-androidauto:mapboxSDKRegistryReleasePublish;
 
-.PHONY: sdkRegistryPublishPublicReleaseAndroidAutoExtension
-sdkRegistryPublishPublicReleaseAndroidAutoExtension:
-	./gradlew extension-androidauto:mapboxSDKRegistryPublicReleasePublish;
+.PHONY: sdkRegistryUploadReleaseComposeExtension
+sdkRegistryUploadReleaseComposeExtension:
+	./gradlew extension-compose:mapboxSDKRegistryReleaseUpload;
 
-.PHONY: sdkRegistryUploadPublicReleaseComposeExtension
-sdkRegistryUploadPublicReleaseComposeExtension:
-	./gradlew extension-compose:mapboxSDKRegistryPublicReleaseUpload;
-
-.PHONY: sdkRegistryPublishPublicReleaseComposeExtension
-sdkRegistryPublishPublicReleaseComposeExtension:
-	./gradlew extension-compose:mapboxSDKRegistryPublicReleasePublish;
+.PHONY: sdkRegistryPublishReleaseComposeExtension
+sdkRegistryPublishReleaseComposeExtension:
+	./gradlew extension-compose:mapboxSDKRegistryReleasePublish;
 
 .PHONY: clean
 clean:
@@ -85,7 +77,7 @@ clean:
 
 .PHONY: codecoverage
 codecoverage:
-	./gradlew sdk:jacocoTestPublicDebugUnitTestReport && google-chrome sdk/build/jacoco/jacocoHtml/index.html
+	./gradlew sdk:jacocoTestDebugUnitTestReport && google-chrome sdk/build/jacoco/jacocoHtml/index.html
 
 # Use `make generate-changelog TAG=LastReleaseTag` while running locally.
 .PHONY: generate-changelog
@@ -95,7 +87,7 @@ generate-changelog:
 	changelog-draft -b main -p $(TAG) -o CHANGELOG.md
 
 # Use `make update-android-docs TAG=YourReleaseTag` while running locally.
-# Run `make prepare-public-release-doc` or `make prepare-private-release-doc` first in the internal repository,
+# Run `make prepare-release-doc` first in the internal repository,
 # Note: if run locally, execute `mbx env` first.
 .PHONY: update-android-docs
 update-android-docs:
@@ -148,13 +140,13 @@ start-android-auto-dhu:
 .PHONY: check-permissions
 check-permissions:
 	 python3 scripts/check-permissions.py \
-	 	--apk app/build/outputs/apk/public/debug/app-public-debug.apk \
+	 	--apk app/build/outputs/apk/debug/app-debug.apk \
 		--file app/permission.json
 
 # Update permissions app module, requires app:assembleDebug first
 .PHONY: update-permissions
 update-permissions:
 	 python3 scripts/check-permissions.py \
-	 	--apk app/build/outputs/apk/public/debug/app-public-debug.apk \
+	 	--apk app/build/outputs/apk/debug/app-debug.apk \
 		--file app/permission.json \
 		--update True

@@ -70,9 +70,9 @@ public abstract class MapboxDokkaExtension @Inject constructor(objects: ObjectFa
   }
 
   private fun LibraryExtension.configureDokka(project: Project) {
-    // "mapbox.dokkaHtmlFlavor" holds the variant to use. For example, "publicRelease" or null if any
-    // non-debuggable variant should be configured. This is used when executing `dokkaHtmlCollector` task to
-    // be able to limit the source set to a specific variant
+    // "mapbox.dokkaHtmlFlavor" holds the variant to use. For example, "release". This is used
+    // when executing `dokkaHtmlCollector` task to be able to limit the source set to a specific
+    // variant
     libraryVariants.all {
       if (this.buildType.isDebuggable) {
         return@all

@@ -7,8 +7,7 @@ import org.gradle.api.Project
 import org.gradle.api.model.ObjectFactory
 import javax.inject.Inject
 
-public abstract class MapboxLibraryExtension @Inject constructor(objects: ObjectFactory) :
-  MapboxAndroidCommonExtension() {
+public abstract class MapboxLibraryExtension @Inject constructor(objects: ObjectFactory) {
   private val dokka = objects.newInstance<MapboxDokkaExtension>()
 
   /** Configure the inner DSL object, [MapboxDokkaExtension]. */
@@ -19,7 +18,7 @@ public abstract class MapboxLibraryExtension @Inject constructor(objects: Object
   internal fun applyTo(project: Project) {
     project.applyRequiredPlugins()
     val libraryExtension = project.extensions.getByName("android") as LibraryExtension
-    libraryExtension.configureFlavors(project)
+    libraryExtension.configurePublicResource(project)
     dokka.applyTo(project, libraryExtension)
   }
 
@@ -34,5 +33,12 @@ public abstract class MapboxLibraryExtension @Inject constructor(objects: Object
 
     internal fun Project.mapboxLibraryExtension(): MapboxLibraryExtension =
       extensions.create(NAME, MapboxLibraryExtension::class.java)
+  }
+}
+
+private fun LibraryExtension.configurePublicResource(project: Project) {
+  sourceSets.all {
+    // limit amount of exposed library resources
+    res.srcDir("${project.projectDir}/src/$name/res-public")
   }
 }
