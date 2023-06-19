@@ -124,6 +124,10 @@ class PolylineAnnotationManagerTest {
     every { dragLayer.lineSortKey(any<Expression>()) } answers { dragLayer }
     every { layer.lineBlur(any<Expression>()) } answers { layer }
     every { dragLayer.lineBlur(any<Expression>()) } answers { dragLayer }
+    every { layer.lineBorderColor(any<Expression>()) } answers { layer }
+    every { dragLayer.lineBorderColor(any<Expression>()) } answers { dragLayer }
+    every { layer.lineBorderWidth(any<Expression>()) } answers { layer }
+    every { dragLayer.lineBorderWidth(any<Expression>()) } answers { dragLayer }
     every { layer.lineColor(any<Expression>()) } answers { layer }
     every { dragLayer.lineColor(any<Expression>()) } answers { dragLayer }
     every { layer.lineGapWidth(any<Expression>()) } answers { layer }
@@ -268,6 +272,21 @@ class PolylineAnnotationManagerTest {
     assertEquals(0.0, annotation.lineBlur)
     annotation.lineBlur = null
     assertNull(annotation.lineBlur)
+
+    annotation.lineBorderColorInt = Color.BLACK
+    assertEquals(Color.BLACK, annotation.lineBorderColorInt)
+    annotation.lineBorderColorInt = null
+    assertNull(annotation.lineBorderColorInt)
+
+    annotation.lineBorderColorString = ColorUtils.colorToRgbaString(Color.YELLOW)
+    assertEquals(ColorUtils.colorToRgbaString(Color.YELLOW), annotation.lineBorderColorString)
+    annotation.lineBorderColorString = null
+    assertNull(annotation.lineBorderColorString)
+
+    annotation.lineBorderWidth = 0.0
+    assertEquals(0.0, annotation.lineBorderWidth)
+    annotation.lineBorderWidth = null
+    assertNull(annotation.lineBorderWidth)
 
     annotation.lineColorInt = Color.BLACK
     assertEquals(Color.BLACK, annotation.lineColorInt)
@@ -531,6 +550,52 @@ class PolylineAnnotationManagerTest {
     manager.create(options)
     verify(exactly = 1) { manager.layer?.lineBlur(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_BLUR)) }
     verify(exactly = 1) { manager.dragLayer?.lineBlur(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_BLUR)) }
+  }
+
+  @Test
+  fun testLineBorderColorIntLayerProperty() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer?.lineBorderColor(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR)) }
+    val options = PolylineAnnotationOptions()
+      .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
+      .withLineBorderColor(Color.YELLOW)
+    manager.create(options)
+    verify(exactly = 1) { manager.layer?.lineBorderColor(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer?.lineBorderColor(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR)) }
+  }
+
+  @Test
+  fun testLineBorderColorLayerProperty() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer?.lineBorderColor(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR)) }
+    val options = PolylineAnnotationOptions()
+      .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
+      .withLineBorderColor("rgba(0, 0, 0, 1)")
+    manager.create(options)
+    verify(exactly = 1) { manager.layer?.lineBorderColor(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR)) }
+    verify(exactly = 1) { manager.dragLayer?.lineBorderColor(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer?.lineBorderColor(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR)) }
+    verify(exactly = 1) { manager.dragLayer?.lineBorderColor(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR)) }
+  }
+
+  @Test
+  fun testLineBorderWidthLayerProperty() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer?.lineBorderWidth(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_WIDTH)) }
+    val options = PolylineAnnotationOptions()
+      .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
+      .withLineBorderWidth(0.0)
+    manager.create(options)
+    verify(exactly = 1) { manager.layer?.lineBorderWidth(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_WIDTH)) }
+    verify(exactly = 1) { manager.dragLayer?.lineBorderWidth(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_WIDTH)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer?.lineBorderWidth(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_WIDTH)) }
+    verify(exactly = 1) { manager.dragLayer?.lineBorderWidth(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_WIDTH)) }
   }
 
   @Test

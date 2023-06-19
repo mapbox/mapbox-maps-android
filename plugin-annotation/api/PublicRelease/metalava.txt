@@ -150,6 +150,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method protected com.mapbox.maps.extension.style.layers.generated.CircleLayer createDragLayer();
     method protected com.mapbox.maps.extension.style.layers.generated.CircleLayer createLayer();
     method public String getAnnotationIdKey();
+    method public Double? getCircleEmissiveStrength();
     method public com.mapbox.maps.extension.style.layers.properties.generated.CirclePitchAlignment? getCirclePitchAlignment();
     method public com.mapbox.maps.extension.style.layers.properties.generated.CirclePitchScale? getCirclePitchScale();
     method public java.util.List<java.lang.Double>? getCircleTranslate();
@@ -160,12 +161,14 @@ package com.mapbox.maps.plugin.annotation.generated {
     method protected String getLayerId();
     method protected String getSourceId();
     method protected void initializeDataDrivenPropertyMap();
+    method public void setCircleEmissiveStrength(Double?);
     method public void setCirclePitchAlignment(com.mapbox.maps.extension.style.layers.properties.generated.CirclePitchAlignment?);
     method public void setCirclePitchScale(com.mapbox.maps.extension.style.layers.properties.generated.CirclePitchScale?);
     method public void setCircleTranslate(java.util.List<java.lang.Double>?);
     method public void setCircleTranslateAnchor(com.mapbox.maps.extension.style.layers.properties.generated.CircleTranslateAnchor?);
     method protected void setDataDrivenPropertyIsUsed(String property);
     method public void setLayerFilter(com.mapbox.maps.extension.style.expressions.generated.Expression?);
+    property public final Double? circleEmissiveStrength;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.CirclePitchAlignment? circlePitchAlignment;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.CirclePitchScale? circlePitchScale;
     property public final java.util.List<java.lang.Double>? circleTranslate;
@@ -301,12 +304,14 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor? getIconAnchor();
     method @ColorInt public Integer? getIconColorInt();
     method public String? getIconColorString();
+    method public Double? getIconEmissiveStrength();
     method public Double? getIconHaloBlur();
     method @ColorInt public Integer? getIconHaloColorInt();
     method public String? getIconHaloColorString();
     method public Double? getIconHaloWidth();
     method public String? getIconImage();
     method public android.graphics.Bitmap? getIconImageBitmap();
+    method public Double? getIconImageCrossFade();
     method public java.util.List<java.lang.Double>? getIconOffset();
     method public Double? getIconOpacity();
     method public Double? getIconRotate();
@@ -319,6 +324,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor? getTextAnchor();
     method @ColorInt public Integer? getTextColorInt();
     method public String? getTextColorString();
+    method public Double? getTextEmissiveStrength();
     method public String? getTextField();
     method public Double? getTextHaloBlur();
     method @ColorInt public Integer? getTextHaloColorInt();
@@ -338,12 +344,14 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setIconAnchor(com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor?);
     method public void setIconColorInt(@ColorInt Integer?);
     method public void setIconColorString(String?);
+    method public void setIconEmissiveStrength(Double?);
     method public void setIconHaloBlur(Double?);
     method public void setIconHaloColorInt(@ColorInt Integer?);
     method public void setIconHaloColorString(String?);
     method public void setIconHaloWidth(Double?);
     method public void setIconImage(String?);
     method public void setIconImageBitmap(android.graphics.Bitmap?);
+    method public void setIconImageCrossFade(Double?);
     method public void setIconOffset(java.util.List<java.lang.Double>?);
     method public void setIconOpacity(Double?);
     method public void setIconRotate(Double?);
@@ -355,6 +363,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setTextAnchor(com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor?);
     method public void setTextColorInt(@ColorInt Integer?);
     method public void setTextColorString(String?);
+    method public void setTextEmissiveStrength(Double?);
     method public void setTextField(String?);
     method public void setTextHaloBlur(Double?);
     method public void setTextHaloColorInt(@ColorInt Integer?);
@@ -374,12 +383,14 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor? iconAnchor;
     property @ColorInt public final Integer? iconColorInt;
     property public final String? iconColorString;
+    property public final Double? iconEmissiveStrength;
     property public final Double? iconHaloBlur;
     property @ColorInt public final Integer? iconHaloColorInt;
     property public final String? iconHaloColorString;
     property public final Double? iconHaloWidth;
     property public final String? iconImage;
     property public final android.graphics.Bitmap? iconImageBitmap;
+    property public final Double? iconImageCrossFade;
     property public final java.util.List<java.lang.Double>? iconOffset;
     property public final Double? iconOpacity;
     property public final Double? iconRotate;
@@ -391,6 +402,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor? textAnchor;
     property @ColorInt public final Integer? textColorInt;
     property public final String? textColorString;
+    property public final Double? textEmissiveStrength;
     property public final String? textField;
     property public final Double? textHaloBlur;
     property @ColorInt public final Integer? textHaloColorInt;
@@ -542,10 +554,12 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public com.mapbox.geojson.Point? getGeometry();
     method public com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor? getIconAnchor();
     method public String? getIconColor();
+    method public Double? getIconEmissiveStrength();
     method public Double? getIconHaloBlur();
     method public String? getIconHaloColor();
     method public Double? getIconHaloWidth();
     method public String? getIconImage();
+    method public Double? getIconImageCrossFade();
     method public java.util.List<java.lang.Double>? getIconOffset();
     method public Double? getIconOpacity();
     method public Double? getIconRotate();
@@ -556,6 +570,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public Double? getSymbolSortKey();
     method public com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor? getTextAnchor();
     method public String? getTextColor();
+    method public Double? getTextEmissiveStrength();
     method public String? getTextField();
     method public Double? getTextHaloBlur();
     method public String? getTextHaloColor();
@@ -572,10 +587,12 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public com.mapbox.maps.extension.style.layers.properties.generated.TextTransform? getTextTransform();
     method public void setIconAnchor(com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor?);
     method public void setIconColor(String?);
+    method public void setIconEmissiveStrength(Double?);
     method public void setIconHaloBlur(Double?);
     method public void setIconHaloColor(String?);
     method public void setIconHaloWidth(Double?);
     method public void setIconImage(String?);
+    method public void setIconImageCrossFade(Double?);
     method public void setIconOffset(java.util.List<java.lang.Double>?);
     method public void setIconOpacity(Double?);
     method public void setIconRotate(Double?);
@@ -585,6 +602,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setSymbolSortKey(Double?);
     method public void setTextAnchor(com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor?);
     method public void setTextColor(String?);
+    method public void setTextEmissiveStrength(Double?);
     method public void setTextField(String?);
     method public void setTextHaloBlur(Double?);
     method public void setTextHaloColor(String?);
@@ -605,12 +623,14 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withIconAnchor(com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor iconAnchor);
     method public com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withIconColor(String iconColor);
     method public com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withIconColor(@ColorInt int iconColor);
+    method public com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withIconEmissiveStrength(double iconEmissiveStrength);
     method public com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withIconHaloBlur(double iconHaloBlur);
     method public com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withIconHaloColor(String iconHaloColor);
     method public com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withIconHaloColor(@ColorInt int iconHaloColor);
     method public com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withIconHaloWidth(double iconHaloWidth);
     method public com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withIconImage(android.graphics.Bitmap iconImageBitmap);
     method public com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withIconImage(String iconImage);
+    method public com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withIconImageCrossFade(double iconImageCrossFade);
     method public com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withIconOffset(java.util.List<java.lang.Double> iconOffset);
     method public com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withIconOpacity(double iconOpacity);
     method public com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withIconRotate(double iconRotate);
@@ -622,6 +642,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withTextAnchor(com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor textAnchor);
     method public com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withTextColor(String textColor);
     method public com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withTextColor(@ColorInt int textColor);
+    method public com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withTextEmissiveStrength(double textEmissiveStrength);
     method public com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withTextField(String textField);
     method public com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withTextHaloBlur(double textHaloBlur);
     method public com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withTextHaloColor(String textHaloColor);
@@ -639,10 +660,12 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withTextTransform(com.mapbox.maps.extension.style.layers.properties.generated.TextTransform textTransform);
     property public final com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor? iconAnchor;
     property public final String? iconColor;
+    property public final Double? iconEmissiveStrength;
     property public final Double? iconHaloBlur;
     property public final String? iconHaloColor;
     property public final Double? iconHaloWidth;
     property public final String? iconImage;
+    property public final Double? iconImageCrossFade;
     property public final java.util.List<java.lang.Double>? iconOffset;
     property public final Double? iconOpacity;
     property public final Double? iconRotate;
@@ -652,6 +675,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final Double? symbolSortKey;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor? textAnchor;
     property public final String? textColor;
+    property public final Double? textEmissiveStrength;
     property public final String? textField;
     property public final Double? textHaloBlur;
     property public final String? textHaloColor;
@@ -669,10 +693,12 @@ package com.mapbox.maps.plugin.annotation.generated {
     field public static final com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions.Companion Companion;
     field public static final String PROPERTY_ICON_ANCHOR = "icon-anchor";
     field public static final String PROPERTY_ICON_COLOR = "icon-color";
+    field public static final String PROPERTY_ICON_EMISSIVE_STRENGTH = "icon-emissive-strength";
     field public static final String PROPERTY_ICON_HALO_BLUR = "icon-halo-blur";
     field public static final String PROPERTY_ICON_HALO_COLOR = "icon-halo-color";
     field public static final String PROPERTY_ICON_HALO_WIDTH = "icon-halo-width";
     field public static final String PROPERTY_ICON_IMAGE = "icon-image";
+    field public static final String PROPERTY_ICON_IMAGE_CROSS_FADE = "icon-image-cross-fade";
     field public static final String PROPERTY_ICON_OFFSET = "icon-offset";
     field public static final String PROPERTY_ICON_OPACITY = "icon-opacity";
     field public static final String PROPERTY_ICON_ROTATE = "icon-rotate";
@@ -682,6 +708,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     field public static final String PROPERTY_SYMBOL_SORT_KEY = "symbol-sort-key";
     field public static final String PROPERTY_TEXT_ANCHOR = "text-anchor";
     field public static final String PROPERTY_TEXT_COLOR = "text-color";
+    field public static final String PROPERTY_TEXT_EMISSIVE_STRENGTH = "text-emissive-strength";
     field public static final String PROPERTY_TEXT_FIELD = "text-field";
     field public static final String PROPERTY_TEXT_HALO_BLUR = "text-halo-blur";
     field public static final String PROPERTY_TEXT_HALO_COLOR = "text-halo-color";
@@ -748,6 +775,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method protected String getDragLayerId();
     method protected String getDragSourceId();
     method public Boolean? getFillAntialias();
+    method public Double? getFillEmissiveStrength();
     method public java.util.List<java.lang.Double>? getFillTranslate();
     method public com.mapbox.maps.extension.style.layers.properties.generated.FillTranslateAnchor? getFillTranslateAnchor();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getLayerFilter();
@@ -756,12 +784,14 @@ package com.mapbox.maps.plugin.annotation.generated {
     method protected void initializeDataDrivenPropertyMap();
     method protected void setDataDrivenPropertyIsUsed(String property);
     method public void setFillAntialias(Boolean?);
+    method public void setFillEmissiveStrength(Double?);
     method public void setFillTranslate(java.util.List<java.lang.Double>?);
     method public void setFillTranslateAnchor(com.mapbox.maps.extension.style.layers.properties.generated.FillTranslateAnchor?);
     method public void setLayerFilter(com.mapbox.maps.extension.style.expressions.generated.Expression?);
     property protected String dragLayerId;
     property protected String dragSourceId;
     property public final Boolean? fillAntialias;
+    property public final Double? fillEmissiveStrength;
     property public final java.util.List<java.lang.Double>? fillTranslate;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.FillTranslateAnchor? fillTranslateAnchor;
     property public com.mapbox.maps.extension.style.expressions.generated.Expression? layerFilter;
@@ -828,6 +858,9 @@ package com.mapbox.maps.plugin.annotation.generated {
   public final class PolylineAnnotation extends com.mapbox.maps.plugin.annotation.Annotation<com.mapbox.geojson.LineString> {
     ctor public PolylineAnnotation(String id, com.mapbox.maps.plugin.annotation.AnnotationManager<com.mapbox.geojson.LineString,com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation,?,?,?,?,?> annotationManager, com.google.gson.JsonObject jsonObject, com.mapbox.geojson.LineString geometry);
     method public Double? getLineBlur();
+    method @ColorInt public Integer? getLineBorderColorInt();
+    method public String? getLineBorderColorString();
+    method public Double? getLineBorderWidth();
     method @ColorInt public Integer? getLineColorInt();
     method public String? getLineColorString();
     method public Double? getLineGapWidth();
@@ -841,6 +874,9 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public java.util.List<com.mapbox.geojson.Point> getPoints();
     method public com.mapbox.maps.plugin.annotation.AnnotationType getType();
     method public void setLineBlur(Double?);
+    method public void setLineBorderColorInt(@ColorInt Integer?);
+    method public void setLineBorderColorString(String?);
+    method public void setLineBorderWidth(Double?);
     method public void setLineColorInt(@ColorInt Integer?);
     method public void setLineColorString(String?);
     method public void setLineGapWidth(Double?);
@@ -853,6 +889,9 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setPoints(java.util.List<com.mapbox.geojson.Point>);
     method public void setUsedDataDrivenProperties();
     property public final Double? lineBlur;
+    property @ColorInt public final Integer? lineBorderColorInt;
+    property public final String? lineBorderColorString;
+    property public final Double? lineBorderWidth;
     property @ColorInt public final Integer? lineColorInt;
     property public final String? lineColorString;
     property public final Double? lineGapWidth;
@@ -884,6 +923,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public com.mapbox.maps.extension.style.layers.properties.generated.LineCap? getLineCap();
     method public java.util.List<java.lang.Double>? getLineDasharray();
     method public Double? getLineDepthOcclusionFactor();
+    method public Double? getLineEmissiveStrength();
     method public Double? getLineMiterLimit();
     method public Double? getLineRoundLimit();
     method public java.util.List<java.lang.Double>? getLineTranslate();
@@ -896,6 +936,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setLineCap(com.mapbox.maps.extension.style.layers.properties.generated.LineCap?);
     method public void setLineDasharray(java.util.List<java.lang.Double>?);
     method public void setLineDepthOcclusionFactor(Double?);
+    method public void setLineEmissiveStrength(Double?);
     method public void setLineMiterLimit(Double?);
     method public void setLineRoundLimit(Double?);
     method public void setLineTranslate(java.util.List<java.lang.Double>?);
@@ -908,6 +949,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final com.mapbox.maps.extension.style.layers.properties.generated.LineCap? lineCap;
     property public final java.util.List<java.lang.Double>? lineDasharray;
     property public final Double? lineDepthOcclusionFactor;
+    property public final Double? lineEmissiveStrength;
     property public final Double? lineMiterLimit;
     property public final Double? lineRoundLimit;
     property public final java.util.List<java.lang.Double>? lineTranslate;
@@ -934,6 +976,8 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public boolean getDraggable();
     method public com.mapbox.geojson.LineString? getGeometry();
     method public Double? getLineBlur();
+    method public String? getLineBorderColor();
+    method public Double? getLineBorderWidth();
     method public String? getLineColor();
     method public Double? getLineGapWidth();
     method public com.mapbox.maps.extension.style.layers.properties.generated.LineJoin? getLineJoin();
@@ -944,6 +988,8 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public Double? getLineWidth();
     method public java.util.List<com.mapbox.geojson.Point> getPoints();
     method public void setLineBlur(Double?);
+    method public void setLineBorderColor(String?);
+    method public void setLineBorderWidth(Double?);
     method public void setLineColor(String?);
     method public void setLineGapWidth(Double?);
     method public void setLineJoin(com.mapbox.maps.extension.style.layers.properties.generated.LineJoin?);
@@ -956,6 +1002,9 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions withDraggable(boolean draggable);
     method public com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions withGeometry(com.mapbox.geojson.LineString geometry);
     method public com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions withLineBlur(double lineBlur);
+    method public com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions withLineBorderColor(String lineBorderColor);
+    method public com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions withLineBorderColor(@ColorInt int lineBorderColor);
+    method public com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions withLineBorderWidth(double lineBorderWidth);
     method public com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions withLineColor(String lineColor);
     method public com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions withLineColor(@ColorInt int lineColor);
     method public com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions withLineGapWidth(double lineGapWidth);
@@ -967,6 +1016,8 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions withLineWidth(double lineWidth);
     method public com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions withPoints(java.util.List<com.mapbox.geojson.Point> points);
     property public final Double? lineBlur;
+    property public final String? lineBorderColor;
+    property public final Double? lineBorderWidth;
     property public final String? lineColor;
     property public final Double? lineGapWidth;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.LineJoin? lineJoin;
@@ -977,6 +1028,8 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final Double? lineWidth;
     field public static final com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions.Companion Companion;
     field public static final String PROPERTY_LINE_BLUR = "line-blur";
+    field public static final String PROPERTY_LINE_BORDER_COLOR = "line-border-color";
+    field public static final String PROPERTY_LINE_BORDER_WIDTH = "line-border-width";
     field public static final String PROPERTY_LINE_COLOR = "line-color";
     field public static final String PROPERTY_LINE_GAP_WIDTH = "line-gap-width";
     field public static final String PROPERTY_LINE_JOIN = "line-join";

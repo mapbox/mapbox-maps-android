@@ -481,6 +481,113 @@ class CircleLayerTest {
   }
 
   @Test
+  fun circleEmissiveStrengthSet() {
+    val layer = circleLayer("id", "source") {}
+    val testValue = 1.0
+    layer.bindTo(style)
+    layer.circleEmissiveStrength(testValue)
+    verify { style.setStyleLayerProperty("id", "circle-emissive-strength", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "1.0")
+  }
+
+  @Test
+  fun circleEmissiveStrengthGet() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = circleLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), layer.circleEmissiveStrength?.toString())
+    verify { style.getStyleLayerProperty("id", "circle-emissive-strength") }
+  }
+  // Expression Tests
+
+  @Test
+  fun circleEmissiveStrengthAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = circleLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.circleEmissiveStrength(expression)
+    verify { style.setStyleLayerProperty("id", "circle-emissive-strength", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun circleEmissiveStrengthAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = circleLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.circleEmissiveStrengthAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "circle-emissive-strength") }
+  }
+
+  @Test
+  fun circleEmissiveStrengthAsExpressionGetNull() {
+    val layer = circleLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.circleEmissiveStrengthAsExpression)
+    verify { style.getStyleLayerProperty("id", "circle-emissive-strength") }
+  }
+
+  @Test
+  fun circleEmissiveStrengthAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    val layer = circleLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(1.0, layer.circleEmissiveStrengthAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.circleEmissiveStrength!!, 1E-5)
+    verify { style.getStyleLayerProperty("id", "circle-emissive-strength") }
+  }
+
+  @Test
+  fun circleEmissiveStrengthTransitionSet() {
+    val layer = circleLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.circleEmissiveStrengthTransition(
+      transitionOptions {
+        duration(100)
+        delay(200)
+      }
+    )
+    verify { style.setStyleLayerProperty("id", "circle-emissive-strength-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
+  fun circleEmissiveStrengthTransitionGet() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+    val layer = circleLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(transition.toValue().toString(), layer.circleEmissiveStrengthTransition?.toValue().toString())
+    verify { style.getStyleLayerProperty("id", "circle-emissive-strength-transition") }
+  }
+
+  @Test
+  fun circleEmissiveStrengthTransitionSetDsl() {
+    val layer = circleLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.circleEmissiveStrengthTransition {
+      duration(100)
+      delay(200)
+    }
+    verify { style.setStyleLayerProperty("id", "circle-emissive-strength-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
   fun circleOpacitySet() {
     val layer = circleLayer("id", "source") {}
     val testValue = 1.0
@@ -1564,6 +1671,50 @@ class CircleLayerTest {
 
     assertEquals(transition.toValue().toString(), CircleLayer.defaultCircleColorTransition?.toValue().toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-color-transition") }
+  }
+
+  @Test
+  fun defaultCircleEmissiveStrengthTest() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), CircleLayer.defaultCircleEmissiveStrength?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-emissive-strength") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultCircleEmissiveStrengthAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), CircleLayer.defaultCircleEmissiveStrengthAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-emissive-strength") }
+  }
+
+  @Test
+  fun defaultCircleEmissiveStrengthAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    assertEquals(1.0, CircleLayer.defaultCircleEmissiveStrengthAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, CircleLayer.defaultCircleEmissiveStrength!!, 1E-5)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-emissive-strength") }
+  }
+
+  @Test
+  fun defaultCircleEmissiveStrengthTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+
+    assertEquals(transition.toValue().toString(), CircleLayer.defaultCircleEmissiveStrengthTransition?.toValue().toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-emissive-strength-transition") }
   }
 
   @Test

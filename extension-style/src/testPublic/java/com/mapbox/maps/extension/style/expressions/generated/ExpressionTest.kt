@@ -624,6 +624,36 @@ class ExpressionTest {
   }
 
   @Test
+  fun dsl_expression_hsl() {
+    val expression = hsl {
+      // test builder function
+      hsl {}
+    }
+    assertEquals("assert hsl expression", "[hsl, [hsl]]", expression.toString())
+  }
+
+  @Test
+  fun expression_hsl() {
+    val expression = Expression.hsl(Expression.literal("abc"))
+    assertEquals("assert hsl expression", "[hsl, abc]", expression.toString())
+  }
+
+  @Test
+  fun dsl_expression_hsla() {
+    val expression = hsla {
+      // test builder function
+      hsla {}
+    }
+    assertEquals("assert hsla expression", "[hsla, [hsla]]", expression.toString())
+  }
+
+  @Test
+  fun expression_hsla() {
+    val expression = Expression.hsla(Expression.literal("abc"))
+    assertEquals("assert hsla expression", "[hsla, abc]", expression.toString())
+  }
+
+  @Test
   fun expression_id() {
     val expression = id()
     assertEquals("assert id expression", "[id]", expression.toString())
@@ -1047,6 +1077,21 @@ class ExpressionTest {
   }
 
   @Test
+  fun dsl_expression_measureLight() {
+    val expression = measureLight {
+      // test builder function
+      measureLight {}
+    }
+    assertEquals("assert measure-light expression", "[measure-light, [measure-light]]", expression.toString())
+  }
+
+  @Test
+  fun expression_measureLight() {
+    val expression = Expression.measureLight(Expression.literal("abc"))
+    assertEquals("assert measure-light expression", "[measure-light, abc]", expression.toString())
+  }
+
+  @Test
   fun dsl_expression_min() {
     val expression = min {
       // test builder function
@@ -1138,6 +1183,21 @@ class ExpressionTest {
   fun expression_properties() {
     val expression = properties()
     assertEquals("assert properties expression", "[properties]", expression.toString())
+  }
+
+  @Test
+  fun dsl_expression_random() {
+    val expression = random {
+      // test builder function
+      random {}
+    }
+    assertEquals("assert random expression", "[random, [random]]", expression.toString())
+  }
+
+  @Test
+  fun expression_random() {
+    val expression = Expression.random(Expression.literal("abc"))
+    assertEquals("assert random expression", "[random, abc]", expression.toString())
   }
 
   @Test

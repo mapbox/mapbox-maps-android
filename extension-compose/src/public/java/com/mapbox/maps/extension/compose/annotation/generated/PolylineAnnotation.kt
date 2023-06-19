@@ -23,6 +23,9 @@ import com.mapbox.maps.plugin.annotation.generated.createPolylineAnnotationManag
  * @param points A list of Point for the line, which represents the locations of the line on the map.
  * @param lineJoin The display of lines when joining.
  * @param lineBlur Blur applied to the line, in density-independent pixels. The unit of lineBlur is in pixels.
+ * @param lineBorderColorInt The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color. The property is set as Color Int.
+ * @param lineBorderColorString The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color. The property is set as Color String.
+ * @param lineBorderWidth The width of the line border. A value of zero means no border.
  * @param lineColorInt The color with which the line will be drawn. The property is set as Color Int.
  * @param lineColorString The color with which the line will be drawn. The property is set as Color String.
  * @param lineGapWidth Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. The unit of lineGapWidth is in density-independent pixels.
@@ -38,6 +41,9 @@ public fun PolylineAnnotation(
   points: List<Point>,
   lineJoin: LineJoin? = null,
   lineBlur: Double? = null,
+  lineBorderColorInt: Int? = null,
+  lineBorderColorString: String? = null,
+  lineBorderWidth: Double? = null,
   lineColorInt: Int? = null,
   lineColorString: String? = null,
   lineGapWidth: Double? = null,
@@ -64,6 +70,15 @@ public fun PolylineAnnotation(
       }
       lineBlur?.let {
         annotationOptions.withLineBlur(it)
+      }
+      lineBorderColorInt?.let {
+        annotationOptions.withLineBorderColor(it)
+      }
+      lineBorderColorString?.let {
+        annotationOptions.withLineBorderColor(it)
+      }
+      lineBorderWidth?.let {
+        annotationOptions.withLineBorderWidth(it)
       }
       lineColorInt?.let {
         annotationOptions.withLineColor(it)
@@ -104,6 +119,18 @@ public fun PolylineAnnotation(
       }
       update(lineBlur) {
         annotation.lineBlur = it
+        annotationManager.update(annotation)
+      }
+      update(lineBorderColorInt) {
+        annotation.lineBorderColorInt = it
+        annotationManager.update(annotation)
+      }
+      update(lineBorderColorString) {
+        annotation.lineBorderColorString = it
+        annotationManager.update(annotation)
+      }
+      update(lineBorderWidth) {
+        annotation.lineBorderWidth = it
         annotationManager.update(annotation)
       }
       update(lineColorInt) {

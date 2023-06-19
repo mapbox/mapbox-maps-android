@@ -38,6 +38,18 @@ class CircleAnnotationManagerAndroidTest : BaseMapTest() {
   }
 
   @Test
+  fun testCircleEmissiveStrength() {
+    rule.runOnUiThread {
+      val expectedValue = 1.0
+      val circleAnnotationManager = mapView.annotations.createCircleAnnotationManager()
+      circleAnnotationManager.circleEmissiveStrength = expectedValue
+      assertEquals(expectedValue, circleAnnotationManager.circleEmissiveStrength)
+      circleAnnotationManager.circleEmissiveStrength = null
+      assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-emissive-strength").silentUnwrap(), circleAnnotationManager.circleEmissiveStrength)
+    }
+  }
+
+  @Test
   fun testCirclePitchAlignment() {
     rule.runOnUiThread {
       val expectedValue = CirclePitchAlignment.MAP

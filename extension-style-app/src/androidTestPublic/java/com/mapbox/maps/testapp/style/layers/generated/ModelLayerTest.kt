@@ -305,6 +305,126 @@ class ModelLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun modelEmissiveStrengthTest() {
+    val testValue = 1.0
+    val layer = modelLayer("id", "source") {
+      modelEmissiveStrength(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(testValue, layer.modelEmissiveStrength!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun modelEmissiveStrengthAsExpressionTest() {
+    val expression = number {
+      get {
+        literal("number")
+      }
+    }
+    val layer = modelLayer("id", "source") {
+      modelEmissiveStrength(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(expression.toString(), layer.modelEmissiveStrengthAsExpression.toString())
+    assertEquals(null, layer.modelEmissiveStrength)
+  }
+
+  @Test
+  @UiThreadTest
+  fun modelEmissiveStrengthTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = modelLayer("id", "source") {
+      modelEmissiveStrengthTransition(transition)
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.modelEmissiveStrengthTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun modelEmissiveStrengthTransitionSetDslTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = modelLayer("id", "source") {
+      modelEmissiveStrengthTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.modelEmissiveStrengthTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun modelHeightBasedEmissiveStrengthMultiplierTest() {
+    val testValue = listOf(0.0, 1.0, 2.0, 3.0, 4.0)
+    val layer = modelLayer("id", "source") {
+      modelHeightBasedEmissiveStrengthMultiplier(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(testValue.toString(), layer.modelHeightBasedEmissiveStrengthMultiplier?.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun modelHeightBasedEmissiveStrengthMultiplierAsExpressionTest() {
+    val expression = array {
+      literal("number")
+      literal(5)
+      get {
+        literal("array")
+      }
+    }
+    val layer = modelLayer("id", "source") {
+      modelHeightBasedEmissiveStrengthMultiplier(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(expression.toString(), layer.modelHeightBasedEmissiveStrengthMultiplierAsExpression.toString())
+    assertEquals(null, layer.modelHeightBasedEmissiveStrengthMultiplier)
+  }
+
+  @Test
+  @UiThreadTest
+  fun modelHeightBasedEmissiveStrengthMultiplierTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = modelLayer("id", "source") {
+      modelHeightBasedEmissiveStrengthMultiplierTransition(transition)
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.modelHeightBasedEmissiveStrengthMultiplierTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun modelHeightBasedEmissiveStrengthMultiplierTransitionSetDslTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = modelLayer("id", "source") {
+      modelHeightBasedEmissiveStrengthMultiplierTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.modelHeightBasedEmissiveStrengthMultiplierTransition)
+  }
+
+  @Test
+  @UiThreadTest
   fun modelOpacityTest() {
     val testValue = 1.0
     val layer = modelLayer("id", "source") {
@@ -441,6 +561,65 @@ class ModelLayerTest : BaseStyleTest() {
     }
     setupLayer(layer)
     assertEquals(transition, layer.modelRotationTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun modelRoughnessTest() {
+    val testValue = 1.0
+    val layer = modelLayer("id", "source") {
+      modelRoughness(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(testValue, layer.modelRoughness!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun modelRoughnessAsExpressionTest() {
+    val expression = number {
+      get {
+        literal("number")
+      }
+    }
+    val layer = modelLayer("id", "source") {
+      modelRoughness(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(expression.toString(), layer.modelRoughnessAsExpression.toString())
+    assertEquals(null, layer.modelRoughness)
+  }
+
+  @Test
+  @UiThreadTest
+  fun modelRoughnessTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = modelLayer("id", "source") {
+      modelRoughnessTransition(transition)
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.modelRoughnessTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun modelRoughnessTransitionSetDslTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = modelLayer("id", "source") {
+      modelRoughnessTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.modelRoughnessTransition)
   }
 
   @Test
@@ -643,6 +822,12 @@ class ModelLayerTest : BaseStyleTest() {
     assertNotNull("defaultModelColorMixIntensity should not be null", ModelLayer.defaultModelColorMixIntensity)
     assertNotNull("defaultModelColorMixIntensityAsExpression should not be null", ModelLayer.defaultModelColorMixIntensityAsExpression)
     assertNotNull("defaultModelColorMixIntensityTransition should not be null", ModelLayer.defaultModelColorMixIntensityTransition)
+    assertNotNull("defaultModelEmissiveStrength should not be null", ModelLayer.defaultModelEmissiveStrength)
+    assertNotNull("defaultModelEmissiveStrengthAsExpression should not be null", ModelLayer.defaultModelEmissiveStrengthAsExpression)
+    assertNotNull("defaultModelEmissiveStrengthTransition should not be null", ModelLayer.defaultModelEmissiveStrengthTransition)
+    assertNotNull("defaultModelHeightBasedEmissiveStrengthMultiplier should not be null", ModelLayer.defaultModelHeightBasedEmissiveStrengthMultiplier)
+    assertNotNull("defaultModelHeightBasedEmissiveStrengthMultiplierAsExpression should not be null", ModelLayer.defaultModelHeightBasedEmissiveStrengthMultiplierAsExpression)
+    assertNotNull("defaultModelHeightBasedEmissiveStrengthMultiplierTransition should not be null", ModelLayer.defaultModelHeightBasedEmissiveStrengthMultiplierTransition)
     assertNotNull("defaultModelOpacity should not be null", ModelLayer.defaultModelOpacity)
     assertNotNull("defaultModelOpacityAsExpression should not be null", ModelLayer.defaultModelOpacityAsExpression)
     assertNotNull("defaultModelOpacityTransition should not be null", ModelLayer.defaultModelOpacityTransition)
@@ -651,6 +836,9 @@ class ModelLayerTest : BaseStyleTest() {
     assertNotNull("defaultModelRotation should not be null", ModelLayer.defaultModelRotation)
     assertNotNull("defaultModelRotationAsExpression should not be null", ModelLayer.defaultModelRotationAsExpression)
     assertNotNull("defaultModelRotationTransition should not be null", ModelLayer.defaultModelRotationTransition)
+    assertNotNull("defaultModelRoughness should not be null", ModelLayer.defaultModelRoughness)
+    assertNotNull("defaultModelRoughnessAsExpression should not be null", ModelLayer.defaultModelRoughnessAsExpression)
+    assertNotNull("defaultModelRoughnessTransition should not be null", ModelLayer.defaultModelRoughnessTransition)
     assertNotNull("defaultModelScale should not be null", ModelLayer.defaultModelScale)
     assertNotNull("defaultModelScaleAsExpression should not be null", ModelLayer.defaultModelScaleAsExpression)
     assertNotNull("defaultModelScaleTransition should not be null", ModelLayer.defaultModelScaleTransition)
@@ -677,9 +865,12 @@ class ModelLayerTest : BaseStyleTest() {
     val modelCastShadowsTestValue = true
     val modelColorTestValue = "rgba(0, 0, 0, 1)"
     val modelColorMixIntensityTestValue = 1.0
+    val modelEmissiveStrengthTestValue = 1.0
+    val modelHeightBasedEmissiveStrengthMultiplierTestValue = listOf(0.0, 1.0, 2.0, 3.0, 4.0)
     val modelOpacityTestValue = 1.0
     val modelReceiveShadowsTestValue = true
     val modelRotationTestValue = listOf(0.0, 1.0, 2.0)
+    val modelRoughnessTestValue = 1.0
     val modelScaleTestValue = listOf(0.0, 1.0, 2.0)
     val modelScaleModeTestValue = ModelScaleMode.MAP
     val modelTranslationTestValue = listOf(0.0, 1.0, 2.0)
@@ -697,9 +888,12 @@ class ModelLayerTest : BaseStyleTest() {
       modelCastShadows(modelCastShadowsTestValue)
       modelColor(modelColorTestValue)
       modelColorMixIntensity(modelColorMixIntensityTestValue)
+      modelEmissiveStrength(modelEmissiveStrengthTestValue)
+      modelHeightBasedEmissiveStrengthMultiplier(modelHeightBasedEmissiveStrengthMultiplierTestValue)
       modelOpacity(modelOpacityTestValue)
       modelReceiveShadows(modelReceiveShadowsTestValue)
       modelRotation(modelRotationTestValue)
+      modelRoughness(modelRoughnessTestValue)
       modelScale(modelScaleTestValue)
       modelScaleMode(modelScaleModeTestValue)
       modelTranslation(modelTranslationTestValue)
@@ -722,9 +916,12 @@ class ModelLayerTest : BaseStyleTest() {
     assertEquals(modelCastShadowsTestValue, cachedLayer.modelCastShadows)
     assertEquals(modelColorTestValue, cachedLayer.modelColor)
     assertEquals(modelColorMixIntensityTestValue, cachedLayer.modelColorMixIntensity)
+    assertEquals(modelEmissiveStrengthTestValue, cachedLayer.modelEmissiveStrength)
+    assertEquals(modelHeightBasedEmissiveStrengthMultiplierTestValue, cachedLayer.modelHeightBasedEmissiveStrengthMultiplier)
     assertEquals(modelOpacityTestValue, cachedLayer.modelOpacity)
     assertEquals(modelReceiveShadowsTestValue, cachedLayer.modelReceiveShadows)
     assertEquals(modelRotationTestValue, cachedLayer.modelRotation)
+    assertEquals(modelRoughnessTestValue, cachedLayer.modelRoughness)
     assertEquals(modelScaleTestValue, cachedLayer.modelScale)
     assertEquals(modelScaleModeTestValue, cachedLayer.modelScaleMode)
     assertEquals(modelTranslationTestValue, cachedLayer.modelTranslation)

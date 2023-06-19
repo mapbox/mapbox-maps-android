@@ -4,6 +4,7 @@ package com.mapbox.maps.extension.style.layers.generated
 
 import androidx.annotation.ColorInt
 import androidx.annotation.UiThread
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.Layer
@@ -483,6 +484,112 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    */
   override fun circleColorTransition(block: StyleTransition.Builder.() -> Unit): CircleLayer = apply {
     circleColorTransition(StyleTransition.Builder().apply(block).build())
+  }
+
+  /**
+   * Emission strength.
+   */
+  @MapboxExperimental
+  val circleEmissiveStrength: Double?
+    /**
+     * Emission strength.
+     *
+     * Use static method [CircleLayer.defaultCircleEmissiveStrength] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      return getPropertyValue("circle-emissive-strength")
+    }
+
+  /**
+   * Emission strength.
+   *
+   * Use static method [CircleLayer.defaultCircleEmissiveStrength] to set the default property.
+   *
+   * @param circleEmissiveStrength value of circleEmissiveStrength
+   */
+  @MapboxExperimental
+  override fun circleEmissiveStrength(circleEmissiveStrength: Double): CircleLayer = apply {
+    val propertyValue = PropertyValue("circle-emissive-strength", circleEmissiveStrength)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Emission strength.
+   *
+   * This is an Expression representation of "circle-emissive-strength".
+   *
+   */
+  @MapboxExperimental
+  val circleEmissiveStrengthAsExpression: Expression?
+    /**
+     * Emission strength.
+     *
+     * Get the CircleEmissiveStrength property as an Expression
+     *
+     * Use static method [CircleLayer.defaultCircleEmissiveStrengthAsExpression] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      getPropertyValue<Expression>("circle-emissive-strength")?.let {
+        return it
+      }
+      circleEmissiveStrength?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * Emission strength.
+   *
+   * Use static method [CircleLayer.defaultCircleEmissiveStrengthAsExpression] to set the default property.
+   *
+   * @param circleEmissiveStrength value of circleEmissiveStrength as Expression
+   */
+  @MapboxExperimental
+  override fun circleEmissiveStrength(circleEmissiveStrength: Expression): CircleLayer = apply {
+    val propertyValue = PropertyValue("circle-emissive-strength", circleEmissiveStrength)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Transition options for CircleEmissiveStrength.
+   */
+  @MapboxExperimental
+  val circleEmissiveStrengthTransition: StyleTransition?
+    /**
+     * Get the CircleEmissiveStrength property transition options
+     *
+     * Use static method [CircleLayer.defaultCircleEmissiveStrengthTransition] to get the default property.
+     *
+     * @return transition options for Double
+     */
+    get() {
+      return getPropertyValue("circle-emissive-strength-transition")
+    }
+
+  /**
+   * Set the CircleEmissiveStrength property transition options
+   *
+   * Use static method [CircleLayer.defaultCircleEmissiveStrengthTransition] to set the default property.
+   *
+   * @param options transition options for Double
+   */
+  @MapboxExperimental
+  override fun circleEmissiveStrengthTransition(options: StyleTransition): CircleLayer = apply {
+    val propertyValue = PropertyValue("circle-emissive-strength-transition", options)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * DSL for [circleEmissiveStrengthTransition].
+   */
+  @MapboxExperimental
+  override fun circleEmissiveStrengthTransition(block: StyleTransition.Builder.() -> Unit): CircleLayer = apply {
+    circleEmissiveStrengthTransition(StyleTransition.Builder().apply(block).build())
   }
 
   /**
@@ -1526,6 +1633,57 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-color-transition").silentUnwrap()
 
     /**
+     * Emission strength.
+     */
+    @MapboxExperimental
+    val defaultCircleEmissiveStrength: Double?
+      /**
+       * Emission strength.
+       *
+       * Get the default value of CircleEmissiveStrength property
+       *
+       * @return Double
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-emissive-strength").silentUnwrap()
+      }
+
+    /**
+     * Emission strength.
+     *
+     * This is an Expression representation of "circle-emissive-strength".
+     *
+     */
+    @MapboxExperimental
+    val defaultCircleEmissiveStrengthAsExpression: Expression?
+      /**
+       * Get default value of the CircleEmissiveStrength property as an Expression
+       *
+       * @return Double
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-emissive-strength").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultCircleEmissiveStrength?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
+
+    /**
+     * Transition options for CircleEmissiveStrength.
+     */
+    @MapboxExperimental
+    val defaultCircleEmissiveStrengthTransition: StyleTransition?
+      /**
+       * Get the CircleEmissiveStrength property transition options
+       *
+       * @return transition options for Double
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-emissive-strength-transition").silentUnwrap()
+
+    /**
      * The opacity at which the circle will be drawn.
      */
     val defaultCircleOpacity: Double?
@@ -2094,6 +2252,40 @@ interface CircleLayerDsl {
    * DSL for [circleColorTransition].
    */
   fun circleColorTransition(block: StyleTransition.Builder.() -> Unit): CircleLayer
+
+  /**
+   * Emission strength.
+   *
+   * @param circleEmissiveStrength value of circleEmissiveStrength
+   */
+  @MapboxExperimental
+  fun circleEmissiveStrength(circleEmissiveStrength: Double = 0.0): CircleLayer
+
+  /**
+   * Emission strength.
+   *
+   * @param circleEmissiveStrength value of circleEmissiveStrength as Expression
+   */
+  @MapboxExperimental
+  fun circleEmissiveStrength(circleEmissiveStrength: Expression): CircleLayer
+
+  /**
+   * Emission strength.
+   *
+   * Set the CircleEmissiveStrength property transition options
+   *
+   * @param options transition options for Double
+   */
+  @MapboxExperimental
+  fun circleEmissiveStrengthTransition(options: StyleTransition): CircleLayer
+
+  /**
+   * Emission strength.
+   *
+   * DSL for [circleEmissiveStrengthTransition].
+   */
+  @MapboxExperimental
+  fun circleEmissiveStrengthTransition(block: StyleTransition.Builder.() -> Unit): CircleLayer
 
   /**
    * The opacity at which the circle will be drawn.

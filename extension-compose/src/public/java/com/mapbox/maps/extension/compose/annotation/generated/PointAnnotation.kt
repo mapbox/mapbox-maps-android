@@ -43,13 +43,16 @@ import com.mapbox.maps.plugin.annotation.generated.createPointAnnotationManager
  * @param textTransform Specifies how to capitalize text, similar to the CSS {@link PropertyFactory#textTransform} property.
  * @param iconColorInt The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). The property is set as Color Int.
  * @param iconColorString The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). The property is set as Color String.
+ * @param iconEmissiveStrength Emission strength. The unit of iconEmissiveStrength is in intensity.
  * @param iconHaloBlur Fade out the halo towards the outside. The unit of iconHaloBlur is in density-independent pixels.
  * @param iconHaloColorInt The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). The property is set as Color Int.
  * @param iconHaloColorString The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). The property is set as Color String.
  * @param iconHaloWidth Distance of halo to the icon outline. The unit of iconHaloWidth is in density-independent pixels.
+ * @param iconImageCrossFade Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together.
  * @param iconOpacity The opacity at which the icon will be drawn.
  * @param textColorInt The color with which the text will be drawn. The property is set as Color Int.
  * @param textColorString The color with which the text will be drawn. The property is set as Color String.
+ * @param textEmissiveStrength Emission strength. The unit of textEmissiveStrength is in intensity.
  * @param textHaloBlur The halo's fadeout distance towards the outside. The unit of textHaloBlur is in density-independent pixels.
  * @param textHaloColorInt The color of the text's halo, which helps it stand out from backgrounds. The property is set as Color Int.
  * @param textHaloColorString The color of the text's halo, which helps it stand out from backgrounds. The property is set as Color String.
@@ -82,13 +85,16 @@ public fun PointAnnotation(
   textTransform: TextTransform? = null,
   iconColorInt: Int? = null,
   iconColorString: String? = null,
+  iconEmissiveStrength: Double? = null,
   iconHaloBlur: Double? = null,
   iconHaloColorInt: Int? = null,
   iconHaloColorString: String? = null,
   iconHaloWidth: Double? = null,
+  iconImageCrossFade: Double? = null,
   iconOpacity: Double? = null,
   textColorInt: Int? = null,
   textColorString: String? = null,
+  textEmissiveStrength: Double? = null,
   textHaloBlur: Double? = null,
   textHaloColorInt: Int? = null,
   textHaloColorString: String? = null,
@@ -171,6 +177,9 @@ public fun PointAnnotation(
       iconColorString?.let {
         annotationOptions.withIconColor(it)
       }
+      iconEmissiveStrength?.let {
+        annotationOptions.withIconEmissiveStrength(it)
+      }
       iconHaloBlur?.let {
         annotationOptions.withIconHaloBlur(it)
       }
@@ -183,6 +192,9 @@ public fun PointAnnotation(
       iconHaloWidth?.let {
         annotationOptions.withIconHaloWidth(it)
       }
+      iconImageCrossFade?.let {
+        annotationOptions.withIconImageCrossFade(it)
+      }
       iconOpacity?.let {
         annotationOptions.withIconOpacity(it)
       }
@@ -191,6 +203,9 @@ public fun PointAnnotation(
       }
       textColorString?.let {
         annotationOptions.withTextColor(it)
+      }
+      textEmissiveStrength?.let {
+        annotationOptions.withTextEmissiveStrength(it)
       }
       textHaloBlur?.let {
         annotationOptions.withTextHaloBlur(it)
@@ -303,6 +318,10 @@ public fun PointAnnotation(
         annotation.iconColorString = it
         annotationManager.update(annotation)
       }
+      update(iconEmissiveStrength) {
+        annotation.iconEmissiveStrength = it
+        annotationManager.update(annotation)
+      }
       update(iconHaloBlur) {
         annotation.iconHaloBlur = it
         annotationManager.update(annotation)
@@ -319,6 +338,10 @@ public fun PointAnnotation(
         annotation.iconHaloWidth = it
         annotationManager.update(annotation)
       }
+      update(iconImageCrossFade) {
+        annotation.iconImageCrossFade = it
+        annotationManager.update(annotation)
+      }
       update(iconOpacity) {
         annotation.iconOpacity = it
         annotationManager.update(annotation)
@@ -329,6 +352,10 @@ public fun PointAnnotation(
       }
       update(textColorString) {
         annotation.textColorString = it
+        annotationManager.update(annotation)
+      }
+      update(textEmissiveStrength) {
+        annotation.textEmissiveStrength = it
         annotationManager.update(annotation)
       }
       update(textHaloBlur) {

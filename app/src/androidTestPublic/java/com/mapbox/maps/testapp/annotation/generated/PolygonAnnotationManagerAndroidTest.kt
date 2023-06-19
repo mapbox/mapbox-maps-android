@@ -51,6 +51,18 @@ class PolygonAnnotationManagerAndroidTest : BaseMapTest() {
   }
 
   @Test
+  fun testFillEmissiveStrength() {
+    rule.runOnUiThread {
+      val expectedValue = 1.0
+      val polygonAnnotationManager = mapView.annotations.createPolygonAnnotationManager()
+      polygonAnnotationManager.fillEmissiveStrength = expectedValue
+      assertEquals(expectedValue, polygonAnnotationManager.fillEmissiveStrength)
+      polygonAnnotationManager.fillEmissiveStrength = null
+      assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-emissive-strength").silentUnwrap(), polygonAnnotationManager.fillEmissiveStrength)
+    }
+  }
+
+  @Test
   fun testFillTranslate() {
     rule.runOnUiThread {
       val expectedValue = listOf(0.0, 1.0)

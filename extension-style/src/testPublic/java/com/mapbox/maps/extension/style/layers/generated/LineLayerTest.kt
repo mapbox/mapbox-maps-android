@@ -602,6 +602,262 @@ class LineLayerTest {
   }
 
   @Test
+  fun lineBorderColorSet() {
+    val layer = lineLayer("id", "source") {}
+    val testValue = "rgba(0, 0, 0, 1)"
+    layer.bindTo(style)
+    layer.lineBorderColor(testValue)
+    verify { style.setStyleLayerProperty("id", "line-border-color", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "rgba(0, 0, 0, 1)")
+  }
+
+  @Test
+  fun lineBorderColorGet() {
+    val expression = rgba {
+      literal(0)
+      literal(0)
+      literal(0)
+      literal(1.0)
+    }
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = "rgba(0, 0, 0, 1)"
+    assertEquals(expectedValue.toString(), layer.lineBorderColor?.toString())
+    verify { style.getStyleLayerProperty("id", "line-border-color") }
+  }
+  // Expression Tests
+
+  @Test
+  fun lineBorderColorAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.lineBorderColor(expression)
+    verify { style.setStyleLayerProperty("id", "line-border-color", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun lineBorderColorAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.lineBorderColorAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "line-border-color") }
+  }
+
+  @Test
+  fun lineBorderColorAsExpressionGetNull() {
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.lineBorderColorAsExpression)
+    verify { style.getStyleLayerProperty("id", "line-border-color") }
+  }
+
+  @Test
+  fun lineBorderColorAsExpressionGetFromLiteral() {
+    val expression = rgba {
+      literal(0)
+      literal(0)
+      literal(0)
+      literal(1.0)
+    }
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.lineBorderColorAsExpression.toString())
+    assertEquals("rgba(0, 0, 0, 1)", layer.lineBorderColor)
+    assertEquals(Color.BLACK, layer.lineBorderColorAsColorInt)
+    verify { style.getStyleLayerProperty("id", "line-border-color") }
+  }
+
+  @Test
+  fun lineBorderColorAsColorIntSet() {
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.lineBorderColor(Color.CYAN)
+    verify { style.setStyleLayerProperty("id", "line-border-color", capture(valueSlot)) }
+    assertEquals("[rgba, 0, 255, 255, 1.0]", valueSlot.captured.toString())
+  }
+
+  @Test
+  fun lineBorderColorAsColorIntGet() {
+    val expression = rgba {
+      literal(255)
+      literal(0)
+      literal(0)
+      literal(1.0)
+    }
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(Color.RED, layer.lineBorderColorAsColorInt)
+    verify { style.getStyleLayerProperty("id", "line-border-color") }
+  }
+
+  @Test
+  fun lineBorderColorTransitionSet() {
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.lineBorderColorTransition(
+      transitionOptions {
+        duration(100)
+        delay(200)
+      }
+    )
+    verify { style.setStyleLayerProperty("id", "line-border-color-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
+  fun lineBorderColorTransitionGet() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(transition.toValue().toString(), layer.lineBorderColorTransition?.toValue().toString())
+    verify { style.getStyleLayerProperty("id", "line-border-color-transition") }
+  }
+
+  @Test
+  fun lineBorderColorTransitionSetDsl() {
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.lineBorderColorTransition {
+      duration(100)
+      delay(200)
+    }
+    verify { style.setStyleLayerProperty("id", "line-border-color-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
+  fun lineBorderWidthSet() {
+    val layer = lineLayer("id", "source") {}
+    val testValue = 1.0
+    layer.bindTo(style)
+    layer.lineBorderWidth(testValue)
+    verify { style.setStyleLayerProperty("id", "line-border-width", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "1.0")
+  }
+
+  @Test
+  fun lineBorderWidthGet() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), layer.lineBorderWidth?.toString())
+    verify { style.getStyleLayerProperty("id", "line-border-width") }
+  }
+  // Expression Tests
+
+  @Test
+  fun lineBorderWidthAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.lineBorderWidth(expression)
+    verify { style.setStyleLayerProperty("id", "line-border-width", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun lineBorderWidthAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.lineBorderWidthAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "line-border-width") }
+  }
+
+  @Test
+  fun lineBorderWidthAsExpressionGetNull() {
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.lineBorderWidthAsExpression)
+    verify { style.getStyleLayerProperty("id", "line-border-width") }
+  }
+
+  @Test
+  fun lineBorderWidthAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(1.0, layer.lineBorderWidthAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.lineBorderWidth!!, 1E-5)
+    verify { style.getStyleLayerProperty("id", "line-border-width") }
+  }
+
+  @Test
+  fun lineBorderWidthTransitionSet() {
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.lineBorderWidthTransition(
+      transitionOptions {
+        duration(100)
+        delay(200)
+      }
+    )
+    verify { style.setStyleLayerProperty("id", "line-border-width-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
+  fun lineBorderWidthTransitionGet() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(transition.toValue().toString(), layer.lineBorderWidthTransition?.toValue().toString())
+    verify { style.getStyleLayerProperty("id", "line-border-width-transition") }
+  }
+
+  @Test
+  fun lineBorderWidthTransitionSetDsl() {
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.lineBorderWidthTransition {
+      duration(100)
+      delay(200)
+    }
+    verify { style.setStyleLayerProperty("id", "line-border-width-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
   fun lineColorSet() {
     val layer = lineLayer("id", "source") {}
     val testValue = "rgba(0, 0, 0, 1)"
@@ -921,6 +1177,113 @@ class LineLayerTest {
       delay(200)
     }
     verify { style.setStyleLayerProperty("id", "line-depth-occlusion-factor-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
+  fun lineEmissiveStrengthSet() {
+    val layer = lineLayer("id", "source") {}
+    val testValue = 1.0
+    layer.bindTo(style)
+    layer.lineEmissiveStrength(testValue)
+    verify { style.setStyleLayerProperty("id", "line-emissive-strength", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "1.0")
+  }
+
+  @Test
+  fun lineEmissiveStrengthGet() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), layer.lineEmissiveStrength?.toString())
+    verify { style.getStyleLayerProperty("id", "line-emissive-strength") }
+  }
+  // Expression Tests
+
+  @Test
+  fun lineEmissiveStrengthAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.lineEmissiveStrength(expression)
+    verify { style.setStyleLayerProperty("id", "line-emissive-strength", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun lineEmissiveStrengthAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.lineEmissiveStrengthAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "line-emissive-strength") }
+  }
+
+  @Test
+  fun lineEmissiveStrengthAsExpressionGetNull() {
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.lineEmissiveStrengthAsExpression)
+    verify { style.getStyleLayerProperty("id", "line-emissive-strength") }
+  }
+
+  @Test
+  fun lineEmissiveStrengthAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(1.0, layer.lineEmissiveStrengthAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.lineEmissiveStrength!!, 1E-5)
+    verify { style.getStyleLayerProperty("id", "line-emissive-strength") }
+  }
+
+  @Test
+  fun lineEmissiveStrengthTransitionSet() {
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.lineEmissiveStrengthTransition(
+      transitionOptions {
+        duration(100)
+        delay(200)
+      }
+    )
+    verify { style.setStyleLayerProperty("id", "line-emissive-strength-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
+  fun lineEmissiveStrengthTransitionGet() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(transition.toValue().toString(), layer.lineEmissiveStrengthTransition?.toValue().toString())
+    verify { style.getStyleLayerProperty("id", "line-emissive-strength-transition") }
+  }
+
+  @Test
+  fun lineEmissiveStrengthTransitionSetDsl() {
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.lineEmissiveStrengthTransition {
+      duration(100)
+      delay(200)
+    }
+    verify { style.setStyleLayerProperty("id", "line-emissive-strength-transition", capture(valueSlot)) }
     assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
   }
 
@@ -1998,6 +2361,125 @@ class LineLayerTest {
   }
 
   @Test
+  fun defaultLineBorderColorTest() {
+    val expression = rgba {
+      literal(0)
+      literal(0)
+      literal(0)
+      literal(1.0)
+    }
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val expectedValue = "rgba(0, 0, 0, 1)"
+    assertEquals(expectedValue.toString(), LineLayer.defaultLineBorderColor?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-border-color") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultLineBorderColorAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), LineLayer.defaultLineBorderColorAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-border-color") }
+  }
+
+  @Test
+  fun defaultLineBorderColorAsExpressionGetFromLiteral() {
+    val expression = rgba {
+      literal(0)
+      literal(0)
+      literal(0)
+      literal(1.0)
+    }
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    assertEquals(expression.toString(), LineLayer.defaultLineBorderColorAsExpression.toString())
+    assertEquals("rgba(0, 0, 0, 1)", LineLayer.defaultLineBorderColor)
+    assertEquals(Color.BLACK, LineLayer.defaultLineBorderColorAsColorInt)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-border-color") }
+  }
+
+  @Test
+  fun defaultLineBorderColorAsColorIntGet() {
+    val expression = rgba {
+      literal(255)
+      literal(0)
+      literal(0)
+      literal(1.0)
+    }
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    assertEquals(Color.RED, LineLayer.defaultLineBorderColorAsColorInt)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-border-color") }
+  }
+
+  @Test
+  fun defaultLineBorderColorTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+
+    assertEquals(transition.toValue().toString(), LineLayer.defaultLineBorderColorTransition?.toValue().toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-border-color-transition") }
+  }
+
+  @Test
+  fun defaultLineBorderWidthTest() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), LineLayer.defaultLineBorderWidth?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-border-width") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultLineBorderWidthAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), LineLayer.defaultLineBorderWidthAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-border-width") }
+  }
+
+  @Test
+  fun defaultLineBorderWidthAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    assertEquals(1.0, LineLayer.defaultLineBorderWidthAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, LineLayer.defaultLineBorderWidth!!, 1E-5)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-border-width") }
+  }
+
+  @Test
+  fun defaultLineBorderWidthTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+
+    assertEquals(transition.toValue().toString(), LineLayer.defaultLineBorderWidthTransition?.toValue().toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-border-width-transition") }
+  }
+
+  @Test
   fun defaultLineColorTest() {
     val expression = rgba {
       literal(0)
@@ -2145,6 +2627,50 @@ class LineLayerTest {
 
     assertEquals(transition.toValue().toString(), LineLayer.defaultLineDepthOcclusionFactorTransition?.toValue().toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-depth-occlusion-factor-transition") }
+  }
+
+  @Test
+  fun defaultLineEmissiveStrengthTest() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), LineLayer.defaultLineEmissiveStrength?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-emissive-strength") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultLineEmissiveStrengthAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), LineLayer.defaultLineEmissiveStrengthAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-emissive-strength") }
+  }
+
+  @Test
+  fun defaultLineEmissiveStrengthAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    assertEquals(1.0, LineLayer.defaultLineEmissiveStrengthAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, LineLayer.defaultLineEmissiveStrength!!, 1E-5)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-emissive-strength") }
+  }
+
+  @Test
+  fun defaultLineEmissiveStrengthTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+
+    assertEquals(transition.toValue().toString(), LineLayer.defaultLineEmissiveStrengthTransition?.toValue().toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-emissive-strength-transition") }
   }
 
   @Test

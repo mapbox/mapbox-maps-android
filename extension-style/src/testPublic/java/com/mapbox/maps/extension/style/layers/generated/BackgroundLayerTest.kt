@@ -206,6 +206,113 @@ class BackgroundLayerTest {
   }
 
   @Test
+  fun backgroundEmissiveStrengthSet() {
+    val layer = backgroundLayer("id") {}
+    val testValue = 1.0
+    layer.bindTo(style)
+    layer.backgroundEmissiveStrength(testValue)
+    verify { style.setStyleLayerProperty("id", "background-emissive-strength", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "1.0")
+  }
+
+  @Test
+  fun backgroundEmissiveStrengthGet() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = backgroundLayer("id") { }
+    layer.bindTo(style)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), layer.backgroundEmissiveStrength?.toString())
+    verify { style.getStyleLayerProperty("id", "background-emissive-strength") }
+  }
+  // Expression Tests
+
+  @Test
+  fun backgroundEmissiveStrengthAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = backgroundLayer("id") {}
+    layer.bindTo(style)
+    layer.backgroundEmissiveStrength(expression)
+    verify { style.setStyleLayerProperty("id", "background-emissive-strength", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun backgroundEmissiveStrengthAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = backgroundLayer("id") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.backgroundEmissiveStrengthAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "background-emissive-strength") }
+  }
+
+  @Test
+  fun backgroundEmissiveStrengthAsExpressionGetNull() {
+    val layer = backgroundLayer("id") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.backgroundEmissiveStrengthAsExpression)
+    verify { style.getStyleLayerProperty("id", "background-emissive-strength") }
+  }
+
+  @Test
+  fun backgroundEmissiveStrengthAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    val layer = backgroundLayer("id") { }
+    layer.bindTo(style)
+    assertEquals(1.0, layer.backgroundEmissiveStrengthAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.backgroundEmissiveStrength!!, 1E-5)
+    verify { style.getStyleLayerProperty("id", "background-emissive-strength") }
+  }
+
+  @Test
+  fun backgroundEmissiveStrengthTransitionSet() {
+    val layer = backgroundLayer("id") {}
+    layer.bindTo(style)
+    layer.backgroundEmissiveStrengthTransition(
+      transitionOptions {
+        duration(100)
+        delay(200)
+      }
+    )
+    verify { style.setStyleLayerProperty("id", "background-emissive-strength-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
+  fun backgroundEmissiveStrengthTransitionGet() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+    val layer = backgroundLayer("id") {}
+    layer.bindTo(style)
+    assertEquals(transition.toValue().toString(), layer.backgroundEmissiveStrengthTransition?.toValue().toString())
+    verify { style.getStyleLayerProperty("id", "background-emissive-strength-transition") }
+  }
+
+  @Test
+  fun backgroundEmissiveStrengthTransitionSetDsl() {
+    val layer = backgroundLayer("id") {}
+    layer.bindTo(style)
+    layer.backgroundEmissiveStrengthTransition {
+      duration(100)
+      delay(200)
+    }
+    verify { style.setStyleLayerProperty("id", "background-emissive-strength-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
   fun backgroundOpacitySet() {
     val layer = backgroundLayer("id") {}
     val testValue = 1.0
@@ -494,6 +601,50 @@ class BackgroundLayerTest {
 
     assertEquals(transition.toValue().toString(), BackgroundLayer.defaultBackgroundColorTransition?.toValue().toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("background", "background-color-transition") }
+  }
+
+  @Test
+  fun defaultBackgroundEmissiveStrengthTest() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), BackgroundLayer.defaultBackgroundEmissiveStrength?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("background", "background-emissive-strength") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultBackgroundEmissiveStrengthAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), BackgroundLayer.defaultBackgroundEmissiveStrengthAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("background", "background-emissive-strength") }
+  }
+
+  @Test
+  fun defaultBackgroundEmissiveStrengthAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    assertEquals(1.0, BackgroundLayer.defaultBackgroundEmissiveStrengthAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, BackgroundLayer.defaultBackgroundEmissiveStrength!!, 1E-5)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("background", "background-emissive-strength") }
+  }
+
+  @Test
+  fun defaultBackgroundEmissiveStrengthTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+
+    assertEquals(transition.toValue().toString(), BackgroundLayer.defaultBackgroundEmissiveStrengthTransition?.toValue().toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("background", "background-emissive-strength-transition") }
   }
 
   @Test

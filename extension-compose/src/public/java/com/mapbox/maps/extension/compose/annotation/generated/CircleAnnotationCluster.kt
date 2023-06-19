@@ -20,6 +20,7 @@ import com.mapbox.maps.plugin.annotation.generated.createCircleAnnotationManager
  *
  * @param annotations List of [CircleAnnotationOptions] to be added to the cluster.
  * @param annotationConfig Configuration for [CircleAnnotationCluster].
+ * @param circleEmissiveStrength Emission strength. The unit of circleEmissiveStrength is in intensity.
  * @param circlePitchAlignment Orientation of circle when map is pitched.
  * @param circlePitchScale Controls the scaling behavior of the circle when the map is pitched.
  * @param circleTranslate The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. The unit of circleTranslate is in density-independent pixels.
@@ -31,6 +32,7 @@ import com.mapbox.maps.plugin.annotation.generated.createCircleAnnotationManager
 public fun CircleAnnotationCluster(
   annotations: List<CircleAnnotationOptions>,
   annotationConfig: AnnotationConfig? = null,
+  circleEmissiveStrength: Double? = null,
   circlePitchAlignment: CirclePitchAlignment? = null,
   circlePitchScale: CirclePitchScale? = null,
   circleTranslate: List<Double>? = null,
@@ -50,6 +52,9 @@ public fun CircleAnnotationCluster(
     update = {
       set(annotations) {
         annotationClusterItems = it
+      }
+      set(circleEmissiveStrength) {
+        annotationManager.circleEmissiveStrength = it
       }
       set(circlePitchAlignment) {
         annotationManager.circlePitchAlignment = it

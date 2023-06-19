@@ -43,6 +43,8 @@ class PolylineAnnotationManager(
     dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_JOIN] = false
     dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_SORT_KEY] = false
     dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_BLUR] = false
+    dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR] = false
+    dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_BORDER_WIDTH] = false
     dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_COLOR] = false
     dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_GAP_WIDTH] = false
     dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_OFFSET] = false
@@ -64,6 +66,14 @@ class PolylineAnnotationManager(
       PolylineAnnotationOptions.PROPERTY_LINE_BLUR -> {
         layer?.lineBlur(get(PolylineAnnotationOptions.PROPERTY_LINE_BLUR))
         dragLayer?.lineBlur(get(PolylineAnnotationOptions.PROPERTY_LINE_BLUR))
+      }
+      PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR -> {
+        layer?.lineBorderColor(get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR))
+        dragLayer?.lineBorderColor(get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR))
+      }
+      PolylineAnnotationOptions.PROPERTY_LINE_BORDER_WIDTH -> {
+        layer?.lineBorderWidth(get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_WIDTH))
+        dragLayer?.lineBorderWidth(get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_WIDTH))
       }
       PolylineAnnotationOptions.PROPERTY_LINE_COLOR -> {
         layer?.lineColor(get(PolylineAnnotationOptions.PROPERTY_LINE_COLOR))
@@ -101,6 +111,8 @@ class PolylineAnnotationManager(
    * PolylineAnnotationOptions.PROPERTY_LINE_JOIN - LineJoin
    * PolylineAnnotationOptions.PROPERTY_LINE_SORT_KEY - Double
    * PolylineAnnotationOptions.PROPERTY_LINE_BLUR - Double
+   * PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR - String
+   * PolylineAnnotationOptions.PROPERTY_LINE_BORDER_WIDTH - Double
    * PolylineAnnotationOptions.PROPERTY_LINE_COLOR - String
    * PolylineAnnotationOptions.PROPERTY_LINE_GAP_WIDTH - Double
    * PolylineAnnotationOptions.PROPERTY_LINE_OFFSET - Double
@@ -128,6 +140,8 @@ class PolylineAnnotationManager(
    * PolylineAnnotationOptions.PROPERTY_LINE_JOIN - LineJoin
    * PolylineAnnotationOptions.PROPERTY_LINE_SORT_KEY - Double
    * PolylineAnnotationOptions.PROPERTY_LINE_BLUR - Double
+   * PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR - String
+   * PolylineAnnotationOptions.PROPERTY_LINE_BORDER_WIDTH - Double
    * PolylineAnnotationOptions.PROPERTY_LINE_COLOR - String
    * PolylineAnnotationOptions.PROPERTY_LINE_GAP_WIDTH - Double
    * PolylineAnnotationOptions.PROPERTY_LINE_OFFSET - Double
@@ -289,6 +303,32 @@ class PolylineAnnotationManager(
       newValue?.let {
         layer?.lineDepthOcclusionFactor(it)
         dragLayer?.lineDepthOcclusionFactor(it)
+      }
+    }
+
+  /**
+   * The LineEmissiveStrength property
+   *
+   * Emission strength. The unit of lineEmissiveStrength is in intensity.
+   */
+  var lineEmissiveStrength: Double?
+    /**
+     * Get the LineEmissiveStrength property
+     *
+     * @return property wrapper value around Double
+     */
+    get(): Double? {
+      return layer?.lineEmissiveStrength
+    }
+    /**
+     * Set the LineEmissiveStrength property
+     * @param value property wrapper value around Double
+     */
+    set(value) {
+      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("line", "line-emissive-strength").silentUnwrap()
+      newValue?.let {
+        layer?.lineEmissiveStrength(it)
+        dragLayer?.lineEmissiveStrength(it)
       }
     }
 

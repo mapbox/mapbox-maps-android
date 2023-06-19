@@ -156,6 +156,32 @@ class CircleAnnotationManager(
 
   // Property accessors
   /**
+   * The CircleEmissiveStrength property
+   *
+   * Emission strength. The unit of circleEmissiveStrength is in intensity.
+   */
+  var circleEmissiveStrength: Double?
+    /**
+     * Get the CircleEmissiveStrength property
+     *
+     * @return property wrapper value around Double
+     */
+    get(): Double? {
+      return layer?.circleEmissiveStrength
+    }
+    /**
+     * Set the CircleEmissiveStrength property
+     * @param value property wrapper value around Double
+     */
+    set(value) {
+      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-emissive-strength").silentUnwrap()
+      newValue?.let {
+        layer?.circleEmissiveStrength(it)
+        dragLayer?.circleEmissiveStrength(it)
+      }
+    }
+
+  /**
    * The CirclePitchAlignment property
    *
    * Orientation of circle when map is pitched.

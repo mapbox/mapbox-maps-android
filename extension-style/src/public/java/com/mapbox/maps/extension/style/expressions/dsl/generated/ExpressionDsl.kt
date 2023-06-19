@@ -220,6 +220,16 @@ fun has(block: Expression.ExpressionBuilder.() -> Unit): Expression = Expression
 fun heatmapDensity(): Expression = Expression.heatmapDensity()
 
 /**
+ * Creates a color value from hue (range 0-360), saturation and lightness components (range 0-100), and an alpha component of 1. If any component is out of range, the expression is an error.
+ */
+fun hsl(block: Expression.ExpressionBuilder.() -> Unit): Expression = Expression.hsl(block)
+
+/**
+ * Creates a color value from hue (range 0-360), saturation and lightness components (range 0-100), and an alpha component (range 0-1). If any component is out of range, the expression is an error.
+ */
+fun hsla(block: Expression.ExpressionBuilder.() -> Unit): Expression = Expression.hsla(block)
+
+/**
  * Returns the feature's id, if it has one.
  */
 fun id(): Expression = Expression.id()
@@ -335,6 +345,11 @@ fun match(block: Expression.ExpressionBuilder.() -> Unit): Expression = Expressi
 fun max(block: Expression.ExpressionBuilder.() -> Unit): Expression = Expression.max(block)
 
 /**
+ * Returns a requested property of the light configuration based on the supplied options. Currently the only supported option is `brightness` which returns the global brightness value of the lights on a scale of 0 to 1, where 0 means total darkness and 1 means full brightness.
+ */
+fun measureLight(block: Expression.ExpressionBuilder.() -> Unit): Expression = Expression.measureLight(block)
+
+/**
  * Returns the minimum value of the inputs.
  */
 fun min(block: Expression.ExpressionBuilder.() -> Unit): Expression = Expression.min(block)
@@ -368,6 +383,11 @@ fun pitch(): Expression = Expression.pitch()
  * Returns the feature properties object.  Note that in some cases, it may be more efficient to use `["get", "property_name"]` directly.
  */
 fun properties(): Expression = Expression.properties()
+
+/**
+ * Returns a random value in the specified range (first two input numbers) based on a supplied seed (third input). The seed can be an expression or a constant number or string value.
+ */
+fun random(block: Expression.ExpressionBuilder.() -> Unit): Expression = Expression.random(block)
 
 /**
  * Returns the raster value of a pixel computed via `raster-color-mix`. Can only be used in the `raster-color` property.

@@ -3221,6 +3221,113 @@ class SymbolLayerTest {
   }
 
   @Test
+  fun iconEmissiveStrengthSet() {
+    val layer = symbolLayer("id", "source") {}
+    val testValue = 1.0
+    layer.bindTo(style)
+    layer.iconEmissiveStrength(testValue)
+    verify { style.setStyleLayerProperty("id", "icon-emissive-strength", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "1.0")
+  }
+
+  @Test
+  fun iconEmissiveStrengthGet() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), layer.iconEmissiveStrength?.toString())
+    verify { style.getStyleLayerProperty("id", "icon-emissive-strength") }
+  }
+  // Expression Tests
+
+  @Test
+  fun iconEmissiveStrengthAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.iconEmissiveStrength(expression)
+    verify { style.setStyleLayerProperty("id", "icon-emissive-strength", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun iconEmissiveStrengthAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.iconEmissiveStrengthAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "icon-emissive-strength") }
+  }
+
+  @Test
+  fun iconEmissiveStrengthAsExpressionGetNull() {
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.iconEmissiveStrengthAsExpression)
+    verify { style.getStyleLayerProperty("id", "icon-emissive-strength") }
+  }
+
+  @Test
+  fun iconEmissiveStrengthAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(1.0, layer.iconEmissiveStrengthAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.iconEmissiveStrength!!, 1E-5)
+    verify { style.getStyleLayerProperty("id", "icon-emissive-strength") }
+  }
+
+  @Test
+  fun iconEmissiveStrengthTransitionSet() {
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.iconEmissiveStrengthTransition(
+      transitionOptions {
+        duration(100)
+        delay(200)
+      }
+    )
+    verify { style.setStyleLayerProperty("id", "icon-emissive-strength-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
+  fun iconEmissiveStrengthTransitionGet() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(transition.toValue().toString(), layer.iconEmissiveStrengthTransition?.toValue().toString())
+    verify { style.getStyleLayerProperty("id", "icon-emissive-strength-transition") }
+  }
+
+  @Test
+  fun iconEmissiveStrengthTransitionSetDsl() {
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.iconEmissiveStrengthTransition {
+      duration(100)
+      delay(200)
+    }
+    verify { style.setStyleLayerProperty("id", "icon-emissive-strength-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
   fun iconHaloBlurSet() {
     val layer = symbolLayer("id", "source") {}
     val testValue = 1.0
@@ -3580,6 +3687,113 @@ class SymbolLayerTest {
       delay(200)
     }
     verify { style.setStyleLayerProperty("id", "icon-halo-width-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
+  fun iconImageCrossFadeSet() {
+    val layer = symbolLayer("id", "source") {}
+    val testValue = 1.0
+    layer.bindTo(style)
+    layer.iconImageCrossFade(testValue)
+    verify { style.setStyleLayerProperty("id", "icon-image-cross-fade", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "1.0")
+  }
+
+  @Test
+  fun iconImageCrossFadeGet() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), layer.iconImageCrossFade?.toString())
+    verify { style.getStyleLayerProperty("id", "icon-image-cross-fade") }
+  }
+  // Expression Tests
+
+  @Test
+  fun iconImageCrossFadeAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.iconImageCrossFade(expression)
+    verify { style.setStyleLayerProperty("id", "icon-image-cross-fade", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun iconImageCrossFadeAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.iconImageCrossFadeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "icon-image-cross-fade") }
+  }
+
+  @Test
+  fun iconImageCrossFadeAsExpressionGetNull() {
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.iconImageCrossFadeAsExpression)
+    verify { style.getStyleLayerProperty("id", "icon-image-cross-fade") }
+  }
+
+  @Test
+  fun iconImageCrossFadeAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(1.0, layer.iconImageCrossFadeAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.iconImageCrossFade!!, 1E-5)
+    verify { style.getStyleLayerProperty("id", "icon-image-cross-fade") }
+  }
+
+  @Test
+  fun iconImageCrossFadeTransitionSet() {
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.iconImageCrossFadeTransition(
+      transitionOptions {
+        duration(100)
+        delay(200)
+      }
+    )
+    verify { style.setStyleLayerProperty("id", "icon-image-cross-fade-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
+  fun iconImageCrossFadeTransitionGet() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(transition.toValue().toString(), layer.iconImageCrossFadeTransition?.toValue().toString())
+    verify { style.getStyleLayerProperty("id", "icon-image-cross-fade-transition") }
+  }
+
+  @Test
+  fun iconImageCrossFadeTransitionSetDsl() {
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.iconImageCrossFadeTransition {
+      duration(100)
+      delay(200)
+    }
+    verify { style.setStyleLayerProperty("id", "icon-image-cross-fade-transition", capture(valueSlot)) }
     assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
   }
 
@@ -4011,6 +4225,113 @@ class SymbolLayerTest {
       delay(200)
     }
     verify { style.setStyleLayerProperty("id", "text-color-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
+  fun textEmissiveStrengthSet() {
+    val layer = symbolLayer("id", "source") {}
+    val testValue = 1.0
+    layer.bindTo(style)
+    layer.textEmissiveStrength(testValue)
+    verify { style.setStyleLayerProperty("id", "text-emissive-strength", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "1.0")
+  }
+
+  @Test
+  fun textEmissiveStrengthGet() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), layer.textEmissiveStrength?.toString())
+    verify { style.getStyleLayerProperty("id", "text-emissive-strength") }
+  }
+  // Expression Tests
+
+  @Test
+  fun textEmissiveStrengthAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.textEmissiveStrength(expression)
+    verify { style.setStyleLayerProperty("id", "text-emissive-strength", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun textEmissiveStrengthAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.textEmissiveStrengthAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "text-emissive-strength") }
+  }
+
+  @Test
+  fun textEmissiveStrengthAsExpressionGetNull() {
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.textEmissiveStrengthAsExpression)
+    verify { style.getStyleLayerProperty("id", "text-emissive-strength") }
+  }
+
+  @Test
+  fun textEmissiveStrengthAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(1.0, layer.textEmissiveStrengthAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.textEmissiveStrength!!, 1E-5)
+    verify { style.getStyleLayerProperty("id", "text-emissive-strength") }
+  }
+
+  @Test
+  fun textEmissiveStrengthTransitionSet() {
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.textEmissiveStrengthTransition(
+      transitionOptions {
+        duration(100)
+        delay(200)
+      }
+    )
+    verify { style.setStyleLayerProperty("id", "text-emissive-strength-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
+  fun textEmissiveStrengthTransitionGet() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(transition.toValue().toString(), layer.textEmissiveStrengthTransition?.toValue().toString())
+    verify { style.getStyleLayerProperty("id", "text-emissive-strength-transition") }
+  }
+
+  @Test
+  fun textEmissiveStrengthTransitionSetDsl() {
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.textEmissiveStrengthTransition {
+      duration(100)
+      delay(200)
+    }
+    verify { style.setStyleLayerProperty("id", "text-emissive-strength-transition", capture(valueSlot)) }
     assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
   }
 
@@ -6180,6 +6501,50 @@ class SymbolLayerTest {
   }
 
   @Test
+  fun defaultIconEmissiveStrengthTest() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), SymbolLayer.defaultIconEmissiveStrength?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-emissive-strength") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultIconEmissiveStrengthAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), SymbolLayer.defaultIconEmissiveStrengthAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-emissive-strength") }
+  }
+
+  @Test
+  fun defaultIconEmissiveStrengthAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    assertEquals(1.0, SymbolLayer.defaultIconEmissiveStrengthAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, SymbolLayer.defaultIconEmissiveStrength!!, 1E-5)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-emissive-strength") }
+  }
+
+  @Test
+  fun defaultIconEmissiveStrengthTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+
+    assertEquals(transition.toValue().toString(), SymbolLayer.defaultIconEmissiveStrengthTransition?.toValue().toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-emissive-strength-transition") }
+  }
+
+  @Test
   fun defaultIconHaloBlurTest() {
     val testValue = 1.0
     every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
@@ -6340,6 +6705,50 @@ class SymbolLayerTest {
 
     assertEquals(transition.toValue().toString(), SymbolLayer.defaultIconHaloWidthTransition?.toValue().toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-halo-width-transition") }
+  }
+
+  @Test
+  fun defaultIconImageCrossFadeTest() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), SymbolLayer.defaultIconImageCrossFade?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-image-cross-fade") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultIconImageCrossFadeAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), SymbolLayer.defaultIconImageCrossFadeAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-image-cross-fade") }
+  }
+
+  @Test
+  fun defaultIconImageCrossFadeAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    assertEquals(1.0, SymbolLayer.defaultIconImageCrossFadeAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, SymbolLayer.defaultIconImageCrossFade!!, 1E-5)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-image-cross-fade") }
+  }
+
+  @Test
+  fun defaultIconImageCrossFadeTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+
+    assertEquals(transition.toValue().toString(), SymbolLayer.defaultIconImageCrossFadeTransition?.toValue().toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-image-cross-fade-transition") }
   }
 
   @Test
@@ -6536,6 +6945,50 @@ class SymbolLayerTest {
 
     assertEquals(transition.toValue().toString(), SymbolLayer.defaultTextColorTransition?.toValue().toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-color-transition") }
+  }
+
+  @Test
+  fun defaultTextEmissiveStrengthTest() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), SymbolLayer.defaultTextEmissiveStrength?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-emissive-strength") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultTextEmissiveStrengthAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), SymbolLayer.defaultTextEmissiveStrengthAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-emissive-strength") }
+  }
+
+  @Test
+  fun defaultTextEmissiveStrengthAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    assertEquals(1.0, SymbolLayer.defaultTextEmissiveStrengthAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, SymbolLayer.defaultTextEmissiveStrength!!, 1E-5)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-emissive-strength") }
+  }
+
+  @Test
+  fun defaultTextEmissiveStrengthTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+
+    assertEquals(transition.toValue().toString(), SymbolLayer.defaultTextEmissiveStrengthTransition?.toValue().toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-emissive-strength-transition") }
   }
 
   @Test

@@ -765,6 +765,39 @@ class PointAnnotation(
     }
 
   /**
+   * The iconEmissiveStrength property
+   *
+   * Emission strength. The unit of iconEmissiveStrength is in intensity.
+   */
+  var iconEmissiveStrength: Double?
+    /**
+     * Get the iconEmissiveStrength property
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = jsonObject.get(PointAnnotationOptions.PROPERTY_ICON_EMISSIVE_STRENGTH)
+      value?.let {
+        return it.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the iconEmissiveStrength property
+     *
+     * To update the pointAnnotation on the map use {@link pointAnnotationManager#update(Annotation)}.
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      if (value != null) {
+        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_ICON_EMISSIVE_STRENGTH, value)
+      } else {
+        jsonObject.remove(PointAnnotationOptions.PROPERTY_ICON_EMISSIVE_STRENGTH)
+      }
+    }
+
+  /**
    * The iconHaloBlur property
    *
    * Fade out the halo towards the outside. The unit of iconHaloBlur is in density-independent pixels.
@@ -897,6 +930,39 @@ class PointAnnotation(
     }
 
   /**
+   * The iconImageCrossFade property
+   *
+   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together.
+   */
+  var iconImageCrossFade: Double?
+    /**
+     * Get the iconImageCrossFade property
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = jsonObject.get(PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE)
+      value?.let {
+        return it.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the iconImageCrossFade property
+     *
+     * To update the pointAnnotation on the map use {@link pointAnnotationManager#update(Annotation)}.
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      if (value != null) {
+        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE, value)
+      } else {
+        jsonObject.remove(PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE)
+      }
+    }
+
+  /**
    * The iconOpacity property
    *
    * The opacity at which the icon will be drawn.
@@ -992,6 +1058,39 @@ class PointAnnotation(
         jsonObject.addProperty(PointAnnotationOptions.PROPERTY_TEXT_COLOR, value)
       } else {
         jsonObject.remove(PointAnnotationOptions.PROPERTY_TEXT_COLOR)
+      }
+    }
+
+  /**
+   * The textEmissiveStrength property
+   *
+   * Emission strength. The unit of textEmissiveStrength is in intensity.
+   */
+  var textEmissiveStrength: Double?
+    /**
+     * Get the textEmissiveStrength property
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = jsonObject.get(PointAnnotationOptions.PROPERTY_TEXT_EMISSIVE_STRENGTH)
+      value?.let {
+        return it.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the textEmissiveStrength property
+     *
+     * To update the pointAnnotation on the map use {@link pointAnnotationManager#update(Annotation)}.
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      if (value != null) {
+        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_TEXT_EMISSIVE_STRENGTH, value)
+      } else {
+        jsonObject.remove(PointAnnotationOptions.PROPERTY_TEXT_EMISSIVE_STRENGTH)
       }
     }
 
@@ -1243,6 +1342,9 @@ class PointAnnotation(
     jsonObject.get(PointAnnotationOptions.PROPERTY_ICON_COLOR)?.let {
       annotationManager.enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_ICON_COLOR)
     }
+    jsonObject.get(PointAnnotationOptions.PROPERTY_ICON_EMISSIVE_STRENGTH)?.let {
+      annotationManager.enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_ICON_EMISSIVE_STRENGTH)
+    }
     jsonObject.get(PointAnnotationOptions.PROPERTY_ICON_HALO_BLUR)?.let {
       annotationManager.enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_ICON_HALO_BLUR)
     }
@@ -1252,11 +1354,17 @@ class PointAnnotation(
     jsonObject.get(PointAnnotationOptions.PROPERTY_ICON_HALO_WIDTH)?.let {
       annotationManager.enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_ICON_HALO_WIDTH)
     }
+    jsonObject.get(PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE)?.let {
+      annotationManager.enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE)
+    }
     jsonObject.get(PointAnnotationOptions.PROPERTY_ICON_OPACITY)?.let {
       annotationManager.enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_ICON_OPACITY)
     }
     jsonObject.get(PointAnnotationOptions.PROPERTY_TEXT_COLOR)?.let {
       annotationManager.enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_TEXT_COLOR)
+    }
+    jsonObject.get(PointAnnotationOptions.PROPERTY_TEXT_EMISSIVE_STRENGTH)?.let {
+      annotationManager.enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_TEXT_EMISSIVE_STRENGTH)
     }
     jsonObject.get(PointAnnotationOptions.PROPERTY_TEXT_HALO_BLUR)?.let {
       annotationManager.enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_TEXT_HALO_BLUR)

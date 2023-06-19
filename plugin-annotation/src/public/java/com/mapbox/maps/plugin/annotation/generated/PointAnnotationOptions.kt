@@ -416,6 +416,24 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   }
 
   /**
+   * Emission strength.
+   */
+  var iconEmissiveStrength: Double? = null
+
+  /**
+   * Set icon-emissive-strength to initialise the pointAnnotation with.
+   *
+   * Emission strength. The unit of iconEmissiveStrength is in intensity.
+   *
+   * @param iconEmissiveStrength the icon-emissive-strength value
+   * @return this
+   */
+  fun withIconEmissiveStrength(iconEmissiveStrength: Double): PointAnnotationOptions {
+    this.iconEmissiveStrength = iconEmissiveStrength
+    return this
+  }
+
+  /**
    * Fade out the halo towards the outside.
    */
   var iconHaloBlur: Double? = null
@@ -483,6 +501,24 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   }
 
   /**
+   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together.
+   */
+  var iconImageCrossFade: Double? = null
+
+  /**
+   * Set icon-image-cross-fade to initialise the pointAnnotation with.
+   *
+   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together.
+   *
+   * @param iconImageCrossFade the icon-image-cross-fade value
+   * @return this
+   */
+  fun withIconImageCrossFade(iconImageCrossFade: Double): PointAnnotationOptions {
+    this.iconImageCrossFade = iconImageCrossFade
+    return this
+  }
+
+  /**
    * The opacity at which the icon will be drawn.
    */
   var iconOpacity: Double? = null
@@ -528,6 +564,24 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
    */
   fun withTextColor(@ColorInt textColor: Int): PointAnnotationOptions {
     this.textColor = ColorUtils.colorToRgbaString(textColor)
+    return this
+  }
+
+  /**
+   * Emission strength.
+   */
+  var textEmissiveStrength: Double? = null
+
+  /**
+   * Set text-emissive-strength to initialise the pointAnnotation with.
+   *
+   * Emission strength. The unit of textEmissiveStrength is in intensity.
+   *
+   * @param textEmissiveStrength the text-emissive-strength value
+   * @return this
+   */
+  fun withTextEmissiveStrength(textEmissiveStrength: Double): PointAnnotationOptions {
+    this.textEmissiveStrength = textEmissiveStrength
     return this
   }
 
@@ -771,6 +825,9 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
     iconColor?.let {
       jsonObject.addProperty(PROPERTY_ICON_COLOR, it)
     }
+    iconEmissiveStrength?.let {
+      jsonObject.addProperty(PROPERTY_ICON_EMISSIVE_STRENGTH, it)
+    }
     iconHaloBlur?.let {
       jsonObject.addProperty(PROPERTY_ICON_HALO_BLUR, it)
     }
@@ -780,11 +837,17 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
     iconHaloWidth?.let {
       jsonObject.addProperty(PROPERTY_ICON_HALO_WIDTH, it)
     }
+    iconImageCrossFade?.let {
+      jsonObject.addProperty(PROPERTY_ICON_IMAGE_CROSS_FADE, it)
+    }
     iconOpacity?.let {
       jsonObject.addProperty(PROPERTY_ICON_OPACITY, it)
     }
     textColor?.let {
       jsonObject.addProperty(PROPERTY_TEXT_COLOR, it)
+    }
+    textEmissiveStrength?.let {
+      jsonObject.addProperty(PROPERTY_TEXT_EMISSIVE_STRENGTH, it)
     }
     textHaloBlur?.let {
       jsonObject.addProperty(PROPERTY_TEXT_HALO_BLUR, it)
@@ -872,6 +935,9 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
     /** The property for icon-color */
     const val PROPERTY_ICON_COLOR = "icon-color"
 
+    /** The property for icon-emissive-strength */
+    const val PROPERTY_ICON_EMISSIVE_STRENGTH = "icon-emissive-strength"
+
     /** The property for icon-halo-blur */
     const val PROPERTY_ICON_HALO_BLUR = "icon-halo-blur"
 
@@ -881,11 +947,17 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
     /** The property for icon-halo-width */
     const val PROPERTY_ICON_HALO_WIDTH = "icon-halo-width"
 
+    /** The property for icon-image-cross-fade */
+    const val PROPERTY_ICON_IMAGE_CROSS_FADE = "icon-image-cross-fade"
+
     /** The property for icon-opacity */
     const val PROPERTY_ICON_OPACITY = "icon-opacity"
 
     /** The property for text-color */
     const val PROPERTY_TEXT_COLOR = "text-color"
+
+    /** The property for text-emissive-strength */
+    const val PROPERTY_TEXT_EMISSIVE_STRENGTH = "text-emissive-strength"
 
     /** The property for text-halo-blur */
     const val PROPERTY_TEXT_HALO_BLUR = "text-halo-blur"
@@ -978,6 +1050,9 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
       if (feature.hasProperty(PROPERTY_ICON_COLOR)) {
         options.iconColor = feature.getProperty(PROPERTY_ICON_COLOR).asString
       }
+      if (feature.hasProperty(PROPERTY_ICON_EMISSIVE_STRENGTH)) {
+        options.iconEmissiveStrength = feature.getProperty(PROPERTY_ICON_EMISSIVE_STRENGTH).asDouble
+      }
       if (feature.hasProperty(PROPERTY_ICON_HALO_BLUR)) {
         options.iconHaloBlur = feature.getProperty(PROPERTY_ICON_HALO_BLUR).asDouble
       }
@@ -987,11 +1062,17 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
       if (feature.hasProperty(PROPERTY_ICON_HALO_WIDTH)) {
         options.iconHaloWidth = feature.getProperty(PROPERTY_ICON_HALO_WIDTH).asDouble
       }
+      if (feature.hasProperty(PROPERTY_ICON_IMAGE_CROSS_FADE)) {
+        options.iconImageCrossFade = feature.getProperty(PROPERTY_ICON_IMAGE_CROSS_FADE).asDouble
+      }
       if (feature.hasProperty(PROPERTY_ICON_OPACITY)) {
         options.iconOpacity = feature.getProperty(PROPERTY_ICON_OPACITY).asDouble
       }
       if (feature.hasProperty(PROPERTY_TEXT_COLOR)) {
         options.textColor = feature.getProperty(PROPERTY_TEXT_COLOR).asString
+      }
+      if (feature.hasProperty(PROPERTY_TEXT_EMISSIVE_STRENGTH)) {
+        options.textEmissiveStrength = feature.getProperty(PROPERTY_TEXT_EMISSIVE_STRENGTH).asDouble
       }
       if (feature.hasProperty(PROPERTY_TEXT_HALO_BLUR)) {
         options.textHaloBlur = feature.getProperty(PROPERTY_TEXT_HALO_BLUR).asDouble

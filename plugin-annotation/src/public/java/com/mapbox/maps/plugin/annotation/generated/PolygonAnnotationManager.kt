@@ -161,6 +161,32 @@ class PolygonAnnotationManager(
     }
 
   /**
+   * The FillEmissiveStrength property
+   *
+   * Emission strength. The unit of fillEmissiveStrength is in intensity.
+   */
+  var fillEmissiveStrength: Double?
+    /**
+     * Get the FillEmissiveStrength property
+     *
+     * @return property wrapper value around Double
+     */
+    get(): Double? {
+      return layer?.fillEmissiveStrength
+    }
+    /**
+     * Set the FillEmissiveStrength property
+     * @param value property wrapper value around Double
+     */
+    set(value) {
+      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-emissive-strength").silentUnwrap()
+      newValue?.let {
+        layer?.fillEmissiveStrength(it)
+        dragLayer?.fillEmissiveStrength(it)
+      }
+    }
+
+  /**
    * The FillTranslate property
    *
    * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. The unit of fillTranslate is in density-independent pixels.

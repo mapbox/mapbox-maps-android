@@ -657,6 +657,220 @@ class ModelLayerTest {
   }
 
   @Test
+  fun modelEmissiveStrengthSet() {
+    val layer = modelLayer("id", "source") {}
+    val testValue = 1.0
+    layer.bindTo(style)
+    layer.modelEmissiveStrength(testValue)
+    verify { style.setStyleLayerProperty("id", "model-emissive-strength", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "1.0")
+  }
+
+  @Test
+  fun modelEmissiveStrengthGet() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = modelLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), layer.modelEmissiveStrength?.toString())
+    verify { style.getStyleLayerProperty("id", "model-emissive-strength") }
+  }
+  // Expression Tests
+
+  @Test
+  fun modelEmissiveStrengthAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = modelLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.modelEmissiveStrength(expression)
+    verify { style.setStyleLayerProperty("id", "model-emissive-strength", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun modelEmissiveStrengthAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = modelLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.modelEmissiveStrengthAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "model-emissive-strength") }
+  }
+
+  @Test
+  fun modelEmissiveStrengthAsExpressionGetNull() {
+    val layer = modelLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.modelEmissiveStrengthAsExpression)
+    verify { style.getStyleLayerProperty("id", "model-emissive-strength") }
+  }
+
+  @Test
+  fun modelEmissiveStrengthAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    val layer = modelLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(1.0, layer.modelEmissiveStrengthAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.modelEmissiveStrength!!, 1E-5)
+    verify { style.getStyleLayerProperty("id", "model-emissive-strength") }
+  }
+
+  @Test
+  fun modelEmissiveStrengthTransitionSet() {
+    val layer = modelLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.modelEmissiveStrengthTransition(
+      transitionOptions {
+        duration(100)
+        delay(200)
+      }
+    )
+    verify { style.setStyleLayerProperty("id", "model-emissive-strength-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
+  fun modelEmissiveStrengthTransitionGet() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+    val layer = modelLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(transition.toValue().toString(), layer.modelEmissiveStrengthTransition?.toValue().toString())
+    verify { style.getStyleLayerProperty("id", "model-emissive-strength-transition") }
+  }
+
+  @Test
+  fun modelEmissiveStrengthTransitionSetDsl() {
+    val layer = modelLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.modelEmissiveStrengthTransition {
+      duration(100)
+      delay(200)
+    }
+    verify { style.setStyleLayerProperty("id", "model-emissive-strength-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
+  fun modelHeightBasedEmissiveStrengthMultiplierSet() {
+    val layer = modelLayer("id", "source") {}
+    val testValue = listOf(0.0, 1.0, 2.0, 3.0, 4.0)
+    layer.bindTo(style)
+    layer.modelHeightBasedEmissiveStrengthMultiplier(testValue)
+    verify { style.setStyleLayerProperty("id", "model-height-based-emissive-strength-multiplier", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[0.0, 1.0, 2.0, 3.0, 4.0]")
+  }
+
+  @Test
+  fun modelHeightBasedEmissiveStrengthMultiplierGet() {
+    val testValue = listOf(0.0, 1.0, 2.0, 3.0, 4.0)
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = modelLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = listOf(0.0, 1.0, 2.0, 3.0, 4.0)
+    assertEquals(expectedValue.toString(), layer.modelHeightBasedEmissiveStrengthMultiplier?.toString())
+    verify { style.getStyleLayerProperty("id", "model-height-based-emissive-strength-multiplier") }
+  }
+  // Expression Tests
+
+  @Test
+  fun modelHeightBasedEmissiveStrengthMultiplierAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = modelLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.modelHeightBasedEmissiveStrengthMultiplier(expression)
+    verify { style.setStyleLayerProperty("id", "model-height-based-emissive-strength-multiplier", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun modelHeightBasedEmissiveStrengthMultiplierAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = modelLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.modelHeightBasedEmissiveStrengthMultiplierAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "model-height-based-emissive-strength-multiplier") }
+  }
+
+  @Test
+  fun modelHeightBasedEmissiveStrengthMultiplierAsExpressionGetNull() {
+    val layer = modelLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.modelHeightBasedEmissiveStrengthMultiplierAsExpression)
+    verify { style.getStyleLayerProperty("id", "model-height-based-emissive-strength-multiplier") }
+  }
+
+  @Test
+  fun modelHeightBasedEmissiveStrengthMultiplierAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(listOf(0.0, 1.0, 2.0, 3.0, 4.0))
+    val layer = modelLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals("[literal, [0.0, 1.0, 2.0, 3.0, 4.0]]", layer.modelHeightBasedEmissiveStrengthMultiplierAsExpression.toString())
+    assertEquals(listOf(0.0, 1.0, 2.0, 3.0, 4.0), layer.modelHeightBasedEmissiveStrengthMultiplier!!)
+    verify { style.getStyleLayerProperty("id", "model-height-based-emissive-strength-multiplier") }
+  }
+
+  @Test
+  fun modelHeightBasedEmissiveStrengthMultiplierTransitionSet() {
+    val layer = modelLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.modelHeightBasedEmissiveStrengthMultiplierTransition(
+      transitionOptions {
+        duration(100)
+        delay(200)
+      }
+    )
+    verify { style.setStyleLayerProperty("id", "model-height-based-emissive-strength-multiplier-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
+  fun modelHeightBasedEmissiveStrengthMultiplierTransitionGet() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+    val layer = modelLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(transition.toValue().toString(), layer.modelHeightBasedEmissiveStrengthMultiplierTransition?.toValue().toString())
+    verify { style.getStyleLayerProperty("id", "model-height-based-emissive-strength-multiplier-transition") }
+  }
+
+  @Test
+  fun modelHeightBasedEmissiveStrengthMultiplierTransitionSetDsl() {
+    val layer = modelLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.modelHeightBasedEmissiveStrengthMultiplierTransition {
+      duration(100)
+      delay(200)
+    }
+    verify { style.setStyleLayerProperty("id", "model-height-based-emissive-strength-multiplier-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
   fun modelOpacitySet() {
     val layer = modelLayer("id", "source") {}
     val testValue = 1.0
@@ -935,6 +1149,113 @@ class ModelLayerTest {
       delay(200)
     }
     verify { style.setStyleLayerProperty("id", "model-rotation-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
+  fun modelRoughnessSet() {
+    val layer = modelLayer("id", "source") {}
+    val testValue = 1.0
+    layer.bindTo(style)
+    layer.modelRoughness(testValue)
+    verify { style.setStyleLayerProperty("id", "model-roughness", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "1.0")
+  }
+
+  @Test
+  fun modelRoughnessGet() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = modelLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), layer.modelRoughness?.toString())
+    verify { style.getStyleLayerProperty("id", "model-roughness") }
+  }
+  // Expression Tests
+
+  @Test
+  fun modelRoughnessAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = modelLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.modelRoughness(expression)
+    verify { style.setStyleLayerProperty("id", "model-roughness", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun modelRoughnessAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = modelLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.modelRoughnessAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "model-roughness") }
+  }
+
+  @Test
+  fun modelRoughnessAsExpressionGetNull() {
+    val layer = modelLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.modelRoughnessAsExpression)
+    verify { style.getStyleLayerProperty("id", "model-roughness") }
+  }
+
+  @Test
+  fun modelRoughnessAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    val layer = modelLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(1.0, layer.modelRoughnessAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.modelRoughness!!, 1E-5)
+    verify { style.getStyleLayerProperty("id", "model-roughness") }
+  }
+
+  @Test
+  fun modelRoughnessTransitionSet() {
+    val layer = modelLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.modelRoughnessTransition(
+      transitionOptions {
+        duration(100)
+        delay(200)
+      }
+    )
+    verify { style.setStyleLayerProperty("id", "model-roughness-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
+  fun modelRoughnessTransitionGet() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+    val layer = modelLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(transition.toValue().toString(), layer.modelRoughnessTransition?.toValue().toString())
+    verify { style.getStyleLayerProperty("id", "model-roughness-transition") }
+  }
+
+  @Test
+  fun modelRoughnessTransitionSetDsl() {
+    val layer = modelLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.modelRoughnessTransition {
+      duration(100)
+      delay(200)
+    }
+    verify { style.setStyleLayerProperty("id", "model-roughness-transition", capture(valueSlot)) }
     assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
   }
 
@@ -1564,6 +1885,94 @@ class ModelLayerTest {
   }
 
   @Test
+  fun defaultModelEmissiveStrengthTest() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), ModelLayer.defaultModelEmissiveStrength?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("model", "model-emissive-strength") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultModelEmissiveStrengthAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), ModelLayer.defaultModelEmissiveStrengthAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("model", "model-emissive-strength") }
+  }
+
+  @Test
+  fun defaultModelEmissiveStrengthAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    assertEquals(1.0, ModelLayer.defaultModelEmissiveStrengthAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, ModelLayer.defaultModelEmissiveStrength!!, 1E-5)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("model", "model-emissive-strength") }
+  }
+
+  @Test
+  fun defaultModelEmissiveStrengthTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+
+    assertEquals(transition.toValue().toString(), ModelLayer.defaultModelEmissiveStrengthTransition?.toValue().toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("model", "model-emissive-strength-transition") }
+  }
+
+  @Test
+  fun defaultModelHeightBasedEmissiveStrengthMultiplierTest() {
+    val testValue = listOf(0.0, 1.0, 2.0, 3.0, 4.0)
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = listOf(0.0, 1.0, 2.0, 3.0, 4.0)
+    assertEquals(expectedValue.toString(), ModelLayer.defaultModelHeightBasedEmissiveStrengthMultiplier?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("model", "model-height-based-emissive-strength-multiplier") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultModelHeightBasedEmissiveStrengthMultiplierAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), ModelLayer.defaultModelHeightBasedEmissiveStrengthMultiplierAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("model", "model-height-based-emissive-strength-multiplier") }
+  }
+
+  @Test
+  fun defaultModelHeightBasedEmissiveStrengthMultiplierAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(listOf(0.0, 1.0, 2.0, 3.0, 4.0))
+    assertEquals("[literal, [0.0, 1.0, 2.0, 3.0, 4.0]]", ModelLayer.defaultModelHeightBasedEmissiveStrengthMultiplierAsExpression.toString())
+    assertEquals(listOf(0.0, 1.0, 2.0, 3.0, 4.0), ModelLayer.defaultModelHeightBasedEmissiveStrengthMultiplier!!)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("model", "model-height-based-emissive-strength-multiplier") }
+  }
+
+  @Test
+  fun defaultModelHeightBasedEmissiveStrengthMultiplierTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+
+    assertEquals(transition.toValue().toString(), ModelLayer.defaultModelHeightBasedEmissiveStrengthMultiplierTransition?.toValue().toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("model", "model-height-based-emissive-strength-multiplier-transition") }
+  }
+
+  @Test
   fun defaultModelOpacityTest() {
     val testValue = 1.0
     every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
@@ -1681,6 +2090,50 @@ class ModelLayerTest {
 
     assertEquals(transition.toValue().toString(), ModelLayer.defaultModelRotationTransition?.toValue().toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("model", "model-rotation-transition") }
+  }
+
+  @Test
+  fun defaultModelRoughnessTest() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), ModelLayer.defaultModelRoughness?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("model", "model-roughness") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultModelRoughnessAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), ModelLayer.defaultModelRoughnessAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("model", "model-roughness") }
+  }
+
+  @Test
+  fun defaultModelRoughnessAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    assertEquals(1.0, ModelLayer.defaultModelRoughnessAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, ModelLayer.defaultModelRoughness!!, 1E-5)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("model", "model-roughness") }
+  }
+
+  @Test
+  fun defaultModelRoughnessTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+
+    assertEquals(transition.toValue().toString(), ModelLayer.defaultModelRoughnessTransition?.toValue().toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("model", "model-roughness-transition") }
   }
 
   @Test

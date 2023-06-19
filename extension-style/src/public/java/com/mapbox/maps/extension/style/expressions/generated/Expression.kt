@@ -522,6 +522,22 @@ class Expression : Value {
     }
 
     /**
+     * Creates a color value from hue (range 0-360), saturation and lightness components (range 0-100), and an
+     * alpha component of 1. If any component is out of range, the expression is an error.
+     */
+    fun hsl(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
+      this@ExpressionBuilder.arguments.add(Expression.hsl(block))
+    }
+
+    /**
+     * Creates a color value from hue (range 0-360), saturation and lightness components (range 0-100), and an
+     * alpha component (range 0-1). If any component is out of range, the expression is an error.
+     */
+    fun hsla(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
+      this@ExpressionBuilder.arguments.add(Expression.hsla(block))
+    }
+
+    /**
      * Returns the feature's id, if it has one.
      */
     fun id(): ExpressionBuilder = apply {
@@ -702,6 +718,15 @@ class Expression : Value {
     }
 
     /**
+     * Returns a requested property of the light configuration based on the supplied options. Currently the only
+     * supported option is `brightness` which returns the global brightness value of the lights on a scale
+     * of 0 to 1, where 0 means total darkness and 1 means full brightness.
+     */
+    fun measureLight(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
+      this@ExpressionBuilder.arguments.add(Expression.measureLight(block))
+    }
+
+    /**
      * Returns the minimum value of the inputs.
      */
     fun min(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
@@ -758,6 +783,14 @@ class Expression : Value {
      */
     fun properties(): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.properties())
+    }
+
+    /**
+     * Returns a random value in the specified range (first two input numbers) based on a supplied
+     * seed (third input). The seed can be an expression or a constant number or string value.
+     */
+    fun random(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
+      this@ExpressionBuilder.arguments.add(Expression.random(block))
     }
 
     /**
@@ -2575,6 +2608,44 @@ class Expression : Value {
     fun heatmapDensity(): Expression = ExpressionBuilder("heatmap-density").build()
 
     /**
+     * Creates a color value from hue (range 0-360), saturation and lightness components (range 0-100), and an
+     * alpha component of 1. If any component is out of range, the expression is an error.
+     */
+    @JvmStatic
+    fun hsl(vararg expressions: Expression): Expression {
+      val builder = ExpressionBuilder("hsl")
+      expressions.forEach {
+        builder.addArgument(it)
+      }
+      return builder.build()
+    }
+
+    /**
+     * DSL function for "hsl".
+     */
+    fun hsl(block: ExpressionBuilder.() -> Unit): Expression =
+      ExpressionBuilder("hsl").apply(block).build()
+
+    /**
+     * Creates a color value from hue (range 0-360), saturation and lightness components (range 0-100), and an
+     * alpha component (range 0-1). If any component is out of range, the expression is an error.
+     */
+    @JvmStatic
+    fun hsla(vararg expressions: Expression): Expression {
+      val builder = ExpressionBuilder("hsla")
+      expressions.forEach {
+        builder.addArgument(it)
+      }
+      return builder.build()
+    }
+
+    /**
+     * DSL function for "hsla".
+     */
+    fun hsla(block: ExpressionBuilder.() -> Unit): Expression =
+      ExpressionBuilder("hsla").apply(block).build()
+
+    /**
      * Returns the feature's id, if it has one.
      */
     @JvmStatic
@@ -2894,6 +2965,26 @@ class Expression : Value {
       ExpressionBuilder("max").apply(block).build()
 
     /**
+     * Returns a requested property of the light configuration based on the supplied options. Currently the only
+     * supported option is `brightness` which returns the global brightness value of the lights on a scale
+     * of 0 to 1, where 0 means total darkness and 1 means full brightness.
+     */
+    @JvmStatic
+    fun measureLight(vararg expressions: Expression): Expression {
+      val builder = ExpressionBuilder("measure-light")
+      expressions.forEach {
+        builder.addArgument(it)
+      }
+      return builder.build()
+    }
+
+    /**
+     * DSL function for "measure-light".
+     */
+    fun measureLight(block: ExpressionBuilder.() -> Unit): Expression =
+      ExpressionBuilder("measure-light").apply(block).build()
+
+    /**
      * Returns the minimum value of the inputs.
      */
     @JvmStatic
@@ -2999,6 +3090,25 @@ class Expression : Value {
      */
     @JvmStatic
     fun properties(): Expression = ExpressionBuilder("properties").build()
+
+    /**
+     * Returns a random value in the specified range (first two input numbers) based on a supplied
+     * seed (third input). The seed can be an expression or a constant number or string value.
+     */
+    @JvmStatic
+    fun random(vararg expressions: Expression): Expression {
+      val builder = ExpressionBuilder("random")
+      expressions.forEach {
+        builder.addArgument(it)
+      }
+      return builder.build()
+    }
+
+    /**
+     * DSL function for "random".
+     */
+    fun random(block: ExpressionBuilder.() -> Unit): Expression =
+      ExpressionBuilder("random").apply(block).build()
 
     /**
      * Returns the raster value of a pixel computed via `raster-color-mix`. Can only be used in the

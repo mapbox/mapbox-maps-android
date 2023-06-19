@@ -94,6 +94,61 @@ class BackgroundLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun backgroundEmissiveStrengthTest() {
+    val testValue = 1.0
+    val layer = backgroundLayer("id") {
+      backgroundEmissiveStrength(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(testValue, layer.backgroundEmissiveStrength!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun backgroundEmissiveStrengthAsExpressionTest() {
+    val expression = literal(1.0)
+    val layer = backgroundLayer("id") {
+      backgroundEmissiveStrength(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(1.0, layer.backgroundEmissiveStrengthAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.backgroundEmissiveStrength!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun backgroundEmissiveStrengthTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = backgroundLayer("id") {
+      backgroundEmissiveStrengthTransition(transition)
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.backgroundEmissiveStrengthTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun backgroundEmissiveStrengthTransitionSetDslTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = backgroundLayer("id") {
+      backgroundEmissiveStrengthTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.backgroundEmissiveStrengthTransition)
+  }
+
+  @Test
+  @UiThreadTest
   fun backgroundOpacityTest() {
     val testValue = 1.0
     val layer = backgroundLayer("id") {
@@ -193,6 +248,9 @@ class BackgroundLayerTest : BaseStyleTest() {
     assertNotNull("defaultBackgroundColorAsExpression should not be null", BackgroundLayer.defaultBackgroundColorAsExpression)
     assertNotNull("defaultBackgroundColorAsColorInt should not be null", BackgroundLayer.defaultBackgroundColorAsColorInt)
     assertNotNull("defaultBackgroundColorTransition should not be null", BackgroundLayer.defaultBackgroundColorTransition)
+    assertNotNull("defaultBackgroundEmissiveStrength should not be null", BackgroundLayer.defaultBackgroundEmissiveStrength)
+    assertNotNull("defaultBackgroundEmissiveStrengthAsExpression should not be null", BackgroundLayer.defaultBackgroundEmissiveStrengthAsExpression)
+    assertNotNull("defaultBackgroundEmissiveStrengthTransition should not be null", BackgroundLayer.defaultBackgroundEmissiveStrengthTransition)
     assertNotNull("defaultBackgroundOpacity should not be null", BackgroundLayer.defaultBackgroundOpacity)
     assertNotNull("defaultBackgroundOpacityAsExpression should not be null", BackgroundLayer.defaultBackgroundOpacityAsExpression)
     assertNotNull("defaultBackgroundOpacityTransition should not be null", BackgroundLayer.defaultBackgroundOpacityTransition)
@@ -204,11 +262,13 @@ class BackgroundLayerTest : BaseStyleTest() {
   @UiThreadTest
   fun getLayerTest() {
     val backgroundColorTestValue = "rgba(0, 0, 0, 1)"
+    val backgroundEmissiveStrengthTestValue = 1.0
     val backgroundOpacityTestValue = 1.0
     val backgroundPatternTestValue = "abc"
 
     val layer = backgroundLayer("id") {
       backgroundColor(backgroundColorTestValue)
+      backgroundEmissiveStrength(backgroundEmissiveStrengthTestValue)
       backgroundOpacity(backgroundOpacityTestValue)
       backgroundPattern(backgroundPatternTestValue)
     }
@@ -221,6 +281,7 @@ class BackgroundLayerTest : BaseStyleTest() {
     setupLayer(cachedLayer)
 
     assertEquals(backgroundColorTestValue, cachedLayer.backgroundColor)
+    assertEquals(backgroundEmissiveStrengthTestValue, cachedLayer.backgroundEmissiveStrength)
     assertEquals(backgroundOpacityTestValue, cachedLayer.backgroundOpacity)
     assertEquals(backgroundPatternTestValue, cachedLayer.backgroundPattern)
   }

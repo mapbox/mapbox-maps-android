@@ -255,6 +255,134 @@ class LineLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun lineBorderColorTest() {
+    val testValue = "rgba(0, 0, 0, 1)"
+    val layer = lineLayer("id", "source") {
+      lineBorderColor(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(testValue.toString(), layer.lineBorderColor?.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineBorderColorAsExpressionTest() {
+    val expression = toColor {
+      get {
+        literal("color")
+      }
+    }
+    val layer = lineLayer("id", "source") {
+      lineBorderColor(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(expression.toString(), layer.lineBorderColorAsExpression.toString())
+    assertEquals(null, layer.lineBorderColor)
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineBorderColorAsColorIntTest() {
+    val layer = lineLayer("id", "source") {
+      lineBorderColor(Color.CYAN)
+    }
+    setupLayer(layer)
+    assertEquals(Color.CYAN, layer.lineBorderColorAsColorInt)
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineBorderColorTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = lineLayer("id", "source") {
+      lineBorderColorTransition(transition)
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.lineBorderColorTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineBorderColorTransitionSetDslTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = lineLayer("id", "source") {
+      lineBorderColorTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.lineBorderColorTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineBorderWidthTest() {
+    val testValue = 1.0
+    val layer = lineLayer("id", "source") {
+      lineBorderWidth(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(testValue, layer.lineBorderWidth!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineBorderWidthAsExpressionTest() {
+    val expression = number {
+      get {
+        literal("number")
+      }
+    }
+    val layer = lineLayer("id", "source") {
+      lineBorderWidth(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(expression.toString(), layer.lineBorderWidthAsExpression.toString())
+    assertEquals(null, layer.lineBorderWidth)
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineBorderWidthTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = lineLayer("id", "source") {
+      lineBorderWidthTransition(transition)
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.lineBorderWidthTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineBorderWidthTransitionSetDslTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = lineLayer("id", "source") {
+      lineBorderWidthTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.lineBorderWidthTransition)
+  }
+
+  @Test
+  @UiThreadTest
   fun lineColorTest() {
     val testValue = "rgba(0, 0, 0, 1)"
     val layer = lineLayer("id", "source") {
@@ -399,6 +527,61 @@ class LineLayerTest : BaseStyleTest() {
     }
     setupLayer(layer)
     assertEquals(transition, layer.lineDepthOcclusionFactorTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineEmissiveStrengthTest() {
+    val testValue = 1.0
+    val layer = lineLayer("id", "source") {
+      lineEmissiveStrength(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(testValue, layer.lineEmissiveStrength!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineEmissiveStrengthAsExpressionTest() {
+    val expression = literal(1.0)
+    val layer = lineLayer("id", "source") {
+      lineEmissiveStrength(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(1.0, layer.lineEmissiveStrengthAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.lineEmissiveStrength!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineEmissiveStrengthTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = lineLayer("id", "source") {
+      lineEmissiveStrengthTransition(transition)
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.lineEmissiveStrengthTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineEmissiveStrengthTransitionSetDslTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = lineLayer("id", "source") {
+      lineEmissiveStrengthTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.lineEmissiveStrengthTransition)
   }
 
   @Test
@@ -832,6 +1015,13 @@ class LineLayerTest : BaseStyleTest() {
     assertNotNull("defaultLineBlur should not be null", LineLayer.defaultLineBlur)
     assertNotNull("defaultLineBlurAsExpression should not be null", LineLayer.defaultLineBlurAsExpression)
     assertNotNull("defaultLineBlurTransition should not be null", LineLayer.defaultLineBlurTransition)
+    assertNotNull("defaultLineBorderColor should not be null", LineLayer.defaultLineBorderColor)
+    assertNotNull("defaultLineBorderColorAsExpression should not be null", LineLayer.defaultLineBorderColorAsExpression)
+    assertNotNull("defaultLineBorderColorAsColorInt should not be null", LineLayer.defaultLineBorderColorAsColorInt)
+    assertNotNull("defaultLineBorderColorTransition should not be null", LineLayer.defaultLineBorderColorTransition)
+    assertNotNull("defaultLineBorderWidth should not be null", LineLayer.defaultLineBorderWidth)
+    assertNotNull("defaultLineBorderWidthAsExpression should not be null", LineLayer.defaultLineBorderWidthAsExpression)
+    assertNotNull("defaultLineBorderWidthTransition should not be null", LineLayer.defaultLineBorderWidthTransition)
     assertNotNull("defaultLineColor should not be null", LineLayer.defaultLineColor)
     assertNotNull("defaultLineColorAsExpression should not be null", LineLayer.defaultLineColorAsExpression)
     assertNotNull("defaultLineColorAsColorInt should not be null", LineLayer.defaultLineColorAsColorInt)
@@ -841,6 +1031,9 @@ class LineLayerTest : BaseStyleTest() {
     assertNotNull("defaultLineDepthOcclusionFactor should not be null", LineLayer.defaultLineDepthOcclusionFactor)
     assertNotNull("defaultLineDepthOcclusionFactorAsExpression should not be null", LineLayer.defaultLineDepthOcclusionFactorAsExpression)
     assertNotNull("defaultLineDepthOcclusionFactorTransition should not be null", LineLayer.defaultLineDepthOcclusionFactorTransition)
+    assertNotNull("defaultLineEmissiveStrength should not be null", LineLayer.defaultLineEmissiveStrength)
+    assertNotNull("defaultLineEmissiveStrengthAsExpression should not be null", LineLayer.defaultLineEmissiveStrengthAsExpression)
+    assertNotNull("defaultLineEmissiveStrengthTransition should not be null", LineLayer.defaultLineEmissiveStrengthTransition)
     assertNotNull("defaultLineGapWidth should not be null", LineLayer.defaultLineGapWidth)
     assertNotNull("defaultLineGapWidthAsExpression should not be null", LineLayer.defaultLineGapWidthAsExpression)
     assertNotNull("defaultLineGapWidthTransition should not be null", LineLayer.defaultLineGapWidthTransition)
@@ -879,9 +1072,12 @@ class LineLayerTest : BaseStyleTest() {
     val lineRoundLimitTestValue = 1.0
     val lineSortKeyTestValue = 1.0
     val lineBlurTestValue = 1.0
+    val lineBorderColorTestValue = "rgba(0, 0, 0, 1)"
+    val lineBorderWidthTestValue = 1.0
     val lineColorTestValue = "rgba(0, 0, 0, 1)"
     val lineDasharrayTestValue = listOf(1.0, 2.0)
     val lineDepthOcclusionFactorTestValue = 1.0
+    val lineEmissiveStrengthTestValue = 1.0
     val lineGapWidthTestValue = 1.0
     val lineGradientTestValue = interpolate {
       linear()
@@ -926,9 +1122,12 @@ class LineLayerTest : BaseStyleTest() {
       lineRoundLimit(lineRoundLimitTestValue)
       lineSortKey(lineSortKeyTestValue)
       lineBlur(lineBlurTestValue)
+      lineBorderColor(lineBorderColorTestValue)
+      lineBorderWidth(lineBorderWidthTestValue)
       lineColor(lineColorTestValue)
       lineDasharray(lineDasharrayTestValue)
       lineDepthOcclusionFactor(lineDepthOcclusionFactorTestValue)
+      lineEmissiveStrength(lineEmissiveStrengthTestValue)
       lineGapWidth(lineGapWidthTestValue)
       lineGradient(lineGradientTestValue)
       lineOffset(lineOffsetTestValue)
@@ -957,9 +1156,12 @@ class LineLayerTest : BaseStyleTest() {
     assertEquals(lineRoundLimitTestValue, cachedLayer.lineRoundLimit)
     assertEquals(lineSortKeyTestValue, cachedLayer.lineSortKey)
     assertEquals(lineBlurTestValue, cachedLayer.lineBlur)
+    assertEquals(lineBorderColorTestValue, cachedLayer.lineBorderColor)
+    assertEquals(lineBorderWidthTestValue, cachedLayer.lineBorderWidth)
     assertEquals(lineColorTestValue, cachedLayer.lineColor)
     assertEquals(lineDasharrayTestValue, cachedLayer.lineDasharray)
     assertEquals(lineDepthOcclusionFactorTestValue, cachedLayer.lineDepthOcclusionFactor)
+    assertEquals(lineEmissiveStrengthTestValue, cachedLayer.lineEmissiveStrength)
     assertEquals(lineGapWidthTestValue, cachedLayer.lineGapWidth)
     assertEquals(lineGradientTestValue, cachedLayer.lineGradient)
     assertEquals(lineOffsetTestValue, cachedLayer.lineOffset)

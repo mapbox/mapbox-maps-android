@@ -77,6 +77,55 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
   }
 
   /**
+   * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color.
+   */
+  var lineBorderColor: String? = null
+
+  /**
+   * Set line-border-color to initialise the polylineAnnotation with.
+   *
+   * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color.
+   *
+   * @param lineBorderColor the line-border-color value
+   * @return this
+   */
+  fun withLineBorderColor(lineBorderColor: String): PolylineAnnotationOptions {
+    this.lineBorderColor = lineBorderColor
+    return this
+  }
+
+  /**
+   * Set line-border-color to initialise the polylineAnnotation with.
+   *
+   * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color.
+   *
+   * @param lineBorderColor the line-border-color value with ColorInt format
+   * @return this
+   */
+  fun withLineBorderColor(@ColorInt lineBorderColor: Int): PolylineAnnotationOptions {
+    this.lineBorderColor = ColorUtils.colorToRgbaString(lineBorderColor)
+    return this
+  }
+
+  /**
+   * The width of the line border. A value of zero means no border.
+   */
+  var lineBorderWidth: Double? = null
+
+  /**
+   * Set line-border-width to initialise the polylineAnnotation with.
+   *
+   * The width of the line border. A value of zero means no border.
+   *
+   * @param lineBorderWidth the line-border-width value
+   * @return this
+   */
+  fun withLineBorderWidth(lineBorderWidth: Double): PolylineAnnotationOptions {
+    this.lineBorderWidth = lineBorderWidth
+    return this
+  }
+
+  /**
    * The color with which the line will be drawn.
    */
   var lineColor: String? = null
@@ -301,6 +350,12 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
     lineBlur?.let {
       jsonObject.addProperty(PROPERTY_LINE_BLUR, it)
     }
+    lineBorderColor?.let {
+      jsonObject.addProperty(PROPERTY_LINE_BORDER_COLOR, it)
+    }
+    lineBorderWidth?.let {
+      jsonObject.addProperty(PROPERTY_LINE_BORDER_WIDTH, it)
+    }
     lineColor?.let {
       jsonObject.addProperty(PROPERTY_LINE_COLOR, it)
     }
@@ -338,6 +393,12 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
 
     /** The property for line-blur */
     const val PROPERTY_LINE_BLUR = "line-blur"
+
+    /** The property for line-border-color */
+    const val PROPERTY_LINE_BORDER_COLOR = "line-border-color"
+
+    /** The property for line-border-width */
+    const val PROPERTY_LINE_BORDER_WIDTH = "line-border-width"
 
     /** The property for line-color */
     const val PROPERTY_LINE_COLOR = "line-color"
@@ -384,6 +445,12 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
       }
       if (feature.hasProperty(PROPERTY_LINE_BLUR)) {
         options.lineBlur = feature.getProperty(PROPERTY_LINE_BLUR).asDouble
+      }
+      if (feature.hasProperty(PROPERTY_LINE_BORDER_COLOR)) {
+        options.lineBorderColor = feature.getProperty(PROPERTY_LINE_BORDER_COLOR).asString
+      }
+      if (feature.hasProperty(PROPERTY_LINE_BORDER_WIDTH)) {
+        options.lineBorderWidth = feature.getProperty(PROPERTY_LINE_BORDER_WIDTH).asDouble
       }
       if (feature.hasProperty(PROPERTY_LINE_COLOR)) {
         options.lineColor = feature.getProperty(PROPERTY_LINE_COLOR).asString

@@ -4,6 +4,7 @@ package com.mapbox.maps.extension.style.layers.generated
 
 import androidx.annotation.ColorInt
 import androidx.annotation.UiThread
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.Layer
@@ -449,6 +450,112 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    */
   override fun fillColorTransition(block: StyleTransition.Builder.() -> Unit): FillLayer = apply {
     fillColorTransition(StyleTransition.Builder().apply(block).build())
+  }
+
+  /**
+   * Emission strength.
+   */
+  @MapboxExperimental
+  val fillEmissiveStrength: Double?
+    /**
+     * Emission strength.
+     *
+     * Use static method [FillLayer.defaultFillEmissiveStrength] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      return getPropertyValue("fill-emissive-strength")
+    }
+
+  /**
+   * Emission strength.
+   *
+   * Use static method [FillLayer.defaultFillEmissiveStrength] to set the default property.
+   *
+   * @param fillEmissiveStrength value of fillEmissiveStrength
+   */
+  @MapboxExperimental
+  override fun fillEmissiveStrength(fillEmissiveStrength: Double): FillLayer = apply {
+    val propertyValue = PropertyValue("fill-emissive-strength", fillEmissiveStrength)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Emission strength.
+   *
+   * This is an Expression representation of "fill-emissive-strength".
+   *
+   */
+  @MapboxExperimental
+  val fillEmissiveStrengthAsExpression: Expression?
+    /**
+     * Emission strength.
+     *
+     * Get the FillEmissiveStrength property as an Expression
+     *
+     * Use static method [FillLayer.defaultFillEmissiveStrengthAsExpression] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      getPropertyValue<Expression>("fill-emissive-strength")?.let {
+        return it
+      }
+      fillEmissiveStrength?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * Emission strength.
+   *
+   * Use static method [FillLayer.defaultFillEmissiveStrengthAsExpression] to set the default property.
+   *
+   * @param fillEmissiveStrength value of fillEmissiveStrength as Expression
+   */
+  @MapboxExperimental
+  override fun fillEmissiveStrength(fillEmissiveStrength: Expression): FillLayer = apply {
+    val propertyValue = PropertyValue("fill-emissive-strength", fillEmissiveStrength)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Transition options for FillEmissiveStrength.
+   */
+  @MapboxExperimental
+  val fillEmissiveStrengthTransition: StyleTransition?
+    /**
+     * Get the FillEmissiveStrength property transition options
+     *
+     * Use static method [FillLayer.defaultFillEmissiveStrengthTransition] to get the default property.
+     *
+     * @return transition options for Double
+     */
+    get() {
+      return getPropertyValue("fill-emissive-strength-transition")
+    }
+
+  /**
+   * Set the FillEmissiveStrength property transition options
+   *
+   * Use static method [FillLayer.defaultFillEmissiveStrengthTransition] to set the default property.
+   *
+   * @param options transition options for Double
+   */
+  @MapboxExperimental
+  override fun fillEmissiveStrengthTransition(options: StyleTransition): FillLayer = apply {
+    val propertyValue = PropertyValue("fill-emissive-strength-transition", options)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * DSL for [fillEmissiveStrengthTransition].
+   */
+  @MapboxExperimental
+  override fun fillEmissiveStrengthTransition(block: StyleTransition.Builder.() -> Unit): FillLayer = apply {
+    fillEmissiveStrengthTransition(StyleTransition.Builder().apply(block).build())
   }
 
   /**
@@ -1113,6 +1220,57 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
       get() = StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-color-transition").silentUnwrap()
 
     /**
+     * Emission strength.
+     */
+    @MapboxExperimental
+    val defaultFillEmissiveStrength: Double?
+      /**
+       * Emission strength.
+       *
+       * Get the default value of FillEmissiveStrength property
+       *
+       * @return Double
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-emissive-strength").silentUnwrap()
+      }
+
+    /**
+     * Emission strength.
+     *
+     * This is an Expression representation of "fill-emissive-strength".
+     *
+     */
+    @MapboxExperimental
+    val defaultFillEmissiveStrengthAsExpression: Expression?
+      /**
+       * Get default value of the FillEmissiveStrength property as an Expression
+       *
+       * @return Double
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-emissive-strength").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultFillEmissiveStrength?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
+
+    /**
+     * Transition options for FillEmissiveStrength.
+     */
+    @MapboxExperimental
+    val defaultFillEmissiveStrengthTransition: StyleTransition?
+      /**
+       * Get the FillEmissiveStrength property transition options
+       *
+       * @return transition options for Double
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-emissive-strength-transition").silentUnwrap()
+
+    /**
      * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used.
      */
     val defaultFillOpacity: Double?
@@ -1478,6 +1636,40 @@ interface FillLayerDsl {
    * DSL for [fillColorTransition].
    */
   fun fillColorTransition(block: StyleTransition.Builder.() -> Unit): FillLayer
+
+  /**
+   * Emission strength.
+   *
+   * @param fillEmissiveStrength value of fillEmissiveStrength
+   */
+  @MapboxExperimental
+  fun fillEmissiveStrength(fillEmissiveStrength: Double = 0.0): FillLayer
+
+  /**
+   * Emission strength.
+   *
+   * @param fillEmissiveStrength value of fillEmissiveStrength as Expression
+   */
+  @MapboxExperimental
+  fun fillEmissiveStrength(fillEmissiveStrength: Expression): FillLayer
+
+  /**
+   * Emission strength.
+   *
+   * Set the FillEmissiveStrength property transition options
+   *
+   * @param options transition options for Double
+   */
+  @MapboxExperimental
+  fun fillEmissiveStrengthTransition(options: StyleTransition): FillLayer
+
+  /**
+   * Emission strength.
+   *
+   * DSL for [fillEmissiveStrengthTransition].
+   */
+  @MapboxExperimental
+  fun fillEmissiveStrengthTransition(block: StyleTransition.Builder.() -> Unit): FillLayer
 
   /**
    * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used.

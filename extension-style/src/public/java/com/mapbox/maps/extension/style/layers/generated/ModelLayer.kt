@@ -681,6 +681,218 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
+   * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source.
+   */
+  @MapboxExperimental
+  val modelEmissiveStrength: Double?
+    /**
+     * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source.
+     *
+     * Use static method [ModelLayer.defaultModelEmissiveStrength] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      return getPropertyValue("model-emissive-strength")
+    }
+
+  /**
+   * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source.
+   *
+   * Use static method [ModelLayer.defaultModelEmissiveStrength] to set the default property.
+   *
+   * @param modelEmissiveStrength value of modelEmissiveStrength
+   */
+  @MapboxExperimental
+  override fun modelEmissiveStrength(modelEmissiveStrength: Double): ModelLayer = apply {
+    val propertyValue = PropertyValue("model-emissive-strength", modelEmissiveStrength)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source.
+   *
+   * This is an Expression representation of "model-emissive-strength".
+   *
+   */
+  @MapboxExperimental
+  val modelEmissiveStrengthAsExpression: Expression?
+    /**
+     * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source.
+     *
+     * Get the ModelEmissiveStrength property as an Expression
+     *
+     * Use static method [ModelLayer.defaultModelEmissiveStrengthAsExpression] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      getPropertyValue<Expression>("model-emissive-strength")?.let {
+        return it
+      }
+      modelEmissiveStrength?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source.
+   *
+   * Use static method [ModelLayer.defaultModelEmissiveStrengthAsExpression] to set the default property.
+   *
+   * @param modelEmissiveStrength value of modelEmissiveStrength as Expression
+   */
+  @MapboxExperimental
+  override fun modelEmissiveStrength(modelEmissiveStrength: Expression): ModelLayer = apply {
+    val propertyValue = PropertyValue("model-emissive-strength", modelEmissiveStrength)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Transition options for ModelEmissiveStrength.
+   */
+  @MapboxExperimental
+  val modelEmissiveStrengthTransition: StyleTransition?
+    /**
+     * Get the ModelEmissiveStrength property transition options
+     *
+     * Use static method [ModelLayer.defaultModelEmissiveStrengthTransition] to get the default property.
+     *
+     * @return transition options for Double
+     */
+    get() {
+      return getPropertyValue("model-emissive-strength-transition")
+    }
+
+  /**
+   * Set the ModelEmissiveStrength property transition options
+   *
+   * Use static method [ModelLayer.defaultModelEmissiveStrengthTransition] to set the default property.
+   *
+   * @param options transition options for Double
+   */
+  @MapboxExperimental
+  override fun modelEmissiveStrengthTransition(options: StyleTransition): ModelLayer = apply {
+    val propertyValue = PropertyValue("model-emissive-strength-transition", options)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * DSL for [modelEmissiveStrengthTransition].
+   */
+  @MapboxExperimental
+  override fun modelEmissiveStrengthTransition(block: StyleTransition.Builder.() -> Unit): ModelLayer = apply {
+    modelEmissiveStrengthTransition(StyleTransition.Builder().apply(block).build())
+  }
+
+  /**
+   * Emissive strength multiplier along model height (gradient begin, gradient end, value at begin, value at end, gradient curve power (logarithmic scale, curve power = pow(10, val)).
+   */
+  @MapboxExperimental
+  val modelHeightBasedEmissiveStrengthMultiplier: List<Double>?
+    /**
+     * Emissive strength multiplier along model height (gradient begin, gradient end, value at begin, value at end, gradient curve power (logarithmic scale, curve power = pow(10, val)).
+     *
+     * Use static method [ModelLayer.defaultModelHeightBasedEmissiveStrengthMultiplier] to get the default property.
+     *
+     * @return List<Double>
+     */
+    get() {
+      return getPropertyValue<List<Double>>("model-height-based-emissive-strength-multiplier")
+    }
+
+  /**
+   * Emissive strength multiplier along model height (gradient begin, gradient end, value at begin, value at end, gradient curve power (logarithmic scale, curve power = pow(10, val)).
+   *
+   * Use static method [ModelLayer.defaultModelHeightBasedEmissiveStrengthMultiplier] to set the default property.
+   *
+   * @param modelHeightBasedEmissiveStrengthMultiplier value of modelHeightBasedEmissiveStrengthMultiplier
+   */
+  @MapboxExperimental
+  override fun modelHeightBasedEmissiveStrengthMultiplier(modelHeightBasedEmissiveStrengthMultiplier: List<Double>): ModelLayer = apply {
+    val propertyValue = PropertyValue("model-height-based-emissive-strength-multiplier", modelHeightBasedEmissiveStrengthMultiplier)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Emissive strength multiplier along model height (gradient begin, gradient end, value at begin, value at end, gradient curve power (logarithmic scale, curve power = pow(10, val)).
+   *
+   * This is an Expression representation of "model-height-based-emissive-strength-multiplier".
+   *
+   */
+  @MapboxExperimental
+  val modelHeightBasedEmissiveStrengthMultiplierAsExpression: Expression?
+    /**
+     * Emissive strength multiplier along model height (gradient begin, gradient end, value at begin, value at end, gradient curve power (logarithmic scale, curve power = pow(10, val)).
+     *
+     * Get the ModelHeightBasedEmissiveStrengthMultiplier property as an Expression
+     *
+     * Use static method [ModelLayer.defaultModelHeightBasedEmissiveStrengthMultiplierAsExpression] to get the default property.
+     *
+     * @return List<Double>
+     */
+    get() {
+      getPropertyValue<Expression>("model-height-based-emissive-strength-multiplier")?.let {
+        return it
+      }
+      modelHeightBasedEmissiveStrengthMultiplier?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * Emissive strength multiplier along model height (gradient begin, gradient end, value at begin, value at end, gradient curve power (logarithmic scale, curve power = pow(10, val)).
+   *
+   * Use static method [ModelLayer.defaultModelHeightBasedEmissiveStrengthMultiplierAsExpression] to set the default property.
+   *
+   * @param modelHeightBasedEmissiveStrengthMultiplier value of modelHeightBasedEmissiveStrengthMultiplier as Expression
+   */
+  @MapboxExperimental
+  override fun modelHeightBasedEmissiveStrengthMultiplier(modelHeightBasedEmissiveStrengthMultiplier: Expression): ModelLayer = apply {
+    val propertyValue = PropertyValue("model-height-based-emissive-strength-multiplier", modelHeightBasedEmissiveStrengthMultiplier)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Transition options for ModelHeightBasedEmissiveStrengthMultiplier.
+   */
+  @MapboxExperimental
+  val modelHeightBasedEmissiveStrengthMultiplierTransition: StyleTransition?
+    /**
+     * Get the ModelHeightBasedEmissiveStrengthMultiplier property transition options
+     *
+     * Use static method [ModelLayer.defaultModelHeightBasedEmissiveStrengthMultiplierTransition] to get the default property.
+     *
+     * @return transition options for List<Double>
+     */
+    get() {
+      return getPropertyValue("model-height-based-emissive-strength-multiplier-transition")
+    }
+
+  /**
+   * Set the ModelHeightBasedEmissiveStrengthMultiplier property transition options
+   *
+   * Use static method [ModelLayer.defaultModelHeightBasedEmissiveStrengthMultiplierTransition] to set the default property.
+   *
+   * @param options transition options for List<Double>
+   */
+  @MapboxExperimental
+  override fun modelHeightBasedEmissiveStrengthMultiplierTransition(options: StyleTransition): ModelLayer = apply {
+    val propertyValue = PropertyValue("model-height-based-emissive-strength-multiplier-transition", options)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * DSL for [modelHeightBasedEmissiveStrengthMultiplierTransition].
+   */
+  @MapboxExperimental
+  override fun modelHeightBasedEmissiveStrengthMultiplierTransition(block: StyleTransition.Builder.() -> Unit): ModelLayer = apply {
+    modelHeightBasedEmissiveStrengthMultiplierTransition(StyleTransition.Builder().apply(block).build())
+  }
+
+  /**
    * The opacity of the model layer.
    */
   @MapboxExperimental
@@ -959,6 +1171,112 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   @MapboxExperimental
   override fun modelRotationTransition(block: StyleTransition.Builder.() -> Unit): ModelLayer = apply {
     modelRotationTransition(StyleTransition.Builder().apply(block).build())
+  }
+
+  /**
+   * Material roughness. Material is fully smooth for value 0, and fully rough for value 1. Affects only layers using batched-model source.
+   */
+  @MapboxExperimental
+  val modelRoughness: Double?
+    /**
+     * Material roughness. Material is fully smooth for value 0, and fully rough for value 1. Affects only layers using batched-model source.
+     *
+     * Use static method [ModelLayer.defaultModelRoughness] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      return getPropertyValue("model-roughness")
+    }
+
+  /**
+   * Material roughness. Material is fully smooth for value 0, and fully rough for value 1. Affects only layers using batched-model source.
+   *
+   * Use static method [ModelLayer.defaultModelRoughness] to set the default property.
+   *
+   * @param modelRoughness value of modelRoughness
+   */
+  @MapboxExperimental
+  override fun modelRoughness(modelRoughness: Double): ModelLayer = apply {
+    val propertyValue = PropertyValue("model-roughness", modelRoughness)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Material roughness. Material is fully smooth for value 0, and fully rough for value 1. Affects only layers using batched-model source.
+   *
+   * This is an Expression representation of "model-roughness".
+   *
+   */
+  @MapboxExperimental
+  val modelRoughnessAsExpression: Expression?
+    /**
+     * Material roughness. Material is fully smooth for value 0, and fully rough for value 1. Affects only layers using batched-model source.
+     *
+     * Get the ModelRoughness property as an Expression
+     *
+     * Use static method [ModelLayer.defaultModelRoughnessAsExpression] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      getPropertyValue<Expression>("model-roughness")?.let {
+        return it
+      }
+      modelRoughness?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * Material roughness. Material is fully smooth for value 0, and fully rough for value 1. Affects only layers using batched-model source.
+   *
+   * Use static method [ModelLayer.defaultModelRoughnessAsExpression] to set the default property.
+   *
+   * @param modelRoughness value of modelRoughness as Expression
+   */
+  @MapboxExperimental
+  override fun modelRoughness(modelRoughness: Expression): ModelLayer = apply {
+    val propertyValue = PropertyValue("model-roughness", modelRoughness)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Transition options for ModelRoughness.
+   */
+  @MapboxExperimental
+  val modelRoughnessTransition: StyleTransition?
+    /**
+     * Get the ModelRoughness property transition options
+     *
+     * Use static method [ModelLayer.defaultModelRoughnessTransition] to get the default property.
+     *
+     * @return transition options for Double
+     */
+    get() {
+      return getPropertyValue("model-roughness-transition")
+    }
+
+  /**
+   * Set the ModelRoughness property transition options
+   *
+   * Use static method [ModelLayer.defaultModelRoughnessTransition] to set the default property.
+   *
+   * @param options transition options for Double
+   */
+  @MapboxExperimental
+  override fun modelRoughnessTransition(options: StyleTransition): ModelLayer = apply {
+    val propertyValue = PropertyValue("model-roughness-transition", options)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * DSL for [modelRoughnessTransition].
+   */
+  @MapboxExperimental
+  override fun modelRoughnessTransition(block: StyleTransition.Builder.() -> Unit): ModelLayer = apply {
+    modelRoughnessTransition(StyleTransition.Builder().apply(block).build())
   }
 
   /**
@@ -1628,6 +1946,108 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       get() = StyleManager.getStyleLayerPropertyDefaultValue("model", "model-color-mix-intensity-transition").silentUnwrap()
 
     /**
+     * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source.
+     */
+    @MapboxExperimental
+    val defaultModelEmissiveStrength: Double?
+      /**
+       * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source.
+       *
+       * Get the default value of ModelEmissiveStrength property
+       *
+       * @return Double
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("model", "model-emissive-strength").silentUnwrap()
+      }
+
+    /**
+     * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source.
+     *
+     * This is an Expression representation of "model-emissive-strength".
+     *
+     */
+    @MapboxExperimental
+    val defaultModelEmissiveStrengthAsExpression: Expression?
+      /**
+       * Get default value of the ModelEmissiveStrength property as an Expression
+       *
+       * @return Double
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("model", "model-emissive-strength").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultModelEmissiveStrength?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
+
+    /**
+     * Transition options for ModelEmissiveStrength.
+     */
+    @MapboxExperimental
+    val defaultModelEmissiveStrengthTransition: StyleTransition?
+      /**
+       * Get the ModelEmissiveStrength property transition options
+       *
+       * @return transition options for Double
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("model", "model-emissive-strength-transition").silentUnwrap()
+
+    /**
+     * Emissive strength multiplier along model height (gradient begin, gradient end, value at begin, value at end, gradient curve power (logarithmic scale, curve power = pow(10, val)).
+     */
+    @MapboxExperimental
+    val defaultModelHeightBasedEmissiveStrengthMultiplier: List<Double>?
+      /**
+       * Emissive strength multiplier along model height (gradient begin, gradient end, value at begin, value at end, gradient curve power (logarithmic scale, curve power = pow(10, val)).
+       *
+       * Get the default value of ModelHeightBasedEmissiveStrengthMultiplier property
+       *
+       * @return List<Double>
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("model", "model-height-based-emissive-strength-multiplier").silentUnwrap()
+      }
+
+    /**
+     * Emissive strength multiplier along model height (gradient begin, gradient end, value at begin, value at end, gradient curve power (logarithmic scale, curve power = pow(10, val)).
+     *
+     * This is an Expression representation of "model-height-based-emissive-strength-multiplier".
+     *
+     */
+    @MapboxExperimental
+    val defaultModelHeightBasedEmissiveStrengthMultiplierAsExpression: Expression?
+      /**
+       * Get default value of the ModelHeightBasedEmissiveStrengthMultiplier property as an Expression
+       *
+       * @return List<Double>
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("model", "model-height-based-emissive-strength-multiplier").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultModelHeightBasedEmissiveStrengthMultiplier?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
+
+    /**
+     * Transition options for ModelHeightBasedEmissiveStrengthMultiplier.
+     */
+    @MapboxExperimental
+    val defaultModelHeightBasedEmissiveStrengthMultiplierTransition: StyleTransition?
+      /**
+       * Get the ModelHeightBasedEmissiveStrengthMultiplier property transition options
+       *
+       * @return transition options for List<Double>
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("model", "model-height-based-emissive-strength-multiplier-transition").silentUnwrap()
+
+    /**
      * The opacity of the model layer.
      */
     @MapboxExperimental
@@ -1767,6 +2187,57 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
        * @return transition options for List<Double>
        */
       get() = StyleManager.getStyleLayerPropertyDefaultValue("model", "model-rotation-transition").silentUnwrap()
+
+    /**
+     * Material roughness. Material is fully smooth for value 0, and fully rough for value 1. Affects only layers using batched-model source.
+     */
+    @MapboxExperimental
+    val defaultModelRoughness: Double?
+      /**
+       * Material roughness. Material is fully smooth for value 0, and fully rough for value 1. Affects only layers using batched-model source.
+       *
+       * Get the default value of ModelRoughness property
+       *
+       * @return Double
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("model", "model-roughness").silentUnwrap()
+      }
+
+    /**
+     * Material roughness. Material is fully smooth for value 0, and fully rough for value 1. Affects only layers using batched-model source.
+     *
+     * This is an Expression representation of "model-roughness".
+     *
+     */
+    @MapboxExperimental
+    val defaultModelRoughnessAsExpression: Expression?
+      /**
+       * Get default value of the ModelRoughness property as an Expression
+       *
+       * @return Double
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("model", "model-roughness").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultModelRoughness?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
+
+    /**
+     * Transition options for ModelRoughness.
+     */
+    @MapboxExperimental
+    val defaultModelRoughnessTransition: StyleTransition?
+      /**
+       * Get the ModelRoughness property transition options
+       *
+       * @return transition options for Double
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("model", "model-roughness-transition").silentUnwrap()
 
     /**
      * The scale of the model.
@@ -2160,6 +2631,74 @@ interface ModelLayerDsl {
   fun modelColorMixIntensityTransition(block: StyleTransition.Builder.() -> Unit): ModelLayer
 
   /**
+   * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source.
+   *
+   * @param modelEmissiveStrength value of modelEmissiveStrength
+   */
+  @MapboxExperimental
+  fun modelEmissiveStrength(modelEmissiveStrength: Double = 0.0): ModelLayer
+
+  /**
+   * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source.
+   *
+   * @param modelEmissiveStrength value of modelEmissiveStrength as Expression
+   */
+  @MapboxExperimental
+  fun modelEmissiveStrength(modelEmissiveStrength: Expression): ModelLayer
+
+  /**
+   * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source.
+   *
+   * Set the ModelEmissiveStrength property transition options
+   *
+   * @param options transition options for Double
+   */
+  @MapboxExperimental
+  fun modelEmissiveStrengthTransition(options: StyleTransition): ModelLayer
+
+  /**
+   * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source.
+   *
+   * DSL for [modelEmissiveStrengthTransition].
+   */
+  @MapboxExperimental
+  fun modelEmissiveStrengthTransition(block: StyleTransition.Builder.() -> Unit): ModelLayer
+
+  /**
+   * Emissive strength multiplier along model height (gradient begin, gradient end, value at begin, value at end, gradient curve power (logarithmic scale, curve power = pow(10, val)).
+   *
+   * @param modelHeightBasedEmissiveStrengthMultiplier value of modelHeightBasedEmissiveStrengthMultiplier
+   */
+  @MapboxExperimental
+  fun modelHeightBasedEmissiveStrengthMultiplier(modelHeightBasedEmissiveStrengthMultiplier: List<Double> = listOf(1.0, 1.0, 1.0, 1.0, 0.0)): ModelLayer
+
+  /**
+   * Emissive strength multiplier along model height (gradient begin, gradient end, value at begin, value at end, gradient curve power (logarithmic scale, curve power = pow(10, val)).
+   *
+   * @param modelHeightBasedEmissiveStrengthMultiplier value of modelHeightBasedEmissiveStrengthMultiplier as Expression
+   */
+  @MapboxExperimental
+  fun modelHeightBasedEmissiveStrengthMultiplier(modelHeightBasedEmissiveStrengthMultiplier: Expression): ModelLayer
+
+  /**
+   * Emissive strength multiplier along model height (gradient begin, gradient end, value at begin, value at end, gradient curve power (logarithmic scale, curve power = pow(10, val)).
+   *
+   * Set the ModelHeightBasedEmissiveStrengthMultiplier property transition options
+   *
+   * @param options transition options for List<Double>
+   */
+  @MapboxExperimental
+  fun modelHeightBasedEmissiveStrengthMultiplierTransition(options: StyleTransition): ModelLayer
+
+  /**
+   * Emissive strength multiplier along model height (gradient begin, gradient end, value at begin, value at end, gradient curve power (logarithmic scale, curve power = pow(10, val)).
+   *
+   * DSL for [modelHeightBasedEmissiveStrengthMultiplierTransition].
+   */
+  @MapboxExperimental
+  fun modelHeightBasedEmissiveStrengthMultiplierTransition(block: StyleTransition.Builder.() -> Unit): ModelLayer
+
+  /**
    * The opacity of the model layer.
    *
    * @param modelOpacity value of modelOpacity
@@ -2242,6 +2781,40 @@ interface ModelLayerDsl {
    */
   @MapboxExperimental
   fun modelRotationTransition(block: StyleTransition.Builder.() -> Unit): ModelLayer
+
+  /**
+   * Material roughness. Material is fully smooth for value 0, and fully rough for value 1. Affects only layers using batched-model source.
+   *
+   * @param modelRoughness value of modelRoughness
+   */
+  @MapboxExperimental
+  fun modelRoughness(modelRoughness: Double = 1.0): ModelLayer
+
+  /**
+   * Material roughness. Material is fully smooth for value 0, and fully rough for value 1. Affects only layers using batched-model source.
+   *
+   * @param modelRoughness value of modelRoughness as Expression
+   */
+  @MapboxExperimental
+  fun modelRoughness(modelRoughness: Expression): ModelLayer
+
+  /**
+   * Material roughness. Material is fully smooth for value 0, and fully rough for value 1. Affects only layers using batched-model source.
+   *
+   * Set the ModelRoughness property transition options
+   *
+   * @param options transition options for Double
+   */
+  @MapboxExperimental
+  fun modelRoughnessTransition(options: StyleTransition): ModelLayer
+
+  /**
+   * Material roughness. Material is fully smooth for value 0, and fully rough for value 1. Affects only layers using batched-model source.
+   *
+   * DSL for [modelRoughnessTransition].
+   */
+  @MapboxExperimental
+  fun modelRoughnessTransition(block: StyleTransition.Builder.() -> Unit): ModelLayer
 
   /**
    * The scale of the model.

@@ -69,12 +69,16 @@ Mapbox welcomes participation and contributions from everyone.
 * Deprecate `PointAnnotationManager.iconTextFit` and `PointAnnotationManager.iconTextFitPadding` in favor of `PointAnnotation.iconTextFit` and `PointAnnotation.iconTextFitPadding`.
 * Introduce experimental lights API to enable a uniform 3D lighting across the map. Use `Style.addLights3D` or `Style.setup3DLights` to enable `Ambient` and `Directional` light.
 * Remove experimental `castShadows`, `shadowIntensity` methods from `Light`.
-* Introduce `FillExtrusionLayer.fillExtrusionRoundedRoof`, experimental `FillExtrusionLayer.fillExtrusionEdgeRadius` API.
 * Introduce `LineLayer.lineDepthOcclusionFactor`, `PolylineAnnotationManager.lineDepthOcclusionFactor` API.
 * Introduce experimental `Expression.activeAnchor` API.
 * Introduce experimental `ModelLayer` API to render 3D models on the map.
 * Introduce experimental `MapboxMap.addStyleModel`, `MapboxMap.removeStyleModel`, `MapboxMap.hasStyleModel` APIs.
 * Introduce experimental `LocationPuck3D.modelCastShadows`, `LocationPuck3D.modelReceiveShadows`, `LocationPuck3D.modelScaleMode` APIs.
+* Introduce `Expression.hsl`, `Expression.hsla` color expression.
+* Introduce `Expression.measureLight` lights configuration property.
+* Introduce `LineLayer.lineBorderColor`, `LineLayer.lineBorderWidth` APIs.
+* Introduce experimental `BackgroundLayer.backgroundEmissiveStrength`, `CircleLayer.circleEmissiveStrength`, `FillLayer.fillEmissiveStrength`, `LineLayer.lineEmissiveStrength`, `SymbolLayer.iconEmissiveStrength`, `SymbolLayer.textEmissiveStrength` APIs.
+* Introduce experimental `FillExtrusionLayer.fillExtrusionRoundedRoof`, `FillExtrusionLayer.fillExtrusionEdgeRadius`, `FillExtrusionLayer.fillExtrusionAmbientOcclusionWallRadius`, `FillExtrusionLayer.fillExtrusionAmbientOcclusionGroundRadius`, `FillExtrusionLayer.fillExtrusionAmbientOcclusionGroundAttenuation`, `FillExtrusionLayer.fillExtrusionFloodLightColor`, `FillExtrusionLayer.fillExtrusionFloodLightIntensity`, `FillExtrusionLayer.fillExtrusionFloodLightWallRadius`, `FillExtrusionLayer.fillExtrusionFloodLightGroundRadius`, `FillExtrusionLayer.fillExtrusionFloodLightGroundAttenuation`, `FillExtrusionLayer.fillExtrusionVerticalScale` APIs.
  
 ## Bug fixes 🐞
 * Fix 3d location layer properties `model-scale-transition` and `model-rotation-transition`, made them non-transitionable.

@@ -4,6 +4,7 @@ package com.mapbox.maps.extension.style.layers.generated
 
 import androidx.annotation.ColorInt
 import androidx.annotation.UiThread
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.Layer
@@ -622,6 +623,235 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
+   * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color.
+   */
+  val lineBorderColor: String?
+    /**
+     * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color.
+     *
+     * Use static method [LineLayer.defaultLineBorderColor] to get the default property.
+     *
+     * @return String
+     */
+    get() {
+      lineBorderColorAsExpression?.let {
+        return rgbaExpressionToColorString(it)
+      }
+      return null
+    }
+
+  /**
+   * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color.
+   *
+   * Use static method [LineLayer.defaultLineBorderColor] to set the default property.
+   *
+   * @param lineBorderColor value of lineBorderColor
+   */
+  override fun lineBorderColor(lineBorderColor: String): LineLayer = apply {
+    val propertyValue = PropertyValue("line-border-color", lineBorderColor)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color.
+   *
+   * This is an Expression representation of "line-border-color".
+   *
+   */
+  val lineBorderColorAsExpression: Expression?
+    /**
+     * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color.
+     *
+     * Get the LineBorderColor property as an Expression
+     *
+     * Use static method [LineLayer.defaultLineBorderColorAsExpression] to get the default property.
+     *
+     * @return String
+     */
+    get() {
+      getPropertyValue<Expression>("line-border-color")?.let {
+        return it
+      }
+      return null
+    }
+
+  /**
+   * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color.
+   *
+   * Use static method [LineLayer.defaultLineBorderColorAsExpression] to set the default property.
+   *
+   * @param lineBorderColor value of lineBorderColor as Expression
+   */
+  override fun lineBorderColor(lineBorderColor: Expression): LineLayer = apply {
+    val propertyValue = PropertyValue("line-border-color", lineBorderColor)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color.
+   */
+  val lineBorderColorAsColorInt: Int?
+    /**
+     * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color.
+     *
+     * Use static method [LineLayer.defaultLineBorderColorAsColorInt] to get the default property.
+     *
+     * @return int representation of a rgba string color
+     */
+    @ColorInt
+    get() {
+      lineBorderColorAsExpression?.let {
+        return rgbaExpressionToColorInt(it)
+      }
+      return null
+    }
+
+  /**
+   * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color.
+   *
+   * Use static method [LineLayer.defaultLineBorderColorAsColorInt] to set the default property.
+   *
+   * @param lineBorderColor value of lineBorderColor
+   */
+  override fun lineBorderColor(@ColorInt lineBorderColor: Int): LineLayer = apply {
+    val propertyValue = PropertyValue("line-border-color", colorIntToRgbaExpression(lineBorderColor))
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Transition options for LineBorderColor.
+   */
+  val lineBorderColorTransition: StyleTransition?
+    /**
+     * Get the LineBorderColor property transition options
+     *
+     * Use static method [LineLayer.defaultLineBorderColorTransition] to get the default property.
+     *
+     * @return transition options for String
+     */
+    get() {
+      return getPropertyValue("line-border-color-transition")
+    }
+
+  /**
+   * Set the LineBorderColor property transition options
+   *
+   * Use static method [LineLayer.defaultLineBorderColorTransition] to set the default property.
+   *
+   * @param options transition options for String
+   */
+  override fun lineBorderColorTransition(options: StyleTransition): LineLayer = apply {
+    val propertyValue = PropertyValue("line-border-color-transition", options)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * DSL for [lineBorderColorTransition].
+   */
+  override fun lineBorderColorTransition(block: StyleTransition.Builder.() -> Unit): LineLayer = apply {
+    lineBorderColorTransition(StyleTransition.Builder().apply(block).build())
+  }
+
+  /**
+   * The width of the line border. A value of zero means no border.
+   */
+  val lineBorderWidth: Double?
+    /**
+     * The width of the line border. A value of zero means no border.
+     *
+     * Use static method [LineLayer.defaultLineBorderWidth] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      return getPropertyValue("line-border-width")
+    }
+
+  /**
+   * The width of the line border. A value of zero means no border.
+   *
+   * Use static method [LineLayer.defaultLineBorderWidth] to set the default property.
+   *
+   * @param lineBorderWidth value of lineBorderWidth
+   */
+  override fun lineBorderWidth(lineBorderWidth: Double): LineLayer = apply {
+    val propertyValue = PropertyValue("line-border-width", lineBorderWidth)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * The width of the line border. A value of zero means no border.
+   *
+   * This is an Expression representation of "line-border-width".
+   *
+   */
+  val lineBorderWidthAsExpression: Expression?
+    /**
+     * The width of the line border. A value of zero means no border.
+     *
+     * Get the LineBorderWidth property as an Expression
+     *
+     * Use static method [LineLayer.defaultLineBorderWidthAsExpression] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      getPropertyValue<Expression>("line-border-width")?.let {
+        return it
+      }
+      lineBorderWidth?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * The width of the line border. A value of zero means no border.
+   *
+   * Use static method [LineLayer.defaultLineBorderWidthAsExpression] to set the default property.
+   *
+   * @param lineBorderWidth value of lineBorderWidth as Expression
+   */
+  override fun lineBorderWidth(lineBorderWidth: Expression): LineLayer = apply {
+    val propertyValue = PropertyValue("line-border-width", lineBorderWidth)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Transition options for LineBorderWidth.
+   */
+  val lineBorderWidthTransition: StyleTransition?
+    /**
+     * Get the LineBorderWidth property transition options
+     *
+     * Use static method [LineLayer.defaultLineBorderWidthTransition] to get the default property.
+     *
+     * @return transition options for Double
+     */
+    get() {
+      return getPropertyValue("line-border-width-transition")
+    }
+
+  /**
+   * Set the LineBorderWidth property transition options
+   *
+   * Use static method [LineLayer.defaultLineBorderWidthTransition] to set the default property.
+   *
+   * @param options transition options for Double
+   */
+  override fun lineBorderWidthTransition(options: StyleTransition): LineLayer = apply {
+    val propertyValue = PropertyValue("line-border-width-transition", options)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * DSL for [lineBorderWidthTransition].
+   */
+  override fun lineBorderWidthTransition(block: StyleTransition.Builder.() -> Unit): LineLayer = apply {
+    lineBorderWidthTransition(StyleTransition.Builder().apply(block).build())
+  }
+
+  /**
    * The color with which the line will be drawn.
    */
   val lineColor: String?
@@ -913,6 +1143,112 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    */
   override fun lineDepthOcclusionFactorTransition(block: StyleTransition.Builder.() -> Unit): LineLayer = apply {
     lineDepthOcclusionFactorTransition(StyleTransition.Builder().apply(block).build())
+  }
+
+  /**
+   * Emission strength.
+   */
+  @MapboxExperimental
+  val lineEmissiveStrength: Double?
+    /**
+     * Emission strength.
+     *
+     * Use static method [LineLayer.defaultLineEmissiveStrength] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      return getPropertyValue("line-emissive-strength")
+    }
+
+  /**
+   * Emission strength.
+   *
+   * Use static method [LineLayer.defaultLineEmissiveStrength] to set the default property.
+   *
+   * @param lineEmissiveStrength value of lineEmissiveStrength
+   */
+  @MapboxExperimental
+  override fun lineEmissiveStrength(lineEmissiveStrength: Double): LineLayer = apply {
+    val propertyValue = PropertyValue("line-emissive-strength", lineEmissiveStrength)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Emission strength.
+   *
+   * This is an Expression representation of "line-emissive-strength".
+   *
+   */
+  @MapboxExperimental
+  val lineEmissiveStrengthAsExpression: Expression?
+    /**
+     * Emission strength.
+     *
+     * Get the LineEmissiveStrength property as an Expression
+     *
+     * Use static method [LineLayer.defaultLineEmissiveStrengthAsExpression] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      getPropertyValue<Expression>("line-emissive-strength")?.let {
+        return it
+      }
+      lineEmissiveStrength?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * Emission strength.
+   *
+   * Use static method [LineLayer.defaultLineEmissiveStrengthAsExpression] to set the default property.
+   *
+   * @param lineEmissiveStrength value of lineEmissiveStrength as Expression
+   */
+  @MapboxExperimental
+  override fun lineEmissiveStrength(lineEmissiveStrength: Expression): LineLayer = apply {
+    val propertyValue = PropertyValue("line-emissive-strength", lineEmissiveStrength)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Transition options for LineEmissiveStrength.
+   */
+  @MapboxExperimental
+  val lineEmissiveStrengthTransition: StyleTransition?
+    /**
+     * Get the LineEmissiveStrength property transition options
+     *
+     * Use static method [LineLayer.defaultLineEmissiveStrengthTransition] to get the default property.
+     *
+     * @return transition options for Double
+     */
+    get() {
+      return getPropertyValue("line-emissive-strength-transition")
+    }
+
+  /**
+   * Set the LineEmissiveStrength property transition options
+   *
+   * Use static method [LineLayer.defaultLineEmissiveStrengthTransition] to set the default property.
+   *
+   * @param options transition options for Double
+   */
+  @MapboxExperimental
+  override fun lineEmissiveStrengthTransition(options: StyleTransition): LineLayer = apply {
+    val propertyValue = PropertyValue("line-emissive-strength-transition", options)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * DSL for [lineEmissiveStrengthTransition].
+   */
+  @MapboxExperimental
+  override fun lineEmissiveStrengthTransition(block: StyleTransition.Builder.() -> Unit): LineLayer = apply {
+    lineEmissiveStrengthTransition(StyleTransition.Builder().apply(block).build())
   }
 
   /**
@@ -1934,6 +2270,121 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       get() = StyleManager.getStyleLayerPropertyDefaultValue("line", "line-blur-transition").silentUnwrap()
 
     /**
+     * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color.
+     */
+    val defaultLineBorderColor: String?
+      /**
+       * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color.
+       *
+       * Get the default value of LineBorderColor property
+       *
+       * @return String
+       */
+      get() {
+        defaultLineBorderColorAsExpression?.let {
+          return rgbaExpressionToColorString(it)
+        }
+        return null
+      }
+
+    /**
+     * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color.
+     *
+     * This is an Expression representation of "line-border-color".
+     *
+     */
+    val defaultLineBorderColorAsExpression: Expression?
+      /**
+       * Get default value of the LineBorderColor property as an Expression
+       *
+       * @return String
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("line", "line-border-color").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        return null
+      }
+
+    /**
+     * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color.
+     */
+    val defaultLineBorderColorAsColorInt: Int?
+      /**
+       * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color.
+       *
+       * Get the default value of LineBorderColor property as color int.
+       *
+       * @return int representation of a rgba string color
+       */
+      @ColorInt
+      get() {
+        defaultLineBorderColorAsExpression?.let {
+          return rgbaExpressionToColorInt(it)
+        }
+        return null
+      }
+
+    /**
+     * Transition options for LineBorderColor.
+     */
+    val defaultLineBorderColorTransition: StyleTransition?
+      /**
+       * Get the LineBorderColor property transition options
+       *
+       * @return transition options for String
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("line", "line-border-color-transition").silentUnwrap()
+
+    /**
+     * The width of the line border. A value of zero means no border.
+     */
+    val defaultLineBorderWidth: Double?
+      /**
+       * The width of the line border. A value of zero means no border.
+       *
+       * Get the default value of LineBorderWidth property
+       *
+       * @return Double
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("line", "line-border-width").silentUnwrap()
+      }
+
+    /**
+     * The width of the line border. A value of zero means no border.
+     *
+     * This is an Expression representation of "line-border-width".
+     *
+     */
+    val defaultLineBorderWidthAsExpression: Expression?
+      /**
+       * Get default value of the LineBorderWidth property as an Expression
+       *
+       * @return Double
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("line", "line-border-width").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultLineBorderWidth?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
+
+    /**
+     * Transition options for LineBorderWidth.
+     */
+    val defaultLineBorderWidthTransition: StyleTransition?
+      /**
+       * Get the LineBorderWidth property transition options
+       *
+       * @return transition options for Double
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("line", "line-border-width-transition").silentUnwrap()
+
+    /**
      * The color with which the line will be drawn.
      */
     val defaultLineColor: String?
@@ -2084,6 +2535,57 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
        * @return transition options for Double
        */
       get() = StyleManager.getStyleLayerPropertyDefaultValue("line", "line-depth-occlusion-factor-transition").silentUnwrap()
+
+    /**
+     * Emission strength.
+     */
+    @MapboxExperimental
+    val defaultLineEmissiveStrength: Double?
+      /**
+       * Emission strength.
+       *
+       * Get the default value of LineEmissiveStrength property
+       *
+       * @return Double
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("line", "line-emissive-strength").silentUnwrap()
+      }
+
+    /**
+     * Emission strength.
+     *
+     * This is an Expression representation of "line-emissive-strength".
+     *
+     */
+    @MapboxExperimental
+    val defaultLineEmissiveStrengthAsExpression: Expression?
+      /**
+       * Get default value of the LineEmissiveStrength property as an Expression
+       *
+       * @return Double
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("line", "line-emissive-strength").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultLineEmissiveStrength?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
+
+    /**
+     * Transition options for LineEmissiveStrength.
+     */
+    @MapboxExperimental
+    val defaultLineEmissiveStrengthTransition: StyleTransition?
+      /**
+       * Get the LineEmissiveStrength property transition options
+       *
+       * @return transition options for Double
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("line", "line-emissive-strength-transition").silentUnwrap()
 
     /**
      * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap.
@@ -2602,6 +3104,73 @@ interface LineLayerDsl {
   fun lineBlurTransition(block: StyleTransition.Builder.() -> Unit): LineLayer
 
   /**
+   * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color.
+   *
+   * @param lineBorderColor value of lineBorderColor
+   */
+  fun lineBorderColor(lineBorderColor: String = "rgba(0, 0, 0, 0)"): LineLayer
+
+  /**
+   * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color.
+   *
+   * @param lineBorderColor value of lineBorderColor as Expression
+   */
+  fun lineBorderColor(lineBorderColor: Expression): LineLayer
+
+  /**
+   * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color.
+   *
+   * @param lineBorderColor value of lineBorderColor
+   */
+  fun lineBorderColor(@ColorInt lineBorderColor: Int): LineLayer
+
+  /**
+   * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color.
+   *
+   * Set the LineBorderColor property transition options
+   *
+   * @param options transition options for String
+   */
+  fun lineBorderColorTransition(options: StyleTransition): LineLayer
+
+  /**
+   * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color.
+   *
+   * DSL for [lineBorderColorTransition].
+   */
+  fun lineBorderColorTransition(block: StyleTransition.Builder.() -> Unit): LineLayer
+
+  /**
+   * The width of the line border. A value of zero means no border.
+   *
+   * @param lineBorderWidth value of lineBorderWidth
+   */
+  fun lineBorderWidth(lineBorderWidth: Double = 0.0): LineLayer
+
+  /**
+   * The width of the line border. A value of zero means no border.
+   *
+   * @param lineBorderWidth value of lineBorderWidth as Expression
+   */
+  fun lineBorderWidth(lineBorderWidth: Expression): LineLayer
+
+  /**
+   * The width of the line border. A value of zero means no border.
+   *
+   * Set the LineBorderWidth property transition options
+   *
+   * @param options transition options for Double
+   */
+  fun lineBorderWidthTransition(options: StyleTransition): LineLayer
+
+  /**
+   * The width of the line border. A value of zero means no border.
+   *
+   * DSL for [lineBorderWidthTransition].
+   */
+  fun lineBorderWidthTransition(block: StyleTransition.Builder.() -> Unit): LineLayer
+
+  /**
    * The color with which the line will be drawn.
    *
    * @param lineColor value of lineColor
@@ -2681,6 +3250,40 @@ interface LineLayerDsl {
    * DSL for [lineDepthOcclusionFactorTransition].
    */
   fun lineDepthOcclusionFactorTransition(block: StyleTransition.Builder.() -> Unit): LineLayer
+
+  /**
+   * Emission strength.
+   *
+   * @param lineEmissiveStrength value of lineEmissiveStrength
+   */
+  @MapboxExperimental
+  fun lineEmissiveStrength(lineEmissiveStrength: Double = 0.0): LineLayer
+
+  /**
+   * Emission strength.
+   *
+   * @param lineEmissiveStrength value of lineEmissiveStrength as Expression
+   */
+  @MapboxExperimental
+  fun lineEmissiveStrength(lineEmissiveStrength: Expression): LineLayer
+
+  /**
+   * Emission strength.
+   *
+   * Set the LineEmissiveStrength property transition options
+   *
+   * @param options transition options for Double
+   */
+  @MapboxExperimental
+  fun lineEmissiveStrengthTransition(options: StyleTransition): LineLayer
+
+  /**
+   * Emission strength.
+   *
+   * DSL for [lineEmissiveStrengthTransition].
+   */
+  @MapboxExperimental
+  fun lineEmissiveStrengthTransition(block: StyleTransition.Builder.() -> Unit): LineLayer
 
   /**
    * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap.

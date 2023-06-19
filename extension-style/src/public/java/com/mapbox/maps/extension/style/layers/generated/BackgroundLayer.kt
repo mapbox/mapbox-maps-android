@@ -4,6 +4,7 @@ package com.mapbox.maps.extension.style.layers.generated
 
 import androidx.annotation.ColorInt
 import androidx.annotation.UiThread
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.Layer
@@ -257,6 +258,112 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
    */
   override fun backgroundColorTransition(block: StyleTransition.Builder.() -> Unit): BackgroundLayer = apply {
     backgroundColorTransition(StyleTransition.Builder().apply(block).build())
+  }
+
+  /**
+   * Emission strength.
+   */
+  @MapboxExperimental
+  val backgroundEmissiveStrength: Double?
+    /**
+     * Emission strength.
+     *
+     * Use static method [BackgroundLayer.defaultBackgroundEmissiveStrength] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      return getPropertyValue("background-emissive-strength")
+    }
+
+  /**
+   * Emission strength.
+   *
+   * Use static method [BackgroundLayer.defaultBackgroundEmissiveStrength] to set the default property.
+   *
+   * @param backgroundEmissiveStrength value of backgroundEmissiveStrength
+   */
+  @MapboxExperimental
+  override fun backgroundEmissiveStrength(backgroundEmissiveStrength: Double): BackgroundLayer = apply {
+    val propertyValue = PropertyValue("background-emissive-strength", backgroundEmissiveStrength)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Emission strength.
+   *
+   * This is an Expression representation of "background-emissive-strength".
+   *
+   */
+  @MapboxExperimental
+  val backgroundEmissiveStrengthAsExpression: Expression?
+    /**
+     * Emission strength.
+     *
+     * Get the BackgroundEmissiveStrength property as an Expression
+     *
+     * Use static method [BackgroundLayer.defaultBackgroundEmissiveStrengthAsExpression] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      getPropertyValue<Expression>("background-emissive-strength")?.let {
+        return it
+      }
+      backgroundEmissiveStrength?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * Emission strength.
+   *
+   * Use static method [BackgroundLayer.defaultBackgroundEmissiveStrengthAsExpression] to set the default property.
+   *
+   * @param backgroundEmissiveStrength value of backgroundEmissiveStrength as Expression
+   */
+  @MapboxExperimental
+  override fun backgroundEmissiveStrength(backgroundEmissiveStrength: Expression): BackgroundLayer = apply {
+    val propertyValue = PropertyValue("background-emissive-strength", backgroundEmissiveStrength)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Transition options for BackgroundEmissiveStrength.
+   */
+  @MapboxExperimental
+  val backgroundEmissiveStrengthTransition: StyleTransition?
+    /**
+     * Get the BackgroundEmissiveStrength property transition options
+     *
+     * Use static method [BackgroundLayer.defaultBackgroundEmissiveStrengthTransition] to get the default property.
+     *
+     * @return transition options for Double
+     */
+    get() {
+      return getPropertyValue("background-emissive-strength-transition")
+    }
+
+  /**
+   * Set the BackgroundEmissiveStrength property transition options
+   *
+   * Use static method [BackgroundLayer.defaultBackgroundEmissiveStrengthTransition] to set the default property.
+   *
+   * @param options transition options for Double
+   */
+  @MapboxExperimental
+  override fun backgroundEmissiveStrengthTransition(options: StyleTransition): BackgroundLayer = apply {
+    val propertyValue = PropertyValue("background-emissive-strength-transition", options)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * DSL for [backgroundEmissiveStrengthTransition].
+   */
+  @MapboxExperimental
+  override fun backgroundEmissiveStrengthTransition(block: StyleTransition.Builder.() -> Unit): BackgroundLayer = apply {
+    backgroundEmissiveStrengthTransition(StyleTransition.Builder().apply(block).build())
   }
 
   /**
@@ -550,6 +657,57 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
       get() = StyleManager.getStyleLayerPropertyDefaultValue("background", "background-color-transition").silentUnwrap()
 
     /**
+     * Emission strength.
+     */
+    @MapboxExperimental
+    val defaultBackgroundEmissiveStrength: Double?
+      /**
+       * Emission strength.
+       *
+       * Get the default value of BackgroundEmissiveStrength property
+       *
+       * @return Double
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("background", "background-emissive-strength").silentUnwrap()
+      }
+
+    /**
+     * Emission strength.
+     *
+     * This is an Expression representation of "background-emissive-strength".
+     *
+     */
+    @MapboxExperimental
+    val defaultBackgroundEmissiveStrengthAsExpression: Expression?
+      /**
+       * Get default value of the BackgroundEmissiveStrength property as an Expression
+       *
+       * @return Double
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("background", "background-emissive-strength").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultBackgroundEmissiveStrength?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
+
+    /**
+     * Transition options for BackgroundEmissiveStrength.
+     */
+    @MapboxExperimental
+    val defaultBackgroundEmissiveStrengthTransition: StyleTransition?
+      /**
+       * Get the BackgroundEmissiveStrength property transition options
+       *
+       * @return transition options for Double
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("background", "background-emissive-strength-transition").silentUnwrap()
+
+    /**
      * The opacity at which the background will be drawn.
      */
     val defaultBackgroundOpacity: Double?
@@ -712,6 +870,40 @@ interface BackgroundLayerDsl {
    * DSL for [backgroundColorTransition].
    */
   fun backgroundColorTransition(block: StyleTransition.Builder.() -> Unit): BackgroundLayer
+
+  /**
+   * Emission strength.
+   *
+   * @param backgroundEmissiveStrength value of backgroundEmissiveStrength
+   */
+  @MapboxExperimental
+  fun backgroundEmissiveStrength(backgroundEmissiveStrength: Double = 0.0): BackgroundLayer
+
+  /**
+   * Emission strength.
+   *
+   * @param backgroundEmissiveStrength value of backgroundEmissiveStrength as Expression
+   */
+  @MapboxExperimental
+  fun backgroundEmissiveStrength(backgroundEmissiveStrength: Expression): BackgroundLayer
+
+  /**
+   * Emission strength.
+   *
+   * Set the BackgroundEmissiveStrength property transition options
+   *
+   * @param options transition options for Double
+   */
+  @MapboxExperimental
+  fun backgroundEmissiveStrengthTransition(options: StyleTransition): BackgroundLayer
+
+  /**
+   * Emission strength.
+   *
+   * DSL for [backgroundEmissiveStrengthTransition].
+   */
+  @MapboxExperimental
+  fun backgroundEmissiveStrengthTransition(block: StyleTransition.Builder.() -> Unit): BackgroundLayer
 
   /**
    * The opacity at which the background will be drawn.

@@ -65,11 +65,14 @@ class PointAnnotationManager(
     dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_TEXT_SIZE] = false
     dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_TEXT_TRANSFORM] = false
     dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_ICON_COLOR] = false
+    dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_ICON_EMISSIVE_STRENGTH] = false
     dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_ICON_HALO_BLUR] = false
     dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR] = false
     dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_ICON_HALO_WIDTH] = false
+    dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE] = false
     dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_ICON_OPACITY] = false
     dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_TEXT_COLOR] = false
+    dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_TEXT_EMISSIVE_STRENGTH] = false
     dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_TEXT_HALO_BLUR] = false
     dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR] = false
     dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_TEXT_HALO_WIDTH] = false
@@ -158,6 +161,10 @@ class PointAnnotationManager(
         layer?.iconColor(get(PointAnnotationOptions.PROPERTY_ICON_COLOR))
         dragLayer?.iconColor(get(PointAnnotationOptions.PROPERTY_ICON_COLOR))
       }
+      PointAnnotationOptions.PROPERTY_ICON_EMISSIVE_STRENGTH -> {
+        layer?.iconEmissiveStrength(get(PointAnnotationOptions.PROPERTY_ICON_EMISSIVE_STRENGTH))
+        dragLayer?.iconEmissiveStrength(get(PointAnnotationOptions.PROPERTY_ICON_EMISSIVE_STRENGTH))
+      }
       PointAnnotationOptions.PROPERTY_ICON_HALO_BLUR -> {
         layer?.iconHaloBlur(get(PointAnnotationOptions.PROPERTY_ICON_HALO_BLUR))
         dragLayer?.iconHaloBlur(get(PointAnnotationOptions.PROPERTY_ICON_HALO_BLUR))
@@ -170,6 +177,10 @@ class PointAnnotationManager(
         layer?.iconHaloWidth(get(PointAnnotationOptions.PROPERTY_ICON_HALO_WIDTH))
         dragLayer?.iconHaloWidth(get(PointAnnotationOptions.PROPERTY_ICON_HALO_WIDTH))
       }
+      PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE -> {
+        layer?.iconImageCrossFade(get(PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE))
+        dragLayer?.iconImageCrossFade(get(PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE))
+      }
       PointAnnotationOptions.PROPERTY_ICON_OPACITY -> {
         layer?.iconOpacity(get(PointAnnotationOptions.PROPERTY_ICON_OPACITY))
         dragLayer?.iconOpacity(get(PointAnnotationOptions.PROPERTY_ICON_OPACITY))
@@ -177,6 +188,10 @@ class PointAnnotationManager(
       PointAnnotationOptions.PROPERTY_TEXT_COLOR -> {
         layer?.textColor(get(PointAnnotationOptions.PROPERTY_TEXT_COLOR))
         dragLayer?.textColor(get(PointAnnotationOptions.PROPERTY_TEXT_COLOR))
+      }
+      PointAnnotationOptions.PROPERTY_TEXT_EMISSIVE_STRENGTH -> {
+        layer?.textEmissiveStrength(get(PointAnnotationOptions.PROPERTY_TEXT_EMISSIVE_STRENGTH))
+        dragLayer?.textEmissiveStrength(get(PointAnnotationOptions.PROPERTY_TEXT_EMISSIVE_STRENGTH))
       }
       PointAnnotationOptions.PROPERTY_TEXT_HALO_BLUR -> {
         layer?.textHaloBlur(get(PointAnnotationOptions.PROPERTY_TEXT_HALO_BLUR))
@@ -223,11 +238,14 @@ class PointAnnotationManager(
    * PointAnnotationOptions.PROPERTY_TEXT_SIZE - Double
    * PointAnnotationOptions.PROPERTY_TEXT_TRANSFORM - TextTransform
    * PointAnnotationOptions.PROPERTY_ICON_COLOR - String
+   * PointAnnotationOptions.PROPERTY_ICON_EMISSIVE_STRENGTH - Double
    * PointAnnotationOptions.PROPERTY_ICON_HALO_BLUR - Double
    * PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR - String
    * PointAnnotationOptions.PROPERTY_ICON_HALO_WIDTH - Double
+   * PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE - Double
    * PointAnnotationOptions.PROPERTY_ICON_OPACITY - Double
    * PointAnnotationOptions.PROPERTY_TEXT_COLOR - String
+   * PointAnnotationOptions.PROPERTY_TEXT_EMISSIVE_STRENGTH - Double
    * PointAnnotationOptions.PROPERTY_TEXT_HALO_BLUR - Double
    * PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR - String
    * PointAnnotationOptions.PROPERTY_TEXT_HALO_WIDTH - Double
@@ -270,11 +288,14 @@ class PointAnnotationManager(
    * PointAnnotationOptions.PROPERTY_TEXT_SIZE - Double
    * PointAnnotationOptions.PROPERTY_TEXT_TRANSFORM - TextTransform
    * PointAnnotationOptions.PROPERTY_ICON_COLOR - String
+   * PointAnnotationOptions.PROPERTY_ICON_EMISSIVE_STRENGTH - Double
    * PointAnnotationOptions.PROPERTY_ICON_HALO_BLUR - Double
    * PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR - String
    * PointAnnotationOptions.PROPERTY_ICON_HALO_WIDTH - Double
+   * PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE - Double
    * PointAnnotationOptions.PROPERTY_ICON_OPACITY - Double
    * PointAnnotationOptions.PROPERTY_TEXT_COLOR - String
+   * PointAnnotationOptions.PROPERTY_TEXT_EMISSIVE_STRENGTH - Double
    * PointAnnotationOptions.PROPERTY_TEXT_HALO_BLUR - Double
    * PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR - String
    * PointAnnotationOptions.PROPERTY_TEXT_HALO_WIDTH - Double

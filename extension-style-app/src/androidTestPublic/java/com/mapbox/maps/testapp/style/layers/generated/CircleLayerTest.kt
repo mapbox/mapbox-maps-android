@@ -226,6 +226,61 @@ class CircleLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun circleEmissiveStrengthTest() {
+    val testValue = 1.0
+    val layer = circleLayer("id", "source") {
+      circleEmissiveStrength(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(testValue, layer.circleEmissiveStrength!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun circleEmissiveStrengthAsExpressionTest() {
+    val expression = literal(1.0)
+    val layer = circleLayer("id", "source") {
+      circleEmissiveStrength(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(1.0, layer.circleEmissiveStrengthAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.circleEmissiveStrength!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun circleEmissiveStrengthTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = circleLayer("id", "source") {
+      circleEmissiveStrengthTransition(transition)
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.circleEmissiveStrengthTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun circleEmissiveStrengthTransitionSetDslTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = circleLayer("id", "source") {
+      circleEmissiveStrengthTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.circleEmissiveStrengthTransition)
+  }
+
+  @Test
+  @UiThreadTest
   fun circleOpacityTest() {
     val testValue = 1.0
     val layer = circleLayer("id", "source") {
@@ -680,6 +735,9 @@ class CircleLayerTest : BaseStyleTest() {
     assertNotNull("defaultCircleColorAsExpression should not be null", CircleLayer.defaultCircleColorAsExpression)
     assertNotNull("defaultCircleColorAsColorInt should not be null", CircleLayer.defaultCircleColorAsColorInt)
     assertNotNull("defaultCircleColorTransition should not be null", CircleLayer.defaultCircleColorTransition)
+    assertNotNull("defaultCircleEmissiveStrength should not be null", CircleLayer.defaultCircleEmissiveStrength)
+    assertNotNull("defaultCircleEmissiveStrengthAsExpression should not be null", CircleLayer.defaultCircleEmissiveStrengthAsExpression)
+    assertNotNull("defaultCircleEmissiveStrengthTransition should not be null", CircleLayer.defaultCircleEmissiveStrengthTransition)
     assertNotNull("defaultCircleOpacity should not be null", CircleLayer.defaultCircleOpacity)
     assertNotNull("defaultCircleOpacityAsExpression should not be null", CircleLayer.defaultCircleOpacityAsExpression)
     assertNotNull("defaultCircleOpacityTransition should not be null", CircleLayer.defaultCircleOpacityTransition)
@@ -719,6 +777,7 @@ class CircleLayerTest : BaseStyleTest() {
     val circleSortKeyTestValue = 1.0
     val circleBlurTestValue = 1.0
     val circleColorTestValue = "rgba(0, 0, 0, 1)"
+    val circleEmissiveStrengthTestValue = 1.0
     val circleOpacityTestValue = 1.0
     val circlePitchAlignmentTestValue = CirclePitchAlignment.MAP
     val circlePitchScaleTestValue = CirclePitchScale.MAP
@@ -739,6 +798,7 @@ class CircleLayerTest : BaseStyleTest() {
       circleSortKey(circleSortKeyTestValue)
       circleBlur(circleBlurTestValue)
       circleColor(circleColorTestValue)
+      circleEmissiveStrength(circleEmissiveStrengthTestValue)
       circleOpacity(circleOpacityTestValue)
       circlePitchAlignment(circlePitchAlignmentTestValue)
       circlePitchScale(circlePitchScaleTestValue)
@@ -764,6 +824,7 @@ class CircleLayerTest : BaseStyleTest() {
     assertEquals(circleSortKeyTestValue, cachedLayer.circleSortKey)
     assertEquals(circleBlurTestValue, cachedLayer.circleBlur)
     assertEquals(circleColorTestValue, cachedLayer.circleColor)
+    assertEquals(circleEmissiveStrengthTestValue, cachedLayer.circleEmissiveStrength)
     assertEquals(circleOpacityTestValue, cachedLayer.circleOpacity)
     assertEquals(circlePitchAlignmentTestValue, cachedLayer.circlePitchAlignment)
     assertEquals(circlePitchScaleTestValue, cachedLayer.circlePitchScale)

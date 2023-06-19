@@ -4,6 +4,7 @@ package com.mapbox.maps.extension.style.layers.generated
 
 import androidx.annotation.ColorInt
 import androidx.annotation.UiThread
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.Layer
@@ -3059,6 +3060,112 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
+   * Emission strength.
+   */
+  @MapboxExperimental
+  val iconEmissiveStrength: Double?
+    /**
+     * Emission strength.
+     *
+     * Use static method [SymbolLayer.defaultIconEmissiveStrength] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      return getPropertyValue("icon-emissive-strength")
+    }
+
+  /**
+   * Emission strength.
+   *
+   * Use static method [SymbolLayer.defaultIconEmissiveStrength] to set the default property.
+   *
+   * @param iconEmissiveStrength value of iconEmissiveStrength
+   */
+  @MapboxExperimental
+  override fun iconEmissiveStrength(iconEmissiveStrength: Double): SymbolLayer = apply {
+    val propertyValue = PropertyValue("icon-emissive-strength", iconEmissiveStrength)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Emission strength.
+   *
+   * This is an Expression representation of "icon-emissive-strength".
+   *
+   */
+  @MapboxExperimental
+  val iconEmissiveStrengthAsExpression: Expression?
+    /**
+     * Emission strength.
+     *
+     * Get the IconEmissiveStrength property as an Expression
+     *
+     * Use static method [SymbolLayer.defaultIconEmissiveStrengthAsExpression] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      getPropertyValue<Expression>("icon-emissive-strength")?.let {
+        return it
+      }
+      iconEmissiveStrength?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * Emission strength.
+   *
+   * Use static method [SymbolLayer.defaultIconEmissiveStrengthAsExpression] to set the default property.
+   *
+   * @param iconEmissiveStrength value of iconEmissiveStrength as Expression
+   */
+  @MapboxExperimental
+  override fun iconEmissiveStrength(iconEmissiveStrength: Expression): SymbolLayer = apply {
+    val propertyValue = PropertyValue("icon-emissive-strength", iconEmissiveStrength)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Transition options for IconEmissiveStrength.
+   */
+  @MapboxExperimental
+  val iconEmissiveStrengthTransition: StyleTransition?
+    /**
+     * Get the IconEmissiveStrength property transition options
+     *
+     * Use static method [SymbolLayer.defaultIconEmissiveStrengthTransition] to get the default property.
+     *
+     * @return transition options for Double
+     */
+    get() {
+      return getPropertyValue("icon-emissive-strength-transition")
+    }
+
+  /**
+   * Set the IconEmissiveStrength property transition options
+   *
+   * Use static method [SymbolLayer.defaultIconEmissiveStrengthTransition] to set the default property.
+   *
+   * @param options transition options for Double
+   */
+  @MapboxExperimental
+  override fun iconEmissiveStrengthTransition(options: StyleTransition): SymbolLayer = apply {
+    val propertyValue = PropertyValue("icon-emissive-strength-transition", options)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * DSL for [iconEmissiveStrengthTransition].
+   */
+  @MapboxExperimental
+  override fun iconEmissiveStrengthTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer = apply {
+    iconEmissiveStrengthTransition(StyleTransition.Builder().apply(block).build())
+  }
+
+  /**
    * Fade out the halo towards the outside.
    */
   val iconHaloBlur: Double?
@@ -3384,6 +3491,105 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    */
   override fun iconHaloWidthTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer = apply {
     iconHaloWidthTransition(StyleTransition.Builder().apply(block).build())
+  }
+
+  /**
+   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together.
+   */
+  val iconImageCrossFade: Double?
+    /**
+     * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together.
+     *
+     * Use static method [SymbolLayer.defaultIconImageCrossFade] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      return getPropertyValue("icon-image-cross-fade")
+    }
+
+  /**
+   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together.
+   *
+   * Use static method [SymbolLayer.defaultIconImageCrossFade] to set the default property.
+   *
+   * @param iconImageCrossFade value of iconImageCrossFade
+   */
+  override fun iconImageCrossFade(iconImageCrossFade: Double): SymbolLayer = apply {
+    val propertyValue = PropertyValue("icon-image-cross-fade", iconImageCrossFade)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together.
+   *
+   * This is an Expression representation of "icon-image-cross-fade".
+   *
+   */
+  val iconImageCrossFadeAsExpression: Expression?
+    /**
+     * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together.
+     *
+     * Get the IconImageCrossFade property as an Expression
+     *
+     * Use static method [SymbolLayer.defaultIconImageCrossFadeAsExpression] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      getPropertyValue<Expression>("icon-image-cross-fade")?.let {
+        return it
+      }
+      iconImageCrossFade?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together.
+   *
+   * Use static method [SymbolLayer.defaultIconImageCrossFadeAsExpression] to set the default property.
+   *
+   * @param iconImageCrossFade value of iconImageCrossFade as Expression
+   */
+  override fun iconImageCrossFade(iconImageCrossFade: Expression): SymbolLayer = apply {
+    val propertyValue = PropertyValue("icon-image-cross-fade", iconImageCrossFade)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Transition options for IconImageCrossFade.
+   */
+  val iconImageCrossFadeTransition: StyleTransition?
+    /**
+     * Get the IconImageCrossFade property transition options
+     *
+     * Use static method [SymbolLayer.defaultIconImageCrossFadeTransition] to get the default property.
+     *
+     * @return transition options for Double
+     */
+    get() {
+      return getPropertyValue("icon-image-cross-fade-transition")
+    }
+
+  /**
+   * Set the IconImageCrossFade property transition options
+   *
+   * Use static method [SymbolLayer.defaultIconImageCrossFadeTransition] to set the default property.
+   *
+   * @param options transition options for Double
+   */
+  override fun iconImageCrossFadeTransition(options: StyleTransition): SymbolLayer = apply {
+    val propertyValue = PropertyValue("icon-image-cross-fade-transition", options)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * DSL for [iconImageCrossFadeTransition].
+   */
+  override fun iconImageCrossFadeTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer = apply {
+    iconImageCrossFadeTransition(StyleTransition.Builder().apply(block).build())
   }
 
   /**
@@ -3780,6 +3986,112 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    */
   override fun textColorTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer = apply {
     textColorTransition(StyleTransition.Builder().apply(block).build())
+  }
+
+  /**
+   * Emission strength.
+   */
+  @MapboxExperimental
+  val textEmissiveStrength: Double?
+    /**
+     * Emission strength.
+     *
+     * Use static method [SymbolLayer.defaultTextEmissiveStrength] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      return getPropertyValue("text-emissive-strength")
+    }
+
+  /**
+   * Emission strength.
+   *
+   * Use static method [SymbolLayer.defaultTextEmissiveStrength] to set the default property.
+   *
+   * @param textEmissiveStrength value of textEmissiveStrength
+   */
+  @MapboxExperimental
+  override fun textEmissiveStrength(textEmissiveStrength: Double): SymbolLayer = apply {
+    val propertyValue = PropertyValue("text-emissive-strength", textEmissiveStrength)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Emission strength.
+   *
+   * This is an Expression representation of "text-emissive-strength".
+   *
+   */
+  @MapboxExperimental
+  val textEmissiveStrengthAsExpression: Expression?
+    /**
+     * Emission strength.
+     *
+     * Get the TextEmissiveStrength property as an Expression
+     *
+     * Use static method [SymbolLayer.defaultTextEmissiveStrengthAsExpression] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      getPropertyValue<Expression>("text-emissive-strength")?.let {
+        return it
+      }
+      textEmissiveStrength?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * Emission strength.
+   *
+   * Use static method [SymbolLayer.defaultTextEmissiveStrengthAsExpression] to set the default property.
+   *
+   * @param textEmissiveStrength value of textEmissiveStrength as Expression
+   */
+  @MapboxExperimental
+  override fun textEmissiveStrength(textEmissiveStrength: Expression): SymbolLayer = apply {
+    val propertyValue = PropertyValue("text-emissive-strength", textEmissiveStrength)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Transition options for TextEmissiveStrength.
+   */
+  @MapboxExperimental
+  val textEmissiveStrengthTransition: StyleTransition?
+    /**
+     * Get the TextEmissiveStrength property transition options
+     *
+     * Use static method [SymbolLayer.defaultTextEmissiveStrengthTransition] to get the default property.
+     *
+     * @return transition options for Double
+     */
+    get() {
+      return getPropertyValue("text-emissive-strength-transition")
+    }
+
+  /**
+   * Set the TextEmissiveStrength property transition options
+   *
+   * Use static method [SymbolLayer.defaultTextEmissiveStrengthTransition] to set the default property.
+   *
+   * @param options transition options for Double
+   */
+  @MapboxExperimental
+  override fun textEmissiveStrengthTransition(options: StyleTransition): SymbolLayer = apply {
+    val propertyValue = PropertyValue("text-emissive-strength-transition", options)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * DSL for [textEmissiveStrengthTransition].
+   */
+  @MapboxExperimental
+  override fun textEmissiveStrengthTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer = apply {
+    textEmissiveStrengthTransition(StyleTransition.Builder().apply(block).build())
   }
 
   /**
@@ -6071,6 +6383,57 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-color-transition").silentUnwrap()
 
     /**
+     * Emission strength.
+     */
+    @MapboxExperimental
+    val defaultIconEmissiveStrength: Double?
+      /**
+       * Emission strength.
+       *
+       * Get the default value of IconEmissiveStrength property
+       *
+       * @return Double
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-emissive-strength").silentUnwrap()
+      }
+
+    /**
+     * Emission strength.
+     *
+     * This is an Expression representation of "icon-emissive-strength".
+     *
+     */
+    @MapboxExperimental
+    val defaultIconEmissiveStrengthAsExpression: Expression?
+      /**
+       * Get default value of the IconEmissiveStrength property as an Expression
+       *
+       * @return Double
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-emissive-strength").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultIconEmissiveStrength?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
+
+    /**
+     * Transition options for IconEmissiveStrength.
+     */
+    @MapboxExperimental
+    val defaultIconEmissiveStrengthTransition: StyleTransition?
+      /**
+       * Get the IconEmissiveStrength property transition options
+       *
+       * @return transition options for Double
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-emissive-strength-transition").silentUnwrap()
+
+    /**
      * Fade out the halo towards the outside.
      */
     val defaultIconHaloBlur: Double?
@@ -6232,6 +6595,54 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
        * @return transition options for Double
        */
       get() = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-halo-width-transition").silentUnwrap()
+
+    /**
+     * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together.
+     */
+    val defaultIconImageCrossFade: Double?
+      /**
+       * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together.
+       *
+       * Get the default value of IconImageCrossFade property
+       *
+       * @return Double
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-image-cross-fade").silentUnwrap()
+      }
+
+    /**
+     * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together.
+     *
+     * This is an Expression representation of "icon-image-cross-fade".
+     *
+     */
+    val defaultIconImageCrossFadeAsExpression: Expression?
+      /**
+       * Get default value of the IconImageCrossFade property as an Expression
+       *
+       * @return Double
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-image-cross-fade").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultIconImageCrossFade?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
+
+    /**
+     * Transition options for IconImageCrossFade.
+     */
+    val defaultIconImageCrossFadeTransition: StyleTransition?
+      /**
+       * Get the IconImageCrossFade property transition options
+       *
+       * @return transition options for Double
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-image-cross-fade-transition").silentUnwrap()
 
     /**
      * The opacity at which the icon will be drawn.
@@ -6435,6 +6846,57 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
        * @return transition options for String
        */
       get() = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-color-transition").silentUnwrap()
+
+    /**
+     * Emission strength.
+     */
+    @MapboxExperimental
+    val defaultTextEmissiveStrength: Double?
+      /**
+       * Emission strength.
+       *
+       * Get the default value of TextEmissiveStrength property
+       *
+       * @return Double
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-emissive-strength").silentUnwrap()
+      }
+
+    /**
+     * Emission strength.
+     *
+     * This is an Expression representation of "text-emissive-strength".
+     *
+     */
+    @MapboxExperimental
+    val defaultTextEmissiveStrengthAsExpression: Expression?
+      /**
+       * Get default value of the TextEmissiveStrength property as an Expression
+       *
+       * @return Double
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-emissive-strength").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultTextEmissiveStrength?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
+
+    /**
+     * Transition options for TextEmissiveStrength.
+     */
+    @MapboxExperimental
+    val defaultTextEmissiveStrengthTransition: StyleTransition?
+      /**
+       * Get the TextEmissiveStrength property transition options
+       *
+       * @return transition options for Double
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-emissive-strength-transition").silentUnwrap()
 
     /**
      * The halo's fadeout distance towards the outside.
@@ -7425,6 +7887,40 @@ interface SymbolLayerDsl {
   fun iconColorTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer
 
   /**
+   * Emission strength.
+   *
+   * @param iconEmissiveStrength value of iconEmissiveStrength
+   */
+  @MapboxExperimental
+  fun iconEmissiveStrength(iconEmissiveStrength: Double = 1.0): SymbolLayer
+
+  /**
+   * Emission strength.
+   *
+   * @param iconEmissiveStrength value of iconEmissiveStrength as Expression
+   */
+  @MapboxExperimental
+  fun iconEmissiveStrength(iconEmissiveStrength: Expression): SymbolLayer
+
+  /**
+   * Emission strength.
+   *
+   * Set the IconEmissiveStrength property transition options
+   *
+   * @param options transition options for Double
+   */
+  @MapboxExperimental
+  fun iconEmissiveStrengthTransition(options: StyleTransition): SymbolLayer
+
+  /**
+   * Emission strength.
+   *
+   * DSL for [iconEmissiveStrengthTransition].
+   */
+  @MapboxExperimental
+  fun iconEmissiveStrengthTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer
+
+  /**
    * Fade out the halo towards the outside.
    *
    * @param iconHaloBlur value of iconHaloBlur
@@ -7520,6 +8016,36 @@ interface SymbolLayerDsl {
    * DSL for [iconHaloWidthTransition].
    */
   fun iconHaloWidthTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer
+
+  /**
+   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together.
+   *
+   * @param iconImageCrossFade value of iconImageCrossFade
+   */
+  fun iconImageCrossFade(iconImageCrossFade: Double = 0.0): SymbolLayer
+
+  /**
+   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together.
+   *
+   * @param iconImageCrossFade value of iconImageCrossFade as Expression
+   */
+  fun iconImageCrossFade(iconImageCrossFade: Expression): SymbolLayer
+
+  /**
+   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together.
+   *
+   * Set the IconImageCrossFade property transition options
+   *
+   * @param options transition options for Double
+   */
+  fun iconImageCrossFadeTransition(options: StyleTransition): SymbolLayer
+
+  /**
+   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together.
+   *
+   * DSL for [iconImageCrossFadeTransition].
+   */
+  fun iconImageCrossFadeTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer
 
   /**
    * The opacity at which the icon will be drawn.
@@ -7631,6 +8157,40 @@ interface SymbolLayerDsl {
    * DSL for [textColorTransition].
    */
   fun textColorTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer
+
+  /**
+   * Emission strength.
+   *
+   * @param textEmissiveStrength value of textEmissiveStrength
+   */
+  @MapboxExperimental
+  fun textEmissiveStrength(textEmissiveStrength: Double = 1.0): SymbolLayer
+
+  /**
+   * Emission strength.
+   *
+   * @param textEmissiveStrength value of textEmissiveStrength as Expression
+   */
+  @MapboxExperimental
+  fun textEmissiveStrength(textEmissiveStrength: Expression): SymbolLayer
+
+  /**
+   * Emission strength.
+   *
+   * Set the TextEmissiveStrength property transition options
+   *
+   * @param options transition options for Double
+   */
+  @MapboxExperimental
+  fun textEmissiveStrengthTransition(options: StyleTransition): SymbolLayer
+
+  /**
+   * Emission strength.
+   *
+   * DSL for [textEmissiveStrengthTransition].
+   */
+  @MapboxExperimental
+  fun textEmissiveStrengthTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer
 
   /**
    * The halo's fadeout distance towards the outside.

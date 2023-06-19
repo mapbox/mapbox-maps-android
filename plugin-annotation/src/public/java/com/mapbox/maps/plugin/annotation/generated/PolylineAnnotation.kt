@@ -152,6 +152,105 @@ class PolylineAnnotation(
     }
 
   /**
+   * The lineBorderColor property in Int
+   * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color.
+   */
+  var lineBorderColorInt: Int?
+    /**
+     * Get the lineBorderColor property
+     * @return color value for String
+     */
+    @ColorInt
+    get() {
+      val value = jsonObject.get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR)
+      value?.let {
+        ColorUtils.rgbaToColor(it.asString)?.let {
+          return it
+        }
+      }
+      return null
+    }
+    /**
+     * Set the lineBorderColor property
+     * To update the polylineAnnotation on the map use {@link polylineAnnotationManager#update(Annotation)}.
+     *
+     * @param color value for String
+     */
+    set(@ColorInt value) {
+      if (value != null) {
+        jsonObject.addProperty(
+          PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR, ColorUtils.colorToRgbaString(value)
+        )
+      } else {
+        jsonObject.remove(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR)
+      }
+    }
+
+  /**
+   * The lineBorderColor property in String
+   *
+   * The color of the line border. If line-border-width is greater than zero and the alpha value of this color is 0 (default), the color for the border will be selected automatically based on the line color.
+   */
+  var lineBorderColorString: String?
+    /**
+     * Get the lineBorderColor property
+     * @return color value for String
+     */
+    get() {
+      val value = jsonObject.get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR)
+      value?.let {
+        return it.asString.toString()
+      }
+      return null
+    }
+    /**
+     * Set the lineBorderColor property
+     * To update the polylineAnnotation on the map use {@link polylineAnnotationManager#update(Annotation)}.
+     *
+     * @param color value for String
+     */
+    set(value) {
+      if (value != null) {
+        jsonObject.addProperty(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR, value)
+      } else {
+        jsonObject.remove(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR)
+      }
+    }
+
+  /**
+   * The lineBorderWidth property
+   *
+   * The width of the line border. A value of zero means no border.
+   */
+  var lineBorderWidth: Double?
+    /**
+     * Get the lineBorderWidth property
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = jsonObject.get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_WIDTH)
+      value?.let {
+        return it.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the lineBorderWidth property
+     *
+     * To update the polylineAnnotation on the map use {@link polylineAnnotationManager#update(Annotation)}.
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      if (value != null) {
+        jsonObject.addProperty(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_WIDTH, value)
+      } else {
+        jsonObject.remove(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_WIDTH)
+      }
+    }
+
+  /**
    * The lineColor property in Int
    * The color with which the line will be drawn.
    */
@@ -422,6 +521,12 @@ class PolylineAnnotation(
     }
     jsonObject.get(PolylineAnnotationOptions.PROPERTY_LINE_BLUR)?.let {
       annotationManager.enableDataDrivenProperty(PolylineAnnotationOptions.PROPERTY_LINE_BLUR)
+    }
+    jsonObject.get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR)?.let {
+      annotationManager.enableDataDrivenProperty(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR)
+    }
+    jsonObject.get(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_WIDTH)?.let {
+      annotationManager.enableDataDrivenProperty(PolylineAnnotationOptions.PROPERTY_LINE_BORDER_WIDTH)
     }
     jsonObject.get(PolylineAnnotationOptions.PROPERTY_LINE_COLOR)?.let {
       annotationManager.enableDataDrivenProperty(PolylineAnnotationOptions.PROPERTY_LINE_COLOR)

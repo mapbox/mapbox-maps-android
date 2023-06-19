@@ -442,6 +442,113 @@ class FillLayerTest {
   }
 
   @Test
+  fun fillEmissiveStrengthSet() {
+    val layer = fillLayer("id", "source") {}
+    val testValue = 1.0
+    layer.bindTo(style)
+    layer.fillEmissiveStrength(testValue)
+    verify { style.setStyleLayerProperty("id", "fill-emissive-strength", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "1.0")
+  }
+
+  @Test
+  fun fillEmissiveStrengthGet() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = fillLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), layer.fillEmissiveStrength?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-emissive-strength") }
+  }
+  // Expression Tests
+
+  @Test
+  fun fillEmissiveStrengthAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = fillLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.fillEmissiveStrength(expression)
+    verify { style.setStyleLayerProperty("id", "fill-emissive-strength", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun fillEmissiveStrengthAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = fillLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.fillEmissiveStrengthAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-emissive-strength") }
+  }
+
+  @Test
+  fun fillEmissiveStrengthAsExpressionGetNull() {
+    val layer = fillLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.fillEmissiveStrengthAsExpression)
+    verify { style.getStyleLayerProperty("id", "fill-emissive-strength") }
+  }
+
+  @Test
+  fun fillEmissiveStrengthAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    val layer = fillLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(1.0, layer.fillEmissiveStrengthAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.fillEmissiveStrength!!, 1E-5)
+    verify { style.getStyleLayerProperty("id", "fill-emissive-strength") }
+  }
+
+  @Test
+  fun fillEmissiveStrengthTransitionSet() {
+    val layer = fillLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.fillEmissiveStrengthTransition(
+      transitionOptions {
+        duration(100)
+        delay(200)
+      }
+    )
+    verify { style.setStyleLayerProperty("id", "fill-emissive-strength-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
+  fun fillEmissiveStrengthTransitionGet() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+    val layer = fillLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(transition.toValue().toString(), layer.fillEmissiveStrengthTransition?.toValue().toString())
+    verify { style.getStyleLayerProperty("id", "fill-emissive-strength-transition") }
+  }
+
+  @Test
+  fun fillEmissiveStrengthTransitionSetDsl() {
+    val layer = fillLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.fillEmissiveStrengthTransition {
+      duration(100)
+      delay(200)
+    }
+    verify { style.setStyleLayerProperty("id", "fill-emissive-strength-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
   fun fillOpacitySet() {
     val layer = fillLayer("id", "source") {}
     val testValue = 1.0
@@ -1122,6 +1229,50 @@ class FillLayerTest {
 
     assertEquals(transition.toValue().toString(), FillLayer.defaultFillColorTransition?.toValue().toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-color-transition") }
+  }
+
+  @Test
+  fun defaultFillEmissiveStrengthTest() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), FillLayer.defaultFillEmissiveStrength?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-emissive-strength") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultFillEmissiveStrengthAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), FillLayer.defaultFillEmissiveStrengthAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-emissive-strength") }
+  }
+
+  @Test
+  fun defaultFillEmissiveStrengthAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    assertEquals(1.0, FillLayer.defaultFillEmissiveStrengthAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, FillLayer.defaultFillEmissiveStrength!!, 1E-5)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-emissive-strength") }
+  }
+
+  @Test
+  fun defaultFillEmissiveStrengthTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+
+    assertEquals(transition.toValue().toString(), FillLayer.defaultFillEmissiveStrengthTransition?.toValue().toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-emissive-strength-transition") }
   }
 
   @Test

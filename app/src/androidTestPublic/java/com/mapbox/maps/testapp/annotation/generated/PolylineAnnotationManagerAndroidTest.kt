@@ -100,6 +100,18 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
   }
 
   @Test
+  fun testLineEmissiveStrength() {
+    rule.runOnUiThread {
+      val expectedValue = 1.0
+      val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
+      polylineAnnotationManager.lineEmissiveStrength = expectedValue
+      assertEquals(expectedValue, polylineAnnotationManager.lineEmissiveStrength)
+      polylineAnnotationManager.lineEmissiveStrength = null
+      assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-emissive-strength").silentUnwrap(), polylineAnnotationManager.lineEmissiveStrength)
+    }
+  }
+
+  @Test
   fun testLineTranslate() {
     rule.runOnUiThread {
       val expectedValue = listOf(0.0, 1.0)

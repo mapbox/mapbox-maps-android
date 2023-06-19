@@ -191,6 +191,61 @@ class FillLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun fillEmissiveStrengthTest() {
+    val testValue = 1.0
+    val layer = fillLayer("id", "source") {
+      fillEmissiveStrength(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(testValue, layer.fillEmissiveStrength!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun fillEmissiveStrengthAsExpressionTest() {
+    val expression = literal(1.0)
+    val layer = fillLayer("id", "source") {
+      fillEmissiveStrength(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(1.0, layer.fillEmissiveStrengthAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.fillEmissiveStrength!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun fillEmissiveStrengthTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = fillLayer("id", "source") {
+      fillEmissiveStrengthTransition(transition)
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.fillEmissiveStrengthTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun fillEmissiveStrengthTransitionSetDslTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = fillLayer("id", "source") {
+      fillEmissiveStrengthTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.fillEmissiveStrengthTransition)
+  }
+
+  @Test
+  @UiThreadTest
   fun fillOpacityTest() {
     val testValue = 1.0
     val layer = fillLayer("id", "source") {
@@ -451,6 +506,9 @@ class FillLayerTest : BaseStyleTest() {
     assertNotNull("defaultFillColorAsExpression should not be null", FillLayer.defaultFillColorAsExpression)
     assertNotNull("defaultFillColorAsColorInt should not be null", FillLayer.defaultFillColorAsColorInt)
     assertNotNull("defaultFillColorTransition should not be null", FillLayer.defaultFillColorTransition)
+    assertNotNull("defaultFillEmissiveStrength should not be null", FillLayer.defaultFillEmissiveStrength)
+    assertNotNull("defaultFillEmissiveStrengthAsExpression should not be null", FillLayer.defaultFillEmissiveStrengthAsExpression)
+    assertNotNull("defaultFillEmissiveStrengthTransition should not be null", FillLayer.defaultFillEmissiveStrengthTransition)
     assertNotNull("defaultFillOpacity should not be null", FillLayer.defaultFillOpacity)
     assertNotNull("defaultFillOpacityAsExpression should not be null", FillLayer.defaultFillOpacityAsExpression)
     assertNotNull("defaultFillOpacityTransition should not be null", FillLayer.defaultFillOpacityTransition)
@@ -479,6 +537,7 @@ class FillLayerTest : BaseStyleTest() {
     val fillSortKeyTestValue = 1.0
     val fillAntialiasTestValue = true
     val fillColorTestValue = "rgba(0, 0, 0, 1)"
+    val fillEmissiveStrengthTestValue = 1.0
     val fillOpacityTestValue = 1.0
     val fillOutlineColorTestValue = "rgba(0, 0, 0, 1)"
     val fillPatternTestValue = "abc"
@@ -495,6 +554,7 @@ class FillLayerTest : BaseStyleTest() {
       fillSortKey(fillSortKeyTestValue)
       fillAntialias(fillAntialiasTestValue)
       fillColor(fillColorTestValue)
+      fillEmissiveStrength(fillEmissiveStrengthTestValue)
       fillOpacity(fillOpacityTestValue)
       fillOutlineColor(fillOutlineColorTestValue)
       fillPattern(fillPatternTestValue)
@@ -516,6 +576,7 @@ class FillLayerTest : BaseStyleTest() {
     assertEquals(fillSortKeyTestValue, cachedLayer.fillSortKey)
     assertEquals(fillAntialiasTestValue, cachedLayer.fillAntialias)
     assertEquals(fillColorTestValue, cachedLayer.fillColor)
+    assertEquals(fillEmissiveStrengthTestValue, cachedLayer.fillEmissiveStrength)
     assertEquals(fillOpacityTestValue, cachedLayer.fillOpacity)
     assertEquals(fillOutlineColorTestValue, cachedLayer.fillOutlineColor)
     assertEquals(fillPatternTestValue, cachedLayer.fillPattern)

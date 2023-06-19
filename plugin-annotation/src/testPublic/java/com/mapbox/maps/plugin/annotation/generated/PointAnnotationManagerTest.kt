@@ -160,16 +160,22 @@ class PointAnnotationManagerTest {
     every { dragLayer.textTransform(any<Expression>()) } answers { dragLayer }
     every { layer.iconColor(any<Expression>()) } answers { layer }
     every { dragLayer.iconColor(any<Expression>()) } answers { dragLayer }
+    every { layer.iconEmissiveStrength(any<Expression>()) } answers { layer }
+    every { dragLayer.iconEmissiveStrength(any<Expression>()) } answers { dragLayer }
     every { layer.iconHaloBlur(any<Expression>()) } answers { layer }
     every { dragLayer.iconHaloBlur(any<Expression>()) } answers { dragLayer }
     every { layer.iconHaloColor(any<Expression>()) } answers { layer }
     every { dragLayer.iconHaloColor(any<Expression>()) } answers { dragLayer }
     every { layer.iconHaloWidth(any<Expression>()) } answers { layer }
     every { dragLayer.iconHaloWidth(any<Expression>()) } answers { dragLayer }
+    every { layer.iconImageCrossFade(any<Expression>()) } answers { layer }
+    every { dragLayer.iconImageCrossFade(any<Expression>()) } answers { dragLayer }
     every { layer.iconOpacity(any<Expression>()) } answers { layer }
     every { dragLayer.iconOpacity(any<Expression>()) } answers { dragLayer }
     every { layer.textColor(any<Expression>()) } answers { layer }
     every { dragLayer.textColor(any<Expression>()) } answers { dragLayer }
+    every { layer.textEmissiveStrength(any<Expression>()) } answers { layer }
+    every { dragLayer.textEmissiveStrength(any<Expression>()) } answers { dragLayer }
     every { layer.textHaloBlur(any<Expression>()) } answers { layer }
     every { dragLayer.textHaloBlur(any<Expression>()) } answers { dragLayer }
     every { layer.textHaloColor(any<Expression>()) } answers { layer }
@@ -509,6 +515,11 @@ class PointAnnotationManagerTest {
     annotation.iconColorString = null
     assertNull(annotation.iconColorString)
 
+    annotation.iconEmissiveStrength = 1.0
+    assertEquals(1.0, annotation.iconEmissiveStrength)
+    annotation.iconEmissiveStrength = null
+    assertNull(annotation.iconEmissiveStrength)
+
     annotation.iconHaloBlur = 0.0
     assertEquals(0.0, annotation.iconHaloBlur)
     annotation.iconHaloBlur = null
@@ -529,6 +540,11 @@ class PointAnnotationManagerTest {
     annotation.iconHaloWidth = null
     assertNull(annotation.iconHaloWidth)
 
+    annotation.iconImageCrossFade = 0.0
+    assertEquals(0.0, annotation.iconImageCrossFade)
+    annotation.iconImageCrossFade = null
+    assertNull(annotation.iconImageCrossFade)
+
     annotation.iconOpacity = 1.0
     assertEquals(1.0, annotation.iconOpacity)
     annotation.iconOpacity = null
@@ -543,6 +559,11 @@ class PointAnnotationManagerTest {
     assertEquals(ColorUtils.colorToRgbaString(Color.YELLOW), annotation.textColorString)
     annotation.textColorString = null
     assertNull(annotation.textColorString)
+
+    annotation.textEmissiveStrength = 1.0
+    assertEquals(1.0, annotation.textEmissiveStrength)
+    annotation.textEmissiveStrength = null
+    assertNull(annotation.textEmissiveStrength)
 
     annotation.textHaloBlur = 0.0
     assertEquals(0.0, annotation.textHaloBlur)
@@ -1085,6 +1106,22 @@ class PointAnnotationManagerTest {
   }
 
   @Test
+  fun testIconEmissiveStrengthLayerProperty() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer?.iconEmissiveStrength(Expression.get(PointAnnotationOptions.PROPERTY_ICON_EMISSIVE_STRENGTH)) }
+    val options = PointAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+      .withIconEmissiveStrength(1.0)
+    manager.create(options)
+    verify(exactly = 1) { manager.layer?.iconEmissiveStrength(Expression.get(PointAnnotationOptions.PROPERTY_ICON_EMISSIVE_STRENGTH)) }
+    verify(exactly = 1) { manager.dragLayer?.iconEmissiveStrength(Expression.get(PointAnnotationOptions.PROPERTY_ICON_EMISSIVE_STRENGTH)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer?.iconEmissiveStrength(Expression.get(PointAnnotationOptions.PROPERTY_ICON_EMISSIVE_STRENGTH)) }
+    verify(exactly = 1) { manager.dragLayer?.iconEmissiveStrength(Expression.get(PointAnnotationOptions.PROPERTY_ICON_EMISSIVE_STRENGTH)) }
+  }
+
+  @Test
   fun testIconHaloBlurLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
     every { style.styleLayerExists(any()) } returns true
@@ -1147,6 +1184,22 @@ class PointAnnotationManagerTest {
   }
 
   @Test
+  fun testIconImageCrossFadeLayerProperty() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer?.iconImageCrossFade(Expression.get(PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE)) }
+    val options = PointAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+      .withIconImageCrossFade(0.0)
+    manager.create(options)
+    verify(exactly = 1) { manager.layer?.iconImageCrossFade(Expression.get(PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE)) }
+    verify(exactly = 1) { manager.dragLayer?.iconImageCrossFade(Expression.get(PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer?.iconImageCrossFade(Expression.get(PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE)) }
+    verify(exactly = 1) { manager.dragLayer?.iconImageCrossFade(Expression.get(PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE)) }
+  }
+
+  @Test
   fun testIconOpacityLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
     every { style.styleLayerExists(any()) } returns true
@@ -1190,6 +1243,22 @@ class PointAnnotationManagerTest {
     manager.create(options)
     verify(exactly = 1) { manager.layer?.textColor(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_COLOR)) }
     verify(exactly = 1) { manager.dragLayer?.textColor(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_COLOR)) }
+  }
+
+  @Test
+  fun testTextEmissiveStrengthLayerProperty() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer?.textEmissiveStrength(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_EMISSIVE_STRENGTH)) }
+    val options = PointAnnotationOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+      .withTextEmissiveStrength(1.0)
+    manager.create(options)
+    verify(exactly = 1) { manager.layer?.textEmissiveStrength(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_EMISSIVE_STRENGTH)) }
+    verify(exactly = 1) { manager.dragLayer?.textEmissiveStrength(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_EMISSIVE_STRENGTH)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer?.textEmissiveStrength(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_EMISSIVE_STRENGTH)) }
+    verify(exactly = 1) { manager.dragLayer?.textEmissiveStrength(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_EMISSIVE_STRENGTH)) }
   }
 
   @Test
