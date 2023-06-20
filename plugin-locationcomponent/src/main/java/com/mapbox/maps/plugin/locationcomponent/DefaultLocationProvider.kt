@@ -113,6 +113,7 @@ class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal c
         PuckBearingSource.HEADING -> locationCompassEngine.addCompassListener(
           locationCompassListener
         )
+
         PuckBearingSource.COURSE -> locationCompassEngine.removeCompassListener(
           locationCompassListener
         )
@@ -139,7 +140,11 @@ class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal c
     }
     locationConsumers.add(locationConsumer)
     if (PermissionsManager.areLocationPermissionsGranted(applicationContext)) {
-      locationEngine.getLastLocation(locationEngineCallback)
+      runCatching {
+        locationEngine.getLastLocation(locationEngineCallback)
+      }.onFailure { exception ->
+        logW(TAG, "Failed to get last location: $exception")
+      }
     } else {
       logW(
         TAG,

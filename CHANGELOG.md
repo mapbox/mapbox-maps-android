@@ -3,6 +3,8 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
+## Bug fixes 🐞
+* Fix a security exception when fine location permission is not granted when using DefaultLocationProvider.
 
 
 # 10.14.0 June 14, 2023
