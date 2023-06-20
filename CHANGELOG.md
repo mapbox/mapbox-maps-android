@@ -49,7 +49,6 @@ Mapbox welcomes participation and contributions from everyone.
 * Deprecate `MapboxMap.loadStyleUri`, `MapboxMap.loadStyleJson` and `MapboxMap.loadStyle` methods and introduce one `MapboxMap.loadStyle` accepting either URI / JSON or Style DSL block.
 * Replace `com.mapbox.maps.plugin.animation.Cancelable` with `com.mapbox.common.Cancelable`.
 * Remove `TileStoreOptions.MAPBOX_ACCESS_TOKEN` used e.g. in `TileStore.setOption(TileStoreOptions.MAPBOX_ACCESS_TOKEN, someDomain, someValue)` as it has become redundant.
-* Introduce `MapboxTracing` object allowing to enable Android traces to measure performance of the SDK.
 * Introduce `MapboxTracing` object allowing to enable Android traces to measure performance of the SDK. More details and instructions could be found in `Working with traces` section in `DEVELOPING.md`. 
 
 ## Features ✨ and improvements 🏁
@@ -79,7 +78,6 @@ Mapbox welcomes participation and contributions from everyone.
 * Introduce `LineLayer.lineBorderColor`, `LineLayer.lineBorderWidth` APIs.
 * Introduce experimental `BackgroundLayer.backgroundEmissiveStrength`, `CircleLayer.circleEmissiveStrength`, `FillLayer.fillEmissiveStrength`, `LineLayer.lineEmissiveStrength`, `SymbolLayer.iconEmissiveStrength`, `SymbolLayer.textEmissiveStrength` APIs.
 * Introduce experimental `FillExtrusionLayer.fillExtrusionRoundedRoof`, `FillExtrusionLayer.fillExtrusionEdgeRadius`, `FillExtrusionLayer.fillExtrusionAmbientOcclusionWallRadius`, `FillExtrusionLayer.fillExtrusionAmbientOcclusionGroundRadius`, `FillExtrusionLayer.fillExtrusionAmbientOcclusionGroundAttenuation`, `FillExtrusionLayer.fillExtrusionFloodLightColor`, `FillExtrusionLayer.fillExtrusionFloodLightIntensity`, `FillExtrusionLayer.fillExtrusionFloodLightWallRadius`, `FillExtrusionLayer.fillExtrusionFloodLightGroundRadius`, `FillExtrusionLayer.fillExtrusionFloodLightGroundAttenuation`, `FillExtrusionLayer.fillExtrusionVerticalScale` APIs.
-* Introduce `MapboxMap.tileCover` experimental API to get the tileIDs that cover current map camera.
  
 ## Bug fixes 🐞
 * Fix 3d location layer properties `model-scale-transition` and `model-rotation-transition`, made them non-transitionable.
