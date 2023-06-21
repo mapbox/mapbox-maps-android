@@ -66,7 +66,9 @@ class MapboxMap :
   internal var isStyleLoadInitiated = false
   private val styleObserver: StyleObserver
   internal var renderHandler: Handler? = null
-  private val cancelableSubscriberSet = CopyOnWriteArraySet<Cancelable>()
+  @JvmSynthetic
+  internal val cancelableSubscriberSet = CopyOnWriteArraySet<Cancelable>()
+
   /**
    * Represents current camera state.
    */

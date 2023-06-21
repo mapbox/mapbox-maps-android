@@ -13,7 +13,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
-import com.mapbox.maps.coroutine.cameraChanges
+import com.mapbox.maps.coroutine.cameraChangedEvents
 import com.mapbox.maps.coroutine.getFeatureState
 import com.mapbox.maps.coroutine.queryRenderedFeatures
 import com.mapbox.maps.coroutine.setFeatureState
@@ -67,7 +67,7 @@ class FeatureStateActivity : AppCompatActivity() {
   private suspend fun highlightFeatureOnHover() {
     var lastFeatureId: String? = null
     mapboxMap
-      .cameraChanges()
+      .cameraChangedEvents
       .map {
         Rect().apply {
           crosshair.getDrawingRect(this)

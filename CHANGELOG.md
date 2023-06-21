@@ -57,7 +57,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Add `FreeCameraOptions.getLocation` and `FreeCameraOptions.getAltitude` methods.
 * Add `MapboxMap.coordinatesForRect(rectF: RectF)` to support rectangle parameters.
 * Add `suspend` variants for the async `MapboxMap` functions : `queryRenderedFeatures`, `querySourceFeatures`, `setFeatureState`, `getFeatureState`, `removeFeatureState`, `getGeoJsonClusterLeaves`, `getGeoJsonClusterChildren`, `getGeoJsonClusterExpansionZoom`.
-* Add `MapboxMap.cameraChanges` returning Flow of camera updates.
+* Add `MapboxMap.mapLoadedEvents`, `MapboxMap.mapLoadingErrorEvents`, `MapboxMap.styleLoadedEvents`, `MapboxMap.styleDataLoadedEvents`, `MapboxMap.cameraChangedEvents`, `MapboxMap.mapIdleEvents`, `MapboxMap.sourceAddedEvents`, `MapboxMap.sourceRemovedEvents`, `MapboxMap.sourceDataLoadedEvents`, `MapboxMap.styleImageMissingEvents`, `MapboxMap.styleImageRemoveUnusedEvents`, `MapboxMap.renderFrameStartedEvents`, `MapboxMap.renderFrameFinishedEvents`, `MapboxMap.resourceRequestEvents` returning Flow of events.
 * Introduce custom lint rules to check illegal usage of literals in Expression DSL and suggest auto fix.
 * Introduce custom lint rules to check illegal number of arguments within given Expression DSL.
 * Introduce custom lint rules to check unused layer/source/light/terrain/atmosphere/projection objects in the Style DSL, and suggest auto fix to add it to the style using unaryPlus(+) operator.
