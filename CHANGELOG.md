@@ -6,6 +6,12 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * Fix a security exception when fine location permission is not granted when using DefaultLocationProvider.
 
+# 10.14.1
+## Bug fixes 🐞
+* Fix the latency during the style switch of fill extrusion layers that have data-driven paint properties.
+
+## Dependencies
+* Update gl-native to v10.14.1.
 
 # 10.14.0 June 14, 2023
 ## Features ✨ and improvements 🏁
