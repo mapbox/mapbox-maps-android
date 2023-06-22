@@ -10,7 +10,7 @@ import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.MODEL
 import java.lang.ref.WeakReference
 
 @OptIn(MapboxExperimental::class)
-internal class LayerSourceProvider {
+internal object LayerSourceProvider {
 
   fun getModelSource(locationModelLayerOptions: LocationPuck3D): ModelSourceWrapper {
     if (locationModelLayerOptions.modelUri.isEmpty()) {
@@ -39,7 +39,7 @@ internal class LayerSourceProvider {
   fun getLocationIndicatorLayer() = LocationIndicatorLayerWrapper(LOCATION_INDICATOR_LAYER)
 
   fun getLocationIndicatorLayerRenderer(puckOptions: LocationPuck2D, weakContext: WeakReference<Context>) =
-    LocationIndicatorLayerRenderer(puckOptions, weakContext, this)
+    LocationIndicatorLayerRenderer(puckOptions, weakContext)
 
   fun getModelLayerRenderer(locationModelLayerOptions: LocationPuck3D) =
     ModelLayerRenderer(this, locationModelLayerOptions)

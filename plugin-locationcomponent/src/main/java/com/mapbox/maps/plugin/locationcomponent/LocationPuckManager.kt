@@ -25,7 +25,6 @@ internal class LocationPuckManager(
   private val weakContext: WeakReference<Context>,
   private val delegateProvider: MapDelegateProvider,
   private val positionManager: LocationComponentPositionManager,
-  private val layerSourceProvider: LayerSourceProvider,
   private val animationManager: PuckAnimatorManager
 ) {
 
@@ -51,15 +50,17 @@ internal class LocationPuckManager(
   }
 
   @VisibleForTesting(otherwise = PRIVATE)
-  internal var locationLayerRenderer =
-    when (val puck = settings.locationPuck) {
-      is LocationPuck2D -> {
-        layerSourceProvider.getLocationIndicatorLayerRenderer(puck, weakContext)
-      }
-      is LocationPuck3D -> {
-        layerSourceProvider.getModelLayerRenderer(puck)
-      }
+  internal var locationLayerRenderer = getLocationLayerRenderer(settings)
+
+  private fun getLocationLayerRenderer(settings: LocationComponentSettings) = when (val puck = settings.locationPuck) {
+    is LocationPuck2D -> {
+      LayerSourceProvider.getLocationIndicatorLayerRenderer(puck, weakContext)
     }
+
+    is LocationPuck3D -> {
+      LayerSourceProvider.getModelLayerRenderer(puck)
+    }
+  }
 
   fun updateStyle(style: Style) {
     locationLayerRenderer.updateStyle(style)
@@ -107,14 +108,7 @@ internal class LocationPuckManager(
     positionManager.layerBelow = settings.layerBelow
     locationLayerRenderer.clearBitmaps()
     locationLayerRenderer.removeLayers()
-    locationLayerRenderer = when (val locationPuck = settings.locationPuck) {
-      is LocationPuck2D -> {
-        layerSourceProvider.getLocationIndicatorLayerRenderer(locationPuck, weakContext)
-      }
-      is LocationPuck3D -> {
-        layerSourceProvider.getModelLayerRenderer(locationPuck)
-      }
-    }
+    locationLayerRenderer = getLocationLayerRenderer(settings)
     delegateProvider.getStyle {
       initialize(it)
     }

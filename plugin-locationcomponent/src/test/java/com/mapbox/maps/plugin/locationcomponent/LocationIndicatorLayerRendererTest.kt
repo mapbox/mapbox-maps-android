@@ -27,7 +27,6 @@ import java.lang.ref.WeakReference
 class LocationIndicatorLayerRendererTest {
 
   private val style: Style = mockk(relaxed = true)
-  private val layerSourceProvider: LayerSourceProvider = mockk(relaxed = true)
   private val layerWrapper: LocationIndicatorLayerWrapper = mockk(relaxed = true)
   private val expected: Expected<String, None> = mockk(relaxed = true)
 
@@ -60,13 +59,13 @@ class LocationIndicatorLayerRendererTest {
     every { style.removeStyleLayer(any()) } returns expected
     every { style.styleLayerExists(any()) } returns true
     every { expected.error } returns null
-    every { layerSourceProvider.getLocationIndicatorLayer() } returns layerWrapper
+    mockkObject(LayerSourceProvider)
+    every { LayerSourceProvider.getLocationIndicatorLayer() } returns layerWrapper
     every { layerWrapper.layerId } returns "id"
 
     locationLayerRenderer = LocationIndicatorLayerRenderer(
       puckOptions,
       WeakReference(mockk<Context>(relaxed = true)),
-      layerSourceProvider
     )
     locationLayerRenderer.initializeComponents(style)
   }
@@ -108,7 +107,6 @@ class LocationIndicatorLayerRendererTest {
     val locationLayerRenderer2 = LocationIndicatorLayerRenderer(
       puckOptions2,
       WeakReference(mockk<Context>(relaxed = true)),
-      layerSourceProvider
     )
     locationLayerRenderer2.initializeComponents(style)
 

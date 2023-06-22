@@ -8,28 +8,20 @@ import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.MODEL
 import io.mockk.mockk
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
-import org.junit.Before
 import org.junit.Test
 
 class LayerSourceProviderTest {
 
-  private lateinit var layerSourceProvider: LayerSourceProvider
-
-  @Before
-  fun setup() {
-    layerSourceProvider = LayerSourceProvider()
-  }
-
   @Test(expected = RuntimeException::class)
   fun testGetModelSourceUrlEmpty() {
     val locationPuck3D = LocationPuck3D(modelUri = "")
-    layerSourceProvider.getModelSource(locationPuck3D)
+    LayerSourceProvider.getModelSource(locationPuck3D)
   }
 
   @Test
   fun testGetModelSource() {
     val locationPuck3D = LocationPuck3D(modelUri = "testurl")
-    val modelSource = layerSourceProvider.getModelSource(locationPuck3D)
+    val modelSource = LayerSourceProvider.getModelSource(locationPuck3D)
     assertEquals(MODEL_SOURCE, modelSource.sourceId)
 
     assertEquals(
@@ -56,7 +48,7 @@ class LayerSourceProviderTest {
       modelCastShadows = true,
       modelReceiveShadows = true
     )
-    val modelLayer = layerSourceProvider.getModelLayer(locationPuck3D)
+    val modelLayer = LayerSourceProvider.getModelLayer(locationPuck3D)
     assertEquals(MODEL_LAYER, modelLayer.layerId)
     assertEquals(
       hashMapOf(
@@ -80,22 +72,21 @@ class LayerSourceProviderTest {
 
   @Test
   fun testGetLocationIndicatorLayer() {
-    val locationIndicatorLayer = layerSourceProvider.getLocationIndicatorLayer()
+    val locationIndicatorLayer = LayerSourceProvider.getLocationIndicatorLayer()
     assertEquals(LOCATION_INDICATOR_LAYER, locationIndicatorLayer.layerId)
   }
 
   @Test
   fun testGetLocationIndicatorLayerRenderer() {
     val locationPuck2D = LocationPuck2D()
-    val locationIndicatorLayerRenderer =
-      layerSourceProvider.getLocationIndicatorLayerRenderer(locationPuck2D, mockk())
+    val locationIndicatorLayerRenderer = LayerSourceProvider.getLocationIndicatorLayerRenderer(locationPuck2D, mockk())
     assertNotNull(locationIndicatorLayerRenderer)
   }
 
   @Test
   fun testGetModelLayerRenderer() {
     val locationPuck3D = LocationPuck3D(modelUri = "testurl")
-    val modelLayerRenderer = layerSourceProvider.getModelLayerRenderer(locationPuck3D)
+    val modelLayerRenderer = LayerSourceProvider.getModelLayerRenderer(locationPuck3D)
     assertNotNull(modelLayerRenderer)
   }
 }

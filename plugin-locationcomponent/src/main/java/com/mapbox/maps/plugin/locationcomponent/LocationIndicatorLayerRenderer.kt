@@ -21,11 +21,10 @@ import java.util.Locale
 internal class LocationIndicatorLayerRenderer(
   private val puckOptions: LocationPuck2D,
   private val weakContext: WeakReference<Context>,
-  layerSourceProvider: LayerSourceProvider
+  private val layer: LocationIndicatorLayerWrapper = LayerSourceProvider.getLocationIndicatorLayer()
 ) : LocationLayerRenderer {
 
   private var style: Style? = null
-  private var layer = layerSourceProvider.getLocationIndicatorLayer()
 
   override fun initializeComponents(style: Style) {
     this.style = style

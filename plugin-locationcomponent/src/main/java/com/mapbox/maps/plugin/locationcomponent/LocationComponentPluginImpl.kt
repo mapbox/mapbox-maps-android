@@ -215,7 +215,6 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
               internalSettings.layerAbove,
               internalSettings.layerBelow
             ),
-            layerSourceProvider = LayerSourceProvider(),
             animationManager = PuckAnimatorManager(
               indicatorPositionChangedListener,
               indicatorBearingChangedListener,
