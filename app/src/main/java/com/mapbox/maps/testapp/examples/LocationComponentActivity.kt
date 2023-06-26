@@ -54,7 +54,7 @@ class LocationComponentActivity : AppCompatActivity() {
     locationPermissionHelper = LocationPermissionHelper(WeakReference(this))
     locationPermissionHelper.checkPermissions {
       binding.mapView.apply {
-        getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS) {
+        getMapboxMap().loadStyleUri(Style.STANDARD) {
           setupBuildings(it)
           it.setLight(
             light {

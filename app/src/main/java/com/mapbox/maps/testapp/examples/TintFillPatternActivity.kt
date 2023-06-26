@@ -37,7 +37,7 @@ class TintFillPatternActivity : AppCompatActivity() {
     }
 
     binding.mapView.getMapboxMap().loadStyle(
-      style(Style.MAPBOX_STREETS) {
+      style(Style.STANDARD) {
         +image(FILL_PATTERN_ID, changeBitmapColor(initialBitmap, randomColor()))
         +fillLayer(FILL_LAYER_ID, STREETS_SOURCE_ID) {
           sourceLayer(SOURCE_LAYER)

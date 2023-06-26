@@ -137,7 +137,7 @@ class GesturesActivity : AppCompatActivity() {
         .zoom(15.0)
         .build()
     )
-    mapboxMap.loadStyleUri(Style.MAPBOX_STREETS) {
+    mapboxMap.loadStyleUri(Style.STANDARD) {
       it.addImage(MARKER_IMAGE_ID, BitmapFactory.decodeResource(resources, R.drawable.red_marker))
     }
 

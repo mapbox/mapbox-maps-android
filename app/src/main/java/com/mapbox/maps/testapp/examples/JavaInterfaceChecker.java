@@ -363,18 +363,18 @@ public class JavaInterfaceChecker {
                                  Style.OnStyleLoaded onStyleLoaded,
                                  OnMapLoadErrorListener onMapLoadErrorListener) {
     final MapboxMap mapboxMap = mapView.getMapboxMap();
-    mapboxMap.loadStyle(Style.MAPBOX_STREETS);
-    mapboxMap.loadStyle(Style.MAPBOX_STREETS, onStyleLoaded);
+    mapboxMap.loadStyle(Style.STANDARD);
+    mapboxMap.loadStyle(Style.STANDARD, onStyleLoaded);
     mapboxMap.loadStyle("json");
     mapboxMap.loadStyle("json", onStyleLoaded);
     mapboxMap.loadStyle(styleExtension);
     mapboxMap.loadStyle(styleExtension, onStyleLoaded);
 
     // deprecated to confirm we don't introduce breaking changes
-    mapboxMap.loadStyleUri(Style.MAPBOX_STREETS);
-    mapboxMap.loadStyleUri(Style.MAPBOX_STREETS, onStyleLoaded);
-    mapboxMap.loadStyleUri(Style.MAPBOX_STREETS, onStyleLoaded, onMapLoadErrorListener);
-    mapboxMap.loadStyleUri(Style.MAPBOX_STREETS, new TransitionOptions.Builder().build(), onStyleLoaded, onMapLoadErrorListener);
+    mapboxMap.loadStyleUri(Style.STANDARD);
+    mapboxMap.loadStyleUri(Style.STANDARD, onStyleLoaded);
+    mapboxMap.loadStyleUri(Style.STANDARD, onStyleLoaded, onMapLoadErrorListener);
+    mapboxMap.loadStyleUri(Style.STANDARD, new TransitionOptions.Builder().build(), onStyleLoaded, onMapLoadErrorListener);
     mapboxMap.loadStyleJson("json");
     mapboxMap.loadStyleJson("json", onStyleLoaded);
     mapboxMap.loadStyleJson("json", onStyleLoaded, onMapLoadErrorListener);
@@ -393,9 +393,9 @@ public class JavaInterfaceChecker {
     mapInitOptions = new MapInitOptions(context, mapOptions, plugins);
     mapInitOptions = new MapInitOptions(context, mapOptions, plugins, cameraOptions);
     mapInitOptions = new MapInitOptions(context, mapOptions, plugins, cameraOptions, false);
-    mapInitOptions = new MapInitOptions(context, mapOptions, plugins, cameraOptions, false, Style.MAPBOX_STREETS);
-    mapInitOptions = new MapInitOptions(context, mapOptions, plugins, cameraOptions, false, Style.MAPBOX_STREETS, attrs);
-    mapInitOptions = new MapInitOptions(context, mapOptions, plugins, cameraOptions, false, Style.MAPBOX_STREETS, attrs, 4);
+    mapInitOptions = new MapInitOptions(context, mapOptions, plugins, cameraOptions, false, Style.STANDARD);
+    mapInitOptions = new MapInitOptions(context, mapOptions, plugins, cameraOptions, false, Style.STANDARD, attrs);
+    mapInitOptions = new MapInitOptions(context, mapOptions, plugins, cameraOptions, false, Style.STANDARD, attrs, 4);
   }
 
   private void mapboxOptions() {

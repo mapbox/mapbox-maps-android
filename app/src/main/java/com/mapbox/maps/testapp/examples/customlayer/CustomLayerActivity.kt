@@ -22,7 +22,7 @@ class CustomLayerActivity : AppCompatActivity() {
     setContentView(binding.root)
     mapboxMap = binding.mapView.getMapboxMap()
     mapboxMap.loadStyleUri(
-      Style.MAPBOX_STREETS
+      Style.STANDARD
     ) {
       mapboxMap.setCamera(
         CameraOptions.Builder().center(Point.fromLngLat(116.39053, 39.91448)).zoom(10.0).build()

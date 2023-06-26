@@ -372,7 +372,7 @@ class NavigationSimulator(
 
   companion object {
     private const val TAG = "NavigationSimulator"
-    private val DEFAULT_STYLE = Style.MAPBOX_STREETS
+    private val DEFAULT_STYLE = Style.STANDARD
     private const val DEFAULT_CAMERA_MODE_SWITCH_INTERVAL_MS = 5000L
     private const val DEFAULT_SCRIPT_DURATION_MS = 20000L
     private const val DEFAULT_VIEWPORT_TRANSITION_MAX_DURATION = 2000L

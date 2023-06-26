@@ -33,7 +33,7 @@ class AddOneMarkerSymbolActivity : AppCompatActivity() {
           .build()
       )
     }.loadStyle(
-      styleExtension = style(Style.MAPBOX_STREETS) {
+      styleExtension = style(Style.STANDARD) {
         // prepare blue marker from resources
         +image(BLUE_ICON_ID, BitmapFactory.decodeResource(resources, R.drawable.blue_marker_view))
         +geoJsonSource(SOURCE_ID) {

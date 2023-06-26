@@ -48,7 +48,7 @@ class AnimatePointAnnotationActivity : AppCompatActivity(), MapLoadedCallback {
     )
 
     mapboxMap.subscribeMapLoaded(this@AnimatePointAnnotationActivity)
-    mapboxMap.loadStyleUri(Style.MAPBOX_STREETS)
+    mapboxMap.loadStyleUri(Style.STANDARD)
     binding.deleteAll.visibility = View.GONE
     binding.changeStyle.visibility = View.GONE
   }

@@ -48,7 +48,7 @@ class ViewAnnotationWithPointAnnotationActivity : AppCompatActivity() {
 
     viewAnnotationManager = binding.mapView.viewAnnotationManager
 
-    binding.mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS) {
+    binding.mapView.getMapboxMap().loadStyleUri(Style.STANDARD) {
       prepareAnnotationMarker(binding.mapView, iconBitmap)
       prepareViewAnnotation()
       // show / hide view annotation based on a marker click

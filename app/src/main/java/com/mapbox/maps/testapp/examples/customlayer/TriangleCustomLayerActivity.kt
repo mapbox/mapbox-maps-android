@@ -22,7 +22,7 @@ class TriangleCustomLayerActivity : AppCompatActivity() {
     setContentView(binding.root)
     mapboxMap = binding.mapView.getMapboxMap()
     mapboxMap.loadStyleUri(
-      Style.MAPBOX_STREETS
+      Style.STANDARD
     ) {
       mapboxMap.setCamera(CAMERA)
       addCustomLayer(it)

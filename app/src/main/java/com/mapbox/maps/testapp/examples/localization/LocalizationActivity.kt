@@ -24,7 +24,7 @@ class LocalizationActivity : AppCompatActivity() {
   private var index: Int = 0
   private val styles =
     arrayOf(
-      Style.MAPBOX_STREETS,
+      Style.STANDARD,
       MAPBOX_STREETS_V10
     )
 

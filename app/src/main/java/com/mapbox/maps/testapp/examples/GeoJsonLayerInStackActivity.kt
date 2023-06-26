@@ -22,7 +22,7 @@ class GeoJsonLayerInStackActivity : AppCompatActivity() {
     mapboxMap = mapView.getMapboxMap()
 
     mapboxMap.loadStyle(
-      style(style = Style.MAPBOX_STREETS) {
+      style(style = Style.STANDARD) {
         +geoJsonSource("urban-areas") {
           url("https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_50m_urban_areas.geojson")
         }

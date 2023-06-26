@@ -70,11 +70,11 @@ fun MapFragment.getMapAsync(index: Int) {
 
 fun getStyleFromIndex(index: Int): String {
   return when (index) {
-    0 -> Style.MAPBOX_STREETS
+    0 -> Style.STANDARD
     1 -> Style.DARK
     2 -> Style.SATELLITE
     3 -> Style.LIGHT
     4 -> Style.TRAFFIC_NIGHT
-    else -> Style.MAPBOX_STREETS
+    else -> Style.STANDARD
   }
 }

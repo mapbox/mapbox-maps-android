@@ -22,7 +22,7 @@ class MapViewSnapshotActivity : AppCompatActivity() {
     setContentView(binding.root)
 
     mapboxMap = binding.mapView.getMapboxMap()
-    mapboxMap.loadStyleUri(Style.MAPBOX_STREETS)
+    mapboxMap.loadStyleUri(Style.STANDARD)
 
     binding.fab.setOnClickListener {
       binding.mapView.snapshot { bitmap ->

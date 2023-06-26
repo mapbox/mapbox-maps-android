@@ -18,6 +18,6 @@ class TextureViewActivity : AppCompatActivity() {
     val binding = ActivityTextureViewBinding.inflate(layoutInflater)
     setContentView(binding.root)
     mapboxMap = binding.mapView.getMapboxMap()
-    mapboxMap.loadStyleUri(Style.MAPBOX_STREETS)
+    mapboxMap.loadStyleUri(Style.STANDARD)
   }
 }

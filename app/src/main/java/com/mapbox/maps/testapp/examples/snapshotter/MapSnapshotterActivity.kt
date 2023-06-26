@@ -26,7 +26,7 @@ class MapSnapshotterActivity : AppCompatActivity(), SnapshotStyleListener {
       SnapshotOverlayOptions(showLogo = false, showAttributes = false)
     ).apply {
       setStyleListener(this@MapSnapshotterActivity)
-      setStyleUri(Style.MAPBOX_STREETS)
+      setStyleUri(Style.STANDARD)
       setCamera(
         CameraOptions.Builder().zoom(14.0).center(
           Point.fromLngLat(

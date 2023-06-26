@@ -37,12 +37,12 @@ class ViewAnnotationBasicAddActivity : AppCompatActivity(), OnMapClickListener {
     viewAnnotationManager = binding.mapView.viewAnnotationManager
 
     mapboxMap = binding.mapView.getMapboxMap().apply {
-      loadStyleUri(Style.MAPBOX_STREETS) {
+      loadStyleUri(Style.STANDARD) {
         addOnMapClickListener(this@ViewAnnotationBasicAddActivity)
         binding.fabStyleToggle.setOnClickListener {
           when (getStyle()?.styleURI) {
-            Style.MAPBOX_STREETS -> loadStyleUri(Style.SATELLITE_STREETS)
-            Style.SATELLITE_STREETS -> loadStyleUri(Style.MAPBOX_STREETS)
+            Style.STANDARD -> loadStyleUri(Style.SATELLITE_STREETS)
+            Style.SATELLITE_STREETS -> loadStyleUri(Style.STANDARD)
           }
         }
         Toast.makeText(this@ViewAnnotationBasicAddActivity, STARTUP_TEXT, Toast.LENGTH_LONG).show()

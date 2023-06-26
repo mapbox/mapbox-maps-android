@@ -71,7 +71,7 @@ class CameraPredefinedAnimatorsActivity : AppCompatActivity() {
     mapboxMap = binding.mapView.getMapboxMap()
     cameraAnimationsPlugin = binding.mapView.camera
     mapboxMap.loadStyle(
-      style(Style.MAPBOX_STREETS) {
+      style(Style.STANDARD) {
         mapboxMap.setCamera(START_CAMERA_POSITION)
       }
     )

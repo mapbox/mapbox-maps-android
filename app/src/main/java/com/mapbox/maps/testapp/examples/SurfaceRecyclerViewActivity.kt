@@ -47,7 +47,7 @@ class SurfaceRecyclerViewActivity : AppCompatActivity() {
       "one",
       "two",
       "three",
-      MapItem(Style.MAPBOX_STREETS),
+      MapItem(Style.STANDARD),
       "four",
       "five",
       "six",

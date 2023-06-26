@@ -81,7 +81,7 @@ class SkyLayerSnapshotterActivity : AppCompatActivity() {
           .bearing(330.1)
           .build()
       )
-      setStyleUri(Style.MAPBOX_STREETS)
+      setStyleUri(Style.STANDARD)
       start {
         it?.let { snapshot ->
           binding.maneuverView.setImageBitmap(snapshot.bitmap())

@@ -27,7 +27,7 @@ class AddMarkersSymbolActivity : AppCompatActivity() {
     setContentView(binding.root)
 
     binding.mapView.getMapboxMap().loadStyle(
-      styleExtension = style(Style.MAPBOX_STREETS) {
+      styleExtension = style(Style.STANDARD) {
         // prepare red marker from resources
         +image(RED_ICON_ID, BitmapFactory.decodeResource(resources, R.drawable.red_marker))
         // prepare blue marker from resources

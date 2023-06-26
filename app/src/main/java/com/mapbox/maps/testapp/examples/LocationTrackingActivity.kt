@@ -65,7 +65,7 @@ class LocationTrackingActivity : AppCompatActivity() {
         .build()
     )
     mapView.getMapboxMap().loadStyleUri(
-      Style.MAPBOX_STREETS
+      Style.STANDARD
     ) {
       initLocationComponent()
       setupGesturesListener()

@@ -37,7 +37,7 @@ class RestrictBoundsActivity : AppCompatActivity() {
     setContentView(binding.root)
     mapboxMap = binding.mapView.getMapboxMap()
     mapboxMap.loadStyle(
-      style(Style.MAPBOX_STREETS) {
+      style(Style.STANDARD) {
         +geoJsonSource(BOUNDS_ID) {
           featureCollection(FeatureCollection.fromFeatures(listOf()))
         }

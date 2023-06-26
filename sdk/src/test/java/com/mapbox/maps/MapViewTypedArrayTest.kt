@@ -80,7 +80,7 @@ class MapViewTypedArrayTest(
         /* inputMapStyle */ null,
         /* expectedAntialiasingSampleCount */ 8,
         /* expectedTextureMode */ false,
-        /* expectedStyle */ Style.MAPBOX_STREETS,
+        /* expectedStyle */ Style.STANDARD,
       ),
       arrayOf(
         /* inputAntialiasingSampleCount */ DEFAULT_ANTIALIASING_SAMPLE_COUNT,

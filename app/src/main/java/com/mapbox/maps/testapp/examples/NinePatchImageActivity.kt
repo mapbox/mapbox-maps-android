@@ -31,7 +31,7 @@ class NinePatchImageActivity : AppCompatActivity() {
     mapView = MapView(this)
     setContentView(mapView)
     mapView.getMapboxMap().loadStyle(
-      styleExtension = style(Style.MAPBOX_STREETS) {
+      styleExtension = style(Style.STANDARD) {
         +image9Patch(
           NINE_PATCH_ID,
           BitmapFactory.decodeResource(resources, R.drawable.blue_round_nine)

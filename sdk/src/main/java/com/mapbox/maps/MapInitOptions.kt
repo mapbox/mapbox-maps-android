@@ -18,7 +18,7 @@ import com.mapbox.maps.plugin.*
  * @property plugins The plugins, a list of strings representing class names, that will be loaded as part of MapView initialisation,
  * @property cameraOptions The Initial Camera options when creating a MapView.
  * @property textureView Flag indicating to use a TextureView as render surface for the MapView. Default is false.
- * @property styleUri The styleUri will applied for the MapView in the onStart lifecycle event if no style is set. Default is [Style.MAPBOX_STREETS]. If set to null, then there is no default style will be loaded.
+ * @property styleUri The styleUri will applied for the MapView in the onStart lifecycle event if no style is set. Default is [Style.STANDARD]. If set to null, then there is no default style will be loaded.
  * @property attrs The [AttributeSet] object that init the MapView.
  * @property antialiasingSampleCount sample count to control multisample anti-aliasing (MSAA) option for rendering. E.g. passing 4 enables MSAA x4 if it is supported. Default is 1 (MSAA turned off).
  */
@@ -28,7 +28,7 @@ data class MapInitOptions @JvmOverloads constructor(
   var plugins: List<Plugin> = defaultPluginList,
   var cameraOptions: CameraOptions? = null,
   var textureView: Boolean = false,
-  val styleUri: String? = Style.MAPBOX_STREETS,
+  val styleUri: String? = Style.STANDARD,
   var attrs: AttributeSet? = null,
   var antialiasingSampleCount: Int = DEFAULT_ANTIALIASING_SAMPLE_COUNT,
 ) {

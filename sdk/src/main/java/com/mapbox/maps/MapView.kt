@@ -140,7 +140,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
       val cameraOptions = CameraAttributeParser.parseCameraOptions(typedArray)
       val textureView = typedArray.getInt(R.styleable.mapbox_MapView_mapbox_mapSurface, 0) != 0
       val styleUri =
-        typedArray.getString(R.styleable.mapbox_MapView_mapbox_styleUri) ?: Style.MAPBOX_STREETS
+        typedArray.getString(R.styleable.mapbox_MapView_mapbox_styleUri) ?: Style.STANDARD
       val antialiasingSampleCount = typedArray.getInteger(
         R.styleable.mapbox_MapView_mapbox_mapAntialiasingSampleCount,
         DEFAULT_ANTIALIASING_SAMPLE_COUNT

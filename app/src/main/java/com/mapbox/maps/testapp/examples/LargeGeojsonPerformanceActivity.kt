@@ -65,7 +65,7 @@ class LargeGeojsonPerformanceActivity : AppCompatActivity() {
         )
         // start loading style with multiple very heavy geojson's
         loadStyle(
-          style(Style.MAPBOX_STREETS) {
+          style(Style.STANDARD) {
             for (i in 0 until LARGE_SOURCE_COUNT) {
               +geoJsonSource("${SOURCE}_$i") {
                 logI(TAG, "Update routePoints ${SOURCE}_$i, data-id : $jsonUpdateCounter")

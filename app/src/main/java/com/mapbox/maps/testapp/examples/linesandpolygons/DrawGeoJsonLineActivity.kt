@@ -31,7 +31,7 @@ class DrawGeoJsonLineActivity : AppCompatActivity() {
     )
     mapView.getMapboxMap().loadStyle(
       (
-        style(style = Style.MAPBOX_STREETS) {
+        style(style = Style.STANDARD) {
           +geoJsonSource(GEOJSON_SOURCE_ID) {
             url("asset://from_crema_to_council_crest.geojson")
           }

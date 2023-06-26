@@ -17,7 +17,7 @@ import java.util.*
 object AnnotationUtils {
   private const val TAG = "AnnotationUtils"
   val STYLES =
-    arrayOf(Style.MAPBOX_STREETS, Style.OUTDOORS, Style.LIGHT, Style.DARK, Style.SATELLITE_STREETS)
+    arrayOf(Style.STANDARD, Style.OUTDOORS, Style.LIGHT, Style.DARK, Style.SATELLITE_STREETS)
 
   /**
    * Utility for getting a list of random points.

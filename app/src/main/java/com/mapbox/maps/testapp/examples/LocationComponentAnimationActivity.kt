@@ -101,7 +101,7 @@ class LocationComponentAnimationActivity : AppCompatActivity() {
     setContentView(binding.root)
     mapboxMap = binding.mapView.getMapboxMap().apply {
       loadStyleUri(
-        Style.MAPBOX_STREETS
+        Style.STANDARD
       ) {
         setCamera(
           CameraOptions.Builder()

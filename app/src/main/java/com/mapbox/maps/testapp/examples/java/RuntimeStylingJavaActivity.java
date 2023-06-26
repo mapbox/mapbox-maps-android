@@ -202,7 +202,7 @@ public class RuntimeStylingJavaActivity extends AppCompatActivity {
         mapView = new MapView(this);
         setContentView(mapView);
         mapboxMap = mapView.getMapboxMap();
-        mapboxMap.loadStyleUri(Style.MAPBOX_STREETS, this::setUpStyle);
+        mapboxMap.loadStyleUri(Style.STANDARD, this::setUpStyle);
     }
 
     private void setUpStyle(Style style) {

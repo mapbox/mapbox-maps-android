@@ -44,7 +44,7 @@ class BasicLocationPulsingCircleActivity : AppCompatActivity() {
 
   private fun onMapReady() {
     mapboxMap.loadStyleUri(
-      Style.MAPBOX_STREETS
+      Style.STANDARD
     ) {
       lastStyleUri = it.styleURI
     }

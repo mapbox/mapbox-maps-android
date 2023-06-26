@@ -33,7 +33,7 @@ class DistanceExpressionActivity : AppCompatActivity() {
     mapView.getMapboxMap().setCamera(CameraOptions.Builder().center(center).zoom(16.0).build())
 
     mapView.getMapboxMap().loadStyle(
-      style(Style.MAPBOX_STREETS) {
+      style(Style.STANDARD) {
         +geoJsonSource(POINT_ID) {
           geometry(center)
         }

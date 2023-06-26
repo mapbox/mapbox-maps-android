@@ -39,7 +39,7 @@ class PolygonHolesActivity : AppCompatActivity() {
           .build()
       )
       loadStyleUri(
-        Style.MAPBOX_STREETS
+        Style.STANDARD
       ) { style ->
         val outerLineString: LineString = LineString.fromLngLats(POLYGON_COORDINATES)
         val innerLineString: LineString = LineString.fromLngLats(HOLE_COORDINATES[0])

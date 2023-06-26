@@ -16,7 +16,7 @@ class MultiMapActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_multi_map)
-    initFragmentStyle(R.id.map1, Style.MAPBOX_STREETS, generateCamera(38.913187, -77.032546, 12.0))
+    initFragmentStyle(R.id.map1, Style.STANDARD, generateCamera(38.913187, -77.032546, 12.0))
     initFragmentStyle(R.id.map2, Style.LIGHT, generateCamera(37.775732, -122.413985, 13.0))
     initFragmentStyle(R.id.map3, Style.SATELLITE_STREETS, generateCamera(12.97913, 77.59188, 14.0))
     initFragmentStyle(R.id.map4, Style.DARK, generateCamera(-13.155980, -74.217134, 15.0))

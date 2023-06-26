@@ -1036,6 +1036,11 @@ class Style {
     private const val TAG = "Mbgl-Style"
 
     /**
+     * Mapbox Standard: A dynamic and performant 3D style that is the default for Mapbox maps.
+     */
+    const val STANDARD = "mapbox://styles/mapbox/standard-beta"
+
+    /**
      * Mapbox Streets: A complete base map, perfect for incorporating your own data. Using this
      * constant means your map style will always use the latest version and may change as we
      * improve the style.

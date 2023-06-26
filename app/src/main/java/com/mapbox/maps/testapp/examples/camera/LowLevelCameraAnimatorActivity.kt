@@ -22,7 +22,7 @@ class LowLevelCameraAnimatorActivity : AppCompatActivity() {
     mapboxMap = mapView.getMapboxMap()
     mapboxMap.setCamera(CAMERA_TARGET)
     mapboxMap.loadStyleUri(
-      Style.MAPBOX_STREETS
+      Style.STANDARD
     ) {
       mapView.camera.apply {
         val bearing = createBearingAnimator(cameraAnimatorOptions(-45.0)) {

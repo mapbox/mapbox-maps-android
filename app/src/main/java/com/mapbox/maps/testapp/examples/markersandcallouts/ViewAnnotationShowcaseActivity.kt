@@ -68,14 +68,14 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
 
     mapboxMap = binding.mapView.getMapboxMap().apply {
       loadStyle(
-        styleExtension = prepareStyle(Style.MAPBOX_STREETS, bitmap)
+        styleExtension = prepareStyle(Style.STANDARD, bitmap)
       ) {
         addOnMapClickListener(this@ViewAnnotationShowcaseActivity)
         addOnMapLongClickListener(this@ViewAnnotationShowcaseActivity)
         binding.fabStyleToggle.setOnClickListener {
           when (getStyle()?.styleURI) {
-            Style.MAPBOX_STREETS -> loadStyle(prepareStyle(Style.SATELLITE_STREETS, bitmap))
-            Style.SATELLITE_STREETS -> loadStyle(prepareStyle(Style.MAPBOX_STREETS, bitmap))
+            Style.STANDARD -> loadStyle(prepareStyle(Style.SATELLITE_STREETS, bitmap))
+            Style.SATELLITE_STREETS -> loadStyle(prepareStyle(Style.STANDARD, bitmap))
           }
         }
         Toast.makeText(this@ViewAnnotationShowcaseActivity, STARTUP_TEXT, Toast.LENGTH_LONG).show()
