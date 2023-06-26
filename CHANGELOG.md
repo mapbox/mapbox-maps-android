@@ -5,7 +5,7 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 ## Bug fixes 🐞
 * Fix a security exception when fine location permission is not granted when using DefaultLocationProvider.
-
+* Fix camera animations jitter noticeable on high zoom levels using location puck following mode.
 
 # 10.14.1 June 22, 2023
 ## Bug fixes 🐞

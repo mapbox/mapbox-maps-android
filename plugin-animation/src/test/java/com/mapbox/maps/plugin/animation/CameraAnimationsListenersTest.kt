@@ -73,8 +73,6 @@ class CameraAnimationsListenersTest {
         }
       )
     }
-    mockkObject(CameraAnimationsPluginImpl)
-    every { CameraAnimationsPluginImpl.immediateCameraUpdatesEnabled() } returns false
   }
 
   private fun CameraAnimationsPluginImpl.onCameraMove(cameraOptions: CameraOptions) {
@@ -84,7 +82,6 @@ class CameraAnimationsListenersTest {
   fun cleanUp() {
     unmockkStatic("com.mapbox.maps.MapboxLogger")
     unmockkObject(CameraTransform)
-    unmockkObject(CameraAnimationsPluginImpl)
   }
 
   @Test

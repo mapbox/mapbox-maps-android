@@ -4,12 +4,8 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.AnimatorSet
 import android.animation.ValueAnimator
-import android.os.Handler
-import android.os.Looper
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
-import com.mapbox.common.SettingsServiceFactory
-import com.mapbox.common.SettingsServiceStorageType
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.plugin.MapCameraPlugin
@@ -61,17 +57,6 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlugin {
   private val pitchListeners = CopyOnWriteArraySet<CameraAnimatorChangeListener<Double>>()
 
   private val lifecycleListeners = CopyOnWriteArraySet<CameraAnimationsLifecycleListener>()
-
-  private val handler = Handler(Looper.getMainLooper())
-
-  private var commitScheduled = false
-  private val commitChangesRunnable = Runnable {
-    performMapJump(cameraOptionsBuilder.anchor(anchor).build())
-
-    // reset values
-    cameraOptionsBuilder = CameraOptions.Builder()
-    commitScheduled = false
-  }
 
   /**
    * If debug mode is enabled extra logs will be written about animation lifecycle and
@@ -215,7 +200,6 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlugin {
     paddingListeners.clear()
     lifecycleListeners.clear()
     animators.clear()
-    handler.removeCallbacks(commitChangesRunnable)
   }
 
   /*
@@ -483,25 +467,15 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlugin {
       anchor = valueAnimator.animatedValue as ScreenCoordinate
     }
 
-    if (animator.hasUserListeners || immediateCameraUpdatesEnabled()) {
-      // If the animator have third-party listeners camera changes must be applied immediately
-      // to be seen from the listeners.
-      commitChanges()
-    } else {
-      // main idea here is not to update map on each option change.
-      // the runnable posted here will be executed right after all the animators are applied.
-      if (!commitScheduled) {
-        handler.postAtFrontOfQueue(commitChangesRunnable)
-        commitScheduled = true
-      }
-    }
+    // commit applies changes immediately
+    // this helps to avoid camera animations jitter noticeable on high zoom levels using location puck following mode.
+    commitChanges()
   }
 
   private fun commitChanges() {
-    if (commitScheduled) {
-      handler.removeCallbacks(commitChangesRunnable)
-    }
-    commitChangesRunnable.run()
+    performMapJump(cameraOptionsBuilder.anchor(anchor).build())
+    // reset values
+    cameraOptionsBuilder = CameraOptions.Builder()
   }
 
   private fun cancelAnimatorSet() {
@@ -1003,13 +977,5 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlugin {
    */
   companion object {
     internal const val TAG = "Mbgl-CameraManager"
-
-    @VisibleForTesting(otherwise = PRIVATE)
-    internal fun immediateCameraUpdatesEnabled(): Boolean {
-      val settingValue = SettingsServiceFactory
-        .getInstance(SettingsServiceStorageType.NON_PERSISTENT)
-        .get("sync_camera_with_puck")
-      return settingValue.value?.contents as? Boolean ?: false
-    }
   }
 }
