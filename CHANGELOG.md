@@ -84,6 +84,8 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix 3d location layer properties `model-scale-transition` and `model-rotation-transition`, made them non-transitionable.
 * Fix crash when running animations (e.g. gestures) on Android 14 beta.
 
+## Dependencies
+* Update gl-native to v11.0.0-alpha.21 and common to v24.0.0-SNAPSHOT.0613T0256Z.8c080c8.
 
 # 10.13.0-beta.1 April 05, 2023
 ## Features ✨ and improvements 🏁
