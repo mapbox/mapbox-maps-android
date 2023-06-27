@@ -3,6 +3,8 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # develop
+
+# 11.0.0-alpha.2 June 27, 2023
 ## Breaking changes ⚠️
 * Remove deprecated `MapboxMap.queryRenderedFeatures` methods.
 * Remove `Snapshotter.setTileMode`, `Snapshotter.isInTileMode` methods.
@@ -86,6 +88,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v11.0.0-alpha.21 and common to v24.0.0-SNAPSHOT.0613T0256Z.8c080c8.
+
 
 # 10.13.0-beta.1 April 05, 2023
 ## Features ✨ and improvements 🏁
