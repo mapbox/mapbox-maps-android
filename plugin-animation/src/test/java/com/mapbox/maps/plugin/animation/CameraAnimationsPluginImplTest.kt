@@ -1026,9 +1026,9 @@ class CameraAnimationsPluginImplTest {
     bearingAnimator.start()
     pitchAnimator.start()
     shadowOf(getMainLooper()).idle()
-    // Both, tick and bearing are updated to the start values at first tick.
-    assertEquals(20.0, updateList.first().bearing!!, EPS)
-    assertEquals(10.0, updateList.first().pitch!!, EPS)
+    // animators are applied one after each other now to avoid jittering
+    assertEquals(20.0, updateList[0].bearing!!, EPS)
+    assertEquals(10.0, updateList[1].pitch!!, EPS)
   }
 
   @Test
