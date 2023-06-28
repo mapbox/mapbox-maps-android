@@ -2,6 +2,7 @@
 package com.mapbox.maps.plugin.animation
 
 import android.animation.Animator
+import androidx.annotation.RestrictTo
 import com.mapbox.common.Cancelable
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.ScreenCoordinate
@@ -136,3 +137,13 @@ fun MapPluginExtensionsDelegate.rotateBy(
   animationOptions: MapAnimationOptions? = null,
   animatorListener: Animator.AnimatorListener? = null
 ) = (cameraAnimationsPlugin { rotateBy(first, second, animationOptions, animatorListener) } as? Cancelable) ?: emptyCancelable
+
+/**
+ * Static method to create instance of Mapbox camera animation plugin.
+ * @suppress
+ */
+@RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
+@JvmSynthetic
+fun createCameraAnimationPlugin(): CameraAnimationsPlugin {
+  return CameraAnimationsPluginImpl()
+}

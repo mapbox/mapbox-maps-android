@@ -37,7 +37,7 @@ import kotlin.math.*
 /**
  * Manages gestures events on a MapView.
  */
-class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserverPlugin {
+internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserverPlugin {
 
   private val context: Context
   private var pixelRatio: Float = 1f

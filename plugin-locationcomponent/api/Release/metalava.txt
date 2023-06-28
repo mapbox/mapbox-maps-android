@@ -35,36 +35,6 @@ package com.mapbox.maps.plugin.locationcomponent {
     field public static final long TRANSITION_ANIMATION_DURATION_MS = 750L; // 0x2eeL
   }
 
-  public final class LocationComponentPluginImpl extends com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettingsBase implements com.mapbox.maps.plugin.locationcomponent.LocationComponentPlugin com.mapbox.maps.plugin.locationcomponent.LocationConsumer {
-    ctor public LocationComponentPluginImpl();
-    method public void addOnIndicatorAccuracyRadiusChangedListener(com.mapbox.maps.plugin.locationcomponent.OnIndicatorAccuracyRadiusChangedListener listener);
-    method public void addOnIndicatorBearingChangedListener(com.mapbox.maps.plugin.locationcomponent.OnIndicatorBearingChangedListener listener);
-    method public void addOnIndicatorPositionChangedListener(com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener listener);
-    method protected void applySettings();
-    method public void bind(android.content.Context context, android.util.AttributeSet? attrs, float pixelRatio);
-    method protected com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings getInternalSettings();
-    method public com.mapbox.maps.plugin.locationcomponent.LocationProvider? getLocationProvider();
-    method public void isLocatedAt(com.mapbox.geojson.Point point, com.mapbox.maps.plugin.locationcomponent.PuckLocatedAtPointListener listener);
-    method public void onBearingUpdated(double[] bearing, kotlin.jvm.functions.Function1<? super android.animation.ValueAnimator,kotlin.Unit>? options);
-    method public void onDelegateProvider(com.mapbox.maps.plugin.delegates.MapDelegateProvider delegateProvider);
-    method public void onError(com.mapbox.common.location.LocationError error);
-    method public void onHorizontalAccuracyRadiusUpdated(double[] radius, kotlin.jvm.functions.Function1<? super android.animation.ValueAnimator,kotlin.Unit>? options);
-    method public void onLocationUpdated(com.mapbox.geojson.Point![] location, kotlin.jvm.functions.Function1<? super android.animation.ValueAnimator,kotlin.Unit>? options);
-    method public void onPuckAccuracyRadiusAnimatorDefaultOptionsUpdated(kotlin.jvm.functions.Function1<? super android.animation.ValueAnimator,kotlin.Unit> options);
-    method public void onPuckBearingAnimatorDefaultOptionsUpdated(kotlin.jvm.functions.Function1<? super android.animation.ValueAnimator,kotlin.Unit> options);
-    method public void onPuckLocationAnimatorDefaultOptionsUpdated(kotlin.jvm.functions.Function1<? super android.animation.ValueAnimator,kotlin.Unit> options);
-    method public void onStart();
-    method public void onStop();
-    method public void onStyleChanged(com.mapbox.maps.Style style);
-    method public void removeOnIndicatorAccuracyRadiusChangedListener(com.mapbox.maps.plugin.locationcomponent.OnIndicatorAccuracyRadiusChangedListener listener);
-    method public void removeOnIndicatorBearingChangedListener(com.mapbox.maps.plugin.locationcomponent.OnIndicatorBearingChangedListener listener);
-    method public void removeOnIndicatorPositionChangedListener(com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener listener);
-    method protected void setInternalSettings(com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings);
-    method public void setLocationProvider(com.mapbox.maps.plugin.locationcomponent.LocationProvider locationProvider);
-    property protected com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings internalSettings;
-    field public com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings internalSettings;
-  }
-
   public final class LocationComponentUtils {
     method public static com.mapbox.maps.plugin.LocationPuck2D createDefault2DPuck(com.mapbox.maps.plugin.locationcomponent.LocationComponentPlugin, android.content.Context context, boolean withBearing = false);
     method public static com.mapbox.maps.plugin.LocationPuck2D createDefault2DPuck(com.mapbox.maps.plugin.locationcomponent.LocationComponentPlugin, android.content.Context context);

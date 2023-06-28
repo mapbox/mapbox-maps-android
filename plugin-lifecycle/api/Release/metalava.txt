@@ -1,12 +1,7 @@
 // Signature format: 3.0
 package com.mapbox.maps.plugin.lifecycle {
 
-  public final class MapboxLifecyclePluginImpl implements com.mapbox.maps.plugin.lifecycle.MapboxLifecyclePlugin {
-    ctor public MapboxLifecyclePluginImpl();
-    method public void registerLifecycleObserver(android.view.View mapView, com.mapbox.maps.MapboxLifecycleObserver observer);
-  }
-
-  public final class MapboxLifecyclePluginImplKt {
+  public final class LifecycleUtils {
     method public static com.mapbox.maps.plugin.lifecycle.MapboxLifecyclePlugin getLifecycle(com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate);
   }
 

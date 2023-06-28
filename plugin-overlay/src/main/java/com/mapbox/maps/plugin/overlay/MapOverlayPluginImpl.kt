@@ -13,7 +13,7 @@ import java.util.*
  * Impl class for MapOverlayPlugin
  */
 @MapboxExperimental
-class MapOverlayPluginImpl : MapOverlayPlugin {
+internal class MapOverlayPluginImpl : MapOverlayPlugin {
   private val mapOverlays = mutableListOf<View>()
   private var mapOverlayCoordinatesProvider: MapOverlayCoordinatesProvider? = null
   internal var width: Int = 0

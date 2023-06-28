@@ -13,13 +13,11 @@ import android.view.View
 import androidx.lifecycle.*
 import com.mapbox.maps.MapboxLifecycleObserver
 import com.mapbox.maps.logW
-import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_LIFECYCLE_PLUGIN_ID
-import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 
 /**
  * Concrete implementation of MapboxLifecyclePlugin.
  */
-class MapboxLifecyclePluginImpl : MapboxLifecyclePlugin {
+internal class MapboxLifecyclePluginImpl : MapboxLifecyclePlugin {
   /**
    * Register a MapboxLifecycleObserver to observe life cycle events from LifecycleOwner
    *
@@ -77,11 +75,3 @@ class MapboxLifecyclePluginImpl : MapboxLifecyclePlugin {
     private const val TAG = "MapboxLifecyclePlugin"
   }
 }
-
-/**
- * Extension function for MapView to get the lifecycle plugin instance.
- *
- * @return Lifecycle plugin instance
- */
-val MapPluginProviderDelegate.lifecycle: MapboxLifecyclePlugin
-  get() = this.getPlugin(MAPBOX_LIFECYCLE_PLUGIN_ID)!!

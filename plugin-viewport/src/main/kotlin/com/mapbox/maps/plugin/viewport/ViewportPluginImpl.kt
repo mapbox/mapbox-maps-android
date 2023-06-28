@@ -38,7 +38,7 @@ import java.util.concurrent.CopyOnWriteArraySet
  *  - in a state (camera is being managed by a ViewportState)
  *  - transitioning (camera is being managed by a ViewportTransition)
  */
-class ViewportPluginImpl(private val handler: Handler = Handler(Looper.getMainLooper())) :
+internal class ViewportPluginImpl(private val handler: Handler = Handler(Looper.getMainLooper())) :
   ViewportPlugin {
   private val registeredStatusObservers = CopyOnWriteArraySet<ViewportStatusObserver>()
   private var currentCancelable: Cancelable? = null

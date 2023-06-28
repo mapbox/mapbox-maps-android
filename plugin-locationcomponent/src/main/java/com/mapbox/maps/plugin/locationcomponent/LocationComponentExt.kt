@@ -4,6 +4,7 @@ package com.mapbox.maps.plugin.locationcomponent
 
 import android.content.Context
 import androidx.annotation.DrawableRes
+import androidx.annotation.RestrictTo
 import androidx.core.content.res.ResourcesCompat
 import com.mapbox.maps.ImageHolder
 import com.mapbox.maps.plugin.LocationPuck2D
@@ -44,3 +45,13 @@ fun LocationComponentPlugin.createDefault2DPuck(
   else
     ImageHolder.from(R.drawable.mapbox_user_icon_shadow)
 )
+
+/**
+ * Static method to create instance of Mapbox location component plugin.
+ * @suppress
+ */
+@RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
+@JvmSynthetic
+fun createLocationComponentPlugin(): LocationComponentPlugin {
+  return LocationComponentPluginImpl()
+}

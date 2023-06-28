@@ -15,7 +15,6 @@ import androidx.core.animation.doOnEnd
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.plugin.InvalidPluginConfigurationException
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_CAMERA_PLUGIN_ID
-import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_COMPASS_PLUGIN_ID
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOwnerRegistry
@@ -24,14 +23,13 @@ import com.mapbox.maps.plugin.compass.generated.CompassSettings
 import com.mapbox.maps.plugin.compass.generated.CompassSettingsBase
 import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
-import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 import java.util.concurrent.CopyOnWriteArraySet
 import kotlin.math.abs
 
 /**
  * Concrete implementation of CompassPlugin.
  */
-open class CompassViewPlugin(
+internal class CompassViewPlugin(
   private val viewImplProvider: (Context) -> CompassViewImpl = { CompassViewImpl(it) },
   @SuppressLint("Recycle")
   private val fadeAnimator: ValueAnimator = ValueAnimator.ofFloat(1f, 0f),
@@ -281,9 +279,3 @@ open class CompassViewPlugin(
     private const val BEARING_NORTH_ANIMATION_DURATION = 300L
   }
 }
-
-/**
- * Extension val for MapView to get the Compass View plugin instance.
- */
-val MapPluginProviderDelegate.compass: CompassPlugin
-  get() = this.getPlugin(MAPBOX_COMPASS_PLUGIN_ID)!!

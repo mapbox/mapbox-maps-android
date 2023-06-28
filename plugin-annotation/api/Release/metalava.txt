@@ -66,17 +66,7 @@ package com.mapbox.maps.plugin.annotation {
     method public void onMoveEnd(com.mapbox.android.gestures.MoveGestureDetector detector);
   }
 
-  public final class AnnotationPluginImpl implements com.mapbox.maps.plugin.annotation.AnnotationPlugin {
-    ctor public AnnotationPluginImpl();
-    method public void cleanup();
-    method public com.mapbox.maps.plugin.annotation.AnnotationManager<?,?,?,?,?,?,?> createAnnotationManager(com.mapbox.maps.plugin.annotation.AnnotationType type, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig);
-    method public void onDelegateProvider(com.mapbox.maps.plugin.delegates.MapDelegateProvider delegateProvider);
-    method public void onSizeChanged(int width, int height);
-    method public void onStyleChanged(com.mapbox.maps.Style style);
-    method public void removeAnnotationManager(com.mapbox.maps.plugin.annotation.AnnotationManager<?,?,?,?,?,?,?> annotationManager);
-  }
-
-  public final class AnnotationPluginImplKt {
+  public final class AnnotationsUtils {
     method public static com.mapbox.maps.plugin.annotation.AnnotationPlugin getAnnotations(com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate);
   }
 

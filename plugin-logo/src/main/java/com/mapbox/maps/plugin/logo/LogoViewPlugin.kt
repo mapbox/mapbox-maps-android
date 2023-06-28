@@ -12,7 +12,7 @@ import com.mapbox.maps.plugin.logo.generated.LogoSettingsBase
 /**
  * Concrete implementation of LogoViewPlugin.
  */
-open class LogoViewPlugin(
+internal class LogoViewPlugin(
   private val viewImplProvider: (Context) -> LogoViewImpl = { LogoViewImpl(it) }
 ) : LogoPlugin, LogoSettingsBase() {
 

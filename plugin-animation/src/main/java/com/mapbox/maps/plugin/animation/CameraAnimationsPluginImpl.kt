@@ -37,7 +37,7 @@ import kotlin.properties.Delegates
  */
 
 @OptIn(MapboxExperimental::class)
-class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlugin {
+internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlugin {
 
   @VisibleForTesting(otherwise = PRIVATE)
   internal val animators = hashSetOf<CameraAnimator<*>>()

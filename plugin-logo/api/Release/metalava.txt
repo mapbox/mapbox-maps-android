@@ -18,17 +18,5 @@ package com.mapbox.maps.plugin.logo {
     property public int logoGravity;
   }
 
-  public class LogoViewPlugin extends com.mapbox.maps.plugin.logo.generated.LogoSettingsBase implements com.mapbox.maps.plugin.logo.LogoPlugin {
-    ctor public LogoViewPlugin(kotlin.jvm.functions.Function1<? super android.content.Context,com.mapbox.maps.plugin.logo.LogoViewImpl> viewImplProvider = { it -> return <init>(it) });
-    method protected void applySettings();
-    method public android.view.View bind(android.widget.FrameLayout mapView, android.util.AttributeSet? attrs, float pixelRatio);
-    method protected com.mapbox.maps.plugin.logo.generated.LogoSettings getInternalSettings();
-    method public void initialize();
-    method public void onPluginView(android.view.View view);
-    method protected void setInternalSettings(com.mapbox.maps.plugin.logo.generated.LogoSettings);
-    property public boolean enabled;
-    property protected com.mapbox.maps.plugin.logo.generated.LogoSettings internalSettings;
-  }
-
 }
 

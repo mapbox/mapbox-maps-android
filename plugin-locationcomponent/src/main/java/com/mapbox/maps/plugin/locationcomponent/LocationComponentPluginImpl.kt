@@ -25,7 +25,7 @@ import java.util.concurrent.CopyOnWriteArraySet
  * Default implementation of the LocationComponentPlugin, it renders the configured location puck
  * to the user's current location.
  */
-class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
+internal class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
   LocationComponentSettingsBase() {
   private lateinit var delegateProvider: MapDelegateProvider
 

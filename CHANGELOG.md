@@ -52,6 +52,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Replace `com.mapbox.maps.plugin.animation.Cancelable` with `com.mapbox.common.Cancelable`.
 * Remove `TileStoreOptions.MAPBOX_ACCESS_TOKEN` used e.g. in `TileStore.setOption(TileStoreOptions.MAPBOX_ACCESS_TOKEN, someDomain, someValue)` as it has become redundant.
 * Introduce `MapboxTracing` object allowing to enable Android traces to measure performance of the SDK. More details and instructions could be found in `Working with traces` section in `DEVELOPING.md`. 
+* Remove Mapbox plugin implementations from public API surface.
 
 ## Features ✨ and improvements 🏁
 * Add the `MapboxMap.resetFeatureState` method.

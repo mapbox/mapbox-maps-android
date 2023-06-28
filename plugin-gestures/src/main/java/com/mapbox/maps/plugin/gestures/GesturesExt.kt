@@ -2,6 +2,9 @@
 
 package com.mapbox.maps.plugin.gestures
 
+import android.content.Context
+import android.util.AttributeSet
+import androidx.annotation.RestrictTo
 import com.mapbox.android.gestures.AndroidGesturesManager
 import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.plugin.ScrollMode
@@ -184,4 +187,20 @@ fun GesturesSettings.isScrollHorizontallyLimited(): Boolean {
  */
 fun GesturesSettings.isScrollVerticallyLimited(): Boolean {
   return scrollMode == ScrollMode.HORIZONTAL
+}
+
+/**
+ * Static method to create instance of Mapbox gesture plugin.
+ * @suppress
+ */
+@RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
+@JvmSynthetic
+fun createGesturePlugin(
+  context: Context,
+  attributeSet: AttributeSet?,
+  pixelRatio: Float,
+): GesturesPlugin {
+  return attributeSet?.let {
+    GesturesPluginImpl(context, it, pixelRatio)
+  } ?: GesturesPluginImpl(context, pixelRatio)
 }

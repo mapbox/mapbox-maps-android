@@ -17,11 +17,9 @@ import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.extension.style.utils.transition
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
-import com.mapbox.maps.plugin.animation.CameraAnimationsPluginImpl
 import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.plugin.delegates.listeners.*
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
-import com.mapbox.maps.plugin.gestures.GesturesPluginImpl
 import java.util.concurrent.CopyOnWriteArraySet
 
 /**
@@ -78,10 +76,7 @@ class MapboxMap :
       return nativeMap.getCameraState()
     }
 
-  @VisibleForTesting(otherwise = PRIVATE)
   internal var cameraAnimationsPlugin: CameraAnimationsPlugin? = null
-
-  @VisibleForTesting(otherwise = PRIVATE)
   internal var gesturesPlugin: GesturesPlugin? = null
 
   @VisibleForTesting(otherwise = PRIVATE)
@@ -2014,17 +2009,6 @@ class MapboxMap :
     return nativeMap.getDragCameraOptions(fromPoint, toPoint)
   }
 
-  internal fun setCameraAnimationPlugin(cameraAnimationsPlugin: CameraAnimationsPlugin) {
-    if (cameraAnimationsPlugin is CameraAnimationsPluginImpl) {
-      this.cameraAnimationsPlugin = cameraAnimationsPlugin
-    } else {
-      logW(
-        TAG,
-        "MapboxMap camera extension functions could work only with Mapbox developed plugin!"
-      )
-    }
-  }
-
   /**
    * Call extension function on [CameraAnimationsPlugin].
    * In most cases should not be called directly.
@@ -2039,17 +2023,6 @@ class MapboxMap :
         " MapboxMap camera extension functions are no-op."
     )
     return null
-  }
-
-  internal fun setGesturesAnimationPlugin(gesturesPlugin: GesturesPlugin) {
-    if (gesturesPlugin is GesturesPluginImpl) {
-      this.gesturesPlugin = gesturesPlugin
-    } else {
-      logW(
-        TAG,
-        "MapboxMap gestures extension functions could work only with Mapbox developed plugin!"
-      )
-    }
   }
 
   /**

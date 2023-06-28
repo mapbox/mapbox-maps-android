@@ -2,16 +2,14 @@ package com.mapbox.maps.plugin.annotation
 
 import androidx.annotation.VisibleForTesting
 import com.mapbox.maps.Style
-import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_ANNOTATION_PLUGIN_ID
 import com.mapbox.maps.plugin.annotation.generated.*
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
-import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 import java.lang.ref.WeakReference
 
 /**
  * The impl class for AnnotationPlugin
  */
-class AnnotationPluginImpl : AnnotationPlugin {
+internal class AnnotationPluginImpl : AnnotationPlugin {
   private lateinit var delegateProvider: MapDelegateProvider
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
@@ -107,9 +105,3 @@ class AnnotationPluginImpl : AnnotationPlugin {
     this.delegateProvider = delegateProvider
   }
 }
-
-/**
- * Extension val for MapView to get the Annotation plugin instance.
- */
-val MapPluginProviderDelegate.annotations: AnnotationPlugin
-  get() = this.getPlugin(MAPBOX_ANNOTATION_PLUGIN_ID)!!

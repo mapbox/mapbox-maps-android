@@ -2,6 +2,7 @@
 
 package com.mapbox.maps.plugin.logo
 
+import androidx.annotation.RestrictTo
 import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 
@@ -11,3 +12,13 @@ import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 val MapPluginProviderDelegate.logo: LogoPlugin
   @JvmName("getLogo")
   get() = this.getPlugin(Plugin.MAPBOX_LOGO_PLUGIN_ID)!!
+
+/**
+ * Static method to create instance of Mapbox logo plugin.
+ * @suppress
+ */
+@RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
+@JvmSynthetic
+fun createLogoPlugin(): LogoPlugin {
+  return LogoViewPlugin()
+}

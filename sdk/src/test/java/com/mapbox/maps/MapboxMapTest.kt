@@ -8,10 +8,8 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
-import com.mapbox.maps.plugin.animation.CameraAnimationsPluginImpl
 import com.mapbox.maps.plugin.delegates.listeners.*
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
-import com.mapbox.maps.plugin.gestures.GesturesPluginImpl
 import com.mapbox.maps.plugin.gestures.OnMoveListener
 import com.mapbox.verifyNo
 import io.mockk.*
@@ -57,8 +55,8 @@ class MapboxMapTest {
 
   @Test
   fun onDestroyWithPlugins() {
-    mapboxMap.cameraAnimationsPlugin = mockk<CameraAnimationsPluginImpl>()
-    mapboxMap.gesturesPlugin = mockk<GesturesPluginImpl>()
+    mapboxMap.cameraAnimationsPlugin = mockk()
+    mapboxMap.gesturesPlugin = mockk()
     mapboxMap.onDestroy()
     assertTrue(mapboxMap.cameraAnimationsPlugin == null)
     assertTrue(mapboxMap.gesturesPlugin == null)
@@ -953,24 +951,6 @@ class MapboxMapTest {
     val toPoint = mockk<ScreenCoordinate>()
     mapboxMap.getDragCameraOptions(fromPoint, toPoint)
     verify { nativeMap.getDragCameraOptions(fromPoint, toPoint) }
-  }
-
-  @Test
-  fun setCameraAnimationsPluginInvalid() {
-    mockkStatic("com.mapbox.maps.MapboxLogger")
-    every { logW(any(), any()) } just Runs
-    mapboxMap.setCameraAnimationPlugin(mockk())
-    assertNull(mapboxMap.cameraAnimationsPlugin)
-    unmockkStatic("com.mapbox.maps.MapboxLogger")
-  }
-
-  @Test
-  fun setGesturesPluginInvalid() {
-    mockkStatic("com.mapbox.maps.MapboxLogger")
-    every { logW(any(), any()) } just Runs
-    mapboxMap.setGesturesAnimationPlugin(mockk())
-    assertNull(mapboxMap.gesturesPlugin)
-    unmockkStatic("com.mapbox.maps.MapboxLogger")
   }
 
   @Test

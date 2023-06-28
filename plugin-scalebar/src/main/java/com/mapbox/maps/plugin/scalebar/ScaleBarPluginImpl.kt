@@ -20,7 +20,7 @@ import com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettingsBase
 /**
  * Concrete implementation of ScaleBarViewPlugin.
  */
-open class ScaleBarPluginImpl(
+internal class ScaleBarPluginImpl(
   private val viewImplProvider: (Context) -> ScaleBarImpl = { ScaleBarImpl(it) }
 ) : ScaleBarPlugin, ScaleBarSettingsBase() {
 

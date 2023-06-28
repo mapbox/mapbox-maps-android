@@ -2,6 +2,7 @@
 
 package com.mapbox.maps.plugin.viewport
 
+import androidx.annotation.RestrictTo
 import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 
@@ -16,3 +17,13 @@ import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 val MapPluginProviderDelegate.viewport: ViewportPlugin
   @JvmName("getViewport")
   get() = this.getPlugin(Plugin.MAPBOX_VIEWPORT_PLUGIN_ID)!!
+
+/**
+ * Static method to create instance of Mapbox viewport plugin.
+ * @suppress
+ */
+@RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
+@JvmSynthetic
+fun createViewportPlugin(): ViewportPlugin {
+  return ViewportPluginImpl()
+}

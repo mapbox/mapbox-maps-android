@@ -18,7 +18,7 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 
 @RunWith(RobolectricTestRunner::class)
-class AttributionViewPluginImplTest {
+class AttributionPluginImplImplTest {
 
   private lateinit var attributionPlugin: AttributionPlugin
   private val attributionView = mockk<AttributionViewImpl>(relaxUnitFun = true)
@@ -42,7 +42,7 @@ class AttributionViewPluginImplTest {
     every { typedArray.getInt(any(), any()) } returns (Gravity.BOTTOM or Gravity.START)
     every { typedArray.getDimension(any(), any()) } returns 0f
 
-    attributionPlugin = AttributionViewPlugin { attributionView }
+    attributionPlugin = AttributionPluginImpl { attributionView }
     attributionPlugin.onDelegateProvider(delegateProvider)
     attributionPlugin.bind(mapView, attrs, 1f)
     attributionPlugin.onPluginView(attributionView)

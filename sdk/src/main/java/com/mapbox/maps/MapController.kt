@@ -20,18 +20,20 @@ import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_LOGO_PLUGIN_ID
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_MAP_OVERLAY_PLUGIN_ID
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_SCALEBAR_PLUGIN_ID
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_VIEWPORT_PLUGIN_ID
-import com.mapbox.maps.plugin.animation.CameraAnimationsPluginImpl
-import com.mapbox.maps.plugin.annotation.AnnotationPluginImpl
-import com.mapbox.maps.plugin.attribution.AttributionViewPlugin
-import com.mapbox.maps.plugin.compass.CompassViewPlugin
+import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
+import com.mapbox.maps.plugin.animation.createCameraAnimationPlugin
+import com.mapbox.maps.plugin.annotation.createAnnotationPlugin
+import com.mapbox.maps.plugin.attribution.createAttributionPlugin
+import com.mapbox.maps.plugin.compass.createCompassPlugin
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
-import com.mapbox.maps.plugin.gestures.GesturesPluginImpl
-import com.mapbox.maps.plugin.lifecycle.MapboxLifecyclePluginImpl
-import com.mapbox.maps.plugin.locationcomponent.LocationComponentPluginImpl
-import com.mapbox.maps.plugin.logo.LogoViewPlugin
-import com.mapbox.maps.plugin.overlay.MapOverlayPluginImpl
-import com.mapbox.maps.plugin.scalebar.ScaleBarPluginImpl
-import com.mapbox.maps.plugin.viewport.ViewportPluginImpl
+import com.mapbox.maps.plugin.gestures.GesturesPlugin
+import com.mapbox.maps.plugin.gestures.createGesturePlugin
+import com.mapbox.maps.plugin.lifecycle.createLifecyclePlugin
+import com.mapbox.maps.plugin.locationcomponent.createLocationComponentPlugin
+import com.mapbox.maps.plugin.logo.createLogoPlugin
+import com.mapbox.maps.plugin.overlay.createOverlayPlugin
+import com.mapbox.maps.plugin.scalebar.createScaleBarPlugin
+import com.mapbox.maps.plugin.viewport.createViewportPlugin
 import com.mapbox.maps.renderer.MapboxRenderer
 import com.mapbox.maps.renderer.OnFpsChangedListener
 import com.mapbox.maps.renderer.RendererSetupErrorListener
@@ -292,42 +294,37 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
       try {
         val pluginObject = when (plugin.id) {
           MAPBOX_GESTURES_PLUGIN_ID -> {
-            val attrs = options.attrs
-            if (attrs != null) {
-              GesturesPluginImpl(options.context, attrs, options.mapOptions.pixelRatio)
-            } else {
-              GesturesPluginImpl(options.context, options.mapOptions.pixelRatio)
-            }
+            createGesturePlugin(options.context, options.attrs, options.mapOptions.pixelRatio)
           }
           MAPBOX_CAMERA_PLUGIN_ID -> {
-            CameraAnimationsPluginImpl()
+            createCameraAnimationPlugin()
           }
           MAPBOX_ANNOTATION_PLUGIN_ID -> {
-            AnnotationPluginImpl()
+            createAnnotationPlugin()
           }
           MAPBOX_COMPASS_PLUGIN_ID -> {
-            CompassViewPlugin()
+            createCompassPlugin()
           }
           MAPBOX_ATTRIBUTION_PLUGIN_ID -> {
-            AttributionViewPlugin()
+            createAttributionPlugin()
           }
           MAPBOX_LIFECYCLE_PLUGIN_ID -> {
-            MapboxLifecyclePluginImpl()
+            createLifecyclePlugin()
           }
           MAPBOX_LOCATION_COMPONENT_PLUGIN_ID -> {
-            LocationComponentPluginImpl()
+            createLocationComponentPlugin()
           }
           MAPBOX_LOGO_PLUGIN_ID -> {
-            LogoViewPlugin()
+            createLogoPlugin()
           }
           MAPBOX_MAP_OVERLAY_PLUGIN_ID -> {
-            MapOverlayPluginImpl()
+            createOverlayPlugin()
           }
           MAPBOX_SCALEBAR_PLUGIN_ID -> {
-            ScaleBarPluginImpl()
+            createScaleBarPlugin()
           }
           MAPBOX_VIEWPORT_PLUGIN_ID -> {
-            ViewportPluginImpl()
+            createViewportPlugin()
           }
           else -> {
             plugin.instance
@@ -335,11 +332,11 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
           }
         }
         createPlugin(mapView, Plugin.Custom(plugin.id, pluginObject))
-        if (pluginObject is CameraAnimationsPluginImpl) {
-          mapboxMap.setCameraAnimationPlugin(pluginObject)
-        }
-        if (pluginObject is GesturesPluginImpl) {
-          mapboxMap.setGesturesAnimationPlugin(pluginObject)
+        if (plugin is Plugin.Mapbox) {
+          when (pluginObject) {
+            is CameraAnimationsPlugin -> mapboxMap.cameraAnimationsPlugin = pluginObject
+            is GesturesPlugin -> mapboxMap.gesturesPlugin = pluginObject
+          }
         }
       } catch (ex: NoClassDefFoundError) {
         logI(TAG, PLUGIN_MISSING_TEMPLATE.format(plugin.id))

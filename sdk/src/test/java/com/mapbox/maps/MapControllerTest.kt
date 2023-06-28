@@ -356,14 +356,14 @@ class MapControllerTest {
     testMapController.initializePlugins(mockMapInitOptions)
     verify(exactly = 0) {
       mockPluginRegistry.createPlugin(any(), mockMapInitOptions, any())
-      mockMapboxMap.setCameraAnimationPlugin(any())
-      mockMapboxMap.setGesturesAnimationPlugin(any())
+      mockMapboxMap.cameraAnimationsPlugin = any()
+      mockMapboxMap.gesturesPlugin = any()
     }
   }
 
   @Test
   fun initializePluginsCamera() {
-    every { mockMapboxMap.setCameraAnimationPlugin(any()) } just Runs
+    every { mockMapboxMap.cameraAnimationsPlugin = any() } just Runs
     every { mockMapInitOptions.plugins } answers { listOf(Plugin.Mapbox(Plugin.MAPBOX_CAMERA_PLUGIN_ID)) }
     val createPluginSlot = slot<Plugin>()
     every {
@@ -381,13 +381,13 @@ class MapControllerTest {
     verifySequence {
       mockMapInitOptions.plugins
       mockPluginRegistry.createPlugin(mockMapView, mockMapInitOptions, createdPlugin)
-      mockMapboxMap.setCameraAnimationPlugin(createdPlugin.instance as CameraAnimationsPlugin)
+      mockMapboxMap.cameraAnimationsPlugin = createdPlugin.instance as CameraAnimationsPlugin
     }
   }
 
   @Test
   fun deliversStyleOnStartIfChanged() {
-    every { mockMapboxMap.setCameraAnimationPlugin(any()) } just Runs
+    every { mockMapboxMap.cameraAnimationsPlugin = any() } just Runs
     every { mockMapInitOptions.plugins } answers { listOf(Plugin.Mapbox(Plugin.MAPBOX_CAMERA_PLUGIN_ID)) }
     val createPluginSlot = slot<Plugin>()
     every {
@@ -405,7 +405,7 @@ class MapControllerTest {
     verifySequence {
       mockMapInitOptions.plugins
       mockPluginRegistry.createPlugin(mockMapView, mockMapInitOptions, createdPlugin)
-      mockMapboxMap.setCameraAnimationPlugin(createdPlugin.instance as CameraAnimationsPlugin)
+      mockMapboxMap.cameraAnimationsPlugin = createdPlugin.instance as CameraAnimationsPlugin
     }
   }
 
