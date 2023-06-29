@@ -3,6 +3,8 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
+
+# 10.15.0-beta.1 June 29, 2023
 ## Bug fixes 🐞
 * Fix a security exception when fine location permission is not granted when using DefaultLocationProvider.
 * Fix camera animations jitter noticeable on high zoom levels using location puck following mode.
@@ -12,6 +14,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies 
 * Update gl-native to v10.15.0-beta.1 and common to v23.7.0-beta.1. 
+
 
 
 # 10.14.1 June 22, 2023
