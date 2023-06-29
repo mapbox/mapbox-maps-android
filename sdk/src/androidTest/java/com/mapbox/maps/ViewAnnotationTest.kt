@@ -83,7 +83,7 @@ class ViewAnnotationTest(
       }
       viewAnnotationsLayout = mapView.getChildAt(1) as FrameLayout
       mapboxMap = mapView.getMapboxMap().apply {
-        loadStyleUri(
+        loadStyle(
           Style.MAPBOX_STREETS
         ) {
           latch.countDown()

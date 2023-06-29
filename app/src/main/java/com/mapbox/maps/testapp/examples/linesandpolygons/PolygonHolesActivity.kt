@@ -38,7 +38,7 @@ class PolygonHolesActivity : AppCompatActivity() {
           .zoom(13.0)
           .build()
       )
-      loadStyleUri(
+      loadStyle(
         Style.STANDARD
       ) { style ->
         val outerLineString: LineString = LineString.fromLngLats(POLYGON_COORDINATES)

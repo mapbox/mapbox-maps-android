@@ -46,7 +46,7 @@ class TileJsonActivity : AppCompatActivity() {
       .build()
 
     mapboxMap = mapView.getMapboxMap()
-    mapboxMap.loadStyleJson("{}") {
+    mapboxMap.loadStyle("{}") {
       it.addSource(
         rasterSource(SOURCE_ID) {
           tileSet(tileSet)

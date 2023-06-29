@@ -37,7 +37,7 @@ class RawExpressionActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     val mapView = MapView(this)
     setContentView(mapView)
-    mapView.getMapboxMap().loadStyleUri(Style.STANDARD) {
+    mapView.getMapboxMap().loadStyle(Style.STANDARD) {
       addExpressionToStyle(it)
     }
   }

@@ -32,7 +32,7 @@ class PolylineAnnotationActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     val binding = ActivityAnnotationBinding.inflate(layoutInflater)
     setContentView(binding.root)
-    binding.mapView.getMapboxMap().loadStyleUri(nextStyle) {
+    binding.mapView.getMapboxMap().loadStyle(nextStyle) {
       annotationPlugin = binding.mapView.annotations
       polylineAnnotationManager = annotationPlugin.createPolylineAnnotationManager(
         annotationConfig = AnnotationConfig(PITCH_OUTLINE, LAYER_ID, SOURCE_ID)
@@ -107,7 +107,7 @@ class PolylineAnnotationActivity : AppCompatActivity() {
       }
     }
     binding.changeStyle.setOnClickListener {
-      binding.mapView.getMapboxMap().loadStyleUri(nextStyle)
+      binding.mapView.getMapboxMap().loadStyle(nextStyle)
     }
   }
 

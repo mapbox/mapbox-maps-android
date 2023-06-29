@@ -46,12 +46,12 @@ class LocalizationActivity : AppCompatActivity() {
     applySelectedLanguage = false
     Toast.makeText(this, R.string.change_language_instruction, Toast.LENGTH_LONG).show()
     mapboxMap = binding.mapView.getMapboxMap()
-    mapboxMap.loadStyleUri(nextStyle) {
+    mapboxMap.loadStyle(nextStyle) {
       it.localizeLabels(locale)
     }
     binding.fabStyles.setOnClickListener {
       val styleUri = nextStyle
-      mapboxMap.loadStyleUri(styleUri) {
+      mapboxMap.loadStyle(styleUri) {
         it.localizeLabels(selectedLocale)
       }
       Toast.makeText(this, styleUri, Toast.LENGTH_SHORT).show()

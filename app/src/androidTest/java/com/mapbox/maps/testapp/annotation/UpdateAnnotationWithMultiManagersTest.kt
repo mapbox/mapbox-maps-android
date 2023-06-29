@@ -56,7 +56,7 @@ class UpdateAnnotationWithMultiManagersTest : BaseMapTest() {
     rule.scenario.onActivity {
       handler = Handler(it.mainLooper)
       it.runOnUiThread {
-        mapboxMap.loadStyleUri(Style.MAPBOX_STREETS) {
+        mapboxMap.loadStyle(Style.MAPBOX_STREETS) {
           pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
           pointAnnotationManager.textFont = listOf("Open Sans Regular")
           pointAnnotation = pointAnnotationManager.create(

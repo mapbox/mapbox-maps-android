@@ -64,7 +64,7 @@ class ViewPagerActivity : AppCompatActivity() {
 
 fun MapFragment.getMapAsync(index: Int) {
   this.getMapAsync {
-    it.loadStyleUri(getStyleFromIndex(index))
+    it.loadStyle(getStyleFromIndex(index))
   }
 }
 

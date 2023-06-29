@@ -28,7 +28,7 @@ class TransparentBackgroundActivity : AppCompatActivity() {
     binding = ActivityTransparentBackgroundBinding.inflate(layoutInflater)
     setContentView(binding.root)
 
-    binding.mapView.getMapboxMap().loadStyleJson(
+    binding.mapView.getMapboxMap().loadStyle(
       """
       {
         "version": 8,

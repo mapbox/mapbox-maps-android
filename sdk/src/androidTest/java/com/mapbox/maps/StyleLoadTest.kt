@@ -55,13 +55,13 @@ class StyleLoadTest {
     val styles = mutableListOf<Style>()
     rule.scenario.onActivity { style ->
       style.runOnUiThread {
-        mapboxMap.loadStyleUri(
+        mapboxMap.loadStyle(
           Style.MAPBOX_STREETS
         ) { newStyle ->
           styles.add(newStyle)
           countDownLatch.countDown()
 
-          mapboxMap.loadStyleUri(
+          mapboxMap.loadStyle(
             Style.MAPBOX_STREETS
           ) { newStyle2 ->
             styles.add(newStyle2)
@@ -92,7 +92,7 @@ class StyleLoadTest {
           countDownLatch.countDown()
         }
 
-        mapboxMap.loadStyleUri(
+        mapboxMap.loadStyle(
           Style.MAPBOX_STREETS
         ) { style ->
           assertTrue("Style should be fully loaded", style.isStyleLoaded())
@@ -109,11 +109,11 @@ class StyleLoadTest {
     countDownLatch = CountDownLatch(1)
     rule.scenario.onActivity {
       it.runOnUiThread {
-        mapboxMap.loadStyleUri(
+        mapboxMap.loadStyle(
           Style.MAPBOX_STREETS
         ) { style ->
           assertTrue("Style should be fully loaded", style.isStyleLoaded())
-          mapboxMap.loadStyleUri(Style.SATELLITE) { style2 ->
+          mapboxMap.loadStyle(Style.SATELLITE) { style2 ->
             assertTrue("Style should be still fully loaded although its flaw in our current implementation", style.isStyleLoaded())
             assertTrue("Style should be fully loaded again", style2.isStyleLoaded())
             assertTrue("New style should be valid", style2.isValid())
@@ -134,12 +134,12 @@ class StyleLoadTest {
     var loadedStyles = 0
     rule.scenario.onActivity {
       it.runOnUiThread {
-        mapboxMap.loadStyleUri(Style.MAPBOX_STREETS) { loadedStyles++ }
+        mapboxMap.loadStyle(Style.MAPBOX_STREETS) { loadedStyles++ }
         mapboxMap.loadStyle(style("") {}) { loadedStyles++ }
-        mapboxMap.loadStyleUri(Style.SATELLITE) { loadedStyles++ }
-        mapboxMap.loadStyleUri(Style.MAPBOX_STREETS) { loadedStyles++ }
+        mapboxMap.loadStyle(Style.SATELLITE) { loadedStyles++ }
+        mapboxMap.loadStyle(Style.MAPBOX_STREETS) { loadedStyles++ }
         mapboxMap.loadStyle(style("") {}) { loadedStyles++ }
-        mapboxMap.loadStyleJson(
+        mapboxMap.loadStyle(
           """
             {
               "version": 8,
@@ -158,9 +158,9 @@ class StyleLoadTest {
             }
           """.trimIndent()
         ) { loadedStyles++ }
-        mapboxMap.loadStyleUri(Style.MAPBOX_STREETS) { loadedStyles++ }
-        mapboxMap.loadStyleUri(Style.SATELLITE) { loadedStyles++ }
-        mapboxMap.loadStyleUri(Style.MAPBOX_STREETS) { style ->
+        mapboxMap.loadStyle(Style.MAPBOX_STREETS) { loadedStyles++ }
+        mapboxMap.loadStyle(Style.SATELLITE) { loadedStyles++ }
+        mapboxMap.loadStyle(Style.MAPBOX_STREETS) { style ->
           loadedStyles++
           assertTrue("Style should be fully loaded", style.isStyleLoaded())
           assertTrue("Style should be valid", style.isValid())

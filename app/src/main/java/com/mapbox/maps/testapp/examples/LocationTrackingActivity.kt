@@ -64,7 +64,7 @@ class LocationTrackingActivity : AppCompatActivity() {
         .zoom(14.0)
         .build()
     )
-    mapView.getMapboxMap().loadStyleUri(
+    mapView.getMapboxMap().loadStyle(
       Style.STANDARD
     ) {
       initLocationComponent()

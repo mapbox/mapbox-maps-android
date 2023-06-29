@@ -20,7 +20,7 @@ class WmsSourceActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     val binding = ActivityWmsSourceBinding.inflate(layoutInflater)
     setContentView(binding.root)
-    binding.mapView.getMapboxMap().loadStyleUri(
+    binding.mapView.getMapboxMap().loadStyle(
       Style.LIGHT
     ) {
       it.addSource(

@@ -36,7 +36,7 @@ class TextureViewAnimateActivity : AppCompatActivity() {
     val binding = ActivityTextureViewBinding.inflate(layoutInflater)
     setContentView(binding.root)
 
-    binding.mapView.getMapboxMap().loadStyleUri(Style.STANDARD)
+    binding.mapView.getMapboxMap().loadStyle(Style.STANDARD)
     val cameraPlugin = binding.mapView.camera
 
     for (i in places.indices) {

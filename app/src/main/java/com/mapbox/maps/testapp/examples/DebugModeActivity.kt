@@ -43,7 +43,7 @@ class DebugModeActivity : AppCompatActivity() {
       )
     }
 
-    mapboxMap.loadStyleUri(Style.STANDARD)
+    mapboxMap.loadStyle(Style.STANDARD)
     binding.mapView.compass.opacity = 0.5f
     mapboxMap.setDebug(debugOptions, true)
     registerListeners(mapboxMap)

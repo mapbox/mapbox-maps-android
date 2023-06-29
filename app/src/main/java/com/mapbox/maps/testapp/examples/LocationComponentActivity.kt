@@ -54,7 +54,7 @@ class LocationComponentActivity : AppCompatActivity() {
     locationPermissionHelper = LocationPermissionHelper(WeakReference(this))
     locationPermissionHelper.checkPermissions {
       binding.mapView.apply {
-        getMapboxMap().loadStyleUri(Style.STANDARD) {
+        getMapboxMap().loadStyle(Style.STANDARD) {
           setupBuildings(it)
           it.setLight(
             light {
@@ -222,7 +222,7 @@ class LocationComponentActivity : AppCompatActivity() {
 
   private fun toggleMapStyle() {
     val styleUrl = if (lastStyleUri == Style.DARK) Style.LIGHT else Style.DARK
-    binding.mapView.getMapboxMap().loadStyleUri(styleUrl) {
+    binding.mapView.getMapboxMap().loadStyle(styleUrl) {
       lastStyleUri = styleUrl
     }
   }

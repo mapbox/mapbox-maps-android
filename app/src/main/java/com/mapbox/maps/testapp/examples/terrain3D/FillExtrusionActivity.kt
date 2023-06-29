@@ -42,7 +42,7 @@ class FillExtrusionActivity : AppCompatActivity() {
         .build()
     )
 
-    mapboxMap.loadStyleUri(
+    mapboxMap.loadStyle(
       Style.LIGHT
     ) { style ->
       setupBuildings(style)

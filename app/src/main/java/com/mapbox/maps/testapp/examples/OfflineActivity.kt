@@ -96,7 +96,7 @@ class OfflineActivity : AppCompatActivity() {
         mapView = MapView(this@OfflineActivity).also { mapview ->
           val mapboxMap = mapview.getMapboxMap()
           mapboxMap.setCamera(CameraOptions.Builder().zoom(ZOOM).center(TOKYO).build())
-          mapboxMap.loadStyleUri(Style.OUTDOORS) {
+          mapboxMap.loadStyle(Style.OUTDOORS) {
             // Add a circle annotation to the offline geometry.
             mapview.annotations.createCircleAnnotationManager().create(
               CircleAnnotationOptions()

@@ -23,7 +23,7 @@ class ThreadCheckTest {
   fun testMainThread() {
     rule.scenario.onActivity {
       val mapView = MapView(it, MapInitOptions(it, plugins = listOf()))
-      mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS)
+      mapView.getMapboxMap().loadStyle(Style.MAPBOX_STREETS)
     }
   }
 
@@ -33,7 +33,7 @@ class ThreadCheckTest {
     rule.scenario.onActivity {
       val mapView = MapView(it, MapInitOptions(it, plugins = listOf()))
       runBlocking(Dispatchers.IO) {
-        mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS)
+        mapView.getMapboxMap().loadStyle(Style.MAPBOX_STREETS)
       }
     }
   }

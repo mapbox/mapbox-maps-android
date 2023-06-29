@@ -100,7 +100,7 @@ class LocationComponentAnimationActivity : AppCompatActivity() {
     val binding = ActivityLocationComponentAnimationBinding.inflate(layoutInflater)
     setContentView(binding.root)
     mapboxMap = binding.mapView.getMapboxMap().apply {
-      loadStyleUri(
+      loadStyle(
         Style.STANDARD
       ) {
         setCamera(

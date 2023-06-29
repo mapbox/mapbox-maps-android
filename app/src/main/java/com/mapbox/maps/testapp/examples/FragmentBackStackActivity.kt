@@ -57,7 +57,7 @@ class FragmentBackStackActivity : AppCompatActivity() {
   }
 
   private fun initMap(mapboxMap: MapboxMap) {
-    mapboxMap.loadStyleUri(Style.SATELLITE)
+    mapboxMap.loadStyle(Style.SATELLITE)
   }
 
   private fun handleClick() {

@@ -21,25 +21,25 @@ class StyleSwitchActivity : AppCompatActivity() {
 
     mapboxMap = binding.mapView.getMapboxMap()
 
-    mapboxMap.loadStyleUri(Style.MAPBOX_STREETS)
+    mapboxMap.loadStyle(Style.MAPBOX_STREETS)
 
     binding.streetsButton.setOnClickListener {
-      mapboxMap.loadStyleUri(Style.MAPBOX_STREETS)
+      mapboxMap.loadStyle(Style.MAPBOX_STREETS)
     }
     binding.lightButton.setOnClickListener {
-      mapboxMap.loadStyleUri(Style.LIGHT)
+      mapboxMap.loadStyle(Style.LIGHT)
     }
     binding.darkButton.setOnClickListener {
-      mapboxMap.loadStyleUri(Style.DARK)
+      mapboxMap.loadStyle(Style.DARK)
     }
     binding.satelliteStreetsButton.setOnClickListener {
-      mapboxMap.loadStyleUri(Style.SATELLITE_STREETS)
+      mapboxMap.loadStyle(Style.SATELLITE_STREETS)
     }
     binding.satelliteButton.setOnClickListener {
-      mapboxMap.loadStyleUri(Style.SATELLITE)
+      mapboxMap.loadStyle(Style.SATELLITE)
     }
     binding.outdoorsButton.setOnClickListener {
-      mapboxMap.loadStyleUri(Style.OUTDOORS)
+      mapboxMap.loadStyle(Style.OUTDOORS)
     }
   }
 }

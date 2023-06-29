@@ -9,7 +9,6 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapView
 import com.mapbox.maps.Style
-import com.mapbox.maps.TransitionOptions
 import com.mapbox.maps.extension.style.expressions.dsl.generated.*
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.division
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.interpolate
@@ -19,7 +18,9 @@ import com.mapbox.maps.extension.style.layers.generated.circleLayer
 import com.mapbox.maps.extension.style.layers.generated.symbolLayer
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
+import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.extension.style.utils.ColorUtils
+import com.mapbox.maps.extension.style.utils.transition
 import com.mapbox.maps.plugin.animation.flyTo
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.utils.BitmapUtils.bitmapFromDrawableRes
@@ -35,15 +36,14 @@ class CircleLayerClusteringActivity : AppCompatActivity() {
     setContentView(mapView)
     val mapboxMap = mapView.getMapboxMap()
 
-    mapboxMap.loadStyleUri(
-      styleUri = Style.LIGHT,
-      // Disable any type of fading transition when icons collide on the map. This enhances the visual
-      // look of the data clustering together and breaking apart.
-      styleTransitionOptions = TransitionOptions.Builder()
-        .duration(0)
-        .delay(0)
-        .enablePlacementTransitions(false)
-        .build(),
+    mapboxMap.loadStyle(
+      styleExtension = style(Style.LIGHT) {
+        +transition {
+            duration(0)
+            delay(0)
+            enablePlacementTransitions(false)
+        }
+      },
       onStyleLoaded = {
         mapboxMap.flyTo(
           CameraOptions.Builder()

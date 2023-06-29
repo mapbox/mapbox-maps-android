@@ -47,7 +47,7 @@ abstract class BaseAnimationMapTest {
         it.setContentView(mapView)
 
         mapboxMap = mapView.getMapboxMap().apply {
-          loadStyleUri(
+          loadStyle(
             Style.DARK
           ) { style ->
             this@BaseAnimationMapTest.style = style

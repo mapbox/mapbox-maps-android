@@ -49,7 +49,7 @@ class CircleAnnotationActivity : AppCompatActivity() {
           false
         }
       )
-      binding.mapView.getMapboxMap().loadStyleUri(nextStyle) {
+      binding.mapView.getMapboxMap().loadStyle(nextStyle) {
         addInteractionListener(
           object : OnCircleAnnotationInteractionListener {
             override fun onSelectAnnotation(annotation: CircleAnnotation) {
@@ -104,7 +104,7 @@ class CircleAnnotationActivity : AppCompatActivity() {
       }
     }
     binding.changeStyle.setOnClickListener {
-      binding.mapView.getMapboxMap().loadStyleUri(nextStyle)
+      binding.mapView.getMapboxMap().loadStyle(nextStyle)
     }
   }
 

@@ -46,7 +46,7 @@ class ObservableEventsTest : BaseMapTest() {
   private fun loadTestStyle(styleUri: String = Style.MAPBOX_STREETS) {
     rule.scenario.onActivity {
       it.runOnUiThread {
-        mapboxMap.loadStyleUri(styleUri) { style ->
+        mapboxMap.loadStyle(styleUri) { style ->
           this.style = style
         }
         mapView.onStart()

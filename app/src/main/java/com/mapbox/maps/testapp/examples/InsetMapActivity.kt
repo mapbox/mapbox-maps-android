@@ -40,8 +40,8 @@ class InsetMapActivity : AppCompatActivity(), CameraChangedCallback {
     val binding = ActivityInsetMapBinding.inflate(layoutInflater)
     setContentView(binding.root)
     mainMapboxMap = binding.mapView.getMapboxMap()
-    mainMapboxMap.loadStyleUri(
-      styleUri = STYLE_URL
+    mainMapboxMap.loadStyle(
+      style = STYLE_URL
     ) { mainMapboxMap.subscribeCameraChanged(this@InsetMapActivity) }
 
     var insetMapFragment: MapFragment? =
@@ -69,8 +69,8 @@ class InsetMapActivity : AppCompatActivity(), CameraChangedCallback {
   private fun setInsetMapStyle(insetMapFragment: MapFragment) {
     insetMapFragment.getMapAsync {
       insetMapboxMap = it
-      insetMapboxMap?.loadStyleUri(
-        styleUri = STYLE_URL
+      insetMapboxMap?.loadStyle(
+        style = STYLE_URL
       ) { style ->
         val source = geoJsonSource(BOUNDS_LINE_LAYER_SOURCE_ID) {
           feature(Feature.fromGeometry(LineString.fromLngLats(getRectanglePoints())))

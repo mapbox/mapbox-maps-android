@@ -66,7 +66,7 @@ class MapboxMapTest {
   fun loadStyleMapboxUri() {
     Shadows.shadowOf(Looper.getMainLooper()).pause()
     assertFalse(mapboxMap.isStyleLoadInitiated)
-    mapboxMap.loadStyleUri("mapbox://foo")
+    mapboxMap.loadStyle("mapbox://foo")
     Shadows.shadowOf(Looper.getMainLooper()).idle()
     verify { nativeMap.setStyleURI("mapbox://foo") }
     assertTrue(mapboxMap.isStyleLoadInitiated)
@@ -76,7 +76,7 @@ class MapboxMapTest {
   fun loadStyleMapboxFile() {
     Shadows.shadowOf(Looper.getMainLooper()).pause()
     assertFalse(mapboxMap.isStyleLoadInitiated)
-    mapboxMap.loadStyleUri("file://foo")
+    mapboxMap.loadStyle("file://foo")
     Shadows.shadowOf(Looper.getMainLooper()).idle()
     verify { nativeMap.setStyleURI("file://foo") }
     assertTrue(mapboxMap.isStyleLoadInitiated)
@@ -86,7 +86,7 @@ class MapboxMapTest {
   fun loadStyleInvalidUri() {
     Shadows.shadowOf(Looper.getMainLooper()).pause()
     assertFalse(mapboxMap.isStyleLoadInitiated)
-    mapboxMap.loadStyleUri("foo")
+    mapboxMap.loadStyle("foo")
     Shadows.shadowOf(Looper.getMainLooper()).idle()
     verify { nativeMap.setStyleJSON("foo") }
     assertTrue(mapboxMap.isStyleLoadInitiated)
@@ -96,7 +96,7 @@ class MapboxMapTest {
   fun loadStyleUriLambda() {
     Shadows.shadowOf(Looper.getMainLooper()).pause()
     assertFalse(mapboxMap.isStyleLoadInitiated)
-    mapboxMap.loadStyleUri("foo") {}
+    mapboxMap.loadStyle("foo") {}
     Shadows.shadowOf(Looper.getMainLooper()).idle()
     assertTrue(mapboxMap.isStyleLoadInitiated)
   }
@@ -105,7 +105,7 @@ class MapboxMapTest {
   fun loadStyleJSON() {
     Shadows.shadowOf(Looper.getMainLooper()).pause()
     assertFalse(mapboxMap.isStyleLoadInitiated)
-    mapboxMap.loadStyleJson("foo")
+    mapboxMap.loadStyle("foo")
     Shadows.shadowOf(Looper.getMainLooper()).idle()
     verify { nativeMap.setStyleJSON("foo") }
     assertTrue(mapboxMap.isStyleLoadInitiated)
@@ -115,7 +115,7 @@ class MapboxMapTest {
   fun loadStyleJSONLambda() {
     Shadows.shadowOf(Looper.getMainLooper()).pause()
     assertFalse(mapboxMap.isStyleLoadInitiated)
-    mapboxMap.loadStyleJson("foo") {}
+    mapboxMap.loadStyle("foo") {}
     Shadows.shadowOf(Looper.getMainLooper()).idle()
     verify { nativeMap.setStyleJSON("foo") }
     assertTrue(mapboxMap.isStyleLoadInitiated)
@@ -1012,10 +1012,10 @@ class MapboxMapTest {
   fun setsStyleTransitionAfterOnStyleDataEvent() {
     val options = mockk<TransitionOptions>(relaxed = true)
     val style = mockk<Style>(relaxUnitFun = true)
-    mapboxMap.loadStyleUri(
-      "style",
-      options,
-      {}
+    mapboxMap.loadStyle(
+      style(Style.STANDARD) {
+        +options
+      },
     )
 
     val userCallbackStyleSlot = CapturingSlot<Style.OnStyleLoaded>()

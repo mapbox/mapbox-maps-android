@@ -51,7 +51,7 @@ abstract class BaseStyleTest {
         mapView = MapView(context)
 
         mapboxMap = mapView.getMapboxMap()
-        mapboxMap.loadStyleUri(
+        mapboxMap.loadStyle(
           "mapbox://styles/mapbox/empty-v9"
         ) {
           this@BaseStyleTest.style = it

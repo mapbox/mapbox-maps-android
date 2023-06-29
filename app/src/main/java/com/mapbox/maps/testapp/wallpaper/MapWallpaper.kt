@@ -29,7 +29,7 @@ class MapWallpaper : WallpaperService() {
       mapboxMap = mapSurface.getMapboxMap()
 
       // Custom configuration
-      mapboxMap.loadStyleUri(Style.STANDARD)
+      mapboxMap.loadStyle(Style.STANDARD)
       mapboxMap.setCamera(
         CameraOptions.Builder()
           .center(TARGET)

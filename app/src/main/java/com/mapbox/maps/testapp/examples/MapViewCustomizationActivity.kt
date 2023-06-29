@@ -37,7 +37,7 @@ class MapViewCustomizationActivity : AppCompatActivity() {
     setContentView(binding.root)
 
     // all options provided in xml file - so we just load style
-    binding.mapView.getMapboxMap().loadStyleUri(Style.DARK)
+    binding.mapView.getMapboxMap().loadStyle(Style.DARK)
     configureMapViewFromCode()
   }
 
@@ -84,7 +84,7 @@ class MapViewCustomizationActivity : AppCompatActivity() {
     )
     binding.rootLayout.addView(customMapView, params)
     // load style to map view
-    customMapView.getMapboxMap().loadStyleUri(Style.SATELLITE)
+    customMapView.getMapboxMap().loadStyle(Style.SATELLITE)
   }
 
   override fun onStart() {

@@ -34,7 +34,7 @@ class ThirdPartyVectorSourceActivity : AppCompatActivity() {
         .build()
     )
 
-    mapboxMap.loadStyleUri(Style.LIGHT) {
+    mapboxMap.loadStyle(Style.LIGHT) {
       it.addSource(
         vectorSource(SOURCE_ID) {
           tiles(listOf("https://tiles.mapillary.com/maps/vtp/mly1_public/2/{z}/{x}/{y}?access_token=MLY|4142433049200173|72206abe5035850d6743b23a49c41333"))

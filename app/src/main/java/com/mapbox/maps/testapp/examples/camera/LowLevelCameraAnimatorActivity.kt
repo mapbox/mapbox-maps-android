@@ -21,7 +21,7 @@ class LowLevelCameraAnimatorActivity : AppCompatActivity() {
     setContentView(mapView)
     mapboxMap = mapView.getMapboxMap()
     mapboxMap.setCamera(CAMERA_TARGET)
-    mapboxMap.loadStyleUri(
+    mapboxMap.loadStyle(
       Style.STANDARD
     ) {
       mapView.camera.apply {

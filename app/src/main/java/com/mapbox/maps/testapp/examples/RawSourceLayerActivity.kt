@@ -58,7 +58,7 @@ class RawSourceLayerActivity : AppCompatActivity() {
           .zoom(16.0)
           .build()
       )
-      loadStyleUri(Style.STANDARD) { addGeoJsonSource(it) }
+      loadStyle(Style.STANDARD) { addGeoJsonSource(it) }
     }
   }
 

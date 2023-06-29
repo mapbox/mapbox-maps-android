@@ -39,7 +39,7 @@ class UpdateAnnotationTest : BaseMapTest() {
   private lateinit var handler: Handler
   private val runnable = Runnable {
     if (mapboxMap.isValid()) {
-      mapboxMap.loadStyleUri(AnnotationUtils.STYLES[index++ % AnnotationUtils.STYLES.size]) {
+      mapboxMap.loadStyle(AnnotationUtils.STYLES[index++ % AnnotationUtils.STYLES.size]) {
         runRunnable()
       }
     }

@@ -63,7 +63,7 @@ class MovingIconWithTrailingLineActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     binding = ActivityDdsMovingIconWithTrailingLineBinding.inflate(layoutInflater)
     setContentView(binding.root)
-    binding.mapView.getMapboxMap().loadStyleUri(
+    binding.mapView.getMapboxMap().loadStyle(
       Style.LIGHT
     ) { // Use the Mapbox Directions API to get a directions route
       getRoute()

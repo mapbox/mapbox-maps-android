@@ -55,7 +55,7 @@ class PointAnnotationClusterActivity : AppCompatActivity(), CoroutineScope {
             .zoom(10.0)
             .build()
         )
-        loadStyleUri(nextStyle) {
+        loadStyle(nextStyle) {
           val annotationPlugin = binding.mapView.annotations
           val annotationConfig = AnnotationConfig(
             annotationSourceOptions = AnnotationSourceOptions(
@@ -93,7 +93,7 @@ class PointAnnotationClusterActivity : AppCompatActivity(), CoroutineScope {
 
     binding.deleteAll.setOnClickListener { pointAnnotationManager?.deleteAll() }
     binding.changeStyle.setOnClickListener {
-      binding.mapView.getMapboxMap().loadStyleUri(nextStyle)
+      binding.mapView.getMapboxMap().loadStyle(nextStyle)
     }
   }
 

@@ -22,7 +22,7 @@ class NativeCustomLayerActivity : AppCompatActivity() {
     binding = ActivityCustomLayerBinding.inflate(layoutInflater)
     setContentView(binding.root)
     mapboxMap = binding.mapView.getMapboxMap()
-    mapboxMap.loadStyleUri(
+    mapboxMap.loadStyle(
       Style.STANDARD
     ) {
       mapboxMap.setCamera(

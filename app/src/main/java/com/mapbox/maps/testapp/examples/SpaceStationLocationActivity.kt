@@ -42,7 +42,7 @@ class SpaceStationLocationActivity : AppCompatActivity() {
     val mapView = MapView(this)
     setContentView(mapView)
     mapboxMap = mapView.getMapboxMap()
-    mapboxMap.loadStyleUri(
+    mapboxMap.loadStyle(
       Style.SATELLITE_STREETS
     ) {
       initSpaceStationSymbolLayer(it)

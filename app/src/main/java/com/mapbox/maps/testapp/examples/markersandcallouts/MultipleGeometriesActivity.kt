@@ -27,7 +27,7 @@ class MultipleGeometriesActivity : AppCompatActivity() {
     setContentView(binding.root)
 
     mapboxMap = binding.mapView.getMapboxMap()
-    mapboxMap.loadStyleUri(
+    mapboxMap.loadStyle(
       Style.LIGHT
     ) {
       createGeoJsonSource(it)

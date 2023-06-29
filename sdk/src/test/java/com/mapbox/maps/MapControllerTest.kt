@@ -123,7 +123,7 @@ class MapControllerTest {
 
     testMapController.onStart()
 
-    verify(exactly = 0) { mockMapboxMap.loadStyleUri(Style.MAPBOX_STREETS) }
+    verify(exactly = 0) { mockMapboxMap.loadStyle(Style.MAPBOX_STREETS) }
   }
 
   @Test

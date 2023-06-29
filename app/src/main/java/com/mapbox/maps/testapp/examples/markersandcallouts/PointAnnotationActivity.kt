@@ -52,7 +52,7 @@ class PointAnnotationActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     val binding = ActivityAnnotationBinding.inflate(layoutInflater)
     setContentView(binding.root)
-    binding.mapView.getMapboxMap().loadStyleUri(nextStyle) {
+    binding.mapView.getMapboxMap().loadStyle(nextStyle) {
       annotationPlugin = binding.mapView.annotations
       circleAnnotationManager = annotationPlugin.createCircleAnnotationManager().apply {
         val circleAnnotationOptions: CircleAnnotationOptions = CircleAnnotationOptions()
@@ -204,7 +204,7 @@ class PointAnnotationActivity : AppCompatActivity() {
       }
     }
     binding.changeStyle.setOnClickListener {
-      binding.mapView.getMapboxMap().loadStyleUri(nextStyle)
+      binding.mapView.getMapboxMap().loadStyle(nextStyle)
     }
   }
 
