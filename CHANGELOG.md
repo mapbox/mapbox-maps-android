@@ -6,6 +6,13 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * Fix a security exception when fine location permission is not granted when using DefaultLocationProvider.
 * Fix camera animations jitter noticeable on high zoom levels using location puck following mode.
+* Resolve the missing tile rendering issue when the tile pack's leveling scheme has a maximum zoom level of less than 16.
+* Fix the issue that HTTP resources expiration time being incorrectly reset, which caused excessive network requests.
+* Fix the style change latency for fill extrusion layers(in case the layers have data-driven paint properties) during the style switches.
+
+## Dependencies 
+* Update gl-native to v10.15.0-beta.1 and common to v23.7.0-beta.1. 
+
 
 # 10.14.1 June 22, 2023
 ## Bug fixes 🐞
