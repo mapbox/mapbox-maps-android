@@ -1,7 +1,7 @@
 apply plugin: 'com.github.triplet.play'
 
 play {
-    track = findProperty("releaseTrack") as String ?: "internal"
+    track = findProperty("releaseTrack") as String ?: "alpha"
     serviceAccountCredentials = file("test-app-play-publisher.json")
     defaultToAppBundles = true
 }
