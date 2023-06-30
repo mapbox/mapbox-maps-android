@@ -32,13 +32,13 @@ class ModelLayerActivity : AppCompatActivity() {
     mapView.getMapboxMap().apply {
       setCamera(
         cameraOptions {
-          center(TurfMeasurement.midpoint(HELSINKI, MAPBOX_HELSINKI))
+          center(TurfMeasurement.midpoint(MODEL1_COORDINATES, MAPBOX_HELSINKI))
           zoom(CAMERA_ZOOM)
           pitch(CAMERA_PITCH)
         }
       )
       loadStyle(
-        style(Style.LIGHT) {
+        style(Style.STANDARD) {
           +model(MODEL_ID_1) {
             uri(SAMPLE_MODEL_URI_1)
           }
@@ -49,7 +49,7 @@ class ModelLayerActivity : AppCompatActivity() {
             featureCollection(
               FeatureCollection.fromFeatures(
                 listOf(
-                  Feature.fromGeometry(HELSINKI).also { it.addStringProperty(MODEL_ID_KEY, MODEL_ID_1) },
+                  Feature.fromGeometry(MODEL1_COORDINATES).also { it.addStringProperty(MODEL_ID_KEY, MODEL_ID_1) },
                   Feature.fromGeometry(MAPBOX_HELSINKI).also { it.addStringProperty(MODEL_ID_KEY, MODEL_ID_2) }
                 )
               )
@@ -58,7 +58,7 @@ class ModelLayerActivity : AppCompatActivity() {
           +modelLayer(MODEL_LAYER_ID, SOURCE_ID) {
             modelId(get(MODEL_ID_KEY))
             modelType(ModelType.COMMON_3D)
-            modelScale(listOf(100.0, 100.0, 100.0))
+            modelScale(listOf(40.0, 40.0, 40.0))
             modelTranslation(listOf(0.0, 0.0, 0.0))
             modelRotation(listOf(0.0, 0.0, 90.0))
             modelOpacity(0.7)
@@ -70,7 +70,7 @@ class ModelLayerActivity : AppCompatActivity() {
   }
 
   private companion object {
-    const val CAMERA_ZOOM = 14.0
+    const val CAMERA_ZOOM = 16.0
     const val CAMERA_PITCH = 45.0
     const val SOURCE_ID = "source-id"
     const val MODEL_LAYER_ID = "model-layer-id"
@@ -80,7 +80,7 @@ class ModelLayerActivity : AppCompatActivity() {
     const val SAMPLE_MODEL_URI_1 =
       "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF-Embedded/Duck.gltf"
     const val SAMPLE_MODEL_URI_2 = "asset://sportcar.glb"
-    val HELSINKI = Point.fromLngLat(24.9384, 60.1699)
     val MAPBOX_HELSINKI = Point.fromLngLat(24.945389069265598, 60.17195694011002)
+    val MODEL1_COORDINATES = Point.fromLngLat(MAPBOX_HELSINKI.longitude() - 0.002, MAPBOX_HELSINKI.latitude() + 0.002)
   }
 }
