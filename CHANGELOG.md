@@ -3,6 +3,8 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
+## Bug fixes 🐞
+* Fix view port not following puck if viewport `bearing` option was set to `null` even though new locations were available.
 
 # 10.15.0-beta.1 June 29, 2023
 ## Bug fixes 🐞
