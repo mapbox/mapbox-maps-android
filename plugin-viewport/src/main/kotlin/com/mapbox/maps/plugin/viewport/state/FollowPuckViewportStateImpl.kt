@@ -72,8 +72,7 @@ internal class FollowPuckViewportStateImpl(
     }
   }
 
-  private fun shouldNotifyLatestViewportData() =
-    lastLocation != null && (options.bearing is FollowPuckViewportStateBearing.Constant || lastBearing != null)
+  private fun shouldNotifyLatestViewportData() = lastLocation != null
 
   private fun notifyViewportStateDataObserver(
     observer: ViewportStateDataObserver,
@@ -84,22 +83,17 @@ internal class FollowPuckViewportStateImpl(
     }
   }
 
-  private fun evaluateViewportData(): CameraOptions {
-    return CameraOptions.Builder()
-      .center(lastLocation)
-      .bearing(
-        with(options.bearing) {
-          when (this) {
-            is FollowPuckViewportStateBearing.Constant -> bearing
-            else -> lastBearing
-          }
-        }
-      )
-      .zoom(options.zoom)
-      .pitch(options.pitch)
-      .padding(options.padding)
-      .build()
-  }
+  private fun evaluateViewportData(): CameraOptions = with(CameraOptions.Builder()) {
+    center(lastLocation)
+    when (val bearingOptions = options.bearing) {
+      is FollowPuckViewportStateBearing.Constant -> bearing(bearingOptions.bearing)
+      FollowPuckViewportStateBearing.SyncWithLocationPuck -> lastBearing?.let { bearing(it) }
+      else -> {} // don't touch camera bearing
+    }
+    zoom(options.zoom)
+    pitch(options.pitch)
+    padding(options.padding)
+  }.build()
 
   private fun addIndicatorListenerIfNeeded() {
     if (!isObservingLocationUpdates) {
