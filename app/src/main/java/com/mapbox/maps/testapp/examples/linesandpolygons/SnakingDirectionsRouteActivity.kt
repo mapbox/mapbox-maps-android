@@ -2,8 +2,6 @@ package com.mapbox.maps.testapp.examples.linesandpolygons
 
 import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.api.directions.v5.DirectionsCriteria
@@ -29,22 +27,18 @@ import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.logE
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityJavaservicesSnakingDirectionsRouteBinding
+import com.mapbox.turf.TurfConstants
+import com.mapbox.turf.TurfMisc
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.concurrent.CopyOnWriteArrayList
 
 /**
- * Rather than showing the directions route all at once, have it "snake" from the origin to destination by showing the
- * route one [LegStep] section at a time.
+ * Rather than showing the directions route all at once, have it "snake" from the origin to destination.
  */
 class SnakingDirectionsRouteActivity : AppCompatActivity() {
 
-  private lateinit var mapboxDirectionsClient: MapboxDirections
-  private lateinit var drawRouteRunnable: Runnable
-  private val handler = Handler(Looper.getMainLooper())
-  private val drivingRoutePolyLineFeatureList = CopyOnWriteArrayList<Feature>()
-  private var counterIndex = 0
+  private var mapboxDirectionsClient: MapboxDirections? = null
   private lateinit var binding: ActivityJavaservicesSnakingDirectionsRouteBinding
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -104,7 +98,7 @@ class SnakingDirectionsRouteActivity : AppCompatActivity() {
       .accessToken(getString(R.string.mapbox_access_token))
       .build()
 
-    mapboxDirectionsClient.enqueueCall(object : Callback<DirectionsResponse> {
+    mapboxDirectionsClient?.enqueueCall(object : Callback<DirectionsResponse> {
       override fun onResponse(
         call: Call<DirectionsResponse>,
         response: Response<DirectionsResponse>
@@ -133,37 +127,45 @@ class SnakingDirectionsRouteActivity : AppCompatActivity() {
   }
 
   private fun drawRoute(steps: List<LegStep>) {
-    /**
-     * Runnable class which goes through the route and draws each [LegStep] of the Directions API route
-     */
-    drawRouteRunnable = Runnable {
-      if (counterIndex < steps.size) {
-        val singleStep = steps[counterIndex]
-        singleStep.geometry()?.let {
-          val lineStringRepresentingSingleStep = LineString.fromPolyline(
-            it, PRECISION_5
-          )
-          drivingRoutePolyLineFeatureList.add(Feature.fromGeometry(lineStringRepresentingSingleStep))
-        }
-        binding.mapView.getMapboxMap().getStyle {
-          val source = it.getSource(DRIVING_ROUTE_POLYLINE_SOURCE_ID) as? GeoJsonSource
-          source?.featureCollection(FeatureCollection.fromFeatures(drivingRoutePolyLineFeatureList))
-        }
-        counterIndex++
-      }
-      handler.postDelayed(drawRouteRunnable, DRAW_SPEED_MILLISECONDS)
+    val totalDistance = steps.sumOf(LegStep::distance)
+    val singleAnimationDistance = totalDistance / ANIMATION_STEPS
+
+    val line = steps
+      .mapNotNull { it.geometry() }
+      .map { LineString.fromPolyline(it, PRECISION_5) }
+      .flatMap { it.coordinates() }
+      .let(LineString::fromLngLats)
+
+    val features = List(ANIMATION_STEPS) { index ->
+      Feature.fromGeometry(
+        TurfMisc.lineSliceAlong(
+          line,
+          singleAnimationDistance * index,
+          singleAnimationDistance * (index + 1),
+          TurfConstants.UNIT_METERS
+        )
+      )
     }
-    handler.postDelayed(drawRouteRunnable, DRAW_SPEED_MILLISECONDS)
+
+    val map = binding.mapView.getMapboxMap()
+    (0..ANIMATION_STEPS).forEach { index ->
+      binding.mapView.postDelayed(
+        {
+          if (map.isValid()) {
+            map.getStyle {
+              (it.getSource(DRIVING_ROUTE_POLYLINE_SOURCE_ID) as? GeoJsonSource)
+                ?.featureCollection(FeatureCollection.fromFeatures(features.take(index)))
+            }
+          }
+        },
+        DRAW_SPEED_MILLISECONDS * index
+      )
+    }
   }
 
   override fun onDestroy() {
     super.onDestroy()
-    if (this::mapboxDirectionsClient.isInitialized) {
-      mapboxDirectionsClient.cancelCall()
-    }
-    if (this::drawRouteRunnable.isInitialized) {
-      handler.removeCallbacks(drawRouteRunnable)
-    }
+    mapboxDirectionsClient?.cancelCall()
   }
 
   companion object {
@@ -175,7 +177,8 @@ class SnakingDirectionsRouteActivity : AppCompatActivity() {
     private const val NAVIGATION_LINE_OPACITY = 0.8
     private const val DRIVING_ROUTE_POLYLINE_LINE_LAYER_ID = "DRIVING_ROUTE_POLYLINE_LINE_LAYER_ID"
     private const val DRIVING_ROUTE_POLYLINE_SOURCE_ID = "DRIVING_ROUTE_POLYLINE_SOURCE_ID"
-    private const val DRAW_SPEED_MILLISECONDS = 500L
+    private const val DRAW_SPEED_MILLISECONDS = 50L
+    private const val ANIMATION_STEPS = 200
     private val PARIS_ORIGIN_POINT = Point.fromLngLat(2.35222, 48.856614)
     private val TULLINS_DESTINATION_POINT = Point.fromLngLat(5.486011, 45.299410)
   }
