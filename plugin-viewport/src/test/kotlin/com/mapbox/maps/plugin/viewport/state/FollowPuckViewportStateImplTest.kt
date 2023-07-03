@@ -71,10 +71,11 @@ class FollowPuckViewportStateImplTest {
     val indicatorPositionChangedListenerSlot = slot<OnIndicatorPositionChangedListener>()
     val dataObserver = mockk<ViewportStateDataObserver>()
     val testBearing = 10.0
+    var testBearingSent = false
     val testCenter = Point.fromLngLat(0.0, 0.0)
 
-    // stop observing after the first data point
-    every { dataObserver.onNewData(any()) } returns false
+    // stop observing after the testBearing value has been sent
+    every { dataObserver.onNewData(any()) } answers { !testBearingSent }
 
     followingState.observeDataSource(dataObserver)
     verify {
@@ -92,8 +93,19 @@ class FollowPuckViewportStateImplTest {
       )
     }
     indicatorPositionChangedListenerSlot.captured.onIndicatorPositionChanged(testCenter)
-    // first new data should only be fired when the first position and first bearing are both available.
-    verify(exactly = 0) { dataObserver.onNewData(any()) }
+    // first new data can already be fired when the first position is given. For example, we might
+    // have a static location with no course.
+    verify(exactly = 1) {
+      dataObserver.onNewData(
+        cameraOptions {
+          center(testCenter)
+          pitch(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_PITCH)
+          zoom(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_ZOOM)
+          padding(EdgeInsets(0.0, 0.0, 0.0, 0.0))
+        }
+      )
+    }
+    testBearingSent = true
     indicatorBearingChangedListenerSlot.captured.onIndicatorBearingChanged(testBearing)
     verify(exactly = 1) {
       dataObserver.onNewData(
@@ -107,10 +119,10 @@ class FollowPuckViewportStateImplTest {
       )
     }
 
-    // more indicator updates after the initial update shouldn't be notified.
+    // more indicator updates after the testBearing update shouldn't be notified.
     indicatorBearingChangedListenerSlot.captured.onIndicatorBearingChanged(testBearing)
     indicatorPositionChangedListenerSlot.captured.onIndicatorPositionChanged(testCenter)
-    verify(exactly = 1) {
+    verify(exactly = 2) {
       dataObserver.onNewData(any())
     }
   }
@@ -168,6 +180,53 @@ class FollowPuckViewportStateImplTest {
     // more indicator updates after the initial update shouldn't be notified.
     indicatorBearingChangedListenerSlot.captured.onIndicatorBearingChanged(testBearing)
     indicatorPositionChangedListenerSlot.captured.onIndicatorPositionChanged(testCenter)
+    verify(exactly = 1) {
+      dataObserver.onNewData(any())
+    }
+  }
+
+  @Test
+  fun testObserveDataSourceForFirstDataPointWithNullBearingOption() {
+    val indicatorBearingChangedListenerSlot = slot<OnIndicatorBearingChangedListener>()
+    val indicatorPositionChangedListenerSlot = slot<OnIndicatorPositionChangedListener>()
+    val dataObserver = mockk<ViewportStateDataObserver>()
+    val testBearing = 10.0
+    val testCenter = Point.fromLngLat(0.0, 0.0)
+
+    // set the bearing to be constant
+    followingState.apply {
+      options =
+        options.toBuilder().bearing(null)
+          .build()
+    }
+    every { dataObserver.onNewData(any()) } returns true
+
+    followingState.observeDataSource(dataObserver)
+    verify {
+      locationPlugin.addOnIndicatorBearingChangedListener(
+        capture(indicatorBearingChangedListenerSlot)
+      )
+    }
+    verify {
+      locationPlugin.addOnIndicatorPositionChangedListener(
+        capture(indicatorPositionChangedListenerSlot)
+      )
+    }
+    indicatorPositionChangedListenerSlot.captured.onIndicatorPositionChanged(testCenter)
+    // new bearing updates from location component shouldn't trigger new data.
+    indicatorBearingChangedListenerSlot.captured.onIndicatorBearingChanged(testBearing)
+    // first new data be fired when the first position is available, when the bearing is constant.
+    verify(exactly = 1) {
+      dataObserver.onNewData(
+        cameraOptions {
+          center(testCenter)
+          bearing(null)
+          zoom(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_ZOOM)
+          pitch(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_PITCH)
+          padding(EdgeInsets(0.0, 0.0, 0.0, 0.0))
+        }
+      )
+    }
     verify(exactly = 1) {
       dataObserver.onNewData(any())
     }
