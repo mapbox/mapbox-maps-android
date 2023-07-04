@@ -53,6 +53,8 @@ Mapbox welcomes participation and contributions from everyone.
 * Remove `TileStoreOptions.MAPBOX_ACCESS_TOKEN` used e.g. in `TileStore.setOption(TileStoreOptions.MAPBOX_ACCESS_TOKEN, someDomain, someValue)` as it has become redundant.
 * Introduce `MapboxTracing` object allowing to enable Android traces to measure performance of the SDK. More details and instructions could be found in `Working with traces` section in `DEVELOPING.md`. 
 * Remove Mapbox plugin implementations from public API surface.
+* Remove `HttpServiceFactory.getInstance`, `HttpServiceFactory.reset`, `HttpServiceFactory.setUserDefined` methods.
+* Replace `HttpServiceFactory.getInstance().setInterceptor` with `HttpServiceFactory.setHttpServiceInterceptor`.
 
 ## Features ✨ and improvements 🏁
 * Add the `MapboxMap.resetFeatureState` method.
@@ -89,7 +91,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix view port not following puck if viewport `bearing` option was set to `null` even though new locations were available.
 
 ## Dependencies
-* Update gl-native to v11.0.0-alpha.21 and common to v24.0.0-SNAPSHOT.0613T0256Z.8c080c8.
+* Update gl-native to v11.0.0-SNAPSHOT.0608T0508Z.a85336d and common to v24.0.0-SNAPSHOT.0616T0900Z.e0319e0.
 
 
 # 10.13.0-beta.1 April 05, 2023

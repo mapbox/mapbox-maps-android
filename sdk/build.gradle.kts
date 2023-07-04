@@ -53,11 +53,6 @@ android {
 
 dependencies {
   api(libs.mapbox.base)
-  if (buildFromSource.toBoolean()) {
-    api(project(":okhttp"))
-  } else {
-    api(libs.mapbox.okHttp)
-  }
 
   implementation(libs.mapbox.annotations)
   api(project(":sdk-base"))

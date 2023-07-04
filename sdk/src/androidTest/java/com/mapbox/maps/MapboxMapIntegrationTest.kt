@@ -39,8 +39,7 @@ class MapboxMapIntegrationTest {
   fun testDefaultMapboxOptions() {
     val context = mapView.context
     assertEquals(context.getTokenFromResource(), MapboxOptions.accessToken)
-    // TODO: Add `/` once https://mapbox.atlassian.net/browse/MAPSNAT-1165 is fixed
-    assertEquals("${context.filesDir.absolutePath}/.mapbox/map_data", MapboxMapsOptions.dataPath)
+    assertEquals("${context.filesDir.absolutePath}/.mapbox/map_data/", MapboxMapsOptions.dataPath)
     assertEquals("https://api.mapbox.com", MapboxMapsOptions.baseUrl)
     assertNotNull(MapboxMapsOptions.tileStore)
     assertEquals(TileStoreUsageMode.READ_ONLY, MapboxMapsOptions.tileStoreUsageMode)
