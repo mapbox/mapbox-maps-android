@@ -15,7 +15,7 @@ import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
 import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotation
-import com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationCluster
+import com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationGroup
 import com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions
 
 /**
@@ -53,7 +53,7 @@ public class CircleAnnotationActivity : ComponentActivity() {
                 true
               }
             )
-            CircleAnnotationCluster(
+            CircleAnnotationGroup(
               annotations = CLUSTER_POINTS.map {
                 CircleAnnotationOptions()
                   .withPoint(it)

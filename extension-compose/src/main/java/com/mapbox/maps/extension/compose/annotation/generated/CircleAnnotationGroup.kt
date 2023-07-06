@@ -16,9 +16,14 @@ import com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions
 import com.mapbox.maps.plugin.annotation.generated.createCircleAnnotationManager
 
 /**
- * Composable function to add a [CircleAnnotation]Cluster to the Map.
+ * Composable function to add a [CircleAnnotationGroup] to the Map.
  *
- * @param annotations List of [CircleAnnotationOptions] to be added to the cluster.
+ * The [CircleAnnotationGroup] is more performant than adding multiple [CircleAnnotation] individually,
+ * because the [CircleAnnotationGroup] is added to the map as a single layer.
+ *
+ * [PointAnnotationGroup] and [CircleAnnotationGroup] can also be clustered based on the configuration, see [AnnotationConfig.annotationSourceOptions] and [ClusterOptions] for more details.
+ *
+ * @param annotations List of [CircleAnnotationOptions] to be added to the group.
  * @param annotationConfig Configuration for [CircleAnnotationCluster].
  * @param circleEmissiveStrength Emission strength. The unit of circleEmissiveStrength is in intensity.
  * @param circlePitchAlignment Orientation of circle when map is pitched.
@@ -29,7 +34,7 @@ import com.mapbox.maps.plugin.annotation.generated.createCircleAnnotationManager
  */
 @Composable
 @MapboxMapComposable
-public fun CircleAnnotationCluster(
+public fun CircleAnnotationGroup(
   annotations: List<CircleAnnotationOptions>,
   annotationConfig: AnnotationConfig? = null,
   circleEmissiveStrength: Double? = null,

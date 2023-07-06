@@ -14,7 +14,7 @@ import com.mapbox.maps.compose.testapp.examples.utils.AnnotationUtils
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotation
-import com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationCluster
+import com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationGroup
 import com.mapbox.maps.plugin.annotation.AnnotationConfig
 import com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions
 import java.util.*
@@ -47,7 +47,7 @@ public class PolylineAnnotationActivity : ComponentActivity() {
                 true
               }
             )
-            PolylineAnnotationCluster(
+            PolylineAnnotationGroup(
               annotations = mutableListOf<PolylineAnnotationOptions>().apply {
                 repeat(100) {
                   add(

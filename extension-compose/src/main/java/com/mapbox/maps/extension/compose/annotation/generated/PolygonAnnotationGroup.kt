@@ -16,9 +16,14 @@ import com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions
 import com.mapbox.maps.plugin.annotation.generated.createPolygonAnnotationManager
 
 /**
- * Composable function to add a [PolygonAnnotation]Cluster to the Map.
+ * Composable function to add a [PolygonAnnotationGroup] to the Map.
  *
- * @param annotations List of [PolygonAnnotationOptions] to be added to the cluster.
+ * The [PolygonAnnotationGroup] is more performant than adding multiple [PolygonAnnotation] individually,
+ * because the [PolygonAnnotationGroup] is added to the map as a single layer.
+ *
+ * [PointAnnotationGroup] and [CircleAnnotationGroup] can also be clustered based on the configuration, see [AnnotationConfig.annotationSourceOptions] and [ClusterOptions] for more details.
+ *
+ * @param annotations List of [PolygonAnnotationOptions] to be added to the group.
  * @param annotationConfig Configuration for [PolygonAnnotationCluster].
  * @param fillAntialias Whether or not the fill should be antialiased.
  * @param fillEmissiveStrength Emission strength. The unit of fillEmissiveStrength is in intensity.
@@ -28,7 +33,7 @@ import com.mapbox.maps.plugin.annotation.generated.createPolygonAnnotationManage
  */
 @Composable
 @MapboxMapComposable
-public fun PolygonAnnotationCluster(
+public fun PolygonAnnotationGroup(
   annotations: List<PolygonAnnotationOptions>,
   annotationConfig: AnnotationConfig? = null,
   fillAntialias: Boolean? = null,

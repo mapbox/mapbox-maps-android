@@ -20,7 +20,7 @@ import com.mapbox.maps.compose.testapp.examples.utils.CityLocations
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
 import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.extension.compose.MapboxMap
-import com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationCluster
+import com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationGroup
 import com.mapbox.maps.extension.style.expressions.dsl.generated.literal
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.plugin.annotation.AnnotationConfig
@@ -59,7 +59,7 @@ public class PointAnnotationClusterActivity : ComponentActivity() {
               )
             },
           ) {
-            PointAnnotationCluster(
+            PointAnnotationGroup(
               annotations = points.map {
                 PointAnnotationOptions()
                   .withPoint(it)

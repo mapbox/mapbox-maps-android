@@ -16,9 +16,14 @@ import com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions
 import com.mapbox.maps.plugin.annotation.generated.createPolylineAnnotationManager
 
 /**
- * Composable function to add a [PolylineAnnotation]Cluster to the Map.
+ * Composable function to add a [PolylineAnnotationGroup] to the Map.
  *
- * @param annotations List of [PolylineAnnotationOptions] to be added to the cluster.
+ * The [PolylineAnnotationGroup] is more performant than adding multiple [PolylineAnnotation] individually,
+ * because the [PolylineAnnotationGroup] is added to the map as a single layer.
+ *
+ * [PointAnnotationGroup] and [CircleAnnotationGroup] can also be clustered based on the configuration, see [AnnotationConfig.annotationSourceOptions] and [ClusterOptions] for more details.
+ *
+ * @param annotations List of [PolylineAnnotationOptions] to be added to the group.
  * @param annotationConfig Configuration for [PolylineAnnotationCluster].
  * @param lineCap The display of line endings.
  * @param lineMiterLimit Used to automatically convert miter joins to bevel joins for sharp angles.
@@ -33,7 +38,7 @@ import com.mapbox.maps.plugin.annotation.generated.createPolylineAnnotationManag
  */
 @Composable
 @MapboxMapComposable
-public fun PolylineAnnotationCluster(
+public fun PolylineAnnotationGroup(
   annotations: List<PolylineAnnotationOptions>,
   annotationConfig: AnnotationConfig? = null,
   lineCap: LineCap? = null,

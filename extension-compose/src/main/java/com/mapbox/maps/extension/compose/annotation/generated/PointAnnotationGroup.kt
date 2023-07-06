@@ -16,9 +16,14 @@ import com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions
 import com.mapbox.maps.plugin.annotation.generated.createPointAnnotationManager
 
 /**
- * Composable function to add a [PointAnnotation]Cluster to the Map.
+ * Composable function to add a [PointAnnotationGroup] to the Map.
  *
- * @param annotations List of [PointAnnotationOptions] to be added to the cluster.
+ * The [PointAnnotationGroup] is more performant than adding multiple [PointAnnotation] individually,
+ * because the [PointAnnotationGroup] is added to the map as a single layer.
+ *
+ * [PointAnnotationGroup] and [CircleAnnotationGroup] can also be clustered based on the configuration, see [AnnotationConfig.annotationSourceOptions] and [ClusterOptions] for more details.
+ *
+ * @param annotations List of [PointAnnotationOptions] to be added to the group.
  * @param annotationConfig Configuration for [PointAnnotationCluster].
  * @param iconAllowOverlap If true, the icon will be visible even if it collides with other previously drawn symbols.
  * @param iconIgnorePlacement If true, other symbols can be visible even if they collide with the icon.
@@ -50,7 +55,7 @@ import com.mapbox.maps.plugin.annotation.generated.createPointAnnotationManager
  */
 @Composable
 @MapboxMapComposable
-public fun PointAnnotationCluster(
+public fun PointAnnotationGroup(
   annotations: List<PointAnnotationOptions>,
   annotationConfig: AnnotationConfig? = null,
   iconAllowOverlap: Boolean? = null,
