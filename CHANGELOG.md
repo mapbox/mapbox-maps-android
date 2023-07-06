@@ -78,6 +78,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Introduce experimental `ModelLayer` API to render 3D models on the map.
 * Introduce experimental `MapboxMap.addStyleModel`, `MapboxMap.removeStyleModel`, `MapboxMap.hasStyleModel` APIs.
 * Introduce experimental `LocationPuck3D.modelCastShadows`, `LocationPuck3D.modelReceiveShadows`, `LocationPuck3D.modelScaleMode` APIs.
+  Note: `LocationPuck3D.modelScaleMode` API brings behavioral changes for LocationPuck3d scale and `model-scale` property needs to be adjusted to correctly render the puck. 
 * Introduce `Expression.hsl`, `Expression.hsla` color expression.
 * Introduce `Expression.measureLight` lights configuration property.
 * Introduce `LineLayer.lineBorderColor`, `LineLayer.lineBorderWidth` APIs.
