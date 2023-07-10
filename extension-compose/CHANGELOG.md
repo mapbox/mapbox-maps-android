@@ -16,3 +16,4 @@ Mapbox welcomes participation and contributions from everyone.
   `PolygonAnnotationGroup` composable functions to add an annotation group to the
   map; `PointAnnotationGroup` and `CircleAnnotationGroup` can be clustered based on configuration.
 * Add `ViewAnnotation` composable function to add a view annotation to the map.
+* Add `MapViewportState` API hat can be hoisted to control and observe the map's camera state.

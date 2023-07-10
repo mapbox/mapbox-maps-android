@@ -4,13 +4,13 @@ import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ComposeNode
 import androidx.compose.runtime.currentComposer
-import com.mapbox.maps.CameraOptions
-import com.mapbox.maps.CameraState
+import com.mapbox.common.Cancelable
+import com.mapbox.maps.CameraChangedCallback
 import com.mapbox.maps.MapInitOptions
 import com.mapbox.maps.MapView
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.DefaultSettingsProvider
-import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
-import com.mapbox.maps.plugin.animation.camera
+import com.mapbox.maps.extension.compose.animation.viewport.MapViewportState
 import com.mapbox.maps.plugin.attribution.attribution
 import com.mapbox.maps.plugin.attribution.generated.AttributionSettings
 import com.mapbox.maps.plugin.compass.compass
@@ -26,26 +26,40 @@ import com.mapbox.maps.plugin.logo.generated.LogoSettings
 import com.mapbox.maps.plugin.logo.logo
 import com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings
 import com.mapbox.maps.plugin.scalebar.scalebar
+import com.mapbox.maps.plugin.viewport.ViewportStatusObserver
+import com.mapbox.maps.plugin.viewport.viewport
 
 /**
  * MapboxMapNode to observe/update the input arguments of MapboxMap.
  */
+@OptIn(MapboxExperimental::class)
 private class MapboxMapNode(
   val controller: MapView,
   initialClickListener: OnMapClickListener,
   initialLongClickListener: OnMapLongClickListener,
-  var onCameraStateChange: (CameraState) -> Unit
+  mapViewportState: MapViewportState
 ) : MapNode() {
-  init {
-    controller.getMapboxMap().apply {
-      addOnCameraChangeListener {
-        // Avoid invoke onCameraStateChange when the default instance is used.
-        if (onCameraStateChange !== DefaultSettingsProvider.defaultOnCameraStateChange) {
-          onCameraStateChange.invoke(cameraState)
-        }
-      }
-    }
+  private var cancelable: Cancelable? = null
+  private val cameraChangedCallback = CameraChangedCallback {
+    val cameraState = controller.getMapboxMap().cameraState
+    mapViewportState.cameraState = cameraState
   }
+  private val viewportStatusObserver = ViewportStatusObserver { from, to, reason ->
+    mapViewportState.mapViewportStatus = to
+    mapViewportState.mapViewportStatusChangedReason = reason
+  }
+
+  init {
+    mapViewportState.setMap(controller)
+  }
+
+  var mapViewportState = mapViewportState
+    set(value) {
+      if (value == field) return
+      field.setMap(null)
+      field = value
+      value.setMap(controller)
+    }
 
   var clickListener: OnMapClickListener = initialClickListener
     set(value) {
@@ -69,6 +83,9 @@ private class MapboxMapNode(
       addNonDefaultOnClickListener(clickListener)
       addNonDefaultOnLongClickListener(longClickListener)
     }
+    mapViewportState.cameraState = controller.getMapboxMap().cameraState
+    controller.viewport.addStatusObserver(viewportStatusObserver)
+    cancelable = controller.getMapboxMap().subscribeCameraChanged(cameraChangedCallback)
   }
 
   override fun onRemoved() {
@@ -84,6 +101,8 @@ private class MapboxMapNode(
       removeNonDefaultOnClickListener(clickListener)
       removeNonDefaultOnLongClickListener(longClickListener)
     }
+    cancelable?.cancel()
+    controller.viewport.removeStatusObserver(viewportStatusObserver)
   }
 }
 
@@ -97,8 +116,7 @@ internal fun MapboxMapComposeNode(
   locationComponentSettings: LocationComponentSettings,
   logoSettings: LogoSettings,
   scaleBarSettings: ScaleBarSettings,
-  cameraOptions: CameraOptions,
-  onCameraStateChange: (CameraState) -> Unit,
+  mapViewportState: MapViewportState,
   onMapClickListener: OnMapClickListener,
   onMapLongClickListener: OnMapLongClickListener,
 ) {
@@ -109,7 +127,7 @@ internal fun MapboxMapComposeNode(
         mapApplier.mapView,
         onMapClickListener,
         onMapLongClickListener,
-        onCameraStateChange
+        mapViewportState
       )
     },
     update = {
@@ -139,14 +157,6 @@ internal fun MapboxMapComposeNode(
       set(scaleBarSettings) {
         this.controller.scalebar.applySettings(it)
       }
-      set(cameraOptions) {
-        if (!it.isEmpty()) {
-          this.controller.camera.easeTo(it, mapAnimationOptions { duration(0) })
-        }
-      }
-      update(onCameraStateChange) {
-        this.onCameraStateChange = it
-      }
       update(onMapClickListener) { listener ->
         this.clickListener = listener
       }
@@ -155,11 +165,6 @@ internal fun MapboxMapComposeNode(
       }
     }
   )
-}
-
-private fun CameraOptions.isEmpty(): Boolean {
-  return center == null && padding == null && anchor == null && zoom == null &&
-    bearing == null && pitch == null
 }
 
 private fun GesturesPlugin.addNonDefaultOnClickListener(onMapClickListener: OnMapClickListener) {

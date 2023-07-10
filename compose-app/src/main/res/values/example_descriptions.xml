@@ -7,6 +7,5 @@
     <string name="description_polygon_annotation">Add PolygonAnnotation on the Map</string>
     <string name="description_polyline_annotation">Add PolylineAnnotation on the Map</string>
     <string name="description_view_annotation">Add ViewAnnotation on the Map</string>
-    <string name="description_camera_animation">Use camera animations</string>
-    <string name="description_advanced_camera_animation">Use advanced camera animations</string>
+    <string name="description_map_viewport_animation">Use map viewport animations</string>
 </resources>

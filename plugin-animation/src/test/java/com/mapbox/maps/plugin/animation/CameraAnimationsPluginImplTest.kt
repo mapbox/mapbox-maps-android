@@ -10,8 +10,6 @@ import androidx.core.animation.addListener
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.plugin.animation.CameraAnimationsPluginImpl.Companion.TAG
-import com.mapbox.maps.plugin.animation.CameraAnimationsPluginImplTest.Companion.cameraState
-import com.mapbox.maps.plugin.animation.CameraAnimationsPluginImplTest.Companion.toCameraState
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Companion.cameraAnimatorOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
 import com.mapbox.maps.plugin.animation.animator.CameraAnimator

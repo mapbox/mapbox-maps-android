@@ -699,9 +699,9 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
    * @return [Cancelable] animator set object.
    */
   override fun easeTo(
-    cameraOptions: CameraOptions,
-    animationOptions: MapAnimationOptions?,
-    animatorListener: Animator.AnimatorListener?
+      cameraOptions: CameraOptions,
+      animationOptions: MapAnimationOptions?,
+      animatorListener: Animator.AnimatorListener?
   ) = startHighLevelAnimation(
     cameraAnimationsFactory.getEaseTo(cameraOptions),
     animationOptions,

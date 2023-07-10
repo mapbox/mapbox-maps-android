@@ -3,7 +3,6 @@ package com.mapbox.maps.extension.compose
 import android.content.Context
 import androidx.annotation.DrawableRes
 import androidx.core.content.res.ResourcesCompat
-import com.mapbox.maps.CameraState
 import com.mapbox.maps.ImageHolder
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.attribution.generated.AttributionSettings
@@ -160,9 +159,4 @@ public object DefaultSettingsProvider {
    * Get the default [OnMapLongClickListener] that does nothing.
    */
   public val defaultOnLongClickListener: OnMapLongClickListener = OnMapLongClickListener { false }
-
-  /**
-   * Get the default onCameraStateChange block that does nothing.
-   */
-  public val defaultOnCameraStateChange: (CameraState) -> Unit = {}
 }
