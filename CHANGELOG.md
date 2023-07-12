@@ -72,7 +72,6 @@ Mapbox welcomes participation and contributions from everyone.
 * Introduce `ImageExtensionImpl.Builder(imageId, image)`, `ImageExtensionImpl.Builder(imageId, image)` constructors and deprecated `ImageExtensionImpl.Builder(imageId)`, `ImageExtensionImpl.Builder.image(image)`, `ImageExtensionImpl.Builder.bitmap(bitmap)`, as image/bitmap is required for `ImageExtensionImpl.Builder`; DSL functions are updated to reflect these changes as well. 
 * Deprecate `PointAnnotationManager.iconTextFit` and `PointAnnotationManager.iconTextFitPadding` in favor of `PointAnnotation.iconTextFit` and `PointAnnotation.iconTextFitPadding`.
 * Introduce experimental lights API to enable a uniform 3D lighting across the map. Use `Style.addLights3D` or `Style.setup3DLights` to enable `Ambient` and `Directional` light.
-* Remove experimental `castShadows`, `shadowIntensity` methods from `Light`.
 * Introduce `LineLayer.lineDepthOcclusionFactor`, `PolylineAnnotationManager.lineDepthOcclusionFactor` API.
 * Introduce experimental `Expression.activeAnchor` API.
 * Introduce experimental `ModelLayer` API to render 3D models on the map.
