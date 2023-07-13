@@ -4,7 +4,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-# 10.15.0-rc.1
+
+# 10.15.0-rc.1 July 13, 2023
 ## Bug fixes 🐞
 * Fix view port not following puck if viewport `bearing` option was set to `null` even though new locations were available.
 * Fix the issue of tiles displaying redundant images during a style switch, when both styles include similarly named sprites.
@@ -13,6 +14,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v10.15.0-rc.1 and common to v23.7.0-rc.1.
+
 
 # 10.15.0-beta.1 June 29, 2023
 ## Bug fixes 🐞
