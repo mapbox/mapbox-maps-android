@@ -361,6 +361,7 @@ package com.mapbox.maps {
     method public final void setStyleListener(com.mapbox.maps.SnapshotStyleListener listener);
     method public final void setStyleUri(String styleUri);
     method public final void start(com.mapbox.maps.SnapshotCreatedListener callback);
+    method @com.mapbox.maps.MapboxExperimental public final java.util.List<com.mapbox.maps.CanonicalTileID> tileCover(com.mapbox.maps.TileCoverOptions tileCoverOptions, com.mapbox.maps.CameraOptions? cameraOptions);
     field public static final com.mapbox.maps.Snapshotter.Companion Companion;
   }
 
