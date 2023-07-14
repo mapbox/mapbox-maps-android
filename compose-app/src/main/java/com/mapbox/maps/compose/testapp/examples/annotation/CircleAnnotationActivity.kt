@@ -16,6 +16,11 @@ import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotation
 import com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationGroup
+import com.mapbox.maps.extension.style.expressions.dsl.generated.literal
+import com.mapbox.maps.extension.style.expressions.generated.Expression
+import com.mapbox.maps.plugin.annotation.AnnotationConfig
+import com.mapbox.maps.plugin.annotation.AnnotationSourceOptions
+import com.mapbox.maps.plugin.annotation.ClusterOptions
 import com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions
 
 /**
@@ -60,6 +65,21 @@ public class CircleAnnotationActivity : ComponentActivity() {
                   .withCircleRadius(10.0)
                   .withCircleColor(Color.RED)
               },
+              annotationConfig = AnnotationConfig(
+                annotationSourceOptions = AnnotationSourceOptions(
+                  clusterOptions = ClusterOptions(
+                    textColorExpression = Expression.color(Color.YELLOW),
+                    textColor = Color.BLACK, // Will not be applied as textColorExpression has been set
+                    textSize = 20.0,
+                    circleRadiusExpression = literal(25.0),
+                    colorLevels = listOf(
+                      Pair(100, Color.RED),
+                      Pair(50, Color.BLUE),
+                      Pair(0, Color.GREEN)
+                    )
+                  )
+                )
+              ),
               onClick = {
                 Toast.makeText(
                   this@CircleAnnotationActivity,

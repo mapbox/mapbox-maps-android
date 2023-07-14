@@ -204,6 +204,33 @@ class CircleAnnotationManagerTest {
   }
 
   @Test
+  fun createWithClusterOptions() {
+    manager = CircleAnnotationManager(
+      delegateProvider,
+      AnnotationConfig(
+        annotationSourceOptions = AnnotationSourceOptions(
+          10, 20L, true, 10.0,
+          ClusterOptions(
+            clusterRadius = 30,
+            clusterMaxZoom = 15,
+            clusterProperties = hashMapOf("key1" to "x", "key2" to "y") as HashMap<String, Any>
+          )
+        )
+      )
+    )
+
+    val sourceString = manager.source.toString()
+    assertTrue(sourceString.contains("maxzoom = 10"))
+    assertTrue(sourceString.contains("cluster = true"))
+    assertTrue(sourceString.contains("clusterRadius = 30"))
+    assertTrue(sourceString.contains("clusterMaxZoom = 15"))
+    assertTrue(sourceString.contains("clusterProperties = {key1=x, key2=y}"))
+    assertTrue(sourceString.contains("lineMetrics = true"))
+    assertTrue(sourceString.contains("buffer = 20"))
+    assertTrue(sourceString.contains("tolerance = 10.0"))
+  }
+
+  @Test
   fun create() {
     val annotation = manager.create(
       CircleAnnotationOptions()

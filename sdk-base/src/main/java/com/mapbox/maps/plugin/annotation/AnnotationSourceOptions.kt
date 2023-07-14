@@ -29,7 +29,7 @@ data class AnnotationSourceOptions @JvmOverloads constructor(
   val tolerance: Double? = null,
 
   /**
-   * Options to show and configure symbol clustering with using SymbolManager.
+   * Options to show and configure symbol clustering with using `PointAnnotationManager` or `CircleAnnotationManager`.
    */
   val clusterOptions: ClusterOptions? = null
 )

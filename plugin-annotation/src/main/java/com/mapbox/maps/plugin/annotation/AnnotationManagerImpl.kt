@@ -20,6 +20,7 @@ import com.mapbox.maps.extension.style.image.addImage
 import com.mapbox.maps.extension.style.image.image
 import com.mapbox.maps.extension.style.layers.Layer
 import com.mapbox.maps.extension.style.layers.addPersistentLayer
+import com.mapbox.maps.extension.style.layers.generated.CircleLayer
 import com.mapbox.maps.extension.style.layers.generated.SymbolLayer
 import com.mapbox.maps.extension.style.layers.generated.circleLayer
 import com.mapbox.maps.extension.style.layers.generated.symbolLayer
@@ -240,8 +241,8 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
         }
       }
     }
-    if (layer is SymbolLayer) {
-      // Only apply cluster for SymbolManager
+    if (layer is SymbolLayer || layer is CircleLayer) {
+      // Only apply cluster for PointAnnotations or CircleAnnotations
       initClusterLayers(style)
     }
     updateSource()

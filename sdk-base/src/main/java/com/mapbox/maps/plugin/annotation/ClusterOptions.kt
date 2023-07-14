@@ -5,7 +5,7 @@ import com.mapbox.bindgen.Value
 import java.util.*
 
 /**
- * Options to show and configure symbol clustering with using SymbolManager.
+ * Options to show and configure symbol clustering with using `PointAnnotationManager` or `CircleAnnotationManager`.
  *
  * It exposes a minimal of configuration options, a more advanced setup can be created manually with
  * using CircleLayer and SymbolLayers directly.

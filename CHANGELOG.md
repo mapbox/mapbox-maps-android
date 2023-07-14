@@ -3,6 +3,9 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # develop
+## Features ✨ and improvements 🏁
+* Add clustering support for CircleAnnotationManager.
+
 
 # 11.0.0-alpha.2 June 27, 2023
 ## Breaking changes ⚠️
