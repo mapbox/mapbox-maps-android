@@ -9,7 +9,7 @@ import android.hardware.SensorManager
 import android.util.AttributeSet
 import android.view.WindowManager
 import com.mapbox.bindgen.ExpectedFactory
-import com.mapbox.common.location.LiveTrackingClient
+import com.mapbox.common.location.DeviceLocationProvider
 import com.mapbox.geojson.Point
 import com.mapbox.maps.Style
 import com.mapbox.maps.logE
@@ -50,7 +50,7 @@ class LocationComponentPluginImplTest {
   private val drawable = mockk<Drawable>(relaxed = true)
   private val windowManager = mockk<WindowManager>(relaxed = true)
   private val sensorManager = mockk<SensorManager>(relaxed = true)
-  private val liveTrackingClient = mockk<LiveTrackingClient>(relaxed = true)
+  private val deviceLocationProvider = mockk<DeviceLocationProvider>(relaxed = true)
 
   private val styleCallbackSlot = slot<(Style) -> Unit>()
 
@@ -62,7 +62,7 @@ class LocationComponentPluginImplTest {
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logW(any(), any()) } just Runs
 
-    ShadowLocationServiceFactory.liveTrackingClient = liveTrackingClient
+    ShadowLocationServiceFactory.deviceLocationProvider = deviceLocationProvider
 
     every { context.obtainStyledAttributes(any(), any(), 0, 0) } returns typedArray
     every { context.packageName } returns pack
@@ -149,12 +149,12 @@ class LocationComponentPluginImplTest {
       LocationComponentAttributeParser.parseLocationComponentSettings(
         context,
         attrs,
-        1.0f
+        1f
       )
     } returns LocationComponentSettings(LocationPuck2D()) {
       enabled = true
     }
-    locationComponentPlugin.bind(context, attrs, 1.0f)
+    locationComponentPlugin.bind(context, attrs, 1f, locationProvider, locationPuckManager)
     assertNotNull(locationComponentPlugin.getLocationProvider())
   }
 

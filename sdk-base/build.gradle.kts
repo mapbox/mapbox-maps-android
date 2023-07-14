@@ -21,7 +21,6 @@ android {
     buildConfigField("String", "MAPBOX_SDK_IDENTIFIER", String.format("\"%s\"", "mapbox-maps-android"))
     buildConfigField("String", "MAPBOX_SDK_VERSION", String.format("\"%s\"", VERSION_NAME))
     buildConfigField("String", "MAPBOX_VERSION_STRING", String.format("\"Mapbox/%s\"", VERSION_NAME))
-    buildConfigField("String", "MAPBOX_EVENTS_USER_AGENT", String.format("\"mapbox-maps-android/%s\"", VERSION_NAME))
   }
 
   // Add the `ksp` folder to each variant. Regardless if it exists or not.
@@ -69,6 +68,14 @@ android {
   }
 }
 val buildFromSource: String by project
+
+if (!buildFromSource.toBoolean()) {
+  configurations.all {
+    resolutionStrategy {
+      force(libs.mapbox.coreCommon)
+    }
+  }
+}
 
 dependencies {
   implementation(libs.kotlin)

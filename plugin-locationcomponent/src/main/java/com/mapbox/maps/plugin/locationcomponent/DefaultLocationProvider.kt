@@ -5,16 +5,14 @@ import android.content.Context
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
 import com.mapbox.bindgen.Expected
-import com.mapbox.bindgen.ExpectedFactory
-import com.mapbox.bindgen.Value
 import com.mapbox.common.Cancelable
-import com.mapbox.common.location.LiveTrackingClientAccuracyCategory
-import com.mapbox.common.location.LiveTrackingClientObserver
-import com.mapbox.common.location.LiveTrackingClientSettings.*
-import com.mapbox.common.location.LiveTrackingState
+import com.mapbox.common.location.AccuracyLevel
+import com.mapbox.common.location.IntervalSettings
 import com.mapbox.common.location.Location
 import com.mapbox.common.location.LocationError
 import com.mapbox.common.location.LocationErrorCode
+import com.mapbox.common.location.LocationObserver
+import com.mapbox.common.location.LocationProviderRequest
 import com.mapbox.common.location.LocationService
 import com.mapbox.common.location.LocationServiceFactory
 import com.mapbox.geojson.Point
@@ -36,8 +34,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.shareIn
@@ -57,17 +55,11 @@ class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal c
   constructor(context: Context) : this(
     context,
     LocationCompassEngine(context.applicationContext),
-    LocationServiceFactory.locationService(),
+    LocationServiceFactory.getOrCreate(),
     Dispatchers.Main.immediate,
   )
 
-  private val liveTrackingCapabilities: Value = Value.valueOf(
-    hashMapOf<String, Value>(
-      ACCURACY_CATEGORY to Value.valueOf(LiveTrackingClientAccuracyCategory.HIGH),
-      INTERVAL to Value.valueOf(LocationComponentConstants.DEFAULT_INTERVAL_MILLIS),
-      MINIMUM_INTERVAL to Value.valueOf(LocationComponentConstants.DEFAULT_FASTEST_INTERVAL_MILLIS),
-    )
-  )
+  private var locationProviderNotAvailable: LocationError? = null
 
   private val scope = CoroutineScope(SupervisorJob() + mainCoroutineDispatcher)
 
@@ -91,7 +83,7 @@ class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal c
   /**
    * A hot [Flow] that emits [Location]s or [LocationError] wrapped in a [Expected].
    */
-  private val locationUpdatesFlow: Flow<Expected<LocationError, Location>>
+  private val locationUpdatesFlow: Flow<Location>
 
   /**
    * A map that keeps track of each [Job] associated to the [LocationConsumer].
@@ -102,17 +94,21 @@ class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal c
   private val locationConsumersJobs = ConcurrentHashMap<LocationConsumer, Job>()
 
   init {
-    val result = locationService.getLiveTrackingClient(
-      /* name = */ null,
-      /* capabilities = */ null,
-      /* settings = */ liveTrackingCapabilities
-    )
+    val request = LocationProviderRequest.Builder()
+      .accuracy(AccuracyLevel.HIGH)
+      .interval(
+        IntervalSettings.Builder()
+          .minimumInterval(LocationComponentConstants.DEFAULT_FASTEST_INTERVAL_MILLIS)
+          .interval(LocationComponentConstants.DEFAULT_INTERVAL_MILLIS).build()
+      )
+      .build()
+    val result = locationService.getDeviceLocationProvider(request)
     // Depending on the result we either create a flow that will subscribe to the live tracking
     // client or create a flow that will emit a LocationError
     locationUpdatesFlow = if (result.isValue) {
       val applicationContext = context.applicationContext
-      val liveTrackingClient = result.value!!
-      callbackFlow<Expected<LocationError, Location>> {
+      val locationProvider = result.value!!
+      callbackFlow<Location> {
 
         // Wait that we have the right permissions
         var updateDelay = INIT_UPDATE_DELAY
@@ -123,16 +119,16 @@ class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal c
         }
 
         // If possible send the most recent location available
-        val lastLocationCancelable = locationService.getLastLocation { result ->
-          trySend(result)
+        val lastLocationCancelable = locationProvider.getLastLocation { result ->
+          result?.let { trySend(it) }
         }
 
         // Then, register an observer that will emit the locations provided by the liveTrackingClient
-        val observer = liveTrackingClientObserver(lastLocationCancelable)
-        liveTrackingClient.registerObserver(observer)
+        val observer = locationObserver(lastLocationCancelable)
+        locationProvider.addLocationObserver(observer)
         // Finally wait for the flow to close to unregister the observer and stop live tracking
         awaitClose {
-          liveTrackingClient.unregisterObserver(observer)
+          locationProvider.removeLocationObserver(observer)
         }
       }
         // Convert this Flow into a hot flow so emissions are shared. That is, instead of each
@@ -145,45 +141,28 @@ class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal c
       // Live tracking client not available. Create a flow that emits LocationError
       val error = result.error!!
       logE(TAG, "LocationService error: $error")
-      flowOf(
-        ExpectedFactory.createError(
-          LocationError(
-            LocationErrorCode.NOT_AVAILABLE,
-            LIVE_TRACKING_CLIENT_NOT_AVAILABLE
-          )
-        )
-      )
+      locationProviderNotAvailable =
+        LocationError(LocationErrorCode.NOT_AVAILABLE, LIVE_TRACKING_CLIENT_NOT_AVAILABLE)
+      emptyFlow()
     }
   }
 
   /**
-   * @return a [LiveTrackingClientObserver] that emits the most recent [Location] or [LocationError].
+   * @return a [LocationObserver] that emits the most recent [Location].
    */
-  private fun ProducerScope<Expected<LocationError, Location>>.liveTrackingClientObserver(
+  private fun ProducerScope<Location>.locationObserver(
     lastLocationCancelable: Cancelable?
   ) =
-    object : LiveTrackingClientObserver {
+    object : LocationObserver {
       // Keep track of being already canceled to avoid calling native per each location update
       var lastLocationCanBeCanceled = lastLocationCancelable != null
-      override fun onLiveTrackingStateChanged(state: LiveTrackingState, error: LocationError?) {
-        error?.let {
-          logW(TAG, "Live tracking error: $it")
-        }
-      }
 
-      override fun onLocationUpdateReceived(locationUpdate: Expected<LocationError, MutableList<Location>>) {
+      override fun onLocationUpdateReceived(locations: List<Location>) {
         if (lastLocationCanBeCanceled) {
           lastLocationCancelable?.cancel()
           lastLocationCanBeCanceled = false
         }
-        val update: Expected<LocationError, Location> =
-          if (locationUpdate.isValue) {
-            // For now we only forward the most recent location (last one)
-            ExpectedFactory.createValue(locationUpdate.value!!.last())
-          } else {
-            ExpectedFactory.createError(locationUpdate.error!!)
-          }
-        trySendBlocking(update)
+        trySendBlocking(locations.last())
       }
     }
 
@@ -206,9 +185,16 @@ class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal c
    */
   @SuppressLint("MissingPermission")
   override fun registerLocationConsumer(locationConsumer: LocationConsumer) {
-    val previousJob =
-      locationConsumersJobs.put(locationConsumer, collectLocationFlow(locationConsumer))
-    previousJob?.cancel()
+    // If there's no location provider we can immediately inform the consumer
+    if (locationProviderNotAvailable != null) {
+      locationConsumer.onError(locationProviderNotAvailable!!)
+    } else {
+      // Otherwise, let's start a series of jobs responsible to collect various signals (altitude,
+      // bearing, horizontal accuracy...) and proxy them to the `locationConsumer`.
+      val previousJob =
+        locationConsumersJobs.put(locationConsumer, collectLocationFlow(locationConsumer))
+      previousJob?.cancel()
+    }
   }
 
   /**
@@ -220,14 +206,7 @@ class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal c
   @OptIn(ExperimentalCoroutinesApi::class)
   private fun collectLocationFlow(locationConsumer: LocationConsumer): Job =
     CoroutineScope(Job() + mainCoroutineDispatcher).launch {
-      // First coroutine is responsible to notify about errors
-      launch {
-        locationUpdatesFlow.mapNotNull { it.error }.collect {
-          locationConsumer.onError(it)
-        }
-      }
-
-      val locationFlow = locationUpdatesFlow.mapNotNull { it.value }
+      val locationFlow = locationUpdatesFlow
       // Second one listens for new locations, converts it to Point and notifies the consumer
       launch {
         locationFlow.map {

@@ -37,8 +37,8 @@ detekt = "1.22.0"
 # Dependencies
 
 mapboxBase = "0.8.0"
-mapboxGlNative = "11.0.0-SNAPSHOT.0628T1506Z.55f56ae"
-mapboxCommon = "24.0.0-SNAPSHOT.0628T1118Z.b052007"
+mapboxGlNative = "11.0.0-SNAPSHOT.0710T1454Z.13278ef"
+mapboxCommon = "24.0.0-SNAPSHOT.0714T0913Z.kdz-fix-kotlin-compile-error-in-maps.435d868"
 mapboxGestures = "0.8.0"
 mapboxJavaServices = "5.4.1"
 

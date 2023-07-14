@@ -34,7 +34,14 @@ class MapTelemetryImpl : MapTelemetry {
   constructor(appContext: Context) {
     this.appContext = appContext
 
-    eventsServiceOptions = EventsServerOptions(BuildConfig.MAPBOX_EVENTS_USER_AGENT, null)
+    eventsServiceOptions = EventsServerOptions(
+      SdkInformation(
+        BuildConfig.MAPBOX_SDK_IDENTIFIER,
+        BuildConfig.MAPBOX_SDK_VERSION,
+        null
+      ),
+      null
+    )
     this.eventsService = EventsService.getOrCreate(eventsServiceOptions)
     this.telemetryService = TelemetryService.getOrCreate()
   }
@@ -63,13 +70,7 @@ class MapTelemetryImpl : MapTelemetry {
    * Register the app user turnstile event
    */
   override fun onAppUserTurnstileEvent() {
-    eventsService.sendTurnstileEvent(
-      TurnstileEvent(
-        UserSKUIdentifier.MAPS_MAUS,
-        BuildConfig.MAPBOX_SDK_IDENTIFIER,
-        BuildConfig.MAPBOX_SDK_VERSION
-      )
-    ) { response ->
+    eventsService.sendTurnstileEvent(TurnstileEvent(UserSKUIdentifier.MAPS_MAUS)) { response ->
       if (response.isError) {
         logE(TAG, "sendTurnstileEvent error: ${response.error}")
       }

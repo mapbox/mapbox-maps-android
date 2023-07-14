@@ -5,7 +5,6 @@ import android.telephony.TelephonyManager
 import android.view.Display
 import android.view.WindowManager
 import com.mapbox.common.*
-import com.mapbox.maps.base.BuildConfig
 import io.mockk.*
 import org.junit.After
 import org.junit.Assert.*
@@ -65,11 +64,7 @@ class MapTelemetryTest {
   private val windowManager = mockk<WindowManager>(relaxUnitFun = true)
   private val display = mockk<Display>(relaxUnitFun = true)
 
-  private val turnstileEvent = TurnstileEvent(
-    UserSKUIdentifier.MAPS_MAUS,
-    BuildConfig.MAPBOX_SDK_IDENTIFIER,
-    BuildConfig.MAPBOX_SDK_VERSION
-  )
+  private val turnstileEvent = TurnstileEvent(UserSKUIdentifier.MAPS_MAUS)
 
   @Before
   fun setUp() {
