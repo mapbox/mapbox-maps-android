@@ -7,27 +7,15 @@ group = project.ext.mapboxArtifactGroupId
 afterEvaluate {
     def isSnapshot = project.ext.versionName.contains("-SNAPSHOT")
     components.findAll { it.name.endsWithIgnoreCase("Release") }.forEach { currentComponent ->
-        // Append `-preview` for v11 private preview releases
-        def componentRegistrySdkName = project.ext.mapboxRegistrySdkName + "-preview"
         registry {
             registryPublications {
                 "${currentComponent.name}" {
-                    sdkName = componentRegistrySdkName
+                    sdkName = project.ext.mapboxRegistrySdkName
                     dryRun = false
                     publish = true
                     snapshot = isSnapshot
                     publishMessage = "cc @mapbox/maps-android"
                     publications = [currentComponent.name]
-                    // Use `maps_sdk_private_preview` feature flag for v11 public flavor release.
-
-                    // **Note** that we want to protect v11 private flavor release with both `mobile_maps_private_beta`
-                    // and `maps_sdk_private_preview` feature flags. However this is not supported by our sdk-registry
-                    // infrastructure.
-                    // As a result, for now, we will skip releasing v11 private flavor release.
-
-                    // As a temporary placeholder, we will use `maps_sdk_private_preview` feature
-                    // flag v11 flavor release.
-                    featureFlag = "maps_sdk_private_preview"
                     excludeFromRootProject = project.ext.mapboxRegistryExcludeFromRootProject
                 }
             }
