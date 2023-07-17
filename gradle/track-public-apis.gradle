@@ -41,11 +41,15 @@ android.libraryVariants.all { variant ->
         classpath = configurations.metalava
         mainClass.set("com.android.tools.metalava.Driver")
 
+        // this path represents <module>/src/main/java
+        def sourcePathJava = inputs.getFiles().getAsPath()
+
         doFirst {
             def metalavaClasspath = (project.files(android.getBootClasspath()) + variant.javaCompile.classpath).join(File.pathSeparator)
             args = [
                     '--no-banner',
-                    '--source-path', inputs.getFiles().getAsPath(),
+                    // in order to include KSP files we need to go one directory up
+                    '--source-path', sourcePathJava.substring(0, sourcePathJava.lastIndexOf('/')),
 //                    '--compatible-output=no',
 //                    '--omit-common-packages=yes',
                     '--output-kotlin-nulls=yes',
@@ -82,8 +86,9 @@ android.libraryVariants.all { variant ->
             }
         }
 
-        // Copy the input source files before adding the variantMetalavaFilePath
-        def inputDir = inputs.getFiles().getAsPath()
+        // Copy the input source files before adding the variantMetalavaFilePath,
+        // this path represents <module>/src/main/java
+        def sourcePathJava = inputs.getFiles().getAsPath()
 
         def variantMetalavaFilePath = "api/${variantName}/metalava.txt"
         inputs.file(variantMetalavaFilePath)
@@ -96,7 +101,8 @@ android.libraryVariants.all { variant ->
             def metalavaClasspath = (project.files(android.getBootClasspath()) + variant.javaCompile.classpath).join(File.pathSeparator)
             args = [
                     '--no-banner',
-                    '--source-path', inputDir,
+                    // in order to include KSP files we need to go one directory up
+                    '--source-path', sourcePathJava.substring(0, sourcePathJava.lastIndexOf('/')),
 //                    '--compatible-output=no',
 //                    '--omit-common-packages=yes',
                     '--output-kotlin-nulls=yes',

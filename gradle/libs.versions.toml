@@ -30,15 +30,15 @@ pluginPlayPublisher = "3.7.0"
 pluginGradleVersions = "0.42.0"
 pluginBinaryCompatibilityValidator = "0.8.0"
 
-dokka = "1.8.10"
-kotlin = "1.8.10"
+dokka = "1.7.20"
+kotlin = "1.7.20"
 detekt = "1.22.0"
 
 # Dependencies
 
 mapboxBase = "0.8.0"
-mapboxGlNative = "11.0.0-SNAPSHOT.0711T1422Z.9441959"
-mapboxCommon = "24.0.0-SNAPSHOT.0714T0913Z.kdz-fix-kotlin-compile-error-in-maps.435d868"
+mapboxGlNative = "11.0.0-SNAPSHOT.0714T1714Z.09a368e"
+mapboxCommon = "24.0.0-beta.1"
 mapboxGestures = "0.8.0"
 mapboxJavaServices = "5.4.1"
 
@@ -83,10 +83,10 @@ hamcrest = "2.1"
 equalsVerifier = "3.14"
 asyncInflater = "1.0.0"
 
-compose = "1.4.3"
+compose = "1.3.2"
 composeBom = "2023.01.00"
 gradleVersionsPlugin = "0.42.0"
-ksp = "1.0.9"
+ksp = "1.0.8"
 kotlinDataCompat = "0.7.0"
 
 toster = "0.3.2"

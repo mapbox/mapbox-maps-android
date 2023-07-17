@@ -6,7 +6,10 @@ import android.opengl.GLES20
 import android.os.Trace
 import android.view.Choreographer
 import android.view.Surface
-import androidx.annotation.*
+import androidx.annotation.AnyThread
+import androidx.annotation.UiThread
+import androidx.annotation.VisibleForTesting
+import androidx.annotation.WorkerThread
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxTracing
 import com.mapbox.maps.MapboxTracing.MAPBOX_TRACE_ID

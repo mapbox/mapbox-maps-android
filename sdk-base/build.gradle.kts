@@ -31,7 +31,7 @@ android {
   // moving generated KSP files from build folder to `src/<variant_name>/ksp`
   afterEvaluate {
     tasks.withType(KspTaskJvm::class.java).all {
-      val generatedKspFilesFolder = destination.get()
+      val generatedKspFilesFolder = destination
       var lastFolder = generatedKspFilesFolder.toPath().fileName.toString()
       // We handle "debug" and "release" build types as equal so remove them
       buildTypes.names.forEach {

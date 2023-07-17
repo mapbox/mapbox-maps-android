@@ -6,6 +6,7 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 * Add clustering support for CircleAnnotationManager.
 
+* Update Kotlin version to v1.7.20 and compose compiler version to 1.3.2.
 
 # 11.0.0-alpha.2 June 27, 2023
 ## Breaking changes ⚠️
@@ -117,10 +118,10 @@ Mapbox welcomes participation and contributions from everyone.
 | Dependency                                       | Before       | After      |
 |--------------------------------------------------|--------------|------------|
 | Android Gradle Plugin                            | 7.0.4        | 7.4.2      |
-| Kotlin                                           | 1.5.31       | 1.8.10     |
+| Kotlin                                           | 1.5.31       | 1.7.20     |
 | org.jetbrains.kotlin:kotlin-stdlib-jdk7          | 1.5.31       |            |
-| org.jetbrains.kotlin:kotlin-stdlib-jdk8          |              | 1.8.10     |
-| Dokka plugin                                     | 1.5.31       | 1.8.10     |
+| org.jetbrains.kotlin:kotlin-stdlib-jdk8          |              | 1.7.20     |
+| Dokka plugin                                     | 1.5.31       | 1.7.20     |
 | androidx.core:core-ktx                           | 1.7.0        | 1.9.0      |
 | androidx.appcompat:appcompat                     | 1.3.0        | 1.6.1      |
 | androidx.test:rules                              | 1.4.0        | 1.5.0      |
@@ -145,6 +146,7 @@ Mapbox welcomes participation and contributions from everyone.
 | io.gitlab.arturbosch.detekt:detekt-formatting    | 1.20.0       | 1.22.0     |
 | composeOptions -> kotlinCompilerExtensionVersion | 1.1.0-beta03 | 1.4.3      |
 | androidx.compose:compose-bom                     |              | 2023.01.00 |
+| androidx.compose.compiler:compiler               |              | 1.3.2      |
 | com.pinterest:ktlint                             | 0.39.0       | 0.48.2     |
 
 ## Bug fixes 🐞
