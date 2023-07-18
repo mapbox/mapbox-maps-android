@@ -2,6 +2,7 @@ package com.mapbox.maps.plugin.locationcomponent
 
 import android.animation.ValueAnimator
 import android.content.Context
+import com.mapbox.android.core.permissions.PermissionsManager
 import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.common.Cancelable
 import com.mapbox.common.location.AccuracyLevel

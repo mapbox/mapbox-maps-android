@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
+import com.mapbox.android.core.permissions.PermissionsManager
 import com.mapbox.bindgen.Expected
 import com.mapbox.common.Cancelable
 import com.mapbox.common.location.AccuracyLevel
