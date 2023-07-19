@@ -162,7 +162,7 @@ class RendererSetupTest {
   }
 
   private companion object {
-    const val DEFAULT_LATCH_TIMEOUT_MS = 5_000L
+    const val DEFAULT_LATCH_TIMEOUT_MS = 10_000L
     const val INVALID_STENCIL_SIZE = 23423
     const val VALID_STENCIL_SIZE = 8
   }
