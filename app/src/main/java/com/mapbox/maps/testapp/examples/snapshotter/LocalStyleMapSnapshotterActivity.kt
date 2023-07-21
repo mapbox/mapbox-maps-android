@@ -50,12 +50,11 @@ class LocalStyleMapSnapshotterActivity : AppCompatActivity() {
         }
       """.trimIndent()
     )
-    mapSnapshotter.start {
-      it?.let { mapSnapshot ->
-        val imageView = ImageView(this)
-        imageView.setImageBitmap(mapSnapshot.bitmap())
-        setContentView(imageView)
-      }
+    // ignore error in this example
+    mapSnapshotter.start { bitmap, _ ->
+      val imageView = ImageView(this)
+      imageView.setImageBitmap(bitmap)
+      setContentView(imageView)
     }
   }
 

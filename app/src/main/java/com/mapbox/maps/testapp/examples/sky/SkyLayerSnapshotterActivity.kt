@@ -2,6 +2,7 @@ package com.mapbox.maps.testapp.examples.sky
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
@@ -82,10 +83,16 @@ class SkyLayerSnapshotterActivity : AppCompatActivity() {
           .build()
       )
       setStyleUri(Style.STANDARD)
-      start {
-        it?.let { snapshot ->
-          binding.maneuverView.setImageBitmap(snapshot.bitmap())
+      start { bitmap, error ->
+        if (bitmap != null) {
+          binding.maneuverView.setImageBitmap(bitmap)
           binding.maneuverCaption.visibility = View.VISIBLE
+        } else {
+          Toast.makeText(
+            this@SkyLayerSnapshotterActivity,
+            "Snapshotter error: $error",
+            Toast.LENGTH_SHORT
+          ).show()
         }
       }
     }

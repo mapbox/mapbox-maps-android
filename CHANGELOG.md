@@ -5,8 +5,8 @@ Mapbox welcomes participation and contributions from everyone.
 # develop
 ## Features ✨ and improvements 🏁
 * Add clustering support for CircleAnnotationManager.
-
 * Update Kotlin version to v1.7.20 and compose compiler version to 1.3.2.
+* Improve ergonomics of `Snapshotter.start` method to align with iOS and allow to re-use `Canvas` for user drawing.
 * Add `MapboxMap.coordinateBoundsForRect` returning `CoordinateBounds` for given `RectF` of screen coordinates.
 * Add optional `maxZoom` and `offset` parameters to `MapboxMap.cameraForCoordinateBounds`.
 

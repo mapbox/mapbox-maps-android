@@ -107,14 +107,14 @@ class SnapshotterTest {
   @Test
   fun start() {
     every { coreSnapshotter.styleJSON } returns "foobar"
-    snapshotter.start(mockk())
+    snapshotter.start(mockk(), mockk())
     verify { coreSnapshotter.start(any()) }
   }
 
   @Test(expected = IllegalStateException::class)
   fun startWithException() {
     every { coreSnapshotter.styleJSON } returns ""
-    snapshotter.start(mockk())
+    snapshotter.start(mockk(), mockk())
     verify { coreSnapshotter.start(any()) }
   }
 
@@ -136,6 +136,5 @@ class SnapshotterTest {
     snapshotter.destroy()
     verify { coreSnapshotter.cancel() }
     Assert.assertNull(snapshotter.snapshotStyleCallback)
-    Assert.assertNull(snapshotter.snapshotCreatedCallback)
   }
 }

@@ -1,12 +1,23 @@
 package com.mapbox.maps
 
-import android.graphics.Bitmap
+import android.graphics.Canvas
 import com.mapbox.geojson.Point
 
 /**
- * An image snapshot of a map rendered by the map snapshotter.
+ * An instance of overlay allowing to draw custom content directly over the snapshot image on the [Canvas].
  */
-abstract class MapSnapshotResult internal constructor() {
+abstract class SnapshotOverlay internal constructor() {
+
+  /**
+   * Canvas that should be used for drawing on top of the snapshot image.
+   */
+  abstract val canvas: Canvas
+
+  /**
+   * List of attributions for the sources in this snapshot.
+   */
+  abstract val attributions: List<String>
+
   /**
    * Calculate screen coordinate on the snapshot from geographical `coordinate`.
    *
@@ -22,18 +33,4 @@ abstract class MapSnapshotResult internal constructor() {
    * @return A geographical `coordinate` for a `screen coordinate` on the snapshot.
    */
   abstract fun coordinate(screenCoordinate: ScreenCoordinate): Point
-
-  /**
-   * Get list of attributions for the sources in this snapshot.
-   *
-   * @return A list of attributions for the sources in this snapshot.
-   */
-  abstract fun attributions(): List<String>
-
-  /**
-   * Get the rendered snapshot image as bitmap.
-   *
-   * @return A rendered snapshot image as bitmap.
-   */
-  abstract fun bitmap(): Bitmap
 }
