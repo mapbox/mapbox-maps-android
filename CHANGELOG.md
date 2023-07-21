@@ -7,8 +7,8 @@ Mapbox welcomes participation and contributions from everyone.
 * Add clustering support for CircleAnnotationManager.
 
 * Update Kotlin version to v1.7.20 and compose compiler version to 1.3.2.
+* Add `MapboxMap.coordinateBoundsForRect` returning `CoordinateBounds` for given `RectF` of screen coordinates.
 * Add optional `maxZoom` and `offset` parameters to `MapboxMap.cameraForCoordinateBounds`.
-
 
 # 11.0.0-alpha.2 June 27, 2023
 ## Breaking changes ⚠️

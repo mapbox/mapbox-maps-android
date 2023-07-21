@@ -223,20 +223,18 @@ interface MapCameraManagerDelegate {
   fun coordinatesForPixels(pixels: List<ScreenCoordinate>): List<Point>
 
   /**
-   * Calculates geographical `coordinates` (i.e., longitude-latitude pairs) that correspond
-   * to a [RectF] that holds four screen points.
+   * Returns the [CoordinateBounds] for given [RectF] defined in screen points.
    *
    * The screen points are in `platform pixels` relative to the top left corner
    * of the map (not of the whole screen).
    *
    * This API isn't supported by Globe projection.
    *
-   * @param rectF Rectangle with 4 edges (left, top, right, bottom).
-   *
-   * @return List of `geographical coordinates` that corresponds to given edges of RectF
-   * in clockwise direction starting from topLeft.
+   * @param rectF rectangle area defined in screen points.
+   * @return [CoordinateBounds] representing given [RectF].
+   * @throws [IllegalArgumentException] if [RectF] is empty
    */
-  fun coordinatesForRect(rectF: RectF): List<Point>
+  fun coordinateBoundsForRect(rectF: RectF): CoordinateBounds
 
   /**
    * Calculates the geographical coordinate information that corresponds to a given screen coordinate.

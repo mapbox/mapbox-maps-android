@@ -823,6 +823,35 @@ class MapboxMap :
   }
 
   /**
+   * Returns the [CoordinateBounds] for given [RectF] defined in screen points.
+   *
+   * The screen points are in `platform pixels` relative to the top left corner
+   * of the map (not of the whole screen).
+   *
+   * This API isn't supported by Globe projection.
+   *
+   * @param rectF rectangle area defined in screen points.
+   * @return [CoordinateBounds] representing given [RectF].
+   * @throws [IllegalArgumentException] if [RectF] is empty
+   */
+  override fun coordinateBoundsForRect(rectF: RectF): CoordinateBounds {
+    checkNativeMap("coordinateBoundsForRect")
+    if (rectF.isEmpty) throw IllegalArgumentException("RectF must not be empty")
+    val coordinates = nativeMap.coordinatesForPixels(
+      mutableListOf(
+        // bottom-left corresponds to southwest
+        ScreenCoordinate(rectF.bottom.toDouble(), rectF.left.toDouble()),
+        // top-right corresponds to northeast
+        ScreenCoordinate(rectF.top.toDouble(), rectF.right.toDouble()),
+      )
+    )
+    return CoordinateBounds(
+      /* southwest */ coordinates[0],
+      /* northeast */ coordinates[1]
+    )
+  }
+
+  /**
    * Calculate a screen coordinate that corresponds to a geographical coordinate
    * (i.e., longitude-latitude pair).
    *
@@ -923,46 +952,6 @@ class MapboxMap :
   override fun coordinatesForPixels(pixels: List<ScreenCoordinate>): List<Point> {
     checkNativeMap("coordinatesForPixels")
     return nativeMap.coordinatesForPixels(pixels.toMutableList())
-  }
-
-  /**
-   * Calculates geographical `coordinates` (i.e., longitude-latitude pairs) that correspond
-   * to a [RectF] that holds four screen points.
-   *
-   * The screen points are in `platform pixels` relative to the top left corner
-   * of the map (not of the whole screen).
-   *
-   * This API isn't supported by Globe projection.
-   *
-   * @param rectF Rectangle with 4 edges (left, top, right, bottom).
-   *
-   * @return List of `geographical coordinates` that corresponds to given edges of RectF
-   * in clockwise direction starting from topLeft. if provided [RectF] is empty, an
-   * [IllegalArgumentException] will be thrown.
-   */
-  override fun coordinatesForRect(rectF: RectF): List<Point> {
-    checkNativeMap("coordinatesForRect")
-    if (rectF.isEmpty) throw IllegalArgumentException("RectF must not be empty")
-    val screenCoordinateTopLeft = ScreenCoordinate(
-      rectF.left.toDouble(), rectF.top.toDouble()
-    )
-    val screenCoordinateTopRight = ScreenCoordinate(
-      rectF.right.toDouble(), rectF.top.toDouble()
-    )
-    val screenCoordinateBottomRight = ScreenCoordinate(
-      rectF.right.toDouble(), rectF.bottom.toDouble()
-    )
-    val screenCoordinateBottomLeft = ScreenCoordinate(
-      rectF.left.toDouble(), rectF.bottom.toDouble()
-    )
-    return nativeMap.coordinatesForPixels(
-      mutableListOf(
-        screenCoordinateTopLeft,
-        screenCoordinateTopRight,
-        screenCoordinateBottomRight,
-        screenCoordinateBottomLeft
-      )
-    )
   }
 
   /**

@@ -757,19 +757,19 @@ class MapboxMapTest {
   @Test(expected = IllegalArgumentException::class)
   fun coordinatesForRectWithEmptyRect() {
     val rect = RectF()
-    mapboxMap.coordinatesForRect(rect)
+    mapboxMap.coordinateBoundsForRect(rect)
   }
 
   @Test
   fun coordinatesForRectWithValidRect() {
-    val rect = RectF(0f, 0f, 100f, 100f)
+    val rect = RectF(1f, 2f, 3f, 4f)
     val screenCoordinates = listOf(
-      ScreenCoordinate(0.0, 0.0),
-      ScreenCoordinate(100.0, 0.0),
-      ScreenCoordinate(100.0, 100.0),
-      ScreenCoordinate(0.0, 100.0),
+      ScreenCoordinate(/* bottom */ 4.0, /* left */ 1.0),
+      ScreenCoordinate(/* top */ 2.0, /* right */ 3.0),
     )
-    mapboxMap.coordinatesForRect(rect)
+    every { nativeMap.coordinatesForPixels(any()) } returns
+      mutableListOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0))
+    mapboxMap.coordinateBoundsForRect(rect)
     verify { nativeMap.coordinatesForPixels(screenCoordinates.toMutableList()) }
   }
 
