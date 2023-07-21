@@ -3496,6 +3496,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   /**
    * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together.
    */
+  @MapboxExperimental
   val iconImageCrossFade: Double?
     /**
      * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together.
@@ -3515,6 +3516,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param iconImageCrossFade value of iconImageCrossFade
    */
+  @MapboxExperimental
   override fun iconImageCrossFade(iconImageCrossFade: Double): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-image-cross-fade", iconImageCrossFade)
     setProperty(propertyValue)
@@ -3526,6 +3528,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    * This is an Expression representation of "icon-image-cross-fade".
    *
    */
+  @MapboxExperimental
   val iconImageCrossFadeAsExpression: Expression?
     /**
      * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together.
@@ -3553,6 +3556,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param iconImageCrossFade value of iconImageCrossFade as Expression
    */
+  @MapboxExperimental
   override fun iconImageCrossFade(iconImageCrossFade: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-image-cross-fade", iconImageCrossFade)
     setProperty(propertyValue)
@@ -3561,6 +3565,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   /**
    * Transition options for IconImageCrossFade.
    */
+  @MapboxExperimental
   val iconImageCrossFadeTransition: StyleTransition?
     /**
      * Get the IconImageCrossFade property transition options
@@ -3580,6 +3585,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param options transition options for Double
    */
+  @MapboxExperimental
   override fun iconImageCrossFadeTransition(options: StyleTransition): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-image-cross-fade-transition", options)
     setProperty(propertyValue)
@@ -3588,6 +3594,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   /**
    * DSL for [iconImageCrossFadeTransition].
    */
+  @MapboxExperimental
   override fun iconImageCrossFadeTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer = apply {
     iconImageCrossFadeTransition(StyleTransition.Builder().apply(block).build())
   }
@@ -6599,6 +6606,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     /**
      * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together.
      */
+    @MapboxExperimental
     val defaultIconImageCrossFade: Double?
       /**
        * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together.
@@ -6617,6 +6625,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * This is an Expression representation of "icon-image-cross-fade".
      *
      */
+    @MapboxExperimental
     val defaultIconImageCrossFadeAsExpression: Expression?
       /**
        * Get default value of the IconImageCrossFade property as an Expression
@@ -6636,6 +6645,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     /**
      * Transition options for IconImageCrossFade.
      */
+    @MapboxExperimental
     val defaultIconImageCrossFadeTransition: StyleTransition?
       /**
        * Get the IconImageCrossFade property transition options
@@ -8022,6 +8032,7 @@ interface SymbolLayerDsl {
    *
    * @param iconImageCrossFade value of iconImageCrossFade
    */
+  @MapboxExperimental
   fun iconImageCrossFade(iconImageCrossFade: Double = 0.0): SymbolLayer
 
   /**
@@ -8029,6 +8040,7 @@ interface SymbolLayerDsl {
    *
    * @param iconImageCrossFade value of iconImageCrossFade as Expression
    */
+  @MapboxExperimental
   fun iconImageCrossFade(iconImageCrossFade: Expression): SymbolLayer
 
   /**
@@ -8038,6 +8050,7 @@ interface SymbolLayerDsl {
    *
    * @param options transition options for Double
    */
+  @MapboxExperimental
   fun iconImageCrossFadeTransition(options: StyleTransition): SymbolLayer
 
   /**
@@ -8045,6 +8058,7 @@ interface SymbolLayerDsl {
    *
    * DSL for [iconImageCrossFadeTransition].
    */
+  @MapboxExperimental
   fun iconImageCrossFadeTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer
 
   /**

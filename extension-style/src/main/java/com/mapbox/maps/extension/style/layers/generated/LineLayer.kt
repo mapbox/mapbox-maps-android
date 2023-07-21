@@ -1049,6 +1049,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   /**
    * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded.
    */
+  @MapboxExperimental
   val lineDepthOcclusionFactor: Double?
     /**
      * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded.
@@ -1068,6 +1069,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param lineDepthOcclusionFactor value of lineDepthOcclusionFactor
    */
+  @MapboxExperimental
   override fun lineDepthOcclusionFactor(lineDepthOcclusionFactor: Double): LineLayer = apply {
     val propertyValue = PropertyValue("line-depth-occlusion-factor", lineDepthOcclusionFactor)
     setProperty(propertyValue)
@@ -1079,6 +1081,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    * This is an Expression representation of "line-depth-occlusion-factor".
    *
    */
+  @MapboxExperimental
   val lineDepthOcclusionFactorAsExpression: Expression?
     /**
      * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded.
@@ -1106,6 +1109,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param lineDepthOcclusionFactor value of lineDepthOcclusionFactor as Expression
    */
+  @MapboxExperimental
   override fun lineDepthOcclusionFactor(lineDepthOcclusionFactor: Expression): LineLayer = apply {
     val propertyValue = PropertyValue("line-depth-occlusion-factor", lineDepthOcclusionFactor)
     setProperty(propertyValue)
@@ -1114,6 +1118,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   /**
    * Transition options for LineDepthOcclusionFactor.
    */
+  @MapboxExperimental
   val lineDepthOcclusionFactorTransition: StyleTransition?
     /**
      * Get the LineDepthOcclusionFactor property transition options
@@ -1133,6 +1138,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param options transition options for Double
    */
+  @MapboxExperimental
   override fun lineDepthOcclusionFactorTransition(options: StyleTransition): LineLayer = apply {
     val propertyValue = PropertyValue("line-depth-occlusion-factor-transition", options)
     setProperty(propertyValue)
@@ -1141,6 +1147,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   /**
    * DSL for [lineDepthOcclusionFactorTransition].
    */
+  @MapboxExperimental
   override fun lineDepthOcclusionFactorTransition(block: StyleTransition.Builder.() -> Unit): LineLayer = apply {
     lineDepthOcclusionFactorTransition(StyleTransition.Builder().apply(block).build())
   }
@@ -2491,6 +2498,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     /**
      * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded.
      */
+    @MapboxExperimental
     val defaultLineDepthOcclusionFactor: Double?
       /**
        * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded.
@@ -2509,6 +2517,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      * This is an Expression representation of "line-depth-occlusion-factor".
      *
      */
+    @MapboxExperimental
     val defaultLineDepthOcclusionFactorAsExpression: Expression?
       /**
        * Get default value of the LineDepthOcclusionFactor property as an Expression
@@ -2528,6 +2537,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     /**
      * Transition options for LineDepthOcclusionFactor.
      */
+    @MapboxExperimental
     val defaultLineDepthOcclusionFactorTransition: StyleTransition?
       /**
        * Get the LineDepthOcclusionFactor property transition options
@@ -3226,6 +3236,7 @@ interface LineLayerDsl {
    *
    * @param lineDepthOcclusionFactor value of lineDepthOcclusionFactor
    */
+  @MapboxExperimental
   fun lineDepthOcclusionFactor(lineDepthOcclusionFactor: Double = 1.0): LineLayer
 
   /**
@@ -3233,6 +3244,7 @@ interface LineLayerDsl {
    *
    * @param lineDepthOcclusionFactor value of lineDepthOcclusionFactor as Expression
    */
+  @MapboxExperimental
   fun lineDepthOcclusionFactor(lineDepthOcclusionFactor: Expression): LineLayer
 
   /**
@@ -3242,6 +3254,7 @@ interface LineLayerDsl {
    *
    * @param options transition options for Double
    */
+  @MapboxExperimental
   fun lineDepthOcclusionFactorTransition(options: StyleTransition): LineLayer
 
   /**
@@ -3249,6 +3262,7 @@ interface LineLayerDsl {
    *
    * DSL for [lineDepthOcclusionFactorTransition].
    */
+  @MapboxExperimental
   fun lineDepthOcclusionFactorTransition(block: StyleTransition.Builder.() -> Unit): LineLayer
 
   /**
