@@ -61,9 +61,11 @@ internal class NativeMapImpl(val map: Map) {
     coordinateBounds: CoordinateBounds,
     padding: EdgeInsets?,
     bearing: Double?,
-    pitch: Double?
+    pitch: Double?,
+    maxZoom: Double?,
+    offset: ScreenCoordinate?
   ): CameraOptions {
-    return map.cameraForCoordinateBounds(coordinateBounds, padding, bearing, pitch)
+    return map.cameraForCoordinateBounds(coordinateBounds, padding, bearing, pitch, maxZoom, offset)
   }
 
   fun coordinateInfoForPixel(pixel: ScreenCoordinate): CoordinateInfo {

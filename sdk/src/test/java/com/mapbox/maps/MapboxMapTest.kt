@@ -483,20 +483,39 @@ class MapboxMapTest {
   fun cameraForCoordinateBounds() {
     val bounds = mockk<CoordinateBounds>()
     val edgeInsets = mockk<EdgeInsets>()
-    mapboxMap.cameraForCoordinateBounds(bounds, edgeInsets, 0.0, 1.0)
-    verify { nativeMap.cameraForCoordinateBounds(bounds, edgeInsets, 0.0, 1.0) }
+    val screenCoordinate = mockk<ScreenCoordinate>()
+    mapboxMap.cameraForCoordinateBounds(
+      bounds = bounds,
+      padding = edgeInsets,
+      bearing = 0.0,
+      pitch = 1.0,
+      maxZoom = 2.0,
+      offset = screenCoordinate
+    )
+    verify {
+      nativeMap.cameraForCoordinateBounds(
+        coordinateBounds = bounds,
+        padding = edgeInsets,
+        bearing = 0.0,
+        pitch = 1.0,
+        maxZoom = 2.0,
+        offset = screenCoordinate
+      )
+    }
   }
 
   @Test
   fun cameraForCoordinateBoundsOverload() {
     val bounds = mockk<CoordinateBounds>()
-    mapboxMap.cameraForCoordinateBounds(bounds)
+    mapboxMap.cameraForCoordinateBounds(bounds = bounds)
     verify {
       nativeMap.cameraForCoordinateBounds(
-        bounds,
-        null,
-        null,
-        null
+        coordinateBounds = bounds,
+        padding = null,
+        bearing = null,
+        pitch = null,
+        maxZoom = null,
+        offset = null
       )
     }
   }
@@ -505,34 +524,103 @@ class MapboxMapTest {
   fun cameraForCoordinateBoundsOverloadPadding() {
     val bounds = mockk<CoordinateBounds>()
     val padding = EdgeInsets(1.1, 1.3, 1.4, 1.2)
-    mapboxMap.cameraForCoordinateBounds(bounds, padding)
-    verify { nativeMap.cameraForCoordinateBounds(bounds, padding, null, null) }
+    mapboxMap.cameraForCoordinateBounds(bounds = bounds, padding = padding)
+    verify {
+      nativeMap.cameraForCoordinateBounds(
+        coordinateBounds = bounds,
+        padding = padding,
+        bearing = null,
+        pitch = null,
+        maxZoom = null,
+        offset = null
+      )
+    }
   }
 
   @Test
   fun cameraForCoordinateBoundsWithoutPadding() {
     val bounds = mockk<CoordinateBounds>()
-    mapboxMap.cameraForCoordinateBounds(bounds)
-    verify { nativeMap.cameraForCoordinateBounds(bounds, null, null, null) }
+    val offset = mockk<ScreenCoordinate>()
+    mapboxMap.cameraForCoordinateBounds(
+      bounds = bounds,
+      bearing = 1.0,
+      pitch = 2.0,
+      maxZoom = 12.0,
+      offset = offset
+    )
+    verify {
+      nativeMap.cameraForCoordinateBounds(
+        coordinateBounds = bounds,
+        padding = null,
+        bearing = 1.0,
+        pitch = 2.0,
+        maxZoom = 12.0,
+        offset = offset
+      )
+    }
   }
 
   @Test
   fun cameraForCoordinateBoundsOverloadBearing() {
     val bounds = mockk<CoordinateBounds>()
-    mapboxMap.cameraForCoordinateBounds(bounds, bearing = 2.0)
-    verify { nativeMap.cameraForCoordinateBounds(bounds, null, 2.0, null) }
+    mapboxMap.cameraForCoordinateBounds(bounds = bounds, bearing = 2.0)
+    verify {
+      nativeMap.cameraForCoordinateBounds(
+        coordinateBounds = bounds,
+        padding = null,
+        bearing = 2.0,
+        pitch = null,
+        maxZoom = null,
+        offset = null
+      )
+    }
   }
 
   @Test
   fun cameraForCoordinateBoundsOverloadPitch() {
     val bounds = mockk<CoordinateBounds>()
-    mapboxMap.cameraForCoordinateBounds(bounds, pitch = 2.0)
+    mapboxMap.cameraForCoordinateBounds(bounds = bounds, pitch = 2.0)
     verify {
       nativeMap.cameraForCoordinateBounds(
-        bounds,
-        null,
-        null,
-        2.0
+        coordinateBounds = bounds,
+        padding = null,
+        bearing = null,
+        pitch = 2.0,
+        maxZoom = null,
+        offset = null
+      )
+    }
+  }
+
+  @Test
+  fun cameraForCoordinateBoundsOverloadMaxZoom() {
+    val bounds = mockk<CoordinateBounds>()
+    mapboxMap.cameraForCoordinateBounds(bounds = bounds, maxZoom = 10.0)
+    verify {
+      nativeMap.cameraForCoordinateBounds(
+        coordinateBounds = bounds,
+        padding = null,
+        bearing = null,
+        pitch = null,
+        maxZoom = 10.0,
+        offset = null
+      )
+    }
+  }
+
+  @Test
+  fun cameraForCoordinateBoundsOverloadOffset() {
+    val bounds = mockk<CoordinateBounds>()
+    val screenCoordinate = mockk<ScreenCoordinate>()
+    mapboxMap.cameraForCoordinateBounds(bounds, offset = screenCoordinate)
+    verify {
+      nativeMap.cameraForCoordinateBounds(
+        coordinateBounds = bounds,
+        padding = null,
+        bearing = null,
+        pitch = null,
+        maxZoom = null,
+        offset = screenCoordinate
       )
     }
   }

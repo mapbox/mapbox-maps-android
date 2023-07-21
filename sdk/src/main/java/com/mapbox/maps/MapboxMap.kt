@@ -615,36 +615,37 @@ class MapboxMap :
   }
 
   /**
-   * Convert to a camera options from a given LatLngBounds, padding, bearing and pitch values.
+   * Convenience method that returns the [CameraOptions] object for given parameters.
    *
    * In order for this method to produce correct results [MapView] must be already
    * measured and inflated to have correct width and height values.
    * Calling this method in [Activity.onCreate] will lead to incorrect results.
    *
-   * This API isn't supported by Globe projection and will return a no-op result matching
-   * the world bounds.
-   * See [com.mapbox.maps.extension.style.projection.generated.setProjection]
-   * and [com.mapbox.maps.extension.style.projection.generated.getProjection]
+   * @param bounds The [CoordinateBounds] of the camera.
+   * @param padding The amount of padding in [EdgeInsets] to add to the given bounds.
+   * @param bearing The bearing of the camera.
+   * @param pitch The pitch of the camera.
+   * @param maxZoom The maximum zoom level allowed in the returned camera options.
+   * @param offset The center of the given bounds relative to map center in pixels.
    *
-   * @param bounds The LatLngBounds to take in account when converting
-   * @param padding The optional padding to take in account when converting
-   * @param bearing The optional bearing to take in account when converting
-   * @param pitch The optional pitch to take in account when converting
-   *
-   * @return Returns the converted camera options
+   * @return The [CameraOptions] object representing the provided parameters.
    */
   override fun cameraForCoordinateBounds(
     bounds: CoordinateBounds,
     padding: EdgeInsets?,
     bearing: Double?,
-    pitch: Double?
+    pitch: Double?,
+    maxZoom: Double?,
+    offset: ScreenCoordinate?
   ): CameraOptions {
     checkNativeMap("cameraForCoordinateBounds")
     return nativeMap.cameraForCoordinateBounds(
       bounds,
       padding,
       bearing,
-      pitch
+      pitch,
+      maxZoom,
+      offset,
     )
   }
 

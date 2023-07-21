@@ -541,9 +541,26 @@ class NativeMapTest {
   fun cameraForCoordinateBounds() {
     val bounds = mockk<CoordinateBounds>()
     val edgeInsets = mockk<EdgeInsets>()
+    val offset = mockk<ScreenCoordinate>()
     val nativeMap = NativeMapImpl(map)
-    nativeMap.cameraForCoordinateBounds(bounds, edgeInsets, 1.0, 2.0)
-    verify { map.cameraForCoordinateBounds(bounds, edgeInsets, 1.0, 2.0) }
+    nativeMap.cameraForCoordinateBounds(
+      coordinateBounds = bounds,
+      padding = edgeInsets,
+      bearing = 1.0,
+      pitch = 2.0,
+      maxZoom = 2.0,
+      offset = offset,
+    )
+    verify {
+      nativeMap.cameraForCoordinateBounds(
+        coordinateBounds = bounds,
+        padding = edgeInsets,
+        bearing = 1.0,
+        pitch = 2.0,
+        maxZoom = 2.0,
+        offset = offset
+      )
+    }
   }
 
   @Test
@@ -902,9 +919,26 @@ class NativeMapTest {
   @Test
   fun cameraForCoordinateBoundsWithoutPadding() {
     val bounds = mockk<CoordinateBounds>()
+    val offset = mockk<ScreenCoordinate>()
     val nativeMap = NativeMapImpl(map)
-    nativeMap.cameraForCoordinateBounds(bounds, null, 1.0, 2.0)
-    verify { map.cameraForCoordinateBounds(bounds, null, 1.0, 2.0) }
+    nativeMap.cameraForCoordinateBounds(
+      coordinateBounds = bounds,
+      padding = null,
+      bearing = 1.0,
+      pitch = 2.0,
+      maxZoom = 2.0,
+      offset = offset,
+    )
+    verify {
+      nativeMap.cameraForCoordinateBounds(
+        coordinateBounds = bounds,
+        padding = null,
+        bearing = 1.0,
+        pitch = 2.0,
+        maxZoom = 2.0,
+        offset = offset
+      )
+    }
   }
 
   @Test

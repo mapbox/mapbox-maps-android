@@ -1,5 +1,6 @@
 package com.mapbox.maps.plugin.delegates
 
+import android.app.Activity
 import android.graphics.RectF
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.None
@@ -18,22 +19,28 @@ interface MapCameraManagerDelegate {
   val cameraState: CameraState
 
   /**
-   * Convenience method that returns the camera options object for given arguments
+   * Convenience method that returns the [CameraOptions] object for given parameters.
    *
-   * This API isn't supported by Globe projection.
+   * In order for this method to produce correct results `MapView` must be already
+   * measured and inflated to have correct width and height values.
+   * Calling this method in [Activity.onCreate] will lead to incorrect results.
    *
-   * @param bounds The coordinate bounds of the map
-   * @param padding The edge padding of the map
-   * @param bearing The bearing of the map
-   * @param pitch The pitch of the map
+   * @param bounds The [CoordinateBounds] of the camera.
+   * @param padding The amount of padding in [EdgeInsets] to add to the given bounds.
+   * @param bearing The bearing of the camera.
+   * @param pitch The pitch of the camera.
+   * @param maxZoom The maximum zoom level allowed in the returned camera options.
+   * @param offset The center of the given bounds relative to map center in pixels.
    *
-   * @return Returns the camera options object representing the provided params
+   * @return The [CameraOptions] object representing the provided parameters.
    */
   fun cameraForCoordinateBounds(
     bounds: CoordinateBounds,
     padding: EdgeInsets? = null,
     bearing: Double? = null,
-    pitch: Double? = null
+    pitch: Double? = null,
+    maxZoom: Double? = null,
+    offset: ScreenCoordinate? = null,
   ): CameraOptions
 
   /**
