@@ -44,19 +44,19 @@ class GeoJsonSource : Source {
 
   private var currentGeoJson: GeoJson?
   private var currentData: String?
-  private var currentDataId: String?
+  private var currentDataId: String
 
-  private val workerHandler by lazy {
+  internal val workerHandler by lazy {
     Handler(workerThread.looper)
   }
 
-  private fun setGeoJson(geoJson: GeoJson, dataId: String? = null) {
+  private fun setGeoJson(geoJson: GeoJson, dataId: String) {
     delegate?.let { style ->
       workerHandler.removeCallbacksAndMessages(null)
       workerHandler.post {
         style.setStyleGeoJSONSourceData(
           /* sourceId = */ sourceId,
-          /* dataId = */ dataId.orEmpty(),
+          /* dataId = */ dataId,
           /* data = */ toGeoJsonData(geoJson)
         )
       }
@@ -66,13 +66,13 @@ class GeoJsonSource : Source {
     currentData = null
   }
 
-  private fun setData(data: String, dataId: String? = null) {
+  private fun setData(data: String, dataId: String) {
     delegate?.let { style ->
       workerHandler.removeCallbacksAndMessages(null)
       workerHandler.post {
         style.setStyleGeoJSONSourceData(
           /* sourceId = */ sourceId,
-          /* dataId = */ dataId.orEmpty(),
+          /* dataId = */ dataId,
           /* data = */ GeoJSONSourceData.valueOf(data)
         )
       }
@@ -109,7 +109,7 @@ class GeoJsonSource : Source {
    * @param dataId optional metadata to filter the SOURCE_DATA_LOADED events later. Empty string is treated as no data id.
    */
   @JvmOverloads
-  fun data(value: String, dataId: String? = null): GeoJsonSource = apply {
+  fun data(value: String, dataId: String = ""): GeoJsonSource = apply {
     setData(value, dataId)
   }
 
@@ -131,7 +131,7 @@ class GeoJsonSource : Source {
    * @param dataId optional metadata to filter the SOURCE_DATA_LOADED events later. Empty string is treated as no data id.
    */
   @JvmOverloads
-  fun url(value: String, dataId: String? = null): GeoJsonSource = apply {
+  fun url(value: String, dataId: String = ""): GeoJsonSource = apply {
     data(value, dataId)
   }
 
@@ -331,8 +331,7 @@ class GeoJsonSource : Source {
 
   /**
    * Add a Feature to the GeojsonSource.
-   * Data will be parsed from collection to [String] in a worker thread and
-   * use main thread to pass this data to gl-native.
+   * The data will be scheduled and applied on a worker thread.
    *
    * In order to capture events when actual data is drawn on the map please refer to [Observer] API
    * and listen to `SourceDataLoaded` (optionally pass `data-id` to filter the events)
@@ -345,12 +344,11 @@ class GeoJsonSource : Source {
    * @param dataId optional metadata to filter the SOURCE_DATA_LOADED events later. Empty string is treated as no data id.
    */
   @JvmOverloads
-  fun feature(value: Feature, dataId: String? = null): GeoJsonSource = applyGeoJsonData(value, dataId)
+  fun feature(value: Feature, dataId: String = ""): GeoJsonSource = applyGeoJsonData(value, dataId)
 
   /**
    * Add a Feature Collection to the GeojsonSource.
-   * Data will be parsed from collection to [String] in a worker thread and
-   * use main thread to pass this data to gl-native.
+   * The data will be scheduled and applied on a worker thread.
    *
    * In order to capture events when actual data is drawn on the map please refer to [Observer] API
    * and listen to `SourceDataLoaded` (optionally pass `data-id` to filter the events)
@@ -363,12 +361,11 @@ class GeoJsonSource : Source {
    * @param dataId optional metadata to filter the SOURCE_DATA_LOADED events later. Empty string is treated as no data id.
    */
   @JvmOverloads
-  fun featureCollection(value: FeatureCollection, dataId: String? = null): GeoJsonSource = applyGeoJsonData(value, dataId)
+  fun featureCollection(value: FeatureCollection, dataId: String = ""): GeoJsonSource = applyGeoJsonData(value, dataId)
 
   /**
    * Add a Geometry to the GeojsonSource.
-   * Data will be parsed from collection to [String] in a worker thread and
-   * use main thread to pass this data to gl-native.
+   * The data will be scheduled and applied on a worker thread.
    *
    * In order to capture events when actual data is drawn on the map please refer to [Observer] API
    * and listen to `SourceDataLoaded` (optionally pass `data-id` to filter the events)
@@ -381,11 +378,11 @@ class GeoJsonSource : Source {
    * @param dataId optional metadata to filter the SOURCE_DATA_LOADED events later. Empty string is treated as no data id.
    */
   @JvmOverloads
-  fun geometry(value: Geometry, dataId: String? = null): GeoJsonSource = applyGeoJsonData(value, dataId)
+  fun geometry(value: Geometry, dataId: String = ""): GeoJsonSource = applyGeoJsonData(value, dataId)
 
   private fun applyGeoJsonData(
     data: GeoJson,
-    dataId: String?,
+    dataId: String,
   ): GeoJsonSource = apply {
     setGeoJson(data, dataId)
   }
@@ -403,14 +400,14 @@ class GeoJsonSource : Source {
 
     internal var geoJson: GeoJson? = null
     internal var data: String? = null
-    internal var dataId: String? = null
+    internal var dataId: String = ""
 
     /**
      * @param value an URL to a GeoJSON file, or an inline GeoJSON.
      * @param dataId optional metadata to filter the SOURCE_DATA_LOADED events later. Empty string is treated as no data id.
      */
     @JvmOverloads
-    fun data(value: String, dataId: String? = null): Builder = apply {
+    fun data(value: String, dataId: String = ""): Builder = apply {
       geoJson = null
       data = value
       this.dataId = dataId
@@ -421,7 +418,7 @@ class GeoJsonSource : Source {
      * @param dataId optional metadata to filter the SOURCE_DATA_LOADED events later. Empty string is treated as no data id.
      */
     @JvmOverloads
-    fun url(value: String, dataId: String? = null): Builder = apply {
+    fun url(value: String, dataId: String = ""): Builder = apply {
       data(value, dataId)
     }
 
@@ -615,7 +612,7 @@ class GeoJsonSource : Source {
      * @param dataId optional metadata to filter the SOURCE_DATA_LOADED events later. Empty string is treated as no data id.
      */
     @JvmOverloads
-    fun feature(value: Feature, dataId: String? = null): Builder = apply {
+    fun feature(value: Feature, dataId: String = ""): Builder = apply {
       geoJson(value, dataId)
     }
 
@@ -626,7 +623,7 @@ class GeoJsonSource : Source {
      * @param dataId optional metadata to filter the SOURCE_DATA_LOADED events later. Empty string is treated as no data id.
      */
     @JvmOverloads
-    fun featureCollection(value: FeatureCollection, dataId: String? = null): Builder = apply {
+    fun featureCollection(value: FeatureCollection, dataId: String = ""): Builder = apply {
       geoJson(value, dataId)
     }
 
@@ -637,11 +634,11 @@ class GeoJsonSource : Source {
      * @param dataId optional metadata to filter the SOURCE_DATA_LOADED events later. Empty string is treated as no data id.
      */
     @JvmOverloads
-    fun geometry(value: Geometry, dataId: String? = null): Builder = apply {
+    fun geometry(value: Geometry, dataId: String = ""): Builder = apply {
       geoJson(value, dataId)
     }
 
-    private fun geoJson(geoJson: GeoJson, dataId: String? = null) {
+    private fun geoJson(geoJson: GeoJson, dataId: String) {
       this.geoJson = geoJson
       this.dataId = dataId
       data = null

@@ -60,7 +60,8 @@ Mapbox welcomes participation and contributions from everyone.
 * Introduce `MapboxTracing` object allowing to enable Android traces to measure performance of the SDK. More details and instructions could be found in `Working with traces` section in `DEVELOPING.md`. 
 * Remove Mapbox plugin implementations from public API surface.
 * Remove `HttpServiceFactory.getInstance`, `HttpServiceFactory.reset`, `HttpServiceFactory.setUserDefined` methods.
-* Replace `HttpServiceFactory.getInstance().setInterceptor` with `HttpServiceFactory.setHttpServiceInterceptor`.
+* Replace `HttpServiceFactory.getInstance().setInterceptor` with `HttpServiceFactory.setHttpServiceInterceptor`. 
+* Argument `dataId` of the `GeoJson.feature`, `GeoJson.featureCollection`, `GeoJson.geometry`, `GeoJson.url`, `GeoJson.data` became non-nullable.
 
 ## Features ✨ and improvements 🏁
 * Add the `MapboxMap.resetFeatureState` method.
@@ -90,7 +91,8 @@ Mapbox welcomes participation and contributions from everyone.
 * Introduce experimental `BackgroundLayer.backgroundEmissiveStrength`, `CircleLayer.circleEmissiveStrength`, `FillLayer.fillEmissiveStrength`, `LineLayer.lineEmissiveStrength`, `SymbolLayer.iconEmissiveStrength`, `SymbolLayer.textEmissiveStrength` APIs.
 * Introduce experimental `FillExtrusionLayer.fillExtrusionRoundedRoof`, `FillExtrusionLayer.fillExtrusionEdgeRadius`, `FillExtrusionLayer.fillExtrusionAmbientOcclusionWallRadius`, `FillExtrusionLayer.fillExtrusionAmbientOcclusionGroundRadius`, `FillExtrusionLayer.fillExtrusionAmbientOcclusionGroundAttenuation`, `FillExtrusionLayer.fillExtrusionFloodLightColor`, `FillExtrusionLayer.fillExtrusionFloodLightIntensity`, `FillExtrusionLayer.fillExtrusionFloodLightWallRadius`, `FillExtrusionLayer.fillExtrusionFloodLightGroundRadius`, `FillExtrusionLayer.fillExtrusionFloodLightGroundAttenuation`, `FillExtrusionLayer.fillExtrusionVerticalScale` APIs.
 * Introduce new Mapbox 3D style `Style.STANDARD` and make it default.
- 
+* Introduce GeoJSONSource partial update APIs `GeoJsonSource.addGeoJSONSourceFeatures`, `GeoJsonSource.updateGeoJSONSourceFeatures`, `GeoJsonSource.removeGeoJSONSourceFeatures`.
+
 ## Bug fixes 🐞
 * Fix 3d location layer properties `model-scale-transition` and `model-rotation-transition`, made them non-transitionable.
 * Fix crash when running animations (e.g. gestures) on Android 14 beta.

@@ -498,4 +498,25 @@ class StyleTest {
     style.getStyleAtmosphereProperty(property)
     verify { styleManager.getStyleAtmosphereProperty(property) }
   }
+
+  @Test
+  fun addGeoJSONSourceFeatures() {
+    val feature = mockk<Feature>()
+    style.addGeoJSONSourceFeatures("id", "dataId", listOf(feature))
+    verify { styleManager.addGeoJSONSourceFeatures("id", "dataId", listOf(feature)) }
+  }
+
+  @Test
+  fun updateGeoJSONSourceFeatures() {
+    val feature = mockk<Feature>()
+    style.updateGeoJSONSourceFeatures("id", "dataId", listOf(feature))
+    verify { styleManager.updateGeoJSONSourceFeatures("id", "dataId", listOf(feature)) }
+  }
+
+  @Test
+  fun removeGeoJSONSourceFeatures() {
+    val featureId = "feature_id"
+    style.removeGeoJSONSourceFeatures("id", "dataId", listOf(featureId))
+    verify { styleManager.removeGeoJSONSourceFeatures("id", "dataId", listOf(featureId)) }
+  }
 }

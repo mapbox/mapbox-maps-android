@@ -1,9 +1,9 @@
 package com.mapbox.maps
 
 import android.graphics.Bitmap
+import androidx.annotation.AnyThread
 import androidx.annotation.RestrictTo
 import androidx.annotation.RestrictTo.Scope
-import androidx.annotation.WorkerThread
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
@@ -80,10 +80,10 @@ class Style {
    * @return Returns the map style default [camera][CameraOptions].
    */
   val styleDefaultCamera: CameraOptions
-  get() {
-    checkNativeStyle("getStyleDefaultCamera")
-    return styleManager.styleDefaultCamera
-  }
+    get() {
+      checkNativeStyle("getStyleDefaultCamera")
+      return styleManager.styleDefaultCamera
+    }
 
   /**
    * Returns the map style's transition options. By default, the style parser will attempt
@@ -927,10 +927,10 @@ class Style {
    * @return The list containing the ids of the existing style sources.
    */
   val styleSources: List<StyleObjectInfo>
-  get() {
-    checkNativeStyle("getStyleSources")
-    return styleManager.styleSources
-  }
+    get() {
+      checkNativeStyle("getStyleSources")
+      return styleManager.styleSources
+    }
 
   /**
    * Returns the current sources metadata.
@@ -997,9 +997,16 @@ class Style {
   }
 
   /**
-   * This method is for internal use.
+   * Set geojson source data.
+   * Call may take significant time for parsing and marshalling depending on the data size.
+   * Direct method use is not recommended, consider using [GeoJsonSource.geometry], [GeoJsonSource.feature], [GeoJsonSource.featureCollection], [GeoJsonSource.data], [GeoJsonSource.url] instead.
+   *
+   * @param sourceId the id of the GeoJSON source
+   * @param dataId an arbitrary string used to track the given GeoJSON data, empty string means null ID
+   * @param data the GeoJson source data
+   *
    */
-  @WorkerThread
+  @AnyThread
   fun setStyleGeoJSONSourceData(
     sourceId: String,
     dataId: String,
@@ -1009,6 +1016,69 @@ class Style {
       logW(TAG, "Style object (accessing setStyleGeoJSONSourceData) should not be stored and used after MapView is destroyed or new style has been loaded.")
     }
     return styleManager.setStyleGeoJSONSourceData(sourceId, dataId, data)
+  }
+
+  /**
+   * Add features to the GeoJSON source.
+   * Call may take significant time for parsing and marshalling depending on the data size.
+   * Direct method use is not recommended, consider using [GeoJsonSource.addGeoJSONSourceFeatures] instead.
+   *
+   * @param sourceId the id of the GeoJSON source
+   * @param dataId an arbitrary string used to track the given GeoJSON data, empty string means null ID
+   * @param features list of features to add
+   */
+  @AnyThread
+  fun addGeoJSONSourceFeatures(
+    sourceId: String,
+    dataId: String,
+    features: List<Feature>
+  ): Expected<String, None> {
+    if (!isStyleValid) {
+      logW(TAG, "Style object (accessing addGeoJSONSourceFeatures) should not be stored and used after MapView is destroyed or new style has been loaded.")
+    }
+    return styleManager.addGeoJSONSourceFeatures(sourceId, dataId, features)
+  }
+
+  /**
+   * Update features in the GeoJSON source.
+   * Call may take significant time for parsing and marshalling depending on the data size.
+   * Direct method use is not recommended, consider using [GeoJsonSource.updateGeoJSONSourceFeatures] instead.
+   *
+   * @param sourceId the id of the GeoJSON source
+   * @param dataId an arbitrary string used to track the given GeoJSON data, empty string means null ID
+   * @param features list of features to update
+   */
+  @AnyThread
+  fun updateGeoJSONSourceFeatures(
+    sourceId: String,
+    dataId: String,
+    features: List<Feature>
+  ): Expected<String, None> {
+    if (!isStyleValid) {
+      logW(TAG, "Style object (accessing updateGeoJSONSourceFeatures) should not be stored and used after MapView is destroyed or new style has been loaded.")
+    }
+    return styleManager.updateGeoJSONSourceFeatures(sourceId, dataId, features)
+  }
+
+  /**
+   * Remove features from the GeoJSON source.
+   * Call may take significant time for parsing and marshalling depending on the data size.
+   * Direct method use is not recommended, consider using [GeoJsonSource.removeGeoJSONSourceFeatures] instead.
+   *
+   * @param sourceId the id of the GeoJSON source
+   * @param dataId an arbitrary string used to track the given GeoJSON data, empty string means null ID
+   * @param featuresIds list of feature ids to remove
+   */
+  @AnyThread
+  fun removeGeoJSONSourceFeatures(
+    sourceId: String,
+    dataId: String,
+    featureIds: List<String>
+  ): Expected<String, None> {
+    if (!isStyleValid) {
+      logW(TAG, "Style object (accessing removeGeoJSONSourceFeatures) should not be stored and used after MapView is destroyed or new style has been loaded.")
+    }
+    return styleManager.removeGeoJSONSourceFeatures(sourceId, dataId, featureIds)
   }
 
   /**
