@@ -122,7 +122,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
         mapboxMap.apply {
           cancelable = subscribeSourceDataLoaded(listener)
           setupSource(testSource)
-          testSource.url(TEST_URI)
+          testSource.data(TEST_URI)
         }
       }
     }

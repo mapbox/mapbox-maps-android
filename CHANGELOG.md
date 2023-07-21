@@ -3,12 +3,16 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # develop
+## Breaking changes ⚠️
+* Remove deprecated `GeoJsonSource` public constructor, builder should be used instead.
+
 ## Features ✨ and improvements 🏁
 * Add clustering support for CircleAnnotationManager.
 * Update Kotlin version to v1.7.20 and compose compiler version to 1.3.2.
 * Improve ergonomics of `Snapshotter.start` method to align with iOS and allow to re-use `Canvas` for user drawing.
 * Add `MapboxMap.coordinateBoundsForRect` returning `CoordinateBounds` for given `RectF` of screen coordinates.
 * Add optional `maxZoom` and `offset` parameters to `MapboxMap.cameraForCoordinateBounds`.
+* Mark `GeoJsonSource.url` / `GeoJsonSource.Builder.url` methods as deprecated, `GeoJsonSource.data` / `GeoJsonSource.Builder.data` should be used instead.
 
 # 11.0.0-alpha.2 June 27, 2023
 ## Breaking changes ⚠️

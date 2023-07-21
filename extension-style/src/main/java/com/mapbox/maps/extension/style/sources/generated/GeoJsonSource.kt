@@ -29,22 +29,19 @@ import java.util.*
  * @see [The online documentation](https://docs.mapbox.com/mapbox-gl-js/style-spec/sources/#geojson)
  *
  */
-class GeoJsonSource : Source {
-  @Deprecated(
-    "SourceGeoJson constructor is deprecated, use Builder class instead",
-    level = DeprecationLevel.ERROR
-  )
-  constructor(builder: Builder) : super(builder.sourceId) {
+class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourceId) {
+
+  private var currentGeoJson: GeoJson?
+  private var currentData: String?
+  private var currentDataId: String
+
+  init {
     sourceProperties.putAll(builder.properties)
     volatileSourceProperties.putAll(builder.volatileProperties)
     currentGeoJson = builder.geoJson
     currentData = builder.data
     currentDataId = builder.dataId
   }
-
-  private var currentGeoJson: GeoJson?
-  private var currentData: String?
-  private var currentDataId: String
 
   internal val workerHandler by lazy {
     Handler(workerThread.looper)
@@ -105,6 +102,12 @@ class GeoJsonSource : Source {
   }
 
   /**
+   * Sets GeoJson `data` property as a [String].
+   * [value] could be an URL to a GeoJSON file, or an inline GeoJSON.
+   *
+   * The data will be scheduled and applied on a worker thread and no validation happens synchronously.
+   * If [value] is invalid - `MapLoadingError` with `type = metadata` will be invoked.
+   *
    * @param value an URL to a GeoJSON file, or an inline GeoJSON.
    * @param dataId optional metadata to filter the SOURCE_DATA_LOADED events later. Empty string is treated as no data id.
    */
@@ -131,6 +134,10 @@ class GeoJsonSource : Source {
    * @param dataId optional metadata to filter the SOURCE_DATA_LOADED events later. Empty string is treated as no data id.
    */
   @JvmOverloads
+  @Deprecated(
+    message = "Method url() is deprecated in favor of data() method as they do the same thing",
+    replaceWith = ReplaceWith("data(value, dataId)")
+  )
   fun url(value: String, dataId: String = ""): GeoJsonSource = apply {
     data(value, dataId)
   }
@@ -403,10 +410,15 @@ class GeoJsonSource : Source {
     internal var dataId: String = ""
 
     /**
+     * Sets GeoJson `data` property as a [String].
+     * [value] could be an URL to a GeoJSON file, or an inline GeoJSON.
+     *
+     * The data will be scheduled and applied on a worker thread and no validation happens synchronously.
+     * If [value] is invalid - `MapLoadingError` with `type = metadata` will be invoked.
+     *
      * @param value an URL to a GeoJSON file, or an inline GeoJSON.
      * @param dataId optional metadata to filter the SOURCE_DATA_LOADED events later. Empty string is treated as no data id.
      */
-    @JvmOverloads
     fun data(value: String, dataId: String = ""): Builder = apply {
       geoJson = null
       data = value
@@ -418,6 +430,10 @@ class GeoJsonSource : Source {
      * @param dataId optional metadata to filter the SOURCE_DATA_LOADED events later. Empty string is treated as no data id.
      */
     @JvmOverloads
+    @Deprecated(
+      message = "Method url() is deprecated in favor of data() method as they do the same thing",
+      replaceWith = ReplaceWith("data(value, dataId)")
+    )
     fun url(value: String, dataId: String = ""): Builder = apply {
       data(value, dataId)
     }
