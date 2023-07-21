@@ -66,6 +66,14 @@ internal class NativeMapImpl(val map: Map) {
     return map.cameraForCoordinateBounds(coordinateBounds, padding, bearing, pitch)
   }
 
+  fun coordinateInfoForPixel(pixel: ScreenCoordinate): CoordinateInfo {
+    return map.coordinateInfoForPixel(pixel)
+  }
+
+  fun coordinatesInfoForPixels(pixels: List<ScreenCoordinate>): List<CoordinateInfo> {
+    return map.coordinatesInfoForPixels(pixels)
+  }
+
   fun setUserAnimationInProgress(inProgress: Boolean) {
     map.isUserAnimationInProgress = inProgress
   }

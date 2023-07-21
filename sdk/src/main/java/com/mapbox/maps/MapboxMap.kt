@@ -965,6 +965,42 @@ class MapboxMap :
   }
 
   /**
+   * Calculates the geographical coordinate information that corresponds to a given screen coordinate.
+   *
+   * The screen coordinate is in platform pixels, relative to the top left corner of the map (not the whole screen).
+   *
+   * The returned coordinate will be the closest position projected onto the map surface,
+   * in case the screen coordinate does not intersect with the map surface.
+   *
+   * @param pixel The screen coordinate on the map, in platform pixels.
+   *
+   * @return A CoordinateInfo record containing information about the geographical coordinate corresponding to the given screen coordinate, including whether it is on the map surface.
+   *
+   */
+  override fun coordinateInfoForPixel(pixel: ScreenCoordinate): CoordinateInfo {
+    checkNativeMap("coordinateInfoForPixel")
+    return nativeMap.coordinateInfoForPixel(pixel)
+  }
+
+  /**
+   * Calculates the geographical coordinates information that corresponds to the given screen coordinates.
+   *
+   * The screen coordinates are in platform pixels, relative to the top left corner of the map (not the whole screen).
+   *
+   * The returned coordinate will be the closest position projected onto the map surface,
+   * in case the screen coordinate does not intersect with the map surface.
+   *
+   * @param pixels The list of screen coordinates on the map, in platform pixels.
+   *
+   * @return The CoordinateInfo records containing information about the geographical coordinates corresponding to the given screen coordinates, including whether they are on the map surface.
+   *
+   */
+  override fun coordinatesInfoForPixels(pixels: List<ScreenCoordinate>): List<CoordinateInfo> {
+    checkNativeMap("coordinatesInfoForPixels")
+    return nativeMap.coordinatesInfoForPixels(pixels)
+  }
+
+  /**
    * Calculate distance spanned by one pixel at the specified latitude
    * and zoom level.
    *

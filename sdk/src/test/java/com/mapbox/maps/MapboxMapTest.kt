@@ -686,6 +686,20 @@ class MapboxMapTest {
   }
 
   @Test
+  fun coordinateInfoForPixel() {
+    val pixel = mockk<ScreenCoordinate>()
+    mapboxMap.coordinateInfoForPixel(pixel)
+    verify { nativeMap.coordinateInfoForPixel(pixel) }
+  }
+
+  @Test
+  fun coordinateInfoForPixels() {
+    val pixels = mockk<List<ScreenCoordinate>>()
+    mapboxMap.coordinatesInfoForPixels(pixels)
+    verify { nativeMap.coordinatesInfoForPixels(pixels) }
+  }
+
+  @Test
   fun getBounds() {
     mapboxMap.getBounds()
     verify { nativeMap.getBounds() }

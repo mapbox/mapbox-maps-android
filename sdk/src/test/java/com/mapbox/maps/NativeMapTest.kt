@@ -922,4 +922,20 @@ class NativeMapTest {
     nativeMap.cameraForGeometry(geometry, null, 1.0, 2.0)
     verify { map.cameraForGeometry(geometry, null, 1.0, 2.0) }
   }
+
+  @Test
+  fun coordinateInfoForPixel() {
+    val pixel = mockk<ScreenCoordinate>()
+    val nativeMap = NativeMapImpl(map)
+    nativeMap.coordinateInfoForPixel(pixel)
+    verify { map.coordinateInfoForPixel(pixel) }
+  }
+
+  @Test
+  fun coordinateInfoForPixels() {
+    val pixels = mockk<List<ScreenCoordinate>>()
+    val nativeMap = NativeMapImpl(map)
+    nativeMap.coordinatesInfoForPixels(pixels)
+    verify { map.coordinatesInfoForPixels(pixels) }
+  }
 }
