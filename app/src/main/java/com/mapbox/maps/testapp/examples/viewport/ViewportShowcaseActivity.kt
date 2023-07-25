@@ -1,6 +1,6 @@
 package com.mapbox.maps.testapp.examples.viewport
 
-import android.animation.ValueAnimator
+import android.animation.Animator
 import android.annotation.SuppressLint
 import android.content.res.Configuration
 import android.content.res.Resources
@@ -8,21 +8,20 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.animation.doOnEnd
 import com.mapbox.api.directions.v5.models.DirectionsResponse
 import com.mapbox.core.constants.Constants
 import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.plugin.LocationPuck2D
+import com.mapbox.maps.plugin.animation.MapAnimationOptions
+import com.mapbox.maps.plugin.animation.camera
 import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.plugin.viewport.ViewportPlugin
-import com.mapbox.maps.plugin.viewport.ViewportStatus
 import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions
 import com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions
 import com.mapbox.maps.plugin.viewport.state.FollowPuckViewportState
 import com.mapbox.maps.plugin.viewport.state.OverviewViewportState
-import com.mapbox.maps.plugin.viewport.state.ViewportState
 import com.mapbox.maps.plugin.viewport.viewport
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityViewportAnimationBinding
@@ -141,10 +140,6 @@ class ViewportShowcaseActivity : AppCompatActivity() {
             with reason:         $reason
         """.trimIndent()
       )
-      when (to.getCurrentOrNextState()) {
-        is FollowPuckViewportState -> viewportButton.text = FOLLOW_WITH_LOWER_ZOOM
-        else -> viewportButton.text = FOLLOW
-      }
     }
     if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
       followPuckViewportState.apply {
@@ -161,49 +156,90 @@ class ViewportShowcaseActivity : AppCompatActivity() {
         options = options.toBuilder().padding(overviewPadding).build()
       }
     }
+    viewportButton.text = STATES[CURRENT_STATE_INDEX]
     viewportButton.setOnClickListener {
-      when (viewportButton.text) {
+      when (STATES[CURRENT_STATE_INDEX]) {
+        OVERVIEW -> viewport.transitionTo(overviewViewportState)
         FOLLOW -> viewport.transitionTo(followPuckViewportState)
-        OVERVIEW -> {
-          viewport.transitionTo(overviewViewportState)
-          followPuckViewportState.options =
-            followPuckViewportState.options.toBuilder().zoom(14.0).build()
-        }
-        FOLLOW_WITH_LOWER_ZOOM -> animateZoomSeparately(followPuckViewportState)
+        FOLLOW_WITH_INCREASED_ZOOM -> animateZoomSeparately(
+          followPuckViewportState,
+          zoom = 18.0,
+          durationMs = 1000
+        )
+
+        FOLLOW_WITH_DECREASED_ZOOM -> animateZoomSeparately(
+          followPuckViewportState,
+          zoom = 5.0,
+          durationMs = 1000
+        )
       }
+      CURRENT_STATE_INDEX = (++CURRENT_STATE_INDEX) % 4
+      viewportButton.text = STATES[CURRENT_STATE_INDEX]
     }
   }
 
-  private fun animateZoomSeparately(followPuckViewportState: FollowPuckViewportState) {
-    val zoomAnimator = ValueAnimator.ofFloat(followPuckViewportState.options.zoom!!.toFloat(), 12f)
-    zoomAnimator.apply {
-      duration = 1000
-      addUpdateListener { animation ->
-        val animatedValue = animation.animatedValue as Float
-        followPuckViewportState.options =
-          followPuckViewportState.options.toBuilder().zoom(animatedValue.toDouble()).build()
-      }
-      doOnEnd {
-        viewportButton.text = OVERVIEW
-      }
-      start()
-    }
+  private fun animateZoomSeparately(
+    followPuckViewportState: FollowPuckViewportState,
+    zoom: Double,
+    durationMs: Long
+  ) {
+    // configure the FollowPuckViewportState to not update zoom level
+    followPuckViewportState.disableZoomUpdate()
+
+    // Do the animation for zoom update
+    mapView.camera.easeTo(
+      CameraOptions.Builder().zoom(zoom).build(),
+      MapAnimationOptions.Builder()
+        .duration(durationMs)
+        .animatorListener(
+          object : Animator.AnimatorListener {
+            override fun onAnimationStart(animation: Animator?) {
+              // no-ops
+            }
+
+            override fun onAnimationEnd(animation: Animator?) {
+              followPuckViewportState.resumeZoomUpdateWithCurrentZoomLevel()
+            }
+
+            override fun onAnimationCancel(animation: Animator?) {
+              // no-ops
+            }
+
+            override fun onAnimationRepeat(animation: Animator?) {
+              // no-ops
+            }
+
+          }
+        ).build()
+    )
+  }
+
+  private fun FollowPuckViewportState.disableZoomUpdate() {
+    // configure the FollowPuckViewportState to not update zoom level
+    options = options.toBuilder().zoom(null).build()
+  }
+
+  private fun FollowPuckViewportState.resumeZoomUpdateWithCurrentZoomLevel() {
+    // configure the FollowPuckViewportState to use the current zoom level
+    options = options.toBuilder().zoom(mapView.getMapboxMap().cameraState.zoom).build()
   }
 
   companion object {
     private const val TAG = "ViewportShowcase"
     private const val FOLLOW = "Follow"
     private const val OVERVIEW = "Overview"
-    private const val FOLLOW_WITH_LOWER_ZOOM = "Follow with lower zoom"
+    private const val FOLLOW_WITH_INCREASED_ZOOM = "Follow with increased zoom"
+    private const val FOLLOW_WITH_DECREASED_ZOOM = "Follow with decreased zoom"
     private const val POINT_LAT = 34.052235
     private const val POINT_LNG = -118.243683
     private const val NAVIGATION_ROUTE_JSON_NAME = "navigation_route.json"
+
+    private val STATES = arrayOf(
+      OVERVIEW,
+      FOLLOW,
+      FOLLOW_WITH_INCREASED_ZOOM,
+      FOLLOW_WITH_DECREASED_ZOOM,
+    )
+    private var CURRENT_STATE_INDEX = 0
   }
 }
-
-private fun ViewportStatus.getCurrentOrNextState(): ViewportState? =
-  when (this) {
-    is ViewportStatus.State -> state
-    is ViewportStatus.Transition -> toState
-    ViewportStatus.Idle -> null
-  }
