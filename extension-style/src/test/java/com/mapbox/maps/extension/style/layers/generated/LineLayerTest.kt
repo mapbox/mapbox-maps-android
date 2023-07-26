@@ -132,7 +132,7 @@ class LineLayerTest {
       }
       literal(0)
     }
-    val layer = symbolLayer("id", "source") {}
+    val layer = lineLayer("id", "source") {}
     layer.bindTo(style)
     layer.filter(expression)
     verify { style.setStyleLayerProperty("id", "filter", capture(valueSlot)) }
@@ -150,7 +150,7 @@ class LineLayerTest {
     every { styleProperty.value } returns expression
     every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
 
-    val layer = symbolLayer("id", "source") { }
+    val layer = lineLayer("id", "source") { }
     layer.bindTo(style)
     assertEquals(expression.toString(), layer.filter?.toString())
     verify { style.getStyleLayerProperty("id", "filter") }

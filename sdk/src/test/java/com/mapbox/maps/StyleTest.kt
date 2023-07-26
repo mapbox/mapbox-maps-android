@@ -519,4 +519,58 @@ class StyleTest {
     style.removeGeoJSONSourceFeatures("id", "dataId", listOf(featureId))
     verify { styleManager.removeGeoJSONSourceFeatures("id", "dataId", listOf(featureId)) }
   }
+
+  @Test
+  fun getStyleImports() {
+    style.getStyleImports()
+    verify { styleManager.styleImports }
+  }
+
+  @Test
+  fun removeStyleImports() {
+    val importId = "import-id"
+    style.removeStyleImport(importId)
+    verify { styleManager.removeStyleImport(importId) }
+  }
+
+  @Test
+  fun getStyleImportSchema() {
+    val importId = "import-id"
+    style.getStyleImportSchema(importId)
+    verify { styleManager.getStyleImportSchema(importId) }
+  }
+
+  @Test
+  fun getStyleImportConfigProperties() {
+    val importId = "import-id"
+    style.getStyleImportConfigProperties(importId)
+    verify { styleManager.getStyleImportConfigProperties(importId) }
+  }
+
+  @Test
+  fun getStyleImportConfigProperty() {
+    val importId = "import-id"
+    val config = "config"
+    style.getStyleImportConfigProperty(importId, config)
+    verify { styleManager.getStyleImportConfigProperty(importId, config) }
+  }
+
+  @Test
+  fun setStyleImportConfigProperties() {
+    val importId = "import-id"
+    val config = hashMapOf(
+      "key" to Value.valueOf("value")
+    )
+    style.setStyleImportConfigProperties(importId, config)
+    verify { styleManager.setStyleImportConfigProperties(importId, config) }
+  }
+
+  @Test
+  fun setStyleImportConfigProperty() {
+    val importId = "import-id"
+    val config = "config"
+    val value = Value.valueOf("value")
+    style.setStyleImportConfigProperty(importId, config, value)
+    verify { styleManager.setStyleImportConfigProperty(importId, config, value) }
+  }
 }

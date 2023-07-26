@@ -4,6 +4,7 @@ package com.mapbox.maps.extension.style.layers.generated
 
 import androidx.annotation.ColorInt
 import androidx.annotation.UiThread
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere
 import com.mapbox.maps.extension.style.expressions.generated.Expression
@@ -29,6 +30,33 @@ import java.util.*
  */
 @UiThread
 class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
+
+  /**
+   * The slot this layer is assigned to. If specified, and a slot with that name exists,
+   * it will be placed at that position in the layer order.
+   *
+   * @param slot value of slot
+   */
+  @MapboxExperimental
+  fun slot(slot: String): SkyLayer = apply {
+    val param = PropertyValue("slot", slot)
+    setProperty(param)
+  }
+
+  /**
+   * The slot this layer is assigned to. If specified, and a slot with that name exists,
+   * it will be placed at that position in the layer order.
+   */
+  @MapboxExperimental
+  val slot: String?
+    /**
+     * Get the slot property
+     *
+     * @return slot
+     */
+    get() {
+      return getPropertyValue("slot")
+    }
 
   /**
    * A filter is a property at the layer level that determines which features should be rendered in a style layer.
@@ -1440,7 +1468,7 @@ interface SkyLayerDsl {
 }
 
 /**
- * DSL functions for creating a [SkyLayer].
+ * DSL function for creating a [SkyLayer].
  */
 fun skyLayer(layerId: String, block: SkyLayerDsl.() -> Unit): SkyLayer = SkyLayer(layerId).apply(block)
 

@@ -113,6 +113,107 @@ class Style {
   }
 
   /**
+   * Returns the existing style imports.
+   *
+   * @return The list containing the information about existing style import objects.
+   */
+  @MapboxExperimental
+  fun getStyleImports(): List<StyleObjectInfo> {
+    checkNativeStyle("getStyleImports")
+    return styleManager.styleImports
+  }
+
+  /**
+   * Removes an existing style import.
+   *
+   * @param importId An identifier of the style import to remove.
+   *
+   * @return A string describing an error if the operation was not successful, or empty otherwise.
+   */
+  @MapboxExperimental
+  fun removeStyleImport(importId: String): Expected<String, None> {
+    checkNativeStyle("removeStyleImport")
+    return styleManager.removeStyleImport(importId)
+  }
+
+  /**
+   * Gets style import schema.
+   *
+   * @param importId A style import identifier.
+   *
+   * @return The style import schema or a string describing an error if the operation was not successful.
+   */
+  @MapboxExperimental
+  fun getStyleImportSchema(importId: String): Expected<String, Value> {
+    checkNativeStyle("getStyleImportSchema")
+    return styleManager.getStyleImportSchema(importId)
+  }
+
+  /**
+   * Gets style import config.
+   *
+   * @return The style import configuration or a string describing an error if the operation was not successful.
+   */
+  @MapboxExperimental
+  fun getStyleImportConfigProperties(importId: String): Expected<String, HashMap<String, StylePropertyValue>> {
+    checkNativeStyle("getStyleImportConfigProperties")
+    return styleManager.getStyleImportConfigProperties(importId)
+  }
+
+  /**
+   * Gets the value of style import config.
+   *
+   * @param importId A style import identifier.
+   * @param config The style import config name.
+   * @return The style import config value.
+   */
+  @MapboxExperimental
+  fun getStyleImportConfigProperty(
+    importId: String,
+    config: String
+  ): Expected<String, StylePropertyValue> {
+    checkNativeStyle("getStyleImportConfigProperty")
+    return styleManager.getStyleImportConfigProperty(importId, config)
+  }
+
+  /**
+   * Sets style import config.
+   * This method can be used to perform batch update for a style import configurations.
+   *
+   * @param importId A style import identifier.
+   * @param properties A map of style import configurations.
+   *
+   * @return A string describing an error if the operation was not successful, empty otherwise.
+   */
+  @MapboxExperimental
+  fun setStyleImportConfigProperties(
+    importId: String,
+    configs: HashMap<String, Value>
+  ): Expected<String, None> {
+    checkNativeStyle("setStyleImportConfigProperties")
+    return styleManager.setStyleImportConfigProperties(importId, configs)
+  }
+
+  /**
+   * Sets a value to a style import config.
+   *
+   * @param importId A style import identifier.
+   * @param property The style import config name.
+   * @param value The style import config value.
+   *
+   * @return A string describing an error if the operation was not successful, empty otherwise.
+   */
+  @MapboxExperimental
+  fun setStyleImportConfigProperty(
+    importId: String,
+    config: String,
+    value: Value
+  ): Expected<String, None> {
+    checkNativeStyle("setStyleImportConfigProperty")
+    return styleManager.setStyleImportConfigProperty(importId, config, value)
+  }
+
+  /**
    * Get the styleURI of the current Mapbox Style in use.
    *
    * SetURI is an asynchronous call. In order to get result of this operation please use

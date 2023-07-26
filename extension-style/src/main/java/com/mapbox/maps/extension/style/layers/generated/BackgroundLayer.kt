@@ -28,6 +28,33 @@ import java.util.*
 class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer() {
 
   /**
+   * The slot this layer is assigned to. If specified, and a slot with that name exists,
+   * it will be placed at that position in the layer order.
+   *
+   * @param slot value of slot
+   */
+  @MapboxExperimental
+  fun slot(slot: String): BackgroundLayer = apply {
+    val param = PropertyValue("slot", slot)
+    setProperty(param)
+  }
+
+  /**
+   * The slot this layer is assigned to. If specified, and a slot with that name exists,
+   * it will be placed at that position in the layer order.
+   */
+  @MapboxExperimental
+  val slot: String?
+    /**
+     * Get the slot property
+     *
+     * @return slot
+     */
+    get() {
+      return getPropertyValue("slot")
+    }
+
+  /**
    * Whether this layer is displayed.
    */
   override val visibility: Visibility?
@@ -951,7 +978,7 @@ interface BackgroundLayerDsl {
 }
 
 /**
- * DSL functions for creating a [BackgroundLayer].
+ * DSL function for creating a [BackgroundLayer].
  */
 fun backgroundLayer(layerId: String, block: BackgroundLayerDsl.() -> Unit): BackgroundLayer = BackgroundLayer(layerId).apply(block)
 

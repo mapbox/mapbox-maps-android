@@ -14,6 +14,8 @@ Mapbox welcomes participation and contributions from everyone.
 * Add optional `maxZoom` and `offset` parameters to `MapboxMap.cameraForCoordinateBounds`.
 * Mark `GeoJsonSource.url` / `GeoJsonSource.Builder.url` methods as deprecated, `GeoJsonSource.data` / `GeoJsonSource.Builder.data` should be used instead.
 * Refactor style Light APIs: introduce `AmbientLight`, `DirectionalLight`, `FlatLight` and methods to set them to style.
+* Expose new APIs to import and configure styles: `getStyleImports`, `removeStyleImport`, `getStyleImportSchema`, `getStyleImportConfigProperties`, `setStyleImportConfigProperties`, `getStyleImportConfigProperty`, `setStyleImportConfigProperty`
+* Expose `slot` property for all `Layer`s to link layers from imported styles.
 
 # 11.0.0-alpha.2 June 27, 2023
 ## Breaking changes ⚠️
