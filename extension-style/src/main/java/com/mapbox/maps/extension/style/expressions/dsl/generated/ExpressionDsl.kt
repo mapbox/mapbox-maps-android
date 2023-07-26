@@ -158,6 +158,11 @@ fun collator(block: Expression.CollatorBuilder.() -> Unit): Expression = Express
 fun concat(block: Expression.ExpressionBuilder.() -> Unit): Expression = Expression.concat(block)
 
 /**
+ * Retrieves the configuration value for the given option.
+ */
+fun config(block: Expression.ExpressionBuilder.() -> Unit): Expression = Expression.config(block)
+
+/**
  * Returns the cosine of the input.
  */
 fun cos(block: Expression.ExpressionBuilder.() -> Unit): Expression = Expression.cos(block)
@@ -345,7 +350,7 @@ fun match(block: Expression.ExpressionBuilder.() -> Unit): Expression = Expressi
 fun max(block: Expression.ExpressionBuilder.() -> Unit): Expression = Expression.max(block)
 
 /**
- * Returns a requested property of the light configuration based on the supplied options. Currently the only supported option is `brightness` which returns the global brightness value of the lights on a scale of 0 to 1, where 0 means total darkness and 1 means full brightness.
+ * Returns a requested property of the light configuration based on the supplied options. Currently the only supported option is `brightness` which returns the global brightness value of the lights on a scale of 0 to 1, where 0 means total darkness and 1 means full brightness. This expression works only with 3D light, i.e. when `lights` root property is defined.
  */
 fun measureLight(block: Expression.ExpressionBuilder.() -> Unit): Expression = Expression.measureLight(block)
 

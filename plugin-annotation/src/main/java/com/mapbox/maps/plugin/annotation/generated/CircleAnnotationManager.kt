@@ -158,7 +158,7 @@ class CircleAnnotationManager(
   /**
    * The CircleEmissiveStrength property
    *
-   * Emission strength. The unit of circleEmissiveStrength is in intensity.
+   * Emission strength The unit of circleEmissiveStrength is in intensity.
    */
   var circleEmissiveStrength: Double?
     /**

@@ -1153,12 +1153,12 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * Emission strength.
+   * Emission strength
    */
   @MapboxExperimental
   val lineEmissiveStrength: Double?
     /**
-     * Emission strength.
+     * Emission strength
      *
      * Use static method [LineLayer.defaultLineEmissiveStrength] to get the default property.
      *
@@ -1169,7 +1169,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * Emission strength.
+   * Emission strength
    *
    * Use static method [LineLayer.defaultLineEmissiveStrength] to set the default property.
    *
@@ -1182,7 +1182,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * Emission strength.
+   * Emission strength
    *
    * This is an Expression representation of "line-emissive-strength".
    *
@@ -1190,7 +1190,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   @MapboxExperimental
   val lineEmissiveStrengthAsExpression: Expression?
     /**
-     * Emission strength.
+     * Emission strength
      *
      * Get the LineEmissiveStrength property as an Expression
      *
@@ -1209,7 +1209,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * Emission strength.
+   * Emission strength
    *
    * Use static method [LineLayer.defaultLineEmissiveStrengthAsExpression] to set the default property.
    *
@@ -2547,12 +2547,12 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       get() = StyleManager.getStyleLayerPropertyDefaultValue("line", "line-depth-occlusion-factor-transition").silentUnwrap()
 
     /**
-     * Emission strength.
+     * Emission strength
      */
     @MapboxExperimental
     val defaultLineEmissiveStrength: Double?
       /**
-       * Emission strength.
+       * Emission strength
        *
        * Get the default value of LineEmissiveStrength property
        *
@@ -2563,7 +2563,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * Emission strength.
+     * Emission strength
      *
      * This is an Expression representation of "line-emissive-strength".
      *
@@ -3266,7 +3266,7 @@ interface LineLayerDsl {
   fun lineDepthOcclusionFactorTransition(block: StyleTransition.Builder.() -> Unit): LineLayer
 
   /**
-   * Emission strength.
+   * Emission strength
    *
    * @param lineEmissiveStrength value of lineEmissiveStrength
    */
@@ -3274,7 +3274,7 @@ interface LineLayerDsl {
   fun lineEmissiveStrength(lineEmissiveStrength: Double = 0.0): LineLayer
 
   /**
-   * Emission strength.
+   * Emission strength
    *
    * @param lineEmissiveStrength value of lineEmissiveStrength as Expression
    */
@@ -3282,7 +3282,7 @@ interface LineLayerDsl {
   fun lineEmissiveStrength(lineEmissiveStrength: Expression): LineLayer
 
   /**
-   * Emission strength.
+   * Emission strength
    *
    * Set the LineEmissiveStrength property transition options
    *
@@ -3292,7 +3292,7 @@ interface LineLayerDsl {
   fun lineEmissiveStrengthTransition(options: StyleTransition): LineLayer
 
   /**
-   * Emission strength.
+   * Emission strength
    *
    * DSL for [lineEmissiveStrengthTransition].
    */

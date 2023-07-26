@@ -3060,12 +3060,12 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Emission strength.
+   * Emission strength
    */
   @MapboxExperimental
   val iconEmissiveStrength: Double?
     /**
-     * Emission strength.
+     * Emission strength
      *
      * Use static method [SymbolLayer.defaultIconEmissiveStrength] to get the default property.
      *
@@ -3076,7 +3076,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Emission strength.
+   * Emission strength
    *
    * Use static method [SymbolLayer.defaultIconEmissiveStrength] to set the default property.
    *
@@ -3089,7 +3089,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Emission strength.
+   * Emission strength
    *
    * This is an Expression representation of "icon-emissive-strength".
    *
@@ -3097,7 +3097,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   @MapboxExperimental
   val iconEmissiveStrengthAsExpression: Expression?
     /**
-     * Emission strength.
+     * Emission strength
      *
      * Get the IconEmissiveStrength property as an Expression
      *
@@ -3116,7 +3116,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Emission strength.
+   * Emission strength
    *
    * Use static method [SymbolLayer.defaultIconEmissiveStrengthAsExpression] to set the default property.
    *
@@ -3996,12 +3996,12 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Emission strength.
+   * Emission strength
    */
   @MapboxExperimental
   val textEmissiveStrength: Double?
     /**
-     * Emission strength.
+     * Emission strength
      *
      * Use static method [SymbolLayer.defaultTextEmissiveStrength] to get the default property.
      *
@@ -4012,7 +4012,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Emission strength.
+   * Emission strength
    *
    * Use static method [SymbolLayer.defaultTextEmissiveStrength] to set the default property.
    *
@@ -4025,7 +4025,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Emission strength.
+   * Emission strength
    *
    * This is an Expression representation of "text-emissive-strength".
    *
@@ -4033,7 +4033,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   @MapboxExperimental
   val textEmissiveStrengthAsExpression: Expression?
     /**
-     * Emission strength.
+     * Emission strength
      *
      * Get the TextEmissiveStrength property as an Expression
      *
@@ -4052,7 +4052,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Emission strength.
+   * Emission strength
    *
    * Use static method [SymbolLayer.defaultTextEmissiveStrengthAsExpression] to set the default property.
    *
@@ -6390,12 +6390,12 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-color-transition").silentUnwrap()
 
     /**
-     * Emission strength.
+     * Emission strength
      */
     @MapboxExperimental
     val defaultIconEmissiveStrength: Double?
       /**
-       * Emission strength.
+       * Emission strength
        *
        * Get the default value of IconEmissiveStrength property
        *
@@ -6406,7 +6406,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Emission strength.
+     * Emission strength
      *
      * This is an Expression representation of "icon-emissive-strength".
      *
@@ -6858,12 +6858,12 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-color-transition").silentUnwrap()
 
     /**
-     * Emission strength.
+     * Emission strength
      */
     @MapboxExperimental
     val defaultTextEmissiveStrength: Double?
       /**
-       * Emission strength.
+       * Emission strength
        *
        * Get the default value of TextEmissiveStrength property
        *
@@ -6874,7 +6874,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Emission strength.
+     * Emission strength
      *
      * This is an Expression representation of "text-emissive-strength".
      *
@@ -7897,7 +7897,7 @@ interface SymbolLayerDsl {
   fun iconColorTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer
 
   /**
-   * Emission strength.
+   * Emission strength
    *
    * @param iconEmissiveStrength value of iconEmissiveStrength
    */
@@ -7905,7 +7905,7 @@ interface SymbolLayerDsl {
   fun iconEmissiveStrength(iconEmissiveStrength: Double = 1.0): SymbolLayer
 
   /**
-   * Emission strength.
+   * Emission strength
    *
    * @param iconEmissiveStrength value of iconEmissiveStrength as Expression
    */
@@ -7913,7 +7913,7 @@ interface SymbolLayerDsl {
   fun iconEmissiveStrength(iconEmissiveStrength: Expression): SymbolLayer
 
   /**
-   * Emission strength.
+   * Emission strength
    *
    * Set the IconEmissiveStrength property transition options
    *
@@ -7923,7 +7923,7 @@ interface SymbolLayerDsl {
   fun iconEmissiveStrengthTransition(options: StyleTransition): SymbolLayer
 
   /**
-   * Emission strength.
+   * Emission strength
    *
    * DSL for [iconEmissiveStrengthTransition].
    */
@@ -8173,7 +8173,7 @@ interface SymbolLayerDsl {
   fun textColorTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer
 
   /**
-   * Emission strength.
+   * Emission strength
    *
    * @param textEmissiveStrength value of textEmissiveStrength
    */
@@ -8181,7 +8181,7 @@ interface SymbolLayerDsl {
   fun textEmissiveStrength(textEmissiveStrength: Double = 1.0): SymbolLayer
 
   /**
-   * Emission strength.
+   * Emission strength
    *
    * @param textEmissiveStrength value of textEmissiveStrength as Expression
    */
@@ -8189,7 +8189,7 @@ interface SymbolLayerDsl {
   fun textEmissiveStrength(textEmissiveStrength: Expression): SymbolLayer
 
   /**
-   * Emission strength.
+   * Emission strength
    *
    * Set the TextEmissiveStrength property transition options
    *
@@ -8199,7 +8199,7 @@ interface SymbolLayerDsl {
   fun textEmissiveStrengthTransition(options: StyleTransition): SymbolLayer
 
   /**
-   * Emission strength.
+   * Emission strength
    *
    * DSL for [textEmissiveStrengthTransition].
    */

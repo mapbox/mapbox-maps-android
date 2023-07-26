@@ -10,7 +10,7 @@ import com.mapbox.maps.Style
 import com.mapbox.maps.StylePropertyValue
 import com.mapbox.maps.StylePropertyValueKind
 import com.mapbox.maps.extension.style.expressions.dsl.generated.rgba
-import com.mapbox.maps.extension.style.light.addLights3D
+import com.mapbox.maps.extension.style.light.setLights
 import com.mapbox.maps.extension.style.types.transitionOptions
 import com.mapbox.maps.extension.style.utils.TypeUtils
 import com.mapbox.maps.logE
@@ -50,7 +50,7 @@ class AmbientLightTest {
     val light = ambientLight("id") {
       color(Color.CYAN)
     }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     verify { style.setStyleLights(capture(valueSlot)) }
     assertTrue(valueSlot.captured.toString().contains("color=[rgba, 0, 255, 255, 1.0]"))
   }
@@ -58,7 +58,7 @@ class AmbientLightTest {
   @Test
   fun colorAsColorIntSetAfterInitialization() {
     val light = ambientLight("id") { }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     light.color(Color.CYAN)
     verify { style.setStyleLightProperty("id", "color", capture(valueSlot)) }
     assertEquals("[rgba, 0, 255, 255, 1.0]", valueSlot.captured.toString())
@@ -76,7 +76,7 @@ class AmbientLightTest {
     every { styleProperty.value } returns expression
 
     val light = ambientLight("id") { }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     assertEquals(Color.RED, light.colorAsColorInt!!)
     verify { style.getStyleLightProperty("id", "color") }
   }
@@ -86,7 +86,7 @@ class AmbientLightTest {
     val light = ambientLight("id") {
       color("rgba(0, 0, 0, 1)")
     }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     verify { style.setStyleLights(capture(valueSlot)) }
     assertTrue(valueSlot.captured.toString().contains("color=rgba(0, 0, 0, 1)"))
   }
@@ -94,7 +94,7 @@ class AmbientLightTest {
   @Test
   fun colorSetAfterInitialization() {
     val light = ambientLight("id") { }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     light.color("rgba(0, 0, 0, 1)")
     verify { style.setStyleLightProperty("id", "color", capture(valueSlot)) }
     assertTrue(valueSlot.captured.toString().contains("rgba(0, 0, 0, 1)"))
@@ -112,7 +112,7 @@ class AmbientLightTest {
     every { styleProperty.value } returns expression
 
     val light = ambientLight("id") { }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     assertEquals("rgba(0, 0, 0, 1)".toString(), light.color!!.toString())
     verify { style.getStyleLightProperty("id", "color") }
   }
@@ -130,7 +130,7 @@ class AmbientLightTest {
     val light = ambientLight("id") {
       color(expression)
     }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     verify { style.setStyleLights(capture(valueSlot)) }
     assertTrue(valueSlot.captured.toString().contains(expression.toString()))
   }
@@ -145,7 +145,7 @@ class AmbientLightTest {
     }
 
     val light = ambientLight("id") { }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     light.color(expression)
     verify { style.setStyleLightProperty("id", "color", capture(valueSlot)) }
     assertTrue(valueSlot.captured.toString().contains(expression.toString()))
@@ -163,7 +163,7 @@ class AmbientLightTest {
     every { styleProperty.value } returns expression
 
     val light = ambientLight("id") { }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     assertEquals(expression.toString(), light.colorAsExpression?.toString())
     verify { style.getStyleLightProperty("id", "color") }
   }
@@ -171,7 +171,7 @@ class AmbientLightTest {
   @Test
   fun colorAsExpressionGetNull() {
     val light = ambientLight("id") { }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     assertEquals(null, light.colorAsExpression)
     verify { style.getStyleLightProperty("id", "color") }
   }
@@ -188,7 +188,7 @@ class AmbientLightTest {
     every { styleProperty.value } returns expression
 
     val light = ambientLight("id") { }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     assertEquals(expression.toString(), light.colorAsExpression.toString())
     assertEquals("rgba(0, 0, 0, 1)", light.color)
     assertEquals(Color.BLACK, light.colorAsColorInt)
@@ -205,7 +205,7 @@ class AmbientLightTest {
         }
       )
     }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     verify { style.setStyleLights(capture(valueSlot)) }
     assertTrue(valueSlot.captured.toString().contains("color-transition={duration=100, delay=200}"))
   }
@@ -213,7 +213,7 @@ class AmbientLightTest {
   @Test
   fun colorTransitionSetAfterInitialization() {
     val light = ambientLight("id") { }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     light.colorTransition(
       transitionOptions {
         duration(100)
@@ -232,7 +232,7 @@ class AmbientLightTest {
     }
     every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
     val light = ambientLight("id") {}
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     assertEquals(transition.toValue().toString(), light.colorTransition!!.toValue().toString())
     verify { style.getStyleLightProperty("id", "color-transition") }
   }
@@ -242,7 +242,7 @@ class AmbientLightTest {
     val transition = "wrong type"
     every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
     val light = ambientLight("id") {}
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     assertEquals(null, light.colorTransition)
     verify { style.getStyleLightProperty("id", "color-transition") }
   }
@@ -261,7 +261,7 @@ class AmbientLightTest {
         delay(200)
       }
     }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     verify { style.setStyleLights(capture(valueSlot)) }
     assertTrue(valueSlot.captured.toString().contains("color-transition={duration=100, delay=200}"))
   }
@@ -271,7 +271,7 @@ class AmbientLightTest {
     val light = ambientLight("id") {
       intensity(1.0)
     }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     verify { style.setStyleLights(capture(valueSlot)) }
     assertTrue(valueSlot.captured.toString().contains("intensity=1.0"))
   }
@@ -279,7 +279,7 @@ class AmbientLightTest {
   @Test
   fun intensitySetAfterInitialization() {
     val light = ambientLight("id") { }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     light.intensity(1.0)
     verify { style.setStyleLightProperty("id", "intensity", capture(valueSlot)) }
     assertTrue(valueSlot.captured.toString().contains("1.0"))
@@ -290,7 +290,7 @@ class AmbientLightTest {
     every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
 
     val light = ambientLight("id") { }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     assertEquals(1.0.toString(), light.intensity!!.toString())
     verify { style.getStyleLightProperty("id", "intensity") }
   }
@@ -308,7 +308,7 @@ class AmbientLightTest {
     val light = ambientLight("id") {
       intensity(expression)
     }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     verify { style.setStyleLights(capture(valueSlot)) }
     assertTrue(valueSlot.captured.toString().contains(expression.toString()))
   }
@@ -323,7 +323,7 @@ class AmbientLightTest {
     }
 
     val light = ambientLight("id") { }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     light.intensity(expression)
     verify { style.setStyleLightProperty("id", "intensity", capture(valueSlot)) }
     assertTrue(valueSlot.captured.toString().contains(expression.toString()))
@@ -341,7 +341,7 @@ class AmbientLightTest {
     every { styleProperty.value } returns expression
 
     val light = ambientLight("id") { }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     assertEquals(expression.toString(), light.intensityAsExpression?.toString())
     verify { style.getStyleLightProperty("id", "intensity") }
   }
@@ -349,7 +349,7 @@ class AmbientLightTest {
   @Test
   fun intensityAsExpressionGetNull() {
     val light = ambientLight("id") { }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     assertEquals(null, light.intensityAsExpression)
     verify { style.getStyleLightProperty("id", "intensity") }
   }
@@ -358,7 +358,7 @@ class AmbientLightTest {
   fun intensityAsExpressionGetFromLiteral() {
     every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
     val light = ambientLight("id") { }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     assertEquals(1.0, light.intensityAsExpression?.contents as Double, 1E-5)
     assertEquals(1.0, light.intensity!!, 1E-5)
     verify { style.getStyleLightProperty("id", "intensity") }
@@ -374,7 +374,7 @@ class AmbientLightTest {
         }
       )
     }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     verify { style.setStyleLights(capture(valueSlot)) }
     assertTrue(valueSlot.captured.toString().contains("intensity-transition={duration=100, delay=200}"))
   }
@@ -382,7 +382,7 @@ class AmbientLightTest {
   @Test
   fun intensityTransitionSetAfterInitialization() {
     val light = ambientLight("id") { }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     light.intensityTransition(
       transitionOptions {
         duration(100)
@@ -401,7 +401,7 @@ class AmbientLightTest {
     }
     every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
     val light = ambientLight("id") {}
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     assertEquals(transition.toValue().toString(), light.intensityTransition!!.toValue().toString())
     verify { style.getStyleLightProperty("id", "intensity-transition") }
   }
@@ -411,7 +411,7 @@ class AmbientLightTest {
     val transition = "wrong type"
     every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
     val light = ambientLight("id") {}
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     assertEquals(null, light.intensityTransition)
     verify { style.getStyleLightProperty("id", "intensity-transition") }
   }
@@ -430,7 +430,7 @@ class AmbientLightTest {
         delay(200)
       }
     }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     verify { style.setStyleLights(capture(valueSlot)) }
     assertTrue(valueSlot.captured.toString().contains("intensity-transition={duration=100, delay=200}"))
   }

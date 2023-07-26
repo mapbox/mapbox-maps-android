@@ -375,14 +375,6 @@ internal class NativeMapImpl(val map: Map) {
     return map.styleSourceExists(sourceId)
   }
 
-  fun setStyleLight(light: Value): Expected<String, None> {
-    return map.setStyleLight(light)
-  }
-
-  fun setStyleLightProperty(property: String, value: Value): Expected<String, None> {
-    return map.setStyleLightProperty(property, value)
-  }
-
   fun setStyleLightProperty(
     id: String,
     property: String,
@@ -409,10 +401,6 @@ internal class NativeMapImpl(val map: Map) {
 
   fun setStyleAtmosphereProperty(property: String, value: Value): Expected<String, None> {
     return map.setStyleAtmosphereProperty(property, value)
-  }
-
-  fun getStyleLightProperty(property: String): StylePropertyValue {
-    return map.getStyleLightProperty(property)
   }
 
   fun getStyleLightProperty(id: String, property: String): StylePropertyValue {

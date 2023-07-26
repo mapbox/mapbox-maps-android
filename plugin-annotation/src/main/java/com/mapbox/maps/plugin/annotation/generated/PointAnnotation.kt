@@ -767,7 +767,7 @@ class PointAnnotation(
   /**
    * The iconEmissiveStrength property
    *
-   * Emission strength. The unit of iconEmissiveStrength is in intensity.
+   * Emission strength The unit of iconEmissiveStrength is in intensity.
    */
   var iconEmissiveStrength: Double?
     /**
@@ -1064,7 +1064,7 @@ class PointAnnotation(
   /**
    * The textEmissiveStrength property
    *
-   * Emission strength. The unit of textEmissiveStrength is in intensity.
+   * Emission strength The unit of textEmissiveStrength is in intensity.
    */
   var textEmissiveStrength: Double?
     /**

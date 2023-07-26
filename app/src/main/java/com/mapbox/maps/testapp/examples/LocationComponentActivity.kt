@@ -16,8 +16,8 @@ import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.generated.fillExtrusionLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.Anchor
 import com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName
-import com.mapbox.maps.extension.style.light.generated.light
-import com.mapbox.maps.extension.style.light.generated.setLight
+import com.mapbox.maps.extension.style.light.generated.flatLight
+import com.mapbox.maps.extension.style.light.setLight
 import com.mapbox.maps.extension.style.projection.generated.getProjection
 import com.mapbox.maps.extension.style.projection.generated.projection
 import com.mapbox.maps.extension.style.projection.generated.setProjection
@@ -57,7 +57,7 @@ class LocationComponentActivity : AppCompatActivity() {
         getMapboxMap().loadStyle(Style.STANDARD) {
           setupBuildings(it)
           it.setLight(
-            light {
+            flatLight {
               anchor(Anchor.MAP)
               color(Color.YELLOW)
               position(

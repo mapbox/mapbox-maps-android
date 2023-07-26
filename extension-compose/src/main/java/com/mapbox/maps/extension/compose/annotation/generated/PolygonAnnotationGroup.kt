@@ -26,7 +26,7 @@ import com.mapbox.maps.plugin.annotation.generated.createPolygonAnnotationManage
  * @param annotations List of [PolygonAnnotationOptions] to be added to the group.
  * @param annotationConfig Configuration for [PolygonAnnotationCluster].
  * @param fillAntialias Whether or not the fill should be antialiased.
- * @param fillEmissiveStrength Emission strength. The unit of fillEmissiveStrength is in intensity.
+ * @param fillEmissiveStrength Emission strength The unit of fillEmissiveStrength is in intensity.
  * @param fillTranslate The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. The unit of fillTranslate is in density-independent pixels.
  * @param fillTranslateAnchor Controls the frame of reference for {@link PropertyFactory#fillTranslate}.
  * @param onClick Callback to be invoked when one of the [PolygonAnnotation] in the cluster is clicked. The clicked [PolygonAnnotation] will be passed as parameter.

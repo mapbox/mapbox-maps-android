@@ -7,7 +7,7 @@ import androidx.annotation.UiThread
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
-import com.mapbox.maps.extension.style.light.Lights3D
+import com.mapbox.maps.extension.style.light.Light
 import com.mapbox.maps.extension.style.types.LightDsl
 import com.mapbox.maps.extension.style.types.StyleTransition
 import com.mapbox.maps.extension.style.utils.ColorUtils.colorIntToRgbaExpression
@@ -15,13 +15,13 @@ import com.mapbox.maps.extension.style.utils.ColorUtils.rgbaExpressionToColorInt
 import com.mapbox.maps.extension.style.utils.ColorUtils.rgbaExpressionToColorString
 
 /**
- *
+ * An indirect light affecting all objects in the map adding a constant amount of light on them. It has no explicit direction and cannot cast shadows.
  *
  * Check the [online documentation](https://www.mapbox.com/mapbox-gl-style-spec/#light).
  */
 @UiThread
 @MapboxExperimental
-class AmbientLight(override val lightId: String) : AmbientLightDslReceiver, Lights3D() {
+class AmbientLight internal constructor(override val lightId: String) : AmbientLightDslReceiver, Light() {
 
   /**
    * Color of the ambient light.
@@ -212,17 +212,10 @@ class AmbientLight(override val lightId: String) : AmbientLightDslReceiver, Ligh
   /**
    * Get the type of this light
    *
-   * @return Type of the 3D light as [String]
+   * @return Type of the light as [String]
    */
   override fun getType(): String {
     return "ambient"
-  }
-
-  /**
-   * Static variables and methods.
-   */
-  companion object {
-    private const val TAG = "Mbgl-Lights3D"
   }
 }
 
@@ -297,9 +290,9 @@ interface AmbientLightDslReceiver {
 }
 
 /**
- * DSL function for creating [ambientLight instance.
+ * DSL function for creating [ambientLight] instance.
  */
 @MapboxExperimental
-fun ambientLight(id: String, block: AmbientLightDslReceiver.() -> Unit): AmbientLight = AmbientLight(id).apply(block)
+fun ambientLight(id: String = "ambient", block: AmbientLightDslReceiver.() -> Unit): AmbientLight = AmbientLight(id).apply(block)
 
 // End of generated file.

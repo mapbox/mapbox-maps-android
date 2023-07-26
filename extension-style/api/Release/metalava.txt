@@ -3,9 +3,10 @@ package com.mapbox.maps.extension.style {
 
   public final class StyleExtensionImpl implements com.mapbox.maps.extension.style.StyleContract.StyleExtension {
     method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere? getAtmosphere();
+    method public com.mapbox.maps.extension.style.StyleContract.StyleLightExtension? getDynamicLight();
+    method public com.mapbox.maps.extension.style.StyleContract.StyleLightExtension? getFlatLight();
     method public java.util.List<com.mapbox.maps.extension.style.StyleContract.StyleImageExtension> getImages();
     method public java.util.List<kotlin.Pair<com.mapbox.maps.extension.style.layers.Layer,com.mapbox.maps.LayerPosition>> getLayers();
-    method public com.mapbox.maps.extension.style.light.generated.Light? getLight();
     method public java.util.List<com.mapbox.maps.extension.style.StyleContract.StyleModelExtension> getModels();
     method public com.mapbox.maps.extension.style.projection.generated.Projection? getProjection();
     method public java.util.List<com.mapbox.maps.extension.style.sources.Source> getSources();
@@ -13,9 +14,10 @@ package com.mapbox.maps.extension.style {
     method public com.mapbox.maps.extension.style.terrain.generated.Terrain? getTerrain();
     method public com.mapbox.maps.TransitionOptions? getTransition();
     property public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere? atmosphere;
+    property public com.mapbox.maps.extension.style.StyleContract.StyleLightExtension? dynamicLight;
+    property public com.mapbox.maps.extension.style.StyleContract.StyleLightExtension? flatLight;
     property public java.util.List<com.mapbox.maps.extension.style.StyleContract.StyleImageExtension> images;
     property public java.util.List<kotlin.Pair<com.mapbox.maps.extension.style.layers.Layer,com.mapbox.maps.LayerPosition>> layers;
-    property public com.mapbox.maps.extension.style.light.generated.Light? light;
     property public java.util.List<com.mapbox.maps.extension.style.StyleContract.StyleModelExtension> models;
     property public com.mapbox.maps.extension.style.projection.generated.Projection? projection;
     property public java.util.List<com.mapbox.maps.extension.style.sources.Source> sources;
@@ -39,7 +41,8 @@ package com.mapbox.maps.extension.style {
     method public kotlin.Pair<com.mapbox.maps.extension.style.layers.Layer,com.mapbox.maps.LayerPosition> layerAtPosition(com.mapbox.maps.extension.style.layers.Layer layer, String? above = null);
     method public kotlin.Pair<com.mapbox.maps.extension.style.layers.Layer,com.mapbox.maps.LayerPosition> layerAtPosition(com.mapbox.maps.extension.style.layers.Layer layer);
     method public operator void setAtmosphere(com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere);
-    method public operator void setLight(com.mapbox.maps.extension.style.light.generated.Light);
+    method public operator void setLight(com.mapbox.maps.extension.style.light.generated.FlatLight);
+    method @com.mapbox.maps.MapboxExperimental public operator void setLight(com.mapbox.maps.extension.style.light.DynamicLight);
     method public operator void setProjection(com.mapbox.maps.extension.style.projection.generated.Projection);
     method public operator void setTerrain(com.mapbox.maps.extension.style.terrain.generated.Terrain);
     method public operator void setTransition(com.mapbox.maps.TransitionOptions);
@@ -196,6 +199,7 @@ package com.mapbox.maps.extension.style.expressions.dsl.generated {
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression color(@ColorInt int intColor);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression concat(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression concat(java.lang.String... values);
+    method public static com.mapbox.maps.extension.style.expressions.generated.Expression config(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression cos(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression cos(double value);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression distance(com.mapbox.geojson.GeoJson geojson);
@@ -340,6 +344,7 @@ package com.mapbox.maps.extension.style.expressions.generated {
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression color(@ColorInt int intColor);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression concat(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression concat(java.lang.String... values);
+    method public static com.mapbox.maps.extension.style.expressions.generated.Expression config(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression cos(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression cos(double value);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression cubicBezier(com.mapbox.maps.extension.style.expressions.generated.Expression x1, com.mapbox.maps.extension.style.expressions.generated.Expression x2, com.mapbox.maps.extension.style.expressions.generated.Expression x3, com.mapbox.maps.extension.style.expressions.generated.Expression x4);
@@ -530,6 +535,8 @@ package com.mapbox.maps.extension.style.expressions.generated {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression concat(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression concat(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression concat(java.lang.String... values);
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression config(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression config(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression cos(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression cos(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression cos(double value);
@@ -744,6 +751,7 @@ package com.mapbox.maps.extension.style.expressions.generated {
     method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder color(@ColorInt int intColor);
     method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder concat(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder concat(java.lang.String... values);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder config(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder cos(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder cos(double value);
     method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder distance(com.mapbox.geojson.GeoJson geojson);
@@ -4970,6 +4978,19 @@ package com.mapbox.maps.extension.style.layers.properties.generated {
 
 package com.mapbox.maps.extension.style.light {
 
+  @com.mapbox.maps.MapboxExperimental public final class DynamicLight implements com.mapbox.maps.extension.style.StyleContract.StyleLightExtension {
+    method public void bindTo(com.mapbox.maps.Style delegate);
+  }
+
+  public abstract class Light {
+    method public abstract String getLightId();
+    property public abstract String lightId;
+    field public static final com.mapbox.maps.extension.style.light.Light.Companion Companion;
+  }
+
+  public static final class Light.Companion {
+  }
+
   @com.mapbox.maps.extension.style.types.LightDsl public final class LightPosition {
     ctor public LightPosition(double radialCoordinate, double azimuthalAngle, double polarAngle);
     method public com.mapbox.maps.extension.style.light.LightPosition copy(double radialCoordinate, double azimuthalAngle, double polarAngle);
@@ -4984,28 +5005,19 @@ package com.mapbox.maps.extension.style.light {
     method public com.mapbox.maps.extension.style.light.LightPosition fromList(java.util.List<java.lang.Double> positionList);
   }
 
-  @com.mapbox.maps.MapboxExperimental public abstract class Lights3D {
-    ctor public Lights3D();
-    method public abstract String getLightId();
-    property public abstract String lightId;
-    field public static final com.mapbox.maps.extension.style.light.Lights3D.Companion Companion;
-  }
-
-  public static final class Lights3D.Companion {
-  }
-
-  public final class Lights3DExtKt {
-    method @com.mapbox.maps.MapboxExperimental public static void addLights3D(com.mapbox.maps.Style, java.util.List<? extends com.mapbox.maps.extension.style.light.Lights3D> lights);
-    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.style.light.Lights3D? getLights3D(com.mapbox.maps.Style, String lightId);
-    method @com.mapbox.maps.MapboxExperimental public static void setup3DLights(com.mapbox.maps.Style, com.mapbox.maps.extension.style.light.generated.AmbientLight ambientLight, com.mapbox.maps.extension.style.light.generated.DirectionalLight directionalLight);
+  public final class LightUtils {
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.style.light.DynamicLight dynamicLight(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.light.generated.AmbientLightDslReceiver,kotlin.Unit> blockAmbient, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.light.generated.DirectionalLightDslReceiver,kotlin.Unit> blockDirectional);
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.style.light.Light? getLight(com.mapbox.maps.Style, String lightId);
+    method @com.mapbox.maps.MapboxExperimental public static void setLight(com.mapbox.maps.Style, com.mapbox.maps.extension.style.light.generated.AmbientLight ambientLight, com.mapbox.maps.extension.style.light.generated.DirectionalLight directionalLight);
+    method public static void setLight(com.mapbox.maps.Style, com.mapbox.maps.extension.style.light.generated.FlatLight flatLight);
+    method @com.mapbox.maps.MapboxExperimental public static void setLights(com.mapbox.maps.Style, java.util.List<? extends com.mapbox.maps.extension.style.light.Light> lights);
   }
 
 }
 
 package com.mapbox.maps.extension.style.light.generated {
 
-  @UiThread @com.mapbox.maps.MapboxExperimental public final class AmbientLight extends com.mapbox.maps.extension.style.light.Lights3D implements com.mapbox.maps.extension.style.light.generated.AmbientLightDslReceiver {
-    ctor public AmbientLight(String lightId);
+  @UiThread @com.mapbox.maps.MapboxExperimental public final class AmbientLight extends com.mapbox.maps.extension.style.light.Light implements com.mapbox.maps.extension.style.light.generated.AmbientLightDslReceiver {
     method public com.mapbox.maps.extension.style.light.generated.AmbientLight color(@ColorInt int color);
     method public com.mapbox.maps.extension.style.light.generated.AmbientLight color(String color);
     method public com.mapbox.maps.extension.style.light.generated.AmbientLight color(com.mapbox.maps.extension.style.expressions.generated.Expression color);
@@ -5031,10 +5043,6 @@ package com.mapbox.maps.extension.style.light.generated {
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? intensityAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? intensityTransition;
     property public String lightId;
-    field public static final com.mapbox.maps.extension.style.light.generated.AmbientLight.Companion Companion;
-  }
-
-  public static final class AmbientLight.Companion {
   }
 
   @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.style.types.LightDsl public interface AmbientLightDslReceiver {
@@ -5050,11 +5058,10 @@ package com.mapbox.maps.extension.style.light.generated {
   }
 
   public final class AmbientLightKt {
-    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.style.light.generated.AmbientLight ambientLight(String id, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.light.generated.AmbientLightDslReceiver,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.style.light.generated.AmbientLight ambientLight(String id = "ambient", kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.light.generated.AmbientLightDslReceiver,kotlin.Unit> block);
   }
 
-  @UiThread @com.mapbox.maps.MapboxExperimental public final class DirectionalLight extends com.mapbox.maps.extension.style.light.Lights3D implements com.mapbox.maps.extension.style.light.generated.DirectionalLightDslReceiver {
-    ctor public DirectionalLight(String lightId);
+  @UiThread @com.mapbox.maps.MapboxExperimental public final class DirectionalLight extends com.mapbox.maps.extension.style.light.Light implements com.mapbox.maps.extension.style.light.generated.DirectionalLightDslReceiver {
     method public com.mapbox.maps.extension.style.light.generated.DirectionalLight castShadows(boolean castShadows);
     method public com.mapbox.maps.extension.style.light.generated.DirectionalLight castShadows(com.mapbox.maps.extension.style.expressions.generated.Expression castShadows);
     method public com.mapbox.maps.extension.style.light.generated.DirectionalLight color(@ColorInt int color);
@@ -5106,10 +5113,6 @@ package com.mapbox.maps.extension.style.light.generated {
     property public final Double? shadowIntensity;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? shadowIntensityAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? shadowIntensityTransition;
-    field public static final com.mapbox.maps.extension.style.light.generated.DirectionalLight.Companion Companion;
-  }
-
-  public static final class DirectionalLight.Companion {
   }
 
   @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.style.types.LightDsl public interface DirectionalLightDslReceiver {
@@ -5135,19 +5138,18 @@ package com.mapbox.maps.extension.style.light.generated {
   }
 
   public final class DirectionalLightKt {
-    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.style.light.generated.DirectionalLight directionalLight(String id, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.light.generated.DirectionalLightDslReceiver,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.style.light.generated.DirectionalLight directionalLight(String id = "directional", kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.light.generated.DirectionalLightDslReceiver,kotlin.Unit> block);
   }
 
-  @UiThread public final class Light implements com.mapbox.maps.extension.style.light.generated.LightDslReceiver com.mapbox.maps.extension.style.StyleContract.StyleLightExtension {
-    ctor public Light();
-    method public com.mapbox.maps.extension.style.light.generated.Light anchor(com.mapbox.maps.extension.style.layers.properties.generated.Anchor anchor);
-    method public com.mapbox.maps.extension.style.light.generated.Light anchor(com.mapbox.maps.extension.style.expressions.generated.Expression anchor);
+  @UiThread public final class FlatLight extends com.mapbox.maps.extension.style.light.Light implements com.mapbox.maps.extension.style.light.generated.FlatLightDslReceiver com.mapbox.maps.extension.style.StyleContract.StyleLightExtension {
+    method public com.mapbox.maps.extension.style.light.generated.FlatLight anchor(com.mapbox.maps.extension.style.layers.properties.generated.Anchor anchor);
+    method public com.mapbox.maps.extension.style.light.generated.FlatLight anchor(com.mapbox.maps.extension.style.expressions.generated.Expression anchor);
     method public void bindTo(com.mapbox.maps.Style delegate);
-    method public com.mapbox.maps.extension.style.light.generated.Light color(@ColorInt int color);
-    method public com.mapbox.maps.extension.style.light.generated.Light color(String color);
-    method public com.mapbox.maps.extension.style.light.generated.Light color(com.mapbox.maps.extension.style.expressions.generated.Expression color);
-    method public com.mapbox.maps.extension.style.light.generated.Light colorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
-    method public com.mapbox.maps.extension.style.light.generated.Light colorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method public com.mapbox.maps.extension.style.light.generated.FlatLight color(@ColorInt int color);
+    method public com.mapbox.maps.extension.style.light.generated.FlatLight color(String color);
+    method public com.mapbox.maps.extension.style.light.generated.FlatLight color(com.mapbox.maps.extension.style.expressions.generated.Expression color);
+    method public com.mapbox.maps.extension.style.light.generated.FlatLight colorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.light.generated.FlatLight colorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.properties.generated.Anchor? getAnchor();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getAnchorAsExpression();
     method public String? getColor();
@@ -5157,18 +5159,19 @@ package com.mapbox.maps.extension.style.light.generated {
     method public Double? getIntensity();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getIntensityAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getIntensityTransition();
+    method public String getLightId();
     method public com.mapbox.maps.extension.style.light.LightPosition? getPosition();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getPositionAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getPositionTransition();
-    method public com.mapbox.maps.extension.style.light.generated.Light intensity(double intensity);
-    method public com.mapbox.maps.extension.style.light.generated.Light intensity(com.mapbox.maps.extension.style.expressions.generated.Expression intensity);
-    method public com.mapbox.maps.extension.style.light.generated.Light intensityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
-    method public com.mapbox.maps.extension.style.light.generated.Light intensityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
-    method public com.mapbox.maps.extension.style.light.generated.Light position(double radialCoordinate, double azimuthalAngle, double polarAngle);
-    method public com.mapbox.maps.extension.style.light.generated.Light position(com.mapbox.maps.extension.style.light.LightPosition position);
-    method public com.mapbox.maps.extension.style.light.generated.Light position(com.mapbox.maps.extension.style.expressions.generated.Expression position);
-    method public com.mapbox.maps.extension.style.light.generated.Light positionTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
-    method public com.mapbox.maps.extension.style.light.generated.Light positionTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method public com.mapbox.maps.extension.style.light.generated.FlatLight intensity(double intensity);
+    method public com.mapbox.maps.extension.style.light.generated.FlatLight intensity(com.mapbox.maps.extension.style.expressions.generated.Expression intensity);
+    method public com.mapbox.maps.extension.style.light.generated.FlatLight intensityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.light.generated.FlatLight intensityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method public com.mapbox.maps.extension.style.light.generated.FlatLight position(double radialCoordinate, double azimuthalAngle, double polarAngle);
+    method public com.mapbox.maps.extension.style.light.generated.FlatLight position(com.mapbox.maps.extension.style.light.LightPosition position);
+    method public com.mapbox.maps.extension.style.light.generated.FlatLight position(com.mapbox.maps.extension.style.expressions.generated.Expression position);
+    method public com.mapbox.maps.extension.style.light.generated.FlatLight positionTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.light.generated.FlatLight positionTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     property public final com.mapbox.maps.extension.style.layers.properties.generated.Anchor? anchor;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? anchorAsExpression;
     property public final String? color;
@@ -5178,41 +5181,33 @@ package com.mapbox.maps.extension.style.light.generated {
     property public final Double? intensity;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? intensityAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? intensityTransition;
+    property public String lightId;
     property public final com.mapbox.maps.extension.style.light.LightPosition? position;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? positionAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? positionTransition;
-    field public static final com.mapbox.maps.extension.style.light.generated.Light.Companion Companion;
   }
 
-  public static final class Light.Companion {
+  @com.mapbox.maps.extension.style.types.LightDsl public interface FlatLightDslReceiver {
+    method public com.mapbox.maps.extension.style.light.generated.FlatLight anchor(com.mapbox.maps.extension.style.layers.properties.generated.Anchor anchor = com.mapbox.maps.extension.style.layers.properties.generated.Anchor.VIEWPORT);
+    method public com.mapbox.maps.extension.style.light.generated.FlatLight anchor(com.mapbox.maps.extension.style.expressions.generated.Expression anchor);
+    method public com.mapbox.maps.extension.style.light.generated.FlatLight color(@ColorInt int color);
+    method public com.mapbox.maps.extension.style.light.generated.FlatLight color(String color = "#ffffff");
+    method public com.mapbox.maps.extension.style.light.generated.FlatLight color(com.mapbox.maps.extension.style.expressions.generated.Expression color);
+    method public com.mapbox.maps.extension.style.light.generated.FlatLight colorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.light.generated.FlatLight colorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method public com.mapbox.maps.extension.style.light.generated.FlatLight intensity(double intensity = 0.5);
+    method public com.mapbox.maps.extension.style.light.generated.FlatLight intensity(com.mapbox.maps.extension.style.expressions.generated.Expression intensity);
+    method public com.mapbox.maps.extension.style.light.generated.FlatLight intensityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.light.generated.FlatLight intensityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method public com.mapbox.maps.extension.style.light.generated.FlatLight position(double radialCoordinate, double azimuthalAngle, double polarAngle);
+    method public com.mapbox.maps.extension.style.light.generated.FlatLight position(com.mapbox.maps.extension.style.light.LightPosition position = com.mapbox.maps.extension.style.light.LightPosition(1.15, 210.0, 30.0));
+    method public com.mapbox.maps.extension.style.light.generated.FlatLight position(com.mapbox.maps.extension.style.expressions.generated.Expression position);
+    method public com.mapbox.maps.extension.style.light.generated.FlatLight positionTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.light.generated.FlatLight positionTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
   }
 
-  @com.mapbox.maps.extension.style.types.LightDsl public interface LightDslReceiver {
-    method public com.mapbox.maps.extension.style.light.generated.Light anchor(com.mapbox.maps.extension.style.layers.properties.generated.Anchor anchor = com.mapbox.maps.extension.style.layers.properties.generated.Anchor.VIEWPORT);
-    method public com.mapbox.maps.extension.style.light.generated.Light anchor(com.mapbox.maps.extension.style.expressions.generated.Expression anchor);
-    method public com.mapbox.maps.extension.style.light.generated.Light color(@ColorInt int color);
-    method public com.mapbox.maps.extension.style.light.generated.Light color(String color = "#ffffff");
-    method public com.mapbox.maps.extension.style.light.generated.Light color(com.mapbox.maps.extension.style.expressions.generated.Expression color);
-    method public com.mapbox.maps.extension.style.light.generated.Light colorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
-    method public com.mapbox.maps.extension.style.light.generated.Light colorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
-    method public com.mapbox.maps.extension.style.light.generated.Light intensity(double intensity = 0.5);
-    method public com.mapbox.maps.extension.style.light.generated.Light intensity(com.mapbox.maps.extension.style.expressions.generated.Expression intensity);
-    method public com.mapbox.maps.extension.style.light.generated.Light intensityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
-    method public com.mapbox.maps.extension.style.light.generated.Light intensityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
-    method public com.mapbox.maps.extension.style.light.generated.Light position(double radialCoordinate, double azimuthalAngle, double polarAngle);
-    method public com.mapbox.maps.extension.style.light.generated.Light position(com.mapbox.maps.extension.style.light.LightPosition position = com.mapbox.maps.extension.style.light.LightPosition(1.15, 210.0, 30.0));
-    method public com.mapbox.maps.extension.style.light.generated.Light position(com.mapbox.maps.extension.style.expressions.generated.Expression position);
-    method public com.mapbox.maps.extension.style.light.generated.Light positionTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
-    method public com.mapbox.maps.extension.style.light.generated.Light positionTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
-  }
-
-  public final class LightKt {
-    method public static com.mapbox.maps.extension.style.light.generated.Light light(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.light.generated.LightDslReceiver,kotlin.Unit> block);
-  }
-
-  public final class LightUtils {
-    method public static com.mapbox.maps.extension.style.light.generated.Light getLight(com.mapbox.maps.Style);
-    method public static void setLight(com.mapbox.maps.Style, com.mapbox.maps.extension.style.StyleContract.StyleLightExtension light);
+  public final class FlatLightKt {
+    method public static com.mapbox.maps.extension.style.light.generated.FlatLight flatLight(String id = "flat", kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.light.generated.FlatLightDslReceiver,kotlin.Unit> block);
   }
 
 }

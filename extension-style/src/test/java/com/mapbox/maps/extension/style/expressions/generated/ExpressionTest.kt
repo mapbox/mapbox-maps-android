@@ -461,6 +461,21 @@ class ExpressionTest {
   }
 
   @Test
+  fun dsl_expression_config() {
+    val expression = config {
+      // test builder function
+      config {}
+    }
+    assertEquals("assert config expression", "[config, [config]]", expression.toString())
+  }
+
+  @Test
+  fun expression_config() {
+    val expression = Expression.config(Expression.literal("abc"))
+    assertEquals("assert config expression", "[config, abc]", expression.toString())
+  }
+
+  @Test
   fun dsl_expression_cos() {
     val expression = cos {
       // test builder function

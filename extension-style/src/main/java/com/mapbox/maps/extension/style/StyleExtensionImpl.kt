@@ -10,7 +10,10 @@ import com.mapbox.maps.extension.style.image.ImageExtensionImpl
 import com.mapbox.maps.extension.style.image.ImageNinePatchExtensionImpl
 import com.mapbox.maps.extension.style.layers.*
 import com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName
-import com.mapbox.maps.extension.style.light.generated.Light
+import com.mapbox.maps.extension.style.light.DynamicLight
+import com.mapbox.maps.extension.style.light.generated.AmbientLight
+import com.mapbox.maps.extension.style.light.generated.DirectionalLight
+import com.mapbox.maps.extension.style.light.generated.FlatLight
 import com.mapbox.maps.extension.style.model.ModelExtensionImpl
 import com.mapbox.maps.extension.style.projection.generated.Projection
 import com.mapbox.maps.extension.style.sources.*
@@ -50,9 +53,15 @@ class StyleExtensionImpl private constructor(
   override val layers: List<Pair<Layer, LayerPosition>> = builder.layers.toList()
 
   /**
-   * The light of the style.
+   * The flat light of the style.
    */
-  override val light: Light? = builder.light
+  override val flatLight: StyleContract.StyleLightExtension? = builder.flatLight
+
+  /**
+   * The dynamic light which is built with [AmbientLight] and [DirectionalLight].
+   */
+  @MapboxExperimental
+  override val dynamicLight: StyleContract.StyleLightExtension? = builder.dynamicLight
 
   /**
    * The terrain of the style.
@@ -89,7 +98,8 @@ class StyleExtensionImpl private constructor(
     internal val images = mutableListOf<StyleContract.StyleImageExtension>()
     @OptIn(MapboxExperimental::class)
     internal val models = mutableListOf<StyleContract.StyleModelExtension>()
-    internal var light: Light? = null
+    internal var flatLight: StyleContract.StyleLightExtension? = null
+    internal var dynamicLight: StyleContract.StyleLightExtension? = null
     internal var terrain: Terrain? = null
     internal var atmosphere: Atmosphere? = null
     internal var projection: Projection? = null
@@ -126,13 +136,24 @@ class StyleExtensionImpl private constructor(
     }
 
     /**
-     * Extension function for [Light] to overload Unary operations.
+     * Extension function for [FlatLight] to overload Unary operations.
      *
-     * Apply +[Light] will add the light to the [StyleExtensionImpl].
+     * Apply +[FlatLight] will add the light to the [StyleExtensionImpl].
      */
     @JvmName("setLight")
-    operator fun Light.unaryPlus() {
-      light = this
+    operator fun FlatLight.unaryPlus() {
+      flatLight = this
+    }
+
+    /**
+     * Extension function for [DynamicLight] to overload Unary operations.
+     *
+     * Apply +[DynamicLight] will add the light to the [StyleExtensionImpl].
+     */
+    @JvmName("setLight")
+    @MapboxExperimental
+    operator fun DynamicLight.unaryPlus() {
+      dynamicLight = this
     }
 
     /**

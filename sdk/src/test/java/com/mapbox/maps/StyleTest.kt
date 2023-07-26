@@ -398,21 +398,21 @@ class StyleTest {
   @Test
   fun setLight() {
     val value = mockk<Value>()
-    style.setStyleLight(value)
-    verify { styleManager.setStyleLight(value) }
+    style.setStyleLights(value)
+    verify { styleManager.setStyleLights(value) }
   }
 
   @Test
   fun getLight() {
-    style.getStyleLightProperty("id")
-    verify { styleManager.getStyleLightProperty("id") }
+    style.getStyleLightProperty("id", "prop")
+    verify { styleManager.getStyleLightProperty("id", "prop") }
   }
 
   @Test
   fun setLightProperty() {
     val value = mockk<Value>()
-    style.setStyleLightProperty("id", value)
-    verify { styleManager.setStyleLightProperty("id", value) }
+    style.setStyleLightProperty("id", "prop", value)
+    verify { styleManager.setStyleLightProperty("id", "prop", value) }
   }
 
   @Test

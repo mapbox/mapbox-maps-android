@@ -172,8 +172,11 @@ class MapboxMapTest {
     val layerPosition = LayerPosition(null, null, 0)
     every { styleExtension.layers } returns listOf(Pair(layer, layerPosition))
 
-    val light = mockk<StyleContract.StyleLightExtension>(relaxed = true)
-    every { styleExtension.light } returns light
+    val flatLight = mockk<StyleContract.StyleLightExtension>(relaxed = true)
+    every { styleExtension.flatLight } returns flatLight
+
+    val dynamicLight = mockk<StyleContract.StyleLightExtension>(relaxed = true)
+    every { styleExtension.dynamicLight } returns dynamicLight
 
     val terrain = mockk<StyleContract.StyleTerrainExtension>(relaxed = true)
     every { styleExtension.terrain } returns terrain
@@ -212,7 +215,8 @@ class MapboxMapTest {
     verifyNo { source.bindTo(style) }
     verifyNo { image.bindTo(style) }
     verifyNo { layer.bindTo(style, layerPosition) }
-    verifyNo { light.bindTo(style) }
+    verifyNo { flatLight.bindTo(style) }
+    verifyNo { dynamicLight.bindTo(style) }
     verifyNo { terrain.bindTo(style) }
     verifyNo { projection.bindTo(style) }
     verifyNo { atmosphere.bindTo(style) }
@@ -222,7 +226,8 @@ class MapboxMapTest {
 
     callbackStyleSlots.first().onStyleLoaded(style)
 
-    verify { light.bindTo(style) }
+    verify { flatLight.bindTo(style) }
+    verify { dynamicLight.bindTo(style) }
     verify { terrain.bindTo(style) }
     verify { projection.bindTo(style) }
     verify { atmosphere.bindTo(style) }

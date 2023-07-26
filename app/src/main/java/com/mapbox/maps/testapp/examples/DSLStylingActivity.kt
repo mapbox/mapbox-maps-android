@@ -25,6 +25,7 @@ import com.mapbox.maps.extension.style.layers.generated.circleLayer
 import com.mapbox.maps.extension.style.layers.generated.rasterLayer
 import com.mapbox.maps.extension.style.layers.generated.symbolLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor
+import com.mapbox.maps.extension.style.light.dynamicLight
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.sources.generated.imageSource
 import com.mapbox.maps.extension.style.style
@@ -179,6 +180,17 @@ class DSLStylingActivity : AppCompatActivity(), OnMapClickListener {
     +rasterLayer("raster", "imag") {
       rasterOpacity(0.8)
     }
+    +dynamicLight(
+      {
+        intensity(0.9)
+        color(Color.BLUE)
+      },
+      {
+        shadowIntensity(0.5)
+        castShadows(true)
+        color(Color.BLACK)
+      }
+    )
   }
 
   companion object {

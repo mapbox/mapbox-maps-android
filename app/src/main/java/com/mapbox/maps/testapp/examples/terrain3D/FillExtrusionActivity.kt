@@ -12,9 +12,9 @@ import com.mapbox.maps.extension.style.expressions.generated.Expression.Companio
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.literal
 import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer
-import com.mapbox.maps.extension.style.light.addLights3D
 import com.mapbox.maps.extension.style.light.generated.ambientLight
 import com.mapbox.maps.extension.style.light.generated.directionalLight
+import com.mapbox.maps.extension.style.light.setLight
 import com.mapbox.maps.testapp.databinding.ActivityFillExtrusionBinding
 
 /**
@@ -25,7 +25,6 @@ import com.mapbox.maps.testapp.databinding.ActivityFillExtrusionBinding
 class FillExtrusionActivity : AppCompatActivity() {
 
   private var isRedColor: Boolean = false
-  private var isInitPosition: Boolean = false
   private lateinit var binding: ActivityFillExtrusionBinding
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,22 +51,17 @@ class FillExtrusionActivity : AppCompatActivity() {
 
   private fun setupLights3D(style: Style) {
     // setup 3d light
-    val ambientLight = ambientLight(AMBIENT_LIGHT_ID) {
+    val ambientLight = ambientLight {
       color(Color.BLUE)
       intensity(0.9)
     }
-    val directionalLight = directionalLight(DIRECTIONAL_LIGHT_ID) {
+    val directionalLight = directionalLight {
       color(Color.YELLOW)
       intensity(0.9)
       castShadows(true)
       direction(listOf(0.0, 15.0))
     }
-    style.addLights3D(
-      listOf(
-        ambientLight,
-        directionalLight,
-      )
-    )
+    style.setLight(ambientLight, directionalLight)
     // change color on fab click
     binding.fabLightColor.setOnClickListener {
       isRedColor = !isRedColor
@@ -96,10 +90,5 @@ class FillExtrusionActivity : AppCompatActivity() {
     fillExtrusionLayer.fillExtrusionAmbientOcclusionRadius(3.0)
     fillExtrusionLayer.fillExtrusionEdgeRadius(0.6)
     style.addLayer(fillExtrusionLayer)
-  }
-
-  private companion object {
-    private const val AMBIENT_LIGHT_ID = "ambient_id"
-    private const val DIRECTIONAL_LIGHT_ID = "directional_id"
   }
 }

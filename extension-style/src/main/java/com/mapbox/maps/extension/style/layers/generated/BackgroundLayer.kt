@@ -261,12 +261,12 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
   }
 
   /**
-   * Emission strength.
+   * Emission strength
    */
   @MapboxExperimental
   val backgroundEmissiveStrength: Double?
     /**
-     * Emission strength.
+     * Emission strength
      *
      * Use static method [BackgroundLayer.defaultBackgroundEmissiveStrength] to get the default property.
      *
@@ -277,7 +277,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
     }
 
   /**
-   * Emission strength.
+   * Emission strength
    *
    * Use static method [BackgroundLayer.defaultBackgroundEmissiveStrength] to set the default property.
    *
@@ -290,7 +290,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
   }
 
   /**
-   * Emission strength.
+   * Emission strength
    *
    * This is an Expression representation of "background-emissive-strength".
    *
@@ -298,7 +298,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
   @MapboxExperimental
   val backgroundEmissiveStrengthAsExpression: Expression?
     /**
-     * Emission strength.
+     * Emission strength
      *
      * Get the BackgroundEmissiveStrength property as an Expression
      *
@@ -317,7 +317,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
     }
 
   /**
-   * Emission strength.
+   * Emission strength
    *
    * Use static method [BackgroundLayer.defaultBackgroundEmissiveStrengthAsExpression] to set the default property.
    *
@@ -657,12 +657,12 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
       get() = StyleManager.getStyleLayerPropertyDefaultValue("background", "background-color-transition").silentUnwrap()
 
     /**
-     * Emission strength.
+     * Emission strength
      */
     @MapboxExperimental
     val defaultBackgroundEmissiveStrength: Double?
       /**
-       * Emission strength.
+       * Emission strength
        *
        * Get the default value of BackgroundEmissiveStrength property
        *
@@ -673,7 +673,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
       }
 
     /**
-     * Emission strength.
+     * Emission strength
      *
      * This is an Expression representation of "background-emissive-strength".
      *
@@ -872,7 +872,7 @@ interface BackgroundLayerDsl {
   fun backgroundColorTransition(block: StyleTransition.Builder.() -> Unit): BackgroundLayer
 
   /**
-   * Emission strength.
+   * Emission strength
    *
    * @param backgroundEmissiveStrength value of backgroundEmissiveStrength
    */
@@ -880,7 +880,7 @@ interface BackgroundLayerDsl {
   fun backgroundEmissiveStrength(backgroundEmissiveStrength: Double = 0.0): BackgroundLayer
 
   /**
-   * Emission strength.
+   * Emission strength
    *
    * @param backgroundEmissiveStrength value of backgroundEmissiveStrength as Expression
    */
@@ -888,7 +888,7 @@ interface BackgroundLayerDsl {
   fun backgroundEmissiveStrength(backgroundEmissiveStrength: Expression): BackgroundLayer
 
   /**
-   * Emission strength.
+   * Emission strength
    *
    * Set the BackgroundEmissiveStrength property transition options
    *
@@ -898,7 +898,7 @@ interface BackgroundLayerDsl {
   fun backgroundEmissiveStrengthTransition(options: StyleTransition): BackgroundLayer
 
   /**
-   * Emission strength.
+   * Emission strength
    *
    * DSL for [backgroundEmissiveStrengthTransition].
    */

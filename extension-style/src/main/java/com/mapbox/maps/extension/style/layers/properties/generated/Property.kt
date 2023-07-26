@@ -503,22 +503,6 @@ enum class HillshadeIlluminationAnchor(override val value: String) : LayerProper
    */
   VIEWPORT("viewport"),
 }
-// SKY_TYPE: The type of the sky
-/**
- * The type of the sky
- *
- * @param value String value of this property
- */
-enum class SkyType(override val value: String) : LayerProperty {
-  /**
-   * Renders the sky with a gradient that can be configured with {@link SKY_GRADIENT_RADIUS} and {@link SKY_GRADIENT}.
-   */
-  GRADIENT("gradient"),
-  /**
-   * Renders the sky with a simulated atmospheric scattering algorithm, the sun direction can be attached to the light position or explicitly set through {@link SKY_ATMOSPHERE_SUN}.
-   */
-  ATMOSPHERE("atmosphere"),
-}
 // MODEL_SCALE_MODE: Defines scaling mode. Only applies to location-indicator type layers.
 /**
  * Defines scaling mode. Only applies to location-indicator type layers.
@@ -552,6 +536,22 @@ enum class ModelType(override val value: String) : LayerProperty {
    * Displayed over other 3D content, occluded by terrain.
    */
   LOCATION_INDICATOR("location-indicator"),
+}
+// SKY_TYPE: The type of the sky
+/**
+ * The type of the sky
+ *
+ * @param value String value of this property
+ */
+enum class SkyType(override val value: String) : LayerProperty {
+  /**
+   * Renders the sky with a gradient that can be configured with {@link SKY_GRADIENT_RADIUS} and {@link SKY_GRADIENT}.
+   */
+  GRADIENT("gradient"),
+  /**
+   * Renders the sky with a simulated atmospheric scattering algorithm, the sun direction can be attached to the light position or explicitly set through {@link SKY_ATMOSPHERE_SUN}.
+   */
+  ATMOSPHERE("atmosphere"),
 }
 // ANCHOR: Whether extruded geometries are lit relative to the map or viewport.
 /**

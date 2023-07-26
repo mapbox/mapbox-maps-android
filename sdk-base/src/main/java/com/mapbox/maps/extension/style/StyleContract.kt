@@ -40,9 +40,15 @@ interface StyleContract {
     val layers: List<Pair<StyleLayerExtension, LayerPosition>>
 
     /**
-     * The light of the style.
+     * The flat light of the style.
      */
-    val light: StyleLightExtension?
+    val flatLight: StyleLightExtension?
+
+    /**
+     * The dynamic (directional and ambient) light of the style.
+     */
+    @MapboxExperimental
+    val dynamicLight: StyleLightExtension?
 
     /**
      * The 3D terrain of the style.

@@ -340,42 +340,14 @@ class Style {
   }
 
   /**
-   * Sets the style global light source properties.
+   * Sets a value to the light property.
    *
-   * See [Style Specification - Light](https://docs.mapbox.com/mapbox-gl-js/style-spec/#light)
-   *
-   * @param parameters A map of style light properties values, with their names as key.
-   *
-   * @return A string describing an error if the operation was not successful, empty otherwise.
-   */
-  fun setStyleLight(parameters: Value): Expected<String, None> {
-    checkNativeStyle("setStyleLight")
-    return styleManager.setStyleLight(parameters)
-  }
-
-  /**
-   * Sets a value to the the style light property.
-   *
-   * @param id Style light property name.
-   * @param light Style light property value.
+   * @param id light id.
+   * @param property light property name.
+   * @param value light property value.
    *
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
-  fun setStyleLightProperty(id: String, light: Value): Expected<String, None> {
-    checkNativeStyle("setStyleLightProperty")
-    return styleManager.setStyleLightProperty(id, light)
-  }
-
-  /**
-   * Sets a value to the 3D light property.
-   *
-   * @param id 3D light id.
-   * @param property 3D light property name.
-   * @param value 3D light property value.
-   *
-   * @return A string describing an error if the operation was not successful, empty otherwise.
-   */
-  @MapboxExperimental
   fun setStyleLightProperty(
     id: String,
     property: String,
@@ -386,24 +358,22 @@ class Style {
   }
 
   /**
-   * Gets added 3D lights to the style.
+   * Gets added lights to the style.
    *
    * @return list of [StyleObjectInfo].
    */
-  @MapboxExperimental
   fun getStyleLights(): MutableList<StyleObjectInfo> {
     checkNativeStyle("getStyleLights")
     return styleManager.styleLights
   }
 
   /**
-   * Sets 3D lights to the style.
+   * Sets lights to the style.
    *
-   * @param lights 3D light value.
+   * @param lights light value.
    *
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
-  @MapboxExperimental
   fun setStyleLights(lights: Value): Expected<String, None> {
     checkNativeStyle("setStyleLights")
     return styleManager.setStyleLights(lights)
@@ -524,25 +494,13 @@ class Style {
   }
 
   /**
-   * Gets the value of a style light property.
+   * Gets the value of the style light property.
    *
-   * @param property Style light property name.
-   * @return Style light property value.
+   * @param id light id.
+   * @param property light property name.
+   *
+   * @return The value of property in the light.
    */
-  fun getStyleLightProperty(property: String): StylePropertyValue {
-    checkNativeStyle("getStyleLightProperty")
-    return styleManager.getStyleLightProperty(property)
-  }
-
-  /**
-   * Gets a value to the 3D light property.
-   *
-   * @param id 3D light id.
-   * @param property 3D light property name.
-   *
-   * @return The value of property in the 3D light.
-   */
-  @MapboxExperimental
   fun getStyleLightProperty(id: String, property: String): StylePropertyValue {
     checkNativeStyle("getStyleLightProperty")
     return styleManager.getStyleLightProperty(id, property)

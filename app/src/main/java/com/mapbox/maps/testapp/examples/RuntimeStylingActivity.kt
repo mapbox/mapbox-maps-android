@@ -15,8 +15,8 @@ import com.mapbox.maps.extension.style.layers.generated.fillExtrusionLayer
 import com.mapbox.maps.extension.style.layers.generated.rasterLayer
 import com.mapbox.maps.extension.style.layers.generated.symbolLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.*
-import com.mapbox.maps.extension.style.light.generated.light
-import com.mapbox.maps.extension.style.light.generated.setLight
+import com.mapbox.maps.extension.style.light.generated.flatLight
+import com.mapbox.maps.extension.style.light.setLight
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.*
 import com.mapbox.maps.extension.style.sources.getSource
@@ -299,7 +299,7 @@ class RuntimeStylingActivity : AppCompatActivity() {
   }
 
   private fun addFillExtrusionLight(style: Style) {
-    val light = light {
+    val light = flatLight {
       anchor(Anchor.MAP)
       color(Color.YELLOW)
       position(

@@ -26,8 +26,8 @@ import com.mapbox.maps.extension.style.layers.properties.generated.Anchor;
 import com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor;
 import com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor;
 import com.mapbox.maps.extension.style.layers.properties.generated.Visibility;
-import com.mapbox.maps.extension.style.light.generated.Light;
-import com.mapbox.maps.extension.style.light.generated.LightUtils;
+import com.mapbox.maps.extension.style.light.LightUtils;
+import com.mapbox.maps.extension.style.light.generated.FlatLight;
 import com.mapbox.maps.extension.style.sources.SourceUtils;
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource;
 import com.mapbox.maps.extension.style.sources.generated.ImageSource;
@@ -319,7 +319,7 @@ public class RuntimeStylingJavaActivity extends AppCompatActivity {
     }
 
     private void addFillExtrusionLight(Style style) {
-        final Light light = new Light();
+        final FlatLight light = new FlatLight("flat");
         light.anchor(Anchor.MAP);
         light.color(Color.YELLOW);
         light.position(10.0, 40.0, 50.0);

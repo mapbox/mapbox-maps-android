@@ -416,6 +416,13 @@ class Expression : Value {
     }
 
     /**
+     * Retrieves the configuration value for the given option.
+     */
+    fun config(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
+      this@ExpressionBuilder.arguments.add(Expression.config(block))
+    }
+
+    /**
      * Returns the cosine of the input.
      */
     fun cos(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
@@ -720,7 +727,8 @@ class Expression : Value {
     /**
      * Returns a requested property of the light configuration based on the supplied options. Currently the only
      * supported option is `brightness` which returns the global brightness value of the lights on a scale
-     * of 0 to 1, where 0 means total darkness and 1 means full brightness.
+     * of 0 to 1, where 0 means total darkness and 1 means full brightness. This expression
+     * works only with 3D light, i.e. when `lights` root property is defined.
      */
     fun measureLight(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.measureLight(block))
@@ -2417,6 +2425,24 @@ class Expression : Value {
       ExpressionBuilder("concat").apply(block).build()
 
     /**
+     * Retrieves the configuration value for the given option.
+     */
+    @JvmStatic
+    fun config(vararg expressions: Expression): Expression {
+      val builder = ExpressionBuilder("config")
+      expressions.forEach {
+        builder.addArgument(it)
+      }
+      return builder.build()
+    }
+
+    /**
+     * DSL function for "config".
+     */
+    fun config(block: ExpressionBuilder.() -> Unit): Expression =
+      ExpressionBuilder("config").apply(block).build()
+
+    /**
      * Returns the cosine of the input.
      */
     @JvmStatic
@@ -2967,7 +2993,8 @@ class Expression : Value {
     /**
      * Returns a requested property of the light configuration based on the supplied options. Currently the only
      * supported option is `brightness` which returns the global brightness value of the lights on a scale
-     * of 0 to 1, where 0 means total darkness and 1 means full brightness.
+     * of 0 to 1, where 0 means total darkness and 1 means full brightness. This expression
+     * works only with 3D light, i.e. when `lights` root property is defined.
      */
     @JvmStatic
     fun measureLight(vararg expressions: Expression): Expression {

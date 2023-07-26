@@ -43,7 +43,7 @@ import com.mapbox.maps.plugin.annotation.generated.createPointAnnotationManager
  * @param textTransform Specifies how to capitalize text, similar to the CSS {@link PropertyFactory#textTransform} property.
  * @param iconColorInt The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). The property is set as Color Int.
  * @param iconColorString The color of the icon. This can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). The property is set as Color String.
- * @param iconEmissiveStrength Emission strength. The unit of iconEmissiveStrength is in intensity.
+ * @param iconEmissiveStrength Emission strength The unit of iconEmissiveStrength is in intensity.
  * @param iconHaloBlur Fade out the halo towards the outside. The unit of iconHaloBlur is in density-independent pixels.
  * @param iconHaloColorInt The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). The property is set as Color Int.
  * @param iconHaloColorString The color of the icon's halo. Icon halos can only be used with [SDF icons](/help/troubleshooting/using-recolorable-images-in-mapbox-maps/). The property is set as Color String.
@@ -52,7 +52,7 @@ import com.mapbox.maps.plugin.annotation.generated.createPointAnnotationManager
  * @param iconOpacity The opacity at which the icon will be drawn.
  * @param textColorInt The color with which the text will be drawn. The property is set as Color Int.
  * @param textColorString The color with which the text will be drawn. The property is set as Color String.
- * @param textEmissiveStrength Emission strength. The unit of textEmissiveStrength is in intensity.
+ * @param textEmissiveStrength Emission strength The unit of textEmissiveStrength is in intensity.
  * @param textHaloBlur The halo's fadeout distance towards the outside. The unit of textHaloBlur is in density-independent pixels.
  * @param textHaloColorInt The color of the text's halo, which helps it stand out from backgrounds. The property is set as Color Int.
  * @param textHaloColorString The color of the text's halo, which helps it stand out from backgrounds. The property is set as Color String.

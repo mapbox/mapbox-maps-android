@@ -2,35 +2,30 @@
 
 package com.mapbox.maps.extension.style.light.generated
 
-import android.util.Log
 import androidx.annotation.ColorInt
 import androidx.annotation.UiThread
-import com.mapbox.bindgen.Value
-import com.mapbox.maps.MapboxStyleException
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
 import com.mapbox.maps.extension.style.layers.properties.generated.Anchor
+import com.mapbox.maps.extension.style.light.Light
 import com.mapbox.maps.extension.style.light.LightPosition
+import com.mapbox.maps.extension.style.light.setLight
 import com.mapbox.maps.extension.style.types.LightDsl
 import com.mapbox.maps.extension.style.types.StyleTransition
 import com.mapbox.maps.extension.style.utils.ColorUtils.colorIntToRgbaExpression
 import com.mapbox.maps.extension.style.utils.ColorUtils.rgbaExpressionToColorInt
 import com.mapbox.maps.extension.style.utils.ColorUtils.rgbaExpressionToColorString
-import com.mapbox.maps.extension.style.utils.unwrap
-import java.util.*
-import kotlin.collections.HashMap
+import java.util.Locale
 
 /**
- * The global light source.
+ * A global directional light source which is only applied on 3D layers and hillshade layers. Using this type disables other light sources.
  *
  * Check the [online documentation](https://www.mapbox.com/mapbox-gl-style-spec/#light).
  */
 @UiThread
-class Light : LightDslReceiver, StyleContract.StyleLightExtension {
-  internal var delegate: Style? = null
-  private val properties = HashMap<String, PropertyValue<*>>()
+class FlatLight internal constructor(override val lightId: String) : FlatLightDslReceiver, StyleContract.StyleLightExtension, Light() {
 
   /**
    * Whether extruded geometries are lit relative to the map or viewport.
@@ -52,7 +47,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
    *
    * @param anchor as Anchor
    */
-  override fun anchor(anchor: Anchor): Light = apply {
+  override fun anchor(anchor: Anchor): FlatLight = apply {
     setProperty(PropertyValue("anchor", anchor))
   }
 
@@ -83,7 +78,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
    *
    * @param anchor value of anchor as Expression
    */
-  override fun anchor(anchor: Expression): Light = apply {
+  override fun anchor(anchor: Expression): FlatLight = apply {
     val propertyValue = PropertyValue("anchor", anchor)
     setProperty(propertyValue)
   }
@@ -108,7 +103,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
    *
    * @param color as int
    */
-  override fun color(@ColorInt color: Int): Light = apply {
+  override fun color(@ColorInt color: Int): FlatLight = apply {
     val propertyValue = PropertyValue("color", colorIntToRgbaExpression(color))
     setProperty(propertyValue)
   }
@@ -132,7 +127,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
    *
    * @param color as String
    */
-  override fun color(color: String): Light = apply {
+  override fun color(color: String): FlatLight = apply {
     setProperty(PropertyValue("color", color))
   }
 
@@ -160,7 +155,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
    *
    * @param color value of color as Expression
    */
-  override fun color(color: Expression): Light = apply {
+  override fun color(color: Expression): FlatLight = apply {
     val propertyValue = PropertyValue("color", color)
     setProperty(propertyValue)
   }
@@ -181,7 +176,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
    *
    * @param options transition options for color
    */
-  override fun colorTransition(options: StyleTransition): Light = apply {
+  override fun colorTransition(options: StyleTransition): FlatLight = apply {
     val propertyValue = PropertyValue("color-transition", options)
     setProperty(propertyValue)
   }
@@ -189,7 +184,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
   /**
    * DSL for [colorTransition].
    */
-  override fun colorTransition(block: StyleTransition.Builder.() -> Unit): Light = apply {
+  override fun colorTransition(block: StyleTransition.Builder.() -> Unit): FlatLight = apply {
     colorTransition(StyleTransition.Builder().apply(block).build())
   }
   /**
@@ -209,7 +204,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
    *
    * @param intensity as Double
    */
-  override fun intensity(intensity: Double): Light = apply {
+  override fun intensity(intensity: Double): FlatLight = apply {
     setProperty(PropertyValue("intensity", intensity))
   }
 
@@ -240,7 +235,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
    *
    * @param intensity value of intensity as Expression
    */
-  override fun intensity(intensity: Expression): Light = apply {
+  override fun intensity(intensity: Expression): FlatLight = apply {
     val propertyValue = PropertyValue("intensity", intensity)
     setProperty(propertyValue)
   }
@@ -261,7 +256,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
    *
    * @param options transition options for intensity
    */
-  override fun intensityTransition(options: StyleTransition): Light = apply {
+  override fun intensityTransition(options: StyleTransition): FlatLight = apply {
     val propertyValue = PropertyValue("intensity-transition", options)
     setProperty(propertyValue)
   }
@@ -269,7 +264,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
   /**
    * DSL for [intensityTransition].
    */
-  override fun intensityTransition(block: StyleTransition.Builder.() -> Unit): Light = apply {
+  override fun intensityTransition(block: StyleTransition.Builder.() -> Unit): FlatLight = apply {
     intensityTransition(StyleTransition.Builder().apply(block).build())
   }
   /**
@@ -293,7 +288,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
    *
    * DSL for setting [LightPosition].
    */
-  override fun position(radialCoordinate: Double, azimuthalAngle: Double, polarAngle: Double): Light = apply {
+  override fun position(radialCoordinate: Double, azimuthalAngle: Double, polarAngle: Double): FlatLight = apply {
     position(LightPosition(radialCoordinate, azimuthalAngle, polarAngle))
   }
   /**
@@ -301,7 +296,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
    *
    * @param position as LightPosition
    */
-  override fun position(position: LightPosition): Light = apply {
+  override fun position(position: LightPosition): FlatLight = apply {
     setProperty(PropertyValue("position", position))
   }
 
@@ -332,7 +327,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
    *
    * @param position value of position as Expression
    */
-  override fun position(position: Expression): Light = apply {
+  override fun position(position: Expression): FlatLight = apply {
     val propertyValue = PropertyValue("position", position)
     setProperty(propertyValue)
   }
@@ -353,7 +348,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
    *
    * @param options transition options for position
    */
-  override fun positionTransition(options: StyleTransition): Light = apply {
+  override fun positionTransition(options: StyleTransition): FlatLight = apply {
     val propertyValue = PropertyValue("position-transition", options)
     setProperty(propertyValue)
   }
@@ -361,77 +356,26 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
   /**
    * DSL for [positionTransition].
    */
-  override fun positionTransition(block: StyleTransition.Builder.() -> Unit): Light = apply {
+  override fun positionTransition(block: StyleTransition.Builder.() -> Unit): FlatLight = apply {
     positionTransition(StyleTransition.Builder().apply(block).build())
   }
 
   /**
-   * Bind the light to the map controller.
+   * Get the type of this light
    *
-   * @param delegate The map controller
+   * @return Type of the light as [String]
+   */
+  override fun getType(): String {
+    return "flat"
+  }
+
+  /**
+   * Bind the light to the Style.
+   *
+   * @param delegate The style delegate
    */
   override fun bindTo(delegate: Style) {
-    this.delegate = delegate
-    val lightParams = HashMap<String, Value>()
-    properties.forEach {
-      lightParams[it.key] = it.value.value
-    }
-    val expected = delegate.setStyleLight(Value(lightParams))
-    expected.error?.let {
-      throw MapboxStyleException("Set light failed: $it")
-    }
-  }
-
-  private fun setProperty(property: PropertyValue<*>) {
-    properties[property.propertyName] = property
-    updateProperty(property)
-  }
-
-  private fun updateProperty(propertyValue: PropertyValue<*>) {
-    val expected = delegate?.setStyleLightProperty(
-      propertyValue.propertyName,
-      propertyValue.value
-    )
-    expected?.error?.let {
-      throw MapboxStyleException("Set light property failed: $it")
-    }
-  }
-
-  private inline fun <reified T> getPropertyValue(propertyName: String): T? {
-    delegate?.let {
-      return try {
-        it.getStyleLightProperty(propertyName).unwrap()
-      } catch (e: RuntimeException) {
-        Log.e(TAG, "Get light property failed: ${e.message}")
-        Log.e(TAG, it.getStyleLightProperty(propertyName).toString())
-        null
-      }
-    }
-    throw MapboxStyleException("Get property $propertyName failed: light is not added to style yet.")
-  }
-
-  private fun getTransitionProperty(transitionName: String): StyleTransition? {
-    delegate?.let {
-      return try {
-        @Suppress("UNCHECKED_CAST")
-        val styleLayerProperty =
-          it.getStyleLightProperty(transitionName).value.contents as HashMap<String, Value>
-        val duration = styleLayerProperty["duration"]?.contents as Long
-        val delay = styleLayerProperty["delay"]?.contents as Long
-        StyleTransition.Builder().delay(delay).duration(duration).build()
-      } catch (e: RuntimeException) {
-        Log.e(TAG, "Get light property failed: ${e.message}")
-        Log.e(TAG, it.getStyleLightProperty(transitionName).toString())
-        null
-      }
-    }
-    throw MapboxStyleException("Get property $transitionName failed: light is not added to style yet.")
-  }
-  /**
-   * Static variables and methods.
-   */
-  companion object {
-    private const val TAG = "Mbgl-Light"
+    delegate.setLight(this)
   }
 }
 
@@ -442,118 +386,118 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
  * property getters.
  */
 @LightDsl
-interface LightDslReceiver {
+interface FlatLightDslReceiver {
 
   /**
    * Whether extruded geometries are lit relative to the map or viewport.
    *
    * @param anchor as Anchor
    */
-  fun anchor(anchor: Anchor = Anchor.VIEWPORT): Light
+  fun anchor(anchor: Anchor = Anchor.VIEWPORT): FlatLight
 
   /**
    * Whether extruded geometries are lit relative to the map or viewport.
    *
    * @param anchor value of anchor as Expression
    */
-  fun anchor(anchor: Expression): Light
+  fun anchor(anchor: Expression): FlatLight
 
   /**
    * Color tint for lighting extruded geometries.
    *
    * @param color as int
    */
-  fun color(@ColorInt color: Int): Light
+  fun color(@ColorInt color: Int): FlatLight
 
   /**
    * Color tint for lighting extruded geometries.
    *
    * @param color as String
    */
-  fun color(color: String = "#ffffff"): Light
+  fun color(color: String = "#ffffff"): FlatLight
 
   /**
    * Color tint for lighting extruded geometries.
    *
    * @param color value of color as Expression
    */
-  fun color(color: Expression): Light
+  fun color(color: Expression): FlatLight
 
   /**
    * Set the Color property transition options.
    *
    * @param options transition options for color
    */
-  fun colorTransition(options: StyleTransition): Light
+  fun colorTransition(options: StyleTransition): FlatLight
 
   /**
    * DSL for [colorTransition].
    */
-  fun colorTransition(block: StyleTransition.Builder.() -> Unit): Light
+  fun colorTransition(block: StyleTransition.Builder.() -> Unit): FlatLight
 
   /**
    * Intensity of lighting (on a scale from 0 to 1). Higher numbers will present as more extreme contrast.
    *
    * @param intensity as Double
    */
-  fun intensity(intensity: Double = 0.5): Light
+  fun intensity(intensity: Double = 0.5): FlatLight
 
   /**
    * Intensity of lighting (on a scale from 0 to 1). Higher numbers will present as more extreme contrast.
    *
    * @param intensity value of intensity as Expression
    */
-  fun intensity(intensity: Expression): Light
+  fun intensity(intensity: Expression): FlatLight
 
   /**
    * Set the Intensity property transition options.
    *
    * @param options transition options for intensity
    */
-  fun intensityTransition(options: StyleTransition): Light
+  fun intensityTransition(options: StyleTransition): FlatLight
 
   /**
    * DSL for [intensityTransition].
    */
-  fun intensityTransition(block: StyleTransition.Builder.() -> Unit): Light
+  fun intensityTransition(block: StyleTransition.Builder.() -> Unit): FlatLight
 
   /**
    * Position of the light source relative to lit (extruded) geometries, in [r radial coordinate, a azimuthal angle, p polar angle] where r indicates the distance from the center of the base of an object to its light, a indicates the position of the light relative to 0 degree (0 degree when `light.anchor` is set to `viewport` corresponds to the top of the viewport, or 0 degree when `light.anchor` is set to `map` corresponds to due north, and degrees proceed clockwise), and p indicates the height of the light (from 0 degree, directly above, to 180 degree, directly below).
    *
    * DSL for setting [LightPosition].
    */
-  fun position(radialCoordinate: Double, azimuthalAngle: Double, polarAngle: Double): Light
+  fun position(radialCoordinate: Double, azimuthalAngle: Double, polarAngle: Double): FlatLight
 
   /**
    * Position of the light source relative to lit (extruded) geometries, in [r radial coordinate, a azimuthal angle, p polar angle] where r indicates the distance from the center of the base of an object to its light, a indicates the position of the light relative to 0 degree (0 degree when `light.anchor` is set to `viewport` corresponds to the top of the viewport, or 0 degree when `light.anchor` is set to `map` corresponds to due north, and degrees proceed clockwise), and p indicates the height of the light (from 0 degree, directly above, to 180 degree, directly below).
    *
    * @param position as LightPosition
    */
-  fun position(position: LightPosition = LightPosition(1.15, 210.0, 30.0)): Light
+  fun position(position: LightPosition = LightPosition(1.15, 210.0, 30.0)): FlatLight
 
   /**
    * Position of the light source relative to lit (extruded) geometries, in [r radial coordinate, a azimuthal angle, p polar angle] where r indicates the distance from the center of the base of an object to its light, a indicates the position of the light relative to 0 degree (0 degree when `light.anchor` is set to `viewport` corresponds to the top of the viewport, or 0 degree when `light.anchor` is set to `map` corresponds to due north, and degrees proceed clockwise), and p indicates the height of the light (from 0 degree, directly above, to 180 degree, directly below).
    *
    * @param position value of position as Expression
    */
-  fun position(position: Expression): Light
+  fun position(position: Expression): FlatLight
 
   /**
    * Set the Position property transition options.
    *
    * @param options transition options for position
    */
-  fun positionTransition(options: StyleTransition): Light
+  fun positionTransition(options: StyleTransition): FlatLight
 
   /**
    * DSL for [positionTransition].
    */
-  fun positionTransition(block: StyleTransition.Builder.() -> Unit): Light
+  fun positionTransition(block: StyleTransition.Builder.() -> Unit): FlatLight
 }
 
 /**
- * DSL function for creating [Light] instance.
+ * DSL function for creating [flatLight] instance.
  */
-fun light(block: LightDslReceiver.() -> Unit): Light = Light().apply(block)
+fun flatLight(id: String = "flat", block: FlatLightDslReceiver.() -> Unit): FlatLight = FlatLight(id).apply(block)
 
 // End of generated file.

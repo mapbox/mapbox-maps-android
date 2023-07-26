@@ -7,7 +7,7 @@ import androidx.annotation.UiThread
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
-import com.mapbox.maps.extension.style.light.Lights3D
+import com.mapbox.maps.extension.style.light.Light
 import com.mapbox.maps.extension.style.types.LightDsl
 import com.mapbox.maps.extension.style.types.StyleTransition
 import com.mapbox.maps.extension.style.utils.ColorUtils.colorIntToRgbaExpression
@@ -15,93 +15,65 @@ import com.mapbox.maps.extension.style.utils.ColorUtils.rgbaExpressionToColorInt
 import com.mapbox.maps.extension.style.utils.ColorUtils.rgbaExpressionToColorString
 
 /**
- *
+ * A light that has a direction and is located at infinite, so its rays are parallel. Simulates the sun light and it can cast shadows
  *
  * Check the [online documentation](https://www.mapbox.com/mapbox-gl-style-spec/#light).
  */
 @UiThread
 @MapboxExperimental
-class DirectionalLight(override val lightId: String) : DirectionalLightDslReceiver, Lights3D() {
+class DirectionalLight internal constructor(override val lightId: String) : DirectionalLightDslReceiver, Light() {
 
   /**
-   * Direction of the light source specified as [a azimuthal angle, p polar angle] where a indicates the azimuthal angle of the light relative to north (in degrees and proceeding clockwise), and p indicates polar angle of the light (from 0 degree, directly above, to 180 degree, directly below).
+   * Enable/Disable shadow casting for this light
    */
-  val direction: List<Double>?
+  val castShadows: Boolean?
     /**
-     * Direction of the light source specified as [a azimuthal angle, p polar angle] where a indicates the azimuthal angle of the light relative to north (in degrees and proceeding clockwise), and p indicates polar angle of the light (from 0 degree, directly above, to 180 degree, directly below).
+     * Enable/Disable shadow casting for this light
      *
-     * @return direction as List<Double>
+     * @return castShadows as Boolean
      */
     get() {
-      return getPropertyValue("direction")
+      return getPropertyValue("cast-shadows")
     }
   /**
-   * Direction of the light source specified as [a azimuthal angle, p polar angle] where a indicates the azimuthal angle of the light relative to north (in degrees and proceeding clockwise), and p indicates polar angle of the light (from 0 degree, directly above, to 180 degree, directly below).
+   * Enable/Disable shadow casting for this light
    *
-   * @param direction as List<Double>
+   * @param castShadows as Boolean
    */
-  override fun direction(direction: List<Double>): DirectionalLight = apply {
-    setProperty(PropertyValue("direction", direction))
+  override fun castShadows(castShadows: Boolean): DirectionalLight = apply {
+    setProperty(PropertyValue("cast-shadows", castShadows))
   }
 
   /**
-   * Direction of the light source specified as [a azimuthal angle, p polar angle] where a indicates the azimuthal angle of the light relative to north (in degrees and proceeding clockwise), and p indicates polar angle of the light (from 0 degree, directly above, to 180 degree, directly below).
+   * Enable/Disable shadow casting for this light
    *
-   * This is an Expression representation of "direction".
+   * This is an Expression representation of "cast-shadows".
    */
-  val directionAsExpression: Expression?
+  val castShadowsAsExpression: Expression?
     /**
-     * Direction of the light source specified as [a azimuthal angle, p polar angle] where a indicates the azimuthal angle of the light relative to north (in degrees and proceeding clockwise), and p indicates polar angle of the light (from 0 degree, directly above, to 180 degree, directly below).
+     * Enable/Disable shadow casting for this light
      *
-     * Get the Direction property as an Expression
+     * Get the CastShadows property as an Expression
      *
-     * @return List<Double>
+     * @return Boolean
      */
     get() {
-      getPropertyValue<Expression>("direction")?.let {
+      getPropertyValue<Expression>("cast-shadows")?.let {
         return it
       }
-      direction?.let {
+      castShadows?.let {
         return Expression.literal(it)
       }
       return null
     }
   /**
-   * Direction of the light source specified as [a azimuthal angle, p polar angle] where a indicates the azimuthal angle of the light relative to north (in degrees and proceeding clockwise), and p indicates polar angle of the light (from 0 degree, directly above, to 180 degree, directly below).
+   * Enable/Disable shadow casting for this light
    *
-   * @param direction value of direction as Expression
+   * @param castShadows value of castShadows as Expression
    */
-  override fun direction(direction: Expression): DirectionalLight = apply {
-    val propertyValue = PropertyValue("direction", direction)
+  override fun castShadows(castShadows: Expression): DirectionalLight = apply {
+    val propertyValue = PropertyValue("cast-shadows", castShadows)
     setProperty(propertyValue)
-  }
-  /**
-   * Direction property transition options.
-   */
-  val directionTransition: StyleTransition?
-    /**
-     * Get the Direction property transition options.
-     *
-     * @return transition options for direction
-     */
-    get() {
-      return getTransitionProperty("direction-transition")
-    }
-  /**
-   * Set the Direction property transition options.
-   *
-   * @param options transition options for direction
-   */
-  override fun directionTransition(options: StyleTransition): DirectionalLight = apply {
-    val propertyValue = PropertyValue("direction-transition", options)
-    setProperty(propertyValue)
-  }
-
-  /**
-   * DSL for [directionTransition].
-   */
-  override fun directionTransition(block: StyleTransition.Builder.() -> Unit): DirectionalLight = apply {
-    directionTransition(StyleTransition.Builder().apply(block).build())
   }
   /**
    * Color of the directional light.
@@ -209,6 +181,86 @@ class DirectionalLight(override val lightId: String) : DirectionalLightDslReceiv
     colorTransition(StyleTransition.Builder().apply(block).build())
   }
   /**
+   * Direction of the light source specified as [a azimuthal angle, p polar angle] where a indicates the azimuthal angle of the light relative to north (in degrees and proceeding clockwise), and p indicates polar angle of the light (from 0 degree, directly above, to 180 degree, directly below).
+   */
+  val direction: List<Double>?
+    /**
+     * Direction of the light source specified as [a azimuthal angle, p polar angle] where a indicates the azimuthal angle of the light relative to north (in degrees and proceeding clockwise), and p indicates polar angle of the light (from 0 degree, directly above, to 180 degree, directly below).
+     *
+     * @return direction as List<Double>
+     */
+    get() {
+      return getPropertyValue("direction")
+    }
+  /**
+   * Direction of the light source specified as [a azimuthal angle, p polar angle] where a indicates the azimuthal angle of the light relative to north (in degrees and proceeding clockwise), and p indicates polar angle of the light (from 0 degree, directly above, to 180 degree, directly below).
+   *
+   * @param direction as List<Double>
+   */
+  override fun direction(direction: List<Double>): DirectionalLight = apply {
+    setProperty(PropertyValue("direction", direction))
+  }
+
+  /**
+   * Direction of the light source specified as [a azimuthal angle, p polar angle] where a indicates the azimuthal angle of the light relative to north (in degrees and proceeding clockwise), and p indicates polar angle of the light (from 0 degree, directly above, to 180 degree, directly below).
+   *
+   * This is an Expression representation of "direction".
+   */
+  val directionAsExpression: Expression?
+    /**
+     * Direction of the light source specified as [a azimuthal angle, p polar angle] where a indicates the azimuthal angle of the light relative to north (in degrees and proceeding clockwise), and p indicates polar angle of the light (from 0 degree, directly above, to 180 degree, directly below).
+     *
+     * Get the Direction property as an Expression
+     *
+     * @return List<Double>
+     */
+    get() {
+      getPropertyValue<Expression>("direction")?.let {
+        return it
+      }
+      direction?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+  /**
+   * Direction of the light source specified as [a azimuthal angle, p polar angle] where a indicates the azimuthal angle of the light relative to north (in degrees and proceeding clockwise), and p indicates polar angle of the light (from 0 degree, directly above, to 180 degree, directly below).
+   *
+   * @param direction value of direction as Expression
+   */
+  override fun direction(direction: Expression): DirectionalLight = apply {
+    val propertyValue = PropertyValue("direction", direction)
+    setProperty(propertyValue)
+  }
+  /**
+   * Direction property transition options.
+   */
+  val directionTransition: StyleTransition?
+    /**
+     * Get the Direction property transition options.
+     *
+     * @return transition options for direction
+     */
+    get() {
+      return getTransitionProperty("direction-transition")
+    }
+  /**
+   * Set the Direction property transition options.
+   *
+   * @param options transition options for direction
+   */
+  override fun directionTransition(options: StyleTransition): DirectionalLight = apply {
+    val propertyValue = PropertyValue("direction-transition", options)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * DSL for [directionTransition].
+   */
+  override fun directionTransition(block: StyleTransition.Builder.() -> Unit): DirectionalLight = apply {
+    directionTransition(StyleTransition.Builder().apply(block).build())
+  }
+  /**
    * A multiplier for the color of the directional light.
    */
   val intensity: Double?
@@ -289,63 +341,11 @@ class DirectionalLight(override val lightId: String) : DirectionalLightDslReceiv
     intensityTransition(StyleTransition.Builder().apply(block).build())
   }
   /**
-   * Enable/Disable shadow casting for this light
-   */
-  val castShadows: Boolean?
-    /**
-     * Enable/Disable shadow casting for this light
-     *
-     * @return castShadows as Boolean
-     */
-    get() {
-      return getPropertyValue("cast-shadows")
-    }
-  /**
-   * Enable/Disable shadow casting for this light
-   *
-   * @param castShadows as Boolean
-   */
-  override fun castShadows(castShadows: Boolean): DirectionalLight = apply {
-    setProperty(PropertyValue("cast-shadows", castShadows))
-  }
-
-  /**
-   * Enable/Disable shadow casting for this light
-   *
-   * This is an Expression representation of "cast-shadows".
-   */
-  val castShadowsAsExpression: Expression?
-    /**
-     * Enable/Disable shadow casting for this light
-     *
-     * Get the CastShadows property as an Expression
-     *
-     * @return Boolean
-     */
-    get() {
-      getPropertyValue<Expression>("cast-shadows")?.let {
-        return it
-      }
-      castShadows?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
-  /**
-   * Enable/Disable shadow casting for this light
-   *
-   * @param castShadows value of castShadows as Expression
-   */
-  override fun castShadows(castShadows: Expression): DirectionalLight = apply {
-    val propertyValue = PropertyValue("cast-shadows", castShadows)
-    setProperty(propertyValue)
-  }
-  /**
-   * Determines the shadow strength, affecting the shadow receiver surfaces final color. Values near 0.0 reduce the shadow contribution to the final color. Values near to 1.0 make occluded surfaces almost black.
+   * Determines the shadow strength, affecting the shadow receiver surfaces final color. Values near 0.0 reduce the shadow contribution to the final color. Values near to 1.0 make occluded surfaces receive almost no directional light. Designed to be used mostly for transitioning between values 0 and 1.
    */
   val shadowIntensity: Double?
     /**
-     * Determines the shadow strength, affecting the shadow receiver surfaces final color. Values near 0.0 reduce the shadow contribution to the final color. Values near to 1.0 make occluded surfaces almost black.
+     * Determines the shadow strength, affecting the shadow receiver surfaces final color. Values near 0.0 reduce the shadow contribution to the final color. Values near to 1.0 make occluded surfaces receive almost no directional light. Designed to be used mostly for transitioning between values 0 and 1.
      *
      * @return shadowIntensity as Double
      */
@@ -353,7 +353,7 @@ class DirectionalLight(override val lightId: String) : DirectionalLightDslReceiv
       return getPropertyValue("shadow-intensity")
     }
   /**
-   * Determines the shadow strength, affecting the shadow receiver surfaces final color. Values near 0.0 reduce the shadow contribution to the final color. Values near to 1.0 make occluded surfaces almost black.
+   * Determines the shadow strength, affecting the shadow receiver surfaces final color. Values near 0.0 reduce the shadow contribution to the final color. Values near to 1.0 make occluded surfaces receive almost no directional light. Designed to be used mostly for transitioning between values 0 and 1.
    *
    * @param shadowIntensity as Double
    */
@@ -362,13 +362,13 @@ class DirectionalLight(override val lightId: String) : DirectionalLightDslReceiv
   }
 
   /**
-   * Determines the shadow strength, affecting the shadow receiver surfaces final color. Values near 0.0 reduce the shadow contribution to the final color. Values near to 1.0 make occluded surfaces almost black.
+   * Determines the shadow strength, affecting the shadow receiver surfaces final color. Values near 0.0 reduce the shadow contribution to the final color. Values near to 1.0 make occluded surfaces receive almost no directional light. Designed to be used mostly for transitioning between values 0 and 1.
    *
    * This is an Expression representation of "shadow-intensity".
    */
   val shadowIntensityAsExpression: Expression?
     /**
-     * Determines the shadow strength, affecting the shadow receiver surfaces final color. Values near 0.0 reduce the shadow contribution to the final color. Values near to 1.0 make occluded surfaces almost black.
+     * Determines the shadow strength, affecting the shadow receiver surfaces final color. Values near 0.0 reduce the shadow contribution to the final color. Values near to 1.0 make occluded surfaces receive almost no directional light. Designed to be used mostly for transitioning between values 0 and 1.
      *
      * Get the ShadowIntensity property as an Expression
      *
@@ -384,7 +384,7 @@ class DirectionalLight(override val lightId: String) : DirectionalLightDslReceiv
       return null
     }
   /**
-   * Determines the shadow strength, affecting the shadow receiver surfaces final color. Values near 0.0 reduce the shadow contribution to the final color. Values near to 1.0 make occluded surfaces almost black.
+   * Determines the shadow strength, affecting the shadow receiver surfaces final color. Values near 0.0 reduce the shadow contribution to the final color. Values near to 1.0 make occluded surfaces receive almost no directional light. Designed to be used mostly for transitioning between values 0 and 1.
    *
    * @param shadowIntensity value of shadowIntensity as Expression
    */
@@ -424,17 +424,10 @@ class DirectionalLight(override val lightId: String) : DirectionalLightDslReceiv
   /**
    * Get the type of this light
    *
-   * @return Type of the 3D light as [String]
+   * @return Type of the light as [String]
    */
   override fun getType(): String {
     return "directional"
-  }
-
-  /**
-   * Static variables and methods.
-   */
-  companion object {
-    private const val TAG = "Mbgl-Lights3D"
   }
 }
 
@@ -449,30 +442,18 @@ class DirectionalLight(override val lightId: String) : DirectionalLightDslReceiv
 interface DirectionalLightDslReceiver {
 
   /**
-   * Direction of the light source specified as [a azimuthal angle, p polar angle] where a indicates the azimuthal angle of the light relative to north (in degrees and proceeding clockwise), and p indicates polar angle of the light (from 0 degree, directly above, to 180 degree, directly below).
+   * Enable/Disable shadow casting for this light
    *
-   * @param direction as List<Double>
+   * @param castShadows as Boolean
    */
-  fun direction(direction: List<Double> = listOf(210.0, 30.0)): DirectionalLight
+  fun castShadows(castShadows: Boolean = false): DirectionalLight
 
   /**
-   * Direction of the light source specified as [a azimuthal angle, p polar angle] where a indicates the azimuthal angle of the light relative to north (in degrees and proceeding clockwise), and p indicates polar angle of the light (from 0 degree, directly above, to 180 degree, directly below).
+   * Enable/Disable shadow casting for this light
    *
-   * @param direction value of direction as Expression
+   * @param castShadows value of castShadows as Expression
    */
-  fun direction(direction: Expression): DirectionalLight
-
-  /**
-   * Set the Direction property transition options.
-   *
-   * @param options transition options for direction
-   */
-  fun directionTransition(options: StyleTransition): DirectionalLight
-
-  /**
-   * DSL for [directionTransition].
-   */
-  fun directionTransition(block: StyleTransition.Builder.() -> Unit): DirectionalLight
+  fun castShadows(castShadows: Expression): DirectionalLight
 
   /**
    * Color of the directional light.
@@ -508,6 +489,32 @@ interface DirectionalLightDslReceiver {
   fun colorTransition(block: StyleTransition.Builder.() -> Unit): DirectionalLight
 
   /**
+   * Direction of the light source specified as [a azimuthal angle, p polar angle] where a indicates the azimuthal angle of the light relative to north (in degrees and proceeding clockwise), and p indicates polar angle of the light (from 0 degree, directly above, to 180 degree, directly below).
+   *
+   * @param direction as List<Double>
+   */
+  fun direction(direction: List<Double> = listOf(210.0, 30.0)): DirectionalLight
+
+  /**
+   * Direction of the light source specified as [a azimuthal angle, p polar angle] where a indicates the azimuthal angle of the light relative to north (in degrees and proceeding clockwise), and p indicates polar angle of the light (from 0 degree, directly above, to 180 degree, directly below).
+   *
+   * @param direction value of direction as Expression
+   */
+  fun direction(direction: Expression): DirectionalLight
+
+  /**
+   * Set the Direction property transition options.
+   *
+   * @param options transition options for direction
+   */
+  fun directionTransition(options: StyleTransition): DirectionalLight
+
+  /**
+   * DSL for [directionTransition].
+   */
+  fun directionTransition(block: StyleTransition.Builder.() -> Unit): DirectionalLight
+
+  /**
    * A multiplier for the color of the directional light.
    *
    * @param intensity as Double
@@ -534,28 +541,14 @@ interface DirectionalLightDslReceiver {
   fun intensityTransition(block: StyleTransition.Builder.() -> Unit): DirectionalLight
 
   /**
-   * Enable/Disable shadow casting for this light
-   *
-   * @param castShadows as Boolean
-   */
-  fun castShadows(castShadows: Boolean = false): DirectionalLight
-
-  /**
-   * Enable/Disable shadow casting for this light
-   *
-   * @param castShadows value of castShadows as Expression
-   */
-  fun castShadows(castShadows: Expression): DirectionalLight
-
-  /**
-   * Determines the shadow strength, affecting the shadow receiver surfaces final color. Values near 0.0 reduce the shadow contribution to the final color. Values near to 1.0 make occluded surfaces almost black.
+   * Determines the shadow strength, affecting the shadow receiver surfaces final color. Values near 0.0 reduce the shadow contribution to the final color. Values near to 1.0 make occluded surfaces receive almost no directional light. Designed to be used mostly for transitioning between values 0 and 1.
    *
    * @param shadowIntensity as Double
    */
   fun shadowIntensity(shadowIntensity: Double = 1.0): DirectionalLight
 
   /**
-   * Determines the shadow strength, affecting the shadow receiver surfaces final color. Values near 0.0 reduce the shadow contribution to the final color. Values near to 1.0 make occluded surfaces almost black.
+   * Determines the shadow strength, affecting the shadow receiver surfaces final color. Values near 0.0 reduce the shadow contribution to the final color. Values near to 1.0 make occluded surfaces receive almost no directional light. Designed to be used mostly for transitioning between values 0 and 1.
    *
    * @param shadowIntensity value of shadowIntensity as Expression
    */
@@ -575,9 +568,9 @@ interface DirectionalLightDslReceiver {
 }
 
 /**
- * DSL function for creating [directionalLight instance.
+ * DSL function for creating [directionalLight] instance.
  */
 @MapboxExperimental
-fun directionalLight(id: String, block: DirectionalLightDslReceiver.() -> Unit): DirectionalLight = DirectionalLight(id).apply(block)
+fun directionalLight(id: String = "directional", block: DirectionalLightDslReceiver.() -> Unit): DirectionalLight = DirectionalLight(id).apply(block)
 
 // End of generated file.

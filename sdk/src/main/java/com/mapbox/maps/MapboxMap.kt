@@ -348,7 +348,8 @@ class MapboxMap :
     initializeStyleLoad(
       onStyleLoaded = onStyleLoaded,
       styleDataStyleLoadedListener = { style ->
-        styleExtension.light?.bindTo(style)
+        styleExtension.flatLight?.bindTo(style)
+        styleExtension.dynamicLight?.bindTo(style)
         styleExtension.terrain?.bindTo(style)
         styleExtension.atmosphere?.bindTo(style)
         styleExtension.projection?.bindTo(style)

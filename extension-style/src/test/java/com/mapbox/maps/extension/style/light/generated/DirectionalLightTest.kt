@@ -10,7 +10,7 @@ import com.mapbox.maps.Style
 import com.mapbox.maps.StylePropertyValue
 import com.mapbox.maps.StylePropertyValueKind
 import com.mapbox.maps.extension.style.expressions.dsl.generated.rgba
-import com.mapbox.maps.extension.style.light.addLights3D
+import com.mapbox.maps.extension.style.light.setLights
 import com.mapbox.maps.extension.style.types.transitionOptions
 import com.mapbox.maps.extension.style.utils.TypeUtils
 import com.mapbox.maps.logE
@@ -46,37 +46,37 @@ class DirectionalLightTest {
   }
 
   @Test
-  fun directionSet() {
+  fun castShadowsSet() {
     val light = directionalLight("id") {
-      direction(listOf(0.0, 1.0))
+      castShadows(true)
     }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     verify { style.setStyleLights(capture(valueSlot)) }
-    assertTrue(valueSlot.captured.toString().contains("direction=[0.0, 1.0]"))
+    assertTrue(valueSlot.captured.toString().contains("cast-shadows=true"))
   }
 
   @Test
-  fun directionSetAfterInitialization() {
+  fun castShadowsSetAfterInitialization() {
     val light = directionalLight("id") { }
-    style.addLights3D(listOf(light))
-    light.direction(listOf(0.0, 1.0))
-    verify { style.setStyleLightProperty("id", "direction", capture(valueSlot)) }
-    assertTrue(valueSlot.captured.toString().contains("[0.0, 1.0]"))
+    style.setLights(listOf(light))
+    light.castShadows(true)
+    verify { style.setStyleLightProperty("id", "cast-shadows", capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("true"))
   }
 
   @Test
-  fun directionGet() {
-    every { styleProperty.value } returns TypeUtils.wrapToValue(listOf(0.0, 1.0))
+  fun castShadowsGet() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(true)
 
     val light = directionalLight("id") { }
-    style.addLights3D(listOf(light))
-    assertEquals(listOf(0.0, 1.0).toString(), light.direction!!.toString())
-    verify { style.getStyleLightProperty("id", "direction") }
+    style.setLights(listOf(light))
+    assertEquals(true.toString(), light.castShadows!!.toString())
+    verify { style.getStyleLightProperty("id", "cast-shadows") }
   }
   // Expression Tests
 
   @Test
-  fun directionAsExpressionSet() {
+  fun castShadowsAsExpressionSet() {
     val expression = rgba {
       literal(0)
       literal(0)
@@ -85,15 +85,15 @@ class DirectionalLightTest {
     }
 
     val light = directionalLight("id") {
-      direction(expression)
+      castShadows(expression)
     }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     verify { style.setStyleLights(capture(valueSlot)) }
     assertTrue(valueSlot.captured.toString().contains(expression.toString()))
   }
 
   @Test
-  fun directionAsExpressionSetAfterInitialization() {
+  fun castShadowsAsExpressionSetAfterInitialization() {
     val expression = rgba {
       literal(0)
       literal(0)
@@ -102,14 +102,14 @@ class DirectionalLightTest {
     }
 
     val light = directionalLight("id") { }
-    style.addLights3D(listOf(light))
-    light.direction(expression)
-    verify { style.setStyleLightProperty("id", "direction", capture(valueSlot)) }
+    style.setLights(listOf(light))
+    light.castShadows(expression)
+    verify { style.setStyleLightProperty("id", "cast-shadows", capture(valueSlot)) }
     assertTrue(valueSlot.captured.toString().contains(expression.toString()))
   }
 
   @Test
-  fun directionAsExpressionGet() {
+  fun castShadowsAsExpressionGet() {
     val expression = rgba {
       literal(0)
       literal(0)
@@ -120,98 +120,27 @@ class DirectionalLightTest {
     every { styleProperty.value } returns expression
 
     val light = directionalLight("id") { }
-    style.addLights3D(listOf(light))
-    assertEquals(expression.toString(), light.directionAsExpression?.toString())
-    verify { style.getStyleLightProperty("id", "direction") }
+    style.setLights(listOf(light))
+    assertEquals(expression.toString(), light.castShadowsAsExpression?.toString())
+    verify { style.getStyleLightProperty("id", "cast-shadows") }
   }
 
   @Test
-  fun directionAsExpressionGetNull() {
+  fun castShadowsAsExpressionGetNull() {
     val light = directionalLight("id") { }
-    style.addLights3D(listOf(light))
-    assertEquals(null, light.directionAsExpression)
-    verify { style.getStyleLightProperty("id", "direction") }
+    style.setLights(listOf(light))
+    assertEquals(null, light.castShadowsAsExpression)
+    verify { style.getStyleLightProperty("id", "cast-shadows") }
   }
 
   @Test
-  fun directionAsExpressionGetFromLiteral() {
-    every { styleProperty.value } returns TypeUtils.wrapToValue(listOf(0.0, 1.0))
+  fun castShadowsAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(true)
     val light = directionalLight("id") { }
-    style.addLights3D(listOf(light))
-    assertTrue(light.directionAsExpression.toString().contains("[0.0, 1.0]"))
-    assertEquals(listOf(0.0, 1.0), light.direction)
-    verify { style.getStyleLightProperty("id", "direction") }
-  }
-
-  @Test
-  fun directionTransitionSet() {
-    val light = directionalLight("id") {
-      directionTransition(
-        transitionOptions {
-          duration(100)
-          delay(200)
-        }
-      )
-    }
-    style.addLights3D(listOf(light))
-    verify { style.setStyleLights(capture(valueSlot)) }
-    assertTrue(valueSlot.captured.toString().contains("direction-transition={duration=100, delay=200}"))
-  }
-
-  @Test
-  fun directionTransitionSetAfterInitialization() {
-    val light = directionalLight("id") { }
-    style.addLights3D(listOf(light))
-    light.directionTransition(
-      transitionOptions {
-        duration(100)
-        delay(200)
-      }
-    )
-    verify { style.setStyleLightProperty("id", "direction-transition", capture(valueSlot)) }
-    assertTrue(valueSlot.captured.toString().contains("{duration=100, delay=200}"))
-  }
-
-  @Test
-  fun directionTransitionGet() {
-    val transition = transitionOptions {
-      duration(100)
-      delay(200)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
-    val light = directionalLight("id") {}
-    style.addLights3D(listOf(light))
-    assertEquals(transition.toValue().toString(), light.directionTransition!!.toValue().toString())
-    verify { style.getStyleLightProperty("id", "direction-transition") }
-  }
-
-  @Test
-  fun directionTransitionGetNull() {
-    val transition = "wrong type"
-    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
-    val light = directionalLight("id") {}
-    style.addLights3D(listOf(light))
-    assertEquals(null, light.directionTransition)
-    verify { style.getStyleLightProperty("id", "direction-transition") }
-  }
-
-  @Test(expected = RuntimeException::class)
-  fun directionTransitionGetException() {
-    val light = directionalLight("id") {}
-    light.directionTransition
-  }
-
-  @Test
-  fun directionTransitionSetDsl() {
-    val light = directionalLight("id") {
-      directionTransition {
-        duration(100)
-        delay(200)
-      }
-    }
-    style.addLights3D(listOf(light))
-    verify { style.setStyleLights(capture(valueSlot)) }
-    assertTrue(valueSlot.captured.toString().contains("direction-transition={duration=100, delay=200}"))
+    style.setLights(listOf(light))
+    assertTrue(light.castShadowsAsExpression.toString().contains("true"))
+    assertEquals(true, light.castShadows)
+    verify { style.getStyleLightProperty("id", "cast-shadows") }
   }
 
   @Test
@@ -219,7 +148,7 @@ class DirectionalLightTest {
     val light = directionalLight("id") {
       color(Color.CYAN)
     }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     verify { style.setStyleLights(capture(valueSlot)) }
     assertTrue(valueSlot.captured.toString().contains("color=[rgba, 0, 255, 255, 1.0]"))
   }
@@ -227,7 +156,7 @@ class DirectionalLightTest {
   @Test
   fun colorAsColorIntSetAfterInitialization() {
     val light = directionalLight("id") { }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     light.color(Color.CYAN)
     verify { style.setStyleLightProperty("id", "color", capture(valueSlot)) }
     assertEquals("[rgba, 0, 255, 255, 1.0]", valueSlot.captured.toString())
@@ -245,7 +174,7 @@ class DirectionalLightTest {
     every { styleProperty.value } returns expression
 
     val light = directionalLight("id") { }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     assertEquals(Color.RED, light.colorAsColorInt!!)
     verify { style.getStyleLightProperty("id", "color") }
   }
@@ -255,7 +184,7 @@ class DirectionalLightTest {
     val light = directionalLight("id") {
       color("rgba(0, 0, 0, 1)")
     }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     verify { style.setStyleLights(capture(valueSlot)) }
     assertTrue(valueSlot.captured.toString().contains("color=rgba(0, 0, 0, 1)"))
   }
@@ -263,7 +192,7 @@ class DirectionalLightTest {
   @Test
   fun colorSetAfterInitialization() {
     val light = directionalLight("id") { }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     light.color("rgba(0, 0, 0, 1)")
     verify { style.setStyleLightProperty("id", "color", capture(valueSlot)) }
     assertTrue(valueSlot.captured.toString().contains("rgba(0, 0, 0, 1)"))
@@ -281,7 +210,7 @@ class DirectionalLightTest {
     every { styleProperty.value } returns expression
 
     val light = directionalLight("id") { }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     assertEquals("rgba(0, 0, 0, 1)".toString(), light.color!!.toString())
     verify { style.getStyleLightProperty("id", "color") }
   }
@@ -299,7 +228,7 @@ class DirectionalLightTest {
     val light = directionalLight("id") {
       color(expression)
     }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     verify { style.setStyleLights(capture(valueSlot)) }
     assertTrue(valueSlot.captured.toString().contains(expression.toString()))
   }
@@ -314,7 +243,7 @@ class DirectionalLightTest {
     }
 
     val light = directionalLight("id") { }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     light.color(expression)
     verify { style.setStyleLightProperty("id", "color", capture(valueSlot)) }
     assertTrue(valueSlot.captured.toString().contains(expression.toString()))
@@ -332,7 +261,7 @@ class DirectionalLightTest {
     every { styleProperty.value } returns expression
 
     val light = directionalLight("id") { }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     assertEquals(expression.toString(), light.colorAsExpression?.toString())
     verify { style.getStyleLightProperty("id", "color") }
   }
@@ -340,7 +269,7 @@ class DirectionalLightTest {
   @Test
   fun colorAsExpressionGetNull() {
     val light = directionalLight("id") { }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     assertEquals(null, light.colorAsExpression)
     verify { style.getStyleLightProperty("id", "color") }
   }
@@ -357,7 +286,7 @@ class DirectionalLightTest {
     every { styleProperty.value } returns expression
 
     val light = directionalLight("id") { }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     assertEquals(expression.toString(), light.colorAsExpression.toString())
     assertEquals("rgba(0, 0, 0, 1)", light.color)
     assertEquals(Color.BLACK, light.colorAsColorInt)
@@ -374,7 +303,7 @@ class DirectionalLightTest {
         }
       )
     }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     verify { style.setStyleLights(capture(valueSlot)) }
     assertTrue(valueSlot.captured.toString().contains("color-transition={duration=100, delay=200}"))
   }
@@ -382,7 +311,7 @@ class DirectionalLightTest {
   @Test
   fun colorTransitionSetAfterInitialization() {
     val light = directionalLight("id") { }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     light.colorTransition(
       transitionOptions {
         duration(100)
@@ -401,7 +330,7 @@ class DirectionalLightTest {
     }
     every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
     val light = directionalLight("id") {}
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     assertEquals(transition.toValue().toString(), light.colorTransition!!.toValue().toString())
     verify { style.getStyleLightProperty("id", "color-transition") }
   }
@@ -411,7 +340,7 @@ class DirectionalLightTest {
     val transition = "wrong type"
     every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
     val light = directionalLight("id") {}
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     assertEquals(null, light.colorTransition)
     verify { style.getStyleLightProperty("id", "color-transition") }
   }
@@ -430,9 +359,178 @@ class DirectionalLightTest {
         delay(200)
       }
     }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     verify { style.setStyleLights(capture(valueSlot)) }
     assertTrue(valueSlot.captured.toString().contains("color-transition={duration=100, delay=200}"))
+  }
+
+  @Test
+  fun directionSet() {
+    val light = directionalLight("id") {
+      direction(listOf(0.0, 1.0))
+    }
+    style.setLights(listOf(light))
+    verify { style.setStyleLights(capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("direction=[0.0, 1.0]"))
+  }
+
+  @Test
+  fun directionSetAfterInitialization() {
+    val light = directionalLight("id") { }
+    style.setLights(listOf(light))
+    light.direction(listOf(0.0, 1.0))
+    verify { style.setStyleLightProperty("id", "direction", capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("[0.0, 1.0]"))
+  }
+
+  @Test
+  fun directionGet() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(listOf(0.0, 1.0))
+
+    val light = directionalLight("id") { }
+    style.setLights(listOf(light))
+    assertEquals(listOf(0.0, 1.0).toString(), light.direction!!.toString())
+    verify { style.getStyleLightProperty("id", "direction") }
+  }
+  // Expression Tests
+
+  @Test
+  fun directionAsExpressionSet() {
+    val expression = rgba {
+      literal(0)
+      literal(0)
+      literal(0)
+      literal(1.0)
+    }
+
+    val light = directionalLight("id") {
+      direction(expression)
+    }
+    style.setLights(listOf(light))
+    verify { style.setStyleLights(capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains(expression.toString()))
+  }
+
+  @Test
+  fun directionAsExpressionSetAfterInitialization() {
+    val expression = rgba {
+      literal(0)
+      literal(0)
+      literal(0)
+      literal(1.0)
+    }
+
+    val light = directionalLight("id") { }
+    style.setLights(listOf(light))
+    light.direction(expression)
+    verify { style.setStyleLightProperty("id", "direction", capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains(expression.toString()))
+  }
+
+  @Test
+  fun directionAsExpressionGet() {
+    val expression = rgba {
+      literal(0)
+      literal(0)
+      literal(0)
+      literal(1.0)
+    }
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val light = directionalLight("id") { }
+    style.setLights(listOf(light))
+    assertEquals(expression.toString(), light.directionAsExpression?.toString())
+    verify { style.getStyleLightProperty("id", "direction") }
+  }
+
+  @Test
+  fun directionAsExpressionGetNull() {
+    val light = directionalLight("id") { }
+    style.setLights(listOf(light))
+    assertEquals(null, light.directionAsExpression)
+    verify { style.getStyleLightProperty("id", "direction") }
+  }
+
+  @Test
+  fun directionAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(listOf(0.0, 1.0))
+    val light = directionalLight("id") { }
+    style.setLights(listOf(light))
+    assertTrue(light.directionAsExpression.toString().contains("[0.0, 1.0]"))
+    assertEquals(listOf(0.0, 1.0), light.direction)
+    verify { style.getStyleLightProperty("id", "direction") }
+  }
+
+  @Test
+  fun directionTransitionSet() {
+    val light = directionalLight("id") {
+      directionTransition(
+        transitionOptions {
+          duration(100)
+          delay(200)
+        }
+      )
+    }
+    style.setLights(listOf(light))
+    verify { style.setStyleLights(capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("direction-transition={duration=100, delay=200}"))
+  }
+
+  @Test
+  fun directionTransitionSetAfterInitialization() {
+    val light = directionalLight("id") { }
+    style.setLights(listOf(light))
+    light.directionTransition(
+      transitionOptions {
+        duration(100)
+        delay(200)
+      }
+    )
+    verify { style.setStyleLightProperty("id", "direction-transition", capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("{duration=100, delay=200}"))
+  }
+
+  @Test
+  fun directionTransitionGet() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    val light = directionalLight("id") {}
+    style.setLights(listOf(light))
+    assertEquals(transition.toValue().toString(), light.directionTransition!!.toValue().toString())
+    verify { style.getStyleLightProperty("id", "direction-transition") }
+  }
+
+  @Test
+  fun directionTransitionGetNull() {
+    val transition = "wrong type"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    val light = directionalLight("id") {}
+    style.setLights(listOf(light))
+    assertEquals(null, light.directionTransition)
+    verify { style.getStyleLightProperty("id", "direction-transition") }
+  }
+
+  @Test(expected = RuntimeException::class)
+  fun directionTransitionGetException() {
+    val light = directionalLight("id") {}
+    light.directionTransition
+  }
+
+  @Test
+  fun directionTransitionSetDsl() {
+    val light = directionalLight("id") {
+      directionTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    style.setLights(listOf(light))
+    verify { style.setStyleLights(capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("direction-transition={duration=100, delay=200}"))
   }
 
   @Test
@@ -440,7 +538,7 @@ class DirectionalLightTest {
     val light = directionalLight("id") {
       intensity(1.0)
     }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     verify { style.setStyleLights(capture(valueSlot)) }
     assertTrue(valueSlot.captured.toString().contains("intensity=1.0"))
   }
@@ -448,7 +546,7 @@ class DirectionalLightTest {
   @Test
   fun intensitySetAfterInitialization() {
     val light = directionalLight("id") { }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     light.intensity(1.0)
     verify { style.setStyleLightProperty("id", "intensity", capture(valueSlot)) }
     assertTrue(valueSlot.captured.toString().contains("1.0"))
@@ -459,7 +557,7 @@ class DirectionalLightTest {
     every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
 
     val light = directionalLight("id") { }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     assertEquals(1.0.toString(), light.intensity!!.toString())
     verify { style.getStyleLightProperty("id", "intensity") }
   }
@@ -477,7 +575,7 @@ class DirectionalLightTest {
     val light = directionalLight("id") {
       intensity(expression)
     }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     verify { style.setStyleLights(capture(valueSlot)) }
     assertTrue(valueSlot.captured.toString().contains(expression.toString()))
   }
@@ -492,7 +590,7 @@ class DirectionalLightTest {
     }
 
     val light = directionalLight("id") { }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     light.intensity(expression)
     verify { style.setStyleLightProperty("id", "intensity", capture(valueSlot)) }
     assertTrue(valueSlot.captured.toString().contains(expression.toString()))
@@ -510,7 +608,7 @@ class DirectionalLightTest {
     every { styleProperty.value } returns expression
 
     val light = directionalLight("id") { }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     assertEquals(expression.toString(), light.intensityAsExpression?.toString())
     verify { style.getStyleLightProperty("id", "intensity") }
   }
@@ -518,7 +616,7 @@ class DirectionalLightTest {
   @Test
   fun intensityAsExpressionGetNull() {
     val light = directionalLight("id") { }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     assertEquals(null, light.intensityAsExpression)
     verify { style.getStyleLightProperty("id", "intensity") }
   }
@@ -527,7 +625,7 @@ class DirectionalLightTest {
   fun intensityAsExpressionGetFromLiteral() {
     every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
     val light = directionalLight("id") { }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     assertEquals(1.0, light.intensityAsExpression?.contents as Double, 1E-5)
     assertEquals(1.0, light.intensity!!, 1E-5)
     verify { style.getStyleLightProperty("id", "intensity") }
@@ -543,7 +641,7 @@ class DirectionalLightTest {
         }
       )
     }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     verify { style.setStyleLights(capture(valueSlot)) }
     assertTrue(valueSlot.captured.toString().contains("intensity-transition={duration=100, delay=200}"))
   }
@@ -551,7 +649,7 @@ class DirectionalLightTest {
   @Test
   fun intensityTransitionSetAfterInitialization() {
     val light = directionalLight("id") { }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     light.intensityTransition(
       transitionOptions {
         duration(100)
@@ -570,7 +668,7 @@ class DirectionalLightTest {
     }
     every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
     val light = directionalLight("id") {}
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     assertEquals(transition.toValue().toString(), light.intensityTransition!!.toValue().toString())
     verify { style.getStyleLightProperty("id", "intensity-transition") }
   }
@@ -580,7 +678,7 @@ class DirectionalLightTest {
     val transition = "wrong type"
     every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
     val light = directionalLight("id") {}
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     assertEquals(null, light.intensityTransition)
     verify { style.getStyleLightProperty("id", "intensity-transition") }
   }
@@ -599,107 +697,9 @@ class DirectionalLightTest {
         delay(200)
       }
     }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     verify { style.setStyleLights(capture(valueSlot)) }
     assertTrue(valueSlot.captured.toString().contains("intensity-transition={duration=100, delay=200}"))
-  }
-
-  @Test
-  fun castShadowsSet() {
-    val light = directionalLight("id") {
-      castShadows(true)
-    }
-    style.addLights3D(listOf(light))
-    verify { style.setStyleLights(capture(valueSlot)) }
-    assertTrue(valueSlot.captured.toString().contains("cast-shadows=true"))
-  }
-
-  @Test
-  fun castShadowsSetAfterInitialization() {
-    val light = directionalLight("id") { }
-    style.addLights3D(listOf(light))
-    light.castShadows(true)
-    verify { style.setStyleLightProperty("id", "cast-shadows", capture(valueSlot)) }
-    assertTrue(valueSlot.captured.toString().contains("true"))
-  }
-
-  @Test
-  fun castShadowsGet() {
-    every { styleProperty.value } returns TypeUtils.wrapToValue(true)
-
-    val light = directionalLight("id") { }
-    style.addLights3D(listOf(light))
-    assertEquals(true.toString(), light.castShadows!!.toString())
-    verify { style.getStyleLightProperty("id", "cast-shadows") }
-  }
-  // Expression Tests
-
-  @Test
-  fun castShadowsAsExpressionSet() {
-    val expression = rgba {
-      literal(0)
-      literal(0)
-      literal(0)
-      literal(1.0)
-    }
-
-    val light = directionalLight("id") {
-      castShadows(expression)
-    }
-    style.addLights3D(listOf(light))
-    verify { style.setStyleLights(capture(valueSlot)) }
-    assertTrue(valueSlot.captured.toString().contains(expression.toString()))
-  }
-
-  @Test
-  fun castShadowsAsExpressionSetAfterInitialization() {
-    val expression = rgba {
-      literal(0)
-      literal(0)
-      literal(0)
-      literal(1.0)
-    }
-
-    val light = directionalLight("id") { }
-    style.addLights3D(listOf(light))
-    light.castShadows(expression)
-    verify { style.setStyleLightProperty("id", "cast-shadows", capture(valueSlot)) }
-    assertTrue(valueSlot.captured.toString().contains(expression.toString()))
-  }
-
-  @Test
-  fun castShadowsAsExpressionGet() {
-    val expression = rgba {
-      literal(0)
-      literal(0)
-      literal(0)
-      literal(1.0)
-    }
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-    every { styleProperty.value } returns expression
-
-    val light = directionalLight("id") { }
-    style.addLights3D(listOf(light))
-    assertEquals(expression.toString(), light.castShadowsAsExpression?.toString())
-    verify { style.getStyleLightProperty("id", "cast-shadows") }
-  }
-
-  @Test
-  fun castShadowsAsExpressionGetNull() {
-    val light = directionalLight("id") { }
-    style.addLights3D(listOf(light))
-    assertEquals(null, light.castShadowsAsExpression)
-    verify { style.getStyleLightProperty("id", "cast-shadows") }
-  }
-
-  @Test
-  fun castShadowsAsExpressionGetFromLiteral() {
-    every { styleProperty.value } returns TypeUtils.wrapToValue(true)
-    val light = directionalLight("id") { }
-    style.addLights3D(listOf(light))
-    assertTrue(light.castShadowsAsExpression.toString().contains("true"))
-    assertEquals(true, light.castShadows)
-    verify { style.getStyleLightProperty("id", "cast-shadows") }
   }
 
   @Test
@@ -707,7 +707,7 @@ class DirectionalLightTest {
     val light = directionalLight("id") {
       shadowIntensity(1.0)
     }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     verify { style.setStyleLights(capture(valueSlot)) }
     assertTrue(valueSlot.captured.toString().contains("shadow-intensity=1.0"))
   }
@@ -715,7 +715,7 @@ class DirectionalLightTest {
   @Test
   fun shadowIntensitySetAfterInitialization() {
     val light = directionalLight("id") { }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     light.shadowIntensity(1.0)
     verify { style.setStyleLightProperty("id", "shadow-intensity", capture(valueSlot)) }
     assertTrue(valueSlot.captured.toString().contains("1.0"))
@@ -726,7 +726,7 @@ class DirectionalLightTest {
     every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
 
     val light = directionalLight("id") { }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     assertEquals(1.0.toString(), light.shadowIntensity!!.toString())
     verify { style.getStyleLightProperty("id", "shadow-intensity") }
   }
@@ -744,7 +744,7 @@ class DirectionalLightTest {
     val light = directionalLight("id") {
       shadowIntensity(expression)
     }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     verify { style.setStyleLights(capture(valueSlot)) }
     assertTrue(valueSlot.captured.toString().contains(expression.toString()))
   }
@@ -759,7 +759,7 @@ class DirectionalLightTest {
     }
 
     val light = directionalLight("id") { }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     light.shadowIntensity(expression)
     verify { style.setStyleLightProperty("id", "shadow-intensity", capture(valueSlot)) }
     assertTrue(valueSlot.captured.toString().contains(expression.toString()))
@@ -777,7 +777,7 @@ class DirectionalLightTest {
     every { styleProperty.value } returns expression
 
     val light = directionalLight("id") { }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     assertEquals(expression.toString(), light.shadowIntensityAsExpression?.toString())
     verify { style.getStyleLightProperty("id", "shadow-intensity") }
   }
@@ -785,7 +785,7 @@ class DirectionalLightTest {
   @Test
   fun shadowIntensityAsExpressionGetNull() {
     val light = directionalLight("id") { }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     assertEquals(null, light.shadowIntensityAsExpression)
     verify { style.getStyleLightProperty("id", "shadow-intensity") }
   }
@@ -794,7 +794,7 @@ class DirectionalLightTest {
   fun shadowIntensityAsExpressionGetFromLiteral() {
     every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
     val light = directionalLight("id") { }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     assertEquals(1.0, light.shadowIntensityAsExpression?.contents as Double, 1E-5)
     assertEquals(1.0, light.shadowIntensity!!, 1E-5)
     verify { style.getStyleLightProperty("id", "shadow-intensity") }
@@ -810,7 +810,7 @@ class DirectionalLightTest {
         }
       )
     }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     verify { style.setStyleLights(capture(valueSlot)) }
     assertTrue(valueSlot.captured.toString().contains("shadow-intensity-transition={duration=100, delay=200}"))
   }
@@ -818,7 +818,7 @@ class DirectionalLightTest {
   @Test
   fun shadowIntensityTransitionSetAfterInitialization() {
     val light = directionalLight("id") { }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     light.shadowIntensityTransition(
       transitionOptions {
         duration(100)
@@ -837,7 +837,7 @@ class DirectionalLightTest {
     }
     every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
     val light = directionalLight("id") {}
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     assertEquals(transition.toValue().toString(), light.shadowIntensityTransition!!.toValue().toString())
     verify { style.getStyleLightProperty("id", "shadow-intensity-transition") }
   }
@@ -847,7 +847,7 @@ class DirectionalLightTest {
     val transition = "wrong type"
     every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
     val light = directionalLight("id") {}
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     assertEquals(null, light.shadowIntensityTransition)
     verify { style.getStyleLightProperty("id", "shadow-intensity-transition") }
   }
@@ -866,7 +866,7 @@ class DirectionalLightTest {
         delay(200)
       }
     }
-    style.addLights3D(listOf(light))
+    style.setLights(listOf(light))
     verify { style.setStyleLights(capture(valueSlot)) }
     assertTrue(valueSlot.captured.toString().contains("shadow-intensity-transition={duration=100, delay=200}"))
   }

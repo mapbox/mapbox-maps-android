@@ -309,7 +309,7 @@ class PolylineAnnotationManager(
   /**
    * The LineEmissiveStrength property
    *
-   * Emission strength. The unit of lineEmissiveStrength is in intensity.
+   * Emission strength The unit of lineEmissiveStrength is in intensity.
    */
   var lineEmissiveStrength: Double?
     /**

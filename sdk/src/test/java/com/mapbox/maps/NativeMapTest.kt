@@ -370,29 +370,6 @@ class NativeMapTest {
   }
 
   @Test
-  fun setStyleLight() {
-    val value = mockk<Value>()
-    val nativeMap = NativeMapImpl(map)
-    nativeMap.setStyleLight(value)
-    verify { map.setStyleLight(value) }
-  }
-
-  @Test
-  fun getStyleLightProperty() {
-    val nativeMap = NativeMapImpl(map)
-    nativeMap.getStyleLightProperty("foo")
-    verify { map.getStyleLightProperty("foo") }
-  }
-
-  @Test
-  fun setStyleLightProperty() {
-    val value = mockk<Value>()
-    val nativeMap = NativeMapImpl(map)
-    nativeMap.setStyleLightProperty("foo", value)
-    verify { map.setStyleLightProperty("foo", value) }
-  }
-
-  @Test
   fun setStyleTerrain() {
     val value = mockk<Value>()
     val nativeMap = NativeMapImpl(map)

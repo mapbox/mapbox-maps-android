@@ -13,6 +13,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Add `MapboxMap.coordinateBoundsForRect` returning `CoordinateBounds` for given `RectF` of screen coordinates.
 * Add optional `maxZoom` and `offset` parameters to `MapboxMap.cameraForCoordinateBounds`.
 * Mark `GeoJsonSource.url` / `GeoJsonSource.Builder.url` methods as deprecated, `GeoJsonSource.data` / `GeoJsonSource.Builder.data` should be used instead.
+* Refactor style Light APIs: introduce `AmbientLight`, `DirectionalLight`, `FlatLight` and methods to set them to style.
 
 # 11.0.0-alpha.2 June 27, 2023
 ## Breaking changes ⚠️

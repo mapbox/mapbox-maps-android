@@ -487,12 +487,12 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
   }
 
   /**
-   * Emission strength.
+   * Emission strength
    */
   @MapboxExperimental
   val circleEmissiveStrength: Double?
     /**
-     * Emission strength.
+     * Emission strength
      *
      * Use static method [CircleLayer.defaultCircleEmissiveStrength] to get the default property.
      *
@@ -503,7 +503,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
     }
 
   /**
-   * Emission strength.
+   * Emission strength
    *
    * Use static method [CircleLayer.defaultCircleEmissiveStrength] to set the default property.
    *
@@ -516,7 +516,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
   }
 
   /**
-   * Emission strength.
+   * Emission strength
    *
    * This is an Expression representation of "circle-emissive-strength".
    *
@@ -524,7 +524,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
   @MapboxExperimental
   val circleEmissiveStrengthAsExpression: Expression?
     /**
-     * Emission strength.
+     * Emission strength
      *
      * Get the CircleEmissiveStrength property as an Expression
      *
@@ -543,7 +543,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
     }
 
   /**
-   * Emission strength.
+   * Emission strength
    *
    * Use static method [CircleLayer.defaultCircleEmissiveStrengthAsExpression] to set the default property.
    *
@@ -1633,12 +1633,12 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-color-transition").silentUnwrap()
 
     /**
-     * Emission strength.
+     * Emission strength
      */
     @MapboxExperimental
     val defaultCircleEmissiveStrength: Double?
       /**
-       * Emission strength.
+       * Emission strength
        *
        * Get the default value of CircleEmissiveStrength property
        *
@@ -1649,7 +1649,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
       }
 
     /**
-     * Emission strength.
+     * Emission strength
      *
      * This is an Expression representation of "circle-emissive-strength".
      *
@@ -2254,7 +2254,7 @@ interface CircleLayerDsl {
   fun circleColorTransition(block: StyleTransition.Builder.() -> Unit): CircleLayer
 
   /**
-   * Emission strength.
+   * Emission strength
    *
    * @param circleEmissiveStrength value of circleEmissiveStrength
    */
@@ -2262,7 +2262,7 @@ interface CircleLayerDsl {
   fun circleEmissiveStrength(circleEmissiveStrength: Double = 0.0): CircleLayer
 
   /**
-   * Emission strength.
+   * Emission strength
    *
    * @param circleEmissiveStrength value of circleEmissiveStrength as Expression
    */
@@ -2270,7 +2270,7 @@ interface CircleLayerDsl {
   fun circleEmissiveStrength(circleEmissiveStrength: Expression): CircleLayer
 
   /**
-   * Emission strength.
+   * Emission strength
    *
    * Set the CircleEmissiveStrength property transition options
    *
@@ -2280,7 +2280,7 @@ interface CircleLayerDsl {
   fun circleEmissiveStrengthTransition(options: StyleTransition): CircleLayer
 
   /**
-   * Emission strength.
+   * Emission strength
    *
    * DSL for [circleEmissiveStrengthTransition].
    */

@@ -163,7 +163,7 @@ class PolygonAnnotationManager(
   /**
    * The FillEmissiveStrength property
    *
-   * Emission strength. The unit of fillEmissiveStrength is in intensity.
+   * Emission strength The unit of fillEmissiveStrength is in intensity.
    */
   var fillEmissiveStrength: Double?
     /**
