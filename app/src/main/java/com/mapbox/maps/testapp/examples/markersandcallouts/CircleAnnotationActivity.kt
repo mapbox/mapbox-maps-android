@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
+import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.plugin.annotation.AnnotationPlugin
 import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.*
@@ -48,6 +49,14 @@ class CircleAnnotationActivity : AppCompatActivity() {
             .show()
           false
         }
+      )
+      binding.mapView.getMapboxMap().setCamera(
+        CameraOptions.Builder()
+          .center(Point.fromLngLat(CIRCLE_LONGITUDE, CIRCLE_LATITUDE))
+          .pitch(45.0)
+          .zoom(12.5)
+          .bearing(-17.6)
+          .build()
       )
       binding.mapView.getMapboxMap().loadStyle(nextStyle) {
         addInteractionListener(

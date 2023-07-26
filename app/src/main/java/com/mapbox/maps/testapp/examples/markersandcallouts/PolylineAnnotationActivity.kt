@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
+import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.extension.style.layers.getLayer
 import com.mapbox.maps.plugin.annotation.AnnotationConfig
 import com.mapbox.maps.plugin.annotation.AnnotationPlugin
@@ -32,6 +33,14 @@ class PolylineAnnotationActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     val binding = ActivityAnnotationBinding.inflate(layoutInflater)
     setContentView(binding.root)
+    binding.mapView.getMapboxMap().setCamera(
+      CameraOptions.Builder()
+        .center(Point.fromLngLat(24.945749, 60.171924))
+        .pitch(45.0)
+        .zoom(9.5)
+        .bearing(-17.6)
+        .build()
+    )
     binding.mapView.getMapboxMap().loadStyle(nextStyle) {
       annotationPlugin = binding.mapView.annotations
       polylineAnnotationManager = annotationPlugin.createPolylineAnnotationManager(

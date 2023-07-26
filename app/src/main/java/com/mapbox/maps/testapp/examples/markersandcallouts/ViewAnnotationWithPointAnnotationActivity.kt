@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Point
+import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapView
 import com.mapbox.maps.Style
 import com.mapbox.maps.ViewAnnotationAnchor
@@ -47,6 +48,15 @@ class ViewAnnotationWithPointAnnotationActivity : AppCompatActivity() {
     )!!
 
     viewAnnotationManager = binding.mapView.viewAnnotationManager
+
+    binding.mapView.getMapboxMap().setCamera(
+      CameraOptions.Builder()
+        .center(POINT)
+        .pitch(45.0)
+        .zoom(12.5)
+        .bearing(-17.6)
+        .build()
+    )
 
     binding.mapView.getMapboxMap().loadStyle(Style.STANDARD) {
       prepareAnnotationMarker(binding.mapView, iconBitmap)

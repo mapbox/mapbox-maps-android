@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
+import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.eq
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.get
@@ -52,6 +53,19 @@ class PointAnnotationActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     val binding = ActivityAnnotationBinding.inflate(layoutInflater)
     setContentView(binding.root)
+    binding.mapView.getMapboxMap().setCamera(
+      CameraOptions.Builder()
+        .center(
+          Point.fromLngLat(
+            AIRPORT_LONGITUDE,
+            AIRPORT_LATITUDE
+          )
+        )
+        .pitch(45.0)
+        .zoom(10.5)
+        .bearing(-17.6)
+        .build()
+    )
     binding.mapView.getMapboxMap().loadStyle(nextStyle) {
       annotationPlugin = binding.mapView.annotations
       circleAnnotationManager = annotationPlugin.createCircleAnnotationManager().apply {
