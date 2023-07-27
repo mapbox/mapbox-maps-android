@@ -304,6 +304,19 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ExampleOverviewActivity" />
         </activity>
+
+        <activity
+            android:name=".examples.terrain3D.Lights3DActivity"
+            android:description="@string/description_lights3d"
+            android:exported="true"
+            android:label="@string/activity_lights3d">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_3D" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ExampleOverviewActivity" />
+        </activity>
         <activity
             android:name=".examples.IconPropertyActivity"
             android:description="@string/description_icon_property"
