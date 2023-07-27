@@ -4,6 +4,20 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 10.15.0
+## Bug fixes 🐞
+* Fix a security exception when fine location permission is not granted when using `DefaultLocationProvider`.
+* Fix camera animations jitter noticeable on high zoom levels using location puck following mode.
+* Fix view port not following puck if viewport `bearing` option was set to `null` even though new locations were available.
+* Fix the issue of tiles displaying redundant images during a style switch, when both styles include similarly named sprites.
+* Fix crash in offline download when no-content responses are received.
+* Fix the issue of rendering sky layers behind the globe when the atmosphere is disabled.
+* Resolve the issue with tile rendering when the tile pack's levelling scheme has a maximum zoom level of less than 16, and the camera zoom surpasses the maximum zoom value defined by the tile pack's levelling scheme.
+* Fix the HTTP resources expiration time being reset when the Expires header defined the expiration time and the Cache-Control header was present but did not define the expiration time.
+* Fix the latency during the style switch of fill extrusion layers that have data-driven paint properties.
+
+## Dependencies
+* Update gl-native to v10.15.0 and common to v23.7.0.
 
 # 10.15.0-rc.1 July 13, 2023
 ## Bug fixes 🐞
