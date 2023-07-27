@@ -3,6 +3,7 @@ package com.mapbox.maps.extension.style.layers
 import android.util.Log
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.LayerPosition
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxStyleException
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.StyleContract
@@ -108,6 +109,22 @@ abstract class Layer : StyleContract.StyleLayerExtension {
    * @param maxZoom value of maxzoom
    */
   abstract fun maxZoom(maxZoom: Double): Layer
+
+  /**
+   * The slot this layer is assigned to. If specified, and a slot with that name exists,
+   * it will be placed at that position in the layer order.
+   *
+   * @param slot value of slot
+   */
+  @MapboxExperimental
+  abstract fun slot(slot: String): Layer
+
+  /**
+   * The slot this layer is assigned to. If specified, and a slot with that name exists,
+   * it will be placed at that position in the layer order.
+   */
+  @MapboxExperimental
+  abstract val slot: String?
 
   /**
    * Bind the layer to the Style.

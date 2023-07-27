@@ -34,7 +34,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
    * @param slot value of slot
    */
   @MapboxExperimental
-  fun slot(slot: String): BackgroundLayer = apply {
+  override fun slot(slot: String): BackgroundLayer = apply {
     val param = PropertyValue("slot", slot)
     setProperty(param)
   }
@@ -44,7 +44,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
    * it will be placed at that position in the layer order.
    */
   @MapboxExperimental
-  val slot: String?
+  override val slot: String?
     /**
      * Get the slot property
      *
@@ -859,6 +859,15 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
  */
 @LayersDsl
 interface BackgroundLayerDsl {
+
+  /**
+   * The slot this layer is assigned to. If specified, and a slot with that name exists,
+   * it will be placed at that position in the layer order.
+   *
+   * @param slot value of slot
+   */
+  @MapboxExperimental
+  fun slot(slot: String): BackgroundLayer
 
   /**
    * Whether this layer is displayed.

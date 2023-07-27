@@ -63,7 +63,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    * @param slot value of slot
    */
   @MapboxExperimental
-  fun slot(slot: String): CircleLayer = apply {
+  override fun slot(slot: String): CircleLayer = apply {
     val param = PropertyValue("slot", slot)
     setProperty(param)
   }
@@ -73,7 +73,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    * it will be placed at that position in the layer order.
    */
   @MapboxExperimental
-  val slot: String?
+  override val slot: String?
     /**
      * Get the slot property
      *
@@ -2184,6 +2184,15 @@ interface CircleLayerDsl {
    * @param sourceLayer value of sourceLayer
    */
   fun sourceLayer(sourceLayer: String): CircleLayer
+
+  /**
+   * The slot this layer is assigned to. If specified, and a slot with that name exists,
+   * it will be placed at that position in the layer order.
+   *
+   * @param slot value of slot
+   */
+  @MapboxExperimental
+  fun slot(slot: String): CircleLayer
 
   /**
    * A filter is a property at the layer level that determines which features should be rendered in a style layer.

@@ -63,7 +63,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    * @param slot value of slot
    */
   @MapboxExperimental
-  fun slot(slot: String): SymbolLayer = apply {
+  override fun slot(slot: String): SymbolLayer = apply {
     val param = PropertyValue("slot", slot)
     setProperty(param)
   }
@@ -73,7 +73,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    * it will be placed at that position in the layer order.
    */
   @MapboxExperimental
-  val slot: String?
+  override val slot: String?
     /**
      * Get the slot property
      *
@@ -7281,6 +7281,15 @@ interface SymbolLayerDsl {
    * @param sourceLayer value of sourceLayer
    */
   fun sourceLayer(sourceLayer: String): SymbolLayer
+
+  /**
+   * The slot this layer is assigned to. If specified, and a slot with that name exists,
+   * it will be placed at that position in the layer order.
+   *
+   * @param slot value of slot
+   */
+  @MapboxExperimental
+  fun slot(slot: String): SymbolLayer
 
   /**
    * A filter is a property at the layer level that determines which features should be rendered in a style layer.

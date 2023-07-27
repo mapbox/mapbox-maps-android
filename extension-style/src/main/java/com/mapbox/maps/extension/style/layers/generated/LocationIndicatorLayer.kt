@@ -34,7 +34,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    * @param slot value of slot
    */
   @MapboxExperimental
-  fun slot(slot: String): LocationIndicatorLayer = apply {
+  override fun slot(slot: String): LocationIndicatorLayer = apply {
     val param = PropertyValue("slot", slot)
     setProperty(param)
   }
@@ -44,7 +44,7 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    * it will be placed at that position in the layer order.
    */
   @MapboxExperimental
-  val slot: String?
+  override val slot: String?
     /**
      * Get the slot property
      *
@@ -2533,6 +2533,15 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
  */
 @LayersDsl
 interface LocationIndicatorLayerDsl {
+
+  /**
+   * The slot this layer is assigned to. If specified, and a slot with that name exists,
+   * it will be placed at that position in the layer order.
+   *
+   * @param slot value of slot
+   */
+  @MapboxExperimental
+  fun slot(slot: String): LocationIndicatorLayer
 
   /**
    * Whether this layer is displayed.

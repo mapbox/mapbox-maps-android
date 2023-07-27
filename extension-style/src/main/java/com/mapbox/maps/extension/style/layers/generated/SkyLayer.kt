@@ -38,7 +38,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
    * @param slot value of slot
    */
   @MapboxExperimental
-  fun slot(slot: String): SkyLayer = apply {
+  override fun slot(slot: String): SkyLayer = apply {
     val param = PropertyValue("slot", slot)
     setProperty(param)
   }
@@ -48,7 +48,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
    * it will be placed at that position in the layer order.
    */
   @MapboxExperimental
-  val slot: String?
+  override val slot: String?
     /**
      * Get the slot property
      *
@@ -1302,6 +1302,15 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
  */
 @LayersDsl
 interface SkyLayerDsl {
+
+  /**
+   * The slot this layer is assigned to. If specified, and a slot with that name exists,
+   * it will be placed at that position in the layer order.
+   *
+   * @param slot value of slot
+   */
+  @MapboxExperimental
+  fun slot(slot: String): SkyLayer
 
   /**
    * A filter is a property at the layer level that determines which features should be rendered in a style layer.

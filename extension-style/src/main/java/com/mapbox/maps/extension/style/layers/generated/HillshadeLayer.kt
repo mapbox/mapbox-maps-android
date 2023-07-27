@@ -63,7 +63,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
    * @param slot value of slot
    */
   @MapboxExperimental
-  fun slot(slot: String): HillshadeLayer = apply {
+  override fun slot(slot: String): HillshadeLayer = apply {
     val param = PropertyValue("slot", slot)
     setProperty(param)
   }
@@ -73,7 +73,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
    * it will be placed at that position in the layer order.
    */
   @MapboxExperimental
-  val slot: String?
+  override val slot: String?
     /**
      * Get the slot property
      *
@@ -1240,6 +1240,15 @@ interface HillshadeLayerDsl {
    * @param sourceLayer value of sourceLayer
    */
   fun sourceLayer(sourceLayer: String): HillshadeLayer
+
+  /**
+   * The slot this layer is assigned to. If specified, and a slot with that name exists,
+   * it will be placed at that position in the layer order.
+   *
+   * @param slot value of slot
+   */
+  @MapboxExperimental
+  fun slot(slot: String): HillshadeLayer
 
   /**
    * Whether this layer is displayed.

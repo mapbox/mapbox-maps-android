@@ -62,7 +62,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    * @param slot value of slot
    */
   @MapboxExperimental
-  fun slot(slot: String): ModelLayer = apply {
+  override fun slot(slot: String): ModelLayer = apply {
     val param = PropertyValue("slot", slot)
     setProperty(param)
   }
@@ -72,7 +72,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    * it will be placed at that position in the layer order.
    */
   @MapboxExperimental
-  val slot: String?
+  override val slot: String?
     /**
      * Get the slot property
      *
@@ -2500,6 +2500,15 @@ interface ModelLayerDsl {
    * @param sourceLayer value of sourceLayer
    */
   fun sourceLayer(sourceLayer: String): ModelLayer
+
+  /**
+   * The slot this layer is assigned to. If specified, and a slot with that name exists,
+   * it will be placed at that position in the layer order.
+   *
+   * @param slot value of slot
+   */
+  @MapboxExperimental
+  fun slot(slot: String): ModelLayer
 
   /**
    * A filter is a property at the layer level that determines which features should be rendered in a style layer.

@@ -59,7 +59,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
    * @param slot value of slot
    */
   @MapboxExperimental
-  fun slot(slot: String): RasterLayer = apply {
+  override fun slot(slot: String): RasterLayer = apply {
     val param = PropertyValue("slot", slot)
     setProperty(param)
   }
@@ -69,7 +69,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
    * it will be placed at that position in the layer order.
    */
   @MapboxExperimental
-  val slot: String?
+  override val slot: String?
     /**
      * Get the slot property
      *
@@ -1701,6 +1701,15 @@ interface RasterLayerDsl {
    * @param sourceLayer value of sourceLayer
    */
   fun sourceLayer(sourceLayer: String): RasterLayer
+
+  /**
+   * The slot this layer is assigned to. If specified, and a slot with that name exists,
+   * it will be placed at that position in the layer order.
+   *
+   * @param slot value of slot
+   */
+  @MapboxExperimental
+  fun slot(slot: String): RasterLayer
 
   /**
    * Whether this layer is displayed.
