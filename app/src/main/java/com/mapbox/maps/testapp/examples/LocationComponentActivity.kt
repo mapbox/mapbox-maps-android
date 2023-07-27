@@ -11,9 +11,6 @@ import com.mapbox.maps.ImageHolder
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.expressions.dsl.generated.interpolate
-import com.mapbox.maps.extension.style.expressions.generated.Expression
-import com.mapbox.maps.extension.style.layers.addLayer
-import com.mapbox.maps.extension.style.layers.generated.fillExtrusionLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.Anchor
 import com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName
 import com.mapbox.maps.extension.style.light.generated.flatLight
@@ -55,7 +52,6 @@ class LocationComponentActivity : AppCompatActivity() {
     locationPermissionHelper.checkPermissions {
       binding.mapView.apply {
         getMapboxMap().loadStyle(Style.STANDARD) {
-          setupBuildings(it)
           it.setLight(
             flatLight {
               anchor(Anchor.MAP)
@@ -94,21 +90,6 @@ class LocationComponentActivity : AppCompatActivity() {
         }
       }
     }
-  }
-
-  private fun setupBuildings(style: Style) {
-    val fillExtrusionLayer = fillExtrusionLayer("3d-buildings", "composite") {
-      sourceLayer("building")
-      filter(Expression.eq(Expression.get("extrude"), Expression.literal("true")))
-      minZoom(15.0)
-      fillExtrusionColor(Color.parseColor("#aaaaaa"))
-      fillExtrusionHeight(Expression.get("height"))
-      fillExtrusionBase(Expression.get("min_height"))
-      fillExtrusionOpacity(0.6)
-      fillExtrusionAmbientOcclusionIntensity(0.3)
-      fillExtrusionAmbientOcclusionRadius(3.0)
-    }
-    style.addLayer(fillExtrusionLayer)
   }
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
