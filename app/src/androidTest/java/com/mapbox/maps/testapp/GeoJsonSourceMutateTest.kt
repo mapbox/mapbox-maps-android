@@ -70,10 +70,13 @@ class GeoJsonSourceMutateTest(
     }
 
     withLatch { latch ->
+      println("With latch")
       rule.runOnUiThread {
         var cancelable: Cancelable? = null
         cancelable = mapboxMap.subscribeSourceDataLoaded {
+          println("Source data loaded, source id : ${it.sourceId} / data id : ${it.dataId}")
           if (it.sourceId == SOURCE_ID && it.dataId == DATA_ID) {
+            println("Finish latch")
             cancelable?.cancel()
             latch.countDown()
           }
@@ -88,6 +91,7 @@ class GeoJsonSourceMutateTest(
     featureList: List<Feature>,
     commandType: CommandType
   ) {
+    println("Mutate geojson (command $commandType), data id : $DATA_ID")
     val geoJsonSource = this.style.getSourceAs<GeoJsonSource>(SOURCE_ID)!!
     when (commandType) {
       CommandType.ADD_PARTIAL -> {
@@ -106,6 +110,7 @@ class GeoJsonSourceMutateTest(
         geoJsonSource.featureCollection(FeatureCollection.fromFeatures(initialFeatures + featureList), DATA_ID)
       }
     }
+    println("Geojson updated, wait for the source data loaded event")
   }
 
   companion object {
