@@ -16,8 +16,8 @@ import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.getLayer
 import com.mapbox.maps.extension.style.light.generated.AmbientLight
 import com.mapbox.maps.extension.style.light.generated.DirectionalLight
-import com.mapbox.maps.extension.style.light.generated.setLight
-import com.mapbox.maps.extension.style.light.setup3DLights
+import com.mapbox.maps.extension.style.light.generated.FlatLight
+import com.mapbox.maps.extension.style.light.setLight
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.terrain.generated.setTerrain
 import org.junit.After
@@ -88,10 +88,6 @@ abstract class BaseStyleTest {
     style.removeStyleLayer(layer.layerId)
   }
 
-  fun setupLight(light: StyleContract.StyleLightExtension) {
-    style.setLight(light)
-  }
-
   fun setupTerrain(terrain: StyleContract.StyleTerrainExtension) {
     style.setTerrain(terrain)
   }
@@ -104,9 +100,13 @@ abstract class BaseStyleTest {
     style.addSource(source)
   }
 
+  fun setupLight(light: FlatLight) {
+    style.setLight(light)
+  }
+
   @OptIn(MapboxExperimental::class)
-  fun setupLights3D(ambientLight: AmbientLight, directionalLight: DirectionalLight) {
-    style.setup3DLights(ambientLight, directionalLight)
+  fun setupLight(ambientLight: AmbientLight, directionalLight: DirectionalLight) {
+    style.setLight(ambientLight, directionalLight)
   }
 
   fun getLayer(id: String): Layer? {
