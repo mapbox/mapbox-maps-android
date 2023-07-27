@@ -106,6 +106,8 @@ class LocationComponentAnimationActivity : AppCompatActivity() {
         setCamera(
           CameraOptions.Builder()
             .zoom(14.0)
+            .pitch(0.0)
+            .bearing(0.0)
             .center(Point.fromLngLat(POINT_LNG, POINT_LAT))
             .build()
         )

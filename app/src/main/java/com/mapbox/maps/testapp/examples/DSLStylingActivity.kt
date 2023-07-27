@@ -14,6 +14,7 @@ import com.mapbox.maps.RenderedQueryOptions
 import com.mapbox.maps.ScreenBox
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.Style
+import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.extension.style.expressions.dsl.generated.concat
 import com.mapbox.maps.extension.style.expressions.dsl.generated.format
 import com.mapbox.maps.extension.style.expressions.dsl.generated.get
@@ -26,6 +27,8 @@ import com.mapbox.maps.extension.style.layers.generated.rasterLayer
 import com.mapbox.maps.extension.style.layers.generated.symbolLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor
 import com.mapbox.maps.extension.style.light.dynamicLight
+import com.mapbox.maps.extension.style.light.generated.ambientLight
+import com.mapbox.maps.extension.style.light.generated.directionalLight
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.sources.generated.imageSource
 import com.mapbox.maps.extension.style.style
@@ -46,7 +49,16 @@ class DSLStylingActivity : AppCompatActivity(), OnMapClickListener {
     setContentView(mapView)
 
     mapboxMap = mapView.getMapboxMap()
-    mapboxMap.loadStyle(createStyle())
+    mapboxMap.loadStyle(createStyle()) {
+      mapboxMap.setCamera(
+        cameraOptions {
+          center(Point.fromLngLat(-122.40276277449118, 37.79608281254676))
+          zoom(15.7)
+          bearing(359.63)
+          pitch(60.0)
+        }
+      )
+    }
     mapboxMap.addOnMapClickListener(this)
   }
 
@@ -84,7 +96,7 @@ class DSLStylingActivity : AppCompatActivity(), OnMapClickListener {
     e.toString()
   }
 
-  private fun createStyle() = style(style = Style.TRAFFIC_DAY) {
+  private fun createStyle() = style(style = Style.STANDARD) {
     +imageSource("imag") {
       url(IMAGE_URL)
       coordinates(
@@ -97,7 +109,7 @@ class DSLStylingActivity : AppCompatActivity(), OnMapClickListener {
       )
     }
     +geoJsonSource(id = "earthquakes") {
-      url(GEOJSON_URL)
+      data(GEOJSON_URL)
       cluster(false)
     }
     +circleLayer(layerId = "earthquakeCircle", sourceId = "earthquakes") {
@@ -181,14 +193,14 @@ class DSLStylingActivity : AppCompatActivity(), OnMapClickListener {
       rasterOpacity(0.8)
     }
     +dynamicLight(
-      {
-        intensity(0.9)
-        color(Color.BLUE)
+      ambientLight {
+        intensity(0.2)
+        color(Color.YELLOW)
       },
-      {
+      directionalLight {
         shadowIntensity(0.5)
         castShadows(true)
-        color(Color.BLACK)
+        color(Color.WHITE)
       }
     )
   }

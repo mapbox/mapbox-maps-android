@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.maps.Style
+import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.extension.style.expressions.dsl.generated.interpolate
 import com.mapbox.maps.extension.style.layers.generated.SkyLayer
 import com.mapbox.maps.extension.style.layers.generated.skyLayer
@@ -77,6 +78,12 @@ class SkyLayerShowcaseActivity : AppCompatActivity() {
         }
       }
     ) {
+      binding.mapView.getMapboxMap().setCamera(
+        cameraOptions {
+          zoom(16.0)
+          pitch(85.0)
+        }
+      )
       binding.mapView.scalebar.enabled = false
       skyLayer = it.getLayerAs(SKY_LAYER)
     }

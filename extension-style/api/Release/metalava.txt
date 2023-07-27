@@ -5006,7 +5006,7 @@ package com.mapbox.maps.extension.style.light {
   }
 
   public final class LightUtils {
-    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.style.light.DynamicLight dynamicLight(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.light.generated.AmbientLightDslReceiver,kotlin.Unit> blockAmbient, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.light.generated.DirectionalLightDslReceiver,kotlin.Unit> blockDirectional);
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.style.light.DynamicLight dynamicLight(com.mapbox.maps.extension.style.light.generated.AmbientLight ambientLight, com.mapbox.maps.extension.style.light.generated.DirectionalLight directionalLight);
     method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.style.light.Light? getLight(com.mapbox.maps.Style, String lightId);
     method @com.mapbox.maps.MapboxExperimental public static void setLight(com.mapbox.maps.Style, com.mapbox.maps.extension.style.light.generated.AmbientLight ambientLight, com.mapbox.maps.extension.style.light.generated.DirectionalLight directionalLight);
     method public static void setLight(com.mapbox.maps.Style, com.mapbox.maps.extension.style.light.generated.FlatLight flatLight);

@@ -53,9 +53,9 @@ class CircleAnnotationActivity : AppCompatActivity() {
       binding.mapView.getMapboxMap().setCamera(
         CameraOptions.Builder()
           .center(Point.fromLngLat(CIRCLE_LONGITUDE, CIRCLE_LATITUDE))
-          .pitch(45.0)
-          .zoom(12.5)
-          .bearing(-17.6)
+          .pitch(0.0)
+          .zoom(5.0)
+          .bearing(0.0)
           .build()
       )
       binding.mapView.getMapboxMap().loadStyle(nextStyle) {

@@ -2,8 +2,6 @@ package com.mapbox.maps.testapp.examples
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.mapbox.geojson.Point
-import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapView
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.expressions.generated.Expression
@@ -39,15 +37,7 @@ class RawExpressionActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     val mapView = MapView(this)
     setContentView(mapView)
-    mapView.getMapboxMap().setCamera(
-      CameraOptions.Builder()
-        .center(Point.fromLngLat(24.945749, 60.171924))
-        .pitch(45.0)
-        .zoom(12.5)
-        .bearing(-17.6)
-        .build()
-    )
-    mapView.getMapboxMap().loadStyle(Style.STANDARD) {
+    mapView.getMapboxMap().loadStyle(Style.MAPBOX_STREETS) {
       addExpressionToStyle(it)
     }
   }

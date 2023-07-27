@@ -9,9 +9,7 @@ import com.mapbox.maps.MapboxStyleException
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
 import com.mapbox.maps.extension.style.light.generated.AmbientLight
-import com.mapbox.maps.extension.style.light.generated.AmbientLightDslReceiver
 import com.mapbox.maps.extension.style.light.generated.DirectionalLight
-import com.mapbox.maps.extension.style.light.generated.DirectionalLightDslReceiver
 import com.mapbox.maps.extension.style.light.generated.FlatLight
 import com.mapbox.maps.extension.style.utils.silentUnwrap
 import com.mapbox.maps.logE
@@ -118,14 +116,17 @@ fun Style.getLight(lightId: String): Light? {
 
 /**
  * DSL function for creating [DynamicLight] instance.
+ *
+ * @param ambientLight the [AmbientLight] to set.
+ * @param directionalLight the [DirectionalLight] to set.
  */
 @MapboxExperimental
 fun dynamicLight(
-  blockAmbient: AmbientLightDslReceiver.() -> Unit,
-  blockDirectional: DirectionalLightDslReceiver.() -> Unit
+  ambientLight: AmbientLight,
+  directionalLight: DirectionalLight
 ): DynamicLight = DynamicLight(
-  AmbientLight("ambient").apply(blockAmbient),
-  DirectionalLight("directional").apply(blockDirectional)
+  ambientLight,
+  directionalLight
 )
 
 @PublishedApi

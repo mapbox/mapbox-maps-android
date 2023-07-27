@@ -6,6 +6,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
+import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityCustomLayerBinding
 
@@ -23,11 +24,15 @@ class NativeCustomLayerActivity : AppCompatActivity() {
     setContentView(binding.root)
     mapboxMap = binding.mapView.getMapboxMap()
     mapboxMap.loadStyle(
-      Style.STANDARD
+      Style.MAPBOX_STREETS
     ) {
       mapboxMap.setCamera(
-        CameraOptions.Builder().center(Point.fromLngLat(116.39053, 39.91448)).zoom(10.0)
-          .build()
+        cameraOptions {
+          center(Point.fromLngLat(116.39053, 39.91448))
+          pitch(0.0)
+          bearing(0.0)
+          zoom(10.0)
+        }
       )
       initFab()
     }

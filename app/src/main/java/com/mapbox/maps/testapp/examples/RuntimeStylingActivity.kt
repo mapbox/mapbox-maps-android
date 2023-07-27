@@ -36,7 +36,7 @@ class RuntimeStylingActivity : AppCompatActivity() {
 
     mapboxMap = mapView.getMapboxMap()
     mapboxMap.loadStyle(
-      Style.STANDARD
+      Style.MAPBOX_STREETS
     ) { setupStyle(it) }
   }
 

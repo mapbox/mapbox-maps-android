@@ -63,7 +63,7 @@ class WithinExpressionActivity : AppCompatActivity() {
     val bufferedRouteGeometry = bufferLineStringGeometry()
 
     mapView.getMapboxMap().loadStyle(
-      style(Style.STANDARD) {
+      style(Style.MAPBOX_STREETS) {
         +geoJsonSource(POINT_ID) {
           geometry(LineString.fromLngLats(coordinates))
         }

@@ -36,9 +36,9 @@ class PolylineAnnotationActivity : AppCompatActivity() {
     binding.mapView.getMapboxMap().setCamera(
       CameraOptions.Builder()
         .center(Point.fromLngLat(24.945749, 60.171924))
-        .pitch(45.0)
-        .zoom(9.5)
-        .bearing(-17.6)
+        .pitch(0.0)
+        .zoom(4.0)
+        .bearing(0.0)
         .build()
     )
     binding.mapView.getMapboxMap().loadStyle(nextStyle) {

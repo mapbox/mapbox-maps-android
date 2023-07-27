@@ -22,7 +22,7 @@ class TriangleCustomLayerActivity : AppCompatActivity() {
     setContentView(binding.root)
     mapboxMap = binding.mapView.getMapboxMap()
     mapboxMap.loadStyle(
-      Style.STANDARD
+      Style.MAPBOX_STREETS
     ) {
       mapboxMap.setCamera(CAMERA)
       addCustomLayer(it)
@@ -106,6 +106,6 @@ class TriangleCustomLayerActivity : AppCompatActivity() {
     private const val CUSTOM_LAYER_ID = "custom"
     private const val TAG = "TriangleCustomLayerActivity"
     private val CAMERA =
-      CameraOptions.Builder().center(Point.fromLngLat(20.0, 58.0)).zoom(3.0).build()
+      CameraOptions.Builder().center(Point.fromLngLat(20.0, 58.0)).pitch(0.0).zoom(3.0).build()
   }
 }

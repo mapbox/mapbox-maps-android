@@ -4,10 +4,14 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.get
 import com.mapbox.api.directions.v5.models.DirectionsResponse
 import com.mapbox.core.constants.Constants
 import com.mapbox.geojson.LineString
+import com.mapbox.geojson.Point
 import com.mapbox.maps.MapView
+import com.mapbox.maps.Style
+import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
 import com.mapbox.maps.testapp.utils.NavigationSimulator
 
@@ -34,29 +38,39 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
       ).routes()[0].geometry()!!,
       Constants.PRECISION_6
     )
-    navigationSimulator = NavigationSimulator(mapView, routePoints)
-    navigationSimulator.apply {
-      disableGestures()
-      playCustomNavigationScripts(
-        NavigationSimulator.NavigationStep(INITIAL_OVERVIEW_DELAY_MS) {
-          setCameraTrackingMode(NavigationSimulator.CameraFollowMode.FOLLOW)
-        },
-        NavigationSimulator.NavigationStep(FIRST_FOLLOW_MODE_DELAY_MS) {
-          setCameraTrackingMode(NavigationSimulator.CameraFollowMode.OVERVIEW)
-        },
-        NavigationSimulator.NavigationStep(SECOND_OVERVIEW_MODE_DELAY_MS) {
-          setCameraTrackingMode(NavigationSimulator.CameraFollowMode.FOLLOW)
+    mapView.getMapboxMap().loadStyle(Style.STANDARD) {
+      mapView.getMapboxMap().setCamera(
+        cameraOptions {
+          center(Point.fromLngLat(-118.410042, 33.942791))
+          bearing(0.0)
+          pitch(0.0)
+          zoom(9.0)
         }
       )
+      navigationSimulator = NavigationSimulator(mapView, routePoints)
+      navigationSimulator.apply {
+        disableGestures()
+        playCustomNavigationScripts(
+          NavigationSimulator.NavigationStep(INITIAL_OVERVIEW_DELAY_MS) {
+            setCameraTrackingMode(NavigationSimulator.CameraFollowMode.FOLLOW)
+          },
+          NavigationSimulator.NavigationStep(FIRST_FOLLOW_MODE_DELAY_MS) {
+            setCameraTrackingMode(NavigationSimulator.CameraFollowMode.OVERVIEW)
+          },
+          NavigationSimulator.NavigationStep(SECOND_OVERVIEW_MODE_DELAY_MS) {
+            setCameraTrackingMode(NavigationSimulator.CameraFollowMode.FOLLOW)
+          }
+        )
+      }
+      handler.postDelayed(
+        {
+          finish()
+        },
+        SIMULATION_DURATION
+      )
+      // Uncomment below to play the default navigation script in loop.
+      // navigationSimulator.playDefaultNavigationScriptsInLoop()
     }
-    handler.postDelayed(
-      {
-        finish()
-      },
-      SIMULATION_DURATION
-    )
-    // Uncomment below to play the default navigation script in loop.
-    // navigationSimulator.playDefaultNavigationScriptsInLoop()
   }
 
   override fun onDestroy() {
