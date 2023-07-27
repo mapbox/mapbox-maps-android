@@ -15,6 +15,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Resolve the issue with tile rendering when the tile pack's levelling scheme has a maximum zoom level of less than 16, and the camera zoom surpasses the maximum zoom value defined by the tile pack's levelling scheme.
 * Fix the HTTP resources expiration time being reset when the Expires header defined the expiration time and the Cache-Control header was present but did not define the expiration time.
 * Fix the latency during the style switch of fill extrusion layers that have data-driven paint properties.
+* Fix a rounding error when point lies at the edge of the screen by using `rountToInt` for limiting `MapboxMap#pixelForCoordinate` to the bounds of MapView.
 
 ## Dependencies
 * Update gl-native to v10.15.0 and common to v23.7.0.
