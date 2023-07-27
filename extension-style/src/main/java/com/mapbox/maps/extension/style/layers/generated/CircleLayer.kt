@@ -137,12 +137,42 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
 
   /**
    * Whether this layer is displayed.
+   */
+  override val visibilityAsExpression: Expression?
+    /**
+     * Whether this layer is displayed.
+     *
+     * Use static method [CircleLayer.defaultVisibility] to get the default property value.
+     *
+     * @return VISIBILITY as expression
+     */
+    get() {
+      getPropertyValue<Expression>("visibility")?.let {
+        return it
+      }
+      return null
+    }
+
+  /**
+   * Whether this layer is displayed.
    *
    * Use static method [CircleLayer.defaultVisibility] to get the default property value.
    *
    * @param visibility value of Visibility
    */
   override fun visibility(visibility: Visibility): CircleLayer = apply {
+    val propertyValue = PropertyValue("visibility", visibility)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Whether this layer is displayed.
+   *
+   * Use static method [[CircleLayer.defaultVisibility] to get the default property value.
+   *
+   * @param visibility value of Visibility
+   */
+  override fun visibility(visibility: Expression): CircleLayer = apply {
     val propertyValue = PropertyValue("visibility", visibility)
     setProperty(propertyValue)
   }
@@ -2174,6 +2204,13 @@ interface CircleLayerDsl {
    * @param visibility value of Visibility
    */
   fun visibility(visibility: Visibility): CircleLayer
+
+  /**
+   * Whether this layer is displayed.
+   *
+   * @param visibility value of Visibility as Expression
+   */
+  fun visibility(visibility: Expression): CircleLayer
 
   /**
    * The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.

@@ -16,9 +16,11 @@ Mapbox welcomes participation and contributions from everyone.
 * Refactor style Light APIs: introduce `AmbientLight`, `DirectionalLight`, `FlatLight` and methods to set them to style.
 * Expose new APIs to import and configure styles: `getStyleImports`, `removeStyleImport`, `getStyleImportSchema`, `getStyleImportConfigProperties`, `setStyleImportConfigProperties`, `getStyleImportConfigProperty`, `setStyleImportConfigProperty`
 * Expose `slot` property for all `Layer`s to link layers from imported styles.
+* Add expression support for visibility layer property.
  
 ## Bug fixes 🐞
 * Fix a rounding error when point lies at the edge of the screen by using `rountToInt` for limiting `MapboxMap#pixelForCoordinate` to the bounds of MapView.
+
 
 # 11.0.0-alpha.2 June 27, 2023
 ## Breaking changes ⚠️

@@ -6,6 +6,7 @@ import com.mapbox.maps.LayerPosition
 import com.mapbox.maps.MapboxStyleException
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.StyleContract
+import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.generated.BackgroundLayer
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
 import com.mapbox.maps.extension.style.layers.properties.generated.Visibility
@@ -49,18 +50,32 @@ abstract class Layer : StyleContract.StyleLayerExtension {
   internal abstract fun getType(): String
 
   /**
-   * Get the Visibility property
+   * Get the Visibility property.
    *
    * @return property wrapper value around VISIBILITY
    */
   abstract val visibility: Visibility?
 
   /**
-   * Set the Visibility property
+   * Get the Visibility property as Expression.
+   *
+   * @return property wrapper value around VISIBILITY
+   */
+  abstract val visibilityAsExpression: Expression?
+
+  /**
+   * Set the Visibility property.
    *
    * @param visibility value of Visibility
    */
   abstract fun visibility(visibility: Visibility): Layer
+
+  /**
+   * Set the Visibility property as expression.
+   *
+   * @param visibility value of Visibility as expression
+   */
+  abstract fun visibility(visibility: Expression): Layer
 
   /**
    * The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.

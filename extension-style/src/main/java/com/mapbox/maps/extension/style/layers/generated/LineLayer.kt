@@ -137,12 +137,42 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
 
   /**
    * Whether this layer is displayed.
+   */
+  override val visibilityAsExpression: Expression?
+    /**
+     * Whether this layer is displayed.
+     *
+     * Use static method [LineLayer.defaultVisibility] to get the default property value.
+     *
+     * @return VISIBILITY as expression
+     */
+    get() {
+      getPropertyValue<Expression>("visibility")?.let {
+        return it
+      }
+      return null
+    }
+
+  /**
+   * Whether this layer is displayed.
    *
    * Use static method [LineLayer.defaultVisibility] to get the default property value.
    *
    * @param visibility value of Visibility
    */
   override fun visibility(visibility: Visibility): LineLayer = apply {
+    val propertyValue = PropertyValue("visibility", visibility)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Whether this layer is displayed.
+   *
+   * Use static method [[LineLayer.defaultVisibility] to get the default property value.
+   *
+   * @param visibility value of Visibility
+   */
+  override fun visibility(visibility: Expression): LineLayer = apply {
     val propertyValue = PropertyValue("visibility", visibility)
     setProperty(propertyValue)
   }
@@ -3015,6 +3045,13 @@ interface LineLayerDsl {
    * @param visibility value of Visibility
    */
   fun visibility(visibility: Visibility): LineLayer
+
+  /**
+   * Whether this layer is displayed.
+   *
+   * @param visibility value of Visibility as Expression
+   */
+  fun visibility(visibility: Expression): LineLayer
 
   /**
    * The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.
