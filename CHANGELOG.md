@@ -101,6 +101,43 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v11.0.0-beta.1 and common to v24.0.0-beta.1.
+* Instantiate OpenGL ES context 3.0, if available, otherwise fallback to 2.0.
+* Use EGL 1.4 instead of EGL 1.0.
+* Update dependencies : 
+
+| Dependency                                       | Before       | After      |
+|--------------------------------------------------|--------------|------------|
+| Android Gradle Plugin                            | 7.0.4        | 7.4.2      |
+| Kotlin                                           | 1.5.31       | 1.7.20     |
+| org.jetbrains.kotlin:kotlin-stdlib-jdk7          | 1.5.31       |            |
+| org.jetbrains.kotlin:kotlin-stdlib-jdk8          |              | 1.7.20     |
+| Dokka plugin                                     | 1.5.31       | 1.7.20     |
+| androidx.core:core-ktx                           | 1.7.0        | 1.9.0      |
+| androidx.appcompat:appcompat                     | 1.3.0        | 1.6.1      |
+| androidx.test:rules                              | 1.4.0        | 1.5.0      |
+| androidx.test:core                               | 1.4.0        | 1.5.0      |
+| androidx.test:runner                             | 1.4.0        | 1.5.2      |
+| androidx.test:orchestrator                       | 1.4.0        | 1.4.2      |
+| androidx.test:monitor                            | 1.4.0        | 1.6.1      |
+| androidx.test.espresso:espresso-core             | 3.4.0        | 3.5.1      |
+| androidx.test.ext:junit                          | 1.1.3        | 1.1.5      |
+| org.jetbrains.kotlinx:kotlinx-coroutines-core    | 1.3.9        | 1.6.1      |
+| org.jetbrains.kotlinx:kotlinx-coroutines-test    | 1.3.9        | 1.6.1      |
+| io.mockk:mockk                                   | 1.12.3       | 1.13.4     |
+| io.mockk:mockk-agent-api                         | 1.12.3       | 1.13.4     |
+| io.mockk:mockk-agent-jvm                         | 1.12.3       | 1.13.4     |
+| org.robolectric:robolectric                      | 4.8.1        | 4.9.2      |
+| com.android.tools.lint:lint-api                  | 30.0.4       | 30.4.2     |
+| com.android.tools.lint:lint-checks               | 30.0.4       | 30.4.2     |
+| com.android.tools.lint:lint                      | 30.0.4       | 30.4.2     |
+| com.android.tools.lint:lint-tests                | 30.0.4       | 30.4.2     |
+| com.android.tools:testutils                      | 30.0.4       | 30.4.2     |
+| nl.jqno.equalsverifier:equalsverifier            | 3.10.1       | 3.14       |
+| io.gitlab.arturbosch.detekt:detekt-formatting    | 1.20.0       | 1.22.0     |
+| composeOptions -> kotlinCompilerExtensionVersion | 1.1.0-beta03 | 1.4.3      |
+| androidx.compose:compose-bom                     |              | 2023.01.00 |
+| androidx.compose.compiler:compiler               |              | 1.3.2      |
+| com.pinterest:ktlint                             | 0.39.0       | 0.48.2     |
 
 # 11.0.0-alpha.2 June 27, 2023
 ## Breaking changes ⚠️
@@ -192,21 +229,6 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v11.0.0-SNAPSHOT.0608T0508Z.a85336d and common to v24.0.0-SNAPSHOT.0616T0900Z.e0319e0.
-
-
-# 10.13.0-beta.1 April 05, 2023
-## Features ✨ and improvements 🏁
-* Deprecate `Snapshotter.setTileMode` and `Snapshotter.isInTileMode`.
-* Deprecate `Style.setStyleGeoJSONSourceData(sourceId, data)`.
-* Use flat screen coordinate conversion functions with zero exaggeration terrain.
-* Share similar image and glyph atlases across tiles and thus avoid unnecessary textures creation.
-* Render single color gradient as solid line.
-
-## Bug fixes 🐞
-* Fix the crash when identifying if device is connected to WiFi.
-* Fix a crash when a hillshade bucket was created with disabled terrain, but the terrain got enabled afterwards.
-
-## Dependencies
 * Instantiate OpenGL ES context 3.0, if available, otherwise fallback to 2.0.
 * Use EGL 1.4 instead of EGL 1.0.
 * Update dependencies : 
@@ -245,23 +267,223 @@ Mapbox welcomes participation and contributions from everyone.
 | androidx.compose.compiler:compiler               |              | 1.3.2      |
 | com.pinterest:ktlint                             | 0.39.0       | 0.48.2     |
 
-## Bug fixes 🐞
-* Fix raw expression parsing for list literal.
+# 11.0.0-alpha.1 March 2, 2023
+## Features ✨ and improvements 🏁
+* Enable raster colorization via `raster-color` expression and `RasterLayer.rasterColor`, `RasterLayer.rasterColorMix`, `RasterLayer.rasterColorRange` layer properties.
 
-# 10.12.0
+
+# 10.15.0 July 27, 2023
+## Bug fixes 🐞
+* Fix a security exception when fine location permission is not granted when using `DefaultLocationProvider`.
+* Fix camera animations jitter noticeable on high zoom levels using location puck following mode.
+* Fix view port not following puck if viewport `bearing` option was set to `null` even though new locations were available.
+* Fix the issue of tiles displaying redundant images during a style switch, when both styles include similarly named sprites.
+* Fix crash in offline download when no-content responses are received.
+* Fix the issue of rendering sky layers behind the globe when the atmosphere is disabled.
+* Resolve the issue with tile rendering when the tile pack's levelling scheme has a maximum zoom level of less than 16, and the camera zoom surpasses the maximum zoom value defined by the tile pack's levelling scheme.
+* Fix the HTTP resources expiration time being reset when the Expires header defined the expiration time and the Cache-Control header was present but did not define the expiration time.
+* Fix the latency during the style switch of fill extrusion layers that have data-driven paint properties.
+* Fix a rounding error when point lies at the edge of the screen by using `rountToInt` for limiting `MapboxMap#pixelForCoordinate` to the bounds of MapView.
+
+## Dependencies
+* Update gl-native to v10.15.0 and common to v23.7.0.
+
+
+# 10.15.0-rc.1 July 13, 2023
+## Bug fixes 🐞
+* Fix view port not following puck if viewport `bearing` option was set to `null` even though new locations were available.
+* Fix the issue of tiles displaying redundant images during a style switch, when both styles include similarly named sprites.
+* Fix crash in offline download when no-content responses are received.
+* Fix the issue of rendering sky layers behind the globe when the atmosphere is disabled.
+
+## Dependencies
+* Update gl-native to v10.15.0-rc.1 and common to v23.7.0-rc.1.
+
+
+# 10.15.0-beta.1 June 29, 2023
+## Bug fixes 🐞
+* Fix a security exception when fine location permission is not granted when using DefaultLocationProvider.
+* Fix camera animations jitter noticeable on high zoom levels using location puck following mode.
+* Resolve the missing tile rendering issue when the tile pack's leveling scheme has a maximum zoom level of less than 16.
+* Fix the issue that HTTP resources expiration time being incorrectly reset, which caused excessive network requests.
+* Fix the style change latency for fill extrusion layers(in case the layers have data-driven paint properties) during the style switches.
+
+## Dependencies 
+* Update gl-native to v10.15.0-beta.1 and common to v23.7.0-beta.1. 
+
+
+
+# 10.14.1 June 22, 2023
+## Bug fixes 🐞
+* Fix the latency during the style switch of fill extrusion layers that have data-driven paint properties.
+
+## Dependencies
+* Update gl-native to v10.14.1.
+
+
+# 10.14.0 June 14, 2023
+## Features ✨ and improvements 🏁
+* Improve performance of setting puck style properties by removing redundant check if layer / source exists.
+* Improve performance of symbol layers with identical or no text.
+* Hide line labels with too large an angle between two neighboring glyphs.
+* Introduce `MapboxMap.tileCover` and `Snapshotter.tileCover` experimental API to get the tileIDs that cover current map camera.
+
+## Bug fixes 🐞
+* Fix layer zoom range check so that the layer will be hidden when the zoom equals to layer's max zoom.
+* Fixes occasional rendering errors caused by long line layers and vertex data overflow.
+* Fix crash when running animations (e.g. gestures) on Android 14 beta.
+* Fix image and zoom dependent expression evaluation errors during style switching.
+* Avoid re-use of raw icon atlas buffers when images point to the different location in the atlas.
+* Fix flickering of symbols on high zoom level.
+* Fix ineffective `tilesize` setting in `CustomGeometrySourceOptions`. Now the generated tiles accurately reflect the specified `tilesize` setting.
+
+## Dependencies
+* Update gl-native to v10.14.0 and common to v23.6.0.
+
+
+# 10.14.0-rc.1 May 31, 2023
+## Features ✨ and improvements 🏁
+* Introduce `MapboxMap.tileCover` experimental API to get the tileIDs that cover current map camera.
+
+## Bug fixes 🐞
+* Fix crash when running animations (e.g. gestures) on Android 14 beta.
+* Fix image and zoom dependent expression evaluation errors during style switching.
+* Avoid re-use of raw icon atlas buffers when images point to the different location in the atlas.
+
+## Dependencies
+* Update gl-native to v10.14.0-rc.1 and common to v23.6.0-rc.1.
+ 
+
+# 10.14.0-beta.1 May 17, 2023
+## Features ✨ and improvements 🏁
+* Improve performance of setting puck style properties by removing redundant check if layer / source exists.
+* Improve performance of symbol layers with identical or no text.
+* Hide line labels with too large an angle between two neighboring glyphs.
+
+## Bug fixes 🐞
+* Fix layer zoom range check so that the layer will be hidden when the zoom equals to layer's max zoom.
+* Fixes occasional rendering errors caused by long line layers and vertex data overflow.
+
+## Dependencies
+* Update gl-native to v10.14.0-beta.1 and common to v23.6.0-beta.1.
+
+
+# 10.13.0 May 05, 2023
+## Features ✨ and improvements 🏁
+* Add overloaded methods to `CameraAnimatorsFactory` allowing to set camera animator owner.
+* Improve startup performance by calculating the style expressions dependencies lazily.
+* Introduce a new APIs `coordinateInfoForPixel(pixel: ScreenCoordinate): CoordinateInfo` and `coordinatesInfoForPixels(pixels: List<ScreenCoordinate>): List<CoordinateInfo>` which will return record(s) containing both `coordinate` and `isOnSurface` info.
+* Deprecate `Snapshotter.setTileMode` and `Snapshotter.isInTileMode`.
+* Deprecate `Style.setStyleGeoJSONSourceData(sourceId, data)`.
+* Deprecate `isMapLoaded` method.
+* Share similar image and glyph atlases across tiles and thus avoid unnecessary textures creation.
+* Render single color gradient as solid line.
+* Use flat screen coordinate conversion functions with zero exaggeration terrain.
+* Deprecate qRF APIs that use specific geometry types, which also are not cancelable.
+
+## Bug fixes 🐞
+* Fix rare issue in renderer which could freeze the device when bringing the `MapView` back to front.
+* Fix artefacts caused by a race condition when style layers got updated during pending tiles layout.
+* Fix missing return unexpected result in model_loader processing, so the client could be aware of the error.
+* Fix text flickering while symbol layer update if text-field contains text-color property.
+* Fix 3d location layer properties `model-scale-transition` and `model-rotation-transition`, made them non-transitionable.
+* Fix raw expression parsing for list literal.
+* Fix text flickering while symbol layer update if `text-field` contains `text-color` property inside the format expression.
+* Fix a crash when a hillshade bucket was created with disabled terrain, but the terrain got enabled afterwards.
+* Fix the crash when identifying if device is connected to WiFi.
+* Fix jumpy gestures when external `AndroidGestureManager` is added with `setGesturesManager`.
+* Fix a bug that accidentally cleared icon images when `setMemoryBudget` was used with megabyte values.
+* Fix handling of Unicode characters in `slice`, `index-of`, `in` and `length` expressions.
+
+## Dependencies
+* Update gl-native to v10.13.1 and common to v23.5.0.
+
+
+
+
+# 10.13.0-rc.1 April 20, 2023
+## Features ✨ and improvements 🏁
+* Add overloaded methods to `CameraAnimatorsFactory` allowing to set camera animator owner.
+* Improve startup performance by calculating the style expressions dependencies lazily.
+* Introduce a new APIs `coordinateInfoForPixel(pixel: ScreenCoordinate): CoordinateInfo` and `coordinatesInfoForPixels(pixels: List<ScreenCoordinate>): List<CoordinateInfo>` which will return record(s) containing both `coordinate` and `isOnSurface` info.
+
+## Bug fixes 🐞
+* Fix 3d location layer properties `model-scale-transition` and `model-rotation-transition`, made them non-transitionable.
+* Fix raw expression parsing for list literal.
+* Fix text flickering while symbol layer update if `text-field` contains `text-color` property inside the format expression.
+
+## Dependencies
+* Update gl-native to v10.13.0-rc.1 and common to v23.5.0-rc.1.
+
+
+
+# 10.13.0-beta.1 April 05, 2023
+## Features ✨ and improvements 🏁
+* Deprecate `Snapshotter.setTileMode` and `Snapshotter.isInTileMode`.
+* Deprecate `Style.setStyleGeoJSONSourceData(sourceId, data)`.
+* Use flat screen coordinate conversion functions with zero exaggeration terrain.
+* Share similar image and glyph atlases across tiles and thus avoid unnecessary textures creation.
+* Render single color gradient as solid line.
+
+## Bug fixes 🐞
+* Fix the crash when identifying if device is connected to WiFi.
+* Fix a crash when a hillshade bucket was created with disabled terrain, but the terrain got enabled afterwards.
+
+## Dependencies
+* Update gl-native to v10.13.0-beta.1 and common to v23.5.0-beta.1.
+
+
+
+# 10.12.1 March 28, 2023
+## Bug fixes 🐞
+* Fix missing data id in `source-data-loaded` event for empty GeoJSON data.
+
+## Dependencies
+* Update gl-native to v10.12.1.
+
+
+# 10.12.0 March 23, 2023
+## Features ✨ and improvements 🏁
+* Add `data-id` argument to `GeoJsonSource` data update methods. `data-id` is later attached to the `SourceDataLoadedEventData` event and allows to track the specific `GeoJsonSource` update.
+* Reduce line gradient texture size if there is no color change.
+
 ## Bug fixes 🐞
 * Fix regression from `v10.11.0` when applying geojson from loaded style to the new style could cause the crash or no data applied.
+* Fix regression from `v10.11.0` when applying geojson data was not working when no style was available.
+* Do not fail on parsing vector tile when there are duplicate keys encoded in the tile data.
+* Fix a bug where camera change event is not emitted when using free camera options to set camera.
+* Fix network usage for the case when multiple access tokens are used.
+* Fix rendering glitches for symbols when animating the map caused by image atlas interfering.
+* Fix set geojson source data with null value.
+* Interrupt blocking disk cache database operations on application exit, so that the application does not hang.
+* Fix a bug where continuously dragging and changing zoom would lead to either very slow or very fast map dragging.
+* Avoid generation of the unneeded glyph textures.
+* Fix rendering errors when the closing point is missing in GeoJSON polygon features.
+* Fix a bug where taking consecutive snapshots had missing tiles.
+* Fix a bug where fill extrusions would flicker when crossing a certain zoom threshold.
 
-# 10.12.0-rc.1
+## Dependencies
+* Update gl-native to v10.12.0 and common to v23.4.0.
+
+
+# 10.11.2 March 10, 2023
+## Bug fixes 🐞
+* Fix missing terrain on some GPUs (e.g. Mali). ([2038](https://github.com/mapbox/mapbox-maps-android/pull/2038))
+
+## Dependencies
+* Update gl-native to v10.11.2. ([2038](https://github.com/mapbox/mapbox-maps-android/pull/2038))
+
+
+# 10.12.0-rc.1 March 09, 2023
 ## Bug fixes 🐞
 * Fix regression from `v10.11.0` when applying geojson data was not working when no style was available.
 * Interrupt blocking disk cache database operations on application exit so that the application does not hang.
 * Fix a bug where continuously dragging and changing zoom would lead to either very slow or fast map dragging.
 * Fix missing terrain on some GPUs (e.g. Mali).
 
-# 11.0.0-alpha.1 March 2, 2023
-## Features ✨ and improvements 🏁
-* Enable raster colorization via `raster-color` expression and `RasterLayer.rasterColor`, `RasterLayer.rasterColorMix`, `RasterLayer.rasterColorRange` layer properties.
+## Dependencies
+* Update gl-native to v10.12.0-rc.1 and common to v23.4.0-rc.1.
+
 
 # 10.12.0-beta.1 February 22, 2023
 ## Features ✨ and improvements 🏁
