@@ -21,6 +21,7 @@ import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.plugin.delegates.listeners.*
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import java.util.concurrent.CopyOnWriteArraySet
+import kotlin.math.roundToInt
 
 /**
  * The general class to interact with in the Mapbox Maps SDK for Android.
@@ -877,8 +878,19 @@ class MapboxMap :
     checkNativeMap("pixelForCoordinate")
     val screenCoordinate = nativeMap.pixelForCoordinate(coordinate)
     val screenSize = nativeMap.getSize()
-    return if (screenCoordinate.x in 0.0..screenSize.width.toDouble() && screenCoordinate.y in 0.0..screenSize.height.toDouble()) {
-      screenCoordinate
+
+    var x = screenCoordinate.x
+    var y = screenCoordinate.y
+
+    if (screenCoordinate.x < 0.0 || screenCoordinate.x > screenSize.width) {
+      x = screenCoordinate.x.roundToInt().toDouble()
+    }
+
+    if (screenCoordinate.y < 0.0 || screenCoordinate.y > screenSize.height) {
+      y = screenCoordinate.y.roundToInt().toDouble()
+    }
+    return if (x in 0.0..screenSize.width.toDouble() && y in 0.0..screenSize.height.toDouble()) {
+      ScreenCoordinate(x, y)
     } else {
       ScreenCoordinate(-1.0, -1.0)
     }
