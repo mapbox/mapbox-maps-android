@@ -17,6 +17,8 @@ import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.animation.MapAnimationOptions
 import com.mapbox.maps.plugin.animation.camera
 import com.mapbox.maps.plugin.locationcomponent.location
+import com.mapbox.maps.plugin.viewport.DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_PITCH
+import com.mapbox.maps.plugin.viewport.DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_ZOOM
 import com.mapbox.maps.plugin.viewport.ViewportPlugin
 import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions
 import com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions
@@ -160,16 +162,26 @@ class ViewportShowcaseActivity : AppCompatActivity() {
     viewportButton.setOnClickListener {
       when (STATES[CURRENT_STATE_INDEX]) {
         OVERVIEW -> viewport.transitionTo(overviewViewportState)
-        FOLLOW -> viewport.transitionTo(followPuckViewportState)
-        FOLLOW_WITH_INCREASED_ZOOM -> animateZoomSeparately(
+        FOLLOW -> viewport.transitionTo(followPuckViewportState.apply {
+          options = options.toBuilder()
+            .zoom(
+              DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_ZOOM
+            )
+            .pitch(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_PITCH)
+            .build()
+        })
+
+        FOLLOW_WITH_INCREASED_ZOOM -> animateZoomAndPitchSeparately(
           followPuckViewportState,
           zoom = 18.0,
+          pitch = 10.0,
           durationMs = 1000
         )
 
-        FOLLOW_WITH_DECREASED_ZOOM -> animateZoomSeparately(
+        FOLLOW_WITH_DECREASED_ZOOM -> animateZoomAndPitchSeparately(
           followPuckViewportState,
-          zoom = 5.0,
+          zoom = 15.0,
+          pitch = 60.0,
           durationMs = 1000
         )
       }
@@ -178,17 +190,22 @@ class ViewportShowcaseActivity : AppCompatActivity() {
     }
   }
 
-  private fun animateZoomSeparately(
+  private fun animateZoomAndPitchSeparately(
     followPuckViewportState: FollowPuckViewportState,
     zoom: Double,
+    pitch: Double,
     durationMs: Long
   ) {
     // configure the FollowPuckViewportState to not update zoom level
     followPuckViewportState.disableZoomUpdate()
+    followPuckViewportState.disablePitchUpdate()
 
     // Do the animation for zoom update
     mapView.camera.easeTo(
-      CameraOptions.Builder().zoom(zoom).build(),
+      CameraOptions.Builder()
+        .zoom(zoom)
+        .pitch(pitch)
+        .build(),
       MapAnimationOptions.Builder()
         .duration(durationMs)
         .animatorListener(
@@ -199,6 +216,7 @@ class ViewportShowcaseActivity : AppCompatActivity() {
 
             override fun onAnimationEnd(animation: Animator?) {
               followPuckViewportState.resumeZoomUpdateWithCurrentZoomLevel()
+              followPuckViewportState.resumeZoomUpdateWithCurrentPitchLevel()
             }
 
             override fun onAnimationCancel(animation: Animator?) {
@@ -224,9 +242,19 @@ class ViewportShowcaseActivity : AppCompatActivity() {
     options = options.toBuilder().zoom(mapView.getMapboxMap().cameraState.zoom).build()
   }
 
+  private fun FollowPuckViewportState.disablePitchUpdate() {
+    // configure the FollowPuckViewportState to not update camera pitch.
+    options = options.toBuilder().pitch(null).build()
+  }
+
+  private fun FollowPuckViewportState.resumeZoomUpdateWithCurrentPitchLevel() {
+    // configure the FollowPuckViewportState to use the current pitch level
+    options = options.toBuilder().pitch(mapView.getMapboxMap().cameraState.pitch).build()
+  }
+
   companion object {
     private const val TAG = "ViewportShowcase"
-    private const val FOLLOW = "Follow"
+    private const val FOLLOW = "Follow with default zoom"
     private const val OVERVIEW = "Overview"
     private const val FOLLOW_WITH_INCREASED_ZOOM = "Follow with increased zoom"
     private const val FOLLOW_WITH_DECREASED_ZOOM = "Follow with decreased zoom"
