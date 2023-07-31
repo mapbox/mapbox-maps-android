@@ -69,7 +69,9 @@ class GeoJsonSourceMutateTest(
       }
     }
 
-    withLatch { latch ->
+    withLatch(
+      timeoutMillis = 10_000L
+    ) { latch ->
       println("With latch")
       rule.runOnUiThread {
         var cancelable: Cancelable? = null
