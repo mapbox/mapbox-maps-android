@@ -39,6 +39,7 @@ class OfflineActivity : AppCompatActivity() {
     // Set application-scoped tile store so that all MapViews created from now on will apply these
     // settings.
     MapboxOptions.mapsOptions.tileStore = tileStore
+    MapboxOptions.mapsOptions.tileStoreUsageMode = TileStoreUsageMode.READ_ONLY
     OfflineManager().also {
       // Revert setting custom tile store
       MapboxOptions.mapsOptions.tileStore = null
