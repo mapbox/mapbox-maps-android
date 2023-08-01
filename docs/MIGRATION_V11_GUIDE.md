@@ -1,0 +1,668 @@
+# Mapbox Maps SDK v11 for Android Migration Guide <!-- omit in toc -->
+
+This document is a guide for migrating from v10 of the Mapbox Maps SDK for Android to the v11. It includes information about new features, deprecated APIs, and breaking changes.
+
+## Explore This Guide <!-- omit in toc -->
+
+- [Version Compatibility](#version-compatibility)
+- [Explore new features](#explore-new-features)
+- [Migration steps](#migration-steps)
+  - [1. Update dependencies](#1-update-dependencies)
+  - [2. Replace deprecated APIs](#2-replace-deprecated-apis)
+    - [2.1 Deprecating MapboxMap.loadStyle methods](#21-deprecating-mapboxmaploadstyle-methods)
+    - [2.2 Deprecating event listener APIs](#22-deprecating-event-listener-apis)
+    - [2.3 Image utilities](#23-image-utilities)
+  - [3. Check for breaking changes](#3-check-for-breaking-changes)
+    - [3.1 Location API](#31-location-api)
+      - [3.1.1 Using LocationService instead of LocationEngine](#311-using-locationservice-instead-of-locationengine)
+    - [3.2. ResourceOptions and ResourceOptionsManager have been removed](#32-resourceoptions-and-resourceoptionsmanager-have-been-removed)
+    - [3.3 Events API](#33-events-api)
+    - [3.4 Camera Animations API](#34-camera-animations-api)
+    - [3.5 Annotation API](#35-annotation-api)
+    - [3.6 Offline API](#36-offline-api)
+      - [3.6.1 OfflineManager API changes](#361-offlinemanager-api-changes)
+      - [3.6.2 Legacy OfflineRegionManager API changes](#362-legacy-offlineregionmanager-api-changes)
+    - [3.7 Query Rendered/Source Features API](#37-query-renderedsource-features-api)
+    - [3.8 Feature State API](#38-feature-state-api)
+    - [3.9 Snapshot API](#39-snapshot-api)
+    - [3.10 Style API](#310-style-api)
+    - [3.11 Render Cache API](#311-render-cache-api)
+    - [3.12 Usage of data classes](#312-usage-of-data-classes)
+    - [3.13 Usage of interfaces](#313-usage-of-interfaces)
+    - [3.14 Changes in the network stack](#314-changes-in-the-network-stack)
+    - [3.15 Java-specific changes](#315-java-specific-changes)
+  - [4. Validate ProGuard Rules](#4-validate-proguard-rules)
+  - [5. Test your app](#5-test-your-app)
+- [New APIs and minor ergonomic improvements](#new-apis-and-minor-ergonomic-improvements)
+  - [Lighting and 3D Model APIs](#lighting-and-3d-model-apis)
+    - [Lighting API](#lighting-api)
+    - [Layer emissiveness controls](#layer-emissiveness-controls)
+    - [New FillExtrusionLayer properties](#new-fillextrusionlayer-properties)
+    - [LineLayer occlusion visibility](#linelayer-occlusion-visibility)
+    - [Icon cross-fading for the SymbolLayer](#icon-cross-fading-for-the-symbollayer)
+    - [ModelLayer](#modellayer)
+  - [Query Rendered Features and Feature State API improvements](#query-rendered-features-and-feature-state-api-improvements)
+  - [Camera API improvements](#camera-api-improvements)
+  - [Style API and expressions improvements](#style-api-and-expressions-improvements)
+    - [New expressions](#new-expressions)
+    - [Raster colorization](#raster-colorization)
+    - [Improved expression ergonomics](#improved-expression-ergonomics)
+    - [Convenience method to update ImageSource](#convenience-method-to-update-imagesource)
+  - [AnnotationManager API improvements](#annotationmanager-api-improvements)
+  - [Introducing Partial GeoJsonSource APIs](#introducing-partial-geojsonsource-apis)
+  - [Tracing API](#tracing-api)
+- [Known Issues / Coming Soon](#known-issues--coming-soon)
+- [Conclusion](#conclusion)
+
+## Version Compatibility
+
+| Version | Minimum Android Version | Kotlin Version | Target/Compile SDK Version |
+| ------- | ----------------------- | -------------- | -------------------------- |
+| 11.0.0  | 5.0 (API level 21)      | 1.6.0 or later | 33                         |
+
+**Note:**
+* The Mapbox Maps SDK v11 was compiled using Kotlin 1.7.20, it has binary compatibility with Kotlin compiler 1.6 and above.
+* The Mapbox Maps SDK v11 was built with compile SDK version 33, which is also [the minimum target SDK level for new apps published to Google Play Store](https://developer.android.com/google/play/requirements/target-sdk).
+  * The Mapbox Maps SDK v11 also updated the Android X libraries which requires `minCompileSdk (33)`, if you are not able to update to compileSDK 33, please force using an older version of Android X libraries in app’s build.gradle:
+```kotlin
+  implementation("androidx.appcompat:appcompat") {
+    version {
+      strictly("1.4.2")
+    }
+  }
+  implementation("androidx.core:core-ktx") {
+    version {
+      strictly("1.8.0")
+    }
+  }
+```
+
+## Explore new features
+
+We're excited to announce the launch of Mapbox Standard, our latest Mapbox style, now accessible to all customers. The key highlight of Mapbox Standard is its dynamic basemap concept, constantly evolving with the latest features. By incorporating this style into your application, you can rest assured that your users will automatically receive updates with the newest features, without any extra effort on your part. This guarantees that your users will consistently enjoy the best and most up-to-date map features we have to offer.
+
+To set a Mapbox style for your map in v11 you can use the `Style.STANDARD` constant like below:
+
+```kotlin
+mapboxMap.loadStyle(Style.STANDARD)
+```
+
+And with the power of evolving basemap functionality, the Standard's style light preset can be changed with a single line of code:
+
+```kotlin
+style.setStyleImportConfigProperty("basemap", "lightPreset", Value.valueOf("dusk"))
+```
+
+| Light preset "`day`" (default) | Light preset "`dusk`"      |
+| ------------------------------ | -------------------------- |
+| <img src="day.jpg"></img>      | <img src="dusk.jpg"></img> |
+
+You can get more info about the available presets and config options of the Standard style in the style documentation.
+<!-- TODO Add link to the style documentation. -->
+
+For more cool features and improvements, check [New APIs and minor ergonomic improvements](#new-apis-and-minor-ergonomic-improvements) section.
+
+## Migration steps
+
+### 1. Update dependencies
+
+Update your app's dependencies to use the latest version of the Mapbox Maps SDK for Android.
+
+```groovy
+dependencies {
+    implementation 'com.mapbox.maps:android:11.0.0-beta.1'
+}
+```
+
+### 2. Replace deprecated APIs
+
+Check for deprecated APIs in your code and replace them with the recommended alternatives. Deprecated APIs may be removed in future releases.
+
+#### 2.1 Deprecating MapboxMap.loadStyle methods
+
+The following methods have been deprecated and will be removed in the next major version:
+```kotlin
+fun loadStyleUri(styleUri: String, styleTransitionOptions: TransitionOptions? = null, onStyleLoaded: Style.OnStyleLoaded? = null, onMapLoadErrorListener: OnMapLoadErrorListener? = null)
+fun loadStyleUri(styleUri: String, onStyleLoaded: Style.OnStyleLoaded? = null, onMapLoadErrorListener: OnMapLoadErrorListener? = null)
+fun loadStyleUri(styleUri: String, onStyleLoaded: Style.OnStyleLoaded? = null)
+fun loadStyleUri(styleUri: String)
+fun loadStyleJson(styleJson: String, styleTransitionOptions: TransitionOptions? = null, onStyleLoaded: Style.OnStyleLoaded? = null, onMapLoadErrorListener: OnMapLoadErrorListener? = null)
+fun loadStyleJson(styleJson: String, onStyleLoaded: Style.OnStyleLoaded? = null, onMapLoadErrorListener: OnMapLoadErrorListener? = null)
+fun loadStyleJson(styleJson: String, onStyleLoaded: Style.OnStyleLoaded? = null)
+fun loadStyleJson(styleJson: String)
+fun loadStyle(styleExtension: StyleContract.StyleExtension, styleTransitionOptions: TransitionOptions? = null, onStyleLoaded: Style.OnStyleLoaded? = null, onMapLoadErrorListener: OnMapLoadErrorListener? = null)
+fun loadStyle(styleExtension: StyleContract.StyleExtension, onStyleLoaded: Style.OnStyleLoaded? = null, onMapLoadErrorListener: OnMapLoadErrorListener? = null)
+```
+
+The following functions are introduced to load the style:
+```kotlin
+// to load the style both from URI or JSON
+@JvmOverloads
+fun loadStyle(
+    style: String,
+    onStyleLoaded: Style.OnStyleLoaded? = null,
+)
+
+// to load the style using Style DSL
+@JvmOverloads
+fun loadStyle(
+    styleExtension: StyleContract.StyleExtension,
+    onStyleLoaded: Style.OnStyleLoaded? = null,
+)
+```
+
+Important notes:
+1. When using `loadStyle(style: String, onStyleLoaded: Style.OnStyleLoaded? = null)` string is first checked if it is a valid URI, and if not - it will be treated as a JSON.
+2. Parameter `onMapLoadErrorListener` from `loadStyle` was removed as it was not covering all the map / style loading errors. If you need to listen to those errors, you have to register a specific listener in advance, e.g. `OnMapLoadErrorListener` should now be registered with `MapboxMap.subscribeMapLoadingError`; you could also subscribe to other error / warning events like `MapboxMap.subscribeStyleImageMissing` or `MapboxMap.subscribeStyleImageUnused`.
+3. Parameter `styleTransitionOptions` from `loadStyle` was removed. To apply `styleTransitionOptions`, you should use more granular overloaded `loadStyle` taking `StyleContract.StyleExtension` and add transition options in the DSL block:
+
+```kotlin
+mapboxMap.loadStyle(
+    style(Style.DARK) {
+        +transition {
+            duration(100L)
+            enablePlacementTransitions(false)
+        }
+        // other runtime styling
+    }
+)
+```
+
+Related minor breaking change: renamed `StyleContract.StyleExtension.styleUri` -> `StyleContract.StyleExtension.style` as this property could now return both URI and JSON:
+```kotlin
+mapboxMap.loadStyle(style(styleUri = Style.DARK))
+// should be replaced with
+mapboxMap.loadStyle(style(style = Style.DARK))
+```
+
+#### 2.2 Deprecating event listener APIs
+All `Map` events have become serializable, which brings type-safety and eliminates deserialization errors. We have deprecated traditional listener-based event API (e.g. `MapboxMap.add<EVENT>Listener()` and `MapboxMap.remove<EVENT>Listener()`) and modified observable event APIs to `subscribe` dedicated events using `MapboxMap.subscribe<EVENT>`.
+
+The following methods have been deprecated in favor of `subscribe<EVENT>` methods and will be removed in the next major version. The full list is:
+```kotlin
+    fun addOnCameraChangeListener(onCameraChangeListener: OnCameraChangeListener)
+    fun removeOnCameraChangeListener(onCameraChangeListener: OnCameraChangeListener)
+    fun addOnMapIdleListener(onMapIdleListener: OnMapIdleListener)
+    fun removeOnMapIdleListener(onMapIdleListener: OnMapIdleListener)
+    fun addOnMapLoadErrorListener(onMapLoadErrorListener: OnMapLoadErrorListener)
+    fun removeOnMapLoadErrorListener(onMapLoadErrorListener: OnMapLoadErrorListener)
+    fun addOnMapLoadedListener(onMapLoadedListener: OnMapLoadedListener)
+    fun removeOnMapLoadedListener(onMapLoadedListener: OnMapLoadedListener)
+    fun addOnRenderFrameStartedListener(onRenderFrameStartedListener: OnRenderFrameStartedListener)
+    fun removeOnRenderFrameStartedListener(onRenderFrameStartedListener: OnRenderFrameStartedListener)
+    fun addOnRenderFrameFinishedListener(onRenderFrameFinishedListener: OnRenderFrameFinishedListener)
+    fun removeOnRenderFrameFinishedListener(onRenderFrameFinishedListener: OnRenderFrameFinishedListener)
+    fun addOnSourceAddedListener(onSourceAddedListener: OnSourceAddedListener)
+    fun removeOnSourceAddedListener(onSourceAddedListener: OnSourceAddedListener)
+    fun addOnSourceDataLoadedListener(onSourceDataLoadedListener: OnSourceDataLoadedListener)
+    fun removeOnSourceDataLoadedListener(onSourceDataLoadedListener: OnSourceDataLoadedListener)
+    fun addOnSourceRemovedListener(onSourceRemovedListener: OnSourceRemovedListener)
+    fun removeOnSourceRemovedListener(onSourceRemovedListener: OnSourceRemovedListener)
+    fun addOnStyleDataLoadedListener(onStyleDataLoadedListener: OnStyleDataLoadedListener)
+    fun removeOnStyleDataLoadedListener(onStyleDataLoadedListener: OnStyleDataLoadedListener)
+    fun addOnStyleLoadedListener(onStyleLoadedListener: OnStyleLoadedListener)
+    fun removeOnStyleLoadedListener(onStyleLoadedListener: OnStyleLoadedListener)
+    fun addOnStyleImageMissingListener(onStyleImageMissingListener: OnStyleImageMissingListener)
+    fun removeOnStyleImageMissingListener(onStyleImageMissingListener: OnStyleImageMissingListener)
+    fun addOnStyleImageUnusedListener(onStyleImageUnusedListener: OnStyleImageUnusedListener)
+    fun removeOnStyleImageUnusedListener(onStyleImageUnusedListener: OnStyleImageUnusedListener)
+```
+
+The following APIs are introduced to subscribe to events:
+```kotlin
+    fun subscribeCameraChanged(cameraChangedCallback: CameraChangedCallback): Cancelable
+    fun subscribeMapIdle(mapIdleCallback: MapIdleCallback): Cancelable
+    fun subscribeMapLoadingError(mapLoadingErrorCallback: MapLoadingErrorCallback): Cancelable
+    fun subscribeMapLoaded(mapLoadedCallback: MapLoadedCallback): Cancelable
+    fun subscribeRenderFrameStarted(renderFrameStartedCallback: RenderFrameStartedCallback): Cancelable
+    fun subscribeRenderFrameFinished(renderFrameFinishedCallback: RenderFrameFinishedCallback): Cancelable
+    fun subscribeSourceAdded(sourceAddedCallback: SourceAddedCallback): Cancelable
+    fun subscribeSourceDataLoaded(sourceDataLoadedCallback: SourceDataLoadedCallback): Cancelable
+    fun subscribeSourceRemoved(sourceRemovedCallback: SourceRemovedCallback): Cancelable
+    fun subscribeStyleDataLoaded(styleDataLoadedCallback: StyleDataLoadedCallback): Cancelable
+    fun subscribeStyleLoaded(styleLoadedCallback: StyleLoadedCallback): Cancelable
+    fun subscribeStyleImageMissing(styleImageMissingCallback: StyleImageMissingCallback): Cancelable
+    fun subscribeStyleImageUnused(styleImageRemoveUnusedCallback: StyleImageRemoveUnusedCallback): Cancelable
+    fun subscribeResourceRequest(resourceRequestCallback: ResourceRequestCallback): Cancelable
+```
+
+**Note**: To unsubscribe, use the returned `Cancelable` object.
+
+For conveniency, `MapboxMap` methods returning `Flow` of events were introduced: `cameraChangedEvents`, `mapIdleEvents`, `sourceAddedEvents`, `sourceRemovedEvents`, `sourceDataLoadedEvents`,
+`styleImageMissingEvents`, `styleImageRemoveUnusedEvents`, `renderFrameStartedEvents`, `renderFrameFinishedEvents`, `resourceRequestEvents`.
+
+Event listeners have been deprecated and replaced with callbacks. Callbacks invoke `run` method that will return data associated with the specific event.
+
+  | v10                           | v11                            |
+  | ----------------------------- | ------------------------------ |
+  | OnCameraChangeListener        | CameraChangedCallback          |
+  | OnMapIdleListener             | MapIdleCallback                |
+  | OnMapLoadErrorListener        | MapLoadingErrorCallback        |
+  | OnMapLoadedListener           | MapLoadedCallback              |
+  | OnRenderFrameStartedListener  | RenderFrameStartedCallback     |
+  | OnRenderFrameFinishedListener | RenderFrameFinishedCallback    |
+  | OnSourceAddedListener         | SourceAddedCallback            |
+  | OnSourceDataLoadedListener    | SourceDataLoadedCallback       |
+  | OnSourceRemovedListener       | SourceRemovedCallback          |
+  | OnStyleDataLoadedListener     | StyleDataLoadedCallback        |
+  | OnStyleLoadedListener         | StyleLoadedCallback            |
+  | OnStyleImageMissingListener   | StyleImageMissingCallback      |
+  | OnStyleImageUnusedListener    | StyleImageRemoveUnusedCallback |
+
+#### 2.3 Image utilities
+
+- Added `ImageExtensionImpl.Builder(imageId, image)`, `ImageExtensionImpl.Builder(imageId, bitmap)` constructors and deprecated `ImageExtensionImpl.Builder(imageId)`, `ImageExtensionImpl.Builder.image(image)`, `ImageExtensionImpl.Builder.bitmap(bitmap)`.
+
+### 3. Check for breaking changes
+
+The following are breaking changes that may affect your app:
+
+#### 3.1 Location API
+
+1. `MapView.location2` has been removed and the following methods `puckBearingEnabled`, `showAccuracyRing`, `accuracyRingColor`, `accuracyRingBorderColor` were moved to `MapView.location`.
+2. `PuckBearingSource` was renamed to `PuckBearing`:
+   - `mapbox_locationComponentPuckBearingSource` was renamed to `mapbox_locationComponentPuckBearing`.
+   - `MapView.location2.puckBearingSource` will become `MapView.location.puckBearing`.
+3. `LocationConsumer` interface was extended with `onError` allowing to handle location errors.
+4. `LocationConsumer.onAccuracyRadiusUpdated` was renamed to `LocationConsumer.onHorizontalAccuracyRadiusUpdated`.
+5. To keep the 3D model size constant across different zoom levels, platform based `scale-expression` has been removed in favor of `LocationPuck3D.modelScaleMode` API, and the default value `ModelScaleMode.VIEWPORT` keeps the 3D model constant across all zoom levels. This introduced a behavioral breaking change, and the `model-scale` property needs to be adjusted to correctly render the puck (we found the adjustment to be around `100x` of `model-scale` value, but that could vary depending on model properties, etc.).
+
+##### 3.1.1 Using LocationService instead of LocationEngine
+
+1. `LocationEngine` has been removed. In order to get a location provider you now have to import the `com.mapbox.common.location.*` packages and use the `LocationService` and `DeviceLocationProvider` with a `LocationObserver`.
+
+First get a `DeviceLocationProvider`:
+```kotlin
+import com.mapbox.common.location.LocationService
+import com.mapbox.common.location.LocationServiceFactory
+import com.mapbox.common.location.LocationProvider
+import com.mapbox.common.location.LocationObserver
+
+val locationService : LocationService = LocationServiceFactory.getOrCreate()
+var locationProvider: DeviceLocationProvider? = null
+val result = locationService.getDeviceLocationProvider(null)
+if (result.isValue) {
+    locationProvider = result.value!!
+} else {
+    Log.error("Failed to get device location provider")
+}
+```
+
+To receive location updates, create a `LocationObserver` and override the `onLocationUpdateReceived` function to handle the locations:
+``` kotlin
+val locationObserver = object: LocationObserver {
+        override fun onLocationUpdateReceived(locations: MutableList<Location>) {
+            Log.e(TAG, "Location update received: " + locations)
+        }
+}
+locationProvider.addLocationObserver(locationObserver);
+```
+
+To stop receiving updates, simply remove your observer:
+``` kotlin
+locationProvider.removeLocationObserver(locationObserver);
+```
+
+You can register for location updates via a `PendingIntent` on the `DeviceLocationProvider`:
+``` kotlin
+locationProvider.requestLocationUpdates(myPendingIntent)
+locationProvider.removeLocationUpdates(myPendingIntent)
+```
+
+You can also register a `LocationObserver` with a `Looper` object, the message queue will then be used to implement the callback mechanism:
+``` kotlin
+addLocationObserver(observer: LocationObserver, looper: Looper)
+```
+
+The location provider automatically starts and stops collecting locations based on the amount of subscribers: once the first subscriber is registered, the service starts, and when the last observer is unregistered, the service stops.
+
+If you want to get the last known location, you can do so via the asynchronous `LocationProivder.getLastLocation` function. The function returns a Cancelable object which allows cancelling the request if needed:
+``` kotlin
+val lastLocationCancelable = locationProvider.getLastLocation { result ->
+          result?.let { doSomething(it) }
+        }
+```
+
+To cancel the request, simply call
+``` kotlin
+lastLocationCancelable.cancel()
+```
+
+2. Compatibility classes `com.mapbox.common.location.compat.*` have been removed.
+
+#### 3.2. ResourceOptions and ResourceOptionsManager have been removed
+
+There can only be one global Mapbox access token used by the application.
+
+The `ResourceOptions` class has been removed. In order to set options `accessToken`, `baseURL`, `dataPath`,
+`assetPath`, `tileStore` and `tileStoreUsageMode` at runtime, please use `MapboxOptions` and [`MapboxMapsOptions`](mapbox-maps-android/sdk/src/main/java/com/mapbox/maps/MapboxMapsOptions.kt) objects.
+
+
+If you were using `ResourceOptions` to set the access token and other properties as part of the map
+view `MapInitOptions` (or `MapSnapshotOptions` for the `Snapshotter`), you can now call the following
+methods before creating the `MapView`, `MapSurface` or `Snapshotter`:
+```kotlin
+    MapboxOptions.accessToken = "your_mapbox_access_token"
+    MapboxOptions.mapsOptions.tileStore = yourTileStore
+    MapboxOptions.mapsOptions.tileStoreUsageMode = yourTileStoreUsageMode
+```
+You can find an example at [`MapViewCustomizationActivity.kt`](mapbox-maps-android/app/src/main/java/com/mapbox/maps/testapp/examples/MapViewCustomizationActivity.kt).
+
+The `ResourceOptionsManager` class has been removed. In order to set the default token, please define a string resource value:
+```xml
+<resources>
+    <string name="mapbox_access_token" translatable="false" >your_mapbox_access_token</string>
+</resources>
+```
+Alternatively, you can use `MapboxOptions.accessToken` property at runtime.
+
+#### 3.3 Events API
+
+The `Observer` interface used to subscribe for `observable` events and associated methods `MapboxMap.subscribe(observer: Observer, events: List<String>)` and `MapboxMap.unsubscribe(observer: Observer, events: List<String>)` have been removed. Use `MapboxMap.subscribe<EVENT> : Cancelable` methods to subscribe to the events.
+
+#### 3.4 Camera Animations API
+
+1. The `MapAnimationOptions.animatorListener` property is removed. To subscribe to animations, provide `Animator.animatorListener` with `flyTo`, `easeTo`, `pitchBy`, `scaleBy`, `moveBy`, `rotateBy` APIs.
+2. The `Cancelable` interface is moved from an animation plugin package to a generic common package for reuse across the codebase, e.g., `com.mapbox.maps.plugin.animation.Cancelable` is replaced with `com.mapbox.common.Cancelable`.
+
+#### 3.5 Annotation API
+
+The `Annotation.id` changed the type to `String` from `Long`. `Annotation.id` should now be used as a feature identifier instead of `Annotation.featureIdentifier` when binding annotations to view annotations. `Annotation.featureIdentifier` has been removed.
+
+#### 3.6 Offline API
+
+
+##### 3.6.1 OfflineManager API changes
+
+1. The `OfflineManagerInterface` was removed, use a concrete instance of `OfflineManager` instead.
+2. The `OfflineManager.createTilesetDescriptor(tilesetDescriptorOptionsForTilesets)` and `TilesetDescriptorOptionsForTilesets` were removed. Please use `TilesetDescriptorOptions.Builder.tilesets` to provide additional tilesets to the `TilesetDescriptorOptions` and create `TilesetDescriptor` by invoking `OfflineManager.createTilesetDescriptor(tilesetDescriptorOptions)` function.
+3. The Mapbox access token is removed from TileStoreOptions. The token is now retrieved from the system via [`MapboxOptions`](#32-resourceoptions-and-resourceoptionsmanager-have-been-removed).
+
+##### 3.6.2 Legacy OfflineRegionManager API changes
+
+1. The `ResponseError` is renamed to `OfflineRegionError`.
+2. The `OfflineRegionObserver.responseError(ResponseError)` is renamed to `OfflineRegionObserver.errorOccurred(OfflineRegionError)`.
+3. The `ResponseErrorReason` is renamed to `OfflineRegionErrorType`.
+   1. The `OfflineRegionErrorType.DISK_FULL` is introduced as a specific error code for shortage of the available space to store the resources.
+   2. The `OfflineRegionErrorType.TILE_COUNT_LIMIT_EXCEEDED` is introduced as a specific error code indicating that the limit on the number of Mapbox tiles stored for offline regions has been reached.
+4. The `OfflineRegionObserver.tileCountLimitExceeded()` is removed in favor of the new `OfflineRegionErrorType.TILE_COUNT_LIMIT_EXCEEDED`.
+5. The `OfflineRegionError.isFatal` flag is introduced, indicating that the error is fatal i.e. the region cannot proceed downloading of any resources and it will be put to inactive state.
+
+#### 3.7 Query Rendered/Source Features API
+
+1. The single `MapboxMap.queryRenderedFeatures` method accepts `RenderedQueryGeometry` and returns the list of `QueriedRenderedFeature` in the callback, allowing to check which layers contain the feature.
+2. The deprecated `MapboxMap.queryRenderedFeatures` and `MapboxMap.queryFeatureExtensions` methods are removed.
+3. The `MapboxMap.querySourceFeatures` returns `Cancelable`.
+
+#### 3.8 Feature State API
+
+1. The callback argument `callback: QueryFeatureStateCallback` is added to the following methods: `MapboxMap.getFeatureState`, `MapboxMap.setFeatureState`, `MapboxMap.removeFeatureState`.
+2. The following feature state methods now return `Cancelable`: `MapboxMap.getFeatureState`, `MapboxMap.setFeatureState`, `MapboxMap.removeFeatureState`.
+
+#### 3.9 Snapshot API
+
+1. Methods `Snapshotter.setTileMode`, `Snapshotter.isInTileMode` were removed.
+2. Interface `MapSnapshotInterface` was removed.
+3. `Snapshotter.start` method has been changed to align with iOS. This also brings benefit of less image copy operations and allowing to re-use the same `Canvas` to do custom drawing over the snapshot for the user if needed by introducing `SnapshotOverlay` class.
+```kotlin
+// in v10
+snapshotter.start { mapSnapshotterInterface ->
+    // explicit check for nullability
+    mapSnapshotterInterface?.let { mapSnapshot ->
+        // extra copy operation
+        val bitmap = mapSnapshot.bitmap()
+        // creating own Canvas
+        val canvas = Canvas(bitmap)
+        canvas.drawOval(RectF(0f, 0f, 100f, 100f), Paint())
+        val imageView = ImageView(context)
+        imageView.setImageBitmap(bitmap)
+        setContentView(imageView)
+    }
+}
+
+// in v11
+snapshotter.start { snapshotBitmap, errorMessage ->
+    start(
+        overlayCallback = { overlay ->
+            overlay.canvas.drawOval(
+                RectF(0f, 0f, 100f, 100f),
+                Paint()
+            )
+        }
+    ) { bitmap, errorMessage ->
+        if (errorMessage != null) {
+            Toast.makeText(
+                context,
+                errorMessage,
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+        val imageView = ImageView(context)
+        imageView.setImageBitmap(bitmap)
+        setContentView(imageView)
+    }
+}
+```
+
+#### 3.10 Style API
+
+1. The new Mapbox Standard style `Style.STANDARD` has been introduced as the default style.
+2. Mapbox style constants have been updated to use the latest versions bringing performance improvements:
+
+| Style             | v10                                          | v11                                          |
+| ----------------- | -------------------------------------------- | -------------------------------------------- |
+| MAPBOX_STREETS    | mapbox://styles/mapbox/streets-v11           | mapbox://styles/mapbox/streets-v12           |
+| SATELLITE_STREETS | mapbox://styles/mapbox/satellite-streets-v11 | mapbox://styles/mapbox/satellite-streets-v12 |
+| OUTDOORS          | mapbox://styles/mapbox/outdoors-v11          | mapbox://styles/mapbox/outdoors-v12          |
+| LIGHT             | mapbox://styles/mapbox/light-v10             | mapbox://styles/mapbox/light-v11             |
+| DARK              | mapbox://styles/mapbox/dark-v10              | mapbox://styles/mapbox/dark-v11              |
+| STANDARD          | N / A                                        | mapbox://styles/mapbox/standard-beta         |
+
+3. The `MapboxMap` methods: `getGeoJsonClusterLeaves`, `getGeoJsonClusterChildren`, `getGeoJsonClusterExpansionZoom` all return `Cancelable`.
+4. Remove deprecated `MapStyleStateDelegate.isFullyLoaded` and `MapboxMap.isFullyLoaded`. `Style.isStyleLoaded` should be used instead.
+5. Remove deprecated `Layer` transition properties: `backgroundPatternTransition`, `lineDasharrayTransition`, `linePatternTransition`, `fillPatternTransition`.
+6. Remove `Style.setStyleGeoJSONSourceData(sourceId: String, data: GeoJSONSourceData)` method.
+7. Argument `dataId` of the `GeoJson.feature`, `GeoJson.featureCollection`, `GeoJson.geometry`, `GeoJson.url`, `GeoJson.data` became non-nullable.
+8. Remove deprecated `GeoJsonSource` public constructor, builder should be used instead.
+9. Light API has been enhanced and `Light` has become `FlatLight`:
+   - DSL function to create light instance `light { }` should be replaced with `flatLight { }`.
+   - `Light()` should be replaced with `FlatLight(id: String)`. Any id should work for now as only single instance of flat light is supported at the moment.
+   - `Style.setStyleLight(parameters: Value)` removed and should be replaced with `Style.setStyleLights(lights: Value)`; `Style.setStyleLightProperty(id: String, light: Value)`, `Style.getStyleLightProperty(property: String)` removed and should be replaced with similar overloaded functions with `id: String` parameter.
+
+#### 3.11 Render Cache API
+
+1. The experimental `MapboxMap.setRenderCacheOptions` and `MapboxMap.getRenderCacheOptions` APIs are removed.
+2. The experimental `MapboxMap.setMemoryBudget` API is renamed to `MapboxMap.setTileCacheBudget` and is promoted to a stable API.
+
+#### 3.12 Usage of data classes
+
+1. The plugin settings classes - `AttributionSettings`, `CompassSettings`, `GesturesSettings`, `LocationComponentSettings`, `LogoSettings`, `ScaleBarSettings` - are not Kotlin `data` classes anymore as there are known [limitations](https://jakewharton.com/public-api-challenges-in-kotlin/) of using data class as public API to be not scalable. These setting classes are now made as final classes that implement `Parcelable`.
+2. `ImageHolder` class is introduced to represent either a drawable id or a `Bitmap`. The following properties are updated to utilize this new type: `CompassSettings.image`, `LocationPuck2D.topImage`, `LocationPuck2D.bearingImage`, `LocationPuck2D.shadowImage`.
+
+#### 3.13 Usage of interfaces
+
+Native interfaces `StyleManagerInterface`, `StyleInterface`, `CameraManagerInterface`, `MapInterface`, `ObservableInterface` have been removed. `MapboxMap` and `Style`, which were implementing those interfaces, should now be used to call native methods.
+
+#### 3.14 Changes in the network stack
+
+Those changes should only affect you if you explicitly access the Mapbox network stack by overwriting it or adding an interceptor.
+
+1. `HttpServiceFactory.getInstance`, `HttpServiceFactory.reset`, `HttpServiceFactory.setUserDefined` methods were removed from the public API. ***This means that you are not allowed to overwrite the Mapbox network stack anymore.***
+2. To add an interceptor, you should call `HttpServiceFactory.setHttpServiceInterceptor` instead of `HttpServiceFactory.getInstance().setInterceptor`.
+3. `DownloadOptions` now contains a new field called `memoryThreshold`. It specifies a threshold for returning data in memory instead of writing to the disk.
+4. `HttpResponseData.code` type changed from `long` to `int`.
+5. `HttpServiceInterceptorInterface` has a new function `onUpload` that must be implemented if you use the interceptor interface.
+6. The ability to overwrite for HTTP stack through modular setup has been removed, e.g. if you have used `@MapboxModule(type = MapboxModuleType.CommonHttpClient)` in your application, it will not overwrite the network stack in Mapbox Maps SDK v11 anymore.
+
+#### 3.15 Java-specific changes
+
+The callback for animations has been removed from `AnimationOptions` and can now be optionally passed when executing the animation.
+While this is an optional declaration for Kotlin, it's considered a breaking change for Java.
+
+```java
+    mapCamera.easeTo(
+        new CameraOptions.Builder()
+            .center(Point.fromLngLat(location.getLongitude(), location.getLatitude()))
+            .bearing((double) location.getBearing())
+            .pitch(45.0)
+            .zoom(17.0)
+            .padding(new EdgeInsets(1000, 0, 0, 0))
+            .build(),
+        mapAnimationOptionsBuilder.build(),
+            null // add additional null
+    );
+```
+
+### 4. Validate ProGuard Rules
+
+Validate that your app's ProGuard rules are still valid by upgrading to the newest version by testing a release variant.
+If you encounter any issues, refer to the [ProGuard rules documentation](https://docs.mapbox.com/android/maps/guides/proguard/) for more information.
+
+### 5. Test your app
+
+Test your app thoroughly after making the changes to ensure everything works as expected.
+
+## New APIs and minor ergonomic improvements
+
+### Lighting and 3D Model APIs
+
+The new Standard style and its dynamic lighting is powered by the new Style and Lighting APIs that you can experiment with. The following experimental APIs can be used to control the look and feel of the map.
+
+#### Lighting API
+- `Style.addLight(ambientLight: AmbientLight, directionalLight: DirectionalLight)` should be used to enable and setup Ambient and Directional light. This could be also used in Style DSL with `dynamicLight` DSL function:
+```kotlin
+mapView.getMapboxMap().loadStyle(
+  style(style = Style.STANDARD) {
+    // other DSL code
+    +dynamicLight(
+      blockAmbient = {
+        intensity(5.0)
+      },
+      blockDirectional = {
+        castShadows(true)
+      }
+    )
+  }
+)
+```
+
+#### Layer emissiveness controls
+
+The following layer properties control the emissiveness of specific layers:
+
+- `BackgroundLayer.backgroundEmissiveStrength`
+- `CircleLayer.circleEmissiveStrength`
+- `FillLayer.fillEmissiveStrength`
+- `LineLayer.lineEmissiveStrength`
+- `SymbolLayer.iconEmissiveStrength`
+- `SymbolLayer.textEmissiveStrength`
+- `ModelLayer.modelEmissiveStrength`
+
+#### New FillExtrusionLayer properties
+
+For the FillExtrusionLayer, you have control over various properties, such as ambient occlusion, flood lighting, and edge roundness.
+
+- `FillExtrusionLayer.fillExtrusionRoundedRoof`
+- `FillExtrusionLayer.fillExtrusionEdgeRadius`
+- `FillExtrusionLayer.fillExtrusionAmbientOcclusionWallRadius`
+- `FillExtrusionLayer.fillExtrusionAmbientOcclusionGroundRadius`
+- `FillExtrusionLayer.fillExtrusionAmbientOcclusionGroundAttenuation`
+- `FillExtrusionLayer.fillExtrusionFloodLightColor`
+- `FillExtrusionLayer.fillExtrusionFloodLightIntensity`
+- `FillExtrusionLayer.fillExtrusionFloodLightWallRadius`
+- `FillExtrusionLayer.fillExtrusionFloodLightGroundRadius`
+- `FillExtrusionLayer.fillExtrusionFloodLightGroundAttenuation`
+- `FillExtrusionLayer.fillExtrusionVerticalScale`
+
+#### LineLayer occlusion visibility
+
+- The new `LineLayer.lineDepthOcclusionFactor` property controls the visibility of a line layer occluded by 3D objects, such as buildings or fill extrusions.
+
+#### Icon cross-fading for the SymbolLayer
+
+- The new `SymbolLayer.iconImageCrossFade` property controls cross-fading between two icon variants. The property can be used together with [`measure-light`](#new-expressions) expression to cross-fade between light and dark icons.
+
+#### ModelLayer
+
+We've also introduced an experimental `ModelLayer` that allows you to render 3D models on the map. Try it out, and let us know your feedback!
+
+### Query Rendered Features and Feature State API improvements
+
+- Added `suspend` variants for the async `MapboxMap` methods: `queryRenderedFeatures`, `querySourceFeatures`, `setFeatureState`, `getFeatureState`, `removeFeatureState`,`resetFeatureStates`, 
+`getGeoJsonClusterLeaves`, `getGeoJsonClusterChildren`, `getGeoJsonClusterExpansionZoom`.
+- Added `MapboxMap.resetFeatureStates` method to reset all feature states within the source.
+
+### Camera API improvements
+
+- We made padding parameter optional for `MapboxMap` methods `cameraForCoordinateBounds`, `cameraForCoordinates`, `cameraForGeometry`.
+- Added `FreeCameraOptions` methods `getLocation`, `getAltitude`, `setLocation`, `setAltitude` to control location/altitude independently of each other.
+- Added `MapboxMap.coordinateBoundsForRect` returning `CoordinateBounds` for given `RectF` of screen coordinates.
+
+### Style API and expressions improvements
+
+#### New expressions
+
+We have introduced a new set of expressions to enhance your styling capabilities:
+
+- `hsl`, `hsla`: These expressions allow you to define colors using hue, saturation, lightness format.
+- `random`: Generate random values using this expression. Use this expression to generate random values, which can be particularly helpful for introducing randomness into your map data.
+- `measureLight`: Create dynamic styles based on lighting conditions.
+- `activeAnchor`: Now, you can assign a unique image to each variable anchor of a symbol layer.
+
+#### Raster colorization
+
+The raster colorization feature allows you to change the visualization of the raster data. This feature is particularly useful for the colorization of satellite imagery, grayscale radar tiles, rgb-encoded terrain, or population density tiles.
+
+You can enable raster colorization via the `rasterColor` expression and `RasterLayer.rasterColor`, `RasterLayer.rasterColorMix`, `RasterLayer.rasterColorRange` layer properties.
+
+#### Improved expression ergonomics
+
+- Added custom lint rules to check:
+    - illegal usage of literals in Expression DSL and suggest auto fix
+    - illegal number of arguments within given Expression DSL
+    - unused layer/source/light/terrain/atmosphere/projection objects in the Style DSL, and suggest auto fix to add it to the style using unaryPlus(+) operator
+
+- Added `Expression` overload functions `linearInterpolator`, `exponentialInterpolator`, `cubicBezierInterpolator`, `step`, `match` and `switchCase` to construct the expressions with strongly typed parameters.
+
+#### Convenience method to update ImageSource
+
+- Added `ImageSource.updateImage(Bitmap)` convenience method for updating the image of the `ImageSource`.
+
+### AnnotationManager API improvements
+
+- Added `PointAnnotation.iconTextFit` and `PointAnnotation.iconTextFitPadding` to use instead of deprecated `PointAnnotationManager.iconTextFit` and `PointAnnotationManager.iconTextFitPadding`. The new properties allow you to create uniquely looking callout annotations with ease.
+- Added clustering support for CircleAnnotationManager.
+
+### Introducing Partial GeoJsonSource APIs
+Introduced `GeoJsonSource.addGeoJSONSourceFeatures`, `GeoJsonSource.updateGeoJSONSourceFeatures`, `GeoJsonSource.removeGeoJSONSourceFeatures` APIs to partially mutate the geojson source data instead of passing the whole source data for every update.
+New methods are faster (up to 4x), performance boost is most visible when small number of features in large geojson sources are mutated.
+
+### Tracing API
+
+The new Tracing API allows you to enable two types of traces:
+
+- **Native Rendering Engine Traces:**
+To enable these traces, use the method `MapboxTracing.enableCore()`. These traces encompass native render calls, style loading, tile requests, tile parsing and more.
+- **Android Platform Traces:**
+To enable these traces, use the method `MapboxTracing.enablePlatform()`. These traces cover Android render thread calls, such as preparing and destroying the surface.
+
+Additionally, you have the option to enable all traces at once using `MapboxTracing.enableAll()`. If you want to disable all tracing, simply use `MapboxTracing.disableAll()`.
+
+You can find more details about Tracing API use in the [Developing guide](../mapbox-maps-android/DEVELOPING.md#working-with-traces)
+
+### Evolving Basemap
+
+The new `Style` APIs allow to import other styles, change style configuration and control the merged style layers ordering.
+- `getStyleImports`, `removeStyleImport` controls style imports
+- `getStyleImportSchema` describes schema for the imported style fragment, that lists available configuration parameters
+- `getStyleImportConfigProperties`, `getStyleImportConfigProperty`, `setStyleImportConfigProperties`, `setStyleImportConfigProperty` controls the values of the configuration parameters for the imported style fragment defined by schema 
+
+## Known Issues / Coming Soon
+
+- The offline functionality is not yet supported for the new Standard style.
+- Downloading style packs / tile regions for offline may be slower comparing to v10.
+- When using the styles with Globe projection by default (e.g. STANDARD or MAPBOX_STREETS) - `MapboxMap.cameraForGeometry` and other similar methods may return incorrect values. Because of that `OverviewViewportState` may focus the map camera incorrectly.
+
+## Conclusion
+
+Following the above steps will help you migrate your app to the latest version of the Mapbox Maps SDK for Android. If you encounter any issues during the migration process, refer to the [Mapbox Maps SDK for Android documentation](https://docs.mapbox.com/android/maps/overview/) or reach out to the Mapbox support team for assistance.
