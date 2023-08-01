@@ -95,11 +95,13 @@ class RestrictBoundsActivity : AppCompatActivity() {
         )
       }
     }
-    source.geometry(
-      Polygon.fromLngLats(
-        list
+    if (list.isNotEmpty()) {
+      source.geometry(
+        Polygon.fromLngLats(
+          list
+        )
       )
-    )
+    }
   }
 
   private fun showCrosshair() {
