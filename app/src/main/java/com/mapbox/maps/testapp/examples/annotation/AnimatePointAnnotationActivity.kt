@@ -9,8 +9,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.animation.addListener
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
+import com.mapbox.maps.dsl.cameraOptions
+import com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName
+import com.mapbox.maps.extension.style.projection.generated.projection
+import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.*
+import com.mapbox.maps.plugin.gestures.gestures
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityAnnotationBinding
 import com.mapbox.maps.testapp.utils.BitmapUtils.bitmapFromDrawableRes
@@ -35,20 +40,27 @@ class AnimatePointAnnotationActivity : AppCompatActivity(), MapLoadedCallback {
     binding = ActivityAnnotationBinding.inflate(layoutInflater)
     setContentView(binding.root)
     mapboxMap = binding.mapView.getMapboxMap()
-    mapboxMap.setCamera(
-      CameraOptions.Builder()
-        .center(
-          Point.fromLngLat(
-            LONGITUDE,
-            LATITUDE
+    binding.mapView.gestures.pitchEnabled = false
+    mapboxMap.apply {
+      setCamera(
+        cameraOptions {
+          center(
+            Point.fromLngLat(
+              LONGITUDE,
+              LATITUDE
+            )
           )
-        )
-        .zoom(12.0)
-        .build()
-    )
+          zoom(12.0)
+        }
+      )
+      loadStyle(
+        style(Style.STANDARD) {
+          +projection(ProjectionName.MERCATOR)
+        }
+      )
+    }
 
     mapboxMap.subscribeMapLoaded(this@AnimatePointAnnotationActivity)
-    mapboxMap.loadStyle(Style.STANDARD)
     binding.deleteAll.visibility = View.GONE
     binding.changeStyle.visibility = View.GONE
   }
