@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="description_simple_map">Create and display a map that uses the default Mapbox streets style. This example also shows how to update the starting camera for a map.</string>
+    <string name="description_standard_style">Use the Standard style and modify settings at runtime.</string>
     <string name="description_studio_style_map">Use a custom style designed in Mapbox Studio.</string>
     <string name="description_runtime_styling">Shows runtime styling</string>
     <string name="description_tint_fill">Add an image to a style and use it to display a pattern in the landuse FillLayer in the Mapbox Streets style.</string>
