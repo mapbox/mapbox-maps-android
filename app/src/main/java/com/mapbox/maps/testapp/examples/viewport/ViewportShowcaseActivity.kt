@@ -17,8 +17,6 @@ import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.animation.MapAnimationOptions
 import com.mapbox.maps.plugin.animation.camera
 import com.mapbox.maps.plugin.locationcomponent.location
-import com.mapbox.maps.plugin.viewport.DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_PITCH
-import com.mapbox.maps.plugin.viewport.DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_ZOOM
 import com.mapbox.maps.plugin.viewport.ViewportPlugin
 import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions
 import com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions
@@ -142,6 +140,7 @@ class ViewportShowcaseActivity : AppCompatActivity() {
             with reason:         $reason
         """.trimIndent()
       )
+      followPuckViewportState.resetDefaultOptions()
     }
     if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
       followPuckViewportState.apply {
@@ -162,22 +161,13 @@ class ViewportShowcaseActivity : AppCompatActivity() {
     viewportButton.setOnClickListener {
       when (STATES[CURRENT_STATE_INDEX]) {
         OVERVIEW -> viewport.transitionTo(overviewViewportState)
-        FOLLOW -> viewport.transitionTo(followPuckViewportState.apply {
-          options = options.toBuilder()
-            .zoom(
-              DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_ZOOM
-            )
-            .pitch(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_PITCH)
-            .build()
-        })
-
+        FOLLOW -> viewport.transitionTo(followPuckViewportState)
         FOLLOW_WITH_INCREASED_ZOOM -> animateZoomAndPitchSeparately(
           followPuckViewportState,
           zoom = 18.0,
           pitch = 10.0,
           durationMs = 1000
         )
-
         FOLLOW_WITH_DECREASED_ZOOM -> animateZoomAndPitchSeparately(
           followPuckViewportState,
           zoom = 15.0,
@@ -250,6 +240,11 @@ class ViewportShowcaseActivity : AppCompatActivity() {
   private fun FollowPuckViewportState.resumeZoomUpdateWithCurrentPitchLevel() {
     // configure the FollowPuckViewportState to use the current pitch level
     options = options.toBuilder().pitch(mapView.getMapboxMap().cameraState.pitch).build()
+  }
+
+  private fun FollowPuckViewportState.resetDefaultOptions() {
+    // reset to the default FollowPuckViewportStateOptions
+    options = FollowPuckViewportStateOptions.Builder().build()
   }
 
   companion object {
