@@ -186,10 +186,6 @@ class ViewportShowcaseActivity : AppCompatActivity() {
     pitch: Double,
     durationMs: Long
   ) {
-    // configure the FollowPuckViewportState to not update zoom level
-    followPuckViewportState.disableZoomUpdate()
-    followPuckViewportState.disablePitchUpdate()
-
     // Do the animation for zoom update
     mapView.camera.easeTo(
       CameraOptions.Builder()
@@ -201,7 +197,9 @@ class ViewportShowcaseActivity : AppCompatActivity() {
         .animatorListener(
           object : Animator.AnimatorListener {
             override fun onAnimationStart(animation: Animator?) {
-              // no-ops
+              // configure the FollowPuckViewportState to not update zoom level
+              followPuckViewportState.disableZoomUpdate()
+              followPuckViewportState.disablePitchUpdate()
             }
 
             override fun onAnimationEnd(animation: Animator?) {
