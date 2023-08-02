@@ -384,7 +384,7 @@ jobs:
                 name: check release runtime Mapbox dependencies to fail fast
                 command: |
                   echo "PR Target branch: $PR_TARGET_BRANCH"
-                  ./gradlew sdk:dependencyInsight --configuration publicReleaseRuntimeClasspath --dependency com.mapbox.maps | grep -vzq 'FAILED'
+                  ./gradlew sdk:dependencyInsight --configuration releaseRuntimeClasspath --dependency com.mapbox.maps | grep -vzq 'FAILED'
             - run:
                 name: check changelog
                 command: |
