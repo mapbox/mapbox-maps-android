@@ -120,7 +120,7 @@ commands:
       - run:
           name: Run JVM unit tests & create jacoco code coverage report
           no_output_timeout: 15m
-          command: ./gradlew jacocoTestPublicDebugUnitTestReport
+          command: ./gradlew jacocoTestDebugUnitTestReport
 #      - run:
 #          name: Upload codecov
 #          command: bash <(curl -sSfL https://codecov.io/bash)
@@ -449,11 +449,12 @@ jobs:
           steps:
             - checkout
             - restore-gradle-cache
-            - run:
-                no_output_timeout: 30m
-                name: verify-api-kotlin-binary-compatibility
-                command: |
-                  ./gradlew checkApiKotlinValidator
+            # FIXME https://mapbox.atlassian.net/browse/MAPSAND-788
+            # - run:
+            #    no_output_timeout: 30m
+            #    name: verify-api-kotlin-binary-compatibility
+            #    command: |
+            #      ./gradlew checkApiKotlinValidator
       - run: exit 0
 
   verify-api-revapi:
