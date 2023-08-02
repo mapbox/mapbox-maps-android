@@ -949,4 +949,11 @@ class NativeMapTest {
     nativeMap.coordinatesInfoForPixels(pixels)
     verify { map.coordinatesInfoForPixels(pixels) }
   }
+
+  @Test
+  fun getAttributions() {
+    val nativeMap = NativeMapImpl(map)
+    nativeMap.getAttributions()
+    verify { map.attributions }
+  }
 }

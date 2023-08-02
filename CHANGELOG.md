@@ -4,7 +4,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 # develop
 
-# 11.0.0-beta.1
+# 11.0.0-beta.1 August 2, 2023
 ## Breaking changes ⚠️
 * Remove deprecated `GeoJsonSource` public constructor, builder should be used instead.
 * Remove deprecated `MapboxMap.queryRenderedFeatures` methods.
@@ -57,6 +57,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Remove `HttpServiceFactory.getInstance`, `HttpServiceFactory.reset`, `HttpServiceFactory.setUserDefined` methods.
 * Replace `HttpServiceFactory.getInstance().setInterceptor` with `HttpServiceFactory.setHttpServiceInterceptor`.
 * Argument `dataId` of the `GeoJson.feature`, `GeoJson.featureCollection`, `GeoJson.geometry`, `GeoJson.url`, `GeoJson.data` became non-nullable.
+* Remove `Style.getStyleSourcesAttribution` and replace with `MapboxMap.getAttributions`.
 
 ## Features ✨ and improvements 🏁
 * Add clustering support for CircleAnnotationManager.
@@ -100,7 +101,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Introduce raster colorization via `raster-color` expression and `RasterLayer.rasterColor`, `RasterLayer.rasterColorMix`, `RasterLayer.rasterColorRange` layer properties.
 
 ## Dependencies
-* Update gl-native to v11.0.0-beta.1 and common to v24.0.0-beta.1.
+* Update gl-native to v11.0.0-beta.2 and common to v24.0.0-beta.2.
 * Instantiate OpenGL ES context 3.0, if available, otherwise fallback to 2.0.
 * Use EGL 1.4 instead of EGL 1.0.
 * Update dependencies : 

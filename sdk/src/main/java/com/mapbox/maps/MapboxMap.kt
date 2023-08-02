@@ -2149,7 +2149,18 @@ class MapboxMap :
     tileCoverOptions: TileCoverOptions,
     cameraOptions: CameraOptions?
   ): List<CanonicalTileID> {
+    checkNativeMap("tileCover")
     return nativeMap.tileCover(tileCoverOptions, cameraOptions)
+  }
+
+  /**
+   * Returns attributions for the data used by the Map's style.
+   *
+   * @return An array of attributions for the data sources used by the Map's style.
+   */
+  fun getAttributions(): List<String> {
+    checkNativeMap("getAttributions")
+    return nativeMap.getAttributions()
   }
 
   internal fun addViewAnnotation(

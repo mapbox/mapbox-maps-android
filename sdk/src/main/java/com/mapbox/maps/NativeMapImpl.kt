@@ -642,4 +642,8 @@ internal class NativeMapImpl(val map: Map) {
   fun subscribe(eventName: String, onGenericEventsListener: GenericEventCallback): Cancelable {
     return map.subscribe(eventName, onGenericEventsListener)
   }
+
+  fun getAttributions(): List<String> {
+    return map.attributions
+  }
 }

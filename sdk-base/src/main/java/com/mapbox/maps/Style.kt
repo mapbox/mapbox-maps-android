@@ -992,26 +992,6 @@ class Style {
     }
 
   /**
-   * Returns the current sources metadata.
-   *
-   * @return The list of source attributions.
-   */
-  fun getStyleSourcesAttribution(): List<String> {
-    checkNativeStyle("getStyleSourcesAttribution")
-    val sources = styleSources
-    val sourceAttributions = mutableListOf<String>()
-    for (sourceId in sources) {
-      val sourceParameters = getStyleSourceProperties(sourceId.id)
-      if (sourceParameters.isValue) {
-        @Suppress("UNCHECKED_CAST")
-        val parameterMap = sourceParameters.value!!.contents as HashMap<String, Value>
-        sourceAttributions.add(parameterMap["attribution"].toString())
-      }
-    }
-    return sourceAttributions
-  }
-
-  /**
    * Returns the existing style layers.
    *
    * @return The list containing the ids of the existing style layers.

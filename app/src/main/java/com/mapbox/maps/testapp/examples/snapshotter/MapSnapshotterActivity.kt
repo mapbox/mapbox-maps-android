@@ -24,10 +24,7 @@ class MapSnapshotterActivity : AppCompatActivity(), SnapshotStyleListener {
       .pixelRatio(1.0f)
       .build()
 
-    mapSnapshotter = Snapshotter(
-      this, snapshotterOptions,
-      SnapshotOverlayOptions(showLogo = false, showAttributes = false)
-    ).apply {
+    mapSnapshotter = Snapshotter(this, snapshotterOptions,).apply {
       setStyleListener(this@MapSnapshotterActivity)
       setStyleUri(Style.STANDARD)
       setCamera(

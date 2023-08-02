@@ -30,7 +30,7 @@ class MapAttributionDelegateImplTest {
   fun setUp() {
     context = ApplicationProvider.getApplicationContext()
     mapAttributionDelegate = MapAttributionDelegateImpl(mapboxMap, mapTelemetry)
-    every { style.getStyleSourcesAttribution() } returns listOf(ATTRIBUTION)
+    every { mapboxMap.getAttributions() } returns listOf(ATTRIBUTION)
     every { mapboxMap.getStyle() } returns style
     every { style.styleURI } returns STYLE_URL
   }
@@ -59,11 +59,6 @@ class MapAttributionDelegateImplTest {
 
   @Test
   fun parseAttributions() {
-    every { mapboxMap.getStyle() } returns null
-    assert(mapAttributionDelegate.parseAttributions(context, AttributionParserConfig()).isEmpty())
-    every { style.getStyleSourcesAttribution() } returns listOf(ATTRIBUTION)
-    every { mapboxMap.getStyle() } returns style
-
     var attributions = mapAttributionDelegate.parseAttributions(
       context,
       AttributionParserConfig(

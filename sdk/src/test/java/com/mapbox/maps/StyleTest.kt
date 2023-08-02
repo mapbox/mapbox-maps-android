@@ -2,7 +2,6 @@ package com.mapbox.maps
 
 import android.graphics.Bitmap
 import com.mapbox.bindgen.DataRef
-import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
 import io.mockk.*
@@ -264,22 +263,6 @@ class StyleTest {
   fun getSourceProperty() {
     style.getStyleSourceProperty("id", "foobar")
     verify { styleManager.getStyleSourceProperty("id", "foobar") }
-  }
-
-  @Test
-  fun getSourcesAttribution() {
-    val source = mockk<StyleObjectInfo>()
-    every { source.id } returns "id"
-    every { styleManager.styleSources } returns listOf(source)
-    val valueMap = HashMap<String, Value>()
-    valueMap.put("attribution", mockk())
-    every { styleManager.getStyleSourceProperties(any()) } returns ExpectedFactory.createValue(
-      Value.valueOf(
-        valueMap
-      )
-    )
-    style.getStyleSourcesAttribution()
-    verify { styleManager.getStyleSourceProperties("id") }
   }
 
   @Test

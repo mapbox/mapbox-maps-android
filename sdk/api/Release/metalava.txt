@@ -182,6 +182,7 @@ package com.mapbox.maps {
     method public void dragStart(com.mapbox.maps.ScreenCoordinate point);
     method public void executeOnRenderThread(Runnable runnable);
     method public Object? gesturesPlugin(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.gestures.GesturesPlugin,?> function);
+    method public java.util.List<java.lang.String> getAttributions();
     method public com.mapbox.maps.CameraBounds getBounds();
     method public com.mapbox.maps.CameraState getCameraState();
     method public java.util.List<com.mapbox.maps.MapDebugOptions> getDebug();

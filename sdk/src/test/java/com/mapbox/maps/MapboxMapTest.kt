@@ -1167,6 +1167,12 @@ class MapboxMapTest {
   }
 
   @Test
+  fun getAttributions() {
+    mapboxMap.getAttributions()
+    verify { nativeMap.getAttributions() }
+  }
+
+  @Test
   fun subscribeCameraChange() {
     val listener = mockk<CameraChangedCallback>()
     mapboxMap.subscribeCameraChanged(listener)

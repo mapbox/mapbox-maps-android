@@ -38,18 +38,14 @@ internal class MapAttributionDelegateImpl constructor(
     context: Context,
     config: AttributionParserConfig
   ): List<Attribution> {
-    mapboxMap.getStyle()?.let { style ->
-      val attributionsArray =
-        style.getStyleSourcesAttribution().filter { it.isNotEmpty() && it != NULL_STRING }.toTypedArray()
-      return AttributionParser.Options(context)
-        .withCopyrightSign(config.withCopyrightSign)
-        .withImproveMap(config.withImproveMap)
-        .withTelemetryAttribution(config.withTelemetryAttribution)
-        .withMapboxAttribution(config.withMapboxAttribution)
-        .withAttributionData(*attributionsArray)
-        .build().getAttributions().toList()
-    }
-    return emptyList()
+    val attributionsArray = mapboxMap.getAttributions().toTypedArray()
+    return AttributionParser.Options(context)
+      .withCopyrightSign(config.withCopyrightSign)
+      .withImproveMap(config.withImproveMap)
+      .withTelemetryAttribution(config.withTelemetryAttribution)
+      .withMapboxAttribution(config.withMapboxAttribution)
+      .withAttributionData(*attributionsArray)
+      .build().getAttributions().toList()
   }
 
   /**
@@ -86,7 +82,6 @@ internal class MapAttributionDelegateImpl constructor(
 
   companion object {
     private const val MAP_FEEDBACK_URL = "https://apps.mapbox.com/feedback"
-    private const val NULL_STRING = "null"
     private const val MAP_FEEDBACK_STYLE_URI_REGEX = "^(.*://[^:^/]*)/(.*)/(.*)"
   }
 }
