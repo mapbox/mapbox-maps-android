@@ -57,7 +57,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Remove `HttpServiceFactory.getInstance`, `HttpServiceFactory.reset`, `HttpServiceFactory.setUserDefined` methods.
 * Replace `HttpServiceFactory.getInstance().setInterceptor` with `HttpServiceFactory.setHttpServiceInterceptor`.
 * Argument `dataId` of the `GeoJson.feature`, `GeoJson.featureCollection`, `GeoJson.geometry`, `GeoJson.url`, `GeoJson.data` became non-nullable.
-* Remove `Style.getStyleSourcesAttribution` and replace with `MapboxMap.getAttributions`.
+* Remove `Style.getStyleSourcesAttribution`. `MapboxMap.getAttributions` should be used instead.
 
 ## Features ✨ and improvements 🏁
 * Add clustering support for CircleAnnotationManager.

@@ -468,7 +468,7 @@ snapshotter.start { snapshotBitmap, errorMessage ->
    - DSL function to create light instance `light { }` should be replaced with `flatLight { }`.
    - `Light()` should be replaced with `FlatLight(id: String)`. Any id should work for now as only single instance of flat light is supported at the moment.
    - `Style.setStyleLight(parameters: Value)` removed and should be replaced with `Style.setStyleLights(lights: Value)`; `Style.setStyleLightProperty(id: String, light: Value)`, `Style.getStyleLightProperty(property: String)` removed and should be replaced with similar overloaded functions with `id: String` parameter.
-10. Remove `Style.getStyleSourcesAttribution`; should be replaced with `MapboxMap.getAttributions`.
+10. Remove `Style.getStyleSourcesAttribution`. `MapboxMap.getAttributions` should be used instead.
 
 #### 3.11 Render Cache API
 
