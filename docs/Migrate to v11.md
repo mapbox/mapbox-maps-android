@@ -335,7 +335,7 @@ lastLocationCancelable.cancel()
 There can only be one global Mapbox access token used by the application.
 
 The `ResourceOptions` class has been removed. In order to set options `accessToken`, `baseURL`, `dataPath`,
-`assetPath`, `tileStore` and `tileStoreUsageMode` at runtime, please use `MapboxOptions` and [`MapboxMapsOptions`](mapbox-maps-android/sdk/src/main/java/com/mapbox/maps/MapboxMapsOptions.kt) objects.
+`assetPath`, `tileStore` and `tileStoreUsageMode` at runtime, please use `MapboxOptions` and [`MapboxMapsOptions`](../sdk/src/main/java/com/mapbox/maps/MapboxMapsOptions.kt) objects.
 
 
 If you were using `ResourceOptions` to set the access token and other properties as part of the map
@@ -346,7 +346,7 @@ methods before creating the `MapView`, `MapSurface` or `Snapshotter`:
     MapboxOptions.mapsOptions.tileStore = yourTileStore
     MapboxOptions.mapsOptions.tileStoreUsageMode = yourTileStoreUsageMode
 ```
-You can find an example at [`MapViewCustomizationActivity.kt`](mapbox-maps-android/app/src/main/java/com/mapbox/maps/testapp/examples/MapViewCustomizationActivity.kt).
+You can find an example at [`MapViewCustomizationActivity.kt`](../app/src/main/java/com/mapbox/maps/testapp/examples/MapViewCustomizationActivity.kt).
 
 The `ResourceOptionsManager` class has been removed. In order to set the default token, please define a string resource value:
 ```xml
@@ -649,7 +649,7 @@ To enable these traces, use the method `MapboxTracing.enablePlatform()`. These t
 
 Additionally, you have the option to enable all traces at once using `MapboxTracing.enableAll()`. If you want to disable all tracing, simply use `MapboxTracing.disableAll()`.
 
-You can find more details about Tracing API use in the [Developing guide](../mapbox-maps-android/DEVELOPING.md#working-with-traces)
+You can find more details about Tracing API use in the [Developing guide](../DEVELOPING.md#working-with-traces)
 
 ### Evolving Basemap
 
