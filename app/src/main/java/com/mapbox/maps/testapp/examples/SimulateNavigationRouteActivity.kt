@@ -10,6 +10,7 @@ import com.mapbox.core.constants.Constants
 import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
 import com.mapbox.maps.MapView
+import com.mapbox.maps.MapboxTracing
 import com.mapbox.maps.Style
 import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
@@ -27,6 +28,7 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+    MapboxTracing.enableAll()
     val mapView = MapView(this)
     setContentView(mapView)
     val routePoints = LineString.fromPolyline(

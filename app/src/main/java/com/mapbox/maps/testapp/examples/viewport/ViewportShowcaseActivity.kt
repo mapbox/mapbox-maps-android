@@ -90,6 +90,7 @@ class ViewportShowcaseActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+    MapboxTracing.enableAll()
     val binding = ActivityViewportAnimationBinding.inflate(layoutInflater)
     setContentView(binding.root)
     viewportButton = binding.switchButton
