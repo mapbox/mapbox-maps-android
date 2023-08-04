@@ -41,23 +41,11 @@ echo "CURRENT_BRANCH: $CURRENT_BRANCH"
 echo "TARGET_BRANCH: $TARGET_BRANCH"
 VARIANTS=( private public )
 
-# If "main" then we're targeting v10 releases
-if [[ "$TARGET_BRANCH" = "main" ]]; then
+# If "lts/v10" then we're targeting v10 releases
+if [[ "$TARGET_BRANCH" = "lts/v10" ]]; then
   STABLE_RELEASE_TAG_PATTERN="v10\.[0-9]*\.0$"
-  # use the latest stable minor release tag for main branch
+  # use the latest stable minor release tag for lts/v10 branch
   LAST_STABLE_RELEASE_TAG=$(git tag --list --sort=-creatordate | grep "$STABLE_RELEASE_TAG_PATTERN" | head -n 1)
-# If "develop" then we're targeting v11 releases
-elif [[ "$TARGET_BRANCH" = "develop" ]]; then
-  STABLE_RELEASE_TAG_PATTERN="v11\.[0-9]*\.0$"
-  # use the latest stable minor release tag for develop branch if available or empty if not
-  LAST_STABLE_RELEASE_TAG=$(git tag --list --sort=-creatordate | grep "$STABLE_RELEASE_TAG_PATTERN" | head -n 1 || true)
-  if [ -z "$LAST_STABLE_RELEASE_TAG" ]; then
-    VARIANTS=( public )
-    echo "========================  No v11 stable release for $TARGET_BRANCH found. Comparing against most recent one. ===================================="
-    STABLE_RELEASE_TAG_PATTERN="v11\.[0-9]*\.[0-9]*.*$"
-    # use the latest release tag for develop branch if available (e.g. [v11.0.0-alpha.1])
-    LAST_STABLE_RELEASE_TAG=$(git tag --list --sort=-creatordate | grep "$STABLE_RELEASE_TAG_PATTERN" | head -n 1)
-  fi
 else
   LATEST_MINOR_THIS_BRANCH=$(git tag --sort=-creatordate | { grep "^$TARGET_BRANCH\.0$" || test $? = 1; } | head -n 1) # grep sets error if result is empty, so `test` is needed
   if [ -z "$LATEST_MINOR_THIS_BRANCH" ]; then
