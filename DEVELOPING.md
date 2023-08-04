@@ -238,6 +238,10 @@ The build step that pushes the app to Firebase will give you an URL that can be
 used for checking the phone logs in case of a crash or test failure. If you
 don't have access to Firebase, please ask a member of the Maps team.
 
+In order to run tests on multiple devices, the last commit in a branch must have
+`multiple_devices` message. We also run tests on multiple device automatically
+when the release tag is added.
+
 The CircleCI bot will wait for the Firebase test to finish, collect the results,
 publish them as build artifact and fail/succeed accordingly.
 
