@@ -11,8 +11,11 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.compose.testapp.ExampleScaffold
 import com.mapbox.maps.compose.testapp.examples.utils.AnnotationUtils
+import com.mapbox.maps.compose.testapp.examples.utils.CityLocations
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
+import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.extension.compose.MapboxMap
+import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
 import com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotation
 import com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationGroup
 import com.mapbox.maps.plugin.annotation.AnnotationConfig
@@ -31,8 +34,19 @@ public class PolylineAnnotationActivity : ComponentActivity() {
     setContent {
       MapboxMapComposeTheme {
         ExampleScaffold {
+          val mapViewportState = rememberMapViewportState {
+            setCameraOptions(
+              cameraOptions {
+                center(CityLocations.NULLISLAND)
+                zoom(3.0)
+                pitch(0.0)
+                bearing(0.0)
+              }
+            )
+          }
           MapboxMap(
-            Modifier.fillMaxSize()
+            Modifier.fillMaxSize(),
+            mapViewportState = mapViewportState
           ) {
             PolylineAnnotation(
               points = POLYLINE_POINTS,
