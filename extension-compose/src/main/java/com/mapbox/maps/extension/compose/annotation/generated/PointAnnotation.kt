@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ComposeNode
 import androidx.compose.runtime.currentComposer
 import com.mapbox.geojson.Point
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.MapboxMapComposable
 import com.mapbox.maps.extension.compose.annotation.internal.generated.PointAnnotationManagerNode
 import com.mapbox.maps.extension.compose.annotation.internal.generated.PointAnnotationNode
@@ -62,6 +63,7 @@ import com.mapbox.maps.plugin.annotation.generated.createPointAnnotationManager
  */
 @Composable
 @MapboxMapComposable
+@MapboxExperimental
 public fun PointAnnotation(
   point: Point,
   iconImageBitmap: Bitmap? = null,

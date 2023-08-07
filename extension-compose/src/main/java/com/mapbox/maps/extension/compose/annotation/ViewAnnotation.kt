@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.ViewAnnotationOptions
 import com.mapbox.maps.extension.compose.MapboxMapComposable
 import com.mapbox.maps.extension.compose.internal.MapApplier
@@ -58,6 +59,7 @@ internal class ViewAnnotationNode(
  */
 @Composable
 @MapboxMapComposable
+@MapboxExperimental
 public fun ViewAnnotation(
   options: ViewAnnotationOptions,
   modifier: Modifier = Modifier,

@@ -5,6 +5,7 @@ package com.mapbox.maps.extension.compose.annotation.generated
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ComposeNode
 import androidx.compose.runtime.currentComposer
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.MapboxMapComposable
 import com.mapbox.maps.extension.compose.annotation.internal.generated.PolylineAnnotationManagerNode
 import com.mapbox.maps.extension.compose.internal.MapApplier
@@ -38,6 +39,7 @@ import com.mapbox.maps.plugin.annotation.generated.createPolylineAnnotationManag
  */
 @Composable
 @MapboxMapComposable
+@MapboxExperimental
 public fun PolylineAnnotationGroup(
   annotations: List<PolylineAnnotationOptions>,
   annotationConfig: AnnotationConfig? = null,

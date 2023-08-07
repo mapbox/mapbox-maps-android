@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.annotation.DrawableRes
 import androidx.core.content.res.ResourcesCompat
 import com.mapbox.maps.ImageHolder
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.attribution.generated.AttributionSettings
 import com.mapbox.maps.plugin.compass.generated.CompassSettings
@@ -18,6 +19,7 @@ import com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings
 /**
  * Utility that provides the default values of the Settings for each plugin.
  */
+@MapboxExperimental
 public object DefaultSettingsProvider {
   /**
    * Create a default [AttributionSettings].
@@ -25,6 +27,8 @@ public object DefaultSettingsProvider {
    * @param context the application context
    * @param pixelRatio the pixel ratio to be applied to the margins
    */
+  @JvmOverloads
+  @MapboxExperimental
   public fun defaultAttributionSettings(
     context: Context,
     pixelRatio: Float = context.resources.displayMetrics.density
@@ -43,6 +47,8 @@ public object DefaultSettingsProvider {
    * @param context the application context
    * @param pixelRatio the pixel ratio to be applied to the margins
    */
+  @JvmOverloads
+  @MapboxExperimental
   public fun defaultCompassSettings(
     context: Context,
     pixelRatio: Float = context.resources.displayMetrics.density
@@ -58,6 +64,7 @@ public object DefaultSettingsProvider {
   /**
    * Get the default [GesturesSettings].
    */
+  @MapboxExperimental
   public val defaultGesturesSettings: GesturesSettings = GesturesSettings {}
 
   private fun Context.getCompatDrawable(@DrawableRes resId: Int) = ResourcesCompat.getDrawable(
@@ -73,6 +80,7 @@ public object DefaultSettingsProvider {
    * @param withBearing if true, the location puck will show an arrow bearing image, default is false.
    */
   @JvmOverloads
+  @MapboxExperimental
   public fun createDefault2DPuck(
     context: Context,
     withBearing: Boolean = false
@@ -98,6 +106,8 @@ public object DefaultSettingsProvider {
    * @param context the context of the application
    * @param pixelRatio the pixel ratio to be applied to the [LocationComponentSettings.pulsingMaxRadius]
    */
+  @JvmOverloads
+  @MapboxExperimental
   public fun defaultLocationComponentSettings(
     context: Context,
     pixelRatio: Float = context.resources.displayMetrics.density
@@ -115,6 +125,8 @@ public object DefaultSettingsProvider {
    * @param context the application context
    * @param pixelRatio the pixel ratio to be applied to the margins
    */
+  @JvmOverloads
+  @MapboxExperimental
   public fun defaultLogoSettings(
     context: Context,
     pixelRatio: Float = context.resources.displayMetrics.density
@@ -133,6 +145,8 @@ public object DefaultSettingsProvider {
    * @param context the application context
    * @param pixelRatio the pixel ratio to be applied to the margins and size of the scale bar.
    */
+  @JvmOverloads
+  @MapboxExperimental
   public fun defaultScaleBarSettings(
     context: Context,
     pixelRatio: Float = context.resources.displayMetrics.density
@@ -153,10 +167,12 @@ public object DefaultSettingsProvider {
   /**
    * Get the default [OnMapClickListener] that does nothing.
    */
+  @MapboxExperimental
   public val defaultOnClickListener: OnMapClickListener = OnMapClickListener { false }
 
   /**
    * Get the default [OnMapLongClickListener] that does nothing.
    */
+  @MapboxExperimental
   public val defaultOnLongClickListener: OnMapLongClickListener = OnMapLongClickListener { false }
 }

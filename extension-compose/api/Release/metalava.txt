@@ -1,0 +1,137 @@
+// Signature format: 3.0
+package com.mapbox.maps.extension.compose {
+
+  @com.mapbox.maps.MapboxExperimental public final class DefaultSettingsProvider {
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.plugin.LocationPuck2D createDefault2DPuck(android.content.Context context, boolean withBearing = false);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.plugin.LocationPuck2D createDefault2DPuck(android.content.Context context);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.plugin.attribution.generated.AttributionSettings defaultAttributionSettings(android.content.Context context, float pixelRatio = android.util.DisplayMetrics.density);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.plugin.attribution.generated.AttributionSettings defaultAttributionSettings(android.content.Context context);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.plugin.compass.generated.CompassSettings defaultCompassSettings(android.content.Context context, float pixelRatio = android.util.DisplayMetrics.density);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.plugin.compass.generated.CompassSettings defaultCompassSettings(android.content.Context context);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings defaultLocationComponentSettings(android.content.Context context, float pixelRatio = android.util.DisplayMetrics.density);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings defaultLocationComponentSettings(android.content.Context context);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.plugin.logo.generated.LogoSettings defaultLogoSettings(android.content.Context context, float pixelRatio = android.util.DisplayMetrics.density);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.plugin.logo.generated.LogoSettings defaultLogoSettings(android.content.Context context);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings defaultScaleBarSettings(android.content.Context context, float pixelRatio = android.util.DisplayMetrics.density);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings defaultScaleBarSettings(android.content.Context context);
+    method public com.mapbox.maps.plugin.gestures.generated.GesturesSettings getDefaultGesturesSettings();
+    method public com.mapbox.maps.plugin.gestures.OnMapClickListener getDefaultOnClickListener();
+    method public com.mapbox.maps.plugin.gestures.OnMapLongClickListener getDefaultOnLongClickListener();
+    property public final com.mapbox.maps.plugin.gestures.generated.GesturesSettings defaultGesturesSettings;
+    property public final com.mapbox.maps.plugin.gestures.OnMapClickListener defaultOnClickListener;
+    property public final com.mapbox.maps.plugin.gestures.OnMapLongClickListener defaultOnLongClickListener;
+    field public static final com.mapbox.maps.extension.compose.DefaultSettingsProvider INSTANCE;
+  }
+
+  public final class MapEffectKt {
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void MapEffect(Object? key1, kotlin.jvm.functions.Function3<? super kotlinx.coroutines.CoroutineScope,? super com.mapbox.maps.MapView,? super kotlin.coroutines.Continuation<? super kotlin.Unit>,?> block);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void MapEffect(Object? key1, Object? key2, kotlin.jvm.functions.Function3<? super kotlinx.coroutines.CoroutineScope,? super com.mapbox.maps.MapView,? super kotlin.coroutines.Continuation<? super kotlin.Unit>,?> block);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void MapEffect(Object? key1, Object? key2, Object? key3, kotlin.jvm.functions.Function3<? super kotlinx.coroutines.CoroutineScope,? super com.mapbox.maps.MapView,? super kotlin.coroutines.Continuation<? super kotlin.Unit>,?> block);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void MapEffect(Object![]? keys, kotlin.jvm.functions.Function3<? super kotlinx.coroutines.CoroutineScope,? super com.mapbox.maps.MapView,? super kotlin.coroutines.Continuation<? super kotlin.Unit>,?> block);
+  }
+
+  @androidx.compose.runtime.ComposableTargetMarker(description="Mapbox Map Composable") @com.mapbox.maps.MapboxExperimental @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention.BINARY) @kotlin.annotation.Target(allowedTargets={kotlin.annotation.AnnotationTarget.FILE, kotlin.annotation.AnnotationTarget.FUNCTION, kotlin.annotation.AnnotationTarget.PROPERTY_GETTER, kotlin.annotation.AnnotationTarget.TYPE, kotlin.annotation.AnnotationTarget.TYPE_PARAMETER}) public @interface MapboxMapComposable {
+  }
+
+  public final class MapboxMapKt {
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static void MapboxMap(androidx.compose.ui.Modifier modifier = Modifier, kotlin.jvm.functions.Function1<? super android.content.Context,com.mapbox.maps.MapInitOptions> mapInitOptionsFactory = { context -> return <init>(context) }, com.mapbox.maps.plugin.attribution.generated.AttributionSettings attributionSettings = DefaultSettingsProvider.defaultAttributionSettings(LocalContext.current.applicationContext), com.mapbox.maps.plugin.compass.generated.CompassSettings compassSettings = DefaultSettingsProvider.defaultCompassSettings(LocalContext.current.applicationContext), com.mapbox.maps.plugin.gestures.generated.GesturesSettings gesturesSettings = DefaultSettingsProvider.defaultGesturesSettings, com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings locationComponentSettings = DefaultSettingsProvider.defaultLocationComponentSettings(LocalContext.current.applicationContext), com.mapbox.maps.plugin.logo.generated.LogoSettings logoSettings = DefaultSettingsProvider.defaultLogoSettings(LocalContext.current.applicationContext), com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings scaleBarSettings = DefaultSettingsProvider.defaultScaleBarSettings(LocalContext.current.applicationContext), com.mapbox.maps.extension.compose.animation.viewport.MapViewportState mapViewportState = rememberMapViewportState(), com.mapbox.maps.plugin.gestures.OnMapClickListener onMapClickListener = DefaultSettingsProvider.defaultOnClickListener, com.mapbox.maps.plugin.gestures.OnMapLongClickListener onMapLongClickListener = DefaultSettingsProvider.defaultOnLongClickListener, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.MapboxMapScope,kotlin.Unit>? content = null);
+  }
+
+  @androidx.compose.foundation.layout.LayoutScopeMarker @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class MapboxMapScope {
+    field public static final com.mapbox.maps.extension.compose.MapboxMapScope INSTANCE;
+  }
+
+}
+
+package com.mapbox.maps.extension.compose.animation.viewport {
+
+  @com.mapbox.maps.MapboxExperimental public final class MapViewportState {
+    ctor public MapViewportState(com.mapbox.maps.CameraState cameraState = com.mapbox.maps.extension.compose.animation.viewport.MapViewportState.INIT_CAMERA_STATE);
+    method @com.mapbox.maps.MapboxExperimental public void easeTo(com.mapbox.maps.CameraOptions cameraOptions, com.mapbox.maps.plugin.animation.MapAnimationOptions? animationOptions = null, com.mapbox.maps.plugin.viewport.CompletionListener? completionListener = null);
+    method @com.mapbox.maps.MapboxExperimental public void flyTo(com.mapbox.maps.CameraOptions cameraOptions, com.mapbox.maps.plugin.animation.MapAnimationOptions? animationOptions = null, com.mapbox.maps.plugin.viewport.CompletionListener? completionListener = null);
+    method public com.mapbox.maps.CameraState getCameraState();
+    method public com.mapbox.maps.plugin.viewport.ViewportStatus getMapViewportStatus();
+    method public com.mapbox.maps.plugin.viewport.data.ViewportStatusChangeReason getMapViewportStatusChangedReason();
+    method public com.mapbox.maps.CameraOptions? getStyleDefaultCameraOptions();
+    method @com.mapbox.maps.MapboxExperimental public void idle();
+    method @UiThread @com.mapbox.maps.MapboxExperimental public void setCameraOptions(com.mapbox.maps.CameraOptions cameraOptions);
+    method @com.mapbox.maps.MapboxExperimental public void transitionToFollowPuckState(com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions followPuckViewportStateOptions, com.mapbox.maps.plugin.viewport.data.DefaultViewportTransitionOptions defaultTransitionOptions = DefaultViewportTransitionOptions.<init>().build(), com.mapbox.maps.plugin.viewport.CompletionListener? completionListener = null);
+    method @com.mapbox.maps.MapboxExperimental public void transitionToOverviewState(com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions overviewViewportStateOptions, com.mapbox.maps.plugin.viewport.data.DefaultViewportTransitionOptions defaultTransitionOptions = DefaultViewportTransitionOptions.<init>().build(), com.mapbox.maps.plugin.viewport.CompletionListener? completionListener = null);
+    property public final com.mapbox.maps.CameraState cameraState;
+    property public final com.mapbox.maps.plugin.viewport.ViewportStatus mapViewportStatus;
+    property public final com.mapbox.maps.plugin.viewport.data.ViewportStatusChangeReason mapViewportStatusChangedReason;
+    property public final com.mapbox.maps.CameraOptions? styleDefaultCameraOptions;
+    field public static final com.mapbox.maps.extension.compose.animation.viewport.MapViewportState.Companion Companion;
+  }
+
+  public static final class MapViewportState.Companion {
+    method public androidx.compose.runtime.saveable.Saver<com.mapbox.maps.extension.compose.animation.viewport.MapViewportState,com.mapbox.maps.CameraState> getSaver();
+    property public final androidx.compose.runtime.saveable.Saver<com.mapbox.maps.extension.compose.animation.viewport.MapViewportState,com.mapbox.maps.CameraState> Saver;
+  }
+
+  public final class MapViewportStateKt {
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static inline com.mapbox.maps.extension.compose.animation.viewport.MapViewportState rememberMapViewportState(String? key = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.animation.viewport.MapViewportState,kotlin.Unit> init = {});
+  }
+
+}
+
+package com.mapbox.maps.extension.compose.annotation {
+
+  public final class ViewAnnotationKt {
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void ViewAnnotation(com.mapbox.maps.ViewAnnotationOptions options, androidx.compose.ui.Modifier modifier = Modifier, com.mapbox.maps.viewannotation.OnViewAnnotationUpdatedListener? onUpdatedListener = null, kotlin.jvm.functions.Function0<kotlin.Unit> content);
+  }
+
+}
+
+package com.mapbox.maps.extension.compose.annotation.generated {
+
+  public final class CircleAnnotationGroupKt {
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void CircleAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, Double? circleEmissiveStrength = null, com.mapbox.maps.extension.style.layers.properties.generated.CirclePitchAlignment? circlePitchAlignment = null, com.mapbox.maps.extension.style.layers.properties.generated.CirclePitchScale? circlePitchScale = null, java.util.List<java.lang.Double>? circleTranslate = null, com.mapbox.maps.extension.style.layers.properties.generated.CircleTranslateAnchor? circleTranslateAnchor = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.CircleAnnotation,java.lang.Boolean> onClick = { it -> return false });
+  }
+
+  public final class CircleAnnotationKt {
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void CircleAnnotation(com.mapbox.geojson.Point point, Double? circleBlur = null, Integer? circleColorInt = null, String? circleColorString = null, Double? circleOpacity = null, Double? circleRadius = null, Integer? circleStrokeColorInt = null, String? circleStrokeColorString = null, Double? circleStrokeOpacity = null, Double? circleStrokeWidth = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.CircleAnnotation,java.lang.Boolean> onClick = { it -> return false });
+  }
+
+  public final class PointAnnotationGroupKt {
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void PointAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, Boolean? iconAllowOverlap = null, Boolean? iconIgnorePlacement = null, Boolean? iconKeepUpright = null, Boolean? iconOptional = null, Double? iconPadding = null, com.mapbox.maps.extension.style.layers.properties.generated.IconPitchAlignment? iconPitchAlignment = null, com.mapbox.maps.extension.style.layers.properties.generated.IconRotationAlignment? iconRotationAlignment = null, Boolean? symbolAvoidEdges = null, com.mapbox.maps.extension.style.layers.properties.generated.SymbolPlacement? symbolPlacement = null, Double? symbolSpacing = null, com.mapbox.maps.extension.style.layers.properties.generated.SymbolZOrder? symbolZOrder = null, Boolean? textAllowOverlap = null, java.util.List<java.lang.String>? textFont = null, Boolean? textIgnorePlacement = null, Boolean? textKeepUpright = null, Double? textMaxAngle = null, Boolean? textOptional = null, Double? textPadding = null, com.mapbox.maps.extension.style.layers.properties.generated.TextPitchAlignment? textPitchAlignment = null, com.mapbox.maps.extension.style.layers.properties.generated.TextRotationAlignment? textRotationAlignment = null, java.util.List<java.lang.String>? textVariableAnchor = null, java.util.List<java.lang.String>? textWritingMode = null, java.util.List<java.lang.Double>? iconTranslate = null, com.mapbox.maps.extension.style.layers.properties.generated.IconTranslateAnchor? iconTranslateAnchor = null, java.util.List<java.lang.Double>? textTranslate = null, com.mapbox.maps.extension.style.layers.properties.generated.TextTranslateAnchor? textTranslateAnchor = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PointAnnotation,java.lang.Boolean> onClick = { it -> return false });
+  }
+
+  public final class PointAnnotationKt {
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void PointAnnotation(com.mapbox.geojson.Point point, android.graphics.Bitmap? iconImageBitmap = null, com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor? iconAnchor = null, String? iconImage = null, java.util.List<java.lang.Double>? iconOffset = null, Double? iconRotate = null, Double? iconSize = null, com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit? iconTextFit = null, java.util.List<java.lang.Double>? iconTextFitPadding = null, com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor? textAnchor = null, String? textField = null, com.mapbox.maps.extension.style.layers.properties.generated.TextJustify? textJustify = null, Double? textLetterSpacing = null, Double? textLineHeight = null, Double? textMaxWidth = null, java.util.List<java.lang.Double>? textOffset = null, Double? textRadialOffset = null, Double? textRotate = null, Double? textSize = null, com.mapbox.maps.extension.style.layers.properties.generated.TextTransform? textTransform = null, Integer? iconColorInt = null, String? iconColorString = null, Double? iconEmissiveStrength = null, Double? iconHaloBlur = null, Integer? iconHaloColorInt = null, String? iconHaloColorString = null, Double? iconHaloWidth = null, Double? iconImageCrossFade = null, Double? iconOpacity = null, Integer? textColorInt = null, String? textColorString = null, Double? textEmissiveStrength = null, Double? textHaloBlur = null, Integer? textHaloColorInt = null, String? textHaloColorString = null, Double? textHaloWidth = null, Double? textOpacity = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PointAnnotation,java.lang.Boolean> onClick = { it -> return false });
+  }
+
+  public final class PolygonAnnotationGroupKt {
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void PolygonAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, Boolean? fillAntialias = null, Double? fillEmissiveStrength = null, java.util.List<java.lang.Double>? fillTranslate = null, com.mapbox.maps.extension.style.layers.properties.generated.FillTranslateAnchor? fillTranslateAnchor = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation,java.lang.Boolean> onClick = { it -> return false });
+  }
+
+  public final class PolygonAnnotationKt {
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void PolygonAnnotation(java.util.List<? extends java.util.List<com.mapbox.geojson.Point>> points, Integer? fillColorInt = null, String? fillColorString = null, Double? fillOpacity = null, Integer? fillOutlineColorInt = null, String? fillOutlineColorString = null, String? fillPattern = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation,java.lang.Boolean> onClick = { it -> return false });
+  }
+
+  public final class PolylineAnnotationGroupKt {
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void PolylineAnnotationGroup(java.util.List<com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions> annotations, com.mapbox.maps.plugin.annotation.AnnotationConfig? annotationConfig = null, com.mapbox.maps.extension.style.layers.properties.generated.LineCap? lineCap = null, Double? lineMiterLimit = null, Double? lineRoundLimit = null, java.util.List<java.lang.Double>? lineDasharray = null, Double? lineDepthOcclusionFactor = null, Double? lineEmissiveStrength = null, java.util.List<java.lang.Double>? lineTranslate = null, com.mapbox.maps.extension.style.layers.properties.generated.LineTranslateAnchor? lineTranslateAnchor = null, java.util.List<java.lang.Double>? lineTrimOffset = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation,java.lang.Boolean> onClick = { it -> return false });
+  }
+
+  public final class PolylineAnnotationKt {
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void PolylineAnnotation(java.util.List<com.mapbox.geojson.Point> points, com.mapbox.maps.extension.style.layers.properties.generated.LineJoin? lineJoin = null, Double? lineBlur = null, Integer? lineBorderColorInt = null, String? lineBorderColorString = null, Double? lineBorderWidth = null, Integer? lineColorInt = null, String? lineColorString = null, Double? lineGapWidth = null, Double? lineOffset = null, Double? lineOpacity = null, String? linePattern = null, Double? lineWidth = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation,java.lang.Boolean> onClick = { it -> return false });
+  }
+
+}
+
+package com.mapbox.maps.extension.compose.internal {
+
+  public final class MapApplierKt {
+  }
+
+  public final class MapPreviewPlaceholderKt {
+  }
+
+  public final class MapboxMapNodeKt {
+  }
+
+  public final class SettingsUtilsKt {
+  }
+
+}
+

@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ComposeNode
 import androidx.compose.runtime.currentComposer
 import com.mapbox.geojson.Point
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.MapboxMapComposable
 import com.mapbox.maps.extension.compose.annotation.internal.generated.CircleAnnotationManagerNode
 import com.mapbox.maps.extension.compose.annotation.internal.generated.CircleAnnotationNode
@@ -33,6 +34,7 @@ import com.mapbox.maps.plugin.annotation.generated.createCircleAnnotationManager
  */
 @Composable
 @MapboxMapComposable
+@MapboxExperimental
 public fun CircleAnnotation(
   point: Point,
   circleBlur: Double? = null,

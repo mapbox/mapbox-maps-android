@@ -38,8 +38,8 @@ import com.mapbox.maps.toCameraOptions
  * [init] will be called when the [MapViewportState] is first created to configure its
  * initial state.
  */
-@MapboxExperimental
 @Composable
+@MapboxExperimental
 public inline fun rememberMapViewportState(
   key: String? = null,
   crossinline init: MapViewportState.() -> Unit = {}
@@ -80,12 +80,14 @@ public class MapViewportState(
   /**
    * The current [CameraState] of the map.
    */
+  @MapboxExperimental
   public var cameraState: CameraState by mutableStateOf(cameraState)
     internal set
 
   /**
    * The reason why the [ViewportStatus] has been changed.
    */
+  @MapboxExperimental
   public var mapViewportStatusChangedReason: ViewportStatusChangeReason by mutableStateOf(
     ViewportStatusChangeReason.IDLE_REQUESTED
   )
@@ -96,6 +98,7 @@ public class MapViewportState(
    *
    * It could be either a [ViewportStatus.State], [ViewportStatus.Transition] or [ViewportStatus.Idle].
    */
+  @MapboxExperimental
   public var mapViewportStatus: ViewportStatus by mutableStateOf(ViewportStatus.Idle)
     internal set
 
@@ -106,6 +109,7 @@ public class MapViewportState(
    * This method must be called from the map's UI thread.
    */
   @UiThread
+  @MapboxExperimental
   public fun setCameraOptions(cameraOptions: CameraOptions) {
     tryInvokingOperation { mapView ->
       mapView.apply {
@@ -122,6 +126,7 @@ public class MapViewportState(
   /**
    * A utility function to get the default [CameraOptions] defined in the style.
    */
+  @MapboxExperimental
   public val styleDefaultCameraOptions: CameraOptions?
     get() = controller?.getMapboxMap()?.getStyle()?.styleDefaultCamera
 
@@ -132,6 +137,7 @@ public class MapViewportState(
    * @param animationOptions Transition options (animation duration, listeners etc)
    * @param completionListener the optional [CompletionListener] to observe the completion if the transition
    */
+  @MapboxExperimental
   public fun easeTo(
     cameraOptions: CameraOptions,
     animationOptions: MapAnimationOptions? = null,
@@ -171,6 +177,7 @@ public class MapViewportState(
    * @param animationOptions Transition options (animation duration, listeners etc)
    * @param completionListener the optional [CompletionListener] to observe the completion if the transition
    */
+  @MapboxExperimental
   public fun flyTo(
     cameraOptions: CameraOptions,
     animationOptions: MapAnimationOptions? = null,
@@ -200,6 +207,7 @@ public class MapViewportState(
    * @param defaultTransitionOptions the defaultTransitionOptions for the transition
    * @param completionListener the optional [CompletionListener] to observe the completion if the transition
    */
+  @MapboxExperimental
   public fun transitionToOverviewState(
     overviewViewportStateOptions: OverviewViewportStateOptions,
     defaultTransitionOptions: DefaultViewportTransitionOptions = DefaultViewportTransitionOptions.Builder()
@@ -224,6 +232,7 @@ public class MapViewportState(
    * @param defaultTransitionOptions the defaultTransitionOptions for the transition
    * @param completionListener the optional [CompletionListener] to observe the completion if the transition
    */
+  @MapboxExperimental
   public fun transitionToFollowPuckState(
     followPuckViewportStateOptions: FollowPuckViewportStateOptions,
     defaultTransitionOptions: DefaultViewportTransitionOptions = DefaultViewportTransitionOptions.Builder()
@@ -246,6 +255,7 @@ public class MapViewportState(
    *
    * This cancels any active [ViewportState] or [ViewportTransition].
    */
+  @MapboxExperimental
   public fun idle() {
     tryInvokingOperation { mapView ->
       mapView.viewport.idle()
