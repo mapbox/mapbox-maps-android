@@ -6,6 +6,8 @@ This document is a guide for migrating from v10 of the Mapbox Maps SDK for Andro
 
 - [Version Compatibility](#version-compatibility)
 - [Explore new features](#explore-new-features)
+  - [The Mapbox Standard Style](#the-mapbox-standard-style)
+  - [Style Imports](#style-imports)
 - [Migration steps](#migration-steps)
   - [1. Update dependencies](#1-update-dependencies)
   - [2. Replace deprecated APIs](#2-replace-deprecated-apis)
@@ -79,28 +81,92 @@ This document is a guide for migrating from v10 of the Mapbox Maps SDK for Andro
 
 ## Explore new features
 
-We're excited to announce the launch of Mapbox Standard, our latest Mapbox style, now accessible to all customers. The key highlight of Mapbox Standard is its dynamic basemap concept, constantly evolving with the latest features. By incorporating this style into your application, you can rest assured that your users will automatically receive updates with the newest features, without any extra effort on your part. This guarantees that your users will consistently enjoy the best and most up-to-date map features we have to offer.
+### The Mapbox Standard Style
 
-To set a Mapbox style for your map in v11 you can use the `Style.STANDARD` constant like below:
+We're excited to announce the launch of Mapbox Standard, our latest Mapbox style, now accessible to all customers in a beta version. The new Mapbox Standard core style enables a highly performant and elegant 3D mapping experience with powerful dynamic lighting capabilities, landmark 3D buildings, and an expertly crafted symbolic aesthetic. With Mapbox Standard, we are also introducing a new paradigm for how to interact with map styles.
+
+To set Mapbox Standard as the style for your map in v11 you can use the `Style.STANDARD` constant like below:
 
 ```kotlin
 mapboxMap.loadStyle(Style.STANDARD)
 ```
 
-And with the power of evolving basemap functionality, the Standard's style light preset can be changed with a single line of code:
+The Mapbox Standard style features 4 light presets: `day`, `dusk`, `dawn`, and `night`. The style light preset can be changed from the default, “Day”, to another preset with a single line of code:
 
 ```kotlin
-style.setStyleImportConfigProperty("basemap", "lightPreset", Value.valueOf("dusk"))
+style.setStyleImportConfigProperty("standard", "lightPreset", Value.valueOf("dusk"))
 ```
 
 | Light preset "`day`" (default) | Light preset "`dusk`"      |
 | ------------------------------ | -------------------------- |
 | <img src="day.jpg"></img>      | <img src="dusk.jpg"></img> |
 
-You can get more info about the available presets and config options of the Standard style in the style documentation.
-<!-- TODO Add link to the style documentation. -->
+Changing the light preset will alter the colors and shadows on your map to reflect the time of day. For more information, check out the  [Lighting API](#lighting-api) section. Similarly, you can set other configuration properties on the Standard style such as showing POIs, place labels, or specific fonts:
 
-For more cool features and improvements, check [New APIs and minor ergonomic improvements](#new-apis-and-minor-ergonomic-improvements) section.
+```kotlin
+style.setStyleImportConfigProperty("standard", "showPointOfInterestLabels", Value.valueOf(false))
+```
+
+The Standard style offers 6 configuration properties for developers to change when they import it into their own style:
+
+Property | Type | Description
+--- | --- | ---
+`showPlaceLabels` | `Bool` | Shows and hides place label layers.
+`showRoadLabels` | `Bool` | Shows and hides all road labels, including road shields.
+`showPointOfInterestLabels` | `Bool` | Shows or hides all POI icons and text.
+`showTransitLabels` | `Bool` | Shows or hides all transit icons and text.
+`lightPreset` | `String` | Switches between 4 time-of-day states: `dusk`, `dawn`, `day`, and `night`.
+`font` | `Array` | Defines font family for the style from predefined options.
+
+In addition, Mapbox Standard is making adding your own data layers easier for you. To add custom layers in the appropriate location in the Standard style layer stack, we added 3 carefully designed slots that you can leverage to place your layer:
+
+Slot | Description
+--- | ---
+`bottom` | Above polygons (land, landuse, water, etc.)
+`middle` | Above lines (roads, etc.) and behind 3D buildings
+`none` | If you add no identifier, your custom layer will be placed on top of everything
+
+Just set the preferred `slot` on the `Layer` object before adding it to your map and your layer will be appropriately placed in the Standard style's layer stack.
+
+```kotlin
++lineLayer(layerId = "line-layer", sourceId = "line-layer") {
+  lineColor(rgb(255.0, 165.0, 0.0))
+  slot("middle")
+}
+```
+
+- Important: For the new Standard style, you can only add layers to these three slots (`bottom`, `middle`, `none`) within the Standard style basemap.
+
+Similar to the classic Mapbox styles, you can still use  `LayerPosition` when importing the Standard Style. However, this method is only applicable to custom layers you have added yourself. If you add two layers to the same slot with a specified layer position the latter will define the order of the layers in that slot.
+
+When using the Standard style, you get the latest basemap rendering features, map styling trends and data layers as soon as they are available, without requiring any manual migration/integration. On top of this, you'll still have the ability to introduce your own data to the map and control your user's experience. If you have feedback or questions about the Standard beta style please reach out to: `hey-map-design@mapbox.com`.
+
+Our existing, classic Mapbox styles (such as [Mapbox Streets](https://www.mapbox.com/maps/streets), [Mapbox Light](https://www.mapbox.com/maps/light), and [Mapbox Satellite Streets](https://www.mapbox.com/maps/satellite)) and any custom styles you have built in Mapbox Studio will still work just like they do in v10, so no changes are required.
+
+### Style Imports
+
+To work with styles like Mapbox Standard, we've introduced new Style APIs that allow you to import other styles into the main style you display to your users. These styles will be imported by reference, so updates to them will be reflected in your main style without additional work needed on your side. For example, imagine you have style A and style B. The Style API will allow you to import A into B. Upon importing, you can set configurations that apply to A. The configuration properties for the imported style A will depend on what the creator of style A chooses to be configurable. For the Standard style, 6 configuration properties are available for setting lighting, fonts, and label display options (see [The Mapbox Standard Style](#the-mapbox-standard-style) section above).
+
+We've introduced new APIs on the `Style` object so you can work with these features:
+
+- `style.styleImports`, which returns all of the styles you have imported into your main style
+- `style.removeStyleImport()`, which removes the style import with the passed Id
+- `style.getStyleImportSchema()`, which returns the full schema describing the style import with th passed Id
+- `style.getStyleImportConfigProperties()`, which returns all of the configuration properties of th style import with the passed Id
+- `style.getStyleImportConfigProperty()`, which returns the specified configuration property of th style import with the passed Id
+- `style.setStyleImportConfigProperties()`, which sets all of the configuration properties of th style import with the passed Id
+- `style.setStyleImportConfigProperty()`, which sets the specified configuration property of the style import with the passed Id
+
+In addition to modifying the configuration properties of the imported styles, you can add your own layers to the imported style through the concept of `slot`s. `Slot`s are pre-specified locations in the imported style where your layer will be added to (such as on top of existing land layers, but below all labels). To do this, we've added a new `slot` property to each `Layer`. This property allows you to identify which `slot` in the imported style your new layer should be placed in.
+
+```kotlin
++lineLayer(layerId = "line-layer", sourceId = "line-layer") {
+  lineColor(rgb(255.0, 165.0, 0.0))
+  slot("middle")
+}
+```
+
+For more information, see [The Mapbox Standard Style](#the-mapbox-standard-style) section above.
 
 ## Migration steps
 
@@ -228,7 +294,7 @@ The following APIs are introduced to subscribe to events:
 
 **Note**: To unsubscribe, use the returned `Cancelable` object.
 
-For conveniency, `MapboxMap` methods returning `Flow` of events were introduced: `cameraChangedEvents`, `mapIdleEvents`, `sourceAddedEvents`, `sourceRemovedEvents`, `sourceDataLoadedEvents`,
+For convenience, `MapboxMap` methods returning `Flow` of events were introduced: `cameraChangedEvents`, `mapIdleEvents`, `sourceAddedEvents`, `sourceRemovedEvents`, `sourceDataLoadedEvents`,
 `styleImageMissingEvents`, `styleImageRemoveUnusedEvents`, `renderFrameStartedEvents`, `renderFrameFinishedEvents`, `resourceRequestEvents`.
 
 Event listeners have been deprecated and replaced with callbacks. Callbacks invoke `run` method that will return data associated with the specific event.
@@ -650,13 +716,6 @@ To enable these traces, use the method `MapboxTracing.enablePlatform()`. These t
 Additionally, you have the option to enable all traces at once using `MapboxTracing.enableAll()`. If you want to disable all tracing, simply use `MapboxTracing.disableAll()`.
 
 You can find more details about Tracing API use in the [Developing guide](../DEVELOPING.md#working-with-traces)
-
-### Evolving Basemap
-
-The new `Style` APIs allow to import other styles, change style configuration and control the merged style layers ordering.
-- `getStyleImports`, `removeStyleImport` controls style imports
-- `getStyleImportSchema` describes schema for the imported style fragment, that lists available configuration parameters
-- `getStyleImportConfigProperties`, `getStyleImportConfigProperty`, `setStyleImportConfigProperties`, `setStyleImportConfigProperty` controls the values of the configuration parameters for the imported style fragment defined by schema 
 
 ## Known Issues / Coming Soon
 
