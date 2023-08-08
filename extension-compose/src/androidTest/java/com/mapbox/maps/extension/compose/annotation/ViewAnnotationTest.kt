@@ -15,10 +15,10 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.swipeLeft
 import com.mapbox.geojson.Point
-import com.mapbox.maps.MapInitOptions
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.ViewAnnotationAnchor
-import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.extension.compose.MapboxMap
+import com.mapbox.maps.extension.compose.animation.viewport.MapViewportState
 import com.mapbox.maps.extension.compose.internal.utils.CityLocations.HELSINKI
 import com.mapbox.maps.extension.compose.internal.utils.CityLocations.MINSK
 import com.mapbox.maps.viewannotation.viewAnnotationOptions
@@ -94,6 +94,7 @@ public class ViewAnnotationTest {
     composeTestRule.onNodeWithText(VIEW_ANNOTATION_TEXT).assertDoesNotExist()
   }
 
+  @OptIn(MapboxExperimental::class)
   private fun setMapContent(
     cameraCenter: Point,
     annotationCenter: Point,
@@ -105,14 +106,11 @@ public class ViewAnnotationTest {
         Modifier
           .fillMaxSize()
           .testTag(MAP_TEST_TAG),
-        mapInitOptionsFactory = { context ->
-          MapInitOptions(
-            context,
-            cameraOptions = cameraOptions {
-              zoom(ZOOM)
-              center(cameraCenter)
-            }
-          )
+        mapViewportState = MapViewportState().apply {
+          setCameraOptions {
+            zoom(ZOOM)
+            center(cameraCenter)
+          }
         }
       ) {
         ViewAnnotation(

@@ -12,9 +12,9 @@ import com.mapbox.maps.*
 import com.mapbox.maps.compose.testapp.ExampleScaffold
 import com.mapbox.maps.compose.testapp.examples.utils.CityLocations
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
-import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.extension.compose.MapEffect
 import com.mapbox.maps.extension.compose.MapboxMap
+import com.mapbox.maps.extension.compose.animation.viewport.MapViewportState
 
 /**
  * Example to showcase usage of MapEffect to enable debug mode.
@@ -36,15 +36,13 @@ public class DebugModeActivity : ComponentActivity() {
     ExampleScaffold {
       MapboxMap(
         Modifier.fillMaxSize(),
-        mapInitOptionsFactory = { context ->
-          MapInitOptions(
-            context = context,
-            styleUri = Style.MAPBOX_STREETS,
-            cameraOptions = cameraOptions {
-              center(CityLocations.BERLIN)
-              zoom(ZOOM)
-            }
-          )
+        mapViewportState = MapViewportState().apply {
+          setCameraOptions {
+            center(CityLocations.BERLIN)
+            zoom(ZOOM)
+            pitch(0.0)
+            this.bearing(0.0)
+          }
         },
         onMapClickListener = {
           Toast.makeText(this@DebugModeActivity, "Clicked on $it", Toast.LENGTH_SHORT).show()

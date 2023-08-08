@@ -8,11 +8,13 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
 import com.mapbox.geojson.Point
-import com.mapbox.maps.*
+import com.mapbox.maps.MapInitOptions
+import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.Style
 import com.mapbox.maps.compose.testapp.ExampleScaffold
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
-import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.extension.compose.MapboxMap
+import com.mapbox.maps.extension.compose.animation.viewport.MapViewportState
 import com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotation
 
 /**
@@ -30,12 +32,14 @@ public class PolygonAnnotationActivity : ComponentActivity() {
             mapInitOptionsFactory = { context ->
               MapInitOptions(
                 context,
-                cameraOptions = cameraOptions {
-                  zoom(ZOOM)
-                  center(CAMERA_CENTER)
-                },
                 styleUri = Style.LIGHT
               )
+            },
+            mapViewportState = MapViewportState().apply {
+              setCameraOptions {
+                zoom(ZOOM)
+                center(CAMERA_CENTER)
+              }
             }
           ) {
             PolygonAnnotation(

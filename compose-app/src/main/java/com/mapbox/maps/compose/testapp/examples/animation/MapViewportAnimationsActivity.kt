@@ -43,12 +43,10 @@ public class MapViewportAnimationsActivity : ComponentActivity() {
     super.onCreate(savedInstanceState)
     setContent {
       val mapViewportState = rememberMapViewportState {
-        setCameraOptions(
-          cameraOptions {
-            center(CityLocations.HELSINKI)
-            zoom(15.0)
-          }
-        )
+        setCameraOptions {
+          center(CityLocations.HELSINKI)
+          zoom(15.0)
+        }
       }
       MapboxMapComposeTheme {
         ExampleScaffold(

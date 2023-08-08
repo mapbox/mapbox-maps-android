@@ -8,12 +8,12 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
 import com.mapbox.geojson.Point
-import com.mapbox.maps.*
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.compose.testapp.ExampleScaffold
 import com.mapbox.maps.compose.testapp.examples.utils.CityLocations
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
-import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.extension.compose.MapboxMap
+import com.mapbox.maps.extension.compose.animation.viewport.MapViewportState
 import com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotation
 import com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationGroup
 import com.mapbox.maps.extension.style.expressions.dsl.generated.literal
@@ -35,14 +35,11 @@ public class CircleAnnotationActivity : ComponentActivity() {
         ExampleScaffold {
           MapboxMap(
             Modifier.fillMaxSize(),
-            mapInitOptionsFactory = { context ->
-              MapInitOptions(
-                context,
-                cameraOptions = cameraOptions {
-                  zoom(ZOOM)
-                  center(CityLocations.HELSINKI)
-                }
-              )
+            mapViewportState = MapViewportState().apply {
+              setCameraOptions {
+                zoom(ZOOM)
+                center(CityLocations.HELSINKI)
+              }
             }
           ) {
             CircleAnnotation(

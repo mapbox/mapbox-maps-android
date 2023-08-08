@@ -16,6 +16,7 @@ import com.mapbox.maps.CameraState
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.logW
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.animation.MapAnimationOptions
@@ -121,6 +122,18 @@ public class MapViewportState(
         )
       }
     }
+  }
+
+  /**
+   * Move the camera instantaneously as specified by [block] camera options.
+   * Any camera animation in progress will be cancelled.
+   *
+   * This method must be called from the map's UI thread.
+   */
+  @UiThread
+  @MapboxExperimental
+  public fun setCameraOptions(block: CameraOptions.Builder.() -> Unit) {
+    setCameraOptions(cameraOptions(block))
   }
 
   /**

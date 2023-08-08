@@ -55,6 +55,7 @@ package com.mapbox.maps.extension.compose.animation.viewport {
     method public com.mapbox.maps.CameraOptions? getStyleDefaultCameraOptions();
     method @com.mapbox.maps.MapboxExperimental public void idle();
     method @UiThread @com.mapbox.maps.MapboxExperimental public void setCameraOptions(com.mapbox.maps.CameraOptions cameraOptions);
+    method @UiThread @com.mapbox.maps.MapboxExperimental public void setCameraOptions(kotlin.jvm.functions.Function1<? super com.mapbox.maps.CameraOptions.Builder,kotlin.Unit> block);
     method @com.mapbox.maps.MapboxExperimental public void transitionToFollowPuckState(com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions followPuckViewportStateOptions, com.mapbox.maps.plugin.viewport.data.DefaultViewportTransitionOptions defaultTransitionOptions = DefaultViewportTransitionOptions.<init>().build(), com.mapbox.maps.plugin.viewport.CompletionListener? completionListener = null);
     method @com.mapbox.maps.MapboxExperimental public void transitionToOverviewState(com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions overviewViewportStateOptions, com.mapbox.maps.plugin.viewport.data.DefaultViewportTransitionOptions defaultTransitionOptions = DefaultViewportTransitionOptions.<init>().build(), com.mapbox.maps.plugin.viewport.CompletionListener? completionListener = null);
     property public final com.mapbox.maps.CameraState cameraState;

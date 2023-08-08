@@ -18,8 +18,8 @@ import com.mapbox.maps.compose.testapp.ExampleScaffold
 import com.mapbox.maps.compose.testapp.examples.utils.AnnotationUtils
 import com.mapbox.maps.compose.testapp.examples.utils.CityLocations
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
-import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.extension.compose.MapboxMap
+import com.mapbox.maps.extension.compose.animation.viewport.MapViewportState
 import com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationGroup
 import com.mapbox.maps.extension.style.expressions.dsl.generated.literal
 import com.mapbox.maps.extension.style.expressions.generated.Expression
@@ -49,14 +49,11 @@ public class PointAnnotationClusterActivity : ComponentActivity() {
         ExampleScaffold {
           MapboxMap(
             Modifier.fillMaxSize(),
-            mapInitOptionsFactory = { context ->
-              MapInitOptions(
-                context,
-                cameraOptions = cameraOptions {
-                  zoom(ZOOM)
-                  center(CityLocations.WASHINGTON)
-                }
-              )
+            mapViewportState = MapViewportState().apply {
+              setCameraOptions {
+                zoom(ZOOM)
+                center(CityLocations.WASHINGTON)
+              }
             },
           ) {
             PointAnnotationGroup(

@@ -20,8 +20,8 @@ import com.mapbox.maps.*
 import com.mapbox.maps.compose.testapp.ExampleScaffold
 import com.mapbox.maps.compose.testapp.examples.utils.CityLocations.HELSINKI
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
-import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.extension.compose.MapboxMap
+import com.mapbox.maps.extension.compose.animation.viewport.MapViewportState
 import com.mapbox.maps.extension.compose.annotation.ViewAnnotation
 import com.mapbox.maps.viewannotation.viewAnnotationOptions
 import java.util.*
@@ -38,19 +38,16 @@ public class ViewAnnotationActivity : ComponentActivity() {
       var buttonColor by remember {
         mutableStateOf(Color.Blue)
       }
-      val animatedColor by animateColorAsState(buttonColor)
+      val animatedColor by animateColorAsState(buttonColor, label = "ButtonAnnotationColor")
       MapboxMapComposeTheme {
         ExampleScaffold {
           MapboxMap(
             Modifier.fillMaxSize(),
-            mapInitOptionsFactory = { context ->
-              MapInitOptions(
-                context,
-                cameraOptions = cameraOptions {
-                  zoom(ZOOM)
-                  center(HELSINKI)
-                }
-              )
+            mapViewportState = MapViewportState().apply {
+              setCameraOptions {
+                zoom(ZOOM)
+                center(HELSINKI)
+              }
             }
           ) {
             ViewAnnotation(
