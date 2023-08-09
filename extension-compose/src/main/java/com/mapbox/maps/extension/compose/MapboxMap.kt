@@ -69,16 +69,14 @@ public fun MapboxMap(
     MapPreviewPlaceHolder(modifier)
     return
   }
-  val context = LocalContext.current.applicationContext
-  val mapView = remember {
-    MapView(
-      context,
-      mapInitOptions = mapInitOptionsFactory.invoke(context)
-    )
-  }
+
+  lateinit var mapView: MapView
+
   AndroidView(
-    factory = {
-      mapView
+    factory = { context ->
+      MapView(context, mapInitOptions = mapInitOptionsFactory.invoke(context)).also {
+        mapView = it
+      }
     },
     modifier = modifier,
   )

@@ -1,7 +1,6 @@
 package com.mapbox.maps.plugin.attribution
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.DialogInterface
@@ -14,6 +13,7 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.VisibleForTesting
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import com.mapbox.maps.module.MapTelemetry
 import com.mapbox.maps.plugin.delegates.MapAttributionDelegate
@@ -58,7 +58,7 @@ class AttributionDialogManagerImpl(
   /**
    * Invoked when the map attribution dialog should be shown to the end user
    *
-   * @param attributionTitles an array of attribution titles
+   * @param attributions an array of attribution titles
    */
   private fun showAttributionDialog(attributions: List<Attribution>) {
     val builder = AlertDialog.Builder(context)

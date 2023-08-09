@@ -1,7 +1,7 @@
 package com.mapbox.maps.plugin.attribution
 
 import android.content.DialogInterface
-import androidx.test.core.app.ApplicationProvider
+import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.maps.module.MapTelemetry
 import com.mapbox.maps.plugin.delegates.MapAttributionDelegate
 import io.mockk.*
@@ -10,6 +10,7 @@ import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
 
 @RunWith(RobolectricTestRunner::class)
@@ -32,7 +33,9 @@ class AttributionDialogManagerImplTest {
       Attribution("Telemetry", "telemetry_url")
     )
     attributionDialogManagerImpl = AttributionDialogManagerImpl(
-      ApplicationProvider.getApplicationContext()
+      Robolectric.buildActivity(AppCompatActivity::class.java).get().also {
+        it.setTheme(R.style.Theme_AppCompat_Dialog_Alert)
+      }
     )
   }
 

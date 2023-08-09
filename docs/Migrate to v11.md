@@ -29,10 +29,11 @@ This document is a guide for migrating from v10 of the Mapbox Maps SDK for Andro
     - [3.9 Snapshot API](#39-snapshot-api)
     - [3.10 Style API](#310-style-api)
     - [3.11 Render Cache API](#311-render-cache-api)
-    - [3.12 Usage of data classes](#312-usage-of-data-classes)
-    - [3.13 Usage of interfaces](#313-usage-of-interfaces)
-    - [3.14 Changes in the network stack](#314-changes-in-the-network-stack)
-    - [3.15 Java-specific changes](#315-java-specific-changes)
+    - [3.12 Attributes API](#312-attributes-api)
+    - [3.13 Usage of data classes](#313-usage-of-data-classes)
+    - [3.14 Usage of interfaces](#314-usage-of-interfaces)
+    - [3.15 Changes in the network stack](#315-changes-in-the-network-stack)
+    - [3.16 Java-specific changes](#316-java-specific-changes)
   - [4. Validate ProGuard Rules](#4-validate-proguard-rules)
   - [5. Test your app](#5-test-your-app)
 - [New APIs and minor ergonomic improvements](#new-apis-and-minor-ergonomic-improvements)
@@ -542,16 +543,20 @@ snapshotter.start { snapshotBitmap, errorMessage ->
 1. The experimental `MapboxMap.setRenderCacheOptions` and `MapboxMap.getRenderCacheOptions` APIs are removed.
 2. The experimental `MapboxMap.setMemoryBudget` API is renamed to `MapboxMap.setTileCacheBudget` and is promoted to a stable API.
 
-#### 3.12 Usage of data classes
+#### 3.12 Attributes API
+
+The `AlertDialog` of attribution plugin has been migrated from `android.app.AlertDialog` to `androidx.appcompat.app.AlertDialog`.
+
+#### 3.13 Usage of data classes
 
 1. The plugin settings classes - `AttributionSettings`, `CompassSettings`, `GesturesSettings`, `LocationComponentSettings`, `LogoSettings`, `ScaleBarSettings` - are not Kotlin `data` classes anymore as there are known [limitations](https://jakewharton.com/public-api-challenges-in-kotlin/) of using data class as public API to be not scalable. These setting classes are now made as final classes that implement `Parcelable`.
 2. `ImageHolder` class is introduced to represent either a drawable id or a `Bitmap`. The following properties are updated to utilize this new type: `CompassSettings.image`, `LocationPuck2D.topImage`, `LocationPuck2D.bearingImage`, `LocationPuck2D.shadowImage`.
 
-#### 3.13 Usage of interfaces
+#### 3.14 Usage of interfaces
 
 Native interfaces `StyleManagerInterface`, `StyleInterface`, `CameraManagerInterface`, `MapInterface`, `ObservableInterface` have been removed. `MapboxMap` and `Style`, which were implementing those interfaces, should now be used to call native methods.
 
-#### 3.14 Changes in the network stack
+#### 3.15 Changes in the network stack
 
 Those changes should only affect you if you explicitly access the Mapbox network stack by overwriting it or adding an interceptor.
 
@@ -562,7 +567,7 @@ Those changes should only affect you if you explicitly access the Mapbox network
 5. `HttpServiceInterceptorInterface` has a new function `onUpload` that must be implemented if you use the interceptor interface.
 6. The ability to overwrite for HTTP stack through modular setup has been removed, e.g. if you have used `@MapboxModule(type = MapboxModuleType.CommonHttpClient)` in your application, it will not overwrite the network stack in Mapbox Maps SDK v11 anymore.
 
-#### 3.15 Java-specific changes
+#### 3.16 Java-specific changes
 
 The callback for animations has been removed from `AnimationOptions` and can now be optionally passed when executing the animation.
 While this is an optional declaration for Kotlin, it's considered a breaking change for Java.
