@@ -215,6 +215,7 @@ class LocationComponentActivity : AppCompatActivity() {
           when (style.getProjection().name) {
             ProjectionName.MERCATOR -> ProjectionName.GLOBE
             ProjectionName.GLOBE -> ProjectionName.MERCATOR
+            else -> ProjectionName.GLOBE
           }
         )
       )

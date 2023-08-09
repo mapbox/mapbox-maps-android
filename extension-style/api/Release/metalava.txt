@@ -4839,241 +4839,421 @@ package com.mapbox.maps.extension.style.layers.properties {
 
 package com.mapbox.maps.extension.style.layers.properties.generated {
 
-  public enum Anchor {
-    method public String! getValue();
-    property public String! value;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.Anchor MAP;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.Anchor VIEWPORT;
+  public final class Anchor {
+    method public String getValue();
+    method public static com.mapbox.maps.extension.style.layers.properties.generated.Anchor valueOf(String value);
+    property public String value;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.Anchor.Companion Companion;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.Anchor MAP;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.Anchor VIEWPORT;
   }
 
-  public enum CirclePitchAlignment {
-    method public String! getValue();
-    property public String! value;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.CirclePitchAlignment MAP;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.CirclePitchAlignment VIEWPORT;
+  public static final class Anchor.Companion {
+    method public com.mapbox.maps.extension.style.layers.properties.generated.Anchor valueOf(String value);
   }
 
-  public enum CirclePitchScale {
-    method public String! getValue();
-    property public String! value;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.CirclePitchScale MAP;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.CirclePitchScale VIEWPORT;
+  public final class CirclePitchAlignment {
+    method public String getValue();
+    method public static com.mapbox.maps.extension.style.layers.properties.generated.CirclePitchAlignment valueOf(String value);
+    property public String value;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.CirclePitchAlignment.Companion Companion;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.CirclePitchAlignment MAP;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.CirclePitchAlignment VIEWPORT;
   }
 
-  public enum CircleTranslateAnchor {
-    method public String! getValue();
-    property public String! value;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.CircleTranslateAnchor MAP;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.CircleTranslateAnchor VIEWPORT;
+  public static final class CirclePitchAlignment.Companion {
+    method public com.mapbox.maps.extension.style.layers.properties.generated.CirclePitchAlignment valueOf(String value);
   }
 
-  public enum FillExtrusionTranslateAnchor {
-    method public String! getValue();
-    property public String! value;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.FillExtrusionTranslateAnchor MAP;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.FillExtrusionTranslateAnchor VIEWPORT;
+  public final class CirclePitchScale {
+    method public String getValue();
+    method public static com.mapbox.maps.extension.style.layers.properties.generated.CirclePitchScale valueOf(String value);
+    property public String value;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.CirclePitchScale.Companion Companion;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.CirclePitchScale MAP;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.CirclePitchScale VIEWPORT;
   }
 
-  public enum FillTranslateAnchor {
-    method public String! getValue();
-    property public String! value;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.FillTranslateAnchor MAP;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.FillTranslateAnchor VIEWPORT;
+  public static final class CirclePitchScale.Companion {
+    method public com.mapbox.maps.extension.style.layers.properties.generated.CirclePitchScale valueOf(String value);
   }
 
-  public enum HillshadeIlluminationAnchor {
-    method public String! getValue();
-    property public String! value;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.HillshadeIlluminationAnchor MAP;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.HillshadeIlluminationAnchor VIEWPORT;
+  public final class CircleTranslateAnchor {
+    method public String getValue();
+    method public static com.mapbox.maps.extension.style.layers.properties.generated.CircleTranslateAnchor valueOf(String value);
+    property public String value;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.CircleTranslateAnchor.Companion Companion;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.CircleTranslateAnchor MAP;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.CircleTranslateAnchor VIEWPORT;
   }
 
-  public enum IconAnchor {
-    method public String! getValue();
-    property public String! value;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor BOTTOM;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor BOTTOM_LEFT;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor BOTTOM_RIGHT;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor CENTER;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor LEFT;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor RIGHT;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor TOP;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor TOP_LEFT;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor TOP_RIGHT;
+  public static final class CircleTranslateAnchor.Companion {
+    method public com.mapbox.maps.extension.style.layers.properties.generated.CircleTranslateAnchor valueOf(String value);
   }
 
-  public enum IconPitchAlignment {
-    method public String! getValue();
-    property public String! value;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.IconPitchAlignment AUTO;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.IconPitchAlignment MAP;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.IconPitchAlignment VIEWPORT;
+  public final class FillExtrusionTranslateAnchor {
+    method public String getValue();
+    method public static com.mapbox.maps.extension.style.layers.properties.generated.FillExtrusionTranslateAnchor valueOf(String value);
+    property public String value;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.FillExtrusionTranslateAnchor.Companion Companion;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.FillExtrusionTranslateAnchor MAP;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.FillExtrusionTranslateAnchor VIEWPORT;
   }
 
-  public enum IconRotationAlignment {
-    method public String! getValue();
-    property public String! value;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.IconRotationAlignment AUTO;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.IconRotationAlignment MAP;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.IconRotationAlignment VIEWPORT;
+  public static final class FillExtrusionTranslateAnchor.Companion {
+    method public com.mapbox.maps.extension.style.layers.properties.generated.FillExtrusionTranslateAnchor valueOf(String value);
   }
 
-  public enum IconTextFit {
-    method public String! getValue();
-    property public String! value;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit BOTH;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit HEIGHT;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit NONE;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit WIDTH;
+  public final class FillTranslateAnchor {
+    method public String getValue();
+    method public static com.mapbox.maps.extension.style.layers.properties.generated.FillTranslateAnchor valueOf(String value);
+    property public String value;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.FillTranslateAnchor.Companion Companion;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.FillTranslateAnchor MAP;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.FillTranslateAnchor VIEWPORT;
   }
 
-  public enum IconTranslateAnchor {
-    method public String! getValue();
-    property public String! value;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.IconTranslateAnchor MAP;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.IconTranslateAnchor VIEWPORT;
+  public static final class FillTranslateAnchor.Companion {
+    method public com.mapbox.maps.extension.style.layers.properties.generated.FillTranslateAnchor valueOf(String value);
   }
 
-  public enum LineCap {
-    method public String! getValue();
-    property public String! value;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.LineCap BUTT;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.LineCap ROUND;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.LineCap SQUARE;
+  public final class HillshadeIlluminationAnchor {
+    method public String getValue();
+    method public static com.mapbox.maps.extension.style.layers.properties.generated.HillshadeIlluminationAnchor valueOf(String value);
+    property public String value;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.HillshadeIlluminationAnchor.Companion Companion;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.HillshadeIlluminationAnchor MAP;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.HillshadeIlluminationAnchor VIEWPORT;
   }
 
-  public enum LineJoin {
-    method public String! getValue();
-    property public String! value;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.LineJoin BEVEL;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.LineJoin MITER;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.LineJoin ROUND;
+  public static final class HillshadeIlluminationAnchor.Companion {
+    method public com.mapbox.maps.extension.style.layers.properties.generated.HillshadeIlluminationAnchor valueOf(String value);
   }
 
-  public enum LineTranslateAnchor {
-    method public String! getValue();
-    property public String! value;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.LineTranslateAnchor MAP;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.LineTranslateAnchor VIEWPORT;
+  public final class IconAnchor {
+    method public String getValue();
+    method public static com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor valueOf(String value);
+    property public String value;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor BOTTOM;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor BOTTOM_LEFT;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor BOTTOM_RIGHT;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor CENTER;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor.Companion Companion;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor LEFT;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor RIGHT;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor TOP;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor TOP_LEFT;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor TOP_RIGHT;
   }
 
-  @com.mapbox.maps.MapboxExperimental public enum ModelScaleMode {
-    method public String! getValue();
-    property public String! value;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.ModelScaleMode MAP;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.ModelScaleMode VIEWPORT;
+  public static final class IconAnchor.Companion {
+    method public com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor valueOf(String value);
   }
 
-  @com.mapbox.maps.MapboxExperimental public enum ModelType {
-    method public String! getValue();
-    property public String! value;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.ModelType COMMON_3D;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.ModelType LOCATION_INDICATOR;
+  public final class IconPitchAlignment {
+    method public String getValue();
+    method public static com.mapbox.maps.extension.style.layers.properties.generated.IconPitchAlignment valueOf(String value);
+    property public String value;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.IconPitchAlignment AUTO;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.IconPitchAlignment.Companion Companion;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.IconPitchAlignment MAP;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.IconPitchAlignment VIEWPORT;
   }
 
-  public enum ProjectionName {
-    method public String! getValue();
-    property public String! value;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName GLOBE;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName MERCATOR;
+  public static final class IconPitchAlignment.Companion {
+    method public com.mapbox.maps.extension.style.layers.properties.generated.IconPitchAlignment valueOf(String value);
   }
 
-  public enum RasterResampling {
-    method public String! getValue();
-    property public String! value;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.RasterResampling LINEAR;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.RasterResampling NEAREST;
+  public final class IconRotationAlignment {
+    method public String getValue();
+    method public static com.mapbox.maps.extension.style.layers.properties.generated.IconRotationAlignment valueOf(String value);
+    property public String value;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.IconRotationAlignment AUTO;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.IconRotationAlignment.Companion Companion;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.IconRotationAlignment MAP;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.IconRotationAlignment VIEWPORT;
   }
 
-  public enum SkyType {
-    method public String! getValue();
-    property public String! value;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.SkyType ATMOSPHERE;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.SkyType GRADIENT;
+  public static final class IconRotationAlignment.Companion {
+    method public com.mapbox.maps.extension.style.layers.properties.generated.IconRotationAlignment valueOf(String value);
   }
 
-  public enum SymbolPlacement {
-    method public String! getValue();
-    property public String! value;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.SymbolPlacement LINE;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.SymbolPlacement LINE_CENTER;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.SymbolPlacement POINT;
+  public final class IconTextFit {
+    method public String getValue();
+    method public static com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit valueOf(String value);
+    property public String value;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit BOTH;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit.Companion Companion;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit HEIGHT;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit NONE;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit WIDTH;
   }
 
-  public enum SymbolZOrder {
-    method public String! getValue();
-    property public String! value;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.SymbolZOrder AUTO;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.SymbolZOrder SOURCE;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.SymbolZOrder VIEWPORT_Y;
+  public static final class IconTextFit.Companion {
+    method public com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit valueOf(String value);
   }
 
-  public enum TextAnchor {
-    method public String! getValue();
-    property public String! value;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor BOTTOM;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor BOTTOM_LEFT;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor BOTTOM_RIGHT;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor CENTER;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor LEFT;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor RIGHT;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor TOP;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor TOP_LEFT;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor TOP_RIGHT;
+  public final class IconTranslateAnchor {
+    method public String getValue();
+    method public static com.mapbox.maps.extension.style.layers.properties.generated.IconTranslateAnchor valueOf(String value);
+    property public String value;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.IconTranslateAnchor.Companion Companion;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.IconTranslateAnchor MAP;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.IconTranslateAnchor VIEWPORT;
   }
 
-  public enum TextJustify {
-    method public String! getValue();
-    property public String! value;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.TextJustify AUTO;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.TextJustify CENTER;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.TextJustify LEFT;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.TextJustify RIGHT;
+  public static final class IconTranslateAnchor.Companion {
+    method public com.mapbox.maps.extension.style.layers.properties.generated.IconTranslateAnchor valueOf(String value);
   }
 
-  public enum TextPitchAlignment {
-    method public String! getValue();
-    property public String! value;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.TextPitchAlignment AUTO;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.TextPitchAlignment MAP;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.TextPitchAlignment VIEWPORT;
+  public final class LineCap {
+    method public String getValue();
+    method public static com.mapbox.maps.extension.style.layers.properties.generated.LineCap valueOf(String value);
+    property public String value;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.LineCap BUTT;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.LineCap.Companion Companion;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.LineCap ROUND;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.LineCap SQUARE;
   }
 
-  public enum TextRotationAlignment {
-    method public String! getValue();
-    property public String! value;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.TextRotationAlignment AUTO;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.TextRotationAlignment MAP;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.TextRotationAlignment VIEWPORT;
+  public static final class LineCap.Companion {
+    method public com.mapbox.maps.extension.style.layers.properties.generated.LineCap valueOf(String value);
   }
 
-  public enum TextTransform {
-    method public String! getValue();
-    property public String! value;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.TextTransform LOWERCASE;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.TextTransform NONE;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.TextTransform UPPERCASE;
+  public final class LineJoin {
+    method public String getValue();
+    method public static com.mapbox.maps.extension.style.layers.properties.generated.LineJoin valueOf(String value);
+    property public String value;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.LineJoin BEVEL;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.LineJoin.Companion Companion;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.LineJoin MITER;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.LineJoin ROUND;
   }
 
-  public enum TextTranslateAnchor {
-    method public String! getValue();
-    property public String! value;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.TextTranslateAnchor MAP;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.TextTranslateAnchor VIEWPORT;
+  public static final class LineJoin.Companion {
+    method public com.mapbox.maps.extension.style.layers.properties.generated.LineJoin valueOf(String value);
   }
 
-  public enum TextWritingMode {
-    method public String! getValue();
-    property public String! value;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.TextWritingMode HORIZONTAL;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.TextWritingMode VERTICAL;
+  public final class LineTranslateAnchor {
+    method public String getValue();
+    method public static com.mapbox.maps.extension.style.layers.properties.generated.LineTranslateAnchor valueOf(String value);
+    property public String value;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.LineTranslateAnchor.Companion Companion;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.LineTranslateAnchor MAP;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.LineTranslateAnchor VIEWPORT;
   }
 
-  public enum Visibility {
-    method public String! getValue();
-    property public String! value;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.Visibility NONE;
-    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.Visibility VISIBLE;
+  public static final class LineTranslateAnchor.Companion {
+    method public com.mapbox.maps.extension.style.layers.properties.generated.LineTranslateAnchor valueOf(String value);
+  }
+
+  @com.mapbox.maps.MapboxExperimental public final class ModelScaleMode {
+    method public String getValue();
+    method public static com.mapbox.maps.extension.style.layers.properties.generated.ModelScaleMode valueOf(String value);
+    property public String value;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.ModelScaleMode.Companion Companion;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.ModelScaleMode MAP;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.ModelScaleMode VIEWPORT;
+  }
+
+  public static final class ModelScaleMode.Companion {
+    method public com.mapbox.maps.extension.style.layers.properties.generated.ModelScaleMode valueOf(String value);
+  }
+
+  @com.mapbox.maps.MapboxExperimental public final class ModelType {
+    method public String getValue();
+    method public static com.mapbox.maps.extension.style.layers.properties.generated.ModelType valueOf(String value);
+    property public String value;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.ModelType COMMON_3D;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.ModelType.Companion Companion;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.ModelType LOCATION_INDICATOR;
+  }
+
+  public static final class ModelType.Companion {
+    method public com.mapbox.maps.extension.style.layers.properties.generated.ModelType valueOf(String value);
+  }
+
+  public final class ProjectionName {
+    method public String getValue();
+    method public static com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName valueOf(String value);
+    property public String value;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName.Companion Companion;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName GLOBE;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName MERCATOR;
+  }
+
+  public static final class ProjectionName.Companion {
+    method public com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName valueOf(String value);
+  }
+
+  public final class RasterResampling {
+    method public String getValue();
+    method public static com.mapbox.maps.extension.style.layers.properties.generated.RasterResampling valueOf(String value);
+    property public String value;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.RasterResampling.Companion Companion;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.RasterResampling LINEAR;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.RasterResampling NEAREST;
+  }
+
+  public static final class RasterResampling.Companion {
+    method public com.mapbox.maps.extension.style.layers.properties.generated.RasterResampling valueOf(String value);
+  }
+
+  public final class SkyType {
+    method public String getValue();
+    method public static com.mapbox.maps.extension.style.layers.properties.generated.SkyType valueOf(String value);
+    property public String value;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.SkyType ATMOSPHERE;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.SkyType.Companion Companion;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.SkyType GRADIENT;
+  }
+
+  public static final class SkyType.Companion {
+    method public com.mapbox.maps.extension.style.layers.properties.generated.SkyType valueOf(String value);
+  }
+
+  public final class SymbolPlacement {
+    method public String getValue();
+    method public static com.mapbox.maps.extension.style.layers.properties.generated.SymbolPlacement valueOf(String value);
+    property public String value;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.SymbolPlacement.Companion Companion;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.SymbolPlacement LINE;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.SymbolPlacement LINE_CENTER;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.SymbolPlacement POINT;
+  }
+
+  public static final class SymbolPlacement.Companion {
+    method public com.mapbox.maps.extension.style.layers.properties.generated.SymbolPlacement valueOf(String value);
+  }
+
+  public final class SymbolZOrder {
+    method public String getValue();
+    method public static com.mapbox.maps.extension.style.layers.properties.generated.SymbolZOrder valueOf(String value);
+    property public String value;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.SymbolZOrder AUTO;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.SymbolZOrder.Companion Companion;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.SymbolZOrder SOURCE;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.SymbolZOrder VIEWPORT_Y;
+  }
+
+  public static final class SymbolZOrder.Companion {
+    method public com.mapbox.maps.extension.style.layers.properties.generated.SymbolZOrder valueOf(String value);
+  }
+
+  public final class TextAnchor {
+    method public String getValue();
+    method public static com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor valueOf(String value);
+    property public String value;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor BOTTOM;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor BOTTOM_LEFT;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor BOTTOM_RIGHT;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor CENTER;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor.Companion Companion;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor LEFT;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor RIGHT;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor TOP;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor TOP_LEFT;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor TOP_RIGHT;
+  }
+
+  public static final class TextAnchor.Companion {
+    method public com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor valueOf(String value);
+  }
+
+  public final class TextJustify {
+    method public String getValue();
+    method public static com.mapbox.maps.extension.style.layers.properties.generated.TextJustify valueOf(String value);
+    property public String value;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.TextJustify AUTO;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.TextJustify CENTER;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.TextJustify.Companion Companion;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.TextJustify LEFT;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.TextJustify RIGHT;
+  }
+
+  public static final class TextJustify.Companion {
+    method public com.mapbox.maps.extension.style.layers.properties.generated.TextJustify valueOf(String value);
+  }
+
+  public final class TextPitchAlignment {
+    method public String getValue();
+    method public static com.mapbox.maps.extension.style.layers.properties.generated.TextPitchAlignment valueOf(String value);
+    property public String value;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.TextPitchAlignment AUTO;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.TextPitchAlignment.Companion Companion;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.TextPitchAlignment MAP;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.TextPitchAlignment VIEWPORT;
+  }
+
+  public static final class TextPitchAlignment.Companion {
+    method public com.mapbox.maps.extension.style.layers.properties.generated.TextPitchAlignment valueOf(String value);
+  }
+
+  public final class TextRotationAlignment {
+    method public String getValue();
+    method public static com.mapbox.maps.extension.style.layers.properties.generated.TextRotationAlignment valueOf(String value);
+    property public String value;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.TextRotationAlignment AUTO;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.TextRotationAlignment.Companion Companion;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.TextRotationAlignment MAP;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.TextRotationAlignment VIEWPORT;
+  }
+
+  public static final class TextRotationAlignment.Companion {
+    method public com.mapbox.maps.extension.style.layers.properties.generated.TextRotationAlignment valueOf(String value);
+  }
+
+  public final class TextTransform {
+    method public String getValue();
+    method public static com.mapbox.maps.extension.style.layers.properties.generated.TextTransform valueOf(String value);
+    property public String value;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.TextTransform.Companion Companion;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.TextTransform LOWERCASE;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.TextTransform NONE;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.TextTransform UPPERCASE;
+  }
+
+  public static final class TextTransform.Companion {
+    method public com.mapbox.maps.extension.style.layers.properties.generated.TextTransform valueOf(String value);
+  }
+
+  public final class TextTranslateAnchor {
+    method public String getValue();
+    method public static com.mapbox.maps.extension.style.layers.properties.generated.TextTranslateAnchor valueOf(String value);
+    property public String value;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.TextTranslateAnchor.Companion Companion;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.TextTranslateAnchor MAP;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.TextTranslateAnchor VIEWPORT;
+  }
+
+  public static final class TextTranslateAnchor.Companion {
+    method public com.mapbox.maps.extension.style.layers.properties.generated.TextTranslateAnchor valueOf(String value);
+  }
+
+  public final class TextWritingMode {
+    method public String getValue();
+    method public static com.mapbox.maps.extension.style.layers.properties.generated.TextWritingMode valueOf(String value);
+    property public String value;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.TextWritingMode.Companion Companion;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.TextWritingMode HORIZONTAL;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.TextWritingMode VERTICAL;
+  }
+
+  public static final class TextWritingMode.Companion {
+    method public com.mapbox.maps.extension.style.layers.properties.generated.TextWritingMode valueOf(String value);
+  }
+
+  public final class Visibility {
+    method public String getValue();
+    method public static com.mapbox.maps.extension.style.layers.properties.generated.Visibility valueOf(String value);
+    property public String value;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.Visibility.Companion Companion;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.Visibility NONE;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.Visibility VISIBLE;
+  }
+
+  public static final class Visibility.Companion {
+    method public com.mapbox.maps.extension.style.layers.properties.generated.Visibility valueOf(String value);
   }
 
 }
@@ -5439,11 +5619,17 @@ package com.mapbox.maps.extension.style.sources {
 
 package com.mapbox.maps.extension.style.sources.generated {
 
-  public enum Encoding {
-    method public final String! getValue();
-    property public final String! value;
-    enum_constant public static final com.mapbox.maps.extension.style.sources.generated.Encoding MAPBOX;
-    enum_constant public static final com.mapbox.maps.extension.style.sources.generated.Encoding TERRARIUM;
+  public final class Encoding {
+    method public String getValue();
+    method public static com.mapbox.maps.extension.style.sources.generated.Encoding valueOf(String value);
+    property public final String value;
+    field public static final com.mapbox.maps.extension.style.sources.generated.Encoding.Companion Companion;
+    field public static final com.mapbox.maps.extension.style.sources.generated.Encoding MAPBOX;
+    field public static final com.mapbox.maps.extension.style.sources.generated.Encoding TERRARIUM;
+  }
+
+  public static final class Encoding.Companion {
+    method public com.mapbox.maps.extension.style.sources.generated.Encoding valueOf(String value);
   }
 
   public final class GeoJsonSource extends com.mapbox.maps.extension.style.sources.Source {
@@ -5754,11 +5940,17 @@ package com.mapbox.maps.extension.style.sources.generated {
     method public static com.mapbox.maps.extension.style.sources.generated.RasterSource rasterSource(String id, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.sources.generated.RasterSource.Builder,kotlin.Unit> block);
   }
 
-  public enum Scheme {
-    method public final String! getValue();
-    property public final String! value;
-    enum_constant public static final com.mapbox.maps.extension.style.sources.generated.Scheme TMS;
-    enum_constant public static final com.mapbox.maps.extension.style.sources.generated.Scheme XYZ;
+  public final class Scheme {
+    method public String getValue();
+    method public static com.mapbox.maps.extension.style.sources.generated.Scheme valueOf(String value);
+    property public final String value;
+    field public static final com.mapbox.maps.extension.style.sources.generated.Scheme.Companion Companion;
+    field public static final com.mapbox.maps.extension.style.sources.generated.Scheme TMS;
+    field public static final com.mapbox.maps.extension.style.sources.generated.Scheme XYZ;
+  }
+
+  public static final class Scheme.Companion {
+    method public com.mapbox.maps.extension.style.sources.generated.Scheme valueOf(String value);
   }
 
   public final class VectorSource extends com.mapbox.maps.extension.style.sources.Source {

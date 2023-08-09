@@ -535,6 +535,7 @@ snapshotter.start { snapshotBitmap, errorMessage ->
    - `Light()` should be replaced with `FlatLight(id: String)`. Any id should work for now as only single instance of flat light is supported at the moment.
    - `Style.setStyleLight(parameters: Value)` removed and should be replaced with `Style.setStyleLights(lights: Value)`; `Style.setStyleLightProperty(id: String, light: Value)`, `Style.getStyleLightProperty(property: String)` removed and should be replaced with similar overloaded functions with `id: String` parameter.
 10. Remove `Style.getStyleSourcesAttribution`. `MapboxMap.getAttributions` should be used instead.
+11. All style enum classes from [Property.kt](https://github.com/mapbox/mapbox-maps-android-internal/blob/main/mapbox-maps-android/extension-style/src/main/java/com/mapbox/maps/extension/style/layers/properties/generated/Property.kt) and [SourceProperties.kt](https://github.com/mapbox/mapbox-maps-android-internal/blob/main/mapbox-maps-android/extension-style/src/main/java/com/mapbox/maps/extension/style/sources/generated/SourceProperties.kt) became regular classes instead of enums. Enum functions `ordinal`, `name`, `values` are not available anymore, but `valueOf` still exists. When using these classes with `when` expression `else` branch will have to be implemented.
 
 #### 3.11 Render Cache API
 

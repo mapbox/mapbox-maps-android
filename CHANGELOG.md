@@ -3,6 +3,9 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # develop
+# 11.0.0-beta.2
+## Breaking changes ⚠️
+* Replace style related enum classes with regular classes.
 
 # 11.0.0-beta.1 August 2, 2023
 ## Breaking changes ⚠️

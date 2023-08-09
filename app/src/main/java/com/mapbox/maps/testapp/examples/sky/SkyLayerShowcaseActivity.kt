@@ -94,12 +94,12 @@ class SkyLayerShowcaseActivity : AppCompatActivity() {
     binding.switchSkyMode.setOnCheckedChangeListener { _, isChecked ->
       if (isChecked) {
         skyType = SkyType.ATMOSPHERE
-        binding.textSkyMode.text = getString(R.string.sky_mode, skyType.name)
+        binding.textSkyMode.text = getString(R.string.sky_mode, skyType.value)
         binding.layoutGradient.visibility = View.GONE
         binding.layoutAtmosphere.visibility = View.VISIBLE
       } else {
         skyType = SkyType.GRADIENT
-        binding.textSkyMode.text = getString(R.string.sky_mode, skyType.name)
+        binding.textSkyMode.text = getString(R.string.sky_mode, skyType.value)
         binding.layoutGradient.visibility = View.VISIBLE
         binding.layoutAtmosphere.visibility = View.GONE
       }
@@ -110,7 +110,7 @@ class SkyLayerShowcaseActivity : AppCompatActivity() {
   }
 
   private fun applyInitials() {
-    binding.textSkyMode.text = getString(R.string.sky_mode, skyType.name)
+    binding.textSkyMode.text = getString(R.string.sky_mode, skyType.value)
     binding.captionAtmosphereCenterA.text = getString(R.string.sky_center_azimuth, skyAtmosphereCenterA.toInt())
     binding.captionAtmosphereCenterP.text = getString(R.string.sky_center_polar, skyAtmosphereCenterP.toInt())
     binding.captionGradientCenterA.text = getString(R.string.sky_center_azimuth, skyGradientCenterA.toInt())
