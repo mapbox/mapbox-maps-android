@@ -650,7 +650,7 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
     } else {
       val zoomBy = calculateZoomBy(detector)
       if (internalSettings.simultaneousRotateAndPinchToZoomEnabled) {
-        val zoom = cameraAnimationsPlugin.createZoomAnimator(
+        val zoomAnimator = cameraAnimationsPlugin.createZoomAnimator(
           cameraAnimatorOptions(mapCameraManagerDelegate.cameraState.zoom + zoomBy) {
             startValue(mapCameraManagerDelegate.cameraState.zoom)
             owner(MapAnimationOwnerRegistry.GESTURES)
@@ -658,11 +658,6 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
         ) {
           duration = 0
         }
-        zoom.addListener(
-          onEnd = {
-            onScaleAnimationEnd(detector)
-          }
-        )
         val anchorAnimator = cameraAnimationsPlugin.createAnchorAnimator(
           options = cameraAnimatorOptions(focalPoint) {
             owner(MapAnimationOwnerRegistry.GESTURES)
@@ -670,7 +665,17 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
         ) {
           duration = 0
         }
-        cameraAnimationsPlugin.playAnimatorsTogether(zoom, anchorAnimator)
+        // it is important to apply onEnd lambda to last registered animator
+        cameraAnimationsPlugin.playAnimatorsTogether(
+          anchorAnimator,
+          zoomAnimator.apply {
+            addListener(
+              onEnd = {
+                onScaleAnimationEnd(detector)
+              }
+            )
+          }
+        )
       } else {
         easeToImmediately(
           CameraOptions.Builder()
@@ -916,11 +921,6 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
         ) {
           duration = 0
         }
-      bearingAnimator.addListener(
-        onEnd = {
-          onRotateAnimationEnd(detector)
-        }
-      )
       val anchorAnimator = cameraAnimationsPlugin.createAnchorAnimator(
         options = cameraAnimatorOptions(focalPoint) {
           owner(MapAnimationOwnerRegistry.GESTURES)
@@ -928,7 +928,17 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
       ) {
         duration = 0
       }
-      cameraAnimationsPlugin.playAnimatorsTogether(bearingAnimator, anchorAnimator)
+      cameraAnimationsPlugin.playAnimatorsTogether(
+        anchorAnimator,
+        // it is important to apply onEnd lambda to last registered animator
+        bearingAnimator.apply {
+          addListener(
+            onEnd = {
+              onRotateAnimationEnd(detector)
+            }
+          )
+        }
+      )
     } else {
       easeToImmediately(
         CameraOptions.Builder()

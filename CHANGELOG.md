@@ -8,6 +8,9 @@ Mapbox welcomes participation and contributions from everyone.
 * Replace style related enum classes with regular classes.
 * Migrate from `android.app.AlertDialog` to `androidx.appcompat.app.AlertDialog` for attribution plugin.
 
+## Bug fixes 🐞
+* Fix the bug when anchor was not reset after gestures leading to an unexpected map camera animation result with incorrect `CameraState.center`.
+
 # 11.0.0-beta.1 August 2, 2023
 ## Breaking changes ⚠️
 * Remove deprecated `GeoJsonSource` public constructor, builder should be used instead.
@@ -275,7 +278,6 @@ Mapbox welcomes participation and contributions from everyone.
 # 11.0.0-alpha.1 March 2, 2023
 ## Features ✨ and improvements 🏁
 * Enable raster colorization via `raster-color` expression and `RasterLayer.rasterColor`, `RasterLayer.rasterColorMix`, `RasterLayer.rasterColorRange` layer properties.
-
 
 # 10.15.0 July 27, 2023
 ## Bug fixes 🐞
