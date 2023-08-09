@@ -878,7 +878,10 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlugin {
   ): ValueAnimator = CameraCenterAnimator(options, block)
 
   /**
-   * Play given [ValueAnimator]'s together
+   * Play given [ValueAnimator]'s together.
+   *
+   * Note: [animators] will get registered and run in the same order as passed here.
+   * This is important if any actions should be run before or after all the animators, e.g. [Animator.AnimatorListener.onAnimationEnd] should be registered for the **last** animator from [animators] to be run after all the [animators] ended.
    *
    * @param animators Variable number of [ValueAnimator]'s
    */
@@ -903,7 +906,7 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlugin {
   }
 
   /**
-   * Play given [ValueAnimator]'s sequentially
+   * Play given [ValueAnimator]'s sequentially.
    *
    * @param animators Variable number of [ValueAnimator]'s
    */

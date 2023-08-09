@@ -3,7 +3,8 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
-
+## Bug fixes 🐞
+* Fix the bug when anchor was not reset after gestures leading to an unexpected map camera animation result with incorrect `CameraState.center`.
 
 # 10.15.0 July 27, 2023
 ## Bug fixes 🐞
