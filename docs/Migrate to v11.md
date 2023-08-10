@@ -95,7 +95,9 @@ mapboxMap.loadStyle(Style.STANDARD)
 The Mapbox Standard style features 4 light presets: `day`, `dusk`, `dawn`, and `night`. The style light preset can be changed from the default, “Day”, to another preset with a single line of code:
 
 ```kotlin
-style.setStyleImportConfigProperty("standard", "lightPreset", Value.valueOf("dusk"))
+mapboxMap.loadStyle(Style.STANDARD) { style ->
+  style.setStyleImportConfigProperty("standard", "lightPreset", Value.valueOf("dusk"))
+}
 ```
 
 | Light preset "`day`" (default) | Light preset "`dusk`"      |
@@ -105,7 +107,9 @@ style.setStyleImportConfigProperty("standard", "lightPreset", Value.valueOf("dus
 Changing the light preset will alter the colors and shadows on your map to reflect the time of day. For more information, check out the  [Lighting API](#lighting-api) section. Similarly, you can set other configuration properties on the Standard style such as showing POIs, place labels, or specific fonts:
 
 ```kotlin
-style.setStyleImportConfigProperty("standard", "showPointOfInterestLabels", Value.valueOf(false))
+mapboxMap.loadStyle(Style.STANDARD) { style ->
+  style.setStyleImportConfigProperty("standard", "showPointOfInterestLabels", Value.valueOf(false))
+}
 ```
 
 The Standard style offers 6 configuration properties for developers to change when they import it into their own style:
