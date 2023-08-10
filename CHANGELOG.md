@@ -5,6 +5,10 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 ## Bug fixes 🐞
 * Fix the bug when anchor was not reset after gestures leading to an unexpected map camera animation result with incorrect `CameraState.center`.
+* Avoid excessive relayout of the symbol layer when no properties depend on the image changes. This fix eliminates the symbol layer flickering when styles are switched.
+
+## Dependencies
+* Update gl-native to v10.16.0-beta.1 and common to v23.8.0 beta.1.
 
 # 10.15.0 July 27, 2023
 ## Bug fixes 🐞
