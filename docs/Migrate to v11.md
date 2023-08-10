@@ -44,6 +44,7 @@ This document is a guide for migrating from v10 of the Mapbox Maps SDK for Andro
     - [LineLayer occlusion visibility](#linelayer-occlusion-visibility)
     - [Icon cross-fading for the SymbolLayer](#icon-cross-fading-for-the-symbollayer)
     - [ModelLayer](#modellayer)
+  - [Jetpack Compose Extension](#jetpack-compose-extension)
   - [Query Rendered Features and Feature State API improvements](#query-rendered-features-and-feature-state-api-improvements)
   - [Camera API improvements](#camera-api-improvements)
   - [Style API and expressions improvements](#style-api-and-expressions-improvements)
@@ -662,6 +663,10 @@ For the FillExtrusionLayer, you have control over various properties, such as am
 #### ModelLayer
 
 We've also introduced an experimental `ModelLayer` that allows you to render 3D models on the map. Try it out, and let us know your feedback!
+
+### Jetpack Compose Extension
+
+With Android Maps SDK v11, we also released an optional compose extension, to make it easier to integrate Mapbox Maps to your app using [Jetpack Compose](https://developer.android.com/jetpack/compose). For more details, please check out our [Jetpack Compose Extension Guide](../extension-compose/README.md) and our [compose example application](../compose-app).
 
 ### Query Rendered Features and Feature State API improvements
 
