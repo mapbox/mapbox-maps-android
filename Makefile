@@ -109,7 +109,7 @@ start-android-auto-dhu:
 .PHONY: check-permissions
 check-permissions:
 	 python3 scripts/check-permissions.py \
-	 	--apk app/build/outputs/apk/debug/app-debug.apk \
+	 	--apk app/build/outputs/apk/release/app-release.apk \
 		--file app/permission.json
 
 # Update permissions app module, requires app:assembleDebug first
