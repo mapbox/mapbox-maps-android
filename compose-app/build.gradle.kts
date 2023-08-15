@@ -72,6 +72,7 @@ dependencies {
   androidTestImplementation(libs.androidx.uiAutomator)
   testImplementation(libs.junit)
   detektPlugins(libs.detektFormatting)
+  debugImplementation(libs.squareLeakCanary)
 }
 
 project.apply {
