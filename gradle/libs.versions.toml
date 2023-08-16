@@ -37,7 +37,7 @@ detekt = "1.22.0"
 # Dependencies
 
 mapboxBase = "0.8.0"
-mapboxGlNative = "11.0.0-beta.2"
+mapboxGlNative = "11.0.0-SNAPSHOT.0810T1317Z.cda4569"
 mapboxCommon = "24.0.0-beta.2"
 mapboxGestures = "0.8.0"
 mapboxJavaServices = "5.4.1"
@@ -166,7 +166,7 @@ mapbox-annotationsProcessor = { module = "com.mapbox.base:annotations-processor"
 mapbox-base = { module = "com.mapbox.base:common", version.ref = "mapboxBase" }
 mapbox-coreCommon = { module = "com.mapbox.common:common", version.ref = "mapboxCommon" }
 mapbox-gestures = { module = "com.mapbox.mapboxsdk:mapbox-android-gestures", version.ref = "mapboxGestures" }
-mapbox-glNative = { module = "com.mapbox.maps:android-core", version.ref = "mapboxGlNative" }
+mapbox-glNative = { module = "com.mapbox.maps:android-core-internal", version.ref = "mapboxGlNative" }
 mapbox-javaGeoJSON = { module = "com.mapbox.mapboxsdk:mapbox-sdk-geojson", version.ref = "mapboxJavaServices" }
 mapbox-javaTurf = { module = "com.mapbox.mapboxsdk:mapbox-sdk-turf", version.ref = "mapboxJavaServices" }
 mapbox-services = { module = "com.mapbox.mapboxsdk:mapbox-sdk-services", version.ref = "mapboxJavaServices" }

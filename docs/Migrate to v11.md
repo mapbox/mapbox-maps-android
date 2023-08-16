@@ -55,6 +55,7 @@ This document is a guide for migrating from v10 of the Mapbox Maps SDK for Andro
   - [AnnotationManager API improvements](#annotationmanager-api-improvements)
   - [Introducing Partial GeoJsonSource APIs](#introducing-partial-geojsonsource-apis)
   - [Tracing API](#tracing-api)
+  - [Mapbox Maps Recorder](#mapbox-maps-recorder)
 - [Known Issues / Coming Soon](#known-issues--coming-soon)
 - [Conclusion](#conclusion)
 
@@ -731,6 +732,10 @@ To enable these traces, use the method `MapboxTracing.enablePlatform()`. These t
 Additionally, you have the option to enable all traces at once using `MapboxTracing.enableAll()`. If you want to disable all tracing, simply use `MapboxTracing.disableAll()`.
 
 You can find more details about Tracing API use in the [Developing guide](../DEVELOPING.md#working-with-traces)
+
+### Mapbox Maps Recorder
+
+`MapboxMapRecorder` provides API to record and replay map interaction sessions. Such recordings can be used to debug issues which require multiple steps to reproduce. Usage example could be found [here](../app/src/main/java/com/mapbox/maps/testapp/examples/MapboxMapRecorderActivity.kt).
 
 ## Known Issues / Coming Soon
 

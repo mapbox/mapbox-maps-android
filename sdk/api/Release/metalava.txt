@@ -178,6 +178,7 @@ package com.mapbox.maps {
     method public com.mapbox.maps.CoordinateInfo coordinateInfoForPixel(com.mapbox.maps.ScreenCoordinate pixel);
     method public java.util.List<com.mapbox.geojson.Point> coordinatesForPixels(java.util.List<com.mapbox.maps.ScreenCoordinate> pixels);
     method public java.util.List<com.mapbox.maps.CoordinateInfo> coordinatesInfoForPixels(java.util.List<com.mapbox.maps.ScreenCoordinate> pixels);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.MapboxMapRecorder createRecorder();
     method public void dragEnd();
     method public void dragStart(com.mapbox.maps.ScreenCoordinate point);
     method public void executeOnRenderThread(Runnable runnable);
@@ -286,6 +287,28 @@ package com.mapbox.maps {
 
   public static final class MapboxMap.Companion {
     method public void clearData(com.mapbox.maps.AsyncOperationResultCallback callback);
+  }
+
+  @com.mapbox.maps.MapboxExperimental public final class MapboxMapRecorder {
+    method public String getPlaybackState();
+    method public void replay(java.nio.ByteBuffer recordedSequence, com.mapbox.maps.MapPlayerOptions options = mapPlayerOptions({ 
+
+}), kotlin.jvm.functions.Function0<kotlin.Unit> onEnded = {});
+    method public void replay(java.nio.ByteBuffer recordedSequence, com.mapbox.maps.MapPlayerOptions options = mapPlayerOptions({ 
+
+}));
+    method public void replay(java.nio.ByteBuffer recordedSequence);
+    method public void startRecording(com.mapbox.maps.MapRecorderOptions options = mapRecorderOptions({ 
+
+}));
+    method public void startRecording();
+    method public java.nio.ByteBuffer stopRecording();
+    method public void togglePauseReplay();
+  }
+
+  public final class MapboxMapRecorderKt {
+    method public static inline com.mapbox.maps.MapPlayerOptions mapPlayerOptions(kotlin.jvm.functions.Function1<? super com.mapbox.maps.MapPlayerOptions.Builder,kotlin.Unit> block);
+    method public static inline com.mapbox.maps.MapRecorderOptions mapRecorderOptions(kotlin.jvm.functions.Function1<? super com.mapbox.maps.MapRecorderOptions.Builder,kotlin.Unit> block);
   }
 
   public final class MapboxMapsOptions {

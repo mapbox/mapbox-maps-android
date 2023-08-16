@@ -8,6 +8,9 @@ Mapbox welcomes participation and contributions from everyone.
 * Replace style related enum classes with regular classes.
 * Migrate from `android.app.AlertDialog` to `androidx.appcompat.app.AlertDialog` for attribution plugin.
 
+## Features ✨ and improvements 🏁
+* Introduce experimental `MapboxMapRecorder` allowing to record and replay custom scenarios.
+
 ## Bug fixes 🐞
 * Fix the bug when anchor was not reset after gestures leading to an unexpected map camera animation result with incorrect `CameraState.center`.
 

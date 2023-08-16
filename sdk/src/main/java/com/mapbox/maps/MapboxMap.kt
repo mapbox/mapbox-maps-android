@@ -106,6 +106,12 @@ class MapboxMap :
     )
   }
 
+  /**
+   * Create a new instance of [MapboxMapRecorder] for this map.
+   */
+  @MapboxExperimental
+  fun createRecorder() = MapboxMapRecorder(MapRecorder(nativeMap.map))
+
   private fun String.isValidUri(): Boolean {
     val isMapboxStyleUri = startsWith("mapbox://", ignoreCase = true)
     val isMapboxAssetUri = startsWith("asset://", ignoreCase = true)

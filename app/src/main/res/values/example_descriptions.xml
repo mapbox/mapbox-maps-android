@@ -18,6 +18,7 @@
     <string name="description_map_viewpager">Use a MapView inside a ViewPager</string>
     <string name="description_map_multi">Using multiple map fragments in one Activity</string>
     <string name="description_debug_mode">Use variations of debug modes of the Map</string>
+    <string name="description_mapbox_recorder">Showcasing recording / replaying session with MapboxMapRecorder</string>
     <string name="description_snapshotter">Create a static, non-interactive image of a map style with specified camera position. The resulting snapshot is provided as a bitmap on Android.</string>
     <string name="description_snapshotter_dds">Use data driven styling with static map image generation</string>
     <string name="description_snapshotter_local">Use an local style with static map image generation</string>
