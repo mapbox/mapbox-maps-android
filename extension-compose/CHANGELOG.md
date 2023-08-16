@@ -4,6 +4,9 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+## Bug fixes 🐞
+* Fix the bug where wrong pixel ratio could be used in a dual display setup.
+
 # 0.1.0 August 10, 2023
 ## Features ✨ and improvements 🏁
 * Add experimental `MapboxMap` composable function as the entry point to inject a MapboxMap to the app.

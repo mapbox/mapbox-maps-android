@@ -110,6 +110,17 @@
                 android:name="@string/category"
                 android:value="@string/category_camera" />
         </activity>
+        <activity
+            android:name=".examples.basic.MultiDisplayActivity"
+            android:configChanges="orientation|screenSize|screenLayout"
+            android:description="@string/description_multiple_display"
+            android:exported="true"
+            android:label="@string/activity_multiple_display"
+            android:parentActivityName=".ExampleOverviewActivity">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_basic" />
+        </activity>
     </application>
 
 </manifest>

@@ -44,20 +44,20 @@ public fun MapboxMap(
   modifier: Modifier = Modifier,
   mapInitOptionsFactory: (Context) -> MapInitOptions = { context -> MapInitOptions(context) },
   attributionSettings: AttributionSettings = DefaultSettingsProvider.defaultAttributionSettings(
-    LocalContext.current.applicationContext
+    LocalContext.current
   ),
   compassSettings: CompassSettings = DefaultSettingsProvider.defaultCompassSettings(
-    LocalContext.current.applicationContext
+    LocalContext.current
   ),
   gesturesSettings: GesturesSettings = DefaultSettingsProvider.defaultGesturesSettings,
   locationComponentSettings: LocationComponentSettings = DefaultSettingsProvider.defaultLocationComponentSettings(
-    LocalContext.current.applicationContext,
+    LocalContext.current
   ),
   logoSettings: LogoSettings = DefaultSettingsProvider.defaultLogoSettings(
-    LocalContext.current.applicationContext
+    LocalContext.current
   ),
   scaleBarSettings: ScaleBarSettings = DefaultSettingsProvider.defaultScaleBarSettings(
-    LocalContext.current.applicationContext
+    LocalContext.current
   ),
   mapViewportState: MapViewportState = rememberMapViewportState(),
   onMapClickListener: OnMapClickListener = DefaultSettingsProvider.defaultOnClickListener,

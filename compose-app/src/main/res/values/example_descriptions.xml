@@ -8,4 +8,5 @@
     <string name="description_polyline_annotation">Add PolylineAnnotation on the Map</string>
     <string name="description_view_annotation">Add ViewAnnotation on the Map</string>
     <string name="description_map_viewport_animation">Use map viewport animations</string>
+    <string name="description_multiple_display">Display the map on a secondary display</string>
 </resources>

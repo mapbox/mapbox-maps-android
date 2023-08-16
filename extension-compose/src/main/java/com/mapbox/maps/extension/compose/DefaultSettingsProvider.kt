@@ -24,7 +24,8 @@ public object DefaultSettingsProvider {
   /**
    * Create a default [AttributionSettings].
    *
-   * @param context the application context
+   * @param context must be the context closest to the map view. This is specially important in
+   * dual display hardware. Otherwise, we might get the wrong pixel ratio.
    * @param pixelRatio the pixel ratio to be applied to the margins
    */
   @JvmOverloads
@@ -44,7 +45,8 @@ public object DefaultSettingsProvider {
   /**
    * Create a default [CompassSettings].
    *
-   * @param context the application context
+   * @param context must be the context closest to the map view. This is specially important in
+   * dual display hardware. Otherwise, we might get the wrong pixel ratio.
    * @param pixelRatio the pixel ratio to be applied to the margins
    */
   @JvmOverloads
@@ -122,7 +124,8 @@ public object DefaultSettingsProvider {
   /**
    * Create a default [LogoSettings].
    *
-   * @param context the application context
+   * @param context must be the context closest to the map view. This is specially important in
+   * dual display hardware. Otherwise, we might get the wrong pixel ratio.
    * @param pixelRatio the pixel ratio to be applied to the margins
    */
   @JvmOverloads
@@ -142,7 +145,8 @@ public object DefaultSettingsProvider {
   /**
    * Create a default [ScaleBarSettings].
    *
-   * @param context the application context
+   * @param context must be the context closest to the map view. This is specially important in
+   * dual display hardware. Otherwise, we might get the wrong pixel ratio.
    * @param pixelRatio the pixel ratio to be applied to the margins and size of the scale bar.
    */
   @JvmOverloads

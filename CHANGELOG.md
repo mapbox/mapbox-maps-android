@@ -10,6 +10,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Features ✨ and improvements 🏁
 * Introduce experimental `MapboxMapRecorder` allowing to record and replay custom scenarios.
+* New compose example `MulitDisplayActiviy` ported from XML test app.
 
 ## Bug fixes 🐞
 * Fix the bug when anchor was not reset after gestures leading to an unexpected map camera animation result with incorrect `CameraState.center`.
