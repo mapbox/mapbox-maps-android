@@ -86,7 +86,11 @@ dependencies {
     api(project(":maps-core"))
     api(project(":common"))
   } else {
-    api(libs.mapbox.glNative)
+    if (libs.versions.mapboxGlNative.get().contains("-SNAPSHOT")) {
+      api(libs.mapbox.glNativeSnapshot)
+    } else {
+      api(libs.mapbox.glNative)
+    }
     api(libs.mapbox.coreCommon)
   }
 
