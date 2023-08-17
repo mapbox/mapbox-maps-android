@@ -10,12 +10,9 @@ import androidx.core.animation.addListener
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.dsl.cameraOptions
-import com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName
-import com.mapbox.maps.extension.style.projection.generated.projection
-import com.mapbox.maps.extension.style.style
+import com.mapbox.maps.extension.style.layers.properties.generated.IconPitchAlignment
 import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.*
-import com.mapbox.maps.plugin.gestures.gestures
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityAnnotationBinding
 import com.mapbox.maps.testapp.utils.BitmapUtils.bitmapFromDrawableRes
@@ -40,7 +37,6 @@ class AnimatePointAnnotationActivity : AppCompatActivity(), MapLoadedCallback {
     binding = ActivityAnnotationBinding.inflate(layoutInflater)
     setContentView(binding.root)
     mapboxMap = binding.mapView.getMapboxMap()
-    binding.mapView.gestures.pitchEnabled = false
     mapboxMap.apply {
       setCamera(
         cameraOptions {
@@ -53,11 +49,7 @@ class AnimatePointAnnotationActivity : AppCompatActivity(), MapLoadedCallback {
           zoom(12.0)
         }
       )
-      loadStyle(
-        style(Style.STANDARD) {
-          +projection(ProjectionName.MERCATOR)
-        }
-      )
+      loadStyle(Style.STANDARD)
     }
 
     mapboxMap.subscribeMapLoaded(this@AnimatePointAnnotationActivity)
@@ -67,6 +59,7 @@ class AnimatePointAnnotationActivity : AppCompatActivity(), MapLoadedCallback {
 
   override fun run(eventData: MapLoaded) {
     pointAnnotationManager = binding.mapView.annotations.createPointAnnotationManager().apply {
+      this.iconPitchAlignment = IconPitchAlignment.MAP
       bitmapFromDrawableRes(
         this@AnimatePointAnnotationActivity,
         R.drawable.ic_car_top

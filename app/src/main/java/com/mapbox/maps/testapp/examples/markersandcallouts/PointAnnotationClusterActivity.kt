@@ -9,6 +9,7 @@ import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapboxMap
+import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.expressions.dsl.generated.literal
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.color
 import com.mapbox.maps.plugin.annotation.AnnotationConfig
@@ -36,10 +37,11 @@ class PointAnnotationClusterActivity : AppCompatActivity(), CoroutineScope {
   private var pointAnnotationManager: PointAnnotationManager? = null
   private var options: List<PointAnnotationOptions>? = null
   private var index: Int = 0
+
+  // STANDARD style doesn't support ICON_FIRE_STATION image
+  private val styles = AnnotationUtils.STYLES.filterNot { it == Style.STANDARD }
   private val nextStyle: String
-    get() {
-      return AnnotationUtils.STYLES[index++ % AnnotationUtils.STYLES.size]
-    }
+    get() = styles[index++ % styles.size]
   private lateinit var binding: ActivityAnnotationBinding
 
   override fun onCreate(savedInstanceState: Bundle?) {

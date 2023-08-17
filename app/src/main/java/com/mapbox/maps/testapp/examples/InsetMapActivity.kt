@@ -7,6 +7,7 @@ import com.mapbox.geojson.Feature
 import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
+import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.generated.lineLayer
 import com.mapbox.maps.extension.style.layers.getLayer
@@ -40,6 +41,7 @@ class InsetMapActivity : AppCompatActivity(), CameraChangedCallback {
     val binding = ActivityInsetMapBinding.inflate(layoutInflater)
     setContentView(binding.root)
     mainMapboxMap = binding.mapView.getMapboxMap()
+    mainMapboxMap.setCamera(MAIN_MAP_CAMERA_POSITION)
     mainMapboxMap.loadStyle(
       style = STYLE_URL
     ) { mainMapboxMap.subscribeCameraChanged(this@InsetMapActivity) }
@@ -69,24 +71,26 @@ class InsetMapActivity : AppCompatActivity(), CameraChangedCallback {
   private fun setInsetMapStyle(insetMapFragment: MapFragment) {
     insetMapFragment.getMapAsync {
       insetMapboxMap = it
-      insetMapboxMap?.loadStyle(
-        style = STYLE_URL
-      ) { style ->
-        val source = geoJsonSource(BOUNDS_LINE_LAYER_SOURCE_ID) {
-          feature(Feature.fromGeometry(LineString.fromLngLats(getRectanglePoints())))
+      insetMapboxMap?.apply {
+        setCamera(INSET_CAMERA_POSITION)
+        loadStyle(
+          style = STYLE_URL
+        ) { style ->
+          val source = geoJsonSource(BOUNDS_LINE_LAYER_SOURCE_ID) {
+            feature(Feature.fromGeometry(LineString.fromLngLats(getRectanglePoints())))
+          }
+          style.addSource(source)
+          // The layer properties for our line. This is where we make the line dotted, set the color, etc.
+          val layer = lineLayer(BOUNDS_LINE_LAYER_LAYER_ID, BOUNDS_LINE_LAYER_SOURCE_ID) {
+            lineCap(LineCap.ROUND)
+            lineJoin(LineJoin.ROUND)
+            lineWidth(3.0)
+            lineColor(Color.YELLOW)
+            visibility(Visibility.VISIBLE)
+          }
+          style.addLayer(layer)
+          updateInsetMapLineLayerBounds(style)
         }
-        style.addSource(source)
-
-        // The layer properties for our line. This is where we make the line dotted, set the color, etc.
-        val layer = lineLayer(BOUNDS_LINE_LAYER_LAYER_ID, BOUNDS_LINE_LAYER_SOURCE_ID) {
-          lineCap(LineCap.ROUND)
-          lineJoin(LineJoin.ROUND)
-          lineWidth(3.0)
-          lineColor(Color.YELLOW)
-          visibility(Visibility.VISIBLE)
-        }
-        style.addLayer(layer)
-        updateInsetMapLineLayerBounds(style)
       }
       insetMapFragment.getMapView().apply {
         logo.enabled = false
@@ -139,5 +143,16 @@ class InsetMapActivity : AppCompatActivity(), CameraChangedCallback {
     private const val BOUNDS_LINE_LAYER_SOURCE_ID = "BOUNDS_LINE_LAYER_SOURCE_ID"
     private const val BOUNDS_LINE_LAYER_LAYER_ID = "BOUNDS_LINE_LAYER_LAYER_ID"
     private const val ZOOM_DISTANCE_BETWEEN_MAIN_AND_INSET_MAPS = 3
+    private val MAIN_MAP_CAMERA_POSITION = cameraOptions {
+      center(Point.fromLngLat(106.025839, 11.302318))
+      zoom(5.11)
+    }
+
+    private val INSET_CAMERA_POSITION = CameraOptions.Builder()
+      .zoom(MAIN_MAP_CAMERA_POSITION.zoom?.minus(ZOOM_DISTANCE_BETWEEN_MAIN_AND_INSET_MAPS))
+      .pitch(MAIN_MAP_CAMERA_POSITION.pitch)
+      .bearing(MAIN_MAP_CAMERA_POSITION.bearing)
+      .center(MAIN_MAP_CAMERA_POSITION.center)
+      .build()
   }
 }

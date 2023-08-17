@@ -7,10 +7,7 @@
     <com.mapbox.maps.MapView
         android:id="@+id/mapView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        mapbox:mapbox_cameraTargetLat="11.302318"
-        mapbox:mapbox_cameraTargetLng="106.025839"
-        mapbox:mapbox_cameraZoom="5.11" />
+        android:layout_height="match_parent" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardview"
