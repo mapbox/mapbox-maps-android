@@ -15,7 +15,7 @@ composeCompileSdkVersion = "33"
 exampleMinSdkVersion = "23"
 exampleTargetSdkVersion = "33"
 exampleCompileSdkVersion = "33"
-exampleNdkVersion = "21.4.7075529"
+exampleNdkVersion = "23.2.8568313"
 
 # Plugins
 pluginJacoco = "0.2"
@@ -37,8 +37,8 @@ detekt = "1.22.0"
 # Dependencies
 
 mapboxBase = "0.8.0"
-mapboxGlNative = "11.0.0-SNAPSHOT.0810T1317Z.cda4569"
-mapboxCommon = "24.0.0-beta.2"
+mapboxGlNative = "11.0.0-SNAPSHOT.0817T1106Z.38eb10b"
+mapboxCommon = "24.0.0-beta.3"
 mapboxGestures = "0.8.0"
 mapboxJavaServices = "5.4.1"
 

@@ -61,9 +61,9 @@ This document is a guide for migrating from v10 of the Mapbox Maps SDK for Andro
 
 ## Version Compatibility
 
-| Version | Minimum Android Version | Kotlin Version | Target/Compile SDK Version |
-| ------- | ----------------------- | -------------- | -------------------------- |
-| 11.0.0  | 5.0 (API level 21)      | 1.6.0 or later | 33                         |
+| Version | Minimum Android Version | Kotlin Version | Target/Compile SDK Version | NDK Version   |
+| ------- | ----------------------- | -------------- | -------------------------- |---------------|
+| 11.0.0  | 5.0 (API level 21)      | 1.6.0 or later | 33                         | 23.2.8568313  |
 
 **Note:**
 * The Mapbox Maps SDK v11 was compiled using Kotlin 1.7.20, it has binary compatibility with Kotlin compiler 1.6 and above.

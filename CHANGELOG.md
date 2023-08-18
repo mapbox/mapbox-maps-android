@@ -15,6 +15,13 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * Fix the bug when anchor was not reset after gestures leading to an unexpected map camera animation result with incorrect `CameraState.center`.
 
+## Dependencies
+Update dependencies:
+
+| Dependency | Before       | After        |
+|------------|--------------|--------------|
+| NDK        | 21.4.7075529 | 23.2.8568313 |
+
 # 11.0.0-beta.1 August 2, 2023
 ## Breaking changes ⚠️
 * Remove deprecated `GeoJsonSource` public constructor, builder should be used instead.

@@ -859,7 +859,7 @@ executors:
         type: string
         default: medium
     docker:
-      - image: mbgl/android-ndk-r21e:latest
+      - image: mbgl/android-ndk-r23-lts:latest
     resource_class: << parameters.machine >>
     working_directory: /src
     environment:
