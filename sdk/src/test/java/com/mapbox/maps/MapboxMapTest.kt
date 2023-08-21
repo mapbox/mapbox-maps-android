@@ -1279,15 +1279,25 @@ class MapboxMapTest {
     mapboxMap.subscribeGenericEvent("event1", listener)
     verify { nativeMap.subscribe("event1", listener) }
   }
+
+  @Test
+  fun setRenderWorldCopies() {
+    mapboxMap.setRenderWorldCopies(true)
+    verify { nativeMap.setRenderWorldCopies(true) }
+  }
+
+  @Test
+  fun getRenderWorldCopies() {
+    mapboxMap.getRenderWorldCopies()
+    verify { nativeMap.getRenderWorldCopies() }
+  }
 }
 
 @RunWith(ParameterizedRobolectricTestRunner::class)
 @LooperMode(LooperMode.Mode.PAUSED)
 class PixelForCoordinatesTest(
-  private val inputX: Double,
-  private val inputY: Double,
-  private val expectedX: Double,
-  private val expectedY: Double
+  private val input: List<ScreenCoordinate>,
+  private val expected: List<ScreenCoordinate>,
 ) {
   private val nativeMap: NativeMapImpl = mockk(relaxed = true)
   private val nativeObserver: NativeObserver = mockk(relaxed = true)
@@ -1307,27 +1317,23 @@ class PixelForCoordinatesTest(
   @Test
   fun pixelForCoordinate() {
     val point = mockk<Point>()
-    val convertedScreenCoordinate = ScreenCoordinate(inputX, inputY)
     every { nativeMap.getSize() } returns Size(100f, 100f)
-    every { nativeMap.pixelForCoordinate(point) } returns convertedScreenCoordinate
+    every { nativeMap.pixelForCoordinate(point) } returns input[0]
     val screenCoordinate = mapboxMap.pixelForCoordinate(point)
     verifySequence {
       nativeMap.pixelForCoordinate(point)
       nativeMap.getSize()
     }
-    assertEquals(ScreenCoordinate(expectedX, expectedY), screenCoordinate)
+    assertEquals(expected[0], screenCoordinate)
   }
 
   @Test
-  fun setRenderWorldCopies() {
-    mapboxMap.setRenderWorldCopies(true)
-    verify { nativeMap.setRenderWorldCopies(true) }
-  }
-
-  @Test
-  fun getRenderWorldCopies() {
-    mapboxMap.getRenderWorldCopies()
-    verify { nativeMap.getRenderWorldCopies() }
+  fun pixelsForCoordinates() {
+    val points = mockk<List<Point>>(relaxed = true)
+    every { nativeMap.getSize() } returns Size(100f, 100f)
+    every { nativeMap.pixelsForCoordinates(points.toMutableList()) } returns input.toMutableList()
+    val screenCoordinates = mapboxMap.pixelsForCoordinates(points)
+    assertEquals(expected, screenCoordinates)
   }
 
   @After
@@ -1341,65 +1347,72 @@ class PixelForCoordinatesTest(
     @ParameterizedRobolectricTestRunner.Parameters(name = "Input ScreenCoordinate({0}, {1}) should be mapped to ScreenCoordinate({2}, {3})")
     fun data() = listOf(
       arrayOf(
-        150.0,
-        150.0,
-        -1.0,
-        -1.0
+        listOf(ScreenCoordinate(150.0, 150.0)),
+        listOf(ScreenCoordinate(-1.0, -1.0)),
       ),
       arrayOf(
-        50.0,
-        50.0,
-        50.0,
-        50.0
+        listOf(ScreenCoordinate(50.0, 50.0)),
+        listOf(ScreenCoordinate(50.0, 50.0)),
       ),
       arrayOf(
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        listOf(ScreenCoordinate(0.0, 0.0)),
+        listOf(ScreenCoordinate(0.0, 0.0)),
       ),
       arrayOf(
-        100.0,
-        100.0,
-        100.0,
-        100.0
+        listOf(ScreenCoordinate(100.0, 100.0)),
+        listOf(ScreenCoordinate(100.0, 100.0))
       ),
       arrayOf(
-        100.0000000345,
-        100.0,
-        100.0,
-        100.0,
+        listOf(ScreenCoordinate(100.0000000345, 100.0)),
+        listOf(ScreenCoordinate(100.0, 100.0))
       ),
       arrayOf(
-        0.0000000345,
-        100.0,
-        0.0000000345,
-        100.0,
+        listOf(ScreenCoordinate(0.0000000345, 100.0)),
+        listOf(ScreenCoordinate(0.0000000345, 100.0))
       ),
       arrayOf(
-        0.1000000345,
-        100.0,
-        0.1000000345,
-        100.0,
+        listOf(ScreenCoordinate(0.1000000345, 100.0)),
+        listOf(ScreenCoordinate(0.1000000345, 100.0))
       ),
       arrayOf(
-        100.45,
-        100.0,
-        100.0,
-        100.0,
+        listOf(ScreenCoordinate(100.45, 100.0)),
+        listOf(ScreenCoordinate(100.0, 100.0))
       ),
       arrayOf(
-        100.500001,
-        100.0,
-        -1.0,
-        -1.0,
+        listOf(ScreenCoordinate(100.500001, 100.0)),
+        listOf(ScreenCoordinate(-1.0, -1.0))
       ),
-
       arrayOf(
-        100.0,
-        -0.0000001,
-        100.0,
-        0.0,
+        listOf(ScreenCoordinate(100.0, -0.0000001)),
+        listOf(ScreenCoordinate(100.0, 0.0)),
+      ),
+      arrayOf(
+        listOf(
+          ScreenCoordinate(100.0, -0.0000001),
+          ScreenCoordinate(0.0, 0.0),
+          ScreenCoordinate(100.0, 100.0),
+          ScreenCoordinate(100.1233445, 100.0000434)
+        ),
+        listOf(
+          ScreenCoordinate(100.0, 0.0),
+          ScreenCoordinate(0.0, 0.0),
+          ScreenCoordinate(100.0, 100.0),
+          ScreenCoordinate(100.0, 100.0)
+        ),
+      ),
+      arrayOf(
+        listOf(
+          ScreenCoordinate(100.56666, 110.0000001),
+          ScreenCoordinate(-10.0, -10.0),
+          ScreenCoordinate(0.023456, -0.023456),
+          ScreenCoordinate(100.1233445, 50.0)
+        ),
+        listOf(
+          ScreenCoordinate(-1.0, -1.0),
+          ScreenCoordinate(-1.0, -1.0),
+          ScreenCoordinate(0.023456, 0.0),
+          ScreenCoordinate(100.0, 50.0)
+        ),
       ),
     )
   }
