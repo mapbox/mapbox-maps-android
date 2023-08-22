@@ -59,7 +59,7 @@ internal class StyleObserver(
     styleDataSourcesLoadedListener: Style.OnStyleLoaded? = null,
   ) {
     // needed to prevent receiving onStyleLoaded for the old style in some rare cases
-    nativeObserver.resubscribeStyleLoadListeners(styleLoadedCallback = this, styleDataLoadedCallback = this)
+    nativeObserver.resubscribeStyleLoadListeners()
     this.userStyleLoadedListener = userOnStyleLoaded
     this.styleDataStyleLoadedListener = styleDataStyleLoadedListener
     this.styleDataSpritesLoadedListener = styleDataSpritesLoadedListener

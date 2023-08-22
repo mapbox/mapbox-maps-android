@@ -1176,28 +1176,28 @@ class MapboxMapTest {
   fun subscribeCameraChange() {
     val listener = mockk<CameraChangedCallback>()
     mapboxMap.subscribeCameraChanged(listener)
-    verify { nativeMap.subscribe(listener) }
+    verify { nativeObserver.subscribeCameraChanged(listener) }
   }
 
   @Test
   fun subscribeMapIdleListener() {
     val listener = mockk<MapIdleCallback>()
     mapboxMap.subscribeMapIdle(listener)
-    verify { nativeMap.subscribe(listener) }
+    verify { nativeObserver.subscribeMapIdle(listener) }
   }
 
   @Test
   fun subscribeMapLoadErrorListener() {
     val listener = mockk<MapLoadingErrorCallback>()
     mapboxMap.subscribeMapLoadingError(listener)
-    verify { nativeMap.subscribe(listener) }
+    verify { nativeObserver.subscribeMapLoadingError(listener) }
   }
 
   @Test
   fun subscribeMapLoadedListener() {
     val listener = mockk<MapLoadedCallback>()
     mapboxMap.subscribeMapLoaded(listener)
-    verify { nativeMap.subscribe(listener) }
+    verify { nativeObserver.subscribeMapLoaded(listener) }
   }
 
   // Render frame events
@@ -1205,14 +1205,14 @@ class MapboxMapTest {
   fun subscribeRenderFrameFinishedListener() {
     val listener = mockk<RenderFrameFinishedCallback>()
     mapboxMap.subscribeRenderFrameFinished(listener)
-    verify { nativeMap.subscribe(listener) }
+    verify { nativeObserver.subscribeRenderFrameFinished(listener) }
   }
 
   @Test
   fun subscribeRenderFrameStartedListener() {
     val listener = mockk<RenderFrameStartedCallback>()
     mapboxMap.subscribeRenderFrameStarted(listener)
-    verify { nativeMap.subscribe(listener) }
+    verify { nativeObserver.subscribeRenderFrameStarted(listener) }
   }
 
   // Source events
@@ -1220,21 +1220,21 @@ class MapboxMapTest {
   fun subscribeSourceAddedListener() {
     val listener = mockk<SourceAddedCallback>()
     mapboxMap.subscribeSourceAdded(listener)
-    verify { nativeMap.subscribe(listener) }
+    verify { nativeObserver.subscribeSourceAdded(listener) }
   }
 
   @Test
   fun subscribeSourceDataLoadedListener() {
     val listener = mockk<SourceDataLoadedCallback>()
     mapboxMap.subscribeSourceDataLoaded(listener)
-    verify { nativeMap.subscribe(listener) }
+    verify { nativeObserver.subscribeSourceDataLoaded(listener) }
   }
 
   @Test
   fun subscribeSourceRemovedListener() {
     val listener = mockk<SourceRemovedCallback>()
     mapboxMap.subscribeSourceRemoved(listener)
-    verify { nativeMap.subscribe(listener) }
+    verify { nativeObserver.subscribeSourceRemoved(listener) }
   }
 
   // Style events
@@ -1242,42 +1242,42 @@ class MapboxMapTest {
   fun subscribeStyleLoadedListener() {
     val listener = mockk<StyleLoadedCallback>()
     mapboxMap.subscribeStyleLoaded(listener)
-    verify { nativeMap.subscribe(listener) }
+    verify { nativeObserver.subscribeStyleLoaded(listener) }
   }
 
   @Test
   fun subscribeStyleImageMissingListener() {
     val listener = mockk<StyleImageMissingCallback>()
     mapboxMap.subscribeStyleImageMissing(listener)
-    verify { nativeMap.subscribe(listener) }
+    verify { nativeObserver.subscribeStyleImageMissing(listener) }
   }
 
   @Test
-  fun subscribeStyleImageUnusedListener() {
+  fun subscribeStyleImageRemoveUnusedListener() {
     val listener = mockk<StyleImageRemoveUnusedCallback>()
-    mapboxMap.subscribeStyleImageUnused(listener)
-    verify { nativeMap.subscribe(listener) }
+    mapboxMap.subscribeStyleImageRemoveUnused(listener)
+    verify { nativeObserver.subscribeStyleImageRemoveUnused(listener) }
   }
 
   @Test
   fun subscribeStyleDataLoaded() {
     val listener = mockk<StyleDataLoadedCallback>()
     mapboxMap.subscribeStyleDataLoaded(listener)
-    verify { nativeMap.subscribe(listener) }
+    verify { nativeObserver.subscribeStyleDataLoaded(listener) }
   }
 
   @Test
   fun subscribeResourceRequest() {
     val listener = mockk<ResourceRequestCallback>()
     mapboxMap.subscribeResourceRequest(listener)
-    verify { nativeMap.subscribe(listener) }
+    verify { nativeObserver.subscribeResourceRequest(listener) }
   }
 
   @Test
   fun subscribeGenericEvent() {
     val listener = mockk<GenericEventCallback>()
     mapboxMap.subscribeGenericEvent("event1", listener)
-    verify { nativeMap.subscribe("event1", listener) }
+    verify { nativeObserver.subscribeGenericEvent("event1", listener) }
   }
 
   @Test

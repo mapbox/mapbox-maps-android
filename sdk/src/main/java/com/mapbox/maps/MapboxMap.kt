@@ -20,7 +20,6 @@ import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.plugin.delegates.listeners.*
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
-import java.util.concurrent.CopyOnWriteArraySet
 import kotlin.math.roundToInt
 
 /**
@@ -60,13 +59,11 @@ class MapboxMap :
     return isMapValid
   }
 
-  private val nativeObserver: NativeObserver
+  internal val nativeObserver: NativeObserver
   internal var style: Style? = null
   internal var isStyleLoadInitiated = false
   private val styleObserver: StyleObserver
   internal var renderHandler: Handler? = null
-  @JvmSynthetic
-  internal val cancelableSubscriberSet = CopyOnWriteArraySet<Cancelable>()
 
   /**
    * Represents current camera state.
@@ -98,6 +95,8 @@ class MapboxMap :
   ) {
     this.nativeMap = nativeMap
     this.nativeObserver = nativeObserver
+    // we register our internal native observers here and
+    // this is critical to always have our observers registered first
     this.styleObserver = StyleObserver(
       this.nativeMap.map,
       { style -> this.style = style },
@@ -155,7 +154,7 @@ class MapboxMap :
    * 1. Parameter `onMapLoadErrorListener` was removed as it was not covering all the map / style loading errors.
    *  Now if you need to listen to those errors you have to register specific listener in advance, e.g.
    *  [OnMapLoadErrorListener] should now be registered with [subscribeMapLoadingError];
-   *  you could also subscribe to other events like [subscribeStyleImageMissing] or [subscribeStyleImageUnused].
+   *  you could also subscribe to other events like [subscribeStyleImageMissing] or [subscribeStyleImageRemoveUnused].
    *
    * 2. Parameter `styleTransitionOptions` was removed from this overloaded method.
    *  In order to apply it you should use more granular overloaded [loadStyle] taking [StyleContract.StyleExtension]
@@ -330,7 +329,7 @@ class MapboxMap :
    * 1. Parameter `onMapLoadErrorListener` was removed as it was not covering all the map / style loading errors.
    *  Now if you need to listen to those errors you have to register specific listener in advance, e.g.
    *  [OnMapLoadErrorListener] should now be registered with [subscribeMapLoadingError];
-   *  you could also subscribe to other events like [subscribeStyleImageMissing] or [subscribeStyleImageUnused].
+   *  you could also subscribe to other events like [subscribeStyleImageMissing] or [subscribeStyleImageRemoveUnused].
    *
    * 2. Parameter `styleTransitionOptions` was removed from this overloaded method. Instead you have to add transition options in the DSL block:
    *
@@ -1382,9 +1381,7 @@ class MapboxMap :
    */
   override fun subscribeMapLoaded(mapLoadedCallback: MapLoadedCallback): Cancelable {
     checkNativeMap("subscribeMapLoaded")
-    return nativeMap.subscribe(mapLoadedCallback).also {
-      cancelableSubscriberSet.add(it)
-    }
+    return nativeObserver.subscribeMapLoaded(mapLoadedCallback)
   }
 
   /**
@@ -1396,9 +1393,7 @@ class MapboxMap :
    */
   override fun subscribeMapIdle(mapIdleCallback: MapIdleCallback): Cancelable {
     checkNativeMap("subscribeMapIdle")
-    return nativeMap.subscribe(mapIdleCallback).also {
-      cancelableSubscriberSet.add(it)
-    }
+    return nativeObserver.subscribeMapIdle(mapIdleCallback)
   }
 
   /**
@@ -1410,9 +1405,7 @@ class MapboxMap :
    */
   override fun subscribeMapLoadingError(mapLoadingErrorCallback: MapLoadingErrorCallback): Cancelable {
     checkNativeMap("subscribeMapLoadingError")
-    return nativeMap.subscribe(mapLoadingErrorCallback).also {
-      cancelableSubscriberSet.add(it)
-    }
+    return nativeObserver.subscribeMapLoadingError(mapLoadingErrorCallback)
   }
 
   /**
@@ -1424,9 +1417,7 @@ class MapboxMap :
    */
   override fun subscribeStyleLoaded(styleLoadedCallback: StyleLoadedCallback): Cancelable {
     checkNativeMap("subscribeStyleLoaded")
-    return nativeMap.subscribe(styleLoadedCallback).also {
-      cancelableSubscriberSet.add(it)
-    }
+    return nativeObserver.subscribeStyleLoaded(styleLoadedCallback)
   }
 
   /**
@@ -1438,9 +1429,7 @@ class MapboxMap :
    */
   override fun subscribeStyleDataLoaded(styleDataLoadedCallback: StyleDataLoadedCallback): Cancelable {
     checkNativeMap("subscribeStyleDataLoaded")
-    return nativeMap.subscribe(styleDataLoadedCallback).also {
-      cancelableSubscriberSet.add(it)
-    }
+    return nativeObserver.subscribeStyleDataLoaded(styleDataLoadedCallback)
   }
 
   /**
@@ -1452,9 +1441,7 @@ class MapboxMap :
    */
   override fun subscribeSourceDataLoaded(sourceDataLoadedCallback: SourceDataLoadedCallback): Cancelable {
     checkNativeMap("subscribeSourceDataLoaded")
-    return nativeMap.subscribe(sourceDataLoadedCallback).also {
-      cancelableSubscriberSet.add(it)
-    }
+    return nativeObserver.subscribeSourceDataLoaded(sourceDataLoadedCallback)
   }
 
   /**
@@ -1466,9 +1453,7 @@ class MapboxMap :
    */
   override fun subscribeSourceAdded(sourceAddedCallback: SourceAddedCallback): Cancelable {
     checkNativeMap("subscribeSourceAdded")
-    return nativeMap.subscribe(sourceAddedCallback).also {
-      cancelableSubscriberSet.add(it)
-    }
+    return nativeObserver.subscribeSourceAdded(sourceAddedCallback)
   }
 
   /**
@@ -1480,9 +1465,7 @@ class MapboxMap :
    */
   override fun subscribeSourceRemoved(sourceRemovedCallback: SourceRemovedCallback): Cancelable {
     checkNativeMap("subscribeSourceRemoved")
-    return nativeMap.subscribe(sourceRemovedCallback).also {
-      cancelableSubscriberSet.add(it)
-    }
+    return nativeObserver.subscribeSourceRemoved(sourceRemovedCallback)
   }
 
   /**
@@ -1494,9 +1477,7 @@ class MapboxMap :
    */
   override fun subscribeStyleImageMissing(styleImageMissingCallback: StyleImageMissingCallback): Cancelable {
     checkNativeMap("subscribeStyleImageMissing")
-    return nativeMap.subscribe(styleImageMissingCallback).also {
-      cancelableSubscriberSet.add(it)
-    }
+    return nativeObserver.subscribeStyleImageMissing(styleImageMissingCallback)
   }
 
   /**
@@ -1506,11 +1487,9 @@ class MapboxMap :
    *
    * @param styleImageRemoveUnusedCallback
    */
-  override fun subscribeStyleImageUnused(styleImageRemoveUnusedCallback: StyleImageRemoveUnusedCallback): Cancelable {
+  override fun subscribeStyleImageRemoveUnused(styleImageRemoveUnusedCallback: StyleImageRemoveUnusedCallback): Cancelable {
     checkNativeMap("subscribeStyleImageRemoveUnused")
-    return nativeMap.subscribe(styleImageRemoveUnusedCallback).also {
-      cancelableSubscriberSet.add(it)
-    }
+    return nativeObserver.subscribeStyleImageRemoveUnused(styleImageRemoveUnusedCallback)
   }
 
   /**
@@ -1522,9 +1501,7 @@ class MapboxMap :
    */
   override fun subscribeCameraChanged(cameraChangedCallback: CameraChangedCallback): Cancelable {
     checkNativeMap("subscribeCameraChanged")
-    return nativeMap.subscribe(cameraChangedCallback).also {
-      cancelableSubscriberSet.add(it)
-    }
+    return nativeObserver.subscribeCameraChanged(cameraChangedCallback)
   }
 
   /**
@@ -1536,9 +1513,7 @@ class MapboxMap :
    */
   override fun subscribeRenderFrameStarted(renderFrameStartedCallback: RenderFrameStartedCallback): Cancelable {
     checkNativeMap("subscribeRenderFrameStarted")
-    return nativeMap.subscribe(renderFrameStartedCallback).also {
-      cancelableSubscriberSet.add(it)
-    }
+    return nativeObserver.subscribeRenderFrameStarted(renderFrameStartedCallback)
   }
 
   /**
@@ -1550,9 +1525,7 @@ class MapboxMap :
    */
   override fun subscribeRenderFrameFinished(renderFrameFinishedCallback: RenderFrameFinishedCallback): Cancelable {
     checkNativeMap("subscribeRenderFrameFinished")
-    return nativeMap.subscribe(renderFrameFinishedCallback).also {
-      cancelableSubscriberSet.add(it)
-    }
+    return nativeObserver.subscribeRenderFrameFinished(renderFrameFinishedCallback)
   }
 
   /**
@@ -1564,9 +1537,7 @@ class MapboxMap :
    */
   override fun subscribeResourceRequest(resourceRequestCallback: ResourceRequestCallback): Cancelable {
     checkNativeMap("subscribeResourceRequest")
-    return nativeMap.subscribe(resourceRequestCallback).also {
-      cancelableSubscriberSet.add(it)
-    }
+    return nativeObserver.subscribeResourceRequest(resourceRequestCallback)
   }
 
   /**
@@ -1583,9 +1554,7 @@ class MapboxMap :
     genericEventCallback: GenericEventCallback
   ): Cancelable {
     checkNativeMap("subscribeGenericEvent")
-    return nativeMap.subscribe(eventName, genericEventCallback).also {
-      cancelableSubscriberSet.add(it)
-    }
+    return nativeObserver.subscribeGenericEvent(eventName, genericEventCallback)
   }
 
   /**
@@ -1915,8 +1884,8 @@ class MapboxMap :
    * needed and can be removed using StyleManager#removeStyleImage method.
    */
   @Deprecated(
-    message = "This method is deprecated, and will be removed in next major release. use [subscribeStyleImageUnused] instead.",
-    replaceWith = ReplaceWith("subscribeStyleImageUnused(styleImageRemoveUnusedCallback)"),
+    message = "This method is deprecated, and will be removed in next major release. use [subscribeStyleImageRemoveUnused] instead.",
+    replaceWith = ReplaceWith("subscribeStyleImageRemoveUnused(styleImageRemoveUnusedCallback)"),
     level = DeprecationLevel.WARNING
   )
   override fun addOnStyleImageUnusedListener(onStyleImageUnusedListener: OnStyleImageUnusedListener) {
@@ -1928,7 +1897,7 @@ class MapboxMap :
    * Remove the style image unused listener.
    */
   @Deprecated(
-    message = "This method is deprecated, and will be removed in next major release. use cancelable returned from [subscribeStyleImageUnused] to remove the listener.",
+    message = "This method is deprecated, and will be removed in next major release. use cancelable returned from [subscribeStyleImageRemoveUnused] to remove the listener.",
     level = DeprecationLevel.WARNING
   )
   override fun removeOnStyleImageUnusedListener(onStyleImageUnusedListener: OnStyleImageUnusedListener) {
@@ -2097,10 +2066,6 @@ class MapboxMap :
   internal fun onDestroy() {
     cameraAnimationsPlugin = null
     gesturesPlugin = null
-    cancelableSubscriberSet.forEach {
-      it.cancel()
-    }
-    cancelableSubscriberSet.clear()
     styleObserver.onDestroy()
     isMapValid = false
   }

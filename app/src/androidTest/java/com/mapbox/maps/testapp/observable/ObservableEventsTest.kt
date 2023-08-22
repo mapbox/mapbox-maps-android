@@ -277,7 +277,7 @@ class ObservableEventsTest : BaseMapTest() {
   }
 
   @Test
-  fun subscribeStyleImageUnusedEvent() {
+  fun subscribeStyleImageRemoveUnusedEvent() {
     val latch = CountDownLatch(1)
 
     val listener = StyleImageRemoveUnusedCallback {
@@ -296,7 +296,7 @@ class ObservableEventsTest : BaseMapTest() {
               setCamera(cameraOptions { center(Point.fromLngLat(60.1733244, 24.9410248)) })
             }
           }
-          subscribeStyleImageUnused(listener)
+          subscribeStyleImageRemoveUnused(listener)
           loadStyle(
             style(Style.MAPBOX_STREETS) {
               +geoJsonSource(SOURCE_ID) {

@@ -598,15 +598,15 @@ class NativeObserverTest {
   }
 
   @Test
-  fun subscribeStyleImageUnusedListener() {
+  fun subscribeStyleImageRemoveUnusedListener() {
     val listener = mockk<StyleImageRemoveUnusedCallback>(relaxUnitFun = true)
-    nativeObserver.subscribeStyleImageUnused(listener)
+    nativeObserver.subscribeStyleImageRemoveUnused(listener)
     verify { observableInterface.subscribe(listener) }
     assertTrue(nativeObserver.cancelableEventsMap.containsKey(MapEvent.STYLE_IMAGE_REMOVE_UNUSED))
     assertEquals(1, nativeObserver.cancelableEventsMap[MapEvent.STYLE_IMAGE_REMOVE_UNUSED]?.size)
 
     val listener2 = mockk<StyleImageRemoveUnusedCallback>(relaxUnitFun = true)
-    nativeObserver.subscribeStyleImageUnused(listener2)
+    nativeObserver.subscribeStyleImageRemoveUnused(listener2)
     verify { observableInterface.subscribe(listener) }
     assertEquals(2, nativeObserver.cancelableEventsMap[MapEvent.STYLE_IMAGE_REMOVE_UNUSED]?.size)
   }
@@ -703,7 +703,7 @@ class NativeObserverTest {
 
     nativeObserver.subscribeStyleLoaded(listener1)
     nativeObserver.subscribeStyleDataLoaded(listener2)
-    nativeObserver.resubscribeStyleLoadListeners(listener1, listener2)
+    nativeObserver.resubscribeStyleLoadListeners()
 
     verify(exactly = 2) {
       observableInterface.subscribe(listener1)

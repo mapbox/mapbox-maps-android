@@ -226,7 +226,7 @@ fun loadStyle(
 
 Important notes:
 1. When using `loadStyle(style: String, onStyleLoaded: Style.OnStyleLoaded? = null)` string is first checked if it is a valid URI, and if not - it will be treated as a JSON.
-2. Parameter `onMapLoadErrorListener` from `loadStyle` was removed as it was not covering all the map / style loading errors. If you need to listen to those errors, you have to register a specific listener in advance, e.g. `OnMapLoadErrorListener` should now be registered with `MapboxMap.subscribeMapLoadingError`; you could also subscribe to other error / warning events like `MapboxMap.subscribeStyleImageMissing` or `MapboxMap.subscribeStyleImageUnused`.
+2. Parameter `onMapLoadErrorListener` from `loadStyle` was removed as it was not covering all the map / style loading errors. If you need to listen to those errors, you have to register a specific listener in advance, e.g. `OnMapLoadErrorListener` should now be registered with `MapboxMap.subscribeMapLoadingError`; you could also subscribe to other error / warning events like `MapboxMap.subscribeStyleImageMissing` or `MapboxMap.subscribeStyleImageRemoveUnused`.
 3. Parameter `styleTransitionOptions` from `loadStyle` was removed. To apply `styleTransitionOptions`, you should use more granular overloaded `loadStyle` taking `StyleContract.StyleExtension` and add transition options in the DSL block:
 
 ```kotlin
@@ -295,7 +295,7 @@ The following APIs are introduced to subscribe to events:
     fun subscribeStyleDataLoaded(styleDataLoadedCallback: StyleDataLoadedCallback): Cancelable
     fun subscribeStyleLoaded(styleLoadedCallback: StyleLoadedCallback): Cancelable
     fun subscribeStyleImageMissing(styleImageMissingCallback: StyleImageMissingCallback): Cancelable
-    fun subscribeStyleImageUnused(styleImageRemoveUnusedCallback: StyleImageRemoveUnusedCallback): Cancelable
+    fun subscribeStyleImageRemoveUnused(styleImageRemoveUnusedCallback: StyleImageRemoveUnusedCallback): Cancelable
     fun subscribeResourceRequest(resourceRequestCallback: ResourceRequestCallback): Cancelable
 ```
 

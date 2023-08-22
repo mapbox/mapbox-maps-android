@@ -59,7 +59,7 @@ class DebugModeActivity : AppCompatActivity() {
     mapboxMap.subscribeStyleImageMissing {
       logI(TAG, "StyleImageMissingCallback: $it")
     }
-    mapboxMap.subscribeStyleImageUnused {
+    mapboxMap.subscribeStyleImageRemoveUnused {
       logI(TAG, "StyleImageRemoveUnusedCallback: $it")
     }
     mapboxMap.subscribeMapIdle {

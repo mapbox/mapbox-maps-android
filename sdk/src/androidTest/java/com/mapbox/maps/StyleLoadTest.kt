@@ -10,8 +10,10 @@ import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.extension.style.terrain.generated.terrain
 import junit.framework.TestCase.*
 import org.junit.*
+import org.junit.Assert.assertArrayEquals
 import org.junit.runner.RunWith
 import java.util.concurrent.CountDownLatch
+import java.util.concurrent.TimeUnit
 import kotlin.random.Random
 
 @RunWith(AndroidJUnit4::class)
@@ -224,6 +226,148 @@ class StyleLoadTest {
       }
     }
     countDownLatch.throwExceptionOnTimeoutMs()
+  }
+
+  @Test
+  fun testRegisterUserListenerRegisteredBeforeStyleLoad() {
+    countDownLatch = CountDownLatch(2)
+    val callbackResultList = mutableListOf<String>()
+    rule.scenario.onActivity {
+      it.runOnUiThread {
+        mapView.onStart()
+
+        val map = mapView.getMapboxMap()
+        var loadedStyle: Style? = null
+        map.subscribeStyleLoaded {
+          assert(map.getStyle() == loadedStyle)
+          callbackResultList.add("STYLE_LOADED")
+          countDownLatch.countDown()
+        }
+        map.subscribeStyleDataLoaded { styleDataLoaded ->
+          assert(map.getStyle() == loadedStyle)
+          // ignore SPRITES and SOURCES as order is undetermined
+          if (styleDataLoaded.type == StyleDataLoadedType.STYLE) {
+            callbackResultList.add(styleDataLoaded.type.name)
+            countDownLatch.countDown()
+          }
+        }
+        map.loadStyle(Style.STANDARD) { style ->
+          loadedStyle = style
+        }
+      }
+    }
+    countDownLatch.throwExceptionOnTimeoutMs()
+    assertArrayEquals(
+      arrayOf(
+        StyleDataLoadedType.STYLE.name,
+        "STYLE_LOADED"
+      ),
+      callbackResultList.toTypedArray()
+    )
+  }
+
+  @Test
+  fun testRegisterUserListenerRegisteredAfterStyleLoad() {
+    countDownLatch = CountDownLatch(2)
+    val callbackResultList = mutableListOf<String>()
+    rule.scenario.onActivity {
+      it.runOnUiThread {
+        mapView.onStart()
+
+        val map = mapView.getMapboxMap()
+        var loadedStyle: Style? = null
+        map.loadStyle(Style.STANDARD) { style ->
+          loadedStyle = style
+        }
+        map.subscribeStyleLoaded {
+          assert(map.getStyle() == loadedStyle)
+          callbackResultList.add("STYLE_LOADED")
+          countDownLatch.countDown()
+        }
+        map.subscribeStyleDataLoaded { styleDataLoaded ->
+          assert(map.getStyle() == loadedStyle)
+          // ignore SPRITES and SOURCES as order is undetermined
+          if (styleDataLoaded.type == StyleDataLoadedType.STYLE) {
+            callbackResultList.add(styleDataLoaded.type.name)
+            countDownLatch.countDown()
+          }
+        }
+      }
+    }
+    countDownLatch.throwExceptionOnTimeoutMs()
+    assertArrayEquals(
+      arrayOf(
+        StyleDataLoadedType.STYLE.name,
+        "STYLE_LOADED"
+      ),
+      callbackResultList.toTypedArray()
+    )
+  }
+
+  @Test
+  fun testRegisterUserListenerRegisteredBeforeCanceledBeforeStyleLoad() {
+    countDownLatch = CountDownLatch(1)
+    rule.scenario.onActivity {
+      it.runOnUiThread {
+        mapView.onStart()
+
+        val map = mapView.getMapboxMap()
+        val c1 = map.subscribeStyleLoaded {
+          assert(false)
+        }
+        val c2 = map.subscribeStyleDataLoaded {
+          assert(false)
+        }
+        c1.cancel()
+        c2.cancel()
+        map.loadStyle(Style.STANDARD)
+      }
+    }
+    countDownLatch.await(5_000, TimeUnit.MILLISECONDS)
+  }
+
+  @Test
+  fun testRegisterUserListenerRegisteredAfterCanceledAfterStyleLoad() {
+    countDownLatch = CountDownLatch(1)
+    rule.scenario.onActivity {
+      it.runOnUiThread {
+        mapView.onStart()
+
+        val map = mapView.getMapboxMap()
+        map.loadStyle(Style.STANDARD)
+        val c1 = map.subscribeStyleLoaded {
+          assert(false)
+        }
+        val c2 = map.subscribeStyleDataLoaded {
+          assert(false)
+        }
+        c1.cancel()
+        c2.cancel()
+      }
+    }
+    countDownLatch.await(5_000, TimeUnit.MILLISECONDS)
+  }
+
+  @Test
+  fun testRegisterUserListenerRegisteredBeforeAndCanceledAfterStyleLoad() {
+    countDownLatch = CountDownLatch(1)
+    rule.scenario.onActivity {
+      it.runOnUiThread {
+        mapView.onStart()
+
+        val map = mapView.getMapboxMap()
+        val c1 = map.subscribeStyleLoaded {
+          assert(false)
+        }
+        val c2 = map.subscribeStyleDataLoaded {
+          assert(false)
+        }
+        map.loadStyle(Style.STANDARD)
+        c1.cancel()
+        c2.cancel()
+      }
+    }
+    countDownLatch.await(5_000, TimeUnit.MILLISECONDS)
   }
 
   @After

@@ -7,6 +7,7 @@ Mapbox welcomes participation and contributions from everyone.
 ## Breaking changes ⚠️
 * Replace style related enum classes with regular classes.
 * Migrate from `android.app.AlertDialog` to `androidx.appcompat.app.AlertDialog` for attribution plugin.
+* Rename `MapboxMap.subscribeStyleImageUnused` to `MapboxMap.subscribeStyleImageRemoveUnused`.
 
 ## Features ✨ and improvements 🏁
 * Introduce experimental `MapboxMapRecorder` allowing to record and replay custom scenarios.
@@ -14,7 +15,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Bug fixes 🐞
 * Fix the bug when anchor was not reset after gestures leading to an unexpected map camera animation result with incorrect `CameraState.center`.
-* Fix a rounding error when point lies at the edge of the screen by using `rountToInt` for limiting `MapboxMap#pixelsForCoordinates` to the bounds of MapView.
+* Fix a rounding error when point lies at the edge of the screen by using `rountToInt` for limiting `MapboxMap.pixelsForCoordinates` to the bounds of MapView.
+* Fix the bug when `MapboxMap.getStyle` returned NULL if `MapboxMap.subscribeStyleLoaded` called before `MapboxMap.loadStyle`.
 
 ## Dependencies
 Update dependencies:

@@ -264,8 +264,8 @@ interface MapListenerDelegate {
    * needed and can be removed using StyleManager#removeStyleImage method.
    */
   @Deprecated(
-    message = "This method is deprecated, and will be removed in next major release. use [subscribeStyleImageUnused] instead.",
-    replaceWith = ReplaceWith("subscribeStyleImageUnused(styleImageRemoveUnusedCallback)"),
+    message = "This method is deprecated, and will be removed in next major release. use [subscribeStyleImageRemoveUnused] instead.",
+    replaceWith = ReplaceWith("subscribeStyleImageRemoveUnused(styleImageRemoveUnusedCallback)"),
     level = DeprecationLevel.WARNING
   )
   fun addOnStyleImageUnusedListener(onStyleImageUnusedListener: OnStyleImageUnusedListener)
@@ -274,7 +274,7 @@ interface MapListenerDelegate {
    * Remove the style image unused listener.
    */
   @Deprecated(
-    message = "This method is deprecated, and will be removed in next major release. use cancelable returned from [subscribeStyleImageUnused] to remove the listener.",
+    message = "This method is deprecated, and will be removed in next major release. use cancelable returned from [subscribeStyleImageRemoveUnused] to remove the listener.",
     level = DeprecationLevel.WARNING
   )
   fun removeOnStyleImageUnusedListener(onStyleImageUnusedListener: OnStyleImageUnusedListener)
@@ -376,7 +376,7 @@ interface MapListenerDelegate {
    *
    * @param styleImageRemoveUnusedCallback
    */
-  fun subscribeStyleImageUnused(styleImageRemoveUnusedCallback: StyleImageRemoveUnusedCallback): Cancelable
+  fun subscribeStyleImageRemoveUnused(styleImageRemoveUnusedCallback: StyleImageRemoveUnusedCallback): Cancelable
 
   /**
    * Subscribes to `RenderFrameStarted` event.

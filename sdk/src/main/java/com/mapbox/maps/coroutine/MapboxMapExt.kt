@@ -292,7 +292,7 @@ suspend fun MapboxMap.setFeatureState(
  */
 val MapboxMap.mapLoadedEvents: Flow<MapLoaded>
   @JvmSynthetic
-  get() = eventsFlowBuilder { callback ->
+  get() = eventsFlowBuilder(MapEvent.MAP_LOADED) { callback ->
     subscribeMapLoaded {
       callback.invoke(it)
     }
@@ -303,7 +303,7 @@ val MapboxMap.mapLoadedEvents: Flow<MapLoaded>
  */
 val MapboxMap.mapLoadingErrorEvents: Flow<MapLoadingError>
   @JvmSynthetic
-  get() = eventsFlowBuilder { callback ->
+  get() = eventsFlowBuilder(MapEvent.MAP_LOADING_ERROR) { callback ->
     subscribeMapLoadingError {
       callback.invoke(it)
     }
@@ -314,7 +314,7 @@ val MapboxMap.mapLoadingErrorEvents: Flow<MapLoadingError>
  */
 val MapboxMap.styleLoadedEvents: Flow<StyleLoaded>
   @JvmSynthetic
-  get() = eventsFlowBuilder { callback ->
+  get() = eventsFlowBuilder(MapEvent.STYLE_LOADED) { callback ->
     subscribeStyleLoaded {
       callback.invoke(it)
     }
@@ -325,7 +325,7 @@ val MapboxMap.styleLoadedEvents: Flow<StyleLoaded>
  */
 val MapboxMap.styleDataLoadedEvents: Flow<StyleDataLoaded>
   @JvmSynthetic
-  get() = eventsFlowBuilder { callback ->
+  get() = eventsFlowBuilder(MapEvent.STYLE_DATA_LOADED) { callback ->
     subscribeStyleDataLoaded {
       callback.invoke(it)
     }
@@ -336,7 +336,7 @@ val MapboxMap.styleDataLoadedEvents: Flow<StyleDataLoaded>
  */
 val MapboxMap.cameraChangedEvents: Flow<CameraChanged>
   @JvmSynthetic
-  get() = eventsFlowBuilder { callback ->
+  get() = eventsFlowBuilder(MapEvent.CAMERA_CHANGED) { callback ->
     subscribeCameraChanged {
       callback.invoke(it)
     }
@@ -347,7 +347,7 @@ val MapboxMap.cameraChangedEvents: Flow<CameraChanged>
  */
 val MapboxMap.mapIdleEvents: Flow<MapIdle>
   @JvmSynthetic
-  get() = eventsFlowBuilder { callback ->
+  get() = eventsFlowBuilder(MapEvent.MAP_IDLE) { callback ->
     subscribeMapIdle {
       callback.invoke(it)
     }
@@ -358,7 +358,7 @@ val MapboxMap.mapIdleEvents: Flow<MapIdle>
  */
 val MapboxMap.sourceAddedEvents: Flow<SourceAdded>
   @JvmSynthetic
-  get() = eventsFlowBuilder { callback ->
+  get() = eventsFlowBuilder(MapEvent.SOURCE_ADDED) { callback ->
     subscribeSourceAdded {
       callback.invoke(it)
     }
@@ -369,7 +369,7 @@ val MapboxMap.sourceAddedEvents: Flow<SourceAdded>
  */
 val MapboxMap.sourceRemovedEvents: Flow<SourceRemoved>
   @JvmSynthetic
-  get() = eventsFlowBuilder { callback ->
+  get() = eventsFlowBuilder(MapEvent.SOURCE_REMOVED) { callback ->
     subscribeSourceRemoved {
       callback.invoke(it)
     }
@@ -380,7 +380,7 @@ val MapboxMap.sourceRemovedEvents: Flow<SourceRemoved>
  */
 val MapboxMap.sourceDataLoadedEvents: Flow<SourceDataLoaded>
   @JvmSynthetic
-  get() = eventsFlowBuilder { callback ->
+  get() = eventsFlowBuilder(MapEvent.SOURCE_DATA_LOADED) { callback ->
     subscribeSourceDataLoaded {
       callback.invoke(it)
     }
@@ -391,19 +391,19 @@ val MapboxMap.sourceDataLoadedEvents: Flow<SourceDataLoaded>
  */
 val MapboxMap.styleImageMissingEvents: Flow<StyleImageMissing>
   @JvmSynthetic
-  get() = eventsFlowBuilder { callback ->
+  get() = eventsFlowBuilder(MapEvent.STYLE_IMAGE_MISSING) { callback ->
     subscribeStyleImageMissing {
       callback.invoke(it)
     }
   }
 
 /**
- * [Flow] of [StyleImageRemoveUnused] updates from [MapboxMap.subscribeStyleImageUnused].
+ * [Flow] of [StyleImageRemoveUnused] updates from [MapboxMap.subscribeStyleImageRemoveUnused].
  */
 val MapboxMap.styleImageRemoveUnusedEvents: Flow<StyleImageRemoveUnused>
   @JvmSynthetic
-  get() = eventsFlowBuilder { callback ->
-    subscribeStyleImageUnused {
+  get() = eventsFlowBuilder(MapEvent.STYLE_IMAGE_REMOVE_UNUSED) { callback ->
+    subscribeStyleImageRemoveUnused {
       callback.invoke(it)
     }
   }
@@ -413,7 +413,7 @@ val MapboxMap.styleImageRemoveUnusedEvents: Flow<StyleImageRemoveUnused>
  */
 val MapboxMap.renderFrameStartedEvents: Flow<RenderFrameStarted>
   @JvmSynthetic
-  get() = eventsFlowBuilder { callback ->
+  get() = eventsFlowBuilder(MapEvent.RENDER_FRAME_STARTED) { callback ->
     subscribeRenderFrameStarted {
       callback.invoke(it)
     }
@@ -424,7 +424,7 @@ val MapboxMap.renderFrameStartedEvents: Flow<RenderFrameStarted>
  */
 val MapboxMap.renderFrameFinishedEvents: Flow<RenderFrameFinished>
   @JvmSynthetic
-  get() = eventsFlowBuilder { callback ->
+  get() = eventsFlowBuilder(MapEvent.RENDER_FRAME_FINISHED) { callback ->
     subscribeRenderFrameFinished {
       callback.invoke(it)
     }
@@ -435,7 +435,7 @@ val MapboxMap.renderFrameFinishedEvents: Flow<RenderFrameFinished>
  */
 val MapboxMap.resourceRequestEvents: Flow<ResourceRequest>
   @JvmSynthetic
-  get() = eventsFlowBuilder { callback ->
+  get() = eventsFlowBuilder(MapEvent.RESOURCE_REQUEST) { callback ->
     subscribeResourceRequest {
       callback.invoke(it)
     }
@@ -444,16 +444,20 @@ val MapboxMap.resourceRequestEvents: Flow<ResourceRequest>
 /**
  * Helper function to build a Flow of map event.
  */
-private fun <T> MapboxMap.eventsFlowBuilder(block: ((T) -> Unit) -> Cancelable): Flow<T> =
+private fun <T> MapboxMap.eventsFlowBuilder(mapEvent: MapEvent, block: ((T) -> Unit) -> Cancelable): Flow<T> =
   callbackFlow {
     val cancelable = block.invoke {
       trySendBlocking(it)
     }
-    cancelableSubscriberSet.add(
+
+    nativeObserver.cancelableEventsMap.getOrPut(mapEvent) {
+      mutableListOf()
+    }.add(
       Cancelable {
         channel.close()
       }
     )
+
     awaitClose {
       cancelable.cancel()
     }

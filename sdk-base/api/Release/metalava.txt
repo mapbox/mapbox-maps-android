@@ -1670,7 +1670,7 @@ package com.mapbox.maps.plugin.delegates {
     method public com.mapbox.common.Cancelable subscribeSourceRemoved(com.mapbox.maps.SourceRemovedCallback sourceRemovedCallback);
     method public com.mapbox.common.Cancelable subscribeStyleDataLoaded(com.mapbox.maps.StyleDataLoadedCallback styleDataLoadedCallback);
     method public com.mapbox.common.Cancelable subscribeStyleImageMissing(com.mapbox.maps.StyleImageMissingCallback styleImageMissingCallback);
-    method public com.mapbox.common.Cancelable subscribeStyleImageUnused(com.mapbox.maps.StyleImageRemoveUnusedCallback styleImageRemoveUnusedCallback);
+    method public com.mapbox.common.Cancelable subscribeStyleImageRemoveUnused(com.mapbox.maps.StyleImageRemoveUnusedCallback styleImageRemoveUnusedCallback);
     method public com.mapbox.common.Cancelable subscribeStyleLoaded(com.mapbox.maps.StyleLoadedCallback styleLoadedCallback);
   }
 
