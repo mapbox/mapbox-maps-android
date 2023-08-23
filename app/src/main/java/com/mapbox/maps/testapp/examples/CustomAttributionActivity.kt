@@ -39,7 +39,8 @@ class CustomAttributionActivity : AppCompatActivity() {
       binding.withImproveMap,
       binding.withCopyrightSign,
       binding.withTelemetryAttribution,
-      binding.withMapboxAttribution
+      binding.withMapboxAttribution,
+      binding.withMapboxPrivacyPolicy,
     )
     checkBoxes.forEach { checkedTextView ->
       checkedTextView.setOnClickListener { checkedTextView.toggle() }
@@ -52,6 +53,7 @@ class CustomAttributionActivity : AppCompatActivity() {
         checkBoxes[1].isChecked,
         checkBoxes[2].isChecked,
         checkBoxes[3].isChecked,
+        checkBoxes[4].isChecked,
       )
       attributionPlugin.setCustomAttributionDialogManager(
         CustomAttributionDialog(this, config)

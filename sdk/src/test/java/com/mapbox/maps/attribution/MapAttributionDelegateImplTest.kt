@@ -68,7 +68,8 @@ class MapAttributionDelegateImplTest {
       AttributionParserConfig(
         withImproveMap = false,
         withTelemetryAttribution = false,
-        withMapboxAttribution = false
+        withMapboxAttribution = false,
+        withMapboxPrivacyPolicy = false,
       )
     )
     assertEquals(1, attributions.size)
@@ -86,7 +87,8 @@ class MapAttributionDelegateImplTest {
       AttributionParserConfig(
         withImproveMap = true,
         withTelemetryAttribution = false,
-        withMapboxAttribution = false
+        withMapboxAttribution = false,
+        withMapboxPrivacyPolicy = false,
       )
     )
     assertEquals(2, attributions.size)
@@ -104,7 +106,8 @@ class MapAttributionDelegateImplTest {
       AttributionParserConfig(
         withImproveMap = false,
         withTelemetryAttribution = true,
-        withMapboxAttribution = false
+        withMapboxAttribution = false,
+        withMapboxPrivacyPolicy = false,
       )
     )
 
@@ -123,7 +126,8 @@ class MapAttributionDelegateImplTest {
       AttributionParserConfig(
         withImproveMap = false,
         withTelemetryAttribution = false,
-        withMapboxAttribution = true
+        withMapboxAttribution = true,
+        withMapboxPrivacyPolicy = false,
       )
     )
 
@@ -137,7 +141,7 @@ class MapAttributionDelegateImplTest {
     )
 
     attributions = mapAttributionDelegate.parseAttributions(context, AttributionParserConfig())
-    assertEquals(4, attributions.size)
+    assertEquals(5, attributions.size)
     var counter = 0
     for ((title, url) in attributions) {
       when (counter) {
@@ -175,6 +179,16 @@ class MapAttributionDelegateImplTest {
           )
           assertEquals(
             "Telemetry title should match", "Telemetry Settings",
+            title
+          )
+        }
+        4 -> {
+          assertEquals(
+            "Telemetry URL should match", "https://www.mapbox.com/legal/privacy#product-privacy-policy/",
+            url
+          )
+          assertEquals(
+            "Telemetry title should match", "Mapbox Privacy Policy",
             title
           )
         }
