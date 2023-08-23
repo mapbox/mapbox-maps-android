@@ -83,7 +83,7 @@ internal class NativeObserver(
   private val styleLoadedCallbackSet = CopyOnWriteArraySet<ExtendedStyleLoadedCancelable>()
   private val styleDataLoadedCallbackSet = CopyOnWriteArraySet<ExtendedDataStyleLoadedCancelable>()
 
-  internal var cancelableEventsMap = LinkedHashMap<MapEvent, MutableList<Cancelable>>()
+  internal var cancelableEventsMap = HashMap<MapEvent, MutableList<Cancelable>>()
 
   //
   // Subscribe to Add / Remove deprecated methods.
