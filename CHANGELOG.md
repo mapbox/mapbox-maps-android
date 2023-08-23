@@ -18,6 +18,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix the bug when anchor was not reset after gestures leading to an unexpected map camera animation result with incorrect `CameraState.center`.
 * Fix a rounding error when point lies at the edge of the screen by using `rountToInt` for limiting `MapboxMap.pixelsForCoordinates` to the bounds of MapView.
 * Fix the bug when `MapboxMap.getStyle` returned NULL if `MapboxMap.subscribeStyleLoaded` called before `MapboxMap.loadStyle`.
+* Fix NPE when animating edge insets types (e.g. map padding).
 
 ## Dependencies
 Update dependencies:
