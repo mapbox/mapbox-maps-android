@@ -592,6 +592,10 @@ While this is an optional declaration for Kotlin, it's considered a breaking cha
     );
 ```
 
+#### 3.17 Settings service changes
+
+The interface `SettingsServiceInterface` has been removed in favour of class `SettingsService`. `SettingsServiceFactory.getInstance(...)` now returns the `SettingsService` class.
+
 ### 4. Validate ProGuard Rules
 
 Validate that your app's ProGuard rules are still valid by upgrading to the newest version by testing a release variant.
@@ -739,9 +743,7 @@ You can find more details about Tracing API use in the [Developing guide](../DEV
 
 ## Known Issues / Coming Soon
 
-- The offline functionality is not yet supported for the new Standard style.
 - Downloading style packs / tile regions for offline may be slower comparing to v10.
-- When using the styles with Globe projection by default (e.g. STANDARD or MAPBOX_STREETS) - `MapboxMap.cameraForGeometry` and other similar methods may return incorrect values. Because of that `OverviewViewportState` may focus the map camera incorrectly.
 
 ## Conclusion
 

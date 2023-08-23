@@ -65,6 +65,8 @@ public class DebugModeActivity : ComponentActivity() {
               MapDebugOptions.DEPTH_BUFFER,
               MapDebugOptions.MODEL_BOUNDS,
               MapDebugOptions.TERRAIN_WIREFRAME,
+              MapDebugOptions.LAYERS2_DWIREFRAME,
+              MapDebugOptions.LAYERS3_DWIREFRAME,
             ),
             true
           )

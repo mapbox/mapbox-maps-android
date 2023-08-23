@@ -491,7 +491,7 @@ class MapboxMapTest {
     val screenCoordinate = mockk<ScreenCoordinate>()
     mapboxMap.cameraForCoordinateBounds(
       bounds = bounds,
-      padding = edgeInsets,
+      boundsPadding = edgeInsets,
       bearing = 0.0,
       pitch = 1.0,
       maxZoom = 2.0,
@@ -529,7 +529,7 @@ class MapboxMapTest {
   fun cameraForCoordinateBoundsOverloadPadding() {
     val bounds = mockk<CoordinateBounds>()
     val padding = EdgeInsets(1.1, 1.3, 1.4, 1.2)
-    mapboxMap.cameraForCoordinateBounds(bounds = bounds, padding = padding)
+    mapboxMap.cameraForCoordinateBounds(bounds = bounds, boundsPadding = padding)
     verify {
       nativeMap.cameraForCoordinateBounds(
         coordinateBounds = bounds,

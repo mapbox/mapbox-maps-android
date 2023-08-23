@@ -622,24 +622,27 @@ class MapboxMap :
   }
 
   /**
-   * Convenience method that returns the [CameraOptions] object for given parameters.
+   * Convert the given [bounds], [boundsPadding], [bearing] and [pitch] values to [CameraOptions].
+   * Note that this method takes into account the current map padding in addition to the
+   * [boundsPadding] provided in parameters.
    *
    * In order for this method to produce correct results [MapView] must be already
    * measured and inflated to have correct width and height values.
    * Calling this method in [Activity.onCreate] will lead to incorrect results.
    *
    * @param bounds The [CoordinateBounds] of the camera.
-   * @param padding The amount of padding in [EdgeInsets] to add to the given bounds.
+   * @param boundsPadding The amount of padding in [EdgeInsets] to add to the given bounds.
    * @param bearing The bearing of the camera.
    * @param pitch The pitch of the camera.
    * @param maxZoom The maximum zoom level allowed in the returned camera options.
    * @param offset The center of the given bounds relative to map center in pixels.
    *
-   * @return The [CameraOptions] object representing the provided parameters.
+   * @return the converted [CameraOptions]. Padding is absent in the returned [CameraOptions]
+   * as the zoom level already accounts for the [boundsPadding] provided.
    */
   override fun cameraForCoordinateBounds(
     bounds: CoordinateBounds,
-    padding: EdgeInsets?,
+    boundsPadding: EdgeInsets?,
     bearing: Double?,
     pitch: Double?,
     maxZoom: Double?,
@@ -648,7 +651,7 @@ class MapboxMap :
     checkNativeMap("cameraForCoordinateBounds")
     return nativeMap.cameraForCoordinateBounds(
       bounds,
-      padding,
+      boundsPadding,
       bearing,
       pitch,
       maxZoom,
@@ -657,32 +660,30 @@ class MapboxMap :
   }
 
   /**
-   * Convert to a camera options from a given list of points, padding, bearing and pitch values.
+   * Convert the given list of [coordinates], [coordinatesPadding], [bearing] and [pitch] values to [CameraOptions].
+   * Note that this method takes into account the current map padding in addition to the
+   * [coordinatesPadding] provided in parameters.
    *
    * In order for this method to produce correct results [MapView] must be already
    * measured and inflated to have correct width and height values.
    * Calling this method in [Activity.onCreate] will lead to incorrect results.
    *
-   * This API isn't supported by Globe projection and will return a no-op result matching
-   * the current camera center.
-   * See [com.mapbox.maps.extension.style.projection.generated.setProjection]
-   * and [com.mapbox.maps.extension.style.projection.generated.getProjection]
-   *
    * @param coordinates The List of coordinates to take in account when converting
-   * @param padding The optional padding to take in account when converting
+   * @param coordinatesPadding The amount of padding in pixels to add to the given [coordinates].
    * @param bearing The optional bearing to take in account when converting
    * @param pitch The optional pitch to take in account when converting
    *
-   * @return Returns the converted camera options
+   * @return the converted [CameraOptions]. Padding is absent in the returned [CameraOptions] as
+   * the zoom level already accounts for the [coordinatesPadding] provided.
    */
   override fun cameraForCoordinates(
     coordinates: List<Point>,
-    padding: EdgeInsets?,
+    coordinatesPadding: EdgeInsets?,
     bearing: Double?,
     pitch: Double?
   ): CameraOptions {
     checkNativeMap("cameraForCoordinates")
-    return nativeMap.cameraForCoordinates(coordinates, padding, bearing, pitch)
+    return nativeMap.cameraForCoordinates(coordinates, coordinatesPadding, bearing, pitch)
   }
 
   /**
@@ -717,32 +718,30 @@ class MapboxMap :
   }
 
   /**
-   * Convert to a camera options from a given geometry, padding, bearing and pitch values.
+   * Convert the given [geometry], [geometryPadding], [bearing] and [pitch] values to [CameraOptions].
+   * Note that this method takes into account the current map padding in addition to the
+   * [geometryPadding] provided in parameters.
    *
    * In order for this method to produce correct results [MapView] must be already
    * measured and inflated to have correct width and height values.
    * Calling this method in [Activity.onCreate] will lead to incorrect results.
    *
-   * This API isn't supported by Globe projection and will return a no-op result matching
-   * the current camera center.
-   * See [com.mapbox.maps.extension.style.projection.generated.setProjection]
-   * and [com.mapbox.maps.extension.style.projection.generated.getProjection]
-   *
-   * @param geometry The geometry to take in account when converting
-   * @param padding The optional padding to take in account when converting
+   * @param geometry The [Geometry] to take in account when converting
+   * @param geometryPadding The optional amount of padding in pixels to add to the given [geometry].
    * @param bearing The optional bearing to take in account when converting
    * @param pitch The optional pitch to take in account when converting
    *
-   * @return Returns the converted camera options
+   * @return Returns the converted [CameraOptions]. Padding is absent in the returned
+   * [CameraOptions] as the zoom level already accounts for the [geometryPadding] provided.
    */
   override fun cameraForGeometry(
     geometry: Geometry,
-    padding: EdgeInsets?,
+    geometryPadding: EdgeInsets?,
     bearing: Double?,
     pitch: Double?
   ): CameraOptions {
     checkNativeMap("cameraForGeometry")
-    return nativeMap.cameraForGeometry(geometry, padding, bearing, pitch)
+    return nativeMap.cameraForGeometry(geometry, geometryPadding, bearing, pitch)
   }
 
   /**

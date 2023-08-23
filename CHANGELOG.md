@@ -2,7 +2,7 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# develop
+# main
 # 11.0.0-beta.2
 ## Breaking changes ⚠️
 * Replace style related enum classes with regular classes.
@@ -19,13 +19,26 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix a rounding error when point lies at the edge of the screen by using `rountToInt` for limiting `MapboxMap.pixelsForCoordinates` to the bounds of MapView.
 * Fix the bug when `MapboxMap.getStyle` returned NULL if `MapboxMap.subscribeStyleLoaded` called before `MapboxMap.loadStyle`.
 * Fix NPE when animating edge insets types (e.g. map padding).
+* Reduce segment overlap in flood lighting to improve rendering performance.
+* Enable offline support for the Standard style.
+* Add wireframe rendering debug feature `MapDebugOptions.LAYERS3_DWIREFRAME` and `MapDebugOptions.LAYERS2_DWIREFRAME`.
+
+## Bug fixes 🐞
+* Fix the bug when anchor was not reset after gestures leading to an unexpected map camera animation result with incorrect `CameraState.center`.
+* Fix a rounding error when point lies at the edge of the screen by using `rountToInt` for limiting `MapboxMap#pixelsForCoordinates` to the bounds of MapView.
+* Fix Tileset descriptor resolving on network error. The issue prevented the downloading of style and tilepacks in case of a network error.
+* Avoid excessive relayout of the symbol layer when no properties depend on the image changes. This fix eliminates the symbol layer flickering when styles are switched.
+* Don't emit `MapLoadingError` if an offline tilepack for 3D landmarks has no tiles.
+* Fix a bug where the `cameraForGeometry` method returned incorrect values for the globe projection.
 
 ## Dependencies
 Update dependencies:
 
-| Dependency | Before       | After        |
-|------------|--------------|--------------|
-| NDK        | 21.4.7075529 | 23.2.8568313 |
+| Dependency | Before        | After         |
+|------------|---------------|---------------|
+| NDK        | 21.4.7075529  | 23.2.8568313  |
+| gl-native  | 11.0.0-beta.2 | 11.0.0-beta.3 |
+| common     | 24.0.0-beta.2 | 24.0.0-beta.3 |
 
 # 11.0.0-beta.1 August 2, 2023
 ## Breaking changes ⚠️
