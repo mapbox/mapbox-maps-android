@@ -10,6 +10,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Bug fixes 🐞
 * Fix a rounding error when point lies at the edge of the screen by using `rountToInt` for limiting `MapboxMap#pixelsForCoordinates` to the bounds of MapView.
+* Fix NPE when animating edge insets types (e.g. map padding).
 
 # 10.16.0-beta.1 August 10, 2023
 ## Bug fixes 🐞
