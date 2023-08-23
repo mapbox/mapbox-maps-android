@@ -1100,6 +1100,8 @@ package com.mapbox.maps.plugin.attribution {
     field public static final com.mapbox.maps.plugin.attribution.Attribution.Companion Companion;
     field public static final String OSM = "OpenStreetMap";
     field public static final String OSM_ABBR = "OSM";
+    field public static final String PRIVACY_POLICY = "Mapbox Privacy Policy";
+    field public static final String PRIVACY_POLICY_URL = "https://www.mapbox.com/legal/privacy#product-privacy-policy/";
     field public static final String TELEMETRY_SETTINGS = "Telemetry Settings";
   }
 
@@ -1112,6 +1114,7 @@ package com.mapbox.maps.plugin.attribution {
   }
 
   public final class AttributionParserConfig {
+    ctor public AttributionParserConfig(boolean withImproveMap = true, boolean withCopyrightSign = true, boolean withTelemetryAttribution = true, boolean withMapboxAttribution = true, boolean withMapboxPrivacyPolicy = true);
     ctor public AttributionParserConfig(boolean withImproveMap = true, boolean withCopyrightSign = true, boolean withTelemetryAttribution = true, boolean withMapboxAttribution = true);
     ctor public AttributionParserConfig(boolean withImproveMap = true, boolean withCopyrightSign = true, boolean withTelemetryAttribution = true);
     ctor public AttributionParserConfig(boolean withImproveMap = true, boolean withCopyrightSign = true);
@@ -1119,14 +1122,17 @@ package com.mapbox.maps.plugin.attribution {
     method public boolean getWithCopyrightSign();
     method public boolean getWithImproveMap();
     method public boolean getWithMapboxAttribution();
+    method public boolean getWithMapboxPrivacyPolicy();
     method public boolean getWithTelemetryAttribution();
     method public void setWithCopyrightSign(boolean withCopyrightSign);
     method public void setWithImproveMap(boolean withImproveMap);
     method public void setWithMapboxAttribution(boolean withMapboxAttribution);
+    method public void setWithMapboxPrivacyPolicy(boolean withMapboxPrivacyPolicy);
     method public void setWithTelemetryAttribution(boolean withTelemetryAttribution);
     property public final boolean withCopyrightSign;
     property public final boolean withImproveMap;
     property public final boolean withMapboxAttribution;
+    property public final boolean withMapboxPrivacyPolicy;
     property public final boolean withTelemetryAttribution;
   }
 

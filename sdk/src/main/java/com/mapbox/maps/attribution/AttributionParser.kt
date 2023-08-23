@@ -26,7 +26,9 @@ open class AttributionParser internal constructor(
   private val withImproveMap: Boolean,
   private val withCopyrightSign: Boolean,
   private val withTelemetryAttribution: Boolean,
-  private val withMapboxAttribution: Boolean
+  private val withMapboxAttribution: Boolean,
+  private val withMapboxPrivacyPolicy: Boolean,
+
 ) {
   private val attributions: MutableSet<Attribution> = LinkedHashSet()
 
@@ -218,12 +220,20 @@ open class AttributionParser internal constructor(
    * Invoked to manually add attributions
    */
   private fun addAdditionalAttributions() {
+    val context = context.get()
     if (withTelemetryAttribution) {
-      val context = context.get()
       attributions.add(
         Attribution(
           if (context != null) context.getString(R.string.mapbox_telemetrySettings) else Attribution.TELEMETRY_SETTINGS,
           Attribution.ABOUT_TELEMETRY_URL
+        )
+      )
+    }
+    if (withMapboxPrivacyPolicy) {
+      attributions.add(
+        Attribution(
+          if (context != null) context.getString(R.string.mapbox_privacy_policy) else Attribution.PRIVACY_POLICY,
+          Attribution.PRIVACY_POLICY_URL
         )
       )
     }
@@ -280,6 +290,7 @@ open class AttributionParser internal constructor(
     private var withCopyrightSign = true
     private var withTelemetryAttribution = false
     private var withMapboxAttribution = true
+    private var withMapboxPrivacyPolicy = true
     private var attributionDataStringArray: Array<String>? = null
     private var stringLiteralArray = mutableListOf<String>()
 
@@ -324,6 +335,14 @@ open class AttributionParser internal constructor(
     }
 
     /**
+     * Flag indicating to add privacy policy
+     */
+    fun withMapboxPrivacyPolicy(withMapboxPrivacyPolicy: Boolean): Options {
+      this.withMapboxPrivacyPolicy = withMapboxPrivacyPolicy
+      return this
+    }
+
+    /**
      * Build the attribution parser
      */
     fun build(): AttributionParser {
@@ -336,7 +355,8 @@ open class AttributionParser internal constructor(
           withImproveMap,
           withCopyrightSign,
           withTelemetryAttribution,
-          withMapboxAttribution
+          withMapboxAttribution,
+          withMapboxPrivacyPolicy,
         )
       attributionParser.parse()
       // parse string literals provided by source attribution.

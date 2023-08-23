@@ -5,6 +5,9 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 
 # 10.16.0-rc.1
+## Features ✨ and improvements 🏁
+* Add Mapbox Privacy Policy to attribution links.
+
 ## Bug fixes 🐞
 * Fix a rounding error when point lies at the edge of the screen by using `rountToInt` for limiting `MapboxMap#pixelsForCoordinates` to the bounds of MapView.
 

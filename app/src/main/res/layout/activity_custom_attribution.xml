@@ -34,6 +34,11 @@
             android:id="@+id/withMapboxAttribution"
             style="@style/CustomAttributionCheckbox"
             android:text="@string/custom_attribution_withMapboxAttribution" />
+
+        <CheckedTextView
+            android:id="@+id/withMapboxPrivacyPolicy"
+            style="@style/CustomAttributionCheckbox"
+            android:text="@string/custom_attribution_withMapboxAttribution" />
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
