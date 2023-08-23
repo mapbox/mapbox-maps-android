@@ -4,6 +4,8 @@ import android.animation.TypeEvaluator
 import com.mapbox.geojson.Point
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.ScreenCoordinate
+import com.mapbox.maps.logW
+import com.mapbox.maps.plugin.animation.CameraAnimationsPluginImpl.Companion.TAG
 
 /**
  * Contains custom animator evaluators related to animating camera properties
@@ -27,15 +29,31 @@ object Evaluators {
     startValue + fraction * (endValue - startValue)
   }
 
+  private val zeroEdgeInsets = EdgeInsets(0.0, 0.0, 0.0, 0.0)
+
   /**
    * Type evaluator for EdgeInsets data
    */
-  val EDGE_INSET = TypeEvaluator<EdgeInsets> { fraction, startValue, endValue ->
+  val EDGE_INSET = TypeEvaluator { fraction, startValue: EdgeInsets?, endValue: EdgeInsets? ->
+    // We have seen in the wild that under some conditions we get null values. So let's guard
+    // against possible null start/end
+    val nonNullStart = if (startValue != null) {
+      startValue
+    } else {
+      logW(TAG, "Start edge insets are null (fraction: $fraction)")
+      zeroEdgeInsets
+    }
+    val nonNullEnd = if (endValue != null) {
+      endValue
+    } else {
+      logW(TAG, "End edge insets are null (fraction: $fraction)")
+      zeroEdgeInsets
+    }
     EdgeInsets(
-      startValue.top + fraction * (endValue.top - startValue.top),
-      startValue.left + fraction * (endValue.left - startValue.left),
-      startValue.bottom + fraction * (endValue.bottom - startValue.bottom),
-      startValue.right + fraction * (endValue.right - startValue.right)
+      nonNullStart.top + fraction * (nonNullEnd.top - nonNullStart.top),
+      nonNullStart.left + fraction * (nonNullEnd.left - nonNullStart.left),
+      nonNullStart.bottom + fraction * (nonNullEnd.bottom - nonNullStart.bottom),
+      nonNullStart.right + fraction * (nonNullEnd.right - nonNullStart.right)
     )
   }
 
