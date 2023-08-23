@@ -791,24 +791,7 @@ class MapboxMap :
    */
   override fun pixelForCoordinate(coordinate: Point): ScreenCoordinate {
     checkNativeMap("pixelForCoordinate")
-    val coordinate = nativeMap.pixelForCoordinate(coordinate)
-    val screenSize = nativeMap.size
-
-    var x = coordinate.x
-    var y = coordinate.y
-
-    if (coordinate.x < 0.0 || coordinate.x > screenSize.width) {
-      x = coordinate.x.roundToInt().toDouble()
-    }
-
-    if (coordinate.y < 0.0 || coordinate.y > screenSize.height) {
-      y = coordinate.y.roundToInt().toDouble()
-    }
-    return if (x in 0.0..screenSize.width.toDouble() && y in 0.0..screenSize.height.toDouble()) {
-      ScreenCoordinate(x, y)
-    } else {
-      ScreenCoordinate(-1.0, -1.0)
-    }
+    return nativeMap.pixelForCoordinate(coordinate).clampScreenCoordinate()
   }
 
   /**
@@ -831,7 +814,33 @@ class MapboxMap :
    */
   override fun pixelsForCoordinates(coordinates: List<Point>): List<ScreenCoordinate> {
     checkNativeMap("pixelsForCoordinates")
-    return nativeMap.pixelsForCoordinates(coordinates)
+    return nativeMap.pixelsForCoordinates(coordinates.toMutableList())
+      .map { it.clampScreenCoordinate() }
+  }
+
+  /**
+   * Clamp screen coordinate to the bound of [MapView].
+   * If the screen coordinate is outside of the bounds of [MapView] the returned screen coordinate
+   * contains -1 for both coordinates.
+   */
+  private fun ScreenCoordinate.clampScreenCoordinate(): ScreenCoordinate {
+    val screenSize = nativeMap.getSize()
+
+    var x = this.x
+    var y = this.y
+
+    if (this.x < 0.0 || this.x > screenSize.width) {
+      x = this.x.roundToInt().toDouble()
+    }
+
+    if (this.y < 0.0 || this.y > screenSize.height) {
+      y = this.y.roundToInt().toDouble()
+    }
+    return if (x in 0.0..screenSize.width.toDouble() && y in 0.0..screenSize.height.toDouble()) {
+      ScreenCoordinate(x, y)
+    } else {
+      ScreenCoordinate(-1.0, -1.0)
+    }
   }
 
   /**

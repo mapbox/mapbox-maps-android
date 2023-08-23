@@ -4,6 +4,10 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 10.16.0-rc.1
+## Bug fixes 🐞
+* Fix a rounding error when point lies at the edge of the screen by using `rountToInt` for limiting `MapboxMap#pixelsForCoordinates` to the bounds of MapView.
+
 # 10.16.0-beta.1 August 10, 2023
 ## Bug fixes 🐞
 * Fix the bug when anchor was not reset after gestures leading to an unexpected map camera animation result with incorrect `CameraState.center`.
