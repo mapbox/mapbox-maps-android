@@ -88,6 +88,7 @@
     <string name="custom_attribution_withCopyrightSign">WithCopyrightSign</string>
     <string name="custom_attribution_withTelemetryAttribution">WithTelemetry</string>
     <string name="custom_attribution_withMapboxAttribution">WithMapbox</string>
+    <string name="custom_attribution_withMapboxPrivacyPolicy">WithPrivacyPolicy</string>
 
     <!-- Symbol Activity-->
     <string name="toggle_draggable_state">Toggle draggable state</string>

@@ -451,6 +451,7 @@ package com.mapbox.maps.attribution {
     method public com.mapbox.maps.attribution.AttributionParser.Options withCopyrightSign(boolean withCopyrightSign);
     method public com.mapbox.maps.attribution.AttributionParser.Options withImproveMap(boolean withImproveMap);
     method public com.mapbox.maps.attribution.AttributionParser.Options withMapboxAttribution(boolean withMapboxAttribution);
+    method public com.mapbox.maps.attribution.AttributionParser.Options withMapboxPrivacyPolicy(boolean withMapboxPrivacyPolicy);
     method public com.mapbox.maps.attribution.AttributionParser.Options withTelemetryAttribution(boolean withTelemetryAttribution);
     field public static final String HTML_STYLE_REGEX = "<(\"[^\"]*\"|\'[^\']*\'|[^\'\">])*>";
   }

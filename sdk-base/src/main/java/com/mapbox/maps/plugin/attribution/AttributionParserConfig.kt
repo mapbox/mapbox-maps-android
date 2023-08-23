@@ -20,4 +20,8 @@ class AttributionParserConfig @JvmOverloads constructor(
    * Whether contains mapbox attribution
    */
   var withMapboxAttribution: Boolean = true,
+  /**
+   * Whether contains mapbox privacy policy
+   */
+  var withMapboxPrivacyPolicy: Boolean = true,
 )

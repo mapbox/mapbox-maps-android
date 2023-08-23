@@ -44,6 +44,7 @@ internal class MapAttributionDelegateImpl constructor(
       .withImproveMap(config.withImproveMap)
       .withTelemetryAttribution(config.withTelemetryAttribution)
       .withMapboxAttribution(config.withMapboxAttribution)
+      .withMapboxPrivacyPolicy(config.withMapboxPrivacyPolicy)
       .withAttributionData(*attributionsArray)
       .build().getAttributions().toList()
   }
