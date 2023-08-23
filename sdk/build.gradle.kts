@@ -40,11 +40,6 @@ android {
     unitTests.apply {
       isIncludeAndroidResources = true
     }
-    // workaround for https://github.com/robolectric/robolectric/issues/5456 to fix OOM on CI
-    unitTests.all {
-      it.systemProperty("robolectric.dependency.repo.id'", "mavenCentral")
-      it.systemProperty("robolectric.dependency.repo.url", "https://repo1.maven.org/maven2")
-    }
     animationsDisabled = true
     if (!project.hasProperty("android.injected.invoked.from.ide")) {
       execution = "ANDROIDX_TEST_ORCHESTRATOR"

@@ -66,6 +66,16 @@ allprojects {
   }
 }
 
+// hack to fix unit test, see https://github.com/robolectric/robolectric/issues/5131#issuecomment-509631890.
+subprojects {
+  tasks.withType<Test>().configureEach {
+    maxParallelForks = 2
+    setForkEvery(80)
+    setMaxHeapSize("2048m")
+    setMinHeapSize("1024m")
+  }
+}
+
 plugins {
   id("com.mapbox.gradle.root")
   // the IDE mistakenly highlights `libs` as an error, see https://github.com/gradle/gradle/issues/22797
@@ -74,10 +84,6 @@ plugins {
   // Used to print dependency tree of the task, useful to debug gradle tasks
   // Ticket to track adding this feature to gradle officially: https://github.com/gradle/gradle/issues/980
   alias(libs.plugins.taskTreeId)
-}
-
-tasks.withType<Test> {
-  maxParallelForks = (Runtime.getRuntime().availableProcessors()).takeIf { it > 0 } ?: 1
 }
 
 apiValidation {
