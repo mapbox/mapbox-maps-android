@@ -4,9 +4,11 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-# 10.15.1
+
+# 10.15.1 August 24, 2023
 ## Bug fixes 🐞
 * Fix NPE when animating edge insets types (e.g. map padding).
+
 
 # 10.15.0 July 27, 2023
 ## Bug fixes 🐞
