@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>CompassPlugin</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/jetbrains-mono.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+<div class="navigation-wrapper" id="navigation-wrapper">
+    <div id="leftToggler"><span class="icon-toggler"></span></div>
+    <div class="library-name">
+            <a href="../../../index.html">
+                    <span>mapbox-maps-android</span>
+            </a>
+    </div>
+    <div>
+    </div>
+    <div class="pull-right d-flex">
+        <button id="theme-toggle-button"><span id="theme-toggle"></span></button>
+        <div id="searchBar"></div>
+    </div>
+</div>
+<div id="container">
+    <div id="leftColumn">
+        <div id="sideMenu"></div>
+    </div>
+    <div id="main">
+<div class="main-content" id="content" pageIds="mapbox-maps-android::com.mapbox.maps.plugin.compass/CompassPlugin///PointingToDeclaration//540127926">
+  <div class="breadcrumbs"><a href="../../../index.html">mapbox-maps-android</a><span class="delimiter">/</span><a href="../index.html">com.mapbox.maps.plugin.compass</a><span class="delimiter">/</span><span class="current">CompassPlugin</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Compass</span><wbr></wbr><span><span>Plugin</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">interface </span><a href="index.html">CompassPlugin</a> : <a href="../../com.mapbox.maps.plugin/-view-plugin/index.html">ViewPlugin</a>, <a href="../../com.mapbox.maps.plugin/-map-camera-plugin/index.html">MapCameraPlugin</a>, <a href="../../com.mapbox.maps.plugin/-lifecycle-plugin/index.html">LifecyclePlugin</a>, <a href="../../com.mapbox.maps.plugin.compass.generated/-compass-settings-interface/index.html">CompassSettingsInterface</a></div><p class="paragraph">Presenter interface for the Compass.</p></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Functions">Functions</button><button class="section-tab" data-togglable="Properties">Properties</button></div>
+    <div class="tabs-section-body">
+      <h2 class="">Functions</h2>
+      <div class="table" data-togglable="Functions"><a data-name="-1020429160%2FFunctions%2F540127926" anchor-label="addCompassClickListener" id="-1020429160%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="add-compass-click-listener.html"><span>add</span><wbr></wbr><span>Compass</span><wbr></wbr><span>Click</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1020429160%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="add-compass-click-listener.html"><span class="token function">addCompassClickListener</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">onClickListener<span class="token operator">: </span><a href="../-on-compass-click-listener/index.html">OnCompassClickListener</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Add an OnClick listener to the presenter.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-737073743%2FFunctions%2F540127926" anchor-label="bind" id="-737073743%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../com.mapbox.maps.plugin/-view-plugin/bind.html"><span><span>bind</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-737073743%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="../../com.mapbox.maps.plugin/-view-plugin/bind.html"><span class="token function">bind</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">mapView<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/widget/FrameLayout.html">FrameLayout</a><span class="token punctuation">, </span></span><span class="parameter ">attrs<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/util/AttributeSet.html">AttributeSet</a><span class="token operator">?</span><span class="token punctuation">, </span></span><span class="parameter ">pixelRatio<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html">Float</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/view/View.html">View</a></div><div class="brief "><p class="paragraph">Bind a view instance</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1281433840%2FFunctions%2F540127926" anchor-label="cleanup" id="-1281433840%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../com.mapbox.maps.plugin/-map-plugin/cleanup.html"><span><span>cleanup</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1281433840%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="../../com.mapbox.maps.plugin/-map-plugin/cleanup.html"><span class="token function">cleanup</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Called when the map is destroyed. Should be used to cleanup plugin resources for that map.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-380495331%2FFunctions%2F540127926" anchor-label="getSettings" id="-380495331%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../com.mapbox.maps.plugin.compass.generated/-compass-settings-interface/get-settings.html"><span>get</span><wbr></wbr><span><span>Settings</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-380495331%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="../../com.mapbox.maps.plugin.compass.generated/-compass-settings-interface/get-settings.html"><span class="token function">getSettings</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../com.mapbox.maps.plugin.compass.generated/-compass-settings/index.html">CompassSettings</a></div><div class="brief "><p class="paragraph">Get current compass configuration.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1379737258%2FFunctions%2F540127926" anchor-label="initialize" id="-1379737258%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../com.mapbox.maps.plugin/-map-plugin/initialize.html"><span><span>initialize</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1379737258%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="../../com.mapbox.maps.plugin/-map-plugin/initialize.html"><span class="token function">initialize</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Called when the plugin is first added to the map.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-288271465%2FFunctions%2F540127926" anchor-label="onCameraMove" id="-288271465%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../com.mapbox.maps.plugin/-map-camera-plugin/on-camera-move.html"><span>on</span><wbr></wbr><span>Camera</span><wbr></wbr><span><span>Move</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-288271465%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="../../com.mapbox.maps.plugin/-map-camera-plugin/on-camera-move.html"><span class="token function">onCameraMove</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">lat<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a><span class="token punctuation">, </span></span><span class="parameter ">lon<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a><span class="token punctuation">, </span></span><span class="parameter ">zoom<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a><span class="token punctuation">, </span></span><span class="parameter ">pitch<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a><span class="token punctuation">, </span></span><span class="parameter ">bearing<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a><span class="token punctuation">, </span></span><span class="parameter ">padding<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double-array/index.html">DoubleArray</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Called whenever camera position changes.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1836431500%2FFunctions%2F540127926" anchor-label="onCompassClicked" id="1836431500%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="on-compass-clicked.html"><span>on</span><wbr></wbr><span>Compass</span><wbr></wbr><span><span>Clicked</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1836431500%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="on-compass-clicked.html"><span class="token function">onCompassClicked</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Invoked when the compass view is clicked.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-509536299%2FFunctions%2F540127926" anchor-label="onDelegateProvider" id="-509536299%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../com.mapbox.maps.plugin/-map-plugin/on-delegate-provider.html"><span>on</span><wbr></wbr><span>Delegate</span><wbr></wbr><span><span>Provider</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-509536299%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="../../com.mapbox.maps.plugin/-map-plugin/on-delegate-provider.html"><span class="token function">onDelegateProvider</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">delegateProvider<span class="token operator">: </span><a href="../../com.mapbox.maps.plugin.delegates/-map-delegate-provider/index.html">MapDelegateProvider</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Provides all map delegate instances.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-755501811%2FFunctions%2F540127926" anchor-label="onPluginView" id="-755501811%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../com.mapbox.maps.plugin/-view-plugin/on-plugin-view.html"><span>on</span><wbr></wbr><span>Plugin</span><wbr></wbr><span><span>View</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-755501811%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="../../com.mapbox.maps.plugin/-view-plugin/on-plugin-view.html"><span class="token function">onPluginView</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">view<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/view/View.html">View</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Provides a view instances returned in inflate after it's been added to the MapView.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="170641859%2FFunctions%2F540127926" anchor-label="onStart" id="170641859%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../com.mapbox.maps.plugin/-lifecycle-plugin/on-start.html"><span>on</span><wbr></wbr><span><span>Start</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="170641859%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="../../com.mapbox.maps.plugin/-lifecycle-plugin/on-start.html"><span class="token function">onStart</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Called whenever activity's/fragment's lifecycle is entering a &quot;started&quot; state.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1747122989%2FFunctions%2F540127926" anchor-label="onStop" id="-1747122989%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../com.mapbox.maps.plugin/-lifecycle-plugin/on-stop.html"><span>on</span><wbr></wbr><span><span>Stop</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1747122989%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="../../com.mapbox.maps.plugin/-lifecycle-plugin/on-stop.html"><span class="token function">onStop</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Called whenever activity's/fragment's lifecycle is entering a &quot;stopped&quot; state.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="2093634645%2FFunctions%2F540127926" anchor-label="removeCompassClickListener" id="2093634645%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="remove-compass-click-listener.html"><span>remove</span><wbr></wbr><span>Compass</span><wbr></wbr><span>Click</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2093634645%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="remove-compass-click-listener.html"><span class="token function">removeCompassClickListener</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">onClickListener<span class="token operator">: </span><a href="../-on-compass-click-listener/index.html">OnCompassClickListener</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Remove an OnClick listener from the presenter.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1537568288%2FFunctions%2F540127926" anchor-label="updateSettings" id="1537568288%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../com.mapbox.maps.plugin.compass.generated/-compass-settings-interface/update-settings.html"><span>update</span><wbr></wbr><span><span>Settings</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1537568288%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="../../com.mapbox.maps.plugin.compass.generated/-compass-settings-interface/update-settings.html"><span class="token function">updateSettings</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">block<span class="token operator">: </span><span class="token keyword"></span><a href="../../com.mapbox.maps.plugin.compass.generated/-compass-settings/-builder/index.html">CompassSettings.Builder</a><span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Update compass configuration, the update will be applied to the plugin automatically.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2 class="">Properties</h2>
+      <div class="table" data-togglable="Properties"><a data-name="481669940%2FProperties%2F540127926" anchor-label="clickable" id="481669940%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../com.mapbox.maps.plugin.compass.generated/-compass-settings-interface/clickable.html"><span><span>clickable</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="481669940%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="481669940%2FProperties%2F540127926" anchor-label="clickable" id="481669940%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">var </span><a href="../../com.mapbox.maps.plugin.compass.generated/-compass-settings-interface/clickable.html">clickable</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><a data-name="481669940%2FProperties%2F540127926" anchor-label="clickable" id="481669940%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Whether the compass can be clicked and click events can be registered.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1185412619%2FProperties%2F540127926" anchor-label="enabled" id="-1185412619%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../com.mapbox.maps.plugin.compass.generated/-compass-settings-interface/enabled.html"><span><span>enabled</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1185412619%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1185412619%2FProperties%2F540127926" anchor-label="enabled" id="-1185412619%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">var </span><a href="../../com.mapbox.maps.plugin.compass.generated/-compass-settings-interface/enabled.html">enabled</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><a data-name="-1185412619%2FProperties%2F540127926" anchor-label="enabled" id="-1185412619%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Whether the compass is visible on the map.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1020391775%2FProperties%2F540127926" anchor-label="fadeWhenFacingNorth" id="-1020391775%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../com.mapbox.maps.plugin.compass.generated/-compass-settings-interface/fade-when-facing-north.html"><span>fade</span><wbr></wbr><span>When</span><wbr></wbr><span>Facing</span><wbr></wbr><span><span>North</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1020391775%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1020391775%2FProperties%2F540127926" anchor-label="fadeWhenFacingNorth" id="-1020391775%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">var </span><a href="../../com.mapbox.maps.plugin.compass.generated/-compass-settings-interface/fade-when-facing-north.html">fadeWhenFacingNorth</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><a data-name="-1020391775%2FProperties%2F540127926" anchor-label="fadeWhenFacingNorth" id="-1020391775%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Whether the compass fades out to invisible when facing north direction.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1334370139%2FProperties%2F540127926" anchor-label="image" id="1334370139%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../com.mapbox.maps.plugin.compass.generated/-compass-settings-interface/image.html"><span><span>image</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1334370139%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="1334370139%2FProperties%2F540127926" anchor-label="image" id="1334370139%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">var </span><a href="../../com.mapbox.maps.plugin.compass.generated/-compass-settings-interface/image.html">image</a><span class="token operator">: </span><a href="../../com.mapbox.maps/-image-holder/index.html">ImageHolder</a><span class="token operator">?</span></div><div class="brief "><a data-name="1334370139%2FProperties%2F540127926" anchor-label="image" id="1334370139%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">The compass image, the visual representation of the compass.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="855315883%2FProperties%2F540127926" anchor-label="marginBottom" id="855315883%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../com.mapbox.maps.plugin.compass.generated/-compass-settings-interface/margin-bottom.html"><span>margin</span><wbr></wbr><span><span>Bottom</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="855315883%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="855315883%2FProperties%2F540127926" anchor-label="marginBottom" id="855315883%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">var </span><a href="../../com.mapbox.maps.plugin.compass.generated/-compass-settings-interface/margin-bottom.html">marginBottom</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html">Float</a></div><div class="brief "><a data-name="855315883%2FProperties%2F540127926" anchor-label="marginBottom" id="855315883%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Defines the margin to the bottom that the compass icon honors.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1068156529%2FProperties%2F540127926" anchor-label="marginLeft" id="-1068156529%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../com.mapbox.maps.plugin.compass.generated/-compass-settings-interface/margin-left.html"><span>margin</span><wbr></wbr><span><span>Left</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1068156529%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1068156529%2FProperties%2F540127926" anchor-label="marginLeft" id="-1068156529%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">var </span><a href="../../com.mapbox.maps.plugin.compass.generated/-compass-settings-interface/margin-left.html">marginLeft</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html">Float</a></div><div class="brief "><a data-name="-1068156529%2FProperties%2F540127926" anchor-label="marginLeft" id="-1068156529%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Defines the margin to the left that the compass icon honors.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1814673336%2FProperties%2F540127926" anchor-label="marginRight" id="-1814673336%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../com.mapbox.maps.plugin.compass.generated/-compass-settings-interface/margin-right.html"><span>margin</span><wbr></wbr><span><span>Right</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1814673336%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1814673336%2FProperties%2F540127926" anchor-label="marginRight" id="-1814673336%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">var </span><a href="../../com.mapbox.maps.plugin.compass.generated/-compass-settings-interface/margin-right.html">marginRight</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html">Float</a></div><div class="brief "><a data-name="-1814673336%2FProperties%2F540127926" anchor-label="marginRight" id="-1814673336%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Defines the margin to the right that the compass icon honors.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-510375697%2FProperties%2F540127926" anchor-label="marginTop" id="-510375697%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../com.mapbox.maps.plugin.compass.generated/-compass-settings-interface/margin-top.html"><span>margin</span><wbr></wbr><span><span>Top</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-510375697%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-510375697%2FProperties%2F540127926" anchor-label="marginTop" id="-510375697%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">var </span><a href="../../com.mapbox.maps.plugin.compass.generated/-compass-settings-interface/margin-top.html">marginTop</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html">Float</a></div><div class="brief "><a data-name="-510375697%2FProperties%2F540127926" anchor-label="marginTop" id="-510375697%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Defines the margin to the top that the compass icon honors.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="243053675%2FProperties%2F540127926" anchor-label="opacity" id="243053675%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../com.mapbox.maps.plugin.compass.generated/-compass-settings-interface/opacity.html"><span><span>opacity</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="243053675%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="243053675%2FProperties%2F540127926" anchor-label="opacity" id="243053675%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">var </span><a href="../../com.mapbox.maps.plugin.compass.generated/-compass-settings-interface/opacity.html">opacity</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html">Float</a></div><div class="brief "><a data-name="243053675%2FProperties%2F540127926" anchor-label="opacity" id="243053675%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">The alpha channel value of the compass image</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1215246469%2FProperties%2F540127926" anchor-label="position" id="-1215246469%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../com.mapbox.maps.plugin.compass.generated/-compass-settings-interface/position.html"><span><span>position</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1215246469%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1215246469%2FProperties%2F540127926" anchor-label="position" id="-1215246469%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">var </span><a href="../../com.mapbox.maps.plugin.compass.generated/-compass-settings-interface/position.html">position</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><a data-name="-1215246469%2FProperties%2F540127926" anchor-label="position" id="-1215246469%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Defines where the compass is positioned on the map</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1027362106%2FProperties%2F540127926" anchor-label="rotation" id="-1027362106%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../com.mapbox.maps.plugin.compass.generated/-compass-settings-interface/rotation.html"><span><span>rotation</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1027362106%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1027362106%2FProperties%2F540127926" anchor-label="rotation" id="-1027362106%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">var </span><a href="../../com.mapbox.maps.plugin.compass.generated/-compass-settings-interface/rotation.html">rotation</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html">Float</a></div><div class="brief "><a data-name="-1027362106%2FProperties%2F540127926" anchor-label="rotation" id="-1027362106%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">The clockwise rotation value in degrees of the compass.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1482405874%2FProperties%2F540127926" anchor-label="visibility" id="1482405874%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../com.mapbox.maps.plugin.compass.generated/-compass-settings-interface/visibility.html"><span><span>visibility</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1482405874%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="1482405874%2FProperties%2F540127926" anchor-label="visibility" id="1482405874%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">var </span><a href="../../com.mapbox.maps.plugin.compass.generated/-compass-settings-interface/visibility.html">visibility</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><a data-name="1482405874%2FProperties%2F540127926" anchor-label="visibility" id="1482405874%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">Whether the compass is displayed.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2023 Copyright</span><span
+                class="pull-right"><span>Generated by </span><a
+                href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+    </div>
+</div>
+</body>
+</html>
