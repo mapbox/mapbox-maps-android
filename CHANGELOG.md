@@ -4,7 +4,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-# 10.16.0-rc.1
+
+# 10.16.0-rc.1 August 24, 2023
 ## Features ✨ and improvements 🏁
 * Add Mapbox Privacy Policy to attribution links.
 
@@ -15,6 +16,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v10.16.0-rc.2 and common to v23.8.0-rc.2.
+
 
 # 10.16.0-beta.1 August 10, 2023
 ## Bug fixes 🐞
