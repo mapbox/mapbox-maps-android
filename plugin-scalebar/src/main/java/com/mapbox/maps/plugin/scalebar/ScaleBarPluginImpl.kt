@@ -78,7 +78,7 @@ internal class ScaleBarPluginImpl(
    */
   override fun initialize() {
     applySettings()
-    mapListenerDelegate.subscribeCameraChanged(cameraChangeListener)
+    cancelable = mapListenerDelegate.subscribeCameraChanged(cameraChangeListener)
   }
 
   /**

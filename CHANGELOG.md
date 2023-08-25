@@ -4,6 +4,9 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+## Bug fixes 🐞
+* Fix scale bar receives camera changes after being disabled the first time.
+
 # 11.0.0-beta.2 August 24, 2023
 ## Breaking changes ⚠️
 * Replace style related enum classes with regular classes.
