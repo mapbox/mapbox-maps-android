@@ -9,7 +9,7 @@ import kotlin.math.pow
 import kotlin.math.roundToInt
 
 internal fun createAnimatorSet(animators: List<Animator>) = AnimatorSet().apply {
-  playTogether(*animators.toTypedArray())
+  playTogether(animators)
 }
 
 internal fun screenDistanceFromMapCenterToTarget(

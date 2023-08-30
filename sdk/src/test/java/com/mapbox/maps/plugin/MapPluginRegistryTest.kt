@@ -169,12 +169,11 @@ class MapPluginRegistryTest {
     mapPluginRegistry.onCameraMove(cameraState)
     verify {
       cameraPlugin.onCameraMove(
-        center.latitude(),
-        center.longitude(),
-        zoom,
-        pitch,
-        bearing,
-        arrayOf(insets.left, insets.top, insets.right, insets.bottom)
+          center,
+          zoom,
+          pitch,
+          bearing,
+          insets
       )
     }
   }

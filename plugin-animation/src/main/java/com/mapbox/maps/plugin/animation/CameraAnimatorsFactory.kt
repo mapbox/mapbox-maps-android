@@ -146,7 +146,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
   @JvmOverloads
   fun getPitchBy(pitch: Double, owner: String? = null): Array<CameraAnimator<*>> {
     val startPitch = mapCameraManagerDelegate.cameraState.pitch
-    return Array(1) {
+    return arrayOf(
       CameraPitchAnimator(
         options = cameraAnimatorOptions(startPitch + pitch) {
           startValue(startPitch)
@@ -157,7 +157,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
           this.owner = customOwner
         }
       }
-    }
+    )
   }
 
   /**
@@ -174,7 +174,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
     anchor: ScreenCoordinate? = null,
     owner: String? = null
   ): Array<CameraAnimator<*>> {
-    val animationList = mutableListOf<ValueAnimator>()
+    val animationList = mutableListOf<CameraAnimator<*>>()
     anchor?.let {
       animationList.add(
         CameraAnchorAnimator(
@@ -203,7 +203,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
         }
       }
     )
-    return animationList.map { it as CameraAnimator<*> }.toTypedArray()
+    return animationList.toTypedArray()
   }
 
   /**
@@ -222,7 +222,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
       mapTransformDelegate,
       mapCameraManagerDelegate
     )
-    return Array(1) {
+    return arrayOf(
       CameraCenterAnimator(
         options = cameraAnimatorOptions(centerTarget) {
           startValue(cameraState.center)
@@ -233,7 +233,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
           this.owner = customOwner
         }
       }
-    }
+    )
   }
 
   /**
@@ -278,7 +278,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
       )
       val bearing = -(cameraBearingRadians + angleRadians).rad2deg()
 
-      return Array(1) {
+      return arrayOf(
         CameraBearingAnimator(
           options = cameraAnimatorOptions(bearing) {
             startValue(cameraBearingDegrees)
@@ -290,7 +290,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
             this.owner = customOwner
           }
         }
-      }
+      )
     }
     return emptyArray()
   }
@@ -305,11 +305,13 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
 
     val currentCameraState = mapCameraManagerDelegate.cameraState
 
-    val endPadding = cameraOptions.padding ?: currentCameraState.padding
+    val startPadding = currentCameraState.padding
+    val endPadding = cameraOptions.padding ?: startPadding
     val endPointRaw = (cameraOptions.center ?: currentCameraState.center).wrapCoordinate()
     var endZoom = cameraOptions.zoom ?: currentCameraState.zoom
     val endBearing = cameraOptions.bearing ?: currentCameraState.bearing
-    val endPitch = cameraOptions.pitch ?: currentCameraState.pitch
+    val startPitch = currentCameraState.pitch
+    val endPitch = cameraOptions.pitch ?: startPitch
 
     val startBearing = currentCameraState.bearing
     val startScale = 2.0.pow(currentCameraState.zoom)
@@ -427,17 +429,6 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
           this.owner = customOwner
         }
       },
-      CameraBearingAnimator(
-        options = cameraAnimatorOptions(endBearing) {
-          startValue(startBearing)
-        },
-        useShortestPath = true,
-        block = defaultAnimationParameters[CameraAnimatorType.BEARING]
-      ).apply {
-        owner?.let { customOwner ->
-          this.owner = customOwner
-        }
-      },
       CameraZoomAnimator(
         evaluator = { fraction, _, _ ->
           val safeFraction = fraction.getSafeFraction()
@@ -457,32 +448,51 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
       }
     )
 
-    animators.add(
-      CameraPitchAnimator(
-        options = cameraAnimatorOptions(endPitch) {
-          startValue(currentCameraState.pitch)
+    if (endBearing != startBearing) {
+      animators.add(
+        CameraBearingAnimator(
+        options = cameraAnimatorOptions(endBearing) {
+          startValue(startBearing)
         },
-        block = defaultAnimationParameters[CameraAnimatorType.PITCH]
+        useShortestPath = true,
+        block = defaultAnimationParameters[CameraAnimatorType.BEARING]
       ).apply {
         owner?.let { customOwner ->
           this.owner = customOwner
         }
       }
-    )
+      )
+    }
 
-    animators.add(
-      CameraPaddingAnimator(
-        options = cameraAnimatorOptions(endPadding) {
-          startValue(currentCameraState.padding)
-        },
-        block = defaultAnimationParameters[CameraAnimatorType.PADDING]
-      ).apply {
-        owner?.let { customOwner ->
-          this.owner = customOwner
+    if (endPitch != startPitch) {
+      animators.add(
+        CameraPitchAnimator(
+          options = cameraAnimatorOptions(endPitch) {
+            startValue(startPitch)
+          },
+          block = defaultAnimationParameters[CameraAnimatorType.PITCH]
+        ).apply {
+          owner?.let { customOwner ->
+            this.owner = customOwner
+          }
         }
-      }
-    )
+      )
+    }
 
+    if (endPadding != startPadding) {
+      animators.add(
+        CameraPaddingAnimator(
+          options = cameraAnimatorOptions(endPadding) {
+            startValue(startPadding)
+          },
+          block = defaultAnimationParameters[CameraAnimatorType.PADDING]
+        ).apply {
+          owner?.let { customOwner ->
+            this.owner = customOwner
+          }
+        }
+      )
+    }
     return animators.toTypedArray()
   }
 

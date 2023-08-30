@@ -151,14 +151,11 @@ internal class MapPluginRegistry(
   fun onCameraMove(cameraState: CameraState) {
     cameraPlugins.forEach {
       it.onCameraMove(
-        cameraState.center.latitude(),
-        cameraState.center.longitude(),
+        cameraState.center,
         cameraState.zoom,
         cameraState.pitch,
         cameraState.bearing,
-        cameraState.padding.let { insets ->
-          arrayOf(insets.left, insets.top, insets.right, insets.bottom)
-        }
+        cameraState.padding
       )
     }
   }

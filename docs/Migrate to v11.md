@@ -437,6 +437,7 @@ The `Observer` interface used to subscribe for `observable` events and associate
 
 1. The `MapAnimationOptions.animatorListener` property is removed. To subscribe to animations, provide `Animator.animatorListener` with `flyTo`, `easeTo`, `pitchBy`, `scaleBy`, `moveBy`, `rotateBy` APIs.
 2. The `Cancelable` interface is moved from an animation plugin package to a generic common package for reuse across the codebase, e.g., `com.mapbox.maps.plugin.animation.Cancelable` is replaced with `com.mapbox.common.Cancelable`.
+3. The `MapCameraPlugin`'s `onCameraMove` method now uses `Point` for camera center and `EdgeInsets` for padding.
 
 #### 3.5 Annotation API
 

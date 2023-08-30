@@ -103,7 +103,7 @@ class CameraAnimatorOptions<T> private constructor(
     /**
      * Builder DSL function to create [CameraAnimatorOptions] object.
      */
-    fun <T> cameraAnimatorOptions(vararg targets: T, block: (Builder<T>.() -> Unit)? = null) = if (block != null)
-      Builder(targets = targets).apply(block).build() else Builder(targets = targets).build()
+    inline fun <T> cameraAnimatorOptions(vararg targets: T, block: (Builder<T>.() -> Unit) = {}) =
+      Builder(targets = targets).apply(block).build()
   }
 }

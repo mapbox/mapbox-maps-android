@@ -762,7 +762,7 @@ package com.mapbox.maps.plugin {
   }
 
   public fun interface MapCameraPlugin extends com.mapbox.maps.plugin.MapPlugin {
-    method public void onCameraMove(double lat, double lon, double zoom, double pitch, double bearing, Double![] padding);
+    method public void onCameraMove(com.mapbox.geojson.Point center, double zoom, double pitch, double bearing, com.mapbox.maps.EdgeInsets padding);
   }
 
   public interface MapPlugin {
@@ -930,7 +930,7 @@ package com.mapbox.maps.plugin.animation {
   }
 
   public static final class CameraAnimatorOptions.Companion {
-    method public <T> com.mapbox.maps.plugin.animation.CameraAnimatorOptions<T> cameraAnimatorOptions(T![]? targets, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Builder<T>,kotlin.Unit>? block = null);
+    method public inline <T> com.mapbox.maps.plugin.animation.CameraAnimatorOptions<T> cameraAnimatorOptions(T![]? targets, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Builder<T>,kotlin.Unit> block = {});
   }
 
   public enum CameraAnimatorType {

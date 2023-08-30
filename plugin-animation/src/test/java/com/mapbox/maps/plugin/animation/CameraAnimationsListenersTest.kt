@@ -63,14 +63,11 @@ class CameraAnimationsListenersTest {
     every { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) } answers {
       actualCameraState = firstArg<CameraOptions>().toCameraState()
       cameraAnimationsPluginImpl.onCameraMove(
-        lat = actualCameraState.center.latitude(),
-        lon = actualCameraState.center.longitude(),
-        zoom = actualCameraState.zoom,
-        pitch = actualCameraState.pitch,
-        bearing = actualCameraState.bearing,
-        padding = actualCameraState.padding.let { insets ->
-          arrayOf(insets.left, insets.top, insets.right, insets.bottom)
-        }
+          center = actualCameraState.center,
+          zoom = actualCameraState.zoom,
+          pitch = actualCameraState.pitch,
+          bearing = actualCameraState.bearing,
+          padding = actualCameraState.padding
       )
     }
   }

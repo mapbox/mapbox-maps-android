@@ -4,7 +4,6 @@ import android.animation.Animator
 import android.animation.AnimatorSet
 import android.animation.ValueAnimator
 import com.mapbox.geojson.Point
-import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.animation.camera
@@ -101,7 +100,6 @@ class FollowPuckViewportStateImplTest {
           center(testCenter)
           pitch(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_PITCH)
           zoom(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_ZOOM)
-          padding(EdgeInsets(0.0, 0.0, 0.0, 0.0))
         }
       )
     }
@@ -114,7 +112,6 @@ class FollowPuckViewportStateImplTest {
           center(testCenter)
           pitch(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_PITCH)
           zoom(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_ZOOM)
-          padding(EdgeInsets(0.0, 0.0, 0.0, 0.0))
         }
       )
     }
@@ -169,7 +166,6 @@ class FollowPuckViewportStateImplTest {
           bearing(constantBearing)
           zoom(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_ZOOM)
           pitch(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_PITCH)
-          padding(EdgeInsets(0.0, 0.0, 0.0, 0.0))
         }
       )
     }
@@ -223,7 +219,6 @@ class FollowPuckViewportStateImplTest {
           bearing(null)
           zoom(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_ZOOM)
           pitch(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_PITCH)
-          padding(EdgeInsets(0.0, 0.0, 0.0, 0.0))
         }
       )
     }
@@ -277,7 +272,6 @@ class FollowPuckViewportStateImplTest {
           center(testCenter)
           pitch(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_PITCH)
           zoom(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_ZOOM)
-          padding(EdgeInsets(0.0, 0.0, 0.0, 0.0))
         }
       )
     }
@@ -291,7 +285,6 @@ class FollowPuckViewportStateImplTest {
           center(testCenter)
           pitch(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_PITCH)
           zoom(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_ZOOM)
-          padding(EdgeInsets(0.0, 0.0, 0.0, 0.0))
         }
       )
     }
@@ -332,7 +325,6 @@ class FollowPuckViewportStateImplTest {
           center(testCenter)
           pitch(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_PITCH)
           zoom(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_ZOOM)
-          padding(EdgeInsets(0.0, 0.0, 0.0, 0.0))
         }
       )
     }
@@ -347,7 +339,6 @@ class FollowPuckViewportStateImplTest {
           center(testCenter)
           pitch(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_PITCH)
           zoom(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_ZOOM)
-          padding(EdgeInsets(0.0, 0.0, 0.0, 0.0))
         }
       )
     }
@@ -360,15 +351,19 @@ class FollowPuckViewportStateImplTest {
     val testBearing = 10.0
     val testCenter = Point.fromLngLat(0.0, 0.0)
     val animatorSet = mockk<AnimatorSet>()
-    val animator = mockk<ValueAnimator>()
+    val childAnimator = mockk<ValueAnimator>()
     val animatorListenerSlot = slot<Animator.AnimatorListener>()
 
     every { transitionFactory.transitionLinear(any(), any()) } returns animatorSet
     every { animatorSet.addListener(any()) } just runs
-    every { animatorSet.childAnimations } returns arrayListOf(animator)
+    every { animatorSet.childAnimations } returns arrayListOf(childAnimator)
     every { animatorSet.start() } just runs
     every { animatorSet.setDuration(any()) } returns animatorSet
-    every { animatorSet.cancel() } just runs
+    // In real implementation when the set is cancel both onAnimationCancel and onAnimationEnd are called
+    every { animatorSet.cancel() } answers {
+      animatorListenerSlot.captured.onAnimationCancel(animatorSet)
+      animatorListenerSlot.captured.onAnimationEnd(animatorSet)
+    }
     every { cameraPlugin.registerAnimators(any()) } just runs
     every { cameraPlugin.unregisterAnimators(any()) } just runs
 
@@ -393,7 +388,7 @@ class FollowPuckViewportStateImplTest {
     verifySequence {
       animatorSet.addListener(capture(animatorListenerSlot))
       animatorSet.childAnimations
-      cameraPlugin.registerAnimators(animator)
+      cameraPlugin.registerAnimators(childAnimator)
       animatorSet.duration = 0
       animatorSet.start()
     }
@@ -413,6 +408,6 @@ class FollowPuckViewportStateImplTest {
       )
     }
     assertFalse(followingState.isFollowingStateRunning)
-    verify { cameraPlugin.unregisterAnimators(animator) }
+    verify { cameraPlugin.unregisterAnimators(childAnimator) }
   }
 }

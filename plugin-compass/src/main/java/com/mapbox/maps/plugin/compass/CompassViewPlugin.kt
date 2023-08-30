@@ -12,7 +12,9 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.animation.doOnEnd
+import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.plugin.InvalidPluginConfigurationException
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_CAMERA_PLUGIN_ID
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
@@ -186,12 +188,11 @@ internal class CompassViewPlugin(
    * Could be invoked from any thread when map starts rendering.
    */
   override fun onCameraMove(
-    lat: Double,
-    lon: Double,
-    zoom: Double,
-    pitch: Double,
-    bearing: Double,
-    padding: Array<Double>
+      center: Point,
+      zoom: Double,
+      pitch: Double,
+      bearing: Double,
+      padding: EdgeInsets
   ) {
     update(bearing)
   }

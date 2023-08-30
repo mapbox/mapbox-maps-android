@@ -15,7 +15,6 @@ import com.mapbox.maps.plugin.locationcomponent.LocationComponentPlugin
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorBearingChangedListener
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener
 import com.mapbox.maps.plugin.locationcomponent.location
-import com.mapbox.maps.plugin.viewport.DEFAULT_STATE_ANIMATION_DURATION_MS
 import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateBearing
 import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions
 import com.mapbox.maps.plugin.viewport.transition.MapboxViewportTransitionFactory
@@ -34,6 +33,19 @@ internal class FollowPuckViewportStateImpl(
     mapDelegateProvider
   )
 ) : FollowPuckViewportState {
+  private val cleanUpAnimatorListener: Animator.AnimatorListener =
+    object : Animator.AnimatorListener {
+      override fun onAnimationStart(animation: Animator) {}
+
+      override fun onAnimationEnd(animation: Animator) {
+        unregisterRunningAnimationAnimators()
+      }
+
+      override fun onAnimationCancel(animation: Animator) {}
+
+      override fun onAnimationRepeat(animation: Animator) {}
+    }
+
   private val cameraPlugin = mapDelegateProvider.mapPluginProviderDelegate.camera
   private val locationComponent = mapDelegateProvider.mapPluginProviderDelegate.location
   private val dataSourceUpdateObservers = CopyOnWriteArraySet<ViewportStateDataObserver>()
@@ -63,8 +75,7 @@ internal class FollowPuckViewportStateImpl(
     if (shouldNotifyLatestViewportData()) {
       val viewportData = evaluateViewportData()
       if (isFollowingStateRunning) {
-        // Use instant update here since the location updates are already interpolated by the location component plugin
-        updateFrame(viewportData, true)
+        updateFrame(viewportData)
       }
       dataSourceUpdateObservers.forEach {
         notifyViewportStateDataObserver(it, viewportData)
@@ -175,73 +186,38 @@ internal class FollowPuckViewportStateImpl(
   private fun cancelAnimation() {
     AnimationThreadController.postOnAnimatorThread {
       runningAnimation?.apply {
+        // cancel will take care of calling unregisterRunningAnimationAnimators through
+        // the cleanUpAnimatorListener
         cancel()
-        childAnimations.forEach {
-          cameraPlugin.unregisterAnimators(it as ValueAnimator)
-        }
       }
-      runningAnimation = null
     }
   }
 
   @OptIn(MapboxExperimental::class)
-  private fun startAnimation(
-    animatorSet: AnimatorSet,
-    instant: Boolean,
-  ) {
+  private fun startAnimation(animatorSet: AnimatorSet) {
     cancelAnimation()
     animatorSet.childAnimations.forEach {
       cameraPlugin.registerAnimators(it as ValueAnimator)
     }
-    if (instant) {
-      animatorSet.duration = 0
-    }
+    animatorSet.duration = 0
     AnimationThreadController.postOnAnimatorThread {
       animatorSet.start()
       runningAnimation = animatorSet
     }
   }
 
-  private fun finishAnimation(animatorSet: AnimatorSet?) {
-    animatorSet?.childAnimations?.forEach {
+  private fun unregisterRunningAnimationAnimators() {
+    runningAnimation?.childAnimations?.forEach {
       cameraPlugin.unregisterAnimators(it as ValueAnimator)
     }
-    if (runningAnimation == animatorSet) {
-      runningAnimation = null
-    }
+    runningAnimation = null
   }
 
-  private fun updateFrame(
-    cameraOptions: CameraOptions,
-    instant: Boolean = false,
-    onComplete: ((isFinished: Boolean) -> Unit)? = null
-  ) {
+  private fun updateFrame(cameraOptions: CameraOptions) {
     startAnimation(
-      transitionFactory.transitionLinear(cameraOptions, DEFAULT_STATE_ANIMATION_DURATION_MS)
-        .apply {
-          addListener(
-            object : Animator.AnimatorListener {
-              private var isCanceled = false
-              override fun onAnimationStart(animation: Animator) {
-                // no-ops
-              }
-
-              override fun onAnimationEnd(animation: Animator) {
-                onComplete?.invoke(!isCanceled)
-                finishAnimation(this@apply)
-              }
-
-              override fun onAnimationCancel(animation: Animator) {
-                isCanceled = true
-              }
-
-              override fun onAnimationRepeat(animation: Animator) {
-                // no-ops
-              }
-            }
-          )
-        },
-      instant
+      // Duration is set to 0 because we want instant animation
+      transitionFactory.transitionLinear(cameraOptions, 0)
+        .apply { addListener(cleanUpAnimatorListener) }
     )
   }
 

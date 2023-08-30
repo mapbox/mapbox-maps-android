@@ -155,34 +155,22 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
   /**
    * Called whenever camera position changes.
    *
-   * @param lat latitude
-   * @param lon longitude
+   * @param center camera center
    * @param zoom zoom
    * @param pitch pitch in degrees
    * @param bearing bearing in degrees
-   * @param padding padding ordered as [left, top, right, bottom]
+   * @param padding padding
    */
   override fun onCameraMove(
-    lat: Double,
-    lon: Double,
+    center: Point,
     zoom: Double,
     pitch: Double,
     bearing: Double,
-    padding: Array<Double>
+    padding: EdgeInsets
   ) {
     this.bearing = bearing
-    this.center = Point.fromLngLat(lon, lat)
-    // Insets array order : [left, top, right, bottom]
-    this.padding = EdgeInsets(
-      /* top = */
-      padding[1],
-      /* left = */
-      padding[0],
-      /* bottom = */
-      padding[3],
-      /* right = */
-      padding[2],
-    )
+    this.center = center
+    this.padding = padding
     this.pitch = pitch
     this.zoom = zoom
   }

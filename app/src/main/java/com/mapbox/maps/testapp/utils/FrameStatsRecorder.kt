@@ -1,35 +1,48 @@
 package com.mapbox.maps.testapp.utils
 
+import android.content.Context
 import android.os.SystemClock
 import android.widget.Toast
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.mapbox.common.Cancelable
-import com.mapbox.maps.*
+import com.mapbox.maps.MapView
+import com.mapbox.maps.MapboxLifecycleObserver
+import com.mapbox.maps.RenderFrameFinishedCallback
+import com.mapbox.maps.logI
 import com.mapbox.maps.plugin.lifecycle.lifecycle
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import kotlin.math.pow
 import kotlin.math.sqrt
 
 class FrameStatsRecorder {
+  private var writeSummaryJob: Job = Job().apply { cancel() }
   private var renderFrameFinishCount = 0
   private var overtimeFrameCount = 0
   private val renderFrameIntervalsMs = mutableListOf<Float>()
   private val frameReport = mutableListOf<JsonObject>()
   private var startBenchmarkTime = 0L
   private var lastRenderedFrameTime = 0L
-  private val renderFrameFinishedCancelable: Cancelable? = null
+  private var renderFrameFinishedCancelable = Cancelable {}
   private val renderFrameFinishedCallback = RenderFrameFinishedCallback {
     renderFrameFinishCount++
     val now = SystemClock.elapsedRealtimeNanos()
     if (lastRenderedFrameTime != 0L) {
-      renderFrameIntervalsMs.add((now - lastRenderedFrameTime) * 1e-6f)
+      val renderFrameIntervalMs = (now - lastRenderedFrameTime) * 1e-6f
+      renderFrameIntervalsMs.add(renderFrameIntervalMs)
       frameReport.add(
         JsonObject().apply {
           addProperty(TIME_FROM_START, (now - startBenchmarkTime) * 1e-6f)
-          addProperty(INTERVAL_FROM_LAST_FRAME, (now - lastRenderedFrameTime) * 1e-6f)
+          addProperty(INTERVAL_FROM_LAST_FRAME, renderFrameIntervalMs)
         }
       )
-      if (now - lastRenderedFrameTime > 1000_000L * TARGET_FRAME_TIME_MS) {
+      if (renderFrameIntervalMs > TARGET_FRAME_TIME_MS) {
         overtimeFrameCount++
       }
     }
@@ -37,11 +50,21 @@ class FrameStatsRecorder {
   }
 
   /**
-   * Start benchmarking the MapView's frame stats.
+   * Start or resume benchmarking the MapView's frame stats.
    */
-  fun startBenchmarking(mapView: MapView) {
-    mapView.getMapboxMap().subscribeRenderFrameFinished(renderFrameFinishedCallback)
+  fun startResumeBenchmarking(mapView: MapView) {
+    // Make sure we've finished writing any previous stats
+    cancelAndWaitWrite()
+    renderFrameFinishedCancelable = mapView.getMapboxMap().subscribeRenderFrameFinished(renderFrameFinishedCallback)
     startBenchmarkTime = SystemClock.elapsedRealtimeNanos()
+    lastRenderedFrameTime = 0L
+  }
+
+  private fun cancelAndWaitWrite() {
+    renderFrameFinishedCancelable.cancel()
+    runBlocking {
+      writeSummaryJob.join()
+    }
   }
 
   /**
@@ -49,24 +72,31 @@ class FrameStatsRecorder {
    */
   fun stopBenchmarking(mapView: MapView) {
     val endBenchmarkTime = SystemClock.elapsedRealtimeNanos()
-    StorageUtils(mapView.context).writeToFile(
-      FRAME_LOG_JSON_NAME,
-      Gson().toJson(frameReport)
-    )
-    Toast.makeText(
-      mapView.context,
-      """
-              Average FPS: ${(renderFrameFinishCount * 1e9f / (endBenchmarkTime - startBenchmarkTime)).format()}
-              Over time frames: $overtimeFrameCount
-              Over time frames ratio: ${(overtimeFrameCount * 100f / renderFrameFinishCount).format()}%
-              Max frame interval: ${renderFrameIntervalsMs.maxOrNull().format()}ms
-              Min frame interval: ${renderFrameIntervalsMs.minOrNull().format()}ms
-              Frame interval SD: ${renderFrameIntervalsMs.sd().format()}ms
-              Logs have been saved to ${mapView.context.filesDir}/${StorageUtils.LOG_DIR}/$FRAME_LOG_JSON_NAME.
-      """.trimIndent(),
-      Toast.LENGTH_LONG
-    ).show()
-    renderFrameFinishedCancelable?.cancel()
+    renderFrameFinishedCancelable.cancel()
+    writeSummary(mapView.context.applicationContext, endBenchmarkTime)
+  }
+
+  @OptIn(DelicateCoroutinesApi::class)
+  private fun writeSummary(context: Context, endBenchmarkTime: Long) {
+    writeSummaryJob = GlobalScope.launch(Dispatchers.IO) {
+      StorageUtils(context).writeToFile(
+        FRAME_LOG_JSON_NAME,
+        Gson().toJson(frameReport)
+      )
+      val stats = """
+                Average FPS: ${(renderFrameFinishCount * 1e9f / (endBenchmarkTime - startBenchmarkTime)).format()}
+                Over time frames: $overtimeFrameCount
+                Over time frames ratio: ${(overtimeFrameCount * 100f / renderFrameFinishCount).format()}%
+                Max frame interval: ${renderFrameIntervalsMs.maxOrNull().format()}ms
+                Min frame interval: ${renderFrameIntervalsMs.minOrNull().format()}ms
+                Frame interval SD: ${renderFrameIntervalsMs.sd().format()}ms
+                Logs have been saved to ${context.filesDir}/${StorageUtils.LOG_DIR}/$FRAME_LOG_JSON_NAME.
+        """.trimIndent()
+      logI(TAG, stats)
+      withContext(Dispatchers.Main) {
+        Toast.makeText(context, stats, Toast.LENGTH_LONG).show()
+      }
+    }
   }
 
   private fun Number?.format(): String {
@@ -75,12 +105,10 @@ class FrameStatsRecorder {
 
   private fun List<Float>.sd(): Double {
     val mean = average()
-    return sqrt(
-      fold(
-        0.0,
-        { accumulator, next -> accumulator + (next - mean).pow(2.0) }
-      ) / size
-    )
+    val variance = fold(0.0) { accumulator, next ->
+      accumulator + (next - mean).pow(2.0)
+    } / size
+    return sqrt(variance)
   }
 
   companion object {
@@ -88,6 +116,7 @@ class FrameStatsRecorder {
     private const val FRAME_LOG_JSON_NAME = "frame_log.json"
     private const val TIME_FROM_START = "time_from_start"
     private const val INTERVAL_FROM_LAST_FRAME = "interval_from_last_frame"
+    private const val TAG = "FrameStatsRecorder"
   }
 }
 
@@ -96,7 +125,7 @@ class FrameStatsRecorder {
  */
 fun MapView.recordFrameStats() {
   val frameStatsRecorder = FrameStatsRecorder()
-  frameStatsRecorder.startBenchmarking(this)
+  frameStatsRecorder.startResumeBenchmarking(this)
   this.lifecycle.registerLifecycleObserver(
     this,
     object : MapboxLifecycleObserver {

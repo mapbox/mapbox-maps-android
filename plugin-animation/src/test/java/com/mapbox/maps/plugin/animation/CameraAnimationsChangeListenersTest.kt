@@ -16,14 +16,11 @@ class CameraAnimationsChangeListenersTest {
 
   private fun CameraAnimationsPluginImpl.onCameraMove(cameraState: CameraState) {
     onCameraMove(
-      lat = cameraState.center.latitude(),
-      lon = cameraState.center.longitude(),
-      zoom = cameraState.zoom,
-      pitch = cameraState.pitch,
-      bearing = cameraState.bearing,
-      padding = cameraState.padding.let { insets ->
-        arrayOf(insets.left, insets.top, insets.right, insets.bottom)
-      }
+        center = cameraState.center,
+        zoom = cameraState.zoom,
+        pitch = cameraState.pitch,
+        bearing = cameraState.bearing,
+        padding = cameraState.padding
     )
   }
 

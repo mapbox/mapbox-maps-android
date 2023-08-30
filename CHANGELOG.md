@@ -3,9 +3,15 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
+## Breaking changes ⚠️
+* The `MapCameraPlugin`'s `onCameraMove` method now uses `Point` for camera center and `EdgeInsets` for padding.
 
 ## Bug fixes 🐞
 * Fix scale bar receives camera changes after being disabled the first time.
+
+## Features ✨ and improvements 🏁
+* Avoid creating unnecessary objects during animation under some conditions.
+
 
 # 11.0.0-beta.2 August 24, 2023
 ## Breaking changes ⚠️

@@ -75,7 +75,7 @@ class FollowPuckViewportStateOptions private constructor(
    * Builder for [FollowPuckViewportStateOptions]
    */
   class Builder {
-    private var padding: EdgeInsets? = EdgeInsets(0.0, 0.0, 0.0, 0.0)
+    private var padding: EdgeInsets? = null
     private var zoom: Double? = DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_ZOOM
     private var bearing: FollowPuckViewportStateBearing? =
       FollowPuckViewportStateBearing.SyncWithLocationPuck
