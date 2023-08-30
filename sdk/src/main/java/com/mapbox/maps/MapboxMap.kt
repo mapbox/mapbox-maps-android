@@ -1954,8 +1954,8 @@ class MapboxMap :
    * tile units or in megabytes. A Map will do the best effort to keep memory
    * allocations for a non essential resources within the budget.
    *
-   * If tile cache budget in megabytes is set, the engine will try to use ETC1 texture compression
-   * for raster layers, therefore, raster images with alpha channel will be rendered incorrectly.
+   * If the tile cache budget is specified in megabytes, the engine will attempt
+   * to use ETC2 texture compression for raster layers.
    *
    * If null is set, the tile cache budget in tile units will be dynamically calculated based on
    * the current viewport size.
