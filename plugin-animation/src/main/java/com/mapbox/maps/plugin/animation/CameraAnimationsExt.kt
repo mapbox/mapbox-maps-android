@@ -147,3 +147,13 @@ fun MapPluginExtensionsDelegate.rotateBy(
 fun createCameraAnimationPlugin(): CameraAnimationsPlugin {
   return CameraAnimationsPluginImpl()
 }
+
+/**
+ * Static method to get [CameraAnimatorsFactory].
+ * @suppress
+ */
+@RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
+@JvmSynthetic
+fun CameraAnimationsPlugin.getCameraAnimatorsFactory(): CameraAnimatorsFactory {
+  return (this as CameraAnimationsPluginImpl).cameraAnimationsFactory
+}
