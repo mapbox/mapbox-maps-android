@@ -86,5 +86,4 @@ fun MapOptions.Builder.applyDefaultParams(context: Context): MapOptions.Builder 
   orientation(NorthOrientation.UPWARDS)
   viewportMode(ViewportMode.DEFAULT)
   crossSourceCollisions(true)
-  optimizeForTerrain(true)
 }

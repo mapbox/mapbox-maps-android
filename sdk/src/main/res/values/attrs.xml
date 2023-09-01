@@ -38,8 +38,6 @@
         </attr>
         <!-- To enable cross-source symbol collision detection or not. By default, it is set to true. -->
         <attr name="mapbox_mapCrossSourceCollisionsEnabled" format="boolean" />
-        <!-- To enable optimize for terrain or not. By default, it is set to true. -->
-        <attr name="mapbox_optimizeForTerrainEnabled" format="boolean" />
         <!-- The custom pixel ratio. By default, it is set to 1. -->
         <attr name="mapbox_mapPixelRatio" format="float" />
         <!-- The view type used to render. -->

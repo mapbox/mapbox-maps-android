@@ -147,34 +147,6 @@ class MapAttributeParserTest {
   }
 
   @Test
-  fun mapAttributeParserOptimizeForTerrainEnabledTrue() {
-    every {
-      typedArray.getBoolean(
-        R.styleable.mapbox_MapView_mapbox_optimizeForTerrainEnabled,
-        true
-      )
-    } returns true
-    assertEquals(
-      true,
-      MapAttributeParser.parseMapOptions(typedArray, 99.0f).optimizeForTerrain
-    )
-  }
-
-  @Test
-  fun mapAttributeParserOptimizeForTerrainEnabledFalse() {
-    every {
-      typedArray.getBoolean(
-        R.styleable.mapbox_MapView_mapbox_optimizeForTerrainEnabled,
-        true
-      )
-    } returns false
-    assertEquals(
-      false,
-      MapAttributeParser.parseMapOptions(typedArray, 99.0f).optimizeForTerrain
-    )
-  }
-
-  @Test
   fun northOrientationUpwards() {
     every { typedArray.getInt(R.styleable.mapbox_MapView_mapbox_mapOrientation, 0) } returns 0
     assertEquals(

@@ -2,9 +2,10 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# main
+# 11.0.0-beta.3
 ## Breaking changes ⚠️
 * The `MapCameraPlugin`'s `onCameraMove` method now uses `Point` for camera center and `EdgeInsets` for padding.
+* Remove `MapInitOptions.optimizeForTerrain`.
 
 ## Bug fixes 🐞
 * Fix scale bar receives camera changes after being disabled the first time.

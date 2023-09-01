@@ -544,6 +544,7 @@ snapshotter.start { snapshotBitmap, errorMessage ->
    - `Style.setStyleLight(parameters: Value)` removed and should be replaced with `Style.setStyleLights(lights: Value)`; `Style.setStyleLightProperty(id: String, light: Value)`, `Style.getStyleLightProperty(property: String)` removed and should be replaced with similar overloaded functions with `id: String` parameter.
 10. Remove `Style.getStyleSourcesAttribution`. `MapboxMap.getAttributions` should be used instead.
 11. All style enum classes from [Property.kt](../extension-style/src/main/java/com/mapbox/maps/extension/style/layers/properties/generated/Property.kt) and [SourceProperties.kt](../extension-style/src/main/java/com/mapbox/maps/extension/style/sources/generated/SourceProperties.kt) became regular classes instead of enums. Enum functions `ordinal`, `name`, `values` are not available anymore, but `valueOf` still exists. When using these classes with `when` expression `else` branch will have to be implemented.
+12. Remove `MapInitOptions.optimizeForTerrain` as it has become redundant.
 
 #### 3.11 Render Cache API
 
