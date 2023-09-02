@@ -300,6 +300,7 @@ commands:
           name: Run robo tests on Firebase
           no_output_timeout: 10m
           command: |
+            cat "${GCLOUD_SERVICE_ACCOUNT_JSON}"
             if [[ -n "${GCLOUD_SERVICE_ACCOUNT_JSON}" ]]; then
               if << parameters.multiple_devices >> ; then
                 gcloud firebase test android run --type robo \
