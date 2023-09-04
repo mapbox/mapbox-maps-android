@@ -1588,6 +1588,7 @@ package com.mapbox.maps.plugin.delegates {
     method public com.mapbox.maps.CameraOptions cameraForCoordinateBounds(com.mapbox.maps.CoordinateBounds bounds, com.mapbox.maps.EdgeInsets? padding = null, Double? bearing = null, Double? pitch = null, Double? maxZoom = null, com.mapbox.maps.ScreenCoordinate? offset = null);
     method public com.mapbox.maps.CameraOptions cameraForCoordinates(java.util.List<com.mapbox.geojson.Point> coordinates, com.mapbox.maps.EdgeInsets? padding = null, Double? bearing = null, Double? pitch = null);
     method public com.mapbox.maps.CameraOptions cameraForCoordinates(java.util.List<com.mapbox.geojson.Point> coordinates, com.mapbox.maps.CameraOptions camera, com.mapbox.maps.ScreenBox box);
+    method public com.mapbox.maps.CameraOptions cameraForDrag(com.mapbox.maps.ScreenCoordinate fromPoint, com.mapbox.maps.ScreenCoordinate toPoint);
     method public com.mapbox.maps.CameraOptions cameraForGeometry(com.mapbox.geojson.Geometry geometry, com.mapbox.maps.EdgeInsets? padding = null, Double? bearing = null, Double? pitch = null);
     method public com.mapbox.maps.CoordinateBounds coordinateBoundsForCamera(com.mapbox.maps.CameraOptions camera);
     method public com.mapbox.maps.CoordinateBounds coordinateBoundsForCameraUnwrapped(com.mapbox.maps.CameraOptions camera);
@@ -1598,17 +1599,15 @@ package com.mapbox.maps.plugin.delegates {
     method public com.mapbox.maps.CoordinateInfo coordinateInfoForPixel(com.mapbox.maps.ScreenCoordinate pixel);
     method public java.util.List<com.mapbox.geojson.Point> coordinatesForPixels(java.util.List<com.mapbox.maps.ScreenCoordinate> pixels);
     method public java.util.List<com.mapbox.maps.CoordinateInfo> coordinatesInfoForPixels(java.util.List<com.mapbox.maps.ScreenCoordinate> pixels);
-    method public void dragEnd();
-    method public void dragStart(com.mapbox.maps.ScreenCoordinate point);
     method public com.mapbox.maps.CameraBounds getBounds();
     method public com.mapbox.maps.CameraState getCameraState();
-    method public com.mapbox.maps.CameraOptions getDragCameraOptions(com.mapbox.maps.ScreenCoordinate fromPoint, com.mapbox.maps.ScreenCoordinate toPoint);
     method public com.mapbox.maps.FreeCameraOptions getFreeCameraOptions();
     method public com.mapbox.maps.ScreenCoordinate pixelForCoordinate(com.mapbox.geojson.Point coordinate);
     method public java.util.List<com.mapbox.maps.ScreenCoordinate> pixelsForCoordinates(java.util.List<com.mapbox.geojson.Point> coordinates);
     method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setBounds(com.mapbox.maps.CameraBoundsOptions options);
     method public void setCamera(com.mapbox.maps.CameraOptions cameraOptions);
     method public void setCamera(com.mapbox.maps.FreeCameraOptions freeCameraOptions);
+    method public void setCenterAltitudeMode(com.mapbox.maps.MapCenterAltitudeMode mode);
     property public abstract com.mapbox.maps.CameraState cameraState;
   }
 

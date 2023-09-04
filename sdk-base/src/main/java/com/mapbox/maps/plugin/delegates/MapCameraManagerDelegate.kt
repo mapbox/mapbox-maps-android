@@ -308,28 +308,22 @@ interface MapCameraManagerDelegate {
   fun getBounds(): CameraBounds
 
   /**
-   * Prepares the drag gesture to use the provided screen coordinate as a pivot point. This function should be called each time when user starts a dragging action (e.g. by clicking on the map). The following dragging will be relative to the pivot.
+   * Sets the map `center altitude mode` that defines behavior of the center point
+   * altitude for all subsequent camera manipulations.
    *
-   * @param point The pivot coordinate, measured in \link MapOptions#size platform pixels \endlink from top to bottom and from left to right.
+   * Note: any gesture changing the map camera will set [MapCenterAltitudeMode.TERRAIN]
+   * when finished.
    */
-  fun dragStart(point: ScreenCoordinate)
+  fun setCenterAltitudeMode(mode: MapCenterAltitudeMode)
 
   /**
-   * Calculates target point where camera should move after drag. The method should be called after `dragStart` and before `dragEnd`.
+   * Calculates a target point where the camera should move after dragging from
+   * a screen coordinate `startCoordinate` to another coordinate `endCoordinate`.
    *
-   * @param fromPoint The point to drag the map from, measured in \link MapOptions#size platform pixels \endlink from top to bottom and from left to right.
-   * @param toPoint The point to drag the map to, measured in \link MapOptions#size platform pixels \endlink from top to bottom and from left to right.
+   * @param fromPoint The `screen coordinate` to drag the map from, measured in `platform pixels` from top to bottom and from left to right.
+   * @param toPoint The `screen coordinate` to drag the map to, measured in `platform pixels` from top to bottom and from left to right.
    *
-   * @return Returns the camera options object showing end point
+   * @return The [CameraOptions] object with the center variable set to the computed target location.
    */
-  fun getDragCameraOptions(
-    fromPoint: ScreenCoordinate,
-    toPoint: ScreenCoordinate
-  ): CameraOptions
-
-  /**
-   * Ends the ongoing drag gesture.
-   * This function should be called always after the user has ended a drag gesture initiated by `dragStart`.
-   */
-  fun dragEnd()
+  fun cameraForDrag(fromPoint: ScreenCoordinate, toPoint: ScreenCoordinate): CameraOptions
 }

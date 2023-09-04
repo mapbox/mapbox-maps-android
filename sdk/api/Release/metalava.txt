@@ -166,6 +166,7 @@ package com.mapbox.maps {
     method public com.mapbox.maps.CameraOptions cameraForCoordinateBounds(com.mapbox.maps.CoordinateBounds bounds, com.mapbox.maps.EdgeInsets? boundsPadding, Double? bearing, Double? pitch, Double? maxZoom, com.mapbox.maps.ScreenCoordinate? offset);
     method public com.mapbox.maps.CameraOptions cameraForCoordinates(java.util.List<com.mapbox.geojson.Point> coordinates, com.mapbox.maps.EdgeInsets? coordinatesPadding, Double? bearing, Double? pitch);
     method public com.mapbox.maps.CameraOptions cameraForCoordinates(java.util.List<com.mapbox.geojson.Point> coordinates, com.mapbox.maps.CameraOptions camera, com.mapbox.maps.ScreenBox box);
+    method public com.mapbox.maps.CameraOptions cameraForDrag(com.mapbox.maps.ScreenCoordinate fromPoint, com.mapbox.maps.ScreenCoordinate toPoint);
     method public com.mapbox.maps.CameraOptions cameraForGeometry(com.mapbox.geojson.Geometry geometry, com.mapbox.maps.EdgeInsets? geometryPadding, Double? bearing, Double? pitch);
     method public static void clearData(com.mapbox.maps.AsyncOperationResultCallback callback);
     method public com.mapbox.maps.CoordinateBounds coordinateBoundsForCamera(com.mapbox.maps.CameraOptions camera);
@@ -179,15 +180,12 @@ package com.mapbox.maps {
     method public java.util.List<com.mapbox.geojson.Point> coordinatesForPixels(java.util.List<com.mapbox.maps.ScreenCoordinate> pixels);
     method public java.util.List<com.mapbox.maps.CoordinateInfo> coordinatesInfoForPixels(java.util.List<com.mapbox.maps.ScreenCoordinate> pixels);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.MapboxMapRecorder createRecorder();
-    method public void dragEnd();
-    method public void dragStart(com.mapbox.maps.ScreenCoordinate point);
     method public void executeOnRenderThread(Runnable runnable);
     method public Object? gesturesPlugin(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.gestures.GesturesPlugin,?> function);
     method public java.util.List<java.lang.String> getAttributions();
     method public com.mapbox.maps.CameraBounds getBounds();
     method public com.mapbox.maps.CameraState getCameraState();
     method public java.util.List<com.mapbox.maps.MapDebugOptions> getDebug();
-    method public com.mapbox.maps.CameraOptions getDragCameraOptions(com.mapbox.maps.ScreenCoordinate fromPoint, com.mapbox.maps.ScreenCoordinate toPoint);
     method public Double? getElevation(com.mapbox.geojson.Point coordinate);
     method public com.mapbox.common.Cancelable getFeatureState(String sourceId, String? sourceLayerId = null, String featureId, com.mapbox.maps.QueryFeatureStateCallback callback);
     method public com.mapbox.common.Cancelable getFeatureState(String sourceId, String featureId, com.mapbox.maps.QueryFeatureStateCallback callback);
@@ -252,6 +250,7 @@ package com.mapbox.maps {
     method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setBounds(com.mapbox.maps.CameraBoundsOptions options);
     method public void setCamera(com.mapbox.maps.CameraOptions cameraOptions);
     method public void setCamera(com.mapbox.maps.FreeCameraOptions freeCameraOptions);
+    method public void setCenterAltitudeMode(com.mapbox.maps.MapCenterAltitudeMode mode);
     method public void setConstrainMode(com.mapbox.maps.ConstrainMode constrainMode);
     method public void setDebug(java.util.List<? extends com.mapbox.maps.MapDebugOptions> debugOptions, boolean enabled);
     method public com.mapbox.common.Cancelable setFeatureState(String sourceId, String? sourceLayerId = null, String featureId, com.mapbox.bindgen.Value state, com.mapbox.maps.FeatureStateOperationCallback callback);

@@ -38,21 +38,6 @@ internal class NativeMapImpl(val map: Map) {
     return map.cameraState
   }
 
-  fun dragStart(point: ScreenCoordinate) {
-    map.dragStart(point)
-  }
-
-  fun dragEnd() {
-    map.dragEnd()
-  }
-
-  fun getDragCameraOptions(
-    fromPoint: ScreenCoordinate,
-    toPoint: ScreenCoordinate
-  ): CameraOptions {
-    return map.getDragCameraOptions(fromPoint, toPoint)
-  }
-
   fun coordinatesForPixels(pixels: MutableList<ScreenCoordinate>): MutableList<Point> {
     return map.coordinatesForPixels(pixels)
   }
@@ -645,5 +630,13 @@ internal class NativeMapImpl(val map: Map) {
 
   fun getAttributions(): List<String> {
     return map.attributions
+  }
+
+  fun cameraForDrag(fromPoint: ScreenCoordinate, toPoint: ScreenCoordinate): CameraOptions {
+    return map.cameraForDrag(fromPoint, toPoint)
+  }
+
+  fun setCenterAltitudeMode(mode: MapCenterAltitudeMode) {
+    map.setCenterAltitudeMode(mode)
   }
 }

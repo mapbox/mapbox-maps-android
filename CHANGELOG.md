@@ -6,13 +6,15 @@ Mapbox welcomes participation and contributions from everyone.
 ## Breaking changes ⚠️
 * The `MapCameraPlugin`'s `onCameraMove` method now uses `Point` for camera center and `EdgeInsets` for padding.
 * Remove `MapInitOptions.optimizeForTerrain`.
-
-## Bug fixes 🐞
-* Fix scale bar receives camera changes after being disabled the first time.
+* Replace `MapboxMap` and `MapCameraManagerDelegate` APIs `dragStart`, `dragEnd`, `getDragCameraOptions` with `cameraForDrag`, `setCenterAltitudeMode`.
 
 ## Features ✨ and improvements 🏁
 * Avoid creating unnecessary objects during animation under some conditions.
+* Improve map camera and gestures when terrain is used to fix camera bumpiness and map flickering.
 
+## Bug fixes 🐞
+* Fix scale bar receives camera changes after being disabled the first time.
+* Fix camera flying away on pitch gesture after some other animations.
 
 # 11.0.0-beta.2 August 24, 2023
 ## Breaking changes ⚠️

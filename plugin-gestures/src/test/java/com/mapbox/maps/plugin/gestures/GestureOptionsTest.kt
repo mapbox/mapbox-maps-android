@@ -41,14 +41,12 @@ class GestureOptionsTest {
 
   private val pack = "com.mapbox.maps"
 
-  private val mainHandler = mockk<Handler>()
-
   private val animationsTimeoutHandler = mockk<Handler>()
 
   private val runnableSlot = slot<Runnable>()
 
   private val gesturePlugin =
-    GesturesPluginImpl(context, mockk(relaxed = true), mockk(relaxed = true), mainHandler, animationsTimeoutHandler)
+    GesturesPluginImpl(context, mockk(relaxed = true), mockk(relaxed = true), animationsTimeoutHandler)
 
   @Before
   fun setUp() {
@@ -65,10 +63,6 @@ class GestureOptionsTest {
     every { mapPluginProviderDelegate.camera } returns cameraAnimationsPlugin
     every { mapDelegateProvider.mapTransformDelegate } returns mapTransformDelegate
     every { mapDelegateProvider.mapProjectionDelegate } returns mapProjectionDelegate
-    every { mainHandler.post(capture(runnableSlot)) } answers {
-      runnableSlot.captured.run()
-      true
-    }
   }
 
   private fun setupGesturePlugin() {

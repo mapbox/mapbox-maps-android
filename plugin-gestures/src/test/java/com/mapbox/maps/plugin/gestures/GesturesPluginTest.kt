@@ -5,7 +5,6 @@ import android.animation.ValueAnimator
 import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.PointF
-import android.os.Looper
 import android.util.AttributeSet
 import android.view.InputDevice.SOURCE_CLASS_POINTER
 import android.view.MotionEvent
@@ -32,9 +31,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.ParameterizedRobolectricTestRunner
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.Shadows
 import org.robolectric.annotation.LooperMode
-import java.time.Duration
 
 @RunWith(RobolectricTestRunner::class)
 @LooperMode(LooperMode.Mode.PAUSED)
@@ -131,7 +128,7 @@ class GesturesPluginTest {
       0.0
     )
     every {
-      mapCameraManagerDelegate.getDragCameraOptions(
+      mapCameraManagerDelegate.cameraForDrag(
         any(),
         any()
       )
@@ -224,22 +221,6 @@ class GesturesPluginTest {
     val touchHandled = presenter.onTouchEvent(obtainMotionEventButton(BUTTON_SECONDARY))
     verify(exactly = 0) { mapTransformDelegate.setGestureInProgress(true) }
     assertFalse(touchHandled)
-  }
-
-  @Test
-  fun verifyGestureInProgressActionDown() {
-    every { gesturesManager.onTouchEvent(any()) }.returns(true)
-    presenter.onTouchEvent(obtainMotionEventAction(ACTION_DOWN))
-    verify(exactly = 1) { mapTransformDelegate.setGestureInProgress(true) }
-  }
-
-  @Test
-  fun verifyGestureInProgressActionUp() {
-    every { gesturesManager.onTouchEvent(any()) }.returns(true)
-    Shadows.shadowOf(Looper.getMainLooper()).pause()
-    presenter.onTouchEvent(obtainMotionEventAction(ACTION_UP))
-    Shadows.shadowOf(Looper.getMainLooper()).idleFor(Duration.ofMillis(50))
-    verify(exactly = 1) { mapTransformDelegate.setGestureInProgress(false) }
   }
 
   @Test
@@ -475,7 +456,7 @@ class GesturesPluginTest {
       0.0
     )
     every {
-      mapCameraManagerDelegate.getDragCameraOptions(
+      mapCameraManagerDelegate.cameraForDrag(
         any(),
         any()
       )
@@ -500,7 +481,7 @@ class GesturesPluginTest {
     // listeners are notified every time, but animations applied only once
     verify(exactly = 3) { listener.onMove(any()) }
     verify(exactly = 1) {
-      mapCameraManagerDelegate.getDragCameraOptions(
+      mapCameraManagerDelegate.cameraForDrag(
         ScreenCoordinate(0.0, 0.0),
         ScreenCoordinate(-50.0, -50.0)
       )
@@ -520,7 +501,7 @@ class GesturesPluginTest {
       0.0
     )
     every {
-      mapCameraManagerDelegate.getDragCameraOptions(
+      mapCameraManagerDelegate.cameraForDrag(
         any(),
         any()
       )
@@ -552,7 +533,7 @@ class GesturesPluginTest {
     // listeners are notified every time, but animations applied twice
     verify(exactly = 3) { listener.onMove(any()) }
     verify(exactly = 2) {
-      mapCameraManagerDelegate.getDragCameraOptions(
+      mapCameraManagerDelegate.cameraForDrag(
         ScreenCoordinate(0.0, 0.0),
         ScreenCoordinate(-50.0, -50.0)
       )
@@ -898,8 +879,11 @@ class GesturesPluginTest {
       0.0,
       1.0
     )
-    val centerScreen = ScreenCoordinate(50.0, 50.0)
-    presenter.centerScreen = centerScreen
+    val cameraCenterScreenCoordinate = ScreenCoordinate(
+      10.0,
+      10.0
+    )
+    every { mapCameraManagerDelegate.pixelForCoordinate(any()) } returns cameraCenterScreenCoordinate
     setupShoveListener()
     val gestureDetector = mockk<ShoveGestureDetector>(relaxUnitFun = true)
     val result = presenter.handleShove(gestureDetector, -15.0f)
@@ -913,7 +897,7 @@ class GesturesPluginTest {
       )
     }
     assertEquals(resultCameraOptions.captured.pitch!!, 2.5, EPS)
-    assertEquals(resultCameraOptions.captured.anchor, centerScreen)
+    assertEquals(resultCameraOptions.captured.anchor, cameraCenterScreenCoordinate)
   }
 
   @Test
@@ -994,7 +978,7 @@ class GesturesPluginTest {
     val fromSlot = slot<ScreenCoordinate>()
     val toSlot = slot<ScreenCoordinate>()
     every {
-      mapCameraManagerDelegate.getDragCameraOptions(capture(fromSlot), capture(toSlot))
+      mapCameraManagerDelegate.cameraForDrag(capture(fromSlot), capture(toSlot))
     } answers {
       CameraOptions.Builder().center(Point.fromLngLat(toSlot.captured.x, toSlot.captured.y)).build()
     }
@@ -1318,7 +1302,7 @@ class IsPointAboveHorizonTest(
       0.0
     )
     every {
-      mapCameraManagerDelegate.getDragCameraOptions(
+      mapCameraManagerDelegate.cameraForDrag(
         any(),
         any()
       )
@@ -1331,7 +1315,7 @@ class IsPointAboveHorizonTest(
     every { moveGestureDetector.pointersCount } returns 1
     presenter.handleMove(moveGestureDetector, 50.0f, 50.0f)
     verify(exactly = if (expectedResult) 0 else 1) {
-      mapCameraManagerDelegate.dragStart(any())
+      cameraAnimationsPlugin.easeTo(any(), any(), any())
     }
   }
 
@@ -1351,7 +1335,7 @@ class IsPointAboveHorizonTest(
       0.0
     )
     every {
-      mapCameraManagerDelegate.getDragCameraOptions(
+      mapCameraManagerDelegate.cameraForDrag(
         any(),
         any()
       )
@@ -1527,7 +1511,7 @@ class FlingGestureTest(
     every { mapDelegateProvider.mapProjectionDelegate } returns mapProjectionDelegate
     every { mapPluginProviderDelegate.getPlugin<CameraAnimationsPlugin>(Plugin.MAPBOX_CAMERA_PLUGIN_ID) } returns cameraAnimationsPlugin
     every { mapTransformDelegate.getSize() } returns Size(100.0f, 100.0f)
-    every { mapCameraManagerDelegate.coordinateForPixel(any()) } returns Point.fromLngLat(0.0, 0.0)
+    every { mapCameraManagerDelegate.coordinateForPixel(any()) } returns Point.fromLngLat(1.0, 1.0)
     // Make sure isPointAboveHorizon return false
     every { mapCameraManagerDelegate.pixelForCoordinate(any()) } returns ScreenCoordinate(
       0.0,
@@ -1553,7 +1537,7 @@ class FlingGestureTest(
       targetPitch
     )
     every {
-      mapCameraManagerDelegate.getDragCameraOptions(
+      mapCameraManagerDelegate.cameraForDrag(
         any(),
         any()
       )
@@ -1574,7 +1558,7 @@ class FlingGestureTest(
         targetVelocity.second
       )
     verify(exactly = 1) {
-      mapCameraManagerDelegate.getDragCameraOptions(
+      mapCameraManagerDelegate.cameraForDrag(
         ScreenCoordinate(0.0, 0.0),
         expectedCoordinate
       )

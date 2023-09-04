@@ -1040,24 +1040,18 @@ class MapboxMapTest {
   }
 
   @Test
-  fun dragStart() {
-    val screenCoordinate = mockk<ScreenCoordinate>()
-    mapboxMap.dragStart(screenCoordinate)
-    verify { nativeMap.dragStart(screenCoordinate) }
-  }
-
-  @Test
-  fun dragEnd() {
-    mapboxMap.dragEnd()
-    verify { nativeMap.dragEnd() }
-  }
-
-  @Test
-  fun getDragCameraOptions() {
+  fun cameraForDrag() {
     val fromPoint = mockk<ScreenCoordinate>()
     val toPoint = mockk<ScreenCoordinate>()
-    mapboxMap.getDragCameraOptions(fromPoint, toPoint)
-    verify { nativeMap.getDragCameraOptions(fromPoint, toPoint) }
+    mapboxMap.cameraForDrag(fromPoint, toPoint)
+    verify { nativeMap.cameraForDrag(fromPoint, toPoint) }
+  }
+
+  @Test
+  fun setCenterAltitudeMode() {
+    val altitude = MapCenterAltitudeMode.SEA
+    mapboxMap.setCenterAltitudeMode(altitude)
+    verify { nativeMap.setCenterAltitudeMode(altitude) }
   }
 
   @Test
