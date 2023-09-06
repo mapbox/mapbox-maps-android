@@ -15,6 +15,7 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * Fix scale bar receives camera changes after being disabled the first time.
 * Fix camera flying away on pitch gesture after some other animations.
+* Fix map not being rendered when EGL exception happens but Android surface is still valid.
 
 # 11.0.0-beta.2 August 24, 2023
 ## Breaking changes ⚠️

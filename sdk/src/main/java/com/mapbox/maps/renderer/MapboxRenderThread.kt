@@ -78,7 +78,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
    * We track moment when EGL context is created and associated with current Android surface.
    */
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  internal var eglContextCreated = false
+  internal var eglContextMadeCurrent = false
     // no need for synchronized getter, getting value for this var happens on render thread only
     set(value) = renderThreadPreparedLock.withLock {
       field = value
@@ -90,9 +90,9 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
    * Getter is thread-safe as this flag could be accessed from any thread.
    */
   private val renderThreadPrepared get() = renderThreadPreparedLock.withLock {
-    eglContextCreated && nativeRenderCreated
+    eglContextMadeCurrent && nativeRenderCreated
   }
-  private var eglPrepared = false
+  private var eglContextCreated = false
   private var renderNotSupported = false
 
   // could not be volatile as setter method is synchronized
@@ -185,8 +185,8 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
           "Setting up render thread, flags:" +
             " creatingSurface=$creatingSurface," +
             " nativeRenderCreated=$nativeRenderCreated," +
+            " eglContextMadeCurrent=$eglContextMadeCurrent," +
             " eglContextCreated=$eglContextCreated," +
-            " eglPrepared=$eglPrepared," +
             " paused=$paused"
         )
         val eglConfigOk = checkEglConfig()
@@ -200,9 +200,9 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
           // it's safe to use !! here as we checked surface above
           val eglSurfaceOk = checkEglSurface(surface!!)
           if (eglSurfaceOk) {
-            eglContextCreated = checkEglContextCurrent()
+            eglContextMadeCurrent = checkEglContextCurrent()
             // finally we can create native renderer if needed or just report OK
-            if (eglContextCreated) {
+            if (eglContextMadeCurrent) {
               if (!nativeRenderCreated) {
                 // we set `nativeRenderCreated` as `true` before creating native render as core could potentially
                 // schedule task in the same callchain and we need to make sure that `renderThreadPrepared` is already `true`
@@ -227,10 +227,10 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   }
 
   private fun checkEglConfig(): Boolean {
-    if (!eglPrepared) {
+    if (!eglContextCreated) {
       val eglOk = eglCore.prepareEgl()
       if (eglOk) {
-        eglPrepared = true
+        eglContextCreated = true
       } else {
         logE(TAG, "EGL was not configured, please check logs above.")
         renderNotSupported = true
@@ -244,7 +244,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     return if (surface?.isValid == true) {
       true
     } else {
-      logW(TAG, "EGL was configured but Android surface is null or not valid, waiting for a new one...")
+      logW(TAG, "EGL was configured but Android surface.isValid=${surface?.isValid}, waiting for a new one...")
       // give system a bit of time and try rendering again hoping surface will be valid now
       postPrepareRenderFrame(delayMillis = RETRY_DELAY_MS)
       false
@@ -287,7 +287,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   }
 
   private fun checkWidgetRender() {
-    if (eglPrepared && !widgetRenderCreated && widgetRenderer.hasWidgets()) {
+    if (eglContextCreated && !widgetRenderCreated && widgetRenderer.hasWidgets()) {
       widgetRenderer.setSharedContext(eglCore.eglContext)
       widgetRenderCreated = true
     }
@@ -362,7 +362,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     trace("release-egl-surface") {
       widgetTextureRenderer.release()
       eglCore.releaseSurface(eglSurface)
-      eglContextCreated = false
+      eglContextMadeCurrent = false
       eglSurface = eglCore.eglNoSurface
       widgetRenderCreated = false
       widgetRenderer.release()
@@ -377,10 +377,10 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       nonRenderEventQueue.clear()
       nativeRenderCreated = false
       releaseEglSurface()
-      if (eglPrepared) {
+      if (eglContextCreated) {
         eglCore.release()
       }
-      eglPrepared = false
+      eglContextCreated = false
       if (tryRecreate) {
         setUpRenderThread(creatingSurface = true)
       } else {
@@ -551,11 +551,35 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       renderEvent.runnable?.let {
         renderEventQueue.add(renderEvent)
       }
-      if (renderThreadPrepared) {
+      renderPreparedGuardedRun {
         postPrepareRenderFrame()
       }
     } else {
       postNonRenderEvent(renderEvent)
+    }
+  }
+
+  private inline fun renderPreparedGuardedRun(crossinline block: () -> Unit) {
+    if (renderThreadPrepared) {
+      block.invoke()
+      return
+    }
+    // it may happen that Android surface is valid but renderThreadPrepared=false
+    // due to eglContextMadeCurrent=false when we do `releaseEglSurface()` after some egl error;
+    // in this case we try to re-setup render thread; if Android surface is invalid - we can't do anything
+    // until Android system sends us the new one
+    if (surface?.isValid == true) {
+      logI(TAG, "renderThreadPrepared=false but Android surface is valid, trying to recreate EGL...")
+      renderHandlerThread.post {
+        if (setUpRenderThread(creatingSurface = true)) {
+          block.invoke()
+          logI(TAG, "Setting up render thread was OK, map should render again!")
+        } else {
+          logI(TAG, "Setting up render thread failed, check logs above.")
+        }
+      }
+    } else {
+      logI(TAG, "renderThreadPrepared=false and Android surface is not valid (isValid=${surface?.isValid}). Waiting for new one.")
     }
   }
 
@@ -594,9 +618,9 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   @UiThread
   fun resume() {
     paused = false
-    logI(TAG, "Renderer resumed, renderThreadPrepared=$renderThreadPrepared")
+    logI(TAG, "Renderer resumed, renderThreadPrepared=$renderThreadPrepared, surface.isValid=${surface?.isValid}")
     // schedule render if we resume not after first create (e.g. bring map back to front)
-    if (renderThreadPrepared) {
+    renderPreparedGuardedRun {
       postPrepareRenderFrame()
     }
   }

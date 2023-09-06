@@ -484,12 +484,12 @@ class MapboxRenderThreadTest {
       )
     )
     // simulate render thread is not fully prepared, e.g. EGL context is lost
-    mapboxRenderThread.eglContextCreated = false
+    mapboxRenderThread.eglContextMadeCurrent = false
     idleHandler()
     verifyNo { runnable.run() }
     pauseHandler()
     // simulate render thread is fully prepared again
-    mapboxRenderThread.eglContextCreated = true
+    mapboxRenderThread.eglContextMadeCurrent = true
     mapboxRenderThread.processAndroidSurface(surface, 1, 1)
     // taking into account we try to reschedule event with some delay
     idleHandler(RETRY_DELAY_MS)
@@ -536,7 +536,7 @@ class MapboxRenderThreadTest {
     mapboxRenderThread.awaitingNextVsync = false
 
     // paused state
-    mapboxRenderThread.eglContextCreated = false
+    mapboxRenderThread.eglContextMadeCurrent = false
     mapboxRenderThread.pause()
     pauseHandler()
     mapboxRenderThread.queueRenderEvent(
@@ -551,7 +551,7 @@ class MapboxRenderThreadTest {
     verifyNo { runnable.run() }
 
     // resumed state
-    mapboxRenderThread.eglContextCreated = true
+    mapboxRenderThread.eglContextMadeCurrent = true
     mapboxRenderThread.resume()
     idleHandler()
     assertEquals(0, mapboxRenderThread.nonRenderEventQueue.size)
@@ -937,6 +937,39 @@ class MapboxRenderThreadTest {
       mapboxRenderer.createRenderer()
       // swap works OK with new EGLSurface already
       eglCore.swapBuffers(any())
+    }
+  }
+
+  @Test
+  fun eglErrorTest() {
+    initRenderThread()
+    provideValidSurface()
+    pauseHandler()
+    every { eglCore.swapBuffers(any()) } returns EGL14.EGL_BAD_ALLOC
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
+    idleHandler()
+    every { eglCore.swapBuffers(any()) } returns EGL14.EGL_SUCCESS
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
+    idleHandler()
+    verifyOrder {
+      // swap buffers for surface creation
+      eglCore.swapBuffers(any())
+      // swap buffers for EGL_BAD_ALLOC
+      eglCore.swapBuffers(any())
+      // releasing EGL surface
+      eglCore.releaseSurface(any())
+      // because of creatingSurface=true argument
+      eglCore.makeNothingCurrent()
+      // create new EGL surface
+      eglCore.createWindowSurface(any())
+      // re-create the EGL context
+      eglCore.makeCurrent(any())
+      // swap buffers for EGL_SUCCESS
+      eglCore.swapBuffers(any())
+    }
+    // we do not destroy the native renderer
+    verifyNo {
+      mapboxRenderer.destroyRenderer()
     }
   }
 }

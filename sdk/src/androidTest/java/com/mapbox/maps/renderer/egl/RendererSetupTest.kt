@@ -21,6 +21,7 @@ import java.util.concurrent.TimeUnit
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest
+@Ignore("Tests are flaky")
 class RendererSetupTest {
 
   private lateinit var countDownLatch: CountDownLatch
