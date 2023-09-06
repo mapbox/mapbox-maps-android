@@ -5,8 +5,21 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 
 # 10.16.0
+## Features ✨ and improvements 🏁
+* Add Mapbox Privacy Policy to attribution links.
+
 ## Bug fixes 🐞
 * Fix map not being rendered when EGL exception happens but Android surface is still valid.
+* Fix terrain rendering for the Terrarium-encoded tiles.
+* Fixes an issue that causes view annotations to be placed on the sky when high pitch and mercator projection is used.
+* Don't emit `MapLoadingError` if an offline tilepack has no tiles.
+* Fix the bug when anchor was not reset after gestures leading to an unexpected map camera animation result with incorrect `CameraState.center`.
+* Avoid excessive relayout of the symbol layer when no properties depend on the image changes. This fix eliminates the symbol layer flickering when styles are switched.
+* Fix a rounding error when point lies at the edge of the screen by using `rountToInt` for limiting `MapboxMap#pixelsForCoordinates` to the bounds of MapView.
+* Fix NPE when animating edge insets types (e.g. map padding).
+
+## Dependencies
+* Update gl-native to v10.16.0 and common to v23.8.0.
 
 # 10.15.1 August 24, 2023
 ## Bug fixes 🐞
