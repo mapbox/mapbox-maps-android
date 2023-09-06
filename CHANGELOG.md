@@ -4,6 +4,9 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 10.16.0
+## Bug fixes 🐞
+* Fix map not being rendered when EGL exception happens but Android surface is still valid.
 
 # 10.16.0-rc.1 August 24, 2023
 ## Features ✨ and improvements 🏁

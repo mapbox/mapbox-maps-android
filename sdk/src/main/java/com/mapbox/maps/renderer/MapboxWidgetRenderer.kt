@@ -12,7 +12,7 @@ internal class MapboxWidgetRenderer(
   private val antialiasingSampleCount: Int,
 ) {
   private var eglCore: EGLCore? = null
-  private var eglPrepared = false
+  private var eglContextCreated = false
   private var eglSurface: EGLSurface? = null
   private var sizeChanged = false
 
@@ -34,7 +34,7 @@ internal class MapboxWidgetRenderer(
   fun getTexture() = textures[0]
 
   fun setSharedContext(sharedContext: EGLContext) {
-    if (eglPrepared) {
+    if (eglContextCreated) {
       release()
     }
     eglCore = EGLCore(
@@ -118,7 +118,7 @@ internal class MapboxWidgetRenderer(
     }
     this.eglSurface = null
     this.eglCore = null
-    this.eglPrepared = false
+    this.eglContextCreated = false
   }
 
   fun updateTexture() {
@@ -175,9 +175,9 @@ internal class MapboxWidgetRenderer(
       return
     }
 
-    if (!eglPrepared) {
-      eglPrepared = eglCore.prepareEgl()
-      if (!eglPrepared) {
+    if (!eglContextCreated) {
+      eglContextCreated = eglCore.prepareEgl()
+      if (!eglContextCreated) {
         logE(TAG, "Widget EGL was not configured, please check logs above.")
         return
       }
