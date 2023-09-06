@@ -537,7 +537,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     }
   }
 
-  private fun renderPreparedGuardedRun(block: () -> Unit) {
+  private inline fun renderPreparedGuardedRun(crossinline block: () -> Unit) {
     if (renderThreadPrepared) {
       block.invoke()
       return
