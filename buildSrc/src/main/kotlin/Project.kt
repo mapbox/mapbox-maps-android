@@ -14,8 +14,8 @@ object AndroidVersions {
   }
   object ExampleApp {
     const val minSdkVersion = 23
-    const val targetSdkVersion = 31
-    const val compileSdkVersion = 31
+    const val targetSdkVersion = 33
+    const val compileSdkVersion = 33
   }
 }
 
