@@ -110,8 +110,16 @@ class FeatureStateActivity : AppCompatActivity() {
           // Update Magnitude, location and date text view.
           val time = selectedFeature.getNumberProperty("time")
           binding.date.text = getDateTime(time.toLong())
-          binding.location.text = selectedFeature.getStringProperty("place")
-          binding.magnitude.text = selectedFeature.getNumberProperty("mag").toString()
+          binding.location.text = if (selectedFeature.hasNonNullValueForProperty("place")) {
+            selectedFeature.getStringProperty("place")
+          } else {
+            "N/A"
+          }
+          binding.magnitude.text = if (selectedFeature.hasNonNullValueForProperty("mag")) {
+            selectedFeature.getNumberProperty("mag").toString()
+          } else {
+            "N/A"
+          }
         }
       }
   }
