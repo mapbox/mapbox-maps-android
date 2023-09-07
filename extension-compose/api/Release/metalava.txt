@@ -30,11 +30,43 @@ package com.mapbox.maps.extension.compose {
     method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void MapEffect(Object![]? keys, kotlin.jvm.functions.Function3<? super kotlinx.coroutines.CoroutineScope,? super com.mapbox.maps.MapView,? super kotlin.coroutines.Continuation<? super kotlin.Unit>,?> block);
   }
 
+  @com.mapbox.maps.MapboxExperimental public final class MapEvents {
+    ctor public MapEvents(com.mapbox.maps.MapLoadedCallback? onMapLoaded = null, com.mapbox.maps.MapIdleCallback? onMapIdle = null, com.mapbox.maps.MapLoadingErrorCallback? onMapLoadingError = null, com.mapbox.maps.StyleLoadedCallback? onStyleLoaded = null, com.mapbox.maps.StyleDataLoadedCallback? onStyleDataLoaded = null, com.mapbox.maps.SourceDataLoadedCallback? onSourceDataLoaded = null, com.mapbox.maps.SourceAddedCallback? onSourceAdded = null, com.mapbox.maps.SourceRemovedCallback? onSourceRemoved = null, com.mapbox.maps.StyleImageMissingCallback? onStyleImageMissing = null, com.mapbox.maps.StyleImageRemoveUnusedCallback? onStyleImageRemoveUnused = null, com.mapbox.maps.CameraChangedCallback? onCameraChanged = null, com.mapbox.maps.RenderFrameStartedCallback? onRenderFrameStarted = null, com.mapbox.maps.RenderFrameFinishedCallback? onRenderFrameFinished = null, com.mapbox.maps.ResourceRequestCallback? onResourceRequest = null);
+    method public com.mapbox.maps.CameraChangedCallback? getOnCameraChanged();
+    method public com.mapbox.maps.MapIdleCallback? getOnMapIdle();
+    method public com.mapbox.maps.MapLoadedCallback? getOnMapLoaded();
+    method public com.mapbox.maps.MapLoadingErrorCallback? getOnMapLoadingError();
+    method public com.mapbox.maps.RenderFrameFinishedCallback? getOnRenderFrameFinished();
+    method public com.mapbox.maps.RenderFrameStartedCallback? getOnRenderFrameStarted();
+    method public com.mapbox.maps.ResourceRequestCallback? getOnResourceRequest();
+    method public com.mapbox.maps.SourceAddedCallback? getOnSourceAdded();
+    method public com.mapbox.maps.SourceDataLoadedCallback? getOnSourceDataLoaded();
+    method public com.mapbox.maps.SourceRemovedCallback? getOnSourceRemoved();
+    method public com.mapbox.maps.StyleDataLoadedCallback? getOnStyleDataLoaded();
+    method public com.mapbox.maps.StyleImageMissingCallback? getOnStyleImageMissing();
+    method public com.mapbox.maps.StyleImageRemoveUnusedCallback? getOnStyleImageRemoveUnused();
+    method public com.mapbox.maps.StyleLoadedCallback? getOnStyleLoaded();
+    property public final com.mapbox.maps.CameraChangedCallback? onCameraChanged;
+    property public final com.mapbox.maps.MapIdleCallback? onMapIdle;
+    property public final com.mapbox.maps.MapLoadedCallback? onMapLoaded;
+    property public final com.mapbox.maps.MapLoadingErrorCallback? onMapLoadingError;
+    property public final com.mapbox.maps.RenderFrameFinishedCallback? onRenderFrameFinished;
+    property public final com.mapbox.maps.RenderFrameStartedCallback? onRenderFrameStarted;
+    property public final com.mapbox.maps.ResourceRequestCallback? onResourceRequest;
+    property public final com.mapbox.maps.SourceAddedCallback? onSourceAdded;
+    property public final com.mapbox.maps.SourceDataLoadedCallback? onSourceDataLoaded;
+    property public final com.mapbox.maps.SourceRemovedCallback? onSourceRemoved;
+    property public final com.mapbox.maps.StyleDataLoadedCallback? onStyleDataLoaded;
+    property public final com.mapbox.maps.StyleImageMissingCallback? onStyleImageMissing;
+    property public final com.mapbox.maps.StyleImageRemoveUnusedCallback? onStyleImageRemoveUnused;
+    property public final com.mapbox.maps.StyleLoadedCallback? onStyleLoaded;
+  }
+
   @androidx.compose.runtime.ComposableTargetMarker(description="Mapbox Map Composable") @com.mapbox.maps.MapboxExperimental @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention.BINARY) @kotlin.annotation.Target(allowedTargets={kotlin.annotation.AnnotationTarget.FILE, kotlin.annotation.AnnotationTarget.FUNCTION, kotlin.annotation.AnnotationTarget.PROPERTY_GETTER, kotlin.annotation.AnnotationTarget.TYPE, kotlin.annotation.AnnotationTarget.TYPE_PARAMETER}) public @interface MapboxMapComposable {
   }
 
   public final class MapboxMapKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static void MapboxMap(androidx.compose.ui.Modifier modifier = Modifier, kotlin.jvm.functions.Function1<? super android.content.Context,com.mapbox.maps.MapInitOptions> mapInitOptionsFactory = { context -> return <init>(context) }, com.mapbox.maps.plugin.attribution.generated.AttributionSettings attributionSettings = DefaultSettingsProvider.defaultAttributionSettings(LocalContext.current), com.mapbox.maps.plugin.compass.generated.CompassSettings compassSettings = DefaultSettingsProvider.defaultCompassSettings(LocalContext.current), com.mapbox.maps.plugin.gestures.generated.GesturesSettings gesturesSettings = DefaultSettingsProvider.defaultGesturesSettings, com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings locationComponentSettings = DefaultSettingsProvider.defaultLocationComponentSettings(LocalContext.current), com.mapbox.maps.plugin.logo.generated.LogoSettings logoSettings = DefaultSettingsProvider.defaultLogoSettings(LocalContext.current), com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings scaleBarSettings = DefaultSettingsProvider.defaultScaleBarSettings(LocalContext.current), com.mapbox.maps.extension.compose.animation.viewport.MapViewportState mapViewportState = rememberMapViewportState(), com.mapbox.maps.plugin.gestures.OnMapClickListener onMapClickListener = DefaultSettingsProvider.defaultOnClickListener, com.mapbox.maps.plugin.gestures.OnMapLongClickListener onMapLongClickListener = DefaultSettingsProvider.defaultOnLongClickListener, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.MapboxMapScope,kotlin.Unit>? content = null);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static void MapboxMap(androidx.compose.ui.Modifier modifier = Modifier, com.mapbox.maps.extension.compose.MapEvents? mapEvents = null, kotlin.jvm.functions.Function1<? super android.content.Context,com.mapbox.maps.MapInitOptions> mapInitOptionsFactory = { context -> return <init>(context) }, com.mapbox.maps.plugin.attribution.generated.AttributionSettings attributionSettings = DefaultSettingsProvider.defaultAttributionSettings(LocalContext.current), com.mapbox.maps.plugin.compass.generated.CompassSettings compassSettings = DefaultSettingsProvider.defaultCompassSettings(LocalContext.current), com.mapbox.maps.plugin.gestures.generated.GesturesSettings gesturesSettings = DefaultSettingsProvider.defaultGesturesSettings, com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings locationComponentSettings = DefaultSettingsProvider.defaultLocationComponentSettings(LocalContext.current), com.mapbox.maps.plugin.logo.generated.LogoSettings logoSettings = DefaultSettingsProvider.defaultLogoSettings(LocalContext.current), com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings scaleBarSettings = DefaultSettingsProvider.defaultScaleBarSettings(LocalContext.current), com.mapbox.maps.extension.compose.animation.viewport.MapViewportState mapViewportState = rememberMapViewportState(), com.mapbox.maps.plugin.gestures.OnMapClickListener onMapClickListener = DefaultSettingsProvider.defaultOnClickListener, com.mapbox.maps.plugin.gestures.OnMapLongClickListener onMapLongClickListener = DefaultSettingsProvider.defaultOnLongClickListener, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.MapboxMapScope,kotlin.Unit>? content = null);
   }
 
   @androidx.compose.foundation.layout.LayoutScopeMarker @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class MapboxMapScope {

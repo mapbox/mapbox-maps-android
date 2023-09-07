@@ -42,6 +42,7 @@ import kotlinx.coroutines.awaitCancellation
 @MapboxExperimental
 public fun MapboxMap(
   modifier: Modifier = Modifier,
+  mapEvents: MapEvents? = null,
   mapInitOptionsFactory: (Context) -> MapInitOptions = { context -> MapInitOptions(context) },
   attributionSettings: AttributionSettings = DefaultSettingsProvider.defaultAttributionSettings(
     LocalContext.current
@@ -93,6 +94,7 @@ public fun MapboxMap(
   val currentOnMapClickListener by rememberUpdatedState(onMapClickListener)
   val currentOnMapLongClickListener by rememberUpdatedState(onMapLongClickListener)
   val currentContent by rememberUpdatedState(content)
+  val currentMapEvents by rememberUpdatedState(mapEvents)
 
   LaunchedEffect(Unit) {
     disposingComposition(
@@ -110,7 +112,9 @@ public fun MapboxMap(
             currentScaleBarSettings,
             currentMapViewportState,
             currentOnMapClickListener,
-            currentOnMapLongClickListener
+            currentOnMapLongClickListener,
+            currentMapEvents,
+
           )
           currentContent?.let { MapboxMapScope.it() }
         }

@@ -13,6 +13,7 @@ import com.mapbox.maps.compose.testapp.ExampleScaffold
 import com.mapbox.maps.compose.testapp.examples.utils.CityLocations
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
 import com.mapbox.maps.extension.compose.MapEffect
+import com.mapbox.maps.extension.compose.MapEvents
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.MapViewportState
 
@@ -51,7 +52,24 @@ public class DebugModeActivity : ComponentActivity() {
         onMapLongClickListener = {
           Toast.makeText(this@DebugModeActivity, "Long-clicked on $it", Toast.LENGTH_SHORT).show()
           false
-        }
+        },
+        mapEvents = MapEvents(
+          onMapLoaded = {
+            logI("map events", "on map loaded")
+          },
+          onMapIdle = {
+            logI("map events", "on map idle")
+          },
+          onMapLoadingError = {
+            logI("map events", "on map loading error")
+          },
+          onStyleLoaded = {
+            logI("map events", "on style loaded")
+          },
+          onSourceDataLoaded = {
+            logI("map events", "on source data loaded ${it.tileId}")
+          },
+        )
       ) {
         // Enable debug mode using MapEffect
         MapEffect(Unit) { map ->

@@ -3,6 +3,8 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
+## Features ✨ and improvements 🏁
+* Add experimental `MapEvents` to handle all events emitted by `MapboxMap`.
 
 ## Bug fixes 🐞
 * Fix the bug where wrong pixel ratio could be used in a dual display setup.
