@@ -2,7 +2,8 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# 11.0.0-beta.3
+
+# 11.0.0-beta.3 September 08, 2023
 ## Breaking changes ⚠️
 * The `MapCameraPlugin`'s `onCameraMove` method now uses `Point` for camera center and `EdgeInsets` for padding.
 * Remove `MapInitOptions.optimizeForTerrain` as whenever terrain is present layer order is automatically adjusted for better performance.
@@ -25,6 +26,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v11.0.0-beta.4 and common to v24.0.0-beta.4.
+
 
 # 11.0.0-beta.2 August 24, 2023
 ## Breaking changes ⚠️
