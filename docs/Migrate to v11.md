@@ -56,7 +56,6 @@ This document is a guide for migrating from v10 of the Mapbox Maps SDK for Andro
   - [Introducing Partial GeoJsonSource APIs](#introducing-partial-geojsonsource-apis)
   - [Tracing API](#tracing-api)
   - [Mapbox Maps Recorder](#mapbox-maps-recorder)
-- [Known Issues / Coming Soon](#known-issues--coming-soon)
 - [Conclusion](#conclusion)
 
 ## Version Compatibility
@@ -742,10 +741,6 @@ You can find more details about Tracing API use in the [Developing guide](../DEV
 ### Mapbox Maps Recorder
 
 `MapboxMapRecorder` provides API to record and replay map interaction sessions. Such recordings can be used to debug issues which require multiple steps to reproduce. Usage example could be found [here](../app/src/main/java/com/mapbox/maps/testapp/examples/MapboxMapRecorderActivity.kt).
-
-## Known Issues / Coming Soon
-
-- Downloading style packs / tile regions for offline may be slower comparing to v10.
 
 ## Conclusion
 

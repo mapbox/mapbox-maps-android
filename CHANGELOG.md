@@ -5,17 +5,26 @@ Mapbox welcomes participation and contributions from everyone.
 # 11.0.0-beta.3
 ## Breaking changes ⚠️
 * The `MapCameraPlugin`'s `onCameraMove` method now uses `Point` for camera center and `EdgeInsets` for padding.
-* Remove `MapInitOptions.optimizeForTerrain`.
+* Remove `MapInitOptions.optimizeForTerrain` as whenever terrain is present layer order is automatically adjusted for better performance.
 * Replace `MapboxMap` and `MapCameraManagerDelegate` APIs `dragStart`, `dragEnd`, `getDragCameraOptions` with `cameraForDrag`, `setCenterAltitudeMode`.
 
 ## Features ✨ and improvements 🏁
 * Avoid creating unnecessary objects during animation under some conditions.
 * Improve map camera and gestures when terrain is used to fix camera bumpiness and map flickering.
+* Use a fallback glyph URL if a style does not define one. This enables the addition of Symbol layers to an empty style or to the style that doesn't use Symbol layers.
+* Use ETC2 compression for raster tiles to support transparency.
 
 ## Bug fixes 🐞
 * Fix scale bar receives camera changes after being disabled the first time.
 * Fix camera flying away on pitch gesture after some other animations.
 * Fix map not being rendered when EGL exception happens but Android surface is still valid.
+* Fix fallback rules for the style's transition property. The change fixes style transitions when style imports are modified for the Standard style.
+* Fix terrain rendering for the Terrarium-encoded tiles.
+* Cancel pending style url loading request when loading a new style json.
+* Fixes an issue that causes view annotations to be placed on the sky when high pitch and mercator projection is used.
+
+## Dependencies
+* Update gl-native to v11.0.0-beta.4 and common to v24.0.0-beta.4.
 
 # 11.0.0-beta.2 August 24, 2023
 ## Breaking changes ⚠️
