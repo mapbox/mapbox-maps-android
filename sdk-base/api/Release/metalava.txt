@@ -122,7 +122,6 @@ package com.mapbox.maps {
     method @AnyThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleGeoJSONSourceData(String sourceId, String dataId, com.mapbox.maps.GeoJSONSourceData data);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleImportConfigProperties(String importId, java.util.HashMap<java.lang.String,com.mapbox.bindgen.Value> configs);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleImportConfigProperty(String importId, String config, com.mapbox.bindgen.Value value);
-    method public void setStyleJSON(String);
     method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleLayerProperties(String layerId, com.mapbox.bindgen.Value properties);
     method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleLayerProperty(String layerId, String property, com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleLightProperty(String id, String property, com.mapbox.bindgen.Value value);
@@ -134,7 +133,6 @@ package com.mapbox.maps {
     method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleTerrain(com.mapbox.bindgen.Value properties);
     method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleTerrainProperty(String property, com.mapbox.bindgen.Value value);
     method public void setStyleTransition(com.mapbox.maps.TransitionOptions transitionOptions);
-    method public void setStyleURI(String);
     method public boolean styleLayerExists(String layerId);
     method public boolean styleSourceExists(String sourceId);
     method @AnyThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> updateGeoJSONSourceFeatures(String sourceId, String dataId, java.util.List<com.mapbox.geojson.Feature> features);

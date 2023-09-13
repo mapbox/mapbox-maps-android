@@ -330,21 +330,9 @@ class StyleTest {
   }
 
   @Test
-  fun setJson() {
-    style.styleJSON = "foobar"
-    verify { styleManager.styleJSON = "foobar" }
-  }
-
-  @Test
   fun getJson() {
     style.styleJSON
     verify { styleManager.styleJSON }
-  }
-
-  @Test
-  fun setUri() {
-    style.styleURI = "foobar"
-    verify { styleManager.styleURI = "foobar" }
   }
 
   @Test

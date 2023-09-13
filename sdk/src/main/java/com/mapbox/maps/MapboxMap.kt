@@ -40,7 +40,8 @@ class MapboxMap :
   MapFeatureQueryDelegate,
   MapListenerDelegate,
   MapPluginExtensionsDelegate,
-  MapCameraManagerDelegate {
+  MapCameraManagerDelegate,
+  MapboxStyleManager {
 
   private val nativeMap: NativeMapImpl
   private var isMapValid = true
@@ -82,7 +83,7 @@ class MapboxMap :
     nativeMap: NativeMapImpl,
     nativeObserver: NativeObserver,
     styleObserver: StyleObserver
-  ) {
+  ) : super(nativeMap.map) {
     this.nativeMap = nativeMap
     this.nativeObserver = nativeObserver
     this.styleObserver = styleObserver
@@ -92,7 +93,7 @@ class MapboxMap :
     nativeMap: NativeMapImpl,
     nativeObserver: NativeObserver,
     pixelRatio: Float
-  ) {
+  ) : super(nativeMap.map) {
     this.nativeMap = nativeMap
     this.nativeObserver = nativeObserver
     // we register our internal native observers here and

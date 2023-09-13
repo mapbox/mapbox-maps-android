@@ -1315,6 +1315,7 @@ class PixelForCoordinatesTest(
     every { nativeMap.pixelForCoordinate(point) } returns input[0]
     val screenCoordinate = mapboxMap.pixelForCoordinate(point)
     verifySequence {
+      nativeMap.map
       nativeMap.pixelForCoordinate(point)
       nativeMap.getSize()
     }

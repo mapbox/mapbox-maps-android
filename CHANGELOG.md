@@ -2,6 +2,12 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
+# 11.0.0-beta.4
+## Breaking changes ⚠️
+* Remove setter functions for `Style.styleURI` and `Style.styleJSON` as loading the style should happen only with `MapboxMap.loadStyle`.
+
+## Features ✨ and improvements 🏁
+* Copy relevant `Style` methods to `MapboxMap` providing better alignment with iOS and GL-JS.
 
 # 11.0.0-beta.3 September 08, 2023
 ## Breaking changes ⚠️

@@ -215,24 +215,11 @@ class Style {
 
   /**
    * Get the styleURI of the current Mapbox Style in use.
-   *
-   * SetURI is an asynchronous call. In order to get result of this operation please use
-   * [MapboxMap.addOnStyleLoadedListener], [MapboxMap.addOnStyleDataLoadedListener] or
-   * [MapboxMap.addOnMapLoadErrorListener]. In case of successful style load you should get notified
-   * by [MapboxMap.addOnStyleLoadedListener].
-   *
-   * And in case of error @see MapLoadError#StyleLoadError will be generated.
-   *
-   * \attention This method should be called on the same thread where @see Map object is initialized.*
    */
-  var styleURI: String
+  val styleURI: String
     get() {
       checkNativeStyle("getStyleURI")
       return styleManager.styleURI
-    }
-    set(value) {
-      checkNativeStyle("setStyleURI")
-      styleManager.styleURI = value
     }
 
   /**
@@ -240,14 +227,10 @@ class Style {
    *
    * @return A JSON string containing a serialized Mapbox Style.
    */
-  var styleJSON: String
+  val styleJSON: String
     get() {
       checkNativeStyle("getStyleJSON")
       return styleManager.styleJSON
-    }
-    set(value) {
-      checkNativeStyle("setStyleJSON")
-      styleManager.styleJSON = value
     }
 
   /**
