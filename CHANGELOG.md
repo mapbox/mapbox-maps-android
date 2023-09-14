@@ -9,6 +9,9 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 * Copy relevant `Style` methods to `MapboxMap` providing better alignment with iOS and GL-JS.
 
+## Bug fixes 🐞
+* Free resources immediately after map event subscription is canceled.
+
 # 11.0.0-beta.3 September 08, 2023
 ## Breaking changes ⚠️
 * The `MapCameraPlugin`'s `onCameraMove` method now uses `Point` for camera center and `EdgeInsets` for padding.

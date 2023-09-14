@@ -5,58 +5,94 @@ import androidx.annotation.VisibleForTesting
 import com.mapbox.common.Cancelable
 import com.mapbox.maps.extension.observable.*
 import com.mapbox.maps.plugin.delegates.listeners.*
+import java.util.Objects
 import java.util.concurrent.CopyOnWriteArraySet
 
-internal enum class MapEvent {
-  CAMERA_CHANGED,
-
-  // Map events
-  MAP_IDLE,
-  MAP_LOADING_ERROR,
-  MAP_LOADED,
-
-  // Style events
-  STYLE_DATA_LOADED,
-  STYLE_LOADED,
-  STYLE_IMAGE_MISSING,
-  STYLE_IMAGE_REMOVE_UNUSED,
-
-  // Render frame events
-  RENDER_FRAME_STARTED,
-  RENDER_FRAME_FINISHED,
-
-  // Source events
-  SOURCE_ADDED,
-  SOURCE_DATA_LOADED,
-  SOURCE_REMOVED,
-
-  // Resource request event
-  RESOURCE_REQUEST,
-  GENERIC_EVENT,
-}
-
+@Suppress("DeprecatedCallableAddReplaceWith", "DEPRECATION")
 @UiThread
 internal class NativeObserver(
   private val observable: NativeMapImpl
 ) {
-  private inner class ExtendedStyleLoadedCancelable(
-    val styleLoadedCallback: StyleLoadedCallback,
-    var originalCancelable: Cancelable
+  /**
+   * A [Cancelable] that will add itself to the given [cancelableSet] when created and remove
+   * itself when [cancel]ed.
+   *
+   * @param originalCancelable the original [Cancelable]. Its [Cancelable.cancel] will be called when [cancel] is executed
+   * @param cancelableSet a [MutableSet] that will hold this cancelable while it is active.
+   * @param onCancel function to be called after [cancel] is executed
+   */
+  private open inner class ExtendedCancelable(
+    open val originalCancelable: Cancelable,
+    val onCancel: (() -> Unit)? = null,
+    private val cancelableSet: MutableSet<Cancelable> = this@NativeObserver.cancelableSet,
   ) : Cancelable {
-    override fun cancel() {
-      styleLoadedCallbackSet.remove(this)
-      originalCancelable.cancel()
+    init {
+      @Suppress("LeakingThis")
+      cancelableSet.add(this)
     }
+
+    /**
+     * Calls cancel on [originalCancelable] and also removes itself from [cancelableSet].
+     */
+    override fun cancel() {
+      cancelableSet.remove(this)
+      originalCancelable.cancel()
+      onCancel?.invoke()
+    }
+
+    override fun equals(other: Any?): Boolean {
+      if (this === other) return true
+      if (javaClass != other?.javaClass) return false
+
+      other as ExtendedCancelable
+
+      if (originalCancelable != other.originalCancelable) return false
+      if (cancelableSet != other.cancelableSet) return false
+      if (onCancel != other.onCancel) return false
+
+      return true
+    }
+
+    override fun hashCode(): Int = Objects.hash(originalCancelable, cancelableSet, onCancel)
   }
 
-  private inner class ExtendedDataStyleLoadedCancelable(
-    val styleDataLoadedCallback: StyleDataLoadedCallback,
-    var originalCancelable: Cancelable
-  ) : Cancelable {
-    override fun cancel() {
-      styleDataLoadedCallbackSet.remove(this)
+  /**
+   * An [ExtendedCancelable] that holds the original [callback] to be able to resubscribe later.
+   *
+   * @param callback the callback to use when [resubscribe] is called.
+   * @param originalCancelable the original [Cancelable]. Its [Cancelable.cancel] will be called when [cancel] is executed. It will be updated when [resubscribe] is executed.
+   * @param cancelableSet a [MutableSet] that will hold this cancelable while it is active.
+   * @param onCancel function to be called after [cancel] is executed
+   */
+  @Suppress("UNCHECKED_CAST")
+  private inner class ResubscribeExtendedCancelable<C>(
+    private val callback: C,
+    override var originalCancelable: Cancelable,
+    cancelableSet: MutableSet<ResubscribeExtendedCancelable<C>>,
+    onCancel: (() -> Unit)? = null
+  ) : ExtendedCancelable(originalCancelable, onCancel, cancelableSet as MutableSet<Cancelable>) {
+    /**
+     * Resubscribes [callback] and stores the returned [Cancelable] from calling [subscribe]
+     * in [originalCancelable]
+     *
+     * @param subscribe the method responsible to subscribe [callback]
+     */
+    fun resubscribe(subscribe: (C) -> Cancelable) {
       originalCancelable.cancel()
+      originalCancelable = subscribe(callback)
     }
+
+    override fun equals(other: Any?): Boolean {
+      if (this === other) return true
+      if (javaClass != other?.javaClass) return false
+      if (!super.equals(other)) return false
+
+      other as ResubscribeExtendedCancelable<*>
+
+      return callback == other.callback
+    }
+
+    override fun hashCode(): Int = Objects.hash(super.hashCode(), callback)
   }
 
   /**
@@ -77,146 +113,27 @@ internal class NativeObserver(
   val onStyleImageMissingListeners = CopyOnWriteArraySet<OnStyleImageMissingListener>()
   val onStyleImageUnusedListeners = CopyOnWriteArraySet<OnStyleImageUnusedListener>()
 
-  /**
-   * We have to control those types of callbacks as they participate in [resubscribeStyleLoadListeners].
-   */
-  private val styleLoadedCallbackSet = CopyOnWriteArraySet<ExtendedStyleLoadedCancelable>()
-  private val styleDataLoadedCallbackSet = CopyOnWriteArraySet<ExtendedDataStyleLoadedCancelable>()
-
-  internal var cancelableEventsMap = HashMap<MapEvent, MutableList<Cancelable>>()
-
-  //
-  // Subscribe to Add / Remove deprecated methods.
-  //
-  private fun <T> subscribeToMapEvent(event: MapEvent, callback: T, eventName: String = "") {
-    when (event) {
-      MapEvent.CAMERA_CHANGED -> {
-        val cameraChangedCallback = CameraChangedCallback {
-          (callback as OnCameraChangeListener).onCameraChanged(it.toCameraChangedEventData())
-        }
-        cancelableEventsMap.getOrPut(MapEvent.CAMERA_CHANGED) {
-          mutableListOf()
-        }.add(observable.subscribe(cameraChangedCallback))
-      }
-      MapEvent.MAP_IDLE -> {
-        val mapIdleCallback = MapIdleCallback {
-          (callback as OnMapIdleListener).onMapIdle(it.toMapIdleEventData())
-        }
-        cancelableEventsMap.getOrPut(MapEvent.MAP_IDLE) {
-          mutableListOf()
-        }.add(observable.subscribe(mapIdleCallback))
-      }
-      MapEvent.MAP_LOADING_ERROR -> {
-        val mapLoadingErrorCallback = MapLoadingErrorCallback {
-          (callback as OnMapLoadErrorListener).onMapLoadError(it.toMapLoadingErrorEventData())
-        }
-        cancelableEventsMap.getOrPut(MapEvent.MAP_LOADING_ERROR) {
-          mutableListOf()
-        }.add(observable.subscribe(mapLoadingErrorCallback))
-      }
-      MapEvent.MAP_LOADED -> {
-        val mapLoadedCallback = MapLoadedCallback {
-          (callback as OnMapLoadedListener).onMapLoaded(it.toMapLoadedEventData())
-        }
-        cancelableEventsMap.getOrPut(MapEvent.MAP_LOADED) {
-          mutableListOf()
-        }.add(observable.subscribe(mapLoadedCallback))
-      }
-      MapEvent.STYLE_DATA_LOADED -> {
-        val styleDataLoadedCallback = StyleDataLoadedCallback {
-          (callback as OnStyleDataLoadedListener).onStyleDataLoaded(it.toStyleDataLoadedEventData())
-        }
-        cancelableEventsMap.getOrPut(MapEvent.STYLE_DATA_LOADED) {
-          mutableListOf()
-        }.add(observable.subscribe(styleDataLoadedCallback))
-      }
-      MapEvent.STYLE_LOADED -> {
-        val styleLoadedCallback = StyleLoadedCallback {
-          (callback as OnStyleLoadedListener).onStyleLoaded(it.toStyleLoadedEventData())
-        }
-        cancelableEventsMap.getOrPut(MapEvent.STYLE_LOADED) {
-          mutableListOf()
-        }.add(observable.subscribe(styleLoadedCallback))
-      }
-      MapEvent.STYLE_IMAGE_MISSING -> {
-        val styleImageMissingCallback = StyleImageMissingCallback {
-          (callback as OnStyleImageMissingListener).onStyleImageMissing(it.getStyleImageMissingEventData())
-        }
-        cancelableEventsMap.getOrPut(MapEvent.STYLE_IMAGE_MISSING) {
-          mutableListOf()
-        }.add(observable.subscribe(styleImageMissingCallback))
-      }
-      MapEvent.STYLE_IMAGE_REMOVE_UNUSED -> {
-        val styleImageRemoveUnusedCallback = StyleImageRemoveUnusedCallback {
-          (callback as OnStyleImageUnusedListener).onStyleImageUnused(it.toStyleImageUnusedEventData())
-        }
-        cancelableEventsMap.getOrPut(MapEvent.STYLE_IMAGE_REMOVE_UNUSED) {
-          mutableListOf()
-        }.add(observable.subscribe(styleImageRemoveUnusedCallback))
-      }
-      MapEvent.RENDER_FRAME_FINISHED -> {
-        val renderFrameFinishedCallback = RenderFrameFinishedCallback {
-          (callback as OnRenderFrameFinishedListener).onRenderFrameFinished(it.toRenderFrameFinishedEventData())
-        }
-        cancelableEventsMap.getOrPut(MapEvent.RENDER_FRAME_FINISHED) {
-          mutableListOf()
-        }.add(observable.subscribe(renderFrameFinishedCallback))
-      }
-      MapEvent.RENDER_FRAME_STARTED -> {
-        val renderFrameStartedCallback = RenderFrameStartedCallback {
-          (callback as OnRenderFrameStartedListener).onRenderFrameStarted(it.toRenderFrameStartedEventData())
-        }
-        cancelableEventsMap.getOrPut(MapEvent.RENDER_FRAME_STARTED) {
-          mutableListOf()
-        }.add(observable.subscribe(renderFrameStartedCallback))
-      }
-      MapEvent.SOURCE_ADDED -> {
-        val sourceAddedCallback = SourceAddedCallback {
-          (callback as OnSourceAddedListener).onSourceAdded(it.toSourceAddedEventData())
-        }
-        cancelableEventsMap.getOrPut(MapEvent.SOURCE_ADDED) {
-          mutableListOf()
-        }.add(observable.subscribe(sourceAddedCallback))
-      }
-      MapEvent.SOURCE_DATA_LOADED -> {
-        val sourceDataLoadedCallback = SourceDataLoadedCallback {
-          (callback as OnSourceDataLoadedListener).onSourceDataLoaded(it.toSourceDataLoadedEventData())
-        }
-        cancelableEventsMap.getOrPut(MapEvent.SOURCE_DATA_LOADED) {
-          mutableListOf()
-        }.add(observable.subscribe(sourceDataLoadedCallback))
-      }
-      MapEvent.SOURCE_REMOVED -> {
-        val sourceRemovedCallback = SourceRemovedCallback {
-          (callback as OnSourceRemovedListener).onSourceRemoved(it.toSourceRemovedEventData())
-        }
-        cancelableEventsMap.getOrPut(MapEvent.SOURCE_REMOVED) {
-          mutableListOf()
-        }.add(observable.subscribe(sourceRemovedCallback))
-      }
-      MapEvent.RESOURCE_REQUEST -> {
-        cancelableEventsMap.getOrPut(MapEvent.RESOURCE_REQUEST) {
-          mutableListOf()
-        }.add(observable.subscribe(callback as ResourceRequestCallback))
-      }
-      MapEvent.GENERIC_EVENT -> {
-        // not applicable for add/remove v10 methods.
-      }
-    }
-  }
-
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  internal fun cancelAllAndRemove(event: MapEvent) {
-    cancelableEventsMap[event]?.forEach { it.cancel() }
-    cancelableEventsMap.remove(event)
-  }
+  internal val cancelableSet = CopyOnWriteArraySet<Cancelable>()
+
+  private val styleDataLoadedCancelableSet = CopyOnWriteArraySet<ResubscribeExtendedCancelable<StyleDataLoadedCallback>>()
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  // ResubscribeExtendedCancelable is private so we expose the set as generic Cancelable set
+  internal val _styleDataLoadedCancelableSet: MutableSet<out Cancelable> = styleDataLoadedCancelableSet
+
+  private val styleLoadedCancelableSet = CopyOnWriteArraySet<ResubscribeExtendedCancelable<StyleLoadedCallback>>()
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  // ResubscribeExtendedCancelable is private so we expose the set as generic Cancelable set
+  internal val _styleLoadedCancelableSet: MutableSet<out Cancelable> = styleLoadedCancelableSet
 
   @Deprecated(
     message = "This method is deprecated, and will be removed in next major release.",
     level = DeprecationLevel.WARNING
   )
   fun addOnCameraChangeListener(onCameraChangeListener: OnCameraChangeListener) {
-    subscribeToMapEvent(MapEvent.CAMERA_CHANGED, onCameraChangeListener)
+    subscribeCameraChanged({
+      onCameraChangeListener.onCameraChanged(it.toCameraChangedEventData())
+    })
     onCameraChangeListeners.add(onCameraChangeListener)
   }
 
@@ -226,9 +143,6 @@ internal class NativeObserver(
   )
   fun removeOnCameraChangeListener(onCameraChangeListener: OnCameraChangeListener) {
     onCameraChangeListeners.remove(onCameraChangeListener)
-    if (onCameraChangeListeners.isEmpty()) {
-      cancelAllAndRemove(MapEvent.CAMERA_CHANGED)
-    }
   }
 
   @Deprecated(
@@ -236,7 +150,9 @@ internal class NativeObserver(
     level = DeprecationLevel.WARNING
   )
   fun addOnMapIdleListener(onMapIdleListener: OnMapIdleListener) {
-    subscribeToMapEvent(MapEvent.MAP_IDLE, onMapIdleListener)
+    subscribeMapIdle({
+      onMapIdleListener.onMapIdle(it.toMapIdleEventData())
+    })
     onMapIdleListeners.add(onMapIdleListener)
   }
 
@@ -246,9 +162,6 @@ internal class NativeObserver(
   )
   fun removeOnMapIdleListener(onMapIdleListener: OnMapIdleListener) {
     onMapIdleListeners.remove(onMapIdleListener)
-    if (onMapIdleListeners.isEmpty()) {
-      cancelAllAndRemove(MapEvent.MAP_IDLE)
-    }
   }
 
   @Deprecated(
@@ -256,7 +169,9 @@ internal class NativeObserver(
     level = DeprecationLevel.WARNING
   )
   fun addOnMapLoadErrorListener(onMapLoadErrorListener: OnMapLoadErrorListener) {
-    subscribeToMapEvent(MapEvent.MAP_LOADING_ERROR, onMapLoadErrorListener)
+    subscribeMapLoadingError({
+      onMapLoadErrorListener.onMapLoadError(it.toMapLoadingErrorEventData())
+    })
     onMapLoadErrorListeners.add(onMapLoadErrorListener)
   }
 
@@ -266,9 +181,6 @@ internal class NativeObserver(
   )
   fun removeOnMapLoadErrorListener(onMapLoadErrorListener: OnMapLoadErrorListener) {
     onMapLoadErrorListeners.remove(onMapLoadErrorListener)
-    if (onMapLoadErrorListeners.isEmpty()) {
-      cancelAllAndRemove(MapEvent.MAP_LOADING_ERROR)
-    }
   }
 
   @Deprecated(
@@ -276,7 +188,9 @@ internal class NativeObserver(
     level = DeprecationLevel.WARNING
   )
   fun addOnMapLoadedListener(onMapLoadedListener: OnMapLoadedListener) {
-    subscribeToMapEvent(MapEvent.MAP_LOADED, onMapLoadedListener)
+    subscribeMapLoaded({
+      onMapLoadedListener.onMapLoaded(it.toMapLoadedEventData())
+    })
     onMapLoadedListeners.add(onMapLoadedListener)
   }
 
@@ -286,9 +200,6 @@ internal class NativeObserver(
   )
   fun removeOnMapLoadedListener(onMapLoadedListener: OnMapLoadedListener) {
     onMapLoadedListeners.remove(onMapLoadedListener)
-    if (onMapLoadedListeners.isEmpty()) {
-      cancelAllAndRemove(MapEvent.MAP_LOADED)
-    }
   }
 
   // Render frame events
@@ -297,7 +208,9 @@ internal class NativeObserver(
     level = DeprecationLevel.WARNING
   )
   fun addOnRenderFrameFinishedListener(onRenderFrameFinishedListener: OnRenderFrameFinishedListener) {
-    subscribeToMapEvent(MapEvent.RENDER_FRAME_FINISHED, onRenderFrameFinishedListener)
+    subscribeRenderFrameFinished({
+      onRenderFrameFinishedListener.onRenderFrameFinished(it.toRenderFrameFinishedEventData())
+    })
     onRenderFrameFinishedListeners.add(onRenderFrameFinishedListener)
   }
 
@@ -307,9 +220,6 @@ internal class NativeObserver(
   )
   fun removeOnRenderFrameFinishedListener(onRenderFrameFinishedListener: OnRenderFrameFinishedListener) {
     onRenderFrameFinishedListeners.remove(onRenderFrameFinishedListener)
-    if (onRenderFrameFinishedListeners.isEmpty()) {
-      cancelAllAndRemove(MapEvent.RENDER_FRAME_FINISHED)
-    }
   }
 
   @Deprecated(
@@ -317,7 +227,9 @@ internal class NativeObserver(
     level = DeprecationLevel.WARNING
   )
   fun addOnRenderFrameStartedListener(onRenderFrameStartedListener: OnRenderFrameStartedListener) {
-    subscribeToMapEvent(MapEvent.RENDER_FRAME_STARTED, onRenderFrameStartedListener)
+    subscribeRenderFrameStarted({
+      onRenderFrameStartedListener.onRenderFrameStarted(it.toRenderFrameStartedEventData())
+    })
     onRenderFrameStartedListeners.add(onRenderFrameStartedListener)
   }
 
@@ -327,9 +239,6 @@ internal class NativeObserver(
   )
   fun removeOnRenderFrameStartedListener(onRenderFrameStartedListener: OnRenderFrameStartedListener) {
     onRenderFrameStartedListeners.remove(onRenderFrameStartedListener)
-    if (onRenderFrameStartedListeners.isEmpty()) {
-      cancelAllAndRemove(MapEvent.RENDER_FRAME_STARTED)
-    }
   }
 
   // Source events
@@ -338,7 +247,9 @@ internal class NativeObserver(
     level = DeprecationLevel.WARNING
   )
   fun addOnSourceAddedListener(onSourceAddedListener: OnSourceAddedListener) {
-    subscribeToMapEvent(MapEvent.SOURCE_ADDED, onSourceAddedListener)
+    subscribeSourceAdded({
+      onSourceAddedListener.onSourceAdded(it.toSourceAddedEventData())
+    })
     onSourceAddedListeners.add(onSourceAddedListener)
   }
 
@@ -348,9 +259,6 @@ internal class NativeObserver(
   )
   fun removeOnSourceAddedListener(onSourceAddedListener: OnSourceAddedListener) {
     onSourceAddedListeners.remove(onSourceAddedListener)
-    if (onSourceAddedListeners.isEmpty()) {
-      cancelAllAndRemove(MapEvent.SOURCE_ADDED)
-    }
   }
 
   @Deprecated(
@@ -358,7 +266,9 @@ internal class NativeObserver(
     level = DeprecationLevel.WARNING
   )
   fun addOnSourceDataLoadedListener(onSourceDataLoadedListener: OnSourceDataLoadedListener) {
-    subscribeToMapEvent(MapEvent.SOURCE_DATA_LOADED, onSourceDataLoadedListener)
+    subscribeSourceDataLoaded({
+      onSourceDataLoadedListener.onSourceDataLoaded(it.toSourceDataLoadedEventData())
+    })
     onSourceDataLoadedListeners.add(onSourceDataLoadedListener)
   }
 
@@ -368,9 +278,6 @@ internal class NativeObserver(
   )
   fun removeOnSourceDataLoadedListener(onSourceDataLoadedListener: OnSourceDataLoadedListener) {
     onSourceDataLoadedListeners.remove(onSourceDataLoadedListener)
-    if (onSourceDataLoadedListeners.isEmpty()) {
-      cancelAllAndRemove(MapEvent.SOURCE_DATA_LOADED)
-    }
   }
 
   @Deprecated(
@@ -378,7 +285,9 @@ internal class NativeObserver(
     level = DeprecationLevel.WARNING
   )
   fun addOnSourceRemovedListener(onSourceRemovedListener: OnSourceRemovedListener) {
-    subscribeToMapEvent(MapEvent.SOURCE_REMOVED, onSourceRemovedListener)
+    subscribeSourceRemoved({
+      onSourceRemovedListener.onSourceRemoved(it.toSourceRemovedEventData())
+    })
     onSourceRemovedListeners.add(onSourceRemovedListener)
   }
 
@@ -388,18 +297,16 @@ internal class NativeObserver(
   )
   fun removeOnSourceRemovedListener(onSourceRemovedListener: OnSourceRemovedListener) {
     onSourceRemovedListeners.remove(onSourceRemovedListener)
-    if (onSourceRemovedListeners.isEmpty()) {
-      cancelAllAndRemove(MapEvent.SOURCE_REMOVED)
-    }
   }
 
-  // Style events
   @Deprecated(
     message = "This method is deprecated, and will be removed in next major release.",
     level = DeprecationLevel.WARNING
   )
   fun addOnStyleLoadedListener(onStyleLoadedListener: OnStyleLoadedListener) {
-    subscribeToMapEvent(MapEvent.STYLE_LOADED, onStyleLoadedListener)
+    subscribeStyleLoaded({
+      onStyleLoadedListener.onStyleLoaded(it.toStyleLoadedEventData())
+    })
     onStyleLoadedListeners.add(onStyleLoadedListener)
   }
 
@@ -409,9 +316,6 @@ internal class NativeObserver(
   )
   fun removeOnStyleLoadedListener(onStyleLoadedListener: OnStyleLoadedListener) {
     onStyleLoadedListeners.remove(onStyleLoadedListener)
-    if (onStyleLoadedListeners.isEmpty()) {
-      cancelAllAndRemove(MapEvent.STYLE_LOADED)
-    }
   }
 
   @Deprecated(
@@ -419,7 +323,9 @@ internal class NativeObserver(
     level = DeprecationLevel.WARNING
   )
   fun addOnStyleDataLoadedListener(onStyleDataLoadedListener: OnStyleDataLoadedListener) {
-    subscribeToMapEvent(MapEvent.STYLE_DATA_LOADED, onStyleDataLoadedListener)
+    subscribeStyleDataLoaded({
+      onStyleDataLoadedListener.onStyleDataLoaded(it.toStyleDataLoadedEventData())
+    })
     onStyleDataLoadedListeners.add(onStyleDataLoadedListener)
   }
 
@@ -429,9 +335,6 @@ internal class NativeObserver(
   )
   fun removeOnStyleDataLoadedListener(onStyleDataLoadedListener: OnStyleDataLoadedListener) {
     onStyleDataLoadedListeners.remove(onStyleDataLoadedListener)
-    if (onStyleDataLoadedListeners.isEmpty()) {
-      cancelAllAndRemove(MapEvent.STYLE_DATA_LOADED)
-    }
   }
 
   @Deprecated(
@@ -439,7 +342,9 @@ internal class NativeObserver(
     level = DeprecationLevel.WARNING
   )
   fun addOnStyleImageMissingListener(onStyleImageMissingListener: OnStyleImageMissingListener) {
-    subscribeToMapEvent(MapEvent.STYLE_IMAGE_MISSING, onStyleImageMissingListener)
+    subscribeStyleImageMissing({
+      onStyleImageMissingListener.onStyleImageMissing(it.getStyleImageMissingEventData())
+    })
     onStyleImageMissingListeners.add(onStyleImageMissingListener)
   }
 
@@ -449,9 +354,6 @@ internal class NativeObserver(
   )
   fun removeOnStyleImageMissingListener(onStyleImageMissingListener: OnStyleImageMissingListener) {
     onStyleImageMissingListeners.remove(onStyleImageMissingListener)
-    if (onStyleImageMissingListeners.isEmpty()) {
-      cancelAllAndRemove(MapEvent.STYLE_IMAGE_MISSING)
-    }
   }
 
   @Deprecated(
@@ -459,7 +361,9 @@ internal class NativeObserver(
     level = DeprecationLevel.WARNING
   )
   fun addOnStyleImageUnusedListener(onStyleImageUnusedListener: OnStyleImageUnusedListener) {
-    subscribeToMapEvent(MapEvent.STYLE_IMAGE_REMOVE_UNUSED, onStyleImageUnusedListener)
+    subscribeStyleImageRemoveUnused({
+      onStyleImageUnusedListener.onStyleImageUnused(it.toStyleImageUnusedEventData())
+    })
     onStyleImageUnusedListeners.add(onStyleImageUnusedListener)
   }
 
@@ -469,184 +373,155 @@ internal class NativeObserver(
   )
   fun removeOnStyleImageUnusedListener(onStyleImageUnusedListener: OnStyleImageUnusedListener) {
     onStyleImageUnusedListeners.remove(onStyleImageUnusedListener)
-    if (onStyleImageUnusedListeners.isEmpty()) {
-      cancelAllAndRemove(MapEvent.STYLE_IMAGE_REMOVE_UNUSED)
-    }
   }
 
-  /**
-   * New subscribe methods supported by native.
-   */
-  fun subscribeCameraChanged(cameraChangedCallback: CameraChangedCallback): Cancelable {
-    return observable.subscribe(cameraChangedCallback).also {
-      cancelableEventsMap.getOrPut(MapEvent.CAMERA_CHANGED) {
-        mutableListOf()
-      }.add(it)
-    }
-  }
+  fun subscribeCameraChanged(
+    cameraChangedCallback: CameraChangedCallback,
+    onCancel: (() -> Unit)? = null
+  ): Cancelable = ExtendedCancelable(
+    observable.subscribe(cameraChangedCallback),
+    onCancel
+  )
 
-  fun subscribeMapLoaded(mapLoadedCallback: MapLoadedCallback): Cancelable {
-    return observable.subscribe(mapLoadedCallback).also {
-      cancelableEventsMap.getOrPut(MapEvent.MAP_LOADED) {
-        mutableListOf()
-      }.add(it)
-    }
-  }
+  fun subscribeMapLoaded(
+    mapLoadedCallback: MapLoadedCallback,
+    onCancel: (() -> Unit)? = null
+  ): Cancelable = ExtendedCancelable(
+    observable.subscribe(mapLoadedCallback),
+    onCancel
+  )
 
-  fun subscribeMapIdle(mapIdleCallback: MapIdleCallback): Cancelable {
-    return observable.subscribe(mapIdleCallback).also {
-      cancelableEventsMap.getOrPut(MapEvent.MAP_IDLE) {
-        mutableListOf()
-      }.add(it)
-    }
-  }
+  fun subscribeMapIdle(
+    mapIdleCallback: MapIdleCallback,
+    onCancel: (() -> Unit)? = null
+  ): Cancelable = ExtendedCancelable(
+    observable.subscribe(mapIdleCallback),
+    onCancel
+  )
 
-  fun subscribeMapLoadingError(mapLoadingErrorCallback: MapLoadingErrorCallback): Cancelable {
-    return observable.subscribe(mapLoadingErrorCallback).also {
-      cancelableEventsMap.getOrPut(MapEvent.MAP_LOADING_ERROR) {
-        mutableListOf()
-      }.add(it)
-    }
-  }
+  fun subscribeMapLoadingError(
+    mapLoadingErrorCallback: MapLoadingErrorCallback,
+    onCancel: (() -> Unit)? = null
+  ): Cancelable = ExtendedCancelable(
+    observable.subscribe(mapLoadingErrorCallback),
+    onCancel
+  )
 
   fun subscribeStyleLoaded(
-    styleLoadedCallback: StyleLoadedCallback
-  ): Cancelable {
-    val originalCancelable = observable.subscribe(styleLoadedCallback)
-    // extendedCancelable is needed to track when user calls cancel so we return it to the user
-    val extendedCancelable = ExtendedStyleLoadedCancelable(styleLoadedCallback, originalCancelable)
-    // we store originalCancelable in the map so that `styleLoadedCallback` is not removed
-    // when calling `resubscribeStyleLoadListeners`
-    cancelableEventsMap.getOrPut(MapEvent.STYLE_LOADED) {
-      mutableListOf()
-    }.add(originalCancelable)
-    styleLoadedCallbackSet.add(extendedCancelable)
-    return extendedCancelable
-  }
+    styleLoadedCallback: StyleLoadedCallback,
+    onCancel: (() -> Unit)? = null
+  ): Cancelable = ResubscribeExtendedCancelable(
+    styleLoadedCallback,
+    observable.subscribe(styleLoadedCallback),
+    styleLoadedCancelableSet,
+    onCancel
+  )
 
-  fun subscribeStyleDataLoaded(styleDataLoadedCallback: StyleDataLoadedCallback): Cancelable {
-    val originalCancelable = observable.subscribe(styleDataLoadedCallback)
-    // extendedCancelable is needed to track when user calls cancel so we return it to the user
-    val extendedCancelable = ExtendedDataStyleLoadedCancelable(styleDataLoadedCallback, originalCancelable)
-    // we store originalCancelable in the map so that `styleDataLoadedCallbackSet` is not removed
-    // when calling `resubscribeStyleLoadListeners`
-    cancelableEventsMap.getOrPut(MapEvent.STYLE_DATA_LOADED) {
-      mutableListOf()
-    }.add(originalCancelable)
-    styleDataLoadedCallbackSet.add(extendedCancelable)
-    return extendedCancelable
-  }
+  fun subscribeStyleDataLoaded(
+    styleDataLoadedCallback: StyleDataLoadedCallback,
+    onCancel: (() -> Unit)? = null
+  ): Cancelable = ResubscribeExtendedCancelable(
+    styleDataLoadedCallback,
+    observable.subscribe(styleDataLoadedCallback),
+    styleDataLoadedCancelableSet,
+    onCancel
+  )
 
-  fun subscribeSourceDataLoaded(sourceDataLoadedCallback: SourceDataLoadedCallback): Cancelable {
-    return observable.subscribe(sourceDataLoadedCallback).also {
-      cancelableEventsMap.getOrPut(MapEvent.SOURCE_DATA_LOADED) {
-        mutableListOf()
-      }.add(it)
-    }
-  }
+  fun subscribeSourceDataLoaded(
+    sourceDataLoadedCallback: SourceDataLoadedCallback,
+    onCancel: (() -> Unit)? = null
+  ): Cancelable = ExtendedCancelable(
+    observable.subscribe(sourceDataLoadedCallback),
+    onCancel
+  )
 
-  fun subscribeSourceAdded(sourceAddedCallback: SourceAddedCallback): Cancelable {
-    return observable.subscribe(sourceAddedCallback).also {
-      cancelableEventsMap.getOrPut(MapEvent.SOURCE_ADDED) {
-        mutableListOf()
-      }.add(it)
-    }
-  }
+  fun subscribeSourceAdded(
+    sourceAddedCallback: SourceAddedCallback,
+    onCancel: (() -> Unit)? = null
+  ): Cancelable = ExtendedCancelable(
+    observable.subscribe(sourceAddedCallback),
+    onCancel
+  )
 
-  fun subscribeSourceRemoved(sourceRemovedCallback: SourceRemovedCallback): Cancelable {
-    return observable.subscribe(sourceRemovedCallback).also {
-      cancelableEventsMap.getOrPut(MapEvent.SOURCE_REMOVED) {
-        mutableListOf()
-      }.add(it)
-    }
-  }
+  fun subscribeSourceRemoved(
+    sourceRemovedCallback: SourceRemovedCallback,
+    onCancel: (() -> Unit)? = null
+  ): Cancelable = ExtendedCancelable(
+    observable.subscribe(sourceRemovedCallback),
+    onCancel
+  )
 
-  fun subscribeStyleImageMissing(styleImageMissingCallback: StyleImageMissingCallback): Cancelable {
-    return observable.subscribe(styleImageMissingCallback).also {
-      cancelableEventsMap.getOrPut(MapEvent.STYLE_IMAGE_MISSING) {
-        mutableListOf()
-      }.add(it)
-    }
-  }
+  fun subscribeStyleImageMissing(
+    styleImageMissingCallback: StyleImageMissingCallback,
+    onCancel: (() -> Unit)? = null
+  ): Cancelable = ExtendedCancelable(
+    observable.subscribe(styleImageMissingCallback),
+    onCancel
+  )
 
-  fun subscribeStyleImageRemoveUnused(styleImageRemoveUnusedCallback: StyleImageRemoveUnusedCallback): Cancelable {
-    return observable.subscribe(styleImageRemoveUnusedCallback).also {
-      cancelableEventsMap.getOrPut(MapEvent.STYLE_IMAGE_REMOVE_UNUSED) {
-        mutableListOf()
-      }.add(it)
-    }
-  }
+  fun subscribeStyleImageRemoveUnused(
+    styleImageRemoveUnusedCallback: StyleImageRemoveUnusedCallback,
+    onCancel: (() -> Unit)? = null
+  ): Cancelable = ExtendedCancelable(
+    observable.subscribe(styleImageRemoveUnusedCallback),
+    onCancel
+  )
 
-  fun subscribeRenderFrameStarted(renderFrameStartedCallback: RenderFrameStartedCallback): Cancelable {
-    return observable.subscribe(renderFrameStartedCallback).also {
-      cancelableEventsMap.getOrPut(MapEvent.RENDER_FRAME_STARTED) {
-        mutableListOf()
-      }.add(it)
-    }
-  }
+  fun subscribeRenderFrameStarted(
+    renderFrameStartedCallback: RenderFrameStartedCallback,
+    onCancel: (() -> Unit)? = null
+  ): Cancelable = ExtendedCancelable(
+    observable.subscribe(renderFrameStartedCallback),
+    onCancel
+  )
 
-  fun subscribeRenderFrameFinished(renderFrameFinishedCallback: RenderFrameFinishedCallback): Cancelable {
-    return observable.subscribe(renderFrameFinishedCallback).also {
-      cancelableEventsMap.getOrPut(MapEvent.RENDER_FRAME_FINISHED) {
-        mutableListOf()
-      }.add(it)
-    }
-  }
+  internal fun subscribeRenderFrameFinished(
+    renderFrameFinishedCallback: RenderFrameFinishedCallback,
+    onCancel: (() -> Unit)? = null
+  ): Cancelable = ExtendedCancelable(
+    observable.subscribe(renderFrameFinishedCallback),
+    onCancel
+  )
 
-  fun subscribeResourceRequest(resourceRequestCallback: ResourceRequestCallback): Cancelable {
-    return observable.subscribe(resourceRequestCallback).also {
-      cancelableEventsMap.getOrPut(MapEvent.RESOURCE_REQUEST) {
-        mutableListOf()
-      }.add(it)
-    }
-  }
+  internal fun subscribeResourceRequest(
+    resourceRequestCallback: ResourceRequestCallback,
+    onCancel: (() -> Unit)? = null
+  ): Cancelable = ExtendedCancelable(
+    observable.subscribe(resourceRequestCallback),
+    onCancel
+  )
 
   @MapboxExperimental
   fun subscribeGenericEvent(
     eventName: String,
-    genericEventCallback: GenericEventCallback
-  ): Cancelable {
-    return observable.subscribe(eventName, genericEventCallback).also {
-      cancelableEventsMap.getOrPut(MapEvent.GENERIC_EVENT) {
-        mutableListOf()
-      }.add(it)
-    }
-  }
+    genericEventCallback: GenericEventCallback,
+    onCancel: (() -> Unit)? = null
+  ): Cancelable = ExtendedCancelable(
+    observable.subscribe(eventName, genericEventCallback),
+    onCancel
+  )
 
   // This method is needed to prevent receiving styleLoaded events with the old style
   // when new style is loaded. For example loading empty style and another style immediately after
   // that will notify STYLE_LOADED event for the first style after second style has already started
   // loading
   fun resubscribeStyleLoadListeners() {
-    cancelAllAndRemove(MapEvent.STYLE_LOADED)
-    cancelAllAndRemove(MapEvent.STYLE_DATA_LOADED)
     // we subscribe again but re-use extended cancelable/s that could be cached on user side
     // to make sure that calling extendedCancelable.cancel will actually hit the correct new originalCancelable.cancel
-    styleLoadedCallbackSet.forEach {
-      val originalCancelable = observable.subscribe(it.styleLoadedCallback)
-      it.originalCancelable = originalCancelable
-      // we store originalCancelable in the map so that `styleLoadedCallback` is not removed
-      // when calling `resubscribeStyleLoadListeners`
-      cancelableEventsMap.getOrPut(MapEvent.STYLE_LOADED) {
-        mutableListOf()
-      }.add(originalCancelable)
+    styleLoadedCancelableSet.forEach {
+      it.resubscribe(observable::subscribe)
     }
-    styleDataLoadedCallbackSet.forEach {
-      val originalCancelable = observable.subscribe(it.styleDataLoadedCallback)
-      it.originalCancelable = originalCancelable
-      // we store originalCancelable in the map so that `styleLoadedCallback` is not removed
-      // when calling `resubscribeStyleLoadListeners`
-      cancelableEventsMap.getOrPut(MapEvent.STYLE_DATA_LOADED) {
-        mutableListOf()
-      }.add(originalCancelable)
+    styleDataLoadedCancelableSet.forEach {
+      it.resubscribe(observable::subscribe)
     }
   }
 
   fun onDestroy() {
     // cancel all cancelable
-    cancelableEventsMap.values.flatten().forEach { it.cancel() }
+    cancelableSet.forEach(Cancelable::cancel)
+    styleDataLoadedCancelableSet.forEach(Cancelable::cancel)
+    styleLoadedCancelableSet.forEach(Cancelable::cancel)
 
-    cancelableEventsMap.clear()
     onCameraChangeListeners.clear()
 
     onMapIdleListeners.clear()
@@ -664,8 +539,5 @@ internal class NativeObserver(
     onStyleDataLoadedListeners.clear()
     onStyleImageMissingListeners.clear()
     onStyleImageUnusedListeners.clear()
-
-    styleLoadedCallbackSet.clear()
-    styleDataLoadedCallbackSet.clear()
   }
 }

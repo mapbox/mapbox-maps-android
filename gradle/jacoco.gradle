@@ -8,6 +8,10 @@ jacocoAndroidUnitTestReport {
     csv.enabled true
     html.enabled true
     xml.enabled true
+    excludes += [
+            '**/*MapboxStyleManager.class',
+            'com/mapbox/maps/plugin/*/generated/*',
+    ]
 }
 
 tasks.withType(Test) {

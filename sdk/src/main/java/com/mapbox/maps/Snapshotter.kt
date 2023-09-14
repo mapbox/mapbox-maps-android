@@ -33,7 +33,9 @@ open class Snapshotter {
   private val mapSnapshotOptions: MapSnapshotOptions
   internal var snapshotStyleCallback: SnapshotStyleListener? = null
   private val snapshotOverlayOptions: SnapshotOverlayOptions
-  private var cancelableEvents = HashMap<MapEvent, Cancelable>()
+  private var cancelableEvents = mutableListOf<Cancelable>()
+  private var loadingErrorCancelable: Cancelable? = null
+  private var styleLoadedCancelable: Cancelable? = null
 
   @JvmOverloads
   constructor(
@@ -52,13 +54,14 @@ open class Snapshotter {
     coreSnapshotter = MapSnapshotter(options)
     dispatchTelemetryTurnstileEvent(context)
     val weakSelf = WeakReference(this)
-    cancelableEvents[MapEvent.MAP_LOADING_ERROR] = subscribeMapLoadingError {
+    loadingErrorCancelable = subscribeMapLoadingError {
       weakSelf.get()?.apply {
+        loadingErrorCancelable?.cancel()
         snapshotStyleCallback?.onDidFailLoadingStyle(it.message)
-        cancelableEvents[MapEvent.MAP_LOADING_ERROR]?.cancel()
       }
     }
-    cancelableEvents[MapEvent.STYLE_DATA_LOADED] = subscribeStyleDataLoaded {
+    cancelableEvents.add(
+      subscribeStyleDataLoaded {
       if (it.type == StyleDataLoadedType.STYLE) {
         weakSelf.get()?.apply {
           snapshotStyleCallback?.onDidFinishLoadingStyle(
@@ -70,7 +73,8 @@ open class Snapshotter {
         }
       }
     }
-    cancelableEvents[MapEvent.STYLE_LOADED] = subscribeStyleLoaded {
+    )
+    styleLoadedCancelable = subscribeStyleLoaded {
       weakSelf.get()?.apply {
         snapshotStyleCallback?.onDidFullyLoadStyle(
           Style(
@@ -78,14 +82,16 @@ open class Snapshotter {
             pixelRatio
           )
         )
-        cancelableEvents[MapEvent.STYLE_LOADED]?.cancel()
+        styleLoadedCancelable?.cancel()
       }
     }
-    cancelableEvents[MapEvent.STYLE_IMAGE_MISSING] = subscribeStyleImageMissing {
+    cancelableEvents.add(
+      subscribeStyleImageMissing {
       weakSelf.get()?.apply {
         snapshotStyleCallback?.onStyleImageMissing(it.imageId)
       }
     }
+    )
   }
 
   private fun dispatchTelemetryTurnstileEvent(
@@ -203,8 +209,10 @@ open class Snapshotter {
    */
   fun destroy() {
     cancel()
-    cancelableEvents.values.forEach { it.cancel() }
+    cancelableEvents.forEach(Cancelable::cancel)
     cancelableEvents.clear()
+    loadingErrorCancelable?.cancel()
+    styleLoadedCancelable?.cancel()
     snapshotStyleCallback = null
   }
 

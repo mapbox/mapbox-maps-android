@@ -80,6 +80,7 @@ dependencies {
   testImplementation(libs.robolectricEgl)
   testImplementation(libs.asyncInflater)
   testImplementation(libs.androidx.testJUnit)
+  testImplementation(libs.coroutinesTest)
   debugImplementation(libs.androidx.appCompat)
 
   androidTestImplementation(libs.bundles.base.dependenciesAndroidTests)
@@ -100,16 +101,4 @@ project.apply {
   from("$rootDir/gradle/track-public-apis.gradle")
   from("$rootDir/gradle/detekt.gradle")
   from("$rootDir/gradle/dependency-updates.gradle")
-}
-
-tasks.withType<JacocoReport> {
-  afterEvaluate {
-    classDirectories.setFrom(files(classDirectories.files.map {
-      fileTree(it).apply {
-        exclude(
-          "**MapboxStyleManager**",
-        )
-      }
-    }))
-  }
 }

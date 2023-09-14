@@ -28,134 +28,81 @@ class NativeMapTest {
 
   private val map = mockk<Map>(relaxed = true)
 
-  private fun <T> subscribeMapEvent(event: MapEvent, callback: T, eventName: String = "") {
-    val nativeMap = NativeMapImpl(map)
-    when (event) {
-      MapEvent.CAMERA_CHANGED -> {
-        nativeMap.subscribe(callback as CameraChangedCallback)
-        verify { map.subscribe(callback) }
-      }
-      MapEvent.MAP_IDLE -> {
-        nativeMap.subscribe(callback as MapIdleCallback)
-        verify { map.subscribe(callback) }
-      }
-      MapEvent.MAP_LOADING_ERROR -> {
-        nativeMap.subscribe(callback as MapLoadingErrorCallback)
-        verify { map.subscribe(callback) }
-      }
-      MapEvent.MAP_LOADED -> {
-        nativeMap.subscribe(callback as MapLoadedCallback)
-        verify { map.subscribe(callback) }
-      }
-      MapEvent.STYLE_DATA_LOADED -> {
-        nativeMap.subscribe(callback as StyleDataLoadedCallback)
-        verify { map.subscribe(callback) }
-      }
-      MapEvent.STYLE_LOADED -> {
-        nativeMap.subscribe(callback as StyleLoadedCallback)
-        verify { map.subscribe(callback) }
-      }
-      MapEvent.STYLE_IMAGE_MISSING -> {
-        nativeMap.subscribe(callback as StyleImageMissingCallback)
-        verify { map.subscribe(callback) }
-      }
-      MapEvent.STYLE_IMAGE_REMOVE_UNUSED -> {
-        nativeMap.subscribe(callback as StyleImageRemoveUnusedCallback)
-        verify { map.subscribe(callback) }
-      }
-      MapEvent.RENDER_FRAME_STARTED -> {
-        nativeMap.subscribe(callback as RenderFrameStartedCallback)
-        verify { map.subscribe(callback) }
-      }
-      MapEvent.RENDER_FRAME_FINISHED -> {
-        nativeMap.subscribe(callback as RenderFrameFinishedCallback)
-        verify { map.subscribe(callback) }
-      }
-      MapEvent.SOURCE_ADDED -> {
-        nativeMap.subscribe(callback as SourceAddedCallback)
-        verify { map.subscribe(callback) }
-      }
-      MapEvent.SOURCE_DATA_LOADED -> {
-        nativeMap.subscribe(callback as SourceDataLoadedCallback)
-        verify { map.subscribe(callback) }
-      }
-      MapEvent.SOURCE_REMOVED -> {
-        nativeMap.subscribe(callback as SourceRemovedCallback)
-        verify { map.subscribe(callback) }
-      }
-      MapEvent.RESOURCE_REQUEST -> {
-        nativeMap.subscribe(callback as ResourceRequestCallback)
-        verify { map.subscribe(callback) }
-      }
-      MapEvent.GENERIC_EVENT -> {
-        nativeMap.subscribe(eventName, callback as GenericEventCallback)
-        verify { map.subscribe(eventName, callback) }
-      }
-    }
-  }
-
   @Test
   fun subscribeCameraChangeEvent() {
-    subscribeMapEvent(MapEvent.CAMERA_CHANGED, mockk<CameraChangedCallback>())
+    subscribeEvent<CameraChangedCallback>(NativeMapImpl::subscribe, Map::subscribe)
   }
 
   @Test
   fun subscribeMapIdleEvent() {
-    subscribeMapEvent(MapEvent.MAP_IDLE, mockk<MapIdleCallback>())
+    subscribeEvent<MapIdleCallback>(NativeMapImpl::subscribe, Map::subscribe)
   }
   @Test
   fun subscribeStyleDataLoadedEvent() {
-    subscribeMapEvent(MapEvent.STYLE_DATA_LOADED, mockk<StyleDataLoadedCallback>())
+    subscribeEvent<StyleDataLoadedCallback>(NativeMapImpl::subscribe, Map::subscribe)
   }
 
   @Test
   fun subscribeStyleLoadedEvent() {
-    subscribeMapEvent(MapEvent.STYLE_LOADED, mockk<StyleLoadedCallback>())
+    subscribeEvent<StyleLoadedCallback>(NativeMapImpl::subscribe, Map::subscribe)
   }
 
   @Test
   fun subscribeImageMissingEvent() {
-    subscribeMapEvent(MapEvent.STYLE_IMAGE_MISSING, mockk<StyleImageMissingCallback>())
+    subscribeEvent<StyleImageMissingCallback>(NativeMapImpl::subscribe, Map::subscribe)
   }
 
   @Test
   fun subscribeImageRemovedEvent() {
-    subscribeMapEvent(MapEvent.STYLE_IMAGE_REMOVE_UNUSED, mockk<StyleImageRemoveUnusedCallback>())
+    subscribeEvent<StyleImageRemoveUnusedCallback>(NativeMapImpl::subscribe, Map::subscribe)
   }
 
   @Test
   fun subscribeRenderFrameFinishedEvent() {
-    subscribeMapEvent(MapEvent.RENDER_FRAME_FINISHED, mockk<RenderFrameFinishedCallback>())
+    subscribeEvent<RenderFrameFinishedCallback>(NativeMapImpl::subscribe, Map::subscribe)
   }
 
   @Test
   fun subscribeRenderFrameStartedEvent() {
-    subscribeMapEvent(MapEvent.RENDER_FRAME_STARTED, mockk<RenderFrameStartedCallback>())
+    subscribeEvent<RenderFrameStartedCallback>(NativeMapImpl::subscribe, Map::subscribe)
   }
 
   @Test
   fun subscribeSourceAddedEvent() {
-    subscribeMapEvent(MapEvent.SOURCE_ADDED, mockk<SourceAddedCallback>())
+    subscribeEvent<SourceAddedCallback>(NativeMapImpl::subscribe, Map::subscribe)
   }
 
   @Test
   fun subscribeSourceDataLoadedEvent() {
-    subscribeMapEvent(MapEvent.SOURCE_DATA_LOADED, mockk<SourceDataLoadedCallback>())
+    subscribeEvent<SourceDataLoadedCallback>(NativeMapImpl::subscribe, Map::subscribe)
   }
 
   @Test
   fun subscribeSourceRemovedEvent() {
-    subscribeMapEvent(MapEvent.SOURCE_REMOVED, mockk<SourceRemovedCallback>())
+    subscribeEvent<SourceRemovedCallback>(NativeMapImpl::subscribe, Map::subscribe)
   }
 
   @Test
   fun subscribeResourceRequestEvent() {
-    subscribeMapEvent(MapEvent.RESOURCE_REQUEST, mockk<ResourceRequestCallback>())
+    subscribeEvent<ResourceRequestCallback>(NativeMapImpl::subscribe, Map::subscribe)
+  }
+
+  private inline fun <reified C> subscribeEvent(
+    nativeSubscribe: NativeMapImpl.(C) -> Unit,
+    crossinline mapSubscribe: Map.(C) -> Unit
+  ) {
+    val nativeMap = NativeMapImpl(map)
+    val callback: C = mockk()
+    nativeMap.nativeSubscribe(callback)
+    verify { map.mapSubscribe(callback) }
   }
 
   @Test
   fun subscribeUntypedEvent() {
-    subscribeMapEvent(MapEvent.GENERIC_EVENT, mockk<GenericEventCallback>(), "event")
+    val nativeMap = NativeMapImpl(map)
+    val callback = mockk<GenericEventCallback>()
+    nativeMap.subscribe("event", callback)
+    verify { map.subscribe("event", callback) }
   }
 
   @Test
