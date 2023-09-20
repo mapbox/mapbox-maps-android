@@ -113,7 +113,7 @@ fun SourceDataLoaded.toSourceDataLoadedEventData() = SourceDataLoadedEventData(
   message = "This extension function is deprecated, and will be removed in next major release.",
   level = DeprecationLevel.WARNING
 )
-fun StyleImageMissing.getStyleImageMissingEventData() = StyleImageMissingEventData(
+fun StyleImageMissing.toStyleImageMissingEventData() = StyleImageMissingEventData(
   begin = this.timestamp.time,
   end = this.timestamp.time,
   id = this.imageId

@@ -5,12 +5,14 @@ Mapbox welcomes participation and contributions from everyone.
 # 11.0.0-beta.4
 ## Breaking changes ⚠️
 * Remove setter functions for `Style.styleURI` and `Style.styleJSON` as loading the style should happen only with `MapboxMap.loadStyle`.
+* Rename `StyleImageMissing.getStyleImageMissingEventData` to `StyleImageMissing.toStyleImageMissingEventData`.
 
 ## Features ✨ and improvements 🏁
 * Copy relevant `Style` methods to `MapboxMap` providing better alignment with iOS and GL-JS.
 
 ## Bug fixes 🐞
 * Free resources immediately after map event subscription is canceled.
+* Fix map event listeners not being removed when `MapboxMap.remove*Listener` is called.
 
 # 11.0.0-beta.3 September 08, 2023
 ## Breaking changes ⚠️

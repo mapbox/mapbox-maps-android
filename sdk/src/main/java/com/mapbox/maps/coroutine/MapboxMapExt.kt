@@ -1,3 +1,9 @@
+// Suppress to keep <T> generic type for `callbackFlow<T>` - otherwise kotlin compiler crashes because the onCancel lambda
+// see :
+// https://youtrack.jetbrains.com/issue/KT-53478/Could-not-load-module-Error-module
+// https://youtrack.jetbrains.com/issue/KT-52757/Type-inference-for-builders-fails-if-inferred-from-a-function
+@file:Suppress("RemoveExplicitTypeArguments")
+
 package com.mapbox.maps.coroutine
 
 import com.mapbox.bindgen.Expected
@@ -26,7 +32,6 @@ suspend fun MapboxMap.awaitStyle(): Style = suspendCoroutine { continuation ->
   getStyle(continuation::resume)
 }
 
-// TODO improve loadStyle ergonomics https://mapbox.atlassian.net/browse/MAPSAND-923
 /**
  * Load a new style from a style extension, suspends until style is loaded.
  *
@@ -293,8 +298,8 @@ suspend fun MapboxMap.setFeatureState(
  */
 val MapboxMap.mapLoadedEvents: Flow<MapLoaded>
   @JvmSynthetic
-  get() = callbackFlow {
-    val cancelable = nativeObserver.subscribeMapLoaded(::trySendBlocking) { channel.close() }
+  get() = callbackFlow<MapLoaded> {
+    val cancelable = nativeObserver.subscribeMapLoaded(::trySendBlocking, onCancel = channel::close)
     awaitClose(cancelable::cancel)
   }.flowOn(Dispatchers.Main.immediate)
 
@@ -303,8 +308,8 @@ val MapboxMap.mapLoadedEvents: Flow<MapLoaded>
  */
 val MapboxMap.mapLoadingErrorEvents: Flow<MapLoadingError>
   @JvmSynthetic
-  get() = callbackFlow {
-    val cancelable = nativeObserver.subscribeMapLoadingError(::trySendBlocking) { channel.close() }
+  get() = callbackFlow<MapLoadingError> {
+    val cancelable = nativeObserver.subscribeMapLoadingError(::trySendBlocking, onCancel = channel::close)
     awaitClose(cancelable::cancel)
   }.flowOn(Dispatchers.Main.immediate)
 
@@ -313,8 +318,8 @@ val MapboxMap.mapLoadingErrorEvents: Flow<MapLoadingError>
  */
 val MapboxMap.styleLoadedEvents: Flow<StyleLoaded>
   @JvmSynthetic
-  get() = callbackFlow {
-    val cancelable = nativeObserver.subscribeStyleLoaded(::trySendBlocking) { channel.close() }
+  get() = callbackFlow<StyleLoaded> {
+    val cancelable = nativeObserver.subscribeStyleLoaded(::trySendBlocking, onCancel = channel::close)
     awaitClose(cancelable::cancel)
   }.flowOn(Dispatchers.Main.immediate)
 
@@ -323,8 +328,8 @@ val MapboxMap.styleLoadedEvents: Flow<StyleLoaded>
  */
 val MapboxMap.styleDataLoadedEvents: Flow<StyleDataLoaded>
   @JvmSynthetic
-  get() = callbackFlow {
-    val cancelable = nativeObserver.subscribeStyleDataLoaded(::trySendBlocking) { channel.close() }
+  get() = callbackFlow<StyleDataLoaded> {
+    val cancelable = nativeObserver.subscribeStyleDataLoaded(::trySendBlocking, onCancel = channel::close)
     awaitClose(cancelable::cancel)
   }.flowOn(Dispatchers.Main.immediate)
 
@@ -333,8 +338,8 @@ val MapboxMap.styleDataLoadedEvents: Flow<StyleDataLoaded>
  */
 val MapboxMap.cameraChangedEvents: Flow<CameraChanged>
   @JvmSynthetic
-  get() = callbackFlow {
-    val cancelable = nativeObserver.subscribeCameraChanged(::trySendBlocking) { channel.close() }
+  get() = callbackFlow<CameraChanged> {
+    val cancelable = nativeObserver.subscribeCameraChanged(::trySendBlocking, onCancel = channel::close)
     awaitClose(cancelable::cancel)
   }.flowOn(Dispatchers.Main.immediate)
 
@@ -343,8 +348,8 @@ val MapboxMap.cameraChangedEvents: Flow<CameraChanged>
  */
 val MapboxMap.mapIdleEvents: Flow<MapIdle>
   @JvmSynthetic
-  get() = callbackFlow {
-    val cancelable = nativeObserver.subscribeMapIdle(::trySendBlocking) { channel.close() }
+  get() = callbackFlow<MapIdle> {
+    val cancelable = nativeObserver.subscribeMapIdle(::trySendBlocking, onCancel = channel::close)
     awaitClose(cancelable::cancel)
   }.flowOn(Dispatchers.Main.immediate)
 
@@ -353,8 +358,8 @@ val MapboxMap.mapIdleEvents: Flow<MapIdle>
  */
 val MapboxMap.sourceAddedEvents: Flow<SourceAdded>
   @JvmSynthetic
-  get() = callbackFlow {
-    val cancelable = nativeObserver.subscribeSourceAdded(::trySendBlocking) { channel.close() }
+  get() = callbackFlow<SourceAdded> {
+    val cancelable = nativeObserver.subscribeSourceAdded(::trySendBlocking, onCancel = channel::close)
     awaitClose(cancelable::cancel)
   }.flowOn(Dispatchers.Main.immediate)
 
@@ -363,8 +368,8 @@ val MapboxMap.sourceAddedEvents: Flow<SourceAdded>
  */
 val MapboxMap.sourceRemovedEvents: Flow<SourceRemoved>
   @JvmSynthetic
-  get() = callbackFlow {
-    val cancelable = nativeObserver.subscribeSourceRemoved(::trySendBlocking) { channel.close() }
+  get() = callbackFlow<SourceRemoved> {
+    val cancelable = nativeObserver.subscribeSourceRemoved(::trySendBlocking, onCancel = channel::close)
     awaitClose(cancelable::cancel)
   }.flowOn(Dispatchers.Main.immediate)
 
@@ -373,8 +378,8 @@ val MapboxMap.sourceRemovedEvents: Flow<SourceRemoved>
  */
 val MapboxMap.sourceDataLoadedEvents: Flow<SourceDataLoaded>
   @JvmSynthetic
-  get() = callbackFlow {
-    val cancelable = nativeObserver.subscribeSourceDataLoaded(::trySendBlocking) { channel.close() }
+  get() = callbackFlow<SourceDataLoaded> {
+    val cancelable = nativeObserver.subscribeSourceDataLoaded(::trySendBlocking, onCancel = channel::close)
     awaitClose(cancelable::cancel)
   }.flowOn(Dispatchers.Main.immediate)
 
@@ -383,8 +388,9 @@ val MapboxMap.sourceDataLoadedEvents: Flow<SourceDataLoaded>
  */
 val MapboxMap.styleImageMissingEvents: Flow<StyleImageMissing>
   @JvmSynthetic
-  get() = callbackFlow {
-    val cancelable = nativeObserver.subscribeStyleImageMissing(::trySendBlocking) { channel.close() }
+  get() = callbackFlow<StyleImageMissing> {
+    val cancelable =
+      nativeObserver.subscribeStyleImageMissing(::trySendBlocking, onCancel = channel::close)
     awaitClose(cancelable::cancel)
   }.flowOn(Dispatchers.Main.immediate)
 
@@ -393,8 +399,9 @@ val MapboxMap.styleImageMissingEvents: Flow<StyleImageMissing>
  */
 val MapboxMap.styleImageRemoveUnusedEvents: Flow<StyleImageRemoveUnused>
   @JvmSynthetic
-  get() = callbackFlow {
-    val cancelable = nativeObserver.subscribeStyleImageRemoveUnused(::trySendBlocking) { channel.close() }
+  get() = callbackFlow<StyleImageRemoveUnused> {
+    val cancelable =
+      nativeObserver.subscribeStyleImageRemoveUnused(::trySendBlocking, onCancel = channel::close)
     awaitClose(cancelable::cancel)
   }.flowOn(Dispatchers.Main.immediate)
 
@@ -403,8 +410,9 @@ val MapboxMap.styleImageRemoveUnusedEvents: Flow<StyleImageRemoveUnused>
  */
 val MapboxMap.renderFrameStartedEvents: Flow<RenderFrameStarted>
   @JvmSynthetic
-  get() = callbackFlow {
-    val cancelable = nativeObserver.subscribeRenderFrameStarted(::trySendBlocking) { channel.close() }
+  get() = callbackFlow<RenderFrameStarted> {
+    val cancelable =
+      nativeObserver.subscribeRenderFrameStarted(::trySendBlocking, onCancel = channel::close)
     awaitClose(cancelable::cancel)
   }.flowOn(Dispatchers.Main.immediate)
 
@@ -413,9 +421,10 @@ val MapboxMap.renderFrameStartedEvents: Flow<RenderFrameStarted>
  */
 val MapboxMap.renderFrameFinishedEvents: Flow<RenderFrameFinished>
   @JvmSynthetic
-  get() = callbackFlow {
-      val cancelable = nativeObserver.subscribeRenderFrameFinished(::trySendBlocking) { channel.close() }
-      awaitClose(cancelable::cancel)
+  get() = callbackFlow<RenderFrameFinished> {
+    val cancelable =
+      nativeObserver.subscribeRenderFrameFinished(::trySendBlocking, onCancel = channel::close)
+    awaitClose(cancelable::cancel)
   }.flowOn(Dispatchers.Main.immediate)
 
 /**
@@ -423,7 +432,20 @@ val MapboxMap.renderFrameFinishedEvents: Flow<RenderFrameFinished>
  */
 val MapboxMap.resourceRequestEvents: Flow<ResourceRequest>
   @JvmSynthetic
-  get() = callbackFlow {
-      val cancelable = nativeObserver.subscribeResourceRequest(::trySendBlocking) { channel.close() }
-      awaitClose(cancelable::cancel)
+  get() = callbackFlow<ResourceRequest> {
+    val cancelable = nativeObserver.subscribeResourceRequest(::trySendBlocking, onCancel = channel::close)
+    awaitClose(cancelable::cancel)
   }.flowOn(Dispatchers.Main.immediate)
+
+/**
+ * [Flow] of [GenericEvent] updates from [MapboxMap.subscribeGenericEvent].
+ */
+@JvmSynthetic
+@MapboxExperimental
+fun MapboxMap.genericEvents(eventName: String): Flow<GenericEvent> {
+  return callbackFlow<GenericEvent> {
+    val cancelable =
+      nativeObserver.subscribeGenericEvent(eventName, ::trySendBlocking, onCancel = channel::close)
+    awaitClose(cancelable::cancel)
+  }.flowOn(Dispatchers.Main.immediate)
+}

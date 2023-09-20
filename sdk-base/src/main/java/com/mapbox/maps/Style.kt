@@ -1,7 +1,7 @@
 package com.mapbox.maps
 
 import android.graphics.Bitmap
-import androidx.annotation.AnyThread
+import androidx.annotation.MainThread
 import androidx.annotation.RestrictTo
 import androidx.annotation.RestrictTo.Scope
 import com.mapbox.bindgen.Expected
@@ -1028,7 +1028,7 @@ class Style {
    * @param data the GeoJson source data
    *
    */
-  @AnyThread
+  @MainThread
   fun setStyleGeoJSONSourceData(
     sourceId: String,
     dataId: String,
@@ -1049,7 +1049,7 @@ class Style {
    * @param dataId an arbitrary string used to track the given GeoJSON data, empty string means null ID
    * @param features list of features to add
    */
-  @AnyThread
+  @MainThread
   fun addGeoJSONSourceFeatures(
     sourceId: String,
     dataId: String,
@@ -1070,7 +1070,7 @@ class Style {
    * @param dataId an arbitrary string used to track the given GeoJSON data, empty string means null ID
    * @param features list of features to update
    */
-  @AnyThread
+  @MainThread
   fun updateGeoJSONSourceFeatures(
     sourceId: String,
     dataId: String,
@@ -1091,7 +1091,7 @@ class Style {
    * @param dataId an arbitrary string used to track the given GeoJSON data, empty string means null ID
    * @param featuresIds list of feature ids to remove
    */
-  @AnyThread
+  @MainThread
   fun removeGeoJSONSourceFeatures(
     sourceId: String,
     dataId: String,

@@ -184,7 +184,6 @@ package com.mapbox.maps.exception {
 package com.mapbox.maps.extension.observable {
 
   public final class EventsExtensionKt {
-    method @Deprecated public static com.mapbox.maps.extension.observable.eventdata.StyleImageMissingEventData getStyleImageMissingEventData(com.mapbox.maps.StyleImageMissing);
     method @Deprecated public static com.mapbox.maps.extension.observable.eventdata.CameraChangedEventData toCameraChangedEventData(com.mapbox.maps.CameraChanged);
     method @Deprecated public static com.mapbox.maps.extension.observable.eventdata.MapIdleEventData toMapIdleEventData(com.mapbox.maps.MapIdle);
     method @Deprecated public static com.mapbox.maps.extension.observable.eventdata.MapLoadedEventData toMapLoadedEventData(com.mapbox.maps.MapLoaded);
@@ -195,6 +194,7 @@ package com.mapbox.maps.extension.observable {
     method @Deprecated public static com.mapbox.maps.extension.observable.eventdata.SourceDataLoadedEventData toSourceDataLoadedEventData(com.mapbox.maps.SourceDataLoaded);
     method @Deprecated public static com.mapbox.maps.extension.observable.eventdata.SourceRemovedEventData toSourceRemovedEventData(com.mapbox.maps.SourceRemoved);
     method @Deprecated public static com.mapbox.maps.extension.observable.eventdata.StyleDataLoadedEventData toStyleDataLoadedEventData(com.mapbox.maps.StyleDataLoaded);
+    method @Deprecated public static com.mapbox.maps.extension.observable.eventdata.StyleImageMissingEventData toStyleImageMissingEventData(com.mapbox.maps.StyleImageMissing);
     method @Deprecated public static com.mapbox.maps.extension.observable.eventdata.StyleImageUnusedEventData toStyleImageUnusedEventData(com.mapbox.maps.StyleImageRemoveUnused);
     method @Deprecated public static com.mapbox.maps.extension.observable.eventdata.StyleLoadedEventData toStyleLoadedEventData(com.mapbox.maps.StyleLoaded);
     method @Deprecated public static com.mapbox.maps.extension.observable.model.TileID toTileId(com.mapbox.maps.CanonicalTileID);

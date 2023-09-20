@@ -520,6 +520,7 @@ package com.mapbox.maps.coroutine {
     method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.maps.Style! awaitLoadStyle(com.mapbox.maps.MapboxMap, com.mapbox.maps.extension.style.StyleContract.StyleExtension styleExtension);
     method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.maps.Style! awaitLoadStyle(com.mapbox.maps.MapboxMap, String style);
     method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.maps.Style! awaitStyle(com.mapbox.maps.MapboxMap);
+    method @com.mapbox.maps.MapboxExperimental @kotlin.jvm.JvmSynthetic public static kotlinx.coroutines.flow.Flow<? extends com.mapbox.maps.GenericEvent>! genericEvents(com.mapbox.maps.MapboxMap, String eventName);
     method @kotlin.jvm.JvmSynthetic public static kotlinx.coroutines.flow.Flow<com.mapbox.maps.CameraChanged> getCameraChangedEvents(com.mapbox.maps.MapboxMap);
     method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.Value>! getFeatureState(com.mapbox.maps.MapboxMap, String sourceId, String sourceLayerId = null, String featureId);
     method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.maps.FeatureExtensionValue>! getGeoJsonClusterChildren(com.mapbox.maps.MapboxMap, String sourceIdentifier, com.mapbox.geojson.Feature cluster);

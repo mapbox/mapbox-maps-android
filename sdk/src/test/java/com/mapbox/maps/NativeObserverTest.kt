@@ -39,7 +39,6 @@ class NativeObserverTest {
     addAndRemoveListener(
       NativeObserver::addOnCameraChangeListener,
       NativeObserver::removeOnCameraChangeListener,
-      NativeObserver::onCameraChangeListeners,
       OnCameraChangeListener::onCameraChanged
     )
   }
@@ -49,7 +48,6 @@ class NativeObserverTest {
     addAndRemoveListener(
       NativeObserver::addOnMapIdleListener,
       NativeObserver::removeOnMapIdleListener,
-      NativeObserver::onMapIdleListeners,
       OnMapIdleListener::onMapIdle
     )
   }
@@ -59,7 +57,6 @@ class NativeObserverTest {
     addAndRemoveListener(
       NativeObserver::addOnMapLoadErrorListener,
       NativeObserver::removeOnMapLoadErrorListener,
-      NativeObserver::onMapLoadErrorListeners,
       OnMapLoadErrorListener::onMapLoadError
     )
   }
@@ -69,7 +66,6 @@ class NativeObserverTest {
     addAndRemoveListener(
       NativeObserver::addOnMapLoadedListener,
       NativeObserver::removeOnMapLoadedListener,
-      NativeObserver::onMapLoadedListeners,
       OnMapLoadedListener::onMapLoaded
     )
   }
@@ -79,7 +75,6 @@ class NativeObserverTest {
     addAndRemoveListener(
       NativeObserver::addOnRenderFrameFinishedListener,
       NativeObserver::removeOnRenderFrameFinishedListener,
-      NativeObserver::onRenderFrameFinishedListeners,
       OnRenderFrameFinishedListener::onRenderFrameFinished
     )
   }
@@ -89,7 +84,6 @@ class NativeObserverTest {
     addAndRemoveListener(
       NativeObserver::addOnRenderFrameStartedListener,
       NativeObserver::removeOnRenderFrameStartedListener,
-      NativeObserver::onRenderFrameStartedListeners,
       OnRenderFrameStartedListener::onRenderFrameStarted
     )
   }
@@ -99,7 +93,6 @@ class NativeObserverTest {
     addAndRemoveListener(
       NativeObserver::addOnSourceAddedListener,
       NativeObserver::removeOnSourceAddedListener,
-      NativeObserver::onSourceAddedListeners,
       OnSourceAddedListener::onSourceAdded
     )
   }
@@ -109,7 +102,6 @@ class NativeObserverTest {
     addAndRemoveListener(
       NativeObserver::addOnSourceDataLoadedListener,
       NativeObserver::removeOnSourceDataLoadedListener,
-      NativeObserver::onSourceDataLoadedListeners,
       OnSourceDataLoadedListener::onSourceDataLoaded
     )
   }
@@ -119,19 +111,7 @@ class NativeObserverTest {
     addAndRemoveListener(
       NativeObserver::addOnSourceRemovedListener,
       NativeObserver::removeOnSourceRemovedListener,
-      NativeObserver::onSourceRemovedListeners,
       OnSourceRemovedListener::onSourceRemoved
-    )
-  }
-
-  @Test
-  fun addAndRemoveOnStyleLoadedListener() {
-    addAndRemoveListener(
-      NativeObserver::addOnStyleLoadedListener,
-      NativeObserver::removeOnStyleLoadedListener,
-      NativeObserver::onStyleLoadedListeners,
-      OnStyleLoadedListener::onStyleLoaded,
-      NativeObserver::_styleLoadedCancelableSet
     )
   }
 
@@ -140,7 +120,6 @@ class NativeObserverTest {
     addAndRemoveListener(
       NativeObserver::addOnStyleImageMissingListener,
       NativeObserver::removeOnStyleImageMissingListener,
-      NativeObserver::onStyleImageMissingListeners,
       OnStyleImageMissingListener::onStyleImageMissing
     )
   }
@@ -150,8 +129,17 @@ class NativeObserverTest {
     addAndRemoveListener(
       NativeObserver::addOnStyleImageUnusedListener,
       NativeObserver::removeOnStyleImageUnusedListener,
-      NativeObserver::onStyleImageUnusedListeners,
       OnStyleImageUnusedListener::onStyleImageUnused
+    )
+  }
+
+  @Test
+  fun addAndRemoveOnStyleLoadedListener() {
+    addAndRemoveListener(
+      NativeObserver::addOnStyleLoadedListener,
+      NativeObserver::removeOnStyleLoadedListener,
+      OnStyleLoadedListener::onStyleLoaded,
+      NativeObserver::_resubscribableSet
     )
   }
 
@@ -160,9 +148,8 @@ class NativeObserverTest {
     addAndRemoveListener(
       NativeObserver::addOnStyleDataLoadedListener,
       NativeObserver::removeOnStyleDataLoadedListener,
-      NativeObserver::onStyleDataLoadedListeners,
       OnStyleDataLoadedListener::onStyleDataLoaded,
-      NativeObserver::_styleDataLoadedCancelableSet
+      NativeObserver::_resubscribableSet
     )
   }
 
@@ -173,29 +160,23 @@ class NativeObserverTest {
   private inline fun <reified L, reified D> addAndRemoveListener(
     addListener: NativeObserver.(L) -> Unit,
     removeListener: NativeObserver.(L) -> Unit,
-    listenersSet: NativeObserver.() -> MutableSet<L>,
     crossinline listenerOn: L.(D) -> Unit,
-    cancelableSet: NativeObserver.() -> MutableSet<*> = NativeObserver::cancelableSet,
+    cancelableSet: NativeObserver.() -> MutableSet<*> = NativeObserver::_cancelableSet,
   ) {
     val listener: L = mockk(relaxUnitFun = true)
     nativeObserver.addListener(listener)
-    assertEquals(1, nativeObserver.listenersSet().size)
     assertEquals(1, nativeObserver.cancelableSet().size)
 
     val listener2: L = mockk(relaxUnitFun = true)
     nativeObserver.addListener(listener2)
-    assertEquals(2, nativeObserver.listenersSet().size)
     assertEquals(2, nativeObserver.cancelableSet().size)
 
     nativeObserver.removeListener(listener)
-    assertEquals(1, nativeObserver.listenersSet().size)
-    // FIXME: MAPSAND-1218
-    // assertEquals(1, nativeObserver.cancelableSet().size)
+    assertEquals(1, nativeObserver.cancelableSet().size)
 
     nativeObserver.removeListener(listener2)
-    assertEquals(0, nativeObserver.listenersSet().size)
-    // FIXME: MAPSAND-1218
-    // assertEquals(0, nativeObserver.cancelableSet().size)
+    assertEquals(0, nativeObserver.cancelableSet().size)
+
     verifyNo { listener.listenerOn(any()) }
     verifyNo { listener2.listenerOn(any()) }
   }
@@ -248,10 +229,20 @@ class NativeObserverTest {
     subscribe(NativeObserver::subscribeSourceRemoved, NativeMapImpl::subscribe)
   }
 
+  @Test
+  fun subscribeResourceRequest() {
+    subscribe(NativeObserver::subscribeResourceRequest, NativeMapImpl::subscribe)
+  }
+
   // Style events
   @Test
   fun subscribeStyleLoadedListener() {
-    subscribe(NativeObserver::subscribeStyleLoaded, NativeMapImpl::subscribe, NativeObserver::_styleLoadedCancelableSet)
+    subscribe(NativeObserver::subscribeStyleLoaded, NativeMapImpl::subscribe, NativeObserver::_resubscribableSet)
+  }
+
+  @Test
+  fun subscribeStyleDataLoaded() {
+    subscribe(NativeObserver::subscribeStyleDataLoaded, NativeMapImpl::subscribe, NativeObserver::_resubscribableSet)
   }
 
   @Test
@@ -264,20 +255,10 @@ class NativeObserverTest {
     subscribe(NativeObserver::subscribeStyleImageRemoveUnused, NativeMapImpl::subscribe)
   }
 
-  @Test
-  fun subscribeStyleDataLoaded() {
-    subscribe(NativeObserver::subscribeStyleDataLoaded, NativeMapImpl::subscribe, NativeObserver::_styleDataLoadedCancelableSet)
-  }
-
-  @Test
-  fun subscribeResourceRequest() {
-    subscribe(NativeObserver::subscribeResourceRequest, NativeMapImpl::subscribe)
-  }
-
   private inline fun <reified C> subscribe(
     subscribe: NativeObserver.(C) -> Cancelable,
     crossinline nativeSubscribe: NativeMapImpl.(C) -> Cancelable,
-    cancelableSet: NativeObserver.() -> MutableSet<*> = NativeObserver::cancelableSet,
+    cancelableSet: NativeObserver.() -> MutableSet<*> = NativeObserver::_cancelableSet,
   ) {
     val callback: C = mockk()
     val cancelable = nativeObserver.subscribe(callback)
@@ -307,95 +288,53 @@ class NativeObserverTest {
     val callback = mockk<GenericEventCallback>(relaxUnitFun = true)
     val cancelable = nativeObserver.subscribeGenericEvent(event1, callback)
     verify { observableInterface.subscribe(event1, callback) }
-    assertEquals(1, nativeObserver.cancelableSet.size)
-    assertSame(cancelable, nativeObserver.cancelableSet.first())
+    assertEquals(1, nativeObserver._cancelableSet.size)
+    assertSame(cancelable, nativeObserver._cancelableSet.first())
 
     val callback2 = mockk<GenericEventCallback>(relaxUnitFun = true)
     val cancelable2 = nativeObserver.subscribeGenericEvent(event2, callback2)
     verify { observableInterface.subscribe(event2, callback2) }
-    assertEquals(2, nativeObserver.cancelableSet.size)
-    assertTrue(nativeObserver.cancelableSet.containsAll(listOf(cancelable, cancelable2)))
+    assertEquals(2, nativeObserver._cancelableSet.size)
+    assertTrue(nativeObserver._cancelableSet.containsAll(listOf(cancelable, cancelable2)))
 
     cancelable.cancel()
-    assertEquals(1, nativeObserver.cancelableSet.size)
-    assertSame(cancelable2, nativeObserver.cancelableSet.first())
+    assertEquals(1, nativeObserver._cancelableSet.size)
+    assertSame(cancelable2, nativeObserver._cancelableSet.first())
 
     cancelable2.cancel()
-    assertTrue(nativeObserver.cancelableSet.isEmpty())
+    assertTrue(nativeObserver._cancelableSet.isEmpty())
   }
 
   @Test
   fun clearListeners() {
-    nativeObserver.onCameraChangeListeners.add(mockk(relaxed = true))
-
-    nativeObserver.onMapIdleListeners.add(mockk(relaxed = true))
-    nativeObserver.onMapLoadErrorListeners.add(mockk(relaxed = true))
-    nativeObserver.onMapLoadedListeners.add(mockk(relaxed = true))
-
-    nativeObserver.onRenderFrameFinishedListeners.add(mockk(relaxed = true))
-    nativeObserver.onRenderFrameStartedListeners.add(mockk(relaxed = true))
-
-    nativeObserver.onSourceAddedListeners.add(mockk(relaxed = true))
-    nativeObserver.onSourceDataLoadedListeners.add(mockk(relaxed = true))
-    nativeObserver.onSourceRemovedListeners.add(mockk(relaxed = true))
-
-    nativeObserver.onStyleLoadedListeners.add(mockk(relaxed = true))
-    nativeObserver.onStyleImageMissingListeners.add(mockk(relaxed = true))
-    nativeObserver.onStyleImageUnusedListeners.add(mockk(relaxed = true))
-    nativeObserver.onStyleDataLoadedListeners.add(mockk(relaxed = true))
-
-    var pendingCancel = 0
-    val onCancel: () -> Unit = { pendingCancel-- }
+    val onCancel: () -> Unit = mockk(relaxed = true)
     nativeObserver.subscribeCameraChanged(mockk(relaxed = true), onCancel)
-    pendingCancel++
     nativeObserver.subscribeStyleDataLoaded(mockk(relaxed = true), onCancel)
-    pendingCancel++
     nativeObserver.subscribeStyleLoaded(mockk(relaxed = true), onCancel)
-    pendingCancel++
-    assertEquals(1, nativeObserver.cancelableSet.size)
-    assertEquals(1, nativeObserver._styleDataLoadedCancelableSet.size)
-    assertEquals(1, nativeObserver._styleLoadedCancelableSet.size)
+    assertEquals(1, nativeObserver._cancelableSet.size)
+    assertEquals(2, nativeObserver._resubscribableSet.size)
 
     nativeObserver.onDestroy()
-    assertTrue(nativeObserver.cancelableSet.isEmpty())
-    assertTrue(nativeObserver._styleDataLoadedCancelableSet.isEmpty())
-    assertTrue(nativeObserver._styleLoadedCancelableSet.isEmpty())
-    assertTrue(nativeObserver.onCameraChangeListeners.isEmpty())
-    assertEquals(0, pendingCancel)
+    assertTrue(nativeObserver._cancelableSet.isEmpty())
+    assertTrue(nativeObserver._resubscribableSet.isEmpty())
 
-    assertTrue(nativeObserver.onMapIdleListeners.isEmpty())
-    assertTrue(nativeObserver.onMapLoadErrorListeners.isEmpty())
-    assertTrue(nativeObserver.onMapLoadedListeners.isEmpty())
-
-    assertTrue(nativeObserver.onRenderFrameFinishedListeners.isEmpty())
-    assertTrue(nativeObserver.onRenderFrameStartedListeners.isEmpty())
-
-    assertTrue(nativeObserver.onSourceAddedListeners.isEmpty())
-    assertTrue(nativeObserver.onSourceDataLoadedListeners.isEmpty())
-    assertTrue(nativeObserver.onSourceRemovedListeners.isEmpty())
-
-    assertTrue(nativeObserver.onStyleLoadedListeners.isEmpty())
-    assertTrue(nativeObserver.onStyleImageMissingListeners.isEmpty())
-    assertTrue(nativeObserver.onStyleImageUnusedListeners.isEmpty())
-    assertTrue(nativeObserver.onStyleDataLoadedListeners.isEmpty())
+    verify(exactly = 3) { onCancel.invoke() }
   }
 
   @Test
   fun resubscribesStyleLoadedEvents() {
     val listener1 = mockk<StyleLoadedCallback>()
     val listener2 = mockk<StyleDataLoadedCallback>()
-    assertEquals(0, nativeObserver.cancelableSet.size)
-    assertEquals(0, nativeObserver._styleDataLoadedCancelableSet.size)
-    assertEquals(0, nativeObserver._styleLoadedCancelableSet.size)
+    assertEquals(0, nativeObserver._cancelableSet.size)
+    assertEquals(0, nativeObserver._resubscribableSet.size)
     nativeObserver.subscribeStyleLoaded(listener1)
-    assertEquals(1, nativeObserver._styleLoadedCancelableSet.size)
+    assertEquals(1, nativeObserver._resubscribableSet.size)
     nativeObserver.subscribeStyleDataLoaded(listener2)
-    assertEquals(1, nativeObserver._styleDataLoadedCancelableSet.size)
+    assertEquals(2, nativeObserver._resubscribableSet.size)
 
     nativeObserver.resubscribeStyleLoadListeners()
-    assertEquals(0, nativeObserver.cancelableSet.size)
-    assertEquals(1, nativeObserver._styleLoadedCancelableSet.size)
-    assertEquals(1, nativeObserver._styleDataLoadedCancelableSet.size)
+    assertEquals(0, nativeObserver._cancelableSet.size)
+    assertEquals(2, nativeObserver._resubscribableSet.size)
 
     verify(exactly = 2) {
       observableInterface.subscribe(listener1)

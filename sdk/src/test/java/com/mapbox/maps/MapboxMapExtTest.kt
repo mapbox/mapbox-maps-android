@@ -2,6 +2,7 @@ package com.mapbox.maps
 
 import com.mapbox.common.Cancelable
 import com.mapbox.maps.coroutine.cameraChangedEvents
+import com.mapbox.maps.coroutine.genericEvents
 import com.mapbox.maps.coroutine.mapIdleEvents
 import com.mapbox.maps.coroutine.mapLoadedEvents
 import com.mapbox.maps.coroutine.mapLoadingErrorEvents
@@ -59,12 +60,12 @@ class MapboxMapExtTest {
 
   @Test
   fun mapLoadedEvents() = runTest {
-    collect(NativeObserver::subscribeMapLoaded, MapboxMap::mapLoadedEvents, MapLoadedCallback::run)
+    testEventsFlow(NativeObserver::subscribeMapLoaded, MapboxMap::mapLoadedEvents, MapLoadedCallback::run)
   }
 
   @Test
   fun mapLoadingErrorEvents() = runTest {
-    collect(
+    testEventsFlow(
       NativeObserver::subscribeMapLoadingError,
       MapboxMap::mapLoadingErrorEvents,
       MapLoadingErrorCallback::run
@@ -73,7 +74,7 @@ class MapboxMapExtTest {
 
   @Test
   fun styleLoadedEvents() = runTest {
-    collect(
+    testEventsFlow(
       NativeObserver::subscribeStyleLoaded,
       MapboxMap::styleLoadedEvents,
       StyleLoadedCallback::run
@@ -82,7 +83,7 @@ class MapboxMapExtTest {
 
   @Test
   fun styleDataLoadedEvents() = runTest {
-    collect(
+    testEventsFlow(
       NativeObserver::subscribeStyleDataLoaded,
       MapboxMap::styleDataLoadedEvents,
       StyleDataLoadedCallback::run
@@ -91,7 +92,7 @@ class MapboxMapExtTest {
 
   @Test
   fun cameraChangedEvents() = runTest {
-    collect(
+    testEventsFlow(
       NativeObserver::subscribeCameraChanged,
       MapboxMap::cameraChangedEvents,
       CameraChangedCallback::run
@@ -100,12 +101,12 @@ class MapboxMapExtTest {
 
   @Test
   fun mapIdleEvents() = runTest {
-    collect(NativeObserver::subscribeMapIdle, MapboxMap::mapIdleEvents, MapIdleCallback::run)
+    testEventsFlow(NativeObserver::subscribeMapIdle, MapboxMap::mapIdleEvents, MapIdleCallback::run)
   }
 
   @Test
   fun sourceAddedEvents() = runTest {
-    collect(
+    testEventsFlow(
       NativeObserver::subscribeSourceAdded,
       MapboxMap::sourceAddedEvents,
       SourceAddedCallback::run
@@ -114,7 +115,7 @@ class MapboxMapExtTest {
 
   @Test
   fun sourceRemovedEvents() = runTest {
-    collect(
+    testEventsFlow(
       NativeObserver::subscribeSourceRemoved,
       MapboxMap::sourceRemovedEvents,
       SourceRemovedCallback::run
@@ -123,7 +124,7 @@ class MapboxMapExtTest {
 
   @Test
   fun sourceDataLoadedEvents() = runTest {
-    collect(
+    testEventsFlow(
       NativeObserver::subscribeSourceDataLoaded,
       MapboxMap::sourceDataLoadedEvents,
       SourceDataLoadedCallback::run
@@ -132,7 +133,7 @@ class MapboxMapExtTest {
 
   @Test
   fun styleImageMissingEvents() = runTest {
-    collect(
+    testEventsFlow(
       NativeObserver::subscribeStyleImageMissing,
       MapboxMap::styleImageMissingEvents,
       StyleImageMissingCallback::run
@@ -141,7 +142,7 @@ class MapboxMapExtTest {
 
   @Test
   fun styleImageRemoveUnusedEvents() = runTest {
-    collect(
+    testEventsFlow(
       NativeObserver::subscribeStyleImageRemoveUnused,
       MapboxMap::styleImageRemoveUnusedEvents,
       StyleImageRemoveUnusedCallback::run
@@ -150,7 +151,7 @@ class MapboxMapExtTest {
 
   @Test
   fun renderFrameStartedEvents() = runTest {
-    collect(
+    testEventsFlow(
       NativeObserver::subscribeRenderFrameStarted,
       MapboxMap::renderFrameStartedEvents,
       RenderFrameStartedCallback::run
@@ -159,7 +160,7 @@ class MapboxMapExtTest {
 
   @Test
   fun renderFrameFinishedEvents() = runTest {
-    collect(
+    testEventsFlow(
       NativeObserver::subscribeRenderFrameFinished,
       MapboxMap::renderFrameFinishedEvents,
       RenderFrameFinishedCallback::run
@@ -168,24 +169,75 @@ class MapboxMapExtTest {
 
   @Test
   fun resourceRequestEvents() = runTest {
-    collect(
-      NativeObserver::subscribeResourceRequest,
-      MapboxMap::resourceRequestEvents,
-      ResourceRequestCallback::run
-    )
+    val callbackSlot: CapturingSlot<ResourceRequestCallback> = CapturingSlot()
+    val onCancelSlot: CapturingSlot<() -> Unit> = slot()
+    every {
+      nativeObserver.subscribeResourceRequest(
+        capture(callbackSlot),
+        capture(onCancelSlot),
+      )
+    } returns cancelable
+
+    val values = mutableListOf<ResourceRequest>()
+    backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) {
+      mapboxMap.resourceRequestEvents.toList(values)
+    }
+    val event: ResourceRequest = mockk()
+    callbackSlot.captured.run(event)
+    callbackSlot.captured.run(event)
+    val event2: ResourceRequest = mockk()
+    callbackSlot.captured.run(event2)
+    onCancelSlot.captured.invoke()
+
+    assertEquals(3, values.size)
+    assertSame(event, values[0])
+    assertSame(event, values[1])
+    assertSame(event2, values[2])
   }
 
-  private inline fun <reified EventCallback : Any, reified EventData> collect(
-    crossinline subscribe: NativeObserver.(EventCallback, (() -> Unit)?) -> Cancelable,
+  @Test
+  fun genericEvents() = runTest {
+    val eventName = "test-event"
+    val callbackSlot: CapturingSlot<GenericEventCallback> = CapturingSlot()
+    val onCancelSlot = mutableListOf<(() -> Unit)?>()
+    every {
+      nativeObserver.subscribeGenericEvent(
+        eventName,
+        capture(callbackSlot),
+        captureNullable(onCancelSlot),
+      )
+    } returns cancelable
+
+    val values = mutableListOf<GenericEvent>()
+    backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) {
+      mapboxMap.genericEvents(eventName).toList(values)
+    }
+    val genericEvent: GenericEvent = mockk()
+    callbackSlot.captured.run(genericEvent)
+    callbackSlot.captured.run(genericEvent)
+    val genericEvent2: GenericEvent = mockk()
+    callbackSlot.captured.run(genericEvent2)
+    onCancelSlot.first()!!.invoke()
+
+    assertEquals(3, values.size)
+    assertSame(genericEvent, values[0])
+    assertSame(genericEvent, values[1])
+    assertSame(genericEvent2, values[2])
+  }
+
+  private inline fun <reified EventCallback : Any, reified EventListener : Any, reified EventData> testEventsFlow(
+    crossinline subscribe: NativeObserver.(EventCallback, (() -> Unit)?, EventListener?) -> Cancelable,
     crossinline getFlow: MapboxMap.() -> Flow<EventData>,
     crossinline callbackRun: EventCallback.(EventData) -> Unit
   ) = runTest {
-    val styleDataLoadedCallbackSlot: CapturingSlot<EventCallback> = CapturingSlot()
-    val onCancelSlot: CapturingSlot<() -> Unit> = slot()
+    val callbackSlot: CapturingSlot<EventCallback> = CapturingSlot()
+    val listenerSlot = mutableListOf<EventListener?>()
+    val onCancelSlot = slot<() -> Unit>()
     every {
       nativeObserver.subscribe(
-        capture(styleDataLoadedCallbackSlot),
-        capture(onCancelSlot)
+        capture(callbackSlot),
+        capture(onCancelSlot),
+        captureNullable(listenerSlot),
       )
     } returns cancelable
 
@@ -194,10 +246,10 @@ class MapboxMapExtTest {
       mapboxMap.getFlow().toList(values)
     }
     val styleDataLoaded: EventData = mockk()
-    styleDataLoadedCallbackSlot.captured.callbackRun(styleDataLoaded)
-    styleDataLoadedCallbackSlot.captured.callbackRun(styleDataLoaded)
+    callbackSlot.captured.callbackRun(styleDataLoaded)
+    callbackSlot.captured.callbackRun(styleDataLoaded)
     val styleDataLoaded2: EventData = mockk()
-    styleDataLoadedCallbackSlot.captured.callbackRun(styleDataLoaded2)
+    callbackSlot.captured.callbackRun(styleDataLoaded2)
     onCancelSlot.captured.invoke()
 
     assertEquals(3, values.size)
