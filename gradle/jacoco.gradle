@@ -10,6 +10,7 @@ jacocoAndroidUnitTestReport {
     xml.enabled true
     excludes += [
             '**/*MapboxStyleManager.class',
+            '**/*RenderThreadRecorder.class',
             'com/mapbox/maps/plugin/*/generated/*',
     ]
 }
