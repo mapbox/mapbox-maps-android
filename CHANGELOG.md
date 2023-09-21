@@ -2,7 +2,8 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# 11.0.0-beta.4
+
+# 11.0.0-beta.4 September 21, 2023
 ## Breaking changes ⚠️
 * Remove setter functions for `Style.styleURI` and `Style.styleJSON` as loading the style should happen only with `MapboxMap.loadStyle`.
 * Rename `StyleImageMissing.getStyleImageMissingEventData` to `StyleImageMissing.toStyleImageMissingEventData`.
@@ -29,6 +30,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v11.0.0-beta.5 and common to v24.0.0-beta.5.
+
 
 
 # 11.0.0-beta.3 September 08, 2023
