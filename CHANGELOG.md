@@ -8,11 +8,28 @@ Mapbox welcomes participation and contributions from everyone.
 * Rename `StyleImageMissing.getStyleImageMissingEventData` to `StyleImageMissing.toStyleImageMissingEventData`.
 
 ## Features ✨ and improvements 🏁
+* Introduce experimental APIs to work with Custom Raster Sources: `MapboxMap.addCustomRasterSource`, `MapboxMap.setCustomRasterSourceTileData`, `MapboxMap.invalidateCustomRasterSourceTile`, `MapboxMap.invalidateCustomRasterSourceRegion`.
 * Copy relevant `Style` methods to `MapboxMap` providing better alignment with iOS and GL-JS.
+* Add `FillExtrusionLayer.fillExtrusionCutoffFadeRange` and `ModelLayer.modelCutoffFadeRange` to control fade out of the layers when pitch is used.
+* Improve atmosphere rendering performance.
+* Improve fill layer and model layer rendering performance on high pitch views.
+* Improve GPU performance by drawing opaque 3D geometry without blending.
+* Introduce experimental `SymbolLayer.symbolZElevate` property to elevate symbols along with the buildings that are in the same place. The feature is supported for symbols with point placement only.
+* Add `Atmosphere.verticalRange` property.
 
 ## Bug fixes 🐞
 * Free resources immediately after map event subscription is canceled.
 * Fix map event listeners not being removed when `MapboxMap.remove*Listener` is called.
+* Fix issue where the terrain didn't work if defined within a style fragment.
+* The Custom Geometry Source `fetchTileFunction` and `cancelTileFunction` callbacks are invoked on the client thread.
+* Fixes a rendering error that broke symbol layers on Samsung S22 devices.
+* Cache featureState for newly added source in case it is not available in renderer.
+* Fix issue with model layer blending with geometry tile source.
+* Fix incorrectly set begin timestamp for the RenderFrameFinished event.
+
+## Dependencies
+* Update gl-native to v11.0.0-beta.5 and common to v24.0.0-beta.5.
+
 
 # 11.0.0-beta.3 September 08, 2023
 ## Breaking changes ⚠️

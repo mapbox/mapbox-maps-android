@@ -1113,6 +1113,80 @@ class Style {
     return styleManager.isStyleLoaded
   }
 
+  /**
+   * Note! This is an experimental feature. It can be changed or removed in future versions.
+   *
+   * Adds a custom raster source to be used in the style. To add the data, implement the fetchTileFunction callback in the options and call setStyleCustomRasterSourceTileData()
+   *
+   * @param sourceId A style source identifier
+   * @param options The `custom raster source options` for the custom raster source.
+   */
+  @MapboxExperimental
+  fun addStyleCustomRasterSource(
+    sourceId: String,
+    options: CustomRasterSourceOptions
+  ): Expected<String, None> {
+    checkNativeStyle("addStyleCustomRasterSource")
+    return styleManager.addStyleCustomRasterSource(sourceId, options)
+  }
+
+  /**
+   * Note! This is an experimental feature. It can be changed or removed in future versions.
+   *
+   * Set tile data for a raster tile.
+   *
+   * @param sourceId A style source identifier.
+   * @param tileId A `canonical tile id` of the tile.
+   * @param square `Image` content of the tile.
+   */
+  @MapboxExperimental
+  fun setStyleCustomRasterSourceTileData(
+    sourceId: String,
+    tileId: CanonicalTileID,
+    square: Image
+  ): Expected<String, None> {
+    checkNativeStyle("setStyleCustomRasterSourceTileData")
+    return styleManager.setStyleCustomRasterSourceTileData(sourceId, tileId, square)
+  }
+
+  /**
+   * Note! This is an experimental feature. It can be changed or removed in future versions.
+   *
+   * Invalidate tile for provided custom raster source.
+   *
+   * @param sourceId A style source identifier,.
+   * @param tileId A `canonical tile id` of the tile.
+   *
+   * @return A string describing an error if the operation was not successful, empty otherwise.
+   */
+  @MapboxExperimental
+  fun invalidateStyleCustomRasterSourceTile(
+    sourceId: String,
+    tileId: CanonicalTileID
+  ): Expected<String, None> {
+    checkNativeStyle("invalidateStyleCustomRasterSourceTile")
+    return styleManager.invalidateStyleCustomRasterSourceTile(sourceId, tileId)
+  }
+
+  /**
+   * Note! This is an experimental feature. It can be changed or removed in future versions.
+   *
+   * Invalidate region for provided custom raster source.
+   *
+   * @param sourceId A style source identifier
+   * @param bounds A `coordinate bounds` object.
+   *
+   * @return A string describing an error if the operation was not successful, empty otherwise.
+   */
+  @MapboxExperimental
+  fun invalidateStyleCustomRasterSourceRegion(
+    sourceId: String,
+    bounds: CoordinateBounds
+  ): Expected<String, None> {
+    checkNativeStyle("invalidateStyleCustomRasterSourceRegion")
+    return styleManager.invalidateStyleCustomRasterSourceRegion(sourceId, bounds)
+  }
+
   private fun checkNativeStyle(methodName: String) {
     ThreadChecker.throwIfNotMainThread()
     if (!isStyleValid) {

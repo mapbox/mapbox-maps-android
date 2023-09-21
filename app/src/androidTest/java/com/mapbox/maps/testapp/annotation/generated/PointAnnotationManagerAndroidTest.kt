@@ -161,6 +161,18 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
   }
 
   @Test
+  fun testSymbolZElevate() {
+    rule.runOnUiThread {
+      val expectedValue = true
+      val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
+      pointAnnotationManager.symbolZElevate = expectedValue
+      assertEquals(expectedValue, pointAnnotationManager.symbolZElevate)
+      pointAnnotationManager.symbolZElevate = null
+      assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "symbol-z-elevate").silentUnwrap(), pointAnnotationManager.symbolZElevate)
+    }
+  }
+
+  @Test
   fun testSymbolZOrder() {
     rule.runOnUiThread {
       val expectedValue = SymbolZOrder.AUTO

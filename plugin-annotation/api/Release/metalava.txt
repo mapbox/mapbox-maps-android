@@ -442,6 +442,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public Boolean? getSymbolAvoidEdges();
     method public com.mapbox.maps.extension.style.layers.properties.generated.SymbolPlacement? getSymbolPlacement();
     method public Double? getSymbolSpacing();
+    method public Boolean? getSymbolZElevate();
     method public com.mapbox.maps.extension.style.layers.properties.generated.SymbolZOrder? getSymbolZOrder();
     method public Boolean? getTextAllowOverlap();
     method public java.util.List<java.lang.String>? getTextFont();
@@ -474,6 +475,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setSymbolAvoidEdges(Boolean?);
     method public void setSymbolPlacement(com.mapbox.maps.extension.style.layers.properties.generated.SymbolPlacement?);
     method public void setSymbolSpacing(Double?);
+    method public void setSymbolZElevate(Boolean?);
     method public void setSymbolZOrder(com.mapbox.maps.extension.style.layers.properties.generated.SymbolZOrder?);
     method public void setTextAllowOverlap(Boolean?);
     method public void setTextFont(java.util.List<java.lang.String>?);
@@ -508,6 +510,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final Boolean? symbolAvoidEdges;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.SymbolPlacement? symbolPlacement;
     property public final Double? symbolSpacing;
+    property public final Boolean? symbolZElevate;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.SymbolZOrder? symbolZOrder;
     property public final Boolean? textAllowOverlap;
     property public final java.util.List<java.lang.String>? textFont;

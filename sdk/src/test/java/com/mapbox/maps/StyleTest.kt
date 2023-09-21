@@ -544,4 +544,37 @@ class StyleTest {
     style.setStyleImportConfigProperty(importId, config, value)
     verify { styleManager.setStyleImportConfigProperty(importId, config, value) }
   }
+
+  @Test
+  fun addStyleCustomRasterSource() {
+    val sourceId = "source-id"
+    val options = mockk<CustomRasterSourceOptions>()
+    style.addStyleCustomRasterSource(sourceId, options)
+    verify { styleManager.addStyleCustomRasterSource(sourceId, options) }
+  }
+
+  @Test
+  fun setStyleCustomRasterSourceTileData() {
+    val sourceId = "source-id"
+    val tileId = mockk<CanonicalTileID>()
+    val image = mockk<Image>()
+    style.setStyleCustomRasterSourceTileData(sourceId, tileId, image)
+    verify { styleManager.setStyleCustomRasterSourceTileData(sourceId, tileId, image) }
+  }
+
+  @Test
+  fun invalidateStyleCustomRasterSourceTile() {
+    val sourceId = "source-id"
+    val tileId = mockk<CanonicalTileID>()
+    style.invalidateStyleCustomRasterSourceTile(sourceId, tileId)
+    verify { styleManager.invalidateStyleCustomRasterSourceTile(sourceId, tileId) }
+  }
+
+  @Test
+  fun invalidateStyleCustomRasterSourceRegion() {
+    val sourceId = "source-id"
+    val bounds = mockk<CoordinateBounds>()
+    style.invalidateStyleCustomRasterSourceRegion(sourceId, bounds)
+    verify { styleManager.invalidateStyleCustomRasterSourceRegion(sourceId, bounds) }
+  }
 }

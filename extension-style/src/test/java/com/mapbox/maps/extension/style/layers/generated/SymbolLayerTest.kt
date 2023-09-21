@@ -1373,6 +1373,74 @@ class SymbolLayerTest {
   }
 
   @Test
+  fun symbolZElevateSet() {
+    val layer = symbolLayer("id", "source") {}
+    val testValue = true
+    layer.bindTo(style)
+    layer.symbolZElevate(testValue)
+    verify { style.setStyleLayerProperty("id", "symbol-z-elevate", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "true")
+  }
+
+  @Test
+  fun symbolZElevateGet() {
+    val testValue = true
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = true
+    assertEquals(expectedValue.toString(), layer.symbolZElevate?.toString())
+    verify { style.getStyleLayerProperty("id", "symbol-z-elevate") }
+  }
+  // Expression Tests
+
+  @Test
+  fun symbolZElevateAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.symbolZElevate(expression)
+    verify { style.setStyleLayerProperty("id", "symbol-z-elevate", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun symbolZElevateAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.symbolZElevateAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "symbol-z-elevate") }
+  }
+
+  @Test
+  fun symbolZElevateAsExpressionGetNull() {
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.symbolZElevateAsExpression)
+    verify { style.getStyleLayerProperty("id", "symbol-z-elevate") }
+  }
+
+  @Test
+  fun symbolZElevateAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(true)
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals("true", layer.symbolZElevateAsExpression.toString())
+    val expectedValue = true
+    assertEquals(expectedValue, layer.symbolZElevate)
+    verify { style.getStyleLayerProperty("id", "symbol-z-elevate") }
+  }
+
+  @Test
   fun symbolZOrderSet() {
     val layer = symbolLayer("id", "source") {}
     layer.bindTo(style)
@@ -5620,6 +5688,38 @@ class SymbolLayerTest {
     assertEquals(1.0, SymbolLayer.defaultSymbolSpacingAsExpression?.contents as Double, 1E-5)
     assertEquals(1.0, SymbolLayer.defaultSymbolSpacing!!, 1E-5)
     verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "symbol-spacing") }
+  }
+
+  @Test
+  fun defaultSymbolZElevateTest() {
+    val testValue = true
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = true
+    assertEquals(expectedValue.toString(), SymbolLayer.defaultSymbolZElevate?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "symbol-z-elevate") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultSymbolZElevateAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), SymbolLayer.defaultSymbolZElevateAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "symbol-z-elevate") }
+  }
+
+  @Test
+  fun defaultSymbolZElevateAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(true)
+    assertEquals("true", SymbolLayer.defaultSymbolZElevateAsExpression.toString())
+    val expectedValue = true
+    assertEquals(expectedValue, SymbolLayer.defaultSymbolZElevate)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "symbol-z-elevate") }
   }
 
   @Test

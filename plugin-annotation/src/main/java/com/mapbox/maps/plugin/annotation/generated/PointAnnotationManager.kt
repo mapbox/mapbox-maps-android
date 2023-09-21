@@ -589,6 +589,32 @@ class PointAnnotationManager(
     }
 
   /**
+   * The SymbolZElevate property
+   *
+   * Position symbol on buildings (both fill extrusions and models) roof tops. In order to have minimal impact on performance, this is supported only when {@link PropertyFactory#fillExtrusionHeight} is not zoom-dependent and not edited after initial bucket creation. For fading in buildings when zooming in, fill-extrusion-vertical-scale should be used and symbols would raise with building roofs. Symbols are sorted by elevation, except in case when `viewport-y` sorting or {@link PropertyFactory#symbolSortKey} are applied.
+   */
+  var symbolZElevate: Boolean?
+    /**
+     * Get the SymbolZElevate property
+     *
+     * @return property wrapper value around Boolean
+     */
+    get(): Boolean? {
+      return layer?.symbolZElevate
+    }
+    /**
+     * Set the SymbolZElevate property
+     * @param value property wrapper value around Boolean
+     */
+    set(value) {
+      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("symbol", "symbol-z-elevate").silentUnwrap()
+      newValue?.let {
+        layer?.symbolZElevate(it)
+        dragLayer?.symbolZElevate(it)
+      }
+    }
+
+  /**
    * The SymbolZOrder property
    *
    * Determines whether overlapping symbols in the same layer are rendered in the order that they appear in the data source or by their y-position relative to the viewport. To control the order and prioritization of symbols otherwise, use {@link PropertyFactory#symbolSortKey}.

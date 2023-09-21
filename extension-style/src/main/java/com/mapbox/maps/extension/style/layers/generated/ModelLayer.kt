@@ -738,6 +738,75 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
+   * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled.
+   */
+  @MapboxExperimental
+  val modelCutoffFadeRange: Double?
+    /**
+     * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled.
+     *
+     * Use static method [ModelLayer.defaultModelCutoffFadeRange] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      return getPropertyValue("model-cutoff-fade-range")
+    }
+
+  /**
+   * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled.
+   *
+   * Use static method [ModelLayer.defaultModelCutoffFadeRange] to set the default property.
+   *
+   * @param modelCutoffFadeRange value of modelCutoffFadeRange
+   */
+  @MapboxExperimental
+  override fun modelCutoffFadeRange(modelCutoffFadeRange: Double): ModelLayer = apply {
+    val propertyValue = PropertyValue("model-cutoff-fade-range", modelCutoffFadeRange)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled.
+   *
+   * This is an Expression representation of "model-cutoff-fade-range".
+   *
+   */
+  @MapboxExperimental
+  val modelCutoffFadeRangeAsExpression: Expression?
+    /**
+     * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled.
+     *
+     * Get the ModelCutoffFadeRange property as an Expression
+     *
+     * Use static method [ModelLayer.defaultModelCutoffFadeRangeAsExpression] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      getPropertyValue<Expression>("model-cutoff-fade-range")?.let {
+        return it
+      }
+      modelCutoffFadeRange?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled.
+   *
+   * Use static method [ModelLayer.defaultModelCutoffFadeRangeAsExpression] to set the default property.
+   *
+   * @param modelCutoffFadeRange value of modelCutoffFadeRange as Expression
+   */
+  @MapboxExperimental
+  override fun modelCutoffFadeRange(modelCutoffFadeRange: Expression): ModelLayer = apply {
+    val propertyValue = PropertyValue("model-cutoff-fade-range", modelCutoffFadeRange)
+    setProperty(propertyValue)
+  }
+
+  /**
    * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source.
    */
   @MapboxExperimental
@@ -2003,6 +2072,45 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       get() = StyleManager.getStyleLayerPropertyDefaultValue("model", "model-color-mix-intensity-transition").silentUnwrap()
 
     /**
+     * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled.
+     */
+    @MapboxExperimental
+    val defaultModelCutoffFadeRange: Double?
+      /**
+       * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled.
+       *
+       * Get the default value of ModelCutoffFadeRange property
+       *
+       * @return Double
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("model", "model-cutoff-fade-range").silentUnwrap()
+      }
+
+    /**
+     * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled.
+     *
+     * This is an Expression representation of "model-cutoff-fade-range".
+     *
+     */
+    @MapboxExperimental
+    val defaultModelCutoffFadeRangeAsExpression: Expression?
+      /**
+       * Get default value of the ModelCutoffFadeRange property as an Expression
+       *
+       * @return Double
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("model", "model-cutoff-fade-range").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultModelCutoffFadeRange?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
+
+    /**
      * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source.
      */
     @MapboxExperimental
@@ -2702,6 +2810,22 @@ interface ModelLayerDsl {
    */
   @MapboxExperimental
   fun modelColorMixIntensityTransition(block: StyleTransition.Builder.() -> Unit): ModelLayer
+
+  /**
+   * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled.
+   *
+   * @param modelCutoffFadeRange value of modelCutoffFadeRange
+   */
+  @MapboxExperimental
+  fun modelCutoffFadeRange(modelCutoffFadeRange: Double = 0.0): ModelLayer
+
+  /**
+   * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled.
+   *
+   * @param modelCutoffFadeRange value of modelCutoffFadeRange as Expression
+   */
+  @MapboxExperimental
+  fun modelCutoffFadeRange(modelCutoffFadeRange: Expression): ModelLayer
 
   /**
    * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source.

@@ -1064,6 +1064,71 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
+   * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled.
+   */
+  val fillExtrusionCutoffFadeRange: Double?
+    /**
+     * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled.
+     *
+     * Use static method [FillExtrusionLayer.defaultFillExtrusionCutoffFadeRange] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      return getPropertyValue("fill-extrusion-cutoff-fade-range")
+    }
+
+  /**
+   * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled.
+   *
+   * Use static method [FillExtrusionLayer.defaultFillExtrusionCutoffFadeRange] to set the default property.
+   *
+   * @param fillExtrusionCutoffFadeRange value of fillExtrusionCutoffFadeRange
+   */
+  override fun fillExtrusionCutoffFadeRange(fillExtrusionCutoffFadeRange: Double): FillExtrusionLayer = apply {
+    val propertyValue = PropertyValue("fill-extrusion-cutoff-fade-range", fillExtrusionCutoffFadeRange)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled.
+   *
+   * This is an Expression representation of "fill-extrusion-cutoff-fade-range".
+   *
+   */
+  val fillExtrusionCutoffFadeRangeAsExpression: Expression?
+    /**
+     * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled.
+     *
+     * Get the FillExtrusionCutoffFadeRange property as an Expression
+     *
+     * Use static method [FillExtrusionLayer.defaultFillExtrusionCutoffFadeRangeAsExpression] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      getPropertyValue<Expression>("fill-extrusion-cutoff-fade-range")?.let {
+        return it
+      }
+      fillExtrusionCutoffFadeRange?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled.
+   *
+   * Use static method [FillExtrusionLayer.defaultFillExtrusionCutoffFadeRangeAsExpression] to set the default property.
+   *
+   * @param fillExtrusionCutoffFadeRange value of fillExtrusionCutoffFadeRange as Expression
+   */
+  override fun fillExtrusionCutoffFadeRange(fillExtrusionCutoffFadeRange: Expression): FillExtrusionLayer = apply {
+    val propertyValue = PropertyValue("fill-extrusion-cutoff-fade-range", fillExtrusionCutoffFadeRange)
+    setProperty(propertyValue)
+  }
+
+  /**
    * The color of the flood light effect on the walls of the extruded buildings. This property works only with 3D light, i.e. when `lights` root property is defined.
    */
   @MapboxExperimental
@@ -2759,6 +2824,43 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       get() = StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-color-transition").silentUnwrap()
 
     /**
+     * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled.
+     */
+    val defaultFillExtrusionCutoffFadeRange: Double?
+      /**
+       * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled.
+       *
+       * Get the default value of FillExtrusionCutoffFadeRange property
+       *
+       * @return Double
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-cutoff-fade-range").silentUnwrap()
+      }
+
+    /**
+     * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled.
+     *
+     * This is an Expression representation of "fill-extrusion-cutoff-fade-range".
+     *
+     */
+    val defaultFillExtrusionCutoffFadeRangeAsExpression: Expression?
+      /**
+       * Get default value of the FillExtrusionCutoffFadeRange property as an Expression
+       *
+       * @return Double
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-cutoff-fade-range").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultFillExtrusionCutoffFadeRange?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
+
+    /**
      * The color of the flood light effect on the walls of the extruded buildings. This property works only with 3D light, i.e. when `lights` root property is defined.
      */
     @MapboxExperimental
@@ -3703,6 +3805,20 @@ interface FillExtrusionLayerDsl {
    * DSL for [fillExtrusionColorTransition].
    */
   fun fillExtrusionColorTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer
+
+  /**
+   * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled.
+   *
+   * @param fillExtrusionCutoffFadeRange value of fillExtrusionCutoffFadeRange
+   */
+  fun fillExtrusionCutoffFadeRange(fillExtrusionCutoffFadeRange: Double = 0.0): FillExtrusionLayer
+
+  /**
+   * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled.
+   *
+   * @param fillExtrusionCutoffFadeRange value of fillExtrusionCutoffFadeRange as Expression
+   */
+  fun fillExtrusionCutoffFadeRange(fillExtrusionCutoffFadeRange: Expression): FillExtrusionLayer
 
   /**
    * The color of the flood light effect on the walls of the extruded buildings. This property works only with 3D light, i.e. when `lights` root property is defined.

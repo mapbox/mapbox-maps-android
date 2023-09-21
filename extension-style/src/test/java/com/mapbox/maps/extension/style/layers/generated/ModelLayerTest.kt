@@ -657,6 +657,73 @@ class ModelLayerTest {
   }
 
   @Test
+  fun modelCutoffFadeRangeSet() {
+    val layer = modelLayer("id", "source") {}
+    val testValue = 1.0
+    layer.bindTo(style)
+    layer.modelCutoffFadeRange(testValue)
+    verify { style.setStyleLayerProperty("id", "model-cutoff-fade-range", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "1.0")
+  }
+
+  @Test
+  fun modelCutoffFadeRangeGet() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = modelLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), layer.modelCutoffFadeRange?.toString())
+    verify { style.getStyleLayerProperty("id", "model-cutoff-fade-range") }
+  }
+  // Expression Tests
+
+  @Test
+  fun modelCutoffFadeRangeAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = modelLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.modelCutoffFadeRange(expression)
+    verify { style.setStyleLayerProperty("id", "model-cutoff-fade-range", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun modelCutoffFadeRangeAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = modelLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.modelCutoffFadeRangeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "model-cutoff-fade-range") }
+  }
+
+  @Test
+  fun modelCutoffFadeRangeAsExpressionGetNull() {
+    val layer = modelLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.modelCutoffFadeRangeAsExpression)
+    verify { style.getStyleLayerProperty("id", "model-cutoff-fade-range") }
+  }
+
+  @Test
+  fun modelCutoffFadeRangeAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    val layer = modelLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(1.0, layer.modelCutoffFadeRangeAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.modelCutoffFadeRange!!, 1E-5)
+    verify { style.getStyleLayerProperty("id", "model-cutoff-fade-range") }
+  }
+
+  @Test
   fun modelEmissiveStrengthSet() {
     val layer = modelLayer("id", "source") {}
     val testValue = 1.0
@@ -1902,6 +1969,37 @@ class ModelLayerTest {
 
     assertEquals(transition.toValue().toString(), ModelLayer.defaultModelColorMixIntensityTransition?.toValue().toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("model", "model-color-mix-intensity-transition") }
+  }
+
+  @Test
+  fun defaultModelCutoffFadeRangeTest() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), ModelLayer.defaultModelCutoffFadeRange?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("model", "model-cutoff-fade-range") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultModelCutoffFadeRangeAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), ModelLayer.defaultModelCutoffFadeRangeAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("model", "model-cutoff-fade-range") }
+  }
+
+  @Test
+  fun defaultModelCutoffFadeRangeAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    assertEquals(1.0, ModelLayer.defaultModelCutoffFadeRangeAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, ModelLayer.defaultModelCutoffFadeRange!!, 1E-5)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("model", "model-cutoff-fade-range") }
   }
 
   @Test

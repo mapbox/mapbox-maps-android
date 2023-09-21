@@ -1210,12 +1210,12 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * Emission strength
+   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
    */
   @MapboxExperimental
   val lineEmissiveStrength: Double?
     /**
-     * Emission strength
+     * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
      *
      * Use static method [LineLayer.defaultLineEmissiveStrength] to get the default property.
      *
@@ -1226,7 +1226,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * Emission strength
+   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
    *
    * Use static method [LineLayer.defaultLineEmissiveStrength] to set the default property.
    *
@@ -1239,7 +1239,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * Emission strength
+   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
    *
    * This is an Expression representation of "line-emissive-strength".
    *
@@ -1247,7 +1247,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   @MapboxExperimental
   val lineEmissiveStrengthAsExpression: Expression?
     /**
-     * Emission strength
+     * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
      *
      * Get the LineEmissiveStrength property as an Expression
      *
@@ -1266,7 +1266,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * Emission strength
+   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
    *
    * Use static method [LineLayer.defaultLineEmissiveStrengthAsExpression] to set the default property.
    *
@@ -1415,11 +1415,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * Defines a gradient with which to color a line feature. Can only be used with GeoJSON sources that specify `"lineMetrics": true`.
+   * A gradient used to color a line feature at various distances along its length. Defined using a `step` or `interpolate` expression which outputs a color for each corresponding `line-progress` input value. `line-progress` is a percentage of the line feature's total length as measured on the webmercator projected coordinate plane (a `number` between `0` and `1`).  Can only be used with GeoJSON sources that specify `"lineMetrics": true`.
    */
   val lineGradient: Expression?
     /**
-     * Defines a gradient with which to color a line feature. Can only be used with GeoJSON sources that specify `"lineMetrics": true`.
+     * A gradient used to color a line feature at various distances along its length. Defined using a `step` or `interpolate` expression which outputs a color for each corresponding `line-progress` input value. `line-progress` is a percentage of the line feature's total length as measured on the webmercator projected coordinate plane (a `number` between `0` and `1`).  Can only be used with GeoJSON sources that specify `"lineMetrics": true`.
      *
      * Use static method [LineLayer.defaultLineGradient] to get the default property.
      *
@@ -1430,7 +1430,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * Defines a gradient with which to color a line feature. Can only be used with GeoJSON sources that specify `"lineMetrics": true`.
+   * A gradient used to color a line feature at various distances along its length. Defined using a `step` or `interpolate` expression which outputs a color for each corresponding `line-progress` input value. `line-progress` is a percentage of the line feature's total length as measured on the webmercator projected coordinate plane (a `number` between `0` and `1`).  Can only be used with GeoJSON sources that specify `"lineMetrics": true`.
    *
    * Use static method [LineLayer.defaultLineGradient] to set the default property.
    *
@@ -2604,12 +2604,12 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       get() = StyleManager.getStyleLayerPropertyDefaultValue("line", "line-depth-occlusion-factor-transition").silentUnwrap()
 
     /**
-     * Emission strength
+     * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
      */
     @MapboxExperimental
     val defaultLineEmissiveStrength: Double?
       /**
-       * Emission strength
+       * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
        *
        * Get the default value of LineEmissiveStrength property
        *
@@ -2620,7 +2620,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * Emission strength
+     * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
      *
      * This is an Expression representation of "line-emissive-strength".
      *
@@ -3339,7 +3339,7 @@ interface LineLayerDsl {
   fun lineDepthOcclusionFactorTransition(block: StyleTransition.Builder.() -> Unit): LineLayer
 
   /**
-   * Emission strength
+   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
    *
    * @param lineEmissiveStrength value of lineEmissiveStrength
    */
@@ -3347,7 +3347,7 @@ interface LineLayerDsl {
   fun lineEmissiveStrength(lineEmissiveStrength: Double = 0.0): LineLayer
 
   /**
-   * Emission strength
+   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
    *
    * @param lineEmissiveStrength value of lineEmissiveStrength as Expression
    */
@@ -3355,7 +3355,7 @@ interface LineLayerDsl {
   fun lineEmissiveStrength(lineEmissiveStrength: Expression): LineLayer
 
   /**
-   * Emission strength
+   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
    *
    * Set the LineEmissiveStrength property transition options
    *
@@ -3365,7 +3365,7 @@ interface LineLayerDsl {
   fun lineEmissiveStrengthTransition(options: StyleTransition): LineLayer
 
   /**
-   * Emission strength
+   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
    *
    * DSL for [lineEmissiveStrengthTransition].
    */
@@ -3403,7 +3403,7 @@ interface LineLayerDsl {
   fun lineGapWidthTransition(block: StyleTransition.Builder.() -> Unit): LineLayer
 
   /**
-   * Defines a gradient with which to color a line feature. Can only be used with GeoJSON sources that specify `"lineMetrics": true`.
+   * A gradient used to color a line feature at various distances along its length. Defined using a `step` or `interpolate` expression which outputs a color for each corresponding `line-progress` input value. `line-progress` is a percentage of the line feature's total length as measured on the webmercator projected coordinate plane (a `number` between `0` and `1`).  Can only be used with GeoJSON sources that specify `"lineMetrics": true`.
    *
    * @param lineGradient value of lineGradient
    */

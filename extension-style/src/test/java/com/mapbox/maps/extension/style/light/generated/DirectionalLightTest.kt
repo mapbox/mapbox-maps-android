@@ -457,7 +457,7 @@ class DirectionalLightTest {
     every { styleProperty.value } returns TypeUtils.wrapToValue(listOf(0.0, 1.0))
     val light = directionalLight("id") { }
     style.setLights(listOf(light))
-    assertTrue(light.directionAsExpression.toString().contains("[0.0, 1.0]"))
+    assertEquals("[literal, [0.0, 1.0]]", light.directionAsExpression.toString())
     assertEquals(listOf(0.0, 1.0), light.direction)
     verify { style.getStyleLightProperty("id", "direction") }
   }

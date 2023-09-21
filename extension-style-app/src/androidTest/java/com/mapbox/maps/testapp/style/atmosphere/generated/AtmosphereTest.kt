@@ -388,6 +388,60 @@ class AtmosphereTest : BaseStyleTest() {
     setupAtmosphere(atmosphere)
     assertEquals(transition, atmosphere.starIntensityTransition)
   }
+
+  @Test
+  @UiThreadTest
+  fun verticalRangeTest() {
+    val atmosphere = atmosphere {
+      verticalRange(listOf(0.0, 1.0))
+    }
+    setupAtmosphere(atmosphere)
+    assertEquals(listOf(0.0, 1.0), atmosphere.verticalRange)
+  }
+
+  // Add Expression Test
+  @Test
+  @UiThreadTest
+  fun verticalRangeAsExpressionTest() {
+    val expression = literal(listOf(0.0, 1.0))
+
+    val atmosphere = atmosphere {
+      verticalRange(expression)
+    }
+    setupAtmosphere(atmosphere)
+    assertEquals(expression.toString(), atmosphere.verticalRangeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun verticalRangeTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val atmosphere = atmosphere {
+      verticalRangeTransition(transition)
+    }
+    setupAtmosphere(atmosphere)
+    assertEquals(transition, atmosphere.verticalRangeTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun verticalRangeTransitionSetDslTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val atmosphere = atmosphere {
+      verticalRangeTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    setupAtmosphere(atmosphere)
+    assertEquals(transition, atmosphere.verticalRangeTransition)
+  }
 }
 
 // End of generated file.

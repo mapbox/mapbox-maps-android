@@ -1435,6 +1435,71 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
+   * Position symbol on buildings (both fill extrusions and models) roof tops. In order to have minimal impact on performance, this is supported only when `fill-extrusion-height` is not zoom-dependent and not edited after initial bucket creation. For fading in buildings when zooming in, fill-extrusion-vertical-scale should be used and symbols would raise with building roofs. Symbols are sorted by elevation, except in case when `viewport-y` sorting or `symbol-sort-key` are applied.
+   */
+  val symbolZElevate: Boolean?
+    /**
+     * Position symbol on buildings (both fill extrusions and models) roof tops. In order to have minimal impact on performance, this is supported only when `fill-extrusion-height` is not zoom-dependent and not edited after initial bucket creation. For fading in buildings when zooming in, fill-extrusion-vertical-scale should be used and symbols would raise with building roofs. Symbols are sorted by elevation, except in case when `viewport-y` sorting or `symbol-sort-key` are applied.
+     *
+     * Use static method [SymbolLayer.defaultSymbolZElevate] to get the default property.
+     *
+     * @return Boolean
+     */
+    get() {
+      return getPropertyValue("symbol-z-elevate")
+    }
+
+  /**
+   * Position symbol on buildings (both fill extrusions and models) roof tops. In order to have minimal impact on performance, this is supported only when `fill-extrusion-height` is not zoom-dependent and not edited after initial bucket creation. For fading in buildings when zooming in, fill-extrusion-vertical-scale should be used and symbols would raise with building roofs. Symbols are sorted by elevation, except in case when `viewport-y` sorting or `symbol-sort-key` are applied.
+   *
+   * Use static method [SymbolLayer.defaultSymbolZElevate] to set the default property.
+   *
+   * @param symbolZElevate value of symbolZElevate
+   */
+  override fun symbolZElevate(symbolZElevate: Boolean): SymbolLayer = apply {
+    val propertyValue = PropertyValue("symbol-z-elevate", symbolZElevate)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Position symbol on buildings (both fill extrusions and models) roof tops. In order to have minimal impact on performance, this is supported only when `fill-extrusion-height` is not zoom-dependent and not edited after initial bucket creation. For fading in buildings when zooming in, fill-extrusion-vertical-scale should be used and symbols would raise with building roofs. Symbols are sorted by elevation, except in case when `viewport-y` sorting or `symbol-sort-key` are applied.
+   *
+   * This is an Expression representation of "symbol-z-elevate".
+   *
+   */
+  val symbolZElevateAsExpression: Expression?
+    /**
+     * Position symbol on buildings (both fill extrusions and models) roof tops. In order to have minimal impact on performance, this is supported only when `fill-extrusion-height` is not zoom-dependent and not edited after initial bucket creation. For fading in buildings when zooming in, fill-extrusion-vertical-scale should be used and symbols would raise with building roofs. Symbols are sorted by elevation, except in case when `viewport-y` sorting or `symbol-sort-key` are applied.
+     *
+     * Get the SymbolZElevate property as an Expression
+     *
+     * Use static method [SymbolLayer.defaultSymbolZElevateAsExpression] to get the default property.
+     *
+     * @return Boolean
+     */
+    get() {
+      getPropertyValue<Expression>("symbol-z-elevate")?.let {
+        return it
+      }
+      symbolZElevate?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * Position symbol on buildings (both fill extrusions and models) roof tops. In order to have minimal impact on performance, this is supported only when `fill-extrusion-height` is not zoom-dependent and not edited after initial bucket creation. For fading in buildings when zooming in, fill-extrusion-vertical-scale should be used and symbols would raise with building roofs. Symbols are sorted by elevation, except in case when `viewport-y` sorting or `symbol-sort-key` are applied.
+   *
+   * Use static method [SymbolLayer.defaultSymbolZElevateAsExpression] to set the default property.
+   *
+   * @param symbolZElevate value of symbolZElevate as Expression
+   */
+  override fun symbolZElevate(symbolZElevate: Expression): SymbolLayer = apply {
+    val propertyValue = PropertyValue("symbol-z-elevate", symbolZElevate)
+    setProperty(propertyValue)
+  }
+
+  /**
    * Determines whether overlapping symbols in the same layer are rendered in the order that they appear in the data source or by their y-position relative to the viewport. To control the order and prioritization of symbols otherwise, use `symbol-sort-key`.
    */
   val symbolZOrder: SymbolZOrder?
@@ -3117,12 +3182,12 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Emission strength
+   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
    */
   @MapboxExperimental
   val iconEmissiveStrength: Double?
     /**
-     * Emission strength
+     * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
      *
      * Use static method [SymbolLayer.defaultIconEmissiveStrength] to get the default property.
      *
@@ -3133,7 +3198,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Emission strength
+   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
    *
    * Use static method [SymbolLayer.defaultIconEmissiveStrength] to set the default property.
    *
@@ -3146,7 +3211,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Emission strength
+   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
    *
    * This is an Expression representation of "icon-emissive-strength".
    *
@@ -3154,7 +3219,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   @MapboxExperimental
   val iconEmissiveStrengthAsExpression: Expression?
     /**
-     * Emission strength
+     * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
      *
      * Get the IconEmissiveStrength property as an Expression
      *
@@ -3173,7 +3238,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Emission strength
+   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
    *
    * Use static method [SymbolLayer.defaultIconEmissiveStrengthAsExpression] to set the default property.
    *
@@ -4053,12 +4118,12 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Emission strength
+   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
    */
   @MapboxExperimental
   val textEmissiveStrength: Double?
     /**
-     * Emission strength
+     * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
      *
      * Use static method [SymbolLayer.defaultTextEmissiveStrength] to get the default property.
      *
@@ -4069,7 +4134,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Emission strength
+   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
    *
    * Use static method [SymbolLayer.defaultTextEmissiveStrength] to set the default property.
    *
@@ -4082,7 +4147,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Emission strength
+   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
    *
    * This is an Expression representation of "text-emissive-strength".
    *
@@ -4090,7 +4155,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   @MapboxExperimental
   val textEmissiveStrengthAsExpression: Expression?
     /**
-     * Emission strength
+     * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
      *
      * Get the TextEmissiveStrength property as an Expression
      *
@@ -4109,7 +4174,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Emission strength
+   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
    *
    * Use static method [SymbolLayer.defaultTextEmissiveStrengthAsExpression] to set the default property.
    *
@@ -5493,6 +5558,43 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
+     * Position symbol on buildings (both fill extrusions and models) roof tops. In order to have minimal impact on performance, this is supported only when `fill-extrusion-height` is not zoom-dependent and not edited after initial bucket creation. For fading in buildings when zooming in, fill-extrusion-vertical-scale should be used and symbols would raise with building roofs. Symbols are sorted by elevation, except in case when `viewport-y` sorting or `symbol-sort-key` are applied.
+     */
+    val defaultSymbolZElevate: Boolean?
+      /**
+       * Position symbol on buildings (both fill extrusions and models) roof tops. In order to have minimal impact on performance, this is supported only when `fill-extrusion-height` is not zoom-dependent and not edited after initial bucket creation. For fading in buildings when zooming in, fill-extrusion-vertical-scale should be used and symbols would raise with building roofs. Symbols are sorted by elevation, except in case when `viewport-y` sorting or `symbol-sort-key` are applied.
+       *
+       * Get the default value of SymbolZElevate property
+       *
+       * @return Boolean
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("symbol", "symbol-z-elevate").silentUnwrap()
+      }
+
+    /**
+     * Position symbol on buildings (both fill extrusions and models) roof tops. In order to have minimal impact on performance, this is supported only when `fill-extrusion-height` is not zoom-dependent and not edited after initial bucket creation. For fading in buildings when zooming in, fill-extrusion-vertical-scale should be used and symbols would raise with building roofs. Symbols are sorted by elevation, except in case when `viewport-y` sorting or `symbol-sort-key` are applied.
+     *
+     * This is an Expression representation of "symbol-z-elevate".
+     *
+     */
+    val defaultSymbolZElevateAsExpression: Expression?
+      /**
+       * Get default value of the SymbolZElevate property as an Expression
+       *
+       * @return Boolean
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("symbol", "symbol-z-elevate").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultSymbolZElevate?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
+
+    /**
      * Determines whether overlapping symbols in the same layer are rendered in the order that they appear in the data source or by their y-position relative to the viewport. To control the order and prioritization of symbols otherwise, use `symbol-sort-key`.
      */
     val defaultSymbolZOrder: SymbolZOrder?
@@ -6447,12 +6549,12 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-color-transition").silentUnwrap()
 
     /**
-     * Emission strength
+     * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
      */
     @MapboxExperimental
     val defaultIconEmissiveStrength: Double?
       /**
-       * Emission strength
+       * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
        *
        * Get the default value of IconEmissiveStrength property
        *
@@ -6463,7 +6565,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Emission strength
+     * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
      *
      * This is an Expression representation of "icon-emissive-strength".
      *
@@ -6915,12 +7017,12 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-color-transition").silentUnwrap()
 
     /**
-     * Emission strength
+     * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
      */
     @MapboxExperimental
     val defaultTextEmissiveStrength: Double?
       /**
-       * Emission strength
+       * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
        *
        * Get the default value of TextEmissiveStrength property
        *
@@ -6931,7 +7033,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Emission strength
+     * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
      *
      * This is an Expression representation of "text-emissive-strength".
      *
@@ -7595,6 +7697,20 @@ interface SymbolLayerDsl {
   fun symbolSpacing(symbolSpacing: Expression): SymbolLayer
 
   /**
+   * Position symbol on buildings (both fill extrusions and models) roof tops. In order to have minimal impact on performance, this is supported only when `fill-extrusion-height` is not zoom-dependent and not edited after initial bucket creation. For fading in buildings when zooming in, fill-extrusion-vertical-scale should be used and symbols would raise with building roofs. Symbols are sorted by elevation, except in case when `viewport-y` sorting or `symbol-sort-key` are applied.
+   *
+   * @param symbolZElevate value of symbolZElevate
+   */
+  fun symbolZElevate(symbolZElevate: Boolean = false): SymbolLayer
+
+  /**
+   * Position symbol on buildings (both fill extrusions and models) roof tops. In order to have minimal impact on performance, this is supported only when `fill-extrusion-height` is not zoom-dependent and not edited after initial bucket creation. For fading in buildings when zooming in, fill-extrusion-vertical-scale should be used and symbols would raise with building roofs. Symbols are sorted by elevation, except in case when `viewport-y` sorting or `symbol-sort-key` are applied.
+   *
+   * @param symbolZElevate value of symbolZElevate as Expression
+   */
+  fun symbolZElevate(symbolZElevate: Expression): SymbolLayer
+
+  /**
    * Determines whether overlapping symbols in the same layer are rendered in the order that they appear in the data source or by their y-position relative to the viewport. To control the order and prioritization of symbols otherwise, use `symbol-sort-key`.
    *
    * @param symbolZOrder value of symbolZOrder
@@ -7970,7 +8086,7 @@ interface SymbolLayerDsl {
   fun iconColorTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer
 
   /**
-   * Emission strength
+   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
    *
    * @param iconEmissiveStrength value of iconEmissiveStrength
    */
@@ -7978,7 +8094,7 @@ interface SymbolLayerDsl {
   fun iconEmissiveStrength(iconEmissiveStrength: Double = 1.0): SymbolLayer
 
   /**
-   * Emission strength
+   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
    *
    * @param iconEmissiveStrength value of iconEmissiveStrength as Expression
    */
@@ -7986,7 +8102,7 @@ interface SymbolLayerDsl {
   fun iconEmissiveStrength(iconEmissiveStrength: Expression): SymbolLayer
 
   /**
-   * Emission strength
+   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
    *
    * Set the IconEmissiveStrength property transition options
    *
@@ -7996,7 +8112,7 @@ interface SymbolLayerDsl {
   fun iconEmissiveStrengthTransition(options: StyleTransition): SymbolLayer
 
   /**
-   * Emission strength
+   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
    *
    * DSL for [iconEmissiveStrengthTransition].
    */
@@ -8246,7 +8362,7 @@ interface SymbolLayerDsl {
   fun textColorTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer
 
   /**
-   * Emission strength
+   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
    *
    * @param textEmissiveStrength value of textEmissiveStrength
    */
@@ -8254,7 +8370,7 @@ interface SymbolLayerDsl {
   fun textEmissiveStrength(textEmissiveStrength: Double = 1.0): SymbolLayer
 
   /**
-   * Emission strength
+   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
    *
    * @param textEmissiveStrength value of textEmissiveStrength as Expression
    */
@@ -8262,7 +8378,7 @@ interface SymbolLayerDsl {
   fun textEmissiveStrength(textEmissiveStrength: Expression): SymbolLayer
 
   /**
-   * Emission strength
+   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
    *
    * Set the TextEmissiveStrength property transition options
    *
@@ -8272,7 +8388,7 @@ interface SymbolLayerDsl {
   fun textEmissiveStrengthTransition(options: StyleTransition): SymbolLayer
 
   /**
-   * Emission strength
+   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
    *
    * DSL for [textEmissiveStrengthTransition].
    */

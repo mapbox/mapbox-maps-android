@@ -305,6 +305,30 @@ class ModelLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun modelCutoffFadeRangeTest() {
+    val testValue = 1.0
+    val layer = modelLayer("id", "source") {
+      modelCutoffFadeRange(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(testValue, layer.modelCutoffFadeRange!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun modelCutoffFadeRangeAsExpressionTest() {
+    val expression = literal(1.0)
+    val layer = modelLayer("id", "source") {
+      modelCutoffFadeRange(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(1.0, layer.modelCutoffFadeRangeAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.modelCutoffFadeRange!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
   fun modelEmissiveStrengthTest() {
     val testValue = 1.0
     val layer = modelLayer("id", "source") {
@@ -837,6 +861,8 @@ class ModelLayerTest : BaseStyleTest() {
     assertNotNull("defaultModelColorMixIntensity should not be null", ModelLayer.defaultModelColorMixIntensity)
     assertNotNull("defaultModelColorMixIntensityAsExpression should not be null", ModelLayer.defaultModelColorMixIntensityAsExpression)
     assertNotNull("defaultModelColorMixIntensityTransition should not be null", ModelLayer.defaultModelColorMixIntensityTransition)
+    assertNotNull("defaultModelCutoffFadeRange should not be null", ModelLayer.defaultModelCutoffFadeRange)
+    assertNotNull("defaultModelCutoffFadeRangeAsExpression should not be null", ModelLayer.defaultModelCutoffFadeRangeAsExpression)
     assertNotNull("defaultModelEmissiveStrength should not be null", ModelLayer.defaultModelEmissiveStrength)
     assertNotNull("defaultModelEmissiveStrengthAsExpression should not be null", ModelLayer.defaultModelEmissiveStrengthAsExpression)
     assertNotNull("defaultModelEmissiveStrengthTransition should not be null", ModelLayer.defaultModelEmissiveStrengthTransition)
@@ -880,6 +906,7 @@ class ModelLayerTest : BaseStyleTest() {
     val modelCastShadowsTestValue = true
     val modelColorTestValue = "rgba(0, 0, 0, 1)"
     val modelColorMixIntensityTestValue = 1.0
+    val modelCutoffFadeRangeTestValue = 1.0
     val modelEmissiveStrengthTestValue = 1.0
     val modelHeightBasedEmissiveStrengthMultiplierTestValue = listOf(0.0, 1.0, 2.0, 3.0, 4.0)
     val modelOpacityTestValue = 1.0
@@ -903,6 +930,7 @@ class ModelLayerTest : BaseStyleTest() {
       modelCastShadows(modelCastShadowsTestValue)
       modelColor(modelColorTestValue)
       modelColorMixIntensity(modelColorMixIntensityTestValue)
+      modelCutoffFadeRange(modelCutoffFadeRangeTestValue)
       modelEmissiveStrength(modelEmissiveStrengthTestValue)
       modelHeightBasedEmissiveStrengthMultiplier(modelHeightBasedEmissiveStrengthMultiplierTestValue)
       modelOpacity(modelOpacityTestValue)
@@ -931,6 +959,7 @@ class ModelLayerTest : BaseStyleTest() {
     assertEquals(modelCastShadowsTestValue, cachedLayer.modelCastShadows)
     assertEquals(modelColorTestValue, cachedLayer.modelColor)
     assertEquals(modelColorMixIntensityTestValue, cachedLayer.modelColorMixIntensity)
+    assertEquals(modelCutoffFadeRangeTestValue, cachedLayer.modelCutoffFadeRange)
     assertEquals(modelEmissiveStrengthTestValue, cachedLayer.modelEmissiveStrength)
     assertEquals(modelHeightBasedEmissiveStrengthMultiplierTestValue, cachedLayer.modelHeightBasedEmissiveStrengthMultiplier)
     assertEquals(modelOpacityTestValue, cachedLayer.modelOpacity)

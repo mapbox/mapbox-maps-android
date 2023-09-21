@@ -921,6 +921,126 @@ class AtmosphereTest {
   }
 
   @Test
+  fun verticalRangeSet() {
+    val atmosphere = atmosphere {
+      verticalRange(listOf(0.0, 1.0))
+    }
+    atmosphere.bindTo(style)
+    verify { style.setStyleAtmosphere(capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("vertical-range=[0.0, 1.0]"))
+  }
+
+  @Test
+  fun verticalRangeSetAfterInitialization() {
+    val atmosphere = atmosphere { }
+    atmosphere.bindTo(style)
+    atmosphere.verticalRange(listOf(0.0, 1.0))
+    verify { style.setStyleAtmosphereProperty("vertical-range", capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("[0.0, 1.0]"))
+  }
+
+  @Test
+  fun verticalRangeGet() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(listOf(0.0, 1.0))
+
+    val atmosphere = atmosphere { }
+    atmosphere.bindTo(style)
+    assertEquals(listOf(0.0, 1.0).toString(), atmosphere.verticalRange!!.toString())
+    verify { style.getStyleAtmosphereProperty("vertical-range") }
+  }
+
+  // Expression Tests
+
+  @Test
+  fun verticalRangeAsExpressionGetNull() {
+    val atmosphere = atmosphere { }
+    atmosphere.bindTo(style)
+    assertEquals(null, atmosphere.verticalRangeAsExpression)
+    verify { style.getStyleAtmosphereProperty("vertical-range") }
+  }
+
+  @Test
+  fun verticalRangeAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(listOf(0.0, 1.0))
+    val atmosphere = atmosphere { }
+    atmosphere.bindTo(style)
+    assertEquals("[literal, [0.0, 1.0]]", atmosphere.verticalRangeAsExpression.toString())
+    assertEquals(listOf(0.0, 1.0), atmosphere.verticalRange)
+    verify { style.getStyleAtmosphereProperty("vertical-range") }
+  }
+
+  @Test
+  fun verticalRangeTransitionSet() {
+    val atmosphere = atmosphere {
+      verticalRangeTransition(
+        transitionOptions {
+          duration(100)
+          delay(200)
+        }
+      )
+    }
+    atmosphere.bindTo(style)
+    verify { style.setStyleAtmosphere(capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("vertical-range-transition={duration=100, delay=200}"))
+  }
+
+  @Test
+  fun verticalRangeTransitionSetAfterInitialization() {
+    val atmosphere = atmosphere { }
+    atmosphere.bindTo(style)
+    atmosphere.verticalRangeTransition(
+      transitionOptions {
+        duration(100)
+        delay(200)
+      }
+    )
+    verify { style.setStyleAtmosphereProperty("vertical-range-transition", capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("{duration=100, delay=200}"))
+  }
+
+  @Test
+  fun verticalRangeTransitionGet() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    val atmosphere = atmosphere {}
+    atmosphere.bindTo(style)
+    assertEquals(transition.toValue().toString(), atmosphere.verticalRangeTransition!!.toValue().toString())
+    verify { style.getStyleAtmosphereProperty("vertical-range-transition") }
+  }
+
+  @Test
+  fun verticalRangeTransitionGetNull() {
+    val transition = "wrong type"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    val atmosphere = atmosphere {}
+    atmosphere.bindTo(style)
+    assertEquals(null, atmosphere.verticalRangeTransition)
+    verify { style.getStyleAtmosphereProperty("vertical-range-transition") }
+  }
+
+  @Test(expected = RuntimeException::class)
+  fun verticalRangeTransitionGetException() {
+    val atmosphere = atmosphere {}
+    atmosphere.verticalRangeTransition
+  }
+
+  @Test
+  fun verticalRangeTransitionSetDsl() {
+    val atmosphere = atmosphere {
+      verticalRangeTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    atmosphere.bindTo(style)
+    verify { style.setStyleAtmosphere(capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("vertical-range-transition={duration=100, delay=200}"))
+  }
+
+  @Test
   fun getAtmosphereTest() {
     assertNotNull(style.getAtmosphere())
     verify(exactly = 0) { style.setStyleAtmosphere(any()) }

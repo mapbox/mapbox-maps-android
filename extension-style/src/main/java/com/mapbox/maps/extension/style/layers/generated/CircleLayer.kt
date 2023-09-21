@@ -544,12 +544,12 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
   }
 
   /**
-   * Emission strength
+   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
    */
   @MapboxExperimental
   val circleEmissiveStrength: Double?
     /**
-     * Emission strength
+     * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
      *
      * Use static method [CircleLayer.defaultCircleEmissiveStrength] to get the default property.
      *
@@ -560,7 +560,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
     }
 
   /**
-   * Emission strength
+   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
    *
    * Use static method [CircleLayer.defaultCircleEmissiveStrength] to set the default property.
    *
@@ -573,7 +573,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
   }
 
   /**
-   * Emission strength
+   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
    *
    * This is an Expression representation of "circle-emissive-strength".
    *
@@ -581,7 +581,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
   @MapboxExperimental
   val circleEmissiveStrengthAsExpression: Expression?
     /**
-     * Emission strength
+     * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
      *
      * Get the CircleEmissiveStrength property as an Expression
      *
@@ -600,7 +600,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
     }
 
   /**
-   * Emission strength
+   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
    *
    * Use static method [CircleLayer.defaultCircleEmissiveStrengthAsExpression] to set the default property.
    *
@@ -1690,12 +1690,12 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-color-transition").silentUnwrap()
 
     /**
-     * Emission strength
+     * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
      */
     @MapboxExperimental
     val defaultCircleEmissiveStrength: Double?
       /**
-       * Emission strength
+       * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
        *
        * Get the default value of CircleEmissiveStrength property
        *
@@ -1706,7 +1706,7 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
       }
 
     /**
-     * Emission strength
+     * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
      *
      * This is an Expression representation of "circle-emissive-strength".
      *
@@ -2327,7 +2327,7 @@ interface CircleLayerDsl {
   fun circleColorTransition(block: StyleTransition.Builder.() -> Unit): CircleLayer
 
   /**
-   * Emission strength
+   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
    *
    * @param circleEmissiveStrength value of circleEmissiveStrength
    */
@@ -2335,7 +2335,7 @@ interface CircleLayerDsl {
   fun circleEmissiveStrength(circleEmissiveStrength: Double = 0.0): CircleLayer
 
   /**
-   * Emission strength
+   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
    *
    * @param circleEmissiveStrength value of circleEmissiveStrength as Expression
    */
@@ -2343,7 +2343,7 @@ interface CircleLayerDsl {
   fun circleEmissiveStrength(circleEmissiveStrength: Expression): CircleLayer
 
   /**
-   * Emission strength
+   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
    *
    * Set the CircleEmissiveStrength property transition options
    *
@@ -2353,7 +2353,7 @@ interface CircleLayerDsl {
   fun circleEmissiveStrengthTransition(options: StyleTransition): CircleLayer
 
   /**
-   * Emission strength
+   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
    *
    * DSL for [circleEmissiveStrengthTransition].
    */

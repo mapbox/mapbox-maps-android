@@ -26,7 +26,7 @@ import com.mapbox.maps.plugin.annotation.generated.createCircleAnnotationManager
  *
  * @param annotations List of [CircleAnnotationOptions] to be added to the group.
  * @param annotationConfig Configuration for [CircleAnnotationCluster].
- * @param circleEmissiveStrength Emission strength The unit of circleEmissiveStrength is in intensity.
+ * @param circleEmissiveStrength Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined. The unit of circleEmissiveStrength is in intensity.
  * @param circlePitchAlignment Orientation of circle when map is pitched.
  * @param circlePitchScale Controls the scaling behavior of the circle when the map is pitched.
  * @param circleTranslate The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. The unit of circleTranslate is in density-independent pixels.

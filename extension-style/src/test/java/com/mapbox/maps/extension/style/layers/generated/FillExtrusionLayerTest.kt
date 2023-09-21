@@ -1016,6 +1016,73 @@ class FillExtrusionLayerTest {
   }
 
   @Test
+  fun fillExtrusionCutoffFadeRangeSet() {
+    val layer = fillExtrusionLayer("id", "source") {}
+    val testValue = 1.0
+    layer.bindTo(style)
+    layer.fillExtrusionCutoffFadeRange(testValue)
+    verify { style.setStyleLayerProperty("id", "fill-extrusion-cutoff-fade-range", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "1.0")
+  }
+
+  @Test
+  fun fillExtrusionCutoffFadeRangeGet() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = fillExtrusionLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), layer.fillExtrusionCutoffFadeRange?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-cutoff-fade-range") }
+  }
+  // Expression Tests
+
+  @Test
+  fun fillExtrusionCutoffFadeRangeAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = fillExtrusionLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.fillExtrusionCutoffFadeRange(expression)
+    verify { style.setStyleLayerProperty("id", "fill-extrusion-cutoff-fade-range", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun fillExtrusionCutoffFadeRangeAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = fillExtrusionLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.fillExtrusionCutoffFadeRangeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-cutoff-fade-range") }
+  }
+
+  @Test
+  fun fillExtrusionCutoffFadeRangeAsExpressionGetNull() {
+    val layer = fillExtrusionLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.fillExtrusionCutoffFadeRangeAsExpression)
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-cutoff-fade-range") }
+  }
+
+  @Test
+  fun fillExtrusionCutoffFadeRangeAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    val layer = fillExtrusionLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(1.0, layer.fillExtrusionCutoffFadeRangeAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.fillExtrusionCutoffFadeRange!!, 1E-5)
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-cutoff-fade-range") }
+  }
+
+  @Test
   fun fillExtrusionFloodLightColorSet() {
     val layer = fillExtrusionLayer("id", "source") {}
     val testValue = "rgba(0, 0, 0, 1)"
@@ -2726,6 +2793,37 @@ class FillExtrusionLayerTest {
 
     assertEquals(transition.toValue().toString(), FillExtrusionLayer.defaultFillExtrusionColorTransition?.toValue().toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-color-transition") }
+  }
+
+  @Test
+  fun defaultFillExtrusionCutoffFadeRangeTest() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), FillExtrusionLayer.defaultFillExtrusionCutoffFadeRange?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-cutoff-fade-range") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultFillExtrusionCutoffFadeRangeAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), FillExtrusionLayer.defaultFillExtrusionCutoffFadeRangeAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-cutoff-fade-range") }
+  }
+
+  @Test
+  fun defaultFillExtrusionCutoffFadeRangeAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    assertEquals(1.0, FillExtrusionLayer.defaultFillExtrusionCutoffFadeRangeAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, FillExtrusionLayer.defaultFillExtrusionCutoffFadeRange!!, 1E-5)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-cutoff-fade-range") }
   }
 
   @Test

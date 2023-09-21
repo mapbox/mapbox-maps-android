@@ -600,6 +600,89 @@ class Atmosphere : AtmosphereDslReceiver, StyleContract.StyleAtmosphereExtension
     val propertyValue = PropertyValue("star-intensity", starIntensity)
     setProperty(propertyValue)
   }
+  /**
+   * Specify the vertical range, measured in meters, over which the fog should gradually fade out. When both parameters are set to zero, the fog will be rendered without any vertical constraints.
+   */
+  val verticalRange: List<Double>?
+    /**
+     * Specify the vertical range, measured in meters, over which the fog should gradually fade out. When both parameters are set to zero, the fog will be rendered without any vertical constraints.
+     *
+     * @return vertical-range as List<Double>
+     */
+    get() {
+      return getPropertyValue("vertical-range")
+    }
+
+  /**
+   * Specify the vertical range, measured in meters, over which the fog should gradually fade out. When both parameters are set to zero, the fog will be rendered without any vertical constraints.
+   *
+   * @param verticalRange as List<Double>
+   */
+  override fun verticalRange(verticalRange: List<Double>): Atmosphere = apply {
+    setProperty(PropertyValue("vertical-range", verticalRange))
+  }
+
+  /**
+   * VerticalRange property transition options.
+   */
+  val verticalRangeTransition: StyleTransition?
+    /**
+     * Get the VerticalRange property transition options.
+     *
+     * @return transition options for vertical-range
+     */
+    get() {
+      return getTransitionProperty("vertical-range-transition")
+    }
+
+  /**
+   * Set the VerticalRange property transition options.
+   *
+   * @param options transition options for vertical-range
+   */
+  override fun verticalRangeTransition(options: StyleTransition): Atmosphere = apply {
+    val propertyValue = PropertyValue("vertical-range-transition", options)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * DSL for [verticalRangeTransition].
+   */
+  override fun verticalRangeTransition(block: StyleTransition.Builder.() -> Unit): Atmosphere = apply {
+    verticalRangeTransition(StyleTransition.Builder().apply(block).build())
+  }
+
+  /**
+   * Specify the vertical range, measured in meters, over which the fog should gradually fade out. When both parameters are set to zero, the fog will be rendered without any vertical constraints.
+   *
+   * This is an Expression representation of "vertical-range".
+   */
+  val verticalRangeAsExpression: Expression?
+    /**
+     * Specify the vertical range, measured in meters, over which the fog should gradually fade out. When both parameters are set to zero, the fog will be rendered without any vertical constraints.
+     *
+     * Get the verticalRange property as an Expression
+     *
+     * @return List<Double>
+     */
+    get() {
+      getPropertyValue<Expression>("vertical-range")?.let {
+        return it
+      }
+      verticalRange?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+  /**
+   * Specify the vertical range, measured in meters, over which the fog should gradually fade out. When both parameters are set to zero, the fog will be rendered without any vertical constraints.
+   *
+   * @param verticalRange value of verticalRange as Expression
+   */
+  override fun verticalRange(verticalRange: Expression): Atmosphere = apply {
+    val propertyValue = PropertyValue("vertical-range", verticalRange)
+    setProperty(propertyValue)
+  }
 
   /**
    * Bind atmosphere to the map controller.
@@ -849,6 +932,31 @@ interface AtmosphereDslReceiver {
    * DSL for [starIntensityTransition].
    */
   fun starIntensityTransition(block: StyleTransition.Builder.() -> Unit): Atmosphere
+  /**
+   * Specify the vertical range, measured in meters, over which the fog should gradually fade out. When both parameters are set to zero, the fog will be rendered without any vertical constraints.
+   *
+   * @param verticalRange as List<Double>
+   */
+  fun verticalRange(verticalRange: List<Double> = listOf(0.0, 0.0)): Atmosphere
+
+  /**
+   * Specify the vertical range, measured in meters, over which the fog should gradually fade out. When both parameters are set to zero, the fog will be rendered without any vertical constraints.
+   *
+   * @param verticalRange value of verticalRange as Expression
+   */
+  fun verticalRange(verticalRange: Expression): Atmosphere
+
+  /**
+   * Set the VerticalRange property transition options.
+   *
+   * @param options transition options for vertical-range
+   */
+  fun verticalRangeTransition(options: StyleTransition): Atmosphere
+
+  /**
+   * DSL for [verticalRangeTransition].
+   */
+  fun verticalRangeTransition(block: StyleTransition.Builder.() -> Unit): Atmosphere
 }
 
 /**

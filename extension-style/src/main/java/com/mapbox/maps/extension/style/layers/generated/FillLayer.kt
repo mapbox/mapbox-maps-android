@@ -510,12 +510,12 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   }
 
   /**
-   * Emission strength
+   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
    */
   @MapboxExperimental
   val fillEmissiveStrength: Double?
     /**
-     * Emission strength
+     * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
      *
      * Use static method [FillLayer.defaultFillEmissiveStrength] to get the default property.
      *
@@ -526,7 +526,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     }
 
   /**
-   * Emission strength
+   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
    *
    * Use static method [FillLayer.defaultFillEmissiveStrength] to set the default property.
    *
@@ -539,7 +539,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   }
 
   /**
-   * Emission strength
+   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
    *
    * This is an Expression representation of "fill-emissive-strength".
    *
@@ -547,7 +547,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   @MapboxExperimental
   val fillEmissiveStrengthAsExpression: Expression?
     /**
-     * Emission strength
+     * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
      *
      * Get the FillEmissiveStrength property as an Expression
      *
@@ -566,7 +566,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     }
 
   /**
-   * Emission strength
+   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
    *
    * Use static method [FillLayer.defaultFillEmissiveStrengthAsExpression] to set the default property.
    *
@@ -1277,12 +1277,12 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
       get() = StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-color-transition").silentUnwrap()
 
     /**
-     * Emission strength
+     * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
      */
     @MapboxExperimental
     val defaultFillEmissiveStrength: Double?
       /**
-       * Emission strength
+       * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
        *
        * Get the default value of FillEmissiveStrength property
        *
@@ -1293,7 +1293,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
       }
 
     /**
-     * Emission strength
+     * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
      *
      * This is an Expression representation of "fill-emissive-strength".
      *
@@ -1711,7 +1711,7 @@ interface FillLayerDsl {
   fun fillColorTransition(block: StyleTransition.Builder.() -> Unit): FillLayer
 
   /**
-   * Emission strength
+   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
    *
    * @param fillEmissiveStrength value of fillEmissiveStrength
    */
@@ -1719,7 +1719,7 @@ interface FillLayerDsl {
   fun fillEmissiveStrength(fillEmissiveStrength: Double = 0.0): FillLayer
 
   /**
-   * Emission strength
+   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
    *
    * @param fillEmissiveStrength value of fillEmissiveStrength as Expression
    */
@@ -1727,7 +1727,7 @@ interface FillLayerDsl {
   fun fillEmissiveStrength(fillEmissiveStrength: Expression): FillLayer
 
   /**
-   * Emission strength
+   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
    *
    * Set the FillEmissiveStrength property transition options
    *
@@ -1737,7 +1737,7 @@ interface FillLayerDsl {
   fun fillEmissiveStrengthTransition(options: StyleTransition): FillLayer
 
   /**
-   * Emission strength
+   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
    *
    * DSL for [fillEmissiveStrengthTransition].
    */

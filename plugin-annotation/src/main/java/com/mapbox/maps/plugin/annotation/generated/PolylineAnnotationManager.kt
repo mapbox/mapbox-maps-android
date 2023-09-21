@@ -3,6 +3,7 @@
 package com.mapbox.maps.plugin.annotation.generated
 
 import com.mapbox.geojson.*
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.get
@@ -285,6 +286,7 @@ class PolylineAnnotationManager(
    *
    * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded.
    */
+  @MapboxExperimental
   var lineDepthOcclusionFactor: Double?
     /**
      * Get the LineDepthOcclusionFactor property
@@ -309,8 +311,9 @@ class PolylineAnnotationManager(
   /**
    * The LineEmissiveStrength property
    *
-   * Emission strength The unit of lineEmissiveStrength is in intensity.
+   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined. The unit of lineEmissiveStrength is in intensity.
    */
+  @MapboxExperimental
   var lineEmissiveStrength: Double?
     /**
      * Get the LineEmissiveStrength property

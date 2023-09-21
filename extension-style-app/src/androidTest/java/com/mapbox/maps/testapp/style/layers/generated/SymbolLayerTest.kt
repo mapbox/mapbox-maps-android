@@ -535,6 +535,30 @@ class SymbolLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun symbolZElevateTest() {
+    val testValue = true
+    val layer = symbolLayer("id", "source") {
+      symbolZElevate(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(testValue.toString(), layer.symbolZElevate?.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun symbolZElevateAsExpressionTest() {
+    val expression = literal(true)
+    val layer = symbolLayer("id", "source") {
+      symbolZElevate(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(expression.toString(), layer.symbolZElevateAsExpression.toString())
+    assertEquals(true, layer.symbolZElevate!!)
+  }
+
+  @Test
+  @UiThreadTest
   fun symbolZOrderTest() {
     val layer = symbolLayer("id", "source") {
       symbolZOrder(SymbolZOrder.AUTO)
@@ -2239,6 +2263,8 @@ class SymbolLayerTest : BaseStyleTest() {
     assertNotNull("defaultSymbolSortKeyAsExpression should not be null", SymbolLayer.defaultSymbolSortKeyAsExpression)
     assertNotNull("defaultSymbolSpacing should not be null", SymbolLayer.defaultSymbolSpacing)
     assertNotNull("defaultSymbolSpacingAsExpression should not be null", SymbolLayer.defaultSymbolSpacingAsExpression)
+    assertNotNull("defaultSymbolZElevate should not be null", SymbolLayer.defaultSymbolZElevate)
+    assertNotNull("defaultSymbolZElevateAsExpression should not be null", SymbolLayer.defaultSymbolZElevateAsExpression)
     assertNotNull("defaultSymbolZOrder should not be null", SymbolLayer.defaultSymbolZOrder)
     assertNotNull("defaultSymbolZOrderAsExpression should not be null", SymbolLayer.defaultSymbolZOrderAsExpression)
     assertNotNull("defaultTextAllowOverlap should not be null", SymbolLayer.defaultTextAllowOverlap)
@@ -2368,6 +2394,7 @@ class SymbolLayerTest : BaseStyleTest() {
     val symbolPlacementTestValue = SymbolPlacement.POINT
     val symbolSortKeyTestValue = 1.0
     val symbolSpacingTestValue = 1.0
+    val symbolZElevateTestValue = true
     val symbolZOrderTestValue = SymbolZOrder.AUTO
     val textAllowOverlapTestValue = true
     val textAnchorTestValue = TextAnchor.CENTER
@@ -2451,6 +2478,7 @@ class SymbolLayerTest : BaseStyleTest() {
       symbolPlacement(symbolPlacementTestValue)
       symbolSortKey(symbolSortKeyTestValue)
       symbolSpacing(symbolSpacingTestValue)
+      symbolZElevate(symbolZElevateTestValue)
       symbolZOrder(symbolZOrderTestValue)
       textAllowOverlap(textAllowOverlapTestValue)
       textAnchor(textAnchorTestValue)
@@ -2522,6 +2550,7 @@ class SymbolLayerTest : BaseStyleTest() {
     assertEquals(symbolPlacementTestValue, cachedLayer.symbolPlacement)
     assertEquals(symbolSortKeyTestValue, cachedLayer.symbolSortKey)
     assertEquals(symbolSpacingTestValue, cachedLayer.symbolSpacing)
+    assertEquals(symbolZElevateTestValue, cachedLayer.symbolZElevate)
     assertEquals(symbolZOrderTestValue, cachedLayer.symbolZOrder)
     assertEquals(textAllowOverlapTestValue, cachedLayer.textAllowOverlap)
     assertEquals(textAnchorTestValue, cachedLayer.textAnchor)
