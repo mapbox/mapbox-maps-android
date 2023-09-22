@@ -396,7 +396,7 @@ License: [The Apache Software License, Version 2.0](http://www.apache.org/licens
 
 ===========================================================================
 
-Mapbox Maps Android uses portions of the Okio.
+Mapbox Maps Android uses portions of the okio.
 
 URL: [https://github.com/square/okio/](https://github.com/square/okio/)
 
