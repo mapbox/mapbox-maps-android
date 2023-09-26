@@ -539,7 +539,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   override fun doFrame(frameTimeNanos: Long) {
     trace("do-frame") {
       val startTime = if (renderThreadRecorder?.recording == true) {
-        SystemClock.elapsedRealtime()
+        SystemClock.elapsedRealtimeNanos()
       } else {
         0L
       }
@@ -553,13 +553,13 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       // via `renderHandlerThread.postDelayed` instead of updating queue concurrently that is being drained (which may lead to deadlock in core).
       drainQueue(nonRenderEventQueue)
       val endTime = if (renderThreadRecorder?.recording == true) {
-        SystemClock.elapsedRealtime()
+        SystemClock.elapsedRealtimeNanos()
       } else {
         0L
       }
-      if (endTime != 0L) {
+      if (startTime != 0L && endTime != 0L) {
         renderThreadRecorder?.addFrameStats(
-          endTime - startTime,
+          (endTime - startTime) / 10e6,
           fpsManager.skippedNow
         )
       }

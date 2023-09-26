@@ -13,7 +13,7 @@ class RenderThreadRecorder private constructor() {
 
   private var startTime = 0L
   private var totalDroppedFrames = 0L
-  private val frameTimeList = mutableListOf<Long>()
+  private val frameTimeList = mutableListOf<Double>()
 
   /**
    * Is recording in progress.
@@ -31,7 +31,7 @@ class RenderThreadRecorder private constructor() {
     startTime = SystemClock.elapsedRealtime()
   }
 
-  internal fun addFrameStats(frameTime: Long, droppedFrames: Int) {
+  internal fun addFrameStats(frameTime: Double, droppedFrames: Int) {
     totalDroppedFrames += droppedFrames
     frameTimeList.add(frameTime)
   }
@@ -80,5 +80,5 @@ data class RenderThreadStats(
   val totalTime: Long,
   val totalFrames: Long,
   val totalDroppedFrames: Long,
-  val frameTimeList: List<Long>,
+  val frameTimeList: List<Double>,
 )
