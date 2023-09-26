@@ -19,6 +19,8 @@ internal class FpsManager(
   private var previousFrameTimeNs = -1L
   private var previousDrawnFrameIndex = 0
   private var frameRenderTimeAccumulatedNs = 0L
+  var skippedNow = 0
+    private set
 
   private var preRenderTimeNs = -1L
   private var choreographerTicks = 0
@@ -60,10 +62,12 @@ internal class FpsManager(
    * Return true if rendering should happen this frame and false otherwise.
    *
    * @param frameTimeNs time value from Choreographer in [System.nanoTime] timebase.
+   * @param recorderStarted whether [RenderThreadRecorder.start] has been called
+   * - in that case we want to [updateFrameStats] even if there is no [OnFpsChangedListener] attached and no frame pacing needed
    */
-  fun preRender(frameTimeNs: Long): Boolean {
+  fun preRender(frameTimeNs: Long, recorderStarted: Boolean = false): Boolean {
     // no need to perform neither pacing nor FPS calculation when setMaxFps / setOnFpsChangedListener was not called by the user
-    if (userToScreenRefreshRateRatio == null && fpsChangedListener == null) {
+    if (userToScreenRefreshRateRatio == null && fpsChangedListener == null && !recorderStarted) {
       return true
     }
     // clear any scheduled task as new render call is about to happen
@@ -107,7 +111,7 @@ internal class FpsManager(
 
   private fun updateFrameStats(frameTimeNs: Long) {
     preRenderTimeNs = System.nanoTime()
-    var skippedNow = 0
+    skippedNow = 0
     // check if we did miss VSYNC deadline meaning too much work was done in previous doFrame
     if (previousFrameTimeNs != -1L && frameTimeNs - previousFrameTimeNs > screenRefreshPeriodNs + ONE_MILLISECOND_NS) {
       skippedNow =
