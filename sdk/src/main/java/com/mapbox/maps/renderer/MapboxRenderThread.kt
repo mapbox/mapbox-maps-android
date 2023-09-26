@@ -1,6 +1,7 @@
 package com.mapbox.maps.renderer
 
 import android.opengl.GLES20
+import android.os.SystemClock
 import android.view.Choreographer
 import android.view.Surface
 import androidx.annotation.*
@@ -58,6 +59,8 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   @Volatile
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal var paused = false
+
+  internal var renderThreadRecorder: RenderThreadRecorder? = null
 
   /**
    * We track moment when native renderer is prepared.
@@ -282,7 +285,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   }
 
   private fun draw(frameTimeNanos: Long) {
-    if (!fpsManager.preRender(frameTimeNanos)) {
+    if (!fpsManager.preRender(frameTimeNanos, renderThreadRecorder?.recording == true)) {
       // when we have FPS limited and desire to skip core render - we must schedule new draw call
       // otherwise map may remain in not fully loaded state
       postPrepareRenderFrame()
@@ -512,6 +515,11 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
 
   @WorkerThread
   override fun doFrame(frameTimeNanos: Long) {
+    val startTime = if (renderThreadRecorder?.recording == true) {
+      SystemClock.elapsedRealtimeNanos()
+    } else {
+      0L
+    }
     // it makes sense to draw not only when EGL config is prepared but when native renderer is created
     if (renderThreadPrepared && !paused) {
       draw(frameTimeNanos)
@@ -521,6 +529,17 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     // With `awaitingNextVsync = false` we will always schedule recursive tasks for later execution
     // via `renderHandlerThread.postDelayed` instead of updating queue concurrently that is being drained (which may lead to deadlock in core).
     drainQueue(nonRenderEventQueue)
+    val endTime = if (renderThreadRecorder?.recording == true) {
+      SystemClock.elapsedRealtimeNanos()
+    } else {
+      0L
+    }
+    if (startTime != 0L && endTime != 0L) {
+      renderThreadRecorder?.addFrameStats(
+        (endTime - startTime) / 1e6,
+        fpsManager.skippedNow
+      )
+    }
   }
 
   @AnyThread
