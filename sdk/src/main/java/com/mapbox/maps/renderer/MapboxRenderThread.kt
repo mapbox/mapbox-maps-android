@@ -559,7 +559,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       }
       if (startTime != 0L && endTime != 0L) {
         renderThreadRecorder?.addFrameStats(
-          (endTime - startTime) / 10e6,
+          (endTime - startTime) / 1e6,
           fpsManager.skippedNow
         )
       }
