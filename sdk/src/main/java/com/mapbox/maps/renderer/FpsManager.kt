@@ -1,6 +1,7 @@
 package com.mapbox.maps.renderer
 
 import android.os.Handler
+import androidx.annotation.RestrictTo
 import androidx.annotation.WorkerThread
 import androidx.core.os.postDelayed
 import com.mapbox.maps.logI
@@ -8,9 +9,8 @@ import com.mapbox.maps.logW
 import kotlin.math.pow
 
 @WorkerThread
-internal class FpsManager(
-  private val handler: Handler
-) {
+@RestrictTo(RestrictTo.Scope.LIBRARY)
+internal class FpsManager(private val handler: Handler) {
   private var userRefreshRate = USER_DEFINED_REFRESH_RATE_NOT_SET
   private var userToScreenRefreshRateRatio: Double? = null
 

@@ -1,10 +1,12 @@
 package com.mapbox.maps.plugin.locationcomponent
 
+import androidx.annotation.RestrictTo
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.plugin.ModelScaleMode
 
 @OptIn(MapboxExperimental::class)
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class ModelLayerWrapper(
   layerId: String,
   sourceId: String,

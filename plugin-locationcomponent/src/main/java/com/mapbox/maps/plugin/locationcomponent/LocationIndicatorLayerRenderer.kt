@@ -2,6 +2,7 @@ package com.mapbox.maps.plugin.locationcomponent
 
 import android.content.Context
 import androidx.annotation.ColorInt
+import androidx.annotation.RestrictTo
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
 import com.mapbox.maps.ImageHolder
@@ -18,6 +19,7 @@ import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.util.Locale
 
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class LocationIndicatorLayerRenderer(
   private val puckOptions: LocationPuck2D,
   private val weakContext: WeakReference<Context>,

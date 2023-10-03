@@ -1,11 +1,13 @@
 package com.mapbox.maps.plugin.locationcomponent
 
 import android.util.Log
+import androidx.annotation.RestrictTo
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxLocationComponentException
 import com.mapbox.maps.Style
 import com.mapbox.maps.logE
 
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class ModelSourceWrapper(
   val sourceId: String,
   private var url: String,

@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.annotation.RestrictTo
 import com.mapbox.common.Cancelable
 import com.mapbox.maps.CameraChangedCallback
 import com.mapbox.maps.CameraState
@@ -20,6 +21,7 @@ import com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettingsBase
 /**
  * Concrete implementation of ScaleBarViewPlugin.
  */
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class ScaleBarPluginImpl(
   private val viewImplProvider: (Context) -> ScaleBarImpl = { ScaleBarImpl(it) }
 ) : ScaleBarPlugin, ScaleBarSettingsBase() {

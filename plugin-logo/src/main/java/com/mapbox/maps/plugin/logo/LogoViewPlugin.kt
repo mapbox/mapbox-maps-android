@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.annotation.RestrictTo
 import com.mapbox.maps.plugin.logo.generated.LogoAttributeParser
 import com.mapbox.maps.plugin.logo.generated.LogoSettings
 import com.mapbox.maps.plugin.logo.generated.LogoSettingsBase
@@ -12,6 +13,7 @@ import com.mapbox.maps.plugin.logo.generated.LogoSettingsBase
 /**
  * Concrete implementation of LogoViewPlugin.
  */
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class LogoViewPlugin(
   private val viewImplProvider: (Context) -> LogoViewImpl = { LogoViewImpl(it) }
 ) : LogoPlugin, LogoSettingsBase() {

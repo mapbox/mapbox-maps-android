@@ -1,5 +1,6 @@
 package com.mapbox.maps.plugin.viewport.transition
 
+import androidx.annotation.RestrictTo
 import com.mapbox.common.Cancelable
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
@@ -15,6 +16,7 @@ import com.mapbox.maps.plugin.viewport.state.ViewportState
  *
  * Use [ViewportPlugin.makeImmediateViewportTransition] to create instances of ImmediateViewportTransition.
  */
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class ImmediateViewportTransition(delegateProvider: MapDelegateProvider) :
   ViewportTransition {
   private val cameraPlugin = delegateProvider.mapPluginProviderDelegate.camera

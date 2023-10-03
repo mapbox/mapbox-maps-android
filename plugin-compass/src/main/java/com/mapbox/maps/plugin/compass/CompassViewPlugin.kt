@@ -4,12 +4,11 @@ import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.drawable.BitmapDrawable
-import android.os.Handler
-import android.os.Looper
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.annotation.RestrictTo
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.animation.doOnEnd
 import com.mapbox.geojson.Point
@@ -31,11 +30,11 @@ import kotlin.math.abs
 /**
  * Concrete implementation of CompassPlugin.
  */
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class CompassViewPlugin(
   private val viewImplProvider: (Context) -> CompassViewImpl = { CompassViewImpl(it) },
   @SuppressLint("Recycle")
-  private val fadeAnimator: ValueAnimator = ValueAnimator.ofFloat(1f, 0f),
-  @Suppress("unused") private val mainHandler: Handler = Handler(Looper.getMainLooper())
+  private val fadeAnimator: ValueAnimator = ValueAnimator.ofFloat(1f, 0f)
 ) : CompassPlugin, CompassSettingsBase() {
 
   private lateinit var compassView: CompassView
@@ -273,7 +272,7 @@ internal class CompassViewPlugin(
   /**
    * Static variables and methods.
    */
-  companion object {
+  private companion object {
     private const val DEFAULT_BEARING = 0.0
     private const val TIME_WAIT_IDLE = 500L
     private const val TIME_FADE_ANIMATION = TIME_WAIT_IDLE

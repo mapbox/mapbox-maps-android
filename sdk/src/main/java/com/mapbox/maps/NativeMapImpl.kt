@@ -1,5 +1,6 @@
 package com.mapbox.maps
 
+import androidx.annotation.RestrictTo
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
@@ -8,6 +9,7 @@ import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
 
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class NativeMapImpl(val map: Map) {
 
   fun setSize(size: Size) {

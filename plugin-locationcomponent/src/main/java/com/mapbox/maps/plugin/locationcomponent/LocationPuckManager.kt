@@ -2,6 +2,7 @@ package com.mapbox.maps.plugin.locationcomponent
 
 import android.animation.ValueAnimator
 import android.content.Context
+import androidx.annotation.RestrictTo
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
 import androidx.core.animation.doOnEnd
@@ -20,6 +21,7 @@ import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSetti
 import java.lang.ref.WeakReference
 import kotlin.math.abs
 
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class LocationPuckManager(
   var settings: LocationComponentSettings,
   private val weakContext: WeakReference<Context>,

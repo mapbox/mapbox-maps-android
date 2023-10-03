@@ -10,6 +10,7 @@ import android.os.Looper
 import android.util.AttributeSet
 import android.view.InputDevice
 import android.view.MotionEvent
+import androidx.annotation.RestrictTo
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
 import androidx.core.animation.addListener
@@ -37,6 +38,7 @@ import kotlin.math.*
 /**
  * Manages gestures events on a MapView.
  */
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserverPlugin {
 
   private val context: Context

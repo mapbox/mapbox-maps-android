@@ -3,6 +3,7 @@ package com.mapbox.maps.renderer
 import android.opengl.EGLContext
 import android.opengl.EGLSurface
 import android.opengl.GLES20
+import androidx.annotation.RestrictTo
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.logE
 import com.mapbox.maps.renderer.egl.EGLCore
@@ -10,6 +11,7 @@ import com.mapbox.maps.renderer.widget.Widget
 import java.util.concurrent.CopyOnWriteArraySet
 
 @OptIn(MapboxExperimental::class)
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class MapboxWidgetRenderer(
   private val antialiasingSampleCount: Int,
 ) {

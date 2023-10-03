@@ -1,5 +1,6 @@
 package com.mapbox.maps
 
+import androidx.annotation.RestrictTo
 import androidx.annotation.UiThread
 import androidx.annotation.VisibleForTesting
 import com.mapbox.common.Cancelable
@@ -10,6 +11,7 @@ import java.util.concurrent.CopyOnWriteArraySet
 
 @Suppress("DeprecatedCallableAddReplaceWith", "DEPRECATION")
 @UiThread
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class NativeObserver(
   private val observable: NativeMapImpl
 ) {

@@ -4,12 +4,14 @@ import android.graphics.Bitmap
 import android.opengl.GLES20
 import android.opengl.GLUtils
 import android.opengl.Matrix
+import androidx.annotation.RestrictTo
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.renderer.gl.GlUtils
 import com.mapbox.maps.renderer.gl.GlUtils.put
 import com.mapbox.maps.renderer.gl.GlUtils.toFloatBuffer
 
 @OptIn(MapboxExperimental::class)
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class BitmapWidgetRenderer(
   @Volatile
   // Bitmap is retained throughout BitmapWidgetRenderer lifetime.

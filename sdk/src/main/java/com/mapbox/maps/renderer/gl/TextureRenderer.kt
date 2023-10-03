@@ -1,8 +1,10 @@
 package com.mapbox.maps.renderer.gl
 
 import android.opengl.GLES20
+import androidx.annotation.RestrictTo
 import com.mapbox.maps.renderer.gl.GlUtils.toFloatBuffer
 
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class TextureRenderer(
   private val depth: Float = 0f
 ) {
@@ -13,7 +15,7 @@ internal class TextureRenderer(
   private var uniformTexture: Int = 0
   private var vbo: IntArray = IntArray(2)
 
-  fun prepare() {
+  private fun prepare() {
     setupVbo(
       vertexArray = floatArrayOf(
         -1f, -1f, depth,

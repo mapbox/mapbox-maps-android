@@ -3,6 +3,7 @@ package com.mapbox.maps.plugin.locationcomponent
 import android.animation.ValueAnimator
 import android.content.Context
 import android.util.AttributeSet
+import androidx.annotation.RestrictTo
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
 import com.mapbox.common.location.LocationError
@@ -25,6 +26,7 @@ import java.util.concurrent.CopyOnWriteArraySet
  * Default implementation of the LocationComponentPlugin, it renders the configured location puck
  * to the user's current location.
  */
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
   LocationComponentSettingsBase() {
   private lateinit var delegateProvider: MapDelegateProvider

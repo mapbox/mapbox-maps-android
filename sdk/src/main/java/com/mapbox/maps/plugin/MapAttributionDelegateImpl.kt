@@ -2,6 +2,7 @@ package com.mapbox.maps.plugin
 
 import android.content.Context
 import android.net.Uri
+import androidx.annotation.RestrictTo
 import com.mapbox.common.MapboxOptions
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.attribution.AttributionParser
@@ -12,7 +13,8 @@ import com.mapbox.maps.plugin.delegates.MapAttributionDelegate
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
-internal class MapAttributionDelegateImpl constructor(
+@RestrictTo(RestrictTo.Scope.LIBRARY)
+internal class MapAttributionDelegateImpl(
   private val mapboxMap: MapboxMap,
   private val mapTelemetry: MapTelemetry
 ) : MapAttributionDelegate {

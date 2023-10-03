@@ -4,6 +4,7 @@ import android.opengl.EGL14
 import android.opengl.EGLConfig
 import android.opengl.EGLDisplay
 import android.os.Build
+import androidx.annotation.RestrictTo
 import androidx.annotation.VisibleForTesting
 import com.mapbox.maps.MAPBOX_LOCALE
 import com.mapbox.maps.MapView.Companion.DEFAULT_ANTIALIASING_SAMPLE_COUNT
@@ -13,6 +14,7 @@ import com.mapbox.maps.logW
 import java.lang.Boolean.compare
 import java.lang.Integer.compare
 
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class EGLConfigChooser constructor(
   private val translucentSurface: Boolean,
   private var antialiasingSampleCount: Int,

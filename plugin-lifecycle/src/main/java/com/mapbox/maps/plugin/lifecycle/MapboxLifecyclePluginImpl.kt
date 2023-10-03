@@ -10,6 +10,7 @@ import android.content.ComponentCallbacks2.TRIM_MEMORY_RUNNING_MODERATE
 import android.content.ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN
 import android.content.res.Configuration
 import android.view.View
+import androidx.annotation.RestrictTo
 import androidx.lifecycle.*
 import com.mapbox.maps.MapboxLifecycleObserver
 import com.mapbox.maps.logW
@@ -17,6 +18,7 @@ import com.mapbox.maps.logW
 /**
  * Concrete implementation of MapboxLifecyclePlugin.
  */
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class MapboxLifecyclePluginImpl : MapboxLifecyclePlugin {
   /**
    * Register a MapboxLifecycleObserver to observe life cycle events from LifecycleOwner

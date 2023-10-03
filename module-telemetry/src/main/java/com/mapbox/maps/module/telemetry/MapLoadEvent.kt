@@ -2,6 +2,7 @@ package com.mapbox.maps.module.telemetry
 
 import android.annotation.SuppressLint
 import android.os.Build
+import androidx.annotation.RestrictTo
 import com.google.gson.annotations.SerializedName
 import com.mapbox.maps.base.BuildConfig
 
@@ -9,6 +10,7 @@ import com.mapbox.maps.base.BuildConfig
  * Event will be sent while map is loaded.
  */
 @SuppressLint("ParcelCreator")
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class MapLoadEvent(
   @field:SerializedName("userId") val userId: String?,
   phoneState: PhoneState

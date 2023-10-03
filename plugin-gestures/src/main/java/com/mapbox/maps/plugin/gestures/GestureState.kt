@@ -1,7 +1,9 @@
 package com.mapbox.maps.plugin.gestures
 
+import androidx.annotation.RestrictTo
 import com.mapbox.android.gestures.AndroidGesturesManager
 
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class GestureState(private val gesturesManager: AndroidGesturesManager) {
   enum class Type {
     DoubleTap,

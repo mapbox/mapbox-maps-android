@@ -2,6 +2,7 @@ package com.mapbox.maps.plugin.viewport.state
 
 import android.animation.AnimatorSet
 import android.animation.ValueAnimator
+import androidx.annotation.RestrictTo
 import androidx.annotation.VisibleForTesting
 import androidx.core.animation.doOnEnd
 import com.mapbox.common.Cancelable
@@ -17,6 +18,7 @@ import java.util.concurrent.*
 /**
  * The actual implementation of [OverviewViewportState] that shows the overview of a given geometry.
  */
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class OverviewViewportStateImpl(
   mapDelegateProvider: MapDelegateProvider,
   initialOptions: OverviewViewportStateOptions,

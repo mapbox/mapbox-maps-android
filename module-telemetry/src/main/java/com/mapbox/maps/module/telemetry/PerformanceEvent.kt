@@ -2,6 +2,7 @@ package com.mapbox.maps.module.telemetry
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import androidx.annotation.RestrictTo
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.annotations.SerializedName
@@ -40,6 +41,7 @@ import java.util.*
  *
  */
 @SuppressLint("ParcelCreator")
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class PerformanceEvent(
   phoneState: PhoneState,
   @field:SerializedName("sessionId") val sessionId: String?,

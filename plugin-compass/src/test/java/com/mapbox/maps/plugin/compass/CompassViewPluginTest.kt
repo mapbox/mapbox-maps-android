@@ -56,7 +56,7 @@ class CompassViewPluginTest {
       true
     }
 
-    compassPlugin = CompassViewPlugin({ compassView }, fadeAnimator, mainHandler)
+    compassPlugin = CompassViewPlugin({ compassView }, fadeAnimator)
     compassPlugin.onPluginView(compassView)
     compassPlugin.onDelegateProvider(delegateProvider)
     fadeAnimatorEndListener = animatorEndListenerSlot.captured

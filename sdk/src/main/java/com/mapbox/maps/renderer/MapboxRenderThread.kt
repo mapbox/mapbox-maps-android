@@ -8,6 +8,7 @@ import android.os.Trace
 import android.view.Choreographer
 import android.view.Surface
 import androidx.annotation.AnyThread
+import androidx.annotation.RestrictTo
 import androidx.annotation.UiThread
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.WorkerThread
@@ -31,6 +32,7 @@ import kotlin.properties.Delegates
  * The render thread is responsible for the communication between any thread and the render thread it creates.
  * It is also responsible for EGL set up, managing context, window surfaces etc.
  */
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class MapboxRenderThread : Choreographer.FrameCallback {
 
   internal val renderHandlerThread: RenderHandlerThread

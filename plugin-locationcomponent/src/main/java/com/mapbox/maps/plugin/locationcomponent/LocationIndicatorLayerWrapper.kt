@@ -1,7 +1,9 @@
 package com.mapbox.maps.plugin.locationcomponent
 
+import androidx.annotation.RestrictTo
 import com.mapbox.bindgen.Value
 
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class LocationIndicatorLayerWrapper(layerId: String) : LocationLayerWrapper(layerId) {
 
   init {

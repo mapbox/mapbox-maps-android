@@ -3,6 +3,7 @@ package com.mapbox.maps.plugin.viewport.state
 import android.animation.Animator
 import android.animation.AnimatorSet
 import android.animation.ValueAnimator
+import androidx.annotation.RestrictTo
 import androidx.annotation.VisibleForTesting
 import com.mapbox.common.Cancelable
 import com.mapbox.geojson.Point
@@ -26,6 +27,7 @@ import java.util.concurrent.*
  *
  * Note: [LocationComponentPlugin] should be enabled to use this viewport state.
  */
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class FollowPuckViewportStateImpl(
   mapDelegateProvider: MapDelegateProvider,
   initialOptions: FollowPuckViewportStateOptions,

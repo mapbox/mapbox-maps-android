@@ -1,6 +1,7 @@
 package com.mapbox.maps.extension.androidauto
 
 import android.graphics.Rect
+import androidx.annotation.RestrictTo
 import androidx.car.app.CarContext
 import androidx.car.app.SurfaceCallback
 import androidx.car.app.SurfaceContainer
@@ -16,7 +17,8 @@ import java.util.concurrent.CopyOnWriteArraySet
  *
  * Maintains the surface state for [MapboxCarMap].
  */
-internal class CarMapSurfaceOwner @JvmOverloads constructor(
+@RestrictTo(RestrictTo.Scope.LIBRARY)
+internal class CarMapSurfaceOwner(
   internal var gestureHandler: MapboxCarMapGestureHandler? = DefaultMapboxCarMapGestureHandler()
 ) : SurfaceCallback {
 

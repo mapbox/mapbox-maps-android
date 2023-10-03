@@ -1,6 +1,7 @@
 package com.mapbox.maps
 
 import android.view.MotionEvent
+import androidx.annotation.RestrictTo
 import androidx.annotation.VisibleForTesting
 import com.mapbox.common.Cancelable
 import com.mapbox.common.MapboxOptions
@@ -40,6 +41,7 @@ import com.mapbox.maps.renderer.RendererSetupErrorListener
 import com.mapbox.maps.renderer.widget.Widget
 import java.util.concurrent.CopyOnWriteArraySet
 
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class MapController : MapPluginProviderDelegate, MapControllable {
 
   internal val renderer: MapboxRenderer
@@ -47,7 +49,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   private val mapInitOptions: MapInitOptions
   private val nativeMap: NativeMapImpl
   private val mapboxMap: MapboxMap
-  internal val pluginRegistry: MapPluginRegistry
+  private val pluginRegistry: MapPluginRegistry
   private val styleDataLoadedCallback: StyleDataLoadedCallback
   private val cameraChangedCallback: CameraChangedCallback
   private val cancelableSubscriberSet = CopyOnWriteArraySet<Cancelable>()

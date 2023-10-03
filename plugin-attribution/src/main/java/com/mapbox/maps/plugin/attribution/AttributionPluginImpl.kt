@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.annotation.RestrictTo
 import com.mapbox.maps.plugin.attribution.generated.AttributionAttributeParser
 import com.mapbox.maps.plugin.attribution.generated.AttributionSettings
 import com.mapbox.maps.plugin.attribution.generated.AttributionSettingsBase
@@ -14,6 +15,7 @@ import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 /**
  * Concrete implementation of AttributionViewPlugin.
  */
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class AttributionPluginImpl(
   private val viewImplProvider: (Context) -> AttributionViewImpl = { AttributionViewImpl(it) }
 ) : AttributionPlugin, AttributionSettingsBase(), View.OnClickListener {

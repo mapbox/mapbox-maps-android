@@ -2,8 +2,10 @@ package com.mapbox.maps.plugin.locationcomponent.animators
 
 import android.graphics.Color
 import androidx.annotation.ColorInt
+import androidx.annotation.RestrictTo
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorAccuracyRadiusChangedListener
 
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class PuckAccuracyRadiusAnimator(private val accuracyRadiusChangedListener: OnIndicatorAccuracyRadiusChangedListener) :
   PuckAnimator<Double>(Evaluators.DOUBLE) {
 

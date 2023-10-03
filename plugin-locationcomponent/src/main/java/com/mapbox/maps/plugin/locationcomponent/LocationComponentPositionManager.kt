@@ -1,8 +1,10 @@
 package com.mapbox.maps.plugin.locationcomponent
 
+import androidx.annotation.RestrictTo
 import com.mapbox.maps.LayerPosition
 import com.mapbox.maps.Style
 
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class LocationComponentPositionManager(
   private var style: Style,
   internal var layerAbove: String?,

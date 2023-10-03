@@ -1,5 +1,6 @@
 package com.mapbox.maps
 
+import androidx.annotation.RestrictTo
 import androidx.annotation.VisibleForTesting
 import com.mapbox.common.Cancelable
 import java.util.concurrent.CopyOnWriteArraySet
@@ -8,6 +9,7 @@ import java.util.concurrent.CopyOnWriteArraySet
  * Class that listens to style error and load events
  * and maintains and invokes user added listeners.
  */
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class StyleObserver(
   private val styleManager: StyleManager,
   private val styleLoadedListener: Style.OnStyleLoaded,

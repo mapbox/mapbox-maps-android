@@ -3,6 +3,7 @@ package com.mapbox.maps.plugin.viewport
 import android.animation.ValueAnimator
 import android.os.Handler
 import android.os.Looper
+import androidx.annotation.RestrictTo
 import com.mapbox.common.Cancelable
 import com.mapbox.maps.plugin.animation.CameraAnimationsLifecycleListener
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
@@ -38,6 +39,7 @@ import java.util.concurrent.CopyOnWriteArraySet
  *  - in a state (camera is being managed by a ViewportState)
  *  - transitioning (camera is being managed by a ViewportTransition)
  */
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class ViewportPluginImpl(private val handler: Handler = Handler(Looper.getMainLooper())) :
   ViewportPlugin {
   private val registeredStatusObservers = CopyOnWriteArraySet<ViewportStatusObserver>()

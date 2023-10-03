@@ -10,6 +10,7 @@ import android.telephony.TelephonyManager
 import android.text.TextUtils
 import android.util.DisplayMetrics
 import android.view.WindowManager
+import androidx.annotation.RestrictTo
 import androidx.annotation.VisibleForTesting
 import com.google.gson.annotations.SerializedName
 import com.mapbox.common.TelemetrySystemUtils
@@ -17,6 +18,7 @@ import com.mapbox.common.TelemetrySystemUtils
 /**
  * Class that holds kinds of states of the current phone.
  */
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class PhoneState {
   @SerializedName("created")
   var created: String

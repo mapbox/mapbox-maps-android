@@ -1,15 +1,15 @@
 package com.mapbox.maps.plugin
 
 import android.view.MotionEvent
+import androidx.annotation.RestrictTo
 import com.mapbox.maps.*
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import com.mapbox.maps.plugin.lifecycle.MapboxLifecyclePlugin
 import java.util.concurrent.CopyOnWriteArraySet
 
-internal class MapPluginRegistry(
-  private val mapDelegateProvider: MapDelegateProvider
-) {
+@RestrictTo(RestrictTo.Scope.LIBRARY)
+internal class MapPluginRegistry(private val mapDelegateProvider: MapDelegateProvider) {
 
   private enum class State {
     STARTED,

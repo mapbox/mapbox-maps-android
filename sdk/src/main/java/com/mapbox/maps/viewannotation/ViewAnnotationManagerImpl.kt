@@ -19,6 +19,7 @@ import java.util.concurrent.CopyOnWriteArraySet
 import kotlin.collections.Map
 import kotlin.math.abs
 
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class ViewAnnotationManagerImpl(
   mapView: MapView,
   private val viewAnnotationsLayout: FrameLayout = FrameLayout(mapView.context),

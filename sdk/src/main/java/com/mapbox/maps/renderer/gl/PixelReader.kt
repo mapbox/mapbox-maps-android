@@ -6,6 +6,7 @@ import android.opengl.GLES30
 import android.os.Build
 import androidx.annotation.ChecksSdkIntAtLeast
 import androidx.annotation.RequiresApi
+import androidx.annotation.RestrictTo
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.IntBuffer
@@ -18,10 +19,8 @@ import java.nio.IntBuffer
  *
  * Inspired by http://www.songho.ca/opengl/gl_pbo.html
  */
-internal class PixelReader(
-  val width: Int,
-  val height: Int
-) {
+@RestrictTo(RestrictTo.Scope.LIBRARY)
+internal class PixelReader(val width: Int, val height: Int) {
   private val bufferSize = width * height * channelNum
   private var buffer = ByteBuffer
     .allocateDirect(bufferSize)
@@ -83,7 +82,7 @@ internal class PixelReader(
     }
   }
 
-  companion object {
+  private companion object {
     // currently support just RGBA
     private const val channelNum = 4
     @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.N)

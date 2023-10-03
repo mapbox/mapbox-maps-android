@@ -8,11 +8,13 @@ import android.hardware.SensorManager
 import android.os.SystemClock
 import android.view.Surface
 import android.view.WindowManager
+import androidx.annotation.RestrictTo
 import com.mapbox.maps.logW
 
 /**
  * This class handles compass events and tracking the current device heading.
  */
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class LocationCompassEngine(context: Context) : SensorEventListener {
   private val windowManager: WindowManager =
     context.applicationContext.getSystemService(Context.WINDOW_SERVICE) as WindowManager

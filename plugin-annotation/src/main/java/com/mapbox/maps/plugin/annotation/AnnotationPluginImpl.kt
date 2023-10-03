@@ -1,5 +1,6 @@
 package com.mapbox.maps.plugin.annotation
 
+import androidx.annotation.RestrictTo
 import androidx.annotation.VisibleForTesting
 import com.mapbox.maps.Style
 import com.mapbox.maps.plugin.annotation.generated.*
@@ -9,6 +10,7 @@ import java.lang.ref.WeakReference
 /**
  * The impl class for AnnotationPlugin
  */
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class AnnotationPluginImpl : AnnotationPlugin {
   private lateinit var delegateProvider: MapDelegateProvider
 

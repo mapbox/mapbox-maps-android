@@ -86,8 +86,7 @@ class ScaleBarImpl : ScaleBar, View {
       field = value
     }
 
-  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  internal val refreshHandler: RefreshHandler
+  private val refreshHandler: RefreshHandler
   private val decimalFormat = DecimalFormat("0.#")
   private var isScaleBarVisible = false
   private var reusableCanvas: Canvas? = null
@@ -488,10 +487,13 @@ class ScaleBarImpl : ScaleBar, View {
     }
   }
 
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal fun refreshHandlerHasMessages(what: Int): Boolean = refreshHandler.hasMessages(what)
+
   /**
    * Handler class to limit the refresh frequent.
    */
-  internal class RefreshHandler(scaleBarImpl: ScaleBarImpl) : Handler(Looper.getMainLooper()) {
+  private class RefreshHandler(scaleBarImpl: ScaleBarImpl) : Handler(Looper.getMainLooper()) {
     private var scaleBarWidgetWeakReference: WeakReference<ScaleBarImpl> =
       WeakReference(scaleBarImpl)
 

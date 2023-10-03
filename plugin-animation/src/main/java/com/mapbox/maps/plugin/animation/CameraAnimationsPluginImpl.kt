@@ -4,6 +4,7 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.AnimatorSet
 import android.animation.ValueAnimator
+import androidx.annotation.RestrictTo
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
 import com.mapbox.common.Cancelable
@@ -35,10 +36,9 @@ import kotlin.properties.Delegates
  * [CameraAnimationsPluginImpl] is NOT thread-safe meaning all animations must be started from one thread.
  * However, it doesn't have to be the UI thread.
  */
-
 @OptIn(MapboxExperimental::class)
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlugin {
-
   @VisibleForTesting(otherwise = PRIVATE)
   internal val animators = hashSetOf<CameraAnimator<*>>()
   private val runningAnimatorsQueue = LinkedHashSet<ValueAnimator>()
@@ -831,7 +831,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
   ): ValueAnimator = CameraAnchorAnimator(options, block)
 
   /**
-   * Create CameraBearingAnimator. Current map camera option will be applied on animation start if not specified explicitly with [options.startValue].
+   * Create CameraBearingAnimator. Current map camera option will be applied on animation start if not specified explicitly with [options.startValue][CameraAnimatorOptions.startValue].
    *
    * @param options animator options object to set targets and other non mandatory options
    * @param useShortestPath if set to True shortest bearing path will be applied while animating bearing values.
@@ -846,7 +846,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
   ): ValueAnimator = CameraBearingAnimator(options, useShortestPath, block)
 
   /**
-   * Create CameraPitchAnimator. Current map camera option will be applied on animation start if not specified explicitly with [options.startValue].
+   * Create CameraPitchAnimator. Current map camera option will be applied on animation start if not specified explicitly with [options.startValue][CameraAnimatorOptions.startValue].
    *
    * @param options animator options object to set targets and other non mandatory options
    * @param block optional block to apply any [ValueAnimator] parameters
@@ -857,7 +857,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
   ): ValueAnimator = CameraPitchAnimator(options, block)
 
   /**
-   * Create CameraPaddingAnimator. Current map camera option will be applied on animation start if not specified explicitly with [options.startValue].
+   * Create CameraPaddingAnimator. Current map camera option will be applied on animation start if not specified explicitly with [options.startValue][CameraAnimatorOptions.startValue].
    *
    * @param options animator options object to set targets and other non mandatory options
    * @param block optional block to apply any [ValueAnimator] parameters
@@ -868,7 +868,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
   ): ValueAnimator = CameraPaddingAnimator(options, block)
 
   /**
-   * Create CameraCenterAnimator. Current map camera option will be applied on animation start if not specified explicitly with [options.startValue].
+   * Create CameraCenterAnimator. Current map camera option will be applied on animation start if not specified explicitly with [options.startValue][CameraAnimatorOptions.startValue].
    *
    * @param options animator options object to set targets and other non mandatory options
    * @param block optional block to apply any [ValueAnimator] parameters
@@ -980,7 +980,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
   /**
    * Static variables and methods.
    */
-  companion object {
+   internal companion object {
     internal const val TAG = "Mbgl-CameraManager"
   }
 }

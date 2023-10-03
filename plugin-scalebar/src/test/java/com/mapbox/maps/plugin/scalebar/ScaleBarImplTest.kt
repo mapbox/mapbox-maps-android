@@ -119,8 +119,8 @@ class ScaleBarImplTest {
     scaleBarView.useContinuousRendering = false
     Shadows.shadowOf(Looper.getMainLooper()).pause()
     scaleBarView.distancePerPixel = 1.0f
-    assertTrue(scaleBarView.refreshHandler.hasMessages(MSG_RENDER_ON_DEMAND))
-    assertFalse(scaleBarView.refreshHandler.hasMessages(MSG_RENDER_CONTINUOUS))
+    assertTrue(scaleBarView.refreshHandlerHasMessages(MSG_RENDER_ON_DEMAND))
+    assertFalse(scaleBarView.refreshHandlerHasMessages(MSG_RENDER_CONTINUOUS))
     Shadows.shadowOf(Looper.getMainLooper()).idle()
   }
 
@@ -130,8 +130,8 @@ class ScaleBarImplTest {
     scaleBarView.useContinuousRendering = true
     Shadows.shadowOf(Looper.getMainLooper()).pause()
     scaleBarView.distancePerPixel = 1.0f
-    assertFalse(scaleBarView.refreshHandler.hasMessages(MSG_RENDER_ON_DEMAND))
-    assertTrue(scaleBarView.refreshHandler.hasMessages(MSG_RENDER_CONTINUOUS))
+    assertFalse(scaleBarView.refreshHandlerHasMessages(MSG_RENDER_ON_DEMAND))
+    assertTrue(scaleBarView.refreshHandlerHasMessages(MSG_RENDER_CONTINUOUS))
     Shadows.shadowOf(Looper.getMainLooper()).idle()
   }
 }

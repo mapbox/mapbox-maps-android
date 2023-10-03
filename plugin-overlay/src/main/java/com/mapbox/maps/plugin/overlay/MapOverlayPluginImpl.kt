@@ -1,6 +1,7 @@
 package com.mapbox.maps.plugin.overlay
 
 import android.view.View
+import androidx.annotation.RestrictTo
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.CoordinateBounds
@@ -13,6 +14,7 @@ import java.util.*
  * Impl class for MapOverlayPlugin
  */
 @MapboxExperimental
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class MapOverlayPluginImpl : MapOverlayPlugin {
   private val mapOverlays = mutableListOf<View>()
   private var mapOverlayCoordinatesProvider: MapOverlayCoordinatesProvider? = null
@@ -222,6 +224,7 @@ internal class MapOverlayPluginImpl : MapOverlayPlugin {
   /**
    * Class represent the rectangle of MapOverlays on MapView
    */
+  @RestrictTo(RestrictTo.Scope.LIBRARY)
   internal class MapOverLayRect(
     var left: Int,
     var top: Int,

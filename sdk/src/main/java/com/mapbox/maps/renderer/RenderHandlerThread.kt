@@ -4,9 +4,11 @@ import android.os.Handler
 import android.os.HandlerThread
 import android.os.Message
 import android.os.Process.THREAD_PRIORITY_DISPLAY
+import androidx.annotation.RestrictTo
 import androidx.annotation.VisibleForTesting
 import com.mapbox.maps.logW
 
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class RenderHandlerThread {
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)

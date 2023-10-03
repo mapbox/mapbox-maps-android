@@ -1,5 +1,6 @@
 package com.mapbox.maps.plugin.locationcomponent
 
+import androidx.annotation.RestrictTo
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
 import com.mapbox.bindgen.Value
@@ -9,6 +10,7 @@ import com.mapbox.maps.plugin.LocationPuck3D
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.MODEL_LAYER
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.MODEL_SOURCE
 
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class ModelLayerRenderer(
   layerSourceProvider: LayerSourceProvider,
   private val locationModelLayerOptions: LocationPuck3D

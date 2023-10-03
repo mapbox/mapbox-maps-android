@@ -4,6 +4,7 @@ import android.opengl.*
 import android.os.Handler
 import android.os.Looper
 import android.view.Surface
+import androidx.annotation.RestrictTo
 import androidx.annotation.WorkerThread
 import com.mapbox.maps.MapView
 import com.mapbox.maps.logE
@@ -20,6 +21,7 @@ import java.util.*
  *
  * Inspired by [Grafika](https://github.com/google/grafika/blob/master/app/src/main/java/com/android/grafika/gles/EglCore.java)
  */
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class EGLCore(
   private val translucentSurface: Boolean,
   private val antialiasingSampleCount: Int,

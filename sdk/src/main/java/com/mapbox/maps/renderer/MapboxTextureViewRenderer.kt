@@ -3,8 +3,10 @@ package com.mapbox.maps.renderer
 import android.graphics.SurfaceTexture
 import android.view.Surface
 import android.view.TextureView
+import androidx.annotation.RestrictTo
 import androidx.annotation.VisibleForTesting
 
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class MapboxTextureViewRenderer : MapboxRenderer, TextureView.SurfaceTextureListener {
 
   override val widgetRenderer: MapboxWidgetRenderer
