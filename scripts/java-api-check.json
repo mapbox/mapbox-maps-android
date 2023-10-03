@@ -22,6 +22,7 @@
             "com\\.mapbox\\.maps\\.viewannotation\\.ViewAnnotation",
             "com\\.mapbox\\.maps\\.ImmediateViewportTransition",
             "com\\.mapbox\\.maps\\.renderer\\.EventType",
+            "com\\.mapbox\\.maps\\.renderer\\.FpsManager",
             "com\\.mapbox\\.maps\\.renderer\\.MapboxRenderer",
             "com\\.mapbox\\.maps\\.renderer\\.MapboxRenderThread",
             "com\\.mapbox\\.maps\\.renderer\\.RenderHandlerThread",
