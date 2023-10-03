@@ -3,12 +3,12 @@ package com.mapbox.maps.renderer.egl
 import android.app.Activity
 import android.os.Handler
 import android.os.Looper
-import android.view.ViewGroup
 import androidx.core.os.postDelayed
 import androidx.test.annotation.UiThreadTest
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
+import com.mapbox.common.Cancelable
 import com.mapbox.maps.EmptyActivity
 import com.mapbox.maps.MapView
 import com.mapbox.maps.renderer.RendererError
@@ -21,10 +21,10 @@ import java.util.concurrent.TimeUnit
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest
-@Ignore("Tests are flaky")
 class RendererSetupTest {
 
   private lateinit var countDownLatch: CountDownLatch
+  private var cancelable: Cancelable? = null
   private val eventList = CopyOnWriteArrayList<Event>()
   private val mainHandler = Handler(Looper.getMainLooper())
 
@@ -36,19 +36,12 @@ class RendererSetupTest {
     RENDERER_ERROR,
   }
 
-  @Before
-  @UiThreadTest
-  fun setUp() {
-    countDownLatch = CountDownLatch(1)
-    eventList.clear()
-  }
-
   @Test
   fun regularCreateMapTest() {
+    countDownLatch = CountDownLatch(2)
     rule.scenario.onActivity {
-      val mapView = MapView(it)
-      it.frameLayout.addView(mapView)
-      createMapView(it, mapView, withDelayMs = 0L)
+      val validMapView = createMapView(it, valid = true)
+      setupMapView(it, validMapView, withDelayMs = 0L)
     }
     countDownLatch.await(DEFAULT_LATCH_TIMEOUT_MS, TimeUnit.MILLISECONDS)
     assertArrayEquals(
@@ -59,16 +52,22 @@ class RendererSetupTest {
 
   @Test
   fun recreateMapImmediateOnErrorTest() {
+    countDownLatch = CountDownLatch(3)
     rule.scenario.onActivity {
-      EGLConfigChooser.STENCIL_SIZE = INVALID_STENCIL_SIZE
-      val mapView = MapView(it)
-      it.frameLayout.addView(mapView)
-      createMapView(it, mapView, withDelayMs = 0L)
+      val invalidMapView = createMapView(it, valid = false)
+      val delayMs = 0L
+      setupMapView(it, invalidMapView, withDelayMs = delayMs)
+      mainHandler.postDelayed(delayMs) {
+        val validMapView = createMapView(it, valid = true)
+        setupMapView(it, validMapView, withDelayMs = 0)
+      }
     }
     countDownLatch.await(DEFAULT_LATCH_TIMEOUT_MS, TimeUnit.MILLISECONDS)
+    // noting that number of RENDERER_ERROR is undermined as renderer automatically tries re-creating EGL
+    // so we're using distinct function to make sure we eventually re-created the MapView as expected
     assertArrayEquals(
       arrayOf(Event.RENDERER_ERROR, Event.MAP_LOAD_SUCCESS),
-      eventList.toArray()
+      eventList.distinct().toTypedArray()
     )
   }
 
@@ -76,10 +75,8 @@ class RendererSetupTest {
   fun severalErrorListenersTest() {
     countDownLatch = CountDownLatch(2)
     rule.scenario.onActivity { activity ->
-      EGLConfigChooser.STENCIL_SIZE = INVALID_STENCIL_SIZE
-      val mapView = MapView(activity)
-      activity.frameLayout.addView(mapView)
-      mapView.addRendererSetupErrorListener {
+      val invalidMapView = createMapView(activity, valid = false)
+      invalidMapView.addRendererSetupErrorListener {
         when (it) {
           RendererError.NO_VALID_EGL_CONFIG_FOUND -> {
             eventList.add(Event.RENDERER_ERROR)
@@ -89,7 +86,7 @@ class RendererSetupTest {
           else -> { /** no-op **/ }
         }
       }
-      mapView.addRendererSetupErrorListener {
+      invalidMapView.addRendererSetupErrorListener {
         when (it) {
           RendererError.NO_VALID_EGL_CONFIG_FOUND -> {
             eventList.add(Event.RENDERER_ERROR)
@@ -109,26 +106,45 @@ class RendererSetupTest {
 
   @Test
   fun recreateMapWithDelayOnErrorTest() {
+    countDownLatch = CountDownLatch(3)
     rule.scenario.onActivity {
-      EGLConfigChooser.STENCIL_SIZE = INVALID_STENCIL_SIZE
-      val mapView = MapView(it)
-      it.frameLayout.addView(mapView)
-      createMapView(it, mapView, withDelayMs = 500L)
+      val invalidMapView = createMapView(it, valid = false)
+      val delayMs = 500L
+      setupMapView(it, invalidMapView, withDelayMs = delayMs)
+      mainHandler.postDelayed(delayMs) {
+        val validMapView = createMapView(it, valid = true)
+        setupMapView(it, validMapView, withDelayMs = 0)
+      }
     }
     countDownLatch.await(DEFAULT_LATCH_TIMEOUT_MS, TimeUnit.MILLISECONDS)
+    // noting that number of RENDERER_ERROR is undermined as renderer automatically tries re-creating EGL
+    // so we're using distinct function to make sure we eventually re-created the MapView as expected
     assertArrayEquals(
       arrayOf(Event.RENDERER_ERROR, Event.MAP_LOAD_SUCCESS),
-      eventList.toArray()
+      eventList.distinct().toTypedArray()
     )
   }
 
-  private fun createMapView(
+  private fun createMapView(activity: EmptyActivity, valid: Boolean): MapView {
+    if (valid) {
+      EGLConfigChooser.STENCIL_SIZE = VALID_STENCIL_SIZE
+    } else {
+      EGLConfigChooser.STENCIL_SIZE = INVALID_STENCIL_SIZE
+    }
+    val mapView = MapView(activity)
+    activity.frameLayout.addView(mapView)
+    mapView.getMapboxMap().loadStyle("{}")
+    return mapView
+  }
+
+  private fun setupMapView(
     activity: Activity,
     mapView: MapView,
     withDelayMs: Long,
   ) {
     mapView.onStart()
-    mapView.getMapboxMap().subscribeMapLoaded {
+    cancelable?.cancel()
+    cancelable = mapView.getMapboxMap().subscribeMapLoaded {
       eventList.add(Event.MAP_LOAD_SUCCESS)
       mapView.onStop()
       mapView.onDestroy()
@@ -141,25 +157,24 @@ class RendererSetupTest {
             eventList.add(Event.RENDERER_ERROR)
             mapView.onStop()
             mapView.onDestroy()
-            EGLConfigChooser.STENCIL_SIZE = VALID_STENCIL_SIZE
-            val parent = (mapView.parent as ViewGroup)
-            val validMapView = MapView(activity)
-            parent.removeView(mapView)
-            parent.addView(validMapView)
-            // create valid map view without delay to subscribe to new renderer errors asap
-            createMapView(activity, validMapView, withDelayMs = 0)
+            (activity as EmptyActivity).frameLayout.removeView(mapView)
           }
           RendererError.OUT_OF_MEMORY -> { /** no-op **/ }
           else -> { /** no-op **/ }
         }
       }
+      countDownLatch.countDown()
     }
   }
 
-  @After
   @UiThreadTest
+  @After
   fun cleanUp() {
+    cancelable?.cancel()
+    cancelable = null
+    eventList.clear()
     EGLConfigChooser.STENCIL_SIZE = VALID_STENCIL_SIZE
+    mainHandler.removeCallbacksAndMessages(null)
   }
 
   private companion object {
