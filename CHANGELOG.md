@@ -4,7 +4,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-# 10.16.1
+
+# 10.16.1 October 03, 2023
 ## Bug fixes 🐞
 * Fix incorrectly set `begin` timestamp for the `RenderFrameFinished` event.
 * Fix a rendering error that broke symbol layers on Samsung S22 devices.
@@ -15,6 +16,7 @@ Mapbox welcomes participation and contributions from everyone.
  
 ## Dependencies
 * Update gl-native to v10.16.1 and common to v23.8.3.
+
 
 
 # 10.16.0 September 06, 2023
