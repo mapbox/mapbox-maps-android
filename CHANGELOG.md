@@ -2,7 +2,7 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# main
+# 11.0.0-beta.5
 ## Breaking changes ⚠️
 * Rename `MapCameraManagerDelegate` properties for methods `cameraForCoordinateBounds`, `cameraForCoordinates` and `cameraForGeometry` to align them with `MapboxMap` methods.
 
@@ -12,6 +12,7 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * Hide methods and properties from Java in `MapView`, `MapboxMap` and `Snapshotter` that are not supposed to be public.
 * Fix `Style` docs for methods `setStyleImportConfigProperties`, `setStyleImportConfigProperty`, `removeGeoJSONSourceFeatures`.
+* Fix flood light not working by changing default EGL config to RGBA_8888.
 
 # 11.0.0-beta.4 September 21, 2023
 ## Breaking changes ⚠️

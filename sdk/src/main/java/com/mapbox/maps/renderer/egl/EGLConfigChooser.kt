@@ -21,7 +21,9 @@ internal class EGLConfigChooser constructor(
 ) {
   private val antialiasingEnabled get() = antialiasingSampleCount > DEFAULT_ANTIALIASING_SAMPLE_COUNT
 
-  // Get all configs at least RGB 565 with 16 depth and 8 stencil
+  // Get all configs at least RGB 565 with 16 depth and 8 stencil.
+  // For all features to work we absolutely prefer RGBA_8888 with 24-bit depth,
+  // this should be supported on almost all devices
   private val configAttributes: IntArray
     get() {
       val emulator = inEmulator()
@@ -111,16 +113,16 @@ internal class EGLConfigChooser constructor(
 
   // Quality
   internal enum class BufferFormat(var value: Int) {
-    Format16Bit(3),
+    Format32BitAlpha(0),
     Format32BitNoAlpha(1),
-    Format32BitAlpha(2),
-    Format24Bit(0),
-    Unknown(4)
+    Format24Bit(2),
+    Format16Bit(3),
+    Unknown(4),
   }
 
   internal enum class DepthStencilFormat(var value: Int) {
+    Format24Depth8Stencil(0),
     Format16Depth8Stencil(1),
-    Format24Depth8Stencil(0)
   }
 
   private fun chooseBestMatchConfig(
@@ -220,18 +222,16 @@ internal class EGLConfigChooser constructor(
 
       // Filter our configs first for depth, stencil and anti-aliasing
       if (configOk) {
-        // Work out the config's buffer format
-        val bufferFormat: BufferFormat
-        if (bits == 16 && red == 5 && green == 6 && blue == 5 && alpha == 0) {
-          bufferFormat = BufferFormat.Format16Bit
+        val bufferFormat: BufferFormat = if (bits == 16 && red == 5 && green == 6 && blue == 5 && alpha == 0) {
+          BufferFormat.Format16Bit
         } else if (bits == 32 && red == 8 && green == 8 && blue == 8 && alpha == 0) {
-          bufferFormat = BufferFormat.Format32BitNoAlpha
+          BufferFormat.Format32BitNoAlpha
         } else if (bits == 32 && red == 8 && green == 8 && blue == 8 && alpha == 8) {
-          bufferFormat = BufferFormat.Format32BitAlpha
+          BufferFormat.Format32BitAlpha
         } else if (bits == 24 && red == 8 && green == 8 && blue == 8 && alpha == 0) {
-          bufferFormat = BufferFormat.Format24Bit
+          BufferFormat.Format24Bit
         } else {
-          bufferFormat = BufferFormat.Unknown
+          BufferFormat.Unknown
         }
 
         // Ignore formats we don't recognise
