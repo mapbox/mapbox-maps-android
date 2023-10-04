@@ -2,6 +2,16 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
+# main
+## Breaking changes ⚠️
+* Rename `MapCameraManagerDelegate` properties for methods `cameraForCoordinateBounds`, `cameraForCoordinates` and `cameraForGeometry` to align them with `MapboxMap` methods.
+
+## Features ✨ and improvements 🏁
+* Add `GeoJsonSource.data(..)` overloads to allow Java to call with and without `dataId`.
+
+## Bug fixes 🐞
+* Hide methods and properties from Java in `MapView`, `MapboxMap` and `Snapshotter` that are not supposed to be public.
+* Fix `Style` docs for methods `setStyleImportConfigProperties`, `setStyleImportConfigProperty`, `removeGeoJSONSourceFeatures`.
 
 # 11.0.0-beta.4 September 21, 2023
 ## Breaking changes ⚠️

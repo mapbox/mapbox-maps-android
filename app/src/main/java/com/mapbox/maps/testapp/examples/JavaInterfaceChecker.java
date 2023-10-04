@@ -26,7 +26,9 @@ import android.util.AttributeSet;
 import android.view.Surface;
 
 import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.OptIn;
 
 import com.mapbox.android.gestures.AndroidGesturesManager;
 import com.mapbox.android.gestures.MoveGestureDetector;
@@ -48,6 +50,7 @@ import com.mapbox.maps.MapOptions;
 import com.mapbox.maps.MapSnapshotOptions;
 import com.mapbox.maps.MapSurface;
 import com.mapbox.maps.MapView;
+import com.mapbox.maps.MapboxExperimental;
 import com.mapbox.maps.MapboxMap;
 import com.mapbox.maps.MapboxMapsOptions;
 import com.mapbox.maps.QueryFeatureExtensionCallback;
@@ -115,11 +118,12 @@ import java.util.Locale;
 
 import kotlin.Pair;
 
+/** @noinspection UnusedAssignment*/
 public class JavaInterfaceChecker {
-  private void getClusterLeaves(MapboxMap mapboxMap, String sourcdId, Feature cluster, QueryFeatureExtensionCallback callback) {
-    mapboxMap.getGeoJsonClusterLeaves(sourcdId, cluster, callback);
-    mapboxMap.getGeoJsonClusterLeaves(sourcdId, cluster, 1, callback);
-    mapboxMap.getGeoJsonClusterLeaves(sourcdId, cluster, 1, 2, callback);
+  private void getClusterLeaves(MapboxMap mapboxMap, String sourceId, Feature cluster, QueryFeatureExtensionCallback callback) {
+    mapboxMap.getGeoJsonClusterLeaves(sourceId, cluster, callback);
+    mapboxMap.getGeoJsonClusterLeaves(sourceId, cluster, 1, callback);
+    mapboxMap.getGeoJsonClusterLeaves(sourceId, cluster, 1, 2, callback);
   }
 
   private void scaleBarSettings() {
@@ -359,6 +363,7 @@ public class JavaInterfaceChecker {
     locationPuck3D = new LocationPuck3D("uri", floatList, 1.0f, floatList, "scale", floatList, floatList);
   }
 
+  /** @noinspection deprecation*/
   private void mapboxMapOverLoad(MapView mapView, StyleContract.StyleExtension styleExtension,
                                  Style.OnStyleLoaded onStyleLoaded,
                                  OnMapLoadErrorListener onMapLoadErrorListener) {
@@ -427,7 +432,7 @@ public class JavaInterfaceChecker {
 
   private void addSymbolLayer(Style style) {
     Formatted formatted = new Formatted();
-    formatted.add(new FormattedSection("test", 0.7, new ArrayList<String>(), "#1000"));
+    formatted.add(new FormattedSection("test", 0.7, new ArrayList<>(), "#1000"));
     SymbolLayer symbolLayer = new SymbolLayer("test", "test")
         .iconAnchor(IconAnchor.BOTTOM)
         .textField(formatted)
@@ -447,22 +452,22 @@ public class JavaInterfaceChecker {
     final MapAnimationOptions mapAnimationOptions = new MapAnimationOptions.Builder().build();
     Animator.AnimatorListener animationListener = new Animator.AnimatorListener() {
       @Override
-      public void onAnimationStart(Animator animation) {
+      public void onAnimationStart(@NonNull Animator animation) {
 
       }
 
       @Override
-      public void onAnimationEnd(Animator animation) {
+      public void onAnimationEnd(@NonNull Animator animation) {
 
       }
 
       @Override
-      public void onAnimationCancel(Animator animation) {
+      public void onAnimationCancel(@NonNull Animator animation) {
 
       }
 
       @Override
-      public void onAnimationRepeat(Animator animation) {
+      public void onAnimationRepeat(@NonNull Animator animation) {
 
       }
     };
@@ -568,6 +573,7 @@ public class JavaInterfaceChecker {
     GesturesUtils.addOnShoveListener(mapboxMap, onShoveListener);
     GesturesUtils.removeOnShoveListener(mapboxMap, onShoveListener);
     AndroidGesturesManager gesturesManager = GesturesUtils.getGesturesManager(mapboxMap);
+    //noinspection DataFlowIssue
     GesturesUtils.setGesturesManager(mapboxMap, gesturesManager, false, false);
   }
 
@@ -579,6 +585,7 @@ public class JavaInterfaceChecker {
     LogoPlugin logo = LogoUtils.getLogo(mapView);
   }
 
+  @OptIn(markerClass = MapboxExperimental.class)
   private void overlay(MapView mapView) {
     MapOverlayPlugin overlay = MapOverlayUtils.getOverlay(mapView);
   }
@@ -601,7 +608,7 @@ public class JavaInterfaceChecker {
     });
   }
 
-  private class CustomTelemetry implements MapTelemetry {
+  private static class CustomTelemetry implements MapTelemetry {
     @Override
     public void onAppUserTurnstileEvent() {
 

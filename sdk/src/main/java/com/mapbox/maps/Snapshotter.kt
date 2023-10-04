@@ -31,6 +31,7 @@ open class Snapshotter {
   private val coreSnapshotter: MapSnapshotter
   private val pixelRatio: Float
   private val mapSnapshotOptions: MapSnapshotOptions
+  @get:JvmSynthetic @set:JvmSynthetic
   internal var snapshotStyleCallback: SnapshotStyleListener? = null
   private val snapshotOverlayOptions: SnapshotOverlayOptions
   private var cancelableEvents = mutableListOf<Cancelable>()
@@ -107,8 +108,7 @@ open class Snapshotter {
     }.onAppUserTurnstileEvent()
   }
 
-  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  internal constructor(
+  private constructor(
     context: WeakReference<Context>,
     options: MapSnapshotOptions,
     overlayOptions: SnapshotOverlayOptions,
@@ -536,5 +536,14 @@ open class Snapshotter {
     }
 
     private const val TAG = "Snapshotter"
+
+    @JvmSynthetic
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    internal operator fun invoke(
+      context: WeakReference<Context>,
+      options: MapSnapshotOptions,
+      overlayOptions: SnapshotOverlayOptions,
+      coreSnapshotter: MapSnapshotter,
+    ) = Snapshotter(context, options, overlayOptions, coreSnapshotter)
   }
 }

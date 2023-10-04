@@ -34,6 +34,7 @@ import kotlin.math.roundToInt
  *
  * @property style the map style.
  */
+@Suppress("DEPRECATION")
 class MapboxMap :
   MapTransformDelegate,
   MapProjectionDelegate,
@@ -60,10 +61,14 @@ class MapboxMap :
     return isMapValid
   }
 
+  @get:JvmSynthetic
   internal val nativeObserver: NativeObserver
+  @get:JvmSynthetic @set:JvmSynthetic
   internal var style: Style? = null
+  @get:JvmSynthetic @set:JvmSynthetic
   internal var isStyleLoadInitiated = false
   private val styleObserver: StyleObserver
+  @get:JvmSynthetic @set:JvmSynthetic
   internal var renderHandler: Handler? = null
 
   /**
@@ -75,11 +80,12 @@ class MapboxMap :
       return nativeMap.getCameraState()
     }
 
+  @get:JvmSynthetic @set:JvmSynthetic
   internal var cameraAnimationsPlugin: CameraAnimationsPlugin? = null
+  @get:JvmSynthetic @set:JvmSynthetic
   internal var gesturesPlugin: GesturesPlugin? = null
 
-  @VisibleForTesting(otherwise = PRIVATE)
-  internal constructor(
+  private constructor(
     nativeMap: NativeMapImpl,
     nativeObserver: NativeObserver,
     styleObserver: StyleObserver
@@ -89,7 +95,7 @@ class MapboxMap :
     this.styleObserver = styleObserver
   }
 
-  internal constructor(
+  private constructor(
     nativeMap: NativeMapImpl,
     nativeObserver: NativeObserver,
     pixelRatio: Float
@@ -386,6 +392,7 @@ class MapboxMap :
   /**
    * Legacy method to load style, please refer to deprecation message for more details.
    */
+  @Suppress("UNUSED_PARAMETER")
   @Deprecated(
     message = "Loading style was revisited in v11, this method is deprecated." +
       " IMPORTANT: onMapLoadErrorListener and styleTransitionOptions will not be applied anymore," +
@@ -404,6 +411,7 @@ class MapboxMap :
   /**
    * Legacy method to load style, please refer to deprecation message for more details.
    */
+  @Suppress("UNUSED_PARAMETER")
   @Deprecated(
     message = "Loading style was revisited in v11, this method is deprecated." +
       " IMPORTANT: onMapLoadErrorListener will not be triggered anymore," +
@@ -2052,6 +2060,7 @@ class MapboxMap :
     return null
   }
 
+  @JvmSynthetic
   internal fun onDestroy() {
     cameraAnimationsPlugin = null
     gesturesPlugin = null
@@ -2131,6 +2140,7 @@ class MapboxMap :
     return nativeMap.getAttributions()
   }
 
+  @JvmSynthetic
   internal fun addViewAnnotation(
     viewId: String,
     options: ViewAnnotationOptions
@@ -2139,6 +2149,7 @@ class MapboxMap :
     return nativeMap.addViewAnnotation(viewId, options)
   }
 
+  @JvmSynthetic
   internal fun updateViewAnnotation(
     viewId: String,
     options: ViewAnnotationOptions
@@ -2147,16 +2158,19 @@ class MapboxMap :
     return nativeMap.updateViewAnnotation(viewId, options)
   }
 
+  @JvmSynthetic
   internal fun removeViewAnnotation(viewId: String): Expected<String, None> {
     checkNativeMap("removeViewAnnotation")
     return nativeMap.removeViewAnnotation(viewId)
   }
 
+  @JvmSynthetic
   internal fun getViewAnnotationOptions(identifier: String): Expected<String, ViewAnnotationOptions> {
     checkNativeMap("getViewAnnotationOptions")
     return nativeMap.getViewAnnotationOptions(identifier)
   }
 
+  @JvmSynthetic
   internal fun setViewAnnotationPositionsUpdateListener(listener: DelegatingViewAnnotationPositionsUpdateListener?) {
     checkNativeMap("setViewAnnotationPositionsUpdateListener")
     return nativeMap.setViewAnnotationPositionsUpdateListener(listener)
@@ -2195,13 +2209,36 @@ class MapboxMap :
     }
 
     private const val TAG = "Mbgl-MapboxMap"
+    @JvmSynthetic
     internal const val QFE_SUPER_CLUSTER = "supercluster"
+    @JvmSynthetic
     internal const val QFE_LEAVES = "leaves"
+    @JvmSynthetic
     internal const val QFE_LIMIT = "limit"
+    @JvmSynthetic
     internal const val QFE_OFFSET = "offset"
+    @JvmSynthetic
     internal const val QFE_DEFAULT_LIMIT = 10L
+    @JvmSynthetic
     internal const val QFE_DEFAULT_OFFSET = 0L
+    @JvmSynthetic
     internal const val QFE_CHILDREN = "children"
+    @JvmSynthetic
     internal const val QFE_EXPANSION_ZOOM = "expansion-zoom"
+
+    @VisibleForTesting(otherwise = PRIVATE)
+    @JvmSynthetic
+    internal operator fun invoke(
+      nativeMap: NativeMapImpl,
+      nativeObserver: NativeObserver,
+      styleObserver: StyleObserver
+    ) = MapboxMap(nativeMap, nativeObserver, styleObserver)
+
+    @JvmSynthetic
+    internal operator fun invoke(
+      nativeMap: NativeMapImpl,
+      nativeObserver: NativeObserver,
+      pixelRatio: Float
+    ) = MapboxMap(nativeMap, nativeObserver, pixelRatio)
   }
 }

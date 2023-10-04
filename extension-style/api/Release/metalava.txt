@@ -5735,6 +5735,7 @@ package com.mapbox.maps.extension.style.sources.generated {
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder clusterProperty(String propertyName, com.mapbox.maps.extension.style.expressions.generated.Expression mapExpr);
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder clusterRadius(long value = 50L);
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder data(String value, String dataId = "");
+    method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder data(String value);
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder feature(com.mapbox.geojson.Feature value, String dataId = "");
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder feature(com.mapbox.geojson.Feature value);
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder featureCollection(com.mapbox.geojson.FeatureCollection value, String dataId = "");

@@ -18,6 +18,7 @@ import com.mapbox.geojson.Feature
  * Note: Similar to a View object, a [Style] should only be read and modified
  * from the main thread.
  */
+@Suppress("KDocUnresolvedReference")
 class Style {
   private var styleManager: StyleManager
   /**
@@ -181,7 +182,7 @@ class Style {
    * This method can be used to perform batch update for a style import configurations.
    *
    * @param importId A style import identifier.
-   * @param properties A map of style import configurations.
+   * @param configs A map of style import configurations.
    *
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
@@ -198,7 +199,7 @@ class Style {
    * Sets a value to a style import config.
    *
    * @param importId A style import identifier.
-   * @param property The style import config name.
+   * @param config The style import config name.
    * @param value The style import config value.
    *
    * @return A string describing an error if the operation was not successful, empty otherwise.
@@ -1089,7 +1090,7 @@ class Style {
    *
    * @param sourceId the id of the GeoJSON source
    * @param dataId an arbitrary string used to track the given GeoJSON data, empty string means null ID
-   * @param featuresIds list of feature ids to remove
+   * @param featureIds list of feature ids to remove
    */
   @MainThread
   fun removeGeoJSONSourceFeatures(

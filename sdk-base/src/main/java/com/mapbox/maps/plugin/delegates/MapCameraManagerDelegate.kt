@@ -26,7 +26,7 @@ interface MapCameraManagerDelegate {
    * Calling this method in [Activity.onCreate] will lead to incorrect results.
    *
    * @param bounds The [CoordinateBounds] of the camera.
-   * @param padding The amount of padding in [EdgeInsets] to add to the given bounds.
+   * @param boundsPadding The amount of padding in [EdgeInsets] to add to the given bounds.
    * @param bearing The bearing of the camera.
    * @param pitch The pitch of the camera.
    * @param maxZoom The maximum zoom level allowed in the returned camera options.
@@ -36,7 +36,7 @@ interface MapCameraManagerDelegate {
    */
   fun cameraForCoordinateBounds(
     bounds: CoordinateBounds,
-    padding: EdgeInsets? = null,
+    boundsPadding: EdgeInsets? = null,
     bearing: Double? = null,
     pitch: Double? = null,
     maxZoom: Double? = null,
@@ -49,7 +49,7 @@ interface MapCameraManagerDelegate {
    * This API isn't supported by Globe projection.
    *
    * @param coordinates The coordinates representing the bounds of the map
-   * @param padding The edge padding of the map
+   * @param coordinatesPadding The edge padding of the map
    * @param bearing The bearing of the map
    * @param pitch The pitch of the map
    *
@@ -57,7 +57,7 @@ interface MapCameraManagerDelegate {
    */
   fun cameraForCoordinates(
     coordinates: List<Point>,
-    padding: EdgeInsets? = null,
+    coordinatesPadding: EdgeInsets? = null,
     bearing: Double? = null,
     pitch: Double? = null
   ): CameraOptions
@@ -91,7 +91,7 @@ interface MapCameraManagerDelegate {
    * This API isn't supported by Globe projection.
    *
    * @param geometry The geometry of the map
-   * @param padding The edge padding of the map
+   * @param geometryPadding The edge padding of the map
    * @param bearing The bearing of the map
    * @param pitch The pitch of the map
    *
@@ -99,7 +99,7 @@ interface MapCameraManagerDelegate {
    */
   fun cameraForGeometry(
     geometry: Geometry,
-    padding: EdgeInsets? = null,
+    geometryPadding: EdgeInsets? = null,
     bearing: Double? = null,
     pitch: Double? = null
   ): CameraOptions

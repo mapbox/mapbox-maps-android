@@ -419,6 +419,7 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
      * @param value an URL to a GeoJSON file, or an inline GeoJSON.
      * @param dataId optional metadata to filter the SOURCE_DATA_LOADED events later. Empty string is treated as no data id.
      */
+    @JvmOverloads
     fun data(value: String, dataId: String = ""): Builder = apply {
       geoJson = null
       data = value

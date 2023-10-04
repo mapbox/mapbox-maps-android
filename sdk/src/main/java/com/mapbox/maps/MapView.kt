@@ -39,6 +39,7 @@ import kotlin.math.hypot
  * and for ensuring your use adheres to the relevant terms of use.
  */
 open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
+  @get:JvmSynthetic
   internal lateinit var mapController: MapController
     private set
 
@@ -85,7 +86,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    * a [AttributeSet] object, an [Int] which represents a style attribute file,
    * and an [Int] which represents a style resource file.
    */
-  internal constructor(
+  private constructor(
     context: Context,
     attrs: AttributeSet?,
     defStyleAttr: Int,
@@ -132,6 +133,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
 
   @SuppressLint("CustomViewStyleable")
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  @JvmSynthetic
   internal fun parseTypedArray(context: Context, attrs: AttributeSet?): MapInitOptions {
     val typedArray = context.obtainStyledAttributes(attrs, R.styleable.mapbox_MapView, 0, 0)
     try {
@@ -165,8 +167,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
     }
   }
 
-  @VisibleForTesting
-  internal constructor(
+  private constructor(
     context: Context,
     attrs: AttributeSet?,
     mapController: MapController,
@@ -448,12 +449,14 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    * Static variables and methods.
    */
   companion object {
+    @JvmSynthetic
     internal const val DEFAULT_ANTIALIASING_SAMPLE_COUNT = 1
 
     /**
      * Fallback to this value if, for some reason, Android display is NULL.
      * This will not affect rendering on displays with higher frame rate if [MapView.setMaximumFps] was not called.
      */
+    @JvmSynthetic
     internal const val DEFAULT_FPS = 60
 
     /**
@@ -493,5 +496,13 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
         return eglConfigOk && terrainSupported
       }
     }
+
+    @VisibleForTesting
+    @JvmSynthetic
+    internal operator fun invoke(
+      context: Context,
+      attrs: AttributeSet?,
+      mapController: MapController,
+    ) = MapView(context, attrs, mapController)
   }
 }

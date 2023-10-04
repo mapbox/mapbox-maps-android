@@ -1,5 +1,14 @@
 package com.mapbox.maps.testapp.examples.java;
 
+import static com.mapbox.maps.extension.style.expressions.generated.Expression.concat;
+import static com.mapbox.maps.extension.style.expressions.generated.Expression.get;
+import static com.mapbox.maps.extension.style.expressions.generated.Expression.gt;
+import static com.mapbox.maps.extension.style.expressions.generated.Expression.literal;
+import static com.mapbox.maps.extension.style.expressions.generated.Expression.rgb;
+import static com.mapbox.maps.extension.style.expressions.generated.Expression.subtract;
+import static com.mapbox.maps.extension.style.expressions.generated.Expression.toNumber;
+import static java.text.DateFormat.getDateTimeInstance;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -7,8 +16,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.mapbox.geojson.Point;
-import com.mapbox.maps.MapIdleCallback;
 import com.mapbox.maps.MapLoadingError;
 import com.mapbox.maps.MapLoadingErrorCallback;
 import com.mapbox.maps.MapView;
@@ -40,18 +51,6 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import static com.mapbox.maps.extension.style.expressions.generated.Expression.concat;
-import static com.mapbox.maps.extension.style.expressions.generated.Expression.get;
-import static com.mapbox.maps.extension.style.expressions.generated.Expression.gt;
-import static com.mapbox.maps.extension.style.expressions.generated.Expression.literal;
-import static com.mapbox.maps.extension.style.expressions.generated.Expression.rgb;
-import static com.mapbox.maps.extension.style.expressions.generated.Expression.subtract;
-import static com.mapbox.maps.extension.style.expressions.generated.Expression.toNumber;
-import static java.text.DateFormat.getDateTimeInstance;
 
 /**
  * Example showcasing usage of creating style with java codes.
@@ -94,7 +93,7 @@ public class DSLStylingJavaActivity extends AppCompatActivity implements OnMapCl
     private static final String RASTER_LAYER_ID = "raster";
     private static final String IMAGE_9_PATCH_ID = "image9patch";
     private static final Expression MAG_KEY = literal("mag");
-    private static final List<String> QUERY_LIST = new ArrayList() {
+    private static final List<String> QUERY_LIST = new ArrayList<String>() {
         {
             add(CIRCLE_LAYER_ID);
             add(SYMBOL_LAYER_ID);
@@ -107,13 +106,12 @@ public class DSLStylingJavaActivity extends AppCompatActivity implements OnMapCl
         }
     };
     private MapboxMap mapboxMap;
-    private MapView mapView;
 
     private static final String TAG = "StylingJavaActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mapView = new MapView(this);
+        MapView mapView = new MapView(this);
         setContentView(mapView);
         mapboxMap = mapView.getMapboxMap();
         mapboxMap.subscribeMapLoadingError(this);
@@ -156,7 +154,7 @@ public class DSLStylingJavaActivity extends AppCompatActivity implements OnMapCl
             Date netDate = new Date(time);
             dateTime = sdf.format(netDate);
         } catch (Exception e) {
-            e.toString();
+            Log.w(TAG, "getDateTime: Unable to parse " + time, e);
         }
         return dateTime;
     }
@@ -177,7 +175,7 @@ public class DSLStylingJavaActivity extends AppCompatActivity implements OnMapCl
         builder.addLayer(rasterLayer);
         // Add the earthquake source
         builder.addSource(new GeoJsonSource.Builder(SOURCE_ID)
-                .url(GEOJSON_URL)
+                .data(GEOJSON_URL)
                 .cluster(false)
                 .build()
         );
