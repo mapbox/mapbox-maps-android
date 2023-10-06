@@ -8,7 +8,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Features ✨ and improvements 🏁
 * Add `GeoJsonSource.data(..)` overloads to allow Java to call with and without `dataId`.
-
+* Add a new layer type `CustomLayer` and style DSL to create it. `CustomLayer` allows to use custom OpenGL ES rendering through `CustomLayerHost`. `CustomLayer` contains the `slot` property allowing using it with the Standard style.
+  
 ## Bug fixes 🐞
 * Hide methods and properties from Java in `MapView`, `MapboxMap` and `Snapshotter` that are not supposed to be public.
 * Fix `Style` docs for methods `setStyleImportConfigProperties`, `setStyleImportConfigProperty`, `removeGeoJSONSourceFeatures`.

@@ -2,8 +2,9 @@
 
 package com.mapbox.maps.extension.style.layers
 
+import com.mapbox.maps.CustomLayerHost
+import com.mapbox.maps.CustomLayerRenderParameters
 import com.mapbox.maps.LayerPosition
-import com.mapbox.maps.MapboxStyleException
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.layers.generated.*
@@ -32,6 +33,23 @@ fun Style.getLayer(layerId: String): Layer? {
     "raster" -> RasterLayer(layerId, source)
     "symbol" -> SymbolLayer(layerId, source)
     "model" -> ModelLayer(layerId, source)
+    "custom" -> CustomLayer(
+      layerId,
+      // passing the dummy CustomLayerHost value here as an actual one is already applied in core
+      object : CustomLayerHost {
+        override fun initialize() {
+        }
+
+        override fun render(parameters: CustomLayerRenderParameters) {
+        }
+
+        override fun contextLost() {
+        }
+
+        override fun deinitialize() {
+        }
+      }
+    )
     else -> {
       logE(TAG, "Layer type: $type unknown.")
       null
@@ -95,29 +113,6 @@ fun Style.addLayerAt(layer: StyleContract.StyleLayerExtension, index: Int?) {
  */
 fun Style.addLayer(layer: StyleContract.StyleLayerExtension) {
   layer.bindTo(this)
-}
-
-/**
- * Bind the layer to the map controller persistently.
- *
- * Whenever a new style is being parsed and currently used style has persistent layers,
- * an engine will try to do following:
- *   - keep the persistent layer at its relative position
- *   - keep the source used by a persistent layer
- *   - keep images added through `addStyleImage` method
- *
- * In cases when a new style has the same layer, source or image resource, style's resources would be
- * used instead and `MapLoadingError` event will be emitted.
- *
- * @param style The style
- * @param position the position that the current layer is added to
- */
-internal fun Layer.bindPersistentlyTo(style: Style, position: LayerPosition? = null) {
-  this.delegate = style
-  val expected = style.addPersistentStyleLayer(getCachedLayerProperties(), position)
-  expected.error?.let {
-    throw MapboxStyleException("Add persistent layer failed: $it")
-  }
 }
 
 /**

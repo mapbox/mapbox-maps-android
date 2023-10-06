@@ -7,13 +7,21 @@ import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.dsl.cameraOptions
+import com.mapbox.maps.extension.style.layers.CustomLayer
+import com.mapbox.maps.extension.style.layers.addLayer
+import com.mapbox.maps.extension.style.layers.customLayer
+import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityCustomLayerBinding
 
 /**
- * Test activity showcasing the Custom Layer API
+ * Test activity showcasing the Custom Layer API where [CustomLayerHost] is implemented in C++.
+ *
+ * Additionally we make use of `slot` here initially placing custom layer in the "middle"
+ * and placing it in the "bottom" when turning it on / off.
  */
 class NativeCustomLayerActivity : AppCompatActivity() {
+
   private lateinit var mapboxMap: MapboxMap
   private val nativeCustomLayer = NativeExampleCustomLayer()
   private lateinit var binding: ActivityCustomLayerBinding
@@ -24,7 +32,14 @@ class NativeCustomLayerActivity : AppCompatActivity() {
     setContentView(binding.root)
     mapboxMap = binding.mapView.getMapboxMap()
     mapboxMap.loadStyle(
-      Style.MAPBOX_STREETS
+      style(Style.STANDARD) {
+        +customLayer(
+          layerId = CUSTOM_LAYER_ID,
+          host = nativeCustomLayer
+        ) {
+          slot("middle")
+        }
+      }
     ) {
       mapboxMap.setCamera(
         cameraOptions {
@@ -50,14 +65,9 @@ class NativeCustomLayerActivity : AppCompatActivity() {
         style.removeStyleLayer(CUSTOM_LAYER_ID)
         binding.fab.setImageResource(R.drawable.ic_layers)
       } else {
-        val expected = style.addStyleCustomLayer(
-          layerId = CUSTOM_LAYER_ID,
-          nativeCustomLayer,
-          LayerPosition(null, "building", null)
+        style.addLayer(
+          CustomLayer(CUSTOM_LAYER_ID, nativeCustomLayer).apply { slot("bottom") },
         )
-        expected.error?.let {
-          logE(TAG, "Add custom layer exception $it")
-        }
         binding.fab.setImageResource(R.drawable.ic_layers_clear)
       }
     }
@@ -95,7 +105,6 @@ class NativeCustomLayerActivity : AppCompatActivity() {
   }
 
   companion object {
-    private const val CUSTOM_LAYER_ID = "custom"
-    private const val TAG = "NativeCustomLayerActivity"
+    private const val CUSTOM_LAYER_ID = "customId"
   }
 }

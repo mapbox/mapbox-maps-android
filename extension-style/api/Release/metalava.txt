@@ -1042,10 +1042,57 @@ package com.mapbox.maps.extension.style.image {
 
 package com.mapbox.maps.extension.style.layers {
 
+  @UiThread public final class CustomLayer extends com.mapbox.maps.extension.style.layers.Layer implements com.mapbox.maps.extension.style.layers.CustomLayerDsl {
+    ctor public CustomLayer(String layerId, com.mapbox.maps.CustomLayerHost host);
+    method public String getLayerId();
+    method public Double? getMaxZoom();
+    method public Double? getMinZoom();
+    method public String? getSlot();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.Visibility? getVisibility();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getVisibilityAsExpression();
+    method public com.mapbox.maps.extension.style.layers.CustomLayer maxZoom(double maxZoom);
+    method public com.mapbox.maps.extension.style.layers.CustomLayer minZoom(double minZoom);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.CustomLayer slot(String slot);
+    method public com.mapbox.maps.extension.style.layers.CustomLayer visibility(com.mapbox.maps.extension.style.layers.properties.generated.Visibility visibility);
+    method public com.mapbox.maps.extension.style.layers.CustomLayer visibility(com.mapbox.maps.extension.style.expressions.generated.Expression visibility);
+    property public String layerId;
+    property public Double? maxZoom;
+    property public Double? minZoom;
+    property public String? slot;
+    property public com.mapbox.maps.extension.style.layers.properties.generated.Visibility? visibility;
+    property public com.mapbox.maps.extension.style.expressions.generated.Expression? visibilityAsExpression;
+    field public static final com.mapbox.maps.extension.style.layers.CustomLayer.Companion Companion;
+  }
+
+  public static final class CustomLayer.Companion {
+    method public Double? getDefaultMaxZoom();
+    method public Double? getDefaultMinZoom();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.Visibility? getDefaultVisibility();
+    property public final Double? defaultMaxZoom;
+    property public final Double? defaultMinZoom;
+    property public final com.mapbox.maps.extension.style.layers.properties.generated.Visibility? defaultVisibility;
+  }
+
+  @com.mapbox.maps.extension.style.types.LayersDsl public interface CustomLayerDsl {
+    method public com.mapbox.maps.extension.style.layers.CustomLayer maxZoom(double maxZoom);
+    method public com.mapbox.maps.extension.style.layers.CustomLayer minZoom(double minZoom);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.CustomLayer slot(String slot);
+    method public com.mapbox.maps.extension.style.layers.CustomLayer visibility(com.mapbox.maps.extension.style.layers.properties.generated.Visibility visibility);
+    method public com.mapbox.maps.extension.style.layers.CustomLayer visibility(com.mapbox.maps.extension.style.expressions.generated.Expression visibility);
+  }
+
+  public final class CustomLayerKt {
+    method public static com.mapbox.maps.extension.style.layers.CustomLayer customLayer(String layerId, com.mapbox.maps.CustomLayerHost host, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.layers.CustomLayerDsl,kotlin.Unit>? block = null);
+    method public static com.mapbox.maps.extension.style.layers.CustomLayer customLayer(String layerId, com.mapbox.maps.CustomLayerHost host);
+  }
+
   public abstract class Layer implements com.mapbox.maps.extension.style.StyleContract.StyleLayerExtension {
     ctor public Layer();
+    method protected com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addLayer(com.mapbox.maps.Style delegate, com.mapbox.bindgen.Value propertiesValue, com.mapbox.maps.LayerPosition? position);
+    method protected com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addPersistentLayer(com.mapbox.maps.Style delegate, com.mapbox.maps.LayerPosition? position);
     method public final void bindTo(com.mapbox.maps.Style delegate);
     method public void bindTo(com.mapbox.maps.Style delegate, com.mapbox.maps.LayerPosition? position);
+    method protected final com.mapbox.bindgen.Value getCachedLayerProperties();
     method public abstract String getLayerId();
     method public abstract Double? getMaxZoom();
     method public abstract Double? getMinZoom();

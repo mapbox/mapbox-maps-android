@@ -7,6 +7,10 @@ import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.dsl.cameraOptions
+import com.mapbox.maps.extension.style.layers.CustomLayer
+import com.mapbox.maps.extension.style.layers.addLayerBelow
+import com.mapbox.maps.extension.style.layers.customLayer
+import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityCustomLayerBinding
 
@@ -23,7 +27,15 @@ class CustomLayerActivity : AppCompatActivity() {
     setContentView(binding.root)
     mapboxMap = binding.mapView.getMapboxMap()
     mapboxMap.loadStyle(
-      Style.MAPBOX_STREETS
+      style(Style.MAPBOX_STREETS) {
+        +layerAtPosition(
+          customLayer(
+            layerId = CUSTOM_LAYER_ID,
+            host = ExampleCustomLayer()
+          ),
+          below = "building"
+        )
+      }
     ) {
       mapboxMap.setCamera(
         cameraOptions {
@@ -49,14 +61,10 @@ class CustomLayerActivity : AppCompatActivity() {
         style.removeStyleLayer(CUSTOM_LAYER_ID)
         binding.fab.setImageResource(R.drawable.ic_layers)
       } else {
-        val expected = style.addStyleCustomLayer(
-          layerId = CUSTOM_LAYER_ID,
-          ExampleCustomLayer(),
-          LayerPosition(null, "building", null)
+        style.addLayerBelow(
+          CustomLayer(CUSTOM_LAYER_ID, ExampleCustomLayer()),
+          below = "building"
         )
-        expected.error?.let {
-          logE(TAG, "Add custom layer exception $it")
-        }
         binding.fab.setImageResource(R.drawable.ic_layers_clear)
       }
     }
@@ -98,7 +106,6 @@ class CustomLayerActivity : AppCompatActivity() {
   }
 
   companion object {
-    private const val CUSTOM_LAYER_ID = "custom"
-    private const val TAG = "CustomLayerActivity"
+    private const val CUSTOM_LAYER_ID = "customId"
   }
 }

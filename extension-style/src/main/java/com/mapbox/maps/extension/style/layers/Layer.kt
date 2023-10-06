@@ -1,6 +1,8 @@
 package com.mapbox.maps.extension.style.layers
 
 import android.util.Log
+import com.mapbox.bindgen.Expected
+import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.LayerPosition
 import com.mapbox.maps.MapboxExperimental
@@ -126,6 +128,21 @@ abstract class Layer : StyleContract.StyleLayerExtension {
   @MapboxExperimental
   abstract val slot: String?
 
+  protected open fun addPersistentLayer(
+    delegate: Style,
+    position: LayerPosition?
+  ): Expected<String, None> {
+    return delegate.addPersistentStyleLayer(getCachedLayerProperties(), position)
+  }
+
+  protected open fun addLayer(
+    delegate: Style,
+    propertiesValue: Value,
+    position: LayerPosition?
+  ): Expected<String, None> {
+    return delegate.addStyleLayer(propertiesValue, position)
+  }
+
   /**
    * Bind the layer to the Style.
    *
@@ -145,7 +162,7 @@ abstract class Layer : StyleContract.StyleLayerExtension {
     this.delegate = delegate
 
     val propertiesValue = appliedLayerPropertiesValue ?: getCachedLayerProperties()
-    val expected = delegate.addStyleLayer(propertiesValue, position)
+    val expected = addLayer(delegate, propertiesValue, position)
     expected.error?.let {
       throw MapboxStyleException("Add layer failed: $it")
     }
@@ -158,8 +175,31 @@ abstract class Layer : StyleContract.StyleLayerExtension {
     }
   }
 
+  /**
+   * Bind the layer to the map controller persistently.
+   *
+   * Whenever a new style is being parsed and currently used style has persistent layers,
+   * an engine will try to do following:
+   *   - keep the persistent layer at its relative position
+   *   - keep the source used by a persistent layer
+   *   - keep images added through `addStyleImage` method
+   *
+   * In cases when a new style has the same layer, source or image resource, style's resources would be
+   * used instead and `MapLoadingError` event will be emitted.
+   *
+   * @param style The style
+   * @param position the position that the current layer is added to
+   */
+  internal fun bindPersistentlyTo(style: Style, position: LayerPosition? = null) {
+    this.delegate = style
+    val expected = addPersistentLayer(style, position)
+    expected.error?.let {
+      throw MapboxStyleException("Add persistent layer failed: $it")
+    }
+  }
+
   // Layer Properties
-  internal fun getCachedLayerProperties(): Value {
+  protected fun getCachedLayerProperties(): Value {
     val properties = HashMap<String, Value>()
     layerProperties.values.forEach {
       properties[it.propertyName] = it.value

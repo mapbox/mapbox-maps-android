@@ -6,6 +6,12 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
+import com.mapbox.maps.extension.style.layers.CustomLayer
+import com.mapbox.maps.extension.style.layers.addLayerBelow
+import com.mapbox.maps.extension.style.layers.customLayer
+import com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName
+import com.mapbox.maps.extension.style.projection.generated.projection
+import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityCustomLayerBinding
 
@@ -22,23 +28,28 @@ class TriangleCustomLayerActivity : AppCompatActivity() {
     setContentView(binding.root)
     mapboxMap = binding.mapView.getMapboxMap()
     mapboxMap.loadStyle(
-      Style.MAPBOX_STREETS
+      style(Style.MAPBOX_STREETS) {
+        +layerAtPosition(
+          customLayer(
+            layerId = CUSTOM_LAYER_ID,
+            host = TriangleCustomLayer()
+          ),
+          below = "building"
+        )
+        // triangle is floating when using default ProjectionName.GLOBE
+        +projection(ProjectionName.MERCATOR)
+      }
     ) {
       mapboxMap.setCamera(CAMERA)
-      addCustomLayer(it)
       initFab()
     }
   }
 
   private fun addCustomLayer(style: Style) {
-    val expected = style.addStyleCustomLayer(
-      layerId = CUSTOM_LAYER_ID,
-      TriangleCustomLayer(),
-      LayerPosition(null, "building", null),
+    style.addLayerBelow(
+      CustomLayer(CUSTOM_LAYER_ID, TriangleCustomLayer()),
+      below = "building"
     )
-    expected.error?.let {
-      logE(TAG, "Add custom layer exception $it")
-    }
     binding.fab.setImageResource(R.drawable.ic_layers_clear)
   }
 
@@ -74,6 +85,7 @@ class TriangleCustomLayerActivity : AppCompatActivity() {
         updateLayer()
         true
       }
+
       R.id.action_set_color_red -> {
         TriangleCustomLayer.color = floatArrayOf(
           1.0f, 0.0f, 0.0f, 0.5f,
@@ -82,6 +94,7 @@ class TriangleCustomLayerActivity : AppCompatActivity() {
         )
         true
       }
+
       R.id.action_set_color_green -> {
         TriangleCustomLayer.color = floatArrayOf(
           0.0f, 1.0f, 0.0f, 0.5f,
@@ -90,6 +103,7 @@ class TriangleCustomLayerActivity : AppCompatActivity() {
         )
         true
       }
+
       R.id.action_set_color_blue -> {
         TriangleCustomLayer.color = floatArrayOf(
           0.0f, 0.0f, 1.0f, 0.5f,
@@ -98,13 +112,13 @@ class TriangleCustomLayerActivity : AppCompatActivity() {
         )
         true
       }
+
       else -> super.onOptionsItemSelected(item)
     }
   }
 
   companion object {
-    private const val CUSTOM_LAYER_ID = "custom"
-    private const val TAG = "TriangleCustomLayerActivity"
+    private const val CUSTOM_LAYER_ID = "customId"
     private val CAMERA =
       CameraOptions.Builder().center(Point.fromLngLat(20.0, 58.0)).pitch(0.0).zoom(3.0).build()
   }
