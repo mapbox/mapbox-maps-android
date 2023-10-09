@@ -2,7 +2,8 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# 11.0.0-beta.5
+
+# 11.0.0-beta.5 October 09, 2023
 ## Breaking changes ⚠️
 * Rename `MapCameraManagerDelegate` properties for methods `cameraForCoordinateBounds`, `cameraForCoordinates` and `cameraForGeometry` to align them with `MapboxMap` methods.
 * Consolidate `FetchTileFunctionCallback` and `CancelTileFunctionCallback` by single type `TileFunctionCallback`.
@@ -34,6 +35,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v11.0.0-beta.6 and common to v24.0.0-beta.6.
+
 
 # 11.0.0-beta.4 September 21, 2023
 ## Breaking changes ⚠️
