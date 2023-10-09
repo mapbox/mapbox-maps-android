@@ -5,15 +5,35 @@ Mapbox welcomes participation and contributions from everyone.
 # 11.0.0-beta.5
 ## Breaking changes ⚠️
 * Rename `MapCameraManagerDelegate` properties for methods `cameraForCoordinateBounds`, `cameraForCoordinates` and `cameraForGeometry` to align them with `MapboxMap` methods.
+* Consolidate `FetchTileFunctionCallback` and `CancelTileFunctionCallback` by single type `TileFunctionCallback`.
+* Make `Image` parameter nullable in `setStyleCustomRasterSourceTileData()` method.
 
 ## Features ✨ and improvements 🏁
 * Add `GeoJsonSource.data(..)` overloads to allow Java to call with and without `dataId`.
 * Add a new layer type `CustomLayer` and style DSL to create it. `CustomLayer` allows to use custom OpenGL ES rendering through `CustomLayerHost`. `CustomLayer` contains the `slot` property allowing using it with the Standard style.
-  
+* Improve the caching model for the custom raster source.
+* Optimize custom raster source data update.
+* Increase rendering performance of shadows.
+* Print warning log message for unknown style layer properties instead of causing fatal errors.
+* Optimise memory usage in the `FillExtrusionLayer`.
+* Improve the rendering performance of a `SymbolLayer` that uses `SymbolLayer.symbolSortKey` property.
+* Reduce memory usage in fill-extrusion flood light and ground ambient occlusion.
+
 ## Bug fixes 🐞
 * Hide methods and properties from Java in `MapView`, `MapboxMap` and `Snapshotter` that are not supposed to be public.
 * Fix `Style` docs for methods `setStyleImportConfigProperties`, `setStyleImportConfigProperty`, `removeGeoJSONSourceFeatures`.
 * Fix flood light not working by changing default EGL config to RGBA_8888.
+* Fix a bug where the map would not zoom above a certain threshold on high-pitched views.
+* Fix crashes if 3D layers are used alone on terrain or globe without any other layer types.
+* Fix `LineLayer` leaking if placed behind the satellite layer.
+* Fix line and raster layers interop for draped mode.
+* Fix a crash when consecutive snapshot requests were made.
+* Fix erroneous shadow map sampling of distant landmarks.
+* Fix incorrect level-of-detail model being chosen for trees in some scenarios.
+* Fix the style layer minimum and maximum zoom default values from infinity to actual ones.
+
+## Dependencies
+* Update gl-native to v11.0.0-beta.6 and common to v24.0.0-beta.6.
 
 # 11.0.0-beta.4 September 21, 2023
 ## Breaking changes ⚠️

@@ -15,8 +15,7 @@ class CustomGeometrySourceTest {
   private val style = mockk<Style>(relaxUnitFun = true, relaxed = true)
   private val expected = mockk<Expected<String, None>>(relaxUnitFun = true, relaxed = true)
 
-  private val fetchTileFunctionCallback: FetchTileFunctionCallback = mockk()
-  private val cancelTileFunctionCallback: CancelTileFunctionCallback = mockk()
+  private val tileFunctionCallback: TileFunctionCallback = mockk()
   private val tileOptions: TileOptions = mockk()
 
   @Before
@@ -27,17 +26,20 @@ class CustomGeometrySourceTest {
     every { style.invalidateStyleCustomGeometrySourceTile(any(), any()) } returns expected
 
     every { expected.error } returns null
-  }
 
-  @Test
-  fun bindTest() {
-    val testSource = customGeometrySource("testId") {
-      fetchTileFunction(fetchTileFunctionCallback)
-      cancelTileFunction(cancelTileFunctionCallback)
+    testSource = customGeometrySource("testId") {
+      fetchTileFunction(tileFunctionCallback)
+      cancelTileFunction(tileFunctionCallback)
       minZoom(0)
       maxZoom(20)
       tileOptions(tileOptions)
     }
+  }
+
+  private lateinit var testSource: CustomGeometrySource
+
+  @Test
+  fun bindTest() {
     testSource.bindTo(style)
     verify { style.addStyleCustomGeometrySource("testId", any()) }
   }
@@ -45,13 +47,6 @@ class CustomGeometrySourceTest {
   @Test
   fun setTileDataTest() {
     val tileData = mutableListOf<Feature>(Feature.fromGeometry(Point.fromLngLat(0.0, 0.0)))
-    val testSource = customGeometrySource("testId") {
-      fetchTileFunction(fetchTileFunctionCallback)
-      cancelTileFunction(cancelTileFunctionCallback)
-      minZoom(0)
-      maxZoom(20)
-      tileOptions(tileOptions)
-    }
     val tileID: CanonicalTileID = mockk()
     testSource.bindTo(style)
     testSource.setTileData(tileID, tileData)
@@ -61,13 +56,6 @@ class CustomGeometrySourceTest {
   @Test(expected = RuntimeException::class)
   fun setTileDataBeforeBindTest() {
     val tileData = mutableListOf<Feature>(Feature.fromGeometry(Point.fromLngLat(0.0, 0.0)))
-    val testSource = customGeometrySource("testId") {
-      fetchTileFunction(fetchTileFunctionCallback)
-      cancelTileFunction(cancelTileFunctionCallback)
-      minZoom(0)
-      maxZoom(20)
-      tileOptions(tileOptions)
-    }
     val tileID: CanonicalTileID = mockk()
     testSource.setTileData(tileID, tileData)
     verify { style.setStyleCustomGeometrySourceTileData("testId", tileID, tileData) }
@@ -75,13 +63,6 @@ class CustomGeometrySourceTest {
 
   @Test
   fun invalidRegionTest() {
-    val testSource = customGeometrySource("testId") {
-      fetchTileFunction(fetchTileFunctionCallback)
-      cancelTileFunction(cancelTileFunctionCallback)
-      minZoom(0)
-      maxZoom(20)
-      tileOptions(tileOptions)
-    }
     val coordinateBounds: CoordinateBounds = mockk()
     testSource.bindTo(style)
     testSource.invalidRegion(coordinateBounds)
@@ -90,13 +71,6 @@ class CustomGeometrySourceTest {
 
   @Test(expected = RuntimeException::class)
   fun invalidRegionBeforeBindTest() {
-    val testSource = customGeometrySource("testId") {
-      fetchTileFunction(fetchTileFunctionCallback)
-      cancelTileFunction(cancelTileFunctionCallback)
-      minZoom(0)
-      maxZoom(20)
-      tileOptions(tileOptions)
-    }
     val coordinateBounds: CoordinateBounds = mockk()
     testSource.invalidRegion(coordinateBounds)
     verify { style.invalidateStyleCustomGeometrySourceRegion("testId", coordinateBounds) }
@@ -104,13 +78,6 @@ class CustomGeometrySourceTest {
 
   @Test
   fun invalidTileTest() {
-    val testSource = customGeometrySource("testId") {
-      fetchTileFunction(fetchTileFunctionCallback)
-      cancelTileFunction(cancelTileFunctionCallback)
-      minZoom(0)
-      maxZoom(20)
-      tileOptions(tileOptions)
-    }
     val tileID: CanonicalTileID = mockk()
     testSource.bindTo(style)
     testSource.invalidTile(tileID)
@@ -119,13 +86,6 @@ class CustomGeometrySourceTest {
 
   @Test(expected = RuntimeException::class)
   fun invalidTileBeforeBindTest() {
-    val testSource = customGeometrySource("testId") {
-      fetchTileFunction(fetchTileFunctionCallback)
-      cancelTileFunction(cancelTileFunctionCallback)
-      minZoom(0)
-      maxZoom(20)
-      tileOptions(tileOptions)
-    }
     val tileID: CanonicalTileID = mockk()
     testSource.invalidTile(tileID)
     verify { style.invalidateStyleCustomGeometrySourceTile("testId", tileID) }

@@ -113,10 +113,17 @@ class MapboxMap :
   }
 
   /**
-   * Create a new instance of [MapboxMapRecorder] for this map.
+   * @return The [MapboxMapRecorder] instance for this map or null if it can't be created
    */
   @MapboxExperimental
-  fun createRecorder() = MapboxMapRecorder(MapRecorder(nativeMap.map))
+  fun createRecorder(): MapboxMapRecorder {
+    val expected = MapRecorder.createInstance(nativeMap.map)
+    return if (expected.isValue) {
+      MapboxMapRecorder(expected.value!!)
+    } else {
+      throw RuntimeException(expected.error ?: "Error occurred in MapboxMap.createRecorder!")
+    }
+  }
 
   private fun String.isValidUri(): Boolean {
     val isMapboxStyleUri = startsWith("mapbox://", ignoreCase = true)

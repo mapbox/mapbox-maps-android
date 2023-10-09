@@ -27,11 +27,10 @@ class MapboxMapRecorderActivity : AppCompatActivity() {
     setContentView(mapView)
 
     val mapboxMap = mapView.getMapboxMap()
+    // Make the ``MapboxMapRecorder`` and start the recording
+    val recorder = mapboxMap.createRecorder()
+    recorder.startRecording()
     mapboxMap.loadStyle(Style.STANDARD) {
-      // Once the Style is loaded, make the ``MapboxMapRecorder`` and start the recording
-      val recorder = mapboxMap.createRecorder()
-      recorder.startRecording()
-
       // Build a new set of CameraOptions for the map to fly to
       val cameraOptions = cameraOptions {
         center(Point.fromLngLat(-73.581, 45.4588))

@@ -1136,18 +1136,21 @@ class Style {
    *
    * Set tile data for a raster tile.
    *
+   * By default, the provided data is not cached, and the implementation will call the fetch callback each time the tile reappears.
+   * Use the [MapboxMap.setTileCacheBudget] API to establish an internal cache for the source.
+   *
    * @param sourceId A style source identifier.
    * @param tileId A `canonical tile id` of the tile.
-   * @param square `Image` content of the tile.
+   * @param image `Image` content of the tile. If an empty image is provided then the tile gets removed from the map.
    */
   @MapboxExperimental
   fun setStyleCustomRasterSourceTileData(
     sourceId: String,
     tileId: CanonicalTileID,
-    square: Image
+    image: Image?
   ): Expected<String, None> {
     checkNativeStyle("setStyleCustomRasterSourceTileData")
-    return styleManager.setStyleCustomRasterSourceTileData(sourceId, tileId, square)
+    return styleManager.setStyleCustomRasterSourceTileData(sourceId, tileId, image)
   }
 
   /**

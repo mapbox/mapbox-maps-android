@@ -371,7 +371,7 @@ package com.mapbox.maps {
     method public final com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleAtmosphere(com.mapbox.bindgen.Value properties);
     method public final com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleAtmosphereProperty(String property, com.mapbox.bindgen.Value value);
     method public final com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleCustomGeometrySourceTileData(String sourceId, com.mapbox.maps.CanonicalTileID tileId, java.util.List<com.mapbox.geojson.Feature> featureCollection);
-    method @com.mapbox.maps.MapboxExperimental public final com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleCustomRasterSourceTileData(String sourceId, com.mapbox.maps.CanonicalTileID tileId, com.mapbox.maps.Image square);
+    method @com.mapbox.maps.MapboxExperimental public final com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleCustomRasterSourceTileData(String sourceId, com.mapbox.maps.CanonicalTileID tileId, com.mapbox.maps.Image? image);
     method @com.mapbox.maps.MapboxExperimental public final com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleImportConfigProperties(String importId, java.util.HashMap<java.lang.String,com.mapbox.bindgen.Value> configs);
     method @com.mapbox.maps.MapboxExperimental public final com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleImportConfigProperty(String importId, String config, com.mapbox.bindgen.Value value);
     method public final com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleLayerProperties(String layerId, com.mapbox.bindgen.Value properties);
