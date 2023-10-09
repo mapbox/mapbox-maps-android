@@ -93,11 +93,12 @@ To set Mapbox Standard as the style for your map in v11 you can use the `Style.S
 mapboxMap.loadStyle(Style.STANDARD)
 ```
 
-The Mapbox Standard style features 4 light presets: `day`, `dusk`, `dawn`, and `night`. The style light preset can be changed from the default, “Day”, to another preset with a single line of code:
+The Mapbox Standard style features 4 light presets: `day`, `dusk`, `dawn`, and `night`. The style light preset can be changed from the default, “Day”, to another preset with a single line of code. Here you identify which imported style (`basemap`) you want to change the `lightPresent` config on, as well as the value (`dusk`) you want to change it to.
+
 
 ```kotlin
 mapboxMap.loadStyle(Style.STANDARD) { style ->
-  style.setStyleImportConfigProperty("standard", "lightPreset", Value.valueOf("dusk"))
+  style.setStyleImportConfigProperty(styleImportId, "lightPreset", Value.valueOf("dusk"))
 }
 ```
 
@@ -109,7 +110,7 @@ Changing the light preset will alter the colors and shadows on your map to refle
 
 ```kotlin
 mapboxMap.loadStyle(Style.STANDARD) { style ->
-  style.setStyleImportConfigProperty("standard", "showPointOfInterestLabels", Value.valueOf(false))
+  style.setStyleImportConfigProperty(styleImportId, "showPointOfInterestLabels", Value.valueOf(false))
 }
 ```
 
@@ -124,13 +125,13 @@ Property | Type | Description
 `lightPreset` | `String` | Switches between 4 time-of-day states: `dusk`, `dawn`, `day`, and `night`.
 `font` | `Array` | Defines font family for the style from predefined options.
 
-In addition, Mapbox Standard is making adding your own data layers easier for you. To add custom layers in the appropriate location in the Standard style layer stack, we added 3 carefully designed slots that you can leverage to place your layer:
+Mapbox Standard is making adding your own data layers easier for you through the concept of `slot`s. `Slot`s are pre-specified locations in the style where your layer will be added to (such as on top of existing land layers, but below all labels). To do this, we've added a new `slot` property to each `Layer`. This property allows you to identify which `slot` in the Mapbox Standard your new layer should be placed in. To add custom layers in the appropriate location in the Standard style layer stack, we added 3 carefully designed slots that you can leverage to place your layer. These slots will remain stable, so you can be sure that your own map won't break even as the basemap evolves automatically.
 
 Slot | Description
 --- | ---
 `bottom` | Above polygons (land, landuse, water, etc.)
 `middle` | Above lines (roads, etc.) and behind 3D buildings
-`none` | If you add no identifier, your custom layer will be placed on top of everything
+`top` | Above all existing layers in the style
 
 Just set the preferred `slot` on the `Layer` object before adding it to your map and your layer will be appropriately placed in the Standard style's layer stack.
 
@@ -141,17 +142,46 @@ Just set the preferred `slot` on the `Layer` object before adding it to your map
 }
 ```
 
-- Important: For the new Standard style, you can only add layers to these three slots (`bottom`, `middle`, `none`) within the Standard style basemap.
+- Important: For the new Standard style, you can only add layers to these three slots (`bottom`, `middle`, `top`) within the Standard style basemap.
 
 Similar to the classic Mapbox styles, you can still use  `LayerPosition` when importing the Standard Style. However, this method is only applicable to custom layers you have added yourself. If you add two layers to the same slot with a specified layer position the latter will define the order of the layers in that slot.
 
-When using the Standard style, you get the latest basemap rendering features, map styling trends and data layers as soon as they are available, without requiring any manual migration/integration. On top of this, you'll still have the ability to introduce your own data to the map and control your user's experience. If you have feedback or questions about the Standard beta style please reach out to: `hey-map-design@mapbox.com`.
+Standard is aware of the map lighting configuration using the `measure-light` expression, which returns you an aggregated value of your light settings. This returns a value which ranges from 0 (darkest) to 1 (brightest). In darker lights, you make the individual layers light up by using the new `*-emissive-stength` expressions, which allow you to add emissive light to different layer types and for example keep texts legible in all light settings. If your custom layers seem too dark, try adjusting the emissive strength of these layers. 
+
+### Customizing Standard
+
+The underlying design paradigm to the Standard style is different from what you know from the classic core styles. Mapbox manages the basemap experience and surfaces key global styling configurations - in return, you get a cohesive visual experience and an evergreen map, always featuring the latest data, styling and rendering features compatible with your SDK. The configuration options make interactions with the basemap simpler than before. During the beta phase, we are piloting these configurations - we welcome feedback on the beta configurations. If you have feedback or questions about the Standard beta style reach out to: [hey-map-design@mapbox.com](mailto:hey-map-design@mapbox.com).
+
+You can customize the overall color of your Standard experience easily by adjusting the 3D light settings. Individual basemap layers and/or color values can’t be adjusted, but all the flexibility offered by the style specification can be applied to custom layers while keeping interaction with the basemap simple through `slot`s.
 
 Our existing, classic Mapbox styles (such as [Mapbox Streets](https://www.mapbox.com/maps/streets), [Mapbox Light](https://www.mapbox.com/maps/light), and [Mapbox Satellite Streets](https://www.mapbox.com/maps/satellite)) and any custom styles you have built in Mapbox Studio will still work just like they do in v10, so no changes are required.
 
 ### Style Imports
 
-To work with styles like Mapbox Standard, we've introduced new Style APIs that allow you to import other styles into the main style you display to your users. These styles will be imported by reference, so updates to them will be reflected in your main style without additional work needed on your side. For example, imagine you have style A and style B. The Style API will allow you to import A into B. Upon importing, you can set configurations that apply to A. The configuration properties for the imported style A will depend on what the creator of style A chooses to be configurable. For the Standard style, 6 configuration properties are available for setting lighting, fonts, and label display options (see [The Mapbox Standard Style](#the-mapbox-standard-style) section above).
+To work with styles like Mapbox Standard, we've introduced new Style APIs that allow you to import other styles into the main style you display to your users. These styles will be imported by reference, so updates to them will be reflected in your main style without additional work needed on your side. For example, imagine you have style A and style B. The Style API will allow you to import A into B. Upon importing, you can set configurations that apply to A and adjust them at runtime. The configuration properties for the imported style A will depend on what the creator of style A chooses to be configurable. For the Standard style, 6 configuration properties are available for setting lighting, fonts, and label display options (see [The Mapbox Standard Style](#the-mapbox-standard-style) section above).
+
+To import a style, you should add an "imports" section to your [Style JSON](https://docs.mapbox.com/help/glossary/style/). In the above example, you would add this "imports" section to your Style JSON for B to import style A and set various configurations such as `Montserrat` for the `font` and `dusk` for the `lightPreset`.
+
+```
+...
+"imports": [
+    {
+        "id": "A",
+        "url": "STYLE_URL_FOR_A",
+        "config": {
+            "font": "Montserrat",
+            "lightPreset": "dusk",
+            "showPointOfInterestLabels": true,
+            "showTransitLabels": false,
+            "showPlaceLabels": true,
+            "showRoadLabels": false
+        }
+    }
+],
+...
+```
+
+For a full example of importing a style, please check out our [Standard Style Example](https://github.com/mapbox/mapbox-maps-android/blob/main/app/src/main/java/com/mapbox/maps/testapp/examples/StandardStyleActivity.kt). This example imports the Standard style into another style [Real Estate New York](https://github.com/mapbox/mapbox-maps-android/blob/main/app/src/main/assets/fragment-realestate-NY.json). 
 
 We've introduced new APIs on the `Style` object so you can work with these features:
 
