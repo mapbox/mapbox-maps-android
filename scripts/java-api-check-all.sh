@@ -41,13 +41,7 @@ echo "CURRENT_BRANCH: $CURRENT_BRANCH"
 echo "TARGET_BRANCH: $TARGET_BRANCH"
 VARIANTS=( private public )
 
-# If "main" then we're targeting v10 releases
 if [[ "$TARGET_BRANCH" = "main" ]]; then
-  STABLE_RELEASE_TAG_PATTERN="v10\.[0-9]*\.0$"
-  # use the latest stable minor release tag for main branch
-  LAST_STABLE_RELEASE_TAG=$(git tag --list --sort=-creatordate | grep "$STABLE_RELEASE_TAG_PATTERN" | head -n 1)
-# If "develop" then we're targeting v11 releases
-elif [[ "$TARGET_BRANCH" = "develop" ]]; then
   STABLE_RELEASE_TAG_PATTERN="v11\.[0-9]*\.0$"
   # use the latest stable minor release tag for develop branch if available or empty if not
   LAST_STABLE_RELEASE_TAG=$(git tag --list --sort=-creatordate | grep "$STABLE_RELEASE_TAG_PATTERN" | head -n 1 || true)
