@@ -4,7 +4,6 @@ package com.mapbox.maps.extension.style.layers.generated
 
 import androidx.annotation.ColorInt
 import androidx.annotation.UiThread
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.Layer
@@ -62,7 +61,6 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * @param slot value of slot
    */
-  @MapboxExperimental
   override fun slot(slot: String): CircleLayer = apply {
     val param = PropertyValue("slot", slot)
     setProperty(param)
@@ -72,7 +70,6 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    * The slot this layer is assigned to. If specified, and a slot with that name exists,
    * it will be placed at that position in the layer order.
    */
-  @MapboxExperimental
   override val slot: String?
     /**
      * Get the slot property
@@ -546,7 +543,6 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
   /**
    * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
    */
-  @MapboxExperimental
   val circleEmissiveStrength: Double?
     /**
      * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
@@ -566,7 +562,6 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * @param circleEmissiveStrength value of circleEmissiveStrength
    */
-  @MapboxExperimental
   override fun circleEmissiveStrength(circleEmissiveStrength: Double): CircleLayer = apply {
     val propertyValue = PropertyValue("circle-emissive-strength", circleEmissiveStrength)
     setProperty(propertyValue)
@@ -578,7 +573,6 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    * This is an Expression representation of "circle-emissive-strength".
    *
    */
-  @MapboxExperimental
   val circleEmissiveStrengthAsExpression: Expression?
     /**
      * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
@@ -606,7 +600,6 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * @param circleEmissiveStrength value of circleEmissiveStrength as Expression
    */
-  @MapboxExperimental
   override fun circleEmissiveStrength(circleEmissiveStrength: Expression): CircleLayer = apply {
     val propertyValue = PropertyValue("circle-emissive-strength", circleEmissiveStrength)
     setProperty(propertyValue)
@@ -615,7 +608,6 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
   /**
    * Transition options for CircleEmissiveStrength.
    */
-  @MapboxExperimental
   val circleEmissiveStrengthTransition: StyleTransition?
     /**
      * Get the CircleEmissiveStrength property transition options
@@ -635,7 +627,6 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
    *
    * @param options transition options for Double
    */
-  @MapboxExperimental
   override fun circleEmissiveStrengthTransition(options: StyleTransition): CircleLayer = apply {
     val propertyValue = PropertyValue("circle-emissive-strength-transition", options)
     setProperty(propertyValue)
@@ -644,7 +635,6 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
   /**
    * DSL for [circleEmissiveStrengthTransition].
    */
-  @MapboxExperimental
   override fun circleEmissiveStrengthTransition(block: StyleTransition.Builder.() -> Unit): CircleLayer = apply {
     circleEmissiveStrengthTransition(StyleTransition.Builder().apply(block).build())
   }
@@ -1692,7 +1682,6 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
     /**
      * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
      */
-    @MapboxExperimental
     val defaultCircleEmissiveStrength: Double?
       /**
        * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
@@ -1711,7 +1700,6 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
      * This is an Expression representation of "circle-emissive-strength".
      *
      */
-    @MapboxExperimental
     val defaultCircleEmissiveStrengthAsExpression: Expression?
       /**
        * Get default value of the CircleEmissiveStrength property as an Expression
@@ -1731,7 +1719,6 @@ class CircleLayer(override val layerId: String, val sourceId: String) : CircleLa
     /**
      * Transition options for CircleEmissiveStrength.
      */
-    @MapboxExperimental
     val defaultCircleEmissiveStrengthTransition: StyleTransition?
       /**
        * Get the CircleEmissiveStrength property transition options
@@ -2191,7 +2178,6 @@ interface CircleLayerDsl {
    *
    * @param slot value of slot
    */
-  @MapboxExperimental
   fun slot(slot: String): CircleLayer
 
   /**
@@ -2331,7 +2317,6 @@ interface CircleLayerDsl {
    *
    * @param circleEmissiveStrength value of circleEmissiveStrength
    */
-  @MapboxExperimental
   fun circleEmissiveStrength(circleEmissiveStrength: Double = 0.0): CircleLayer
 
   /**
@@ -2339,7 +2324,6 @@ interface CircleLayerDsl {
    *
    * @param circleEmissiveStrength value of circleEmissiveStrength as Expression
    */
-  @MapboxExperimental
   fun circleEmissiveStrength(circleEmissiveStrength: Expression): CircleLayer
 
   /**
@@ -2349,7 +2333,6 @@ interface CircleLayerDsl {
    *
    * @param options transition options for Double
    */
-  @MapboxExperimental
   fun circleEmissiveStrengthTransition(options: StyleTransition): CircleLayer
 
   /**
@@ -2357,7 +2340,6 @@ interface CircleLayerDsl {
    *
    * DSL for [circleEmissiveStrengthTransition].
    */
-  @MapboxExperimental
   fun circleEmissiveStrengthTransition(block: StyleTransition.Builder.() -> Unit): CircleLayer
 
   /**

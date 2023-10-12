@@ -4,7 +4,6 @@ package com.mapbox.maps.extension.style.layers.generated
 
 import androidx.annotation.ColorInt
 import androidx.annotation.UiThread
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.Layer
@@ -62,7 +61,6 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param slot value of slot
    */
-  @MapboxExperimental
   override fun slot(slot: String): SymbolLayer = apply {
     val param = PropertyValue("slot", slot)
     setProperty(param)
@@ -72,7 +70,6 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    * The slot this layer is assigned to. If specified, and a slot with that name exists,
    * it will be placed at that position in the layer order.
    */
-  @MapboxExperimental
   override val slot: String?
     /**
      * Get the slot property
@@ -1305,11 +1302,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Sorts features in ascending order based on this value. Features with lower sort keys are drawn and placed first.  When `icon-allow-overlap` or `text-allow-overlap` is `false`, features with a lower sort key will have priority during placement. When `icon-allow-overlap` or `text-allow-overlap` is set to `true`, features with a higher sort key will overlap over features with a lower sort key.
+   * Sorts features in ascending order based on this value. Features with lower sort keys are drawn and placed first. When `icon-allow-overlap` or `text-allow-overlap` is `false`, features with a lower sort key will have priority during placement. When `icon-allow-overlap` or `text-allow-overlap` is set to `true`, features with a higher sort key will overlap over features with a lower sort key.
    */
   val symbolSortKey: Double?
     /**
-     * Sorts features in ascending order based on this value. Features with lower sort keys are drawn and placed first.  When `icon-allow-overlap` or `text-allow-overlap` is `false`, features with a lower sort key will have priority during placement. When `icon-allow-overlap` or `text-allow-overlap` is set to `true`, features with a higher sort key will overlap over features with a lower sort key.
+     * Sorts features in ascending order based on this value. Features with lower sort keys are drawn and placed first. When `icon-allow-overlap` or `text-allow-overlap` is `false`, features with a lower sort key will have priority during placement. When `icon-allow-overlap` or `text-allow-overlap` is set to `true`, features with a higher sort key will overlap over features with a lower sort key.
      *
      * Use static method [SymbolLayer.defaultSymbolSortKey] to get the default property.
      *
@@ -1320,7 +1317,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Sorts features in ascending order based on this value. Features with lower sort keys are drawn and placed first.  When `icon-allow-overlap` or `text-allow-overlap` is `false`, features with a lower sort key will have priority during placement. When `icon-allow-overlap` or `text-allow-overlap` is set to `true`, features with a higher sort key will overlap over features with a lower sort key.
+   * Sorts features in ascending order based on this value. Features with lower sort keys are drawn and placed first. When `icon-allow-overlap` or `text-allow-overlap` is `false`, features with a lower sort key will have priority during placement. When `icon-allow-overlap` or `text-allow-overlap` is set to `true`, features with a higher sort key will overlap over features with a lower sort key.
    *
    * Use static method [SymbolLayer.defaultSymbolSortKey] to set the default property.
    *
@@ -1332,14 +1329,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Sorts features in ascending order based on this value. Features with lower sort keys are drawn and placed first.  When `icon-allow-overlap` or `text-allow-overlap` is `false`, features with a lower sort key will have priority during placement. When `icon-allow-overlap` or `text-allow-overlap` is set to `true`, features with a higher sort key will overlap over features with a lower sort key.
+   * Sorts features in ascending order based on this value. Features with lower sort keys are drawn and placed first. When `icon-allow-overlap` or `text-allow-overlap` is `false`, features with a lower sort key will have priority during placement. When `icon-allow-overlap` or `text-allow-overlap` is set to `true`, features with a higher sort key will overlap over features with a lower sort key.
    *
    * This is an Expression representation of "symbol-sort-key".
    *
    */
   val symbolSortKeyAsExpression: Expression?
     /**
-     * Sorts features in ascending order based on this value. Features with lower sort keys are drawn and placed first.  When `icon-allow-overlap` or `text-allow-overlap` is `false`, features with a lower sort key will have priority during placement. When `icon-allow-overlap` or `text-allow-overlap` is set to `true`, features with a higher sort key will overlap over features with a lower sort key.
+     * Sorts features in ascending order based on this value. Features with lower sort keys are drawn and placed first. When `icon-allow-overlap` or `text-allow-overlap` is `false`, features with a lower sort key will have priority during placement. When `icon-allow-overlap` or `text-allow-overlap` is set to `true`, features with a higher sort key will overlap over features with a lower sort key.
      *
      * Get the SymbolSortKey property as an Expression
      *
@@ -1358,7 +1355,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Sorts features in ascending order based on this value. Features with lower sort keys are drawn and placed first.  When `icon-allow-overlap` or `text-allow-overlap` is `false`, features with a lower sort key will have priority during placement. When `icon-allow-overlap` or `text-allow-overlap` is set to `true`, features with a higher sort key will overlap over features with a lower sort key.
+   * Sorts features in ascending order based on this value. Features with lower sort keys are drawn and placed first. When `icon-allow-overlap` or `text-allow-overlap` is `false`, features with a lower sort key will have priority during placement. When `icon-allow-overlap` or `text-allow-overlap` is set to `true`, features with a higher sort key will overlap over features with a lower sort key.
    *
    * Use static method [SymbolLayer.defaultSymbolSortKeyAsExpression] to set the default property.
    *
@@ -3184,7 +3181,6 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   /**
    * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
    */
-  @MapboxExperimental
   val iconEmissiveStrength: Double?
     /**
      * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
@@ -3204,7 +3200,6 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param iconEmissiveStrength value of iconEmissiveStrength
    */
-  @MapboxExperimental
   override fun iconEmissiveStrength(iconEmissiveStrength: Double): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-emissive-strength", iconEmissiveStrength)
     setProperty(propertyValue)
@@ -3216,7 +3211,6 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    * This is an Expression representation of "icon-emissive-strength".
    *
    */
-  @MapboxExperimental
   val iconEmissiveStrengthAsExpression: Expression?
     /**
      * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
@@ -3244,7 +3238,6 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param iconEmissiveStrength value of iconEmissiveStrength as Expression
    */
-  @MapboxExperimental
   override fun iconEmissiveStrength(iconEmissiveStrength: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-emissive-strength", iconEmissiveStrength)
     setProperty(propertyValue)
@@ -3253,7 +3246,6 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   /**
    * Transition options for IconEmissiveStrength.
    */
-  @MapboxExperimental
   val iconEmissiveStrengthTransition: StyleTransition?
     /**
      * Get the IconEmissiveStrength property transition options
@@ -3273,7 +3265,6 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param options transition options for Double
    */
-  @MapboxExperimental
   override fun iconEmissiveStrengthTransition(options: StyleTransition): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-emissive-strength-transition", options)
     setProperty(propertyValue)
@@ -3282,7 +3273,6 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   /**
    * DSL for [iconEmissiveStrengthTransition].
    */
-  @MapboxExperimental
   override fun iconEmissiveStrengthTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer = apply {
     iconEmissiveStrengthTransition(StyleTransition.Builder().apply(block).build())
   }
@@ -3618,7 +3608,6 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   /**
    * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together.
    */
-  @MapboxExperimental
   val iconImageCrossFade: Double?
     /**
      * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together.
@@ -3638,7 +3627,6 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param iconImageCrossFade value of iconImageCrossFade
    */
-  @MapboxExperimental
   override fun iconImageCrossFade(iconImageCrossFade: Double): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-image-cross-fade", iconImageCrossFade)
     setProperty(propertyValue)
@@ -3650,7 +3638,6 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    * This is an Expression representation of "icon-image-cross-fade".
    *
    */
-  @MapboxExperimental
   val iconImageCrossFadeAsExpression: Expression?
     /**
      * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together.
@@ -3678,7 +3665,6 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param iconImageCrossFade value of iconImageCrossFade as Expression
    */
-  @MapboxExperimental
   override fun iconImageCrossFade(iconImageCrossFade: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-image-cross-fade", iconImageCrossFade)
     setProperty(propertyValue)
@@ -3687,7 +3673,6 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   /**
    * Transition options for IconImageCrossFade.
    */
-  @MapboxExperimental
   val iconImageCrossFadeTransition: StyleTransition?
     /**
      * Get the IconImageCrossFade property transition options
@@ -3707,7 +3692,6 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param options transition options for Double
    */
-  @MapboxExperimental
   override fun iconImageCrossFadeTransition(options: StyleTransition): SymbolLayer = apply {
     val propertyValue = PropertyValue("icon-image-cross-fade-transition", options)
     setProperty(propertyValue)
@@ -3716,7 +3700,6 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   /**
    * DSL for [iconImageCrossFadeTransition].
    */
-  @MapboxExperimental
   override fun iconImageCrossFadeTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer = apply {
     iconImageCrossFadeTransition(StyleTransition.Builder().apply(block).build())
   }
@@ -4120,7 +4103,6 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   /**
    * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
    */
-  @MapboxExperimental
   val textEmissiveStrength: Double?
     /**
      * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
@@ -4140,7 +4122,6 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textEmissiveStrength value of textEmissiveStrength
    */
-  @MapboxExperimental
   override fun textEmissiveStrength(textEmissiveStrength: Double): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-emissive-strength", textEmissiveStrength)
     setProperty(propertyValue)
@@ -4152,7 +4133,6 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    * This is an Expression representation of "text-emissive-strength".
    *
    */
-  @MapboxExperimental
   val textEmissiveStrengthAsExpression: Expression?
     /**
      * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
@@ -4180,7 +4160,6 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param textEmissiveStrength value of textEmissiveStrength as Expression
    */
-  @MapboxExperimental
   override fun textEmissiveStrength(textEmissiveStrength: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-emissive-strength", textEmissiveStrength)
     setProperty(propertyValue)
@@ -4189,7 +4168,6 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   /**
    * Transition options for TextEmissiveStrength.
    */
-  @MapboxExperimental
   val textEmissiveStrengthTransition: StyleTransition?
     /**
      * Get the TextEmissiveStrength property transition options
@@ -4209,7 +4187,6 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param options transition options for Double
    */
-  @MapboxExperimental
   override fun textEmissiveStrengthTransition(options: StyleTransition): SymbolLayer = apply {
     val propertyValue = PropertyValue("text-emissive-strength-transition", options)
     setProperty(propertyValue)
@@ -4218,7 +4195,6 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   /**
    * DSL for [textEmissiveStrengthTransition].
    */
-  @MapboxExperimental
   override fun textEmissiveStrengthTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer = apply {
     textEmissiveStrengthTransition(StyleTransition.Builder().apply(block).build())
   }
@@ -5484,11 +5460,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Sorts features in ascending order based on this value. Features with lower sort keys are drawn and placed first.  When `icon-allow-overlap` or `text-allow-overlap` is `false`, features with a lower sort key will have priority during placement. When `icon-allow-overlap` or `text-allow-overlap` is set to `true`, features with a higher sort key will overlap over features with a lower sort key.
+     * Sorts features in ascending order based on this value. Features with lower sort keys are drawn and placed first. When `icon-allow-overlap` or `text-allow-overlap` is `false`, features with a lower sort key will have priority during placement. When `icon-allow-overlap` or `text-allow-overlap` is set to `true`, features with a higher sort key will overlap over features with a lower sort key.
      */
     val defaultSymbolSortKey: Double?
       /**
-       * Sorts features in ascending order based on this value. Features with lower sort keys are drawn and placed first.  When `icon-allow-overlap` or `text-allow-overlap` is `false`, features with a lower sort key will have priority during placement. When `icon-allow-overlap` or `text-allow-overlap` is set to `true`, features with a higher sort key will overlap over features with a lower sort key.
+       * Sorts features in ascending order based on this value. Features with lower sort keys are drawn and placed first. When `icon-allow-overlap` or `text-allow-overlap` is `false`, features with a lower sort key will have priority during placement. When `icon-allow-overlap` or `text-allow-overlap` is set to `true`, features with a higher sort key will overlap over features with a lower sort key.
        *
        * Get the default value of SymbolSortKey property
        *
@@ -5499,7 +5475,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Sorts features in ascending order based on this value. Features with lower sort keys are drawn and placed first.  When `icon-allow-overlap` or `text-allow-overlap` is `false`, features with a lower sort key will have priority during placement. When `icon-allow-overlap` or `text-allow-overlap` is set to `true`, features with a higher sort key will overlap over features with a lower sort key.
+     * Sorts features in ascending order based on this value. Features with lower sort keys are drawn and placed first. When `icon-allow-overlap` or `text-allow-overlap` is `false`, features with a lower sort key will have priority during placement. When `icon-allow-overlap` or `text-allow-overlap` is set to `true`, features with a higher sort key will overlap over features with a lower sort key.
      *
      * This is an Expression representation of "symbol-sort-key".
      *
@@ -6551,7 +6527,6 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     /**
      * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
      */
-    @MapboxExperimental
     val defaultIconEmissiveStrength: Double?
       /**
        * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
@@ -6570,7 +6545,6 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * This is an Expression representation of "icon-emissive-strength".
      *
      */
-    @MapboxExperimental
     val defaultIconEmissiveStrengthAsExpression: Expression?
       /**
        * Get default value of the IconEmissiveStrength property as an Expression
@@ -6590,7 +6564,6 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     /**
      * Transition options for IconEmissiveStrength.
      */
-    @MapboxExperimental
     val defaultIconEmissiveStrengthTransition: StyleTransition?
       /**
        * Get the IconEmissiveStrength property transition options
@@ -6765,7 +6738,6 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     /**
      * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together.
      */
-    @MapboxExperimental
     val defaultIconImageCrossFade: Double?
       /**
        * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together.
@@ -6784,7 +6756,6 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * This is an Expression representation of "icon-image-cross-fade".
      *
      */
-    @MapboxExperimental
     val defaultIconImageCrossFadeAsExpression: Expression?
       /**
        * Get default value of the IconImageCrossFade property as an Expression
@@ -6804,7 +6775,6 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     /**
      * Transition options for IconImageCrossFade.
      */
-    @MapboxExperimental
     val defaultIconImageCrossFadeTransition: StyleTransition?
       /**
        * Get the IconImageCrossFade property transition options
@@ -7019,7 +6989,6 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     /**
      * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
      */
-    @MapboxExperimental
     val defaultTextEmissiveStrength: Double?
       /**
        * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
@@ -7038,7 +7007,6 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * This is an Expression representation of "text-emissive-strength".
      *
      */
-    @MapboxExperimental
     val defaultTextEmissiveStrengthAsExpression: Expression?
       /**
        * Get default value of the TextEmissiveStrength property as an Expression
@@ -7058,7 +7026,6 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     /**
      * Transition options for TextEmissiveStrength.
      */
-    @MapboxExperimental
     val defaultTextEmissiveStrengthTransition: StyleTransition?
       /**
        * Get the TextEmissiveStrength property transition options
@@ -7390,7 +7357,6 @@ interface SymbolLayerDsl {
    *
    * @param slot value of slot
    */
-  @MapboxExperimental
   fun slot(slot: String): SymbolLayer
 
   /**
@@ -7669,14 +7635,14 @@ interface SymbolLayerDsl {
   fun symbolPlacement(symbolPlacement: Expression): SymbolLayer
 
   /**
-   * Sorts features in ascending order based on this value. Features with lower sort keys are drawn and placed first.  When `icon-allow-overlap` or `text-allow-overlap` is `false`, features with a lower sort key will have priority during placement. When `icon-allow-overlap` or `text-allow-overlap` is set to `true`, features with a higher sort key will overlap over features with a lower sort key.
+   * Sorts features in ascending order based on this value. Features with lower sort keys are drawn and placed first. When `icon-allow-overlap` or `text-allow-overlap` is `false`, features with a lower sort key will have priority during placement. When `icon-allow-overlap` or `text-allow-overlap` is set to `true`, features with a higher sort key will overlap over features with a lower sort key.
    *
    * @param symbolSortKey value of symbolSortKey
    */
   fun symbolSortKey(symbolSortKey: Double): SymbolLayer
 
   /**
-   * Sorts features in ascending order based on this value. Features with lower sort keys are drawn and placed first.  When `icon-allow-overlap` or `text-allow-overlap` is `false`, features with a lower sort key will have priority during placement. When `icon-allow-overlap` or `text-allow-overlap` is set to `true`, features with a higher sort key will overlap over features with a lower sort key.
+   * Sorts features in ascending order based on this value. Features with lower sort keys are drawn and placed first. When `icon-allow-overlap` or `text-allow-overlap` is `false`, features with a lower sort key will have priority during placement. When `icon-allow-overlap` or `text-allow-overlap` is set to `true`, features with a higher sort key will overlap over features with a lower sort key.
    *
    * @param symbolSortKey value of symbolSortKey as Expression
    */
@@ -8090,7 +8056,6 @@ interface SymbolLayerDsl {
    *
    * @param iconEmissiveStrength value of iconEmissiveStrength
    */
-  @MapboxExperimental
   fun iconEmissiveStrength(iconEmissiveStrength: Double = 1.0): SymbolLayer
 
   /**
@@ -8098,7 +8063,6 @@ interface SymbolLayerDsl {
    *
    * @param iconEmissiveStrength value of iconEmissiveStrength as Expression
    */
-  @MapboxExperimental
   fun iconEmissiveStrength(iconEmissiveStrength: Expression): SymbolLayer
 
   /**
@@ -8108,7 +8072,6 @@ interface SymbolLayerDsl {
    *
    * @param options transition options for Double
    */
-  @MapboxExperimental
   fun iconEmissiveStrengthTransition(options: StyleTransition): SymbolLayer
 
   /**
@@ -8116,7 +8079,6 @@ interface SymbolLayerDsl {
    *
    * DSL for [iconEmissiveStrengthTransition].
    */
-  @MapboxExperimental
   fun iconEmissiveStrengthTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer
 
   /**
@@ -8221,7 +8183,6 @@ interface SymbolLayerDsl {
    *
    * @param iconImageCrossFade value of iconImageCrossFade
    */
-  @MapboxExperimental
   fun iconImageCrossFade(iconImageCrossFade: Double = 0.0): SymbolLayer
 
   /**
@@ -8229,7 +8190,6 @@ interface SymbolLayerDsl {
    *
    * @param iconImageCrossFade value of iconImageCrossFade as Expression
    */
-  @MapboxExperimental
   fun iconImageCrossFade(iconImageCrossFade: Expression): SymbolLayer
 
   /**
@@ -8239,7 +8199,6 @@ interface SymbolLayerDsl {
    *
    * @param options transition options for Double
    */
-  @MapboxExperimental
   fun iconImageCrossFadeTransition(options: StyleTransition): SymbolLayer
 
   /**
@@ -8247,7 +8206,6 @@ interface SymbolLayerDsl {
    *
    * DSL for [iconImageCrossFadeTransition].
    */
-  @MapboxExperimental
   fun iconImageCrossFadeTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer
 
   /**
@@ -8366,7 +8324,6 @@ interface SymbolLayerDsl {
    *
    * @param textEmissiveStrength value of textEmissiveStrength
    */
-  @MapboxExperimental
   fun textEmissiveStrength(textEmissiveStrength: Double = 1.0): SymbolLayer
 
   /**
@@ -8374,7 +8331,6 @@ interface SymbolLayerDsl {
    *
    * @param textEmissiveStrength value of textEmissiveStrength as Expression
    */
-  @MapboxExperimental
   fun textEmissiveStrength(textEmissiveStrength: Expression): SymbolLayer
 
   /**
@@ -8384,7 +8340,6 @@ interface SymbolLayerDsl {
    *
    * @param options transition options for Double
    */
-  @MapboxExperimental
   fun textEmissiveStrengthTransition(options: StyleTransition): SymbolLayer
 
   /**
@@ -8392,7 +8347,6 @@ interface SymbolLayerDsl {
    *
    * DSL for [textEmissiveStrengthTransition].
    */
-  @MapboxExperimental
   fun textEmissiveStrengthTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer
 
   /**

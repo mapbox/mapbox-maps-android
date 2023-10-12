@@ -86,10 +86,10 @@ package com.mapbox.maps {
     method public com.mapbox.maps.StylePropertyValue getStyleAtmosphereProperty(String property);
     method public com.mapbox.maps.CameraOptions getStyleDefaultCamera();
     method public com.mapbox.maps.Image? getStyleImage(String imageId);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.bindgen.Expected<java.lang.String,java.util.HashMap<java.lang.String,com.mapbox.maps.StylePropertyValue>> getStyleImportConfigProperties(String importId);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.maps.StylePropertyValue> getStyleImportConfigProperty(String importId, String config);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.Value> getStyleImportSchema(String importId);
-    method @com.mapbox.maps.MapboxExperimental public java.util.List<com.mapbox.maps.StyleObjectInfo> getStyleImports();
+    method public com.mapbox.bindgen.Expected<java.lang.String,java.util.HashMap<java.lang.String,com.mapbox.maps.StylePropertyValue>> getStyleImportConfigProperties(String importId);
+    method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.maps.StylePropertyValue> getStyleImportConfigProperty(String importId, String config);
+    method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.Value> getStyleImportSchema(String importId);
+    method public java.util.List<com.mapbox.maps.StyleObjectInfo> getStyleImports();
     method public String getStyleJSON();
     method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.Value> getStyleLayerProperties(String layerId);
     method public com.mapbox.maps.StylePropertyValue getStyleLayerProperty(String layerId, String property);
@@ -115,7 +115,7 @@ package com.mapbox.maps {
     method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> moveStyleLayer(String layerId, com.mapbox.maps.LayerPosition? layerPosition);
     method @MainThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> removeGeoJSONSourceFeatures(String sourceId, String dataId, java.util.List<java.lang.String> featureIds);
     method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> removeStyleImage(String imageId);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> removeStyleImport(String importId);
+    method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> removeStyleImport(String importId);
     method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> removeStyleLayer(String layerId);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> removeStyleModel(String modelId);
     method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> removeStyleSource(String sourceId);
@@ -124,8 +124,8 @@ package com.mapbox.maps {
     method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleCustomGeometrySourceTileData(String sourceId, com.mapbox.maps.CanonicalTileID tileId, java.util.List<com.mapbox.geojson.Feature> featureCollection);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleCustomRasterSourceTileData(String sourceId, com.mapbox.maps.CanonicalTileID tileId, com.mapbox.maps.Image? image);
     method @MainThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleGeoJSONSourceData(String sourceId, String dataId, com.mapbox.maps.GeoJSONSourceData data);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleImportConfigProperties(String importId, java.util.HashMap<java.lang.String,com.mapbox.bindgen.Value> configs);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleImportConfigProperty(String importId, String config, com.mapbox.bindgen.Value value);
+    method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleImportConfigProperties(String importId, java.util.HashMap<java.lang.String,com.mapbox.bindgen.Value> configs);
+    method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleImportConfigProperty(String importId, String config, com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleLayerProperties(String layerId, com.mapbox.bindgen.Value properties);
     method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleLayerProperty(String layerId, String property, com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleLightProperty(String id, String property, com.mapbox.bindgen.Value value);
@@ -2390,7 +2390,7 @@ package com.mapbox.maps.plugin.overlay {
     method public java.util.List<com.mapbox.geojson.Point> getShownCoordinates();
   }
 
-  @com.mapbox.maps.MapboxExperimental public interface MapOverlayPlugin extends com.mapbox.maps.plugin.MapSizePlugin com.mapbox.maps.plugin.MapPlugin {
+  public interface MapOverlayPlugin extends com.mapbox.maps.plugin.MapSizePlugin com.mapbox.maps.plugin.MapPlugin {
     method public com.mapbox.maps.EdgeInsets getEdgeInsets();
     method public void reframe(com.mapbox.maps.plugin.overlay.OnReframeFinished? onReframeFinished = null);
     method public void registerMapOverlayCoordinatesProvider(com.mapbox.maps.plugin.overlay.MapOverlayCoordinatesProvider provider);

@@ -47,7 +47,6 @@ interface StyleContract {
     /**
      * The dynamic (directional and ambient) light of the style.
      */
-    @MapboxExperimental
     val dynamicLight: StyleLightExtension?
 
     /**

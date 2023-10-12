@@ -287,7 +287,6 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     plugin: Plugin
   ) = pluginRegistry.createPlugin(mapView, mapInitOptions, plugin)
 
-  @OptIn(MapboxExperimental::class)
   fun initializePlugins(
     options: MapInitOptions,
     mapView: MapView? = null,

@@ -108,7 +108,7 @@ fun all(block: Expression.ExpressionBuilder.() -> Unit): Expression = Expression
 fun any(block: Expression.ExpressionBuilder.() -> Unit): Expression = Expression.any(block)
 
 /**
- * Asserts that the input is an array (optionally with a specific item type and length).  If, when the input expression is evaluated, it is not of the asserted type, then this assertion will cause the whole expression to be aborted.
+ * Asserts that the input is an array (optionally with a specific item type and length). If, when the input expression is evaluated, it is not of the asserted type, then this assertion will cause the whole expression to be aborted.
  */
 fun array(block: Expression.ExpressionBuilder.() -> Unit): Expression = Expression.array(block)
 
@@ -385,7 +385,7 @@ fun pi(): Expression = Expression.pi()
 fun pitch(): Expression = Expression.pitch()
 
 /**
- * Returns the feature properties object.  Note that in some cases, it may be more efficient to use `["get", "property_name"]` directly.
+ * Returns the feature properties object. Note that in some cases, it may be more efficient to use `["get", "property_name"]` directly.
  */
 fun properties(): Expression = Expression.properties()
 
@@ -501,7 +501,7 @@ fun varExpression(block: Expression.ExpressionBuilder.() -> Unit): Expression = 
 fun within(geometry: Geometry): Expression = Expression.within(geometry)
 
 /**
- * Returns the current zoom level.  Note that in style layout and paint properties, ["zoom"] may only appear as the input to a top-level "step" or "interpolate" expression.
+ * Returns the current zoom level. Note that in style layout and paint properties, ["zoom"] may only appear as the input to a top-level "step" or "interpolate" expression.
  */
 fun zoom(): Expression = Expression.zoom()
 

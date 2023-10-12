@@ -4,7 +4,6 @@ package com.mapbox.maps.extension.style.layers.generated
 
 import androidx.annotation.ColorInt
 import androidx.annotation.UiThread
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.Layer
@@ -62,7 +61,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param slot value of slot
    */
-  @MapboxExperimental
   override fun slot(slot: String): LineLayer = apply {
     val param = PropertyValue("slot", slot)
     setProperty(param)
@@ -72,7 +70,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    * The slot this layer is assigned to. If specified, and a slot with that name exists,
    * it will be placed at that position in the layer order.
    */
-  @MapboxExperimental
   override val slot: String?
     /**
      * Get the slot property
@@ -1106,7 +1103,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   /**
    * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded.
    */
-  @MapboxExperimental
   val lineDepthOcclusionFactor: Double?
     /**
      * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded.
@@ -1126,7 +1122,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param lineDepthOcclusionFactor value of lineDepthOcclusionFactor
    */
-  @MapboxExperimental
   override fun lineDepthOcclusionFactor(lineDepthOcclusionFactor: Double): LineLayer = apply {
     val propertyValue = PropertyValue("line-depth-occlusion-factor", lineDepthOcclusionFactor)
     setProperty(propertyValue)
@@ -1138,7 +1133,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    * This is an Expression representation of "line-depth-occlusion-factor".
    *
    */
-  @MapboxExperimental
   val lineDepthOcclusionFactorAsExpression: Expression?
     /**
      * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded.
@@ -1166,7 +1160,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param lineDepthOcclusionFactor value of lineDepthOcclusionFactor as Expression
    */
-  @MapboxExperimental
   override fun lineDepthOcclusionFactor(lineDepthOcclusionFactor: Expression): LineLayer = apply {
     val propertyValue = PropertyValue("line-depth-occlusion-factor", lineDepthOcclusionFactor)
     setProperty(propertyValue)
@@ -1175,7 +1168,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   /**
    * Transition options for LineDepthOcclusionFactor.
    */
-  @MapboxExperimental
   val lineDepthOcclusionFactorTransition: StyleTransition?
     /**
      * Get the LineDepthOcclusionFactor property transition options
@@ -1195,7 +1187,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param options transition options for Double
    */
-  @MapboxExperimental
   override fun lineDepthOcclusionFactorTransition(options: StyleTransition): LineLayer = apply {
     val propertyValue = PropertyValue("line-depth-occlusion-factor-transition", options)
     setProperty(propertyValue)
@@ -1204,7 +1195,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   /**
    * DSL for [lineDepthOcclusionFactorTransition].
    */
-  @MapboxExperimental
   override fun lineDepthOcclusionFactorTransition(block: StyleTransition.Builder.() -> Unit): LineLayer = apply {
     lineDepthOcclusionFactorTransition(StyleTransition.Builder().apply(block).build())
   }
@@ -1212,7 +1202,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   /**
    * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
    */
-  @MapboxExperimental
   val lineEmissiveStrength: Double?
     /**
      * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
@@ -1232,7 +1221,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param lineEmissiveStrength value of lineEmissiveStrength
    */
-  @MapboxExperimental
   override fun lineEmissiveStrength(lineEmissiveStrength: Double): LineLayer = apply {
     val propertyValue = PropertyValue("line-emissive-strength", lineEmissiveStrength)
     setProperty(propertyValue)
@@ -1244,7 +1232,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    * This is an Expression representation of "line-emissive-strength".
    *
    */
-  @MapboxExperimental
   val lineEmissiveStrengthAsExpression: Expression?
     /**
      * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
@@ -1272,7 +1259,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param lineEmissiveStrength value of lineEmissiveStrength as Expression
    */
-  @MapboxExperimental
   override fun lineEmissiveStrength(lineEmissiveStrength: Expression): LineLayer = apply {
     val propertyValue = PropertyValue("line-emissive-strength", lineEmissiveStrength)
     setProperty(propertyValue)
@@ -1281,7 +1267,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   /**
    * Transition options for LineEmissiveStrength.
    */
-  @MapboxExperimental
   val lineEmissiveStrengthTransition: StyleTransition?
     /**
      * Get the LineEmissiveStrength property transition options
@@ -1301,7 +1286,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param options transition options for Double
    */
-  @MapboxExperimental
   override fun lineEmissiveStrengthTransition(options: StyleTransition): LineLayer = apply {
     val propertyValue = PropertyValue("line-emissive-strength-transition", options)
     setProperty(propertyValue)
@@ -1310,7 +1294,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   /**
    * DSL for [lineEmissiveStrengthTransition].
    */
-  @MapboxExperimental
   override fun lineEmissiveStrengthTransition(block: StyleTransition.Builder.() -> Unit): LineLayer = apply {
     lineEmissiveStrengthTransition(StyleTransition.Builder().apply(block).build())
   }
@@ -1415,11 +1398,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * A gradient used to color a line feature at various distances along its length. Defined using a `step` or `interpolate` expression which outputs a color for each corresponding `line-progress` input value. `line-progress` is a percentage of the line feature's total length as measured on the webmercator projected coordinate plane (a `number` between `0` and `1`).  Can only be used with GeoJSON sources that specify `"lineMetrics": true`.
+   * A gradient used to color a line feature at various distances along its length. Defined using a `step` or `interpolate` expression which outputs a color for each corresponding `line-progress` input value. `line-progress` is a percentage of the line feature's total length as measured on the webmercator projected coordinate plane (a `number` between `0` and `1`). Can only be used with GeoJSON sources that specify `"lineMetrics": true`.
    */
   val lineGradient: Expression?
     /**
-     * A gradient used to color a line feature at various distances along its length. Defined using a `step` or `interpolate` expression which outputs a color for each corresponding `line-progress` input value. `line-progress` is a percentage of the line feature's total length as measured on the webmercator projected coordinate plane (a `number` between `0` and `1`).  Can only be used with GeoJSON sources that specify `"lineMetrics": true`.
+     * A gradient used to color a line feature at various distances along its length. Defined using a `step` or `interpolate` expression which outputs a color for each corresponding `line-progress` input value. `line-progress` is a percentage of the line feature's total length as measured on the webmercator projected coordinate plane (a `number` between `0` and `1`). Can only be used with GeoJSON sources that specify `"lineMetrics": true`.
      *
      * Use static method [LineLayer.defaultLineGradient] to get the default property.
      *
@@ -1430,7 +1413,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * A gradient used to color a line feature at various distances along its length. Defined using a `step` or `interpolate` expression which outputs a color for each corresponding `line-progress` input value. `line-progress` is a percentage of the line feature's total length as measured on the webmercator projected coordinate plane (a `number` between `0` and `1`).  Can only be used with GeoJSON sources that specify `"lineMetrics": true`.
+   * A gradient used to color a line feature at various distances along its length. Defined using a `step` or `interpolate` expression which outputs a color for each corresponding `line-progress` input value. `line-progress` is a percentage of the line feature's total length as measured on the webmercator projected coordinate plane (a `number` between `0` and `1`). Can only be used with GeoJSON sources that specify `"lineMetrics": true`.
    *
    * Use static method [LineLayer.defaultLineGradient] to set the default property.
    *
@@ -2555,7 +2538,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     /**
      * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded.
      */
-    @MapboxExperimental
     val defaultLineDepthOcclusionFactor: Double?
       /**
        * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded.
@@ -2574,7 +2556,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      * This is an Expression representation of "line-depth-occlusion-factor".
      *
      */
-    @MapboxExperimental
     val defaultLineDepthOcclusionFactorAsExpression: Expression?
       /**
        * Get default value of the LineDepthOcclusionFactor property as an Expression
@@ -2594,7 +2575,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     /**
      * Transition options for LineDepthOcclusionFactor.
      */
-    @MapboxExperimental
     val defaultLineDepthOcclusionFactorTransition: StyleTransition?
       /**
        * Get the LineDepthOcclusionFactor property transition options
@@ -2606,7 +2586,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     /**
      * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
      */
-    @MapboxExperimental
     val defaultLineEmissiveStrength: Double?
       /**
        * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
@@ -2625,7 +2604,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      * This is an Expression representation of "line-emissive-strength".
      *
      */
-    @MapboxExperimental
     val defaultLineEmissiveStrengthAsExpression: Expression?
       /**
        * Get default value of the LineEmissiveStrength property as an Expression
@@ -2645,7 +2623,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     /**
      * Transition options for LineEmissiveStrength.
      */
-    @MapboxExperimental
     val defaultLineEmissiveStrengthTransition: StyleTransition?
       /**
        * Get the LineEmissiveStrength property transition options
@@ -3032,7 +3009,6 @@ interface LineLayerDsl {
    *
    * @param slot value of slot
    */
-  @MapboxExperimental
   fun slot(slot: String): LineLayer
 
   /**
@@ -3309,7 +3285,6 @@ interface LineLayerDsl {
    *
    * @param lineDepthOcclusionFactor value of lineDepthOcclusionFactor
    */
-  @MapboxExperimental
   fun lineDepthOcclusionFactor(lineDepthOcclusionFactor: Double = 1.0): LineLayer
 
   /**
@@ -3317,7 +3292,6 @@ interface LineLayerDsl {
    *
    * @param lineDepthOcclusionFactor value of lineDepthOcclusionFactor as Expression
    */
-  @MapboxExperimental
   fun lineDepthOcclusionFactor(lineDepthOcclusionFactor: Expression): LineLayer
 
   /**
@@ -3327,7 +3301,6 @@ interface LineLayerDsl {
    *
    * @param options transition options for Double
    */
-  @MapboxExperimental
   fun lineDepthOcclusionFactorTransition(options: StyleTransition): LineLayer
 
   /**
@@ -3335,7 +3308,6 @@ interface LineLayerDsl {
    *
    * DSL for [lineDepthOcclusionFactorTransition].
    */
-  @MapboxExperimental
   fun lineDepthOcclusionFactorTransition(block: StyleTransition.Builder.() -> Unit): LineLayer
 
   /**
@@ -3343,7 +3315,6 @@ interface LineLayerDsl {
    *
    * @param lineEmissiveStrength value of lineEmissiveStrength
    */
-  @MapboxExperimental
   fun lineEmissiveStrength(lineEmissiveStrength: Double = 0.0): LineLayer
 
   /**
@@ -3351,7 +3322,6 @@ interface LineLayerDsl {
    *
    * @param lineEmissiveStrength value of lineEmissiveStrength as Expression
    */
-  @MapboxExperimental
   fun lineEmissiveStrength(lineEmissiveStrength: Expression): LineLayer
 
   /**
@@ -3361,7 +3331,6 @@ interface LineLayerDsl {
    *
    * @param options transition options for Double
    */
-  @MapboxExperimental
   fun lineEmissiveStrengthTransition(options: StyleTransition): LineLayer
 
   /**
@@ -3369,7 +3338,6 @@ interface LineLayerDsl {
    *
    * DSL for [lineEmissiveStrengthTransition].
    */
-  @MapboxExperimental
   fun lineEmissiveStrengthTransition(block: StyleTransition.Builder.() -> Unit): LineLayer
 
   /**
@@ -3403,7 +3371,7 @@ interface LineLayerDsl {
   fun lineGapWidthTransition(block: StyleTransition.Builder.() -> Unit): LineLayer
 
   /**
-   * A gradient used to color a line feature at various distances along its length. Defined using a `step` or `interpolate` expression which outputs a color for each corresponding `line-progress` input value. `line-progress` is a percentage of the line feature's total length as measured on the webmercator projected coordinate plane (a `number` between `0` and `1`).  Can only be used with GeoJSON sources that specify `"lineMetrics": true`.
+   * A gradient used to color a line feature at various distances along its length. Defined using a `step` or `interpolate` expression which outputs a color for each corresponding `line-progress` input value. `line-progress` is a percentage of the line feature's total length as measured on the webmercator projected coordinate plane (a `number` between `0` and `1`). Can only be used with GeoJSON sources that specify `"lineMetrics": true`.
    *
    * @param lineGradient value of lineGradient
    */

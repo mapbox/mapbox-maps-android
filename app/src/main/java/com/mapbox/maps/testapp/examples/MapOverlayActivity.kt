@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.image.image
@@ -25,7 +24,6 @@ import com.mapbox.maps.plugin.overlay.mapboxOverlay
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityMapOverlayBinding
 
-@MapboxExperimental
 class MapOverlayActivity : AppCompatActivity(), OnMapClickListener {
 
   private val markerCoordinates = mutableListOf<Point>(

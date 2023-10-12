@@ -21,7 +21,6 @@ import com.mapbox.maps.testapp.databinding.ActivityFillExtrusionBinding
  * Extrude the building layer in the Mapbox Light style using FillExtrusionLayer
  * and set up the light position.
  */
-@OptIn(MapboxExperimental::class)
 class FillExtrusionActivity : AppCompatActivity() {
 
   private var isRedColor: Boolean = false
@@ -77,6 +76,7 @@ class FillExtrusionActivity : AppCompatActivity() {
     }
   }
 
+  @OptIn(MapboxExperimental::class)
   private fun setupBuildings(style: Style) {
     val fillExtrusionLayer = FillExtrusionLayer("3d-buildings", "composite")
     fillExtrusionLayer.sourceLayer("building")

@@ -4,7 +4,6 @@ package com.mapbox.maps.extension.style.layers.generated
 
 import androidx.annotation.ColorInt
 import androidx.annotation.UiThread
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.Layer
@@ -33,7 +32,6 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    *
    * @param slot value of slot
    */
-  @MapboxExperimental
   override fun slot(slot: String): LocationIndicatorLayer = apply {
     val param = PropertyValue("slot", slot)
     setProperty(param)
@@ -43,7 +41,6 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
    * The slot this layer is assigned to. If specified, and a slot with that name exists,
    * it will be placed at that position in the layer order.
    */
-  @MapboxExperimental
   override val slot: String?
     /**
      * Get the slot property
@@ -2540,7 +2537,6 @@ interface LocationIndicatorLayerDsl {
    *
    * @param slot value of slot
    */
-  @MapboxExperimental
   fun slot(slot: String): LocationIndicatorLayer
 
   /**

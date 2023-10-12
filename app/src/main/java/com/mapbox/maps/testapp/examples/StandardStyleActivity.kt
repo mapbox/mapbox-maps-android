@@ -6,7 +6,6 @@ import com.mapbox.bindgen.Value
 import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.expressions.dsl.generated.rgb
@@ -18,7 +17,6 @@ import com.mapbox.maps.testapp.databinding.ActivityStandardStyleBinding
 /**
  * Example of working with style imports and the Standard style.
  */
-@OptIn(MapboxExperimental::class)
 class StandardStyleActivity : AppCompatActivity() {
   private lateinit var mapboxMap: MapboxMap
   private val line = LineString.fromLngLats(LINE_COORDINATES)

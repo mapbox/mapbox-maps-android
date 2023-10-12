@@ -601,11 +601,11 @@ class Atmosphere : AtmosphereDslReceiver, StyleContract.StyleAtmosphereExtension
     setProperty(propertyValue)
   }
   /**
-   * Specify the vertical range, measured in meters, over which the fog should gradually fade out. When both parameters are set to zero, the fog will be rendered without any vertical constraints.
+   * An array of two number values, specifying the vertical range, measured in meters, over which the fog should gradually fade out. When both parameters are set to zero, the fog will be rendered without any vertical constraints.
    */
   val verticalRange: List<Double>?
     /**
-     * Specify the vertical range, measured in meters, over which the fog should gradually fade out. When both parameters are set to zero, the fog will be rendered without any vertical constraints.
+     * An array of two number values, specifying the vertical range, measured in meters, over which the fog should gradually fade out. When both parameters are set to zero, the fog will be rendered without any vertical constraints.
      *
      * @return vertical-range as List<Double>
      */
@@ -614,7 +614,7 @@ class Atmosphere : AtmosphereDslReceiver, StyleContract.StyleAtmosphereExtension
     }
 
   /**
-   * Specify the vertical range, measured in meters, over which the fog should gradually fade out. When both parameters are set to zero, the fog will be rendered without any vertical constraints.
+   * An array of two number values, specifying the vertical range, measured in meters, over which the fog should gradually fade out. When both parameters are set to zero, the fog will be rendered without any vertical constraints.
    *
    * @param verticalRange as List<Double>
    */
@@ -653,13 +653,13 @@ class Atmosphere : AtmosphereDslReceiver, StyleContract.StyleAtmosphereExtension
   }
 
   /**
-   * Specify the vertical range, measured in meters, over which the fog should gradually fade out. When both parameters are set to zero, the fog will be rendered without any vertical constraints.
+   * An array of two number values, specifying the vertical range, measured in meters, over which the fog should gradually fade out. When both parameters are set to zero, the fog will be rendered without any vertical constraints.
    *
    * This is an Expression representation of "vertical-range".
    */
   val verticalRangeAsExpression: Expression?
     /**
-     * Specify the vertical range, measured in meters, over which the fog should gradually fade out. When both parameters are set to zero, the fog will be rendered without any vertical constraints.
+     * An array of two number values, specifying the vertical range, measured in meters, over which the fog should gradually fade out. When both parameters are set to zero, the fog will be rendered without any vertical constraints.
      *
      * Get the verticalRange property as an Expression
      *
@@ -675,7 +675,7 @@ class Atmosphere : AtmosphereDslReceiver, StyleContract.StyleAtmosphereExtension
       return null
     }
   /**
-   * Specify the vertical range, measured in meters, over which the fog should gradually fade out. When both parameters are set to zero, the fog will be rendered without any vertical constraints.
+   * An array of two number values, specifying the vertical range, measured in meters, over which the fog should gradually fade out. When both parameters are set to zero, the fog will be rendered without any vertical constraints.
    *
    * @param verticalRange value of verticalRange as Expression
    */
@@ -933,14 +933,14 @@ interface AtmosphereDslReceiver {
    */
   fun starIntensityTransition(block: StyleTransition.Builder.() -> Unit): Atmosphere
   /**
-   * Specify the vertical range, measured in meters, over which the fog should gradually fade out. When both parameters are set to zero, the fog will be rendered without any vertical constraints.
+   * An array of two number values, specifying the vertical range, measured in meters, over which the fog should gradually fade out. When both parameters are set to zero, the fog will be rendered without any vertical constraints.
    *
    * @param verticalRange as List<Double>
    */
   fun verticalRange(verticalRange: List<Double> = listOf(0.0, 0.0)): Atmosphere
 
   /**
-   * Specify the vertical range, measured in meters, over which the fog should gradually fade out. When both parameters are set to zero, the fog will be rendered without any vertical constraints.
+   * An array of two number values, specifying the vertical range, measured in meters, over which the fog should gradually fade out. When both parameters are set to zero, the fog will be rendered without any vertical constraints.
    *
    * @param verticalRange value of verticalRange as Expression
    */

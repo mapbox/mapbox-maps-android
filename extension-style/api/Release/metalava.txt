@@ -1101,7 +1101,7 @@ package com.mapbox.maps.extension.style.layers {
     method public abstract com.mapbox.maps.extension.style.expressions.generated.Expression? getVisibilityAsExpression();
     method public abstract com.mapbox.maps.extension.style.layers.Layer maxZoom(double maxZoom);
     method public abstract com.mapbox.maps.extension.style.layers.Layer minZoom(double minZoom);
-    method @com.mapbox.maps.MapboxExperimental public abstract com.mapbox.maps.extension.style.layers.Layer slot(String slot);
+    method public abstract com.mapbox.maps.extension.style.layers.Layer slot(String slot);
     method public abstract com.mapbox.maps.extension.style.layers.Layer visibility(com.mapbox.maps.extension.style.layers.properties.generated.Visibility visibility);
     method public abstract com.mapbox.maps.extension.style.layers.Layer visibility(com.mapbox.maps.extension.style.expressions.generated.Expression visibility);
     property public abstract String layerId;
@@ -1139,10 +1139,10 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundColor(@ColorInt int backgroundColor);
     method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundColorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundColorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundEmissiveStrength(double backgroundEmissiveStrength);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundEmissiveStrength(com.mapbox.maps.extension.style.expressions.generated.Expression backgroundEmissiveStrength);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundEmissiveStrengthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundEmissiveStrengthTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundEmissiveStrength(double backgroundEmissiveStrength);
+    method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundEmissiveStrength(com.mapbox.maps.extension.style.expressions.generated.Expression backgroundEmissiveStrength);
+    method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundEmissiveStrengthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundEmissiveStrengthTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundOpacity(double backgroundOpacity);
     method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundOpacity(com.mapbox.maps.extension.style.expressions.generated.Expression backgroundOpacity);
     method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundOpacityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -1232,10 +1232,10 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundColor(@ColorInt int backgroundColor);
     method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundColorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundColorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundEmissiveStrength(double backgroundEmissiveStrength = 0.0);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundEmissiveStrength(com.mapbox.maps.extension.style.expressions.generated.Expression backgroundEmissiveStrength);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundEmissiveStrengthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundEmissiveStrengthTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundEmissiveStrength(double backgroundEmissiveStrength = 0.0);
+    method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundEmissiveStrength(com.mapbox.maps.extension.style.expressions.generated.Expression backgroundEmissiveStrength);
+    method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundEmissiveStrengthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundEmissiveStrengthTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundOpacity(double backgroundOpacity = 1.0);
     method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundOpacity(com.mapbox.maps.extension.style.expressions.generated.Expression backgroundOpacity);
     method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundOpacityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -1264,10 +1264,10 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.CircleLayer circleColor(@ColorInt int circleColor);
     method public com.mapbox.maps.extension.style.layers.generated.CircleLayer circleColorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.CircleLayer circleColorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.CircleLayer circleEmissiveStrength(double circleEmissiveStrength);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.CircleLayer circleEmissiveStrength(com.mapbox.maps.extension.style.expressions.generated.Expression circleEmissiveStrength);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.CircleLayer circleEmissiveStrengthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.CircleLayer circleEmissiveStrengthTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method public com.mapbox.maps.extension.style.layers.generated.CircleLayer circleEmissiveStrength(double circleEmissiveStrength);
+    method public com.mapbox.maps.extension.style.layers.generated.CircleLayer circleEmissiveStrength(com.mapbox.maps.extension.style.expressions.generated.Expression circleEmissiveStrength);
+    method public com.mapbox.maps.extension.style.layers.generated.CircleLayer circleEmissiveStrengthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.layers.generated.CircleLayer circleEmissiveStrengthTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.CircleLayer circleOpacity(double circleOpacity);
     method public com.mapbox.maps.extension.style.layers.generated.CircleLayer circleOpacity(com.mapbox.maps.extension.style.expressions.generated.Expression circleOpacity);
     method public com.mapbox.maps.extension.style.layers.generated.CircleLayer circleOpacityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -1496,10 +1496,10 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.CircleLayer circleColor(@ColorInt int circleColor);
     method public com.mapbox.maps.extension.style.layers.generated.CircleLayer circleColorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.CircleLayer circleColorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.CircleLayer circleEmissiveStrength(double circleEmissiveStrength = 0.0);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.CircleLayer circleEmissiveStrength(com.mapbox.maps.extension.style.expressions.generated.Expression circleEmissiveStrength);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.CircleLayer circleEmissiveStrengthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.CircleLayer circleEmissiveStrengthTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method public com.mapbox.maps.extension.style.layers.generated.CircleLayer circleEmissiveStrength(double circleEmissiveStrength = 0.0);
+    method public com.mapbox.maps.extension.style.layers.generated.CircleLayer circleEmissiveStrength(com.mapbox.maps.extension.style.expressions.generated.Expression circleEmissiveStrength);
+    method public com.mapbox.maps.extension.style.layers.generated.CircleLayer circleEmissiveStrengthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.layers.generated.CircleLayer circleEmissiveStrengthTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.CircleLayer circleOpacity(double circleOpacity = 1.0);
     method public com.mapbox.maps.extension.style.layers.generated.CircleLayer circleOpacity(com.mapbox.maps.extension.style.expressions.generated.Expression circleOpacity);
     method public com.mapbox.maps.extension.style.layers.generated.CircleLayer circleOpacityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -2012,10 +2012,10 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillColor(@ColorInt int fillColor);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillColorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillColorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillEmissiveStrength(double fillEmissiveStrength);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillEmissiveStrength(com.mapbox.maps.extension.style.expressions.generated.Expression fillEmissiveStrength);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillEmissiveStrengthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillEmissiveStrengthTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillEmissiveStrength(double fillEmissiveStrength);
+    method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillEmissiveStrength(com.mapbox.maps.extension.style.expressions.generated.Expression fillEmissiveStrength);
+    method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillEmissiveStrengthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillEmissiveStrengthTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillOpacity(double fillOpacity);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillOpacity(com.mapbox.maps.extension.style.expressions.generated.Expression fillOpacity);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillOpacityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -2180,10 +2180,10 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillColor(@ColorInt int fillColor);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillColorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillColorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillEmissiveStrength(double fillEmissiveStrength = 0.0);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillEmissiveStrength(com.mapbox.maps.extension.style.expressions.generated.Expression fillEmissiveStrength);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillEmissiveStrengthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillEmissiveStrengthTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillEmissiveStrength(double fillEmissiveStrength = 0.0);
+    method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillEmissiveStrength(com.mapbox.maps.extension.style.expressions.generated.Expression fillEmissiveStrength);
+    method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillEmissiveStrengthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillEmissiveStrengthTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillOpacity(double fillOpacity = 1.0);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillOpacity(com.mapbox.maps.extension.style.expressions.generated.Expression fillOpacity);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillOpacityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -2606,14 +2606,14 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineColorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineDasharray(java.util.List<java.lang.Double> lineDasharray);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineDasharray(com.mapbox.maps.extension.style.expressions.generated.Expression lineDasharray);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineDepthOcclusionFactor(double lineDepthOcclusionFactor);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineDepthOcclusionFactor(com.mapbox.maps.extension.style.expressions.generated.Expression lineDepthOcclusionFactor);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineDepthOcclusionFactorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineDepthOcclusionFactorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineEmissiveStrength(double lineEmissiveStrength);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineEmissiveStrength(com.mapbox.maps.extension.style.expressions.generated.Expression lineEmissiveStrength);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineEmissiveStrengthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineEmissiveStrengthTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineDepthOcclusionFactor(double lineDepthOcclusionFactor);
+    method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineDepthOcclusionFactor(com.mapbox.maps.extension.style.expressions.generated.Expression lineDepthOcclusionFactor);
+    method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineDepthOcclusionFactorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineDepthOcclusionFactorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineEmissiveStrength(double lineEmissiveStrength);
+    method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineEmissiveStrength(com.mapbox.maps.extension.style.expressions.generated.Expression lineEmissiveStrength);
+    method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineEmissiveStrengthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineEmissiveStrengthTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineGapWidth(double lineGapWidth);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineGapWidth(com.mapbox.maps.extension.style.expressions.generated.Expression lineGapWidth);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineGapWidthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -2860,14 +2860,14 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineColorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineDasharray(java.util.List<java.lang.Double> lineDasharray);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineDasharray(com.mapbox.maps.extension.style.expressions.generated.Expression lineDasharray);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineDepthOcclusionFactor(double lineDepthOcclusionFactor = 1.0);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineDepthOcclusionFactor(com.mapbox.maps.extension.style.expressions.generated.Expression lineDepthOcclusionFactor);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineDepthOcclusionFactorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineDepthOcclusionFactorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineEmissiveStrength(double lineEmissiveStrength = 0.0);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineEmissiveStrength(com.mapbox.maps.extension.style.expressions.generated.Expression lineEmissiveStrength);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineEmissiveStrengthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineEmissiveStrengthTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineDepthOcclusionFactor(double lineDepthOcclusionFactor = 1.0);
+    method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineDepthOcclusionFactor(com.mapbox.maps.extension.style.expressions.generated.Expression lineDepthOcclusionFactor);
+    method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineDepthOcclusionFactorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineDepthOcclusionFactorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineEmissiveStrength(double lineEmissiveStrength = 0.0);
+    method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineEmissiveStrength(com.mapbox.maps.extension.style.expressions.generated.Expression lineEmissiveStrength);
+    method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineEmissiveStrengthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineEmissiveStrengthTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineGapWidth(double lineGapWidth = 0.0);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineGapWidth(com.mapbox.maps.extension.style.expressions.generated.Expression lineGapWidth);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineGapWidthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -4152,10 +4152,10 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconColor(@ColorInt int iconColor);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconColorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconColorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconEmissiveStrength(double iconEmissiveStrength);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconEmissiveStrength(com.mapbox.maps.extension.style.expressions.generated.Expression iconEmissiveStrength);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconEmissiveStrengthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconEmissiveStrengthTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconEmissiveStrength(double iconEmissiveStrength);
+    method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconEmissiveStrength(com.mapbox.maps.extension.style.expressions.generated.Expression iconEmissiveStrength);
+    method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconEmissiveStrengthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconEmissiveStrengthTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconHaloBlur(double iconHaloBlur);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconHaloBlur(com.mapbox.maps.extension.style.expressions.generated.Expression iconHaloBlur);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconHaloBlurTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -4173,10 +4173,10 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconIgnorePlacement(com.mapbox.maps.extension.style.expressions.generated.Expression iconIgnorePlacement);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconImage(String iconImage);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconImage(com.mapbox.maps.extension.style.expressions.generated.Expression iconImage);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconImageCrossFade(double iconImageCrossFade);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconImageCrossFade(com.mapbox.maps.extension.style.expressions.generated.Expression iconImageCrossFade);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconImageCrossFadeTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconImageCrossFadeTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconImageCrossFade(double iconImageCrossFade);
+    method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconImageCrossFade(com.mapbox.maps.extension.style.expressions.generated.Expression iconImageCrossFade);
+    method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconImageCrossFadeTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconImageCrossFadeTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconKeepUpright(boolean iconKeepUpright);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconKeepUpright(com.mapbox.maps.extension.style.expressions.generated.Expression iconKeepUpright);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconOffset(java.util.List<java.lang.Double> iconOffset);
@@ -4232,10 +4232,10 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textColor(@ColorInt int textColor);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textColorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textColorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textEmissiveStrength(double textEmissiveStrength);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textEmissiveStrength(com.mapbox.maps.extension.style.expressions.generated.Expression textEmissiveStrength);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textEmissiveStrengthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textEmissiveStrengthTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textEmissiveStrength(double textEmissiveStrength);
+    method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textEmissiveStrength(com.mapbox.maps.extension.style.expressions.generated.Expression textEmissiveStrength);
+    method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textEmissiveStrengthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textEmissiveStrengthTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textField(com.mapbox.maps.extension.style.types.Formatted textField);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textField(com.mapbox.maps.extension.style.expressions.generated.Expression textField);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textField(String textField);
@@ -4749,10 +4749,10 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconColor(@ColorInt int iconColor);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconColorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconColorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconEmissiveStrength(double iconEmissiveStrength = 1.0);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconEmissiveStrength(com.mapbox.maps.extension.style.expressions.generated.Expression iconEmissiveStrength);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconEmissiveStrengthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconEmissiveStrengthTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconEmissiveStrength(double iconEmissiveStrength = 1.0);
+    method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconEmissiveStrength(com.mapbox.maps.extension.style.expressions.generated.Expression iconEmissiveStrength);
+    method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconEmissiveStrengthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconEmissiveStrengthTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconHaloBlur(double iconHaloBlur = 0.0);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconHaloBlur(com.mapbox.maps.extension.style.expressions.generated.Expression iconHaloBlur);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconHaloBlurTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -4770,10 +4770,10 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconIgnorePlacement(com.mapbox.maps.extension.style.expressions.generated.Expression iconIgnorePlacement);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconImage(String iconImage);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconImage(com.mapbox.maps.extension.style.expressions.generated.Expression iconImage);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconImageCrossFade(double iconImageCrossFade = 0.0);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconImageCrossFade(com.mapbox.maps.extension.style.expressions.generated.Expression iconImageCrossFade);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconImageCrossFadeTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconImageCrossFadeTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconImageCrossFade(double iconImageCrossFade = 0.0);
+    method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconImageCrossFade(com.mapbox.maps.extension.style.expressions.generated.Expression iconImageCrossFade);
+    method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconImageCrossFadeTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconImageCrossFadeTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconKeepUpright(boolean iconKeepUpright = false);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconKeepUpright(com.mapbox.maps.extension.style.expressions.generated.Expression iconKeepUpright);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconOffset(java.util.List<java.lang.Double> iconOffset = listOf(0.0, 0.0));
@@ -4829,10 +4829,10 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textColor(@ColorInt int textColor);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textColorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textColorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textEmissiveStrength(double textEmissiveStrength = 1.0);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textEmissiveStrength(com.mapbox.maps.extension.style.expressions.generated.Expression textEmissiveStrength);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textEmissiveStrengthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textEmissiveStrengthTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textEmissiveStrength(double textEmissiveStrength = 1.0);
+    method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textEmissiveStrength(com.mapbox.maps.extension.style.expressions.generated.Expression textEmissiveStrength);
+    method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textEmissiveStrengthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textEmissiveStrengthTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textField(com.mapbox.maps.extension.style.types.Formatted textField);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textField(com.mapbox.maps.extension.style.expressions.generated.Expression textField);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textField(String textField);
@@ -5357,7 +5357,7 @@ package com.mapbox.maps.extension.style.layers.properties.generated {
 
 package com.mapbox.maps.extension.style.light {
 
-  @com.mapbox.maps.MapboxExperimental public final class DynamicLight implements com.mapbox.maps.extension.style.StyleContract.StyleLightExtension {
+  public final class DynamicLight implements com.mapbox.maps.extension.style.StyleContract.StyleLightExtension {
     method public void bindTo(com.mapbox.maps.Style delegate);
   }
 
@@ -5385,18 +5385,18 @@ package com.mapbox.maps.extension.style.light {
   }
 
   public final class LightUtils {
-    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.style.light.DynamicLight dynamicLight(com.mapbox.maps.extension.style.light.generated.AmbientLight ambientLight, com.mapbox.maps.extension.style.light.generated.DirectionalLight directionalLight);
-    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.style.light.Light? getLight(com.mapbox.maps.Style, String lightId);
-    method @com.mapbox.maps.MapboxExperimental public static void setLight(com.mapbox.maps.Style, com.mapbox.maps.extension.style.light.generated.AmbientLight ambientLight, com.mapbox.maps.extension.style.light.generated.DirectionalLight directionalLight);
+    method public static com.mapbox.maps.extension.style.light.DynamicLight dynamicLight(com.mapbox.maps.extension.style.light.generated.AmbientLight ambientLight, com.mapbox.maps.extension.style.light.generated.DirectionalLight directionalLight);
+    method public static com.mapbox.maps.extension.style.light.Light? getLight(com.mapbox.maps.Style, String lightId);
+    method public static void setLight(com.mapbox.maps.Style, com.mapbox.maps.extension.style.light.generated.AmbientLight ambientLight, com.mapbox.maps.extension.style.light.generated.DirectionalLight directionalLight);
     method public static void setLight(com.mapbox.maps.Style, com.mapbox.maps.extension.style.light.generated.FlatLight flatLight);
-    method @com.mapbox.maps.MapboxExperimental public static void setLights(com.mapbox.maps.Style, java.util.List<? extends com.mapbox.maps.extension.style.light.Light> lights);
+    method public static void setLights(com.mapbox.maps.Style, java.util.List<? extends com.mapbox.maps.extension.style.light.Light> lights);
   }
 
 }
 
 package com.mapbox.maps.extension.style.light.generated {
 
-  @UiThread @com.mapbox.maps.MapboxExperimental public final class AmbientLight extends com.mapbox.maps.extension.style.light.Light implements com.mapbox.maps.extension.style.light.generated.AmbientLightDslReceiver {
+  @UiThread public final class AmbientLight extends com.mapbox.maps.extension.style.light.Light implements com.mapbox.maps.extension.style.light.generated.AmbientLightDslReceiver {
     method public com.mapbox.maps.extension.style.light.generated.AmbientLight color(@ColorInt int color);
     method public com.mapbox.maps.extension.style.light.generated.AmbientLight color(String color);
     method public com.mapbox.maps.extension.style.light.generated.AmbientLight color(com.mapbox.maps.extension.style.expressions.generated.Expression color);
@@ -5424,7 +5424,7 @@ package com.mapbox.maps.extension.style.light.generated {
     property public String lightId;
   }
 
-  @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.style.types.LightDsl public interface AmbientLightDslReceiver {
+  @com.mapbox.maps.extension.style.types.LightDsl public interface AmbientLightDslReceiver {
     method public com.mapbox.maps.extension.style.light.generated.AmbientLight color(@ColorInt int color);
     method public com.mapbox.maps.extension.style.light.generated.AmbientLight color(String color = "#ffffff");
     method public com.mapbox.maps.extension.style.light.generated.AmbientLight color(com.mapbox.maps.extension.style.expressions.generated.Expression color);
@@ -5437,10 +5437,10 @@ package com.mapbox.maps.extension.style.light.generated {
   }
 
   public final class AmbientLightKt {
-    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.style.light.generated.AmbientLight ambientLight(String id = "ambient", kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.light.generated.AmbientLightDslReceiver,kotlin.Unit> block);
+    method public static com.mapbox.maps.extension.style.light.generated.AmbientLight ambientLight(String id = "ambient", kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.light.generated.AmbientLightDslReceiver,kotlin.Unit> block);
   }
 
-  @UiThread @com.mapbox.maps.MapboxExperimental public final class DirectionalLight extends com.mapbox.maps.extension.style.light.Light implements com.mapbox.maps.extension.style.light.generated.DirectionalLightDslReceiver {
+  @UiThread public final class DirectionalLight extends com.mapbox.maps.extension.style.light.Light implements com.mapbox.maps.extension.style.light.generated.DirectionalLightDslReceiver {
     method public com.mapbox.maps.extension.style.light.generated.DirectionalLight castShadows(boolean castShadows);
     method public com.mapbox.maps.extension.style.light.generated.DirectionalLight castShadows(com.mapbox.maps.extension.style.expressions.generated.Expression castShadows);
     method public com.mapbox.maps.extension.style.light.generated.DirectionalLight color(@ColorInt int color);
@@ -5494,7 +5494,7 @@ package com.mapbox.maps.extension.style.light.generated {
     property public final com.mapbox.maps.extension.style.types.StyleTransition? shadowIntensityTransition;
   }
 
-  @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.style.types.LightDsl public interface DirectionalLightDslReceiver {
+  @com.mapbox.maps.extension.style.types.LightDsl public interface DirectionalLightDslReceiver {
     method public com.mapbox.maps.extension.style.light.generated.DirectionalLight castShadows(boolean castShadows = false);
     method public com.mapbox.maps.extension.style.light.generated.DirectionalLight castShadows(com.mapbox.maps.extension.style.expressions.generated.Expression castShadows);
     method public com.mapbox.maps.extension.style.light.generated.DirectionalLight color(@ColorInt int color);
@@ -5517,7 +5517,7 @@ package com.mapbox.maps.extension.style.light.generated {
   }
 
   public final class DirectionalLightKt {
-    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.style.light.generated.DirectionalLight directionalLight(String id = "directional", kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.light.generated.DirectionalLightDslReceiver,kotlin.Unit> block);
+    method public static com.mapbox.maps.extension.style.light.generated.DirectionalLight directionalLight(String id = "directional", kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.light.generated.DirectionalLightDslReceiver,kotlin.Unit> block);
   }
 
   @UiThread public final class FlatLight extends com.mapbox.maps.extension.style.light.Light implements com.mapbox.maps.extension.style.light.generated.FlatLightDslReceiver com.mapbox.maps.extension.style.StyleContract.StyleLightExtension {

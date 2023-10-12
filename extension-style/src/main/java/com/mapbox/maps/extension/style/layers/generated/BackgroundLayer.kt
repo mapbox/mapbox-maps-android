@@ -4,7 +4,6 @@ package com.mapbox.maps.extension.style.layers.generated
 
 import androidx.annotation.ColorInt
 import androidx.annotation.UiThread
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.Layer
@@ -33,7 +32,6 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
    *
    * @param slot value of slot
    */
-  @MapboxExperimental
   override fun slot(slot: String): BackgroundLayer = apply {
     val param = PropertyValue("slot", slot)
     setProperty(param)
@@ -43,7 +41,6 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
    * The slot this layer is assigned to. If specified, and a slot with that name exists,
    * it will be placed at that position in the layer order.
    */
-  @MapboxExperimental
   override val slot: String?
     /**
      * Get the slot property
@@ -320,7 +317,6 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
   /**
    * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
    */
-  @MapboxExperimental
   val backgroundEmissiveStrength: Double?
     /**
      * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
@@ -340,7 +336,6 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
    *
    * @param backgroundEmissiveStrength value of backgroundEmissiveStrength
    */
-  @MapboxExperimental
   override fun backgroundEmissiveStrength(backgroundEmissiveStrength: Double): BackgroundLayer = apply {
     val propertyValue = PropertyValue("background-emissive-strength", backgroundEmissiveStrength)
     setProperty(propertyValue)
@@ -352,7 +347,6 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
    * This is an Expression representation of "background-emissive-strength".
    *
    */
-  @MapboxExperimental
   val backgroundEmissiveStrengthAsExpression: Expression?
     /**
      * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
@@ -380,7 +374,6 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
    *
    * @param backgroundEmissiveStrength value of backgroundEmissiveStrength as Expression
    */
-  @MapboxExperimental
   override fun backgroundEmissiveStrength(backgroundEmissiveStrength: Expression): BackgroundLayer = apply {
     val propertyValue = PropertyValue("background-emissive-strength", backgroundEmissiveStrength)
     setProperty(propertyValue)
@@ -389,7 +382,6 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
   /**
    * Transition options for BackgroundEmissiveStrength.
    */
-  @MapboxExperimental
   val backgroundEmissiveStrengthTransition: StyleTransition?
     /**
      * Get the BackgroundEmissiveStrength property transition options
@@ -409,7 +401,6 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
    *
    * @param options transition options for Double
    */
-  @MapboxExperimental
   override fun backgroundEmissiveStrengthTransition(options: StyleTransition): BackgroundLayer = apply {
     val propertyValue = PropertyValue("background-emissive-strength-transition", options)
     setProperty(propertyValue)
@@ -418,7 +409,6 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
   /**
    * DSL for [backgroundEmissiveStrengthTransition].
    */
-  @MapboxExperimental
   override fun backgroundEmissiveStrengthTransition(block: StyleTransition.Builder.() -> Unit): BackgroundLayer = apply {
     backgroundEmissiveStrengthTransition(StyleTransition.Builder().apply(block).build())
   }
@@ -716,7 +706,6 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
     /**
      * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
      */
-    @MapboxExperimental
     val defaultBackgroundEmissiveStrength: Double?
       /**
        * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
@@ -735,7 +724,6 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
      * This is an Expression representation of "background-emissive-strength".
      *
      */
-    @MapboxExperimental
     val defaultBackgroundEmissiveStrengthAsExpression: Expression?
       /**
        * Get default value of the BackgroundEmissiveStrength property as an Expression
@@ -755,7 +743,6 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
     /**
      * Transition options for BackgroundEmissiveStrength.
      */
-    @MapboxExperimental
     val defaultBackgroundEmissiveStrengthTransition: StyleTransition?
       /**
        * Get the BackgroundEmissiveStrength property transition options
@@ -866,7 +853,6 @@ interface BackgroundLayerDsl {
    *
    * @param slot value of slot
    */
-  @MapboxExperimental
   fun slot(slot: String): BackgroundLayer
 
   /**
@@ -949,7 +935,6 @@ interface BackgroundLayerDsl {
    *
    * @param backgroundEmissiveStrength value of backgroundEmissiveStrength
    */
-  @MapboxExperimental
   fun backgroundEmissiveStrength(backgroundEmissiveStrength: Double = 0.0): BackgroundLayer
 
   /**
@@ -957,7 +942,6 @@ interface BackgroundLayerDsl {
    *
    * @param backgroundEmissiveStrength value of backgroundEmissiveStrength as Expression
    */
-  @MapboxExperimental
   fun backgroundEmissiveStrength(backgroundEmissiveStrength: Expression): BackgroundLayer
 
   /**
@@ -967,7 +951,6 @@ interface BackgroundLayerDsl {
    *
    * @param options transition options for Double
    */
-  @MapboxExperimental
   fun backgroundEmissiveStrengthTransition(options: StyleTransition): BackgroundLayer
 
   /**
@@ -975,7 +958,6 @@ interface BackgroundLayerDsl {
    *
    * DSL for [backgroundEmissiveStrengthTransition].
    */
-  @MapboxExperimental
   fun backgroundEmissiveStrengthTransition(block: StyleTransition.Builder.() -> Unit): BackgroundLayer
 
   /**

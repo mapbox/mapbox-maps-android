@@ -60,7 +60,6 @@ class StyleExtensionImpl private constructor(
   /**
    * The dynamic light which is built with [AmbientLight] and [DirectionalLight].
    */
-  @MapboxExperimental
   override val dynamicLight: StyleContract.StyleLightExtension? = builder.dynamicLight
 
   /**
@@ -151,7 +150,6 @@ class StyleExtensionImpl private constructor(
      * Apply +[DynamicLight] will add the light to the [StyleExtensionImpl].
      */
     @JvmName("setLight")
-    @MapboxExperimental
     operator fun DynamicLight.unaryPlus() {
       dynamicLight = this
     }

@@ -6,7 +6,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
 import com.mapbox.maps.MapView
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.StyleContract
@@ -53,8 +52,8 @@ abstract class BaseStyleTest {
         mapboxMap = mapView.getMapboxMap()
         mapboxMap.loadStyle(
           "mapbox://styles/mapbox/empty-v9"
-        ) {
-          this@BaseStyleTest.style = it
+        ) { style ->
+          this@BaseStyleTest.style = style
           latch.countDown()
         }
         mapView.onStart()
@@ -104,7 +103,6 @@ abstract class BaseStyleTest {
     style.setLight(light)
   }
 
-  @OptIn(MapboxExperimental::class)
   fun setupLight(ambientLight: AmbientLight, directionalLight: DirectionalLight) {
     style.setLight(ambientLight, directionalLight)
   }

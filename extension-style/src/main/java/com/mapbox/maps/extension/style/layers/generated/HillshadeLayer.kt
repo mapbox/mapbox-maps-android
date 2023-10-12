@@ -4,7 +4,6 @@ package com.mapbox.maps.extension.style.layers.generated
 
 import androidx.annotation.ColorInt
 import androidx.annotation.UiThread
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.Layer
@@ -62,7 +61,6 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
    *
    * @param slot value of slot
    */
-  @MapboxExperimental
   override fun slot(slot: String): HillshadeLayer = apply {
     val param = PropertyValue("slot", slot)
     setProperty(param)
@@ -72,7 +70,6 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
    * The slot this layer is assigned to. If specified, and a slot with that name exists,
    * it will be placed at that position in the layer order.
    */
-  @MapboxExperimental
   override val slot: String?
     /**
      * Get the slot property
@@ -1247,7 +1244,6 @@ interface HillshadeLayerDsl {
    *
    * @param slot value of slot
    */
-  @MapboxExperimental
   fun slot(slot: String): HillshadeLayer
 
   /**

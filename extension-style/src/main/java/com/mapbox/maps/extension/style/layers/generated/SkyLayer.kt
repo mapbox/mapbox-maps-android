@@ -4,7 +4,6 @@ package com.mapbox.maps.extension.style.layers.generated
 
 import androidx.annotation.ColorInt
 import androidx.annotation.UiThread
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere
 import com.mapbox.maps.extension.style.expressions.generated.Expression
@@ -37,7 +36,6 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
    *
    * @param slot value of slot
    */
-  @MapboxExperimental
   override fun slot(slot: String): SkyLayer = apply {
     val param = PropertyValue("slot", slot)
     setProperty(param)
@@ -47,7 +45,6 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
    * The slot this layer is assigned to. If specified, and a slot with that name exists,
    * it will be placed at that position in the layer order.
    */
-  @MapboxExperimental
   override val slot: String?
     /**
      * Get the slot property
@@ -1309,7 +1306,6 @@ interface SkyLayerDsl {
    *
    * @param slot value of slot
    */
-  @MapboxExperimental
   fun slot(slot: String): SkyLayer
 
   /**

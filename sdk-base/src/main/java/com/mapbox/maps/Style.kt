@@ -118,7 +118,6 @@ class Style {
    *
    * @return The list containing the information about existing style import objects.
    */
-  @MapboxExperimental
   fun getStyleImports(): List<StyleObjectInfo> {
     checkNativeStyle("getStyleImports")
     return styleManager.styleImports
@@ -131,7 +130,6 @@ class Style {
    *
    * @return A string describing an error if the operation was not successful, or empty otherwise.
    */
-  @MapboxExperimental
   fun removeStyleImport(importId: String): Expected<String, None> {
     checkNativeStyle("removeStyleImport")
     return styleManager.removeStyleImport(importId)
@@ -144,7 +142,6 @@ class Style {
    *
    * @return The style import schema or a string describing an error if the operation was not successful.
    */
-  @MapboxExperimental
   fun getStyleImportSchema(importId: String): Expected<String, Value> {
     checkNativeStyle("getStyleImportSchema")
     return styleManager.getStyleImportSchema(importId)
@@ -155,7 +152,6 @@ class Style {
    *
    * @return The style import configuration or a string describing an error if the operation was not successful.
    */
-  @MapboxExperimental
   fun getStyleImportConfigProperties(importId: String): Expected<String, HashMap<String, StylePropertyValue>> {
     checkNativeStyle("getStyleImportConfigProperties")
     return styleManager.getStyleImportConfigProperties(importId)
@@ -168,7 +164,6 @@ class Style {
    * @param config The style import config name.
    * @return The style import config value.
    */
-  @MapboxExperimental
   fun getStyleImportConfigProperty(
     importId: String,
     config: String
@@ -186,7 +181,6 @@ class Style {
    *
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
-  @MapboxExperimental
   fun setStyleImportConfigProperties(
     importId: String,
     configs: HashMap<String, Value>
@@ -204,7 +198,6 @@ class Style {
    *
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
-  @MapboxExperimental
   fun setStyleImportConfigProperty(
     importId: String,
     config: String,

@@ -61,7 +61,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    *
    * @param slot value of slot
    */
-  @MapboxExperimental
   override fun slot(slot: String): ModelLayer = apply {
     val param = PropertyValue("slot", slot)
     setProperty(param)
@@ -71,7 +70,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    * The slot this layer is assigned to. If specified, and a slot with that name exists,
    * it will be placed at that position in the layer order.
    */
-  @MapboxExperimental
   override val slot: String?
     /**
      * Get the slot property
@@ -2615,7 +2613,6 @@ interface ModelLayerDsl {
    *
    * @param slot value of slot
    */
-  @MapboxExperimental
   fun slot(slot: String): ModelLayer
 
   /**

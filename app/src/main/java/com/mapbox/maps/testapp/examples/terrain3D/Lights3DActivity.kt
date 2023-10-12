@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.light.generated.ambientLight
 import com.mapbox.maps.extension.style.light.generated.directionalLight
@@ -16,7 +15,6 @@ import com.mapbox.maps.testapp.databinding.ActivityFillExtrusionBinding
  * Extrude the building layer in the Mapbox Standard style
  * and set up the light position.
  */
-@OptIn(MapboxExperimental::class)
 class Lights3DActivity : AppCompatActivity() {
 
   private var isRedColor: Boolean = false

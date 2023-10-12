@@ -49,14 +49,18 @@ class ImageSource(builder: Builder) : Source(builder.sourceId) {
     get() = getPropertyValue("url")
 
   /**
-   * Corners of image specified in longitude, latitude pairs.
+   * Corners of image specified in longitude, latitude pairs. Note: When using globe projection, the image will
+   * be centered at the North or South Pole in the respective hemisphere if the average latitude
+   * value exceeds 85 degrees or falls below -85 degrees.
    */
   fun coordinates(value: List<List<Double>>): ImageSource = apply {
     setProperty(PropertyValue("coordinates", TypeUtils.wrapToValue(value)))
   }
 
   /**
-   * Corners of image specified in longitude, latitude pairs.
+   * Corners of image specified in longitude, latitude pairs. Note: When using globe projection, the image will
+   * be centered at the North or South Pole in the respective hemisphere if the average latitude
+   * value exceeds 85 degrees or falls below -85 degrees.
    */
   val coordinates: List<List<Double>>?
     /**
@@ -114,7 +118,9 @@ class ImageSource(builder: Builder) : Source(builder.sourceId) {
     }
 
     /**
-     * Corners of image specified in longitude, latitude pairs.
+     * Corners of image specified in longitude, latitude pairs. Note: When using globe projection, the image will
+     * be centered at the North or South Pole in the respective hemisphere if the average latitude
+     * value exceeds 85 degrees or falls below -85 degrees.
      */
     fun coordinates(value: List<List<Double>>): Builder = apply {
       val propertyValue = PropertyValue("coordinates", TypeUtils.wrapToValue(value))

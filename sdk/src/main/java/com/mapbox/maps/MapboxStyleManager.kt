@@ -59,7 +59,6 @@ open class MapboxStyleManager internal constructor(
    *
    * @return The list containing the information about existing style import objects.
    */
-  @MapboxExperimental
   fun getStyleImports(): List<StyleObjectInfo> {
     return styleManager.styleImports
   }
@@ -71,7 +70,6 @@ open class MapboxStyleManager internal constructor(
    *
    * @return A string describing an error if the operation was not successful, or empty otherwise.
    */
-  @MapboxExperimental
   fun removeStyleImport(importId: String): Expected<String, None> {
     return styleManager.removeStyleImport(importId)
   }
@@ -83,7 +81,6 @@ open class MapboxStyleManager internal constructor(
    *
    * @return The style import schema or a string describing an error if the operation was not successful.
    */
-  @MapboxExperimental
   fun getStyleImportSchema(importId: String): Expected<String, Value> {
     return styleManager.getStyleImportSchema(importId)
   }
@@ -93,7 +90,6 @@ open class MapboxStyleManager internal constructor(
    *
    * @return The style import configuration or a string describing an error if the operation was not successful.
    */
-  @MapboxExperimental
   fun getStyleImportConfigProperties(importId: String): Expected<String, HashMap<String, StylePropertyValue>> {
     return styleManager.getStyleImportConfigProperties(importId)
   }
@@ -105,7 +101,6 @@ open class MapboxStyleManager internal constructor(
    * @param config The style import config name.
    * @return The style import config value.
    */
-  @MapboxExperimental
   fun getStyleImportConfigProperty(
     importId: String,
     config: String
@@ -122,7 +117,6 @@ open class MapboxStyleManager internal constructor(
    *
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
-  @MapboxExperimental
   fun setStyleImportConfigProperties(
     importId: String,
     configs: HashMap<String, Value>
@@ -139,7 +133,6 @@ open class MapboxStyleManager internal constructor(
    *
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
-  @MapboxExperimental
   fun setStyleImportConfigProperty(
     importId: String,
     config: String,

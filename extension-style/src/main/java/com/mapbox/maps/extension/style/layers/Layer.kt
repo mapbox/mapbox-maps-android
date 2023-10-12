@@ -5,7 +5,6 @@ import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.LayerPosition
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxStyleException
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.StyleContract
@@ -118,14 +117,12 @@ abstract class Layer : StyleContract.StyleLayerExtension {
    *
    * @param slot value of slot
    */
-  @MapboxExperimental
   abstract fun slot(slot: String): Layer
 
   /**
    * The slot this layer is assigned to. If specified, and a slot with that name exists,
    * it will be placed at that position in the layer order.
    */
-  @MapboxExperimental
   abstract val slot: String?
 
   protected open fun addPersistentLayer(

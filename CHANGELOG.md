@@ -3,6 +3,19 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
+## Features ✨ and improvements 🏁
+* The following APIs have been promoted to stable:
+  - `LineLayer.lineDepthOcclusionFactor`, `LineLayer.lineDepthOcclusionFactorTransition`, `LineLayer.lineEmissiveStrength` and `LineLayer.lineEmissiveStrengthTransition`
+  - `SymbolLayer.iconImageCrossFade`, `SymbolLayer.iconImageCrossFadeTransition`, `SymbolLayer.iconEmissiveStrength`, `SymbolLayer.iconEmissiveStrengthTransition`, `SymbolLayer.textEmissiveStrength` and `SymbolLayer.textEmissiveStrengthTransition`
+  - `BackgroundLayer.backgroundEmissiveStrength` and `BackgroundLayer.backgroundEmissiveStrengthTransition`
+  - `CircleLayer.circleEmissiveStrength` and `CircleLayer.circleEmissiveStrengthTransition`
+  - `FillLayer.fillEmissiveStrength` and `FillLayer.fillEmissiveStrengthTransition`
+  - `FlatLight`, `AmbientLight`, `DirectionalLight` and related APIs
+  - `slot` for all the layers
+  - Style Import APIs: `getStyleImports`, `removeStyleImport`, `getStyleImportSchema`, `getStyleImportConfigProperties`, `getStyleImportConfigProperty`, `setStyleImportConfigProperties`, `setStyleImportConfigProperty`
+  - Annotation plugin APIs: `CircleAnnotationManager.circleEmissiveStrength`, `PolygonAnnotationManager.fillEmissiveStrength`, `PolylineAnnotationManager.lineDepthOcclusionFactor`, `PolylineAnnotationManager.lineEmissiveStrength`
+  - Map Overlay plugin and related APIs
+
 ## Bug fixes 🐞
 * Fix widgets not showing on some zoom levels.
 

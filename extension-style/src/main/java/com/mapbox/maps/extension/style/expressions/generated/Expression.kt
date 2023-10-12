@@ -334,9 +334,9 @@ class Expression : Value {
     }
 
     /**
-     * Asserts that the input is an array (optionally with a specific item type and length).
-     * If, when the input expression is evaluated, it is not of the asserted type, then this
-     * assertion will cause the whole expression to be aborted.
+     * Asserts that the input is an array (optionally with a specific item type and length). If,
+     * when the input expression is evaluated, it is not of the asserted type, then this assertion
+     * will cause the whole expression to be aborted.
      */
     fun array(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.array(block))
@@ -786,8 +786,8 @@ class Expression : Value {
     }
 
     /**
-     * Returns the feature properties object.  Note that in some cases, it may be more efficient
-     * to use `["get", "property_name"]` directly.
+     * Returns the feature properties object. Note that in some cases, it may be more efficient to
+     * use `["get", "property_name"]` directly.
      */
     fun properties(): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.properties())
@@ -989,8 +989,8 @@ class Expression : Value {
     }
 
     /**
-     * Returns the current zoom level.  Note that in style layout and paint properties, ["zoom"] may
-     * only appear as the input to a top-level "step" or "interpolate" expression.
+     * Returns the current zoom level. Note that in style layout and paint properties, ["zoom"] may only
+     * appear as the input to a top-level "step" or "interpolate" expression.
      */
     fun zoom(): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.zoom())
@@ -2201,9 +2201,9 @@ class Expression : Value {
       ExpressionBuilder("any").apply(block).build()
 
     /**
-     * Asserts that the input is an array (optionally with a specific item type and length).
-     * If, when the input expression is evaluated, it is not of the asserted type, then this
-     * assertion will cause the whole expression to be aborted.
+     * Asserts that the input is an array (optionally with a specific item type and length). If,
+     * when the input expression is evaluated, it is not of the asserted type, then this assertion
+     * will cause the whole expression to be aborted.
      */
     @JvmStatic
     fun array(vararg expressions: Expression): Expression {
@@ -3112,8 +3112,8 @@ class Expression : Value {
     fun pitch(): Expression = ExpressionBuilder("pitch").build()
 
     /**
-     * Returns the feature properties object.  Note that in some cases, it may be more efficient
-     * to use `["get", "property_name"]` directly.
+     * Returns the feature properties object. Note that in some cases, it may be more efficient to
+     * use `["get", "property_name"]` directly.
      */
     @JvmStatic
     fun properties(): Expression = ExpressionBuilder("properties").build()
@@ -3528,8 +3528,8 @@ class Expression : Value {
     }
 
     /**
-     * Returns the current zoom level.  Note that in style layout and paint properties, ["zoom"] may
-     * only appear as the input to a top-level "step" or "interpolate" expression.
+     * Returns the current zoom level. Note that in style layout and paint properties, ["zoom"] may only
+     * appear as the input to a top-level "step" or "interpolate" expression.
      */
     @JvmStatic
     fun zoom(): Expression = ExpressionBuilder("zoom").build()

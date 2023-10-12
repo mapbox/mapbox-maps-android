@@ -6,14 +6,9 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.CoordinateBounds
 import com.mapbox.maps.EdgeInsets
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.plugin.delegates.*
 import java.util.*
 
-/**
- * Impl class for MapOverlayPlugin
- */
-@MapboxExperimental
 @RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class MapOverlayPluginImpl : MapOverlayPlugin {
   private val mapOverlays = mutableListOf<View>()

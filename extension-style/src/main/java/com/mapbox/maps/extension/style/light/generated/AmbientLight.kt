@@ -4,7 +4,6 @@ package com.mapbox.maps.extension.style.light.generated
 
 import androidx.annotation.ColorInt
 import androidx.annotation.UiThread
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
 import com.mapbox.maps.extension.style.light.Light
@@ -20,7 +19,6 @@ import com.mapbox.maps.extension.style.utils.ColorUtils.rgbaExpressionToColorStr
  * Check the [online documentation](https://www.mapbox.com/mapbox-gl-style-spec/#light).
  */
 @UiThread
-@MapboxExperimental
 class AmbientLight internal constructor(override val lightId: String) : AmbientLightDslReceiver, Light() {
 
   /**
@@ -226,7 +224,6 @@ class AmbientLight internal constructor(override val lightId: String) : AmbientL
  * property getters.
  */
 @LightDsl
-@MapboxExperimental
 interface AmbientLightDslReceiver {
 
   /**
@@ -292,7 +289,6 @@ interface AmbientLightDslReceiver {
 /**
  * DSL function for creating [ambientLight] instance.
  */
-@MapboxExperimental
 fun ambientLight(id: String = "ambient", block: AmbientLightDslReceiver.() -> Unit): AmbientLight = AmbientLight(id).apply(block)
 
 // End of generated file.

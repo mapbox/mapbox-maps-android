@@ -3,7 +3,6 @@
 package com.mapbox.maps.extension.style.layers.generated
 
 import androidx.annotation.UiThread
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.Layer
@@ -58,7 +57,6 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
    *
    * @param slot value of slot
    */
-  @MapboxExperimental
   override fun slot(slot: String): HeatmapLayer = apply {
     val param = PropertyValue("slot", slot)
     setProperty(param)
@@ -68,7 +66,6 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
    * The slot this layer is assigned to. If specified, and a slot with that name exists,
    * it will be placed at that position in the layer order.
    */
-  @MapboxExperimental
   override val slot: String?
     /**
      * Get the slot property
@@ -246,11 +243,11 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
   // Property getters and setters
 
   /**
-   * Defines the color of each pixel based on its density value in a heatmap.  Should be an expression that uses `["heatmap-density"]` as input.
+   * Defines the color of each pixel based on its density value in a heatmap. Should be an expression that uses `["heatmap-density"]` as input.
    */
   val heatmapColor: Expression?
     /**
-     * Defines the color of each pixel based on its density value in a heatmap.  Should be an expression that uses `["heatmap-density"]` as input.
+     * Defines the color of each pixel based on its density value in a heatmap. Should be an expression that uses `["heatmap-density"]` as input.
      *
      * Use static method [HeatmapLayer.defaultHeatmapColor] to get the default property.
      *
@@ -261,7 +258,7 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
     }
 
   /**
-   * Defines the color of each pixel based on its density value in a heatmap.  Should be an expression that uses `["heatmap-density"]` as input.
+   * Defines the color of each pixel based on its density value in a heatmap. Should be an expression that uses `["heatmap-density"]` as input.
    *
    * Use static method [HeatmapLayer.defaultHeatmapColor] to set the default property.
    *
@@ -694,11 +691,11 @@ class HeatmapLayer(override val layerId: String, val sourceId: String) : Heatmap
       get() = StyleManager.getStyleLayerPropertyDefaultValue("heatmap", "maxzoom").silentUnwrap()
 
     /**
-     * Defines the color of each pixel based on its density value in a heatmap.  Should be an expression that uses `["heatmap-density"]` as input.
+     * Defines the color of each pixel based on its density value in a heatmap. Should be an expression that uses `["heatmap-density"]` as input.
      */
     val defaultHeatmapColor: Expression?
       /**
-       * Defines the color of each pixel based on its density value in a heatmap.  Should be an expression that uses `["heatmap-density"]` as input.
+       * Defines the color of each pixel based on its density value in a heatmap. Should be an expression that uses `["heatmap-density"]` as input.
        *
        * Get the default value of HeatmapColor property
        *
@@ -913,7 +910,6 @@ interface HeatmapLayerDsl {
    *
    * @param slot value of slot
    */
-  @MapboxExperimental
   fun slot(slot: String): HeatmapLayer
 
   /**
@@ -968,7 +964,7 @@ interface HeatmapLayerDsl {
   // Property getters and setters
 
   /**
-   * Defines the color of each pixel based on its density value in a heatmap.  Should be an expression that uses `["heatmap-density"]` as input.
+   * Defines the color of each pixel based on its density value in a heatmap. Should be an expression that uses `["heatmap-density"]` as input.
    *
    * @param heatmapColor value of heatmapColor
    */

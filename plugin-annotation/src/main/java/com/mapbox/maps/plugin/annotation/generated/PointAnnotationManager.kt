@@ -3,7 +3,6 @@
 package com.mapbox.maps.plugin.annotation.generated
 
 import com.mapbox.geojson.*
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.get
@@ -80,7 +79,6 @@ class PointAnnotationManager(
     dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_TEXT_OPACITY] = false
   }
 
-  @OptIn(MapboxExperimental::class)
   override fun setDataDrivenPropertyIsUsed(property: String) {
     when (property) {
       PointAnnotationOptions.PROPERTY_ICON_ANCHOR -> {

@@ -4,7 +4,6 @@ package com.mapbox.maps.extension.style.layers.generated
 
 import androidx.annotation.ColorInt
 import androidx.annotation.UiThread
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.Layer
@@ -62,7 +61,6 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    *
    * @param slot value of slot
    */
-  @MapboxExperimental
   override fun slot(slot: String): FillLayer = apply {
     val param = PropertyValue("slot", slot)
     setProperty(param)
@@ -72,7 +70,6 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    * The slot this layer is assigned to. If specified, and a slot with that name exists,
    * it will be placed at that position in the layer order.
    */
-  @MapboxExperimental
   override val slot: String?
     /**
      * Get the slot property
@@ -512,7 +509,6 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   /**
    * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
    */
-  @MapboxExperimental
   val fillEmissiveStrength: Double?
     /**
      * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
@@ -532,7 +528,6 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    *
    * @param fillEmissiveStrength value of fillEmissiveStrength
    */
-  @MapboxExperimental
   override fun fillEmissiveStrength(fillEmissiveStrength: Double): FillLayer = apply {
     val propertyValue = PropertyValue("fill-emissive-strength", fillEmissiveStrength)
     setProperty(propertyValue)
@@ -544,7 +539,6 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    * This is an Expression representation of "fill-emissive-strength".
    *
    */
-  @MapboxExperimental
   val fillEmissiveStrengthAsExpression: Expression?
     /**
      * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
@@ -572,7 +566,6 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    *
    * @param fillEmissiveStrength value of fillEmissiveStrength as Expression
    */
-  @MapboxExperimental
   override fun fillEmissiveStrength(fillEmissiveStrength: Expression): FillLayer = apply {
     val propertyValue = PropertyValue("fill-emissive-strength", fillEmissiveStrength)
     setProperty(propertyValue)
@@ -581,7 +574,6 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   /**
    * Transition options for FillEmissiveStrength.
    */
-  @MapboxExperimental
   val fillEmissiveStrengthTransition: StyleTransition?
     /**
      * Get the FillEmissiveStrength property transition options
@@ -601,7 +593,6 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
    *
    * @param options transition options for Double
    */
-  @MapboxExperimental
   override fun fillEmissiveStrengthTransition(options: StyleTransition): FillLayer = apply {
     val propertyValue = PropertyValue("fill-emissive-strength-transition", options)
     setProperty(propertyValue)
@@ -610,7 +601,6 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   /**
    * DSL for [fillEmissiveStrengthTransition].
    */
-  @MapboxExperimental
   override fun fillEmissiveStrengthTransition(block: StyleTransition.Builder.() -> Unit): FillLayer = apply {
     fillEmissiveStrengthTransition(StyleTransition.Builder().apply(block).build())
   }
@@ -1279,7 +1269,6 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     /**
      * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
      */
-    @MapboxExperimental
     val defaultFillEmissiveStrength: Double?
       /**
        * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
@@ -1298,7 +1287,6 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
      * This is an Expression representation of "fill-emissive-strength".
      *
      */
-    @MapboxExperimental
     val defaultFillEmissiveStrengthAsExpression: Expression?
       /**
        * Get default value of the FillEmissiveStrength property as an Expression
@@ -1318,7 +1306,6 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     /**
      * Transition options for FillEmissiveStrength.
      */
-    @MapboxExperimental
     val defaultFillEmissiveStrengthTransition: StyleTransition?
       /**
        * Get the FillEmissiveStrength property transition options
@@ -1591,7 +1578,6 @@ interface FillLayerDsl {
    *
    * @param slot value of slot
    */
-  @MapboxExperimental
   fun slot(slot: String): FillLayer
 
   /**
@@ -1715,7 +1701,6 @@ interface FillLayerDsl {
    *
    * @param fillEmissiveStrength value of fillEmissiveStrength
    */
-  @MapboxExperimental
   fun fillEmissiveStrength(fillEmissiveStrength: Double = 0.0): FillLayer
 
   /**
@@ -1723,7 +1708,6 @@ interface FillLayerDsl {
    *
    * @param fillEmissiveStrength value of fillEmissiveStrength as Expression
    */
-  @MapboxExperimental
   fun fillEmissiveStrength(fillEmissiveStrength: Expression): FillLayer
 
   /**
@@ -1733,7 +1717,6 @@ interface FillLayerDsl {
    *
    * @param options transition options for Double
    */
-  @MapboxExperimental
   fun fillEmissiveStrengthTransition(options: StyleTransition): FillLayer
 
   /**
@@ -1741,7 +1724,6 @@ interface FillLayerDsl {
    *
    * DSL for [fillEmissiveStrengthTransition].
    */
-  @MapboxExperimental
   fun fillEmissiveStrengthTransition(block: StyleTransition.Builder.() -> Unit): FillLayer
 
   /**

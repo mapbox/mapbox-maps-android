@@ -3,7 +3,6 @@
 package com.mapbox.maps.plugin.annotation.generated
 
 import com.mapbox.geojson.*
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.get
@@ -166,7 +165,6 @@ class PolygonAnnotationManager(
    *
    * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined. The unit of fillEmissiveStrength is in intensity.
    */
-  @MapboxExperimental
   var fillEmissiveStrength: Double?
     /**
      * Get the FillEmissiveStrength property
