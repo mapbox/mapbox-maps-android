@@ -58,11 +58,11 @@ class LocalizationActivity : AppCompatActivity() {
     }
     binding.fabLocalize.setOnClickListener {
       applySelectedLanguage = if (!applySelectedLanguage) {
-        mapboxMap.getStyle()?.localizeLabels(selectedLocale)
+        mapboxMap.style?.localizeLabels(selectedLocale)
         Toast.makeText(this, R.string.map_not_localized, Toast.LENGTH_SHORT).show()
         true
       } else {
-        mapboxMap.getStyle()?.localizeLabels(locale)
+        mapboxMap.style?.localizeLabels(locale)
         Toast.makeText(this, R.string.map_localized, Toast.LENGTH_SHORT).show()
         false
       }
@@ -116,7 +116,7 @@ class LocalizationActivity : AppCompatActivity() {
       }
       else -> return super.onOptionsItemSelected(item)
     }
-    mapboxMap.getStyle()?.localizeLabels(selectedLocale, layerIdList.toList())
+    mapboxMap.style?.localizeLabels(selectedLocale, layerIdList.toList())
     return true
   }
 

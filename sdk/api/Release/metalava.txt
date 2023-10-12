@@ -201,8 +201,8 @@ package com.mapbox.maps {
     method public byte getPrefetchZoomDelta();
     method public boolean getRenderWorldCopies();
     method public com.mapbox.maps.Size getSize();
-    method public void getStyle(com.mapbox.maps.Style.OnStyleLoaded onStyleLoaded);
     method public com.mapbox.maps.Style? getStyle();
+    method public void getStyle(com.mapbox.maps.Style.OnStyleLoaded onStyleLoaded);
     method @com.mapbox.maps.MapboxExperimental public boolean hasStyleModel(String modelId);
     method public boolean isGestureInProgress();
     method public boolean isUserAnimationInProgress();
@@ -281,6 +281,7 @@ package com.mapbox.maps {
     method public void triggerRepaint();
     method public com.mapbox.geojson.Point unproject(com.mapbox.maps.MercatorCoordinate coordinate, double zoomScale);
     property public com.mapbox.maps.CameraState cameraState;
+    property public final com.mapbox.maps.Style? style;
     field public static final com.mapbox.maps.MapboxMap.Companion Companion;
   }
 

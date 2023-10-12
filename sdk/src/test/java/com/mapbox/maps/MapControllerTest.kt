@@ -96,12 +96,12 @@ class MapControllerTest {
     every { mockRenderer.onStart() } just Runs
     every { mockMapboxMap.isStyleLoadInitiated } returns false
     every { mockMapInitOptions.styleUri } answers { Style.MAPBOX_STREETS }
-    every { mockMapboxMap.getStyle() } returns null
+    every { mockMapboxMap.style } returns null
 
     testMapController.onStart()
 
     verifySequence {
-      mockMapboxMap.getStyle()
+      mockMapboxMap.style
       mockNativeObserver.subscribeCameraChanged(any())
       mockNativeObserver.subscribeStyleDataLoaded(any())
       mockRenderer.onStart()
@@ -118,7 +118,7 @@ class MapControllerTest {
     every { mockRenderer.onStart() } just Runs
     every { mockNativeObserver.subscribeCameraChanged(any()) } returns cancelable
     every { mockNativeObserver.subscribeStyleDataLoaded(any()) } returns cancelable
-    every { mockMapboxMap.getStyle() } returns mockk()
+    every { mockMapboxMap.style } returns mockk()
     every { mockPluginRegistry.onStyleChanged(any()) } just Runs
 
     testMapController.onStart()
@@ -157,12 +157,12 @@ class MapControllerTest {
     every { mockMapInitOptions.styleUri } returns "uri"
 
     val style1 = mockk<Style>()
-    every { mockMapboxMap.getStyle() } returns style1
+    every { mockMapboxMap.style } returns style1
     testMapController.onStart()
 
     testMapController.onStop()
     val style2 = mockk<Style>()
-    every { mockMapboxMap.getStyle() } returns style2
+    every { mockMapboxMap.style } returns style2
     testMapController.onStart()
 
     verifySequence {
@@ -251,14 +251,14 @@ class MapControllerTest {
     every { mockNativeMap.getCameraState() } returns mockCameraState
     every { mockMapboxMap.isStyleLoadInitiated } returns false
     every { mockMapInitOptions.styleUri } answers { Style.MAPBOX_STREETS }
-    every { mockMapboxMap.getStyle() } returns null
+    every { mockMapboxMap.style } returns null
 
     testMapController.onStart()
     val onCameraChangeListener = onCameraChangeListenerSlot.captured
     onCameraChangeListener.run(mockk())
 
     verifySequence {
-      mockMapboxMap.getStyle()
+      mockMapboxMap.style
       mockMapboxMap.isStyleLoadInitiated
       mockMapboxMap.loadStyle(Style.MAPBOX_STREETS)
       mockPluginRegistry.onStart()

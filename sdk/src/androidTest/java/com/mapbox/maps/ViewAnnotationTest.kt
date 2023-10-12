@@ -742,7 +742,7 @@ class ViewAnnotationTest(
   fun associatedFeatureIdWhenFeatureVisible() {
     viewAnnotationTestHelper(
       performAction = {
-        prepareStyle(mapboxMap.getStyle()!!, Visibility.VISIBLE)
+        prepareStyle(mapboxMap.style!!, Visibility.VISIBLE)
         firstView = viewAnnotationManager.addViewAnnotation(
           resId = layoutResId,
           options = viewAnnotationOptions {
@@ -770,7 +770,7 @@ class ViewAnnotationTest(
   fun associatedFeatureIdWhenFeatureGone() {
     viewAnnotationTestHelper(
       performAction = {
-        prepareStyle(mapboxMap.getStyle()!!, Visibility.NONE)
+        prepareStyle(mapboxMap.style!!, Visibility.NONE)
         firstView = viewAnnotationManager.addViewAnnotation(
           resId = layoutResId,
           options = viewAnnotationOptions {
@@ -798,7 +798,7 @@ class ViewAnnotationTest(
     viewAnnotationTestHelper(
       additionalLatchCount = 1,
       performAction = {
-        prepareStyle(mapboxMap.getStyle()!!, Visibility.VISIBLE)
+        prepareStyle(mapboxMap.style!!, Visibility.VISIBLE)
         firstView = viewAnnotationManager.addViewAnnotation(
           resId = layoutResId,
           options = viewAnnotationOptions {
@@ -812,7 +812,7 @@ class ViewAnnotationTest(
       },
       makeChecks = {
         // hide marker
-        mapboxMap.getStyle()?.getLayer("layer")?.visibility(Visibility.NONE)
+        mapboxMap.style?.getLayer("layer")?.visibility(Visibility.NONE)
         mainHandler.postDelayed(
           {
             assertArrayEquals(

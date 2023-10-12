@@ -60,7 +60,7 @@ class NativeCustomLayerActivity : AppCompatActivity() {
   }
 
   private fun swapCustomLayer() {
-    mapboxMap.getStyle()?.let { style ->
+    mapboxMap.style?.let { style ->
       if (style.styleLayerExists(CUSTOM_LAYER_ID)) {
         style.removeStyleLayer(CUSTOM_LAYER_ID)
         binding.fab.setImageResource(R.drawable.ic_layers)

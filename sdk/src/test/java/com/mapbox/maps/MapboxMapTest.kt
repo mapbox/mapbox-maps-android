@@ -26,6 +26,8 @@ import org.robolectric.annotation.LooperMode
 
 private val ZERO_EDGE_INSETS = EdgeInsets(0.0, 0.0, 0.0, 0.0)
 
+@OptIn(MapboxExperimental::class)
+@Suppress("DEPRECATION")
 @RunWith(RobolectricTestRunner::class)
 @LooperMode(LooperMode.Mode.PAUSED)
 @Config(shadows = [ShadowMap::class])
@@ -271,12 +273,12 @@ class MapboxMapTest {
   fun getStyleSynchronously() {
     val style = mockk<Style>()
     mapboxMap.style = style
-    assertNotNull(mapboxMap.getStyle())
+    assertNotNull(mapboxMap.style)
   }
 
   @Test
   fun getStyleSynchronouslyNotReady() {
-    assertNull(mapboxMap.getStyle())
+    assertNull(mapboxMap.style)
   }
 
   @Test
@@ -1340,6 +1342,7 @@ class PixelForCoordinatesTest(
   companion object {
     @JvmStatic
     @ParameterizedRobolectricTestRunner.Parameters(name = "Input ScreenCoordinate({0}, {1}) should be mapped to ScreenCoordinate({2}, {3})")
+    @Suppress("unused")
     fun data() = listOf(
       arrayOf(
         listOf(ScreenCoordinate(150.0, 150.0)),

@@ -81,7 +81,7 @@ class RestrictBoundsActivity : AppCompatActivity() {
   }
 
   private fun showBoundsArea(boundsOptions: CameraBoundsOptions) {
-    val source = mapboxMap.getStyle()!!.getSource(BOUNDS_ID) as GeoJsonSource
+    val source = mapboxMap.style!!.getSource(BOUNDS_ID) as GeoJsonSource
     val bounds = boundsOptions.bounds
     val list = mutableListOf<List<Point>>()
     bounds?.let {

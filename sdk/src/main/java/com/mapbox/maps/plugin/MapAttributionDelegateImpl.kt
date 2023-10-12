@@ -70,7 +70,7 @@ internal class MapAttributionDelegateImpl(
     }
     builder.appendQueryParameter("access_token", MapboxOptions.accessToken)
 
-    mapboxMap.getStyle()?.let {
+    mapboxMap.style?.let {
       val pattern: Pattern = Pattern.compile(MAP_FEEDBACK_STYLE_URI_REGEX)
       val matcher: Matcher = pattern.matcher(it.styleURI)
       if (matcher.find()) {

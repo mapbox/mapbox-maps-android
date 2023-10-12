@@ -19,6 +19,9 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * Fix widgets not showing on some zoom levels.
 
+## Breaking changes ⚠️
+* (Kotlin only) Replaced `MapboxMap.getStyle()` function with property `MapboxMap.style`.
+
 # 11.0.0-beta.5 October 09, 2023
 ## Breaking changes ⚠️
 * Rename `MapCameraManagerDelegate` properties for methods `cameraForCoordinateBounds`, `cameraForCoordinates` and `cameraForGeometry` to align them with `MapboxMap` methods.

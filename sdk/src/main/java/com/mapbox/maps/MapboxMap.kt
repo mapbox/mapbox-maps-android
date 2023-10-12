@@ -63,8 +63,22 @@ class MapboxMap :
 
   @get:JvmSynthetic
   internal val nativeObserver: NativeObserver
-  @get:JvmSynthetic @set:JvmSynthetic
-  internal var style: Style? = null
+
+  /**
+   * [Style] of the map synchronously, will return null is style is not loaded yet.
+   *
+   * Note: keeping the reference to an invalid [Style] instance introduces significant native memory leak,
+   * see [Style.isValid] for more details.
+   *
+   * @return currently loaded [Style] object or NULL if it is not loaded.
+   */
+  var style: Style? = null
+    @JvmSynthetic
+    internal set
+    get() {
+      checkNativeMap("getStyle")
+      return field
+    }
   @get:JvmSynthetic @set:JvmSynthetic
   internal var isStyleLoadInitiated = false
   private val styleObserver: StyleObserver
@@ -461,19 +475,6 @@ class MapboxMap :
     checkNativeMap("getStyle")
     style?.let(onStyleLoaded::onStyleLoaded)
       ?: styleObserver.addGetStyleListener(onStyleLoaded)
-  }
-
-  /**
-   * Get the Style of the map synchronously, will return null is style is not loaded yet.
-   *
-   * Note: keeping the reference to an invalid [Style] instance introduces significant native memory leak,
-   * see [Style.isValid] for more details.
-   *
-   * @return currently loaded [Style] object or NULL if it is not loaded.
-   */
-  fun getStyle(): Style? {
-    checkNativeMap("getStyle")
-    return style
   }
 
   /**

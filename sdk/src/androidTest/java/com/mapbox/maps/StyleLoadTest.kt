@@ -239,15 +239,15 @@ class StyleLoadTest {
         val map = mapView.getMapboxMap()
         var loadedStyle: Style? = null
         map.subscribeStyleLoaded {
-          assertNotNull(map.getStyle())
-          assert(map.getStyle() == loadedStyle)
+          assertNotNull(map.style)
+          assert(map.style == loadedStyle)
           callbackResultList.add("STYLE_LOADED")
           countDownLatch.countDown()
         }
         map.subscribeStyleDataLoaded { styleDataLoaded ->
           // style is not loaded yet
-          assertNull(map.getStyle())
-          assert(map.getStyle() == loadedStyle)
+          assertNull(map.style)
+          assert(map.style == loadedStyle)
           // ignore SPRITES and SOURCES as order is undetermined
           if (styleDataLoaded.type == StyleDataLoadedType.STYLE) {
             callbackResultList.add(styleDataLoaded.type.name)
@@ -283,15 +283,15 @@ class StyleLoadTest {
           loadedStyle = style
         }
         map.subscribeStyleLoaded {
-          assertNotNull(map.getStyle())
-          assert(map.getStyle() == loadedStyle)
+          assertNotNull(map.style)
+          assert(map.style == loadedStyle)
           callbackResultList.add("STYLE_LOADED")
           countDownLatch.countDown()
         }
         map.subscribeStyleDataLoaded { styleDataLoaded ->
           // style is not loaded yet
-          assertNull(map.getStyle())
-          assert(map.getStyle() == loadedStyle)
+          assertNull(map.style)
+          assert(map.style == loadedStyle)
           // ignore SPRITES and SOURCES as order is undetermined
           if (styleDataLoaded.type == StyleDataLoadedType.STYLE) {
             callbackResultList.add(styleDataLoaded.type.name)

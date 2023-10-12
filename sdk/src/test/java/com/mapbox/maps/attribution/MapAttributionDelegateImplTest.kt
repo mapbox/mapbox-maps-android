@@ -31,7 +31,7 @@ class MapAttributionDelegateImplTest {
     context = ApplicationProvider.getApplicationContext()
     mapAttributionDelegate = MapAttributionDelegateImpl(mapboxMap, mapTelemetry)
     every { mapboxMap.getAttributions() } returns listOf(ATTRIBUTION)
-    every { mapboxMap.getStyle() } returns style
+    every { mapboxMap.style } returns style
     every { style.styleURI } returns STYLE_URL
   }
 

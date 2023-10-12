@@ -368,6 +368,8 @@ public class JavaInterfaceChecker {
                                  Style.OnStyleLoaded onStyleLoaded,
                                  OnMapLoadErrorListener onMapLoadErrorListener) {
     final MapboxMap mapboxMap = mapView.getMapboxMap();
+    mapboxMap.getStyle();
+
     mapboxMap.loadStyle(Style.STANDARD);
     mapboxMap.loadStyle(Style.STANDARD, onStyleLoaded);
     mapboxMap.loadStyle("json");

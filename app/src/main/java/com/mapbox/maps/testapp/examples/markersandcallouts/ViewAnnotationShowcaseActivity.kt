@@ -73,7 +73,7 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
         addOnMapClickListener(this@ViewAnnotationShowcaseActivity)
         addOnMapLongClickListener(this@ViewAnnotationShowcaseActivity)
         binding.fabStyleToggle.setOnClickListener {
-          when (getStyle()?.styleURI) {
+          when (style?.styleURI) {
             Style.STANDARD -> loadStyle(prepareStyle(Style.SATELLITE_STREETS, bitmap))
             Style.SATELLITE_STREETS -> loadStyle(prepareStyle(Style.STANDARD, bitmap))
           }

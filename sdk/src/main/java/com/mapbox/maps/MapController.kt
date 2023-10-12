@@ -142,7 +142,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     }
     lifecycleState = LifecycleState.STATE_STARTED
 
-    mapboxMap.getStyle()?.let {
+    mapboxMap.style?.let {
       if (it != style) {
         style = it
         pluginRegistry.onStyleChanged(it)

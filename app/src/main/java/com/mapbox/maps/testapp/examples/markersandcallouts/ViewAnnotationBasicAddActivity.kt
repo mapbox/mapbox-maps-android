@@ -40,7 +40,7 @@ class ViewAnnotationBasicAddActivity : AppCompatActivity(), OnMapClickListener {
       loadStyle(Style.STANDARD) {
         addOnMapClickListener(this@ViewAnnotationBasicAddActivity)
         binding.fabStyleToggle.setOnClickListener {
-          when (getStyle()?.styleURI) {
+          when (style?.styleURI) {
             Style.STANDARD -> loadStyle(Style.SATELLITE_STREETS)
             Style.SATELLITE_STREETS -> loadStyle(Style.STANDARD)
           }

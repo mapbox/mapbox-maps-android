@@ -31,7 +31,7 @@ class TintFillPatternActivity : AppCompatActivity() {
     initialBitmap = BitmapFactory.decodeResource(resources, R.drawable.fill_pattern)
 
     binding.fabPaint.setOnClickListener {
-      binding.mapView.getMapboxMap().getStyle()?.apply {
+      binding.mapView.getMapboxMap().style?.apply {
         addImage(FILL_PATTERN_ID, changeBitmapColor(initialBitmap, randomColor()))
       }
     }
