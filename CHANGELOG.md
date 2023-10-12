@@ -2,6 +2,9 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
+# main
+## Bug fixes 🐞
+* Fix widgets not showing on some zoom levels.
 
 # 11.0.0-beta.5 October 09, 2023
 ## Breaking changes ⚠️

@@ -313,6 +313,14 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
 
       mapboxRenderer.render()
 
+      // TODO remove when rendering engine will handle this for us;
+      //  for now we have to clean context a bit so that our texture(s) is (are) drawn on top of the map
+      GLES20.glDisable(GLES20.GL_STENCIL_TEST)
+      GLES20.glDisable(GLES20.GL_DEPTH_TEST)
+      GLES20.glUseProgram(0)
+      GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0)
+      GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, 0)
+
       if (widgetRenderer.hasTexture()) {
         widgetTextureRenderer.render(widgetRenderer.getTexture())
       }
