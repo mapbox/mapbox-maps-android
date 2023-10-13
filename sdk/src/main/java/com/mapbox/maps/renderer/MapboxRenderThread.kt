@@ -11,7 +11,6 @@ import androidx.annotation.AnyThread
 import androidx.annotation.RestrictTo
 import androidx.annotation.UiThread
 import androidx.annotation.VisibleForTesting
-import androidx.annotation.WorkerThread
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxTracing
 import com.mapbox.maps.MapboxTracing.MAPBOX_TRACE_ID
@@ -495,7 +494,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   @OptIn(MapboxExperimental::class)
   fun removeWidget(widget: Widget) = widgetRenderer.removeWidget(widget)
 
-  @WorkerThread
+  @RenderThread
   internal fun processAndroidSurface(surface: Surface, width: Int, height: Int) {
     if (this.surface != surface) {
       if (this.surface != null) {
@@ -545,7 +544,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     }
   }
 
-  @WorkerThread
+  @RenderThread
   override fun doFrame(frameTimeNanos: Long) {
     trace("do-frame") {
       val startTime = if (renderThreadRecorder?.recording == true) {

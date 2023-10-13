@@ -564,7 +564,10 @@ package com.mapbox.maps.plugin {
 package com.mapbox.maps.renderer {
 
   public fun interface OnFpsChangedListener {
-    method @WorkerThread public void onFpsChanged(double fps);
+    method @com.mapbox.maps.renderer.RenderThread public void onFpsChanged(double fps);
+  }
+
+  @kotlin.annotation.MustBeDocumented @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention.SOURCE) @kotlin.annotation.Target(allowedTargets={kotlin.annotation.AnnotationTarget.FUNCTION, kotlin.annotation.AnnotationTarget.PROPERTY_GETTER, kotlin.annotation.AnnotationTarget.PROPERTY_SETTER, kotlin.annotation.AnnotationTarget.CONSTRUCTOR, kotlin.annotation.AnnotationTarget.CLASS}) public @interface RenderThread {
   }
 
   public final class RendererError {

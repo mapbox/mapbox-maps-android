@@ -4,21 +4,30 @@ import android.graphics.Bitmap
 import android.opengl.GLES20
 import android.opengl.GLUtils
 import android.opengl.Matrix
+import androidx.annotation.AnyThread
 import androidx.annotation.RestrictTo
 import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.renderer.RenderThread
 import com.mapbox.maps.renderer.gl.GlUtils
 import com.mapbox.maps.renderer.gl.GlUtils.put
 import com.mapbox.maps.renderer.gl.GlUtils.toFloatBuffer
+import java.util.concurrent.locks.ReentrantLock
+import kotlin.concurrent.withLock
 
 @OptIn(MapboxExperimental::class)
 @RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class BitmapWidgetRenderer(
-  @Volatile
   // Bitmap is retained throughout BitmapWidgetRenderer lifetime.
   private var bitmap: Bitmap?,
   @Volatile
   private var position: WidgetPosition
 ) : WidgetRenderer {
+
+  /**
+   * Needed to synchronize setting data (translation, rotation, updating bitmap) from any thread (most likely main)
+   * and rendering it using Mapbox render thread.
+   */
+  private val lock = ReentrantLock()
 
   private var halfBitmapWidth = (bitmap?.width ?: 0) / 2f
   private var halfBitmapHeight = (bitmap?.height ?: 0) / 2f
@@ -54,25 +63,31 @@ internal class BitmapWidgetRenderer(
     1f, 1f
   ).toFloatBuffer()
 
+  @Volatile
   private var rotationDegrees = 0F
 
+  @set:AnyThread
+  @get:AnyThread
   override var needRender: Boolean = true
 
+  @RenderThread
   override fun onSurfaceChanged(width: Int, height: Int) {
-    surfaceWidth = width
-    surfaceHeight = height
+    lock.withLock {
+      surfaceWidth = width
+      surfaceHeight = height
 
-    // transforms from (0,0) - (width, height) in screen pixels
-    // to (-1, -1) - (1, 1) for GL
-    screenMatrix.put(
-      2f / width, 0f, 0f, 0f,
-      0f, -2f / height, 0f, 0f,
-      0f, 0f, 0f, 0f,
-      -1f, 1f, 0f, 1f
-    )
+      // transforms from (0,0) - (width, height) in screen pixels
+      // to (-1, -1) - (1, 1) for GL
+      screenMatrix.put(
+        2f / width, 0f, 0f, 0f,
+        0f, -2f / height, 0f, 0f,
+        0f, 0f, 0f, 0f,
+        -1f, 1f, 0f, 1f
+      )
 
-    updateVertexBuffer()
-    updateTranslateMatrix()
+      updateVertexBuffer()
+      updateTranslateMatrix()
+    }
   }
 
   private fun updateVertexBuffer() {
@@ -97,127 +112,135 @@ internal class BitmapWidgetRenderer(
     WidgetPosition.Horizontal.RIGHT -> surfaceWidth.toFloat() - halfBitmapWidth
   }
 
+  @RenderThread
   override fun prepare() {
-    val maxAttrib = IntArray(1)
-    GLES20.glGetIntegerv(GLES20.GL_MAX_VERTEX_ATTRIBS, maxAttrib, 0)
+    lock.withLock {
+      val maxAttrib = IntArray(1)
+      GLES20.glGetIntegerv(GLES20.GL_MAX_VERTEX_ATTRIBS, maxAttrib, 0)
 
-    vertexShader = GlUtils.loadShader(
-      GLES20.GL_VERTEX_SHADER,
-      VERTEX_SHADER_CODE
-    ).also(GlUtils::checkCompileStatus)
+      vertexShader = GlUtils.loadShader(
+        GLES20.GL_VERTEX_SHADER,
+        VERTEX_SHADER_CODE
+      ).also(GlUtils::checkCompileStatus)
 
-    fragmentShader = GlUtils.loadShader(
-      GLES20.GL_FRAGMENT_SHADER,
-      FRAGMENT_SHADER_CODE
-    ).also(GlUtils::checkCompileStatus)
+      fragmentShader = GlUtils.loadShader(
+        GLES20.GL_FRAGMENT_SHADER,
+        FRAGMENT_SHADER_CODE
+      ).also(GlUtils::checkCompileStatus)
 
-    program = GLES20.glCreateProgram().also { program ->
-      GlUtils.checkError("glCreateProgram")
+      program = GLES20.glCreateProgram().also { program ->
+        GlUtils.checkError("glCreateProgram")
 
-      GLES20.glAttachShader(program, vertexShader)
-      GlUtils.checkError("glAttachShader")
+        GLES20.glAttachShader(program, vertexShader)
+        GlUtils.checkError("glAttachShader")
 
-      GLES20.glAttachShader(program, fragmentShader)
-      GlUtils.checkError("glAttachShader")
+        GLES20.glAttachShader(program, fragmentShader)
+        GlUtils.checkError("glAttachShader")
 
-      GLES20.glLinkProgram(program)
-      GlUtils.checkError("glLinkProgram")
+        GLES20.glLinkProgram(program)
+        GlUtils.checkError("glLinkProgram")
+      }
+
+      uniformMvpMatrix =
+        GLES20.glGetUniformLocation(program, "uMvpMatrix")
+      GlUtils.checkError("glGetUniformLocation")
+
+      attributeVertexPosition =
+        GLES20.glGetAttribLocation(program, "aPosition")
+      GlUtils.checkError("glGetAttribLocation")
+
+      attributeTexturePosition =
+        GLES20.glGetAttribLocation(program, "aCoordinate")
+      GlUtils.checkError("glGetAttribLocation")
+
+      uniformTexture =
+        GLES20.glGetUniformLocation(program, "uTexture")
+      GlUtils.checkError("glGetUniformLocation")
+
+      needRender = true
+      updateBitmap = true
     }
-
-    uniformMvpMatrix =
-      GLES20.glGetUniformLocation(program, "uMvpMatrix")
-    GlUtils.checkError("glGetUniformLocation")
-
-    attributeVertexPosition =
-      GLES20.glGetAttribLocation(program, "aPosition")
-    GlUtils.checkError("glGetAttribLocation")
-
-    attributeTexturePosition =
-      GLES20.glGetAttribLocation(program, "aCoordinate")
-    GlUtils.checkError("glGetAttribLocation")
-
-    uniformTexture =
-      GLES20.glGetUniformLocation(program, "uTexture")
-    GlUtils.checkError("glGetUniformLocation")
-
-    needRender = true
-    updateBitmap = true
   }
 
+  @RenderThread
   override fun render() {
-    if (program == 0) {
-      prepare()
+    lock.withLock {
+      GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT)
+      if (program == 0) {
+        prepare()
+      }
+      GLES20.glUseProgram(program)
+      GlUtils.checkError("glUseProgram")
+
+      if (updateMatrix) {
+        Matrix.setIdentityM(mvpMatrix, 0)
+
+        Matrix.multiplyMM(translateRotate, 0, translateMatrix, 0, rotationMatrix, 0)
+        Matrix.multiplyMM(mvpMatrix, 0, screenMatrix, 0, translateRotate, 0)
+
+        mvpMatrixBuffer.rewind()
+        mvpMatrixBuffer.put(mvpMatrix)
+        mvpMatrixBuffer.rewind()
+
+        updateMatrix = false
+      }
+
+      GLES20.glUniformMatrix4fv(uniformMvpMatrix, 1, false, mvpMatrixBuffer)
+
+      textureFromBitmapIfChanged()
+
+      GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textures[0])
+
+      GLES20.glUniform1i(uniformTexture, 0)
+
+      GLES20.glEnableVertexAttribArray(attributeVertexPosition)
+      GlUtils.checkError("glEnableVertexAttribArray")
+
+      GLES20.glVertexAttribPointer(
+        attributeVertexPosition, COORDS_PER_VERTEX,
+        GLES20.GL_FLOAT, false,
+        VERTEX_STRIDE, vertexPositionBuffer
+      )
+      GlUtils.checkError("glVertexAttribPointer")
+
+      GLES20.glEnableVertexAttribArray(attributeTexturePosition)
+      GlUtils.checkError("glEnableVertexAttribArray")
+
+      GLES20.glVertexAttribPointer(
+        attributeTexturePosition, COORDS_PER_VERTEX,
+        GLES20.GL_FLOAT, false,
+        VERTEX_STRIDE, texturePositionBuffer
+      )
+      GlUtils.checkError("glVertexAttribPointer")
+
+      GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, VERTEX_COUNT)
+      GlUtils.checkError("glDrawArrays")
+
+      GLES20.glDisableVertexAttribArray(attributeVertexPosition)
+      GLES20.glDisableVertexAttribArray(attributeTexturePosition)
+      GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0)
+      GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, 0)
+      GLES20.glUseProgram(0)
+
+      needRender = false
     }
-    GLES20.glUseProgram(program)
-    GlUtils.checkError("glUseProgram")
-
-    if (updateMatrix) {
-      Matrix.setIdentityM(mvpMatrix, 0)
-
-      Matrix.multiplyMM(translateRotate, 0, translateMatrix, 0, rotationMatrix, 0)
-      Matrix.multiplyMM(mvpMatrix, 0, screenMatrix, 0, translateRotate, 0)
-
-      mvpMatrixBuffer.rewind()
-      mvpMatrixBuffer.put(mvpMatrix)
-      mvpMatrixBuffer.rewind()
-
-      updateMatrix = false
-    }
-
-    GLES20.glUniformMatrix4fv(uniformMvpMatrix, 1, false, mvpMatrixBuffer)
-
-    textureFromBitmapIfChanged()
-
-    GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textures[0])
-
-    GLES20.glUniform1i(uniformTexture, 0)
-
-    GLES20.glClearColor(1f, 1f, 1f, 1f)
-
-    GLES20.glEnableVertexAttribArray(attributeVertexPosition)
-    GlUtils.checkError("glEnableVertexAttribArray")
-
-    GLES20.glVertexAttribPointer(
-      attributeVertexPosition, COORDS_PER_VERTEX,
-      GLES20.GL_FLOAT, false,
-      VERTEX_STRIDE, vertexPositionBuffer
-    )
-    GlUtils.checkError("glVertexAttribPointer")
-
-    GLES20.glEnableVertexAttribArray(attributeTexturePosition)
-    GlUtils.checkError("glEnableVertexAttribArray")
-
-    GLES20.glVertexAttribPointer(
-      attributeTexturePosition, COORDS_PER_VERTEX,
-      GLES20.GL_FLOAT, false,
-      VERTEX_STRIDE, texturePositionBuffer
-    )
-    GlUtils.checkError("glVertexAttribPointer")
-
-    GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, VERTEX_COUNT)
-    GlUtils.checkError("glDrawArrays")
-
-    GLES20.glDisableVertexAttribArray(attributeVertexPosition)
-    GLES20.glDisableVertexAttribArray(attributeTexturePosition)
-    GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0)
-    GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, 0)
-    GLES20.glUseProgram(0)
-
-    needRender = false
   }
 
+  @RenderThread
   override fun release() {
-    if (program != 0) {
-      GLES20.glDisableVertexAttribArray(attributeVertexPosition)
-      GLES20.glDetachShader(program, vertexShader)
-      GLES20.glDetachShader(program, fragmentShader)
-      GLES20.glDeleteShader(vertexShader)
-      GLES20.glDeleteShader(fragmentShader)
-      GLES20.glDeleteTextures(textures.size, textures, 0)
-      GLES20.glDeleteProgram(program)
-      program = 0
+    lock.withLock {
+      if (program != 0) {
+        GLES20.glDisableVertexAttribArray(attributeVertexPosition)
+        GLES20.glDetachShader(program, vertexShader)
+        GLES20.glDetachShader(program, fragmentShader)
+        GLES20.glDeleteShader(vertexShader)
+        GLES20.glDeleteShader(fragmentShader)
+        GLES20.glDeleteTextures(textures.size, textures, 0)
+        GLES20.glDeleteProgram(program)
+        program = 0
+      }
+      needRender = false
     }
-    needRender = false
   }
 
   /**
@@ -256,32 +279,47 @@ internal class BitmapWidgetRenderer(
     }
   }
 
+  @AnyThread
   fun updateBitmap(bitmap: Bitmap) {
-    this.bitmap = bitmap
-    this.halfBitmapWidth = bitmap.width / 2f
-    this.halfBitmapHeight = bitmap.height / 2f
-    updateTranslateMatrix()
-    updateVertexBuffer()
-    updateBitmap = true
-    updateMatrix = true
-    needRender = true
+    lock.withLock {
+      this.bitmap = bitmap
+      this.halfBitmapWidth = bitmap.width / 2f
+      this.halfBitmapHeight = bitmap.height / 2f
+      updateTranslateMatrix()
+      updateVertexBuffer()
+      updateBitmap = true
+      updateMatrix = true
+      needRender = true
+    }
   }
 
+  @AnyThread
   override fun setRotation(angleDegrees: Float) {
-    rotationDegrees = angleDegrees
-    Matrix.setIdentityM(rotationMatrix, 0)
-    Matrix.setRotateM(rotationMatrix, 0, angleDegrees, 0f, 0f, 1f)
-    updateMatrix = true
-    needRender = true
+    lock.withLock {
+      rotationDegrees = angleDegrees
+      Matrix.setIdentityM(rotationMatrix, 0)
+      Matrix.setRotateM(rotationMatrix, 0, angleDegrees, 0f, 0f, 1f)
+      updateMatrix = true
+      needRender = true
+    }
   }
 
+  @AnyThread
   override fun getRotation(): Float {
     return rotationDegrees
   }
 
+  @AnyThread
   override fun setPosition(widgetPosition: WidgetPosition) {
-    this.position = widgetPosition
-    updateTranslateMatrix()
+    lock.withLock {
+      this.position = widgetPosition
+      updateTranslateMatrix()
+    }
+  }
+
+  @AnyThread
+  override fun getPosition(): WidgetPosition {
+    return position
   }
 
   private fun updateTranslateMatrix() {
@@ -296,10 +334,6 @@ internal class BitmapWidgetRenderer(
 
     updateMatrix = true
     needRender = true
-  }
-
-  override fun getPosition(): WidgetPosition {
-    return position
   }
 
   private companion object {

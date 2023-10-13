@@ -1,6 +1,5 @@
 package com.mapbox.maps.renderer
 
-import androidx.annotation.WorkerThread
 import com.mapbox.maps.MapView
 
 /**
@@ -15,6 +14,6 @@ fun interface OnFpsChangedListener {
    *
    * @param fps The average number of frames rendered over the last second.
    */
-  @WorkerThread
+  @RenderThread
   fun onFpsChanged(fps: Double)
 }

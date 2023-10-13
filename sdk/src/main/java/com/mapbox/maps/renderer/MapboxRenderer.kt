@@ -77,12 +77,12 @@ internal abstract class MapboxRenderer : DelegatingMapClient {
     )
   }
 
-  @WorkerThread
+  @RenderThread
   fun createRenderer() {
     map?.createRenderer()
   }
 
-  @WorkerThread
+  @RenderThread
   fun onSurfaceChanged(width: Int, height: Int) {
     if (width != this.width || height != this.height) {
       this.width = width
@@ -92,7 +92,7 @@ internal abstract class MapboxRenderer : DelegatingMapClient {
     }
   }
 
-  @WorkerThread
+  @RenderThread
   fun destroyRenderer() {
     map?.destroyRenderer()
     // additionally it's correct moment to release pixel reader while we still have EGL context
@@ -100,7 +100,7 @@ internal abstract class MapboxRenderer : DelegatingMapClient {
     pixelReader = null
   }
 
-  @WorkerThread
+  @RenderThread
   fun render() {
     map?.render()
   }
@@ -118,7 +118,7 @@ internal abstract class MapboxRenderer : DelegatingMapClient {
     renderFrameCancelable = map?.subscribe(renderFrameFinishedCallback)
   }
 
-  @WorkerThread
+  @RenderThread
   fun snapshot(): Bitmap? {
     if (!readyForSnapshot.get()) {
       logE(TAG, "Could not take map snapshot because map is not ready yet.")
@@ -173,7 +173,7 @@ internal abstract class MapboxRenderer : DelegatingMapClient {
     renderThread.fpsChangedListener = listener
   }
 
-  @WorkerThread
+  @RenderThread
   private fun performSnapshot(): Bitmap? {
     if (width == 0 && height == 0) {
       logE(TAG, "Could not take map snapshot because map is not ready yet.")

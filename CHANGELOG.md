@@ -18,6 +18,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Bug fixes 🐞
 * Fix widgets not showing on some zoom levels.
+* Fix widgets flickering due to race condition if they are animated.
 
 ## Breaking changes ⚠️
 * (Kotlin only) Replaced `MapboxMap.getStyle()` function with property `MapboxMap.style`.

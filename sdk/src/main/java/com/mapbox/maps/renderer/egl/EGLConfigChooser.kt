@@ -11,10 +11,12 @@ import com.mapbox.maps.MapView.Companion.DEFAULT_ANTIALIASING_SAMPLE_COUNT
 import com.mapbox.maps.logE
 import com.mapbox.maps.logI
 import com.mapbox.maps.logW
+import com.mapbox.maps.renderer.RenderThread
 import java.lang.Boolean.compare
 import java.lang.Integer.compare
 
 @RestrictTo(RestrictTo.Scope.LIBRARY)
+@RenderThread
 internal class EGLConfigChooser constructor(
   private val translucentSurface: Boolean,
   private var antialiasingSampleCount: Int,

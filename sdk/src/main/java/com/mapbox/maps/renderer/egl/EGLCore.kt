@@ -5,11 +5,11 @@ import android.os.Handler
 import android.os.Looper
 import android.view.Surface
 import androidx.annotation.RestrictTo
-import androidx.annotation.WorkerThread
 import com.mapbox.maps.MapView
 import com.mapbox.maps.logE
 import com.mapbox.maps.logI
 import com.mapbox.maps.logW
+import com.mapbox.maps.renderer.RenderThread
 import com.mapbox.maps.renderer.RendererError
 import com.mapbox.maps.renderer.RendererSetupErrorListener
 import java.util.*
@@ -22,6 +22,7 @@ import java.util.*
  * Inspired by [Grafika](https://github.com/google/grafika/blob/master/app/src/main/java/com/android/grafika/gles/EglCore.java)
  */
 @RestrictTo(RestrictTo.Scope.LIBRARY)
+@RenderThread
 internal class EGLCore(
   private val translucentSurface: Boolean,
   private val antialiasingSampleCount: Int,
@@ -242,7 +243,6 @@ internal class EGLCore(
     return EGL14.EGL_SUCCESS
   }
 
-  @WorkerThread
   internal fun addRendererStateListener(listener: RendererSetupErrorListener) {
     rendererSetupErrorListenerSet.add(listener)
     if (accumulatedRendererErrorList.isNotEmpty()) {
@@ -255,12 +255,10 @@ internal class EGLCore(
     }
   }
 
-  @WorkerThread
   internal fun removeRendererStateListener(listener: RendererSetupErrorListener) {
     rendererSetupErrorListenerSet.remove(listener)
   }
 
-  @WorkerThread
   internal fun clearRendererStateListeners() {
     accumulatedRendererErrorList.clear()
     rendererSetupErrorListenerSet.clear()

@@ -42,7 +42,7 @@ package com.mapbox.maps.extension.style {
     method public kotlin.Pair<com.mapbox.maps.extension.style.layers.Layer,com.mapbox.maps.LayerPosition> layerAtPosition(com.mapbox.maps.extension.style.layers.Layer layer);
     method public operator void setAtmosphere(com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere);
     method public operator void setLight(com.mapbox.maps.extension.style.light.generated.FlatLight);
-    method @com.mapbox.maps.MapboxExperimental public operator void setLight(com.mapbox.maps.extension.style.light.DynamicLight);
+    method public operator void setLight(com.mapbox.maps.extension.style.light.DynamicLight);
     method public operator void setProjection(com.mapbox.maps.extension.style.projection.generated.Projection);
     method public operator void setTerrain(com.mapbox.maps.extension.style.terrain.generated.Terrain);
     method public operator void setTransition(com.mapbox.maps.TransitionOptions);
@@ -1052,7 +1052,7 @@ package com.mapbox.maps.extension.style.layers {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getVisibilityAsExpression();
     method public com.mapbox.maps.extension.style.layers.CustomLayer maxZoom(double maxZoom);
     method public com.mapbox.maps.extension.style.layers.CustomLayer minZoom(double minZoom);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.CustomLayer slot(String slot);
+    method public com.mapbox.maps.extension.style.layers.CustomLayer slot(String slot);
     method public com.mapbox.maps.extension.style.layers.CustomLayer visibility(com.mapbox.maps.extension.style.layers.properties.generated.Visibility visibility);
     method public com.mapbox.maps.extension.style.layers.CustomLayer visibility(com.mapbox.maps.extension.style.expressions.generated.Expression visibility);
     property public String layerId;
@@ -1076,7 +1076,7 @@ package com.mapbox.maps.extension.style.layers {
   @com.mapbox.maps.extension.style.types.LayersDsl public interface CustomLayerDsl {
     method public com.mapbox.maps.extension.style.layers.CustomLayer maxZoom(double maxZoom);
     method public com.mapbox.maps.extension.style.layers.CustomLayer minZoom(double minZoom);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.CustomLayer slot(String slot);
+    method public com.mapbox.maps.extension.style.layers.CustomLayer slot(String slot);
     method public com.mapbox.maps.extension.style.layers.CustomLayer visibility(com.mapbox.maps.extension.style.layers.properties.generated.Visibility visibility);
     method public com.mapbox.maps.extension.style.layers.CustomLayer visibility(com.mapbox.maps.extension.style.expressions.generated.Expression visibility);
   }
@@ -1169,7 +1169,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getVisibilityAsExpression();
     method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer maxZoom(double maxZoom);
     method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer minZoom(double minZoom);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer slot(String slot);
+    method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer slot(String slot);
     method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer visibility(com.mapbox.maps.extension.style.layers.properties.generated.Visibility visibility);
     method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer visibility(com.mapbox.maps.extension.style.expressions.generated.Expression visibility);
     property public final String? backgroundColor;
@@ -1244,7 +1244,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer backgroundPattern(com.mapbox.maps.extension.style.expressions.generated.Expression backgroundPattern);
     method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer maxZoom(double maxZoom);
     method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer minZoom(double minZoom);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer slot(String slot);
+    method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer slot(String slot);
     method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer visibility(com.mapbox.maps.extension.style.layers.properties.generated.Visibility visibility);
     method public com.mapbox.maps.extension.style.layers.generated.BackgroundLayer visibility(com.mapbox.maps.extension.style.expressions.generated.Expression visibility);
   }
@@ -1350,7 +1350,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getVisibilityAsExpression();
     method public com.mapbox.maps.extension.style.layers.generated.CircleLayer maxZoom(double maxZoom);
     method public com.mapbox.maps.extension.style.layers.generated.CircleLayer minZoom(double minZoom);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.CircleLayer slot(String slot);
+    method public com.mapbox.maps.extension.style.layers.generated.CircleLayer slot(String slot);
     method public com.mapbox.maps.extension.style.layers.generated.CircleLayer sourceLayer(String sourceLayer);
     method public com.mapbox.maps.extension.style.layers.generated.CircleLayer visibility(com.mapbox.maps.extension.style.layers.properties.generated.Visibility visibility);
     method public com.mapbox.maps.extension.style.layers.generated.CircleLayer visibility(com.mapbox.maps.extension.style.expressions.generated.Expression visibility);
@@ -1536,7 +1536,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.CircleLayer filter(com.mapbox.maps.extension.style.expressions.generated.Expression filter);
     method public com.mapbox.maps.extension.style.layers.generated.CircleLayer maxZoom(double maxZoom);
     method public com.mapbox.maps.extension.style.layers.generated.CircleLayer minZoom(double minZoom);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.CircleLayer slot(String slot);
+    method public com.mapbox.maps.extension.style.layers.generated.CircleLayer slot(String slot);
     method public com.mapbox.maps.extension.style.layers.generated.CircleLayer sourceLayer(String sourceLayer);
     method public com.mapbox.maps.extension.style.layers.generated.CircleLayer visibility(com.mapbox.maps.extension.style.layers.properties.generated.Visibility visibility);
     method public com.mapbox.maps.extension.style.layers.generated.CircleLayer visibility(com.mapbox.maps.extension.style.expressions.generated.Expression visibility);
@@ -1700,7 +1700,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getVisibilityAsExpression();
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer maxZoom(double maxZoom);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer minZoom(double minZoom);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer slot(String slot);
+    method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer slot(String slot);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer sourceLayer(String sourceLayer);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer visibility(com.mapbox.maps.extension.style.layers.properties.generated.Visibility visibility);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer visibility(com.mapbox.maps.extension.style.expressions.generated.Expression visibility);
@@ -1911,7 +1911,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final com.mapbox.maps.extension.style.layers.properties.generated.Visibility? defaultVisibility;
   }
 
-  @com.mapbox.maps.extension.style.types.LayersDsl public interface FillExtrusionLayerDsl {
+  @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.style.types.LayersDsl public interface FillExtrusionLayerDsl {
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionAmbientOcclusionGroundAttenuation(double fillExtrusionAmbientOcclusionGroundAttenuation = 0.69);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionAmbientOcclusionGroundAttenuation(com.mapbox.maps.extension.style.expressions.generated.Expression fillExtrusionAmbientOcclusionGroundAttenuation);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionAmbientOcclusionGroundAttenuationTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -1993,7 +1993,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer filter(com.mapbox.maps.extension.style.expressions.generated.Expression filter);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer maxZoom(double maxZoom);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer minZoom(double minZoom);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer slot(String slot);
+    method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer slot(String slot);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer sourceLayer(String sourceLayer);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer visibility(com.mapbox.maps.extension.style.layers.properties.generated.Visibility visibility);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer visibility(com.mapbox.maps.extension.style.expressions.generated.Expression visibility);
@@ -2072,7 +2072,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getVisibilityAsExpression();
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer maxZoom(double maxZoom);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer minZoom(double minZoom);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer slot(String slot);
+    method public com.mapbox.maps.extension.style.layers.generated.FillLayer slot(String slot);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer sourceLayer(String sourceLayer);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer visibility(com.mapbox.maps.extension.style.layers.properties.generated.Visibility visibility);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer visibility(com.mapbox.maps.extension.style.expressions.generated.Expression visibility);
@@ -2206,7 +2206,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer filter(com.mapbox.maps.extension.style.expressions.generated.Expression filter);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer maxZoom(double maxZoom);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer minZoom(double minZoom);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer slot(String slot);
+    method public com.mapbox.maps.extension.style.layers.generated.FillLayer slot(String slot);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer sourceLayer(String sourceLayer);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer visibility(com.mapbox.maps.extension.style.layers.properties.generated.Visibility visibility);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer visibility(com.mapbox.maps.extension.style.expressions.generated.Expression visibility);
@@ -2257,7 +2257,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.HeatmapLayer heatmapWeight(com.mapbox.maps.extension.style.expressions.generated.Expression heatmapWeight);
     method public com.mapbox.maps.extension.style.layers.generated.HeatmapLayer maxZoom(double maxZoom);
     method public com.mapbox.maps.extension.style.layers.generated.HeatmapLayer minZoom(double minZoom);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.HeatmapLayer slot(String slot);
+    method public com.mapbox.maps.extension.style.layers.generated.HeatmapLayer slot(String slot);
     method public com.mapbox.maps.extension.style.layers.generated.HeatmapLayer sourceLayer(String sourceLayer);
     method public com.mapbox.maps.extension.style.layers.generated.HeatmapLayer visibility(com.mapbox.maps.extension.style.layers.properties.generated.Visibility visibility);
     method public com.mapbox.maps.extension.style.layers.generated.HeatmapLayer visibility(com.mapbox.maps.extension.style.expressions.generated.Expression visibility);
@@ -2337,7 +2337,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.HeatmapLayer heatmapWeight(com.mapbox.maps.extension.style.expressions.generated.Expression heatmapWeight);
     method public com.mapbox.maps.extension.style.layers.generated.HeatmapLayer maxZoom(double maxZoom);
     method public com.mapbox.maps.extension.style.layers.generated.HeatmapLayer minZoom(double minZoom);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.HeatmapLayer slot(String slot);
+    method public com.mapbox.maps.extension.style.layers.generated.HeatmapLayer slot(String slot);
     method public com.mapbox.maps.extension.style.layers.generated.HeatmapLayer sourceLayer(String sourceLayer);
     method public com.mapbox.maps.extension.style.layers.generated.HeatmapLayer visibility(com.mapbox.maps.extension.style.layers.properties.generated.Visibility visibility);
     method public com.mapbox.maps.extension.style.layers.generated.HeatmapLayer visibility(com.mapbox.maps.extension.style.expressions.generated.Expression visibility);
@@ -2401,7 +2401,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.HillshadeLayer hillshadeShadowColorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.HillshadeLayer maxZoom(double maxZoom);
     method public com.mapbox.maps.extension.style.layers.generated.HillshadeLayer minZoom(double minZoom);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.HillshadeLayer slot(String slot);
+    method public com.mapbox.maps.extension.style.layers.generated.HillshadeLayer slot(String slot);
     method public com.mapbox.maps.extension.style.layers.generated.HillshadeLayer sourceLayer(String sourceLayer);
     method public com.mapbox.maps.extension.style.layers.generated.HillshadeLayer visibility(com.mapbox.maps.extension.style.layers.properties.generated.Visibility visibility);
     method public com.mapbox.maps.extension.style.layers.generated.HillshadeLayer visibility(com.mapbox.maps.extension.style.expressions.generated.Expression visibility);
@@ -2508,7 +2508,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.HillshadeLayer hillshadeShadowColorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.HillshadeLayer maxZoom(double maxZoom);
     method public com.mapbox.maps.extension.style.layers.generated.HillshadeLayer minZoom(double minZoom);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.HillshadeLayer slot(String slot);
+    method public com.mapbox.maps.extension.style.layers.generated.HillshadeLayer slot(String slot);
     method public com.mapbox.maps.extension.style.layers.generated.HillshadeLayer sourceLayer(String sourceLayer);
     method public com.mapbox.maps.extension.style.layers.generated.HillshadeLayer visibility(com.mapbox.maps.extension.style.layers.properties.generated.Visibility visibility);
     method public com.mapbox.maps.extension.style.layers.generated.HillshadeLayer visibility(com.mapbox.maps.extension.style.expressions.generated.Expression visibility);
@@ -2651,7 +2651,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineWidthTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer maxZoom(double maxZoom);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer minZoom(double minZoom);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer slot(String slot);
+    method public com.mapbox.maps.extension.style.layers.generated.LineLayer slot(String slot);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer sourceLayer(String sourceLayer);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer visibility(com.mapbox.maps.extension.style.layers.properties.generated.Visibility visibility);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer visibility(com.mapbox.maps.extension.style.expressions.generated.Expression visibility);
@@ -2905,7 +2905,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineWidthTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer maxZoom(double maxZoom);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer minZoom(double minZoom);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer slot(String slot);
+    method public com.mapbox.maps.extension.style.layers.generated.LineLayer slot(String slot);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer sourceLayer(String sourceLayer);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer visibility(com.mapbox.maps.extension.style.layers.properties.generated.Visibility visibility);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer visibility(com.mapbox.maps.extension.style.expressions.generated.Expression visibility);
@@ -3022,7 +3022,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer shadowImageSize(com.mapbox.maps.extension.style.expressions.generated.Expression shadowImageSize);
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer shadowImageSizeTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer shadowImageSizeTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer slot(String slot);
+    method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer slot(String slot);
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer topImage(String topImage);
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer topImage(com.mapbox.maps.extension.style.expressions.generated.Expression topImage);
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer topImageSize(double topImageSize);
@@ -3241,7 +3241,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer shadowImageSize(com.mapbox.maps.extension.style.expressions.generated.Expression shadowImageSize);
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer shadowImageSizeTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer shadowImageSizeTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer slot(String slot);
+    method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer slot(String slot);
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer topImage(String topImage);
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer topImage(com.mapbox.maps.extension.style.expressions.generated.Expression topImage);
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer topImageSize(double topImageSize = 1.0);
@@ -3366,7 +3366,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelTranslationTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelType(com.mapbox.maps.extension.style.layers.properties.generated.ModelType modelType);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelType(com.mapbox.maps.extension.style.expressions.generated.Expression modelType);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer slot(String slot);
+    method public com.mapbox.maps.extension.style.layers.generated.ModelLayer slot(String slot);
     method public com.mapbox.maps.extension.style.layers.generated.ModelLayer sourceLayer(String sourceLayer);
     method public com.mapbox.maps.extension.style.layers.generated.ModelLayer visibility(com.mapbox.maps.extension.style.layers.properties.generated.Visibility visibility);
     method public com.mapbox.maps.extension.style.layers.generated.ModelLayer visibility(com.mapbox.maps.extension.style.expressions.generated.Expression visibility);
@@ -3577,7 +3577,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelTranslationTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelType(com.mapbox.maps.extension.style.layers.properties.generated.ModelType modelType = com.mapbox.maps.extension.style.layers.properties.generated.ModelType.COMMON_3D);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelType(com.mapbox.maps.extension.style.expressions.generated.Expression modelType);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer slot(String slot);
+    method public com.mapbox.maps.extension.style.layers.generated.ModelLayer slot(String slot);
     method public com.mapbox.maps.extension.style.layers.generated.ModelLayer sourceLayer(String sourceLayer);
     method public com.mapbox.maps.extension.style.layers.generated.ModelLayer visibility(com.mapbox.maps.extension.style.layers.properties.generated.Visibility visibility);
     method public com.mapbox.maps.extension.style.layers.generated.ModelLayer visibility(com.mapbox.maps.extension.style.expressions.generated.Expression visibility);
@@ -3665,7 +3665,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterSaturation(com.mapbox.maps.extension.style.expressions.generated.Expression rasterSaturation);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterSaturationTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterSaturationTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterLayer slot(String slot);
+    method public com.mapbox.maps.extension.style.layers.generated.RasterLayer slot(String slot);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer sourceLayer(String sourceLayer);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer visibility(com.mapbox.maps.extension.style.layers.properties.generated.Visibility visibility);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer visibility(com.mapbox.maps.extension.style.expressions.generated.Expression visibility);
@@ -3814,7 +3814,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterSaturation(com.mapbox.maps.extension.style.expressions.generated.Expression rasterSaturation);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterSaturationTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterSaturationTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterLayer slot(String slot);
+    method public com.mapbox.maps.extension.style.layers.generated.RasterLayer slot(String slot);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer sourceLayer(String sourceLayer);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer visibility(com.mapbox.maps.extension.style.layers.properties.generated.Visibility visibility);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer visibility(com.mapbox.maps.extension.style.expressions.generated.Expression visibility);
@@ -3877,7 +3877,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.SkyLayer skyOpacityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.SkyLayer skyType(com.mapbox.maps.extension.style.layers.properties.generated.SkyType skyType);
     method public com.mapbox.maps.extension.style.layers.generated.SkyLayer skyType(com.mapbox.maps.extension.style.expressions.generated.Expression skyType);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SkyLayer slot(String slot);
+    method public com.mapbox.maps.extension.style.layers.generated.SkyLayer slot(String slot);
     method public com.mapbox.maps.extension.style.layers.generated.SkyLayer visibility(com.mapbox.maps.extension.style.layers.properties.generated.Visibility visibility);
     method public com.mapbox.maps.extension.style.layers.generated.SkyLayer visibility(com.mapbox.maps.extension.style.expressions.generated.Expression visibility);
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? filter;
@@ -3984,7 +3984,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.SkyLayer skyOpacityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.SkyLayer skyType(com.mapbox.maps.extension.style.layers.properties.generated.SkyType skyType = com.mapbox.maps.extension.style.layers.properties.generated.SkyType.ATMOSPHERE);
     method public com.mapbox.maps.extension.style.layers.generated.SkyLayer skyType(com.mapbox.maps.extension.style.expressions.generated.Expression skyType);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SkyLayer slot(String slot);
+    method public com.mapbox.maps.extension.style.layers.generated.SkyLayer slot(String slot);
     method public com.mapbox.maps.extension.style.layers.generated.SkyLayer visibility(com.mapbox.maps.extension.style.layers.properties.generated.Visibility visibility);
     method public com.mapbox.maps.extension.style.layers.generated.SkyLayer visibility(com.mapbox.maps.extension.style.expressions.generated.Expression visibility);
   }
@@ -4209,7 +4209,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconTranslateTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer maxZoom(double maxZoom);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer minZoom(double minZoom);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer slot(String slot);
+    method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer slot(String slot);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer sourceLayer(String sourceLayer);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer symbolAvoidEdges(boolean symbolAvoidEdges);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer symbolAvoidEdges(com.mapbox.maps.extension.style.expressions.generated.Expression symbolAvoidEdges);
@@ -4806,7 +4806,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconTranslateTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer maxZoom(double maxZoom);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer minZoom(double minZoom);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.SymbolLayer slot(String slot);
+    method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer slot(String slot);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer sourceLayer(String sourceLayer);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer symbolAvoidEdges(boolean symbolAvoidEdges = false);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer symbolAvoidEdges(com.mapbox.maps.extension.style.expressions.generated.Expression symbolAvoidEdges);
