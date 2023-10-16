@@ -26,7 +26,7 @@ class SecondaryDisplayActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     binding = ActivitySecondaryDisplayBinding.inflate(layoutInflater)
     setContentView(binding.root)
-    binding.mapView.getMapboxMap().loadStyle(
+    binding.mapView.mapboxMap.loadStyle(
       style(Style.STANDARD) {
         +image(IMAGE_ID, BitmapFactory.decodeResource(resources, R.drawable.red_marker)) {
           // Note: The default scale doesn't work with secondary displays.
@@ -53,7 +53,7 @@ class SecondaryDisplayActivity : AppCompatActivity() {
       .zoom(ZOOM)
       .build()
 
-    binding.mapView.getMapboxMap().flyTo(
+    binding.mapView.mapboxMap.flyTo(
       cameraOption,
       MapAnimationOptions.mapAnimationOptions {
         duration(DURATION)

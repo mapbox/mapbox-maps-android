@@ -26,7 +26,7 @@ class MapWallpaper : WallpaperService() {
       surfaceHolder.addCallback(this)
 
       mapSurface = MapSurface(context, surfaceHolder.surface)
-      mapboxMap = mapSurface.getMapboxMap()
+      mapboxMap = mapSurface.mapboxMap
 
       // Custom configuration
       mapboxMap.loadStyle(Style.STANDARD)

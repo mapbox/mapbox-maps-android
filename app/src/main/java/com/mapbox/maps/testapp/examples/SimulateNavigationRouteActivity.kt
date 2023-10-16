@@ -38,8 +38,8 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
       ).routes()[0].geometry()!!,
       Constants.PRECISION_6
     )
-    mapView.getMapboxMap().loadStyle(Style.STANDARD) {
-      mapView.getMapboxMap().setCamera(
+    mapView.mapboxMap.loadStyle(Style.STANDARD) {
+      mapView.mapboxMap.setCamera(
         cameraOptions {
           center(Point.fromLngLat(-118.410042, 33.942791))
           bearing(0.0)

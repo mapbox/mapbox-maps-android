@@ -26,7 +26,7 @@ class GeoJsonSourceMutateTest(
       initialFeatures = generateFeatures(initialFeatureCount)
 
       rule.runOnUiThread {
-        mapboxMap = mapView.getMapboxMap()
+        mapboxMap = mapView.mapboxMap
 
         var cancelable: Cancelable? = null
         cancelable = mapboxMap.subscribeSourceDataLoaded {

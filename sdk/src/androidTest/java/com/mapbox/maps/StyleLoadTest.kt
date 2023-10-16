@@ -32,7 +32,7 @@ class StyleLoadTest {
   fun setUp() {
     rule.scenario.onActivity {
       mapView = MapView(it, MapInitOptions(it, plugins = listOf()))
-      mapboxMap = mapView.getMapboxMap()
+      mapboxMap = mapView.mapboxMap
       it.frameLayout.addView(mapView)
     }
   }
@@ -236,7 +236,7 @@ class StyleLoadTest {
       it.runOnUiThread {
         mapView.onStart()
 
-        val map = mapView.getMapboxMap()
+        val map = mapView.mapboxMap
         var loadedStyle: Style? = null
         map.subscribeStyleLoaded {
           assertNotNull(map.style)
@@ -277,7 +277,7 @@ class StyleLoadTest {
       it.runOnUiThread {
         mapView.onStart()
 
-        val map = mapView.getMapboxMap()
+        val map = mapView.mapboxMap
         var loadedStyle: Style? = null
         map.loadStyle(Style.STANDARD) { style ->
           loadedStyle = style
@@ -317,7 +317,7 @@ class StyleLoadTest {
       it.runOnUiThread {
         mapView.onStart()
 
-        val map = mapView.getMapboxMap()
+        val map = mapView.mapboxMap
         val c1 = map.subscribeStyleLoaded {
           assert(false)
         }
@@ -339,7 +339,7 @@ class StyleLoadTest {
       it.runOnUiThread {
         mapView.onStart()
 
-        val map = mapView.getMapboxMap()
+        val map = mapView.mapboxMap
         map.loadStyle(Style.STANDARD)
         val c1 = map.subscribeStyleLoaded {
           assert(false)
@@ -361,7 +361,7 @@ class StyleLoadTest {
       it.runOnUiThread {
         mapView.onStart()
 
-        val map = mapView.getMapboxMap()
+        val map = mapView.mapboxMap
         val c1 = map.subscribeStyleLoaded {
           assert(false)
         }

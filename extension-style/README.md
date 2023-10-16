@@ -41,7 +41,7 @@ dependencies {
 The Mapbox Style Extension provides some easy-to-use Koltin DSL for constructing layers, sources, light and expressions. A basic use of constructing a style with one layer and one source can be found as follows:
 
 ```kotlin
-mapView.getMapboxMap().loadStyle(
+mapView.mapboxMap.loadStyle(
     style(styleUri = Style.MAPBOX_STREETS) {
         +geojsonSource(id = "earthquakes") {
             url(GEOJSON_URL)

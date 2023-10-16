@@ -121,7 +121,7 @@ class SpinningGlobeActivity : AppCompatActivity() {
       }
     })
 
-    mapboxMap = mapView.getMapboxMap().apply {
+    mapboxMap = mapView.mapboxMap.apply {
       loadStyle(
         style(Style.SATELLITE) {
           +atmosphere { }

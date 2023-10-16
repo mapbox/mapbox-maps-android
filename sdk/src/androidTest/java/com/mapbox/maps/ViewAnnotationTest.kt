@@ -82,7 +82,7 @@ class ViewAnnotationTest(
         })
       }
       viewAnnotationsLayout = mapView.getChildAt(1) as FrameLayout
-      mapboxMap = mapView.getMapboxMap().apply {
+      mapboxMap = mapView.mapboxMap.apply {
         loadStyle(
           Style.MAPBOX_STREETS
         ) {

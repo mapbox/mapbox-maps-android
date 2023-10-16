@@ -30,8 +30,8 @@ class PolygoneAnnotationActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     val binding = ActivityAnnotationBinding.inflate(layoutInflater)
     setContentView(binding.root)
-    binding.mapView.getMapboxMap().setCamera(INITIAL_CAMERA_POS)
-    binding.mapView.getMapboxMap().loadStyle(nextStyle) {
+    binding.mapView.mapboxMap.setCamera(INITIAL_CAMERA_POS)
+    binding.mapView.mapboxMap.loadStyle(nextStyle) {
       annotationPlugin = binding.mapView.annotations
       polygonAnnotationManager = annotationPlugin.createPolygonAnnotationManager().apply {
         addClickListener(
@@ -91,7 +91,7 @@ class PolygoneAnnotationActivity : AppCompatActivity() {
         annotationPlugin.removeAnnotationManager(it)
       }
     }
-    binding.changeStyle.setOnClickListener { binding.mapView.getMapboxMap().loadStyle(nextStyle) }
+    binding.changeStyle.setOnClickListener { binding.mapView.mapboxMap.loadStyle(nextStyle) }
   }
 
   private companion object {

@@ -32,7 +32,7 @@ class MarkerManager(
     pointAnnotationManager.addClickListener(this)
     // by adding regular map click listener we implement deselecting all info windows on map click
     // in legacy code it was controlled by flag in API
-    mapView.getMapboxMap().addOnMapClickListener(this)
+    mapView.mapboxMap.addOnMapClickListener(this)
   }
 
   override fun onAnnotationClick(annotation: PointAnnotation): Boolean {
@@ -99,7 +99,7 @@ class MarkerManager(
   fun destroy() {
     markerList.forEach { removeMarker(it) }
     pointAnnotationManager.removeClickListener(this)
-    mapView.getMapboxMap().removeOnMapClickListener(this)
+    mapView.mapboxMap.removeOnMapClickListener(this)
   }
 
   private fun deselectViewAnnotation(view: View) {
@@ -139,8 +139,8 @@ class MarkerManager(
     var resultOffsetX = 0
     if (leftTop.x < 0) {
       resultOffsetX = abs(leftTop.x.toInt()) + ADDITIONAL_EDGE_PADDING_PX
-    } else if (leftTop.x + width > mapView.getMapboxMap().getSize().width) {
-      resultOffsetX = (mapView.getMapboxMap().getSize().width - leftTop.x - width - ADDITIONAL_EDGE_PADDING_PX).toInt()
+    } else if (leftTop.x + width > mapView.mapboxMap.getSize().width) {
+      resultOffsetX = (mapView.mapboxMap.getSize().width - leftTop.x - width - ADDITIONAL_EDGE_PADDING_PX).toInt()
     }
     mapView.viewAnnotationManager.updateViewAnnotation(
       view,

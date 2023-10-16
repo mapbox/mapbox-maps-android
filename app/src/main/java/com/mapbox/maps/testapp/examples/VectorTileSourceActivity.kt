@@ -20,7 +20,7 @@ class VectorTileSourceActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     val binding = ActivityStyleVectorSourceBinding.inflate(layoutInflater)
     setContentView(binding.root)
-    binding.mapView.getMapboxMap().loadStyle(
+    binding.mapView.mapboxMap.loadStyle(
       style(Style.LIGHT) {
         +vectorSource("terrain-data") {
           url("mapbox://mapbox.mapbox-terrain-v2")

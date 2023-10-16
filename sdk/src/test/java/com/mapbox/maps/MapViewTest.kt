@@ -25,7 +25,7 @@ class MapViewTest {
   fun setUp() {
     mapController = mockk(relaxUnitFun = true)
     mapboxMap = mockk(relaxUnitFun = true)
-    every { mapController.getMapboxMap() } returns mapboxMap
+    every { mapController.mapboxMap } returns mapboxMap
     mapView = MapView(
       mockk(relaxed = true),
       mockk(relaxed = true),
@@ -66,8 +66,8 @@ class MapViewTest {
 
   @Test
   fun getMapboxMap() {
-    mapView.getMapboxMap()
-    verify { mapController.getMapboxMap() }
+    mapView.mapboxMap
+    verify { mapController.mapboxMap }
   }
 
   @Test

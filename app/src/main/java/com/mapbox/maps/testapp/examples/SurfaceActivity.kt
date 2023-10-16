@@ -47,7 +47,7 @@ class SurfaceActivity : AppCompatActivity(), SurfaceHolder.Callback {
     )
 
     // Load a map style
-    mapSurface.getMapboxMap().loadStyle(Style.STANDARD)
+    mapSurface.mapboxMap.loadStyle(Style.STANDARD)
 
     // Touch handling (verify plugin integration)
     binding.surface.setOnTouchListener { _, event -> mapSurface.onTouchEvent(event) }

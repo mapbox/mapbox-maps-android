@@ -26,7 +26,7 @@ class AddMarkersSymbolActivity : AppCompatActivity() {
     val binding = ActivityAddMarkerSymbolBinding.inflate(layoutInflater)
     setContentView(binding.root)
 
-    binding.mapView.getMapboxMap().loadStyle(
+    binding.mapView.mapboxMap.loadStyle(
       styleExtension = style(Style.STANDARD) {
         // prepare red marker from resources
         +image(RED_ICON_ID, BitmapFactory.decodeResource(resources, R.drawable.red_marker))

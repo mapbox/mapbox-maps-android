@@ -49,7 +49,7 @@ abstract class BaseStyleTest {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         mapView = MapView(context)
 
-        mapboxMap = mapView.getMapboxMap()
+        mapboxMap = mapView.mapboxMap
         mapboxMap.loadStyle(
           "mapbox://styles/mapbox/empty-v9"
         ) { style ->

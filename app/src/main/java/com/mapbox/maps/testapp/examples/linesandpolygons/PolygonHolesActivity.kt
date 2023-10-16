@@ -29,7 +29,7 @@ class PolygonHolesActivity : AppCompatActivity() {
 
     mapView = MapView(this)
     setContentView(mapView)
-    with(mapView.getMapboxMap()) {
+    with(mapView.mapboxMap) {
       // TODO attributionTintColor(RED_COLOR) missing
       // TODO compassFadesWhenFacingNorth missing
       setCamera(

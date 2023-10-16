@@ -78,7 +78,7 @@ class LegacyOfflineActivity : AppCompatActivity() {
       it.visibility = View.GONE
       // create mapView
       mapView = MapView(this@LegacyOfflineActivity).also { mapview ->
-        val mapboxMap = mapview.getMapboxMap()
+        val mapboxMap = mapview.mapboxMap
         mapboxMap.setCamera(CameraOptions.Builder().zoom(zoom).center(point).build())
         mapboxMap.loadStyle(styleUrl)
       }

@@ -36,7 +36,7 @@ class ViewAnnotationBasicAddActivity : AppCompatActivity(), OnMapClickListener {
 
     viewAnnotationManager = binding.mapView.viewAnnotationManager
 
-    mapboxMap = binding.mapView.getMapboxMap().apply {
+    mapboxMap = binding.mapView.mapboxMap.apply {
       loadStyle(Style.STANDARD) {
         addOnMapClickListener(this@ViewAnnotationBasicAddActivity)
         binding.fabStyleToggle.setOnClickListener {

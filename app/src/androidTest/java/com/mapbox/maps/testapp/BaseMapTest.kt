@@ -53,7 +53,7 @@ abstract class BaseMapTest {
       timeoutMillis = 10000
     ) { latch ->
       rule.runOnUiThread {
-        mapboxMap = mapView.getMapboxMap()
+        mapboxMap = mapView.mapboxMap
         mapboxMap.loadStyle(
           Style.MAPBOX_STREETS
         ) { style ->

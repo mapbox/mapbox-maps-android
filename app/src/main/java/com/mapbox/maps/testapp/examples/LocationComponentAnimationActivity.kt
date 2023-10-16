@@ -99,7 +99,7 @@ class LocationComponentAnimationActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     val binding = ActivityLocationComponentAnimationBinding.inflate(layoutInflater)
     setContentView(binding.root)
-    mapboxMap = binding.mapView.getMapboxMap().apply {
+    mapboxMap = binding.mapView.mapboxMap.apply {
       loadStyle(
         Style.STANDARD
       ) {

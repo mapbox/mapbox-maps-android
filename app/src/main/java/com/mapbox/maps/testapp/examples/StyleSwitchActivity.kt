@@ -19,7 +19,7 @@ class StyleSwitchActivity : AppCompatActivity() {
     binding = ActivityStyleSwitchBinding.inflate(layoutInflater)
     setContentView(binding.root)
 
-    mapboxMap = binding.mapView.getMapboxMap()
+    mapboxMap = binding.mapView.mapboxMap
 
     mapboxMap.loadStyle(Style.MAPBOX_STREETS)
 

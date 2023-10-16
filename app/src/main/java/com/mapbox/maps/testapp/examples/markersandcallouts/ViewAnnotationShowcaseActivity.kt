@@ -66,7 +66,7 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
     markerWidth = bitmap.width
     markerHeight = bitmap.height
 
-    mapboxMap = binding.mapView.getMapboxMap().apply {
+    mapboxMap = binding.mapView.mapboxMap.apply {
       loadStyle(
         styleExtension = prepareStyle(Style.STANDARD, bitmap)
       ) {

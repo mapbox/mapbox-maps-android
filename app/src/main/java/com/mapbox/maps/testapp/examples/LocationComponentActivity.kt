@@ -38,9 +38,9 @@ class LocationComponentActivity : AppCompatActivity() {
   private lateinit var locationPermissionHelper: LocationPermissionHelper
   private val onIndicatorPositionChangedListener = OnIndicatorPositionChangedListener {
     // Jump to the current indicator position
-    binding.mapView.getMapboxMap().setCamera(CameraOptions.Builder().center(it).build())
+    binding.mapView.mapboxMap.setCamera(CameraOptions.Builder().center(it).build())
     // Set the gestures plugin's focal point to the current indicator location.
-    binding.mapView.gestures.focalPoint = binding.mapView.getMapboxMap().pixelForCoordinate(it)
+    binding.mapView.gestures.focalPoint = binding.mapView.mapboxMap.pixelForCoordinate(it)
   }
   private lateinit var binding: ActivityLocationComponentBinding
 
@@ -51,7 +51,7 @@ class LocationComponentActivity : AppCompatActivity() {
     locationPermissionHelper = LocationPermissionHelper(WeakReference(this))
     locationPermissionHelper.checkPermissions {
       binding.mapView.apply {
-        getMapboxMap().loadStyle(Style.STANDARD) {
+        mapboxMap.loadStyle(Style.STANDARD) {
           it.setLight(
             flatLight {
               anchor(Anchor.MAP)
@@ -203,13 +203,13 @@ class LocationComponentActivity : AppCompatActivity() {
 
   private fun toggleMapStyle() {
     val styleUrl = if (lastStyleUri == Style.DARK) Style.LIGHT else Style.DARK
-    binding.mapView.getMapboxMap().loadStyle(styleUrl) {
+    binding.mapView.mapboxMap.loadStyle(styleUrl) {
       lastStyleUri = styleUrl
     }
   }
 
   private fun toggleMapProjection() {
-    binding.mapView.getMapboxMap().getStyle { style ->
+    binding.mapView.mapboxMap.getStyle { style ->
       style.setProjection(
         projection(
           when (style.getProjection().name) {

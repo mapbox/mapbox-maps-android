@@ -20,7 +20,7 @@ class ShowHideLayersActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     val binding = ActivityShowHideLayersBinding.inflate(layoutInflater)
     setContentView(binding.root)
-    binding.mapView.getMapboxMap().loadStyle(
+    binding.mapView.mapboxMap.loadStyle(
       style(Style.LIGHT) {
         +vectorSource(SOURCE_ID) {
           url(SOURCE_URL)
@@ -34,7 +34,7 @@ class ShowHideLayersActivity : AppCompatActivity() {
       }
     )
     binding.fabLayerToggle.setOnClickListener {
-      binding.mapView.getMapboxMap().getStyle {
+      binding.mapView.mapboxMap.getStyle {
         it.getLayer(LAYER_ID)?.let { layer ->
           if (layer.visibility == Visibility.VISIBLE) {
             layer.visibility(Visibility.NONE)

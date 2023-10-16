@@ -48,7 +48,7 @@ class DSLStylingActivity : AppCompatActivity(), OnMapClickListener {
     val mapView = MapView(this)
     setContentView(mapView)
 
-    mapboxMap = mapView.getMapboxMap()
+    mapboxMap = mapView.mapboxMap
     mapboxMap.loadStyle(createStyle()) {
       mapboxMap.setCamera(
         cameraOptions {

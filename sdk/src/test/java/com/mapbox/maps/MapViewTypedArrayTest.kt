@@ -33,7 +33,7 @@ class MapViewTypedArrayTest(
     attrs = mockk()
     val mapController = mockk<MapController>(relaxUnitFun = true)
     val mapboxMap = mockk<MapboxMap>(relaxUnitFun = true)
-    every { mapController.getMapboxMap() } returns mapboxMap
+    every { mapController.mapboxMap } returns mapboxMap
     mapView = MapView(
       mockk(relaxed = true),
       mockk(relaxed = true),

@@ -40,7 +40,7 @@ class InsetMapActivity : AppCompatActivity(), CameraChangedCallback {
     super.onCreate(savedInstanceState)
     val binding = ActivityInsetMapBinding.inflate(layoutInflater)
     setContentView(binding.root)
-    mainMapboxMap = binding.mapView.getMapboxMap()
+    mainMapboxMap = binding.mapView.mapboxMap
     mainMapboxMap.setCamera(MAIN_MAP_CAMERA_POSITION)
     mainMapboxMap.loadStyle(
       style = STYLE_URL

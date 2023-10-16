@@ -42,7 +42,7 @@ class RawGeoJsonActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     val mapView = MapView(this)
     setContentView(mapView)
-    mapboxMap = mapView.getMapboxMap().apply {
+    mapboxMap = mapView.mapboxMap.apply {
       setCamera(
         CameraOptions.Builder()
           .center(Point.fromLngLat(6.0033416748046875, 43.70908256335716))

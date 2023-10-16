@@ -26,7 +26,7 @@ class MapboxMapRecorderActivity : AppCompatActivity() {
     val mapView = MapView(this)
     setContentView(mapView)
 
-    val mapboxMap = mapView.getMapboxMap()
+    val mapboxMap = mapView.mapboxMap
     // Make the ``MapboxMapRecorder`` and start the recording
     val recorder = mapboxMap.createRecorder()
     recorder.startRecording()

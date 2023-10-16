@@ -30,7 +30,7 @@ class FillExtrusionActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     binding = ActivityFillExtrusionBinding.inflate(layoutInflater)
     setContentView(binding.root)
-    val mapboxMap = binding.mapView.getMapboxMap()
+    val mapboxMap = binding.mapView.mapboxMap
     mapboxMap.setCamera(
       CameraOptions.Builder()
         .center(Point.fromLngLat(-74.0066, 40.7135))

@@ -26,7 +26,7 @@ class FeatureStateTest : BaseMapTest() {
   override fun loadMap() {
     withLatch { latch ->
       rule.runOnUiThread {
-        mapboxMap = mapView.getMapboxMap()
+        mapboxMap = mapView.mapboxMap
         mapboxMap.loadStyle(
           style(Style.MAPBOX_STREETS) {
             +geoJsonSource(SOURCE_ID) {

@@ -41,7 +41,7 @@ class MapOverlayActivity : AppCompatActivity(), OnMapClickListener {
     binding = ActivityMapOverlayBinding.inflate(layoutInflater)
     setContentView(binding.root)
 
-    mapboxMap = binding.mapView.getMapboxMap()
+    mapboxMap = binding.mapView.mapboxMap
     mapboxMap.loadStyle(
       styleExtension = style(Style.LIGHT) {
         +geoJsonSource(sourceId) {

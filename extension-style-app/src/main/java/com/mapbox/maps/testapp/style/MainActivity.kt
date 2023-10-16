@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     val mapView = MapView(this)
     setContentView(mapView)
-    mapView.getMapboxMap().loadStyle(
+    mapView.mapboxMap.loadStyle(
       styleExtension = style(Style.LIGHT) {
         +lineLayer("line-layer", "line-source") {
           lineColor(

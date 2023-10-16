@@ -36,7 +36,7 @@ class AnimatePointAnnotationActivity : AppCompatActivity(), MapLoadedCallback {
     super.onCreate(savedInstanceState)
     binding = ActivityAnnotationBinding.inflate(layoutInflater)
     setContentView(binding.root)
-    mapboxMap = binding.mapView.getMapboxMap()
+    mapboxMap = binding.mapView.mapboxMap
     mapboxMap.apply {
       setCamera(
         cameraOptions {

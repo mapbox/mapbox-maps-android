@@ -23,7 +23,7 @@ class LineGradientActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     val binding = ActivityLineGradientBinding.inflate(layoutInflater)
     setContentView(binding.root)
-    binding.mapView.getMapboxMap().loadStyle(createStyle()) { style ->
+    binding.mapView.mapboxMap.loadStyle(createStyle()) { style ->
       logI(TAG, "Style loaded: ${style.styleURI}")
       // Increase trim offset when user click the increase trim offset button.
       binding.trimOffsetButton.setOnClickListener {

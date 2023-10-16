@@ -72,8 +72,8 @@ public class DebugModeActivity : ComponentActivity() {
         )
       ) {
         // Enable debug mode using MapEffect
-        MapEffect(Unit) { map ->
-          map.getMapboxMap().setDebug(
+        MapEffect(Unit) { mapView ->
+          mapView.mapboxMap.setDebug(
             listOf(
               MapDebugOptions.TILE_BORDERS,
               MapDebugOptions.PARSE_STATUS,

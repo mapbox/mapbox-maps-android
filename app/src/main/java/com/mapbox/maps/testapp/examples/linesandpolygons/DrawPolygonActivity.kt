@@ -26,10 +26,10 @@ class DrawPolygonActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     val binding = ActivityDdsDrawPolygonBinding.inflate(layoutInflater)
     setContentView(binding.root)
-    binding.mapView.getMapboxMap().setCamera(
+    binding.mapView.mapboxMap.setCamera(
       START_CAMERA_POSITION
     )
-    binding.mapView.getMapboxMap().loadStyle(
+    binding.mapView.mapboxMap.loadStyle(
       style(style = Style.LIGHT) {
         +geoJsonSource(SOURCE_ID) {
           url(SOURCE_URL)
@@ -49,7 +49,7 @@ class DrawPolygonActivity : AppCompatActivity() {
       }
     )
     binding.patternFab.setOnClickListener {
-      binding.mapView.getMapboxMap().getStyle { style ->
+      binding.mapView.mapboxMap.getStyle { style ->
         val bitmap = ContextCompat.getDrawable(this@DrawPolygonActivity, R.drawable.pattern)
           ?.toBitmap(128, 128)!!
         style.addImage(IMAGE_ID, bitmap)

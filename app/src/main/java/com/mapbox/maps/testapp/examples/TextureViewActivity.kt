@@ -17,7 +17,7 @@ class TextureViewActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     val binding = ActivityTextureViewBinding.inflate(layoutInflater)
     setContentView(binding.root)
-    mapboxMap = binding.mapView.getMapboxMap()
+    mapboxMap = binding.mapView.mapboxMap
     mapboxMap.loadStyle(Style.STANDARD)
   }
 }

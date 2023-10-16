@@ -63,7 +63,7 @@ class MovingIconWithTrailingLineActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     binding = ActivityDdsMovingIconWithTrailingLineBinding.inflate(layoutInflater)
     setContentView(binding.root)
-    binding.mapView.getMapboxMap().loadStyle(
+    binding.mapView.mapboxMap.loadStyle(
       Style.LIGHT
     ) { // Use the Mapbox Directions API to get a directions route
       getRoute()
@@ -151,8 +151,8 @@ class MovingIconWithTrailingLineActivity : AppCompatActivity() {
           }
 
           val currentRoute = body.routes()[0]
-          binding.mapView.getMapboxMap().getStyle { style ->
-            binding.mapView.getMapboxMap().let { mapboxMap ->
+          binding.mapView.mapboxMap.getStyle { style ->
+            binding.mapView.mapboxMap.let { mapboxMap ->
               mapboxMap.easeTo(
                 mapboxMap.cameraForCoordinateBounds(
                   CoordinateBounds(originPoint, destinationPoint, false),

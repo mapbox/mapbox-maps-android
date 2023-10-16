@@ -236,7 +236,7 @@ class MapControllerTest {
 
   @Test
   fun mapboxMapRequest() {
-    assertEquals(mockMapboxMap, testMapController.getMapboxMap())
+    assertEquals(mockMapboxMap, testMapController.mapboxMap)
   }
 
   @Test

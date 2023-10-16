@@ -30,7 +30,7 @@ class MapIntegrationTest {
     rule.scenario.onActivity {
       it.runOnUiThread {
         mapView = MapView(it)
-        mapboxMap = mapView.getMapboxMap()
+        mapboxMap = mapView.mapboxMap
         it.frameLayout.addView(mapView)
         mapView.onStart()
         mapboxMap.setCamera(

@@ -94,9 +94,9 @@ class MapSurfaceTest {
     val nativeObserver: NativeObserver = mockk(relaxed = true)
     val styleObserver: StyleObserver = mockk(relaxUnitFun = true)
     val mapboxMap = MapboxMap(nativeMap, nativeObserver, styleObserver)
-    every { mapController.getMapboxMap() } returns mapboxMap
-    val result = mapSurface.getMapboxMap()
-    verifyOnce { mapController.getMapboxMap() }
+    every { mapController.mapboxMap } returns mapboxMap
+    val result = mapSurface.mapboxMap
+    verifyOnce { mapController.mapboxMap }
     assertEquals(mapboxMap, result)
   }
 

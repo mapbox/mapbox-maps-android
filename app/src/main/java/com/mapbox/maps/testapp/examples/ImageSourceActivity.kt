@@ -19,7 +19,7 @@ class ImageSourceActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     val binding = ActivityImageSourceBinding.inflate(layoutInflater)
     setContentView(binding.root)
-    val map = binding.mapView.getMapboxMap()
+    val map = binding.mapView.mapboxMap
 
     map.loadStyle(
       style(style = Style.DARK) {

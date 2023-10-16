@@ -185,7 +185,7 @@ class NavigationSimulator(
         }
       )
     }
-    mapView.getMapboxMap().loadStyle(
+    mapView.mapboxMap.loadStyle(
       style(style) {
         +geoJsonSource(GEOJSON_SOURCE_ID) {
           geometry(locationProvider.route)

@@ -28,7 +28,7 @@ class StandardStyleActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     binding = ActivityStandardStyleBinding.inflate(layoutInflater)
     setContentView(binding.root)
-    mapboxMap = binding.mapView.getMapboxMap()
+    mapboxMap = binding.mapView.mapboxMap
     setContentView(binding.root)
 
     // Set the camera options to center on New York City

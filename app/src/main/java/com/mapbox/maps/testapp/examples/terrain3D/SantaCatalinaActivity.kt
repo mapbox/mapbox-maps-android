@@ -49,7 +49,7 @@ class SantaCatalinaActivity : AppCompatActivity() {
     mapView.disablePlugins()
 
     // get map and setup initial camera
-    mapboxMap = mapView.getMapboxMap()
+    mapboxMap = mapView.mapboxMap
     mapboxMap.setCamera(
       CameraOptions.Builder()
         .center(POINT_START)

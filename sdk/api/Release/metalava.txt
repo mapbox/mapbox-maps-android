@@ -15,6 +15,7 @@ package com.mapbox.maps {
     method public void setOnFpsChangedListener(com.mapbox.maps.renderer.OnFpsChangedListener listener);
     method public android.graphics.Bitmap? snapshot();
     method public void snapshot(com.mapbox.maps.MapView.OnSnapshotReady listener);
+    property public abstract com.mapbox.maps.MapboxMap mapboxMap;
   }
 
   public final class MapInitOptions {
@@ -76,6 +77,7 @@ package com.mapbox.maps {
     method public void addRendererSetupErrorListener(com.mapbox.maps.renderer.RendererSetupErrorListener rendererSetupErrorListener);
     method @com.mapbox.maps.MapboxExperimental public void addWidget(com.mapbox.maps.renderer.widget.Widget widget);
     method public com.mapbox.maps.MapboxMap getMapboxMap();
+    method @Deprecated @kotlin.jvm.JvmSynthetic public com.mapbox.maps.MapboxMap! getMapboxMap();
     method public <T extends com.mapbox.maps.plugin.MapPlugin> T? getPlugin(String id);
     method public android.view.Surface getSurface();
     method public void onDestroy();
@@ -95,6 +97,7 @@ package com.mapbox.maps {
     method public void surfaceChanged(int width, int height);
     method public void surfaceCreated();
     method public void surfaceDestroyed();
+    property public com.mapbox.maps.MapboxMap mapboxMap;
     property public final android.view.Surface surface;
   }
 
@@ -107,6 +110,7 @@ package com.mapbox.maps {
     method @com.mapbox.maps.MapboxExperimental public void addWidget(com.mapbox.maps.renderer.widget.Widget widget);
     method public final void createPlugin(com.mapbox.maps.plugin.Plugin plugin);
     method public com.mapbox.maps.MapboxMap getMapboxMap();
+    method @Deprecated @kotlin.jvm.JvmSynthetic public com.mapbox.maps.MapboxMap! getMapboxMap();
     method public <T extends com.mapbox.maps.plugin.MapPlugin> T? getPlugin(String id);
     method public final com.mapbox.maps.viewannotation.ViewAnnotationManager getViewAnnotationManager();
     method public static final boolean isRenderingSupported();
@@ -124,6 +128,7 @@ package com.mapbox.maps {
     method public void setOnFpsChangedListener(com.mapbox.maps.renderer.OnFpsChangedListener listener);
     method public android.graphics.Bitmap? snapshot();
     method public void snapshot(com.mapbox.maps.MapView.OnSnapshotReady listener);
+    property public com.mapbox.maps.MapboxMap mapboxMap;
     property public final com.mapbox.maps.viewannotation.ViewAnnotationManager viewAnnotationManager;
     field public static final com.mapbox.maps.MapView.Companion Companion;
   }

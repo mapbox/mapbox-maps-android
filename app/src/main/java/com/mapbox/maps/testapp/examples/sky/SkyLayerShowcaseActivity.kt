@@ -49,7 +49,7 @@ class SkyLayerShowcaseActivity : AppCompatActivity() {
     binding = ActivitySkyLayerBinding.inflate(layoutInflater)
     setContentView(binding.root)
     applyControls()
-    binding.mapView.getMapboxMap().loadStyle(
+    binding.mapView.mapboxMap.loadStyle(
       styleExtension = style(Style.SATELLITE_STREETS) {
         +skyLayer(SKY_LAYER) {
           skyType(skyType)
@@ -78,7 +78,7 @@ class SkyLayerShowcaseActivity : AppCompatActivity() {
         }
       }
     ) {
-      binding.mapView.getMapboxMap().setCamera(
+      binding.mapView.mapboxMap.setCamera(
         cameraOptions {
           zoom(16.0)
           pitch(85.0)

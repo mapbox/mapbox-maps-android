@@ -21,7 +21,7 @@ class MapViewSnapshotActivity : AppCompatActivity() {
     val binding = ActivityViewSnapshotBinding.inflate(layoutInflater)
     setContentView(binding.root)
 
-    mapboxMap = binding.mapView.getMapboxMap()
+    mapboxMap = binding.mapView.mapboxMap
     mapboxMap.loadStyle(Style.STANDARD)
 
     binding.fab.setOnClickListener {

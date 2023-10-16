@@ -133,7 +133,7 @@ class RendererSetupTest {
     }
     val mapView = MapView(activity)
     activity.frameLayout.addView(mapView)
-    mapView.getMapboxMap().loadStyle("{}")
+    mapView.mapboxMap.loadStyle("{}")
     return mapView
   }
 
@@ -144,7 +144,7 @@ class RendererSetupTest {
   ) {
     mapView.onStart()
     cancelable?.cancel()
-    cancelable = mapView.getMapboxMap().subscribeMapLoaded {
+    cancelable = mapView.mapboxMap.subscribeMapLoaded {
       eventList.add(Event.MAP_LOAD_SUCCESS)
       mapView.onStop()
       mapView.onDestroy()

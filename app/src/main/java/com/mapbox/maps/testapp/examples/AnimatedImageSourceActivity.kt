@@ -32,7 +32,7 @@ class AnimatedImageSourceActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     val binding = ActivityAnimatedImagesourceBinding.inflate(layoutInflater)
     setContentView(binding.root)
-    mapboxMap = binding.mapView.getMapboxMap()
+    mapboxMap = binding.mapView.mapboxMap
     mapboxMap.loadStyle(
       style(style = Style.STANDARD) {
         +imageSource(ID_IMAGE_SOURCE) {

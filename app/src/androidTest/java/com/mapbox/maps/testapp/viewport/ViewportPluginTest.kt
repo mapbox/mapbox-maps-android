@@ -51,7 +51,7 @@ class ViewportPluginTest : BaseMapTest() {
       activity.runOnUiThread {
         viewportPlugin = mapView.viewport
         immediateViewportTransition = viewportPlugin.makeImmediateViewportTransition()
-        mapView.getMapboxMap().setCamera(START_CAMERA_OPTION)
+        mapView.mapboxMap.setCamera(START_CAMERA_OPTION)
         mapView.location.apply {
           enabled = true
           setLocationProvider(locationProvider)
@@ -69,8 +69,8 @@ class ViewportPluginTest : BaseMapTest() {
   fun transitionToDefaultTransition() {
     val latch = CountDownLatch(1)
     handler.post {
-      assertEquals(0.0, mapView.getMapboxMap().cameraState.bearing, EPS)
-      mapView.getMapboxMap().cameraState.center.assertEquals(NULL_ISLAND)
+      assertEquals(0.0, mapView.mapboxMap.cameraState.bearing, EPS)
+      mapView.mapboxMap.cameraState.center.assertEquals(NULL_ISLAND)
       // immediate update location puck to test location.
       locationProvider.locationConsumers.forEach {
         it.onLocationUpdated(
@@ -95,7 +95,7 @@ class ViewportPluginTest : BaseMapTest() {
       throw TimeoutException()
     }
     handler.post {
-      val cameraState = mapView.getMapboxMap().cameraState
+      val cameraState = mapView.mapboxMap.cameraState
       cameraState.center.assertEquals(TEST_POINT)
       assertEquals(TEST_BEARING, cameraState.bearing, EPS)
     }
@@ -105,8 +105,8 @@ class ViewportPluginTest : BaseMapTest() {
   fun transitionToImmediateTransition() {
     val latch = CountDownLatch(1)
     handler.post {
-      assertEquals(0.0, mapView.getMapboxMap().cameraState.bearing, EPS)
-      mapView.getMapboxMap().cameraState.center.assertEquals(NULL_ISLAND)
+      assertEquals(0.0, mapView.mapboxMap.cameraState.bearing, EPS)
+      mapView.mapboxMap.cameraState.center.assertEquals(NULL_ISLAND)
       // immediate update location puck to test location.
       locationProvider.locationConsumers.forEach {
         it.onLocationUpdated(
@@ -131,7 +131,7 @@ class ViewportPluginTest : BaseMapTest() {
     }
 
     handler.post {
-      val cameraState = mapView.getMapboxMap().cameraState
+      val cameraState = mapView.mapboxMap.cameraState
       cameraState.center.assertEquals(TEST_POINT)
       assertEquals(TEST_BEARING, cameraState.bearing, EPS)
     }
@@ -141,8 +141,8 @@ class ViewportPluginTest : BaseMapTest() {
   fun testFollowPuckViewportState() {
     val latch = CountDownLatch(1)
     handler.post {
-      assertEquals(0.0, mapView.getMapboxMap().cameraState.bearing, EPS)
-      mapView.getMapboxMap().cameraState.center.assertEquals(NULL_ISLAND)
+      assertEquals(0.0, mapView.mapboxMap.cameraState.bearing, EPS)
+      mapView.mapboxMap.cameraState.center.assertEquals(NULL_ISLAND)
       // immediate update location puck to test location.
       locationProvider.locationConsumers.forEach {
         it.onLocationUpdated(
@@ -189,7 +189,7 @@ class ViewportPluginTest : BaseMapTest() {
 
     // validate the camera is at the moved location
     handler.post {
-      val cameraState = mapView.getMapboxMap().cameraState
+      val cameraState = mapView.mapboxMap.cameraState
       cameraState.center.assertEquals(TEST_POINT_MOVED)
       assertEquals(TEST_BEARING + 90.0, cameraState.bearing, EPS)
     }

@@ -39,7 +39,7 @@ class AnimatedMarkerActivity : AppCompatActivity(), OnMapClickListener {
       feature(Feature.fromGeometry(currentPoint))
     }
 
-    val mapboxMap = binding.mapView.getMapboxMap()
+    val mapboxMap = binding.mapView.mapboxMap
     mapboxMap.loadStyle(
       style(Style.SATELLITE_STREETS) {
         +image("marker_icon", BitmapFactory.decodeResource(resources, R.drawable.red_marker))
@@ -91,6 +91,6 @@ class AnimatedMarkerActivity : AppCompatActivity(), OnMapClickListener {
   override fun onDestroy() {
     super.onDestroy()
     animator?.cancel()
-    binding.mapView.getMapboxMap().removeOnMapClickListener(this)
+    binding.mapView.mapboxMap.removeOnMapClickListener(this)
   }
 }

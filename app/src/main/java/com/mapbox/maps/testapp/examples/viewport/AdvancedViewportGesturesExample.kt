@@ -66,7 +66,7 @@ class AdvancedViewportGesturesExample : AppCompatActivity() {
     )
   }
   private val onIndicatorPositionChangedListener = OnIndicatorPositionChangedListener {
-    mapView.gestures.focalPoint = mapView.getMapboxMap().pixelForCoordinate(it)
+    mapView.gestures.focalPoint = mapView.mapboxMap.pixelForCoordinate(it)
   }
 
   private val viewportStatusObserver = ViewportStatusObserver { from, to, _ ->
@@ -96,7 +96,7 @@ class AdvancedViewportGesturesExample : AppCompatActivity() {
     override fun onScaleEnd(detector: StandardScaleGestureDetector) {
       // set the default zoom to current value on scale gesture end
       followPuckViewportState.apply {
-        options = options.toBuilder().zoom(mapView.getMapboxMap().cameraState.zoom).build()
+        options = options.toBuilder().zoom(mapView.mapboxMap.cameraState.zoom).build()
       }
     }
   }
@@ -118,7 +118,7 @@ class AdvancedViewportGesturesExample : AppCompatActivity() {
       // set the default bearing to current value on rotate gesture end
       followPuckViewportState.apply {
         options = options.toBuilder()
-          .bearing(FollowPuckViewportStateBearing.Constant(mapView.getMapboxMap().cameraState.bearing))
+          .bearing(FollowPuckViewportStateBearing.Constant(mapView.mapboxMap.cameraState.bearing))
           .build()
       }
     }
@@ -143,7 +143,7 @@ class AdvancedViewportGesturesExample : AppCompatActivity() {
       // set the default pitch to current value on shove gesture end
       followPuckViewportState.apply {
         options = options.toBuilder()
-          .pitch(mapView.getMapboxMap().cameraState.pitch)
+          .pitch(mapView.mapboxMap.cameraState.pitch)
           .build()
       }
     }
@@ -162,7 +162,7 @@ class AdvancedViewportGesturesExample : AppCompatActivity() {
       ).routes()[0].geometry()!!,
       Constants.PRECISION_6
     )
-    mapView.getMapboxMap().loadStyle(
+    mapView.mapboxMap.loadStyle(
       // Show the route line on the map
       style(Style.TRAFFIC_DAY) {
         +geoJsonSource(GEOJSON_SOURCE_ID) {

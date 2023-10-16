@@ -45,7 +45,7 @@ class FeatureStateActivity : AppCompatActivity() {
     binding = ActivityFeatureStateBinding.inflate(layoutInflater)
     setContentView(binding.root)
 
-    mapboxMap = binding.mapView.getMapboxMap()
+    mapboxMap = binding.mapView.mapboxMap
     binding.mapView.scalebar.enabled = false
     mapboxMap.loadStyle(createStyle()) {
       mapboxMap.setCamera(

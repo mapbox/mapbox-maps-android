@@ -12,11 +12,9 @@ import com.mapbox.maps.renderer.widget.Widget
 interface MapControllable : MapboxLifecycleObserver {
 
   /**
-   * Returns a [MapboxMap] object that can be used to interact with the map.
-   *
-   * @return [MapboxMap] object to interact with the map.
+   * A [MapboxMap] object that can be used to interact with the map.
    */
-  fun getMapboxMap(): MapboxMap
+  val mapboxMap: MapboxMap
 
   /**
    * Called when a touch event has occurred.

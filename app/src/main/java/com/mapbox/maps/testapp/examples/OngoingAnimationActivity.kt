@@ -18,7 +18,7 @@ class OngoingAnimationActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     val mapView = MapView(this)
     setContentView(mapView)
-    mapView.getMapboxMap()
+    mapView.mapboxMap
       .apply {
         setCamera(
           CameraOptions.Builder()

@@ -24,7 +24,7 @@ internal class ViewAnnotationManagerImpl(
   mapView: MapView,
   private val viewAnnotationsLayout: FrameLayout = FrameLayout(mapView.context),
 ) : ViewAnnotationManager, DelegatingViewAnnotationPositionsUpdateListener() {
-  private val mapboxMap: MapboxMap = mapView.getMapboxMap()
+  private val mapboxMap: MapboxMap = mapView.mapboxMap
   private val renderThread = mapView.mapController.renderer.renderThread
   private val pixelRatio = mapView.resources.displayMetrics.density
 

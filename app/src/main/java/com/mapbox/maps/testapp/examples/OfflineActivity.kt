@@ -95,7 +95,7 @@ class OfflineActivity : AppCompatActivity() {
         // and the map initialisation period, the default tile store path will be used and
         // no extra action is needed.
         mapView = MapView(this@OfflineActivity).also { mapview ->
-          val mapboxMap = mapview.getMapboxMap()
+          val mapboxMap = mapview.mapboxMap
           mapboxMap.setCamera(CameraOptions.Builder().zoom(ZOOM).center(TOKYO).build())
           mapboxMap.loadStyle(Style.OUTDOORS) {
             // Add a circle annotation to the offline geometry.

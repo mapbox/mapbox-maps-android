@@ -49,7 +49,7 @@ class PointAnnotationClusterActivity : AppCompatActivity(), CoroutineScope {
     binding = ActivityAnnotationBinding.inflate(layoutInflater)
     setContentView(binding.root)
     binding.progress.visibility = View.VISIBLE
-    mapboxMap = binding.mapView.getMapboxMap()
+    mapboxMap = binding.mapView.mapboxMap
       .apply {
         setCamera(
           CameraOptions.Builder()
@@ -95,7 +95,7 @@ class PointAnnotationClusterActivity : AppCompatActivity(), CoroutineScope {
 
     binding.deleteAll.setOnClickListener { pointAnnotationManager?.deleteAll() }
     binding.changeStyle.setOnClickListener {
-      binding.mapView.getMapboxMap().loadStyle(nextStyle)
+      binding.mapView.mapboxMap.loadStyle(nextStyle)
     }
   }
 

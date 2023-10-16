@@ -15,6 +15,8 @@ Mapbox welcomes participation and contributions from everyone.
   - Style Import APIs: `getStyleImports`, `removeStyleImport`, `getStyleImportSchema`, `getStyleImportConfigProperties`, `getStyleImportConfigProperty`, `setStyleImportConfigProperties`, `setStyleImportConfigProperty`
   - Annotation plugin APIs: `CircleAnnotationManager.circleEmissiveStrength`, `PolygonAnnotationManager.fillEmissiveStrength`, `PolylineAnnotationManager.lineDepthOcclusionFactor`, `PolylineAnnotationManager.lineEmissiveStrength`
   - Map Overlay plugin and related APIs
+* (Kotlin only) Deprecated `MapView.getMapboxMap()` function. Please use property `MapView.mapboxMap`.
+* (Kotlin only) Deprecated `MapSurface.getMapboxMap()` function. Please use property `MapSurface.mapboxMap`.
 
 ## Bug fixes 🐞
 * Fix widgets not showing on some zoom levels.

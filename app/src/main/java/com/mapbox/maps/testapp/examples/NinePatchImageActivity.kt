@@ -30,7 +30,7 @@ class NinePatchImageActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     mapView = MapView(this)
     setContentView(mapView)
-    mapView.getMapboxMap().loadStyle(
+    mapView.mapboxMap.loadStyle(
       styleExtension = style(Style.STANDARD) {
         +image9Patch(
           NINE_PATCH_ID,
@@ -51,7 +51,7 @@ class NinePatchImageActivity : AppCompatActivity() {
       style = it
       updateIconText()
     }
-    mapView.getMapboxMap().setCamera(
+    mapView.mapboxMap.setCamera(
       CameraOptions.Builder()
         .center(CENTER)
         .zoom(ZOOM)

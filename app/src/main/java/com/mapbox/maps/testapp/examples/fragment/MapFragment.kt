@@ -30,7 +30,7 @@ class MapFragment : Fragment() {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    mapboxMap = mapView.getMapboxMap()
+    mapboxMap = mapView.mapboxMap
     if (::onMapReady.isInitialized) {
       onMapReady.invoke(mapboxMap)
     }

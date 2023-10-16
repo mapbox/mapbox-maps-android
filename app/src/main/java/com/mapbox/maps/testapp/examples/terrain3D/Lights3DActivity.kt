@@ -24,7 +24,7 @@ class Lights3DActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     binding = ActivityFillExtrusionBinding.inflate(layoutInflater)
     setContentView(binding.root)
-    val mapboxMap = binding.mapView.getMapboxMap()
+    val mapboxMap = binding.mapView.mapboxMap
     mapboxMap.setCamera(
       CameraOptions.Builder()
         .center(Point.fromLngLat(24.943849, 60.171924))

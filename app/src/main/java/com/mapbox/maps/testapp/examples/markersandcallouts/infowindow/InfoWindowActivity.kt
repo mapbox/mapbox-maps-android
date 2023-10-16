@@ -37,7 +37,7 @@ class InfoWindowActivity : AppCompatActivity(), OnMapLongClickListener {
       this@InfoWindowActivity,
       R.drawable.blue_marker_view
     )!!
-    mapView.getMapboxMap().apply {
+    mapView.mapboxMap.apply {
       setCamera(
         cameraOptions {
           center(Point.fromLngLat(-77.03655168667463, 38.897705003219784))
@@ -100,7 +100,7 @@ class InfoWindowActivity : AppCompatActivity(), OnMapLongClickListener {
   }
 
   override fun onDestroy() {
-    mapView.getMapboxMap().removeOnMapLongClickListener(this)
+    mapView.mapboxMap.removeOnMapLongClickListener(this)
     markerManager.destroy()
     super.onDestroy()
   }

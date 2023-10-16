@@ -19,7 +19,7 @@ class MapDelegateProviderTest {
   @Before
   fun setUp() {
     mapView = mockk(relaxed = true)
-    every { mapView.getMapboxMap() } returns mapboxMap
+    every { mapView.mapboxMap } returns mapboxMap
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logI(any(), any()) } just Runs
   }

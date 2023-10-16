@@ -136,7 +136,7 @@ The following example showcases how to turn on debug features using `MapEffect`:
         MapEffect(Unit) { mapView ->
           // Use mapView to access all the Mapbox Maps APIs including plugins etc.
           // For example, to enable debug mode:
-          mapView.getMapboxMap().setDebug(
+          mapView.mapboxMap.setDebug(
             listOf(
               MapDebugOptions.TILE_BORDERS,
               MapDebugOptions.PARSE_STATUS,

@@ -34,7 +34,7 @@ class IconSizeChangeOnClickActivity : AppCompatActivity(), OnMapClickListener {
     val binding = ActivityIconSizeChangeOnClickBinding.inflate(layoutInflater)
     setContentView(binding.root)
 
-    mapboxMap = binding.mapView.getMapboxMap()
+    mapboxMap = binding.mapView.mapboxMap
     mapboxMap.loadStyle(
       styleExtension = style(Style.DARK) {
         +geoJsonSource("marker-source") {

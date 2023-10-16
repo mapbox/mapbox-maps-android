@@ -47,7 +47,7 @@ class SnakingDirectionsRouteActivity : AppCompatActivity() {
     binding = ActivityJavaservicesSnakingDirectionsRouteBinding.inflate(layoutInflater)
     setContentView(binding.root)
 
-    binding.mapView.getMapboxMap().loadStyle(
+    binding.mapView.mapboxMap.loadStyle(
       style(Style.LIGHT) {
         +image(ICON_ID, BitmapFactory.decodeResource(resources, R.drawable.red_marker))
         +geoJsonSource(SOURCE_ID) {
@@ -146,7 +146,7 @@ class SnakingDirectionsRouteActivity : AppCompatActivity() {
       )
     }
 
-    val map = binding.mapView.getMapboxMap()
+    val map = binding.mapView.mapboxMap
     (0..ANIMATION_STEPS).forEach { index ->
       binding.mapView.postDelayed(
         {

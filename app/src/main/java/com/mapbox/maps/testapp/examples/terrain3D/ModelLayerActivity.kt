@@ -29,7 +29,7 @@ class ModelLayerActivity : AppCompatActivity() {
     mapView = MapView(this)
     setContentView(mapView)
 
-    mapView.getMapboxMap().apply {
+    mapView.mapboxMap.apply {
       setCamera(
         cameraOptions {
           center(TurfMeasurement.midpoint(MODEL1_COORDINATES, MAPBOX_HELSINKI))

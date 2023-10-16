@@ -34,7 +34,7 @@ class CircleLayerClusteringActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     val mapView = MapView(this)
     setContentView(mapView)
-    val mapboxMap = mapView.getMapboxMap()
+    val mapboxMap = mapView.mapboxMap
 
     mapboxMap.loadStyle(
       styleExtension = style(Style.LIGHT) {

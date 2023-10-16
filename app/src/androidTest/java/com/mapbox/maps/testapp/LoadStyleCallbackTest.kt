@@ -30,7 +30,7 @@ class LoadStyleCallbackTest {
 
     val latch = CountDownLatch(1)
     testActivity.scenario.onActivity {
-      activity.mapView.getMapboxMap().apply {
+      activity.mapView.mapboxMap.apply {
         subscribeMapLoadingError {
           throw AssertionError("onMapLoadError: $it")
         }
@@ -58,7 +58,7 @@ class LoadStyleCallbackTest {
 
     val latch = CountDownLatch(1)
     testActivity.scenario.onActivity {
-      activity.mapView.getMapboxMap().apply {
+      activity.mapView.mapboxMap.apply {
         subscribeMapLoadingError {
           throw AssertionError("onMapLoadError: $it")
         }
@@ -102,7 +102,7 @@ class LoadStyleCallbackTest {
 
     val latch = CountDownLatch(1)
     testActivity.scenario.onActivity {
-      activity.mapView.getMapboxMap().apply {
+      activity.mapView.mapboxMap.apply {
         subscribeMapLoadingError {
           throw AssertionError("onMapLoadError: $it")
         }

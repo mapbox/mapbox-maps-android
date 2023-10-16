@@ -55,7 +55,7 @@ class FrameStatsRecorder {
   fun startResumeBenchmarking(mapView: MapView) {
     // Make sure we've finished writing any previous stats
     cancelAndWaitWrite()
-    renderFrameFinishedCancelable = mapView.getMapboxMap().subscribeRenderFrameFinished(renderFrameFinishedCallback)
+    renderFrameFinishedCancelable = mapView.mapboxMap.subscribeRenderFrameFinished(renderFrameFinishedCallback)
     startBenchmarkTime = SystemClock.elapsedRealtimeNanos()
     lastRenderedFrameTime = 0L
   }

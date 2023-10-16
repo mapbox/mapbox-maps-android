@@ -19,7 +19,7 @@ class RasterColorizationActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     val mapView = MapView(this)
     setContentView(mapView)
-    mapView.getMapboxMap()
+    mapView.mapboxMap
       .apply {
         loadStyle(
           styleExtension = style {

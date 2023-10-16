@@ -34,7 +34,7 @@ class DebugModeActivity : AppCompatActivity() {
     binding = ActivityDebugBinding.inflate(layoutInflater)
     setContentView(binding.root)
 
-    mapboxMap = binding.mapView.getMapboxMap()
+    mapboxMap = binding.mapView.mapboxMap
 
     mapboxMap.subscribeResourceRequest {
       logI(

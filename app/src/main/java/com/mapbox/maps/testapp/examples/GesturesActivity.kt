@@ -130,7 +130,7 @@ class GesturesActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     binding = ActivityGesturesBinding.inflate(layoutInflater)
     setContentView(binding.root)
-    mapboxMap = binding.mapView.getMapboxMap()
+    mapboxMap = binding.mapView.mapboxMap
     mapboxMap.setCamera(
       CameraOptions.Builder()
         .center(Point.fromLngLat(-0.11968, 51.50325))

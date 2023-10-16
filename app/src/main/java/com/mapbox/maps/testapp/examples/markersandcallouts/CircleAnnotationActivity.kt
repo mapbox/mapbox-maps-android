@@ -50,7 +50,7 @@ class CircleAnnotationActivity : AppCompatActivity() {
           false
         }
       )
-      binding.mapView.getMapboxMap().setCamera(
+      binding.mapView.mapboxMap.setCamera(
         CameraOptions.Builder()
           .center(Point.fromLngLat(CIRCLE_LONGITUDE, CIRCLE_LATITUDE))
           .pitch(0.0)
@@ -58,7 +58,7 @@ class CircleAnnotationActivity : AppCompatActivity() {
           .bearing(0.0)
           .build()
       )
-      binding.mapView.getMapboxMap().loadStyle(nextStyle) {
+      binding.mapView.mapboxMap.loadStyle(nextStyle) {
         addInteractionListener(
           object : OnCircleAnnotationInteractionListener {
             override fun onSelectAnnotation(annotation: CircleAnnotation) {
@@ -113,7 +113,7 @@ class CircleAnnotationActivity : AppCompatActivity() {
       }
     }
     binding.changeStyle.setOnClickListener {
-      binding.mapView.getMapboxMap().loadStyle(nextStyle)
+      binding.mapView.mapboxMap.loadStyle(nextStyle)
     }
   }
 

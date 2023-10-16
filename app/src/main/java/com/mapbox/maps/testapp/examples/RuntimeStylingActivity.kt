@@ -34,7 +34,7 @@ class RuntimeStylingActivity : AppCompatActivity() {
     val mapView = MapView(this)
     setContentView(mapView)
 
-    mapboxMap = mapView.getMapboxMap()
+    mapboxMap = mapView.mapboxMap
     mapboxMap.loadStyle(
       Style.MAPBOX_STREETS
     ) { setupStyle(it) }

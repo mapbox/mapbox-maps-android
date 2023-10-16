@@ -41,7 +41,7 @@ class SpaceStationLocationActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     val mapView = MapView(this)
     setContentView(mapView)
-    mapboxMap = mapView.getMapboxMap()
+    mapboxMap = mapView.mapboxMap
     mapboxMap.loadStyle(
       Style.SATELLITE_STREETS
     ) {

@@ -33,7 +33,7 @@ class PolylineAnnotationActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     val binding = ActivityAnnotationBinding.inflate(layoutInflater)
     setContentView(binding.root)
-    binding.mapView.getMapboxMap().setCamera(
+    binding.mapView.mapboxMap.setCamera(
       CameraOptions.Builder()
         .center(Point.fromLngLat(24.945749, 60.171924))
         .pitch(0.0)
@@ -41,7 +41,7 @@ class PolylineAnnotationActivity : AppCompatActivity() {
         .bearing(0.0)
         .build()
     )
-    binding.mapView.getMapboxMap().loadStyle(nextStyle) {
+    binding.mapView.mapboxMap.loadStyle(nextStyle) {
       annotationPlugin = binding.mapView.annotations
       polylineAnnotationManager = annotationPlugin.createPolylineAnnotationManager(
         annotationConfig = AnnotationConfig(PITCH_OUTLINE, LAYER_ID, SOURCE_ID)
@@ -116,7 +116,7 @@ class PolylineAnnotationActivity : AppCompatActivity() {
       }
     }
     binding.changeStyle.setOnClickListener {
-      binding.mapView.getMapboxMap().loadStyle(nextStyle)
+      binding.mapView.mapboxMap.loadStyle(nextStyle)
     }
   }
 

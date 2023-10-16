@@ -68,7 +68,7 @@ class CameraPredefinedAnimatorsActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     binding = ActivityCameraPredefinedAnimatorsBinding.inflate(layoutInflater)
     setContentView(binding.root)
-    mapboxMap = binding.mapView.getMapboxMap()
+    mapboxMap = binding.mapView.mapboxMap
     cameraAnimationsPlugin = binding.mapView.camera
     mapboxMap.loadStyle(
       style(Style.STANDARD) {

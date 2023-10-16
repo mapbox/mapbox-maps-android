@@ -48,7 +48,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   private val nativeObserver: NativeObserver
   private val mapInitOptions: MapInitOptions
   private val nativeMap: NativeMapImpl
-  private val mapboxMap: MapboxMap
+  private val _mapboxMap: MapboxMap
   private val pluginRegistry: MapPluginRegistry
   private val styleDataLoadedCallback: StyleDataLoadedCallback
   private val cameraChangedCallback: CameraChangedCallback
@@ -59,6 +59,9 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   private var style: Style? = null
 
   private var contextMode: ContextMode? = null
+
+  override val mapboxMap: MapboxMap
+    get() = _mapboxMap
 
   constructor(
     renderer: MapboxRenderer,
@@ -77,7 +80,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
       renderer,
     )
     this.nativeObserver = NativeObserver(nativeMap)
-    this.mapboxMap =
+    this._mapboxMap =
       MapProvider.getMapboxMap(nativeMap, nativeObserver, mapInitOptions.mapOptions.pixelRatio)
     this.mapboxMap.renderHandler = renderer.renderThread.renderHandlerThread.handler
     this.pluginRegistry = MapProvider.getMapPluginRegistry(
@@ -120,7 +123,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     this.mapInitOptions = mapInitOptions
     this.contextMode = contextMode
     this.nativeMap = nativeMap
-    this.mapboxMap = mapboxMap
+    this._mapboxMap = mapboxMap
     this.pluginRegistry = pluginRegistry
     this.cameraChangedCallback = CameraChangedCallback {
       pluginRegistry.onCameraMove(nativeMap.getCameraState())
@@ -132,9 +135,19 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     return nativeMap
   }
 
-  override fun getMapboxMap(): MapboxMap {
-    return mapboxMap
-  }
+  /**
+   * Returns a [MapboxMap] object that can be used to interact with the map.
+   *
+   * @return [MapboxMap] object to interact with the map.
+   */
+  @Deprecated(
+    "This method is deprecated, and will be removed in next major release. Use [mapboxMap] property instead.",
+    replaceWith = ReplaceWith("mapboxMap")
+  )
+  // Hide it from Java. They will use [mapboxMap] property getter above. Moreover, mangle the name
+  // in Java to avoid "platform declaration clash".
+  @JvmSynthetic @JvmName("getMapboxMapDeprecated")
+  fun getMapboxMap(): MapboxMap = mapboxMap
 
   override fun onStart() {
     if (lifecycleState == LifecycleState.STATE_STARTED) {

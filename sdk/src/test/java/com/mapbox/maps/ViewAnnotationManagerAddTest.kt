@@ -40,7 +40,7 @@ class ViewAnnotationManagerAddTest(
   @Before
   fun setUp() {
     val mapView: MapView = mockk(relaxUnitFun = true)
-    every { mapView.getMapboxMap() } returns mapboxMap
+    every { mapView.mapboxMap } returns mapboxMap
     every { mapView.layoutParams = any() } just Runs
     every { mapView.context } returns mockk()
     renderer = mockk(relaxUnitFun = true)

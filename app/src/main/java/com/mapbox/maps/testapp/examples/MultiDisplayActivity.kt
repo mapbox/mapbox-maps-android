@@ -35,7 +35,7 @@ class MultiDisplayActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     binding = ActivityMultiDisplayBinding.inflate(layoutInflater)
     setContentView(binding.root)
-    binding.mapView.getMapboxMap().loadStyle(
+    binding.mapView.mapboxMap.loadStyle(
       style(Style.DARK) {
         +image(IMAGE_ID, BitmapFactory.decodeResource(resources, R.drawable.red_marker))
         +geoJsonSource(SOURCE_ID) {
@@ -62,7 +62,7 @@ class MultiDisplayActivity : AppCompatActivity() {
       .zoom(ZOOM)
       .build()
 
-    binding.mapView.getMapboxMap().flyTo(
+    binding.mapView.mapboxMap.flyTo(
       cameraOption,
       mapAnimationOptions {
         duration(DURATION)

@@ -46,7 +46,7 @@ abstract class BaseAnimationMapTest {
         cameraAnimationPlugin = mapView.camera
         it.setContentView(mapView)
 
-        mapboxMap = mapView.getMapboxMap().apply {
+        mapboxMap = mapView.mapboxMap.apply {
           loadStyle(
             Style.DARK
           ) { style ->

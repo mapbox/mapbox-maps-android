@@ -94,7 +94,7 @@ class ViewportShowcaseActivity : AppCompatActivity() {
     setContentView(binding.root)
     viewportButton = binding.switchButton
     mapView = binding.mapView
-    mapboxMap = binding.mapView.getMapboxMap().apply {
+    mapboxMap = binding.mapView.mapboxMap.apply {
       subscribeStyleLoaded {
         setCamera(
           CameraOptions.Builder()

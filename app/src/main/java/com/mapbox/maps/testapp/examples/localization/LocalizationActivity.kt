@@ -45,7 +45,7 @@ class LocalizationActivity : AppCompatActivity() {
     selectedLocale = locale
     applySelectedLanguage = false
     Toast.makeText(this, R.string.change_language_instruction, Toast.LENGTH_LONG).show()
-    mapboxMap = binding.mapView.getMapboxMap()
+    mapboxMap = binding.mapView.mapboxMap
     mapboxMap.loadStyle(nextStyle) {
       it.localizeLabels(locale)
     }

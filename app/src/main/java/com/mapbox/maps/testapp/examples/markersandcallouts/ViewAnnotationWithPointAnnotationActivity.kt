@@ -49,7 +49,7 @@ class ViewAnnotationWithPointAnnotationActivity : AppCompatActivity() {
 
     viewAnnotationManager = binding.mapView.viewAnnotationManager
 
-    binding.mapView.getMapboxMap().setCamera(
+    binding.mapView.mapboxMap.setCamera(
       CameraOptions.Builder()
         .center(POINT)
         .pitch(45.0)
@@ -58,7 +58,7 @@ class ViewAnnotationWithPointAnnotationActivity : AppCompatActivity() {
         .build()
     )
 
-    binding.mapView.getMapboxMap().loadStyle(Style.STANDARD) {
+    binding.mapView.mapboxMap.loadStyle(Style.STANDARD) {
       prepareAnnotationMarker(binding.mapView, iconBitmap)
       prepareViewAnnotation()
       // show / hide view annotation based on a marker click

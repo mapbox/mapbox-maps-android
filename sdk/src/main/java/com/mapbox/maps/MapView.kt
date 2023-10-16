@@ -242,7 +242,22 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    *
    * @return [MapboxMap] object to interact with the map.
    */
-  override fun getMapboxMap(): MapboxMap = mapController.getMapboxMap()
+  override val mapboxMap
+    get() = mapController.mapboxMap
+
+  /**
+   * Returns a [MapboxMap] object that can be used to interact with the map.
+   *
+   * @return [MapboxMap] object to interact with the map.
+   */
+  @Deprecated(
+    "This method is deprecated, and will be removed in next major release. Use [mapboxMap] property instead.",
+    replaceWith = ReplaceWith("mapboxMap")
+  )
+  // Hide it from Java. They will use [mapboxMap] property getter above. Moreover, mangle the name
+  // in Java to avoid "platform declaration clash".
+  @JvmSynthetic @JvmName("getMapboxMapDeprecated")
+  fun getMapboxMap(): MapboxMap = mapboxMap
 
   /**
    * Queue a runnable to be executed on the map renderer thread.

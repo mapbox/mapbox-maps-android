@@ -53,7 +53,7 @@ class PointAnnotationActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     val binding = ActivityAnnotationBinding.inflate(layoutInflater)
     setContentView(binding.root)
-    binding.mapView.getMapboxMap().setCamera(
+    binding.mapView.mapboxMap.setCamera(
       CameraOptions.Builder()
         .center(
           Point.fromLngLat(
@@ -66,7 +66,7 @@ class PointAnnotationActivity : AppCompatActivity() {
         .bearing(-17.6)
         .build()
     )
-    binding.mapView.getMapboxMap().loadStyle(nextStyle) {
+    binding.mapView.mapboxMap.loadStyle(nextStyle) {
       annotationPlugin = binding.mapView.annotations
       circleAnnotationManager = annotationPlugin.createCircleAnnotationManager().apply {
         val circleAnnotationOptions: CircleAnnotationOptions = CircleAnnotationOptions()
@@ -206,7 +206,7 @@ class PointAnnotationActivity : AppCompatActivity() {
         }
       }
 
-      binding.mapView.getMapboxMap().addOnMapClickListener {
+      binding.mapView.mapboxMap.addOnMapClickListener {
         Toast.makeText(this@PointAnnotationActivity, "OnMapClick", Toast.LENGTH_SHORT).show()
         true
       }
@@ -218,7 +218,7 @@ class PointAnnotationActivity : AppCompatActivity() {
       }
     }
     binding.changeStyle.setOnClickListener {
-      binding.mapView.getMapboxMap().loadStyle(nextStyle)
+      binding.mapView.mapboxMap.loadStyle(nextStyle)
     }
   }
 

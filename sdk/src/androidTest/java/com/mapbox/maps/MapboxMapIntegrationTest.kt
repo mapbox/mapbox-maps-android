@@ -28,7 +28,7 @@ class MapboxMapIntegrationTest {
   fun setUp() {
     rule.scenario.onActivity {
       mapView = MapView(it)
-      mapboxMap = mapView.getMapboxMap()
+      mapboxMap = mapView.mapboxMap
       it.frameLayout.addView(mapView)
       mapView.onStart()
     }

@@ -34,7 +34,7 @@ class CustomAttributionActivity : AppCompatActivity() {
     val binding = ActivityCustomAttributionBinding.inflate(layoutInflater)
     setContentView(binding.root)
 
-    binding.mapView.getMapboxMap().loadStyle(Style.STANDARD)
+    binding.mapView.mapboxMap.loadStyle(Style.STANDARD)
     checkBoxes = listOf(
       binding.withImproveMap,
       binding.withCopyrightSign,

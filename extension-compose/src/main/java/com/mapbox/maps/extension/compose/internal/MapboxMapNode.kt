@@ -57,7 +57,7 @@ private class MapboxMapNode(
   private var cancelable: Cancelable? = null
   private var mapEventCancelableHolder: MapEventCancelableHolder
   private val cameraChangedCallback = CameraChangedCallback {
-    val cameraState = controller.getMapboxMap().cameraState
+    val cameraState = controller.mapboxMap.cameraState
     mapViewportState.cameraState = cameraState
   }
   private val viewportStatusObserver = ViewportStatusObserver { from, to, reason ->
@@ -67,7 +67,7 @@ private class MapboxMapNode(
 
   init {
     mapViewportState.setMap(controller)
-    mapEventCancelableHolder = MapEventCancelableHolder(controller.getMapboxMap())
+    mapEventCancelableHolder = MapEventCancelableHolder(controller.mapboxMap)
   }
 
   var mapViewportState = mapViewportState
@@ -199,9 +199,9 @@ private class MapboxMapNode(
       addNonDefaultOnClickListener(clickListener)
       addNonDefaultOnLongClickListener(longClickListener)
     }
-    mapViewportState.cameraState = controller.getMapboxMap().cameraState
+    mapViewportState.cameraState = controller.mapboxMap.cameraState
     controller.viewport.addStatusObserver(viewportStatusObserver)
-    cancelable = controller.getMapboxMap().subscribeCameraChanged(cameraChangedCallback)
+    cancelable = controller.mapboxMap.subscribeCameraChanged(cameraChangedCallback)
     mapEventCancelableHolder.apply {
       cancelAndSubscribeToMapLoaded(mapLoadedCallback)
       cancelAndSubscribeToMapIdle(mapIdleCallback)

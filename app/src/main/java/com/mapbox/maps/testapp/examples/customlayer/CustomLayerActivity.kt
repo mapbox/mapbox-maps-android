@@ -25,7 +25,7 @@ class CustomLayerActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     binding = ActivityCustomLayerBinding.inflate(layoutInflater)
     setContentView(binding.root)
-    mapboxMap = binding.mapView.getMapboxMap()
+    mapboxMap = binding.mapView.mapboxMap
     mapboxMap.loadStyle(
       style(Style.MAPBOX_STREETS) {
         +layerAtPosition(

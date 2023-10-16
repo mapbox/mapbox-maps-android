@@ -25,7 +25,7 @@ class Terrain3DShowcaseActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     val binding = ActivityTerrainShowcaseBinding.inflate(layoutInflater)
     setContentView(binding.root)
-    mapboxMap = binding.mapView.getMapboxMap()
+    mapboxMap = binding.mapView.mapboxMap
     mapboxMap.loadStyle(
       styleExtension = style(Style.SATELLITE_STREETS) {
         +rasterDemSource(SOURCE) {

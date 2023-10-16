@@ -22,7 +22,7 @@ class GlobeActivity : AppCompatActivity() {
     val mapView = MapView(this)
     setContentView(mapView)
 
-    mapView.getMapboxMap().apply {
+    mapView.mapboxMap.apply {
       setCamera(
         cameraOptions {
           center(CENTER)

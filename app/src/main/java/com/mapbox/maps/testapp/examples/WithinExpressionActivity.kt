@@ -32,7 +32,7 @@ class WithinExpressionActivity : AppCompatActivity() {
     val center = Point.fromLngLat(LON, LAT)
 
     // Setup camera position above Georgetown
-    mapView.getMapboxMap().setCamera(
+    mapView.mapboxMap.setCamera(
       CameraOptions.Builder()
         .center(center)
         .zoom(15.5)
@@ -62,7 +62,7 @@ class WithinExpressionActivity : AppCompatActivity() {
     // Create buffer around linestring
     val bufferedRouteGeometry = bufferLineStringGeometry()
 
-    mapView.getMapboxMap().loadStyle(
+    mapView.mapboxMap.loadStyle(
       style(Style.MAPBOX_STREETS) {
         +geoJsonSource(POINT_ID) {
           geometry(LineString.fromLngLats(coordinates))

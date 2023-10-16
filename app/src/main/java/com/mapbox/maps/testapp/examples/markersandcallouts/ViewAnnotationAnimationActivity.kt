@@ -59,7 +59,7 @@ class ViewAnnotationAnimationActivity : AppCompatActivity() {
     totalLength = TurfMeasurement.length(lineString, UNIT_DEFAULT)
 
     // initialize the mapview
-    mapView.getMapboxMap().apply {
+    mapView.mapboxMap.apply {
       loadStyle(
         style(Style.LIGHT) {
           // source for displaying the route

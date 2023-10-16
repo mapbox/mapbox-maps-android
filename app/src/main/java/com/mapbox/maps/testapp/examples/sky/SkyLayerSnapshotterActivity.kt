@@ -29,7 +29,7 @@ class SkyLayerSnapshotterActivity : AppCompatActivity() {
     setContentView(binding.root)
     binding.mapView.scalebar.enabled = false
     binding.mapView.compass.enabled = false
-    binding.mapView.getMapboxMap().setCamera(
+    binding.mapView.mapboxMap.setCamera(
       CameraOptions.Builder()
         .center(Point.fromLngLat(24.827187523937795, 60.55932732152849))
         .zoom(16.0)
@@ -37,7 +37,7 @@ class SkyLayerSnapshotterActivity : AppCompatActivity() {
         .bearing(330.1)
         .build()
     )
-    binding.mapView.getMapboxMap().loadStyle(
+    binding.mapView.mapboxMap.loadStyle(
       styleExtension = style(Style.OUTDOORS) {
         +skyLayer("sky") {
           skyType(SkyType.GRADIENT)

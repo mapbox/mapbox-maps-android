@@ -39,7 +39,7 @@ class LargeGeojsonPerformanceActivity : AppCompatActivity() {
     val mapView = MapView(this)
     setContentView(mapView)
 
-    mapView.getMapboxMap()
+    mapView.mapboxMap
       .apply {
         subscribeSourceDataLoaded {
           if (it.dataId.isNullOrBlank().not()) {

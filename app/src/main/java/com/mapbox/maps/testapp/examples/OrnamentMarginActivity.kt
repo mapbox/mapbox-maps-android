@@ -25,7 +25,7 @@ class OrnamentMarginActivity : AppCompatActivity(), OnRotateListener {
     super.onCreate(savedInstanceState)
     mapView = MapView(this)
     setContentView(mapView)
-    with(mapView.getMapboxMap()) {
+    with(mapView.mapboxMap) {
       mapView.attribution.position = Gravity.END or Gravity.BOTTOM
       setCamera(
         CameraOptions.Builder()
@@ -38,7 +38,7 @@ class OrnamentMarginActivity : AppCompatActivity(), OnRotateListener {
   }
 
   override fun onRotate(detector: RotateGestureDetector) {
-    val bearing = mapView.getMapboxMap().cameraState.bearing.toFloat()
+    val bearing = mapView.mapboxMap.cameraState.bearing.toFloat()
     val margin = 2f * if (bearing <= 180f) bearing else 180f - (bearing % 180f)
     with(mapView.logo) {
       marginLeft = margin

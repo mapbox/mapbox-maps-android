@@ -25,7 +25,7 @@ class IconPropertyActivity : AppCompatActivity() {
     val binding = ActivityIconPropertyBinding.inflate(layoutInflater)
     setContentView(binding.root)
 
-    binding.mapView.getMapboxMap().loadStyle(
+    binding.mapView.mapboxMap.loadStyle(
       styleExtension = style(Style.OUTDOORS) {
         // Add icons from the U.S. National Parks Service to the map's style.
         +image(RESTROOMS, BitmapFactory.decodeResource(resources, R.drawable.nps_restrooms))

@@ -141,7 +141,7 @@ public class MapViewportState(
    */
   @MapboxExperimental
   public val styleDefaultCameraOptions: CameraOptions?
-    get() = controller?.getMapboxMap()?.style?.styleDefaultCamera
+    get() = controller?.mapboxMap?.style?.styleDefaultCamera
 
   /**
    * Ease the map camera to a given camera options.

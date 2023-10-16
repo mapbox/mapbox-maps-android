@@ -25,7 +25,7 @@ class AddOneMarkerSymbolActivity : AppCompatActivity() {
     val mapView = MapView(this)
     setContentView(mapView)
 
-    mapView.getMapboxMap().also {
+    mapView.mapboxMap.also {
       it.setCamera(
         CameraOptions.Builder()
           .center(Point.fromLngLat(LONGITUDE, LATITUDE))

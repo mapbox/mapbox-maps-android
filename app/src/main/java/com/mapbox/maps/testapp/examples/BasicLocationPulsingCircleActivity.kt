@@ -31,10 +31,10 @@ class BasicLocationPulsingCircleActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     binding = ActivityLocationLayerBasicPulsingCircleBinding.inflate(layoutInflater)
     setContentView(binding.root)
-    mapboxMap = binding.mapView.getMapboxMap()
+    mapboxMap = binding.mapView.mapboxMap
     binding.mapView.location.addOnIndicatorPositionChangedListener {
       mapboxMap.setCamera(CameraOptions.Builder().center(it).build())
-      binding.mapView.gestures.focalPoint = binding.mapView.getMapboxMap().pixelForCoordinate(it)
+      binding.mapView.gestures.focalPoint = binding.mapView.mapboxMap.pixelForCoordinate(it)
     }
     locationPermissionHelper = LocationPermissionHelper(WeakReference(this))
     locationPermissionHelper.checkPermissions {

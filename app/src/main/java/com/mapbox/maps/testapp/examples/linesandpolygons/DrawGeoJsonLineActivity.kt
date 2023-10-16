@@ -21,7 +21,7 @@ class DrawGeoJsonLineActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     val mapView = MapView(this)
     setContentView(mapView)
-    mapView.getMapboxMap().setCamera(
+    mapView.mapboxMap.setCamera(
       CameraOptions.Builder().center(
         Point.fromLngLat(
           LATITUDE,
@@ -29,7 +29,7 @@ class DrawGeoJsonLineActivity : AppCompatActivity() {
         )
       ).zoom(ZOOM).build()
     )
-    mapView.getMapboxMap().loadStyle(
+    mapView.mapboxMap.loadStyle(
       (
         style(style = Style.STANDARD) {
           +geoJsonSource(GEOJSON_SOURCE_ID) {
