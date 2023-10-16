@@ -79,6 +79,7 @@ class MapboxMap :
       checkNativeMap("getStyle")
       return field
     }
+
   @get:JvmSynthetic @set:JvmSynthetic
   internal var isStyleLoadInitiated = false
   private val styleObserver: StyleObserver
@@ -462,6 +463,23 @@ class MapboxMap :
     )
     isStyleLoadInitiated = true
   }
+
+  /**
+   * Get the Style of the map synchronously, will return null is style is not loaded yet.
+   *
+   * Note: keeping the reference to an invalid [Style] instance introduces significant native memory leak,
+   * see [Style.isValid] for more details.
+   *
+   * @return currently loaded [Style] object or NULL if it is not loaded.
+   */
+  @Deprecated(
+    "This method is deprecated, and will be removed in next major release. Use [style] property instead.",
+    replaceWith = ReplaceWith("style")
+  )
+  // Hide it from Java. They will use [style] property getter above. Moreover, mangle the name
+  // in Java to avoid "platform declaration clash".
+  @JvmSynthetic @JvmName("getStyleDeprecated")
+  fun getStyle(): Style? = style
 
   /**
    * Get the [Style] of the map asynchronously.

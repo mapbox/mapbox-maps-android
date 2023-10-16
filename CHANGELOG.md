@@ -15,15 +15,13 @@ Mapbox welcomes participation and contributions from everyone.
   - Style Import APIs: `getStyleImports`, `removeStyleImport`, `getStyleImportSchema`, `getStyleImportConfigProperties`, `getStyleImportConfigProperty`, `setStyleImportConfigProperties`, `setStyleImportConfigProperty`
   - Annotation plugin APIs: `CircleAnnotationManager.circleEmissiveStrength`, `PolygonAnnotationManager.fillEmissiveStrength`, `PolylineAnnotationManager.lineDepthOcclusionFactor`, `PolylineAnnotationManager.lineEmissiveStrength`
   - Map Overlay plugin and related APIs
+* (Kotlin only) Deprecated `MapboxMap.getStyle()` function. Please use property `MapboxMap.style`.
 * (Kotlin only) Deprecated `MapView.getMapboxMap()` function. Please use property `MapView.mapboxMap`.
 * (Kotlin only) Deprecated `MapSurface.getMapboxMap()` function. Please use property `MapSurface.mapboxMap`.
 
 ## Bug fixes 🐞
 * Fix widgets not showing on some zoom levels.
 * Fix widgets flickering due to race condition if they are animated.
-
-## Breaking changes ⚠️
-* (Kotlin only) Replaced `MapboxMap.getStyle()` function with property `MapboxMap.style`.
 
 # 11.0.0-beta.5 October 09, 2023
 ## Breaking changes ⚠️

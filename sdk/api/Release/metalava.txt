@@ -208,6 +208,7 @@ package com.mapbox.maps {
     method public com.mapbox.maps.Size getSize();
     method public com.mapbox.maps.Style? getStyle();
     method public void getStyle(com.mapbox.maps.Style.OnStyleLoaded onStyleLoaded);
+    method @Deprecated @kotlin.jvm.JvmSynthetic public com.mapbox.maps.Style! getStyle();
     method @com.mapbox.maps.MapboxExperimental public boolean hasStyleModel(String modelId);
     method public boolean isGestureInProgress();
     method public boolean isUserAnimationInProgress();

@@ -35,7 +35,7 @@ This document is a guide for migrating from v10 of the Mapbox Maps SDK for Andro
     - [3.15 Changes in the network stack](#315-changes-in-the-network-stack)
     - [3.16 Java-specific changes](#316-java-specific-changes)
     - [3.17 Settings service changes](#317-settings-service-changes)
-    - [3.18 Java-specific changes](#318-kotlin-specific-changes)
+    - [3.18 Kotlin-specific changes](#318-kotlin-specific-changes)
   - [4. Validate ProGuard Rules](#4-validate-proguard-rules)
   - [5. Test your app](#5-test-your-app)
 - [New APIs and minor ergonomic improvements](#new-apis-and-minor-ergonomic-improvements)
@@ -636,7 +636,7 @@ The method `MapView.getMapboxMap()` has been deprecated. Please use property `Ma
 
 The method `MapSurface.getMapboxMap()` has been deprecated. Please use property `MapSurface.mapboxMap`.
 
-The method `MapboxMap.getStyle()` has been replaced with property `MapboxMap.style`.
+The method `MapboxMap.getStyle()` has been deprecated. Please use property `MapboxMap.style`.
 
 ### 4. Validate ProGuard Rules
 
