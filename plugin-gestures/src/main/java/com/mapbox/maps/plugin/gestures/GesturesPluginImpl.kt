@@ -13,7 +13,6 @@ import android.view.MotionEvent
 import androidx.annotation.RestrictTo
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
-import androidx.core.animation.addListener
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import com.mapbox.android.gestures.*
 import com.mapbox.maps.*
@@ -98,40 +97,6 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
   private var rotateAnimators: Array<ValueAnimator>? = null
   private val scheduledAnimators = ArrayList<ValueAnimator>()
   private var gesturesInterpolator = LinearOutSlowInInterpolator()
-
-  // Devices with API <= 23 animating with duration = 0 will send initial value from Looper with
-  // some small delay as a result.
-  // Hence multiple immediate animations sent close to each other may cancel previous ones.
-  // This becomes visible with move gesture since animation steps are relative to each other.
-  // So we defer move distances that are not applied to apply later (when immediate ease will end).
-  private var immediateEaseInProcess = false
-  private var deferredMoveDistanceX: Float = 0f
-  private var deferredMoveDistanceY: Float = 0f
-  private var deferredZoomBy: Double = 0.0
-  private var deferredRotate: Double = 0.0
-  private var deferredShove: Double = 0.0
-
-  private fun easeToImmediately(
-    camera: CameraOptions,
-    actionAfter: (() -> Unit)? = null
-  ) {
-    if (!immediateEaseInProcess) {
-      immediateEaseInProcess = true
-      cameraAnimationsPlugin.easeTo(
-        camera,
-        mapAnimationOptions {
-          duration(0)
-          owner(MapAnimationOwnerRegistry.GESTURES)
-        },
-        animatorListener = object : AnimatorListenerAdapter() {
-          override fun onAnimationEnd(animation: Animator) {
-            actionAfter?.invoke()
-            immediateEaseInProcess = false
-          }
-        }
-      )
-    }
-  }
 
   private fun notifyCoreGestureStarted() {
     if (!gestureStarted) {
@@ -400,11 +365,11 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
           val anchor = event.toScreenCoordinate()
           val zoom =
             cameraAnimationsPlugin.calculateScaleBy(scrollDist.toDouble(), currentZoom)
-          easeToImmediately(
+          cameraAnimationsPlugin.easeTo(
             CameraOptions.Builder().anchor(anchor).zoom(zoom).build(),
-            actionAfter = { cameraAnimationsPlugin.anchor = cachedAnchor }
+            IMMEDIATE_ANIMATION_OPTIONS
           )
-
+          cameraAnimationsPlugin.anchor = cachedAnchor
           return true
         }
 
@@ -627,11 +592,6 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
   }
 
   internal fun handleScale(detector: StandardScaleGestureDetector): Boolean {
-    // in order not to mess up initial anchor values
-    if (!internalSettings.simultaneousRotateAndPinchToZoomEnabled && immediateEaseInProcess) {
-      deferredZoomBy += calculateZoomBy(detector)
-      return true
-    }
     val focalPoint = getScaleFocalPoint(detector)
     scaleCachedAnchor = cameraAnimationsPlugin.anchor
     notifyCoreGestureStarted()
@@ -651,14 +611,12 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
       var targetZoom =
         if (zoomedOut) startZoom - normalizedDeltaChange else startZoom + normalizedDeltaChange
       targetZoom *= internalSettings.zoomAnimationAmount.toDouble()
-      easeToImmediately(
+      cameraAnimationsPlugin.easeTo(
         CameraOptions.Builder()
           .zoom(targetZoom)
           .anchor(focalPoint)
           .build(),
-        actionAfter = {
-          onScaleAnimationEnd(detector)
-        }
+        IMMEDIATE_ANIMATION_OPTIONS
       )
     } else {
       val zoomBy = calculateZoomBy(detector)
@@ -678,30 +636,22 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
         ) {
           duration = 0
         }
-        // it is important to apply onEnd lambda to last registered animator
         cameraAnimationsPlugin.playAnimatorsTogether(
           anchorAnimator,
-          zoomAnimator.apply {
-            addListener(
-              onEnd = {
-                onScaleAnimationEnd(detector)
-              }
-            )
-          }
+          zoomAnimator
         )
       } else {
-        easeToImmediately(
+        cameraAnimationsPlugin.easeTo(
           CameraOptions.Builder()
-            .zoom(mapCameraManagerDelegate.cameraState.zoom + zoomBy + deferredZoomBy)
+            .zoom(mapCameraManagerDelegate.cameraState.zoom + zoomBy)
             .anchor(focalPoint)
             .build(),
-          actionAfter = {
-            onScaleAnimationEnd(detector)
-          }
+          IMMEDIATE_ANIMATION_OPTIONS
         )
-        deferredZoomBy = 0.0
       }
     }
+    // All the camera animations above have duration 0. We can call onScaleAnimationEnd immediately.
+    onScaleAnimationEnd(detector)
     return true
   }
 
@@ -713,11 +663,6 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
 
   internal fun handleScaleBegin(detector: StandardScaleGestureDetector): Boolean {
     quickZoom = detector.pointersCount == 1
-    // Reset deferred animation values here in onBegin, ignores the last possible defererred value
-    // before the onEnd. However it's not noticeable since onEnd animates using velocity.
-    // Allows to keep things simple.
-    deferredZoomBy = 0.0
-
     if (quickZoom) {
       if (!internalSettings.quickZoomEnabled) {
         return false
@@ -921,16 +866,10 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
     detector: RotateGestureDetector,
     rotationDegreesSinceLast: Float
   ): Boolean {
-    // in order not to mess up initial anchor values
-    if (!internalSettings.simultaneousRotateAndPinchToZoomEnabled && immediateEaseInProcess) {
-      deferredRotate += rotationDegreesSinceLast
-      return true
-    }
     // Calculate map bearing value
     val currentBearing = mapCameraManagerDelegate.cameraState.bearing
     rotateCachedAnchor = cameraAnimationsPlugin.anchor
-    val bearing = currentBearing + rotationDegreesSinceLast + deferredRotate
-    deferredRotate = 0.0
+    val bearing = currentBearing + rotationDegreesSinceLast
     val focalPoint = getRotateFocalPoint(detector)
     notifyCoreGestureStarted()
     // Rotate the map
@@ -952,26 +891,19 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
       }
       cameraAnimationsPlugin.playAnimatorsTogether(
         anchorAnimator,
-        // it is important to apply onEnd lambda to last registered animator
-        bearingAnimator.apply {
-          addListener(
-            onEnd = {
-              onRotateAnimationEnd(detector)
-            }
-          )
-        }
+        bearingAnimator
       )
     } else {
-      easeToImmediately(
+      cameraAnimationsPlugin.easeTo(
         CameraOptions.Builder()
           .anchor(focalPoint)
           .bearing(bearing)
           .build(),
-        actionAfter = {
-          onRotateAnimationEnd(detector)
-        }
+        IMMEDIATE_ANIMATION_OPTIONS
       )
     }
+    // All the camera animations above have duration 0. We can call onRotateAnimationEnd immediately.
+    onRotateAnimationEnd(detector)
     return true
   }
 
@@ -984,11 +916,6 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
     if (!internalSettings.rotateEnabled) {
       return false
     }
-
-    // Reset deferred animation values here in onBegin, ignores the last possible defererred value
-    // before the onEnd. However it's not noticeable since onEnd animates using velocity.
-    // Allows to keep things simple.
-    deferredRotate = 0.0
 
     val deltaSinceLast = abs(detector.deltaSinceLast)
     val currTime = detector.currentEvent.eventTime.toDouble()
@@ -1059,11 +986,6 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
       return false
     }
 
-    // Reset deferred animation values here in onBegin, ignores the last possible defererred value
-    // before the onEnd. However it's not noticeable since onEnd animates using velocity.
-    // Allows to keep things simple.
-    deferredShove = 0.0
-
     cancelTransitionsIfRequired()
 
     gestureState.saveAndDisable(GestureState.Type.Shove)
@@ -1077,15 +999,10 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
     detector: ShoveGestureDetector,
     deltaPixelsSinceLast: Float
   ): Boolean {
-    if (immediateEaseInProcess) {
-      deferredShove += deltaPixelsSinceLast
-      return true
-    }
     // Get pitch value (scale and clamp)
     var pitch = mapCameraManagerDelegate.cameraState.pitch
     val optimizedPitch =
-      pitch - (SHOVE_PIXEL_CHANGE_FACTOR * (deltaPixelsSinceLast + deferredShove))
-    deferredShove = 0.0
+      pitch - (SHOVE_PIXEL_CHANGE_FACTOR * (deltaPixelsSinceLast))
     pitch = clamp(optimizedPitch, MINIMUM_PITCH, MAXIMUM_PITCH)
     if (cameraPaddingChanged || sizeChanged) {
       cameraCenterScreenCoordinate = mapCameraManagerDelegate.pixelForCoordinate(mapCameraManagerDelegate.cameraState.center)
@@ -1093,10 +1010,11 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
       sizeChanged = false
     }
     notifyCoreGestureStarted()
-    easeToImmediately(
+    cameraAnimationsPlugin.easeTo(
       CameraOptions.Builder().anchor(cameraCenterScreenCoordinate).pitch(pitch).build(),
-      actionAfter = { notifyOnShoveListeners(detector) }
+      IMMEDIATE_ANIMATION_OPTIONS
     )
+    notifyOnShoveListeners(detector)
     return true
   }
 
@@ -1418,13 +1336,6 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
     if (!internalSettings.scrollEnabled) {
       return false
     }
-
-    // Reset deferred animation values here in onBegin, ignores the last possible defererred value
-    // before the onEnd. However it's not noticeable since onEnd animates using velocity.
-    // Allows to keep things simple.
-    deferredMoveDistanceX = 0f
-    deferredMoveDistanceY = 0f
-
     cancelTransitionsIfRequired()
     notifyOnMoveBeginListeners(detector)
     return true
@@ -1519,18 +1430,10 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
       if (isPointAboveHorizon(ScreenCoordinate(fromX, fromY))) {
         return false
       }
-
-      if (immediateEaseInProcess) {
-        deferredMoveDistanceX += distanceX
-        deferredMoveDistanceY += distanceY
-        return true
-      }
       val resolvedDistanceX =
-        if (internalSettings.isScrollHorizontallyLimited()) 0.0 else (distanceX.toDouble() + deferredMoveDistanceX)
+        if (internalSettings.isScrollHorizontallyLimited()) 0.0 else (distanceX.toDouble())
       val resolvedDistanceY =
-        if (internalSettings.isScrollVerticallyLimited()) 0.0 else (distanceY.toDouble() + deferredMoveDistanceY)
-      deferredMoveDistanceX = 0f
-      deferredMoveDistanceY = 0f
+        if (internalSettings.isScrollVerticallyLimited()) 0.0 else (distanceY.toDouble())
 
       val toX = fromX - resolvedDistanceX
       val toY = fromY - resolvedDistanceY
@@ -1540,7 +1443,10 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
         ScreenCoordinate(fromX, fromY),
         ScreenCoordinate(toX, toY)
       )
-      easeToImmediately(cameraOptions)
+      cameraAnimationsPlugin.easeTo(
+        cameraOptions,
+        IMMEDIATE_ANIMATION_OPTIONS
+      )
     }
     return true
   }
@@ -1865,6 +1771,11 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
 
   private companion object {
     private const val TAG = "Gestures"
+    // immediate options (duration = 0) are handled by Mapbox animation plugin instantly
+    private val IMMEDIATE_ANIMATION_OPTIONS = mapAnimationOptions {
+      duration(0)
+      owner(MapAnimationOwnerRegistry.GESTURES)
+    }
     const val ROTATION_ANGLE_THRESHOLD = 3.0f
     const val MAX_SHOVE_ANGLE = 45.0f
   }

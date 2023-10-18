@@ -3,7 +3,6 @@ package com.mapbox.maps.plugin.animation.animator
 import android.animation.TypeEvaluator
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
-import android.os.Build
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.logW
@@ -52,6 +51,7 @@ abstract class CameraAnimator<out T> (
   internal var canceled = false
   internal var isInternal = false
   internal var skipped = false
+  private val immediate get() = duration == 0L && startDelay == 0L
 
   init {
     setObjectValues(targets[0], targets[0])
@@ -88,7 +88,8 @@ abstract class CameraAnimator<out T> (
     postOnAnimatorThread {
       if (registered) {
         canceled = false
-        if (handleImmediateAnimationOnAPI23OrBelow()) {
+        if (immediate) {
+          handleImmediateAnimation()
           return@postOnAnimatorThread
         }
         super.start()
@@ -114,44 +115,38 @@ abstract class CameraAnimator<out T> (
    * returns the animated value for the first of those objects.
    */
   override fun getAnimatedValue(): Any {
-    // For immediate animations on API <= 23, as we introduced the bypass logic in handleImmediateAnimationOnAPI23OrBelow(),
-    // the returned ValueAnimator.getAnimatedValue() will be null, in this case, we should return the
+    // For immediate animations the returned ValueAnimator.getAnimatedValue() will be null, in this case, we should return the
     // last configured target value, so we immediately jump to the target value.
-    if (Build.VERSION.SDK_INT <= 23) {
-      if (duration == 0L && startDelay == 0L) {
-        return super.getAnimatedValue() ?: targets.last() as Any
-      }
+    if (immediate) {
+      return targets.last() as Any
     }
     return super.getAnimatedValue()
   }
 
   /**
-   * Handle immediate animation(when duration and startDelay of the animation is 0) on devices running
-   * API 23 or below, by sending updates to animator listeners directly without triggering [ValueAnimator]'s start().
+   * Handle immediate animation(when duration and startDelay of the animation is 0)
+   * we trigger animator listeners directly without triggering [ValueAnimator]'s start().
    *
-   * @return true if the animation is handled, false otherwise
+   * This brings the following benefits:
+   *  1. Saves resources by not starting the whole Android SDK animation framing.
+   *  2. Has consistent behaviour on all supported APIs as on API <= 23 Android SDK Animator logic
+   *  is different and has an explicit Handler.post which makes code unpredictable and brings in race conditions.
    */
-  private fun handleImmediateAnimationOnAPI23OrBelow(): Boolean {
-    // Devices with API <= 23 animating with duration = 0 will send initial value from Looper with some small delay as a result.
-    // Hence multiple immediate animations sent close to each other may cancel previous ones.
-    // For these cases, we bypass the ValueAnimator and emit the user registered AnimatorListeners and AnimatorUpdateListeners immediately.
-    if (Build.VERSION.SDK_INT <= 23) {
-      if (duration == 0L && startDelay == 0L) {
-        val tmpListeners = listeners.toList()
-        tmpListeners.forEach {
-          it.onAnimationStart(this)
-        }
-        internalUpdateListener?.onAnimationUpdate(this)
-        userUpdateListeners.forEach {
-          it?.onAnimationUpdate(this)
-        }
-        tmpListeners.forEach {
-          it.onAnimationEnd(this)
-        }
-        return true
+  private fun handleImmediateAnimation() {
+    // bypass the ValueAnimator and emit the user registered AnimatorListeners and AnimatorUpdateListeners immediately
+    // in the same callchain (if not using AnimationThreadController with background thread)
+    listeners.toList().let { listeners ->
+      listeners.forEach {
+        it.onAnimationStart(this)
+      }
+      internalUpdateListener?.onAnimationUpdate(this)
+      userUpdateListeners.forEach {
+        it?.onAnimationUpdate(this)
+      }
+      listeners.forEach {
+        it.onAnimationEnd(this)
       }
     }
-    return false
   }
 
   /**

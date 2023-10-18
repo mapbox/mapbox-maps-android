@@ -18,6 +18,7 @@ Mapbox welcomes participation and contributions from everyone.
 * (Kotlin only) Deprecated `MapboxMap.getStyle()` function. Please use property `MapboxMap.style`.
 * (Kotlin only) Deprecated `MapView.getMapboxMap()` function. Please use property `MapView.mapboxMap`.
 * (Kotlin only) Deprecated `MapSurface.getMapboxMap()` function. Please use property `MapSurface.mapboxMap`.
+* Handle zero duration map camera animators more efficiently resulting in performance improvements for gestures / viewport / locationcomponent.
 
 ## Bug fixes 🐞
 * Fix widgets not showing on some zoom levels.

@@ -1,6 +1,5 @@
 package com.mapbox.maps.plugin.gestures
 
-import android.animation.Animator
 import android.animation.ValueAnimator
 import android.content.Context
 import android.content.res.TypedArray
@@ -61,7 +60,6 @@ class GesturesPluginTest {
   private val pack = "com.mapbox.maps"
 
   private val gestureListener = slot<StandardGestureDetector.StandardOnGestureListener>()
-  private val animatorListenerSlot = slot<Animator.AnimatorListener>()
   private lateinit var presenter: GesturesPluginImpl
 
   @MapboxExperimental
@@ -522,9 +520,8 @@ class GesturesPluginTest {
     assert(handled)
     val mapAnimationOptionsSlot = slot<MapAnimationOptions>()
     verify(exactly = 1) {
-      cameraAnimationsPlugin.easeTo(any(), capture(mapAnimationOptionsSlot), capture(animatorListenerSlot))
+      cameraAnimationsPlugin.easeTo(any(), capture(mapAnimationOptionsSlot))
     }
-    animatorListenerSlot.captured.onAnimationEnd(mockk())
 
     every { moveGestureDetector.pointersCount } returns 1
     handled = presenter.handleMove(moveGestureDetector, 50.0f, 50.0f)
@@ -657,7 +654,6 @@ class GesturesPluginTest {
   fun verifyScaleWithSimultaneousRotateAndPinchToZoomEnabled() {
     val zoomAnimator = mockk<ValueAnimator>(relaxUnitFun = true)
     every { cameraAnimationsPlugin.createZoomAnimator(any(), any()) } returns zoomAnimator
-    val endListenerSlot = slot<Animator.AnimatorListener>()
 
     every { mapCameraManagerDelegate.cameraState } returns CameraState(
       Point.fromLngLat(0.0, 0.0),
@@ -677,8 +673,6 @@ class GesturesPluginTest {
     val result = presenter.handleScale(scaleDetector)
     assert(result)
     verify(exactly = 1) { cameraAnimationsPlugin.playAnimatorsTogether(any(), zoomAnimator) }
-    verify(exactly = 1) { zoomAnimator.addListener(capture(endListenerSlot)) }
-    endListenerSlot.captured.onAnimationEnd(mockk())
     verify(exactly = 1) { listener.onScale(any()) }
   }
 
@@ -818,7 +812,6 @@ class GesturesPluginTest {
         any()
       )
     } returns bearingAnimator
-    val endListenerSlot = slot<Animator.AnimatorListener>()
 
     val rotateGestureDetector = mockk<RotateGestureDetector>()
     every { rotateGestureDetector.focalPoint } returns PointF(1.0f, 1.0f)
@@ -826,8 +819,6 @@ class GesturesPluginTest {
     val result = presenter.handleRotate(rotateGestureDetector, 34.0f)
     assert(result)
     verify(exactly = 1) { cameraAnimationsPlugin.playAnimatorsTogether(any(), bearingAnimator) }
-    verify(exactly = 1) { bearingAnimator.addListener(capture(endListenerSlot)) }
-    endListenerSlot.captured.onAnimationEnd(mockk())
     verify(exactly = 1) { listener.onRotate(any()) }
   }
 
@@ -893,7 +884,6 @@ class GesturesPluginTest {
       cameraAnimationsPlugin.easeTo(
         capture(resultCameraOptions),
         any(),
-        capture(animatorListenerSlot)
       )
     }
     assertEquals(resultCameraOptions.captured.pitch!!, 2.5, EPS)
@@ -970,146 +960,6 @@ class GesturesPluginTest {
   }
 
   @Test
-  fun verifyDeferresMoveWhenImmediateAnimationIsNotFinished() {
-    val moveGestureDetector = mockk<MoveGestureDetector>()
-    every { moveGestureDetector.focalPoint } returns PointF(0.0f, 0.0f)
-    every { moveGestureDetector.pointersCount } returns 1
-
-    val fromSlot = slot<ScreenCoordinate>()
-    val toSlot = slot<ScreenCoordinate>()
-    every {
-      mapCameraManagerDelegate.cameraForDrag(capture(fromSlot), capture(toSlot))
-    } answers {
-      CameraOptions.Builder().center(Point.fromLngLat(toSlot.captured.x, toSlot.captured.y)).build()
-    }
-
-    val distanceX = 50.0
-    val distanceY = 20.0
-    presenter.handleMove(moveGestureDetector, distanceX.toFloat(), distanceY.toFloat())
-
-    val mapAnimationOptionsSlot = slot<MapAnimationOptions>()
-    val cameraOptionsSlot = slot<CameraOptions>()
-    verify(exactly = 1) {
-      cameraAnimationsPlugin.easeTo(
-        capture(cameraOptionsSlot),
-        capture(mapAnimationOptionsSlot),
-        capture(animatorListenerSlot)
-      )
-    }
-    assertEquals(-distanceX, cameraOptionsSlot.captured.center!!.longitude(), EPS)
-    assertEquals(-distanceY, cameraOptionsSlot.captured.center!!.latitude(), EPS)
-
-    clearMocks(cameraAnimationsPlugin)
-
-    // are not applied until onAnimationEnd
-    presenter.handleMove(moveGestureDetector, distanceX.toFloat(), distanceY.toFloat())
-    presenter.handleMove(moveGestureDetector, distanceX.toFloat(), distanceY.toFloat())
-    verify(exactly = 0) {
-      cameraAnimationsPlugin.easeTo(any(), any(), any())
-    }
-
-    animatorListenerSlot.captured.onAnimationEnd(mockk())
-    presenter.handleMove(moveGestureDetector, distanceX.toFloat(), distanceY.toFloat())
-    verify(exactly = 1) {
-      cameraAnimationsPlugin.easeTo(
-        capture(cameraOptionsSlot),
-        capture(mapAnimationOptionsSlot),
-        capture(animatorListenerSlot)
-      )
-    }
-    // all the 3 last moves are animated together
-    assertEquals(-distanceX * 3, cameraOptionsSlot.captured.center!!.longitude(), EPS)
-    assertEquals(-distanceY * 3, cameraOptionsSlot.captured.center!!.latitude(), EPS)
-  }
-
-  @Test
-  fun verifyDeferresShoveWhenImmediateAnimationIsNotFinished() {
-    val shoveDistance = -10.0
-    val startPitch = mapCameraManagerDelegate.cameraState.pitch
-    val expectedPitchDelta = -(SHOVE_PIXEL_CHANGE_FACTOR * shoveDistance)
-
-    presenter.handleShove(shoveGestureDetector, shoveDistance.toFloat())
-
-    val mapAnimationOptionsSlot = slot<MapAnimationOptions>()
-    val cameraOptionsSlot = slot<CameraOptions>()
-    verify(exactly = 1) {
-      cameraAnimationsPlugin.easeTo(
-        capture(cameraOptionsSlot),
-        capture(mapAnimationOptionsSlot),
-        capture(animatorListenerSlot)
-      )
-    }
-    assertEquals(startPitch + expectedPitchDelta, cameraOptionsSlot.captured.pitch!!, EPS)
-
-    clearMocks(cameraAnimationsPlugin)
-
-    // are not applied until onAnimationEnd
-    presenter.handleShove(shoveGestureDetector, shoveDistance.toFloat())
-    presenter.handleShove(shoveGestureDetector, shoveDistance.toFloat())
-    verify(exactly = 0) {
-      cameraAnimationsPlugin.easeTo(any(), any(), any())
-    }
-
-    animatorListenerSlot.captured.onAnimationEnd(mockk())
-    presenter.handleShove(shoveGestureDetector, shoveDistance.toFloat())
-    verify(exactly = 1) {
-      cameraAnimationsPlugin.easeTo(
-        capture(cameraOptionsSlot),
-        capture(mapAnimationOptionsSlot),
-        capture(animatorListenerSlot)
-      )
-    }
-    // all the 3 last shoves are animated together
-    assertEquals(startPitch + expectedPitchDelta * 3, cameraOptionsSlot.captured.pitch!!, EPS)
-  }
-
-  @Test
-  fun verifyDeferresRotateWhenImmediateAnimationIsNotFinished() {
-    presenter.updateSettings { simultaneousRotateAndPinchToZoomEnabled = false }
-
-    val rotateAngle = -10.0
-    val startBearing = mapCameraManagerDelegate.cameraState.bearing
-
-    val rotateGestureDetector = mockk<RotateGestureDetector>()
-    every { rotateGestureDetector.focalPoint } returns PointF(0.0f, 0.0f)
-    every { rotateGestureDetector.pointersCount } returns 1
-
-    presenter.handleRotate(rotateGestureDetector, rotateAngle.toFloat())
-
-    val mapAnimationOptionsSlot = slot<MapAnimationOptions>()
-    val cameraOptionsSlot = slot<CameraOptions>()
-    verify(exactly = 1) {
-      cameraAnimationsPlugin.easeTo(
-        capture(cameraOptionsSlot),
-        capture(mapAnimationOptionsSlot),
-        capture(animatorListenerSlot)
-      )
-    }
-    assertEquals(startBearing + rotateAngle, cameraOptionsSlot.captured.bearing!!, EPS)
-
-    clearMocks(cameraAnimationsPlugin)
-
-    // are not applied until onAnimationEnd
-    presenter.handleRotate(rotateGestureDetector, rotateAngle.toFloat())
-    presenter.handleRotate(rotateGestureDetector, rotateAngle.toFloat())
-    verify(exactly = 0) {
-      cameraAnimationsPlugin.easeTo(any(), any(), any())
-    }
-
-    animatorListenerSlot.captured.onAnimationEnd(mockk())
-    presenter.handleRotate(rotateGestureDetector, rotateAngle.toFloat())
-    verify(exactly = 1) {
-      cameraAnimationsPlugin.easeTo(
-        capture(cameraOptionsSlot),
-        capture(mapAnimationOptionsSlot),
-        capture(animatorListenerSlot)
-      )
-    }
-    // all the 3 last rotates are animated together
-    assertEquals(startBearing + rotateAngle * 3, cameraOptionsSlot.captured.bearing!!, EPS)
-  }
-
-  @Test
   fun testIsPointAboveHorizonNanX() {
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logE(any(), any()) } just Runs
@@ -1137,46 +987,6 @@ class GesturesPluginTest {
       logE(any(), "isPointAboveHorizon: screen coordinate y is NaN.")
     }
     unmockkStatic("com.mapbox.maps.MapboxLogger")
-  }
-
-  @Test
-  fun verifyDeferresScaleWhenImmediateAnimationIsNotFinished() {
-    presenter.updateSettings { simultaneousRotateAndPinchToZoomEnabled = false }
-
-    val startZoom = mapCameraManagerDelegate.cameraState.zoom
-    val scaleFactor = 2f
-    val scaleGestureDetector = mockk<StandardScaleGestureDetector>()
-    every { scaleGestureDetector.scaleFactor } returns scaleFactor
-    every { scaleGestureDetector.focalPoint } returns PointF(0f, 0f)
-    every { scaleGestureDetector.currentSpan } returns 0.0f
-    every { scaleGestureDetector.previousSpan } returns 0.0f
-    val expectedZoomDelta = presenter.calculateZoomBy(scaleGestureDetector)
-
-    presenter.handleScale(scaleGestureDetector)
-
-    val mapAnimationOptionsSlot = slot<MapAnimationOptions>()
-    val cameraOptionsSlot = slot<CameraOptions>()
-    verify(exactly = 1) {
-      cameraAnimationsPlugin.easeTo(capture(cameraOptionsSlot), capture(mapAnimationOptionsSlot), capture(animatorListenerSlot))
-    }
-    assertEquals(cameraOptionsSlot.captured.zoom!!, startZoom + expectedZoomDelta, EPS)
-
-    clearMocks(cameraAnimationsPlugin)
-
-    // are not applied until onAnimationEnd
-    presenter.handleScale(scaleGestureDetector)
-    presenter.handleScale(scaleGestureDetector)
-    verify(exactly = 0) {
-      cameraAnimationsPlugin.easeTo(any(), any(), any())
-    }
-
-    animatorListenerSlot.captured.onAnimationEnd(mockk())
-    presenter.handleScale(scaleGestureDetector)
-    verify(exactly = 1) {
-      cameraAnimationsPlugin.easeTo(capture(cameraOptionsSlot), capture(mapAnimationOptionsSlot), capture(animatorListenerSlot))
-    }
-    // all the 3 last scales are animated together
-    assertEquals(cameraOptionsSlot.captured.zoom!!, startZoom + expectedZoomDelta * 3, EPS)
   }
 
   private companion object {
