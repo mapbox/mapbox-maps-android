@@ -576,7 +576,8 @@ snapshotter.start { snapshotBitmap, errorMessage ->
 10. Remove `Style.getStyleSourcesAttribution`. `MapboxMap.getAttributions` should be used instead.
 11. All style enum classes from [Property.kt](../extension-style/src/main/java/com/mapbox/maps/extension/style/layers/properties/generated/Property.kt) and [SourceProperties.kt](../extension-style/src/main/java/com/mapbox/maps/extension/style/sources/generated/SourceProperties.kt) became regular classes instead of enums. Enum functions `ordinal`, `name`, `values` are not available anymore, but `valueOf` still exists. When using these classes with `when` expression `else` branch will have to be implemented.
 12. Remove `MapInitOptions.optimizeForTerrain` as it has become redundant.
-13. Remove setter functions for `Style.styleURI` and `Style.styleJSON` as loading the style should happen only with `MapboxMap.loadStyle`.
+13. Remove setter functions for `Style.styleURI` and `Style.styleJSON` as loading the style should happen only with `MapboxMap.loadStyle`. 
+14. Extension function `Style.getProjection()` return type changed from `Projection` to `Projection?`. NULL is returned when projection is undefined, previously undefined projection was treated as Mercator projection.
 
 #### 3.11 Render Cache API
 

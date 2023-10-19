@@ -5627,7 +5627,7 @@ package com.mapbox.maps.extension.style.projection.generated {
   }
 
   public final class StyleProjectionUtils {
-    method public static com.mapbox.maps.extension.style.projection.generated.Projection getProjection(com.mapbox.maps.Style);
+    method public static com.mapbox.maps.extension.style.projection.generated.Projection? getProjection(com.mapbox.maps.Style);
     method public static void setProjection(com.mapbox.maps.Style, com.mapbox.maps.extension.style.projection.generated.Projection projection);
   }
 

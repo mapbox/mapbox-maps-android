@@ -212,7 +212,7 @@ class LocationComponentActivity : AppCompatActivity() {
     binding.mapView.mapboxMap.getStyle { style ->
       style.setProjection(
         projection(
-          when (style.getProjection().name) {
+          when (style.getProjection()?.name) {
             ProjectionName.MERCATOR -> ProjectionName.GLOBE
             ProjectionName.GLOBE -> ProjectionName.MERCATOR
             else -> ProjectionName.GLOBE

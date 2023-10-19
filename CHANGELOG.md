@@ -3,6 +3,9 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
+## Breaking changes ⚠️
+* Extension function `Style.getProjection()` return type changed from `Projection` to `Projection?`.
+
 ## Features ✨ and improvements 🏁
 * The following APIs have been promoted to stable:
   - `LineLayer.lineDepthOcclusionFactor`, `LineLayer.lineDepthOcclusionFactorTransition`, `LineLayer.lineEmissiveStrength` and `LineLayer.lineEmissiveStrengthTransition`
