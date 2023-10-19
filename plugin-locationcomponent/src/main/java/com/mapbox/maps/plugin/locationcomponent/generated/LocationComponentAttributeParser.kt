@@ -5,12 +5,13 @@ package com.mapbox.maps.plugin.locationcomponent.generated
 import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
-import com.mapbox.maps.ImageHolder
+import com.mapbox.maps.ImageHolder.Companion.from
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.LocationPuck3D
 import com.mapbox.maps.plugin.ModelScaleMode
 import com.mapbox.maps.plugin.PuckBearing
 import com.mapbox.maps.plugin.locationcomponent.R
+import com.mapbox.maps.plugin.locationcomponent.createDefault2DPuck
 
 /**
  * Utility class for parsing [AttributeSet] to [LocationComponentSettings].
@@ -26,12 +27,13 @@ internal object LocationComponentAttributeParser {
   fun parseLocationComponentSettings(context: Context, attrs: AttributeSet?, pixelRatio: Float = 1.0f): LocationComponentSettings {
     val typedArray = context.obtainStyledAttributes(attrs, R.styleable.mapbox_MapView, 0, 0)
     try {
+      val puckBearingEnabled = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_locationComponentPuckBearingEnabled, false)
       return LocationComponentSettings(
         locationPuck = when (typedArray.getInt(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuck, -1)) {
           0 -> LocationPuck2D(
-            topImage = ImageHolder.from(typedArray.getResourceId(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck2DTopImage, -1)),
-            bearingImage = ImageHolder.from(typedArray.getResourceId(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck2DBearingImage, -1)),
-            shadowImage = ImageHolder.from(typedArray.getResourceId(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck2DShadowImage, -1)),
+            topImage = typedArray.getResourceId(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck2DTopImage, -1).takeIf { it != -1 }?.let { from(it) },
+            bearingImage = typedArray.getResourceId(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck2DBearingImage, -1).takeIf { it != -1 }?.let { from(it) },
+            shadowImage = typedArray.getResourceId(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck2DShadowImage, -1).takeIf { it != -1 }?.let { from(it) },
             scaleExpression = typedArray.getString(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck2DScaleExpression),
             opacity = typedArray.getFloat(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck2DOpacity, 1f),
           )
@@ -63,11 +65,7 @@ internal object LocationComponentAttributeParser {
             modelReceiveShadows = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck3DModelReceiveShadows, true),
             modelScaleMode = ModelScaleMode.values()[typedArray.getInt(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck3DModelScaleMode, ModelScaleMode.VIEWPORT.ordinal)],
           )
-          else -> LocationPuck2D(
-            topImage = ImageHolder.from(R.drawable.mapbox_user_icon),
-            bearingImage = ImageHolder.from(R.drawable.mapbox_user_stroke_icon),
-            shadowImage = ImageHolder.from(R.drawable.mapbox_user_icon_shadow),
-          )
+          else -> createDefault2DPuck(withBearing = puckBearingEnabled)
         }
     ) {
         enabled = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_locationComponentEnabled, false)
@@ -79,7 +77,7 @@ internal object LocationComponentAttributeParser {
         accuracyRingBorderColor = typedArray.getColor(R.styleable.mapbox_MapView_mapbox_locationComponentAccuracyRingBorderColor, Color.parseColor("#4d89cff0"))
         layerAbove = typedArray.getString(R.styleable.mapbox_MapView_mapbox_locationComponentLayerAbove)
         layerBelow = typedArray.getString(R.styleable.mapbox_MapView_mapbox_locationComponentLayerBelow)
-        puckBearingEnabled = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_locationComponentPuckBearingEnabled, true)
+        this.puckBearingEnabled = puckBearingEnabled
         puckBearing = PuckBearing.values()[typedArray.getInt(R.styleable.mapbox_MapView_mapbox_locationComponentPuckBearing, 0)]
       }
     } finally {

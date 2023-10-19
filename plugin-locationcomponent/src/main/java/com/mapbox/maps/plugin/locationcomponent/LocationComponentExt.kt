@@ -26,13 +26,10 @@ private fun Context.getCompatDrawable(@DrawableRes resId: Int) = ResourcesCompat
 
 /**
  * Create a [LocationPuck2D] instance with or without an arrow bearing image.
- * @param context the context of application
  * @param withBearing if true, the location puck will show an arrow bearing image, default is false.
  */
 @JvmOverloads
-fun LocationComponentPlugin.createDefault2DPuck(
-  @Suppress("UNUSED_PARAMETER")
-  context: Context,
+fun createDefault2DPuck(
   withBearing: Boolean = false
 ): LocationPuck2D = LocationPuck2D(
   topImage = ImageHolder.from(R.drawable.mapbox_user_icon),

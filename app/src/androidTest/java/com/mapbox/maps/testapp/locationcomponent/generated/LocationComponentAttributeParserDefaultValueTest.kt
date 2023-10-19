@@ -69,7 +69,7 @@ class LocationComponentAttributeParserDefaultValueTest : BaseMapTest() {
     )
     assertEquals(
       "puckBearingEnabled test failed..",
-      true,
+      false,
       mapView.location.getSettings().puckBearingEnabled
     )
     assertEquals(

@@ -7,7 +7,7 @@ package com.mapbox.maps.plugin.locationcomponent {
     method public void registerLocationConsumer(com.mapbox.maps.plugin.locationcomponent.LocationConsumer locationConsumer);
     method public void removeCompassCalibrationListener(com.mapbox.maps.plugin.locationcomponent.LocationCompassCalibrationListener listener);
     method public void unRegisterLocationConsumer(com.mapbox.maps.plugin.locationcomponent.LocationConsumer locationConsumer);
-    method public void updatePuckBearing(com.mapbox.maps.plugin.PuckBearing source);
+    method public void updatePuckBearing(com.mapbox.maps.plugin.PuckBearing? source);
   }
 
   public fun interface LocationCompassCalibrationListener {
@@ -36,8 +36,8 @@ package com.mapbox.maps.plugin.locationcomponent {
   }
 
   public final class LocationComponentUtils {
-    method public static com.mapbox.maps.plugin.LocationPuck2D createDefault2DPuck(com.mapbox.maps.plugin.locationcomponent.LocationComponentPlugin, android.content.Context context, boolean withBearing = false);
-    method public static com.mapbox.maps.plugin.LocationPuck2D createDefault2DPuck(com.mapbox.maps.plugin.locationcomponent.LocationComponentPlugin, android.content.Context context);
+    method public static com.mapbox.maps.plugin.LocationPuck2D createDefault2DPuck(boolean withBearing = false);
+    method public static com.mapbox.maps.plugin.LocationPuck2D createDefault2DPuck();
     method public static com.mapbox.maps.plugin.locationcomponent.LocationComponentPlugin getLocationComponent(com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate);
   }
 

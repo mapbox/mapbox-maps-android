@@ -11,6 +11,7 @@ import com.mapbox.maps.ImageHolder
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
 import com.mapbox.maps.plugin.LocationPuck2D
+import com.mapbox.maps.plugin.PuckBearing
 import com.mapbox.maps.plugin.locationcomponent.LocationConsumer
 import com.mapbox.maps.plugin.locationcomponent.LocationProvider
 import com.mapbox.maps.plugin.locationcomponent.location
@@ -114,6 +115,9 @@ class LocationComponentAnimationActivity : AppCompatActivity() {
         binding.mapView.location.apply {
           setLocationProvider(FakeLocationProvider())
           updateSettings {
+            puckBearingEnabled = true
+            puckBearing = PuckBearing.COURSE
+            enabled = true
             locationPuck = LocationPuck2D(
               bearingImage = ImageHolder.from(R.drawable.mapbox_mylocation_icon_bearing),
             )

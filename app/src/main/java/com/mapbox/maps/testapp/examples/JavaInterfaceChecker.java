@@ -173,12 +173,6 @@ public class JavaInterfaceChecker {
             .build();
   }
 
-  private void locationComponent(Context context, MapView mapView) {
-    LocationComponentPlugin locationComponent = LocationComponentUtils.getLocationComponent(mapView);
-    locationComponent.setLocationPuck(LocationComponentUtils.createDefault2DPuck(locationComponent, context));
-    locationComponent.setLocationPuck(LocationComponentUtils.createDefault2DPuck(locationComponent, context, true));
-  }
-
   private void gesturesSettings(ScrollMode scrollMode, ScreenCoordinate screenCoordinate) {
     GesturesSettings gesturesSettings = new GesturesSettings.Builder()
             .setDoubleTapToZoomInEnabled(true)
@@ -581,6 +575,8 @@ public class JavaInterfaceChecker {
 
   private void locationComponent(MapView mapView) {
     LocationComponentPlugin locationComponent = LocationComponentUtils.getLocationComponent(mapView);
+    locationComponent.setLocationPuck(LocationComponentUtils.createDefault2DPuck());
+    locationComponent.setLocationPuck(LocationComponentUtils.createDefault2DPuck(true));
   }
 
   private void logo(MapView mapView) {

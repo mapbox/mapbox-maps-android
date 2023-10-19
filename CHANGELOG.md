@@ -5,6 +5,11 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 ## Breaking changes ⚠️
 * Extension function `Style.getProjection()` return type changed from `Projection` to `Projection?`.
+* Extension function `LocationComponentPlugin.createDefault2DPuck` in `LocationComponentUtils.kt` is now stand-alone `createDefault2DPuck`.
+* Extension function `LocationComponentPlugin.createDefault2DPuck` in `LocationComponentUtils` is now stand-alone `createDefault2DPuck`.
+* `createDefault2DPuck` does not require a `context` parameter.
+* Increase minimum location puck bearing threshold needed to trigger an animation to 1 degree (previously 0.01 degrees).
+* Location component puck bearing enabled property (`MapView.location.puckBearingEanbled`) has been changed to `false` by default.
 
 ## Features ✨ and improvements 🏁
 * The following APIs have been promoted to stable:
@@ -22,10 +27,15 @@ Mapbox welcomes participation and contributions from everyone.
 * (Kotlin only) Deprecated `MapView.getMapboxMap()` function. Please use property `MapView.mapboxMap`.
 * (Kotlin only) Deprecated `MapSurface.getMapboxMap()` function. Please use property `MapSurface.mapboxMap`.
 * Handle zero duration map camera animators more efficiently resulting in performance improvements for gestures / viewport / locationcomponent.
+* `DefaultLocationProvider.updatePuckBearing` now accepts null to stop listening for heading/course.
 
 ## Bug fixes 🐞
 * Fix widgets not showing on some zoom levels.
 * Fix widgets flickering due to race condition if they are animated.
+* Fix crash when setting `mapbox:mapbox_locationComponentLocationPuck = "location_puck_2_d"` in map view XML without specifying all images.
+* Fix changing location bearing from `HEADING` to `COURSE` not working.
+* Avoid listening for heading/course when location component puck bearing is disabled.
+
 
 # 11.0.0-beta.5 October 09, 2023
 ## Breaking changes ⚠️

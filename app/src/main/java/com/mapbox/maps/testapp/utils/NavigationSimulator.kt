@@ -13,6 +13,7 @@ import com.mapbox.maps.extension.style.layers.properties.generated.LineJoin
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.plugin.LocationPuck2D
+import com.mapbox.maps.plugin.PuckBearing
 import com.mapbox.maps.plugin.gestures.OnMapClickListener
 import com.mapbox.maps.plugin.gestures.gestures
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener
@@ -307,8 +308,10 @@ class NavigationSimulator(
   private fun initLocationComponent() {
     val locationComponentPlugin = mapView.location
     locationComponentPlugin.updateSettings {
-      this.enabled = true
-      this.locationPuck = LocationPuck2D(
+      puckBearing = PuckBearing.COURSE
+      puckBearingEnabled = true
+      enabled = true
+      locationPuck = LocationPuck2D(
         bearingImage = ImageHolder.from(R.drawable.mapbox_user_puck_icon),
         scaleExpression = interpolate {
           linear()

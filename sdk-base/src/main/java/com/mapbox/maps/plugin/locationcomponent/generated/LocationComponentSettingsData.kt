@@ -77,7 +77,7 @@ private data class LocationComponentSettingsData(
   /**
    * Whether the puck rotates to track the bearing source.
    */
-  @Default("true")
+  @Default("false")
   var puckBearingEnabled: Boolean,
 
   /**

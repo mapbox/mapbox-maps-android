@@ -65,9 +65,10 @@ class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal c
   private val scope = CoroutineScope(SupervisorJob() + mainCoroutineDispatcher)
 
   /**
-   * A [MutableStateFlow] that holds the current puck bearing source.
+   * A [MutableStateFlow] that holds the current puck bearing source. Or null to disable listening
+   * for bearing updates completely.
    */
-  private val puckBearingFlow = MutableStateFlow(PuckBearing.COURSE)
+  private val puckBearingFlow: MutableStateFlow<PuckBearing?> = MutableStateFlow(PuckBearing.COURSE)
 
   /**
    * A hot [Flow] that subscribes to the [locationCompassEngine] to receive device orientation.
@@ -170,9 +171,10 @@ class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal c
   /**
    * Update the data source that drives the bearing updates of the [LocationProvider].
    *
-   * @param source The [PuckBearing] used to drive the bearing updates.
+   * @param source The [PuckBearing] used to drive the bearing updates. Or null to disable listening
+   * for bearing updates completely.
    */
-  fun updatePuckBearing(source: PuckBearing) {
+  fun updatePuckBearing(source: PuckBearing?) {
     // emit the new source if it's different
     puckBearingFlow.value = source
   }
@@ -228,6 +230,7 @@ class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal c
           when (puckBearing) {
             PuckBearing.HEADING -> deviceOrientationFlow
             PuckBearing.COURSE -> locationFlow.mapNotNull { it.bearing }
+            null -> emptyFlow()
           }
         }.collect {
           locationConsumer.onBearingUpdated(it)

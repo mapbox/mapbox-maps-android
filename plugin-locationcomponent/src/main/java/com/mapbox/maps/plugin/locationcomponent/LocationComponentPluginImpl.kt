@@ -265,7 +265,7 @@ internal class LocationComponentPluginImpl : LocationComponentPlugin, LocationCo
 
     if (internalSettings.enabled && locationProvider == null) {
       locationProvider = DefaultLocationProvider(context.applicationContext).apply {
-        updatePuckBearing(internalSettings.puckBearing)
+        updatePuckBearingSettings(internalSettings)
       }
     }
   }
@@ -385,8 +385,15 @@ internal class LocationComponentPluginImpl : LocationComponentPlugin, LocationCo
     }
     if (internalSettings.enabled) {
       locationPuckManager?.updateSettings(internalSettings)
+      (locationProvider as? DefaultLocationProvider)?.updatePuckBearingSettings(internalSettings)
     } else {
       deactivateLocationComponent()
     }
+  }
+
+  private fun DefaultLocationProvider.updatePuckBearingSettings(internalSettings: LocationComponentSettings) {
+    val puckBearingSource =
+      internalSettings.puckBearing.takeIf { internalSettings.puckBearingEnabled }
+    updatePuckBearing(puckBearingSource)
   }
 }

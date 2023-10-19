@@ -2,8 +2,8 @@
 package com.mapbox.maps.extension.compose {
 
   @com.mapbox.maps.MapboxExperimental public final class DefaultSettingsProvider {
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.plugin.LocationPuck2D createDefault2DPuck(android.content.Context context, boolean withBearing = false);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.plugin.LocationPuck2D createDefault2DPuck(android.content.Context context);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.plugin.LocationPuck2D createDefault2DPuck(boolean withBearing = false);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.plugin.LocationPuck2D createDefault2DPuck();
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.plugin.attribution.generated.AttributionSettings defaultAttributionSettings(android.content.Context context, float pixelRatio = android.util.DisplayMetrics.density);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.plugin.attribution.generated.AttributionSettings defaultAttributionSettings(android.content.Context context);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.plugin.compass.generated.CompassSettings defaultCompassSettings(android.content.Context context, float pixelRatio = android.util.DisplayMetrics.density);

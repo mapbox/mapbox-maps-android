@@ -255,8 +255,8 @@ internal class LocationPuckManager(
   }
 
   private companion object {
-    // Skip bearing updates if the change from the lastBearing is too small, thus avoid unnecessary calls to gl-native.
-    const val BEARING_UPDATE_THRESHOLD = 0.01
+    // Skip bearing updates if the change from the lastBearing is too small, thus avoid unnecessary bearing animations.
+    const val BEARING_UPDATE_THRESHOLD = 1.0
     const val TAG = "LocationPuckManager"
   }
 }

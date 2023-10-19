@@ -120,18 +120,16 @@ class LocationComponentActivity : AppCompatActivity() {
         return true
       }
       R.id.action_show_bearing -> {
+        binding.mapView.location.puckBearingEnabled = true
         if (binding.mapView.location.locationPuck is LocationPuck2D) {
-          binding.mapView.location.apply {
-            locationPuck = createDefault2DPuck(this@LocationComponentActivity, withBearing = true)
-          }
+          binding.mapView.location.locationPuck = createDefault2DPuck(withBearing = true)
         }
         return true
       }
       R.id.action_hide_bearing -> {
+        binding.mapView.location.puckBearingEnabled = false
         if (binding.mapView.location.locationPuck is LocationPuck2D) {
-          binding.mapView.location.apply {
-            locationPuck = createDefault2DPuck(this@LocationComponentActivity)
-          }
+          binding.mapView.location.locationPuck = createDefault2DPuck(withBearing = false)
         }
         return true
       }

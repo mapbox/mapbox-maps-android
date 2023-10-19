@@ -10,6 +10,7 @@ import com.mapbox.maps.MapView
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.expressions.dsl.generated.interpolate
 import com.mapbox.maps.plugin.LocationPuck2D
+import com.mapbox.maps.plugin.PuckBearing
 import com.mapbox.maps.plugin.gestures.OnMoveListener
 import com.mapbox.maps.plugin.gestures.gestures
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorBearingChangedListener
@@ -79,8 +80,10 @@ class LocationTrackingActivity : AppCompatActivity() {
   private fun initLocationComponent() {
     val locationComponentPlugin = mapView.location
     locationComponentPlugin.updateSettings {
-      this.enabled = true
-      this.locationPuck = LocationPuck2D(
+      puckBearing = PuckBearing.COURSE
+      puckBearingEnabled = true
+      enabled = true
+      locationPuck = LocationPuck2D(
         bearingImage = ImageHolder.from(R.drawable.mapbox_user_puck_icon),
         shadowImage = ImageHolder.from(R.drawable.mapbox_user_icon_shadow),
         scaleExpression = interpolate {

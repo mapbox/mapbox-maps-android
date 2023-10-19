@@ -194,7 +194,7 @@ public class LocationComponentSettings private constructor(
      * Whether the puck rotates to track the bearing source.
      */
     @set:JvmSynthetic
-    public var puckBearingEnabled: Boolean = true
+    public var puckBearingEnabled: Boolean = false
 
     /**
      * The enum controls how the puck is oriented

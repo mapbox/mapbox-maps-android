@@ -367,9 +367,10 @@ The following are breaking changes that may affect your app:
 2. `PuckBearingSource` was renamed to `PuckBearing`:
    - `mapbox_locationComponentPuckBearingSource` was renamed to `mapbox_locationComponentPuckBearing`.
    - `MapView.location2.puckBearingSource` will become `MapView.location.puckBearing`.
-3. `LocationConsumer` interface was extended with `onError` allowing to handle location errors.
-4. `LocationConsumer.onAccuracyRadiusUpdated` was renamed to `LocationConsumer.onHorizontalAccuracyRadiusUpdated`.
-5. To keep the 3D model size constant across different zoom levels, platform based `scale-expression` has been removed in favor of `LocationPuck3D.modelScaleMode` API, and the default value `ModelScaleMode.VIEWPORT` keeps the 3D model constant across all zoom levels. This introduced a behavioral breaking change, and the `model-scale` property needs to be adjusted to correctly render the puck (we found the adjustment to be around `100x` of `model-scale` value, but that could vary depending on model properties, etc.).
+3. `MapView.location.puckBearingEanbled` is now `false` by default.
+4. `LocationConsumer` interface was extended with `onError` allowing to handle location errors.
+5. `LocationConsumer.onAccuracyRadiusUpdated` was renamed to `LocationConsumer.onHorizontalAccuracyRadiusUpdated`.
+6. To keep the 3D model size constant across different zoom levels, platform based `scale-expression` has been removed in favor of `LocationPuck3D.modelScaleMode` API, and the default value `ModelScaleMode.VIEWPORT` keeps the 3D model constant across all zoom levels. This introduced a behavioral breaking change, and the `model-scale` property needs to be adjusted to correctly render the puck (we found the adjustment to be around `100x` of `model-scale` value, but that could vary depending on model properties, etc.).
 
 ##### 3.1.1 Using LocationService instead of LocationEngine
 

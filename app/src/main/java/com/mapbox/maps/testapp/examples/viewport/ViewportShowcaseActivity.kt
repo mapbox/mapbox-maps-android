@@ -108,6 +108,7 @@ class ViewportShowcaseActivity : AppCompatActivity() {
             locationPuck = LocationPuck2D(
               bearingImage = ImageHolder.from(R.drawable.mapbox_mylocation_icon_bearing)
             )
+            puckBearingEnabled = true
           }
         }
       }

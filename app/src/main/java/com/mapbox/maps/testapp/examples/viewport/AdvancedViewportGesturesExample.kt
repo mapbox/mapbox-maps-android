@@ -19,6 +19,7 @@ import com.mapbox.maps.extension.style.layers.properties.generated.LineJoin
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.plugin.LocationPuck2D
+import com.mapbox.maps.plugin.PuckBearing
 import com.mapbox.maps.plugin.gestures.OnRotateListener
 import com.mapbox.maps.plugin.gestures.OnScaleListener
 import com.mapbox.maps.plugin.gestures.OnShoveListener
@@ -239,6 +240,8 @@ class AdvancedViewportGesturesExample : AppCompatActivity() {
     // setup the location component
     mapView.location.apply {
       enabled = true
+      puckBearingEnabled = true
+      puckBearing = PuckBearing.COURSE
       locationPuck = LocationPuck2D(
         bearingImage = ImageHolder.from(R.drawable.mapbox_user_puck_icon),
         scaleExpression = interpolate {

@@ -6,6 +6,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.mapbox.geojson.Point
 import com.mapbox.maps.dsl.cameraOptions
+import com.mapbox.maps.plugin.PuckBearing
 import com.mapbox.maps.plugin.locationcomponent.LocationConsumer
 import com.mapbox.maps.plugin.locationcomponent.LocationProvider
 import com.mapbox.maps.plugin.locationcomponent.location
@@ -53,8 +54,10 @@ class ViewportPluginTest : BaseMapTest() {
         immediateViewportTransition = viewportPlugin.makeImmediateViewportTransition()
         mapView.mapboxMap.setCamera(START_CAMERA_OPTION)
         mapView.location.apply {
-          enabled = true
           setLocationProvider(locationProvider)
+          puckBearingEnabled = true
+          puckBearing = PuckBearing.COURSE
+          enabled = true
         }
       }
     }
@@ -205,7 +208,11 @@ class ViewportPluginTest : BaseMapTest() {
     val TEST_POINT: Point = Point.fromLngLat(24.9384, 60.1699)
     val TEST_POINT_MOVED: Point = Point.fromLngLat(24.94284, 60.1699)
     val NULL_ISLAND: Point = Point.fromLngLat(0.0, 0.0)
-    val START_CAMERA_OPTION = cameraOptions { center(NULL_ISLAND) }
+    val START_CAMERA_OPTION = cameraOptions {
+      center(NULL_ISLAND)
+      // The default style (i.e. standard) has bearing different than 0 so let's reset it
+      bearing(0.0)
+    }
     const val EPS = 0.000001
     const val TEST_BEARING = 45.0
   }

@@ -78,13 +78,11 @@ public object DefaultSettingsProvider {
   /**
    * Create a [LocationPuck2D] instance with or without an arrow bearing image.
    *
-   * @param context the context of application
    * @param withBearing if true, the location puck will show an arrow bearing image, default is false.
    */
   @JvmOverloads
   @MapboxExperimental
   public fun createDefault2DPuck(
-    context: Context,
     withBearing: Boolean = false
   ): LocationPuck2D = LocationPuck2D(
     topImage = ImageHolder.from(R.drawable.mapbox_user_icon),
@@ -115,9 +113,11 @@ public object DefaultSettingsProvider {
     pixelRatio: Float = context.resources.displayMetrics.density
   ): LocationComponentSettings {
     return LocationComponentSettings(
-      locationPuck = createDefault2DPuck(context)
+      locationPuck = createDefault2DPuck(withBearing = false)
     ) {
       pulsingMaxRadius *= pixelRatio
+      // above `locationPuck = createDefault2DPuck()` is without bearing images so disable it
+      puckBearingEnabled = false
     }
   }
 
