@@ -36,6 +36,7 @@ This document is a guide for migrating from v10 of the Mapbox Maps SDK for Andro
     - [3.16 Java-specific changes](#316-java-specific-changes)
     - [3.17 Settings service changes](#317-settings-service-changes)
     - [3.18 Kotlin-specific changes](#318-kotlin-specific-changes)
+    - [3.19 Plugin changes](#319-plugin-changes)
   - [4. Validate ProGuard Rules](#4-validate-proguard-rules)
   - [5. Test your app](#5-test-your-app)
 - [New APIs and minor ergonomic improvements](#new-apis-and-minor-ergonomic-improvements)
@@ -364,6 +365,7 @@ The following are breaking changes that may affect your app:
 #### 3.1 Location API
 
 1. `MapView.location2` has been removed and the following methods `puckBearingEnabled`, `showAccuracyRing`, `accuracyRingColor`, `accuracyRingBorderColor` were moved to `MapView.location`.
+2. `LocationConsumer2` has been dropped in favor of `LocationConsumer`.
 2. `PuckBearingSource` was renamed to `PuckBearing`:
    - `mapbox_locationComponentPuckBearingSource` was renamed to `mapbox_locationComponentPuckBearing`.
    - `MapView.location2.puckBearingSource` will become `MapView.location.puckBearing`.
@@ -639,6 +641,23 @@ The method `MapView.getMapboxMap()` has been deprecated. Please use property `Ma
 The method `MapSurface.getMapboxMap()` has been deprecated. Please use property `MapSurface.mapboxMap`.
 
 The method `MapboxMap.getStyle()` has been deprecated. Please use property `MapboxMap.style`.
+
+#### 3.19 Plugin changes
+
+All Mapbox plugin _implementations_ have now become internal as they were designed initially.
+Public plugin _interfaces_ have to be used instead:
+
+1. `CameraAnimationsPluginImpl` -> `CameraAnimationsPlugin`
+2. `AnnotationPluginImpl` -> `AnnotationPlugin`
+3. `AttributionPluginImpl` -> `AttributionPlugin`
+4. `CompassViewPlugin` -> `CompassPlugin`
+5. `GesturesPluginImpl` -> `GesturesPlugin`
+6. `MapboxLifecyclePluginImpl` -> `MapboxLifecyclePlugin`
+7. `LocationComponentPluginImpl` -> `LocationComponentPlugin`
+8. `LogoViewPlugin` -> `LogoPlugin`
+9. `MapOverlayPluginImpl` -> `MapOverlayPlugin`
+10. `ScaleBarPluginImpl` -> `ScaleBarPlugin`
+11. `ViewportPluginImpl` -> `ViewportPlugin`
 
 ### 4. Validate ProGuard Rules
 
