@@ -1147,8 +1147,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ExampleOverviewActivity" />
         </activity>
+        <!-- View annotations -->
         <activity
-            android:name=".examples.markersandcallouts.ViewAnnotationShowcaseActivity"
+            android:name=".examples.markersandcallouts.viewannotation.ViewAnnotationShowcaseActivity"
             android:description="@string/description_view_annotation"
             android:exported="true"
             android:label="@string/activity_view_annotations">
@@ -1160,7 +1161,7 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
-            android:name=".examples.markersandcallouts.ViewAnnotationBasicAddActivity"
+            android:name=".examples.markersandcallouts.viewannotation.ViewAnnotationBasicAddActivity"
             android:description="@string/description_view_annotation_basic"
             android:exported="true"
             android:label="@string/activity_view_annotations_basic">
@@ -1172,7 +1173,7 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
-            android:name=".examples.markersandcallouts.ViewAnnotationAnimationActivity"
+            android:name=".examples.markersandcallouts.viewannotation.ViewAnnotationAnimationActivity"
             android:description="@string/description_view_annotation_animation"
             android:exported="true"
             android:label="@string/activity_view_annotations_animation">
@@ -1183,6 +1184,31 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ExampleOverviewActivity" />
         </activity>
+        <activity
+            android:name=".examples.markersandcallouts.viewannotation.ViewAnnotationWithPointAnnotationActivity"
+            android:description="@string/description_view_annotation_point_annotation"
+            android:exported="true"
+            android:label="@string/activity_view_annotations_point_annotation">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_markers_and_callouts" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ExampleOverviewActivity" />
+        </activity>
+        <activity
+            android:name=".examples.markersandcallouts.viewannotation.DynamicViewAnnotationActivity"
+            android:description="@string/description_dynamic_view_annotations"
+            android:exported="true"
+            android:label="@string/activity_dynamic_view_annotations">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_markers_and_callouts" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ExampleOverviewActivity" />
+        </activity>
+        <!-- -->
         <activity
             android:name=".examples.viewport.ViewportShowcaseActivity"
             android:description="@string/description_viewport"
@@ -1203,18 +1229,6 @@
             <meta-data
                 android:name="@string/category"
                 android:value="@string/category_viewport" />
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ExampleOverviewActivity" />
-        </activity>
-        <activity
-            android:name=".examples.markersandcallouts.ViewAnnotationWithPointAnnotationActivity"
-            android:description="@string/description_view_annotation_point_annotation"
-            android:exported="true"
-            android:label="@string/activity_view_annotations_point_annotation">
-            <meta-data
-                android:name="@string/category"
-                android:value="@string/category_markers_and_callouts" />
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ExampleOverviewActivity" />

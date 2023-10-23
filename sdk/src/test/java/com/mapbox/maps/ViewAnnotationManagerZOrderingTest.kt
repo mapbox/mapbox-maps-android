@@ -1,5 +1,6 @@
-package com.mapbox.maps
+ package com.mapbox.maps
 
+ import com.mapbox.geojson.Point
 import com.mapbox.maps.viewannotation.ViewAnnotationManagerImpl
 import io.mockk.*
 import org.junit.Assert.assertEquals
@@ -7,12 +8,12 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 
-@RunWith(Parameterized::class)
-internal class ViewAnnotationManagerZOrderingTest(
+ @RunWith(Parameterized::class)
+ internal class ViewAnnotationManagerZOrderingTest(
   private val oldDescriptors: List<DelegatingViewAnnotationPositionDescriptor>,
   private val newDescriptors: List<DelegatingViewAnnotationPositionDescriptor>,
   private val shouldChangeZOrder: Boolean,
-) {
+ ) {
 
   @Test
   fun calculatesCorrectZOrder() {
@@ -28,13 +29,15 @@ internal class ViewAnnotationManagerZOrderingTest(
     private fun descriptors(vararg identifiers: String) = identifiers.map {
       DelegatingViewAnnotationPositionDescriptor(
         it,
-        0,
-        0,
+        0.0,
+        0.0,
         // different identifiers should have different screen coordinates
         ScreenCoordinate(
           (identifiers.hashCode() % 500).toDouble(),
           (identifiers.hashCode() % 300).toDouble()
-        )
+        ),
+        anchorCoordinate = Point.fromLngLat(0.0, 0.0),
+        anchorConfig = ViewAnnotationAnchorConfig.Builder().anchor(ViewAnnotationAnchor.CENTER).build(),
       )
     }
 
@@ -330,4 +333,4 @@ internal class ViewAnnotationManagerZOrderingTest(
       ),
     )
   }
-}
+ }

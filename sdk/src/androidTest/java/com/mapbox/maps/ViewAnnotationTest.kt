@@ -23,6 +23,9 @@ import com.mapbox.maps.test.R
 import com.mapbox.maps.viewannotation.OnViewAnnotationUpdatedListener
 import com.mapbox.maps.viewannotation.ViewAnnotationManager
 import com.mapbox.maps.viewannotation.ViewAnnotationUpdateMode
+import com.mapbox.maps.viewannotation.annotatedLayerFeature
+import com.mapbox.maps.viewannotation.annotationAnchor
+import com.mapbox.maps.viewannotation.geometry
 import com.mapbox.maps.viewannotation.viewAnnotationOptions
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
@@ -72,8 +75,8 @@ class ViewAnnotationTest(
           override fun onViewAnnotationPositionUpdated(
             view: View,
             leftTopCoordinate: ScreenCoordinate,
-            width: Int,
-            height: Int
+            width: Double,
+            height: Double
           ) { /** no-op **/ }
 
           override fun onViewAnnotationVisibilityUpdated(view: View, visible: Boolean) {
@@ -176,7 +179,9 @@ class ViewAnnotationTest(
           resId = layoutResId,
           options = viewAnnotationOptions {
             geometry(CAMERA_CENTER)
-            anchor(ViewAnnotationAnchor.TOP_LEFT)
+            annotationAnchor {
+              anchor(ViewAnnotationAnchor.TOP_LEFT)
+            }
           }
         )
       },
@@ -196,17 +201,19 @@ class ViewAnnotationTest(
 
   @Test
   fun addViewAnnotationOffsets() {
-    val offsetX = 30
-    val offsetY = 20
+    val offsetX = 30.0
+    val offsetY = 20.0
     viewAnnotationTestHelper(
       performAction = {
         firstView = viewAnnotationManager.addViewAnnotation(
           resId = layoutResId,
           options = viewAnnotationOptions {
             geometry(CAMERA_CENTER)
-            anchor(ViewAnnotationAnchor.TOP_LEFT)
-            offsetX(offsetX)
-            offsetY(offsetY)
+            annotationAnchor {
+              anchor(ViewAnnotationAnchor.TOP_LEFT)
+              offsetX(offsetX)
+              offsetY(offsetY)
+            }
           }
         )
       },
@@ -262,7 +269,9 @@ class ViewAnnotationTest(
           resId = layoutResId,
           options = viewAnnotationOptions {
             geometry(SHIFTED_CENTER)
-            anchor(ViewAnnotationAnchor.TOP_LEFT)
+            annotationAnchor {
+              anchor(ViewAnnotationAnchor.TOP_LEFT)
+            }
             allowOverlap(true)
           }
         )
@@ -270,7 +279,9 @@ class ViewAnnotationTest(
           resId = layoutResId,
           options = viewAnnotationOptions {
             geometry(CAMERA_CENTER)
-            anchor(ViewAnnotationAnchor.TOP_LEFT)
+            annotationAnchor {
+              anchor(ViewAnnotationAnchor.TOP_LEFT)
+            }
             allowOverlap(true)
           }
         )
@@ -305,7 +316,9 @@ class ViewAnnotationTest(
           resId = layoutResId,
           options = viewAnnotationOptions {
             geometry(SHIFTED_CENTER)
-            anchor(ViewAnnotationAnchor.TOP_LEFT)
+            annotationAnchor {
+              anchor(ViewAnnotationAnchor.TOP_LEFT)
+            }
             allowOverlap(false)
           }
         )
@@ -313,7 +326,9 @@ class ViewAnnotationTest(
           resId = layoutResId,
           options = viewAnnotationOptions {
             geometry(CAMERA_CENTER)
-            anchor(ViewAnnotationAnchor.TOP_LEFT)
+            annotationAnchor {
+              anchor(ViewAnnotationAnchor.TOP_LEFT)
+            }
             allowOverlap(false)
           }
         )
@@ -341,7 +356,9 @@ class ViewAnnotationTest(
           resId = layoutResId,
           options = viewAnnotationOptions {
             geometry(SHIFTED_CENTER)
-            anchor(ViewAnnotationAnchor.TOP_LEFT)
+            annotationAnchor {
+              anchor(ViewAnnotationAnchor.TOP_LEFT)
+            }
             allowOverlap(true)
             selected(true)
           }
@@ -350,7 +367,9 @@ class ViewAnnotationTest(
           resId = layoutResId,
           options = viewAnnotationOptions {
             geometry(CAMERA_CENTER)
-            anchor(ViewAnnotationAnchor.TOP_LEFT)
+            annotationAnchor {
+              anchor(ViewAnnotationAnchor.TOP_LEFT)
+            }
             allowOverlap(true)
           }
         )
@@ -386,7 +405,9 @@ class ViewAnnotationTest(
           resId = layoutResId,
           options = viewAnnotationOptions {
             geometry(SHIFTED_CENTER)
-            anchor(ViewAnnotationAnchor.TOP_LEFT)
+            annotationAnchor {
+              anchor(ViewAnnotationAnchor.TOP_LEFT)
+            }
             allowOverlap(true)
           }
         )
@@ -394,7 +415,9 @@ class ViewAnnotationTest(
           resId = layoutResId,
           options = viewAnnotationOptions {
             geometry(CAMERA_CENTER)
-            anchor(ViewAnnotationAnchor.TOP_LEFT)
+            annotationAnchor {
+              anchor(ViewAnnotationAnchor.TOP_LEFT)
+            }
             allowOverlap(false)
           }
         )
@@ -429,7 +452,9 @@ class ViewAnnotationTest(
           resId = layoutResId,
           options = viewAnnotationOptions {
             geometry(SHIFTED_CENTER)
-            anchor(ViewAnnotationAnchor.TOP_LEFT)
+            annotationAnchor {
+              anchor(ViewAnnotationAnchor.TOP_LEFT)
+            }
             allowOverlap(false)
           }
         )
@@ -437,7 +462,9 @@ class ViewAnnotationTest(
           resId = layoutResId,
           options = viewAnnotationOptions {
             geometry(CAMERA_CENTER)
-            anchor(ViewAnnotationAnchor.TOP_LEFT)
+            annotationAnchor {
+              anchor(ViewAnnotationAnchor.TOP_LEFT)
+            }
             allowOverlap(true)
           }
         )
@@ -465,7 +492,9 @@ class ViewAnnotationTest(
           resId = layoutResId,
           options = viewAnnotationOptions {
             geometry(SHIFTED_CENTER)
-            anchor(ViewAnnotationAnchor.TOP_LEFT)
+            annotationAnchor {
+              anchor(ViewAnnotationAnchor.TOP_LEFT)
+            }
             allowOverlap(false)
             selected(true)
           }
@@ -474,7 +503,9 @@ class ViewAnnotationTest(
           resId = layoutResId,
           options = viewAnnotationOptions {
             geometry(CAMERA_CENTER)
-            anchor(ViewAnnotationAnchor.TOP_LEFT)
+            annotationAnchor {
+              anchor(ViewAnnotationAnchor.TOP_LEFT)
+            }
             allowOverlap(false)
           }
         )
@@ -502,7 +533,9 @@ class ViewAnnotationTest(
           resId = layoutResId,
           options = viewAnnotationOptions {
             geometry(SHIFTED_CENTER)
-            anchor(ViewAnnotationAnchor.TOP_LEFT)
+            annotationAnchor {
+              anchor(ViewAnnotationAnchor.TOP_LEFT)
+            }
             allowOverlap(false)
             selected(true)
           }
@@ -511,7 +544,9 @@ class ViewAnnotationTest(
           resId = layoutResId,
           options = viewAnnotationOptions {
             geometry(CAMERA_CENTER)
-            anchor(ViewAnnotationAnchor.TOP_LEFT)
+            annotationAnchor {
+              anchor(ViewAnnotationAnchor.TOP_LEFT)
+            }
             allowOverlap(false)
             selected(true)
           }
@@ -536,7 +571,7 @@ class ViewAnnotationTest(
 
   @Test
   fun updateViewAnnotation() {
-    val offsetY = 30
+    val offsetY = 30.0
     viewAnnotationTestHelper(
       performAction = {
         firstView = viewAnnotationManager.addViewAnnotation(
@@ -549,7 +584,10 @@ class ViewAnnotationTest(
           view = firstView,
           options = viewAnnotationOptions {
             geometry(SHIFTED_CENTER)
-            offsetY(offsetY)
+            annotationAnchor {
+              anchor(ViewAnnotationAnchor.CENTER)
+              offsetY(offsetY)
+            }
           }
         )
       },
@@ -577,8 +615,8 @@ class ViewAnnotationTest(
 
   @Test
   fun updateViewAnnotationDimensions() {
-    val updatedWidthPx = 120
-    val updatedHeightPx = 150
+    val updatedWidthPx = 120.0
+    val updatedHeightPx = 150.0
     viewAnnotationTestHelper(
       performAction = {
         firstView = viewAnnotationManager.addViewAnnotation(
@@ -597,8 +635,8 @@ class ViewAnnotationTest(
       },
       makeChecks = {
         assertTrue(viewAnnotationsLayout.hasChildView(firstView))
-        assertEquals(updatedWidthPx, firstView.width)
-        assertEquals(updatedHeightPx, firstView.height)
+        assertEquals(updatedWidthPx, firstView.width.toDouble(), ADMISSIBLE_ERROR_PX)
+        assertEquals(updatedHeightPx, firstView.height.toDouble(), ADMISSIBLE_ERROR_PX)
         assertEquals(
           mapboxMap.pixelForCoordinate(CAMERA_CENTER).x - firstView.width / 2.0,
           firstView.translationX.toDouble(),
@@ -736,21 +774,24 @@ class ViewAnnotationTest(
     )
   }
 
-  // checking some use-cases when using associatedFeatureId
+  // checking some use-cases when using [ViewAnnotationManager.annotatedLayerFeature]
 
   @Test
-  fun associatedFeatureIdWhenFeatureVisible() {
+  fun annotatedFeatureIdWhenFeatureVisible() {
     viewAnnotationTestHelper(
       performAction = {
         prepareStyle(mapboxMap.style!!, Visibility.VISIBLE)
         firstView = viewAnnotationManager.addViewAnnotation(
           resId = layoutResId,
           options = viewAnnotationOptions {
-            geometry(CAMERA_CENTER)
-            anchor(ViewAnnotationAnchor.BOTTOM)
-            offsetY(50)
+            annotatedLayerFeature(ANNOTATED_LAYER_ID) {
+              featureId(ANNOTATED_FEATURE_ID)
+            }
+            annotationAnchor {
+              anchor(ViewAnnotationAnchor.BOTTOM)
+              offsetY(50.0)
+            }
             visible(true)
-            associatedFeatureId(ASSOCIATED_FEATURE_ID)
           }
         )
       },
@@ -767,18 +808,21 @@ class ViewAnnotationTest(
   }
 
   @Test
-  fun associatedFeatureIdWhenFeatureGone() {
+  fun annotatedLayerFeatureWhenFeatureGone() {
     viewAnnotationTestHelper(
       performAction = {
         prepareStyle(mapboxMap.style!!, Visibility.NONE)
         firstView = viewAnnotationManager.addViewAnnotation(
           resId = layoutResId,
           options = viewAnnotationOptions {
-            geometry(CAMERA_CENTER)
-            anchor(ViewAnnotationAnchor.BOTTOM)
-            offsetY(50)
+            annotatedLayerFeature(ANNOTATED_LAYER_ID) {
+              featureId(ANNOTATED_FEATURE_ID)
+            }
+            annotationAnchor {
+              anchor(ViewAnnotationAnchor.BOTTOM)
+              offsetY(50.0)
+            }
             visible(true)
-            associatedFeatureId(ASSOCIATED_FEATURE_ID)
           }
         )
       },
@@ -794,7 +838,7 @@ class ViewAnnotationTest(
   }
 
   @Test
-  fun associatedFeatureIdWhenFeatureVisibleThenGone() {
+  fun annotatedLayerFeatureWhenFeatureVisibleThenGone() {
     viewAnnotationTestHelper(
       additionalLatchCount = 1,
       performAction = {
@@ -802,17 +846,20 @@ class ViewAnnotationTest(
         firstView = viewAnnotationManager.addViewAnnotation(
           resId = layoutResId,
           options = viewAnnotationOptions {
-            geometry(CAMERA_CENTER)
-            anchor(ViewAnnotationAnchor.BOTTOM)
-            offsetY(50)
+            annotatedLayerFeature(ANNOTATED_LAYER_ID) {
+              featureId(ANNOTATED_FEATURE_ID)
+            }
+            annotationAnchor {
+              anchor(ViewAnnotationAnchor.BOTTOM)
+              offsetY(50.0)
+            }
             visible(true)
-            associatedFeatureId(ASSOCIATED_FEATURE_ID)
           }
         )
       },
       makeChecks = {
         // hide marker
-        mapboxMap.style?.getLayer("layer")?.visibility(Visibility.NONE)
+        mapboxMap.style?.getLayer(ANNOTATED_LAYER_ID)?.visibility(Visibility.NONE)
         mainHandler.postDelayed(
           {
             assertArrayEquals(
@@ -893,7 +940,9 @@ class ViewAnnotationTest(
           resId = layoutResId,
           options = viewAnnotationOptions {
             geometry(CAMERA_CENTER)
-            anchor(ViewAnnotationAnchor.TOP_LEFT)
+            annotationAnchor {
+              anchor(ViewAnnotationAnchor.TOP_LEFT)
+            }
           }
         )
         firstView.visibility = View.VISIBLE
@@ -961,8 +1010,8 @@ class ViewAnnotationTest(
   fun viewAnnotationUpdateListener() {
     var positionCallbackTriggerCount = 0
     var visibilityCallbackTriggerCount = 0
-    var actualWidth = 0
-    var actualHeight = 0
+    var actualWidth = 0.0
+    var actualHeight = 0.0
     var actualLeftTop = ScreenCoordinate(0.0, 0.0)
     var actualVisibility = false
     viewAnnotationTestHelper(
@@ -971,8 +1020,8 @@ class ViewAnnotationTest(
           override fun onViewAnnotationPositionUpdated(
             view: View,
             leftTopCoordinate: ScreenCoordinate,
-            width: Int,
-            height: Int
+            width: Double,
+            height: Double
           ) {
             if (firstView == view) {
               positionCallbackTriggerCount++
@@ -993,7 +1042,9 @@ class ViewAnnotationTest(
           resId = layoutResId,
           options = viewAnnotationOptions {
             geometry(CAMERA_CENTER)
-            anchor(ViewAnnotationAnchor.TOP_LEFT)
+            annotationAnchor {
+              anchor(ViewAnnotationAnchor.TOP_LEFT)
+            }
           }
         )
       },
@@ -1002,8 +1053,8 @@ class ViewAnnotationTest(
         assert(positionCallbackTriggerCount == 1)
         assertEquals(firstView.translationX.toDouble(), actualLeftTop.x, ADMISSIBLE_ERROR_PX)
         assertEquals(firstView.translationY.toDouble(), actualLeftTop.y, ADMISSIBLE_ERROR_PX)
-        assertEquals(firstView.width, actualWidth)
-        assertEquals(firstView.height, actualHeight)
+        assertEquals(firstView.width.toDouble(), actualWidth, ADMISSIBLE_ERROR_PX)
+        assertEquals(firstView.height.toDouble(), actualHeight, ADMISSIBLE_ERROR_PX)
         // callback should be triggered once and contain correct visibility data
         assert(visibilityCallbackTriggerCount == 1)
         assertEquals(true, actualVisibility)
@@ -1014,12 +1065,12 @@ class ViewAnnotationTest(
   private fun prepareStyle(style: Style, visibility: Visibility) {
     style.addSource(
       geoJsonSource("source") {
-        feature(Feature.fromGeometry(CAMERA_CENTER, null, ASSOCIATED_FEATURE_ID))
+        feature(Feature.fromGeometry(CAMERA_CENTER, null, ANNOTATED_FEATURE_ID))
       }
     )
     style.addLayer(
-      symbolLayer("layer", "source") {
-        textField(ASSOCIATED_FEATURE_ID)
+      symbolLayer(ANNOTATED_LAYER_ID, "source") {
+        textField(ANNOTATED_FEATURE_ID)
         visibility(visibility)
       }
     )
@@ -1030,10 +1081,12 @@ class ViewAnnotationTest(
     const val TEST_RUN_MAX_TIME_MS = 10_000L
     const val ADMISSIBLE_ERROR_PX = 3.0
 
-    const val ASSOCIATED_FEATURE_ID = "featureTestId"
+    const val ANNOTATED_FEATURE_ID = "featureTestId"
+    const val ANNOTATED_LAYER_ID = "layerTestId"
     const val CAMERA_ZOOM = 10.0
     val CAMERA_CENTER: Point = Point.fromLngLat(0.0, 0.0)
-    val SHIFTED_CENTER: Point = Point.fromLngLat(CAMERA_CENTER.longitude() - 0.01, CAMERA_CENTER.latitude() - 0.01)
+    val SHIFTED_CENTER: Point =
+      Point.fromLngLat(CAMERA_CENTER.longitude() - 0.01, CAMERA_CENTER.latitude() - 0.01)
 
     @JvmStatic
     @Parameterized.Parameters

@@ -111,7 +111,7 @@ package com.mapbox.maps.extension.compose.animation.viewport {
 package com.mapbox.maps.extension.compose.annotation {
 
   public final class ViewAnnotationKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void ViewAnnotation(com.mapbox.maps.ViewAnnotationOptions options, androidx.compose.ui.Modifier modifier = Modifier, com.mapbox.maps.viewannotation.OnViewAnnotationUpdatedListener? onUpdatedListener = null, kotlin.jvm.functions.Function0<kotlin.Unit> content);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void ViewAnnotation(com.mapbox.maps.ViewAnnotationOptions options, androidx.compose.ui.Modifier modifier = Modifier, com.mapbox.maps.viewannotation.OnViewAnnotationUpdatedListener? onUpdatedListener = null, android.view.ViewGroup.LayoutParams layoutParams = ViewGroup.<init>(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT), kotlin.jvm.functions.Function0<kotlin.Unit> content);
   }
 
 }

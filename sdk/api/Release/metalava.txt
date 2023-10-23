@@ -675,8 +675,10 @@ package com.mapbox.maps.renderer.widget {
 package com.mapbox.maps.viewannotation {
 
   public interface OnViewAnnotationUpdatedListener {
-    method public void onViewAnnotationPositionUpdated(android.view.View view, com.mapbox.maps.ScreenCoordinate leftTopCoordinate, int width, int height);
-    method public void onViewAnnotationVisibilityUpdated(android.view.View view, boolean visible);
+    method public default void onViewAnnotationAnchorCoordinateUpdated(android.view.View view, com.mapbox.geojson.Point anchorCoordinate);
+    method public default void onViewAnnotationAnchorUpdated(android.view.View view, com.mapbox.maps.ViewAnnotationAnchorConfig anchor);
+    method public default void onViewAnnotationPositionUpdated(android.view.View view, com.mapbox.maps.ScreenCoordinate leftTopCoordinate, double width, double height);
+    method public default void onViewAnnotationVisibilityUpdated(android.view.View view, boolean visible);
   }
 
   public interface ViewAnnotationManager {
@@ -686,9 +688,9 @@ package com.mapbox.maps.viewannotation {
     method public void addViewAnnotation(android.view.View view, com.mapbox.maps.ViewAnnotationOptions options);
     method public com.mapbox.maps.CameraOptions? cameraForAnnotations(java.util.List<? extends android.view.View> annotations, com.mapbox.maps.EdgeInsets? edgeInsets = null, Double? bearing = null, Double? pitch = null);
     method public java.util.Map<android.view.View,com.mapbox.maps.ViewAnnotationOptions> getAnnotations();
-    method public android.view.View? getViewAnnotationByFeatureId(String featureId);
-    method public com.mapbox.maps.ViewAnnotationOptions? getViewAnnotationOptionsByFeatureId(String featureId);
-    method public com.mapbox.maps.ViewAnnotationOptions? getViewAnnotationOptionsByView(android.view.View view);
+    method public android.view.View? getViewAnnotation(com.mapbox.maps.AnnotatedLayerFeature annotatedLayerFeature);
+    method public com.mapbox.maps.ViewAnnotationOptions? getViewAnnotationOptions(com.mapbox.maps.AnnotatedLayerFeature annotatedLayerFeature);
+    method public com.mapbox.maps.ViewAnnotationOptions? getViewAnnotationOptions(android.view.View view);
     method public com.mapbox.maps.viewannotation.ViewAnnotationUpdateMode getViewAnnotationUpdateMode();
     method public void removeAllViewAnnotations();
     method public void removeOnViewAnnotationUpdatedListener(com.mapbox.maps.viewannotation.OnViewAnnotationUpdatedListener listener);
@@ -704,6 +706,10 @@ package com.mapbox.maps.viewannotation {
   }
 
   public final class ViewAnnotationOptionsKtxKt {
+    method public static inline com.mapbox.maps.ViewAnnotationOptions.Builder annotatedLayerFeature(com.mapbox.maps.ViewAnnotationOptions.Builder, String layerId, kotlin.jvm.functions.Function1<? super com.mapbox.maps.AnnotatedLayerFeature.Builder,kotlin.Unit> block = {});
+    method public static inline void annotationAnchor(com.mapbox.maps.ViewAnnotationOptions.Builder, kotlin.jvm.functions.Function1<? super com.mapbox.maps.ViewAnnotationAnchorConfig.Builder,kotlin.Unit> block);
+    method public static com.mapbox.maps.ViewAnnotationOptions.Builder annotationAnchors(com.mapbox.maps.ViewAnnotationOptions.Builder, kotlin.jvm.functions.Function1<? super com.mapbox.maps.ViewAnnotationAnchorConfig.Builder,kotlin.Unit>... blocks);
+    method public static com.mapbox.maps.ViewAnnotationOptions.Builder geometry(com.mapbox.maps.ViewAnnotationOptions.Builder, com.mapbox.geojson.Geometry geometry);
     method public static inline com.mapbox.maps.ViewAnnotationOptions viewAnnotationOptions(kotlin.jvm.functions.Function1<? super com.mapbox.maps.ViewAnnotationOptions.Builder,kotlin.Unit> block);
   }
 

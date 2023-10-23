@@ -15,6 +15,7 @@ import com.mapbox.maps.plugin.gestures.gestures
 import com.mapbox.maps.testapp.BaseMapTest
 import com.mapbox.maps.testapp.test.R
 import com.mapbox.maps.viewannotation.OnViewAnnotationUpdatedListener
+import com.mapbox.maps.viewannotation.geometry
 import com.mapbox.maps.viewannotation.viewAnnotationOptions
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -84,8 +85,8 @@ class GestureInterceptedOnViewAnnotationTest : BaseMapTest() {
                 override fun onViewAnnotationPositionUpdated(
                   view: View,
                   leftTopCoordinate: ScreenCoordinate,
-                  width: Int,
-                  height: Int
+                  width: Double,
+                  height: Double
                 ) {}
 
                 override fun onViewAnnotationVisibilityUpdated(view: View, visible: Boolean) {

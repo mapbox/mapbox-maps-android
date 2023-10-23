@@ -3,7 +3,8 @@ package com.mapbox.maps.viewannotation
 import android.graphics.Rect
 import android.os.Looper
 import android.view.*
-import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.view.View.MeasureSpec
+import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.widget.FrameLayout
 import androidx.annotation.*
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater
@@ -13,10 +14,9 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName
 import com.mapbox.maps.extension.style.projection.generated.getProjection
-import com.mapbox.maps.viewannotation.ViewAnnotation.Companion.USER_FIXED_DIMENSION
-import java.util.concurrent.ConcurrentHashMap
+import com.mapbox.maps.renderer.RenderThread
+import java.util.UUID
 import java.util.concurrent.CopyOnWriteArraySet
-import kotlin.collections.Map
 import kotlin.math.abs
 
 @RestrictTo(RestrictTo.Scope.LIBRARY)
@@ -27,6 +27,38 @@ internal class ViewAnnotationManagerImpl(
   private val mapboxMap: MapboxMap = mapView.mapboxMap
   private val renderThread = mapView.mapController.renderer.renderThread
   private val pixelRatio = mapView.resources.displayMetrics.density
+
+  private data class ViewAnnotation(
+    val view: View,
+    var viewLayoutParams: ViewGroup.LayoutParams,
+    // needed to control global layout / on draw listeners lifecycle
+    var attachStateListener: View.OnAttachStateChangeListener? = null,
+    // if user did not specify [ViewAnnotationOptions.visible]  explicitly
+    var handleVisibilityAutomatically: Boolean,
+    // TODO could be simplified with isPositioned flag
+    var visibility: ViewAnnotationVisibility,
+    var measuredWidth: Int,
+    var measuredHeight: Int,
+    var positionDescriptor: DelegatingViewAnnotationPositionDescriptor?,
+    var isPositioned: Boolean,
+    // id passed to gl-native
+    val id: String = UUID.randomUUID().toString()
+  ) {
+    // Helper function to understand if view is visible from Android visibility perspective.
+    val isVisible
+      get() = visibility == ViewAnnotationVisibility.VISIBLE_AND_POSITIONED ||
+        visibility == ViewAnnotationVisibility.VISIBLE_AND_NOT_POSITIONED
+  }
+
+  private val viewAnnotations = mutableMapOf<String, ViewAnnotation>()
+
+  // using copy on write as user could remove listener while callback is invoked
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal val viewUpdatedListenerSet = CopyOnWriteArraySet<OnViewAnnotationUpdatedListener>()
+
+  @Volatile
+  private var updatedPositionDescriptors = emptyList<DelegatingViewAnnotationPositionDescriptor>()
+  private var currentPositionDescriptors = emptyList<DelegatingViewAnnotationPositionDescriptor>()
 
   init {
     viewAnnotationsLayout.layoutParams = FrameLayout.LayoutParams(
@@ -39,20 +71,6 @@ internal class ViewAnnotationManagerImpl(
     mapboxMap.setViewAnnotationPositionsUpdateListener(this)
   }
 
-  private val annotationMap = ConcurrentHashMap<String, ViewAnnotation>()
-
-  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  internal val idLookupMap = ConcurrentHashMap<View, String>()
-  private val currentlyDrawnViewIdSet = mutableSetOf<String>()
-  private val unpositionedViews = mutableSetOf<View>()
-
-  // using copy on write as user could remove listener while callback is invoked
-  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  internal val viewUpdatedListenerSet = CopyOnWriteArraySet<OnViewAnnotationUpdatedListener>()
-
-  @Volatile
-  private var updatedPositionsList: List<DelegatingViewAnnotationPositionDescriptor> = listOf()
-
   override fun addViewAnnotation(
     @LayoutRes resId: Int,
     options: ViewAnnotationOptions,
@@ -61,7 +79,8 @@ internal class ViewAnnotationManagerImpl(
   ) {
     validateOptions(options)
     asyncInflater.inflate(resId, viewAnnotationsLayout) { view, _, _ ->
-      asyncInflateCallback.invoke(prepareViewAnnotation(view, options))
+      prepareViewAnnotation(view, options)
+      asyncInflateCallback.invoke(view)
     }
   }
 
@@ -70,12 +89,14 @@ internal class ViewAnnotationManagerImpl(
     options: ViewAnnotationOptions
   ): View {
     validateOptions(options)
-    val view = LayoutInflater.from(viewAnnotationsLayout.context).inflate(resId, viewAnnotationsLayout, false)
-    return prepareViewAnnotation(view, options)
+    val view = LayoutInflater.from(viewAnnotationsLayout.context)
+      .inflate(resId, viewAnnotationsLayout, false)
+    prepareViewAnnotation(view, options)
+    return view
   }
 
   override fun addViewAnnotation(view: View, options: ViewAnnotationOptions) {
-    if (idLookupMap.containsKey(view)) {
+    if (viewAnnotations.any { it.value.view == view }) {
       throw MapboxViewAnnotationException(
         "Trying to add view annotation that was already added before! " +
           "Please consider deleting annotation view ($view) beforehand."
@@ -86,54 +107,62 @@ internal class ViewAnnotationManagerImpl(
   }
 
   override fun removeViewAnnotation(view: View): Boolean {
-    val id = idLookupMap.remove(view) ?: return false
-    val annotation = annotationMap.remove(id) ?: return false
-    currentlyDrawnViewIdSet.remove(id)
-    remove(id, annotation)
-    return true
+    return viewAnnotations.entries
+      .find { (_, viewAnnotation) -> viewAnnotation.view == view }
+      ?.let { (id, viewAnnotation) ->
+        viewAnnotations.remove(id)
+        remove(viewAnnotation)
+        true
+      } ?: false
   }
 
   override fun removeAllViewAnnotations() {
-    annotationMap.forEach { (id, annotation) ->
-      remove(id, annotation)
+    viewAnnotations.iterator().let { iterator ->
+      while (iterator.hasNext()) {
+        val viewAnnotation = iterator.next().value
+        remove(viewAnnotation)
+        iterator.remove()
+      }
     }
-    currentlyDrawnViewIdSet.clear()
-    annotationMap.clear()
-    idLookupMap.clear()
   }
 
   override fun updateViewAnnotation(
     view: View,
     options: ViewAnnotationOptions,
   ): Boolean {
-    val id = idLookupMap[view] ?: return false
-    checkAssociatedFeatureIdUniqueness(options)
-    annotationMap[id]?.let {
-      it.handleVisibilityAutomatically = (options.visible == null)
-      if (options.width != null) {
-        it.measuredWidth = USER_FIXED_DIMENSION
+    return viewAnnotations
+      .values
+      .find { it.view == view }
+      ?.let { viewAnnotation ->
+        // FIXME does it conform the documented behaviour if `visible` was set but is not present in the update call ?
+        // `When updating existing annotations, if `visible` is not explicitly set, the current value will be retained.`
+        viewAnnotation.handleVisibilityAutomatically = (options.visible == null)
+        if (options.width != null) {
+          viewAnnotation.measuredWidth = USER_FIXED_DIMENSION
+        }
+        if (options.height != null) {
+          viewAnnotation.measuredHeight = USER_FIXED_DIMENSION
+        }
+        getValue(mapboxMap.updateViewAnnotation(viewAnnotation.id, options))
+        true
+      } ?: false
+  }
+
+  override fun getViewAnnotation(annotatedLayerFeature: AnnotatedLayerFeature): View? {
+    return findByAnnotatedLayerFeature(annotatedLayerFeature).first
+  }
+
+  override fun getViewAnnotationOptions(annotatedLayerFeature: AnnotatedLayerFeature): ViewAnnotationOptions? {
+    return findByAnnotatedLayerFeature(annotatedLayerFeature).second
+  }
+
+  override fun getViewAnnotationOptions(view: View): ViewAnnotationOptions? {
+    return viewAnnotations
+      .values
+      .find { it.view == view }
+      ?.let { viewAnnotation ->
+        getValue(mapboxMap.getViewAnnotationOptions(viewAnnotation.id))
       }
-      if (options.height != null) {
-        it.measuredHeight = USER_FIXED_DIMENSION
-      }
-      getValue(mapboxMap.updateViewAnnotation(id, options))
-      return true
-    } ?: return false
-  }
-
-  override fun getViewAnnotationByFeatureId(featureId: String): View? {
-    val (view, _) = findByFeatureId(featureId)
-    return view
-  }
-
-  override fun getViewAnnotationOptionsByFeatureId(featureId: String): ViewAnnotationOptions? {
-    val (_, options) = findByFeatureId(featureId)
-    return options
-  }
-
-  override fun getViewAnnotationOptionsByView(view: View): ViewAnnotationOptions? {
-    val id = idLookupMap[view] ?: return null
-    return getValue(mapboxMap.getViewAnnotationOptions(id))
   }
 
   override fun addOnViewAnnotationUpdatedListener(listener: OnViewAnnotationUpdatedListener) {
@@ -144,39 +173,34 @@ internal class ViewAnnotationManagerImpl(
     viewUpdatedListenerSet.remove(listener)
   }
 
-  @AnyThread
+  @RenderThread
   override fun setViewAnnotationUpdateMode(mode: ViewAnnotationUpdateMode) {
     renderThread.viewAnnotationMode = mode
   }
 
-  @AnyThread
+  @RenderThread
   override fun getViewAnnotationUpdateMode(): ViewAnnotationUpdateMode {
     return renderThread.viewAnnotationMode
   }
 
   override val annotations: Map<View, ViewAnnotationOptions>
-    get() = HashMap<View, ViewAnnotationOptions>().apply {
-      idLookupMap.forEach { (view, _) ->
-        getViewAnnotationOptionsByView(view)?.let { viewAnnotationOptions ->
-          put(view, viewAnnotationOptions)
+    get() = viewAnnotations
+      .mapNotNull { (_, viewAnnotation) ->
+        val options = getValue(mapboxMap.getViewAnnotationOptions(viewAnnotation.id))
+
+        options?.let {
+          viewAnnotation.view to options
         }
       }
-    }
+      .toMap()
 
   /**
-   * ViewAnnotations has width and height, so [MapboxMap.cameraForCoordinates] and
-   * [MapboxMap.cameraForCoordinateBounds] doesn't return correct frame for given annotations.
+   * Calculates CameraOptions to fit the given view annotations, including their width and height.
    *
-   * In order to calculate correct bounds that includes width and height of viewAnnotations, we used following steps
-   * Step1: Calculate cameraOptions using cameraForCoordinates without considering the width and height of
-   * viewAnnotations.
-   * Step2: Calculate [MapboxMap.getMetersPerPixelAtLatitude] with zoom obtained from cameraOptions.
-   * Step3: Calculate projected meter at the anchor of viewAnnotation using [MapboxMap.projectedMetersForCoordinate]
-   * Step4: Adjust northing and easting vector of viewAnnotation with width, height and [getViewAnnotationOptionsFrame],
-   * this will give us north, east, south, west projected meters values.
-   * Step5: Get northEast and southWest coordinates using [MapboxMap.coordinateForProjectedMeters] and
-   * extend bounds using all viewAnnotations this will adjust the bounds with new [CameraOptions].
-   * Step6: Follow step2 to step5 till we get correct bounds and no other adjustment is needed.
+   * @param annotations List of [View] to be shown.
+   * @param edgeInsets [EdgeInsets] to be applied to the camera.
+   * @param bearing [Double] bearing to be applied to the camera.
+   * @param pitch [Double] pitch to be applied to the camera.
    *
    * @return [CameraOptions] object.
    */
@@ -189,50 +213,62 @@ internal class ViewAnnotationManagerImpl(
     if (mapboxMap.style?.getProjection()?.name == ProjectionName.GLOBE || annotations.isEmpty()) {
       return null
     }
-    val viewAnnotationOptions = annotations.mapNotNull {
-      if (it.isVisible) return@mapNotNull getViewAnnotationOptionsByView(it) else null
-    }.filter { it.visible != false }
+    val viewAnnotations = annotations
+      .filter { it.isVisible }
+      .mapNotNull { view ->
+        viewAnnotations.values.find { it.view == view }
+      }
 
-    if (viewAnnotationOptions.isEmpty()) return null
-    val coordinates = coordinatesFromAnnotations(viewAnnotationOptions)
-    var cameraOptionForCoordinates = mapboxMap.cameraForCoordinates(
-      coordinates,
+    if (viewAnnotations.isEmpty()) return null
+    val pointCoordinates =
+      viewAnnotations.mapNotNull { it.coordinate(it.positionDescriptor) }
+    var cameraForViewAnnotationPoints = mapboxMap.cameraForCoordinates(
+      pointCoordinates,
       EdgeInsets(0.0, 0.0, 0.0, 0.0),
       bearing,
       pitch
     )
 
     var isCorrectBound = false
-    // keep north, east, west and southmost Annotation and its frame to adjust paddings for zoom.
-    var north: Pair<ViewAnnotationOptions, Rect?>? = null
-    var east: Pair<ViewAnnotationOptions, Rect?>? = null
-    var west: Pair<ViewAnnotationOptions, Rect?>? = null
-    var south: Pair<ViewAnnotationOptions, Rect?>? = null
+    // viewAnnotation, frame and max coordinate
+    var north: Triple<ViewAnnotation, Rect?, Double>? = null
+    var east: Triple<ViewAnnotation, Rect?, Double>? = null
+    var west: Triple<ViewAnnotation, Rect?, Double>? = null
+    var south: Triple<ViewAnnotation, Rect?, Double>? = null
 
     // we run the loop twice to optimize bounds correctly to fit all the annotations. this might not
     // provide correct results when map is pitched or have bearing.
     var boundsCounter = 1
+
     while (!isCorrectBound && boundsCounter <= MAX_ADJUST_BOUNDS_COUNTER) {
-      val zoom = cameraOptionForCoordinates.zoom
+      val zoom = cameraForViewAnnotationPoints.zoom
       boundsCounter++
       isCorrectBound = true
-      viewAnnotationOptions.forEach { options ->
-        val frame = getViewAnnotationOptionsFrame(options) ?: Rect(0, 0, 0, 0)
-        val annotationBounds = calculateCoordinateBoundForAnnotation(options, frame, zoom)
-        if (north == null || calculateCoordinateBoundForAnnotation(north!!.first, frame, zoom).north() < annotationBounds.north()) {
-          north = Pair(options, frame)
+
+      viewAnnotations.forEach { viewAnnotation ->
+        val frame = getViewAnnotationOptionsFrame(
+          viewAnnotation,
+          viewAnnotation.positionDescriptor
+        ) ?: Rect(0, 0, 0, 0)
+        val annotationBounds = calculateCoordinateBoundForAnnotation(viewAnnotation, frame, zoom)
+        if (annotationBounds == null) {
+          return@forEach
+        }
+
+        if (north == null || north!!.third < annotationBounds.north()) {
+          north = Triple(viewAnnotation, frame, annotationBounds.north())
           isCorrectBound = false
         }
-        if (east == null || calculateCoordinateBoundForAnnotation(east!!.first, frame, zoom).east() < annotationBounds.east()) {
-          east = Pair(options, frame)
+        if (east == null || east!!.third < annotationBounds.east()) {
+          east = Triple(viewAnnotation, frame, annotationBounds.east())
           isCorrectBound = false
         }
-        if (south == null || calculateCoordinateBoundForAnnotation(south!!.first, frame, zoom).south() > annotationBounds.south()) {
-          south = Pair(options, frame)
+        if (south == null || south!!.third > annotationBounds.south()) {
+          south = Triple(viewAnnotation, frame, annotationBounds.south())
           isCorrectBound = false
         }
-        if (west == null || calculateCoordinateBoundForAnnotation(west!!.first, frame, zoom).west() > annotationBounds.west()) {
-          west = Pair(options, frame)
+        if (west == null || west!!.third > annotationBounds.west()) {
+          west = Triple(viewAnnotation, frame, annotationBounds.west())
           isCorrectBound = false
         }
       }
@@ -244,8 +280,14 @@ internal class ViewAnnotationManagerImpl(
       }
 
       val coordinateBoundsForCamera = CoordinateBounds(
-        Point.fromLngLat(west!!.first.coordinate().longitude(), south!!.first.coordinate().latitude()),
-        Point.fromLngLat(east!!.first.coordinate().longitude(), north!!.first.coordinate().latitude())
+        Point.fromLngLat(
+          west!!.first.coordinate(west!!.first.positionDescriptor)!!.longitude(),
+          south!!.first.coordinate(south!!.first.positionDescriptor)!!.latitude()
+        ),
+        Point.fromLngLat(
+          east!!.first.coordinate(east!!.first.positionDescriptor)!!.longitude(),
+          north!!.first.coordinate(north!!.first.positionDescriptor)!!.latitude()
+        )
       )
 
       val paddings = EdgeInsets(
@@ -255,39 +297,46 @@ internal class ViewAnnotationManagerImpl(
         (edgeInsets?.right ?: 0).toDouble() + abs((east!!.second?.right ?: 0.0).toDouble())
       )
 
-      cameraOptionForCoordinates = mapboxMap.cameraForCoordinateBounds(
+      cameraForViewAnnotationPoints = mapboxMap.cameraForCoordinateBounds(
         coordinateBoundsForCamera,
         paddings,
         bearing,
         pitch
       )
     }
-    return cameraOptionForCoordinates
+    return cameraForViewAnnotationPoints
   }
-
-  private fun ViewAnnotationOptions.coordinate() = geometry as Point
 
   /**
    * Function to calculate coordinatebound associated with annotation option.
    * this uses [MapboxMap.projectedMetersForCoordinate] and [MapboxMap.coordinateForProjectedMeters]
    * function to get correct coordinate for northEast and southWest point of annotations.
    */
-  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  internal fun calculateCoordinateBoundForAnnotation(
-    viewAnnotationOptions: ViewAnnotationOptions,
+  private fun calculateCoordinateBoundForAnnotation(
+    viewAnnotation: ViewAnnotation,
     annotationFrame: Rect,
     zoom: Double?
-  ): CoordinateBounds {
-    val metersPerPixelAtLatitude =
-      if (zoom == null) mapboxMap.getMetersPerPixelAtLatitude(viewAnnotationOptions.coordinate().latitude()) else
-        mapboxMap.getMetersPerPixelAtLatitude(viewAnnotationOptions.coordinate().latitude(), zoom)
+  ): CoordinateBounds? {
+    val pointCoordinate =
+      viewAnnotation.coordinate(viewAnnotation.positionDescriptor)
+        ?: return null
 
-    val projectedMeterForCoordinate = mapboxMap.projectedMetersForCoordinate(viewAnnotationOptions.coordinate())
+    val metersPerPixelAtLatitude = if (zoom == null) {
+      mapboxMap.getMetersPerPixelAtLatitude(pointCoordinate.latitude())
+    } else {
+      mapboxMap.getMetersPerPixelAtLatitude(pointCoordinate.latitude(), zoom)
+    }
+
+    val projectedMeterForCoordinate = mapboxMap.projectedMetersForCoordinate(pointCoordinate)
     val metersPerPixelDensity = metersPerPixelAtLatitude / pixelRatio
-    val northing = projectedMeterForCoordinate.northing + (abs(annotationFrame.top).toDouble() * metersPerPixelDensity)
-    val easting = projectedMeterForCoordinate.easting + (abs(annotationFrame.right).toDouble() * metersPerPixelDensity)
-    val southing = projectedMeterForCoordinate.northing - (abs(annotationFrame.bottom).toDouble() * metersPerPixelDensity)
-    val westing = projectedMeterForCoordinate.easting - (abs(annotationFrame.left).toDouble() * metersPerPixelDensity)
+    val northing =
+      projectedMeterForCoordinate.northing + (abs(annotationFrame.top).toDouble() * metersPerPixelDensity)
+    val easting =
+      projectedMeterForCoordinate.easting + (abs(annotationFrame.right).toDouble() * metersPerPixelDensity)
+    val southing =
+      projectedMeterForCoordinate.northing - (abs(annotationFrame.bottom).toDouble() * metersPerPixelDensity)
+    val westing =
+      projectedMeterForCoordinate.easting - (abs(annotationFrame.left).toDouble() * metersPerPixelDensity)
 
     val projectedMeterNorthEast = ProjectedMeters(northing, easting)
     val projectedMeterSouthWest = ProjectedMeters(southing, westing)
@@ -297,17 +346,14 @@ internal class ViewAnnotationManagerImpl(
     return CoordinateBounds(coordinateSouthWest, coordinateNorthEast)
   }
 
-  /**
-   * Function to get coordinates from list of [ViewAnnotationOptions].
-   */
-  private fun coordinatesFromAnnotations(annotationOptions: List<ViewAnnotationOptions>): List<Point> {
-    val coordinatesList = mutableListOf<Point>()
-    annotationOptions.forEach {
-      it.geometry?.let { geometry ->
-        coordinatesList.add(geometry as Point)
-      }
+  private fun ViewAnnotation.coordinate(positionDescriptor: DelegatingViewAnnotationPositionDescriptor?): Point? {
+    val viewAnnotationOptions = getValue(mapboxMap.getViewAnnotationOptions(id)) ?: return null
+
+    return if (viewAnnotationOptions.annotatedFeature!!.isGeometry) {
+      viewAnnotationOptions.annotatedFeature!!.geometry as? Point
+    } else {
+      positionDescriptor?.anchorCoordinate
     }
-    return coordinatesList
   }
 
   /**
@@ -317,8 +363,12 @@ internal class ViewAnnotationManagerImpl(
    *
    * @return [Rect] associated with [ViewAnnotationOptions]
    */
-  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  internal fun getViewAnnotationOptionsFrame(viewAnnotationOptions: ViewAnnotationOptions?): Rect? {
+  private fun getViewAnnotationOptionsFrame(
+    viewAnnotation: ViewAnnotation,
+    positionDescriptor: DelegatingViewAnnotationPositionDescriptor?
+  ): Rect? {
+    val viewAnnotationOptions = getValue(mapboxMap.getViewAnnotationOptions(viewAnnotation.id))
+
     viewAnnotationOptions?.let { options ->
       if (options.width != null && options.height != null) {
         val offsetWidth = if (options.width!! > 0) (options.width!! * 0.5).toInt() else 0
@@ -332,7 +382,10 @@ internal class ViewAnnotationManagerImpl(
         )
 
         // offset rect with respect to anchor defined in viewannotation options.
-        when (options.anchor ?: ViewAnnotationAnchor.CENTER) {
+        val anchor = positionDescriptor?.anchorConfig ?: ViewAnnotationAnchorConfig.Builder()
+          .anchor(ViewAnnotationAnchor.CENTER).build()
+
+        when (anchor.anchor) {
           ViewAnnotationAnchor.TOP -> rect.offset(0, offsetHeight)
           ViewAnnotationAnchor.TOP_LEFT -> rect.offset(offsetWidth, offsetHeight)
           ViewAnnotationAnchor.TOP_RIGHT -> rect.offset(-offsetWidth, offsetHeight)
@@ -344,7 +397,7 @@ internal class ViewAnnotationManagerImpl(
           else -> rect.offset(0, 0)
         }
         // add view annotation option's offsetX and offsetY field to offset the rect.
-        rect.offset(options.offsetX ?: 0, options.offsetY ?: 0)
+        rect.offset(anchor.offsetX.toInt(), anchor.offsetY.toInt())
         return rect
       }
     }
@@ -366,10 +419,10 @@ internal class ViewAnnotationManagerImpl(
     // either swap buffers the same or the next frame.
     if (Looper.myLooper() == Looper.getMainLooper()) {
       // create copy to avoid concurrent modification exception
-      val immutablePositionListCopy = updatedPositionsList
+      val immutableUpdatedPositionDescriptorsCopy = updatedPositionDescriptors
       // schedule positioning on next frame using Choreographer from main thread
       Choreographer.getInstance().postFrameCallback {
-        positionAnnotationViews(immutablePositionListCopy)
+        positionAnnotationViews(immutableUpdatedPositionDescriptorsCopy)
       }
     } else {
       // Called as soon as possible on main thread after updated positions arrived on render thread.
@@ -377,7 +430,7 @@ internal class ViewAnnotationManagerImpl(
       // when using Java Main Looper.
       // update that flag here if callback was triggered, it will be reset by renderer directly when swapping buffers
       renderThread.needViewAnnotationSync = true
-      updatedPositionsList = positions
+      updatedPositionDescriptors = positions
     }
   }
 
@@ -388,235 +441,310 @@ internal class ViewAnnotationManagerImpl(
   }
 
   private fun validateOptions(options: ViewAnnotationOptions) {
-    if (options.geometry == null) {
-      throw IllegalArgumentException(EXCEPTION_TEXT_GEOMETRY_IS_NULL)
+    if (options.annotatedFeature == null) {
+      throw IllegalArgumentException(EXCEPTION_TEXT_FEATURE_IS_NULL)
     }
   }
 
-  private fun checkAssociatedFeatureIdUniqueness(options: ViewAnnotationOptions) {
-    options.associatedFeatureId?.let { associatedFeatureId ->
-      val (view, _) = findByFeatureId(associatedFeatureId)
-      if (view != null) {
-        throw MapboxViewAnnotationException(
-          String.format(
-            EXCEPTION_TEXT_ASSOCIATED_FEATURE_ID_ALREADY_EXISTS,
-            associatedFeatureId
-          )
-        )
-      }
+  private fun prepareViewAnnotation(inflatedView: View, options: ViewAnnotationOptions) {
+    measureView(inflatedView)
+    val inflatedViewLayoutParams = inflatedView.layoutParams as ViewGroup.LayoutParams
+    // If values in layout params are negative - view is wrap_content (assuming match_parent view annotations
+    // make no sense) and size is determined during measure() above.
+    // Otherwise, size is determined by layout params.
+    val measuredWidth = if (inflatedViewLayoutParams.width < 0) {
+      inflatedView.measuredWidth
+    } else {
+      inflatedViewLayoutParams.width
     }
-  }
+    val measuredHeight = if (inflatedViewLayoutParams.height < 0) {
+      inflatedView.measuredHeight
+    } else {
+      inflatedViewLayoutParams.height
+    }
 
-  private fun prepareViewAnnotation(inflatedView: View, options: ViewAnnotationOptions): View {
-    checkAssociatedFeatureIdUniqueness(options)
-    val inflatedViewLayout = inflatedView.layoutParams as FrameLayout.LayoutParams
     val updatedOptions = options.toBuilder()
-      .width(options.width ?: inflatedViewLayout.width)
-      .height(options.height ?: inflatedViewLayout.height)
+      .width(options.width ?: measuredWidth.toDouble())
+      .height(options.height ?: measuredHeight.toDouble())
       .build()
     val viewAnnotation = ViewAnnotation(
       view = inflatedView,
       handleVisibilityAutomatically = (options.visible == null),
       visibility = ViewAnnotationVisibility.INITIAL,
-      viewLayoutParams = inflatedViewLayout,
-      measuredWidth = if (options.width != null) USER_FIXED_DIMENSION else inflatedViewLayout.width,
-      measuredHeight = if (options.height != null) USER_FIXED_DIMENSION else inflatedViewLayout.height,
+      viewLayoutParams = inflatedViewLayoutParams,
+      measuredWidth = if (options.width != null) USER_FIXED_DIMENSION else measuredWidth,
+      measuredHeight = if (options.height != null) USER_FIXED_DIMENSION else measuredHeight,
+      positionDescriptor = null,
+      isPositioned = false,
     )
-    // triggered not so often and needed to control view's width and height when WRAP_CONTENT is used
-    val onGlobalLayoutListener = ViewTreeObserver.OnGlobalLayoutListener {
-      if (viewAnnotation.measuredWidth != USER_FIXED_DIMENSION &&
-        inflatedView.measuredWidth > 0 &&
-        inflatedView.measuredWidth != viewAnnotation.measuredWidth
-      ) {
-        viewAnnotation.measuredWidth = inflatedView.measuredWidth
-        getValue(
-          mapboxMap.updateViewAnnotation(
-            viewAnnotation.id,
-            ViewAnnotationOptions.Builder()
-              .width(inflatedView.measuredWidth)
-              .build()
-          )
-        )
-      }
-      if (viewAnnotation.measuredHeight != USER_FIXED_DIMENSION &&
-        inflatedView.measuredHeight > 0 &&
-        inflatedView.measuredHeight != viewAnnotation.measuredHeight
-      ) {
-        viewAnnotation.measuredHeight = inflatedView.measuredHeight
-        getValue(
-          mapboxMap.updateViewAnnotation(
-            viewAnnotation.id,
-            ViewAnnotationOptions.Builder()
-              .height(inflatedView.measuredHeight)
-              .build()
-          )
-        )
-      }
-    }
-    // triggered on every frame and needed to check if visibility changed
-    // as OnGlobalLayoutListener does not cover cases for View.INVISIBLE properly
-    val onDrawListener = ViewTreeObserver.OnDrawListener {
-      if (viewAnnotation.handleVisibilityAutomatically) {
-        val isAndroidViewVisible = inflatedView.visibility == View.VISIBLE
-        if (
-          (isAndroidViewVisible && viewAnnotation.isVisible) ||
-          (!isAndroidViewVisible && viewAnnotation.visibility == ViewAnnotationVisibility.INVISIBLE) ||
-          (!isAndroidViewVisible && viewAnnotation.visibility == ViewAnnotationVisibility.VISIBLE_AND_NOT_POSITIONED)
-        ) {
-          return@OnDrawListener
-        }
 
-        // hide view until it will be positioned in [positionAnnotationViews]
-        if (isAndroidViewVisible) {
-          unpositionedViews.add(inflatedView)
-          inflatedView.visibility = View.INVISIBLE
-        }
-
-        updateVisibilityAndNotifyUpdateListeners(
-          viewAnnotation,
-          if (isAndroidViewVisible)
-            ViewAnnotationVisibility.VISIBLE_AND_NOT_POSITIONED
-          else
-            ViewAnnotationVisibility.INVISIBLE
-        )
-        if (getValue(mapboxMap.getViewAnnotationOptions(viewAnnotation.id))?.visible != isAndroidViewVisible) {
-          getValue(
-            mapboxMap.updateViewAnnotation(
-              viewAnnotation.id,
-              ViewAnnotationOptions.Builder()
-                .visible(isAndroidViewVisible)
-                .build()
-            )
-          )
-        }
-      }
-    }
-    viewAnnotation.attachStateListener = object : View.OnAttachStateChangeListener {
-      override fun onViewAttachedToWindow(v: View) {
-        inflatedView.viewTreeObserver.addOnDrawListener(onDrawListener)
-        inflatedView.viewTreeObserver.addOnGlobalLayoutListener(onGlobalLayoutListener)
-      }
-
-      override fun onViewDetachedFromWindow(v: View) {
-        inflatedView.viewTreeObserver.removeOnDrawListener(onDrawListener)
-        inflatedView.viewTreeObserver.removeOnGlobalLayoutListener(onGlobalLayoutListener)
-      }
-    }
+    val onGlobalLayoutListener = buildGlobalLayoutListener(viewAnnotation)
+    val onDrawListener = buildDrawListener(viewAnnotation)
+    viewAnnotation.attachStateListener =
+      buildAttachStateListener(viewAnnotation.view, onGlobalLayoutListener, onDrawListener)
     inflatedView.addOnAttachStateChangeListener(viewAnnotation.attachStateListener)
-    annotationMap[viewAnnotation.id] = viewAnnotation
-    idLookupMap[inflatedView] = viewAnnotation.id
+
+    viewAnnotations[viewAnnotation.id] = viewAnnotation
     getValue(mapboxMap.addViewAnnotation(viewAnnotation.id, updatedOptions))
-    return inflatedView
   }
 
-  private fun findByFeatureId(featureId: String): Pair<View?, ViewAnnotationOptions?> {
-    annotationMap.forEach { (id, annotation) ->
-      getValue(mapboxMap.getViewAnnotationOptions(id))?.let { options ->
-        if (options.associatedFeatureId == featureId) {
-          return annotation.view to options
+  private fun measureView(view: View) {
+    val measureSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED)
+    val isComposeView = view.getTag(R.id.composeView) != null
+    // compose expects view to be added to the layout, otherwise it crashes
+    // so we attach it temporarily, then detach until it's positioned and added in [positionAnnotationViews]
+    // also see https://stackoverflow.com/questions/72802387/compose-view-instead-of-native-view-for-markers-info-window
+    // or https://github.com/googlemaps/android-maps-compose/blob/main/maps-compose/src/main/java/com/google/maps/android/compose/ComposeInfoWindowAdapter.kt
+    if (isComposeView) {
+      viewAnnotationsLayout.addView(view)
+    }
+    view.measure(
+      measureSpec,
+      measureSpec,
+    )
+    if (isComposeView) {
+      viewAnnotationsLayout.removeView(view)
+    }
+    view.layout(
+      /* l = */ 0,
+      /* t = */ 0,
+      /* r = */ view.measuredWidth,
+      /* b = */ view.measuredHeight
+    )
+  }
+
+  private fun buildAttachStateListener(
+    view: View,
+    onGlobalLayoutListener: OnGlobalLayoutListener,
+    onDrawListener: ViewTreeObserver.OnDrawListener
+  ) = object : View.OnAttachStateChangeListener {
+    override fun onViewAttachedToWindow(v: View) {
+      view.viewTreeObserver.addOnDrawListener(onDrawListener)
+      view.viewTreeObserver.addOnGlobalLayoutListener(onGlobalLayoutListener)
+    }
+
+    override fun onViewDetachedFromWindow(v: View) {
+      view.viewTreeObserver.removeOnDrawListener(onDrawListener)
+      view.viewTreeObserver.removeOnGlobalLayoutListener(onGlobalLayoutListener)
+    }
+  }
+
+  // triggers on every frame and checks if visibility changed
+  // as OnGlobalLayoutListener does not cover cases for View.INVISIBLE properly
+  private fun buildDrawListener(viewAnnotation: ViewAnnotation) = ViewTreeObserver.OnDrawListener {
+    if (viewAnnotation.handleVisibilityAutomatically) {
+      val isAndroidViewVisible = viewAnnotation.view.isVisible
+
+      if (
+        (isAndroidViewVisible && viewAnnotation.isVisible) ||
+        (!isAndroidViewVisible && viewAnnotation.visibility == ViewAnnotationVisibility.INVISIBLE) ||
+        (!isAndroidViewVisible && viewAnnotation.visibility == ViewAnnotationVisibility.VISIBLE_AND_NOT_POSITIONED)
+      ) {
+        return@OnDrawListener
+      }
+
+      // hide view until it is positioned in [positionAnnotationViews]
+      if (isAndroidViewVisible) {
+        viewAnnotations[viewAnnotation.id]?.isPositioned = false
+        viewAnnotation.view.visibility = View.INVISIBLE
+      }
+
+      updateVisibilityAndNotifyUpdateListeners(
+        viewAnnotation,
+        if (isAndroidViewVisible) {
+          ViewAnnotationVisibility.VISIBLE_AND_NOT_POSITIONED
+        } else {
+          ViewAnnotationVisibility.INVISIBLE
         }
+      )
+      if (getValue(mapboxMap.getViewAnnotationOptions(viewAnnotation.id))?.visible != isAndroidViewVisible) {
+        getValue(
+          mapboxMap.updateViewAnnotation(
+            viewAnnotation.id,
+            ViewAnnotationOptions.Builder()
+              .visible(isAndroidViewVisible)
+              .build()
+          )
+        )
       }
     }
-    return null to null
   }
 
-  private var positionDescriptorCurrentList = emptyList<DelegatingViewAnnotationPositionDescriptor>()
+  // controls view annotations's width and height when dimensions of the view change
+  private fun buildGlobalLayoutListener(viewAnnotation: ViewAnnotation) =
+    OnGlobalLayoutListener {
+      if (
+        viewAnnotation.measuredWidth != USER_FIXED_DIMENSION &&
+        viewAnnotation.view.measuredWidth > 0 &&
+        viewAnnotation.view.measuredWidth != viewAnnotation.measuredWidth
+      ) {
+        viewAnnotation.measuredWidth = viewAnnotation.view.measuredWidth
+        getValue(
+          mapboxMap.updateViewAnnotation(
+            viewAnnotation.id,
+            ViewAnnotationOptions.Builder()
+              .width(viewAnnotation.view.measuredWidth.toDouble())
+              .build()
+          )
+        )
+      }
+      if (
+        viewAnnotation.measuredHeight != USER_FIXED_DIMENSION &&
+        viewAnnotation.view.measuredHeight > 0 &&
+        viewAnnotation.view.measuredHeight != viewAnnotation.measuredHeight
+      ) {
+        viewAnnotation.measuredHeight = viewAnnotation.view.measuredHeight
+        getValue(
+          mapboxMap.updateViewAnnotation(
+            viewAnnotation.id,
+            ViewAnnotationOptions.Builder()
+              .height(viewAnnotation.view.measuredHeight.toDouble())
+              .build()
+          )
+        )
+      }
+    }
+
+  private fun findByAnnotatedLayerFeature(annotatedLayerFeature: AnnotatedLayerFeature): Pair<View?, ViewAnnotationOptions?> {
+    return viewAnnotations
+      .map { (id, viewAnnotation) ->
+        viewAnnotation.view to getValue(mapboxMap.getViewAnnotationOptions(id))
+      }
+      .firstOrNull { (_, viewAnnotationOptions) ->
+        viewAnnotationOptions?.annotatedFeature?.isAnnotatedLayerFeature == true &&
+          viewAnnotationOptions.annotatedFeature?.annotatedLayerFeature == annotatedLayerFeature
+      } ?: Pair(null, null)
+  }
+
   private fun positionAnnotationViews(
-    positionDescriptorUpdatedList: List<DelegatingViewAnnotationPositionDescriptor>
+    updatedPositionDescriptors: List<DelegatingViewAnnotationPositionDescriptor>
   ) {
     val needToReorderZ = needToReorderZ(
-      positionDescriptorCurrentList,
-      positionDescriptorUpdatedList,
+      currentPositionDescriptors,
+      updatedPositionDescriptors,
     )
-    positionDescriptorCurrentList = positionDescriptorUpdatedList
+    currentPositionDescriptors = updatedPositionDescriptors
 
-    // as per current implementation when view annotation was added with WRAP_CONTENT dimension AND
-    // allowOverlap = false - core will notify only about this particular view and thus we will remove
-    // all the others and then restore later resulting in a quick blink
-    // FIXME - other bugs are possible, this does not cover all cases
-    val wrapContentWithAllowOverlapFalseViewAdded = positionDescriptorUpdatedList.size == 1 &&
-      (positionDescriptorUpdatedList[0].width == WRAP_CONTENT || positionDescriptorUpdatedList[0].height == WRAP_CONTENT)
-    // firstly delete views that do not belong to the viewport if it's not specific use-case from above
-    if (!wrapContentWithAllowOverlapFalseViewAdded) {
-      currentlyDrawnViewIdSet.forEach { id ->
-        if (positionDescriptorUpdatedList.indexOfFirst { it.identifier == id } == -1) {
-          annotationMap[id]?.let { annotation ->
-            // if view is invisible / gone we don't remove it so that visibility logic could
-            // still be handled by OnGlobalLayoutListener
-            if (annotation.view.visibility == View.VISIBLE) {
-              viewAnnotationsLayout.removeView(annotation.view)
-              updateVisibilityAndNotifyUpdateListeners(
-                annotation,
-                ViewAnnotationVisibility.INVISIBLE
-              )
-            }
-          }
-        }
-      }
-    }
     // add and reposition new and existed views
-    positionDescriptorUpdatedList.forEach { descriptor ->
-      annotationMap[descriptor.identifier]?.let { annotation ->
+    updatedPositionDescriptors.forEach { descriptor ->
+      viewAnnotations[descriptor.identifier]?.let { viewAnnotation ->
         // update translation first - notify Android render node to schedule updates
-        annotation.view.apply {
+        viewAnnotation.view.apply {
           translationX = descriptor.leftTopCoordinate.x.toFloat()
           translationY = descriptor.leftTopCoordinate.y.toFloat()
         }
+
         // update layout params explicitly if user has specified concrete width or height
-        annotation.viewLayoutParams.apply {
-          if (annotation.measuredWidth == USER_FIXED_DIMENSION) {
-            width = descriptor.width
+        viewAnnotation.viewLayoutParams.apply {
+          if (viewAnnotation.measuredWidth == USER_FIXED_DIMENSION) {
+            width = descriptor.width.toInt()
           }
-          if (annotation.measuredHeight == USER_FIXED_DIMENSION) {
-            height = descriptor.height
-          }
-        }
-        if (!currentlyDrawnViewIdSet.contains(descriptor.identifier) &&
-          viewAnnotationsLayout.indexOfChild(annotation.view) == -1
-        ) {
-          viewAnnotationsLayout.addView(annotation.view, annotation.viewLayoutParams)
-          updateVisibilityAndNotifyUpdateListeners(
-            annotation,
-            if (annotation.view.visibility == View.VISIBLE)
-              ViewAnnotationVisibility.VISIBLE_AND_POSITIONED
-            else
-              ViewAnnotationVisibility.INVISIBLE
-          )
-        }
-        if (viewUpdatedListenerSet.isNotEmpty()) {
-          viewUpdatedListenerSet.forEach {
-            // when using wrap_content dimensions width and height could report -2
-            // it makes sense to notify user only when width and height are calculated
-            if (descriptor.width > 0 && descriptor.height > 0) {
-              it.onViewAnnotationPositionUpdated(
-                view = annotation.view,
-                leftTopCoordinate = descriptor.leftTopCoordinate,
-                width = descriptor.width,
-                height = descriptor.height,
-              )
-            }
+          if (viewAnnotation.measuredHeight == USER_FIXED_DIMENSION) {
+            height = descriptor.height.toInt()
           }
         }
 
-        if (unpositionedViews.remove(annotation.view)) {
-          annotation.view.visibility = View.VISIBLE
+        if (
+          !viewAnnotation.isVisible &&
+          viewAnnotationsLayout.indexOfChild(viewAnnotation.view) == -1
+        ) {
+          viewAnnotation.isPositioned = true
+          viewAnnotationsLayout.addView(viewAnnotation.view, viewAnnotation.viewLayoutParams)
           updateVisibilityAndNotifyUpdateListeners(
-            annotation,
+            viewAnnotation,
+            if (viewAnnotation.view.visibility == View.VISIBLE) {
+              ViewAnnotationVisibility.VISIBLE_AND_POSITIONED
+            } else {
+              ViewAnnotationVisibility.INVISIBLE
+            }
+          )
+        }
+
+        if (!viewAnnotation.isPositioned) {
+          viewAnnotation.isPositioned = true
+          viewAnnotation.view.visibility = View.VISIBLE
+          updateVisibilityAndNotifyUpdateListeners(
+            viewAnnotation,
             ViewAnnotationVisibility.VISIBLE_AND_POSITIONED
           )
         }
 
+        notifyAnchorListeners(viewAnnotation, descriptor)
+        notifyAnchorCoordinateListeners(viewAnnotation, descriptor)
+        notifyPositionListeners(viewAnnotation, descriptor)
+        viewAnnotation.positionDescriptor = descriptor
+
         // reorder Z index with the iteration order to keep selected annotations on top of others
         if (needToReorderZ) {
-          annotation.view.bringToFront()
+          viewAnnotation.view.bringToFront()
         }
       }
     }
-    // all the views should stay as is for that use-case, otherwise we update current view map
-    if (!wrapContentWithAllowOverlapFalseViewAdded) {
-      currentlyDrawnViewIdSet.clear()
-      positionDescriptorUpdatedList.forEach {
-        currentlyDrawnViewIdSet.add(it.identifier)
+
+    // remove visible views that are not present in positions list
+    // TODO should we make them invisible instead?
+    viewAnnotations
+      .filter {
+        it.value.view.isVisible
+      }
+      .filter {
+        currentPositionDescriptors.none { positionDescriptor ->
+          positionDescriptor.identifier == it.key
+        }
+      }
+      .forEach { (_, viewAnnotation) ->
+        viewAnnotationsLayout.removeView(viewAnnotation.view)
+        updateVisibilityAndNotifyUpdateListeners(
+          viewAnnotation,
+          ViewAnnotationVisibility.INVISIBLE
+        )
+      }
+  }
+
+  private fun notifyPositionListeners(
+    viewAnnotation: ViewAnnotation,
+    newPositionDescriptor: DelegatingViewAnnotationPositionDescriptor
+  ) {
+    if (
+      viewAnnotation.positionDescriptor?.leftTopCoordinate != newPositionDescriptor.leftTopCoordinate ||
+      viewAnnotation.positionDescriptor?.width != newPositionDescriptor.width ||
+      viewAnnotation.positionDescriptor?.height != newPositionDescriptor.height
+    ) {
+      viewUpdatedListenerSet.forEach {
+        it.onViewAnnotationPositionUpdated(
+          view = viewAnnotation.view,
+          leftTopCoordinate = newPositionDescriptor.leftTopCoordinate,
+          width = newPositionDescriptor.width,
+          height = newPositionDescriptor.height,
+        )
+      }
+    }
+  }
+
+  private fun notifyAnchorCoordinateListeners(
+    viewAnnotation: ViewAnnotation,
+    newPositionDescriptor: DelegatingViewAnnotationPositionDescriptor
+  ) {
+    if (viewAnnotation.positionDescriptor?.anchorCoordinate != newPositionDescriptor.anchorCoordinate) {
+      viewUpdatedListenerSet.forEach {
+        it.onViewAnnotationAnchorCoordinateUpdated(
+          viewAnnotation.view,
+          newPositionDescriptor.anchorCoordinate,
+        )
+      }
+    }
+  }
+
+  private fun notifyAnchorListeners(
+    viewAnnotation: ViewAnnotation,
+    newPositionDescriptor: DelegatingViewAnnotationPositionDescriptor
+  ) {
+    if (viewAnnotation.positionDescriptor?.anchorConfig != newPositionDescriptor.anchorConfig) {
+      viewUpdatedListenerSet.forEach {
+        it.onViewAnnotationAnchorUpdated(
+          viewAnnotation.view,
+          newPositionDescriptor.anchorConfig,
+        )
       }
     }
   }
@@ -653,7 +781,7 @@ internal class ViewAnnotationManagerImpl(
     }
   }
 
-  private fun remove(internalId: String, annotation: ViewAnnotation) {
+  private fun remove(annotation: ViewAnnotation) {
     viewAnnotationsLayout.removeView(annotation.view)
     updateVisibilityAndNotifyUpdateListeners(annotation, ViewAnnotationVisibility.INVISIBLE)
     // explicit onViewDetachedFromWindow call is needed to handle use-case
@@ -661,39 +789,41 @@ internal class ViewAnnotationManagerImpl(
     annotation.attachStateListener?.onViewDetachedFromWindow(annotation.view)
     annotation.view.removeOnAttachStateChangeListener(annotation.attachStateListener)
     annotation.attachStateListener = null
-    getValue(mapboxMap.removeViewAnnotation(internalId))
+    getValue(mapboxMap.removeViewAnnotation(annotation.id))
   }
 
   companion object {
-    internal const val EXCEPTION_TEXT_GEOMETRY_IS_NULL = "Geometry can not be null!"
-    internal const val EXCEPTION_TEXT_ASSOCIATED_FEATURE_ID_ALREADY_EXISTS =
-      "View annotation with associatedFeatureId=%s already exists!"
+    private const val EXCEPTION_TEXT_FEATURE_IS_NULL = "Annotated feature can not be null!"
     private const val TAG = "ViewAnnotationImpl"
     private const val MAX_ADJUST_BOUNDS_COUNTER = 2
 
+    private const val USER_FIXED_DIMENSION = -1
+
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     internal fun needToReorderZ(
-      positionDescriptorCurrentList: List<DelegatingViewAnnotationPositionDescriptor>,
-      positionDescriptorUpdatedList: List<DelegatingViewAnnotationPositionDescriptor>
+      currentPositionDescriptors: List<DelegatingViewAnnotationPositionDescriptor>,
+      updatedPositionDescriptors: List<DelegatingViewAnnotationPositionDescriptor>
     ): Boolean {
       when {
         // new annotations will be added to layout and trigger on measure anyway
-        positionDescriptorCurrentList.size < positionDescriptorUpdatedList.size -> {
+        currentPositionDescriptors.size < updatedPositionDescriptors.size -> {
           return true
         }
-        positionDescriptorCurrentList.isEmpty() || positionDescriptorUpdatedList.isEmpty() -> {
+
+        currentPositionDescriptors.isEmpty() || updatedPositionDescriptors.isEmpty() -> {
           return false
         }
+
         else -> {
           var currentIndex = 0
           var updatedIndex = 0
           // descriptor of items removed from the new list
           val removedDescriptors = mutableSetOf<String>()
-          while (currentIndex < positionDescriptorCurrentList.size &&
-            updatedIndex < positionDescriptorUpdatedList.size
+          while (currentIndex < currentPositionDescriptors.size &&
+            updatedIndex < updatedPositionDescriptors.size
           ) {
             // skip equal items
-            if (positionDescriptorCurrentList[currentIndex].identifier == positionDescriptorUpdatedList[updatedIndex].identifier) {
+            if (currentPositionDescriptors[currentIndex].identifier == updatedPositionDescriptors[updatedIndex].identifier) {
               currentIndex++
               updatedIndex++
               continue
@@ -701,21 +831,21 @@ internal class ViewAnnotationManagerImpl(
 
             // if removed descriptors list contains the item from the new list - it means
             // the element was not removed but moved, need to invalidate Z order
-            if (removedDescriptors.contains(positionDescriptorUpdatedList[updatedIndex].identifier)) {
+            if (removedDescriptors.contains(updatedPositionDescriptors[updatedIndex].identifier)) {
               return true
             }
 
             // find the elements removed from the old list, add them to set
-            while (currentIndex < positionDescriptorCurrentList.size &&
-              positionDescriptorCurrentList[currentIndex].identifier != positionDescriptorUpdatedList[updatedIndex].identifier
+            while (currentIndex < currentPositionDescriptors.size &&
+              currentPositionDescriptors[currentIndex].identifier != updatedPositionDescriptors[updatedIndex].identifier
             ) {
-              removedDescriptors.add(positionDescriptorCurrentList[currentIndex].identifier)
+              removedDescriptors.add(currentPositionDescriptors[currentIndex].identifier)
               currentIndex++
             }
           }
           // iterate to the end of updated list
-          while (updatedIndex < positionDescriptorUpdatedList.size) {
-            if (removedDescriptors.contains(positionDescriptorUpdatedList[updatedIndex].identifier)) {
+          while (updatedIndex < updatedPositionDescriptors.size) {
+            if (removedDescriptors.contains(updatedPositionDescriptors[updatedIndex].identifier)) {
               return true
             }
             updatedIndex++

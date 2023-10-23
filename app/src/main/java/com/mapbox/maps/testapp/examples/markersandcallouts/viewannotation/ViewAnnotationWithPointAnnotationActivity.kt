@@ -1,4 +1,4 @@
-package com.mapbox.maps.testapp.examples.markersandcallouts
+package com.mapbox.maps.testapp.examples.markersandcallouts.viewannotation
 
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapView
@@ -16,6 +17,7 @@ import com.mapbox.maps.Style
 import com.mapbox.maps.ViewAnnotationAnchor
 import com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor
 import com.mapbox.maps.plugin.annotation.Annotation
+import com.mapbox.maps.plugin.annotation.AnnotationConfig
 import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.*
 import com.mapbox.maps.testapp.R
@@ -24,6 +26,8 @@ import com.mapbox.maps.testapp.databinding.ItemCalloutViewBinding
 import com.mapbox.maps.testapp.utils.BitmapUtils
 import com.mapbox.maps.viewannotation.ViewAnnotationManager
 import com.mapbox.maps.viewannotation.ViewAnnotationUpdateMode
+import com.mapbox.maps.viewannotation.annotationAnchor
+import com.mapbox.maps.viewannotation.geometry
 import com.mapbox.maps.viewannotation.viewAnnotationOptions
 
 /**
@@ -70,7 +74,13 @@ class ViewAnnotationWithPointAnnotationActivity : AppCompatActivity() {
       }
       // show / hide view annotation based on marker visibility
       binding.fabStyleToggle.setOnClickListener {
-        pointAnnotation.iconImageBitmap = if (pointAnnotation.iconImage == null) iconBitmap else null
+        if (pointAnnotation.iconImage == null) {
+          pointAnnotation.iconImageBitmap = iconBitmap
+          viewAnnotation.isVisible = true
+        } else {
+          pointAnnotation.iconImageBitmap = null
+          viewAnnotation.isVisible = false
+        }
         pointAnnotationManager.update(pointAnnotation)
       }
       // update view annotation geometry if dragging the marker
@@ -112,10 +122,12 @@ class ViewAnnotationWithPointAnnotationActivity : AppCompatActivity() {
         viewAnnotationManager.setViewAnnotationUpdateMode(ViewAnnotationUpdateMode.MAP_FIXED_DELAY)
         true
       }
+
       R.id.action_view_annotation_map_synchronized -> {
         viewAnnotationManager.setViewAnnotationUpdateMode(ViewAnnotationUpdateMode.MAP_SYNCHRONIZED)
         true
       }
+
       else -> super.onOptionsItemSelected(item)
     }
   }
@@ -129,10 +141,11 @@ class ViewAnnotationWithPointAnnotationActivity : AppCompatActivity() {
     viewAnnotation = viewAnnotationManager.addViewAnnotation(
       resId = R.layout.item_callout_view,
       options = viewAnnotationOptions {
-        geometry(POINT)
-        associatedFeatureId(pointAnnotation.id)
-        anchor(ViewAnnotationAnchor.BOTTOM)
-        offsetY((pointAnnotation.iconImageBitmap?.height!!).toInt())
+        geometry(pointAnnotation.geometry)
+        annotationAnchor {
+          anchor(ViewAnnotationAnchor.BOTTOM)
+          offsetY((pointAnnotation.iconImageBitmap?.height!!.toDouble()))
+        }
       }
     )
     ItemCalloutViewBinding.bind(viewAnnotation).apply {
@@ -168,12 +181,17 @@ class ViewAnnotationWithPointAnnotationActivity : AppCompatActivity() {
       .withIconImage(iconBitmap)
       .withIconAnchor(IconAnchor.BOTTOM)
       .withDraggable(true)
-    pointAnnotationManager = annotationPlugin.createPointAnnotationManager()
+    pointAnnotationManager = annotationPlugin.createPointAnnotationManager(
+      AnnotationConfig(
+        layerId = LAYER_ID
+      )
+    )
     pointAnnotation = pointAnnotationManager.create(pointAnnotationOptions)
   }
 
   private companion object {
     const val SELECTED_ADD_COEF_PX = 25
     val POINT: Point = Point.fromLngLat(0.381457, 6.687337)
+    val LAYER_ID = "layer-id"
   }
 }

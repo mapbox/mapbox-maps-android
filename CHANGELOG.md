@@ -10,6 +10,14 @@ Mapbox welcomes participation and contributions from everyone.
 * `createDefault2DPuck` does not require a `context` parameter.
 * Increase minimum location puck bearing threshold needed to trigger an animation to 1 degree (previously 0.01 degrees).
 * Location component puck bearing enabled property (`MapView.location.puckBearingEanbled`) has been changed to `false` by default.
+* `ViewAnnotationManager.getViewAnnotationByFeatureId` is renamed to `ViewAnnotationManager.getViewAnnotation`,
+* `ViewAnnotationManager.getViewAnnotationByFeatureId` is renamed to `ViewAnnotationManager.getViewAnnotation`.
+* `ViewAnnotationManager.getViewAnnotationOptionsByView` is renamed to `ViewAnnotationManager.getViewAnnotationOptions`.
+* `ViewAnnotationManager.getViewAnnotationOptionsByFeatureId` is renamed to `ViewAnnotationManager.getViewAnnotationOptions`.
+* `ViewAnnotationAnchorConfig` fields `offsetX`/`offsetY` are now of type Double instead of Int.
+* `ViewAnnotationOptions` accepts list of anchors `variableAnchors` instead of `anchor`/`offsetX`/`offsetY`.
+* `ViewAnnotationOptions` fields `width`/`height` are now of type Double instead of Int.
+* `OnViewAnnotationUpdatedListener.onViewAnnotationPositionUpdated` arguments `width`/`height` are now of type Double instead of Int.
 
 ## Features ✨ and improvements 🏁
 * The following APIs have been promoted to stable:
@@ -28,6 +36,9 @@ Mapbox welcomes participation and contributions from everyone.
 * (Kotlin only) Deprecated `MapSurface.getMapboxMap()` function. Please use property `MapSurface.mapboxMap`.
 * Handle zero duration map camera animators more efficiently resulting in performance improvements for gestures / viewport / locationcomponent.
 * `DefaultLocationProvider.updatePuckBearing` now accepts null to stop listening for heading/course.
+* Add dynamic view annotations that can be attached to complex feature geometries and reposition itself based on the current camera viewport. 
+To create dynamic view annotation use `AnnotatedFeature` of type `ANNOTATED_LAYER_FEATURE`.
+Multiple dynamic view annotations can be attached to the same feature.
 
 ## Bug fixes 🐞
 * Fix widgets not showing on some zoom levels.

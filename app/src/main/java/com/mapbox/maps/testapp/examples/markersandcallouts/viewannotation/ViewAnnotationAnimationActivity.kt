@@ -1,4 +1,4 @@
-package com.mapbox.maps.testapp.examples.markersandcallouts
+package com.mapbox.maps.testapp.examples.markersandcallouts.viewannotation
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -24,6 +24,7 @@ import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ItemCalloutViewBinding
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
 import com.mapbox.maps.viewannotation.ViewAnnotationManager
+import com.mapbox.maps.viewannotation.geometry
 import com.mapbox.turf.TurfConstants.UNIT_DEFAULT
 import com.mapbox.turf.TurfMeasurement
 import kotlin.math.roundToLong
@@ -103,6 +104,7 @@ class ViewAnnotationAnimationActivity : AppCompatActivity() {
 
   override fun onStop() {
     super.onStop()
+    currentAnimator?.removeAllListeners()
     currentAnimator?.cancel()
   }
 

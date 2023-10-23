@@ -1,8 +1,10 @@
 package com.mapbox.maps.viewannotation
 
 import android.view.View
+import com.mapbox.geojson.Point
 import com.mapbox.maps.MapView
 import com.mapbox.maps.ScreenCoordinate
+import com.mapbox.maps.ViewAnnotationAnchorConfig
 import com.mapbox.maps.ViewAnnotationOptions
 
 /**
@@ -25,9 +27,9 @@ interface OnViewAnnotationUpdatedListener {
   fun onViewAnnotationPositionUpdated(
     view: View,
     leftTopCoordinate: ScreenCoordinate,
-    width: Int,
-    height: Int,
-  )
+    width: Double,
+    height: Double,
+  ) = Unit
 
   /**
    * Callback triggered when view visibility has changed.
@@ -45,5 +47,30 @@ interface OnViewAnnotationUpdatedListener {
   fun onViewAnnotationVisibilityUpdated(
     view: View,
     visible: Boolean,
-  )
+  ) = Unit
+
+  /**
+   * Callback triggered when view annotation anchor coordinate has changed.
+   * When it triggers it means that view annotation is repositioned on the attached geometry.
+   *
+   * @param view view annotation that is updated.
+   * @param anchorCoordinate anchor geo coordinate.
+   */
+  fun onViewAnnotationAnchorCoordinateUpdated(
+    view: View,
+    anchorCoordinate: Point,
+  ) = Unit
+
+  /**
+   * Callback triggered when view annotation anchor has changed.
+   * When it triggers it means that view annotation placement relative to its anchor coordinate has
+   * been updated.
+   *
+   * @param view view annotation that is updated.
+   * @param anchor anchor config.
+   */
+  fun onViewAnnotationAnchorUpdated(
+    view: View,
+    anchor: ViewAnnotationAnchorConfig,
+  ) = Unit
 }

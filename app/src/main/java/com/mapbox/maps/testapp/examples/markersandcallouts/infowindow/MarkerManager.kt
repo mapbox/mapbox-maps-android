@@ -4,6 +4,7 @@ import android.view.View
 import com.mapbox.geojson.Point
 import com.mapbox.maps.MapView
 import com.mapbox.maps.ScreenCoordinate
+import com.mapbox.maps.plugin.annotation.AnnotationConfig
 import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.OnPointAnnotationClickListener
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotation
@@ -24,7 +25,13 @@ class MarkerManager(
   private val mapView: MapView
 ) : OnPointAnnotationClickListener, OnMapClickListener {
 
-  private val pointAnnotationManager: PointAnnotationManager = mapView.annotations.createPointAnnotationManager()
+  private val pointAnnotationManager: PointAnnotationManager =
+    mapView.annotations.createPointAnnotationManager(
+      AnnotationConfig(
+        layerId = LAYER_ID
+      )
+    )
+
   // using copy on write just in case as potentially remove may be called while we're iterating in on click listener
   private val markerList = CopyOnWriteArrayList<Marker>()
 
@@ -45,13 +52,13 @@ class MarkerManager(
   }
 
   override fun onMapClick(point: Point): Boolean {
-    deselectMarkers()
+    markerList.forEach(::deselectMarker)
     return true
   }
 
   fun addMarker(marker: Marker): Marker {
-    marker.prepareAnnotationMarker(pointAnnotationManager)
-    marker.prepareViewAnnotation(mapView.viewAnnotationManager)
+    marker.prepareAnnotationMarker(pointAnnotationManager, LAYER_ID)
+    marker.prepareViewAnnotation(mapView)
     markerList.add(marker)
     // do not show info window by default
     deselectMarker(marker)
@@ -75,86 +82,84 @@ class MarkerManager(
       return
     }
     // Need to deselect any currently selected annotation first
-    deselectMarkers()
+    markerList.forEach(::deselectMarker)
+    adjustViewAnnotationXOffset(marker)
     mapView.viewAnnotationManager.updateViewAnnotation(
       marker.viewAnnotation,
       viewAnnotationOptions {
         selected(true)
       }
     )
-    adjustViewAnnotationOffsets(marker.viewAnnotation)
     marker.viewAnnotation.visibility = View.VISIBLE
   }
 
-  fun deselectMarkers() {
-    markerList.forEach { marker ->
-      deselectViewAnnotation(marker.viewAnnotation)
-    }
-  }
-
-  fun deselectMarker(marker: Marker) {
-    deselectViewAnnotation(marker.viewAnnotation)
+  private fun deselectMarker(marker: Marker) {
+    mapView.viewAnnotationManager.updateViewAnnotation(
+      marker.viewAnnotation,
+      viewAnnotationOptions {
+        selected(false)
+        marker.anchor?.let {
+          variableAnchors(
+            listOf(it.toBuilder().offsetX(0.0).build())
+          )
+        }
+      }
+    )
+    marker.viewAnnotation.visibility = View.INVISIBLE
   }
 
   fun destroy() {
-    markerList.forEach { removeMarker(it) }
+    markerList.forEach(::removeMarker)
     pointAnnotationManager.removeClickListener(this)
     mapView.mapboxMap.removeOnMapClickListener(this)
   }
 
-  private fun deselectViewAnnotation(view: View) {
-    mapView.viewAnnotationManager.updateViewAnnotation(
-      view,
-      viewAnnotationOptions {
-        selected(false)
-        // reset offset to default value
-        offsetX(0)
-      }
-    )
-    view.visibility = View.INVISIBLE
-  }
-
-  // if info window view is shown near screen edge - we adjust offsetX so that it fully appears on the screen
-  private fun adjustViewAnnotationOffsets(viewToAdjust: View) {
-    mapView.viewAnnotationManager.addOnViewAnnotationUpdatedListener(object : OnViewAnnotationUpdatedListener {
-      override fun onViewAnnotationPositionUpdated(
-        view: View,
-        leftTopCoordinate: ScreenCoordinate,
-        width: Int,
-        height: Int
-      ) {
-        if (view == viewToAdjust) {
-          updateOffsetX(viewToAdjust, leftTopCoordinate, width)
-          mapView.viewAnnotationManager.removeOnViewAnnotationUpdatedListener(this)
+  // adjust offsetX to fit on the screen if the info window is shown near screen edge
+  private fun adjustViewAnnotationXOffset(marker: Marker) {
+    mapView.viewAnnotationManager.addOnViewAnnotationUpdatedListener(
+      object : OnViewAnnotationUpdatedListener {
+        override fun onViewAnnotationPositionUpdated(
+          view: View,
+          leftTopCoordinate: ScreenCoordinate,
+          width: Double,
+          height: Double,
+        ) {
+          if (view == marker.viewAnnotation) {
+            updateOffsetX(marker, leftTopCoordinate, width)
+            mapView.viewAnnotationManager.removeOnViewAnnotationUpdatedListener(this)
+          }
         }
-      }
-
-      override fun onViewAnnotationVisibilityUpdated(view: View, visible: Boolean) {
-        // not needed
-      }
-    })
+      })
   }
 
-  private fun updateOffsetX(view: View, leftTop: ScreenCoordinate, width: Int) {
-    var resultOffsetX = 0
-    if (leftTop.x < 0) {
-      resultOffsetX = abs(leftTop.x.toInt()) + ADDITIONAL_EDGE_PADDING_PX
+  private fun updateOffsetX(marker: Marker, leftTop: ScreenCoordinate, width: Double) {
+    val resultOffsetX = if (leftTop.x < 0) {
+      abs(leftTop.x) + ADDITIONAL_EDGE_PADDING_PX
     } else if (leftTop.x + width > mapView.mapboxMap.getSize().width) {
-      resultOffsetX = (mapView.mapboxMap.getSize().width - leftTop.x - width - ADDITIONAL_EDGE_PADDING_PX).toInt()
+      mapView.mapboxMap.getSize().width - leftTop.x - width - ADDITIONAL_EDGE_PADDING_PX
+    } else {
+      0.0
     }
+    val anchor = marker.anchor?.toBuilder()
+      ?.offsetX(resultOffsetX)
+      ?.build()
+
     mapView.viewAnnotationManager.updateViewAnnotation(
-      view,
+      marker.viewAnnotation,
       viewAnnotationOptions {
-        offsetX(resultOffsetX)
+        if (anchor != null) {
+          variableAnchors(listOf(anchor))
+        }
       }
     )
   }
 
   private fun Marker.isSelected() =
-    mapView.viewAnnotationManager.getViewAnnotationOptionsByView(viewAnnotation)?.selected == true
+    mapView.viewAnnotationManager.getViewAnnotationOptions(viewAnnotation)?.selected == true
 
   private companion object {
     // additional padding when offsetting view near the screen edge
-    const val ADDITIONAL_EDGE_PADDING_PX = 20
+    const val ADDITIONAL_EDGE_PADDING_PX = 20.0
+    const val LAYER_ID = "annotation-layer"
   }
 }

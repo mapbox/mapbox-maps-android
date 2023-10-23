@@ -1,5 +1,6 @@
 package com.mapbox.maps.extension.compose.annotation
 
+import android.view.ViewGroup
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -21,6 +22,8 @@ import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.MapViewportState
 import com.mapbox.maps.extension.compose.internal.utils.CityLocations.HELSINKI
 import com.mapbox.maps.extension.compose.internal.utils.CityLocations.MINSK
+import com.mapbox.maps.viewannotation.annotationAnchor
+import com.mapbox.maps.viewannotation.geometry
 import com.mapbox.maps.viewannotation.viewAnnotationOptions
 import org.junit.Rule
 import org.junit.Test
@@ -114,9 +117,14 @@ public class ViewAnnotationTest {
         }
       ) {
         ViewAnnotation(
+          layoutParams = ViewGroup.LayoutParams(
+            100, 100
+          ),
           options = viewAnnotationOptions {
             geometry(annotationCenter)
-            anchor(ViewAnnotationAnchor.BOTTOM)
+            annotationAnchor {
+              anchor(ViewAnnotationAnchor.BOTTOM)
+            }
             allowOverlap(false)
             visible(visible)
           }

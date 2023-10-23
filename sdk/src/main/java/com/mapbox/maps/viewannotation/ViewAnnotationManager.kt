@@ -3,9 +3,8 @@ package com.mapbox.maps.viewannotation
 import android.view.View
 import androidx.annotation.LayoutRes
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater
-import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Geometry
-import com.mapbox.geojson.Point
+import com.mapbox.maps.AnnotatedLayerFeature
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapView
@@ -14,15 +13,12 @@ import com.mapbox.maps.ViewAnnotationOptions
 /**
  * Manager API to control View Annotations.
  *
- * View annotations are Android [View]s that are drawn on top of the [MapView] and bound to some [Geometry] (only [Point] is supported for now).
+ * View annotations are Android [View]s on top of the [MapView] and bound to some [Geometry] or [AnnotatedLayerFeature].
+ *
  * In case some view annotations intersect on the screen Z-index is based on addition order.
  *
  * View annotations are invariant to map camera transformations however such properties as size, visibility etc
  * could be controlled by the user using update operation.
- *
- * View annotations are not explicitly bound to any sources however [ViewAnnotationOptions.associatedFeatureId] could be
- * used to bind given view annotation with some [Feature] by [Feature.id] meaning visibility of view annotation will be driven
- * by visibility of given feature.
  *
  * View annotation manager instance is destroyed automatically when [MapView.onDestroy] is called.
  */
@@ -117,25 +113,25 @@ interface ViewAnnotationManager {
   ): Boolean
 
   /**
-   * Find [View] by feature id if it was specified as part of [ViewAnnotationOptions.associatedFeatureId].
+   * Find [View] by annotated layer feature if it was specified as part of [ViewAnnotationOptions.getAnnotatedFeature].
    *
    * @return [View] if view was found and NULL otherwise.
    */
-  fun getViewAnnotationByFeatureId(featureId: String): View?
+  fun getViewAnnotation(annotatedLayerFeature: AnnotatedLayerFeature): View?
 
   /**
-   * Find [ViewAnnotationOptions] of view annotation by feature id if it was specified as part of [ViewAnnotationOptions.associatedFeatureId].
+   * Find [ViewAnnotationOptions] by annotated layer feature if it was specified as part of [ViewAnnotationOptions.getAnnotatedFeature].
    *
-   * @return [ViewAnnotationOptions] if view annotation was found and NULL otherwise.
+   * @return [ViewAnnotationOptions] if view was found and NULL otherwise.
    */
-  fun getViewAnnotationOptionsByFeatureId(featureId: String): ViewAnnotationOptions?
+  fun getViewAnnotationOptions(annotatedLayerFeature: AnnotatedLayerFeature): ViewAnnotationOptions?
 
   /**
    * Get current [ViewAnnotationOptions] for given [view].
    *
    * @return [ViewAnnotationOptions] if view was found and NULL otherwise.
    */
-  fun getViewAnnotationOptionsByView(view: View): ViewAnnotationOptions?
+  fun getViewAnnotationOptions(view: View): ViewAnnotationOptions?
 
   /**
    * Add an instance of [OnViewAnnotationUpdatedListener].

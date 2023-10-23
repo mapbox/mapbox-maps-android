@@ -37,6 +37,7 @@ This document is a guide for migrating from v10 of the Mapbox Maps SDK for Andro
     - [3.17 Settings service changes](#317-settings-service-changes)
     - [3.18 Kotlin-specific changes](#318-kotlin-specific-changes)
     - [3.19 Plugin changes](#319-plugin-changes)
+    - [3.20 View annotations](#320-view-annotations)
   - [4. Validate ProGuard Rules](#4-validate-proguard-rules)
   - [5. Test your app](#5-test-your-app)
 - [New APIs and minor ergonomic improvements](#new-apis-and-minor-ergonomic-improvements)
@@ -658,6 +659,45 @@ Public plugin _interfaces_ have to be used instead:
 9. `MapOverlayPluginImpl` -> `MapOverlayPlugin`
 10. `ScaleBarPluginImpl` -> `ScaleBarPlugin`
 11. `ViewportPluginImpl` -> `ViewportPlugin`
+
+#### 3.20 View annotations
+
+1. `ViewAnnotationOptions` now accepts `AnnotatedFeature` of types `Geometry` or `AnnotatedLayerFeature` instead of `geometry` and `associatedFeatureId`. Both allow to attach view annotation to the complex feature geometries (e.g. line or fill layers).
+
+To create view annotation tied to the layer feature (the view annotation visibility and position will be updated when the feature is 
+changed or goes out of the viewport):
+
+```kotlin
+val viewAnnotation = viewAnnotationManager.addViewAnnotation(
+  R.layout.view_annotation,
+  viewAnnotationOptions {
+    annotatedLayerFeature("layer-id") {
+      featureId("feature-id") // optionally, feature within layer
+    }
+  }
+)
+```
+
+To create view annotation tied to the static geometry:
+
+```kotlin
+val viewAnnotation = viewAnnotationManager.addViewAnnotation(
+  R.layout.view_annotation,
+  viewAnnotationOptions {
+    geometry(Point.fromLngLat(-122.3915, 37.6177)) // geometry can be LineString, Polygon etc.
+  }
+)
+```
+
+For the more detailed example of the new ViewAnnotations use refer to the [DynamicViewAnnotationsActivity.kt](../app/src/main/java/com/mapbox/maps/testapp/examples/markersandcallouts/viewannotation/DynamicViewAnnotationActivity.kt).
+ 
+2. `ViewAnnotationManager.getViewAnnotationByFeatureId` is renamed to `ViewAnnotationManager.getViewAnnotation`.
+3. `ViewAnnotationManager.getViewAnnotationOptionsByView` is renamed to `ViewAnnotationManager.getViewAnnotationOptions`.
+4. `ViewAnnotationManager.getViewAnnotationOptionsByFeatureId` is renamed to `ViewAnnotationManager.getViewAnnotationOptions`.
+5. `ViewAnnotationOptions` accepts list of anchors `variableAnchors` instead of `anchor`/`offsetX`/`offsetY`.
+6. `ViewAnnotationAnchorConfig` fields `offsetX`/`offsetY` are now of type Double instead of Int.
+7. `ViewAnnotationOptions` fields `width`/`height` are now of type Double instead of Int.
+8. `OnViewAnnotationUpdatedListener.onViewAnnotationPositionUpdated` arguments `width`/`height` are now of type Double instead of Int.
 
 ### 4. Validate ProGuard Rules
 

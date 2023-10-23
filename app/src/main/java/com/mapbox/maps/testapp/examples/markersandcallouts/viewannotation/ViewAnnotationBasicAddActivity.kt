@@ -1,4 +1,4 @@
-package com.mapbox.maps.testapp.examples.markersandcallouts
+package com.mapbox.maps.testapp.examples.markersandcallouts.viewannotation
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -18,6 +18,7 @@ import com.mapbox.maps.testapp.databinding.ActivityViewAnnotationShowcaseBinding
 import com.mapbox.maps.testapp.databinding.ItemCalloutViewBinding
 import com.mapbox.maps.viewannotation.ViewAnnotationManager
 import com.mapbox.maps.viewannotation.ViewAnnotationUpdateMode
+import com.mapbox.maps.viewannotation.geometry
 import com.mapbox.maps.viewannotation.viewAnnotationOptions
 
 /**

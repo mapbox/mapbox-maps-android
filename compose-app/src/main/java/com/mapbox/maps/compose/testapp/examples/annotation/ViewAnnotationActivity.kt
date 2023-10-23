@@ -23,6 +23,8 @@ import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.MapViewportState
 import com.mapbox.maps.extension.compose.annotation.ViewAnnotation
+import com.mapbox.maps.viewannotation.annotationAnchors
+import com.mapbox.maps.viewannotation.geometry
 import com.mapbox.maps.viewannotation.viewAnnotationOptions
 import java.util.*
 
@@ -53,7 +55,11 @@ public class ViewAnnotationActivity : ComponentActivity() {
             ViewAnnotation(
               options = viewAnnotationOptions {
                 geometry(HELSINKI)
-                anchor(ViewAnnotationAnchor.BOTTOM)
+                annotationAnchors(
+                  {
+                    anchor(ViewAnnotationAnchor.BOTTOM)
+                  }
+                )
                 allowOverlap(false)
               }
             ) {

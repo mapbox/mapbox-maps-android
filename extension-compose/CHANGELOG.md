@@ -6,6 +6,7 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 * Add experimental `MapEvents` to handle all events emitted by `MapboxMap`.
 * Expose `PointAnnotationGroup.symbolZElevate` property. 
+* Add `ViewAnnotation.layoutParams` property. 
 
 ## Bug fixes 🐞
 * Fix the bug where wrong pixel ratio could be used in a dual display setup.

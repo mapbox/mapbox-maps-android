@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.appcompat.content.res.AppCompatResources
 
@@ -17,9 +18,14 @@ object BitmapUtils {
    * Convert given drawable id to bitmap.
    */
   fun bitmapFromDrawableRes(context: Context, @DrawableRes resourceId: Int) =
-    convertDrawableToBitmap(AppCompatResources.getDrawable(context, resourceId))
+    drawableToBitmap(AppCompatResources.getDrawable(context, resourceId))
 
-  private fun convertDrawableToBitmap(sourceDrawable: Drawable?): Bitmap? {
+  fun drawableToBitmap(
+    sourceDrawable: Drawable?,
+    flipX: Boolean = false,
+    flipY: Boolean = false,
+    @ColorInt tint: Int? = null,
+  ): Bitmap? {
     if (sourceDrawable == null) {
       return null
     }
@@ -29,12 +35,19 @@ object BitmapUtils {
       // copying drawable object to not manipulate on the same reference
       val constantState = sourceDrawable.constantState ?: return null
       val drawable = constantState.newDrawable().mutate()
-      val bitmap: Bitmap = Bitmap.createBitmap(
+      val bitmap = Bitmap.createBitmap(
         drawable.intrinsicWidth, drawable.intrinsicHeight,
         Bitmap.Config.ARGB_8888
       )
+      tint?.let(drawable::setTint)
       val canvas = Canvas(bitmap)
       drawable.setBounds(0, 0, canvas.width, canvas.height)
+      canvas.scale(
+        if (flipX) -1f else 1f,
+        if (flipY) -1f else 1f,
+        canvas.width / 2f,
+        canvas.height / 2f
+      )
       drawable.draw(canvas)
       bitmap
     }

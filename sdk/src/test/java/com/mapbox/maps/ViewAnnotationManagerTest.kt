@@ -1,8 +1,8 @@
 package com.mapbox.maps
 
-import android.graphics.Rect
 import android.util.DisplayMetrics
 import android.view.View
+import android.view.View.MeasureSpec
 import android.view.ViewTreeObserver
 import android.widget.FrameLayout
 import com.mapbox.bindgen.ExpectedFactory
@@ -13,7 +13,6 @@ import com.mapbox.maps.extension.style.layers.properties.generated.ProjectionNam
 import com.mapbox.maps.renderer.MapboxRenderThread
 import com.mapbox.maps.shadows.ShadowCoordinateBounds
 import com.mapbox.maps.viewannotation.*
-import com.mapbox.maps.viewannotation.ViewAnnotationManagerImpl.Companion.EXCEPTION_TEXT_ASSOCIATED_FEATURE_ID_ALREADY_EXISTS
 import io.mockk.*
 import org.junit.After
 import org.junit.Assert.*
@@ -39,6 +38,7 @@ class ViewAnnotationManagerTest {
 
   @Before
   fun setUp() {
+    mockkStatic(MeasureSpec::class)
     every { mapView.mapboxMap } returns mapboxMap
     every { mapView.layoutParams = any() } just Runs
     every { mapView.context } returns mockk()
@@ -46,8 +46,8 @@ class ViewAnnotationManagerTest {
     viewTreeObserver = mockk(relaxed = true)
     every { mapView.mapController.renderer.renderThread } returns renderer
     frameLayoutParams = FrameLayout.LayoutParams(0, 0)
-    frameLayoutParams.width = DEFAULT_WIDTH
-    frameLayoutParams.height = DEFAULT_HEIGHT
+    frameLayoutParams.width = DEFAULT_WIDTH.toInt()
+    frameLayoutParams.height = DEFAULT_HEIGHT.toInt()
     view = mockView()
     viewAnnotationsLayout = mockk()
     every { viewAnnotationsLayout.layoutParams = any() } just Runs
@@ -63,16 +63,22 @@ class ViewAnnotationManagerTest {
 
   private fun mockView(): View = mockk<View>().also {
     every { it.layoutParams } returns frameLayoutParams
+    every { it.measuredWidth } returns 10
+    every { it.measuredHeight } returns 10
+    every { it.measure(any(), any()) } just Runs
+    every { it.layout(any(), any(), any(), any()) } just Runs
     every { it.visibility } returns View.VISIBLE
     every { it.viewTreeObserver } returns viewTreeObserver
     every { it.addOnAttachStateChangeListener(any()) } just Runs
     every { it.removeOnAttachStateChangeListener(any()) } just Runs
+    every { it.getTag(any()) } returns null
   }
 
   @After
   fun tearDown() {
     every { mapboxMap.removeViewAnnotation(any()) } returns ExpectedFactory.createNone()
     viewAnnotationManager.destroy()
+    unmockkStatic(MeasureSpec::class)
   }
 
   @Test
@@ -83,7 +89,7 @@ class ViewAnnotationManagerTest {
         geometry(DEFAULT_GEOMETRY)
       }
     )
-    val exception = assertThrows(RuntimeException::class.java) {
+    assertThrows(RuntimeException::class.java) {
       viewAnnotationManager.addViewAnnotation(
         view,
         viewAnnotationOptions {
@@ -91,98 +97,45 @@ class ViewAnnotationManagerTest {
         }
       )
     }
-    assertEquals(
-      "Trying to add view annotation that was already added before! " +
-        "Please consider deleting annotation view ($view) beforehand.",
-      exception.message
-    )
-  }
-
-  @Test
-  fun addViewAnnotationWithDuplicateAssociatedFeatureId() {
-    val associatedFeatureId = "associatedFeatureId"
-    val viewAnnotationOptions = viewAnnotationOptions {
-      geometry(DEFAULT_GEOMETRY)
-      associatedFeatureId(associatedFeatureId)
-    }
-    viewAnnotationManager.addViewAnnotation(
-      view,
-      viewAnnotationOptions
-    )
-    val id = viewAnnotationManager.idLookupMap[view]!!
-    val anotherView = mockk<View>()
-    every { anotherView.layoutParams } returns frameLayoutParams
-    every { anotherView.visibility } returns View.VISIBLE
-    every { anotherView.viewTreeObserver } returns mockk(relaxed = true)
-    every { mapboxMap.getViewAnnotationOptions(id) } returns ExpectedFactory.createValue(viewAnnotationOptions)
-    val exception = assertThrows(RuntimeException::class.java) {
-      viewAnnotationManager.addViewAnnotation(
-        anotherView,
-        viewAnnotationOptions
-      )
-    }
-    assertEquals(
-      String.format(
-        EXCEPTION_TEXT_ASSOCIATED_FEATURE_ID_ALREADY_EXISTS,
-        associatedFeatureId
-      ),
-      exception.message
-    )
-  }
-
-  @Test
-  fun updateViewAnnotationWithDuplicateAssociatedFeatureId() {
-    val associatedFeatureId = "associatedFeatureId"
-    val viewAnnotationOptions = viewAnnotationOptions {
-      geometry(DEFAULT_GEOMETRY)
-      associatedFeatureId(associatedFeatureId)
-    }
-    viewAnnotationManager.addViewAnnotation(
-      view,
-      viewAnnotationOptions
-    )
-    val id = viewAnnotationManager.idLookupMap[view]!!
-    every { mapboxMap.getViewAnnotationOptions(id) } returns ExpectedFactory.createValue(viewAnnotationOptions)
-    val exception = assertThrows(RuntimeException::class.java) {
-      viewAnnotationManager.updateViewAnnotation(
-        view,
-        viewAnnotationOptions {
-          associatedFeatureId(associatedFeatureId)
-        }
-      )
-    }
-    assertEquals(
-      String.format(
-        EXCEPTION_TEXT_ASSOCIATED_FEATURE_ID_ALREADY_EXISTS,
-        associatedFeatureId
-      ),
-      exception.message
-    )
   }
 
   @Test
   fun updateViewAnnotationSuccess() {
     every { mapboxMap.updateViewAnnotation(any(), any()) } returns ExpectedFactory.createNone()
     val updatedOptions = viewAnnotationOptions {
-      offsetX(10)
+      annotationAnchor {
+        anchor(ViewAnnotationAnchor.CENTER)
+        offsetX(10.0)
+      }
     }
+
+    val idSlot = slot<String>()
+    every {
+      mapboxMap.addViewAnnotation(
+        capture(idSlot), any()
+      )
+    } returns ExpectedFactory.createNone()
+
     viewAnnotationManager.addViewAnnotation(
       view,
       viewAnnotationOptions {
         geometry(DEFAULT_GEOMETRY)
       }
     )
+
     val updateActualResult = viewAnnotationManager.updateViewAnnotation(view, updatedOptions)
     assertEquals(true, updateActualResult)
-    val id = viewAnnotationManager.idLookupMap[view]
-    verify(exactly = 1) { mapboxMap.updateViewAnnotation(id!!, updatedOptions) }
+    verify(exactly = 1) { mapboxMap.updateViewAnnotation(idSlot.captured, updatedOptions) }
   }
 
   @Test
   fun updateViewAnnotationFailure() {
     every { mapboxMap.updateViewAnnotation(any(), any()) } returns ExpectedFactory.createNone()
     val updatedOptions = viewAnnotationOptions {
-      offsetX(-10)
+      annotationAnchor {
+        anchor(ViewAnnotationAnchor.CENTER)
+        offsetX(10.0)
+      }
     }
     val updateActualResult = viewAnnotationManager.updateViewAnnotation(mockk(), updatedOptions)
     assertEquals(false, updateActualResult)
@@ -192,18 +145,23 @@ class ViewAnnotationManagerTest {
   @Test
   fun removeViewAnnotationSuccess() {
     every { mapboxMap.removeViewAnnotation(any()) } returns ExpectedFactory.createNone()
+    val idSlot = slot<String>()
+    every {
+      mapboxMap.addViewAnnotation(
+        capture(idSlot), any()
+      )
+    } returns ExpectedFactory.createNone()
+
     viewAnnotationManager.addViewAnnotation(
       view,
       viewAnnotationOptions {
         geometry(DEFAULT_GEOMETRY)
       }
     )
-    val id = viewAnnotationManager.idLookupMap[view]
     val removeActualResult = viewAnnotationManager.removeViewAnnotation(view)
     assertEquals(true, removeActualResult)
-    assertNull(viewAnnotationManager.idLookupMap[view])
     verify(exactly = 1) { view.removeOnAttachStateChangeListener(any()) }
-    verify(exactly = 1) { mapboxMap.removeViewAnnotation(id!!) }
+    verify(exactly = 1) { mapboxMap.removeViewAnnotation(idSlot.captured) }
     verify(exactly = 1) { viewAnnotationsLayout.removeView(view) }
     verify(exactly = 1) { viewTreeObserver.removeOnDrawListener(any()) }
     verify(exactly = 1) { viewTreeObserver.removeOnGlobalLayoutListener(any()) }
@@ -236,7 +194,6 @@ class ViewAnnotationManagerTest {
       }
     )
     viewAnnotationManager.removeAllViewAnnotations()
-    assert(viewAnnotationManager.idLookupMap.isEmpty())
     verify(exactly = 2) { mapboxMap.removeViewAnnotation(any()) }
     verify(exactly = 1) { viewAnnotationsLayout.removeView(view) }
     verify(exactly = 1) { viewAnnotationsLayout.removeView(anotherView) }
@@ -244,14 +201,27 @@ class ViewAnnotationManagerTest {
 
   @Test
   fun getViewAnnotationByFeatureIdSuccess() {
+    val idSlot = slot<String>()
+    every {
+      mapboxMap.addViewAnnotation(
+        capture(idSlot), any()
+      )
+    } returns ExpectedFactory.createNone()
     val viewAnnotationOptions = viewAnnotationOptions {
-      geometry(DEFAULT_GEOMETRY)
-      associatedFeatureId(FEATURE_ID)
+      annotatedLayerFeature(LAYER_ID) {
+        featureId(FEATURE_ID)
+      }
     }
     viewAnnotationManager.addViewAnnotation(view, viewAnnotationOptions)
-    val viewId = viewAnnotationManager.idLookupMap[view]
-    every { mapboxMap.getViewAnnotationOptions(viewId!!) } returns ExpectedFactory.createValue(viewAnnotationOptions)
-    assertEquals(view, viewAnnotationManager.getViewAnnotationByFeatureId(FEATURE_ID))
+    every { mapboxMap.getViewAnnotationOptions(idSlot.captured) } returns ExpectedFactory.createValue(
+      viewAnnotationOptions
+    )
+    assertEquals(
+      view,
+      viewAnnotationManager.getViewAnnotation(
+        AnnotatedLayerFeature.Builder().featureId(FEATURE_ID).layerId(LAYER_ID).build()
+      )
+    )
   }
 
   @Test
@@ -259,31 +229,54 @@ class ViewAnnotationManagerTest {
     val viewAnnotationOptions = viewAnnotationOptions {
       geometry(DEFAULT_GEOMETRY)
     }
+    val idSlot = slot<String>()
+    every {
+      mapboxMap.addViewAnnotation(
+        capture(idSlot), any()
+      )
+    } returns ExpectedFactory.createNone()
     viewAnnotationManager.addViewAnnotation(view, viewAnnotationOptions)
-    val viewId = viewAnnotationManager.idLookupMap[view]
-    every { mapboxMap.getViewAnnotationOptions(viewId!!) } returns ExpectedFactory.createValue(viewAnnotationOptions)
-    assertNull(viewAnnotationManager.getViewAnnotationByFeatureId(FEATURE_ID))
+    every { mapboxMap.getViewAnnotationOptions(idSlot.captured) } returns ExpectedFactory.createValue(
+      viewAnnotationOptions
+    )
+    assertNull(
+      viewAnnotationManager.getViewAnnotationOptions(
+        AnnotatedLayerFeature.Builder().featureId(FEATURE_ID).layerId(LAYER_ID).build()
+      )
+    )
   }
 
   @Test
   fun getViewAnnotationByFeatureIdFailureNoView() {
-    assertNull(viewAnnotationManager.getViewAnnotationByFeatureId(FEATURE_ID))
+    assertNull(
+      viewAnnotationManager.getViewAnnotationOptions(
+        AnnotatedLayerFeature.Builder().featureId(FEATURE_ID).layerId(LAYER_ID).build()
+      )
+    )
   }
 
   @Test
   fun getViewAnnotationOptionsByFeatureIdSuccess() {
     val viewAnnotationOptions = viewAnnotationOptions {
-      geometry(DEFAULT_GEOMETRY)
-      associatedFeatureId(FEATURE_ID)
+      annotatedLayerFeature(LAYER_ID) {
+        featureId(FEATURE_ID)
+      }
     }
+    val idSlot = slot<String>()
+    every {
+      mapboxMap.addViewAnnotation(
+        capture(idSlot), any()
+      )
+    } returns ExpectedFactory.createNone()
     viewAnnotationManager.addViewAnnotation(view, viewAnnotationOptions)
-    val viewId = viewAnnotationManager.idLookupMap[view]
-    every { mapboxMap.getViewAnnotationOptions(viewId!!) } returns ExpectedFactory.createValue(
+    every { mapboxMap.getViewAnnotationOptions(idSlot.captured) } returns ExpectedFactory.createValue(
       viewAnnotationOptions
     )
     assertEquals(
       viewAnnotationOptions,
-      viewAnnotationManager.getViewAnnotationOptionsByFeatureId(FEATURE_ID)
+      viewAnnotationManager.getViewAnnotationOptions(
+        AnnotatedLayerFeature.Builder().featureId(FEATURE_ID).layerId(LAYER_ID).build()
+      )
     )
   }
 
@@ -292,15 +285,30 @@ class ViewAnnotationManagerTest {
     val viewAnnotationOptions = viewAnnotationOptions {
       geometry(DEFAULT_GEOMETRY)
     }
+    val idSlot = slot<String>()
+    every {
+      mapboxMap.addViewAnnotation(
+        capture(idSlot), any()
+      )
+    } returns ExpectedFactory.createNone()
     viewAnnotationManager.addViewAnnotation(view, viewAnnotationOptions)
-    val viewId = viewAnnotationManager.idLookupMap[view]
-    every { mapboxMap.getViewAnnotationOptions(viewId!!) } returns ExpectedFactory.createValue(viewAnnotationOptions)
-    assertNull(viewAnnotationManager.getViewAnnotationOptionsByFeatureId(FEATURE_ID))
+    every { mapboxMap.getViewAnnotationOptions(idSlot.captured) } returns ExpectedFactory.createValue(
+      viewAnnotationOptions
+    )
+    assertNull(
+      viewAnnotationManager.getViewAnnotationOptions(
+        AnnotatedLayerFeature.Builder().featureId(FEATURE_ID).layerId(LAYER_ID).build()
+      )
+    )
   }
 
   @Test
   fun getViewAnnotationOptionsByFeatureIdFailureNoView() {
-    assertNull(viewAnnotationManager.getViewAnnotationOptionsByFeatureId(FEATURE_ID))
+    assertNull(
+      viewAnnotationManager.getViewAnnotationOptions(
+        AnnotatedLayerFeature.Builder().featureId(FEATURE_ID).layerId(LAYER_ID).build()
+      )
+    )
   }
 
   @Test
@@ -309,13 +317,15 @@ class ViewAnnotationManagerTest {
       geometry(DEFAULT_GEOMETRY)
     }
     viewAnnotationManager.addViewAnnotation(view, viewAnnotationOptions)
-    every { mapboxMap.getViewAnnotationOptions(any()) } returns ExpectedFactory.createValue(viewAnnotationOptions)
-    assertEquals(viewAnnotationOptions, viewAnnotationManager.getViewAnnotationOptionsByView(view))
+    every { mapboxMap.getViewAnnotationOptions(any()) } returns ExpectedFactory.createValue(
+      viewAnnotationOptions
+    )
+    assertEquals(viewAnnotationOptions, viewAnnotationManager.getViewAnnotationOptions(view))
   }
 
   @Test
   fun getViewAnnotationOptionsByViewNoViewFailure() {
-    assertNull(viewAnnotationManager.getViewAnnotationOptionsByView(view))
+    assertNull(viewAnnotationManager.getViewAnnotationOptions(view))
   }
 
   @Test
@@ -421,7 +431,10 @@ class ViewAnnotationManagerTest {
     every { mapboxMap.updateViewAnnotation(any(), any()) } returns ExpectedFactory.createNone()
     val expectedOptions = viewAnnotationOptions {
       geometry(DEFAULT_GEOMETRY)
-      offsetX(10)
+      annotationAnchor {
+        anchor(ViewAnnotationAnchor.CENTER)
+        offsetX(10.0)
+      }
     }
     every { mapboxMap.getViewAnnotationOptions(any()) } returns ExpectedFactory.createValue(
       expectedOptions
@@ -537,31 +550,11 @@ class ViewAnnotationManagerTest {
     assertNull(viewAnnotationManager.cameraForAnnotations(annotations))
   }
 
-  @Test
-  fun testCalculateCoordinateBoundForAnnotation() {
-    val annotationManagerSpyk = spyk(ViewAnnotationManagerImpl(mapView, viewAnnotationsLayout))
-    val viewAnnotationOptions = viewAnnotationOptions {
-      geometry(DEFAULT_GEOMETRY)
-    }
-    val rect = Rect(10, 10, 10, 10)
-    val projectedMeters = ProjectedMeters(1.0, 1.0)
-    every { annotationManagerSpyk.getViewAnnotationOptionsFrame(any()) } returns rect
-    every { mapboxMap.getMetersPerPixelAtLatitude(any(), any()) } returns 1.0
-    every { mapboxMap.projectedMetersForCoordinate(any()) } returns projectedMeters
-    every { mapboxMap.coordinateForProjectedMeters(any()) } returns Point.fromLngLat(0.0, 0.0)
-
-    val expectedCoordinateBounds =
-      CoordinateBounds(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0))
-    annotationManagerSpyk.addViewAnnotation(view, viewAnnotationOptions)
-    val actualCoordinateBounds =
-      annotationManagerSpyk.calculateCoordinateBoundForAnnotation(viewAnnotationOptions, rect, 1.0)
-    assertEquals(expectedCoordinateBounds, actualCoordinateBounds)
-  }
-
   private companion object {
+    private const val LAYER_ID = "layerId"
     private const val FEATURE_ID = "featureId"
     private val DEFAULT_GEOMETRY: Geometry = Point.fromLngLat(0.0, 0.0)
-    private const val DEFAULT_WIDTH = 20
-    private const val DEFAULT_HEIGHT = 20
+    private const val DEFAULT_WIDTH = 20.0
+    private const val DEFAULT_HEIGHT = 20.0
   }
 }

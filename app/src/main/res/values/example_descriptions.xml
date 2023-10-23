@@ -94,6 +94,7 @@
     <string name="description_view_annotation_basic">Add view annotation on a map click</string>
     <string name="description_view_annotation_animation">Animate a view annotation on screen</string>
     <string name="description_view_annotation_point_annotation">Add view annotation to a point annotation</string>
+    <string name="description_dynamic_view_annotations">Add dynamic view annotations to line layers and fixed coordinates</string>
     <string name="description_info_window">Legacy InfoWindow implementation using view annotations</string>
     <string name="description_viewport">Viewport camera showcase</string>
     <string name="description_advanced_viewport">Advanced viewport with gestures showcase</string>

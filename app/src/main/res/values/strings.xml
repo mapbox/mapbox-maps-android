@@ -157,6 +157,7 @@
 
     <!--View Annotations-->
     <string name="content_description_close">Close callout</string>
+    <string name="dynamic_mode">Mode: %1$s</string>
 
     <!-- Tile requests -->
     <string name="set_tile_request_delay">Set tile request delay to 2 sec</string>

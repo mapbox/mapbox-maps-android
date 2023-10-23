@@ -1,6 +1,7 @@
 package com.mapbox.maps.extension.compose.annotation
 
 import android.view.View
+import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
@@ -14,6 +15,7 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.ViewAnnotationOptions
 import com.mapbox.maps.extension.compose.MapboxMapComposable
+import com.mapbox.maps.extension.compose.R
 import com.mapbox.maps.extension.compose.internal.MapApplier
 import com.mapbox.maps.extension.compose.internal.MapNode
 import com.mapbox.maps.viewannotation.OnViewAnnotationUpdatedListener
@@ -64,6 +66,10 @@ public fun ViewAnnotation(
   options: ViewAnnotationOptions,
   modifier: Modifier = Modifier,
   onUpdatedListener: OnViewAnnotationUpdatedListener? = null,
+  layoutParams: ViewGroup.LayoutParams = ViewGroup.LayoutParams(
+    FrameLayout.LayoutParams.WRAP_CONTENT,
+    FrameLayout.LayoutParams.WRAP_CONTENT
+  ),
   content: @Composable () -> Unit,
 ) {
   val mapApplier = currentComposer.applier as? MapApplier
@@ -75,10 +81,7 @@ public fun ViewAnnotation(
         mapApplier?.mapView?.viewAnnotationManager ?: error("Error adding view annotation")
 
       val composeView = ComposeView(mapApplier.mapView.context).apply {
-        layoutParams = FrameLayout.LayoutParams(
-          FrameLayout.LayoutParams.WRAP_CONTENT,
-          FrameLayout.LayoutParams.WRAP_CONTENT
-        )
+        this.layoutParams = layoutParams
       }
 
       composeView.apply {
@@ -90,8 +93,8 @@ public fun ViewAnnotation(
                 this,
                 with(currentOptions.value) {
                   toBuilder()
-                    .height(height ?: coordinates.size.height)
-                    .width(width ?: coordinates.size.width)
+                    .height(height ?: coordinates.size.height.toDouble())
+                    .width(width ?: coordinates.size.width.toDouble())
                     .build()
                 }
               )
@@ -102,6 +105,8 @@ public fun ViewAnnotation(
         }
       }
 
+      // need set a tag to avoid crashing, more details in [ViewAnnotationManagerImpl.measureView]
+      composeView.setTag(R.id.composeView, "")
       viewAnnotationManager.addViewAnnotation(composeView, options)
 
       ViewAnnotationNode(

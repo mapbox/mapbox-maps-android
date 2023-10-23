@@ -3,13 +3,17 @@ package com.mapbox.maps
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.*
+import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater
 import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.geojson.Point
 import com.mapbox.maps.renderer.MapboxRenderThread
 import com.mapbox.maps.viewannotation.ViewAnnotationManagerImpl
-import com.mapbox.maps.viewannotation.ViewAnnotationManagerImpl.Companion.EXCEPTION_TEXT_GEOMETRY_IS_NULL
+import com.mapbox.maps.viewannotation.annotatedLayerFeature
+import com.mapbox.maps.viewannotation.annotationAnchor
+import com.mapbox.maps.viewannotation.geometry
 import com.mapbox.maps.viewannotation.viewAnnotationOptions
 import io.mockk.*
 import org.junit.After
@@ -35,21 +39,30 @@ class ViewAnnotationManagerAddTest(
 
   private lateinit var viewAnnotationManager: ViewAnnotationManagerImpl
   private lateinit var expectedView: View
-  private lateinit var frameLayoutParams: FrameLayout.LayoutParams
+  private lateinit var layoutParams: ViewGroup.LayoutParams
 
   @Before
   fun setUp() {
     val mapView: MapView = mockk(relaxUnitFun = true)
+    mockkStatic(MeasureSpec::class)
+    every { MeasureSpec.makeMeasureSpec(any(), any()) } returns 0
     every { mapView.mapboxMap } returns mapboxMap
     every { mapView.layoutParams = any() } just Runs
     every { mapView.context } returns mockk()
     renderer = mockk(relaxUnitFun = true)
     every { mapView.mapController.renderer.renderThread } returns renderer
-    frameLayoutParams = FrameLayout.LayoutParams(0, 0)
-    frameLayoutParams.width = layoutParamsWidthActual
-    frameLayoutParams.height = layoutParamsHeightActual
+    layoutParams = ViewGroup.LayoutParams(0, 0)
+    layoutParams.width = layoutParamsWidthActual
+    layoutParams.height = layoutParamsHeightActual
     expectedView = mockk(relaxed = true)
-    every { expectedView.layoutParams } returns frameLayoutParams
+    every { expectedView.layoutParams } returns layoutParams
+    every { expectedView.measuredWidth } returns layoutParamsWidthActual
+    every { expectedView.measuredHeight } returns layoutParamsHeightActual
+    every { expectedView.width } returns layoutParamsWidthActual
+    every { expectedView.height } returns layoutParamsHeightActual
+    every { expectedView.measure(any(), any()) } just Runs
+    every { expectedView.layout(any(), any(), any(), any()) } just Runs
+
     every { mapboxMap.addViewAnnotation(any(), any()) } returns ExpectedFactory.createNone()
     viewAnnotationsLayout = mockk()
     every { viewAnnotationsLayout.layoutParams = any() } just Runs
@@ -58,6 +71,12 @@ class ViewAnnotationManagerAddTest(
     every { viewAnnotationsLayout.context } returns mockk()
     val displayMetrics = DisplayMetrics().apply { density = 1f }
     every { mapView.resources.displayMetrics } returns displayMetrics
+
+    mockkStatic(LayoutInflater::class)
+    every {
+      LayoutInflater.from(any()).inflate(resIdActual, viewAnnotationsLayout, false)
+    } returns expectedView
+
     viewAnnotationManager = ViewAnnotationManagerImpl(mapView, viewAnnotationsLayout)
   }
 
@@ -65,34 +84,36 @@ class ViewAnnotationManagerAddTest(
   fun tearDown() {
     every { mapboxMap.removeViewAnnotation(any()) } returns ExpectedFactory.createNone()
     viewAnnotationManager.destroy()
+    unmockkStatic(LayoutInflater::class)
+    unmockkStatic(MeasureSpec::class)
   }
 
   @Test
   fun addViewAnnotationWithSyncResId() {
-    mockkStatic(LayoutInflater::class)
-    every { LayoutInflater.from(any()).inflate(resIdActual, viewAnnotationsLayout, false) } returns expectedView
     if (runtimeExceptionThrown) {
-      val exception = assertThrows(RuntimeException::class.java) {
+      assertThrows(RuntimeException::class.java) {
         viewAnnotationManager.addViewAnnotation(
           resIdActual,
           viewAnnotationOptionsActual
         )
       }
-      assertEquals(EXCEPTION_TEXT_GEOMETRY_IS_NULL, exception.message)
     } else {
       val actualView = viewAnnotationManager.addViewAnnotation(
         resIdActual,
         viewAnnotationOptionsActual
       )
       assertEquals(expectedView, actualView)
+      val optionsSlot = slot<ViewAnnotationOptions>()
+
       verify(exactly = 1) {
         mapboxMap.addViewAnnotation(
           any(),
-          viewAnnotationOptionsExpected
+          capture(optionsSlot)
         )
       }
+
+      assertViewAnnotationOptions(viewAnnotationOptionsExpected, optionsSlot.captured)
     }
-    unmockkStatic(LayoutInflater::class)
   }
 
   @Test
@@ -103,14 +124,13 @@ class ViewAnnotationManagerAddTest(
       callback.captured.onInflateFinished(expectedView, resIdActual, viewAnnotationsLayout)
     }
     if (runtimeExceptionThrown) {
-      val exception = assertThrows(RuntimeException::class.java) {
+      assertThrows(RuntimeException::class.java) {
         viewAnnotationManager.addViewAnnotation(
           resIdActual,
           viewAnnotationOptionsActual,
           asyncInflater,
         ) {}
       }
-      assertEquals(EXCEPTION_TEXT_GEOMETRY_IS_NULL, exception.message)
     } else {
       viewAnnotationManager.addViewAnnotation(
         resIdActual,
@@ -118,12 +138,14 @@ class ViewAnnotationManagerAddTest(
         asyncInflater,
       ) {
         assertEquals(expectedView, it)
+        val optionsSlot = slot<ViewAnnotationOptions>()
         verify(exactly = 1) {
           mapboxMap.addViewAnnotation(
             any(),
-            viewAnnotationOptionsExpected
+            capture(optionsSlot)
           )
         }
+        assertViewAnnotationOptions(viewAnnotationOptionsExpected, optionsSlot.captured)
       }
     }
   }
@@ -131,27 +153,55 @@ class ViewAnnotationManagerAddTest(
   @Test
   fun addViewAnnotationWithView() {
     val actualView = mockk<View>(relaxed = true)
-    every { actualView.layoutParams } returns frameLayoutParams
+    every { actualView.layoutParams } returns layoutParams
+    every { actualView.width } returns layoutParamsWidthActual
+    every { actualView.height } returns layoutParamsHeightActual
+    every { actualView.measuredWidth } returns layoutParamsWidthActual
+    every { actualView.measuredHeight } returns layoutParamsHeightActual
     if (runtimeExceptionThrown) {
-      val exception = assertThrows(RuntimeException::class.java) {
+      assertThrows(RuntimeException::class.java) {
         viewAnnotationManager.addViewAnnotation(
           actualView,
           viewAnnotationOptionsActual
         )
       }
-      assertEquals(EXCEPTION_TEXT_GEOMETRY_IS_NULL, exception.message)
     } else {
       viewAnnotationManager.addViewAnnotation(
         actualView,
         viewAnnotationOptionsActual
       )
+      val optionsSlot = slot<ViewAnnotationOptions>()
       verify(exactly = 1) {
         mapboxMap.addViewAnnotation(
           any(),
-          viewAnnotationOptionsExpected
+          capture(optionsSlot)
         )
       }
+      assertViewAnnotationOptions(viewAnnotationOptionsExpected, optionsSlot.captured)
     }
+  }
+
+  private fun assertViewAnnotationOptions(
+    viewAnnotationOptionsExpected: ViewAnnotationOptions,
+    capturedOptions: ViewAnnotationOptions
+  ) {
+    if (capturedOptions.annotatedFeature?.isGeometry == true) {
+      assertEquals(
+        viewAnnotationOptionsExpected.annotatedFeature!!.geometry,
+        capturedOptions.annotatedFeature!!.geometry,
+      )
+    } else {
+      assertEquals(
+        viewAnnotationOptionsExpected.annotatedFeature!!.annotatedLayerFeature,
+        capturedOptions.annotatedFeature!!.annotatedLayerFeature,
+      )
+    }
+    assertEquals(viewAnnotationOptionsExpected.height, capturedOptions.height)
+    assertEquals(viewAnnotationOptionsExpected.width, capturedOptions.width)
+    assertEquals(viewAnnotationOptionsExpected.visible, capturedOptions.visible)
+    assertEquals(viewAnnotationOptionsExpected.allowOverlap, capturedOptions.allowOverlap)
+    assertEquals(viewAnnotationOptionsExpected.selected, capturedOptions.selected)
+    assertEquals(viewAnnotationOptionsExpected.variableAnchors, capturedOptions.variableAnchors)
   }
 
   companion object {
@@ -165,15 +215,21 @@ class ViewAnnotationManagerAddTest(
         /* viewAnnotationOptionsActual */
         viewAnnotationOptions {
           geometry(Point.fromLngLat(0.0, 0.0))
-          offsetX(10)
+          annotationAnchor {
+            anchor(ViewAnnotationAnchor.CENTER)
+            offsetX(10.0)
+          }
         },
         /* viewAnnotationOptionsExpected */
         viewAnnotationOptions {
           geometry(Point.fromLngLat(0.0, 0.0))
-          offsetX(10)
+          annotationAnchor {
+            anchor(ViewAnnotationAnchor.CENTER)
+            offsetX(10.0)
+          }
           // width and height are calculated based on layout params
-          width(20)
-          height(30)
+          width(20.0)
+          height(30.0)
         },
         /* runtimeExceptionThrown */ false,
       ),
@@ -184,15 +240,21 @@ class ViewAnnotationManagerAddTest(
         /* viewAnnotationOptionsActual */
         viewAnnotationOptions {
           geometry(Point.fromLngLat(0.0, 0.0))
-          offsetX(10)
-          width(40)
+          annotationAnchor {
+            anchor(ViewAnnotationAnchor.CENTER)
+            offsetX(10.0)
+          }
+          width(40.0)
         },
         /* viewAnnotationOptionsExpected */
         viewAnnotationOptions {
           geometry(Point.fromLngLat(0.0, 0.0))
-          offsetX(10)
-          width(40)
-          height(30)
+          annotationAnchor {
+            anchor(ViewAnnotationAnchor.CENTER)
+            offsetX(10.0)
+          }
+          width(40.0)
+          height(30.0)
         },
         /* runtimeExceptionThrown */ false,
       ),
@@ -203,15 +265,21 @@ class ViewAnnotationManagerAddTest(
         /* viewAnnotationOptionsActual */
         viewAnnotationOptions {
           geometry(Point.fromLngLat(0.0, 0.0))
-          offsetX(10)
-          height(40)
+          annotationAnchor {
+            anchor(ViewAnnotationAnchor.CENTER)
+            offsetX(10.0)
+          }
+          height(40.0)
         },
         /* viewAnnotationOptionsExpected */
         viewAnnotationOptions {
           geometry(Point.fromLngLat(0.0, 0.0))
-          offsetX(10)
-          width(20)
-          height(40)
+          annotationAnchor {
+            anchor(ViewAnnotationAnchor.CENTER)
+            offsetX(10.0)
+          }
+          width(20.0)
+          height(40.0)
         },
         /* runtimeExceptionThrown */ false,
       ),
@@ -222,16 +290,22 @@ class ViewAnnotationManagerAddTest(
         /* viewAnnotationOptionsActual */
         viewAnnotationOptions {
           geometry(Point.fromLngLat(0.0, 0.0))
-          offsetX(10)
-          width(50)
-          height(40)
+          annotationAnchor {
+            anchor(ViewAnnotationAnchor.CENTER)
+            offsetX(10.0)
+          }
+          width(50.0)
+          height(40.0)
         },
         /* viewAnnotationOptionsExpected */
         viewAnnotationOptions {
           geometry(Point.fromLngLat(0.0, 0.0))
-          offsetX(10)
-          width(50)
-          height(40)
+          annotationAnchor {
+            anchor(ViewAnnotationAnchor.CENTER)
+            offsetX(10.0)
+          }
+          width(50.0)
+          height(40.0)
         },
         /* runtimeExceptionThrown */ false,
       ),
@@ -241,16 +315,24 @@ class ViewAnnotationManagerAddTest(
         /* layoutParamsHeightActual */ 30,
         /* viewAnnotationOptionsActual */
         viewAnnotationOptions {
-          offsetX(10)
-          width(50)
-          height(40)
+          annotationAnchor {
+            anchor(ViewAnnotationAnchor.CENTER)
+            offsetX(10.0)
+          }
+          width(50.0)
+          height(40.0)
         },
         /* viewAnnotationOptionsExpected */
         viewAnnotationOptions {
-          geometry(Point.fromLngLat(0.0, 0.0))
-          offsetX(10)
-          width(50)
-          height(40)
+          annotatedLayerFeature("layer") {
+            featureId("feature")
+          }
+          annotationAnchor {
+            anchor(ViewAnnotationAnchor.CENTER)
+            offsetX(10.0)
+          }
+          width(50.0)
+          height(40.0)
         },
         /* runtimeExceptionThrown */ true,
       ),

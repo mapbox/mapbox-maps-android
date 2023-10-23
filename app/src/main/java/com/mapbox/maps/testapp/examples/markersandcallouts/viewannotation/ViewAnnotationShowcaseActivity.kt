@@ -1,4 +1,4 @@
-package com.mapbox.maps.testapp.examples.markersandcallouts
+package com.mapbox.maps.testapp.examples.markersandcallouts.viewannotation
 
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
@@ -34,6 +34,8 @@ import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityViewAnnotationShowcaseBinding
 import com.mapbox.maps.viewannotation.ViewAnnotationManager
 import com.mapbox.maps.viewannotation.ViewAnnotationUpdateMode
+import com.mapbox.maps.viewannotation.annotatedLayerFeature
+import com.mapbox.maps.viewannotation.annotationAnchor
 import com.mapbox.maps.viewannotation.viewAnnotationOptions
 import java.util.concurrent.CopyOnWriteArrayList
 
@@ -43,7 +45,10 @@ import java.util.concurrent.CopyOnWriteArrayList
  * Specifically view annotations will be associated with marker icons
  * showcasing how to implement functionality similar to MarkerView from Maps v9.
  */
-class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, OnMapLongClickListener {
+class ViewAnnotationShowcaseActivity :
+  AppCompatActivity(),
+  OnMapClickListener,
+  OnMapLongClickListener {
 
   private lateinit var mapboxMap: MapboxMap
   private lateinit var viewAnnotationManager: ViewAnnotationManager
@@ -94,13 +99,16 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
         viewAnnotationManager.setViewAnnotationUpdateMode(ViewAnnotationUpdateMode.MAP_FIXED_DELAY)
         true
       }
+
       R.id.action_view_annotation_map_synchronized -> {
         viewAnnotationManager.setViewAnnotationUpdateMode(ViewAnnotationUpdateMode.MAP_SYNCHRONIZED)
         true
       }
+
       else -> super.onOptionsItemSelected(item)
     }
   }
+
   private fun prepareStyle(styleUri: String, bitmap: Bitmap) = style(styleUri) {
     +image(BLUE_ICON_ID, bitmap)
     +geoJsonSource(SOURCE_ID) {
@@ -127,11 +135,17 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
 
   override fun onMapClick(point: Point): Boolean {
     mapboxMap.queryRenderedFeatures(
-      RenderedQueryGeometry(mapboxMap.pixelForCoordinate(point)), RenderedQueryOptions(listOf(LAYER_ID), null)
+      RenderedQueryGeometry(mapboxMap.pixelForCoordinate(point)),
+      RenderedQueryOptions(listOf(LAYER_ID), null)
     ) {
       onFeatureClicked(it) { feature ->
-        if (feature.id() != null) {
-          viewAnnotationManager.getViewAnnotationByFeatureId(feature.id()!!)?.toggleViewVisibility()
+        feature.id()?.let { featureId ->
+          viewAnnotationManager.getViewAnnotation(
+            AnnotatedLayerFeature.Builder()
+              .layerId(LAYER_ID)
+              .featureId(featureId)
+              .build()
+          )?.toggleViewVisibility()
         }
       }
     }
@@ -154,7 +168,7 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
   }
 
   private fun addMarkerAndReturnId(point: Point): String {
-    val currentId = "${MARKER_ID_PREFIX}${(markerId++)}"
+    val currentId = "$MARKER_ID_PREFIX${(markerId++)}"
     pointList.add(Feature.fromGeometry(point, null, currentId))
     val featureCollection = FeatureCollection.fromFeatures(pointList)
     mapboxMap.getStyle { style ->
@@ -164,13 +178,16 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
   }
 
   @SuppressLint("SetTextI18n")
-  private fun addViewAnnotation(point: Point, markerId: String) {
+  private fun addViewAnnotation(point: Point, featureId: String) {
     viewAnnotationManager.addViewAnnotation(
       resId = R.layout.item_callout_view,
       options = viewAnnotationOptions {
-        geometry(point)
-        associatedFeatureId(markerId)
-        anchor(ViewAnnotationAnchor.BOTTOM)
+        annotatedLayerFeature(LAYER_ID) {
+          featureId(featureId)
+        }
+        annotationAnchor {
+          anchor(ViewAnnotationAnchor.BOTTOM)
+        }
         allowOverlap(false)
       },
       asyncInflater = asyncInflater
@@ -180,7 +197,10 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
       viewAnnotationManager.updateViewAnnotation(
         viewAnnotation,
         viewAnnotationOptions {
-          offsetY(markerHeight)
+          annotationAnchor {
+            anchor(ViewAnnotationAnchor.BOTTOM)
+            offsetY(markerHeight.toDouble())
+          }
         }
       )
       viewAnnotation.findViewById<TextView>(R.id.textNativeView).text =
@@ -191,7 +211,8 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
       viewAnnotation.findViewById<Button>(R.id.selectButton).setOnClickListener { b ->
         val button = b as Button
         val isSelected = button.text.toString().equals("SELECT", true)
-        val pxDelta = (if (isSelected) SELECTED_ADD_COEF_DP.dpToPx() else -SELECTED_ADD_COEF_DP.dpToPx()).toInt()
+        val pxDelta =
+          (if (isSelected) SELECTED_ADD_COEF_DP.dpToPx() else -SELECTED_ADD_COEF_DP.dpToPx()).toInt()
         button.text = if (isSelected) "DESELECT" else "SELECT"
         viewAnnotationManager.updateViewAnnotation(
           viewAnnotation,
@@ -223,6 +244,7 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
     const val TERRAIN_URL_TILE_RESOURCE = "mapbox://mapbox.mapbox-terrain-dem-v1"
     const val MARKER_ID_PREFIX = "view_annotation_"
     const val SELECTED_ADD_COEF_DP: Float = 8f
-    const val STARTUP_TEXT = "Long click on a map to add a marker and click on a marker to pop-up annotation."
+    const val STARTUP_TEXT =
+      "Long click on a map to add a marker and click on a marker to pop-up annotation."
   }
 }

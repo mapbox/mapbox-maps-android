@@ -94,6 +94,7 @@
     <string name="activity_view_annotations_basic">View annotations: basic example</string>
     <string name="activity_view_annotations_point_annotation">View annotation with point annotation</string>
     <string name="activity_view_annotations_animation">View annotations: animation</string>
+    <string name="activity_dynamic_view_annotations">Dynamic view annotations</string>
     <string name="activity_info_window">View annotation as InfoWindow</string>
     <string name="activity_viewport">Viewport camera</string>
     <string name="activity_advanced_viewport">Advanced Viewport with gestures</string>
