@@ -35,6 +35,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix crash when setting `mapbox:mapbox_locationComponentLocationPuck = "location_puck_2_d"` in map view XML without specifying all images.
 * Fix changing location bearing from `HEADING` to `COURSE` not working.
 * Avoid listening for heading/course when location component puck bearing is disabled.
+* Fix the crash clicking on attribution when not using the `AppCompat` theme.
 
 
 # 11.0.0-beta.5 October 09, 2023

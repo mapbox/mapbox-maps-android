@@ -14,6 +14,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.content.ContextCompat
 import com.mapbox.maps.module.MapTelemetry
 import com.mapbox.maps.plugin.delegates.MapAttributionDelegate
@@ -61,7 +62,11 @@ class AttributionDialogManagerImpl(
    * @param attributions an array of attribution titles
    */
   private fun showAttributionDialog(attributions: List<Attribution>) {
-    val builder = AlertDialog.Builder(context)
+    val builder = AlertDialog.Builder(
+      // needed to avoid incompatibility between e.g. Material themes coming from the user
+      // and Appcompat theme used by our AlertDialog
+      ContextThemeWrapper(context, R.style.Theme_AppCompat_Dialog)
+    )
     builder.setTitle(R.string.mapbox_attributionsDialogTitle)
     val adapter: ArrayAdapter<Attribution> = object : ArrayAdapter<Attribution>(
       context,
