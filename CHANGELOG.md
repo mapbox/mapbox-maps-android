@@ -2,7 +2,8 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# 11.0.0-beta.6
+
+# 11.0.0-beta.6 October 24, 2023
 ## Breaking changes ⚠️
 * Extension function `Style.getProjection()` return type changed from `Projection` to `Projection?`.
 * Extension function `LocationComponentPlugin.createDefault2DPuck` in `LocationComponentUtils.kt` is now stand-alone `createDefault2DPuck`.
@@ -59,6 +60,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v11.0.0-beta.7 and common to v24.0.0-beta.7.
+
 
 
 # 11.0.0-beta.5 October 09, 2023
