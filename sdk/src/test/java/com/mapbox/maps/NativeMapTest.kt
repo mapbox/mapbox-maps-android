@@ -497,6 +497,18 @@ class NativeMapTest {
   }
 
   @Test
+  fun cameraForCoordinatesWithOffset() {
+    val points = mockk<MutableList<Point>>()
+    val camera = mockk<CameraOptions>()
+    val edgeInsets = mockk<EdgeInsets>()
+    val offset = mockk<ScreenCoordinate>()
+    val nativeMap = NativeMapImpl(map)
+
+    nativeMap.cameraForCoordinates(points, camera, edgeInsets, 1.0, offset)
+    verify { map.cameraForCoordinates(points, camera, edgeInsets, 1.0, offset) }
+  }
+
+  @Test
   fun cameraForGeometry() {
     val geometry = mockk<Geometry>()
     val edgeInsets = mockk<EdgeInsets>()

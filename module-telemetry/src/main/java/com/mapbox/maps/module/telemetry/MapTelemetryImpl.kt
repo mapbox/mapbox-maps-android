@@ -3,7 +3,7 @@ package com.mapbox.maps.module.telemetry
 import android.content.Context
 import android.os.Bundle
 import androidx.annotation.VisibleForTesting
-import androidx.annotation.VisibleForTesting.PRIVATE
+import androidx.annotation.VisibleForTesting.Companion.PRIVATE
 import com.google.gson.Gson
 import com.mapbox.annotation.module.MapboxModule
 import com.mapbox.annotation.module.MapboxModuleType

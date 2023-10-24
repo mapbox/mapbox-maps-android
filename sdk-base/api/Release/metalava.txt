@@ -1590,6 +1590,7 @@ package com.mapbox.maps.plugin.delegates {
     method public com.mapbox.maps.CameraOptions cameraForCoordinateBounds(com.mapbox.maps.CoordinateBounds bounds, com.mapbox.maps.EdgeInsets? boundsPadding = null, Double? bearing = null, Double? pitch = null, Double? maxZoom = null, com.mapbox.maps.ScreenCoordinate? offset = null);
     method public com.mapbox.maps.CameraOptions cameraForCoordinates(java.util.List<com.mapbox.geojson.Point> coordinates, com.mapbox.maps.EdgeInsets? coordinatesPadding = null, Double? bearing = null, Double? pitch = null);
     method public com.mapbox.maps.CameraOptions cameraForCoordinates(java.util.List<com.mapbox.geojson.Point> coordinates, com.mapbox.maps.CameraOptions camera, com.mapbox.maps.ScreenBox box);
+    method public com.mapbox.maps.CameraOptions cameraForCoordinates(java.util.List<com.mapbox.geojson.Point> coordinates, com.mapbox.maps.CameraOptions camera, com.mapbox.maps.EdgeInsets? coordinatesPadding, Double? maxZoom, com.mapbox.maps.ScreenCoordinate? offset);
     method public com.mapbox.maps.CameraOptions cameraForDrag(com.mapbox.maps.ScreenCoordinate fromPoint, com.mapbox.maps.ScreenCoordinate toPoint);
     method public com.mapbox.maps.CameraOptions cameraForGeometry(com.mapbox.geojson.Geometry geometry, com.mapbox.maps.EdgeInsets? geometryPadding = null, Double? bearing = null, Double? pitch = null);
     method public com.mapbox.maps.CoordinateBounds coordinateBoundsForCamera(com.mapbox.maps.CameraOptions camera);

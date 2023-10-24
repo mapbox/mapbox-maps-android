@@ -2,9 +2,11 @@ package com.mapbox.maps
 
 import android.graphics.RectF
 import android.os.Looper
+import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
+import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
@@ -703,6 +705,18 @@ class MapboxMapTest {
     val points = mockk<List<Point>>()
     mapboxMap.cameraForCoordinates(points, pitch = 2.0)
     verify { nativeMap.cameraForCoordinates(points, null, null, 2.0) }
+  }
+
+  @Test
+  fun cameraForCoordinatesWithOffset() {
+    val points = mockk<List<Point>>()
+    val camera = mockk<CameraOptions>()
+    val offset = mockk<ScreenCoordinate>()
+    every { nativeMap.cameraForCoordinates(any(), any(), any(), any(), any()) } returns
+      ExpectedFactory.createValue(mockk())
+
+    mapboxMap.cameraForCoordinates(points, camera, ZERO_EDGE_INSETS, 1.0, offset)
+    verify { nativeMap.cameraForCoordinates(points, camera, ZERO_EDGE_INSETS, 1.0, offset) }
   }
 
   @Test

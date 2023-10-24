@@ -2,13 +2,13 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# main
+# 11.0.0-beta.6
 ## Breaking changes ⚠️
 * Extension function `Style.getProjection()` return type changed from `Projection` to `Projection?`.
 * Extension function `LocationComponentPlugin.createDefault2DPuck` in `LocationComponentUtils.kt` is now stand-alone `createDefault2DPuck`.
 * Extension function `LocationComponentPlugin.createDefault2DPuck` in `LocationComponentUtils` is now stand-alone `createDefault2DPuck`.
 * `createDefault2DPuck` does not require a `context` parameter.
-* Increase minimum location puck bearing threshold needed to trigger an animation to 1 degree (previously 0.01 degrees).
+* Increase minimum location puck bearing threshold needed to trigger an animation to 1 degree (previously 0.01 degrees) to reduce the CPU usage.
 * Location component puck bearing enabled property (`MapView.location.puckBearingEanbled`) has been changed to `false` by default.
 * `ViewAnnotationManager.getViewAnnotationByFeatureId` is renamed to `ViewAnnotationManager.getViewAnnotation`,
 * `ViewAnnotationManager.getViewAnnotationByFeatureId` is renamed to `ViewAnnotationManager.getViewAnnotation`.
@@ -18,8 +18,11 @@ Mapbox welcomes participation and contributions from everyone.
 * `ViewAnnotationOptions` accepts list of anchors `variableAnchors` instead of `anchor`/`offsetX`/`offsetY`.
 * `ViewAnnotationOptions` fields `width`/`height` are now of type Double instead of Int.
 * `OnViewAnnotationUpdatedListener.onViewAnnotationPositionUpdated` arguments `width`/`height` are now of type Double instead of Int.
+* Add `getName` method to `DeviceLocationProvider` interface.
+* Add boolean parameter `allowUserDefined` to `getDeviceLocationProvider` method in `LocationService` interface.
 
 ## Features ✨ and improvements 🏁
+* Add dynamic view annotations that can be attached to complex feature geometries and reposition itself based on the current camera viewport. To create dynamic view annotation use `AnnotatedFeature` of type `ANNOTATED_LAYER_FEATURE`. Multiple dynamic view annotations can be attached to the same feature.
 * The following APIs have been promoted to stable:
   - `LineLayer.lineDepthOcclusionFactor`, `LineLayer.lineDepthOcclusionFactorTransition`, `LineLayer.lineEmissiveStrength` and `LineLayer.lineEmissiveStrengthTransition`
   - `SymbolLayer.iconImageCrossFade`, `SymbolLayer.iconImageCrossFadeTransition`, `SymbolLayer.iconEmissiveStrength`, `SymbolLayer.iconEmissiveStrengthTransition`, `SymbolLayer.textEmissiveStrength` and `SymbolLayer.textEmissiveStrengthTransition`
@@ -36,9 +39,13 @@ Mapbox welcomes participation and contributions from everyone.
 * (Kotlin only) Deprecated `MapSurface.getMapboxMap()` function. Please use property `MapSurface.mapboxMap`.
 * Handle zero duration map camera animators more efficiently resulting in performance improvements for gestures / viewport / locationcomponent.
 * `DefaultLocationProvider.updatePuckBearing` now accepts null to stop listening for heading/course.
-* Add dynamic view annotations that can be attached to complex feature geometries and reposition itself based on the current camera viewport. 
-To create dynamic view annotation use `AnnotatedFeature` of type `ANNOTATED_LAYER_FEATURE`.
-Multiple dynamic view annotations can be attached to the same feature.
+* `DefaultLocationProvider.updatePuckBearing` now accepts null to stop listening for heading/course.
+* Add `keep-legacy-style-pack` style pack load extra option that prevents the style package removal from the legacy storage.
+* Enable rendering of fill extrusion flood lights on the ground with fully transparent fill extrusions.
+* Add `cameraForCoordinates` overload so that the padding for map and geometry can be specified separately.
+* Disable terrain when zoom-dependent exaggeration expression evaluates to zero.
+* Add support for `glb` 3D tiles.
+* Align hillshade illumination direction with 3D lights.
 
 ## Bug fixes 🐞
 * Fix widgets not showing on some zoom levels.
@@ -47,6 +54,11 @@ Multiple dynamic view annotations can be attached to the same feature.
 * Fix changing location bearing from `HEADING` to `COURSE` not working.
 * Avoid listening for heading/course when location component puck bearing is disabled.
 * Fix the crash clicking on attribution when not using the `AppCompat` theme.
+* Do not overwrite style URL when setting invalid style JSON.
+* Do not store SDK version in TileStore.
+
+## Dependencies
+* Update gl-native to v11.0.0-beta.7 and common to v24.0.0-beta.7.
 
 
 # 11.0.0-beta.5 October 09, 2023

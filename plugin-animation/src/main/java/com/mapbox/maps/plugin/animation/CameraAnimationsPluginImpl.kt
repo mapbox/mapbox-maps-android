@@ -6,7 +6,7 @@ import android.animation.AnimatorSet
 import android.animation.ValueAnimator
 import androidx.annotation.RestrictTo
 import androidx.annotation.VisibleForTesting
-import androidx.annotation.VisibleForTesting.PRIVATE
+import androidx.annotation.VisibleForTesting.Companion.PRIVATE
 import com.mapbox.common.Cancelable
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*

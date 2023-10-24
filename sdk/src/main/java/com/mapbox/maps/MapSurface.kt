@@ -6,7 +6,7 @@ import android.view.MotionEvent
 import android.view.Surface
 import android.view.WindowManager
 import androidx.annotation.VisibleForTesting
-import androidx.annotation.VisibleForTesting.PRIVATE
+import androidx.annotation.VisibleForTesting.Companion.PRIVATE
 import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 import com.mapbox.maps.renderer.*

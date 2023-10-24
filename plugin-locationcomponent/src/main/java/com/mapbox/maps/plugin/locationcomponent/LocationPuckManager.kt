@@ -4,7 +4,7 @@ import android.animation.ValueAnimator
 import android.content.Context
 import androidx.annotation.RestrictTo
 import androidx.annotation.VisibleForTesting
-import androidx.annotation.VisibleForTesting.PRIVATE
+import androidx.annotation.VisibleForTesting.Companion.PRIVATE
 import androidx.core.animation.doOnEnd
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.Value

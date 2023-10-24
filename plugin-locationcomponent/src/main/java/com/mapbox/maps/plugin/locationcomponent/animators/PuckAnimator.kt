@@ -7,7 +7,7 @@ import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.view.animation.LinearInterpolator
 import androidx.annotation.VisibleForTesting
-import androidx.annotation.VisibleForTesting.PRIVATE
+import androidx.annotation.VisibleForTesting.Companion.PRIVATE
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants
 import com.mapbox.maps.plugin.locationcomponent.LocationLayerRenderer

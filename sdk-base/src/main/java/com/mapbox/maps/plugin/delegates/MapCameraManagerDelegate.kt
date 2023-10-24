@@ -44,16 +44,15 @@ interface MapCameraManagerDelegate {
   ): CameraOptions
 
   /**
-   * Convenience method that returns the camera options object for given arguments
+   * Convenience method that returns the [CameraOptions] object for given parameters.
+   * This method takes into account the current map padding in addition to the padding provided in parameters.
    *
-   * This API isn't supported by Globe projection.
+   * @param coordinates The `coordinates` representing the bounds of the camera.
+   * @param coordinatesPadding The amount of padding in pixels to add to the given `coordinates`.
+   * @param bearing The bearing of the camera.
+   * @param pitch The pitch of the camera.
    *
-   * @param coordinates The coordinates representing the bounds of the map
-   * @param coordinatesPadding The edge padding of the map
-   * @param bearing The bearing of the map
-   * @param pitch The pitch of the map
-   *
-   * @return Returns the camera options object representing the provided params
+   * @return The [CameraOptions] object representing the provided parameters. Padding is absent in the returned [CameraOptions] as the zoom level already accounts for the padding.
    */
   fun cameraForCoordinates(
     coordinates: List<Point>,
@@ -63,26 +62,49 @@ interface MapCameraManagerDelegate {
   ): CameraOptions
 
   /**
-   * Convenience method that adjusts the provided camera options object for given arguments
+   * Convenience method that adjusts the provided [CameraOptions] object for given parameters.
    *
-   * Returns the provided \p camera with zoom adjusted to fit \p coordinates into \p box, so that coordinates on the left,
-   * top and right of the effective camera center at the principal point of the projection (defined by padding) fit into \p box.
-   * Returns the provided camera options object unchanged upon error.
-   * Note that this method may fail if the principal point of the projection is not inside \p box or
-   * if there is no sufficient screen space, defined by principal point and box, to fit the geometry.
+   * Returns the provided `camera` options with zoom adjusted to fit `coordinates` into the `box`, so that `coordinates` on the left,
+   * top, right, and bottom of the effective `camera` center at the principal point of the projection (defined by `padding`) fit into the `box`.
+   * Returns the provided `camera` options object unchanged upon an error.
+   *
+   * The method fails if the principal point is positioned outside of the `box`
+   * or if there is no sufficient screen space, defined by principal point and the `box`, to fit the geometry.
+   * Additionally, in cases when the principal point is positioned exactly on one of the edges of the `box`,
+   * any geometry point that spans further than that edge on the same axis cannot possibly be framed and is ignored for zoom level calculation purposes.
    *
    * This API isn't supported by Globe projection.
    *
-   * @param coordinates The coordinates representing the bounds of the map
-   * @param box The box into which \p coordinates should fit
-   * @param camera The camera for which zoom should be adjusted. Note that \p camera.center is required.
+   * @param coordinates The `coordinates` representing the bounds of the camera.
+   * @param camera The [CameraOptions] for which zoom should be adjusted. Note that the `camera.center`, and `camera.zoom` (as fallback) is required.
+   * @param box The `screen box` into which `coordinates` should fit.
    *
-   * @return Returns the camera options object with the zoom level adjusted to fit \p coordinates into \p box.
+   * @return The [CameraOptions] object with the zoom level adjusted to fit `coordinates` into the `box`.
    */
   fun cameraForCoordinates(
     coordinates: List<Point>,
     camera: CameraOptions,
     box: ScreenBox
+  ): CameraOptions
+
+  /**
+   * Convenience method that returns the [CameraOptions] object for given parameters.
+   *
+   * @param coordinates The `coordinates` representing the bounds of the camera.
+   * @param camera The [CameraOptions] which will be applied before calculating the camera for the coordinates. If any of the fields in [CameraOptions] are not provided then the current value from the map for that field will be used.
+   * @param coordinatesPadding The amount of padding in pixels to add to the given `coordinates`.
+   *                           Note: This padding is not applied to the map but to the coordinates provided. If you want to apply padding to the map use param `camera`.
+   * @param maxZoom The maximum zoom level allowed in the returned camera options.
+   * @param offset The center of the given bounds relative to map center in pixels.
+   *
+   * @return The [CameraOptions] object representing the provided parameters. Padding is absent in the returned [CameraOptions] as the zoom level already accounts for the padding.
+   */
+  fun cameraForCoordinates(
+    coordinates: List<Point>,
+    camera: CameraOptions,
+    coordinatesPadding: EdgeInsets?,
+    maxZoom: Double?,
+    offset: ScreenCoordinate?
   ): CameraOptions
 
   /**

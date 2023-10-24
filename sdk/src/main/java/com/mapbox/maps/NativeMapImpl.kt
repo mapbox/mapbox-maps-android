@@ -115,6 +115,16 @@ internal class NativeMapImpl(val map: Map) {
     return map.cameraForCoordinates(points, camera, box)
   }
 
+  fun cameraForCoordinates(
+    points: List<Point>,
+    camera: CameraOptions,
+    padding: EdgeInsets?,
+    maxZoom: Double?,
+    offset: ScreenCoordinate?
+  ): Expected<String, CameraOptions> {
+    return map.cameraForCoordinates(points, camera, padding, maxZoom, offset)
+  }
+
   fun cameraForGeometry(
     geometry: Geometry,
     padding: EdgeInsets?,

@@ -171,6 +171,7 @@ package com.mapbox.maps {
     method public com.mapbox.maps.CameraOptions cameraForCoordinateBounds(com.mapbox.maps.CoordinateBounds bounds, com.mapbox.maps.EdgeInsets? boundsPadding, Double? bearing, Double? pitch, Double? maxZoom, com.mapbox.maps.ScreenCoordinate? offset);
     method public com.mapbox.maps.CameraOptions cameraForCoordinates(java.util.List<com.mapbox.geojson.Point> coordinates, com.mapbox.maps.EdgeInsets? coordinatesPadding, Double? bearing, Double? pitch);
     method public com.mapbox.maps.CameraOptions cameraForCoordinates(java.util.List<com.mapbox.geojson.Point> coordinates, com.mapbox.maps.CameraOptions camera, com.mapbox.maps.ScreenBox box);
+    method public com.mapbox.maps.CameraOptions cameraForCoordinates(java.util.List<com.mapbox.geojson.Point> coordinates, com.mapbox.maps.CameraOptions camera, com.mapbox.maps.EdgeInsets? coordinatesPadding, Double? maxZoom, com.mapbox.maps.ScreenCoordinate? offset);
     method public com.mapbox.maps.CameraOptions cameraForDrag(com.mapbox.maps.ScreenCoordinate fromPoint, com.mapbox.maps.ScreenCoordinate toPoint);
     method public com.mapbox.maps.CameraOptions cameraForGeometry(com.mapbox.geojson.Geometry geometry, com.mapbox.maps.EdgeInsets? geometryPadding, Double? bearing, Double? pitch);
     method public static void clearData(com.mapbox.maps.AsyncOperationResultCallback callback);

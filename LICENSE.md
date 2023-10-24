@@ -146,7 +146,7 @@ License: [The Apache Software License, Version 2.0](http://www.apache.org/licens
 
 Mapbox Maps Android uses portions of the Android Support Library Annotations.
 
-URL: [https://developer.android.com/jetpack/androidx/releases/annotation#1.3.0](https://developer.android.com/jetpack/androidx/releases/annotation#1.3.0)
+URL: [https://developer.android.com/jetpack/androidx/releases/annotation#1.2.0](https://developer.android.com/jetpack/androidx/releases/annotation#1.2.0)
 
 License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -243,6 +243,14 @@ License: [The Apache Software License, Version 2.0](http://www.apache.org/licens
 Mapbox Maps Android uses portions of the AndroidX Futures.
 
 URL: [https://developer.android.com/topic/libraries/architecture/index.html](https://developer.android.com/topic/libraries/architecture/index.html)
+
+License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+===========================================================================
+
+Mapbox Maps Android uses portions of the Annotation.
+
+URL: [https://developer.android.com/jetpack/androidx/releases/annotation#1.7.0](https://developer.android.com/jetpack/androidx/releases/annotation#1.7.0)
 
 License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -436,7 +444,7 @@ License: [The Apache Software License, Version 2.0](http://www.apache.org/licens
 
 ===========================================================================
 
-### MapboxCoreMaps,11.0.0-beta.6,Mapbox ToS,Mapbox,https://www.mapbox.com/
+### MapboxCoreMaps,11.0.0-beta.7,Mapbox ToS,Mapbox,https://www.mapbox.com/
 
 ```
 Mapbox Core Maps version 10.0

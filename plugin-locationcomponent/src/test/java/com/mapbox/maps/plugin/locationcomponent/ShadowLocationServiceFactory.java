@@ -26,6 +26,12 @@ public class ShadowLocationServiceFactory {
     @Implementation
     public static LocationService locationService() {
         return new LocationService() {
+            @NonNull
+            @Override
+            public Expected<LocationError, DeviceLocationProvider> getDeviceLocationProvider(@NonNull DeviceLocationProviderType deviceLocationProviderType, @Nullable LocationProviderRequest locationProviderRequest, boolean b) {
+                return ExpectedFactory.createValue(deviceLocationProvider);
+            }
+
             @Override
             public void setUserDefinedDeviceLocationProviderFactory(@Nullable DeviceLocationProviderFactory deviceLocationProviderFactory) {
 
@@ -34,12 +40,6 @@ public class ShadowLocationServiceFactory {
             @NonNull
             @Override
             public Expected<LocationError, DeviceLocationProvider> getDeviceLocationProvider(@Nullable LocationProviderRequest locationProviderRequest) {
-                return ExpectedFactory.createValue(deviceLocationProvider);
-            }
-
-            @NonNull
-            @Override
-            public Expected<LocationError, DeviceLocationProvider> getDeviceLocationProvider(@NonNull DeviceLocationProviderType deviceLocationProviderType, @Nullable LocationProviderRequest locationProviderRequest) {
                 return ExpectedFactory.createValue(deviceLocationProvider);
             }
 

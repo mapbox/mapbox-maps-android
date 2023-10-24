@@ -3,7 +3,7 @@ package com.mapbox.maps.plugin.locationcomponent
 import android.annotation.SuppressLint
 import android.content.Context
 import androidx.annotation.VisibleForTesting
-import androidx.annotation.VisibleForTesting.PRIVATE
+import androidx.annotation.VisibleForTesting.Companion.PRIVATE
 import com.mapbox.android.core.permissions.PermissionsManager
 import com.mapbox.bindgen.Expected
 import com.mapbox.common.Cancelable
