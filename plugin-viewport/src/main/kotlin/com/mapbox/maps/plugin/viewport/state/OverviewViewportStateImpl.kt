@@ -6,8 +6,17 @@ import androidx.annotation.RestrictTo
 import androidx.annotation.VisibleForTesting
 import androidx.core.animation.doOnEnd
 import com.mapbox.common.Cancelable
+import com.mapbox.geojson.Geometry
+import com.mapbox.geojson.GeometryCollection
+import com.mapbox.geojson.LineString
+import com.mapbox.geojson.MultiLineString
+import com.mapbox.geojson.MultiPoint
+import com.mapbox.geojson.MultiPolygon
+import com.mapbox.geojson.Point
+import com.mapbox.geojson.Polygon
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.plugin.animation.camera
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions
@@ -57,12 +66,20 @@ internal class OverviewViewportStateImpl(
   }
 
   private fun evaluateViewportData(): CameraOptions {
-    return cameraDelegate.cameraForGeometry(
-      options.geometry,
-      options.padding,
-      options.bearing,
-      options.pitch
-    )
+    return cameraDelegate.cameraForCoordinates(
+      coordinates = options.geometry.extractCoordinates(),
+      camera = cameraOptions {
+        padding(options.padding)
+        bearing(options.bearing)
+        pitch(options.pitch)
+      },
+      coordinatesPadding = options.geometryPadding,
+      maxZoom = options.maxZoom,
+      offset = options.offset
+    ).toBuilder()
+      // cameraForCoordinates does not return padding but we need it to avoid maps placing elements under those paddings (e.g. view annotations)
+      .padding(options.padding)
+      .build()
   }
 
   /**
@@ -143,5 +160,21 @@ internal class OverviewViewportStateImpl(
         .apply { doOnEnd { finishAnimation(this) } },
       instant
     )
+  }
+
+  /**
+   * Extract the flattened coordinates from the [Geometry].
+   */
+  private fun Geometry.extractCoordinates(): List<Point> {
+    return when (this) {
+      is Point -> listOf(this)
+      is LineString -> this.coordinates()
+      is Polygon -> this.coordinates().flatten()
+      is MultiPoint -> this.coordinates()
+      is MultiLineString -> this.coordinates().flatten()
+      is MultiPolygon -> this.coordinates().flatten().flatten()
+      is GeometryCollection -> this.geometries().flatMap { extractCoordinates() }
+      else -> emptyList()
+    }
   }
 }

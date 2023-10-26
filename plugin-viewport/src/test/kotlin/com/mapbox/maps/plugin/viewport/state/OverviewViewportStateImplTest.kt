@@ -6,6 +6,7 @@ import android.animation.ValueAnimator
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.EdgeInsets
+import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.animation.camera
 import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
@@ -39,6 +40,7 @@ class OverviewViewportStateImplTest {
   private val mapCameraDelegate = mockk<MapCameraManagerDelegate>()
   private val cameraPlugin = mockk<CameraAnimationsPlugin>()
   private val cameraOptions = mockk<CameraOptions>()
+  private val cameraOptionsBuilder = mockk<CameraOptions.Builder>()
   private val transitionFactory = mockk<MapboxViewportTransitionFactory>()
   private lateinit var overviewState: OverviewViewportStateImpl
 
@@ -48,7 +50,18 @@ class OverviewViewportStateImplTest {
     mockkStatic(CAMERA_ANIMATIONS_UTILS)
     every { mapPluginProviderDelegate.camera } returns cameraPlugin
     every { delegateProvider.mapCameraManagerDelegate } returns mapCameraDelegate
-    every { mapCameraDelegate.cameraForGeometry(any(), any(), any(), any()) } returns cameraOptions
+    every {
+      mapCameraDelegate.cameraForCoordinates(
+        any(),
+        any(),
+        any(),
+        any(),
+        any()
+      )
+    } returns cameraOptions
+    every { cameraOptions.toBuilder() } returns cameraOptionsBuilder
+    every { cameraOptionsBuilder.padding(any()) } returns cameraOptionsBuilder
+    every { cameraOptionsBuilder.build() } returns cameraOptions
     every { cameraPlugin.registerAnimators(any()) } just runs
     every { cameraPlugin.unregisterAnimators(any()) } just runs
     overviewState = OverviewViewportStateImpl(
@@ -75,12 +88,15 @@ class OverviewViewportStateImplTest {
 
     overviewState.observeDataSource(dataObserver)
     verify {
-      mapCameraDelegate.cameraForGeometry(
-        testGeometry,
-        EdgeInsets(0.0, 0.0, 0.0, 0.0),
-        0.0,
-        0.0
+      mapCameraDelegate.cameraForCoordinates(
+        coordinates = listOf(testGeometry),
+        camera = CameraOptions.Builder().padding(EdgeInsets(0.0, 0.0, 0.0, 0.0))
+          .bearing(0.0).pitch(0.0).build(),
+        coordinatesPadding = EdgeInsets(0.0, 0.0, 0.0, 0.0),
+        maxZoom = null,
+        offset = ScreenCoordinate(0.0, 0.0)
       )
+      cameraOptionsBuilder.padding(EdgeInsets(0.0, 0.0, 0.0, 0.0))
     }
     verify(exactly = 1) {
       dataObserver.onNewData(cameraOptions)
@@ -102,12 +118,15 @@ class OverviewViewportStateImplTest {
 
     overviewState.observeDataSource(dataObserver)
     verify {
-      mapCameraDelegate.cameraForGeometry(
-        testGeometry,
-        EdgeInsets(0.0, 0.0, 0.0, 0.0),
-        0.0,
-        0.0
+      mapCameraDelegate.cameraForCoordinates(
+        coordinates = listOf(testGeometry),
+        camera = CameraOptions.Builder().padding(EdgeInsets(0.0, 0.0, 0.0, 0.0))
+          .bearing(0.0).pitch(0.0).build(),
+        coordinatesPadding = EdgeInsets(0.0, 0.0, 0.0, 0.0),
+        maxZoom = null,
+        offset = ScreenCoordinate(0.0, 0.0)
       )
+      cameraOptionsBuilder.padding(EdgeInsets(0.0, 0.0, 0.0, 0.0))
     }
     verify(exactly = 1) {
       dataObserver.onNewData(cameraOptions)

@@ -2,6 +2,12 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
+# main
+## Features ✨ and improvements 🏁
+* Add `coordinatesPadding`, `maxZoom` and `offset` parameters to `OverviewViewportStateOptions` to allow more granular control of `OverviewViewportState`.
+
+## Bug fixes 🐞
+* Fixed an issue where the camera padding is not calculated properly for `OverviewViewportState`.
 
 # 11.0.0-beta.6 October 24, 2023
 ## Breaking changes ⚠️

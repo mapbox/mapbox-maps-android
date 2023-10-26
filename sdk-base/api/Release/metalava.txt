@@ -2792,13 +2792,19 @@ package com.mapbox.maps.plugin.viewport.data {
     method public long getAnimationDurationMs();
     method public Double? getBearing();
     method public com.mapbox.geojson.Geometry getGeometry();
-    method public com.mapbox.maps.EdgeInsets getPadding();
+    method public com.mapbox.maps.EdgeInsets getGeometryPadding();
+    method public Double? getMaxZoom();
+    method public com.mapbox.maps.ScreenCoordinate getOffset();
+    method public com.mapbox.maps.EdgeInsets? getPadding();
     method public Double? getPitch();
     method public com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions.Builder toBuilder();
     property public final long animationDurationMs;
     property public final Double? bearing;
     property public final com.mapbox.geojson.Geometry geometry;
-    property public final com.mapbox.maps.EdgeInsets padding;
+    property public final com.mapbox.maps.EdgeInsets geometryPadding;
+    property public final Double? maxZoom;
+    property public final com.mapbox.maps.ScreenCoordinate offset;
+    property public final com.mapbox.maps.EdgeInsets? padding;
     property public final Double? pitch;
   }
 
@@ -2808,7 +2814,10 @@ package com.mapbox.maps.plugin.viewport.data {
     method public com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions.Builder bearing(Double? bearing);
     method public com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions build();
     method public com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions.Builder geometry(com.mapbox.geojson.Geometry geometry);
-    method public com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions.Builder padding(com.mapbox.maps.EdgeInsets padding);
+    method public com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions.Builder geometryPadding(com.mapbox.maps.EdgeInsets geometryPadding);
+    method public com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions.Builder maxZoom(Double? maxZoom);
+    method public com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions.Builder offset(com.mapbox.maps.ScreenCoordinate offset);
+    method public com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions.Builder padding(com.mapbox.maps.EdgeInsets? padding);
     method public com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions.Builder pitch(Double? pitch);
   }
 
