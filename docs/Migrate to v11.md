@@ -609,8 +609,9 @@ Those changes should only affect you if you explicitly access the Mapbox network
 2. To add an interceptor, you should call `HttpServiceFactory.setHttpServiceInterceptor` instead of `HttpServiceFactory.getInstance().setInterceptor`.
 3. `DownloadOptions` now contains a new field called `memoryThreshold`. It specifies a threshold for returning data in memory instead of writing to the disk.
 4. `HttpResponseData.code` type changed from `long` to `int`.
-5. `HttpServiceInterceptorInterface` has a new function `onUpload` that must be implemented if you use the interceptor interface.
-6. The ability to overwrite for HTTP stack through modular setup has been removed, e.g. if you have used `@MapboxModule(type = MapboxModuleType.CommonHttpClient)` in your application, it will not overwrite the network stack in Mapbox Maps SDK v11 anymore.
+5. `HttpServiceInterceptorInterface.onDownload` method was removed.
+6. The signature for `HttpServiceInterceptorInterface.onRequest` and `HttpServiceInterceptorInterface.onReponse` was changed. The return value is passed through a continuation instead of the methods' return value.
+7. The ability to overwrite for HTTP stack through modular setup has been removed, e.g. if you have used `@MapboxModule(type = MapboxModuleType.CommonHttpClient)` in your application, it will not overwrite the network stack in Mapbox Maps SDK v11 anymore.
 
 #### 3.16 Java-specific changes
 
