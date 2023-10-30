@@ -22,6 +22,7 @@ import com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions
 import com.mapbox.maps.plugin.annotation.generated.createPointAnnotationManager
 import com.mapbox.maps.testapp.databinding.ActivityAnnotationBinding
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
+import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils.showShortToast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -36,12 +37,15 @@ class PointAnnotationClusterActivity : AppCompatActivity(), CoroutineScope {
   override val coroutineContext = job + Dispatchers.IO
   private var pointAnnotationManager: PointAnnotationManager? = null
   private var options: List<PointAnnotationOptions>? = null
-  private var index: Int = 0
+  private var styleIndex: Int = 0
+  private var slotIndex: Int = 0
 
   // STANDARD style doesn't support ICON_FIRE_STATION image
   private val styles = AnnotationUtils.STYLES.filterNot { it == Style.STANDARD }
   private val nextStyle: String
-    get() = styles[index++ % styles.size]
+    get() = styles[styleIndex++ % styles.size]
+  private val nextSlot: String
+    get() = AnnotationUtils.SLOTS[slotIndex++ % AnnotationUtils.SLOTS.size]
   private lateinit var binding: ActivityAnnotationBinding
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -96,6 +100,11 @@ class PointAnnotationClusterActivity : AppCompatActivity(), CoroutineScope {
     binding.deleteAll.setOnClickListener { pointAnnotationManager?.deleteAll() }
     binding.changeStyle.setOnClickListener {
       binding.mapView.mapboxMap.loadStyle(nextStyle)
+    }
+    binding.changeSlot.setOnClickListener {
+      val slot = nextSlot
+      showShortToast("Switching to $slot slot")
+      pointAnnotationManager?.slot = slot
     }
   }
 

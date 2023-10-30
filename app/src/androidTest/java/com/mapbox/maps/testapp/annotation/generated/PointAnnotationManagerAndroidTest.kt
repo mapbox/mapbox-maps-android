@@ -370,6 +370,18 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
   }
 
   @Test
+  fun testSlot() {
+    rule.runOnUiThread {
+      val expectedValue = "abc"
+      val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
+      pointAnnotationManager.slot = expectedValue
+      assertEquals(expectedValue, pointAnnotationManager.slot)
+      pointAnnotationManager.slot = null
+      assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "slot").silentUnwrap(), pointAnnotationManager.slot)
+    }
+  }
+
+  @Test
   fun create() {
     rule.runOnUiThread {
       val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()

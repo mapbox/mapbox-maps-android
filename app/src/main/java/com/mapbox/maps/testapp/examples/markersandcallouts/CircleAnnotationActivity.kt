@@ -12,6 +12,7 @@ import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.*
 import com.mapbox.maps.testapp.databinding.ActivityAnnotationBinding
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
+import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils.showShortToast
 import java.util.*
 
 /**
@@ -20,10 +21,15 @@ import java.util.*
 class CircleAnnotationActivity : AppCompatActivity() {
   private val random = Random()
   private var circleAnnotationManager: CircleAnnotationManager? = null
-  private var index: Int = 0
+  private var styleIndex: Int = 0
+  private var slotIndex: Int = 0
   private val nextStyle: String
     get() {
-      return AnnotationUtils.STYLES[index++ % AnnotationUtils.STYLES.size]
+      return AnnotationUtils.STYLES[styleIndex++ % AnnotationUtils.STYLES.size]
+    }
+  private val nextSlot: String
+    get() {
+      return AnnotationUtils.SLOTS[slotIndex++ % AnnotationUtils.SLOTS.size]
     }
   private lateinit var annotationPlugin: AnnotationPlugin
   private lateinit var binding: ActivityAnnotationBinding
@@ -114,6 +120,11 @@ class CircleAnnotationActivity : AppCompatActivity() {
     }
     binding.changeStyle.setOnClickListener {
       binding.mapView.mapboxMap.loadStyle(nextStyle)
+    }
+    binding.changeSlot.setOnClickListener {
+      val slot = nextSlot
+      showShortToast("Switching to $slot slot")
+      circleAnnotationManager?.slot = slot
     }
   }
 

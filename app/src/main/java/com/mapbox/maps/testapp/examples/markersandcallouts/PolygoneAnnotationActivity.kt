@@ -10,19 +10,31 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.plugin.annotation.AnnotationPlugin
 import com.mapbox.maps.plugin.annotation.annotations
-import com.mapbox.maps.plugin.annotation.generated.*
+import com.mapbox.maps.plugin.annotation.generated.OnPolygonAnnotationClickListener
+import com.mapbox.maps.plugin.annotation.generated.OnPolygonAnnotationInteractionListener
+import com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation
+import com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationManager
+import com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions
+import com.mapbox.maps.plugin.annotation.generated.createPolygonAnnotationManager
 import com.mapbox.maps.testapp.databinding.ActivityAnnotationBinding
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
+import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils.showShortToast
 
 /**
  * Example showing how to add Polygone annotations
  */
 class PolygoneAnnotationActivity : AppCompatActivity() {
   private var polygonAnnotationManager: PolygonAnnotationManager? = null
-  private var index: Int = 0
+  private var styleIndex: Int = 0
+  private var slotIndex: Int = 0
+
   private val nextStyle: String
     get() {
-      return AnnotationUtils.STYLES[index++ % AnnotationUtils.STYLES.size]
+      return AnnotationUtils.STYLES[styleIndex++ % AnnotationUtils.STYLES.size]
+    }
+  private val nextSlot: String
+    get() {
+      return AnnotationUtils.SLOTS[slotIndex++ % AnnotationUtils.SLOTS.size]
     }
   private lateinit var annotationPlugin: AnnotationPlugin
 
@@ -92,6 +104,11 @@ class PolygoneAnnotationActivity : AppCompatActivity() {
       }
     }
     binding.changeStyle.setOnClickListener { binding.mapView.mapboxMap.loadStyle(nextStyle) }
+    binding.changeSlot.setOnClickListener {
+      val slot = nextSlot
+      showShortToast("Switching to $slot slot")
+      polygonAnnotationManager?.slot = slot
+    }
   }
 
   private companion object {

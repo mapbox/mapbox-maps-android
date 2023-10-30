@@ -101,6 +101,18 @@ class CircleAnnotationManagerAndroidTest : BaseMapTest() {
   }
 
   @Test
+  fun testSlot() {
+    rule.runOnUiThread {
+      val expectedValue = "abc"
+      val circleAnnotationManager = mapView.annotations.createCircleAnnotationManager()
+      circleAnnotationManager.slot = expectedValue
+      assertEquals(expectedValue, circleAnnotationManager.slot)
+      circleAnnotationManager.slot = null
+      assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("circle", "slot").silentUnwrap(), circleAnnotationManager.slot)
+    }
+  }
+
+  @Test
   fun create() {
     rule.runOnUiThread {
       val circleAnnotationManager = mapView.annotations.createCircleAnnotationManager()

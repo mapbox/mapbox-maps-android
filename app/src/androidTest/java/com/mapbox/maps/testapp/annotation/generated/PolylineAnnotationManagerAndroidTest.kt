@@ -149,6 +149,18 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
   }
 
   @Test
+  fun testSlot() {
+    rule.runOnUiThread {
+      val expectedValue = "abc"
+      val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
+      polylineAnnotationManager.slot = expectedValue
+      assertEquals(expectedValue, polylineAnnotationManager.slot)
+      polylineAnnotationManager.slot = null
+      assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("line", "slot").silentUnwrap(), polylineAnnotationManager.slot)
+    }
+  }
+
+  @Test
   fun create() {
     rule.runOnUiThread {
       val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()

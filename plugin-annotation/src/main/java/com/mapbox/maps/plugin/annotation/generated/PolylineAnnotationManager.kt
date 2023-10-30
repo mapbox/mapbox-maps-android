@@ -411,6 +411,32 @@ class PolylineAnnotationManager(
     }
 
   /**
+   * The Slot property
+   *
+   * The slot this layer is assigned to. If specified, and a slot with that name exists, it will be placed at that position in the layer order.
+   */
+  var slot: String?
+    /**
+     * Get the Slot property
+     *
+     * @return property wrapper value around String
+     */
+    get(): String? {
+      return layer?.slot
+    }
+    /**
+     * Set the Slot property
+     * @param value property wrapper value around String
+     */
+    set(value) {
+      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("line", "slot").silentUnwrap()
+      newValue?.let {
+        layer?.slot(it)
+        dragLayer?.slot(it)
+      }
+    }
+
+  /**
    * Create the layer for managed annotations
    *
    * @return the layer created

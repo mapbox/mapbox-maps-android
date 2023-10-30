@@ -1,6 +1,7 @@
 package com.mapbox.maps.testapp.examples.annotation
 
 import android.content.Context
+import android.widget.Toast
 import com.mapbox.geojson.Point
 import com.mapbox.maps.Style
 import com.mapbox.maps.logE
@@ -18,6 +19,14 @@ object AnnotationUtils {
   private const val TAG = "AnnotationUtils"
   val STYLES =
     arrayOf(Style.STANDARD, Style.OUTDOORS, Style.LIGHT, Style.DARK, Style.SATELLITE_STREETS)
+  val SLOTS = arrayOf("top", "middle", "bottom")
+
+  /**
+   * Show short toast message.
+   */
+  internal fun Context.showShortToast(string: String) {
+    Toast.makeText(this, string, Toast.LENGTH_SHORT).show()
+  }
 
   /**
    * Utility for getting a list of random points.

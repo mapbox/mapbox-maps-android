@@ -29,6 +29,7 @@ import com.mapbox.maps.plugin.gestures.addOnMapClickListener
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityAnnotationBinding
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
+import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils.showShortToast
 import com.mapbox.maps.testapp.utils.BitmapUtils.bitmapFromDrawableRes
 import java.util.*
 
@@ -41,11 +42,16 @@ class PointAnnotationActivity : AppCompatActivity() {
   private var pointAnnotation: PointAnnotation? = null
   private var circleAnnotation: CircleAnnotation? = null
   private val animators: MutableList<ValueAnimator> = mutableListOf()
-  private var index: Int = 0
+  private var styleIndex: Int = 0
+  private var slotIndex: Int = 0
   private var consumeClickEvent = false
   private val nextStyle: String
     get() {
-      return AnnotationUtils.STYLES[index++ % AnnotationUtils.STYLES.size]
+      return AnnotationUtils.STYLES[styleIndex++ % AnnotationUtils.STYLES.size]
+    }
+  private val nextSlot: String
+    get() {
+      return AnnotationUtils.SLOTS[slotIndex++ % AnnotationUtils.SLOTS.size]
     }
   private lateinit var annotationPlugin: AnnotationPlugin
   private lateinit var blueBitmap: Bitmap
@@ -219,6 +225,11 @@ class PointAnnotationActivity : AppCompatActivity() {
     }
     binding.changeStyle.setOnClickListener {
       binding.mapView.mapboxMap.loadStyle(nextStyle)
+    }
+    binding.changeSlot.setOnClickListener {
+      val slot = nextSlot
+      showShortToast("Switching to $slot slot")
+      pointAnnotationManager?.slot = slot
     }
   }
 

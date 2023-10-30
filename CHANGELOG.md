@@ -5,6 +5,7 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 ## Features ✨ and improvements 🏁
 * Add `coordinatesPadding`, `maxZoom` and `offset` parameters to `OverviewViewportStateOptions` to allow more granular control of `OverviewViewportState`.
+* Add `CircleAnnotationManager.slot`, `PointAnnotationManager.slot`, `PolygonAnnotationManager.slot`, `PolylineAnnotationManager.slot` to place the associated layer of the `AnnotationManager` to the correct position of the map.
 
 ## Bug fixes 🐞
 * Fixed an issue where the camera padding is not calculated properly for `OverviewViewportState`.

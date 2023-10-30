@@ -88,6 +88,18 @@ class PolygonAnnotationManagerAndroidTest : BaseMapTest() {
   }
 
   @Test
+  fun testSlot() {
+    rule.runOnUiThread {
+      val expectedValue = "abc"
+      val polygonAnnotationManager = mapView.annotations.createPolygonAnnotationManager()
+      polygonAnnotationManager.slot = expectedValue
+      assertEquals(expectedValue, polygonAnnotationManager.slot)
+      polygonAnnotationManager.slot = null
+      assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("fill", "slot").silentUnwrap(), polygonAnnotationManager.slot)
+    }
+  }
+
+  @Test
   fun create() {
     rule.runOnUiThread {
       val polygonAnnotationManager = mapView.annotations.createPolygonAnnotationManager()
