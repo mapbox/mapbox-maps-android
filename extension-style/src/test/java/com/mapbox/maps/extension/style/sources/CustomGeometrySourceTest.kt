@@ -53,7 +53,7 @@ class CustomGeometrySourceTest {
     verify { style.setStyleCustomGeometrySourceTileData("testId", tileID, tileData) }
   }
 
-  @Test(expected = RuntimeException::class)
+  @Test(expected = MapboxStyleException::class)
   fun setTileDataBeforeBindTest() {
     val tileData = mutableListOf<Feature>(Feature.fromGeometry(Point.fromLngLat(0.0, 0.0)))
     val tileID: CanonicalTileID = mockk()
@@ -62,32 +62,32 @@ class CustomGeometrySourceTest {
   }
 
   @Test
-  fun invalidRegionTest() {
+  fun invalidateRegionTest() {
     val coordinateBounds: CoordinateBounds = mockk()
     testSource.bindTo(style)
-    testSource.invalidRegion(coordinateBounds)
+    testSource.invalidateRegion(coordinateBounds)
     verify { style.invalidateStyleCustomGeometrySourceRegion("testId", coordinateBounds) }
   }
 
-  @Test(expected = RuntimeException::class)
-  fun invalidRegionBeforeBindTest() {
+  @Test(expected = MapboxStyleException::class)
+  fun invalidateRegionBeforeBindTest() {
     val coordinateBounds: CoordinateBounds = mockk()
-    testSource.invalidRegion(coordinateBounds)
+    testSource.invalidateRegion(coordinateBounds)
     verify { style.invalidateStyleCustomGeometrySourceRegion("testId", coordinateBounds) }
   }
 
   @Test
-  fun invalidTileTest() {
+  fun invalidateTileTest() {
     val tileID: CanonicalTileID = mockk()
     testSource.bindTo(style)
-    testSource.invalidTile(tileID)
+    testSource.invalidateTile(tileID)
     verify { style.invalidateStyleCustomGeometrySourceTile("testId", tileID) }
   }
 
-  @Test(expected = RuntimeException::class)
-  fun invalidTileBeforeBindTest() {
+  @Test(expected = MapboxStyleException::class)
+  fun invalidateTileBeforeBindTest() {
     val tileID: CanonicalTileID = mockk()
-    testSource.invalidTile(tileID)
+    testSource.invalidateTile(tileID)
     verify { style.invalidateStyleCustomGeometrySourceTile("testId", tileID) }
   }
 }

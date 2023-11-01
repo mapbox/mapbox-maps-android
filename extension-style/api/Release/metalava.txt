@@ -5635,20 +5635,29 @@ package com.mapbox.maps.extension.style.projection.generated {
 
 package com.mapbox.maps.extension.style.sources {
 
-  public final class CustomGeometrySource implements com.mapbox.maps.extension.style.StyleContract.StyleSourceExtension {
+  public final class CustomGeometrySource extends com.mapbox.maps.extension.style.sources.Source {
     ctor public CustomGeometrySource(String id, com.mapbox.maps.CustomGeometrySourceOptions options);
-    method public void bindTo(com.mapbox.maps.Style delegate);
-    method public String getId();
-    method public com.mapbox.maps.CustomGeometrySourceOptions getOptions();
-    method public void invalidRegion(com.mapbox.maps.CoordinateBounds coordinateBounds);
-    method public void invalidTile(com.mapbox.maps.CanonicalTileID tileID);
+    method @Deprecated public void invalidRegion(com.mapbox.maps.CoordinateBounds coordinateBounds);
+    method @Deprecated public void invalidTile(com.mapbox.maps.CanonicalTileID tileID);
+    method public void invalidateRegion(com.mapbox.maps.CoordinateBounds coordinateBounds);
+    method public void invalidateTile(com.mapbox.maps.CanonicalTileID tileID);
     method public void setTileData(com.mapbox.maps.CanonicalTileID tileID, java.util.List<com.mapbox.geojson.Feature> featureCollection);
-    property public final String id;
-    property public final com.mapbox.maps.CustomGeometrySourceOptions options;
   }
 
   public final class CustomGeometrySourceKt {
     method public static com.mapbox.maps.extension.style.sources.CustomGeometrySource customGeometrySource(String id, kotlin.jvm.functions.Function1<? super com.mapbox.maps.CustomGeometrySourceOptions.Builder,kotlin.Unit> block);
+  }
+
+  @com.mapbox.maps.MapboxExperimental public final class CustomRasterSource extends com.mapbox.maps.extension.style.sources.Source {
+    ctor public CustomRasterSource(String id, com.mapbox.maps.CustomRasterSourceOptions options);
+    method public void invalidateRegion(com.mapbox.maps.CoordinateBounds coordinateBounds);
+    method public void invalidateTile(com.mapbox.maps.CanonicalTileID tileID);
+    method public void setTileData(com.mapbox.maps.CanonicalTileID tileID, com.mapbox.maps.Image? image);
+    method public void setTileData(com.mapbox.maps.CanonicalTileID tileID, android.graphics.Bitmap? bitmap);
+  }
+
+  public final class CustomRasterSourceKt {
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.style.sources.CustomRasterSource customRasterSource(String id, kotlin.jvm.functions.Function1<? super com.mapbox.maps.CustomRasterSourceOptions.Builder,kotlin.Unit> block);
   }
 
   public final class GeoJsonSourceUtils {
@@ -5667,6 +5676,7 @@ package com.mapbox.maps.extension.style.sources {
 
   public abstract class Source implements com.mapbox.maps.extension.style.StyleContract.StyleSourceExtension {
     ctor public Source(String sourceId);
+    method protected com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addSource(com.mapbox.maps.Style style);
     method public void bindTo(com.mapbox.maps.Style delegate);
     method public final String getSourceId();
     property public final String sourceId;

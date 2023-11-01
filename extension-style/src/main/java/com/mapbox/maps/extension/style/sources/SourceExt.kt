@@ -2,6 +2,8 @@
 
 package com.mapbox.maps.extension.style.sources
 
+import com.mapbox.maps.CustomGeometrySourceOptions
+import com.mapbox.maps.CustomRasterSourceOptions
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.sources.generated.*
@@ -23,6 +25,12 @@ fun Style.getSource(sourceId: String): Source? {
       "image" -> ImageSource.Builder(sourceId).build().also { it.delegate = this }
       "raster-dem" -> RasterDemSource.Builder(sourceId).build().also { it.delegate = this }
       "raster" -> RasterSource.Builder(sourceId).build().also { it.delegate = this }
+      // we pass empty CustomGeometrySourceOptions as it will not be applied anyway; it is already stored in core
+      "custom-geometry" -> CustomGeometrySource(sourceId, CustomGeometrySourceOptions.Builder().build())
+        .also { it.delegate = this }
+      // we pass empty CustomRasterSourceOptions as it will not be applied anyway; it is already stored in core
+      "custom-raster" -> CustomRasterSource(sourceId, CustomRasterSourceOptions.Builder().build())
+        .also { it.delegate = this }
       else -> {
         logE("StyleSourcePlugin", "Source type: $type unknown.")
         null

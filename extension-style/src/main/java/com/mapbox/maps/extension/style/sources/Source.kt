@@ -1,6 +1,8 @@
 package com.mapbox.maps.extension.style.sources
 
 import android.util.Log
+import com.mapbox.bindgen.Expected
+import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxStyleException
 import com.mapbox.maps.Style
@@ -47,6 +49,10 @@ abstract class Source(
 
   internal var delegate: Style? = null
 
+  protected open fun addSource(style: Style): Expected<String, None> {
+    return style.addStyleSource(sourceId, getCachedSourceProperties())
+  }
+
   /**
    * Add the source to the Style.
    *
@@ -54,7 +60,7 @@ abstract class Source(
    */
   override fun bindTo(delegate: Style) {
     this.delegate = delegate
-    val expected = delegate.addStyleSource(sourceId, getCachedSourceProperties())
+    val expected = addSource(delegate)
     expected.error?.let {
       Log.e(TAG, getCachedSourceProperties().toString())
       throw MapboxStyleException("Add source failed: $it")

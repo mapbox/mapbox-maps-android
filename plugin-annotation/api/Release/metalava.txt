@@ -149,6 +149,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method protected String getDragSourceId();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getLayerFilter();
     method protected String getLayerId();
+    method public String? getSlot();
     method protected String getSourceId();
     method protected void initializeDataDrivenPropertyMap();
     method public void setCircleEmissiveStrength(Double?);
@@ -158,6 +159,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setCircleTranslateAnchor(com.mapbox.maps.extension.style.layers.properties.generated.CircleTranslateAnchor?);
     method protected void setDataDrivenPropertyIsUsed(String property);
     method public void setLayerFilter(com.mapbox.maps.extension.style.expressions.generated.Expression?);
+    method public void setSlot(String?);
     property public final Double? circleEmissiveStrength;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.CirclePitchAlignment? circlePitchAlignment;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.CirclePitchScale? circlePitchScale;
@@ -167,6 +169,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     property protected String dragSourceId;
     property public com.mapbox.maps.extension.style.expressions.generated.Expression? layerFilter;
     property protected String layerId;
+    property public final String? slot;
     property protected String sourceId;
     field public static final com.mapbox.maps.plugin.annotation.generated.CircleAnnotationManager.Companion Companion;
   }
@@ -438,6 +441,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public com.mapbox.maps.extension.style.layers.properties.generated.IconTranslateAnchor? getIconTranslateAnchor();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getLayerFilter();
     method protected String getLayerId();
+    method public String? getSlot();
     method protected String getSourceId();
     method public Boolean? getSymbolAvoidEdges();
     method public com.mapbox.maps.extension.style.layers.properties.generated.SymbolPlacement? getSymbolPlacement();
@@ -472,6 +476,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setIconTranslate(java.util.List<java.lang.Double>?);
     method public void setIconTranslateAnchor(com.mapbox.maps.extension.style.layers.properties.generated.IconTranslateAnchor?);
     method public void setLayerFilter(com.mapbox.maps.extension.style.expressions.generated.Expression?);
+    method public void setSlot(String?);
     method public void setSymbolAvoidEdges(Boolean?);
     method public void setSymbolPlacement(com.mapbox.maps.extension.style.layers.properties.generated.SymbolPlacement?);
     method public void setSymbolSpacing(Double?);
@@ -506,6 +511,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final com.mapbox.maps.extension.style.layers.properties.generated.IconTranslateAnchor? iconTranslateAnchor;
     property public com.mapbox.maps.extension.style.expressions.generated.Expression? layerFilter;
     property protected String layerId;
+    property public final String? slot;
     property protected String sourceId;
     property public final Boolean? symbolAvoidEdges;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.SymbolPlacement? symbolPlacement;
@@ -773,6 +779,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public com.mapbox.maps.extension.style.layers.properties.generated.FillTranslateAnchor? getFillTranslateAnchor();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getLayerFilter();
     method protected String getLayerId();
+    method public String? getSlot();
     method protected String getSourceId();
     method protected void initializeDataDrivenPropertyMap();
     method protected void setDataDrivenPropertyIsUsed(String property);
@@ -781,6 +788,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setFillTranslate(java.util.List<java.lang.Double>?);
     method public void setFillTranslateAnchor(com.mapbox.maps.extension.style.layers.properties.generated.FillTranslateAnchor?);
     method public void setLayerFilter(com.mapbox.maps.extension.style.expressions.generated.Expression?);
+    method public void setSlot(String?);
     property protected String dragLayerId;
     property protected String dragSourceId;
     property public final Boolean? fillAntialias;
@@ -789,6 +797,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final com.mapbox.maps.extension.style.layers.properties.generated.FillTranslateAnchor? fillTranslateAnchor;
     property public com.mapbox.maps.extension.style.expressions.generated.Expression? layerFilter;
     property protected String layerId;
+    property public final String? slot;
     property protected String sourceId;
     field public static final com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationManager.Companion Companion;
   }
@@ -922,6 +931,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public java.util.List<java.lang.Double>? getLineTranslate();
     method public com.mapbox.maps.extension.style.layers.properties.generated.LineTranslateAnchor? getLineTranslateAnchor();
     method public java.util.List<java.lang.Double>? getLineTrimOffset();
+    method public String? getSlot();
     method protected String getSourceId();
     method protected void initializeDataDrivenPropertyMap();
     method protected void setDataDrivenPropertyIsUsed(String property);
@@ -935,6 +945,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setLineTranslate(java.util.List<java.lang.Double>?);
     method public void setLineTranslateAnchor(com.mapbox.maps.extension.style.layers.properties.generated.LineTranslateAnchor?);
     method public void setLineTrimOffset(java.util.List<java.lang.Double>?);
+    method public void setSlot(String?);
     property protected String dragLayerId;
     property protected String dragSourceId;
     property public com.mapbox.maps.extension.style.expressions.generated.Expression? layerFilter;
@@ -948,6 +959,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final java.util.List<java.lang.Double>? lineTranslate;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.LineTranslateAnchor? lineTranslateAnchor;
     property public final java.util.List<java.lang.Double>? lineTrimOffset;
+    property public final String? slot;
     property protected String sourceId;
     field public static final com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationManager.Companion Companion;
   }
