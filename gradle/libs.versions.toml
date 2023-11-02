@@ -8,10 +8,6 @@ autoMinSdkVersion = "23"
 autoTargetSdkVersion = "33"
 autoCompileSdkVersion = "33"
 
-composeMinSdkVersion = "23"
-composeTargetSdkVersion = "33"
-composeCompileSdkVersion = "33"
-
 exampleMinSdkVersion = "23"
 exampleTargetSdkVersion = "33"
 exampleCompileSdkVersion = "33"

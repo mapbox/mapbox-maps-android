@@ -6,10 +6,10 @@ plugins {
 val buildFromSource: String by project
 
 android {
-  compileSdk = libs.versions.composeCompileSdkVersion.get().toInt()
+  compileSdk = libs.versions.androidCompileSdkVersion.get().toInt()
   defaultConfig {
-    minSdk = libs.versions.composeMinSdkVersion.get().toInt()
-    targetSdk = libs.versions.composeTargetSdkVersion.get().toInt()
+    minSdk = libs.versions.androidMinSdkVersion.get().toInt()
+    targetSdk = libs.versions.androidTargetSdkVersion.get().toInt()
     applicationId = "com.mapbox.maps.compose.testapp"
     versionCode = 1
     versionName = "0.1.0"

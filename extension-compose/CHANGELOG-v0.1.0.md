@@ -2,14 +2,7 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# main
-## Features ✨ and improvements 🏁
-* Add experimental `MapEvents` to handle all events emitted by `MapboxMap`.
-* Expose `PointAnnotationGroup.symbolZElevate` property. 
-* Add `ViewAnnotation.layoutParams` property. 
-
-## Bug fixes 🐞
-* Fix the bug where wrong pixel ratio could be used in a dual display setup.
+# Please refer to [release notes](../CHANGELOG.md) in the main SDK for the latest Jetpack Compose Extension related changes.
 
 # 0.1.0 August 10, 2023
 ## Features ✨ and improvements 🏁

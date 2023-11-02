@@ -24,7 +24,7 @@ parameters:
     default: ^v[0-9]+\.[0-9]+$
   release_tags_pattern:
     type: string
-    default: (v.*|extension-androidauto-v.*|extension-compose-v.*)
+    default: (v.*|extension-androidauto-v.*)
   weekly:
     type: boolean
     default: false
@@ -190,8 +190,6 @@ commands:
               sed -i -e "s/^VERSION_NAME=.*/VERSION_NAME=${CIRCLE_TAG:1}/" gradle.properties
             elif [[ $CIRCLE_TAG == extension-androidauto-v* ]]; then
               sed -i -e "s/^MODULE_VERSION_NAME=.*/MODULE_VERSION_NAME=${CIRCLE_TAG:23}/" extension-androidauto/gradle.properties
-            elif [[ $CIRCLE_TAG == extension-compose-v* ]]; then
-              sed -i -e "s/^MODULE_VERSION_NAME=.*/MODULE_VERSION_NAME=${CIRCLE_TAG:19}/" extension-compose/gradle.properties
             elif [[ $CIRCLE_BRANCH == main ]]; then
               COMMIT_SHA=$(git rev-parse --short HEAD)
               sed -i -e "s/-SNAPSHOT.*/-${COMMIT_SHA}-SNAPSHOT/" gradle.properties
