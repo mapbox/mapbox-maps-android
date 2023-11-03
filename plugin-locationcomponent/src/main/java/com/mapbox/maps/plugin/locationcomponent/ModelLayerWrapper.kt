@@ -17,6 +17,8 @@ internal class ModelLayerWrapper(
   modelReceiveShadows: Boolean,
   modelOpacity: Double,
   modelScaleMode: ModelScaleMode,
+  modelEmissiveStrength: Double,
+  modelEmissiveStrengthExpression: Value?
 ) : LocationLayerWrapper(layerId) {
   init {
     layerProperties["id"] = Value(layerId)
@@ -32,6 +34,7 @@ internal class ModelLayerWrapper(
     layerProperties["model-scale-mode"] = Value(modelScaleMode.value)
     layerProperties["model-scale-transition"] = buildTransition(delay = 0, duration = 0)
     layerProperties["model-rotation-transition"] = buildTransition(delay = 0, duration = 0)
+    layerProperties["model-emissive-strength"] = modelEmissiveStrengthExpression ?: Value(modelEmissiveStrength)
   }
 
   private fun buildTransition(delay: Long, duration: Long): Value {

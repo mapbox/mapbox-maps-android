@@ -710,6 +710,8 @@ package com.mapbox.maps.plugin {
   }
 
   public final class LocationPuck3D extends com.mapbox.maps.plugin.LocationPuck {
+    ctor public LocationPuck3D(String modelUri, java.util.List<java.lang.Float> position = listOf(0.0, 0.0), float modelOpacity = 1f, java.util.List<java.lang.Float> modelScale = listOf(1.0, 1.0, 1.0), String? modelScaleExpression = null, java.util.List<java.lang.Float> modelTranslation = listOf(0.0, 0.0, 0.0), java.util.List<java.lang.Float> modelRotation = listOf(0.0, 0.0, 90.0), @com.mapbox.maps.MapboxExperimental boolean modelCastShadows = true, @com.mapbox.maps.MapboxExperimental boolean modelReceiveShadows = true, @com.mapbox.maps.MapboxExperimental com.mapbox.maps.plugin.ModelScaleMode modelScaleMode = com.mapbox.maps.plugin.ModelScaleMode.VIEWPORT, float modelEmissiveStrength = 1f, String? modelEmissiveStrengthExpression = null);
+    ctor public LocationPuck3D(String modelUri, java.util.List<java.lang.Float> position = listOf(0.0, 0.0), float modelOpacity = 1f, java.util.List<java.lang.Float> modelScale = listOf(1.0, 1.0, 1.0), String? modelScaleExpression = null, java.util.List<java.lang.Float> modelTranslation = listOf(0.0, 0.0, 0.0), java.util.List<java.lang.Float> modelRotation = listOf(0.0, 0.0, 90.0), @com.mapbox.maps.MapboxExperimental boolean modelCastShadows = true, @com.mapbox.maps.MapboxExperimental boolean modelReceiveShadows = true, @com.mapbox.maps.MapboxExperimental com.mapbox.maps.plugin.ModelScaleMode modelScaleMode = com.mapbox.maps.plugin.ModelScaleMode.VIEWPORT, float modelEmissiveStrength = 1f);
     ctor public LocationPuck3D(String modelUri, java.util.List<java.lang.Float> position = listOf(0.0, 0.0), float modelOpacity = 1f, java.util.List<java.lang.Float> modelScale = listOf(1.0, 1.0, 1.0), String? modelScaleExpression = null, java.util.List<java.lang.Float> modelTranslation = listOf(0.0, 0.0, 0.0), java.util.List<java.lang.Float> modelRotation = listOf(0.0, 0.0, 90.0), @com.mapbox.maps.MapboxExperimental boolean modelCastShadows = true, @com.mapbox.maps.MapboxExperimental boolean modelReceiveShadows = true, @com.mapbox.maps.MapboxExperimental com.mapbox.maps.plugin.ModelScaleMode modelScaleMode = com.mapbox.maps.plugin.ModelScaleMode.VIEWPORT);
     ctor public LocationPuck3D(String modelUri, java.util.List<java.lang.Float> position = listOf(0.0, 0.0), float modelOpacity = 1f, java.util.List<java.lang.Float> modelScale = listOf(1.0, 1.0, 1.0), String? modelScaleExpression = null, java.util.List<java.lang.Float> modelTranslation = listOf(0.0, 0.0, 0.0), java.util.List<java.lang.Float> modelRotation = listOf(0.0, 0.0, 90.0), @com.mapbox.maps.MapboxExperimental boolean modelCastShadows = true, @com.mapbox.maps.MapboxExperimental boolean modelReceiveShadows = true);
     ctor public LocationPuck3D(String modelUri, java.util.List<java.lang.Float> position = listOf(0.0, 0.0), float modelOpacity = 1f, java.util.List<java.lang.Float> modelScale = listOf(1.0, 1.0, 1.0), String? modelScaleExpression = null, java.util.List<java.lang.Float> modelTranslation = listOf(0.0, 0.0, 0.0), java.util.List<java.lang.Float> modelRotation = listOf(0.0, 0.0, 90.0), @com.mapbox.maps.MapboxExperimental boolean modelCastShadows = true);
@@ -722,6 +724,8 @@ package com.mapbox.maps.plugin {
     ctor public LocationPuck3D(String modelUri);
     method public String component1();
     method public com.mapbox.maps.plugin.ModelScaleMode component10();
+    method public float component11();
+    method public String? component12();
     method public java.util.List<java.lang.Float> component2();
     method public float component3();
     method public java.util.List<java.lang.Float> component4();
@@ -730,8 +734,10 @@ package com.mapbox.maps.plugin {
     method public java.util.List<java.lang.Float> component7();
     method public boolean component8();
     method public boolean component9();
-    method public com.mapbox.maps.plugin.LocationPuck3D copy(String modelUri, java.util.List<java.lang.Float> position, float modelOpacity, java.util.List<java.lang.Float> modelScale, String? modelScaleExpression, java.util.List<java.lang.Float> modelTranslation, java.util.List<java.lang.Float> modelRotation, boolean modelCastShadows, boolean modelReceiveShadows, com.mapbox.maps.plugin.ModelScaleMode modelScaleMode);
+    method public com.mapbox.maps.plugin.LocationPuck3D copy(String modelUri, java.util.List<java.lang.Float> position, float modelOpacity, java.util.List<java.lang.Float> modelScale, String? modelScaleExpression, java.util.List<java.lang.Float> modelTranslation, java.util.List<java.lang.Float> modelRotation, boolean modelCastShadows, boolean modelReceiveShadows, com.mapbox.maps.plugin.ModelScaleMode modelScaleMode, float modelEmissiveStrength, String? modelEmissiveStrengthExpression);
     method public boolean getModelCastShadows();
+    method public float getModelEmissiveStrength();
+    method public String? getModelEmissiveStrengthExpression();
     method public float getModelOpacity();
     method public boolean getModelReceiveShadows();
     method public java.util.List<java.lang.Float> getModelRotation();
@@ -742,6 +748,8 @@ package com.mapbox.maps.plugin {
     method public String getModelUri();
     method public java.util.List<java.lang.Float> getPosition();
     method public void setModelCastShadows(boolean);
+    method public void setModelEmissiveStrength(float);
+    method public void setModelEmissiveStrengthExpression(String?);
     method public void setModelOpacity(float);
     method public void setModelReceiveShadows(boolean);
     method public void setModelRotation(java.util.List<java.lang.Float>);
@@ -752,6 +760,8 @@ package com.mapbox.maps.plugin {
     method public void setModelUri(String);
     method public void setPosition(java.util.List<java.lang.Float>);
     property public final boolean modelCastShadows;
+    property public final float modelEmissiveStrength;
+    property public final String? modelEmissiveStrengthExpression;
     property public final float modelOpacity;
     property public final boolean modelReceiveShadows;
     property public final java.util.List<java.lang.Float> modelRotation;

@@ -6,11 +6,9 @@ import androidx.annotation.RestrictTo
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.Companion.PRIVATE
 import androidx.core.animation.doOnEnd
-import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.Value
 import com.mapbox.common.location.LocationError
 import com.mapbox.geojson.Point
-import com.mapbox.maps.MapboxLocationComponentException
 import com.mapbox.maps.Style
 import com.mapbox.maps.logW
 import com.mapbox.maps.plugin.LocationPuck2D
@@ -18,6 +16,7 @@ import com.mapbox.maps.plugin.LocationPuck3D
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.locationcomponent.animators.PuckAnimatorManager
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
+import com.mapbox.maps.plugin.locationcomponent.utils.take
 import java.lang.ref.WeakReference
 import kotlin.math.abs
 
@@ -259,19 +258,4 @@ internal class LocationPuckManager(
     const val BEARING_UPDATE_THRESHOLD = 1.0
     const val TAG = "LocationPuckManager"
   }
-}
-
-/**
- * Internal function to check if a method invoke on Value succeeded, throws exception if not.
- */
-private inline fun <reified T> Expected<String, T>.take(): T {
-  this.also {
-    it.error?.let { err ->
-      throw MapboxLocationComponentException(err)
-    }
-    it.value?.let { v ->
-      return v
-    }
-  }
-  throw MapboxLocationComponentException("Error in parsing expression.")
 }

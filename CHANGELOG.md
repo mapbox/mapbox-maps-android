@@ -17,6 +17,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Add `CircleAnnotationManager.slot`, `PointAnnotationManager.slot`, `PolygonAnnotationManager.slot`, `PolylineAnnotationManager.slot` to place the associated layer of the `AnnotationManager` to the correct position of the map.
 * Expose experimental `CustomRasterSource` and non-experimental `CustomGeometrySource` as regular `Source`'s providing a better way to work with them and also allowing using them in Style DSL.
 * Deprecate `CustomGeometrySource.invalidTile` and `CustomGeometrySource.invalidRegion`; `CustomGeometrySource.invalidateTile` and `CustomGeometrySource.invalidateRegion` should be used instead.
+* Add `LocationPuck3D.modelEmissiveStrength` and `LocationPuck3D.modelEmissiveStrengthExpression` properties to LocationComponent plugin to control the strength of the light emission.
 
 ## Bug fixes 🐞
 * Fixed an issue where the camera padding is not calculated properly for `OverviewViewportState`.

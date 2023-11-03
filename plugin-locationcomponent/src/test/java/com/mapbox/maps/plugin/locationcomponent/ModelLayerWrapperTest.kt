@@ -7,6 +7,7 @@ import com.mapbox.bindgen.Value
 import com.mapbox.maps.Style
 import com.mapbox.maps.logE
 import com.mapbox.maps.plugin.ModelScaleMode
+import com.mapbox.maps.plugin.locationcomponent.utils.take
 import io.mockk.*
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -28,7 +29,22 @@ class ModelLayerWrapperTest {
     INITIAL_CAST_SHADOWS,
     INITIAL_RECEIVE_SHADOWS,
     INITIAL_OPACITY,
-    INITIAL_SCALE_MODE
+    INITIAL_SCALE_MODE,
+    INITIAL_MODEL_EMISSIVE_STENGTH,
+    null
+  )
+  private val layerWithEmissiveStrengthExpression = ModelLayerWrapper(
+    MODEL_LAYER_ID,
+    MODEL_SOURCE_ID,
+    INITIAL_SCALE,
+    INITIAL_ROTATION,
+    INITIAL_TRANSLATION,
+    INITIAL_CAST_SHADOWS,
+    INITIAL_RECEIVE_SHADOWS,
+    INITIAL_OPACITY,
+    INITIAL_SCALE_MODE,
+    INITIAL_MODEL_EMISSIVE_STENGTH,
+    INITIAL_MODEL_EMISSIVE_STENGTH_EXPRESSION
   )
   private val expected: Expected<String, None> = mockk(relaxed = true)
 
@@ -64,8 +80,32 @@ class ModelLayerWrapperTest {
         "model-cast-shadows" to INITIAL_CAST_SHADOWS,
         "model-scale-transition" to hashMapOf("duration" to 0, "delay" to 0),
         "model-rotation-transition" to hashMapOf("duration" to 0, "delay" to 0),
+        "model-emissive-strength" to INITIAL_MODEL_EMISSIVE_STENGTH
       ).toValue(),
       layer.toValue(),
+    )
+  }
+
+  @Test
+  fun testInitialPropertiesWithEmissiveStrengthExpression() {
+    assertEquals(
+      hashMapOf(
+        "model-type" to "location-indicator",
+        "model-rotation" to INITIAL_ROTATION,
+        "model-scale" to INITIAL_SCALE,
+        "model-translation" to INITIAL_TRANSLATION,
+        "model-opacity" to INITIAL_OPACITY,
+        "model-scale-mode" to INITIAL_SCALE_MODE.value,
+        "id" to MODEL_LAYER_ID,
+        "source" to MODEL_SOURCE_ID,
+        "type" to "model",
+        "model-receive-shadows" to INITIAL_RECEIVE_SHADOWS,
+        "model-cast-shadows" to INITIAL_CAST_SHADOWS,
+        "model-scale-transition" to hashMapOf("duration" to 0, "delay" to 0),
+        "model-rotation-transition" to hashMapOf("duration" to 0, "delay" to 0),
+        "model-emissive-strength" to INITIAL_MODEL_EMISSIVE_STENGTH_EXPRESSION
+      ).toValue(),
+      layerWithEmissiveStrengthExpression.toValue(),
     )
   }
 
@@ -104,7 +144,13 @@ class ModelLayerWrapperTest {
 
   @Test
   fun testLayerNotReady() {
-    every { style.setStyleLayerProperty(any(), any(), any()) } returns ExpectedFactory.createError("error")
+    every {
+      style.setStyleLayerProperty(
+        any(),
+        any(),
+        any()
+      )
+    } returns ExpectedFactory.createError("error")
     val scale = arrayListOf(1.0, 2.0)
     layer.modelScale(scale)
     verify(exactly = 1) {
@@ -171,5 +217,11 @@ class ModelLayerWrapperTest {
     private val INITIAL_RECEIVE_SHADOWS = true
     private const val INITIAL_OPACITY = 1.0
     private val INITIAL_SCALE_MODE = ModelScaleMode.VIEWPORT
+    private val INITIAL_MODEL_EMISSIVE_STENGTH = 1.0
+    private val INITIAL_MODEL_EMISSIVE_STENGTH_EXPRESSION = Value.fromJson(
+      """
+      ["get", "emissivelight"]
+    """.trimIndent()
+    ).take()
   }
 }

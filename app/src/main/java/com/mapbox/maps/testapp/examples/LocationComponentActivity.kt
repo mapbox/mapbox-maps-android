@@ -194,6 +194,7 @@ class LocationComponentActivity : AppCompatActivity() {
           modelRotation = listOf(0.0f, 0.0f, 180.0f),
           modelCastShadows = false,
           modelReceiveShadows = false,
+          modelEmissiveStrength = 1.1f
         )
       }
     }

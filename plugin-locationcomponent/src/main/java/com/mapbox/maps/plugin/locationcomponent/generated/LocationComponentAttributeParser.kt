@@ -64,6 +64,8 @@ internal object LocationComponentAttributeParser {
             modelCastShadows = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck3DModelCastShadows, true),
             modelReceiveShadows = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck3DModelReceiveShadows, true),
             modelScaleMode = ModelScaleMode.values()[typedArray.getInt(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck3DModelScaleMode, ModelScaleMode.VIEWPORT.ordinal)],
+            modelEmissiveStrength = typedArray.getFloat(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck3DModelEmissiveStrength, 1f),
+            modelEmissiveStrengthExpression = typedArray.getString(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck3DModelEmissiveStrengthExpression),
           )
           else -> createDefault2DPuck(withBearing = puckBearingEnabled)
         }

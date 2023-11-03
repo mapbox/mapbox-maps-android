@@ -79,6 +79,10 @@
         <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelReceiveShadows" format="boolean"/>
         <!-- Defines scaling mode. Only applies to location-indicator type layers. -->
         <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelScaleMode" format="enum"/>
+        <!-- Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). -->
+        <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelEmissiveStrength" format="float"/>
+        <!-- Strength of the emission as Expression string, note that when [modelEmissiveStrengthExpression] is specified, it will overwrite the [modelEmissiveStrength] property. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). -->
+        <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelEmissiveStrengthExpression" format="string"/>
     </declare-styleable>
 </resources>
 <!-- End of generated file. -->

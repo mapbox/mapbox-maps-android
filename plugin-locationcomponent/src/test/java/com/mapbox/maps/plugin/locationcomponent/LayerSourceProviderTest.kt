@@ -65,6 +65,7 @@ class LayerSourceProviderTest {
         "model-cast-shadows" to true,
         "model-scale-transition" to hashMapOf("duration" to 0, "delay" to 0),
         "model-rotation-transition" to hashMapOf("duration" to 0, "delay" to 0),
+        "model-emissive-strength" to 1.0
       ).toValue(),
       modelLayer.toValue()
     )

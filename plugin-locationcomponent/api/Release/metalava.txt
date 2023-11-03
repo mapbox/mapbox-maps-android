@@ -41,7 +41,11 @@ package com.mapbox.maps.plugin.locationcomponent {
     method public static com.mapbox.maps.plugin.locationcomponent.LocationComponentPlugin getLocationComponent(com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate);
   }
 
-  public final class LocationPuckManagerKt {
+}
+
+package com.mapbox.maps.plugin.locationcomponent.utils {
+
+  public final class ExpectedUtilsKt {
   }
 
 }

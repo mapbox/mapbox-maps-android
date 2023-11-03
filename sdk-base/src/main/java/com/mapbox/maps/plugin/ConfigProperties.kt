@@ -123,6 +123,14 @@ data class LocationPuck3D @JvmOverloads constructor(
    */
   @MapboxExperimental
   var modelScaleMode: ModelScaleMode = ModelScaleMode.VIEWPORT,
+  /**
+   * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors).
+   */
+  var modelEmissiveStrength: Float = 1f,
+  /**
+   * Strength of the emission as Expression string, note that when [modelEmissiveStrengthExpression] is specified, it will overwrite the [modelEmissiveStrength] property. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors).
+   */
+  var modelEmissiveStrengthExpression: String? = null,
 ) : LocationPuck()
 
 /**
