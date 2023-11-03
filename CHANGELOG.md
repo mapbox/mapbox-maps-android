@@ -2,21 +2,31 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# main
+# 11.0.0-rc.1
+
+## Breaking changes ⚠️
+* Add `LocationService.getDeviceLocationProvider` method that accepts `ExtendedLocationProviderParameters` to `LocationService` interface.
+
 ## Features ✨ and improvements 🏁
 * From v11.0.0-rc.1, Mapbox Compose Extension for Android is released as a separate module following the same release cadence with the main SDK, please refer to [this guide](extension-compose/README.md) to get started with Jetpack Compose, and [v0.1.0 changelog](extension-compose/CHANGELOG-v0.1.0.md) for previous changelogs.
 * [compose] Add experimental `MapEvents` to handle all events emitted by `MapboxMap`.
 * [compose] Expose `PointAnnotationGroup.symbolZElevate` property.
 * [compose] Add `ViewAnnotation.layoutParams` property.
+* Introduce `ExtendedLocationProviderParameters` to specify `DeviceLocationProvider` parameters.
 * Add `coordinatesPadding`, `maxZoom` and `offset` parameters to `OverviewViewportStateOptions` to allow more granular control of `OverviewViewportState`.
 * Add `CircleAnnotationManager.slot`, `PointAnnotationManager.slot`, `PolygonAnnotationManager.slot`, `PolylineAnnotationManager.slot` to place the associated layer of the `AnnotationManager` to the correct position of the map.
 * Expose experimental `CustomRasterSource` and non-experimental `CustomGeometrySource` as regular `Source`'s providing a better way to work with them and also allowing using them in Style DSL.
 * Deprecate `CustomGeometrySource.invalidTile` and `CustomGeometrySource.invalidRegion`; `CustomGeometrySource.invalidateTile` and `CustomGeometrySource.invalidateRegion` should be used instead.
 
-
 ## Bug fixes 🐞
 * Fixed an issue where the camera padding is not calculated properly for `OverviewViewportState`.
 * [compose] Fix the bug where wrong pixel ratio could be used in a dual display setup.
+* Fix the line label flickering issue by eliminating the anchor rounding error.
+* Fix rendering of large/complex fill extrusion features.
+* Fix a crash because of non-exported runtime-registered broadcasts receivers for apps targeting SDK 34.
+
+## Dependencies
+* Update gl-native to v11.0.0-rc.1 and common to v24.0.0-rc.2.
 
 # 11.0.0-beta.6 October 24, 2023
 ## Breaking changes ⚠️

@@ -7,6 +7,7 @@ import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.animation.camera
 import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
+import com.mapbox.maps.plugin.delegates.MapListenerDelegate
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentPlugin
 import com.mapbox.maps.plugin.locationcomponent.location
@@ -40,6 +41,7 @@ class ViewportPluginImplTest {
   private val delegateProvider = mockk<MapDelegateProvider>()
   private val mapPluginProviderDelegate = mockk<MapPluginProviderDelegate>()
   private val mapCameraManagerDelegate = mockk<MapCameraManagerDelegate>()
+  private val mapListenerDelegate = mockk<MapListenerDelegate>()
   private val cameraPlugin = mockk<CameraAnimationsPlugin>()
   private val locationPlugin = mockk<LocationComponentPlugin>()
   private val handler = mockk<Handler>()
@@ -56,6 +58,8 @@ class ViewportPluginImplTest {
   fun setup() {
     every { delegateProvider.mapPluginProviderDelegate } returns mapPluginProviderDelegate
     every { delegateProvider.mapCameraManagerDelegate } returns mapCameraManagerDelegate
+    every { delegateProvider.mapListenerDelegate } returns mapListenerDelegate
+    every { mapListenerDelegate.subscribeRenderFrameStarted(any()) } returns mockk()
     mockkStatic(CAMERA_ANIMATIONS_UTILS)
     mockkStatic(LOCATION_COMPONENT_UTILS)
     every { mapPluginProviderDelegate.location } returns locationPlugin

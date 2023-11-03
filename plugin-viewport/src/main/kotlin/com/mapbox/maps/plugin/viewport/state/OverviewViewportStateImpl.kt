@@ -16,7 +16,9 @@ import com.mapbox.geojson.Point
 import com.mapbox.geojson.Polygon
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.MapboxMapException
 import com.mapbox.maps.dsl.cameraOptions
+import com.mapbox.maps.logI
 import com.mapbox.maps.plugin.animation.camera
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions
@@ -43,6 +45,15 @@ internal class OverviewViewportStateImpl(
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal var isOverviewStateRunning = false
 
+  init {
+    var cancelable = Cancelable { }
+    // notify the camera options to any subscribers when the MapView's width and height is ready
+    cancelable = mapDelegateProvider.mapListenerDelegate.subscribeRenderFrameStarted {
+      handleNewData()
+      cancelable.cancel()
+    }
+  }
+
   /**
    * Describes the configuration options of the state.
    */
@@ -53,7 +64,7 @@ internal class OverviewViewportStateImpl(
     }
 
   private fun handleNewData() {
-    val cameraOptions = evaluateViewportData()
+    val cameraOptions = evaluateViewportData() ?: return
     if (isOverviewStateRunning) {
       updateFrame(cameraOptions, false)
     }
@@ -65,21 +76,27 @@ internal class OverviewViewportStateImpl(
     }
   }
 
-  private fun evaluateViewportData(): CameraOptions {
-    return cameraDelegate.cameraForCoordinates(
-      coordinates = options.geometry.extractCoordinates(),
-      camera = cameraOptions {
-        padding(options.padding)
-        bearing(options.bearing)
-        pitch(options.pitch)
-      },
-      coordinatesPadding = options.geometryPadding,
-      maxZoom = options.maxZoom,
-      offset = options.offset
-    ).toBuilder()
-      // cameraForCoordinates does not return padding but we need it to avoid maps placing elements under those paddings (e.g. view annotations)
-      .padding(options.padding)
-      .build()
+  private fun evaluateViewportData(): CameraOptions? {
+    return try {
+      cameraDelegate.cameraForCoordinates(
+        coordinates = options.geometry.extractCoordinates(),
+        camera = cameraOptions {
+          padding(options.padding)
+          bearing(options.bearing)
+          pitch(options.pitch)
+        },
+        coordinatesPadding = options.geometryPadding,
+        maxZoom = options.maxZoom,
+        offset = options.offset
+      )
+    } catch (exception: MapboxMapException) {
+      // Catch the exception here as there's a corner case where calculation is done before the
+      // mapView is inflated/properly rendered, and following exception will occur:
+      // `Unable to calculate cameraForCoordinates, either padding exceeds screensize or screensize is not set`
+      // In this case, we will silently ignore the exception and log it.
+      logI(TAG, "Failed to evaluate viewport data. ${exception.message}")
+      null
+    }
   }
 
   /**
@@ -90,7 +107,11 @@ internal class OverviewViewportStateImpl(
    * @return a handle that cancels current observation.
    */
   override fun observeDataSource(viewportStateDataObserver: ViewportStateDataObserver): Cancelable {
-    if (viewportStateDataObserver.onNewData(evaluateViewportData())) {
+    var keepObserving = true
+    evaluateViewportData()?.let { cameraOptions ->
+      keepObserving = viewportStateDataObserver.onNewData(cameraOptions)
+    }
+    if (keepObserving) {
       dataSourceUpdateObservers.add(viewportStateDataObserver)
     }
 
@@ -176,5 +197,9 @@ internal class OverviewViewportStateImpl(
       is GeometryCollection -> this.geometries().flatMap { extractCoordinates() }
       else -> emptyList()
     }
+  }
+
+  private companion object {
+    private const val TAG = "OverviewViewportStateImpl"
   }
 }

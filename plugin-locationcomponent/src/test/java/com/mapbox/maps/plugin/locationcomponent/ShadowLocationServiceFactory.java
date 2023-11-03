@@ -9,6 +9,7 @@ import com.mapbox.common.location.AccuracyAuthorization;
 import com.mapbox.common.location.DeviceLocationProvider;
 import com.mapbox.common.location.DeviceLocationProviderFactory;
 import com.mapbox.common.location.DeviceLocationProviderType;
+import com.mapbox.common.location.ExtendedLocationProviderParameters;
 import com.mapbox.common.location.LocationError;
 import com.mapbox.common.location.LocationProviderRequest;
 import com.mapbox.common.location.LocationService;
@@ -26,6 +27,12 @@ public class ShadowLocationServiceFactory {
     @Implementation
     public static LocationService locationService() {
         return new LocationService() {
+            @NonNull
+            @Override
+            public Expected<LocationError, DeviceLocationProvider> getDeviceLocationProvider(@NonNull ExtendedLocationProviderParameters extendedLocationProviderParameters, @Nullable LocationProviderRequest locationProviderRequest) {
+                return ExpectedFactory.createValue(deviceLocationProvider);
+            }
+
             @NonNull
             @Override
             public Expected<LocationError, DeviceLocationProvider> getDeviceLocationProvider(@NonNull DeviceLocationProviderType deviceLocationProviderType, @Nullable LocationProviderRequest locationProviderRequest, boolean b) {
