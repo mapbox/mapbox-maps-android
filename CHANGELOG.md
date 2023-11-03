@@ -2,7 +2,8 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# 11.0.0-rc.1
+
+# 11.0.0-rc.1 November 03, 2023
 
 ## Breaking changes ⚠️
 * Add `LocationService.getDeviceLocationProvider` method that accepts `ExtendedLocationProviderParameters` to `LocationService` interface.
@@ -28,6 +29,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v11.0.0-rc.1 and common to v24.0.0-rc.2.
+
 
 # 11.0.0-beta.6 October 24, 2023
 ## Breaking changes ⚠️
