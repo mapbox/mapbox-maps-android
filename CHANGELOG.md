@@ -2,6 +2,10 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
+# Main
+## Features ✨ and improvements 🏁
+* Promote [Mapbox Standard](https://www.mapbox.com/blog/standard-core-style) style to stable.
+
 
 # 11.0.0-rc.1 November 03, 2023
 
