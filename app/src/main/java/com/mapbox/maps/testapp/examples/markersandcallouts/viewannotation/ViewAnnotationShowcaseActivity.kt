@@ -2,7 +2,6 @@ package com.mapbox.maps.testapp.examples.markersandcallouts.viewannotation
 
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.Menu
@@ -15,6 +14,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
 import com.mapbox.bindgen.Expected
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
@@ -67,7 +68,7 @@ class ViewAnnotationShowcaseActivity :
 
     viewAnnotationManager = binding.mapView.viewAnnotationManager
 
-    val bitmap = BitmapFactory.decodeResource(resources, R.drawable.blue_marker_view)
+    val bitmap = ContextCompat.getDrawable(this, R.drawable.ic_blue_marker)!!.toBitmap()
     markerWidth = bitmap.width
     markerHeight = bitmap.height
 

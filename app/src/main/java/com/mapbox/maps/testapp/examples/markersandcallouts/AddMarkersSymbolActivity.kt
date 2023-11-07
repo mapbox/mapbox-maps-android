@@ -1,8 +1,9 @@
 package com.mapbox.maps.testapp.examples.markersandcallouts
 
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
@@ -29,9 +30,15 @@ class AddMarkersSymbolActivity : AppCompatActivity() {
     binding.mapView.mapboxMap.loadStyle(
       styleExtension = style(Style.STANDARD) {
         // prepare red marker from resources
-        +image(RED_ICON_ID, BitmapFactory.decodeResource(resources, R.drawable.red_marker))
+        +image(
+          RED_ICON_ID,
+          ContextCompat.getDrawable(this@AddMarkersSymbolActivity, R.drawable.ic_red_marker)!!.toBitmap()
+        )
         // prepare blue marker from resources
-        +image(BLUE_ICON_ID, BitmapFactory.decodeResource(resources, R.drawable.blue_marker_view))
+        +image(
+          BLUE_ICON_ID,
+          ContextCompat.getDrawable(this@AddMarkersSymbolActivity, R.drawable.ic_blue_marker)!!.toBitmap()
+        )
         // prepare source that will hold icons and add extra string property to each of it
         // to identify what marker icon should be used
         +geoJsonSource(SOURCE_ID) {

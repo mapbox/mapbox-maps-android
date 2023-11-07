@@ -1,7 +1,6 @@
 package com.mapbox.maps.testapp.examples
 
 import android.annotation.SuppressLint
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -13,6 +12,7 @@ import androidx.annotation.IntDef
 import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mapbox.android.gestures.*
@@ -138,7 +138,7 @@ class GesturesActivity : AppCompatActivity() {
         .build()
     )
     mapboxMap.loadStyle(Style.STANDARD) {
-      it.addImage(MARKER_IMAGE_ID, BitmapFactory.decodeResource(resources, R.drawable.red_marker))
+      it.addImage(MARKER_IMAGE_ID, ContextCompat.getDrawable(this, R.drawable.ic_red_marker)!!.toBitmap())
     }
 
     binding.mapView.waitForLayout {

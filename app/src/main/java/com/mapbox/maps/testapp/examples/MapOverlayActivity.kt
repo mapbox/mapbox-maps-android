@@ -1,8 +1,9 @@
 package com.mapbox.maps.testapp.examples
 
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
@@ -54,7 +55,13 @@ class MapOverlayActivity : AppCompatActivity(), OnMapClickListener {
           )
         }
         // Add the marker image to map
-        +image(imageId, BitmapFactory.decodeResource(resources, R.drawable.blue_marker_view))
+        +image(
+          imageId,
+          ContextCompat.getDrawable(
+            this@MapOverlayActivity,
+            R.drawable.ic_blue_marker
+          )!!.toBitmap()
+        )
         +symbolLayer(layerId, sourceId) {
           iconImage(imageId)
           iconAllowOverlap(true)
