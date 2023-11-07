@@ -2,8 +2,14 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# main
+# 10.16.2
+## Bug fixes 🐞
+* Fix a crash because of non-exported runtime-registered broadcasts receivers for apps targeting SDK 34.
+* Do not crash with `IncompatibleGooglePlayServicesLocationVersion` if fused location provider is not found.
+* Fix line label flickering issue by eliminating the anchor rounding error.
 
+## Dependencies
+* Update gl-native to v10.16.2 and common to v23.8.4.
 
 # 10.16.1 October 03, 2023
 ## Bug fixes 🐞
