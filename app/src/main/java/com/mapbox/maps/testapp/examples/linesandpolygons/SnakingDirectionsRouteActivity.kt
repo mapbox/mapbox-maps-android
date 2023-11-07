@@ -1,9 +1,10 @@
 package com.mapbox.maps.testapp.examples.linesandpolygons
 
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
 import com.mapbox.api.directions.v5.DirectionsCriteria
 import com.mapbox.api.directions.v5.DirectionsCriteria.GEOMETRY_POLYLINE
 import com.mapbox.api.directions.v5.MapboxDirections
@@ -49,7 +50,13 @@ class SnakingDirectionsRouteActivity : AppCompatActivity() {
 
     binding.mapView.mapboxMap.loadStyle(
       style(Style.LIGHT) {
-        +image(ICON_ID, BitmapFactory.decodeResource(resources, R.drawable.red_marker))
+        +image(
+          ICON_ID,
+          ContextCompat.getDrawable(
+            this@SnakingDirectionsRouteActivity,
+            R.drawable.ic_red_marker
+          )!!.toBitmap()
+        )
         +geoJsonSource(SOURCE_ID) {
           featureCollection(
             FeatureCollection.fromFeatures(

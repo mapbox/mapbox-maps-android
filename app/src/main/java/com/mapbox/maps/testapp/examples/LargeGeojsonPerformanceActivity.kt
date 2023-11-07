@@ -1,8 +1,9 @@
 package com.mapbox.maps.testapp.examples
 
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
@@ -77,7 +78,13 @@ class LargeGeojsonPerformanceActivity : AppCompatActivity() {
               }
             }
             // add an icon that uses very small geojson source
-            +image("icon", BitmapFactory.decodeResource(resources, R.drawable.blue_marker_view))
+            +image(
+              "icon",
+              ContextCompat.getDrawable(
+                this@LargeGeojsonPerformanceActivity,
+                R.drawable.ic_blue_marker
+              )!!.toBitmap()
+            )
             +geoJsonSource("${SOURCE}_marker") {
               logI(TAG, "Update marker ${SOURCE}_marker, data-id : $jsonUpdateCounter")
               geometry(Point.fromLngLat(LONGITUDE, LATITUDE), jsonUpdateCounter++.toString())

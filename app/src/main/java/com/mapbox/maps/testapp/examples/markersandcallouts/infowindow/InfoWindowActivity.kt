@@ -35,7 +35,7 @@ class InfoWindowActivity : AppCompatActivity(), OnMapLongClickListener {
 
     icon = BitmapUtils.bitmapFromDrawableRes(
       this@InfoWindowActivity,
-      R.drawable.blue_marker_view
+      R.drawable.ic_blue_marker
     )!!
     mapView.mapboxMap.apply {
       setCamera(

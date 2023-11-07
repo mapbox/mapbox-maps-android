@@ -1,7 +1,8 @@
 package com.mapbox.maps.testapp.observable
 
-import android.graphics.BitmapFactory
 import androidx.annotation.UiThread
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.mapbox.bindgen.DataRef
@@ -373,10 +374,10 @@ class ObservableEventsTest : BaseMapTest() {
             style(Style.MAPBOX_STREETS) {
               +image(
                 IMAGE_ID,
-                BitmapFactory.decodeResource(
-                  activity.resources,
-                  R.drawable.blue_marker_view
-                )
+                ContextCompat.getDrawable(
+                  activity,
+                  R.drawable.ic_blue_marker
+                )!!.toBitmap()
               )
               +geoJsonSource(SOURCE_ID) {
                 geometry(Point.fromLngLat(0.0, 0.0))
@@ -419,10 +420,10 @@ class ObservableEventsTest : BaseMapTest() {
             style(Style.MAPBOX_STREETS) {
               +image(
                 IMAGE_ID,
-                BitmapFactory.decodeResource(
-                  activity.resources,
-                  R.drawable.blue_marker_view
-                )
+                ContextCompat.getDrawable(
+                  activity,
+                  R.drawable.ic_blue_marker
+                )!!.toBitmap()
               )
               +geoJsonSource(SOURCE_ID) {
                 geometry(Point.fromLngLat(0.0, 0.0))

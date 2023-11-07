@@ -48,7 +48,7 @@ class ViewAnnotationWithPointAnnotationActivity : AppCompatActivity() {
 
     val iconBitmap = BitmapUtils.bitmapFromDrawableRes(
       this@ViewAnnotationWithPointAnnotationActivity,
-      R.drawable.blue_marker_view
+      R.drawable.ic_blue_marker
     )!!
 
     viewAnnotationManager = binding.mapView.viewAnnotationManager

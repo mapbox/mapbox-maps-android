@@ -1,8 +1,9 @@
 package com.mapbox.maps.testapp.examples.markersandcallouts
 
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapView
@@ -35,7 +36,10 @@ class AddOneMarkerSymbolActivity : AppCompatActivity() {
     }.loadStyle(
       styleExtension = style(Style.STANDARD) {
         // prepare blue marker from resources
-        +image(BLUE_ICON_ID, BitmapFactory.decodeResource(resources, R.drawable.blue_marker_view))
+        +image(
+          BLUE_ICON_ID,
+          ContextCompat.getDrawable(this@AddOneMarkerSymbolActivity, R.drawable.ic_blue_marker)!!.toBitmap()
+        )
         +geoJsonSource(SOURCE_ID) {
           geometry(Point.fromLngLat(LONGITUDE, LATITUDE))
         }

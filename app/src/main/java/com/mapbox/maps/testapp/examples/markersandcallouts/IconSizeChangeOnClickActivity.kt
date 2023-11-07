@@ -1,9 +1,10 @@
 package com.mapbox.maps.testapp.examples.markersandcallouts
 
 import android.animation.ValueAnimator
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
 import com.mapbox.bindgen.Expected
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
@@ -43,7 +44,10 @@ class IconSizeChangeOnClickActivity : AppCompatActivity(), OnMapClickListener {
           )
         }
         // Add the marker image to map
-        +image("my-marker-image", BitmapFactory.decodeResource(resources, R.drawable.blue_marker_view))
+        +image(
+          "my-marker-image",
+          ContextCompat.getDrawable(this@IconSizeChangeOnClickActivity, R.drawable.ic_blue_marker)!!.toBitmap()
+        )
         // Adding an offset so that the bottom of the blue icon gets fixed to the coordinate, rather than the
         // middle of the icon being fixed to the coordinate point.
         +symbolLayer("marker-layer", "marker-source") {
