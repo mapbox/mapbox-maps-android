@@ -22,7 +22,7 @@ import com.mapbox.maps.plugin.gestures.addOnMapClickListener
 import com.mapbox.maps.testapp.R
 
 /**
- * Use [MapboxMap.flyTo] on a map with globe projection to slowly zoom to a location.
+ * Use [MapboxMap.flyTo] on a map with globe projection, atmosphere and terrain to slowly zoom to a location.
  */
 class GlobeFlyToActivity : AppCompatActivity(), OnMapClickListener {
 
@@ -45,10 +45,7 @@ class GlobeFlyToActivity : AppCompatActivity(), OnMapClickListener {
         +rasterDemSource("raster-dem") {
           url("mapbox://mapbox.terrain-rgb")
         }
-        +terrain("raster-dem") {
-          // camera seems to be a bit jumping on high zoom level - check with gl-native
-          exaggeration(1.5)
-        }
+        +terrain("raster-dem")
       }
     ) {
       // Toast instructing user to tap on the map
