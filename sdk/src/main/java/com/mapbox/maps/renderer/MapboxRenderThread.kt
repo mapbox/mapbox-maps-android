@@ -1,10 +1,14 @@
 package com.mapbox.maps.renderer
 
+import android.app.ActivityManager
+import android.content.Context
 import android.opengl.GLES20
+import android.os.Build
 import android.os.SystemClock
 import android.view.Choreographer
 import android.view.Surface
 import androidx.annotation.*
+import com.mapbox.common.MapboxSDKCommon
 import com.mapbox.maps.logE
 import com.mapbox.maps.logI
 import com.mapbox.maps.logW
@@ -59,6 +63,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   @Volatile
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal var paused = false
+  private var destroyed = false
 
   internal var renderThreadRecorder: RenderThreadRecorder? = null
 
@@ -297,13 +302,13 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
         eglCore.makeCurrent(eglSurface)
       }
 
-      mapboxRenderer.render()
+      nativeRender()
 
       if (widgetRenderer.hasTexture()) {
         widgetTextureRenderer.render(widgetRenderer.getTexture())
       }
     } else {
-      mapboxRenderer.render()
+      nativeRender()
     }
 
     // assuming render event queue holds user's runnables with OpenGL ES commands
@@ -626,6 +631,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   @UiThread
   internal fun destroy() {
     logI(TAG, "destroy")
+    destroyed = true
     lock.withLock {
       // do nothing if destroy for some reason called more than once to avoid deadlock
       if (renderHandlerThread.isRunning) {
@@ -654,6 +660,35 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     while (event != null) {
       event.runnable?.run()
       event = originalQueue.poll()
+    }
+  }
+
+  private fun nativeRender() {
+    try {
+      mapboxRenderer.render()
+    } catch (e: Error) {
+      val errorMessage = "${e.message} happened at ${tryInvoke { mapboxRenderer.map?.cameraState }}" +
+        "; GLES20 error code: ${tryInvoke { GLES20.glGetError() }}" +
+        "; Activity is ${if (destroyed) "destroyed" else if (paused) "paused" else "started"}" +
+        "; Native renderer is created: $nativeRenderCreated" +
+        "; Render thread prepared: $renderThreadPrepared" +
+        "; Android surface isValid: ${surface?.isValid}" +
+        "; Viewport size: w=$width, h=$height" +
+        "; isGestureInProgress: ${tryInvoke { mapboxRenderer.map?.isGestureInProgress }}" +
+        "; isUserAnimationInProgress: ${tryInvoke { mapboxRenderer.map?.isUserAnimationInProgress }}" +
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) "; Memory stats: ${tryInvoke {
+          (MapboxSDKCommon.getContext().getSystemService(Context.ACTIVITY_SERVICE) as? ActivityManager)
+            ?.getProcessMemoryInfo(intArrayOf(android.os.Process.myPid()))?.firstOrNull()?.memoryStats
+        }}." else "."
+      throw Error(errorMessage, e)
+    }
+  }
+
+  private fun <T> tryInvoke(block: () -> T): String? {
+    return try {
+      block.invoke().toString()
+    } catch (t: Throwable) {
+      "unknown"
     }
   }
 
