@@ -17,6 +17,7 @@ This document is a guide for migrating from v10 of the Mapbox Maps SDK for Andro
   - [3. Check for breaking changes](#3-check-for-breaking-changes)
     - [3.1 Location API](#31-location-api)
       - [3.1.1 Using LocationService instead of LocationEngine](#311-using-locationservice-instead-of-locationengine)
+      - [3.1.2 Common location migration](#312-common-location-migration)
     - [3.2. ResourceOptions and ResourceOptionsManager have been removed](#32-resourceoptions-and-resourceoptionsmanager-have-been-removed)
     - [3.3 Events API](#33-events-api)
     - [3.4 Camera Animations API](#34-camera-animations-api)
@@ -396,6 +397,21 @@ if (result.isValue) {
 }
 ```
 
+There are also overload versions of `getDeviceLocationProvider` that allows to specify `DeviceLocationProviderType` and `ExtendedLocationProviderParameters`:
+
+```kotlin
+LocationService::getDeviceLocationProvider(type: DeviceLocationProviderType,
+request: LocationProviderRequest? = null, allowUserDefined: Boolean = true):
+Expected<LocationError, DeviceLocationProvider>
+
+LocationService::getDeviceLocationProvider(extendedParameters: ExtendedLocationProviderParameters,
+request: LocationProviderRequest? = null):
+Expected<LocationError, DeviceLocationProvider>
+```
+
+See the documentation for `DeviceLocationProviderType` and `ExtendedLocationProviderParameters` for a detailed description of these types.
+
+
 To receive location updates, create a `LocationObserver` and override the `onLocationUpdateReceived` function to handle the locations:
 ``` kotlin
 val locationObserver = object: LocationObserver {
@@ -437,6 +453,101 @@ lastLocationCancelable.cancel()
 ```
 
 2. Compatibility classes `com.mapbox.common.location.compat.*` have been removed.
+
+##### 3.1.2 Common location migration
+
+1. `LocationService::getLastLocation()` changes.
+
+ LocationService::getLastLocation() is replaced by an asynchronous method LocationProvider::getLastLocation()
+
+v10:
+
+```kotlin
+LocationService::getLastLocation(): expected<Location, LocationError>
+```
+
+v11:
+```kotlin
+
+LocationProvider::getLastLocation(callback: GetLocationCallback): Cancelable
+```
+
+2. `LiveTrackingClient` has been replaced by `DeviceLocationProvider`
+
+Remove lifecycle mode capabilities from `LiveTrackingClient`/`DeviceLocationProvider`, `LiveTrackingClientSettings::ActivityType`, and `LiveTrackingClient::flush()`
+
+The explicit `start()` and `stop()` functions have been removed from the API. `DeviceLocationProvider` starts as soon as one observer is attached and stops when all observers are removed.
+
+3. `LocationService::getDeviceLocationProvider` instead of `LocationService::getLiveTrackingClient`
+
+Introduce `LocationProviderRequest` to replace the `Value` setting and simplify API. Add several overloads for `getDeviceLocationProvider` to be able to specify custom `DeviceLocationProvider` parameters.
+
+v10:
+
+```kotlin
+LocationService::getLiveTrackingClient(name: String, capabilities: Value): expected<Location, LocationError>
+```
+
+v11:
+
+```kotlin
+LocationService::getDeviceLocationProvider(request: optional<LocationProviderRequest>): Expected<DeviceLocationProvider, LocationError>
+
+LocationService::getDeviceLocationProvider(type: DeviceLocationProviderType,
+request: LocationProviderRequest? = null, allowUserDefined: Boolean = true):
+Expected<LocationError, DeviceLocationProvider>
+
+LocationService::getDeviceLocationProvider(extendedParameters: ExtendedLocationProviderParameters,
+request: LocationProviderRequest? = null):
+Expected<LocationError, DeviceLocationProvider>
+```
+
+See the documentation for `LocationProviderRequest`, `DeviceLocationProviderType` and `ExtendedLocationProviderParameters` for a detailed description of these types.
+
+4. `LiveTrackingClientObserver` changes
+
+Rename `LiveTrackingClientObserver` to `LocationObserver.` Method `onLiveTrackingStateChanged()` removed. Method `onLocationUpdateReceived()` simplified:
+
+v10:
+
+```kotlin
+interface LiveTrackingClientObserver {
+    fun onLiveTrackingStateChanged(state: LiveTrackingState, error: LocationError?)
+    fun onLocationUpdateReceived(locationUpdate: Expected<LocationError, List<Location>>)
+}
+
+```
+
+v11:
+
+```kotlin
+interface LocationObserver {
+    fun onLocationUpdateReceived(locations: List<Location>)
+}
+```
+
+5. Add methods that allows to subscribe to location updates with specific `Looper` or `PendingIntent`
+
+
+Extend `LocationProvider` to allow registering an observer with `Looper`. The observer will be notified through the given `Looper`.
+
+```kotlin
+addLocationObserver(observer: LocationObserver, looper: Looper)
+```
+
+`PendingIntent` can be used to register/unregister for `DeviceLocationProvider` location updates.
+
+```kotlin
+requestLocationUpdates(pendingIntent: PendingIntent)
+removeLocationUpdates(pendingIntent: PendingIntent)
+```
+
+
+6. `LocationServiceFactory` methods changes
+
+`LocationServiceFactory.locationService()` method name changed to `LocationServiceFactory.getOrCreate()`
+
+`LocationServiceFactory.setUserDefined()` method was removed. It is not possible to set custom `LocationService` anymore but possible to set custom `DeviceLocationProvider` with `LocationService::setUserDefinedDeviceLocationProviderFactory()`.
 
 #### 3.2. ResourceOptions and ResourceOptionsManager have been removed
 
@@ -612,6 +723,33 @@ Those changes should only affect you if you explicitly access the Mapbox network
 5. `HttpServiceInterceptorInterface.onDownload` method was removed.
 6. The signature for `HttpServiceInterceptorInterface.onRequest` and `HttpServiceInterceptorInterface.onReponse` was changed. The return value is passed through a continuation instead of the methods' return value.
 7. The ability to overwrite for HTTP stack through modular setup has been removed, e.g. if you have used `@MapboxModule(type = MapboxModuleType.CommonHttpClient)` in your application, it will not overwrite the network stack in Mapbox Maps SDK v11 anymore.
+8. Introduce `HttpRequestFlags` constants to set additional HttpRequest parameters. `HttpRequest.keepCompression` moved to `HttpRequest.flags`(`HttpRequestFlags.KEEP_COMPRESSION`).
+9. Introduce `HttpRequestFlags.PAUSE_IN_BACKGROUND` that can be set using `HttpRequest.flags`. If this flag is set and the application also has the `com.mapbox.common.http.pause_requests_on_demand` setting, the request will be performed in the foreground only. In case application is in the background, the request will be queued.
+
+To set `com.mapbox.common.http.pause_requests_on_demand` add an `http-config.xml` file with the following content:
+
+```xml
+<resources>
+<bool name="com.mapbox.common.http.pause_requests_on_demand">true</bool>
+</resources>
+```
+
+Alternatively, the value can be added to other resource XML file if one already exist.
+
+
+Here is an example code to create a request with the `PAUSE_IN_BACKGROUND` flag:
+
+
+```java
+HttpRequest httpRequest = new HttpRequest.Builder().method(HttpMethod.GET)
+                    .url(url)
+                    .headers(new HashMap<>())
+                    .flags(HttpRequestFlags.PAUSE_IN_BACKGROUND)
+                    .build();
+```
+
+It is also possible to combine the `PAUSE_IN_BACKGROUND` with other flags. To set both `PAUSE_IN_BACKGROUND` and `KEEP_COMPRESSION` flags, use `HttpRequestFlags.PAUSE_IN_BACKGROUND | HttpRequestFlags.KEEP_COMPRESSION` as the value for the `flags` property.
+
 
 #### 3.16 Java-specific changes
 
