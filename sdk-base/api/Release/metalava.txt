@@ -154,7 +154,7 @@ package com.mapbox.maps {
     field public static final String OUTDOORS = "mapbox://styles/mapbox/outdoors-v12";
     field public static final String SATELLITE = "mapbox://styles/mapbox/satellite-v9";
     field public static final String SATELLITE_STREETS = "mapbox://styles/mapbox/satellite-streets-v12";
-    field public static final String STANDARD = "mapbox://styles/mapbox/standard-beta";
+    field public static final String STANDARD = "mapbox://styles/mapbox/standard";
     field public static final String TRAFFIC_DAY = "mapbox://styles/mapbox/traffic-day-v2";
     field public static final String TRAFFIC_NIGHT = "mapbox://styles/mapbox/traffic-night-v2";
   }

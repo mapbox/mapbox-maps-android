@@ -559,13 +559,13 @@ snapshotter.start { snapshotBitmap, errorMessage ->
 2. Mapbox style constants have been updated to use the latest versions bringing performance improvements:
 
 | Style             | v10                                          | v11                                          |
-| ----------------- | -------------------------------------------- | -------------------------------------------- |
+|-------------------|----------------------------------------------|----------------------------------------------|
 | MAPBOX_STREETS    | mapbox://styles/mapbox/streets-v11           | mapbox://styles/mapbox/streets-v12           |
 | SATELLITE_STREETS | mapbox://styles/mapbox/satellite-streets-v11 | mapbox://styles/mapbox/satellite-streets-v12 |
 | OUTDOORS          | mapbox://styles/mapbox/outdoors-v11          | mapbox://styles/mapbox/outdoors-v12          |
 | LIGHT             | mapbox://styles/mapbox/light-v10             | mapbox://styles/mapbox/light-v11             |
 | DARK              | mapbox://styles/mapbox/dark-v10              | mapbox://styles/mapbox/dark-v11              |
-| STANDARD          | N / A                                        | mapbox://styles/mapbox/standard-beta         |
+| STANDARD          | N / A                                        | mapbox://styles/mapbox/standard              |
 
 3. The `MapboxMap` methods: `getGeoJsonClusterLeaves`, `getGeoJsonClusterChildren`, `getGeoJsonClusterExpansionZoom` all return `Cancelable`.
 4. Remove deprecated `MapStyleStateDelegate.isFullyLoaded` and `MapboxMap.isFullyLoaded`. `Style.isStyleLoaded` should be used instead.
