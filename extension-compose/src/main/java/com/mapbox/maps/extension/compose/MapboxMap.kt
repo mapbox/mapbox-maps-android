@@ -11,6 +11,7 @@ import com.mapbox.maps.extension.compose.animation.viewport.MapViewportState
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
 import com.mapbox.maps.extension.compose.internal.MapApplier
 import com.mapbox.maps.extension.compose.internal.MapPreviewPlaceHolder
+import com.mapbox.maps.extension.compose.internal.MapViewLifecycle
 import com.mapbox.maps.extension.compose.internal.MapboxMapComposeNode
 import com.mapbox.maps.plugin.attribution.generated.AttributionSettings
 import com.mapbox.maps.plugin.compass.generated.CompassSettings
@@ -71,14 +72,13 @@ public fun MapboxMap(
     return
   }
 
-  lateinit var mapView: MapView
-
+  val context = LocalContext.current
+  val mapView = remember {
+    MapView(context, mapInitOptions = mapInitOptionsFactory.invoke(context))
+  }
+  MapViewLifecycle(mapView = mapView)
   AndroidView(
-    factory = { context ->
-      MapView(context, mapInitOptions = mapInitOptionsFactory.invoke(context)).also {
-        mapView = it
-      }
-    },
+    factory = { mapView },
     modifier = modifier,
   )
 
@@ -95,7 +95,6 @@ public fun MapboxMap(
   val currentOnMapLongClickListener by rememberUpdatedState(onMapLongClickListener)
   val currentContent by rememberUpdatedState(content)
   val currentMapEvents by rememberUpdatedState(mapEvents)
-
   LaunchedEffect(Unit) {
     disposingComposition(
       Composition(
@@ -115,7 +114,7 @@ public fun MapboxMap(
             currentOnMapLongClickListener,
             currentMapEvents,
 
-          )
+            )
           currentContent?.let { MapboxMapScope.it() }
         }
       }
