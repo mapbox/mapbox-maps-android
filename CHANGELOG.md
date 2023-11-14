@@ -6,6 +6,9 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 * Promote [Mapbox Standard](https://www.mapbox.com/blog/standard-core-style) style to stable.
 
+## Bug fixes 🐞
+* [compose] Fix a lifecycle handling issue for `MapboxMap` which results in potential memory leak.
+
 
 # 11.0.0-rc.1 November 03, 2023
 
