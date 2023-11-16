@@ -718,13 +718,12 @@ Those changes should only affect you if you explicitly access the Mapbox network
 
 1. `HttpServiceFactory.getInstance`, `HttpServiceFactory.reset`, `HttpServiceFactory.setUserDefined` methods were removed from the public API. ***This means that you are not allowed to overwrite the Mapbox network stack anymore.***
 2. To add an interceptor, you should call `HttpServiceFactory.setHttpServiceInterceptor` instead of `HttpServiceFactory.getInstance().setInterceptor`.
-3. `DownloadOptions` now contains a new field called `memoryThreshold`. It specifies a threshold for returning data in memory instead of writing to the disk.
-4. `HttpResponseData.code` type changed from `long` to `int`.
-5. `HttpServiceInterceptorInterface.onDownload` method was removed.
-6. The signature for `HttpServiceInterceptorInterface.onRequest` and `HttpServiceInterceptorInterface.onReponse` was changed. The return value is passed through a continuation instead of the methods' return value.
-7. The ability to overwrite for HTTP stack through modular setup has been removed, e.g. if you have used `@MapboxModule(type = MapboxModuleType.CommonHttpClient)` in your application, it will not overwrite the network stack in Mapbox Maps SDK v11 anymore.
-8. Introduce `HttpRequestFlags` constants to set additional HttpRequest parameters. `HttpRequest.keepCompression` moved to `HttpRequest.flags`(`HttpRequestFlags.KEEP_COMPRESSION`).
-9. Introduce `HttpRequestFlags.PAUSE_IN_BACKGROUND` that can be set using `HttpRequest.flags`. If this flag is set and the application also has the `com.mapbox.common.http.pause_requests_on_demand` setting, the request will be performed in the foreground only. In case application is in the background, the request will be queued.
+3. `HttpResponseData.code` type changed from `long` to `int`.
+4. `HttpServiceInterceptorInterface.onDownload` method was removed.
+5. The signature for `HttpServiceInterceptorInterface.onRequest` and `HttpServiceInterceptorInterface.onReponse` was changed. The return value is passed through a continuation instead of the methods' return value.
+6. The ability to overwrite for HTTP stack through modular setup has been removed, e.g. if you have used `@MapboxModule(type = MapboxModuleType.CommonHttpClient)` in your application, it will not overwrite the network stack in Mapbox Maps SDK v11 anymore.
+7. Introduce `HttpRequestFlags` constants to set additional HttpRequest parameters. `HttpRequest.keepCompression` moved to `HttpRequest.flags`(`HttpRequestFlags.KEEP_COMPRESSION`).
+8. Introduce `HttpRequestFlags.PAUSE_IN_BACKGROUND` that can be set using `HttpRequest.flags`. If this flag is set and the application also has the `com.mapbox.common.http.pause_requests_on_demand` setting, the request will be performed in the foreground only. In case application is in the background, the request will be queued.
 
 To set `com.mapbox.common.http.pause_requests_on_demand` add an `http-config.xml` file with the following content:
 
