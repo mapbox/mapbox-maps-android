@@ -2,8 +2,8 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# 11.0.0-rc.2
-# Main
+
+# 11.0.0-rc.2 November 17, 2023
 ## Breaking changes ⚠️
 * Minimum OpenGL ES version is now 3.0
 
@@ -28,6 +28,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Known issues
 * When adding a view annotation with `ViewAnnotationOptions.allowOverlapWithPuck` or `ViewAnnotationOptions.ignoreCameraPadding` set to true, the same option for all the view annotations added previously will be overwritten to true. The fix will land in the next release.
+
 
 # 11.0.0-rc.1 November 03, 2023
 
