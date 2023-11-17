@@ -1,0 +1,17 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "construction-1",
+      "properties": {},
+      "geometry": {
+        "coordinates": [
+          -122.41444169500868,
+          37.6344580806383
+        ],
+        "type": "Point"
+      }
+    }
+  ]
+}

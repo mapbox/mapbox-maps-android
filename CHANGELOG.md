@@ -2,13 +2,28 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# Main
+# 11.0.0-rc.2
 ## Features ✨ and improvements 🏁
 * Promote [Mapbox Standard](https://www.mapbox.com/blog/standard-core-style) style to stable.
+* Introduce `ViewAnnotationOptions.allowOverlapWithPuck` and `ViewAnnotationOptions.ignoreCameraPadding` to configure the dynamic view annotation's behaviour.
+* Avoid placing view annotation on overlapped line geometries, if the current bound layer is below other annotated line layers.
 
 ## Bug fixes 🐞
 * [compose] Fix a lifecycle handling issue for `MapboxMap` which results in potential memory leak.
+* Fix a StackOverflow crash when `MultiGeometry` is used for `OverviewViewportStateOptions`.
+* Fix flickering and wrong positions in elevated symbols. 
+* Update style layer's source should trigger repaint. 
+* Fix failure to load a 3D model when it uses a 32-bit index buffer.
+* Fix rendering of the updated content on the map after a feature state change if terrain or globe were enabled. 
+* Fix view annotation disappearing on the upper parts of the screen when terrain is enabled. 
+* Trigger view annotation replacement if the associated layer/source gets changed. 
+* Fix a bug where snapshot is rendered without 3D content.
 
+## Dependencies
+* Update gl-native to v11.0.0-rc.2 and common to v24.0.0-rc.3.
+
+## Known issues
+* When adding a view annotation with `ViewAnnotationOptions.allowOverlapWithPuck` or `ViewAnnotationOptions.ignoreCameraPadding` set to true, the same option for all the view annotations added previously will be overwritten to true. The fix will land in the next release.
 
 # 11.0.0-rc.1 November 03, 2023
 
