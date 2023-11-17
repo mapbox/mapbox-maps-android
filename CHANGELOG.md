@@ -3,6 +3,10 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # 11.0.0-rc.2
+# Main
+## Breaking changes ⚠️
+* Minimum OpenGL ES version is now 3.0
+
 ## Features ✨ and improvements 🏁
 * Promote [Mapbox Standard](https://www.mapbox.com/blog/standard-core-style) style to stable.
 * Introduce `ViewAnnotationOptions.allowOverlapWithPuck` and `ViewAnnotationOptions.ignoreCameraPadding` to configure the dynamic view annotation's behaviour.
