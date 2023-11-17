@@ -34,7 +34,7 @@
         {
             "id": "water",
             "type": "fill",
-            "slot": "middle",
+            "slot": "bottom",
             "source": "water_source",
             "source-layer": "water",
             "layout": { },
