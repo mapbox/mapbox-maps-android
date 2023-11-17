@@ -82,15 +82,7 @@ internal class EGLCore(
 
     val notSupportingEglContext3 = checkEglError("eglCreateContext") != null
     eglContext = if (notSupportingEglContext3) {
-      val contextEgl2 = EGL14.eglCreateContext(
-        /* dpy = */ eglDisplay,
-        /* config = */ eglConfig,
-        /* share_context = */ sharedContext,
-        /* attrib_list = */ attribsEgl2,
-        /* offset = */ 0,
-      )
-      checkEglErrorAndNotify("eglCreateContext")
-      contextEgl2
+      throw IllegalStateException("OpenGL ES 3.0 context could not be created")
     } else {
       contextEgl3
     }
@@ -301,6 +293,5 @@ internal class EGLCore(
   companion object {
     private const val TAG = "Mbgl-EglCore"
     private val attribsEgl3 = intArrayOf(EGL14.EGL_CONTEXT_CLIENT_VERSION, 3, EGL14.EGL_NONE)
-    private val attribsEgl2 = intArrayOf(EGL14.EGL_CONTEXT_CLIENT_VERSION, 2, EGL14.EGL_NONE)
   }
 }
