@@ -7,7 +7,6 @@ import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapboxMap
-import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.expressions.dsl.generated.rgb
 import com.mapbox.maps.extension.style.layers.generated.lineLayer
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
@@ -20,7 +19,7 @@ import com.mapbox.maps.testapp.databinding.ActivityStandardStyleBinding
 class StandardStyleActivity : AppCompatActivity() {
   private lateinit var mapboxMap: MapboxMap
   private val line = LineString.fromLngLats(LINE_COORDINATES)
-  private var lightSetting = LightPresets.DUSK
+  private var lightSetting: LightPresets = LightPresets.DUSK
   private var labelsSetting = true
   private lateinit var binding: ActivityStandardStyleBinding
 
@@ -51,56 +50,65 @@ class StandardStyleActivity : AppCompatActivity() {
         +lineLayer(layerId = "line-layer", sourceId = "line-layer") {
           lineColor(rgb(255.0, 165.0, 0.0))
           lineWidth(8.0)
-          slot("middle")
+          // Order of adding layers matter. This line layer has the same slot as the water layer
+          // (see [STYLE_URL]) but it will be rendered on top of the water because it's added later.
+          slot("bottom")
         }
       }
-    ) { style ->
-      addOnClickListeners(style)
-    }
+    )
+    addOnClickListeners()
   }
 
-  private fun addOnClickListeners(style: Style) {
+  private fun addOnClickListeners() {
     // When a user clicks the light setting button change the `lightPreset` config property on the Standard style import
     binding.fabLightSetting.setOnClickListener {
-      lightSetting = when (lightSetting) {
-          LightPresets.DAY -> {
-            LightPresets.DAWN
-          }
-          LightPresets.DAWN -> {
-            LightPresets.DUSK
-          }
-          LightPresets.DUSK -> {
-            LightPresets.NIGHT
-          }
-          LightPresets.NIGHT -> {
-            LightPresets.DAY
-          }
+      mapboxMap.getStyle { style ->
+        lightSetting = when (lightSetting) {
+          LightPresets.DAY -> LightPresets.DAWN
+          LightPresets.DAWN -> LightPresets.DUSK
+          LightPresets.DUSK -> LightPresets.NIGHT
+          LightPresets.NIGHT -> LightPresets.DAY
+        }
+        style.setStyleImportConfigProperty(
+          IMPORT_ID_FOR_STANDARD_STYLE,
+          "lightPreset",
+          lightSetting.value
+        )
       }
-      style.setStyleImportConfigProperty("standard", "lightPreset", Value.valueOf(lightSetting.toString().lowercase()))
     }
 
     // When a user clicks the labels setting button change the label config properties on the Standard style import to show/hide them
     // To identify which configuration properties are available on an imported style you can use `style.getStyleImportSchema()`
     binding.fabLabelsSetting.setOnClickListener {
-      labelsSetting = !labelsSetting
-      style.setStyleImportConfigProperty("standard", "showPlaceLabels", Value.valueOf(labelsSetting))
-      style.setStyleImportConfigProperty("standard", "showRoadLabels", Value.valueOf(labelsSetting))
-      style.setStyleImportConfigProperty("standard", "showPointInterestLabels", Value.valueOf(labelsSetting))
-      style.setStyleImportConfigProperty("standard", "showTransitLabels", Value.valueOf(labelsSetting))
+      mapboxMap.getStyle { style ->
+        labelsSetting = !labelsSetting
+        style.setStyleImportConfigProperty(IMPORT_ID_FOR_STANDARD_STYLE, "showPlaceLabels", Value.valueOf(labelsSetting))
+        style.setStyleImportConfigProperty(IMPORT_ID_FOR_STANDARD_STYLE, "showRoadLabels", Value.valueOf(labelsSetting))
+        style.setStyleImportConfigProperty(IMPORT_ID_FOR_STANDARD_STYLE, "showPointInterestLabels", Value.valueOf(labelsSetting))
+        style.setStyleImportConfigProperty(IMPORT_ID_FOR_STANDARD_STYLE, "showTransitLabels", Value.valueOf(labelsSetting))
+      }
     }
   }
 
-  private enum class LightPresets {
-    DAY,
-    DAWN,
-    DUSK,
-    NIGHT
+  private enum class LightPresets(val value: Value) {
+    DAY(Value.valueOf("day")),
+    DAWN(Value.valueOf("dawn")),
+    DUSK(Value.valueOf("dusk")),
+    NIGHT(Value.valueOf("night"))
   }
 
   companion object {
+    /**
+     * The ID used in [STYLE_URL] that references the `standard` style.
+     */
+    private const val IMPORT_ID_FOR_STANDARD_STYLE = "standard"
     private const val LATITUDE = 40.72
     private const val LONGITUDE = -73.99
     private const val STYLE_URL = "asset://fragment-realestate-NY.json"
+
+    /**
+     * Boundary line between New York and New Jersey.
+     */
     private val LINE_COORDINATES = listOf(
       Point.fromLngLat(-73.91912400100642, 40.913503418907936),
       Point.fromLngLat(-73.9615887363045, 40.82943110786286),
