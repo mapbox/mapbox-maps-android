@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>AnnotationManager</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/jetbrains-mono.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+<div class="navigation-wrapper" id="navigation-wrapper">
+    <div id="leftToggler"><span class="icon-toggler"></span></div>
+    <div class="library-name">
+            <a href="../../../index.html">
+                    <span>mapbox-maps-android</span>
+            </a>
+    </div>
+    <div>
+    </div>
+    <div class="pull-right d-flex">
+        <button id="theme-toggle-button"><span id="theme-toggle"></span></button>
+        <div id="searchBar"></div>
+    </div>
+</div>
+<div id="container">
+    <div id="leftColumn">
+        <div id="sideMenu"></div>
+    </div>
+    <div id="main">
+<div class="main-content" id="content" pageIds="mapbox-maps-android::com.mapbox.maps.plugin.annotation/AnnotationManager///PointingToDeclaration//540127926">
+  <div class="breadcrumbs"><a href="../../../index.html">mapbox-maps-android</a><span class="delimiter">/</span><a href="../index.html">com.mapbox.maps.plugin.annotation</a><span class="delimiter">/</span><span class="current">AnnotationManager</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Annotation</span><wbr></wbr><span><span>Manager</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">interface </span><a href="index.html">AnnotationManager</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="index.html">G</a><span class="token operator"> : </span><span data-unresolved-link="com.mapbox.geojson/Geometry///PointingToDeclaration/">Geometry</span><span class="token punctuation">, </span><span class="token keyword"></span><a href="index.html">T</a><span class="token operator"> : </span><a href="../-annotation/index.html">Annotation</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="index.html">G</a><span class="token operator">&gt;</span><span class="token punctuation">, </span><span class="token keyword"></span><a href="index.html">S</a><span class="token operator"> : </span><a href="../-annotation-options/index.html">AnnotationOptions</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="index.html">G</a><span class="token punctuation">, </span><span class="token keyword"></span><a href="index.html">T</a><span class="token operator">&gt;</span><span class="token punctuation">, </span><span class="token keyword"></span><a href="index.html">D</a><span class="token operator"> : </span><a href="../-on-annotation-drag-listener/index.html">OnAnnotationDragListener</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="index.html">T</a><span class="token operator">&gt;</span><span class="token punctuation">, </span><span class="token keyword"></span><a href="index.html">U</a><span class="token operator"> : </span><a href="../-on-annotation-click-listener/index.html">OnAnnotationClickListener</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="index.html">T</a><span class="token operator">&gt;</span><span class="token punctuation">, </span><span class="token keyword"></span><a href="index.html">V</a><span class="token operator"> : </span><a href="../-on-annotation-long-click-listener/index.html">OnAnnotationLongClickListener</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="index.html">T</a><span class="token operator">&gt;</span><span class="token punctuation">, </span><span class="token keyword"></span><a href="index.html">I</a><span class="token operator"> : </span><a href="../-on-annotation-interaction-listener/index.html">OnAnnotationInteractionListener</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="index.html">T</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span></div><p class="paragraph">Interface for annotationManager</p></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Functions">Functions</button><button class="section-tab" data-togglable="Properties">Properties</button><button class="section-tab" data-togglable="Inheritors">Inheritors</button></div>
+    <div class="tabs-section-body">
+      <h2 class="">Functions</h2>
+      <div class="table" data-togglable="Functions"><a data-name="1435626343%2FFunctions%2F540127926" anchor-label="addClickListener" id="1435626343%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="add-click-listener.html"><span>add</span><wbr></wbr><span>Click</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1435626343%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="add-click-listener.html"><span class="token function">addClickListener</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">u<span class="token operator">: </span><a href="index.html">U</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><p class="paragraph">Add a callback to be invoked when a annotation has been clicked.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-181358147%2FFunctions%2F540127926" anchor-label="addDragListener" id="-181358147%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="add-drag-listener.html"><span>add</span><wbr></wbr><span>Drag</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-181358147%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="add-drag-listener.html"><span class="token function">addDragListener</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">d<span class="token operator">: </span><a href="index.html">D</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><p class="paragraph">Add a callback to be invoked when an annotation is dragged.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1162740711%2FFunctions%2F540127926" anchor-label="addInteractionListener" id="1162740711%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="add-interaction-listener.html"><span>add</span><wbr></wbr><span>Interaction</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1162740711%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="add-interaction-listener.html"><span class="token function">addInteractionListener</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">i<span class="token operator">: </span><a href="index.html">I</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><p class="paragraph">Add a callback to be invoked when a annotation has been selected or deselected.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1898082919%2FFunctions%2F540127926" anchor-label="addLongClickListener" id="1898082919%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="add-long-click-listener.html"><span>add</span><wbr></wbr><span>Long</span><wbr></wbr><span>Click</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1898082919%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="add-long-click-listener.html"><span class="token function">addLongClickListener</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">v<span class="token operator">: </span><a href="index.html">V</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><p class="paragraph">Add a callback to be invoked when a annotation has been long clicked.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1478604336%2FFunctions%2F540127926" anchor-label="create" id="-1478604336%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="create.html"><span><span>create</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1478604336%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="create.html"><span class="token function">create</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">option<span class="token operator">: </span><a href="index.html">S</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">T</a></div><div class="brief "><p class="paragraph">Create an annotation with the option</p></div><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="create.html"><span class="token function">create</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">options<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="index.html">S</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="index.html">T</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Create some annotations with the options</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1553269742%2FFunctions%2F540127926" anchor-label="delete" id="-1553269742%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="delete.html"><span><span>delete</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1553269742%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="delete.html"><span class="token function">delete</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">annotation<span class="token operator">: </span><a href="index.html">T</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Delete the annotation</p></div><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="delete.html"><span class="token function">delete</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">annotations<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="index.html">T</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Delete annotations in the list</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-975763646%2FFunctions%2F540127926" anchor-label="deleteAll" id="-975763646%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="delete-all.html"><span>delete</span><wbr></wbr><span><span>All</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-975763646%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="delete-all.html"><span class="token function">deleteAll</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Delete all the added annotations</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-298561688%2FFunctions%2F540127926" anchor-label="enableDataDrivenProperty" id="-298561688%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="enable-data-driven-property.html"><span>enable</span><wbr></wbr><span>Data</span><wbr></wbr><span>Driven</span><wbr></wbr><span><span>Property</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-298561688%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="enable-data-driven-property.html"><span class="token function">enableDataDrivenProperty</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">property<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Enable a data-driven property. Please visit <a href="https://docs.mapbox.com/android/maps/guides/data-driven-styling/">The online documentation</a> for more details about data-driven-styling</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-767516227%2FFunctions%2F540127926" anchor-label="onDestroy" id="-767516227%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="on-destroy.html"><span>on</span><wbr></wbr><span><span>Destroy</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-767516227%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="on-destroy.html"><span class="token function">onDestroy</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Invoked when Mapview is destroyed</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1042144229%2FFunctions%2F540127926" anchor-label="onSizeChanged" id="-1042144229%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="on-size-changed.html"><span>on</span><wbr></wbr><span>Size</span><wbr></wbr><span><span>Changed</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1042144229%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="on-size-changed.html"><span class="token function">onSizeChanged</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">width<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">height<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Invoked when MapView's width and height have changed.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-997914912%2FFunctions%2F540127926" anchor-label="removeClickListener" id="-997914912%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="remove-click-listener.html"><span>remove</span><wbr></wbr><span>Click</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-997914912%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="remove-click-listener.html"><span class="token function">removeClickListener</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">u<span class="token operator">: </span><a href="index.html">U</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><p class="paragraph">Remove a previously added callback that was to be invoked when annotation has been clicked.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1091152010%2FFunctions%2F540127926" anchor-label="removeDragListener" id="-1091152010%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="remove-drag-listener.html"><span>remove</span><wbr></wbr><span>Drag</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1091152010%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="remove-drag-listener.html"><span class="token function">removeDragListener</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">d<span class="token operator">: </span><a href="index.html">D</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><p class="paragraph">Remove a previously added callback that was to be invoked when an annotation has been dragged.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1834922464%2FFunctions%2F540127926" anchor-label="removeInteractionListener" id="1834922464%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="remove-interaction-listener.html"><span>remove</span><wbr></wbr><span>Interaction</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1834922464%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="remove-interaction-listener.html"><span class="token function">removeInteractionListener</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">i<span class="token operator">: </span><a href="index.html">I</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><p class="paragraph">Remove a previously added callback that was to be invoked when annotation has been selected or deselected.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1994193696%2FFunctions%2F540127926" anchor-label="removeLongClickListener" id="-1994193696%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="remove-long-click-listener.html"><span>remove</span><wbr></wbr><span>Long</span><wbr></wbr><span>Click</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1994193696%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="remove-long-click-listener.html"><span class="token function">removeLongClickListener</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">v<span class="token operator">: </span><a href="index.html">V</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><p class="paragraph">Remove a previously added callback that was to be invoked when annotation has been long clicked.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1162344764%2FFunctions%2F540127926" anchor-label="selectAnnotation" id="-1162344764%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="select-annotation.html"><span>select</span><wbr></wbr><span><span>Annotation</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1162344764%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="select-annotation.html"><span class="token function">selectAnnotation</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">annotation<span class="token operator">: </span><a href="index.html">T</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Toggles the annotation's selection state. If the annotation is deselected, it becomes selected. If the annotation is selected, it becomes deselected.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="541752022%2FFunctions%2F540127926" anchor-label="update" id="541752022%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="update.html"><span><span>update</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="541752022%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="update.html"><span class="token function">update</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">annotation<span class="token operator">: </span><a href="index.html">T</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Update the annotation</p></div><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="update.html"><span class="token function">update</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">annotations<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="index.html">T</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Update annotations in the list</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2 class="">Properties</h2>
+      <div class="table" data-togglable="Properties"><a data-name="64368916%2FProperties%2F540127926" anchor-label="annotations" id="64368916%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="annotations.html"><span><span>annotations</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="64368916%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="64368916%2FProperties%2F540127926" anchor-label="annotations" id="64368916%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">val </span><a href="annotations.html">annotations</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="index.html">T</a><span class="token operator">&gt;</span></div><div class="brief "><a data-name="64368916%2FProperties%2F540127926" anchor-label="annotations" id="64368916%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">The added annotations</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="184035371%2FProperties%2F540127926" anchor-label="clickListeners" id="184035371%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="click-listeners.html"><span>click</span><wbr></wbr><span><span>Listeners</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="184035371%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="184035371%2FProperties%2F540127926" anchor-label="clickListeners" id="184035371%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">val </span><a href="click-listeners.html">clickListeners</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/index.html">MutableList</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="index.html">U</a><span class="token operator">&gt;</span></div><div class="brief "><a data-name="184035371%2FProperties%2F540127926" anchor-label="clickListeners" id="184035371%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">The Added clickListeners</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="330592972%2FProperties%2F540127926" anchor-label="delegateProvider" id="330592972%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="delegate-provider.html"><span>delegate</span><wbr></wbr><span><span>Provider</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="330592972%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="330592972%2FProperties%2F540127926" anchor-label="delegateProvider" id="330592972%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">val </span><a href="delegate-provider.html">delegateProvider</a><span class="token operator">: </span><a href="../../com.mapbox.maps.plugin.delegates/-map-delegate-provider/index.html">MapDelegateProvider</a></div><div class="brief "><a data-name="330592972%2FProperties%2F540127926" anchor-label="delegateProvider" id="330592972%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">The delegateProvider</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1155020819%2FProperties%2F540127926" anchor-label="dragListeners" id="-1155020819%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="drag-listeners.html"><span>drag</span><wbr></wbr><span><span>Listeners</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1155020819%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1155020819%2FProperties%2F540127926" anchor-label="dragListeners" id="-1155020819%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">val </span><a href="drag-listeners.html">dragListeners</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/index.html">MutableList</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="index.html">D</a><span class="token operator">&gt;</span></div><div class="brief "><a data-name="-1155020819%2FProperties%2F540127926" anchor-label="dragListeners" id="-1155020819%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">The added dragListensers</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1337383570%2FProperties%2F540127926" anchor-label="interactionListener" id="1337383570%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="interaction-listener.html"><span>interaction</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1337383570%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="1337383570%2FProperties%2F540127926" anchor-label="interactionListener" id="1337383570%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">val </span><a href="interaction-listener.html">interactionListener</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/index.html">MutableList</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="index.html">I</a><span class="token operator">&gt;</span></div><div class="brief "><a data-name="1337383570%2FProperties%2F540127926" anchor-label="interactionListener" id="1337383570%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">The added interactionListener</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="705481615%2FProperties%2F540127926" anchor-label="longClickListeners" id="705481615%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="long-click-listeners.html"><span>long</span><wbr></wbr><span>Click</span><wbr></wbr><span><span>Listeners</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="705481615%2FProperties%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="705481615%2FProperties%2F540127926" anchor-label="longClickListeners" id="705481615%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">val </span><a href="long-click-listeners.html">longClickListeners</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/index.html">MutableList</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="index.html">V</a><span class="token operator">&gt;</span></div><div class="brief "><a data-name="705481615%2FProperties%2F540127926" anchor-label="longClickListeners" id="705481615%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><p class="paragraph">The added longClickListeners</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2 class="">Inheritors</h2>
+      <div class="table" data-togglable="Inheritors"><a data-name="-1511835843%2FInheritors%2F540127926" anchor-label="AnnotationManagerImpl" id="-1511835843%2FInheritors%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../-annotation-manager-impl/index.html">AnnotationManagerImpl</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1511835843%2FInheritors%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2023 Copyright</span><span
+                class="pull-right"><span>Generated by </span><a
+                href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+    </div>
+</div>
+</body>
+</html>
