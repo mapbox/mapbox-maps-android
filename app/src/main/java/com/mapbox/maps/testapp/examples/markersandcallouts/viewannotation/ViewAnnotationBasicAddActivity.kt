@@ -93,6 +93,8 @@ class ViewAnnotationBasicAddActivity : AppCompatActivity(), OnMapClickListener {
       options = viewAnnotationOptions {
         geometry(point)
         allowOverlap(true)
+        ignoreCameraPadding(true)
+        allowOverlapWithPuck(true)
       }
     )
     viewAnnotationViews.add(viewAnnotation)

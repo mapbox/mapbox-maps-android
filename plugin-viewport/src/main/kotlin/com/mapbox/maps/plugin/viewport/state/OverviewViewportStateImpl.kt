@@ -194,7 +194,7 @@ internal class OverviewViewportStateImpl(
       is MultiPoint -> this.coordinates()
       is MultiLineString -> this.coordinates().flatten()
       is MultiPolygon -> this.coordinates().flatten().flatten()
-      is GeometryCollection -> this.geometries().flatMap { extractCoordinates() }
+      is GeometryCollection -> this.geometries().flatMap { it.extractCoordinates() }
       else -> emptyList()
     }
   }
