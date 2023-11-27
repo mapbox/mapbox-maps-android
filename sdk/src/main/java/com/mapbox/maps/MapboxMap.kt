@@ -754,6 +754,8 @@ class MapboxMap :
    * @param maxZoom The maximum zoom level allowed in the returned camera options.
    * @param offset The center of the given bounds relative to map center in pixels.
    *
+   * Note: if the render thread did not yet calculate the size of the map - current [cameraState] will be returned.
+   *
    * @return The [CameraOptions] object representing the provided parameters. Padding is absent in the returned [CameraOptions] as the zoom level already accounts for the padding.
    */
   override fun cameraForCoordinates(
@@ -765,7 +767,7 @@ class MapboxMap :
   ): CameraOptions {
     checkNativeMap("cameraForCoordinates")
     return nativeMap.cameraForCoordinates(coordinates, camera, coordinatesPadding, maxZoom, offset).getValueOrElse {
-      throw MapboxMapException("Error when calling cameraForCoordinates: $it")
+      return@getValueOrElse cameraState.toCameraOptions()
     }
   }
 
