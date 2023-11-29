@@ -284,7 +284,7 @@ package com.mapbox.maps {
     method public com.mapbox.common.Cancelable subscribeStyleImageMissing(com.mapbox.maps.StyleImageMissingCallback styleImageMissingCallback);
     method public com.mapbox.common.Cancelable subscribeStyleImageRemoveUnused(com.mapbox.maps.StyleImageRemoveUnusedCallback styleImageRemoveUnusedCallback);
     method public com.mapbox.common.Cancelable subscribeStyleLoaded(com.mapbox.maps.StyleLoadedCallback styleLoadedCallback);
-    method @com.mapbox.maps.MapboxExperimental public java.util.List<com.mapbox.maps.CanonicalTileID> tileCover(com.mapbox.maps.TileCoverOptions tileCoverOptions, com.mapbox.maps.CameraOptions? cameraOptions);
+    method @com.mapbox.maps.MapboxExperimental public java.util.List<com.mapbox.maps.TileCoverInfo> tileCover(com.mapbox.maps.TileCoverOptions tileCoverOptions, com.mapbox.maps.CameraOptions? cameraOptions);
     method public void triggerRepaint();
     method public com.mapbox.geojson.Point unproject(com.mapbox.maps.MercatorCoordinate coordinate, double zoomScale);
     property public com.mapbox.maps.CameraState cameraState;
@@ -461,7 +461,7 @@ package com.mapbox.maps {
     method public final void setStyleListener(com.mapbox.maps.SnapshotStyleListener listener);
     method public final void setStyleUri(String styleUri);
     method public final void start(com.mapbox.maps.SnapshotOverlayCallback? overlayCallback = null, com.mapbox.maps.SnapshotResultCallback resultCallback);
-    method @com.mapbox.maps.MapboxExperimental public final java.util.List<com.mapbox.maps.CanonicalTileID> tileCover(com.mapbox.maps.TileCoverOptions tileCoverOptions, com.mapbox.maps.CameraOptions? cameraOptions);
+    method @com.mapbox.maps.MapboxExperimental public final java.util.List<com.mapbox.maps.TileCoverInfo> tileCover(com.mapbox.maps.TileCoverOptions tileCoverOptions, com.mapbox.maps.CameraOptions? cameraOptions);
     field public static final com.mapbox.maps.Snapshotter.Companion Companion;
   }
 

@@ -2168,7 +2168,7 @@ class MapboxMap :
   fun tileCover(
     tileCoverOptions: TileCoverOptions,
     cameraOptions: CameraOptions?
-  ): List<CanonicalTileID> {
+  ): List<TileCoverInfo> {
     checkNativeMap("tileCover")
     return nativeMap.tileCover(tileCoverOptions, cameraOptions)
   }

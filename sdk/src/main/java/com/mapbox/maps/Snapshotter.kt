@@ -505,7 +505,7 @@ open class Snapshotter {
   fun tileCover(
     tileCoverOptions: TileCoverOptions,
     cameraOptions: CameraOptions?
-  ): MutableList<CanonicalTileID> {
+  ): MutableList<TileCoverInfo> {
     return coreSnapshotter.tileCover(tileCoverOptions, cameraOptions)
   }
 
