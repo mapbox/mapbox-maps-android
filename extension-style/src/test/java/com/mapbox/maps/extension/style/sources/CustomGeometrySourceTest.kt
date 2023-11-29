@@ -12,7 +12,7 @@ import org.junit.Before
 import org.junit.Test
 
 class CustomGeometrySourceTest {
-  private val style = mockk<Style>(relaxUnitFun = true, relaxed = true)
+  private val style = mockk<MapboxStyleManager>(relaxUnitFun = true, relaxed = true)
   private val expected = mockk<Expected<String, None>>(relaxUnitFun = true, relaxed = true)
 
   private val tileFunctionCallback: TileFunctionCallback = mockk()

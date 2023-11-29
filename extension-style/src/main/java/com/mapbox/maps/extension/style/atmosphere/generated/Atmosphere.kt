@@ -6,7 +6,7 @@ import androidx.annotation.ColorInt
 import androidx.annotation.UiThread
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxStyleException
-import com.mapbox.maps.Style
+import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
@@ -24,7 +24,7 @@ import com.mapbox.maps.extension.style.utils.unwrap
  */
 @UiThread
 class Atmosphere : AtmosphereDslReceiver, StyleContract.StyleAtmosphereExtension {
-  internal var delegate: Style? = null
+  internal var delegate: MapboxStyleManager? = null
   private val properties = HashMap<String, PropertyValue<*>>()
 
   /**
@@ -689,7 +689,7 @@ class Atmosphere : AtmosphereDslReceiver, StyleContract.StyleAtmosphereExtension
    *
    * @param delegate The map controller
    */
-  override fun bindTo(delegate: Style) {
+  override fun bindTo(delegate: MapboxStyleManager) {
     this.delegate = delegate
     val atmosphereParams = HashMap<String, Value>()
 

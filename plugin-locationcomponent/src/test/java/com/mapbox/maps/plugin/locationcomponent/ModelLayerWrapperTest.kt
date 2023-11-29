@@ -4,7 +4,7 @@ import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
-import com.mapbox.maps.Style
+import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.logE
 import com.mapbox.maps.plugin.ModelScaleMode
 import com.mapbox.maps.plugin.locationcomponent.utils.take
@@ -19,7 +19,7 @@ import org.robolectric.RobolectricTestRunner
 @RunWith(RobolectricTestRunner::class)
 class ModelLayerWrapperTest {
 
-  private val style: Style = mockk(relaxed = true)
+  private val style: MapboxStyleManager = mockk(relaxed = true)
   private val layer = ModelLayerWrapper(
     MODEL_LAYER_ID,
     MODEL_SOURCE_ID,
@@ -165,7 +165,7 @@ class ModelLayerWrapperTest {
 
   @Test
   fun testUpdateStyle() {
-    val newStyle = mockk<Style>(relaxed = true)
+    val newStyle = mockk<MapboxStyleManager>(relaxed = true)
     every { newStyle.setStyleLayerProperty(any(), any(), any()) } returns expected
     layer.updateStyle(newStyle)
     val scale = listOf(1.0, 2.0, 3.0)

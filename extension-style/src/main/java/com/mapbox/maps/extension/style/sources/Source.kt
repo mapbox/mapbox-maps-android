@@ -5,7 +5,7 @@ import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxStyleException
-import com.mapbox.maps.Style
+import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
 import com.mapbox.maps.extension.style.utils.unwrap
@@ -47,9 +47,9 @@ abstract class Source(
     HashMap<String, PropertyValue<*>>()
   }
 
-  internal var delegate: Style? = null
+  internal var delegate: MapboxStyleManager? = null
 
-  protected open fun addSource(style: Style): Expected<String, None> {
+  protected open fun addSource(style: MapboxStyleManager): Expected<String, None> {
     return style.addStyleSource(sourceId, getCachedSourceProperties())
   }
 
@@ -58,7 +58,7 @@ abstract class Source(
    *
    * @param delegate The style delegate
    */
-  override fun bindTo(delegate: Style) {
+  override fun bindTo(delegate: MapboxStyleManager) {
     this.delegate = delegate
     val expected = addSource(delegate)
     expected.error?.let {

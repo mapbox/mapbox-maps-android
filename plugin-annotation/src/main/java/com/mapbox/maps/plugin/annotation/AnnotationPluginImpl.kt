@@ -2,7 +2,7 @@ package com.mapbox.maps.plugin.annotation
 
 import androidx.annotation.RestrictTo
 import androidx.annotation.VisibleForTesting
-import com.mapbox.maps.Style
+import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.plugin.annotation.generated.*
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import java.lang.ref.WeakReference
@@ -86,7 +86,7 @@ internal class AnnotationPluginImpl : AnnotationPlugin {
    *
    * @param style
    */
-  override fun onStyleChanged(style: Style) {
+  override fun onStyleChanged(style: MapboxStyleManager) {
     // no-ops
   }
 

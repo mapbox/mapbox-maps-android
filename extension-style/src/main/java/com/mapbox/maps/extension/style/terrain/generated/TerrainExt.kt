@@ -4,7 +4,7 @@
 package com.mapbox.maps.extension.style.terrain.generated
 
 import com.mapbox.bindgen.Value
-import com.mapbox.maps.Style
+import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.extension.style.StyleContract
 
 /**
@@ -12,7 +12,7 @@ import com.mapbox.maps.extension.style.StyleContract
  *
  * @return Terrain
  */
-fun Style.getTerrain(sourceId: String): Terrain {
+fun MapboxStyleManager.getTerrain(sourceId: String): Terrain {
   return Terrain(sourceId).also { it.delegate = this }
 }
 
@@ -21,14 +21,14 @@ fun Style.getTerrain(sourceId: String): Terrain {
  *
  * @param terrain The terrain to be set
  */
-fun Style.setTerrain(terrain: StyleContract.StyleTerrainExtension) {
+fun MapboxStyleManager.setTerrain(terrain: StyleContract.StyleTerrainExtension) {
   terrain.bindTo(this)
 }
 
 /**
  * Removes terrain from style if it was set.
  */
-fun Style.removeTerrain() {
+fun MapboxStyleManager.removeTerrain() {
   setStyleTerrain(Value.nullValue())
 }
 

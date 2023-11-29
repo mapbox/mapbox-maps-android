@@ -24,7 +24,7 @@ package com.mapbox.maps.plugin.annotation {
     method protected abstract String getLayerId();
     method public java.util.List<V> getLongClickListeners();
     method protected abstract String getSourceId();
-    method protected final void initLayerAndSource(com.mapbox.maps.Style style);
+    method protected final void initLayerAndSource(com.mapbox.maps.MapboxStyleManager style);
     method protected abstract void initializeDataDrivenPropertyMap();
     method public void onDestroy();
     method public void onSizeChanged(int width, int height);

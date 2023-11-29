@@ -6,7 +6,7 @@ import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.CustomLayerHost
 import com.mapbox.maps.LayerPosition
-import com.mapbox.maps.Style
+import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
@@ -198,7 +198,7 @@ class CustomLayer constructor(
     }
 
   override fun addPersistentLayer(
-    delegate: Style,
+    delegate: MapboxStyleManager,
     position: LayerPosition?
   ): Expected<String, None> {
     val customLayer = delegate.addPersistentStyleCustomLayer(layerId, host, position)
@@ -207,7 +207,7 @@ class CustomLayer constructor(
   }
 
   override fun addLayer(
-    delegate: Style,
+    delegate: MapboxStyleManager,
     propertiesValue: Value,
     position: LayerPosition?
   ): Expected<String, None> {

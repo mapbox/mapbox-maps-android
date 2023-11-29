@@ -9,9 +9,9 @@ import androidx.annotation.VisibleForTesting.Companion.PRIVATE
 import com.mapbox.common.location.LocationError
 import com.mapbox.geojson.Point
 import com.mapbox.maps.MapboxLocationComponentException
+import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.RenderedQueryGeometry
 import com.mapbox.maps.RenderedQueryOptions
-import com.mapbox.maps.Style
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.LOCATION_INDICATOR_LAYER
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.MODEL_LAYER
@@ -365,7 +365,7 @@ internal class LocationComponentPluginImpl : LocationComponentPlugin, LocationCo
    *
    * @param style
    */
-  override fun onStyleChanged(style: Style) {
+  override fun onStyleChanged(style: MapboxStyleManager) {
     locationPuckManager?.updateStyle(style)
   }
 

@@ -84,7 +84,7 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
    *
    * @param delegate The style delegate
    */
-  override fun bindTo(delegate: Style) {
+  override fun bindTo(delegate: MapboxStyleManager) {
     super.bindTo(delegate)
     currentGeoJson?.let {
       setGeoJson(it, currentDataId)

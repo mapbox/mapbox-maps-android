@@ -2,7 +2,7 @@ package com.mapbox.maps.extension.style
 
 import com.mapbox.maps.LayerPosition
 import com.mapbox.maps.MapboxExperimental
-import com.mapbox.maps.Style
+import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.TransitionOptions
 
 /**
@@ -80,7 +80,7 @@ interface StyleContract {
      * @param delegate The style delegate
      * @param position the layer position
      */
-    fun bindTo(delegate: Style, position: LayerPosition? = null)
+    fun bindTo(delegate: MapboxStyleManager, position: LayerPosition? = null)
   }
 
   /**
@@ -92,7 +92,7 @@ interface StyleContract {
      *
      * @param delegate The style delegate
      */
-    fun bindTo(delegate: Style)
+    fun bindTo(delegate: MapboxStyleManager)
   }
 
   /**
@@ -104,7 +104,7 @@ interface StyleContract {
      *
      * @param delegate The style delegate
      */
-    fun bindTo(delegate: Style)
+    fun bindTo(delegate: MapboxStyleManager)
   }
 
   /**
@@ -116,7 +116,7 @@ interface StyleContract {
      *
      * @param delegate The style delegate
      */
-    fun bindTo(delegate: Style)
+    fun bindTo(delegate: MapboxStyleManager)
   }
 
   /**
@@ -128,7 +128,7 @@ interface StyleContract {
      *
      * @param delegate The style delegate
      */
-    fun bindTo(delegate: Style)
+    fun bindTo(delegate: MapboxStyleManager)
   }
 
   /**
@@ -140,7 +140,7 @@ interface StyleContract {
      *
      * @param delegate The style delegate
      */
-    fun bindTo(delegate: Style)
+    fun bindTo(delegate: MapboxStyleManager)
   }
 
   /**
@@ -152,7 +152,7 @@ interface StyleContract {
      *
      * @param delegate The style delegate
      */
-    fun bindTo(delegate: Style)
+    fun bindTo(delegate: MapboxStyleManager)
   }
 
   /**
@@ -165,6 +165,6 @@ interface StyleContract {
      *
      * @param delegate The style delegate
      */
-    fun bindTo(delegate: Style)
+    fun bindTo(delegate: MapboxStyleManager)
   }
 }

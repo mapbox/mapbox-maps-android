@@ -192,7 +192,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     }
   }
 
-  protected fun initLayerAndSource(style: Style) {
+  protected fun initLayerAndSource(style: MapboxStyleManager) {
     if (layer == null || source == null) {
       initializeDataDrivenPropertyMap()
       source = createSource()
@@ -248,7 +248,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     updateSource()
   }
 
-  private fun initClusterLayers(style: Style) {
+  private fun initClusterLayers(style: MapboxStyleManager) {
     annotationConfig?.annotationSourceOptions?.clusterOptions?.let {
       it.colorLevels.forEachIndexed { level, _ ->
         val clusterLevelLayer = createClusterLevelLayer(level, it.colorLevels)
@@ -427,7 +427,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     }
   }
 
-  private fun addIconToStyle(style: Style, annotations: Collection<T>) {
+  private fun addIconToStyle(style: MapboxStyleManager, annotations: Collection<T>) {
     annotations
       .filter { it.getType() == AnnotationType.PointAnnotation }
       .forEach {

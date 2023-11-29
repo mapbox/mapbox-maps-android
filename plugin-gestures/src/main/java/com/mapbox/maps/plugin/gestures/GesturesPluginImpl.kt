@@ -45,7 +45,7 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
 
   private lateinit var gesturesManager: AndroidGesturesManager
   private lateinit var gestureState: GestureState
-  private var style: Style? = null
+  private var style: MapboxStyleManager? = null
 
   private lateinit var mapTransformDelegate: MapTransformDelegate
   private lateinit var mapCameraManagerDelegate: MapCameraManagerDelegate
@@ -154,7 +154,7 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
   internal constructor(
     context: Context,
     attributeSet: AttributeSet,
-    style: Style
+    style: MapboxStyleManager
   ) {
     this.context = context
     this.pixelRatio = 1.0f
@@ -1757,7 +1757,7 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
   /**
    * Called when new style is loaded.
    */
-  override fun onStyleChanged(style: Style) {
+  override fun onStyleChanged(style: MapboxStyleManager) {
     this.style = style
   }
 

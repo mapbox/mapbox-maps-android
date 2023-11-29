@@ -32,7 +32,7 @@ import java.util.concurrent.TimeoutException
 @RunWith(RobolectricTestRunner::class)
 @Config(shadows = [ShadowStyleManager::class])
 class GeoJsonSourceTest {
-  private val style = mockk<Style>(relaxUnitFun = true, relaxed = true)
+  private val style = mockk<MapboxStyleManager>(relaxUnitFun = true, relaxed = true)
   private val valueSlot = slot<Value>()
   private val jsonSlot = slot<GeoJSONSourceData>()
   private val expected = mockk<Expected<String, None>>(relaxUnitFun = true, relaxed = true)
@@ -60,11 +60,10 @@ class GeoJsonSourceTest {
     }
   }
 
-  private fun mockkStyle(style: Style) {
+  private fun mockkStyle(style: MapboxStyleManager) {
     every { style.addStyleSource(any(), any()) } returns expected
     every { style.setStyleSourceProperty(any(), any(), any()) } returns expected
     every { style.getStyleSourceProperty(any(), any()) } returns styleProperty
-    every { style.isValid() } returns true
   }
 
   @Test
@@ -530,7 +529,7 @@ class GeoJsonSourceTest {
     Shadows.shadowOf(GeoJsonSource.workerThread.looper).idle()
     Shadows.shadowOf(Looper.getMainLooper()).idle()
 
-    val newStyle = mockk<Style>(relaxUnitFun = true, relaxed = true)
+    val newStyle = mockk<MapboxStyleManager>(relaxUnitFun = true, relaxed = true)
     mockkStyle(newStyle)
     Shadows.shadowOf(Looper.getMainLooper()).pause()
     Shadows.shadowOf(GeoJsonSource.workerThread.looper).pause()
@@ -626,7 +625,7 @@ class GeoJsonSourceTest {
     Shadows.shadowOf(GeoJsonSource.workerThread.looper).idle()
     Shadows.shadowOf(Looper.getMainLooper()).idle()
 
-    val newStyle = mockk<Style>(relaxUnitFun = true, relaxed = true)
+    val newStyle = mockk<MapboxStyleManager>(relaxUnitFun = true, relaxed = true)
     mockkStyle(newStyle)
     Shadows.shadowOf(Looper.getMainLooper()).pause()
     Shadows.shadowOf(GeoJsonSource.workerThread.looper).pause()

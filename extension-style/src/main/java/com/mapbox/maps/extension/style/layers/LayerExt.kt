@@ -5,7 +5,7 @@ package com.mapbox.maps.extension.style.layers
 import com.mapbox.maps.CustomLayerHost
 import com.mapbox.maps.CustomLayerRenderParameters
 import com.mapbox.maps.LayerPosition
-import com.mapbox.maps.Style
+import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.layers.generated.*
 import com.mapbox.maps.extension.style.utils.silentUnwrap
@@ -18,7 +18,7 @@ import com.mapbox.maps.logE
  * @param layerId the layer id
  * @return StyleLayerPlugin
  */
-fun Style.getLayer(layerId: String): Layer? {
+fun MapboxStyleManager.getLayer(layerId: String): Layer? {
   val source by lazy { getStyleLayerProperty(layerId, "source").unwrap<String>() }
   return when (val type = getStyleLayerProperty(layerId, "type").silentUnwrap<String>()) {
     "background" -> BackgroundLayer(layerId)
@@ -67,7 +67,7 @@ fun Style.getLayer(layerId: String): Layer? {
  * @return T if layer is T, otherwise null
  */
 @SuppressWarnings("ChangedType")
-inline fun <reified T : Layer> Style.getLayerAs(layerId: String): T? {
+inline fun <reified T : Layer> MapboxStyleManager.getLayerAs(layerId: String): T? {
   val layer = getLayer(layerId) as? T
   if (layer == null) {
     logE(TAG, "Given layerId = $layerId is not requested type in Layer")
@@ -82,7 +82,7 @@ inline fun <reified T : Layer> Style.getLayerAs(layerId: String): T? {
  * @param layer The layer to be added
  * @param below the layer id that the current layer is added below
  */
-fun Style.addLayerBelow(layer: StyleContract.StyleLayerExtension, below: String?) {
+fun MapboxStyleManager.addLayerBelow(layer: StyleContract.StyleLayerExtension, below: String?) {
   layer.bindTo(this, LayerPosition(null, below, null))
 }
 
@@ -92,7 +92,7 @@ fun Style.addLayerBelow(layer: StyleContract.StyleLayerExtension, below: String?
  * @param layer The layer to be added
  * @param above the layer id that the current layer is added above
  */
-fun Style.addLayerAbove(layer: StyleContract.StyleLayerExtension, above: String?) {
+fun MapboxStyleManager.addLayerAbove(layer: StyleContract.StyleLayerExtension, above: String?) {
   layer.bindTo(this, LayerPosition(above, null, null))
 }
 
@@ -102,7 +102,7 @@ fun Style.addLayerAbove(layer: StyleContract.StyleLayerExtension, above: String?
  * @param layer The layer to be added
  * @param index the index that the current layer is added on
  */
-fun Style.addLayerAt(layer: StyleContract.StyleLayerExtension, index: Int?) {
+fun MapboxStyleManager.addLayerAt(layer: StyleContract.StyleLayerExtension, index: Int?) {
   layer.bindTo(this, LayerPosition(null, null, index))
 }
 
@@ -111,7 +111,7 @@ fun Style.addLayerAt(layer: StyleContract.StyleLayerExtension, index: Int?) {
  *
  * @param layer The layer to be added
  */
-fun Style.addLayer(layer: StyleContract.StyleLayerExtension) {
+fun MapboxStyleManager.addLayer(layer: StyleContract.StyleLayerExtension) {
   layer.bindTo(this)
 }
 
@@ -131,7 +131,7 @@ fun Style.addLayer(layer: StyleContract.StyleLayerExtension) {
  * @param position the position that the current layer is added to
  */
 @JvmOverloads
-fun Style.addPersistentLayer(layer: Layer, position: LayerPosition? = null) {
+fun MapboxStyleManager.addPersistentLayer(layer: Layer, position: LayerPosition? = null) {
   layer.bindPersistentlyTo(this, position)
 }
 

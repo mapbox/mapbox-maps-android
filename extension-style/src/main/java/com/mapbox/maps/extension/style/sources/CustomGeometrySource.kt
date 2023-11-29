@@ -30,7 +30,7 @@ class CustomGeometrySource(
     return "custom-geometry"
   }
 
-  override fun addSource(style: Style): Expected<String, None> {
+  override fun addSource(style: MapboxStyleManager): Expected<String, None> {
     return style.addStyleCustomGeometrySource(sourceId, options)
   }
 
