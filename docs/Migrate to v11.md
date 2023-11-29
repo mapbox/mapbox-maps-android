@@ -693,6 +693,7 @@ snapshotter.start { snapshotBitmap, errorMessage ->
 12. Remove `MapInitOptions.optimizeForTerrain` as it has become redundant.
 13. Remove setter functions for `Style.styleURI` and `Style.styleJSON` as loading the style should happen only with `MapboxMap.loadStyle`. 
 14. Extension function `Style.getProjection()` return type changed from `Projection` to `Projection?`. NULL is returned when projection is undefined, previously undefined projection was treated as Mercator projection.
+15. (Kotlin only) Remove `Style.getStyleSources()` / `Style.getStyleLayers()`. Properties `Style.styleSources` / `Style.styleLayers` should be used instead.
 
 #### 3.11 Render Cache API
 
