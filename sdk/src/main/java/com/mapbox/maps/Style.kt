@@ -1,9 +1,7 @@
 package com.mapbox.maps
 
-import android.graphics.Bitmap
+import androidx.annotation.AnyThread
 import androidx.annotation.MainThread
-import androidx.annotation.RestrictTo
-import androidx.annotation.RestrictTo.Scope
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
@@ -18,39 +16,18 @@ import com.mapbox.geojson.Feature
  * Note: Similar to a View object, a [Style] should only be read and modified
  * from the main thread.
  */
-@Suppress("KDocUnresolvedReference")
-class Style {
-  private var styleManager: StyleManager
-  /**
-   * the pixel ratio of the device
-   */
-  val pixelRatio: Float
-
-  /**
-   * Creates a Style object.
-   *
-   * @param styleManager StyleManager.
-   * @param pixelRatio pixelRatio.
-   * @suppress
-   */
-  @RestrictTo(Scope.LIBRARY_GROUP_PREFIX)
-  constructor(
-    styleManager: StyleManager,
-    pixelRatio: Float
-  ) {
-    this.styleManager = styleManager
-    this.pixelRatio = pixelRatio
-  }
+class Style internal constructor(
+  styleManager: StyleManager,
+  pixelRatio: Float
+) : MapboxStyleManager(styleManager, pixelRatio) {
 
   @Volatile
   private var isStyleValid = true
 
   /**
    * Mark style invalid.
-   * @suppress
    */
-  @RestrictTo(Scope.LIBRARY_GROUP_PREFIX)
-  fun markInvalid() {
+  internal fun markInvalid() {
     isStyleValid = false
   }
 
@@ -80,11 +57,47 @@ class Style {
    *
    * @return Returns the map style default [camera][CameraOptions].
    */
-  val styleDefaultCamera: CameraOptions
+  override val styleDefaultCamera: CameraOptions
+    @MainThread
     get() {
       checkNativeStyle("getStyleDefaultCamera")
-      return styleManager.styleDefaultCamera
+      return super.styleDefaultCamera
     }
+
+  /**
+   * Gets the value of style source property.
+   *
+   * @param sourceId A style source identifier.
+   * @param property The style source property name.
+   * @return The [StylePropertyValue] object.
+   */
+  @MainThread
+  override fun getStyleSourceProperty(sourceId: String, property: String): StylePropertyValue {
+    checkNativeStyle("getStyleSourceProperty")
+    return super.getStyleSourceProperty(sourceId, property)
+  }
+
+  /**
+   * Sets a value to a style source property.
+   * Note: When setting the "data" property of a geojson source, this method does not synchronously parse the GeoJSON data.
+   * The events API shall be used to make sure the provided GeoJSON data is valid.
+   * In case the GeoJSON is valid, a [MapLoaded] event will be propagated. In case of errors, a [MapLoadingError] event will be propagated instead.
+   *
+   * @param sourceId A style source identifier.
+   * @param property The style source property name.
+   * @param value The style source property value.
+   *
+   * @return A string describing an error if the operation was not successful, empty otherwise.
+   */
+  @MainThread
+  override fun setStyleSourceProperty(
+    sourceId: String,
+    property: String,
+    value: Value
+  ): Expected<String, None> {
+    checkNativeStyle("setStyleSourceProperty")
+    return super.setStyleSourceProperty(sourceId, property, value)
+  }
 
   /**
    * Returns the map style's transition options. By default, the style parser will attempt
@@ -96,9 +109,10 @@ class Style {
    *
    * @return Returns the map style [transition options][TransitionOptions].
    */
-  fun getStyleTransition(): TransitionOptions {
+  @MainThread
+  override fun getStyleTransition(): TransitionOptions {
     checkNativeStyle("getStyleTransition")
-    return styleManager.styleTransition
+    return super.getStyleTransition()
   }
 
   /**
@@ -108,9 +122,10 @@ class Style {
    *
    * @param transitionOptions Map style [transition options][TransitionOptions].
    */
-  fun setStyleTransition(transitionOptions: TransitionOptions) {
+  @MainThread
+  override fun setStyleTransition(transitionOptions: TransitionOptions) {
     checkNativeStyle("setStyleTransition")
-    styleManager.styleTransition = transitionOptions
+    super.setStyleTransition(transitionOptions)
   }
 
   /**
@@ -118,9 +133,10 @@ class Style {
    *
    * @return The list containing the information about existing style import objects.
    */
-  fun getStyleImports(): List<StyleObjectInfo> {
+  @MainThread
+  override fun getStyleImports(): List<StyleObjectInfo> {
     checkNativeStyle("getStyleImports")
-    return styleManager.styleImports
+    return super.getStyleImports()
   }
 
   /**
@@ -130,9 +146,10 @@ class Style {
    *
    * @return A string describing an error if the operation was not successful, or empty otherwise.
    */
-  fun removeStyleImport(importId: String): Expected<String, None> {
+  @MainThread
+  override fun removeStyleImport(importId: String): Expected<String, None> {
     checkNativeStyle("removeStyleImport")
-    return styleManager.removeStyleImport(importId)
+    return super.removeStyleImport(importId)
   }
 
   /**
@@ -142,9 +159,10 @@ class Style {
    *
    * @return The style import schema or a string describing an error if the operation was not successful.
    */
-  fun getStyleImportSchema(importId: String): Expected<String, Value> {
+  @MainThread
+  override fun getStyleImportSchema(importId: String): Expected<String, Value> {
     checkNativeStyle("getStyleImportSchema")
-    return styleManager.getStyleImportSchema(importId)
+    return super.getStyleImportSchema(importId)
   }
 
   /**
@@ -152,9 +170,10 @@ class Style {
    *
    * @return The style import configuration or a string describing an error if the operation was not successful.
    */
-  fun getStyleImportConfigProperties(importId: String): Expected<String, HashMap<String, StylePropertyValue>> {
+  @MainThread
+  override fun getStyleImportConfigProperties(importId: String): Expected<String, HashMap<String, StylePropertyValue>> {
     checkNativeStyle("getStyleImportConfigProperties")
-    return styleManager.getStyleImportConfigProperties(importId)
+    return super.getStyleImportConfigProperties(importId)
   }
 
   /**
@@ -164,12 +183,13 @@ class Style {
    * @param config The style import config name.
    * @return The style import config value.
    */
-  fun getStyleImportConfigProperty(
+  @MainThread
+  override fun getStyleImportConfigProperty(
     importId: String,
     config: String
   ): Expected<String, StylePropertyValue> {
     checkNativeStyle("getStyleImportConfigProperty")
-    return styleManager.getStyleImportConfigProperty(importId, config)
+    return super.getStyleImportConfigProperty(importId, config)
   }
 
   /**
@@ -181,12 +201,13 @@ class Style {
    *
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
-  fun setStyleImportConfigProperties(
+  @MainThread
+  override fun setStyleImportConfigProperties(
     importId: String,
     configs: HashMap<String, Value>
   ): Expected<String, None> {
     checkNativeStyle("setStyleImportConfigProperties")
-    return styleManager.setStyleImportConfigProperties(importId, configs)
+    return super.setStyleImportConfigProperties(importId, configs)
   }
 
   /**
@@ -198,22 +219,24 @@ class Style {
    *
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
-  fun setStyleImportConfigProperty(
+  @MainThread
+  override fun setStyleImportConfigProperty(
     importId: String,
     config: String,
     value: Value
   ): Expected<String, None> {
     checkNativeStyle("setStyleImportConfigProperty")
-    return styleManager.setStyleImportConfigProperty(importId, config, value)
+    return super.setStyleImportConfigProperty(importId, config, value)
   }
 
   /**
    * Get the styleURI of the current Mapbox Style in use.
    */
-  val styleURI: String
+  override val styleURI: String
+    @MainThread
     get() {
       checkNativeStyle("getStyleURI")
-      return styleManager.styleURI
+      return super.styleURI
     }
 
   /**
@@ -221,10 +244,11 @@ class Style {
    *
    * @return A JSON string containing a serialized Mapbox Style.
    */
-  val styleJSON: String
+  override val styleJSON: String
+    @MainThread
     get() {
       checkNativeStyle("getStyleJSON")
-      return styleManager.styleJSON
+      return super.styleJSON
     }
 
   /**
@@ -239,9 +263,10 @@ class Style {
    *
    * @return A string describing an error if the operation was not successful, or empty otherwise.
    */
-  fun addStyleLayer(parameters: Value, position: LayerPosition?): Expected<String, None> {
+  @MainThread
+  override fun addStyleLayer(parameters: Value, position: LayerPosition?): Expected<String, None> {
     checkNativeStyle("addStyleLayer")
-    return styleManager.addStyleLayer(parameters, position)
+    return super.addStyleLayer(parameters, position)
   }
 
   /**
@@ -253,9 +278,10 @@ class Style {
    *
    * @return A string describing an error if the operation was not successful, or empty otherwise.
    */
-  fun removeStyleLayer(layerId: String): Expected<String, None> {
+  @MainThread
+  override fun removeStyleLayer(layerId: String): Expected<String, None> {
     checkNativeStyle("removeStyleLayer")
-    return styleManager.removeStyleLayer(layerId)
+    return super.removeStyleLayer(layerId)
   }
 
   /**
@@ -266,9 +292,13 @@ class Style {
    *
    * @return A string describing an error if the operation was not successful, or empty otherwise.
    */
-  fun moveStyleLayer(layerId: String, layerPosition: LayerPosition?): Expected<String, None> {
+  @MainThread
+  override fun moveStyleLayer(
+    layerId: String,
+    layerPosition: LayerPosition?
+  ): Expected<String, None> {
     checkNativeStyle("moveStyleLayer")
-    return styleManager.moveStyleLayer(layerId, layerPosition)
+    return super.moveStyleLayer(layerId, layerPosition)
   }
 
   /**
@@ -280,9 +310,10 @@ class Style {
    *
    * @return True if the given style layer exists, false otherwise.
    */
-  fun styleLayerExists(layerId: String): Boolean {
+  @MainThread
+  override fun styleLayerExists(layerId: String): Boolean {
     checkNativeStyle("styleLayerExists")
-    return styleManager.styleLayerExists(layerId)
+    return super.styleLayerExists(layerId)
   }
 
   /**
@@ -292,9 +323,10 @@ class Style {
    * @param property Style layer property name.
    * @return The property value in the layer with layerId.
    */
-  fun getStyleLayerProperty(layerId: String, property: String): StylePropertyValue {
+  @MainThread
+  override fun getStyleLayerProperty(layerId: String, property: String): StylePropertyValue {
     checkNativeStyle("getStyleLayerProperty")
-    return styleManager.getStyleLayerProperty(layerId, property)
+    return super.getStyleLayerProperty(layerId, property)
   }
 
   /**
@@ -306,13 +338,14 @@ class Style {
    *
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
-  fun setStyleLayerProperty(
+  @MainThread
+  override fun setStyleLayerProperty(
     layerId: String,
     property: String,
     value: Value
   ): Expected<String, None> {
     checkNativeStyle("setStyleLayerProperty")
-    return styleManager.setStyleLayerProperty(layerId, property, value)
+    return super.setStyleLayerProperty(layerId, property, value)
   }
 
   /**
@@ -325,9 +358,10 @@ class Style {
    *
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
-  fun addStyleSource(sourceId: String, properties: Value): Expected<String, None> {
+  @MainThread
+  override fun addStyleSource(sourceId: String, properties: Value): Expected<String, None> {
     checkNativeStyle("addStyleSource")
-    return styleManager.addStyleSource(sourceId, properties)
+    return super.addStyleSource(sourceId, properties)
   }
 
   /**
@@ -338,12 +372,13 @@ class Style {
    *
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
-  fun invalidateStyleCustomGeometrySourceRegion(
+  @MainThread
+  override fun invalidateStyleCustomGeometrySourceRegion(
     sourceId: String,
     coordinateBounds: CoordinateBounds
   ): Expected<String, None> {
     checkNativeStyle("invalidateStyleCustomGeometrySourceRegion")
-    return styleManager.invalidateStyleCustomGeometrySourceRegion(sourceId, coordinateBounds)
+    return super.invalidateStyleCustomGeometrySourceRegion(sourceId, coordinateBounds)
   }
 
   /**
@@ -354,12 +389,13 @@ class Style {
    *
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
-  fun invalidateStyleCustomGeometrySourceTile(
+  @MainThread
+  override fun invalidateStyleCustomGeometrySourceTile(
     sourceId: String,
     tileId: CanonicalTileID
   ): Expected<String, None> {
     checkNativeStyle("invalidateStyleCustomGeometrySourceTile")
-    return styleManager.invalidateStyleCustomGeometrySourceTile(sourceId, tileId)
+    return super.invalidateStyleCustomGeometrySourceTile(sourceId, tileId)
   }
 
   /**
@@ -372,9 +408,10 @@ class Style {
    *
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
-  fun updateStyleImageSourceImage(sourceId: String, image: Image): Expected<String, None> {
+  @MainThread
+  override fun updateStyleImageSourceImage(sourceId: String, image: Image): Expected<String, None> {
     checkNativeStyle("updateStyleImageSourceImage")
-    return styleManager.updateStyleImageSourceImage(sourceId, image)
+    return super.updateStyleImageSourceImage(sourceId, image)
   }
 
   /**
@@ -384,9 +421,10 @@ class Style {
    *
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
-  fun removeStyleSource(sourceId: String): Expected<String, None> {
+  @MainThread
+  override fun removeStyleSource(sourceId: String): Expected<String, None> {
     checkNativeStyle("removeStyleSource")
-    return styleManager.removeStyleSource(sourceId)
+    return super.removeStyleSource(sourceId)
   }
 
   /**
@@ -396,13 +434,14 @@ class Style {
    * @param tileId Identifier of the tile
    * @param featureCollection An array with the features to add
    */
-  fun setStyleCustomGeometrySourceTileData(
+  @MainThread
+  override fun setStyleCustomGeometrySourceTileData(
     sourceId: String,
     tileId: CanonicalTileID,
     featureCollection: MutableList<Feature>
   ): Expected<String, None> {
     checkNativeStyle("setStyleCustomGeometrySourceTileData")
-    return styleManager.setStyleCustomGeometrySourceTileData(sourceId, tileId, featureCollection)
+    return super.setStyleCustomGeometrySourceTileData(sourceId, tileId, featureCollection)
   }
 
   /**
@@ -412,9 +451,10 @@ class Style {
    *
    * @return True if the given source exists, false otherwise.
    */
-  fun styleSourceExists(sourceId: String): Boolean {
+  @MainThread
+  override fun styleSourceExists(sourceId: String): Boolean {
     checkNativeStyle("styleSourceExists")
-    return styleManager.styleSourceExists(sourceId)
+    return super.styleSourceExists(sourceId)
   }
 
   /**
@@ -426,13 +466,14 @@ class Style {
    *
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
-  fun setStyleLightProperty(
+  @MainThread
+  override fun setStyleLightProperty(
     id: String,
     property: String,
     value: Value
   ): Expected<String, None> {
     checkNativeStyle("setStyleLightProperty")
-    return styleManager.setStyleLightProperty(id, property, value)
+    return super.setStyleLightProperty(id, property, value)
   }
 
   /**
@@ -440,9 +481,10 @@ class Style {
    *
    * @return list of [StyleObjectInfo].
    */
-  fun getStyleLights(): MutableList<StyleObjectInfo> {
+  @MainThread
+  override fun getStyleLights(): MutableList<StyleObjectInfo> {
     checkNativeStyle("getStyleLights")
-    return styleManager.styleLights
+    return super.getStyleLights()
   }
 
   /**
@@ -452,9 +494,10 @@ class Style {
    *
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
-  fun setStyleLights(lights: Value): Expected<String, None> {
+  @MainThread
+  override fun setStyleLights(lights: Value): Expected<String, None> {
     checkNativeStyle("setStyleLights")
-    return styleManager.setStyleLights(lights)
+    return super.setStyleLights(lights)
   }
 
   /**
@@ -464,9 +507,10 @@ class Style {
    *
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
-  fun setStyleAtmosphere(properties: Value): Expected<String, None> {
+  @MainThread
+  override fun setStyleAtmosphere(properties: Value): Expected<String, None> {
     checkNativeStyle("setStyleAtmosphere")
-    return styleManager.setStyleAtmosphere(properties)
+    return super.setStyleAtmosphere(properties)
   }
 
   /**
@@ -475,9 +519,10 @@ class Style {
    * @param property The style atmosphere property name.
    * @return The style atmosphere property value.
    */
-  fun getStyleAtmosphereProperty(property: String): StylePropertyValue {
+  @MainThread
+  override fun getStyleAtmosphereProperty(property: String): StylePropertyValue {
     checkNativeStyle("getStyleAtmosphereProperty")
-    return styleManager.getStyleAtmosphereProperty(property)
+    return super.getStyleAtmosphereProperty(property)
   }
 
   /**
@@ -488,9 +533,10 @@ class Style {
    *
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
-  fun setStyleAtmosphereProperty(property: String, value: Value): Expected<String, None> {
+  @MainThread
+  override fun setStyleAtmosphereProperty(property: String, value: Value): Expected<String, None> {
     checkNativeStyle("setStyleAtmosphereProperty")
-    return styleManager.setStyleAtmosphereProperty(property, value)
+    return super.setStyleAtmosphereProperty(property, value)
   }
 
   /**
@@ -502,9 +548,10 @@ class Style {
    *
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
-  fun setStyleTerrain(properties: Value): Expected<String, None> {
+  @MainThread
+  override fun setStyleTerrain(properties: Value): Expected<String, None> {
     checkNativeStyle("setStyleTerrain")
-    return styleManager.setStyleTerrain(properties)
+    return super.setStyleTerrain(properties)
   }
 
   /**
@@ -513,9 +560,10 @@ class Style {
    * @param property Style terrain property name.
    * @return Style terrain property value.
    */
-  fun getStyleTerrainProperty(property: String): StylePropertyValue {
+  @MainThread
+  override fun getStyleTerrainProperty(property: String): StylePropertyValue {
     checkNativeStyle("getStyleTerrainProperty")
-    return styleManager.getStyleTerrainProperty(property)
+    return super.getStyleTerrainProperty(property)
   }
 
   /**
@@ -526,9 +574,10 @@ class Style {
    *
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
-  fun setStyleTerrainProperty(property: String, value: Value): Expected<String, None> {
+  @MainThread
+  override fun setStyleTerrainProperty(property: String, value: Value): Expected<String, None> {
     checkNativeStyle("setStyleTerrainProperty")
-    return styleManager.setStyleTerrainProperty(property, value)
+    return super.setStyleTerrainProperty(property, value)
   }
 
   /**
@@ -542,9 +591,10 @@ class Style {
    *
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
-  fun setStyleProjection(properties: Value): Expected<String, None> {
+  @MainThread
+  override fun setStyleProjection(properties: Value): Expected<String, None> {
     checkNativeStyle("setStyleProjection")
-    return styleManager.setStyleProjection(properties)
+    return super.setStyleProjection(properties)
   }
 
   /**
@@ -553,9 +603,10 @@ class Style {
    * @param property The style projection property name.
    * @return The style projection property value.
    */
-  fun getStyleProjectionProperty(property: String): StylePropertyValue {
+  @MainThread
+  override fun getStyleProjectionProperty(property: String): StylePropertyValue {
     checkNativeStyle("getStyleProjectionProperty")
-    return styleManager.getStyleProjectionProperty(property)
+    return super.getStyleProjectionProperty(property)
   }
 
   /**
@@ -566,9 +617,10 @@ class Style {
    *
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
-  fun setStyleProjectionProperty(property: String, value: Value): Expected<String, None> {
+  @MainThread
+  override fun setStyleProjectionProperty(property: String, value: Value): Expected<String, None> {
     checkNativeStyle("setStyleProjectionProperty")
-    return styleManager.setStyleProjectionProperty(property, value)
+    return super.setStyleProjectionProperty(property, value)
   }
 
   /**
@@ -579,9 +631,10 @@ class Style {
    *
    * @return The value of property in the light.
    */
-  fun getStyleLightProperty(id: String, property: String): StylePropertyValue {
+  @MainThread
+  override fun getStyleLightProperty(id: String, property: String): StylePropertyValue {
     checkNativeStyle("getStyleLightProperty")
-    return styleManager.getStyleLightProperty(id, property)
+    return super.getStyleLightProperty(id, property)
   }
 
   /**
@@ -608,7 +661,8 @@ class Style {
    *
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
-  fun addStyleImage(
+  @MainThread
+  override fun addStyleImage(
     imageId: String,
     scale: Float,
     image: Image,
@@ -618,7 +672,7 @@ class Style {
     content: ImageContent?
   ): Expected<String, None> {
     checkNativeStyle("addStyleImage")
-    return styleManager.addStyleImage(
+    return super.addStyleImage(
       imageId,
       scale,
       image,
@@ -630,96 +684,6 @@ class Style {
   }
 
   /**
-   * Adds an image to be used in the style. This API can also be used for updating
-   * an image. If the image id was already added, it gets replaced by the new image.
-   *
-   * The image can be used in `icon-image`, `fill-pattern`, and `line-pattern`.
-   *
-   * See [https://www.mapbox.com/mapbox-gl-js/style-spec/#layout-symbol-icon-image](https://www.mapbox.com/mapbox-gl-js/style-spec/#layout-symbol-icon-image)
-   * See [https://www.mapbox.com/mapbox-gl-js/style-spec/#paint-line-line-pattern](https://www.mapbox.com/mapbox-gl-js/style-spec/#paint-line-line-pattern)
-   * See [https://www.mapbox.com/mapbox-gl-js/style-spec/#paint-fill-fill-pattern](https://www.mapbox.com/mapbox-gl-js/style-spec/#paint-fill-fill-pattern)
-   *
-   * @param imageId ID of the image.
-   * @param image Pixel data of the image.
-   * @param sdf Option to treat whether image is SDF(signed distance field) or not.
-   *
-   * @return A string describing an error if the operation was not successful, empty otherwise.
-   */
-  fun addImage(
-    imageId: String,
-    image: Image,
-    sdf: Boolean
-  ): Expected<String, None> = addStyleImage(imageId, pixelRatio, image, sdf, listOf(), listOf(), null)
-
-  /**
-   * Adds an image to be used in the style. This API can also be used for updating
-   * an image. If the image id was already added, it gets replaced by the new image.
-   *
-   * The image can be used in `icon-image`, `fill-pattern`, and `line-pattern`.
-   *
-   * See [https://www.mapbox.com/mapbox-gl-js/style-spec/#layout-symbol-icon-image](https://www.mapbox.com/mapbox-gl-js/style-spec/#layout-symbol-icon-image)
-   * See [https://www.mapbox.com/mapbox-gl-js/style-spec/#paint-line-line-pattern](https://www.mapbox.com/mapbox-gl-js/style-spec/#paint-line-line-pattern)
-   * See [https://www.mapbox.com/mapbox-gl-js/style-spec/#paint-fill-fill-pattern](https://www.mapbox.com/mapbox-gl-js/style-spec/#paint-fill-fill-pattern)
-   *
-   * @param imageId ID of the image.
-   * @param image Pixel data of the image.
-   *
-   * @return A string describing an error if the operation was not successful, empty otherwise.
-   */
-  fun addImage(
-    imageId: String,
-    image: Image
-  ): Expected<String, None> = addImage(imageId, image, false)
-
-  /**
-   * Adds an image to be used in the style. This API can also be used for updating
-   * an image. If the image id was already added, it gets replaced by the new image.
-   *
-   * The image can be used in `icon-image`, `fill-pattern`, and `line-pattern`.
-   *
-   * See [https://www.mapbox.com/mapbox-gl-js/style-spec/#layout-symbol-icon-image](https://www.mapbox.com/mapbox-gl-js/style-spec/#layout-symbol-icon-image)
-   * See [https://www.mapbox.com/mapbox-gl-js/style-spec/#paint-line-line-pattern](https://www.mapbox.com/mapbox-gl-js/style-spec/#paint-line-line-pattern)
-   * See [https://www.mapbox.com/mapbox-gl-js/style-spec/#paint-fill-fill-pattern](https://www.mapbox.com/mapbox-gl-js/style-spec/#paint-fill-fill-pattern)
-   *
-   * @param imageId ID of the image.
-   * @param bitmap The bitmap image.
-   * @param sdf Option to treat whether image is SDF(signed distance field) or not.
-   *
-   * @return A string describing an error if the operation was not successful, empty otherwise.
-   */
-  fun addImage(
-    imageId: String,
-    bitmap: Bitmap,
-    sdf: Boolean
-  ): Expected<String, None> {
-    return addImage(
-      imageId,
-      bitmap.toMapboxImage(),
-      sdf
-    )
-  }
-
-  /**
-   * Adds an image to be used in the style. This API can also be used for updating
-   * an image. If the image id was already added, it gets replaced by the new image.
-   *
-   * The image can be used in `icon-image`, `fill-pattern`, and `line-pattern`.
-   *
-   * See [https://www.mapbox.com/mapbox-gl-js/style-spec/#layout-symbol-icon-image](https://www.mapbox.com/mapbox-gl-js/style-spec/#layout-symbol-icon-image)
-   * See [https://www.mapbox.com/mapbox-gl-js/style-spec/#paint-line-line-pattern](https://www.mapbox.com/mapbox-gl-js/style-spec/#paint-line-line-pattern)
-   * See [https://www.mapbox.com/mapbox-gl-js/style-spec/#paint-fill-fill-pattern](https://www.mapbox.com/mapbox-gl-js/style-spec/#paint-fill-fill-pattern)
-   *
-   * @param imageId ID of the image.
-   * @param bitmap The bitmap image.
-   *
-   * @return A string describing an error if the operation was not successful, empty otherwise.
-   */
-  fun addImage(
-    imageId: String,
-    bitmap: Bitmap
-  ): Expected<String, None> = addImage(imageId, bitmap, false)
-
-  /**
    * Get an image from the style.
    *
    * @param imageId ID of the image.
@@ -727,9 +691,10 @@ class Style {
    * @return Image data associated with the given ID, or empty if no image is
    * associated with that ID.
    */
-  fun getStyleImage(imageId: String): Image? {
+  @MainThread
+  override fun getStyleImage(imageId: String): Image? {
     checkNativeStyle("getStyleImage")
-    return styleManager.getStyleImage(imageId)
+    return super.getStyleImage(imageId)
   }
 
   /**
@@ -739,9 +704,10 @@ class Style {
    *
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
-  fun removeStyleImage(imageId: String): Expected<String, None> {
+  @MainThread
+  override fun removeStyleImage(imageId: String): Expected<String, None> {
     checkNativeStyle("removeStyleImage")
-    return styleManager.removeStyleImage(imageId)
+    return super.removeStyleImage(imageId)
   }
 
   /**
@@ -751,9 +717,10 @@ class Style {
    *
    * @return True if image exists, false otherwise.
    */
-  fun hasStyleImage(imageId: String): Boolean {
+  @MainThread
+  override fun hasStyleImage(imageId: String): Boolean {
     checkNativeStyle("hasStyleImage")
-    return styleManager.hasStyleImage(imageId)
+    return super.hasStyleImage(imageId)
   }
 
   /**
@@ -768,9 +735,10 @@ class Style {
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
   @MapboxExperimental
-  fun addStyleModel(modelId: String, modelUri: String): Expected<String, None> {
+  @MainThread
+  override fun addStyleModel(modelId: String, modelUri: String): Expected<String, None> {
     checkNativeStyle("addStyleModel")
-    return styleManager.addStyleModel(modelId, modelUri)
+    return super.addStyleModel(modelId, modelUri)
   }
 
   /**
@@ -781,9 +749,10 @@ class Style {
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
   @MapboxExperimental
-  fun removeStyleModel(modelId: String): Expected<String, None> {
+  @MainThread
+  override fun removeStyleModel(modelId: String): Expected<String, None> {
     checkNativeStyle("removeStyleModel")
-    return styleManager.removeStyleModel(modelId)
+    return super.removeStyleModel(modelId)
   }
 
   /**
@@ -794,9 +763,10 @@ class Style {
    * @return True if model exists, false otherwise.
    */
   @MapboxExperimental
-  fun hasStyleModel(modelId: String): Boolean {
+  @MainThread
+  override fun hasStyleModel(modelId: String): Boolean {
     checkNativeStyle("hasStyleModel")
-    return styleManager.hasStyleModel(modelId)
+    return super.hasStyleModel(modelId)
   }
 
   /**
@@ -805,9 +775,10 @@ class Style {
    * @param layerId A style layer identifier.
    * @return Style layer metadata or a string describing an error if the operation was not successful.
    */
-  fun getStyleLayerProperties(layerId: String): Expected<String, Value> {
+  @MainThread
+  override fun getStyleLayerProperties(layerId: String): Expected<String, Value> {
     checkNativeStyle("getStyleLayerProperties")
-    return styleManager.getStyleLayerProperties(layerId)
+    return super.getStyleLayerProperties(layerId)
   }
 
   /**
@@ -817,41 +788,10 @@ class Style {
    * @param properties the value wrapper around layer metadata
    * @return a string describing an error if the operation was not successful.
    */
-  fun setStyleLayerProperties(layerId: String, properties: Value): Expected<String, None> {
+  @MainThread
+  override fun setStyleLayerProperties(layerId: String, properties: Value): Expected<String, None> {
     checkNativeStyle("setStyleLayerProperties")
-    return styleManager.setStyleLayerProperties(layerId, properties)
-  }
-
-  /**
-   * Gets the value of style source property.
-   *
-   * @param sourceId Style source identifier.
-   * @param property Style source property name.
-   * @return The value of property in the source with sourceId.
-   */
-  fun getStyleSourceProperty(sourceId: String, property: String): StylePropertyValue {
-    // TODO see #1105 issue in internal repo
-//    checkNativeStyle("getStyleSourceProperty")
-    return styleManager.getStyleSourceProperty(sourceId, property)
-  }
-
-  /**
-   * Sets a value to a style source property.
-   *
-   * @param sourceId Style source identifier.
-   * @param property Style source property name.
-   * @param value Style source property value.
-   *
-   * @return A string describing an error if the operation was not successful, empty otherwise.
-   */
-  fun setStyleSourceProperty(
-    sourceId: String,
-    property: String,
-    value: Value
-  ): Expected<String, None> {
-    // TODO see #1105 issue in internal repo
-//    checkNativeStyle("setStyleSourceProperty")
-    return styleManager.setStyleSourceProperty(sourceId, property, value)
+    return super.setStyleLayerProperties(layerId, properties)
   }
 
   /**
@@ -870,13 +810,14 @@ class Style {
    *
    * @return A string describing an error if the operation was not successful, or empty otherwise.
    */
-  fun addStyleCustomLayer(
+  @MainThread
+  override fun addStyleCustomLayer(
     layerId: String,
     layerHost: CustomLayerHost,
     layerPosition: LayerPosition?
   ): Expected<String, None> {
     checkNativeStyle("addStyleCustomLayer")
-    return styleManager.addStyleCustomLayer(layerId, layerHost, layerPosition)
+    return super.addStyleCustomLayer(layerId, layerHost, layerPosition)
   }
 
   /**
@@ -896,12 +837,13 @@ class Style {
    *
    * @return A string describing an error if the operation was not successful, or empty otherwise.
    */
-  fun addPersistentStyleLayer(
+  @MainThread
+  override fun addPersistentStyleLayer(
     properties: Value,
     layerPosition: LayerPosition?
   ): Expected<String, None> {
     checkNativeStyle("addPersistentStyleLayer")
-    return styleManager.addPersistentStyleLayer(properties, layerPosition)
+    return super.addPersistentStyleLayer(properties, layerPosition)
   }
 
   /**
@@ -922,13 +864,14 @@ class Style {
    *
    * @return A string describing an error if the operation was not successful, or empty otherwise.
    */
-  fun addPersistentStyleCustomLayer(
+  @MainThread
+  override fun addPersistentStyleCustomLayer(
     layerId: String,
     layerHost: CustomLayerHost,
     layerPosition: LayerPosition?
   ): Expected<String, None> {
     checkNativeStyle("addPersistentStyleCustomLayer")
-    return styleManager.addPersistentStyleCustomLayer(layerId, layerHost, layerPosition)
+    return super.addPersistentStyleCustomLayer(layerId, layerHost, layerPosition)
   }
 
   /**
@@ -937,24 +880,27 @@ class Style {
    * @param layerId A style layer identifier.
    * @return A string describing an error if the operation was not successful, boolean representing state otherwise.
    */
-  fun isStyleLayerPersistent(layerId: String): Expected<String, Boolean> {
+  @MainThread
+  override fun isStyleLayerPersistent(layerId: String): Expected<String, Boolean> {
     checkNativeStyle("isStyleLayerPersistent")
-    return styleManager.isStyleLayerPersistent(layerId)
+    return super.isStyleLayerPersistent(layerId)
   }
 
   /**
-   * Adds a custom geometry to be used in the style. To add the data, implement the [CustomGeometrySourceOptions.fetchTileFunction]
+   * Adds a custom geometry to be used in the style. To add the data, implement the [CustomGeometrySourceOptions.fetchTile@MainThread
+  override function]
    * callback in the options and call [setStyleCustomGeometrySourceTileData]
    *
    * @param sourceId Style source identifier
    * @param options Settings for the custom geometry
    */
-  fun addStyleCustomGeometrySource(
+  @MainThread
+  override fun addStyleCustomGeometrySource(
     sourceId: String,
     options: CustomGeometrySourceOptions
   ): Expected<String, None> {
     checkNativeStyle("addStyleCustomGeometrySource")
-    return styleManager.addStyleCustomGeometrySource(sourceId, options)
+    return super.addStyleCustomGeometrySource(sourceId, options)
   }
 
   /**
@@ -962,10 +908,11 @@ class Style {
    *
    * @return The list containing the ids of the existing style sources.
    */
-  val styleSources: List<StyleObjectInfo>
+  override val styleSources: List<StyleObjectInfo>
+    @MainThread
     get() {
       checkNativeStyle("getStyleSources")
-      return styleManager.styleSources
+      return super.styleSources
     }
 
   /**
@@ -973,10 +920,11 @@ class Style {
    *
    * @return The list containing the ids of the existing style layers.
    */
-  val styleLayers: List<StyleObjectInfo>
+  override val styleLayers: List<StyleObjectInfo>
+    @MainThread
     get() {
       checkNativeStyle("getStyleLayers")
-      return styleManager.styleLayers
+      return super.styleLayers
     }
 
   /**
@@ -987,9 +935,10 @@ class Style {
    *
    * @return Style source parameters or a string describing an error if the operation was not successful.
    */
-  fun getStyleSourceProperties(sourceId: String): Expected<String, Value> {
+  @MainThread
+  override fun getStyleSourceProperties(sourceId: String): Expected<String, Value> {
     checkNativeStyle("getStyleSourceProperties")
-    return styleManager.getStyleSourceProperties(sourceId)
+    return super.getStyleSourceProperties(sourceId)
   }
 
   /**
@@ -1004,97 +953,163 @@ class Style {
    *
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
-  fun setStyleSourceProperties(
+  @MainThread
+  override fun setStyleSourceProperties(
     sourceId: String,
     properties: Value
   ): Expected<String, None> {
     checkNativeStyle("setStyleSourceProperties")
-    return styleManager.setStyleSourceProperties(sourceId, properties)
+    return super.setStyleSourceProperties(sourceId, properties)
   }
 
   /**
    * Set geojson source data.
    * Call may take significant time for parsing and marshalling depending on the data size.
-   * Direct method use is not recommended, consider using [GeoJsonSource.geometry], [GeoJsonSource.feature], [GeoJsonSource.featureCollection], [GeoJsonSource.data], [GeoJsonSource.url] instead.
+   *
+   * Direct method use is not recommended, consider using `GeoJsonSource.geometry`, `GeoJsonSource.feature`, `GeoJsonSource.featureCollection`, `GeoJsonSource.data` instead.
    *
    * @param sourceId the id of the GeoJSON source
    * @param dataId an arbitrary string used to track the given GeoJSON data, empty string means null ID
    * @param data the GeoJson source data
    *
    */
-  @MainThread
-  fun setStyleGeoJSONSourceData(
+  @AnyThread
+  override fun setStyleGeoJSONSourceData(
     sourceId: String,
     dataId: String,
     data: GeoJSONSourceData
   ): Expected<String, None> {
     if (!isStyleValid) {
-      logW(TAG, "Style object (accessing setStyleGeoJSONSourceData) should not be stored and used after MapView is destroyed or new style has been loaded.")
+      logW(
+        TAG,
+        "Style object (accessing setStyleGeoJSONSourceData) should not be stored and used after MapView is destroyed or new style has been loaded."
+      )
     }
-    return styleManager.setStyleGeoJSONSourceData(sourceId, dataId, data)
+    return super.setStyleGeoJSONSourceData(sourceId, dataId, data)
   }
 
   /**
-   * Add features to the GeoJSON source.
-   * Call may take significant time for parsing and marshalling depending on the data size.
-   * Direct method use is not recommended, consider using [GeoJsonSource.addGeoJSONSourceFeatures] instead.
+   * Add additional features to a GeoJSON style source.
    *
-   * @param sourceId the id of the GeoJSON source
-   * @param dataId an arbitrary string used to track the given GeoJSON data, empty string means null ID
-   * @param features list of features to add
+   * This method is thread-safe.
+   *
+   * Note that when calling this method from a thread other than the main thread, the return value does
+   * not contain the actual operation status. To ensure the success of the operation, use the events API,
+   * which will propagate a [MapLoaded] event upon success or a [MapLoadingError] event upon failure.
+   *
+   * Partially updating a GeoJSON source is not compatible with using shared cache and generated IDs.
+   * It is important to ensure that every feature in the GeoJSON style source, as well as the newly added
+   * feature, has a unique ID (or a unique promote ID if in use). Failure to provide unique IDs will result
+   * in a [MapLoadingError].
+   *
+   * The method allows the user to provide a data ID, which will be returned as the dataId parameter in the
+   * [SourceDataLoaded] event. However, it's important to note that multiple partial updates can be queued
+   * for the same GeoJSON source when ongoing source parsing is taking place. In these cases, the partial
+   * updates will be applied to the source in batches. Only the data ID provided in the most recent call within
+   * each batch will be included in the [SourceDataLoaded] event. If no data ID is provided in the most recent
+   * call, the data ID in the [SourceDataLoaded]event will be null.
+   *
+   * @param sourceId The identifier of the style source.
+   * @param dataId An arbitrary string used to track the given GeoJSON data, empty string means null ID.
+   * @param features An array of GeoJSON features to be added to the source.
+   *
+   * @return A string describing an error if the operation was not successful, empty otherwise.
    */
-  @MainThread
-  fun addGeoJSONSourceFeatures(
+  @AnyThread
+  override fun addGeoJSONSourceFeatures(
     sourceId: String,
     dataId: String,
     features: List<Feature>
   ): Expected<String, None> {
     if (!isStyleValid) {
-      logW(TAG, "Style object (accessing addGeoJSONSourceFeatures) should not be stored and used after MapView is destroyed or new style has been loaded.")
+      logW(
+        TAG,
+        "Style object (accessing addGeoJSONSourceFeatures) should not be stored and used after MapView is destroyed or new style has been loaded."
+      )
     }
-    return styleManager.addGeoJSONSourceFeatures(sourceId, dataId, features)
+    return super.addGeoJSONSourceFeatures(sourceId, dataId, features)
   }
 
   /**
-   * Update features in the GeoJSON source.
-   * Call may take significant time for parsing and marshalling depending on the data size.
-   * Direct method use is not recommended, consider using [GeoJsonSource.updateGeoJSONSourceFeatures] instead.
+   * Update existing features in a GeoJSON style source.
    *
-   * @param sourceId the id of the GeoJSON source
-   * @param dataId an arbitrary string used to track the given GeoJSON data, empty string means null ID
-   * @param features list of features to update
+   * This method is thread safe.
+   *
+   * Note that when calling this method from a thread other than the main thread, the return value does
+   * not contain the actual operation status. To ensure the success of the operation, use the events API,
+   * which will propagate a [MapLoaded] event upon success or a [MapLoadingError] event upon failure.
+   *
+   * Partially updating a GeoJSON source is not compatible with using shared cache and generated IDs.
+   * It is important to ensure that every feature in the GeoJSON style source, as well as the newly added
+   * feature, has a unique ID (or a unique promote ID if in use). Failure to provide unique IDs will result
+   * in a [MapLoadingError].
+   *
+   * The method allows the user to provide a data ID, which will be returned as the dataId parameter in the
+   * [SourceDataLoaded] event. However, it's important to note that multiple partial updates can be queued
+   * for the same GeoJSON source when ongoing source parsing is taking place. In these cases, the partial
+   * updates will be applied to the source in batches. Only the data ID provided in the most recent call within
+   * each batch will be included in the [SourceDataLoaded] event. If no data ID is provided in the most recent
+   * call, the data ID in the [SourceDataLoaded]event will be null.
+   *
+   * @param sourceId A style source identifier.
+   * @param dataId An arbitrary string used to track the given GeoJSON data, empty string means null ID.
+   * @param features the GeoJSON features to be updated in the source.
+   *
+   * @return A string describing an error if the operation was not successful, empty otherwise.
    */
-  @MainThread
-  fun updateGeoJSONSourceFeatures(
+  @AnyThread
+  override fun updateGeoJSONSourceFeatures(
     sourceId: String,
     dataId: String,
     features: List<Feature>
   ): Expected<String, None> {
     if (!isStyleValid) {
-      logW(TAG, "Style object (accessing updateGeoJSONSourceFeatures) should not be stored and used after MapView is destroyed or new style has been loaded.")
+      logW(
+        TAG,
+        "Style object (accessing updateGeoJSONSourceFeatures) should not be stored and used after MapView is destroyed or new style has been loaded."
+      )
     }
-    return styleManager.updateGeoJSONSourceFeatures(sourceId, dataId, features)
+    return super.updateGeoJSONSourceFeatures(sourceId, dataId, features)
   }
 
   /**
-   * Remove features from the GeoJSON source.
-   * Call may take significant time for parsing and marshalling depending on the data size.
-   * Direct method use is not recommended, consider using [GeoJsonSource.removeGeoJSONSourceFeatures] instead.
+   * Remove features from a GeoJSON style source.
    *
-   * @param sourceId the id of the GeoJSON source
-   * @param dataId an arbitrary string used to track the given GeoJSON data, empty string means null ID
-   * @param featureIds list of feature ids to remove
+   * Note that when calling this method from a thread other than the main thread, the return value does
+   * not contain the actual operation status. To ensure the success of the operation, use the events API,
+   * which will propagate a [MapLoaded] event upon success or a [MapLoadingError] event upon failure.
+   *
+   * Partially updating a GeoJSON source is not compatible with using shared cache and generated IDs.
+   * It is important to ensure that every feature in the GeoJSON style source, as well as the newly added
+   * feature, has a unique ID (or a unique promote ID if in use). Failure to provide unique IDs will result
+   * in a [MapLoadingError].
+   *
+   * The method allows the user to provide a data ID, which will be returned as the dataId parameter in the
+   * [SourceDataLoaded] event. However, it's important to note that multiple partial updates can be queued
+   * for the same GeoJSON source when ongoing source parsing is taking place. In these cases, the partial
+   * updates will be applied to the source in batches. Only the data ID provided in the most recent call within
+   * each batch will be included in the [SourceDataLoaded] event. If no data ID is provided in the most recent
+   * call, the data ID in the [SourceDataLoaded]event will be null.
+   *
+   * @param sourceId A style source identifier.
+   * @param dataId An arbitrary string used to track the given GeoJSON data, empty string means null ID.
+   * @param featureIds the Ids of the features that need to be removed from the source.
+   *
+   * @return A string describing an error if the operation was not successful, empty otherwise.
    */
-  @MainThread
-  fun removeGeoJSONSourceFeatures(
+  @AnyThread
+  override fun removeGeoJSONSourceFeatures(
     sourceId: String,
     dataId: String,
     featureIds: List<String>
   ): Expected<String, None> {
     if (!isStyleValid) {
-      logW(TAG, "Style object (accessing removeGeoJSONSourceFeatures) should not be stored and used after MapView is destroyed or new style has been loaded.")
+      logW(
+        TAG,
+        "Style object (accessing removeGeoJSONSourceFeatures) should not be stored and used after MapView is destroyed or new style has been loaded."
+      )
     }
-    return styleManager.removeGeoJSONSourceFeatures(sourceId, dataId, featureIds)
+    return super.removeGeoJSONSourceFeatures(sourceId, dataId, featureIds)
   }
 
   /**
@@ -1102,26 +1117,29 @@ class Style {
    *
    * @return TRUE if and only if the style JSON contents, the style specified sprite and sources are all loaded, otherwise returns FALSE.
    */
-  fun isStyleLoaded(): Boolean {
+  @MainThread
+  override fun isStyleLoaded(): Boolean {
     checkNativeStyle("isStyleLoaded")
-    return styleManager.isStyleLoaded
+    return super.isStyleLoaded()
   }
 
   /**
    * Note! This is an experimental feature. It can be changed or removed in future versions.
    *
-   * Adds a custom raster source to be used in the style. To add the data, implement the fetchTileFunction callback in the options and call setStyleCustomRasterSourceTileData()
+   * Adds a custom raster source to be used in the style. To add the data, implement the fetchTile@MainThread
+  override function callback in the options and call setStyleCustomRasterSourceTileData()
    *
    * @param sourceId A style source identifier
    * @param options The `custom raster source options` for the custom raster source.
    */
   @MapboxExperimental
-  fun addStyleCustomRasterSource(
+  @MainThread
+  override fun addStyleCustomRasterSource(
     sourceId: String,
     options: CustomRasterSourceOptions
   ): Expected<String, None> {
     checkNativeStyle("addStyleCustomRasterSource")
-    return styleManager.addStyleCustomRasterSource(sourceId, options)
+    return super.addStyleCustomRasterSource(sourceId, options)
   }
 
   /**
@@ -1137,13 +1155,14 @@ class Style {
    * @param image `Image` content of the tile. If an empty image is provided then the tile gets removed from the map.
    */
   @MapboxExperimental
-  fun setStyleCustomRasterSourceTileData(
+  @MainThread
+  override fun setStyleCustomRasterSourceTileData(
     sourceId: String,
     tileId: CanonicalTileID,
     image: Image?
   ): Expected<String, None> {
     checkNativeStyle("setStyleCustomRasterSourceTileData")
-    return styleManager.setStyleCustomRasterSourceTileData(sourceId, tileId, image)
+    return super.setStyleCustomRasterSourceTileData(sourceId, tileId, image)
   }
 
   /**
@@ -1157,12 +1176,13 @@ class Style {
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
   @MapboxExperimental
-  fun invalidateStyleCustomRasterSourceTile(
+  @MainThread
+  override fun invalidateStyleCustomRasterSourceTile(
     sourceId: String,
     tileId: CanonicalTileID
   ): Expected<String, None> {
     checkNativeStyle("invalidateStyleCustomRasterSourceTile")
-    return styleManager.invalidateStyleCustomRasterSourceTile(sourceId, tileId)
+    return super.invalidateStyleCustomRasterSourceTile(sourceId, tileId)
   }
 
   /**
@@ -1176,18 +1196,21 @@ class Style {
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
   @MapboxExperimental
-  fun invalidateStyleCustomRasterSourceRegion(
+  @MainThread
+  override fun invalidateStyleCustomRasterSourceRegion(
     sourceId: String,
     bounds: CoordinateBounds
   ): Expected<String, None> {
     checkNativeStyle("invalidateStyleCustomRasterSourceRegion")
-    return styleManager.invalidateStyleCustomRasterSourceRegion(sourceId, bounds)
+    return super.invalidateStyleCustomRasterSourceRegion(sourceId, bounds)
   }
 
   private fun checkNativeStyle(methodName: String) {
-    ThreadChecker.throwIfNotMainThread()
     if (!isStyleValid) {
-      logW(TAG, "Style object (accessing $methodName) should not be stored and used after MapView is destroyed or new style has been loaded.")
+      logW(
+        TAG,
+        "Style object (accessing $methodName) should not be stored and used after MapView is destroyed or new style has been loaded."
+      )
     }
   }
 

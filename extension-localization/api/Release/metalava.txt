@@ -5,8 +5,8 @@ package com.mapbox.maps.extension.localization {
   }
 
   public final class StyleInterfaceExtensionKt {
-    method public static void localizeLabels(com.mapbox.maps.Style, java.util.Locale locale, java.util.List<java.lang.String>? layerIds = null);
-    method public static void localizeLabels(com.mapbox.maps.Style, java.util.Locale locale);
+    method public static void localizeLabels(com.mapbox.maps.MapboxStyleManager, java.util.Locale locale, java.util.List<java.lang.String>? layerIds = null);
+    method public static void localizeLabels(com.mapbox.maps.MapboxStyleManager, java.util.Locale locale);
   }
 
   public final class SupportedLanguagesKt {

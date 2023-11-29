@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.annotation.RestrictTo
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxLocationComponentException
-import com.mapbox.maps.Style
+import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.logE
 
 @RestrictTo(RestrictTo.Scope.LIBRARY)
@@ -15,7 +15,7 @@ internal class ModelSourceWrapper(
 ) {
 
   private var sourceProperties = HashMap<String, Value>()
-  private var style: Style? = null
+  private var style: MapboxStyleManager? = null
 
   init {
     val modelProperties = HashMap<String, Value>()
@@ -30,11 +30,11 @@ internal class ModelSourceWrapper(
     sourceProperties[MODELS] = Value(models)
   }
 
-  fun updateStyle(style: Style) {
+  fun updateStyle(style: MapboxStyleManager) {
     this.style = style
   }
 
-  fun bindTo(style: Style) {
+  fun bindTo(style: MapboxStyleManager) {
     this.style = style
     val expected = style.addStyleSource(sourceId, toValue())
     expected.error?.let {

@@ -23,7 +23,7 @@ import org.robolectric.annotation.Config
 @Config(shadows = [ShadowStyleManager::class])
 class GeoJsonSourceMutateTest {
 
-  private val style = mockk<Style>(relaxUnitFun = true, relaxed = true)
+  private val style = mockk<MapboxStyleManager>(relaxUnitFun = true, relaxed = true)
   private val expected = mockk<Expected<String, None>>(relaxUnitFun = true, relaxed = true)
 
   @Before
@@ -33,7 +33,6 @@ class GeoJsonSourceMutateTest {
     every { logW(any(), any()) } just Runs
 
     every { style.addStyleSource(any(), any()) } returns expected
-    every { style.isValid() } returns true
 
     mockkStatic(StyleManager::class)
   }

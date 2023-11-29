@@ -30,7 +30,7 @@ class CustomRasterSource(
     return "custom-raster"
   }
 
-  override fun addSource(style: Style): Expected<String, None> {
+  override fun addSource(style: MapboxStyleManager): Expected<String, None> {
     return style.addStyleCustomRasterSource(sourceId, options)
   }
 

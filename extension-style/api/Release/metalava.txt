@@ -59,7 +59,7 @@ package com.mapbox.maps.extension.style.atmosphere.generated {
 
   @UiThread public final class Atmosphere implements com.mapbox.maps.extension.style.atmosphere.generated.AtmosphereDslReceiver com.mapbox.maps.extension.style.StyleContract.StyleAtmosphereExtension {
     ctor public Atmosphere();
-    method public void bindTo(com.mapbox.maps.Style delegate);
+    method public void bindTo(com.mapbox.maps.MapboxStyleManager delegate);
     method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere color(@ColorInt int color);
     method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere color(String color);
     method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere color(com.mapbox.maps.extension.style.expressions.generated.Expression color);
@@ -180,9 +180,9 @@ package com.mapbox.maps.extension.style.atmosphere.generated {
   }
 
   public final class AtmosphereUtils {
-    method public static com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere getAtmosphere(com.mapbox.maps.Style);
-    method public static void removeAtmosphere(com.mapbox.maps.Style);
-    method public static void setAtmosphere(com.mapbox.maps.Style, com.mapbox.maps.extension.style.StyleContract.StyleAtmosphereExtension atmosphere);
+    method public static com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere getAtmosphere(com.mapbox.maps.MapboxStyleManager);
+    method public static void removeAtmosphere(com.mapbox.maps.MapboxStyleManager);
+    method public static void setAtmosphere(com.mapbox.maps.MapboxStyleManager, com.mapbox.maps.extension.style.StyleContract.StyleAtmosphereExtension atmosphere);
   }
 
 }
@@ -969,7 +969,7 @@ package com.mapbox.maps.extension.style.image {
 
   public final class ImageExtensionImpl implements com.mapbox.maps.extension.style.StyleContract.StyleImageExtension {
     ctor public ImageExtensionImpl(com.mapbox.maps.extension.style.image.ImageExtensionImpl.Builder builder);
-    method public void bindTo(com.mapbox.maps.Style delegate);
+    method public void bindTo(com.mapbox.maps.MapboxStyleManager delegate);
   }
 
   public static final class ImageExtensionImpl.Builder {
@@ -990,7 +990,7 @@ package com.mapbox.maps.extension.style.image {
 
   public final class ImageNinePatchExtensionImpl implements com.mapbox.maps.extension.style.StyleContract.StyleImageExtension {
     ctor public ImageNinePatchExtensionImpl(com.mapbox.maps.extension.style.image.ImageNinePatchExtensionImpl.Builder builder);
-    method public void bindTo(com.mapbox.maps.Style delegate);
+    method public void bindTo(com.mapbox.maps.MapboxStyleManager delegate);
   }
 
   public static final class ImageNinePatchExtensionImpl.Builder {
@@ -1005,8 +1005,8 @@ package com.mapbox.maps.extension.style.image {
   }
 
   public final class ImageUtils {
-    method public static void addImage(com.mapbox.maps.Style, com.mapbox.maps.extension.style.StyleContract.StyleImageExtension image);
-    method public static void addImage9Patch(com.mapbox.maps.Style, com.mapbox.maps.extension.style.StyleContract.StyleImageExtension image);
+    method public static void addImage(com.mapbox.maps.MapboxStyleManager, com.mapbox.maps.extension.style.StyleContract.StyleImageExtension image);
+    method public static void addImage9Patch(com.mapbox.maps.MapboxStyleManager, com.mapbox.maps.extension.style.StyleContract.StyleImageExtension image);
     method @Deprecated public static com.mapbox.maps.extension.style.image.ImageExtensionImpl image(String imageId, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.image.ImageExtensionImpl.Builder,kotlin.Unit> block);
     method public static com.mapbox.maps.extension.style.image.ImageExtensionImpl image(String imageId, com.mapbox.maps.Image image, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.image.ImageExtensionImpl.Builder,kotlin.Unit> block = {});
     method public static com.mapbox.maps.extension.style.image.ImageExtensionImpl image(String imageId, android.graphics.Bitmap bitmap, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.image.ImageExtensionImpl.Builder,kotlin.Unit> block = {});
@@ -1032,9 +1032,9 @@ package com.mapbox.maps.extension.style.image {
   }
 
   public final class NinePatchUtils {
-    method public static com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addImage9Patch(com.mapbox.maps.Style, String imageId, android.graphics.Bitmap bitmap, float scale = com.mapbox.maps.Style.pixelRatio, boolean sdf = false);
-    method public static com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addImage9Patch(com.mapbox.maps.Style, String imageId, android.graphics.Bitmap bitmap, float scale = com.mapbox.maps.Style.pixelRatio);
-    method public static com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addImage9Patch(com.mapbox.maps.Style, String imageId, android.graphics.Bitmap bitmap);
+    method public static com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addImage9Patch(com.mapbox.maps.MapboxStyleManager, String imageId, android.graphics.Bitmap bitmap, float scale = com.mapbox.maps.MapboxStyleManager.pixelRatio, boolean sdf = false);
+    method public static com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addImage9Patch(com.mapbox.maps.MapboxStyleManager, String imageId, android.graphics.Bitmap bitmap, float scale = com.mapbox.maps.MapboxStyleManager.pixelRatio);
+    method public static com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addImage9Patch(com.mapbox.maps.MapboxStyleManager, String imageId, android.graphics.Bitmap bitmap);
     method public static com.mapbox.maps.extension.style.image.NinePatchImage parse9PatchBitmap(android.graphics.Bitmap);
   }
 
@@ -1088,10 +1088,10 @@ package com.mapbox.maps.extension.style.layers {
 
   public abstract class Layer implements com.mapbox.maps.extension.style.StyleContract.StyleLayerExtension {
     ctor public Layer();
-    method protected com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addLayer(com.mapbox.maps.Style delegate, com.mapbox.bindgen.Value propertiesValue, com.mapbox.maps.LayerPosition? position);
-    method protected com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addPersistentLayer(com.mapbox.maps.Style delegate, com.mapbox.maps.LayerPosition? position);
-    method public final void bindTo(com.mapbox.maps.Style delegate);
-    method public void bindTo(com.mapbox.maps.Style delegate, com.mapbox.maps.LayerPosition? position);
+    method protected com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addLayer(com.mapbox.maps.MapboxStyleManager delegate, com.mapbox.bindgen.Value propertiesValue, com.mapbox.maps.LayerPosition? position);
+    method protected com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addPersistentLayer(com.mapbox.maps.MapboxStyleManager delegate, com.mapbox.maps.LayerPosition? position);
+    method public final void bindTo(com.mapbox.maps.MapboxStyleManager delegate);
+    method public void bindTo(com.mapbox.maps.MapboxStyleManager delegate, com.mapbox.maps.LayerPosition? position);
     method protected final com.mapbox.bindgen.Value getCachedLayerProperties();
     method public abstract String getLayerId();
     method public abstract Double? getMaxZoom();
@@ -1117,14 +1117,14 @@ package com.mapbox.maps.extension.style.layers {
   }
 
   public final class LayerUtils {
-    method public static void addLayer(com.mapbox.maps.Style, com.mapbox.maps.extension.style.StyleContract.StyleLayerExtension layer);
-    method public static void addLayerAbove(com.mapbox.maps.Style, com.mapbox.maps.extension.style.StyleContract.StyleLayerExtension layer, String? above);
-    method public static void addLayerAt(com.mapbox.maps.Style, com.mapbox.maps.extension.style.StyleContract.StyleLayerExtension layer, Integer? index);
-    method public static void addLayerBelow(com.mapbox.maps.Style, com.mapbox.maps.extension.style.StyleContract.StyleLayerExtension layer, String? below);
-    method public static void addPersistentLayer(com.mapbox.maps.Style, com.mapbox.maps.extension.style.layers.Layer layer, com.mapbox.maps.LayerPosition? position = null);
-    method public static void addPersistentLayer(com.mapbox.maps.Style, com.mapbox.maps.extension.style.layers.Layer layer);
-    method public static com.mapbox.maps.extension.style.layers.Layer? getLayer(com.mapbox.maps.Style, String layerId);
-    method public static inline <reified T extends com.mapbox.maps.extension.style.layers.Layer> T! getLayerAs(com.mapbox.maps.Style, String layerId);
+    method public static void addLayer(com.mapbox.maps.MapboxStyleManager, com.mapbox.maps.extension.style.StyleContract.StyleLayerExtension layer);
+    method public static void addLayerAbove(com.mapbox.maps.MapboxStyleManager, com.mapbox.maps.extension.style.StyleContract.StyleLayerExtension layer, String? above);
+    method public static void addLayerAt(com.mapbox.maps.MapboxStyleManager, com.mapbox.maps.extension.style.StyleContract.StyleLayerExtension layer, Integer? index);
+    method public static void addLayerBelow(com.mapbox.maps.MapboxStyleManager, com.mapbox.maps.extension.style.StyleContract.StyleLayerExtension layer, String? below);
+    method public static void addPersistentLayer(com.mapbox.maps.MapboxStyleManager, com.mapbox.maps.extension.style.layers.Layer layer, com.mapbox.maps.LayerPosition? position = null);
+    method public static void addPersistentLayer(com.mapbox.maps.MapboxStyleManager, com.mapbox.maps.extension.style.layers.Layer layer);
+    method public static com.mapbox.maps.extension.style.layers.Layer? getLayer(com.mapbox.maps.MapboxStyleManager, String layerId);
+    method public static inline <reified T extends com.mapbox.maps.extension.style.layers.Layer> T! getLayerAs(com.mapbox.maps.MapboxStyleManager, String layerId);
     method public static Boolean? isPersistent(com.mapbox.maps.extension.style.layers.Layer);
   }
 
@@ -5358,7 +5358,7 @@ package com.mapbox.maps.extension.style.layers.properties.generated {
 package com.mapbox.maps.extension.style.light {
 
   public final class DynamicLight implements com.mapbox.maps.extension.style.StyleContract.StyleLightExtension {
-    method public void bindTo(com.mapbox.maps.Style delegate);
+    method public void bindTo(com.mapbox.maps.MapboxStyleManager delegate);
   }
 
   public abstract class Light {
@@ -5386,10 +5386,10 @@ package com.mapbox.maps.extension.style.light {
 
   public final class LightUtils {
     method public static com.mapbox.maps.extension.style.light.DynamicLight dynamicLight(com.mapbox.maps.extension.style.light.generated.AmbientLight ambientLight, com.mapbox.maps.extension.style.light.generated.DirectionalLight directionalLight);
-    method public static com.mapbox.maps.extension.style.light.Light? getLight(com.mapbox.maps.Style, String lightId);
-    method public static void setLight(com.mapbox.maps.Style, com.mapbox.maps.extension.style.light.generated.AmbientLight ambientLight, com.mapbox.maps.extension.style.light.generated.DirectionalLight directionalLight);
-    method public static void setLight(com.mapbox.maps.Style, com.mapbox.maps.extension.style.light.generated.FlatLight flatLight);
-    method public static void setLights(com.mapbox.maps.Style, java.util.List<? extends com.mapbox.maps.extension.style.light.Light> lights);
+    method public static com.mapbox.maps.extension.style.light.Light? getLight(com.mapbox.maps.MapboxStyleManager, String lightId);
+    method public static void setLight(com.mapbox.maps.MapboxStyleManager, com.mapbox.maps.extension.style.light.generated.AmbientLight ambientLight, com.mapbox.maps.extension.style.light.generated.DirectionalLight directionalLight);
+    method public static void setLight(com.mapbox.maps.MapboxStyleManager, com.mapbox.maps.extension.style.light.generated.FlatLight flatLight);
+    method public static void setLights(com.mapbox.maps.MapboxStyleManager, java.util.List<? extends com.mapbox.maps.extension.style.light.Light> lights);
   }
 
 }
@@ -5523,7 +5523,7 @@ package com.mapbox.maps.extension.style.light.generated {
   @UiThread public final class FlatLight extends com.mapbox.maps.extension.style.light.Light implements com.mapbox.maps.extension.style.light.generated.FlatLightDslReceiver com.mapbox.maps.extension.style.StyleContract.StyleLightExtension {
     method public com.mapbox.maps.extension.style.light.generated.FlatLight anchor(com.mapbox.maps.extension.style.layers.properties.generated.Anchor anchor);
     method public com.mapbox.maps.extension.style.light.generated.FlatLight anchor(com.mapbox.maps.extension.style.expressions.generated.Expression anchor);
-    method public void bindTo(com.mapbox.maps.Style delegate);
+    method public void bindTo(com.mapbox.maps.MapboxStyleManager delegate);
     method public com.mapbox.maps.extension.style.light.generated.FlatLight color(@ColorInt int color);
     method public com.mapbox.maps.extension.style.light.generated.FlatLight color(String color);
     method public com.mapbox.maps.extension.style.light.generated.FlatLight color(com.mapbox.maps.extension.style.expressions.generated.Expression color);
@@ -5595,7 +5595,7 @@ package com.mapbox.maps.extension.style.model {
 
   @com.mapbox.maps.MapboxExperimental public final class ModelExtensionImpl implements com.mapbox.maps.extension.style.StyleContract.StyleModelExtension {
     ctor public ModelExtensionImpl(com.mapbox.maps.extension.style.model.ModelExtensionImpl.Builder builder);
-    method public void bindTo(com.mapbox.maps.Style delegate);
+    method public void bindTo(com.mapbox.maps.MapboxStyleManager delegate);
   }
 
   @com.mapbox.maps.MapboxExperimental public static final class ModelExtensionImpl.Builder {
@@ -5607,7 +5607,7 @@ package com.mapbox.maps.extension.style.model {
   }
 
   public final class ModelUtils {
-    method @com.mapbox.maps.MapboxExperimental public static void addModel(com.mapbox.maps.Style, com.mapbox.maps.extension.style.StyleContract.StyleModelExtension model);
+    method @com.mapbox.maps.MapboxExperimental public static void addModel(com.mapbox.maps.MapboxStyleManager, com.mapbox.maps.extension.style.StyleContract.StyleModelExtension model);
     method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.style.model.ModelExtensionImpl model(String modelId, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.model.ModelExtensionImpl.Builder,kotlin.Unit> block);
   }
 
@@ -5617,7 +5617,7 @@ package com.mapbox.maps.extension.style.projection.generated {
 
   @UiThread public final class Projection implements com.mapbox.maps.extension.style.StyleContract.StyleProjectionExtension {
     ctor public Projection(com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName name);
-    method public void bindTo(com.mapbox.maps.Style delegate);
+    method public void bindTo(com.mapbox.maps.MapboxStyleManager delegate);
     method public com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName getName();
     property public final com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName name;
   }
@@ -5627,8 +5627,8 @@ package com.mapbox.maps.extension.style.projection.generated {
   }
 
   public final class StyleProjectionUtils {
-    method public static com.mapbox.maps.extension.style.projection.generated.Projection? getProjection(com.mapbox.maps.Style);
-    method public static void setProjection(com.mapbox.maps.Style, com.mapbox.maps.extension.style.projection.generated.Projection projection);
+    method public static com.mapbox.maps.extension.style.projection.generated.Projection? getProjection(com.mapbox.maps.MapboxStyleManager);
+    method public static void setProjection(com.mapbox.maps.MapboxStyleManager, com.mapbox.maps.extension.style.projection.generated.Projection projection);
   }
 
 }
@@ -5676,8 +5676,8 @@ package com.mapbox.maps.extension.style.sources {
 
   public abstract class Source implements com.mapbox.maps.extension.style.StyleContract.StyleSourceExtension {
     ctor public Source(String sourceId);
-    method protected com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addSource(com.mapbox.maps.Style style);
-    method public void bindTo(com.mapbox.maps.Style delegate);
+    method protected com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addSource(com.mapbox.maps.MapboxStyleManager style);
+    method public void bindTo(com.mapbox.maps.MapboxStyleManager delegate);
     method public final String getSourceId();
     property public final String sourceId;
     field public static final com.mapbox.maps.extension.style.sources.Source.Companion Companion;
@@ -5687,9 +5687,9 @@ package com.mapbox.maps.extension.style.sources {
   }
 
   public final class SourceUtils {
-    method public static void addSource(com.mapbox.maps.Style, com.mapbox.maps.extension.style.StyleContract.StyleSourceExtension source);
-    method public static com.mapbox.maps.extension.style.sources.Source? getSource(com.mapbox.maps.Style, String sourceId);
-    method public static inline <reified T extends com.mapbox.maps.extension.style.sources.Source> T! getSourceAs(com.mapbox.maps.Style, String sourceId);
+    method public static void addSource(com.mapbox.maps.MapboxStyleManager, com.mapbox.maps.extension.style.StyleContract.StyleSourceExtension source);
+    method public static com.mapbox.maps.extension.style.sources.Source? getSource(com.mapbox.maps.MapboxStyleManager, String sourceId);
+    method public static inline <reified T extends com.mapbox.maps.extension.style.sources.Source> T! getSourceAs(com.mapbox.maps.MapboxStyleManager, String sourceId);
   }
 
   public final class TileSet extends java.util.HashMap<java.lang.String,com.mapbox.bindgen.Value> {
@@ -6156,7 +6156,7 @@ package com.mapbox.maps.extension.style.terrain.generated {
 
   @UiThread public final class Terrain implements com.mapbox.maps.extension.style.StyleContract.StyleTerrainExtension com.mapbox.maps.extension.style.terrain.generated.TerrainDslReceiver {
     ctor public Terrain(String sourceId);
-    method public void bindTo(com.mapbox.maps.Style delegate);
+    method public void bindTo(com.mapbox.maps.MapboxStyleManager delegate);
     method public com.mapbox.maps.extension.style.terrain.generated.Terrain exaggeration(double exaggeration);
     method public com.mapbox.maps.extension.style.terrain.generated.Terrain exaggeration(com.mapbox.maps.extension.style.expressions.generated.Expression exaggeration);
     method public com.mapbox.maps.extension.style.terrain.generated.Terrain exaggerationTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -6186,9 +6186,9 @@ package com.mapbox.maps.extension.style.terrain.generated {
   }
 
   public final class TerrainUtils {
-    method public static com.mapbox.maps.extension.style.terrain.generated.Terrain getTerrain(com.mapbox.maps.Style, String sourceId);
-    method public static void removeTerrain(com.mapbox.maps.Style);
-    method public static void setTerrain(com.mapbox.maps.Style, com.mapbox.maps.extension.style.StyleContract.StyleTerrainExtension terrain);
+    method public static com.mapbox.maps.extension.style.terrain.generated.Terrain getTerrain(com.mapbox.maps.MapboxStyleManager, String sourceId);
+    method public static void removeTerrain(com.mapbox.maps.MapboxStyleManager);
+    method public static void setTerrain(com.mapbox.maps.MapboxStyleManager, com.mapbox.maps.extension.style.StyleContract.StyleTerrainExtension terrain);
   }
 
 }

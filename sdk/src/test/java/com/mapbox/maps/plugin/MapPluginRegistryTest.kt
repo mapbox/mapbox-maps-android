@@ -290,7 +290,7 @@ class MapPluginRegistryTest {
     override fun onDelegateProvider(delegateProvider: MapDelegateProvider) {
     }
 
-    override fun onStyleChanged(style: Style) {
+    override fun onStyleChanged(style: MapboxStyleManager) {
     }
   }
 }

@@ -4,7 +4,7 @@ package com.mapbox.maps.extension.style.sources
 
 import com.mapbox.maps.CustomGeometrySourceOptions
 import com.mapbox.maps.CustomRasterSourceOptions
-import com.mapbox.maps.Style
+import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.sources.generated.*
 import com.mapbox.maps.extension.style.utils.silentUnwrap
@@ -17,7 +17,7 @@ import com.mapbox.maps.logW
  * @param sourceId the source id
  * @return StyleSourcePlugin
  */
-fun Style.getSource(sourceId: String): Source? {
+fun MapboxStyleManager.getSource(sourceId: String): Source? {
   return this.getStyleSourceProperty(sourceId, "type").silentUnwrap<String>()?.let { type ->
     when (type) {
       "vector" -> VectorSource.Builder(sourceId).build().also { it.delegate = this }
@@ -46,7 +46,7 @@ fun Style.getSource(sourceId: String): Source? {
  * @return T if Source is T and null otherwise
  */
 @SuppressWarnings("ChangedType")
-inline fun <reified T : Source> Style.getSourceAs(sourceId: String): T? {
+inline fun <reified T : Source> MapboxStyleManager.getSourceAs(sourceId: String): T? {
   val source = getSource(sourceId)
   if (source !is T) {
     logW(
@@ -63,6 +63,6 @@ inline fun <reified T : Source> Style.getSourceAs(sourceId: String): T? {
  *
  * @param source The source to be added
  */
-fun Style.addSource(source: StyleContract.StyleSourceExtension) {
+fun MapboxStyleManager.addSource(source: StyleContract.StyleSourceExtension) {
   source.bindTo(this)
 }

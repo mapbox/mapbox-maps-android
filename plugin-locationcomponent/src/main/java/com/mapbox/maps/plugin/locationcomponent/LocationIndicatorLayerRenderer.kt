@@ -6,7 +6,7 @@ import androidx.annotation.RestrictTo
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
 import com.mapbox.maps.ImageHolder
-import com.mapbox.maps.Style
+import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.logE
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.BEARING_ICON
@@ -26,9 +26,9 @@ internal class LocationIndicatorLayerRenderer(
   private val layer: LocationIndicatorLayerWrapper = LayerSourceProvider.getLocationIndicatorLayer()
 ) : LocationLayerRenderer {
 
-  private var style: Style? = null
+  private var style: MapboxStyleManager? = null
 
-  override fun initializeComponents(style: Style) {
+  override fun initializeComponents(style: MapboxStyleManager) {
     this.style = style
     setupBitmaps(style)
   }
@@ -80,7 +80,7 @@ internal class LocationIndicatorLayerRenderer(
     layer.topImageSize(scaleExpression)
   }
 
-  private fun setupBitmaps(style: Style) {
+  private fun setupBitmaps(style: MapboxStyleManager) {
     addImageToStyle(style, TOP_ICON, puckOptions.topImage)
     addImageToStyle(style, BEARING_ICON, puckOptions.bearingImage)
     addImageToStyle(style, SHADOW_ICON, puckOptions.shadowImage)
@@ -90,7 +90,7 @@ internal class LocationIndicatorLayerRenderer(
     layer.opacity(puckOptions.opacity.toDouble())
   }
 
-  private fun addImageToStyle(style: Style, iconId: String, imageHolder: ImageHolder?) {
+  private fun addImageToStyle(style: MapboxStyleManager, iconId: String, imageHolder: ImageHolder?) {
     // First try to use the bitmap directly
     imageHolder?.bitmap?.let { bitmap ->
       style.addImage(iconId, bitmap)
@@ -116,7 +116,7 @@ internal class LocationIndicatorLayerRenderer(
     style?.removeStyleImage(SHADOW_ICON)
   }
 
-  override fun updateStyle(style: Style) {
+  override fun updateStyle(style: MapboxStyleManager) {
     this.style = style
     layer.updateStyle(style)
   }

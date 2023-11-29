@@ -3,7 +3,7 @@ package com.mapbox.maps.plugin.locationcomponent
 import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.LayerPosition
-import com.mapbox.maps.Style
+import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.logE
 import io.mockk.*
 import org.junit.After
@@ -16,7 +16,7 @@ import org.robolectric.RobolectricTestRunner
 class LocationLayerWrapperTest {
   private lateinit var locationLayerWrapper: LocationLayerWrapper
   private val layerId = "testLayerId"
-  private val mapStyleDelegate = mockk<Style>(relaxed = true)
+  private val mapStyleDelegate = mockk<MapboxStyleManager>(relaxed = true)
 
   @Before
   fun setup() {
@@ -72,7 +72,7 @@ class LocationLayerWrapperTest {
     every { mapStyleDelegate.setStyleLayerProperty(layerId, any(), any()) } returns ExpectedFactory.createNone()
     val position = LayerPosition("above", "below", 0)
     locationLayerWrapper.bindTo(mapStyleDelegate, position)
-    val newStyle = mockk<Style>()
+    val newStyle = mockk<MapboxStyleManager>()
     every { newStyle.setStyleLayerProperty(layerId, any(), any()) } returns ExpectedFactory.createNone()
     locationLayerWrapper.updateStyle(newStyle)
     locationLayerWrapper.visibility(true)

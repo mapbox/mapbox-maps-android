@@ -104,7 +104,7 @@ class MapboxMap :
     nativeMap: NativeMapImpl,
     nativeObserver: NativeObserver,
     styleObserver: StyleObserver
-  ) : super(nativeMap.map) {
+  ) : super(nativeMap.map, 1.0f) {
     this.nativeMap = nativeMap
     this.nativeObserver = nativeObserver
     this.styleObserver = styleObserver
@@ -114,7 +114,7 @@ class MapboxMap :
     nativeMap: NativeMapImpl,
     nativeObserver: NativeObserver,
     pixelRatio: Float
-  ) : super(nativeMap.map) {
+  ) : super(nativeMap.map, pixelRatio) {
     this.nativeMap = nativeMap
     this.nativeObserver = nativeObserver
     // we register our internal native observers here and
@@ -2111,51 +2111,6 @@ class MapboxMap :
     gesturesPlugin = null
     styleObserver.onDestroy()
     isMapValid = false
-  }
-
-  /**
-   * Adds a model to be used in the style. This API can also be used for updating
-   * a model. If the model for a given `modelId` was already added, it gets replaced by the new model.
-   *
-   * The model can be used in `model-id` property in model layer.
-   *
-   * @param modelId An identifier of the model.
-   * @param modelUri A URI for the model.
-   */
-  @MapboxExperimental
-  fun addStyleModel(modelId: String, modelUri: String) {
-    checkNativeMap("addStyleModel")
-    val expected = nativeMap.addStyleModel(modelId, modelUri)
-    if (expected.isError) {
-      logE(TAG, expected.error ?: "Error occurred in MapboxMap.addStyleModel!")
-    }
-  }
-
-  /**
-   * Removes a model from the style.
-   *
-   * @param modelId The identifier of the model to remove.
-   */
-  @MapboxExperimental
-  fun removeStyleModel(modelId: String) {
-    checkNativeMap("removeStyleModel")
-    val expected = nativeMap.removeStyleModel(modelId)
-    if (expected.isError) {
-      logE(TAG, expected.error ?: "Error occurred in MapboxMap.removeStyleModel!")
-    }
-  }
-
-  /**
-   * Checks whether a model exists.
-   *
-   * @param modelId The identifier of the model.
-   *
-   * @return True if model exists, false otherwise.
-   */
-  @MapboxExperimental
-  fun hasStyleModel(modelId: String): Boolean {
-    checkNativeMap("hasStyleModel")
-    return nativeMap.hasStyleModel(modelId)
   }
 
   /**

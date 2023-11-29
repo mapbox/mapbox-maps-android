@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.annotation.UiThread
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxStyleException
-import com.mapbox.maps.Style
+import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
@@ -20,7 +20,7 @@ import com.mapbox.maps.extension.style.utils.unwrap
  */
 @UiThread
 class Terrain(private val sourceId: String) : TerrainDslReceiver, StyleContract.StyleTerrainExtension {
-  internal var delegate: Style? = null
+  internal var delegate: MapboxStyleManager? = null
   private val properties = HashMap<String, PropertyValue<*>>()
 
   /**
@@ -111,7 +111,7 @@ class Terrain(private val sourceId: String) : TerrainDslReceiver, StyleContract.
    *
    * @param delegate The map controller
    */
-  override fun bindTo(delegate: Style) {
+  override fun bindTo(delegate: MapboxStyleManager) {
     this.delegate = delegate
     val terrainParams = HashMap<String, Value>()
     terrainParams["source"] = Value(sourceId)

@@ -20,7 +20,7 @@ class ImageExtensionImpl(private val builder: Builder) : StyleContract.StyleImag
   /**
    * Add the image to the style.
    */
-  override fun bindTo(delegate: Style) {
+  override fun bindTo(delegate: MapboxStyleManager) {
     delegate.addStyleImage(
       builder.imageId,
       builder.scale ?: delegate.pixelRatio,

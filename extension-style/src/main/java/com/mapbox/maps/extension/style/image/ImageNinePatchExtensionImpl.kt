@@ -4,7 +4,7 @@ import android.graphics.Bitmap
 import com.mapbox.maps.Image
 import com.mapbox.maps.ImageContent
 import com.mapbox.maps.ImageStretches
-import com.mapbox.maps.Style
+import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.utils.check
 
@@ -16,7 +16,7 @@ class ImageNinePatchExtensionImpl(private val builder: Builder) : StyleContract.
   /**
    * Add the image to the style.
    */
-  override fun bindTo(delegate: Style) {
+  override fun bindTo(delegate: MapboxStyleManager) {
     delegate.addStyleImage(
       builder.imageId,
       builder.scale ?: delegate.pixelRatio,

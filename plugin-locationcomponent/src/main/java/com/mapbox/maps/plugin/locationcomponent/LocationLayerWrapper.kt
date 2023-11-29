@@ -6,13 +6,13 @@ import com.mapbox.maps.*
 internal open class LocationLayerWrapper(val layerId: String) {
 
   protected var layerProperties = HashMap<String, Value>()
-  private var style: Style? = null
+  private var style: MapboxStyleManager? = null
 
-  fun updateStyle(style: Style) {
+  fun updateStyle(style: MapboxStyleManager) {
     this.style = style
   }
 
-  fun bindTo(style: Style, position: LayerPosition? = null) {
+  fun bindTo(style: MapboxStyleManager, position: LayerPosition? = null) {
     this.style = style
     val expected = style.addPersistentStyleLayer(toValue(), position)
     expected.error?.let {

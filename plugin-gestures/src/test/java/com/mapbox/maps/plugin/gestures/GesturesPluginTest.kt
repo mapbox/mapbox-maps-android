@@ -94,7 +94,7 @@ class GesturesPluginTest {
       0.0,
       -10.0
     )
-    val style = mockk<Style>()
+    val style = mockk<MapboxStyleManager>()
     every { style.getStyleProjectionProperty("name") } returns StylePropertyValue(
       Value.valueOf("mercator"),
       StylePropertyValueKind.CONSTANT
@@ -1048,7 +1048,7 @@ class IsPointAboveHorizonTest(
   private val mapPluginProviderDelegate: MapPluginProviderDelegate = mockk(relaxUnitFun = true)
   private val mapProjectionDelegate: MapProjectionDelegate = mockk(relaxUnitFun = true)
   private val cameraAnimationsPlugin: CameraAnimationsPlugin = mockk(relaxed = true)
-  private val style: Style = mockk()
+  private val style: MapboxStyleManager = mockk()
 
   private lateinit var presenter: GesturesPluginImpl
 
@@ -1327,7 +1327,7 @@ class FlingGestureTest(
       0.0,
       -10.0
     )
-    val style = mockk<Style>()
+    val style = mockk<MapboxStyleManager>()
     every { style.getStyleProjectionProperty("name") } returns StylePropertyValue(
       Value.valueOf("mercator"),
       StylePropertyValueKind.CONSTANT

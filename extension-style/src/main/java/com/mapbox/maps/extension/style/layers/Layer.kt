@@ -6,7 +6,7 @@ import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.LayerPosition
 import com.mapbox.maps.MapboxStyleException
-import com.mapbox.maps.Style
+import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.generated.BackgroundLayer
@@ -28,7 +28,7 @@ abstract class Layer : StyleContract.StyleLayerExtension {
    */
   internal var internalSourceId: String? = null
 
-  internal var delegate: Style? = null
+  internal var delegate: MapboxStyleManager? = null
 
   internal var appliedLayerPropertiesValue: Value? = null
 
@@ -126,14 +126,14 @@ abstract class Layer : StyleContract.StyleLayerExtension {
   abstract val slot: String?
 
   protected open fun addPersistentLayer(
-    delegate: Style,
+    delegate: MapboxStyleManager,
     position: LayerPosition?
   ): Expected<String, None> {
     return delegate.addPersistentStyleLayer(getCachedLayerProperties(), position)
   }
 
   protected open fun addLayer(
-    delegate: Style,
+    delegate: MapboxStyleManager,
     propertiesValue: Value,
     position: LayerPosition?
   ): Expected<String, None> {
@@ -145,7 +145,7 @@ abstract class Layer : StyleContract.StyleLayerExtension {
    *
    * @param delegate The style controller
    */
-  fun bindTo(delegate: Style) {
+  fun bindTo(delegate: MapboxStyleManager) {
     bindTo(delegate, null)
   }
 
@@ -155,7 +155,7 @@ abstract class Layer : StyleContract.StyleLayerExtension {
    * @param delegate The style controller
    * @param position the position that the current layer is added to
    */
-  override fun bindTo(delegate: Style, position: LayerPosition?) {
+  override fun bindTo(delegate: MapboxStyleManager, position: LayerPosition?) {
     this.delegate = delegate
 
     val propertiesValue = appliedLayerPropertiesValue ?: getCachedLayerProperties()
@@ -187,7 +187,7 @@ abstract class Layer : StyleContract.StyleLayerExtension {
    * @param style The style
    * @param position the position that the current layer is added to
    */
-  internal fun bindPersistentlyTo(style: Style, position: LayerPosition? = null) {
+  internal fun bindPersistentlyTo(style: MapboxStyleManager, position: LayerPosition? = null) {
     this.delegate = style
     val expected = addPersistentLayer(style, position)
     expected.error?.let {

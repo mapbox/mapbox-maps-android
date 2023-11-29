@@ -3,7 +3,7 @@ package com.mapbox.maps.extension.style.light
 import com.mapbox.bindgen.Value
 import com.mapbox.common.toValue
 import com.mapbox.maps.MapboxStyleException
-import com.mapbox.maps.Style
+import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
 import com.mapbox.maps.extension.style.types.StyleTransition
 import com.mapbox.maps.extension.style.utils.unwrap
@@ -26,7 +26,7 @@ abstract class Light internal constructor() {
   @SuppressWarnings("HiddenAbstractMethod")
   internal abstract fun getType(): String
 
-  internal var delegate: Style? = null
+  internal var delegate: MapboxStyleManager? = null
 
   /**
    * Properties of the light.

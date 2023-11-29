@@ -41,7 +41,7 @@ import org.robolectric.annotation.Config
 @Config(shadows = [ShadowProjection::class])
 class PolylineAnnotationManagerTest {
   private val delegateProvider: MapDelegateProvider = mockk()
-  private val style: Style = mockk()
+  private val style: MapboxStyleManager = mockk()
   private val mapCameraManagerDelegate: MapCameraManagerDelegate = mockk()
   private val mapFeatureQueryDelegate: MapFeatureQueryDelegate = mockk()
   private val mapListenerDelegate: MapListenerDelegate = mockk()
@@ -66,7 +66,7 @@ class PolylineAnnotationManagerTest {
     mockkStatic(Projection::class)
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logE(any(), any()) } just Runs
-    val captureCallback = slot<(Style) -> Unit>()
+    val captureCallback = slot<(MapboxStyleManager) -> Unit>()
     every { delegateProvider.getStyle(capture(captureCallback)) } answers {
       captureCallback.captured.invoke(style)
     }
@@ -181,7 +181,7 @@ class PolylineAnnotationManagerTest {
   @Test
   fun initializeBeforeStyleLoad() {
     every { style.styleLayerExists("test_layer") } returns true
-    val captureCallback = slot<(Style) -> Unit>()
+    val captureCallback = slot<(MapboxStyleManager) -> Unit>()
     every { delegateProvider.getStyle(capture(captureCallback)) } just Runs
     manager = PolylineAnnotationManager(delegateProvider, AnnotationConfig("test_layer"))
     // Style is not loaded, can't create and add layer to style

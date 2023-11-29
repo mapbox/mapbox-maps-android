@@ -6,7 +6,7 @@ import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.None
 import com.mapbox.maps.ImageContent
 import com.mapbox.maps.ImageStretches
-import com.mapbox.maps.Style
+import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.toMapboxImage
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
@@ -21,7 +21,7 @@ import java.nio.ByteOrder
  * @return A string describing an error if the operation was not successful, empty otherwise.
  */
 @JvmOverloads
-fun Style.addImage9Patch(
+fun MapboxStyleManager.addImage9Patch(
   imageId: String,
   bitmap: Bitmap,
   scale: Float = pixelRatio,

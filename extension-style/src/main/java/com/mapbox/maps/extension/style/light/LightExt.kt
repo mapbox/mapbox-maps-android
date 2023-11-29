@@ -5,7 +5,7 @@ package com.mapbox.maps.extension.style.light
 import com.mapbox.bindgen.Value
 import com.mapbox.common.toValue
 import com.mapbox.maps.MapboxStyleException
-import com.mapbox.maps.Style
+import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
 import com.mapbox.maps.extension.style.light.generated.AmbientLight
 import com.mapbox.maps.extension.style.light.generated.DirectionalLight
@@ -21,7 +21,7 @@ import kotlin.collections.HashMap
  * @param [ambientLight] The ambient light to be added
  * @param [directionalLight] The directional light to be added
  */
-fun Style.setLight(ambientLight: AmbientLight, directionalLight: DirectionalLight) {
+fun MapboxStyleManager.setLight(ambientLight: AmbientLight, directionalLight: DirectionalLight) {
   val ambientLightParam = HashMap<String, Value>().apply {
     this[LIGHT_PROPERTIES] = convertPropertyMapToValue(ambientLight.lightProperties)
     this.putAll(ambientLight.internalLightProperties)
@@ -46,7 +46,7 @@ fun Style.setLight(ambientLight: AmbientLight, directionalLight: DirectionalLigh
  *
  * @param [flatLight] The flat light to be added
  */
-fun Style.setLight(flatLight: FlatLight) {
+fun MapboxStyleManager.setLight(flatLight: FlatLight) {
   val flatLightParam = HashMap<String, Value>().apply {
     this[LIGHT_PROPERTIES] = convertPropertyMapToValue(flatLight.lightProperties)
     this.putAll(flatLight.internalLightProperties)
@@ -67,7 +67,7 @@ fun Style.setLight(flatLight: FlatLight) {
  *
  * @param lights list of [Light]
  */
-fun Style.setLights(lights: List<Light>) {
+fun MapboxStyleManager.setLights(lights: List<Light>) {
   val valueList = ArrayList<Value>()
   for (light in lights) {
     val lightParams = HashMap<String, Value>().apply {
@@ -96,7 +96,7 @@ private fun convertPropertyMapToValue(property: HashMap<String, PropertyValue<*>
  *
  * @param lightId Id of dynamic light.
  */
-fun Style.getLight(lightId: String): Light? {
+fun MapboxStyleManager.getLight(lightId: String): Light? {
   return when (val type = getStyleLightProperty(lightId, "type").silentUnwrap<String>()) {
     "ambient" -> AmbientLight(lightId)
     "directional" -> DirectionalLight(lightId)

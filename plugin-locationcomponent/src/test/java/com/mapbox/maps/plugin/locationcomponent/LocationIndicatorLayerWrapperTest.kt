@@ -4,7 +4,7 @@ import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
-import com.mapbox.maps.Style
+import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.logE
 import io.mockk.*
 import org.junit.After
@@ -17,7 +17,7 @@ import org.robolectric.RobolectricTestRunner
 @RunWith(RobolectricTestRunner::class)
 class LocationIndicatorLayerWrapperTest {
 
-  private val style: Style = mockk(relaxed = true)
+  private val style: MapboxStyleManager = mockk(relaxed = true)
   private val layer = LocationIndicatorLayerWrapper(INDICATOR_LAYER_ID)
   private val expected: Expected<String, None> = mockk(relaxed = true)
 
@@ -156,7 +156,7 @@ class LocationIndicatorLayerWrapperTest {
 
   @Test
   fun testUpdateStyle() {
-    val newStyle = mockk<Style>(relaxed = true)
+    val newStyle = mockk<MapboxStyleManager>(relaxed = true)
     every { newStyle.setStyleLayerProperty(any(), any(), any()) } returns expected
     layer.updateStyle(newStyle)
     val radius = 1.0

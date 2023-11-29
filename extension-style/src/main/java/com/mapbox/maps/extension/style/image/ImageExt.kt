@@ -4,7 +4,7 @@ package com.mapbox.maps.extension.style.image
 
 import android.graphics.Bitmap
 import com.mapbox.maps.Image
-import com.mapbox.maps.Style
+import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.extension.style.StyleContract
 
 /**
@@ -55,7 +55,7 @@ fun image(
  *
  * @param image The image to be added
  */
-fun Style.addImage(image: StyleContract.StyleImageExtension) {
+fun MapboxStyleManager.addImage(image: StyleContract.StyleImageExtension) {
   image.bindTo(this)
 }
 
@@ -81,6 +81,6 @@ fun image9Patch(
  *
  * @param image The image to be added
  */
-fun Style.addImage9Patch(image: StyleContract.StyleImageExtension) {
+fun MapboxStyleManager.addImage9Patch(image: StyleContract.StyleImageExtension) {
   image.bindTo(this)
 }

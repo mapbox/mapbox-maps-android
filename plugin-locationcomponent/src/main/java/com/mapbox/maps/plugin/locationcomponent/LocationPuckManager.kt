@@ -9,7 +9,7 @@ import androidx.core.animation.doOnEnd
 import com.mapbox.bindgen.Value
 import com.mapbox.common.location.LocationError
 import com.mapbox.geojson.Point
-import com.mapbox.maps.Style
+import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.logW
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.LocationPuck3D
@@ -63,12 +63,12 @@ internal class LocationPuckManager(
     }
   }
 
-  fun updateStyle(style: Style) {
+  fun updateStyle(style: MapboxStyleManager) {
     locationLayerRenderer.updateStyle(style)
     positionManager.updateStyle(style)
   }
 
-  fun initialize(style: Style) {
+  fun initialize(style: MapboxStyleManager) {
     if (!locationLayerRenderer.isRendererInitialised()) {
       animationManager.setUpdateListeners(
         onLocationUpdated,

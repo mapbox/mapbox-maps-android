@@ -24,12 +24,12 @@ class LocationPuckManagerTest {
   private val settings = mockk<LocationComponentSettings>(relaxed = true)
   private val delegateProvider = mockk<MapDelegateProvider>(relaxed = true)
   private val mapCameraDelegate = mockk<MapCameraManagerDelegate>(relaxed = true)
-  private val style = mockk<Style>(relaxed = true)
+  private val style = mockk<MapboxStyleManager>(relaxed = true)
   private val positionManager = mockk<LocationComponentPositionManager>(relaxed = true)
   private val locationLayerRenderer = mockk<LocationLayerRenderer>(relaxed = true)
   private val animationManager = mockk<PuckAnimatorManager>(relaxed = true)
 
-  private val callbackSlot = CapturingSlot<(Style) -> Unit>()
+  private val callbackSlot = CapturingSlot<(MapboxStyleManager) -> Unit>()
 
   private lateinit var locationPuckManager: LocationPuckManager
 
@@ -311,7 +311,7 @@ class LocationPuckManagerTest {
 
   @Test
   fun testUpdateStyle() {
-    val style = mockk<Style>()
+    val style = mockk<MapboxStyleManager>()
     locationPuckManager.updateStyle(style)
     verify {
       locationLayerRenderer.updateStyle(style)

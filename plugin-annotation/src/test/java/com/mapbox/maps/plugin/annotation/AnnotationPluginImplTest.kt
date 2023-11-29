@@ -1,7 +1,7 @@
 package com.mapbox.maps.plugin.annotation
 
 import com.mapbox.bindgen.ExpectedFactory
-import com.mapbox.maps.Style
+import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.plugin.Plugin
@@ -21,7 +21,7 @@ import org.robolectric.RobolectricTestRunner
 @RunWith(RobolectricTestRunner::class)
 class AnnotationPluginImplTest {
   private val delegateProvider: MapDelegateProvider = mockk(relaxed = true)
-  private val style: Style = mockk(relaxed = true)
+  private val style: MapboxStyleManager = mockk(relaxed = true)
   private val gesturesPlugin: GesturesPlugin = mockk(relaxed = true)
   private lateinit var annotationPluginImpl: AnnotationPluginImpl
 

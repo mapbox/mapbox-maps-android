@@ -26,7 +26,7 @@ internal class MapDelegateProviderImpl(
   override val mapPluginProviderDelegate: MapPluginProviderDelegate by lazy { mapController }
   override val mapListenerDelegate: MapListenerDelegate by lazy { mapboxMap }
 
-  override fun getStyle(callback: (Style) -> Unit) {
+  override fun getStyle(callback: (MapboxStyleManager) -> Unit) {
     mapboxMap.getStyle { style -> callback(style) }
   }
 }

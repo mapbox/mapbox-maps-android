@@ -4,7 +4,7 @@
 package com.mapbox.maps.extension.style.atmosphere.generated
 
 import com.mapbox.bindgen.Value
-import com.mapbox.maps.Style
+import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.extension.style.StyleContract
 
 /**
@@ -12,7 +12,7 @@ import com.mapbox.maps.extension.style.StyleContract
  *
  * @return Atmosphere
  */
-fun Style.getAtmosphere(): Atmosphere {
+fun MapboxStyleManager.getAtmosphere(): Atmosphere {
   return Atmosphere().also { it.delegate = this }
 }
 
@@ -21,14 +21,14 @@ fun Style.getAtmosphere(): Atmosphere {
  *
  * @param atmosphere The atmosphere to be set
  */
-fun Style.setAtmosphere(atmosphere: StyleContract.StyleAtmosphereExtension) {
+fun MapboxStyleManager.setAtmosphere(atmosphere: StyleContract.StyleAtmosphereExtension) {
   atmosphere.bindTo(this)
 }
 
 /**
  * Removes atmosphere from style if it was set.
  */
-fun Style.removeAtmosphere() {
+fun MapboxStyleManager.removeAtmosphere() {
   setStyleAtmosphere(Value.nullValue())
 }
 

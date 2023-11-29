@@ -2,11 +2,11 @@ package com.mapbox.maps.plugin.locationcomponent
 
 import androidx.annotation.RestrictTo
 import com.mapbox.maps.LayerPosition
-import com.mapbox.maps.Style
+import com.mapbox.maps.MapboxStyleManager
 
 @RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class LocationComponentPositionManager(
-  private var style: Style,
+  private var style: MapboxStyleManager,
   internal var layerAbove: String?,
   internal var layerBelow: String?
 ) {
@@ -32,7 +32,7 @@ internal class LocationComponentPositionManager(
     }
   }
 
-  fun updateStyle(style: Style) {
+  fun updateStyle(style: MapboxStyleManager) {
     this.style = style
   }
 }

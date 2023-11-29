@@ -1,6 +1,6 @@
 package com.mapbox.maps.extension.style.light
 
-import com.mapbox.maps.Style
+import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.light.generated.AmbientLight
 import com.mapbox.maps.extension.style.light.generated.DirectionalLight
@@ -18,7 +18,7 @@ class DynamicLight internal constructor(
    *
    * @param delegate The style delegate
    */
-  override fun bindTo(delegate: Style) {
+  override fun bindTo(delegate: MapboxStyleManager) {
     delegate.setLight(ambientLight, directionalLight)
   }
 }
