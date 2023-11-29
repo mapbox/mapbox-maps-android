@@ -2,6 +2,262 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
+# 11.0.0
+## Breaking changes ⚠️
+* **Minimum OpenGL ES version is now 3.0**.
+* **Update SDK's `targetSdkVersion` and `compileSdkVersion` to 33**.
+* Remove deprecated `GeoJsonSource` public constructor, builder should be used instead.
+* Remove deprecated `MapboxMap.queryRenderedFeatures` methods.
+* Remove `Snapshotter.setTileMode`, `Snapshotter.isInTileMode` methods.
+* Remove deprecated `MapStyleStateDelegate` and `isFullyLoaded` method.
+* Remove experimental `setRenderCacheOptions`, `getRenderCacheOptions` apis.
+* Add `callback` argument to the `MapboxMap` methods `getFeatureState`, `setFeatureState`, `removeFeatureState`.
+* Use different callback types for the `MapboxMap.queryRenderedFeatures` and the `MapboxMap.querySourceFeatures` methods.
+* Return `cancelable` from the `MapboxMap` methods : `getFeatureState`, `setFeatureState`, `removeFeatureState`, `querySourceFeatures`, `getGeoJsonClusterLeaves`, `getGeoJsonClusterChildren`, `getGeoJsonClusterExpansionZoom`.
+* Remove the deprecated `MapboxMap.queryFeatureExtensions` method.
+* Remove `MapAnimationOptions.animatorListener` property. In order to subscribe to animations, provide `Animator.animatorListener` with `flyTo`, `easeTo`, `pitchBy`, `scaleBy`, `moveBy`, `rotateBy` apis.
+* Replace `LocationEngine` use with `LocationService` in `DefaultProvider`.
+* Add new `LocationConsumer.onError` method to allow consumers handle location errors.
+* Remove `MapView.location2` related interfaces and move `showAccuracyRing`, `accuracyRingColor`, `accuracyRingBorderColor`, `puckBearingEnabled` and `puckBearingSource` to `MapView.location`.
+* Make `AttributionSettings`, `CompassSettings`, `GesturesSettings`, `LocationComponentSettings`, `LogoSettings`, `ScaleBarSettings` not Kotlin `data class`, better binary compatible and implementing `Parcelable`.
+* Change `CompassSettings.image`, `LocationPuck2D.topImage`, `LocationPuck2D.bearingImage`, `LocationPuck2D.shadowImage` to `ImageHolder` allowing to pass either drawable id or `Bitmap`.
+* Remove deprecated `backgroundPatternTransition`, `lineDasharrayTransition`, `linePatternTransition`, `fillPatternTransition` properties.
+* Replace `MapSnapshotInterface` interface with `MapSnapshotResult` abstract class and remove `image()` method, `bitmap()` should be used instead.
+* Change `Annotation.id` from monotonically increasing `Long` to UUID represented as `String`.
+* Remove `Annotation.featureIdentifier` used to connect with View Annotations, now `Annotation.id` should be used instead.
+* Rename `PuckBearingSource` to `PuckBearing` in location component plugin.
+* Remove deprecated overloaded `Style.setStyleGeoJSONSourceData(sourceId: String, data: GeoJSONSourceData)` method.
+* Rename `MapboxMap.setMemoryBudget` to `MapboxMap.setTileCacheBudget` and make it non-experimental.
+* Remove `ResourceOptions` and `ResourceOptionsManager`. Introduce `MapboxOptions` and `MapboxMapsOptions` to handle application-level access token and other generic options.
+* Removed XML attributes `mapbox_resourcesAccessToken` and `mapbox_resourcesBaseUrl`.
+* Update Mapbox styles to latest versions:
+
+| Style             | Before                                       | After                                        |
+|-------------------|----------------------------------------------|----------------------------------------------|
+| MAPBOX_STREETS    | mapbox://styles/mapbox/streets-v11           | mapbox://styles/mapbox/streets-v12           |
+| SATELLITE_STREETS | mapbox://styles/mapbox/satellite-streets-v11 | mapbox://styles/mapbox/satellite-streets-v12 |
+| OUTDOORS          | mapbox://styles/mapbox/outdoors-v11          | mapbox://styles/mapbox/outdoors-v12          |
+| LIGHT             | mapbox://styles/mapbox/light-v10             | mapbox://styles/mapbox/light-v11             |
+| DARK              | mapbox://styles/mapbox/dark-v10              | mapbox://styles/mapbox/dark-v11              |
+
+
+* Remove native interfaces `StyleManagerInterface`, `StyleInterface`, `CameraManagerInterface`, `MapInterface`, `ObservableInterface` and use only `Map` object to access native methods.
+* Make map events typed-safe, events are now have their own subscription methods.
+  Following events are added as typed-safe, `CameraChanged`, `MapIdle`, `MapLoadingError`, `MapLoaded`, `StyleDataLoaded`, `StyleLoaded`, `StyleImageMissing`, `StyleImageRemovedUnunsed`,
+  `RenderFrameStarted`, `RenderFrameFinished`, `SourceAdded`, `SourceDataLoaded`, `SourceRemoved`, `ReourceRequest`.
+  All `subscribe` methods return `Cancelable` object, which users could store and call `cancel` when subscription is no longer needed.
+  `MapboxMap.unsubscribe` methods were removed.
+* Rename `LocationConsumer.onAccuracyRadiusUpdated` to `onHorizontalAccuracyRadiusUpdated`.
+* Deprecate `MapboxMap.loadStyleUri`, `MapboxMap.loadStyleJson` and `MapboxMap.loadStyle` methods and introduce one `MapboxMap.loadStyle` accepting either URI / JSON or Style DSL block.
+* Replace `com.mapbox.maps.plugin.animation.Cancelable` with `com.mapbox.common.Cancelable`.
+* Remove `TileStoreOptions.MAPBOX_ACCESS_TOKEN` used e.g. in `TileStore.setOption(TileStoreOptions.MAPBOX_ACCESS_TOKEN, someDomain, someValue)` as it has become redundant.
+* Introduce `MapboxTracing` object allowing to enable Android traces to measure performance of the SDK. More details and instructions could be found in `Working with traces` section in `DEVELOPING.md`.
+* Remove Mapbox plugin implementations from public API surface.
+* Remove `HttpServiceFactory.getInstance`, `HttpServiceFactory.reset`, `HttpServiceFactory.setUserDefined` methods.
+* Replace `HttpServiceFactory.getInstance().setInterceptor` with `HttpServiceFactory.setHttpServiceInterceptor`.
+* Argument `dataId` of the `GeoJson.feature`, `GeoJson.featureCollection`, `GeoJson.geometry`, `GeoJson.url`, `GeoJson.data` became non-nullable.
+* Remove `Style.getStyleSourcesAttribution`. `MapboxMap.getAttributions` should be used instead.
+* (Kotlin only) Remove `Style.getStyleSources()` / `Style.getStyleLayers()`. Properties `Style.styleSources` / `Style.styleLayers` should be used instead.
+* Replace style related enum classes with regular classes.
+* Migrate from `android.app.AlertDialog` to `androidx.appcompat.app.AlertDialog` for attribution plugin.
+* Rename `MapboxMap.subscribeStyleImageUnused` to `MapboxMap.subscribeStyleImageRemoveUnused`.
+* The `MapCameraPlugin`'s `onCameraMove` method now uses `Point` for camera center and `EdgeInsets` for padding.
+* Remove `MapInitOptions.optimizeForTerrain` as whenever terrain is present layer order is automatically adjusted for better performance.
+* Replace `MapboxMap` and `MapCameraManagerDelegate` APIs `dragStart`, `dragEnd`, `getDragCameraOptions` with `cameraForDrag`, `setCenterAltitudeMode`.
+* Remove setter functions for `Style.styleURI` and `Style.styleJSON` as loading the style should happen only with `MapboxMap.loadStyle`.
+* Rename `StyleImageMissing.getStyleImageMissingEventData` to `StyleImageMissing.toStyleImageMissingEventData`.
+* Rename `MapCameraManagerDelegate` properties for methods `cameraForCoordinateBounds`, `cameraForCoordinates` and `cameraForGeometry` to align them with `MapboxMap` methods.
+* Consolidate `FetchTileFunctionCallback` and `CancelTileFunctionCallback` by single type `TileFunctionCallback`.
+* Make `Image` parameter nullable in `setStyleCustomRasterSourceTileData()` method.
+* Extension function `Style.getProjection()` return type changed from `Projection` to `Projection?`.
+* Extension function `LocationComponentPlugin.createDefault2DPuck` in `LocationComponentUtils.kt` is now stand-alone `createDefault2DPuck`.
+* Extension function `LocationComponentPlugin.createDefault2DPuck` in `LocationComponentUtils` is now stand-alone `createDefault2DPuck`.
+* Function `createDefault2DPuck` does not require a `context` parameter.
+* Increase minimum location puck bearing threshold needed to trigger an animation to 1 degree (previously 0.01 degrees) to reduce the CPU usage.
+* Location component puck bearing enabled property (`MapView.location.puckBearingEanbled`) has been changed to `false` by default.
+* `ViewAnnotationManager.getViewAnnotationByFeatureId` is renamed to `ViewAnnotationManager.getViewAnnotation`,
+* `ViewAnnotationManager.getViewAnnotationByFeatureId` is renamed to `ViewAnnotationManager.getViewAnnotation`.
+* `ViewAnnotationManager.getViewAnnotationOptionsByView` is renamed to `ViewAnnotationManager.getViewAnnotationOptions`.
+* `ViewAnnotationManager.getViewAnnotationOptionsByFeatureId` is renamed to `ViewAnnotationManager.getViewAnnotationOptions`.
+* `ViewAnnotationAnchorConfig` fields `offsetX`/`offsetY` are now of type Double instead of Int.
+* `ViewAnnotationOptions` accepts list of anchors `variableAnchors` instead of `anchor`/`offsetX`/`offsetY`.
+* `ViewAnnotationOptions` fields `width`/`height` are now of type Double instead of Int.
+* `OnViewAnnotationUpdatedListener.onViewAnnotationPositionUpdated` arguments `width`/`height` are now of type Double instead of Int.
+* Add `getName` method to `DeviceLocationProvider` interface.
+* Add boolean parameter `allowUserDefined` to `getDeviceLocationProvider` method in `LocationService` interface.
+* Add `LocationService.getDeviceLocationProvider` method that accepts `ExtendedLocationProviderParameters` to `LocationService` interface.
+
+## Features ✨ and improvements 🏁
+* Introduce new Mapbox 3D style `Style.STANDARD` and make it default.
+* Add dynamic view annotations that can be attached to complex feature geometries and reposition itself based on the current camera viewport. To create dynamic view annotation use `AnnotatedFeature` of type `ANNOTATED_LAYER_FEATURE`. Multiple dynamic view annotations can be attached to the same feature. Also additional options `ViewAnnotationOptions.allowOverlapWithPuck` and `ViewAnnotationOptions.ignoreCameraPadding` introduced to configure the dynamic view annotation's behaviour.
+* The following APIs have been promoted to stable:
+  - `LineLayer.lineDepthOcclusionFactor`, `LineLayer.lineDepthOcclusionFactorTransition`, `LineLayer.lineEmissiveStrength` and `LineLayer.lineEmissiveStrengthTransition`
+  - `SymbolLayer.iconImageCrossFade`, `SymbolLayer.iconImageCrossFadeTransition`, `SymbolLayer.iconEmissiveStrength`, `SymbolLayer.iconEmissiveStrengthTransition`, `SymbolLayer.textEmissiveStrength` and `SymbolLayer.textEmissiveStrengthTransition`
+  - `BackgroundLayer.backgroundEmissiveStrength` and `BackgroundLayer.backgroundEmissiveStrengthTransition`
+  - `CircleLayer.circleEmissiveStrength` and `CircleLayer.circleEmissiveStrengthTransition`
+  - `FillLayer.fillEmissiveStrength` and `FillLayer.fillEmissiveStrengthTransition`
+  - `FlatLight`, `AmbientLight`, `DirectionalLight` and related APIs
+  - Annotation plugin APIs: `CircleAnnotationManager.circleEmissiveStrength`, `PolygonAnnotationManager.fillEmissiveStrength`, `PolylineAnnotationManager.lineDepthOcclusionFactor`, `PolylineAnnotationManager.lineEmissiveStrength`
+  - Map Overlay plugin and related APIs
+* From v11.0.0-rc.1, Mapbox Compose Extension for Android is released as a separate module following the same release cadence with the main SDK, please refer to [this guide](extension-compose/README.md) to get started with Jetpack Compose, and [v0.1.0 changelog](extension-compose/CHANGELOG-v0.1.0.md) for previous changelogs.
+* Avoid creating unnecessary objects during animation under some conditions.
+* Improve map camera and gestures when terrain is used to fix camera bumpiness and map flickering.
+* Use a fallback glyph URL if a style does not define one. This enables the addition of Symbol layers to an empty style or to the style that doesn't use Symbol layers.
+* Use ETC2 compression for raster tiles to support transparency.
+* Introduce experimental `MapboxMapRecorder` allowing to record and replay custom scenarios.
+* Add Mapbox Privacy Policy to attribution links.
+* Add clustering support for `CircleAnnotationManager`.
+* Improve ergonomics of `Snapshotter.start` method to align with iOS and allow to re-use `Canvas` for user drawing.
+* Add `MapboxMap.coordinateBoundsForRect` returning `CoordinateBounds` for given `RectF` of screen coordinates.
+* Add optional `maxZoom` and `offset` parameters to `MapboxMap.cameraForCoordinateBounds`.
+* Mark `GeoJsonSource.url` / `GeoJsonSource.Builder.url` methods as deprecated, `GeoJsonSource.data` / `GeoJsonSource.Builder.data` should be used instead.
+* Refactor style Light APIs: introduce `AmbientLight`, `DirectionalLight`, `FlatLight` and methods to set them to style.
+* Expose new APIs to import and configure styles: `getStyleImports`, `removeStyleImport`, `getStyleImportSchema`, `getStyleImportConfigProperties`, `setStyleImportConfigProperties`, `getStyleImportConfigProperty`, `setStyleImportConfigProperty`
+* Expose `slot` property for all `Layer`s to link layers from imported styles.
+* Add expression support for visibility layer property.
+* Add the `MapboxMap.resetFeatureState` method.
+* Make padding optional for `MapboxMap.cameraForCoordinateBounds`, `MapboxMap.cameraForCoordinates`, `MapboxMap.cameraForGeometry` methods.
+* Add `FreeCameraOptions.getLocation` and `FreeCameraOptions.getAltitude` methods.
+* Add `MapboxMap.coordinatesForRect(rectF: RectF)` to support rectangle parameters.
+* Add `suspend` variants for the async `MapboxMap` functions : `queryRenderedFeatures`, `querySourceFeatures`, `setFeatureState`, `getFeatureState`, `removeFeatureState`, `getGeoJsonClusterLeaves`, `getGeoJsonClusterChildren`, `getGeoJsonClusterExpansionZoom`.
+* Add `MapboxMap.mapLoadedEvents`, `MapboxMap.mapLoadingErrorEvents`, `MapboxMap.styleLoadedEvents`, `MapboxMap.styleDataLoadedEvents`, `MapboxMap.cameraChangedEvents`, `MapboxMap.mapIdleEvents`, `MapboxMap.sourceAddedEvents`, `MapboxMap.sourceRemovedEvents`, `MapboxMap.sourceDataLoadedEvents`, `MapboxMap.styleImageMissingEvents`, `MapboxMap.styleImageRemoveUnusedEvents`, `MapboxMap.renderFrameStartedEvents`, `MapboxMap.renderFrameFinishedEvents`, `MapboxMap.resourceRequestEvents` returning Flow of events.
+* Introduce custom lint rules to check illegal usage of literals in Expression DSL and suggest auto fix.
+* Introduce custom lint rules to check illegal number of arguments within given Expression DSL.
+* Introduce custom lint rules to check unused layer/source/light/terrain/atmosphere/projection objects in the Style DSL, and suggest auto fix to add it to the style using unaryPlus(+) operator.
+* Improve performance for `Snapshotter` when obtaining the bitmap.
+* Add `ImageSource.updateImage(Bitmap)` method.
+* Introduce Expression overload functions `linearInterpolator`, `exponentialInterpolator`, `cubicBezierInterpolator`, `step`, `match` and `switchCase` to construct these expressions with strongly typed parameters.
+* Introduce `ImageExtensionImpl.Builder(imageId, image)`, `ImageExtensionImpl.Builder(imageId, image)` constructors and deprecated `ImageExtensionImpl.Builder(imageId)`, `ImageExtensionImpl.Builder.image(image)`, `ImageExtensionImpl.Builder.bitmap(bitmap)`, as image/bitmap is required for `ImageExtensionImpl.Builder`; DSL functions are updated to reflect these changes as well.
+* Deprecate `PointAnnotationManager.iconTextFit` and `PointAnnotationManager.iconTextFitPadding` in favor of `PointAnnotation.iconTextFit` and `PointAnnotation.iconTextFitPadding`.
+* Introduce experimental lights API to enable a uniform 3D lighting across the map. Use `Style.addLights3D` or `Style.setup3DLights` to enable `Ambient` and `Directional` light.
+* Introduce `LineLayer.lineDepthOcclusionFactor`, `PolylineAnnotationManager.lineDepthOcclusionFactor` API.
+* Introduce experimental `Expression.activeAnchor` API.
+* Introduce experimental `ModelLayer` API to render 3D models on the map.
+* Introduce experimental `MapboxMap.addStyleModel`, `MapboxMap.removeStyleModel`, `MapboxMap.hasStyleModel` APIs.
+* Introduce experimental `LocationPuck3D.modelCastShadows`, `LocationPuck3D.modelReceiveShadows`, `LocationPuck3D.modelScaleMode` APIs. Note: `LocationPuck3D.modelScaleMode` API brings behavioral changes for LocationPuck3d scale and `model-scale` property needs to be adjusted to correctly render the puck.
+* Introduce `Expression.hsl`, `Expression.hsla` color expression.
+* Introduce `Expression.measureLight` lights configuration property.
+* Introduce `LineLayer.lineBorderColor`, `LineLayer.lineBorderWidth` APIs.
+* Introduce experimental `BackgroundLayer.backgroundEmissiveStrength`, `CircleLayer.circleEmissiveStrength`, `FillLayer.fillEmissiveStrength`, `LineLayer.lineEmissiveStrength`, `SymbolLayer.iconEmissiveStrength`, `SymbolLayer.textEmissiveStrength` APIs.
+* Introduce experimental `FillExtrusionLayer.fillExtrusionRoundedRoof`, `FillExtrusionLayer.fillExtrusionEdgeRadius`, `FillExtrusionLayer.fillExtrusionAmbientOcclusionWallRadius`, `FillExtrusionLayer.fillExtrusionAmbientOcclusionGroundRadius`, `FillExtrusionLayer.fillExtrusionAmbientOcclusionGroundAttenuation`, `FillExtrusionLayer.fillExtrusionFloodLightColor`, `FillExtrusionLayer.fillExtrusionFloodLightIntensity`, `FillExtrusionLayer.fillExtrusionFloodLightWallRadius`, `FillExtrusionLayer.fillExtrusionFloodLightGroundRadius`, `FillExtrusionLayer.fillExtrusionFloodLightGroundAttenuation`, `FillExtrusionLayer.fillExtrusionVerticalScale` APIs.
+* Introduce GeoJSONSource partial update APIs `GeoJsonSource.addGeoJSONSourceFeatures`, `GeoJsonSource.updateGeoJSONSourceFeatures`, `GeoJsonSource.removeGeoJSONSourceFeatures`.
+* Introduce raster colorization via `raster-color` expression and `RasterLayer.rasterColor`, `RasterLayer.rasterColorMix`, `RasterLayer.rasterColorRange` layer properties.
+* Introduce experimental APIs to work with Custom Raster Sources: `MapboxMap.addCustomRasterSource`, `MapboxMap.setCustomRasterSourceTileData`, `MapboxMap.invalidateCustomRasterSourceTile`, `MapboxMap.invalidateCustomRasterSourceRegion`.
+* Make both `Style` and `MapboxMap` implement `MapboxStyleManager` exposing all style related methods for the map and providing better alignment with iOS and GL-JS. 
+* Add `FillExtrusionLayer.fillExtrusionCutoffFadeRange` and `ModelLayer.modelCutoffFadeRange` to control fade out of the layers when pitch is used.
+* Improve atmosphere rendering performance.
+* Improve fill layer and model layer rendering performance on high pitch views.
+* Improve GPU performance by drawing opaque 3D geometry without blending.
+* Introduce experimental `SymbolLayer.symbolZElevate` property to elevate symbols along with the buildings that are in the same place. The feature is supported for symbols with point placement only.
+* Add `Atmosphere.verticalRange` property.
+* Add `GeoJsonSource.data(..)` overloads to allow Java to call with and without `dataId`.
+* Add a new layer type `CustomLayer` and style DSL to create it. `CustomLayer` allows to use custom OpenGL ES rendering through `CustomLayerHost`. `CustomLayer` contains the `slot` property allowing using it with the Standard style.
+* Improve the caching model for the custom raster source.
+* Optimize custom raster source data update.
+* Increase rendering performance of shadows.
+* Print warning log message for unknown style layer properties instead of causing fatal errors.
+* Optimise memory usage in the `FillExtrusionLayer`.
+* Improve the rendering performance of a `SymbolLayer` that uses `SymbolLayer.symbolSortKey` property.
+* Reduce memory usage in fill-extrusion flood light and ground ambient occlusion.
+* (Kotlin only) Deprecated `MapboxMap.getStyle()` function. Please use property `MapboxMap.style`.
+* (Kotlin only) Deprecated `MapView.getMapboxMap()` function. Please use property `MapView.mapboxMap`.
+* (Kotlin only) Deprecated `MapSurface.getMapboxMap()` function. Please use property `MapSurface.mapboxMap`.
+* Handle zero duration map camera animators more efficiently resulting in performance improvements for gestures / viewport / locationcomponent.
+* Function `DefaultLocationProvider.updatePuckBearing` now accepts null to stop listening for heading/course.
+* Add `keep-legacy-style-pack` style pack load extra option that prevents the style package removal from the legacy storage.
+* Enable rendering of fill extrusion flood lights on the ground with fully transparent fill extrusions.
+* Add `cameraForCoordinates` overload so that the padding for map and geometry can be specified separately.
+* Disable terrain when zoom-dependent exaggeration expression evaluates to zero.
+* Add support for `glb` 3D tiles.
+* Align hill shade illumination direction with 3D lights.
+* [compose] Add experimental `MapEvents` to handle all events emitted by `MapboxMap`.
+* [compose] Expose `PointAnnotationGroup.symbolZElevate` property.
+* [compose] Add `ViewAnnotation.layoutParams` property.
+* Introduce `ExtendedLocationProviderParameters` to specify `DeviceLocationProvider` parameters.
+* Add `coordinatesPadding`, `maxZoom` and `offset` parameters to `OverviewViewportStateOptions` to allow more granular control of `OverviewViewportState`.
+* Add `CircleAnnotationManager.slot`, `PointAnnotationManager.slot`, `PolygonAnnotationManager.slot`, `PolylineAnnotationManager.slot` to place the associated layer of the `AnnotationManager` to the correct position of the map.
+* Expose experimental `CustomRasterSource` and non-experimental `CustomGeometrySource` as regular `Source`'s providing a better way to work with them and also allowing using them in Style DSL.
+* Deprecate `CustomGeometrySource.invalidTile` and `CustomGeometrySource.invalidRegion`; `CustomGeometrySource.invalidateTile` and `CustomGeometrySource.invalidateRegion` should be used instead.
+* Add `LocationPuck3D.modelEmissiveStrength` and `LocationPuck3D.modelEmissiveStrengthExpression` properties to LocationComponent plugin to control the strength of the light emission.
+
+## Bug fixes 🐞
+* Fix scale bar receives camera changes after being disabled the first time.
+* Fix camera flying away on pitch gesture after some other animations.
+* Fix map not being rendered when EGL exception happens but Android surface is still valid.
+* Fix terrain rendering for the Terrarium-encoded tiles.
+* Cancel pending style url loading request when loading a new style json.
+* Fixes an issue that causes view annotations to be placed on the sky when high pitch and mercator projection is used.
+* Fix the CustomGeometrySource `fetchTileFunction` and `cancelTileFunction` callbacks being invoked on the wrong thread.
+* Fix a rendering error that broke symbol layers on Samsung S22 devices.
+* Cache featureState for newly added source in case it is not available in renderer.
+* Fix issue with model layer blending with geometry tile source.
+* Fix incorrectly set begin timestamp for the `RenderFrameFinished` event.
+* Hide methods and properties from Java in `MapView`, `MapboxMap` and `Snapshotter` that are not supposed to be public.
+* Fix flood light not working by changing default EGL config to RGBA_8888.
+* Fix a bug where the map would not zoom above a certain threshold on high-pitched views.
+* Fix crashes if 3D layers are used alone on terrain or globe without any other layer types.
+* Fix `LineLayer` leaking if placed behind the satellite layer.
+* Fix line and raster layers interop for draped mode.
+* Fix a crash when consecutive snapshot requests were made.
+* Fix erroneous shadow map sampling of distant landmarks.
+* Fix incorrect level-of-detail model being chosen for trees in some scenarios.
+* Fix the style layer minimum and maximum zoom default values from infinity to actual ones.
+* Fix widgets not showing on some zoom levels.
+* Fix widgets flickering due to race condition if they are animated.
+* Avoid listening for heading/course when location component puck bearing is disabled.
+* Do not overwrite style URL when setting invalid style JSON.
+* Do not store SDK version in TileStore.
+* Fixed an issue where the camera padding is not calculated properly for `OverviewViewportState`.
+* [compose] Fix the bug where wrong pixel ratio could be used in a dual display setup.
+* [compose] Fix a lifecycle handling issue for `MapboxMap` which results in potential memory leak.
+* Fix rendering of large/complex fill extrusion features.
+* Fix a crash because of non-exported runtime-registered broadcasts receivers for apps targeting SDK 34.
+* Fix a StackOverflow crash when `MultiGeometry` is used for `OverviewViewportStateOptions`.
+* Fix flickering and wrong positions in elevated symbols.
+* Update style layer's source should trigger repaint.
+* Fix failure to load a 3D model when it uses a 32-bit index buffer.
+* Fix rendering of the updated content on the map after a feature state change if terrain or globe were enabled.
+* Fix a bug where snapshot is rendered without 3D content.
+
+## Dependencies
+* Update gl-native to v11.0.0 and common to v24.0.0.
+* Update dependencies :
+
+| Dependency                                       | Before       | After        |
+|--------------------------------------------------|--------------|--------------|
+| Android Gradle Plugin                            | 7.0.4        | 7.4.2        |
+| Kotlin                                           | 1.5.31       | 1.7.20       |
+| NDK                                              | 21.4.7075529 | 23.2.8568313 |
+| EGL                                              | 1.0          | 1.4          |
+| org.jetbrains.kotlin:kotlin-stdlib-jdk7          | 1.5.31       |              |
+| org.jetbrains.kotlin:kotlin-stdlib-jdk8          |              | 1.7.20       |
+| Dokka plugin                                     | 1.5.31       | 1.7.20       |
+| androidx.core:core-ktx                           | 1.7.0        | 1.9.0        |
+| androidx.appcompat:appcompat                     | 1.3.0        | 1.6.1        |
+| androidx.test:rules                              | 1.4.0        | 1.5.0        |
+| androidx.test:core                               | 1.4.0        | 1.5.0        |
+| androidx.test:runner                             | 1.4.0        | 1.5.2        |
+| androidx.test:orchestrator                       | 1.4.0        | 1.4.2        |
+| androidx.test:monitor                            | 1.4.0        | 1.6.1        |
+| androidx.test.espresso:espresso-core             | 3.4.0        | 3.5.1        |
+| androidx.test.ext:junit                          | 1.1.3        | 1.1.5        |
+| org.jetbrains.kotlinx:kotlinx-coroutines-core    | 1.3.9        | 1.6.1        |
+| org.jetbrains.kotlinx:kotlinx-coroutines-test    | 1.3.9        | 1.6.1        |
+| io.mockk:mockk                                   | 1.12.3       | 1.13.4       |
+| io.mockk:mockk-agent-api                         | 1.12.3       | 1.13.4       |
+| io.mockk:mockk-agent-jvm                         | 1.12.3       | 1.13.4       |
+| org.robolectric:robolectric                      | 4.8.1        | 4.9.2        |
+| com.android.tools.lint:lint-api                  | 30.0.4       | 30.4.2       |
+| com.android.tools.lint:lint-checks               | 30.0.4       | 30.4.2       |
+| com.android.tools.lint:lint                      | 30.0.4       | 30.4.2       |
+| com.android.tools.lint:lint-tests                | 30.0.4       | 30.4.2       |
+| com.android.tools:testutils                      | 30.0.4       | 30.4.2       |
+| nl.jqno.equalsverifier:equalsverifier            | 3.10.1       | 3.14         |
+| io.gitlab.arturbosch.detekt:detekt-formatting    | 1.20.0       | 1.22.0       |
+| composeOptions -> kotlinCompilerExtensionVersion | 1.1.0-beta03 | 1.4.3        |
+| androidx.compose:compose-bom                     |              | 2023.01.00   |
+| androidx.compose.compiler:compiler               |              | 1.3.2        |
+| com.pinterest:ktlint                             | 0.39.0       | 0.48.2       |
 
 # 11.0.0-rc.2 November 17, 2023
 ## Breaking changes ⚠️
@@ -94,7 +350,6 @@ Mapbox welcomes participation and contributions from everyone.
 * (Kotlin only) Deprecated `MapView.getMapboxMap()` function. Please use property `MapView.mapboxMap`.
 * (Kotlin only) Deprecated `MapSurface.getMapboxMap()` function. Please use property `MapSurface.mapboxMap`.
 * Handle zero duration map camera animators more efficiently resulting in performance improvements for gestures / viewport / locationcomponent.
-* `DefaultLocationProvider.updatePuckBearing` now accepts null to stop listening for heading/course.
 * `DefaultLocationProvider.updatePuckBearing` now accepts null to stop listening for heading/course.
 * Add `keep-legacy-style-pack` style pack load extra option that prevents the style package removal from the legacy storage.
 * Enable rendering of fill extrusion flood lights on the ground with fully transparent fill extrusions.
