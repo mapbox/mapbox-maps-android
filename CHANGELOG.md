@@ -2,7 +2,8 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# 11.0.0
+
+# 11.0.0 November 29, 2023
 ## Breaking changes ⚠️
 * **Minimum OpenGL ES version is now 3.0**.
 * **Update SDK's `targetSdkVersion` and `compileSdkVersion` to 33**.
@@ -258,6 +259,7 @@ Mapbox welcomes participation and contributions from everyone.
 | androidx.compose:compose-bom                     |              | 2023.01.00   |
 | androidx.compose.compiler:compiler               |              | 1.3.2        |
 | com.pinterest:ktlint                             | 0.39.0       | 0.48.2       |
+
 
 # 11.0.0-rc.2 November 17, 2023
 ## Breaking changes ⚠️
