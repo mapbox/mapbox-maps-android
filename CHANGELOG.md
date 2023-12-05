@@ -2,6 +2,11 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
+# 10.16.3
+## Bug fixes 🐞
+* Fix widgets flickering due to race condition if they are animated.
+* Fix widgets not showing on some zoom levels.
+* Fix map being black when using widgets (e.g. when `MapDebugOptions.TILE_BORDERS` option is enabled).
 
 # 10.16.2 November 08, 2023
 ## Bug fixes 🐞

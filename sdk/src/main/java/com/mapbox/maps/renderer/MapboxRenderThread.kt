@@ -289,6 +289,25 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     }
   }
 
+  /**
+   * Resetting OpenGL state to make sure widget textures are rendered on top of the map.
+   */
+  private fun resetGlState() {
+    // using at least MapDebugOptions.TILE_BORDERS and perhaps in other situations
+    // rending engine may change the blend function; so we explicitly reset it to needed values
+    GLES20.glEnable(GLES20.GL_BLEND)
+    GLES20.glBlendFunc(GLES20.GL_ONE, GLES20.GL_ONE_MINUS_SRC_ALPHA)
+    GLES20.glBlendEquation(GLES20.GL_FUNC_ADD)
+
+    // explicitly disable stencil and depth because otherwise widgets may be rendered
+    // behind the map tiles in some scenarios
+    GLES20.glDisable(GLES20.GL_STENCIL_TEST)
+    GLES20.glDisable(GLES20.GL_DEPTH_TEST)
+    GLES20.glUseProgram(0)
+    GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0)
+    GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, 0)
+  }
+
   private fun draw(frameTimeNanos: Long) {
     if (!fpsManager.preRender(frameTimeNanos, renderThreadRecorder?.recording == true)) {
       // when we have FPS limited and desire to skip core render - we must schedule new draw call
@@ -303,6 +322,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       }
 
       nativeRender()
+      resetGlState()
 
       if (widgetRenderer.hasTexture()) {
         widgetTextureRenderer.render(widgetRenderer.getTexture())
