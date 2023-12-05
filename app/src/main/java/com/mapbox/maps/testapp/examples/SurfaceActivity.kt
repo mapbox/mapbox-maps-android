@@ -45,6 +45,12 @@ class SurfaceActivity : AppCompatActivity(), SurfaceHolder.Callback {
       mapInitOptions,
     )
 
+    // Show tile borders to make sure widgets are still rendered as expected
+    mapSurface.getMapboxMap().setDebug(
+      listOf(MapDebugOptions.TILE_BORDERS),
+      enabled = true
+    )
+
     // Load a map style
     mapSurface.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS)
 
