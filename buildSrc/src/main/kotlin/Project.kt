@@ -1,7 +1,9 @@
+@file:Suppress("ConstPropertyName")
+
 object AndroidVersions {
   const val minSdkVersion = 21
   const val targetSdkVersion = 30
-  const val compileSdkVersion = 31
+  const val compileSdkVersion = 30
   object AndroidAuto {
     const val minSdkVersion = 23
     const val targetSdkVersion = 30
@@ -14,8 +16,7 @@ object AndroidVersions {
   }
   object ExampleApp {
     const val minSdkVersion = 23
-    const val targetSdkVersion = 33
-    const val compileSdkVersion = 33
+    const val defaultCompileSdkVersion = 33
   }
 }
 
@@ -110,19 +111,19 @@ object Versions {
   const val pluginTaskTree = "2.1.0"
   const val mapboxAccessToken="0.4.0"
   const val mapboxSdkRegistry="1.2.2"
-  const val mapboxGestures = "0.8.0"
+  const val mapboxGestures = "0.9.1" // Required to support compile SDK 30
   const val mapboxJavaServices = "5.4.1"
   const val mapboxBase = "0.8.0"
   const val mapboxGlNative = "10.16.2"
   const val mapboxCommon = "23.8.4"
-  const val androidxCore = "1.7.0" // last version compatible with kotlin 1.5.31
-  const val androidxFragmentTesting = "1.5.0"
+  const val androidxCore = "1.6.0" // Latest version that supports compile SDK 30
+  const val androidxFragmentTesting = "1.3.6" // Latest version that supports compile SDK 30
   const val androidxAnnotation = "1.1.0"
   const val androidxAppcompat = "1.3.0"
   const val androidxTest = "1.4.0"
   const val androidxArchCoreTest = "2.1.0"
   const val androidxConstraintLayout = "2.0.0"
-  const val androidxEspresso = "3.4.0"
+  const val androidxEspresso = "3.3.0" // Newer version either require compile SDK >30 or we hit crash "java.lang.NoSuchMethodError: No static method loadSingleServiceOrNull
   const val androidxJUnit = "1.1.3"
   const val androidxUiAutomator = "2.2.0"
   const val androidxRecyclerView = "1.1.0"
@@ -139,7 +140,7 @@ object Versions {
   const val kotlinCoroutines = "1.3.9"
   const val junit = "4.13.2"
   const val mockk = "1.12.3"
-  const val robolectric = "4.8.1"
+  const val robolectric = "4.11.1"
   const val robolectricEgl = "gl1.1-android-2.1_r1"
   const val lint = "30.0.4"
   const val hamcrest = "2.1"

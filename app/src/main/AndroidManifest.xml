@@ -119,12 +119,12 @@
             android:name=".examples.java.DSLStylingJavaActivity"
             android:description="@string/description_dsl_styling"
             android:exported="true"
-            android:label="@string/activity_dsl_styling"></activity>
+            android:label="@string/activity_dsl_styling" />
         <activity
             android:name=".examples.java.RuntimeStylingJavaActivity"
             android:description="@string/description_dsl_styling"
             android:exported="true"
-            android:label="@string/activity_dsl_styling"></activity>
+            android:label="@string/activity_dsl_styling" />
         <activity
             android:name=".examples.globe.HeatmapLayerGlobeActivity"
             android:description="@string/description_heatmap_layer"
@@ -986,6 +986,7 @@
         </activity>
         <activity
             android:name=".examples.SecondaryDisplayActivity"
+            android:exported="true"
             android:launchMode="singleTask">
             <meta-data
                 android:name="android.allow_multiple_resumed_activities"
@@ -1225,5 +1226,22 @@
         <meta-data
             android:name="com.mapbox.maps.ThreadChecker"
             android:value="true" />
+
+        <!--
+        androidx.test:core:1.3.0 doesn't define "exported" attribute required for Android 12+ so we
+        set it here explicitly
+        -->
+        <activity
+            android:name="androidx.test.core.app.InstrumentationActivityInvoker$BootstrapActivity"
+            android:exported="false"
+            tools:node="mergeOnlyAttributes" />
+        <activity
+            android:name="androidx.test.core.app.InstrumentationActivityInvoker$EmptyActivity"
+            android:exported="false"
+            tools:node="mergeOnlyAttributes" />
+        <activity
+            android:name="androidx.test.core.app.InstrumentationActivityInvoker$EmptyFloatingActivity"
+            android:exported="false"
+            tools:node="mergeOnlyAttributes" />
     </application>
 </manifest>

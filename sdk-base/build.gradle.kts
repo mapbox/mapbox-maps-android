@@ -22,6 +22,7 @@ android {
     buildConfigField("String", "MAPBOX_SDK_VERSION", String.format("\"%s\"", VERSION_NAME))
     buildConfigField("String", "MAPBOX_VERSION_STRING", String.format("\"Mapbox/%s\"", VERSION_NAME))
     buildConfigField("String", "MAPBOX_EVENTS_USER_AGENT", String.format("\"mapbox-maps-android/%s\"", VERSION_NAME))
+    aarMetadata.minCompileSdk = AndroidVersions.compileSdkVersion
   }
 
   flavorDimensions.add("version")
