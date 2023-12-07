@@ -7,6 +7,12 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix widgets flickering due to race condition if they are animated.
 * Fix widgets not showing on some zoom levels.
 * Fix map being black when using widgets (e.g. when `MapDebugOptions.TILE_BORDERS` option is enabled).
+# 10.yy.zz
+## Features ✨ and improvements 🏁
+* Downgrade minimum required `compileSDK` from 31 to 30.
+
+## Dependencies
+* Update Mapbox gestures library to 0.9.1
 
 # 10.16.2 November 08, 2023
 ## Bug fixes 🐞

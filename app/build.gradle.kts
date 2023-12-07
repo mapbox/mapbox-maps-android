@@ -12,7 +12,8 @@ apply {
 val buildFromSource: String by project
 
 android {
-  compileSdk = AndroidVersions.ExampleApp.compileSdkVersion
+  compileSdk = (project.findProperty("APP_USE_COMPILE_SDK") as String?)?.toInt() ?: AndroidVersions.ExampleApp.defaultCompileSdkVersion
+  logger.warn("Using compileSDK: $compileSdk")
   signingConfigs {
     create("release") {
       storeFile = rootProject.file("$rootDir/testapp-release.keystore")
@@ -36,7 +37,7 @@ android {
   defaultConfig {
     applicationId = "com.mapbox.maps.testapp"
     minSdk = AndroidVersions.ExampleApp.minSdkVersion
-    targetSdk = AndroidVersions.ExampleApp.targetSdkVersion
+    targetSdk = this@android.compileSdk
     versionCode = if (project.hasProperty("gitVersionCode")) project.property("gitVersionCode") as Int else 1
     versionName = if (project.hasProperty("gitVersionName")) project.property("gitVersionName") as String else "0.1.0"
     multiDexEnabled = true
@@ -117,8 +118,9 @@ dependencies {
   implementation(Dependencies.androidxMultidex)
   implementation(Dependencies.googleMaterialDesign)
   implementation(Dependencies.squareRetrofit)
-  implementation(Dependencies.androidxFragmentTest)
   implementation(Dependencies.squareRetrofitGsonConverter)
+  // AndroidX Fragment Test is `implementation` because it requires exposing an internal activity in Manifest
+  implementation(Dependencies.androidxFragmentTest)
 
   // By default, the Maps SDK uses the Android Location Provider to obtain raw location updates.
   // And with Android 11, the raw location updates might suffer from precision issue.

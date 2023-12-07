@@ -77,9 +77,17 @@ repositories {
 tasks.withType<org.jetbrains.dokka.gradle.DokkaTask>().configureEach {
   outputDirectory.set(buildDir.resolve(this.name))
 }
-tasks.withType<Test> {
-  maxParallelForks = (Runtime.getRuntime().availableProcessors() / 2).takeIf { it > 0 } ?: 1
+
+// hack to fix unit test, see https://github.com/robolectric/robolectric/issues/5131#issuecomment-509631890.
+subprojects {
+  tasks.withType<Test>().configureEach {
+    maxParallelForks = 2
+    setForkEvery(80)
+    setMaxHeapSize("2048m")
+    setMinHeapSize("1024m")
+  }
 }
+
 
 apiValidation {
   /**
