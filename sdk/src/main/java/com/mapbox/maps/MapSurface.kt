@@ -46,6 +46,7 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
     surface: Surface,
     mapInitOptions: MapInitOptions = MapInitOptions(context) // could use strong ref here as MapInitOptions have strong ref in any case
   ) {
+    MapboxInitializer.init(context)
     this.context = context
     this.surface = surface
     this.mapInitOptions = mapInitOptions

@@ -17,6 +17,7 @@ afterEvaluate {
                     dryRun = false
                     publish = true
                     snapshot = isSnapshot
+                    override = isSnapshot
                     publishMessage = "cc @mapbox/maps-android"
                     publications = [currentComponent.name]
                     excludeFromRootProject = project.ext.mapboxRegistryExcludeFromRootProject

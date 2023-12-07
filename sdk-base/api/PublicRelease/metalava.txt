@@ -22,6 +22,21 @@ package com.mapbox.maps {
   @kotlin.RequiresOptIn(level=kotlin.RequiresOptIn.Level, message="This API is experimental. It may be changed in the future without notice.") @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention) @kotlin.annotation.Target(allowedTargets={kotlin.annotation.AnnotationTarget, kotlin.annotation.AnnotationTarget, kotlin.annotation.AnnotationTarget}) public @interface MapboxExperimental {
   }
 
+  @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) public final class MapboxInitializer implements androidx.startup.Initializer<java.lang.Boolean> {
+    ctor public MapboxInitializer();
+    method public Boolean create(android.content.Context context);
+    method public java.util.List<java.lang.Class<? extends androidx.startup.Initializer<?>>> dependencies();
+    method @MainThread @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) @kotlin.jvm.Throws(exceptionClasses=MapboxInitializerException::class) public static void init(android.content.Context context) throws java.lang.Throwable;
+    field public static final com.mapbox.maps.MapboxInitializer.Companion Companion;
+  }
+
+  public static final class MapboxInitializer.Companion {
+    method @MainThread @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) @kotlin.jvm.Throws(exceptionClasses=MapboxInitializerException::class) public void init(android.content.Context context) throws java.lang.Throwable;
+  }
+
+  public final class MapboxInitializerKt {
+  }
+
   public interface MapboxLifecycleObserver {
     method public void onDestroy();
     method public void onLowMemory();
