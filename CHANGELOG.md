@@ -3,8 +3,13 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
+
+## Features ✨ and improvements 🏁
+* Define minCompileSdkVersion=31 for Maps SDK libraries.
+
 ## Bug fixes 🐞
 * Fix a `MapSurface` rendering issue when widgets are used.
+
 
 # 11.0.0 November 29, 2023
 ## Breaking changes ⚠️

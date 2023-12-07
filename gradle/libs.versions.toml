@@ -3,6 +3,7 @@
 androidMinSdkVersion = "21"
 androidTargetSdkVersion = "33"
 androidCompileSdkVersion = "33"
+androidMinCompileSdkVersion = "31"
 
 autoMinSdkVersion = "23"
 autoTargetSdkVersion = "33"
