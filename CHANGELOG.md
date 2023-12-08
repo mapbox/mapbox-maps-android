@@ -2,7 +2,8 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# 10.16.3
+
+# 10.16.3 December 08, 2023
 ## Bug fixes 🐞
 * Downgrade minimum required `compileSDK` from 31 to 30.
 * Fix the `java.lang.UnsatisfiedLinkError` exception happening on the startup.
@@ -19,6 +20,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Known issues
 * The `java.lang.UnsatisfiedLinkError` exception on startup has been fixed when using Mapbox Maps SDK __only__. If other Mapbox products are used (Navigation, Search) - loading navigation / search native libraries might still crash. Mapbox Navigation / Search SDKs fixes will be released separately.
+
 
 # 10.16.2 November 08, 2023
 ## Bug fixes 🐞
