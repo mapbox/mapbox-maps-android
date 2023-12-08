@@ -4,15 +4,17 @@ Mapbox welcomes participation and contributions from everyone.
 
 # 10.16.3
 ## Bug fixes 🐞
+* Downgrade minimum required `compileSDK` from 31 to 30.
+* Fix the `java.lang.UnsatisfiedLinkError` exception happening on the startup.
 * Fix widgets flickering due to race condition if they are animated.
 * Fix widgets not showing on some zoom levels.
 * Fix map being black when using widgets (e.g. when `MapDebugOptions.TILE_BORDERS` option is enabled).
-# 10.yy.zz
-## Features ✨ and improvements 🏁
-* Downgrade minimum required `compileSDK` from 31 to 30.
 
 ## Dependencies
 * Update Mapbox gestures library to 0.9.1
+
+## Known issues
+* The `java.lang.UnsatisfiedLinkError` exception on startup has been fixed when using Mapbox Maps SDK __only__. If other Mapbox products are used (Navigation, Search) - loading navigation / search native libraries might still crash. Mapbox Navigation / Search SDKs fixes will be released separately.
 
 # 10.16.2 November 08, 2023
 ## Bug fixes 🐞
