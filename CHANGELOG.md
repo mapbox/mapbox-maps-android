@@ -9,9 +9,13 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix widgets flickering due to race condition if they are animated.
 * Fix widgets not showing on some zoom levels.
 * Fix map being black when using widgets (e.g. when `MapDebugOptions.TILE_BORDERS` option is enabled).
+* Fix the crash with enabled timestamps debug option.
+* Fix crashing with `java.lang.Error: unknown native exception` caused by model_collision shader compilation failure.
+* Fix `TileStore` not clearing the invalidated and serveable flags upon a successful download.
 
 ## Dependencies
 * Update Mapbox gestures library to 0.9.1
+* Update gl-native to v10.16.3 and common to v23.8.5.
 
 ## Known issues
 * The `java.lang.UnsatisfiedLinkError` exception on startup has been fixed when using Mapbox Maps SDK __only__. If other Mapbox products are used (Navigation, Search) - loading navigation / search native libraries might still crash. Mapbox Navigation / Search SDKs fixes will be released separately.
