@@ -176,7 +176,7 @@ internal class NativeMapImpl(val map: Map) {
   }
 
   fun coordinateBoundsForCameraUnwrapped(cameraOptions: CameraOptions): CoordinateBounds {
-    return map.coordinateBoundsForCamera(cameraOptions)
+    return map.coordinateBoundsForCameraUnwrapped(cameraOptions)
   }
 
   fun coordinateBoundsZoomForCameraUnwrapped(cameraOptions: CameraOptions): CoordinateBoundsZoom {

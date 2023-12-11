@@ -9,6 +9,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Bug fixes 🐞
 * Fix a `MapSurface` rendering issue when widgets are used.
+* Fix `coordinateBoundsForCameraUnwrapped` returning wrapped coordinates.
 
 
 # 11.0.0 November 29, 2023

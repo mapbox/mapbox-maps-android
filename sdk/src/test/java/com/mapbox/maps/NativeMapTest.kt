@@ -534,6 +534,14 @@ class NativeMapTest {
   }
 
   @Test
+  fun coordinateBoundsForCameraUnwrapped() {
+    val value = mockk<CameraOptions>()
+    val nativeMap = NativeMapImpl(map)
+    nativeMap.coordinateBoundsForCameraUnwrapped(value)
+    verify { map.coordinateBoundsForCameraUnwrapped(value) }
+  }
+
+  @Test
   fun coordinateBoundsZoomForCameraUnwrapped() {
     val value = mockk<CameraOptions>()
     val nativeMap = NativeMapImpl(map)
