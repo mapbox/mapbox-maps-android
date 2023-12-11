@@ -744,6 +744,10 @@ jobs:
                 module_target: "sdk"
             - save-to-workspace:
                 path: "sdk/build/outputs/apk/androidTest/debug/sdk-debug-androidTest.apk"
+            - build-instrumentation-test:
+                module_target: "module-telemetry"
+            - save-to-workspace:
+                path: "module-telemetry/build/outputs/apk/androidTest/debug/sdk-debug-androidTest.apk"
             - store_artifacts:
                 path: app/build/outputs/apk
                 destination: .
