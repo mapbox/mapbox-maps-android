@@ -1200,11 +1200,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * Controls the intensity of light emitted on the source features.
    */
   val lineEmissiveStrength: Double?
     /**
-     * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
+     * Controls the intensity of light emitted on the source features.
      *
      * Use static method [LineLayer.defaultLineEmissiveStrength] to get the default property.
      *
@@ -1215,7 +1215,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * Controls the intensity of light emitted on the source features.
    *
    * Use static method [LineLayer.defaultLineEmissiveStrength] to set the default property.
    *
@@ -1227,14 +1227,14 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * Controls the intensity of light emitted on the source features.
    *
    * This is an Expression representation of "line-emissive-strength".
    *
    */
   val lineEmissiveStrengthAsExpression: Expression?
     /**
-     * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
+     * Controls the intensity of light emitted on the source features.
      *
      * Get the LineEmissiveStrength property as an Expression
      *
@@ -1253,7 +1253,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * Controls the intensity of light emitted on the source features.
    *
    * Use static method [LineLayer.defaultLineEmissiveStrengthAsExpression] to set the default property.
    *
@@ -2584,11 +2584,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       get() = StyleManager.getStyleLayerPropertyDefaultValue("line", "line-depth-occlusion-factor-transition").silentUnwrap()
 
     /**
-     * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
+     * Controls the intensity of light emitted on the source features.
      */
     val defaultLineEmissiveStrength: Double?
       /**
-       * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
+       * Controls the intensity of light emitted on the source features.
        *
        * Get the default value of LineEmissiveStrength property
        *
@@ -2599,7 +2599,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
+     * Controls the intensity of light emitted on the source features.
      *
      * This is an Expression representation of "line-emissive-strength".
      *
@@ -3311,21 +3311,21 @@ interface LineLayerDsl {
   fun lineDepthOcclusionFactorTransition(block: StyleTransition.Builder.() -> Unit): LineLayer
 
   /**
-   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * Controls the intensity of light emitted on the source features.
    *
    * @param lineEmissiveStrength value of lineEmissiveStrength
    */
   fun lineEmissiveStrength(lineEmissiveStrength: Double = 0.0): LineLayer
 
   /**
-   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * Controls the intensity of light emitted on the source features.
    *
    * @param lineEmissiveStrength value of lineEmissiveStrength as Expression
    */
   fun lineEmissiveStrength(lineEmissiveStrength: Expression): LineLayer
 
   /**
-   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * Controls the intensity of light emitted on the source features.
    *
    * Set the LineEmissiveStrength property transition options
    *
@@ -3334,7 +3334,7 @@ interface LineLayerDsl {
   fun lineEmissiveStrengthTransition(options: StyleTransition): LineLayer
 
   /**
-   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * Controls the intensity of light emitted on the source features.
    *
    * DSL for [lineEmissiveStrengthTransition].
    */

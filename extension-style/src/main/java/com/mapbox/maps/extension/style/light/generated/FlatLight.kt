@@ -20,7 +20,7 @@ import com.mapbox.maps.extension.style.utils.ColorUtils.rgbaExpressionToColorStr
 import java.util.Locale
 
 /**
- * A global directional light source which is only applied on 3D layers and hillshade layers. Using this type disables other light sources.
+ * A global directional light source which is only applied on 3D and hillshade layers. Using this type disables other light sources.
  *
  * Check the [online documentation](https://www.mapbox.com/mapbox-gl-style-spec/#light).
  */

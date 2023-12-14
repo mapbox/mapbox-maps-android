@@ -31,14 +31,16 @@ class ImageSource(builder: Builder) : Source(builder.sourceId) {
   }
 
   /**
-   * URL that points to an image.
+   * URL that points to an image. If the URL is not specified, the image is expected
+   * to be loaded directly during runtime.
    */
   fun url(value: String): ImageSource = apply {
     setProperty(PropertyValue("url", TypeUtils.wrapToValue(value)))
   }
 
   /**
-   * URL that points to an image.
+   * URL that points to an image. If the URL is not specified, the image is expected
+   * to be loaded directly during runtime.
    */
   val url: String?
     /**
@@ -110,7 +112,8 @@ class ImageSource(builder: Builder) : Source(builder.sourceId) {
     internal val volatileProperties = HashMap<String, PropertyValue<*>>()
 
     /**
-     * URL that points to an image.
+     * URL that points to an image. If the URL is not specified, the image is expected
+     * to be loaded directly during runtime.
      */
     fun url(value: String): Builder = apply {
       val propertyValue = PropertyValue("url", TypeUtils.wrapToValue(value))

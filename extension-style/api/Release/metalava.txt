@@ -1581,6 +1581,10 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionCutoffFadeRange(com.mapbox.maps.extension.style.expressions.generated.Expression fillExtrusionCutoffFadeRange);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionEdgeRadius(double fillExtrusionEdgeRadius);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionEdgeRadius(com.mapbox.maps.extension.style.expressions.generated.Expression fillExtrusionEdgeRadius);
+    method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionEmissiveStrength(double fillExtrusionEmissiveStrength);
+    method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionEmissiveStrength(com.mapbox.maps.extension.style.expressions.generated.Expression fillExtrusionEmissiveStrength);
+    method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionEmissiveStrengthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionEmissiveStrengthTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionFloodLightColor(String fillExtrusionFloodLightColor);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionFloodLightColor(com.mapbox.maps.extension.style.expressions.generated.Expression fillExtrusionFloodLightColor);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionFloodLightColor(@ColorInt int fillExtrusionFloodLightColor);
@@ -1653,6 +1657,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getFillExtrusionCutoffFadeRangeAsExpression();
     method public Double? getFillExtrusionEdgeRadius();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getFillExtrusionEdgeRadiusAsExpression();
+    method public Double? getFillExtrusionEmissiveStrength();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getFillExtrusionEmissiveStrengthAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getFillExtrusionEmissiveStrengthTransition();
     method public String? getFillExtrusionFloodLightColor();
     method @ColorInt public Integer? getFillExtrusionFloodLightColorAsColorInt();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getFillExtrusionFloodLightColorAsExpression();
@@ -1730,6 +1737,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? fillExtrusionCutoffFadeRangeAsExpression;
     property public final Double? fillExtrusionEdgeRadius;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? fillExtrusionEdgeRadiusAsExpression;
+    property public final Double? fillExtrusionEmissiveStrength;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? fillExtrusionEmissiveStrengthAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? fillExtrusionEmissiveStrengthTransition;
     property public final String? fillExtrusionFloodLightColor;
     property @ColorInt public final Integer? fillExtrusionFloodLightColorAsColorInt;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? fillExtrusionFloodLightColorAsExpression;
@@ -1805,6 +1815,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultFillExtrusionCutoffFadeRangeAsExpression();
     method public Double? getDefaultFillExtrusionEdgeRadius();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultFillExtrusionEdgeRadiusAsExpression();
+    method public Double? getDefaultFillExtrusionEmissiveStrength();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultFillExtrusionEmissiveStrengthAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultFillExtrusionEmissiveStrengthTransition();
     method public String? getDefaultFillExtrusionFloodLightColor();
     method @ColorInt public Integer? getDefaultFillExtrusionFloodLightColorAsColorInt();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultFillExtrusionFloodLightColorAsExpression();
@@ -1870,6 +1883,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultFillExtrusionCutoffFadeRangeAsExpression;
     property public final Double? defaultFillExtrusionEdgeRadius;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultFillExtrusionEdgeRadiusAsExpression;
+    property public final Double? defaultFillExtrusionEmissiveStrength;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultFillExtrusionEmissiveStrengthAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultFillExtrusionEmissiveStrengthTransition;
     property public final String? defaultFillExtrusionFloodLightColor;
     property @ColorInt public final Integer? defaultFillExtrusionFloodLightColorAsColorInt;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultFillExtrusionFloodLightColorAsExpression;
@@ -1945,6 +1961,10 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionCutoffFadeRange(com.mapbox.maps.extension.style.expressions.generated.Expression fillExtrusionCutoffFadeRange);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionEdgeRadius(double fillExtrusionEdgeRadius = 0.0);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionEdgeRadius(com.mapbox.maps.extension.style.expressions.generated.Expression fillExtrusionEdgeRadius);
+    method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionEmissiveStrength(double fillExtrusionEmissiveStrength = 0.0);
+    method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionEmissiveStrength(com.mapbox.maps.extension.style.expressions.generated.Expression fillExtrusionEmissiveStrength);
+    method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionEmissiveStrengthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionEmissiveStrengthTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionFloodLightColor(String fillExtrusionFloodLightColor = "#ffffff");
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionFloodLightColor(com.mapbox.maps.extension.style.expressions.generated.Expression fillExtrusionFloodLightColor);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionFloodLightColor(@ColorInt int fillExtrusionFloodLightColor);
@@ -2353,6 +2373,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     method @ColorInt public Integer? getHillshadeAccentColorAsColorInt();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getHillshadeAccentColorAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getHillshadeAccentColorTransition();
+    method public Double? getHillshadeEmissiveStrength();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getHillshadeEmissiveStrengthAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getHillshadeEmissiveStrengthTransition();
     method public Double? getHillshadeExaggeration();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getHillshadeExaggerationAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getHillshadeExaggerationTransition();
@@ -2381,6 +2404,10 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.HillshadeLayer hillshadeAccentColor(@ColorInt int hillshadeAccentColor);
     method public com.mapbox.maps.extension.style.layers.generated.HillshadeLayer hillshadeAccentColorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.HillshadeLayer hillshadeAccentColorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method public com.mapbox.maps.extension.style.layers.generated.HillshadeLayer hillshadeEmissiveStrength(double hillshadeEmissiveStrength);
+    method public com.mapbox.maps.extension.style.layers.generated.HillshadeLayer hillshadeEmissiveStrength(com.mapbox.maps.extension.style.expressions.generated.Expression hillshadeEmissiveStrength);
+    method public com.mapbox.maps.extension.style.layers.generated.HillshadeLayer hillshadeEmissiveStrengthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.layers.generated.HillshadeLayer hillshadeEmissiveStrengthTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.HillshadeLayer hillshadeExaggeration(double hillshadeExaggeration);
     method public com.mapbox.maps.extension.style.layers.generated.HillshadeLayer hillshadeExaggeration(com.mapbox.maps.extension.style.expressions.generated.Expression hillshadeExaggeration);
     method public com.mapbox.maps.extension.style.layers.generated.HillshadeLayer hillshadeExaggerationTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -2409,6 +2436,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     property @ColorInt public final Integer? hillshadeAccentColorAsColorInt;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? hillshadeAccentColorAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? hillshadeAccentColorTransition;
+    property public final Double? hillshadeEmissiveStrength;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? hillshadeEmissiveStrengthAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? hillshadeEmissiveStrengthTransition;
     property public final Double? hillshadeExaggeration;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? hillshadeExaggerationAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? hillshadeExaggerationTransition;
@@ -2440,6 +2470,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     method @ColorInt public Integer? getDefaultHillshadeAccentColorAsColorInt();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultHillshadeAccentColorAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultHillshadeAccentColorTransition();
+    method public Double? getDefaultHillshadeEmissiveStrength();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultHillshadeEmissiveStrengthAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultHillshadeEmissiveStrengthTransition();
     method public Double? getDefaultHillshadeExaggeration();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultHillshadeExaggerationAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultHillshadeExaggerationTransition();
@@ -2462,6 +2495,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     property @ColorInt public final Integer? defaultHillshadeAccentColorAsColorInt;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultHillshadeAccentColorAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultHillshadeAccentColorTransition;
+    property public final Double? defaultHillshadeEmissiveStrength;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultHillshadeEmissiveStrengthAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultHillshadeEmissiveStrengthTransition;
     property public final Double? defaultHillshadeExaggeration;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultHillshadeExaggerationAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultHillshadeExaggerationTransition;
@@ -2488,6 +2524,10 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.HillshadeLayer hillshadeAccentColor(@ColorInt int hillshadeAccentColor);
     method public com.mapbox.maps.extension.style.layers.generated.HillshadeLayer hillshadeAccentColorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.HillshadeLayer hillshadeAccentColorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method public com.mapbox.maps.extension.style.layers.generated.HillshadeLayer hillshadeEmissiveStrength(double hillshadeEmissiveStrength = 0.0);
+    method public com.mapbox.maps.extension.style.layers.generated.HillshadeLayer hillshadeEmissiveStrength(com.mapbox.maps.extension.style.expressions.generated.Expression hillshadeEmissiveStrength);
+    method public com.mapbox.maps.extension.style.layers.generated.HillshadeLayer hillshadeEmissiveStrengthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.layers.generated.HillshadeLayer hillshadeEmissiveStrengthTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.HillshadeLayer hillshadeExaggeration(double hillshadeExaggeration = 0.5);
     method public com.mapbox.maps.extension.style.layers.generated.HillshadeLayer hillshadeExaggeration(com.mapbox.maps.extension.style.expressions.generated.Expression hillshadeExaggeration);
     method public com.mapbox.maps.extension.style.layers.generated.HillshadeLayer hillshadeExaggerationTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -3549,7 +3589,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelHeightBasedEmissiveStrengthMultiplier(com.mapbox.maps.extension.style.expressions.generated.Expression modelHeightBasedEmissiveStrengthMultiplier);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelHeightBasedEmissiveStrengthMultiplierTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelHeightBasedEmissiveStrengthMultiplierTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelId(String modelId);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelId(String modelId = "");
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelId(com.mapbox.maps.extension.style.expressions.generated.Expression modelId);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelOpacity(double modelOpacity = 1.0);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelOpacity(com.mapbox.maps.extension.style.expressions.generated.Expression modelOpacity);
@@ -3592,6 +3632,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public String getLayerId();
     method public Double? getMaxZoom();
     method public Double? getMinZoom();
+    method public String? getRasterArrayBand();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getRasterArrayBandAsExpression();
     method public Double? getRasterBrightnessMax();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getRasterBrightnessMaxAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getRasterBrightnessMaxTransition();
@@ -3608,6 +3650,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public Double? getRasterContrast();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getRasterContrastAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getRasterContrastTransition();
+    method public Double? getRasterEmissiveStrength();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getRasterEmissiveStrengthAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getRasterEmissiveStrengthTransition();
     method public Double? getRasterFadeDuration();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getRasterFadeDurationAsExpression();
     method public Double? getRasterHueRotate();
@@ -3628,6 +3673,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getVisibilityAsExpression();
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer maxZoom(double maxZoom);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer minZoom(double minZoom);
+    method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterArrayBand(String rasterArrayBand);
+    method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterArrayBand(com.mapbox.maps.extension.style.expressions.generated.Expression rasterArrayBand);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterBrightnessMax(double rasterBrightnessMax);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterBrightnessMax(com.mapbox.maps.extension.style.expressions.generated.Expression rasterBrightnessMax);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterBrightnessMaxTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -3649,6 +3696,10 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterContrast(com.mapbox.maps.extension.style.expressions.generated.Expression rasterContrast);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterContrastTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterContrastTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterEmissiveStrength(double rasterEmissiveStrength);
+    method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterEmissiveStrength(com.mapbox.maps.extension.style.expressions.generated.Expression rasterEmissiveStrength);
+    method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterEmissiveStrengthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterEmissiveStrengthTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterFadeDuration(double rasterFadeDuration);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterFadeDuration(com.mapbox.maps.extension.style.expressions.generated.Expression rasterFadeDuration);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterHueRotate(double rasterHueRotate);
@@ -3672,6 +3723,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public String layerId;
     property public Double? maxZoom;
     property public Double? minZoom;
+    property public final String? rasterArrayBand;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? rasterArrayBandAsExpression;
     property public final Double? rasterBrightnessMax;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? rasterBrightnessMaxAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? rasterBrightnessMaxTransition;
@@ -3688,6 +3741,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final Double? rasterContrast;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? rasterContrastAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? rasterContrastTransition;
+    property public final Double? rasterEmissiveStrength;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? rasterEmissiveStrengthAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? rasterEmissiveStrengthTransition;
     property public final Double? rasterFadeDuration;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? rasterFadeDurationAsExpression;
     property public final Double? rasterHueRotate;
@@ -3712,6 +3768,8 @@ package com.mapbox.maps.extension.style.layers.generated {
   public static final class RasterLayer.Companion {
     method public Double? getDefaultMaxZoom();
     method public Double? getDefaultMinZoom();
+    method public String? getDefaultRasterArrayBand();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultRasterArrayBandAsExpression();
     method public Double? getDefaultRasterBrightnessMax();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultRasterBrightnessMaxAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultRasterBrightnessMaxTransition();
@@ -3727,6 +3785,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public Double? getDefaultRasterContrast();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultRasterContrastAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultRasterContrastTransition();
+    method public Double? getDefaultRasterEmissiveStrength();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultRasterEmissiveStrengthAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultRasterEmissiveStrengthTransition();
     method public Double? getDefaultRasterFadeDuration();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultRasterFadeDurationAsExpression();
     method public Double? getDefaultRasterHueRotate();
@@ -3743,6 +3804,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.properties.generated.Visibility? getDefaultVisibility();
     property public final Double? defaultMaxZoom;
     property public final Double? defaultMinZoom;
+    property public final String? defaultRasterArrayBand;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultRasterArrayBandAsExpression;
     property public final Double? defaultRasterBrightnessMax;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultRasterBrightnessMaxAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultRasterBrightnessMaxTransition;
@@ -3758,6 +3821,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final Double? defaultRasterContrast;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultRasterContrastAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultRasterContrastTransition;
+    property public final Double? defaultRasterEmissiveStrength;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultRasterEmissiveStrengthAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultRasterEmissiveStrengthTransition;
     property public final Double? defaultRasterFadeDuration;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultRasterFadeDurationAsExpression;
     property public final Double? defaultRasterHueRotate;
@@ -3777,6 +3843,8 @@ package com.mapbox.maps.extension.style.layers.generated {
   @com.mapbox.maps.extension.style.types.LayersDsl public interface RasterLayerDsl {
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer maxZoom(double maxZoom);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer minZoom(double minZoom);
+    method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterArrayBand(String rasterArrayBand);
+    method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterArrayBand(com.mapbox.maps.extension.style.expressions.generated.Expression rasterArrayBand);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterBrightnessMax(double rasterBrightnessMax = 1.0);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterBrightnessMax(com.mapbox.maps.extension.style.expressions.generated.Expression rasterBrightnessMax);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterBrightnessMaxTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -3798,6 +3866,10 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterContrast(com.mapbox.maps.extension.style.expressions.generated.Expression rasterContrast);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterContrastTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterContrastTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterEmissiveStrength(double rasterEmissiveStrength = 0.0);
+    method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterEmissiveStrength(com.mapbox.maps.extension.style.expressions.generated.Expression rasterEmissiveStrength);
+    method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterEmissiveStrengthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterEmissiveStrengthTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterFadeDuration(double rasterFadeDuration = 300.0);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterFadeDuration(com.mapbox.maps.extension.style.expressions.generated.Expression rasterFadeDuration);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterHueRotate(double rasterHueRotate = 0.0);

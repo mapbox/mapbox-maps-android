@@ -1083,6 +1083,113 @@ class FillExtrusionLayerTest {
   }
 
   @Test
+  fun fillExtrusionEmissiveStrengthSet() {
+    val layer = fillExtrusionLayer("id", "source") {}
+    val testValue = 1.0
+    layer.bindTo(style)
+    layer.fillExtrusionEmissiveStrength(testValue)
+    verify { style.setStyleLayerProperty("id", "fill-extrusion-emissive-strength", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "1.0")
+  }
+
+  @Test
+  fun fillExtrusionEmissiveStrengthGet() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = fillExtrusionLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), layer.fillExtrusionEmissiveStrength?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-emissive-strength") }
+  }
+  // Expression Tests
+
+  @Test
+  fun fillExtrusionEmissiveStrengthAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = fillExtrusionLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.fillExtrusionEmissiveStrength(expression)
+    verify { style.setStyleLayerProperty("id", "fill-extrusion-emissive-strength", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun fillExtrusionEmissiveStrengthAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = fillExtrusionLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.fillExtrusionEmissiveStrengthAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-emissive-strength") }
+  }
+
+  @Test
+  fun fillExtrusionEmissiveStrengthAsExpressionGetNull() {
+    val layer = fillExtrusionLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.fillExtrusionEmissiveStrengthAsExpression)
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-emissive-strength") }
+  }
+
+  @Test
+  fun fillExtrusionEmissiveStrengthAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    val layer = fillExtrusionLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(1.0, layer.fillExtrusionEmissiveStrengthAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.fillExtrusionEmissiveStrength!!, 1E-5)
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-emissive-strength") }
+  }
+
+  @Test
+  fun fillExtrusionEmissiveStrengthTransitionSet() {
+    val layer = fillExtrusionLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.fillExtrusionEmissiveStrengthTransition(
+      transitionOptions {
+        duration(100)
+        delay(200)
+      }
+    )
+    verify { style.setStyleLayerProperty("id", "fill-extrusion-emissive-strength-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
+  fun fillExtrusionEmissiveStrengthTransitionGet() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+    val layer = fillExtrusionLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(transition.toValue().toString(), layer.fillExtrusionEmissiveStrengthTransition?.toValue().toString())
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-emissive-strength-transition") }
+  }
+
+  @Test
+  fun fillExtrusionEmissiveStrengthTransitionSetDsl() {
+    val layer = fillExtrusionLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.fillExtrusionEmissiveStrengthTransition {
+      duration(100)
+      delay(200)
+    }
+    verify { style.setStyleLayerProperty("id", "fill-extrusion-emissive-strength-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
   fun fillExtrusionFloodLightColorSet() {
     val layer = fillExtrusionLayer("id", "source") {}
     val testValue = "rgba(0, 0, 0, 1)"
@@ -2824,6 +2931,50 @@ class FillExtrusionLayerTest {
     assertEquals(1.0, FillExtrusionLayer.defaultFillExtrusionCutoffFadeRangeAsExpression?.contents as Double, 1E-5)
     assertEquals(1.0, FillExtrusionLayer.defaultFillExtrusionCutoffFadeRange!!, 1E-5)
     verify { StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-cutoff-fade-range") }
+  }
+
+  @Test
+  fun defaultFillExtrusionEmissiveStrengthTest() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), FillExtrusionLayer.defaultFillExtrusionEmissiveStrength?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-emissive-strength") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultFillExtrusionEmissiveStrengthAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), FillExtrusionLayer.defaultFillExtrusionEmissiveStrengthAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-emissive-strength") }
+  }
+
+  @Test
+  fun defaultFillExtrusionEmissiveStrengthAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    assertEquals(1.0, FillExtrusionLayer.defaultFillExtrusionEmissiveStrengthAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, FillExtrusionLayer.defaultFillExtrusionEmissiveStrength!!, 1E-5)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-emissive-strength") }
+  }
+
+  @Test
+  fun defaultFillExtrusionEmissiveStrengthTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+
+    assertEquals(transition.toValue().toString(), FillExtrusionLayer.defaultFillExtrusionEmissiveStrengthTransition?.toValue().toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-emissive-strength-transition") }
   }
 
   @Test

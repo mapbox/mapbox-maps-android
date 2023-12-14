@@ -309,7 +309,7 @@ class PolylineAnnotationManager(
   /**
    * The LineEmissiveStrength property
    *
-   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined. The unit of lineEmissiveStrength is in intensity.
+   * Controls the intensity of light emitted on the source features. The unit of lineEmissiveStrength is in intensity.
    */
   var lineEmissiveStrength: Double?
     /**

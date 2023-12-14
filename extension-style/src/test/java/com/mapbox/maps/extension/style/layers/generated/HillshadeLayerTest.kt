@@ -275,6 +275,113 @@ class HillshadeLayerTest {
   }
 
   @Test
+  fun hillshadeEmissiveStrengthSet() {
+    val layer = hillshadeLayer("id", "source") {}
+    val testValue = 1.0
+    layer.bindTo(style)
+    layer.hillshadeEmissiveStrength(testValue)
+    verify { style.setStyleLayerProperty("id", "hillshade-emissive-strength", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "1.0")
+  }
+
+  @Test
+  fun hillshadeEmissiveStrengthGet() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = hillshadeLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), layer.hillshadeEmissiveStrength?.toString())
+    verify { style.getStyleLayerProperty("id", "hillshade-emissive-strength") }
+  }
+  // Expression Tests
+
+  @Test
+  fun hillshadeEmissiveStrengthAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = hillshadeLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.hillshadeEmissiveStrength(expression)
+    verify { style.setStyleLayerProperty("id", "hillshade-emissive-strength", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun hillshadeEmissiveStrengthAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = hillshadeLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.hillshadeEmissiveStrengthAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "hillshade-emissive-strength") }
+  }
+
+  @Test
+  fun hillshadeEmissiveStrengthAsExpressionGetNull() {
+    val layer = hillshadeLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.hillshadeEmissiveStrengthAsExpression)
+    verify { style.getStyleLayerProperty("id", "hillshade-emissive-strength") }
+  }
+
+  @Test
+  fun hillshadeEmissiveStrengthAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    val layer = hillshadeLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(1.0, layer.hillshadeEmissiveStrengthAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.hillshadeEmissiveStrength!!, 1E-5)
+    verify { style.getStyleLayerProperty("id", "hillshade-emissive-strength") }
+  }
+
+  @Test
+  fun hillshadeEmissiveStrengthTransitionSet() {
+    val layer = hillshadeLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.hillshadeEmissiveStrengthTransition(
+      transitionOptions {
+        duration(100)
+        delay(200)
+      }
+    )
+    verify { style.setStyleLayerProperty("id", "hillshade-emissive-strength-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
+  fun hillshadeEmissiveStrengthTransitionGet() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+    val layer = hillshadeLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(transition.toValue().toString(), layer.hillshadeEmissiveStrengthTransition?.toValue().toString())
+    verify { style.getStyleLayerProperty("id", "hillshade-emissive-strength-transition") }
+  }
+
+  @Test
+  fun hillshadeEmissiveStrengthTransitionSetDsl() {
+    val layer = hillshadeLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.hillshadeEmissiveStrengthTransition {
+      duration(100)
+      delay(200)
+    }
+    verify { style.setStyleLayerProperty("id", "hillshade-emissive-strength-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
   fun hillshadeExaggerationSet() {
     val layer = hillshadeLayer("id", "source") {}
     val testValue = 1.0
@@ -955,6 +1062,50 @@ class HillshadeLayerTest {
 
     assertEquals(transition.toValue().toString(), HillshadeLayer.defaultHillshadeAccentColorTransition?.toValue().toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("hillshade", "hillshade-accent-color-transition") }
+  }
+
+  @Test
+  fun defaultHillshadeEmissiveStrengthTest() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), HillshadeLayer.defaultHillshadeEmissiveStrength?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("hillshade", "hillshade-emissive-strength") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultHillshadeEmissiveStrengthAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), HillshadeLayer.defaultHillshadeEmissiveStrengthAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("hillshade", "hillshade-emissive-strength") }
+  }
+
+  @Test
+  fun defaultHillshadeEmissiveStrengthAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    assertEquals(1.0, HillshadeLayer.defaultHillshadeEmissiveStrengthAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, HillshadeLayer.defaultHillshadeEmissiveStrength!!, 1E-5)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("hillshade", "hillshade-emissive-strength") }
+  }
+
+  @Test
+  fun defaultHillshadeEmissiveStrengthTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+
+    assertEquals(transition.toValue().toString(), HillshadeLayer.defaultHillshadeEmissiveStrengthTransition?.toValue().toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("hillshade", "hillshade-emissive-strength-transition") }
   }
 
   @Test

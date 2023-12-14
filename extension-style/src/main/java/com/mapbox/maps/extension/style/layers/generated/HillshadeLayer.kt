@@ -344,6 +344,105 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
   }
 
   /**
+   * Controls the intensity of light emitted on the source features.
+   */
+  val hillshadeEmissiveStrength: Double?
+    /**
+     * Controls the intensity of light emitted on the source features.
+     *
+     * Use static method [HillshadeLayer.defaultHillshadeEmissiveStrength] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      return getPropertyValue("hillshade-emissive-strength")
+    }
+
+  /**
+   * Controls the intensity of light emitted on the source features.
+   *
+   * Use static method [HillshadeLayer.defaultHillshadeEmissiveStrength] to set the default property.
+   *
+   * @param hillshadeEmissiveStrength value of hillshadeEmissiveStrength
+   */
+  override fun hillshadeEmissiveStrength(hillshadeEmissiveStrength: Double): HillshadeLayer = apply {
+    val propertyValue = PropertyValue("hillshade-emissive-strength", hillshadeEmissiveStrength)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Controls the intensity of light emitted on the source features.
+   *
+   * This is an Expression representation of "hillshade-emissive-strength".
+   *
+   */
+  val hillshadeEmissiveStrengthAsExpression: Expression?
+    /**
+     * Controls the intensity of light emitted on the source features.
+     *
+     * Get the HillshadeEmissiveStrength property as an Expression
+     *
+     * Use static method [HillshadeLayer.defaultHillshadeEmissiveStrengthAsExpression] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      getPropertyValue<Expression>("hillshade-emissive-strength")?.let {
+        return it
+      }
+      hillshadeEmissiveStrength?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * Controls the intensity of light emitted on the source features.
+   *
+   * Use static method [HillshadeLayer.defaultHillshadeEmissiveStrengthAsExpression] to set the default property.
+   *
+   * @param hillshadeEmissiveStrength value of hillshadeEmissiveStrength as Expression
+   */
+  override fun hillshadeEmissiveStrength(hillshadeEmissiveStrength: Expression): HillshadeLayer = apply {
+    val propertyValue = PropertyValue("hillshade-emissive-strength", hillshadeEmissiveStrength)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Transition options for HillshadeEmissiveStrength.
+   */
+  val hillshadeEmissiveStrengthTransition: StyleTransition?
+    /**
+     * Get the HillshadeEmissiveStrength property transition options
+     *
+     * Use static method [HillshadeLayer.defaultHillshadeEmissiveStrengthTransition] to get the default property.
+     *
+     * @return transition options for Double
+     */
+    get() {
+      return getPropertyValue("hillshade-emissive-strength-transition")
+    }
+
+  /**
+   * Set the HillshadeEmissiveStrength property transition options
+   *
+   * Use static method [HillshadeLayer.defaultHillshadeEmissiveStrengthTransition] to set the default property.
+   *
+   * @param options transition options for Double
+   */
+  override fun hillshadeEmissiveStrengthTransition(options: StyleTransition): HillshadeLayer = apply {
+    val propertyValue = PropertyValue("hillshade-emissive-strength-transition", options)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * DSL for [hillshadeEmissiveStrengthTransition].
+   */
+  override fun hillshadeEmissiveStrengthTransition(block: StyleTransition.Builder.() -> Unit): HillshadeLayer = apply {
+    hillshadeEmissiveStrengthTransition(StyleTransition.Builder().apply(block).build())
+  }
+
+  /**
    * Intensity of the hillshade
    */
   val hillshadeExaggeration: Double?
@@ -641,11 +740,11 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
   }
 
   /**
-   * The direction of the light source used to generate the hillshading with 0 as the top of the viewport if `hillshade-illumination-anchor` is set to `viewport` and due north if `hillshade-illumination-anchor` is set to `map`.
+   * The direction of the light source used to generate the hillshading with 0 as the top of the viewport if `hillshade-illumination-anchor` is set to `viewport` and due north if `hillshade-illumination-anchor` is set to `map` and no 3d lights enabled. If `hillshade-illumination-anchor` is set to `map` and 3d lights enabled, the direction from 3d lights is used instead.
    */
   val hillshadeIlluminationDirection: Double?
     /**
-     * The direction of the light source used to generate the hillshading with 0 as the top of the viewport if `hillshade-illumination-anchor` is set to `viewport` and due north if `hillshade-illumination-anchor` is set to `map`.
+     * The direction of the light source used to generate the hillshading with 0 as the top of the viewport if `hillshade-illumination-anchor` is set to `viewport` and due north if `hillshade-illumination-anchor` is set to `map` and no 3d lights enabled. If `hillshade-illumination-anchor` is set to `map` and 3d lights enabled, the direction from 3d lights is used instead.
      *
      * Use static method [HillshadeLayer.defaultHillshadeIlluminationDirection] to get the default property.
      *
@@ -656,7 +755,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
     }
 
   /**
-   * The direction of the light source used to generate the hillshading with 0 as the top of the viewport if `hillshade-illumination-anchor` is set to `viewport` and due north if `hillshade-illumination-anchor` is set to `map`.
+   * The direction of the light source used to generate the hillshading with 0 as the top of the viewport if `hillshade-illumination-anchor` is set to `viewport` and due north if `hillshade-illumination-anchor` is set to `map` and no 3d lights enabled. If `hillshade-illumination-anchor` is set to `map` and 3d lights enabled, the direction from 3d lights is used instead.
    *
    * Use static method [HillshadeLayer.defaultHillshadeIlluminationDirection] to set the default property.
    *
@@ -668,14 +767,14 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
   }
 
   /**
-   * The direction of the light source used to generate the hillshading with 0 as the top of the viewport if `hillshade-illumination-anchor` is set to `viewport` and due north if `hillshade-illumination-anchor` is set to `map`.
+   * The direction of the light source used to generate the hillshading with 0 as the top of the viewport if `hillshade-illumination-anchor` is set to `viewport` and due north if `hillshade-illumination-anchor` is set to `map` and no 3d lights enabled. If `hillshade-illumination-anchor` is set to `map` and 3d lights enabled, the direction from 3d lights is used instead.
    *
    * This is an Expression representation of "hillshade-illumination-direction".
    *
    */
   val hillshadeIlluminationDirectionAsExpression: Expression?
     /**
-     * The direction of the light source used to generate the hillshading with 0 as the top of the viewport if `hillshade-illumination-anchor` is set to `viewport` and due north if `hillshade-illumination-anchor` is set to `map`.
+     * The direction of the light source used to generate the hillshading with 0 as the top of the viewport if `hillshade-illumination-anchor` is set to `viewport` and due north if `hillshade-illumination-anchor` is set to `map` and no 3d lights enabled. If `hillshade-illumination-anchor` is set to `map` and 3d lights enabled, the direction from 3d lights is used instead.
      *
      * Get the HillshadeIlluminationDirection property as an Expression
      *
@@ -694,7 +793,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
     }
 
   /**
-   * The direction of the light source used to generate the hillshading with 0 as the top of the viewport if `hillshade-illumination-anchor` is set to `viewport` and due north if `hillshade-illumination-anchor` is set to `map`.
+   * The direction of the light source used to generate the hillshading with 0 as the top of the viewport if `hillshade-illumination-anchor` is set to `viewport` and due north if `hillshade-illumination-anchor` is set to `map` and no 3d lights enabled. If `hillshade-illumination-anchor` is set to `map` and 3d lights enabled, the direction from 3d lights is used instead.
    *
    * Use static method [HillshadeLayer.defaultHillshadeIlluminationDirectionAsExpression] to set the default property.
    *
@@ -962,6 +1061,54 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
       get() = StyleManager.getStyleLayerPropertyDefaultValue("hillshade", "hillshade-accent-color-transition").silentUnwrap()
 
     /**
+     * Controls the intensity of light emitted on the source features.
+     */
+    val defaultHillshadeEmissiveStrength: Double?
+      /**
+       * Controls the intensity of light emitted on the source features.
+       *
+       * Get the default value of HillshadeEmissiveStrength property
+       *
+       * @return Double
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("hillshade", "hillshade-emissive-strength").silentUnwrap()
+      }
+
+    /**
+     * Controls the intensity of light emitted on the source features.
+     *
+     * This is an Expression representation of "hillshade-emissive-strength".
+     *
+     */
+    val defaultHillshadeEmissiveStrengthAsExpression: Expression?
+      /**
+       * Get default value of the HillshadeEmissiveStrength property as an Expression
+       *
+       * @return Double
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("hillshade", "hillshade-emissive-strength").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultHillshadeEmissiveStrength?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
+
+    /**
+     * Transition options for HillshadeEmissiveStrength.
+     */
+    val defaultHillshadeEmissiveStrengthTransition: StyleTransition?
+      /**
+       * Get the HillshadeEmissiveStrength property transition options
+       *
+       * @return transition options for Double
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("hillshade", "hillshade-emissive-strength-transition").silentUnwrap()
+
+    /**
      * Intensity of the hillshade
      */
     val defaultHillshadeExaggeration: Double?
@@ -1117,11 +1264,11 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
       }
 
     /**
-     * The direction of the light source used to generate the hillshading with 0 as the top of the viewport if `hillshade-illumination-anchor` is set to `viewport` and due north if `hillshade-illumination-anchor` is set to `map`.
+     * The direction of the light source used to generate the hillshading with 0 as the top of the viewport if `hillshade-illumination-anchor` is set to `viewport` and due north if `hillshade-illumination-anchor` is set to `map` and no 3d lights enabled. If `hillshade-illumination-anchor` is set to `map` and 3d lights enabled, the direction from 3d lights is used instead.
      */
     val defaultHillshadeIlluminationDirection: Double?
       /**
-       * The direction of the light source used to generate the hillshading with 0 as the top of the viewport if `hillshade-illumination-anchor` is set to `viewport` and due north if `hillshade-illumination-anchor` is set to `map`.
+       * The direction of the light source used to generate the hillshading with 0 as the top of the viewport if `hillshade-illumination-anchor` is set to `viewport` and due north if `hillshade-illumination-anchor` is set to `map` and no 3d lights enabled. If `hillshade-illumination-anchor` is set to `map` and 3d lights enabled, the direction from 3d lights is used instead.
        *
        * Get the default value of HillshadeIlluminationDirection property
        *
@@ -1132,7 +1279,7 @@ class HillshadeLayer(override val layerId: String, val sourceId: String) : Hills
       }
 
     /**
-     * The direction of the light source used to generate the hillshading with 0 as the top of the viewport if `hillshade-illumination-anchor` is set to `viewport` and due north if `hillshade-illumination-anchor` is set to `map`.
+     * The direction of the light source used to generate the hillshading with 0 as the top of the viewport if `hillshade-illumination-anchor` is set to `viewport` and due north if `hillshade-illumination-anchor` is set to `map` and no 3d lights enabled. If `hillshade-illumination-anchor` is set to `map` and 3d lights enabled, the direction from 3d lights is used instead.
      *
      * This is an Expression representation of "hillshade-illumination-direction".
      *
@@ -1322,6 +1469,36 @@ interface HillshadeLayerDsl {
   fun hillshadeAccentColorTransition(block: StyleTransition.Builder.() -> Unit): HillshadeLayer
 
   /**
+   * Controls the intensity of light emitted on the source features.
+   *
+   * @param hillshadeEmissiveStrength value of hillshadeEmissiveStrength
+   */
+  fun hillshadeEmissiveStrength(hillshadeEmissiveStrength: Double = 0.0): HillshadeLayer
+
+  /**
+   * Controls the intensity of light emitted on the source features.
+   *
+   * @param hillshadeEmissiveStrength value of hillshadeEmissiveStrength as Expression
+   */
+  fun hillshadeEmissiveStrength(hillshadeEmissiveStrength: Expression): HillshadeLayer
+
+  /**
+   * Controls the intensity of light emitted on the source features.
+   *
+   * Set the HillshadeEmissiveStrength property transition options
+   *
+   * @param options transition options for Double
+   */
+  fun hillshadeEmissiveStrengthTransition(options: StyleTransition): HillshadeLayer
+
+  /**
+   * Controls the intensity of light emitted on the source features.
+   *
+   * DSL for [hillshadeEmissiveStrengthTransition].
+   */
+  fun hillshadeEmissiveStrengthTransition(block: StyleTransition.Builder.() -> Unit): HillshadeLayer
+
+  /**
    * Intensity of the hillshade
    *
    * @param hillshadeExaggeration value of hillshadeExaggeration
@@ -1403,14 +1580,14 @@ interface HillshadeLayerDsl {
   fun hillshadeIlluminationAnchor(hillshadeIlluminationAnchor: Expression): HillshadeLayer
 
   /**
-   * The direction of the light source used to generate the hillshading with 0 as the top of the viewport if `hillshade-illumination-anchor` is set to `viewport` and due north if `hillshade-illumination-anchor` is set to `map`.
+   * The direction of the light source used to generate the hillshading with 0 as the top of the viewport if `hillshade-illumination-anchor` is set to `viewport` and due north if `hillshade-illumination-anchor` is set to `map` and no 3d lights enabled. If `hillshade-illumination-anchor` is set to `map` and 3d lights enabled, the direction from 3d lights is used instead.
    *
    * @param hillshadeIlluminationDirection value of hillshadeIlluminationDirection
    */
   fun hillshadeIlluminationDirection(hillshadeIlluminationDirection: Double = 335.0): HillshadeLayer
 
   /**
-   * The direction of the light source used to generate the hillshading with 0 as the top of the viewport if `hillshade-illumination-anchor` is set to `viewport` and due north if `hillshade-illumination-anchor` is set to `map`.
+   * The direction of the light source used to generate the hillshading with 0 as the top of the viewport if `hillshade-illumination-anchor` is set to `viewport` and due north if `hillshade-illumination-anchor` is set to `map` and no 3d lights enabled. If `hillshade-illumination-anchor` is set to `map` and 3d lights enabled, the direction from 3d lights is used instead.
    *
    * @param hillshadeIlluminationDirection value of hillshadeIlluminationDirection as Expression
    */

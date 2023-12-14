@@ -315,11 +315,11 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
   }
 
   /**
-   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * Controls the intensity of light emitted on the source features.
    */
   val backgroundEmissiveStrength: Double?
     /**
-     * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
+     * Controls the intensity of light emitted on the source features.
      *
      * Use static method [BackgroundLayer.defaultBackgroundEmissiveStrength] to get the default property.
      *
@@ -330,7 +330,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
     }
 
   /**
-   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * Controls the intensity of light emitted on the source features.
    *
    * Use static method [BackgroundLayer.defaultBackgroundEmissiveStrength] to set the default property.
    *
@@ -342,14 +342,14 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
   }
 
   /**
-   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * Controls the intensity of light emitted on the source features.
    *
    * This is an Expression representation of "background-emissive-strength".
    *
    */
   val backgroundEmissiveStrengthAsExpression: Expression?
     /**
-     * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
+     * Controls the intensity of light emitted on the source features.
      *
      * Get the BackgroundEmissiveStrength property as an Expression
      *
@@ -368,7 +368,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
     }
 
   /**
-   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * Controls the intensity of light emitted on the source features.
    *
    * Use static method [BackgroundLayer.defaultBackgroundEmissiveStrengthAsExpression] to set the default property.
    *
@@ -704,11 +704,11 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
       get() = StyleManager.getStyleLayerPropertyDefaultValue("background", "background-color-transition").silentUnwrap()
 
     /**
-     * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
+     * Controls the intensity of light emitted on the source features.
      */
     val defaultBackgroundEmissiveStrength: Double?
       /**
-       * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
+       * Controls the intensity of light emitted on the source features.
        *
        * Get the default value of BackgroundEmissiveStrength property
        *
@@ -719,7 +719,7 @@ class BackgroundLayer(override val layerId: String) : BackgroundLayerDsl, Layer(
       }
 
     /**
-     * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
+     * Controls the intensity of light emitted on the source features.
      *
      * This is an Expression representation of "background-emissive-strength".
      *
@@ -931,21 +931,21 @@ interface BackgroundLayerDsl {
   fun backgroundColorTransition(block: StyleTransition.Builder.() -> Unit): BackgroundLayer
 
   /**
-   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * Controls the intensity of light emitted on the source features.
    *
    * @param backgroundEmissiveStrength value of backgroundEmissiveStrength
    */
   fun backgroundEmissiveStrength(backgroundEmissiveStrength: Double = 0.0): BackgroundLayer
 
   /**
-   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * Controls the intensity of light emitted on the source features.
    *
    * @param backgroundEmissiveStrength value of backgroundEmissiveStrength as Expression
    */
   fun backgroundEmissiveStrength(backgroundEmissiveStrength: Expression): BackgroundLayer
 
   /**
-   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * Controls the intensity of light emitted on the source features.
    *
    * Set the BackgroundEmissiveStrength property transition options
    *
@@ -954,7 +954,7 @@ interface BackgroundLayerDsl {
   fun backgroundEmissiveStrengthTransition(options: StyleTransition): BackgroundLayer
 
   /**
-   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * Controls the intensity of light emitted on the source features.
    *
    * DSL for [backgroundEmissiveStrengthTransition].
    */

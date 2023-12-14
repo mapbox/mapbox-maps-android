@@ -767,7 +767,7 @@ class PointAnnotation(
   /**
    * The iconEmissiveStrength property
    *
-   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined. The unit of iconEmissiveStrength is in intensity.
+   * Controls the intensity of light emitted on the source features. The unit of iconEmissiveStrength is in intensity.
    */
   var iconEmissiveStrength: Double?
     /**
@@ -1064,7 +1064,7 @@ class PointAnnotation(
   /**
    * The textEmissiveStrength property
    *
-   * Controls the intensity of light emitted on the source features. This property works only with 3D light, i.e. when `lights` root property is defined. The unit of textEmissiveStrength is in intensity.
+   * Controls the intensity of light emitted on the source features. The unit of textEmissiveStrength is in intensity.
    */
   var textEmissiveStrength: Double?
     /**

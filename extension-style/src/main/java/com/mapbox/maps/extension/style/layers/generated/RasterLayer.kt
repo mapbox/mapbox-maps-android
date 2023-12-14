@@ -210,6 +210,71 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   // Property getters and setters
 
   /**
+   * Displayed band of raster array source layer
+   */
+  val rasterArrayBand: String?
+    /**
+     * Displayed band of raster array source layer
+     *
+     * Use static method [RasterLayer.defaultRasterArrayBand] to get the default property.
+     *
+     * @return String
+     */
+    get() {
+      return getPropertyValue("raster-array-band")
+    }
+
+  /**
+   * Displayed band of raster array source layer
+   *
+   * Use static method [RasterLayer.defaultRasterArrayBand] to set the default property.
+   *
+   * @param rasterArrayBand value of rasterArrayBand
+   */
+  override fun rasterArrayBand(rasterArrayBand: String): RasterLayer = apply {
+    val propertyValue = PropertyValue("raster-array-band", rasterArrayBand)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Displayed band of raster array source layer
+   *
+   * This is an Expression representation of "raster-array-band".
+   *
+   */
+  val rasterArrayBandAsExpression: Expression?
+    /**
+     * Displayed band of raster array source layer
+     *
+     * Get the RasterArrayBand property as an Expression
+     *
+     * Use static method [RasterLayer.defaultRasterArrayBandAsExpression] to get the default property.
+     *
+     * @return String
+     */
+    get() {
+      getPropertyValue<Expression>("raster-array-band")?.let {
+        return it
+      }
+      rasterArrayBand?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * Displayed band of raster array source layer
+   *
+   * Use static method [RasterLayer.defaultRasterArrayBandAsExpression] to set the default property.
+   *
+   * @param rasterArrayBand value of rasterArrayBand as Expression
+   */
+  override fun rasterArrayBand(rasterArrayBand: Expression): RasterLayer = apply {
+    val propertyValue = PropertyValue("raster-array-band", rasterArrayBand)
+    setProperty(propertyValue)
+  }
+
+  /**
    * Increase or reduce the brightness of the image. The value is the maximum brightness.
    */
   val rasterBrightnessMax: Double?
@@ -408,11 +473,11 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   }
 
   /**
-   * Defines a color map by which to colorize a raster layer, parameterized by the `["raster-value"]` expression and evaluated at 1024 uniformly spaced steps over the range specified by `raster-color-range`.
+   * Defines a color map by which to colorize a raster layer, parameterized by the `["raster-value"]` expression and evaluated at 256 uniformly spaced steps over the range specified by `raster-color-range`.
    */
   val rasterColor: Expression?
     /**
-     * Defines a color map by which to colorize a raster layer, parameterized by the `["raster-value"]` expression and evaluated at 1024 uniformly spaced steps over the range specified by `raster-color-range`.
+     * Defines a color map by which to colorize a raster layer, parameterized by the `["raster-value"]` expression and evaluated at 256 uniformly spaced steps over the range specified by `raster-color-range`.
      *
      * Use static method [RasterLayer.defaultRasterColor] to get the default property.
      *
@@ -423,7 +488,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * Defines a color map by which to colorize a raster layer, parameterized by the `["raster-value"]` expression and evaluated at 1024 uniformly spaced steps over the range specified by `raster-color-range`.
+   * Defines a color map by which to colorize a raster layer, parameterized by the `["raster-value"]` expression and evaluated at 256 uniformly spaced steps over the range specified by `raster-color-range`.
    *
    * Use static method [RasterLayer.defaultRasterColor] to set the default property.
    *
@@ -729,6 +794,105 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
    */
   override fun rasterContrastTransition(block: StyleTransition.Builder.() -> Unit): RasterLayer = apply {
     rasterContrastTransition(StyleTransition.Builder().apply(block).build())
+  }
+
+  /**
+   * Controls the intensity of light emitted on the source features.
+   */
+  val rasterEmissiveStrength: Double?
+    /**
+     * Controls the intensity of light emitted on the source features.
+     *
+     * Use static method [RasterLayer.defaultRasterEmissiveStrength] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      return getPropertyValue("raster-emissive-strength")
+    }
+
+  /**
+   * Controls the intensity of light emitted on the source features.
+   *
+   * Use static method [RasterLayer.defaultRasterEmissiveStrength] to set the default property.
+   *
+   * @param rasterEmissiveStrength value of rasterEmissiveStrength
+   */
+  override fun rasterEmissiveStrength(rasterEmissiveStrength: Double): RasterLayer = apply {
+    val propertyValue = PropertyValue("raster-emissive-strength", rasterEmissiveStrength)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Controls the intensity of light emitted on the source features.
+   *
+   * This is an Expression representation of "raster-emissive-strength".
+   *
+   */
+  val rasterEmissiveStrengthAsExpression: Expression?
+    /**
+     * Controls the intensity of light emitted on the source features.
+     *
+     * Get the RasterEmissiveStrength property as an Expression
+     *
+     * Use static method [RasterLayer.defaultRasterEmissiveStrengthAsExpression] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      getPropertyValue<Expression>("raster-emissive-strength")?.let {
+        return it
+      }
+      rasterEmissiveStrength?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * Controls the intensity of light emitted on the source features.
+   *
+   * Use static method [RasterLayer.defaultRasterEmissiveStrengthAsExpression] to set the default property.
+   *
+   * @param rasterEmissiveStrength value of rasterEmissiveStrength as Expression
+   */
+  override fun rasterEmissiveStrength(rasterEmissiveStrength: Expression): RasterLayer = apply {
+    val propertyValue = PropertyValue("raster-emissive-strength", rasterEmissiveStrength)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Transition options for RasterEmissiveStrength.
+   */
+  val rasterEmissiveStrengthTransition: StyleTransition?
+    /**
+     * Get the RasterEmissiveStrength property transition options
+     *
+     * Use static method [RasterLayer.defaultRasterEmissiveStrengthTransition] to get the default property.
+     *
+     * @return transition options for Double
+     */
+    get() {
+      return getPropertyValue("raster-emissive-strength-transition")
+    }
+
+  /**
+   * Set the RasterEmissiveStrength property transition options
+   *
+   * Use static method [RasterLayer.defaultRasterEmissiveStrengthTransition] to set the default property.
+   *
+   * @param options transition options for Double
+   */
+  override fun rasterEmissiveStrengthTransition(options: StyleTransition): RasterLayer = apply {
+    val propertyValue = PropertyValue("raster-emissive-strength-transition", options)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * DSL for [rasterEmissiveStrengthTransition].
+   */
+  override fun rasterEmissiveStrengthTransition(block: StyleTransition.Builder.() -> Unit): RasterLayer = apply {
+    rasterEmissiveStrengthTransition(StyleTransition.Builder().apply(block).build())
   }
 
   /**
@@ -1221,6 +1385,43 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("raster", "maxzoom").silentUnwrap()
 
     /**
+     * Displayed band of raster array source layer
+     */
+    val defaultRasterArrayBand: String?
+      /**
+       * Displayed band of raster array source layer
+       *
+       * Get the default value of RasterArrayBand property
+       *
+       * @return String
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-array-band").silentUnwrap()
+      }
+
+    /**
+     * Displayed band of raster array source layer
+     *
+     * This is an Expression representation of "raster-array-band".
+     *
+     */
+    val defaultRasterArrayBandAsExpression: Expression?
+      /**
+       * Get default value of the RasterArrayBand property as an Expression
+       *
+       * @return String
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-array-band").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultRasterArrayBand?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
+
+    /**
      * Increase or reduce the brightness of the image. The value is the maximum brightness.
      */
     val defaultRasterBrightnessMax: Double?
@@ -1459,6 +1660,54 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
        * @return transition options for Double
        */
       get() = StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-contrast-transition").silentUnwrap()
+
+    /**
+     * Controls the intensity of light emitted on the source features.
+     */
+    val defaultRasterEmissiveStrength: Double?
+      /**
+       * Controls the intensity of light emitted on the source features.
+       *
+       * Get the default value of RasterEmissiveStrength property
+       *
+       * @return Double
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-emissive-strength").silentUnwrap()
+      }
+
+    /**
+     * Controls the intensity of light emitted on the source features.
+     *
+     * This is an Expression representation of "raster-emissive-strength".
+     *
+     */
+    val defaultRasterEmissiveStrengthAsExpression: Expression?
+      /**
+       * Get default value of the RasterEmissiveStrength property as an Expression
+       *
+       * @return Double
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-emissive-strength").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultRasterEmissiveStrength?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
+
+    /**
+     * Transition options for RasterEmissiveStrength.
+     */
+    val defaultRasterEmissiveStrengthTransition: StyleTransition?
+      /**
+       * Get the RasterEmissiveStrength property transition options
+       *
+       * @return transition options for Double
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-emissive-strength-transition").silentUnwrap()
 
     /**
      * Fade duration when a new tile is added.
@@ -1746,6 +1995,20 @@ interface RasterLayerDsl {
   // Property getters and setters
 
   /**
+   * Displayed band of raster array source layer
+   *
+   * @param rasterArrayBand value of rasterArrayBand
+   */
+  fun rasterArrayBand(rasterArrayBand: String): RasterLayer
+
+  /**
+   * Displayed band of raster array source layer
+   *
+   * @param rasterArrayBand value of rasterArrayBand as Expression
+   */
+  fun rasterArrayBand(rasterArrayBand: Expression): RasterLayer
+
+  /**
    * Increase or reduce the brightness of the image. The value is the maximum brightness.
    *
    * @param rasterBrightnessMax value of rasterBrightnessMax
@@ -1806,7 +2069,7 @@ interface RasterLayerDsl {
   fun rasterBrightnessMinTransition(block: StyleTransition.Builder.() -> Unit): RasterLayer
 
   /**
-   * Defines a color map by which to colorize a raster layer, parameterized by the `["raster-value"]` expression and evaluated at 1024 uniformly spaced steps over the range specified by `raster-color-range`.
+   * Defines a color map by which to colorize a raster layer, parameterized by the `["raster-value"]` expression and evaluated at 256 uniformly spaced steps over the range specified by `raster-color-range`.
    *
    * @param rasterColor value of rasterColor
    */
@@ -1901,6 +2164,36 @@ interface RasterLayerDsl {
    * DSL for [rasterContrastTransition].
    */
   fun rasterContrastTransition(block: StyleTransition.Builder.() -> Unit): RasterLayer
+
+  /**
+   * Controls the intensity of light emitted on the source features.
+   *
+   * @param rasterEmissiveStrength value of rasterEmissiveStrength
+   */
+  fun rasterEmissiveStrength(rasterEmissiveStrength: Double = 0.0): RasterLayer
+
+  /**
+   * Controls the intensity of light emitted on the source features.
+   *
+   * @param rasterEmissiveStrength value of rasterEmissiveStrength as Expression
+   */
+  fun rasterEmissiveStrength(rasterEmissiveStrength: Expression): RasterLayer
+
+  /**
+   * Controls the intensity of light emitted on the source features.
+   *
+   * Set the RasterEmissiveStrength property transition options
+   *
+   * @param options transition options for Double
+   */
+  fun rasterEmissiveStrengthTransition(options: StyleTransition): RasterLayer
+
+  /**
+   * Controls the intensity of light emitted on the source features.
+   *
+   * DSL for [rasterEmissiveStrengthTransition].
+   */
+  fun rasterEmissiveStrengthTransition(block: StyleTransition.Builder.() -> Unit): RasterLayer
 
   /**
    * Fade duration when a new tile is added.

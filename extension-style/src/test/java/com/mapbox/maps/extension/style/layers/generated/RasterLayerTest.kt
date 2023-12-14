@@ -125,6 +125,74 @@ class RasterLayerTest {
   // Property getters and setters
 
   @Test
+  fun rasterArrayBandSet() {
+    val layer = rasterLayer("id", "source") {}
+    val testValue = "abc"
+    layer.bindTo(style)
+    layer.rasterArrayBand(testValue)
+    verify { style.setStyleLayerProperty("id", "raster-array-band", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "abc")
+  }
+
+  @Test
+  fun rasterArrayBandGet() {
+    val testValue = "abc"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = rasterLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = "abc"
+    assertEquals(expectedValue.toString(), layer.rasterArrayBand?.toString())
+    verify { style.getStyleLayerProperty("id", "raster-array-band") }
+  }
+  // Expression Tests
+
+  @Test
+  fun rasterArrayBandAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = rasterLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.rasterArrayBand(expression)
+    verify { style.setStyleLayerProperty("id", "raster-array-band", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun rasterArrayBandAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = rasterLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.rasterArrayBandAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "raster-array-band") }
+  }
+
+  @Test
+  fun rasterArrayBandAsExpressionGetNull() {
+    val layer = rasterLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.rasterArrayBandAsExpression)
+    verify { style.getStyleLayerProperty("id", "raster-array-band") }
+  }
+
+  @Test
+  fun rasterArrayBandAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue("abc")
+    val layer = rasterLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals("abc", layer.rasterArrayBandAsExpression.toString())
+    val expectedValue = "abc"
+    assertEquals(expectedValue, layer.rasterArrayBand)
+    verify { style.getStyleLayerProperty("id", "raster-array-band") }
+  }
+
+  @Test
   fun rasterBrightnessMaxSet() {
     val layer = rasterLayer("id", "source") {}
     val testValue = 1.0
@@ -746,6 +814,113 @@ class RasterLayerTest {
   }
 
   @Test
+  fun rasterEmissiveStrengthSet() {
+    val layer = rasterLayer("id", "source") {}
+    val testValue = 1.0
+    layer.bindTo(style)
+    layer.rasterEmissiveStrength(testValue)
+    verify { style.setStyleLayerProperty("id", "raster-emissive-strength", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "1.0")
+  }
+
+  @Test
+  fun rasterEmissiveStrengthGet() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = rasterLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), layer.rasterEmissiveStrength?.toString())
+    verify { style.getStyleLayerProperty("id", "raster-emissive-strength") }
+  }
+  // Expression Tests
+
+  @Test
+  fun rasterEmissiveStrengthAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = rasterLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.rasterEmissiveStrength(expression)
+    verify { style.setStyleLayerProperty("id", "raster-emissive-strength", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun rasterEmissiveStrengthAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = rasterLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.rasterEmissiveStrengthAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "raster-emissive-strength") }
+  }
+
+  @Test
+  fun rasterEmissiveStrengthAsExpressionGetNull() {
+    val layer = rasterLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.rasterEmissiveStrengthAsExpression)
+    verify { style.getStyleLayerProperty("id", "raster-emissive-strength") }
+  }
+
+  @Test
+  fun rasterEmissiveStrengthAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    val layer = rasterLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(1.0, layer.rasterEmissiveStrengthAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.rasterEmissiveStrength!!, 1E-5)
+    verify { style.getStyleLayerProperty("id", "raster-emissive-strength") }
+  }
+
+  @Test
+  fun rasterEmissiveStrengthTransitionSet() {
+    val layer = rasterLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.rasterEmissiveStrengthTransition(
+      transitionOptions {
+        duration(100)
+        delay(200)
+      }
+    )
+    verify { style.setStyleLayerProperty("id", "raster-emissive-strength-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
+  fun rasterEmissiveStrengthTransitionGet() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+    val layer = rasterLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(transition.toValue().toString(), layer.rasterEmissiveStrengthTransition?.toValue().toString())
+    verify { style.getStyleLayerProperty("id", "raster-emissive-strength-transition") }
+  }
+
+  @Test
+  fun rasterEmissiveStrengthTransitionSetDsl() {
+    val layer = rasterLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.rasterEmissiveStrengthTransition {
+      duration(100)
+      delay(200)
+    }
+    verify { style.setStyleLayerProperty("id", "raster-emissive-strength-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
   fun rasterFadeDurationSet() {
     val layer = rasterLayer("id", "source") {}
     val testValue = 1.0
@@ -1270,6 +1445,38 @@ class RasterLayerTest {
   // Default property getter tests
 
   @Test
+  fun defaultRasterArrayBandTest() {
+    val testValue = "abc"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = "abc"
+    assertEquals(expectedValue.toString(), RasterLayer.defaultRasterArrayBand?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-array-band") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultRasterArrayBandAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), RasterLayer.defaultRasterArrayBandAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-array-band") }
+  }
+
+  @Test
+  fun defaultRasterArrayBandAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue("abc")
+    assertEquals("abc", RasterLayer.defaultRasterArrayBandAsExpression.toString())
+    val expectedValue = "abc"
+    assertEquals(expectedValue, RasterLayer.defaultRasterArrayBand)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-array-band") }
+  }
+
+  @Test
   fun defaultRasterBrightnessMaxTest() {
     val testValue = 1.0
     every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
@@ -1488,6 +1695,50 @@ class RasterLayerTest {
 
     assertEquals(transition.toValue().toString(), RasterLayer.defaultRasterContrastTransition?.toValue().toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-contrast-transition") }
+  }
+
+  @Test
+  fun defaultRasterEmissiveStrengthTest() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), RasterLayer.defaultRasterEmissiveStrength?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-emissive-strength") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultRasterEmissiveStrengthAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), RasterLayer.defaultRasterEmissiveStrengthAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-emissive-strength") }
+  }
+
+  @Test
+  fun defaultRasterEmissiveStrengthAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    assertEquals(1.0, RasterLayer.defaultRasterEmissiveStrengthAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, RasterLayer.defaultRasterEmissiveStrength!!, 1E-5)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-emissive-strength") }
+  }
+
+  @Test
+  fun defaultRasterEmissiveStrengthTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+
+    assertEquals(transition.toValue().toString(), RasterLayer.defaultRasterEmissiveStrengthTransition?.toValue().toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-emissive-strength-transition") }
   }
 
   @Test

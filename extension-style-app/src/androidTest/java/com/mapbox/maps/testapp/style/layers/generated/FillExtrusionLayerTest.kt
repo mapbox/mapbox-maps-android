@@ -521,6 +521,61 @@ class FillExtrusionLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun fillExtrusionEmissiveStrengthTest() {
+    val testValue = 1.0
+    val layer = fillExtrusionLayer("id", "source") {
+      fillExtrusionEmissiveStrength(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(testValue, layer.fillExtrusionEmissiveStrength!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun fillExtrusionEmissiveStrengthAsExpressionTest() {
+    val expression = literal(1.0)
+    val layer = fillExtrusionLayer("id", "source") {
+      fillExtrusionEmissiveStrength(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(1.0, layer.fillExtrusionEmissiveStrengthAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.fillExtrusionEmissiveStrength!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun fillExtrusionEmissiveStrengthTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = fillExtrusionLayer("id", "source") {
+      fillExtrusionEmissiveStrengthTransition(transition)
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.fillExtrusionEmissiveStrengthTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun fillExtrusionEmissiveStrengthTransitionSetDslTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = fillExtrusionLayer("id", "source") {
+      fillExtrusionEmissiveStrengthTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.fillExtrusionEmissiveStrengthTransition)
+  }
+
+  @Test
+  @UiThreadTest
   fun fillExtrusionFloodLightColorTest() {
     val testValue = "rgba(0, 0, 0, 1)"
     val layer = fillExtrusionLayer("id", "source") {
@@ -1202,6 +1257,9 @@ class FillExtrusionLayerTest : BaseStyleTest() {
     assertNotNull("defaultFillExtrusionColorTransition should not be null", FillExtrusionLayer.defaultFillExtrusionColorTransition)
     assertNotNull("defaultFillExtrusionCutoffFadeRange should not be null", FillExtrusionLayer.defaultFillExtrusionCutoffFadeRange)
     assertNotNull("defaultFillExtrusionCutoffFadeRangeAsExpression should not be null", FillExtrusionLayer.defaultFillExtrusionCutoffFadeRangeAsExpression)
+    assertNotNull("defaultFillExtrusionEmissiveStrength should not be null", FillExtrusionLayer.defaultFillExtrusionEmissiveStrength)
+    assertNotNull("defaultFillExtrusionEmissiveStrengthAsExpression should not be null", FillExtrusionLayer.defaultFillExtrusionEmissiveStrengthAsExpression)
+    assertNotNull("defaultFillExtrusionEmissiveStrengthTransition should not be null", FillExtrusionLayer.defaultFillExtrusionEmissiveStrengthTransition)
     assertNotNull("defaultFillExtrusionFloodLightColor should not be null", FillExtrusionLayer.defaultFillExtrusionFloodLightColor)
     assertNotNull("defaultFillExtrusionFloodLightColorAsExpression should not be null", FillExtrusionLayer.defaultFillExtrusionFloodLightColorAsExpression)
     assertNotNull("defaultFillExtrusionFloodLightColorAsColorInt should not be null", FillExtrusionLayer.defaultFillExtrusionFloodLightColorAsColorInt)
@@ -1258,6 +1316,7 @@ class FillExtrusionLayerTest : BaseStyleTest() {
     val fillExtrusionBaseTestValue = 1.0
     val fillExtrusionColorTestValue = "rgba(0, 0, 0, 1)"
     val fillExtrusionCutoffFadeRangeTestValue = 1.0
+    val fillExtrusionEmissiveStrengthTestValue = 1.0
     val fillExtrusionFloodLightColorTestValue = "rgba(0, 0, 0, 1)"
     val fillExtrusionFloodLightGroundAttenuationTestValue = 1.0
     val fillExtrusionFloodLightGroundRadiusTestValue = 1.0
@@ -1288,6 +1347,7 @@ class FillExtrusionLayerTest : BaseStyleTest() {
       fillExtrusionBase(fillExtrusionBaseTestValue)
       fillExtrusionColor(fillExtrusionColorTestValue)
       fillExtrusionCutoffFadeRange(fillExtrusionCutoffFadeRangeTestValue)
+      fillExtrusionEmissiveStrength(fillExtrusionEmissiveStrengthTestValue)
       fillExtrusionFloodLightColor(fillExtrusionFloodLightColorTestValue)
       fillExtrusionFloodLightGroundAttenuation(fillExtrusionFloodLightGroundAttenuationTestValue)
       fillExtrusionFloodLightGroundRadius(fillExtrusionFloodLightGroundRadiusTestValue)
@@ -1323,6 +1383,7 @@ class FillExtrusionLayerTest : BaseStyleTest() {
     assertEquals(fillExtrusionBaseTestValue, cachedLayer.fillExtrusionBase)
     assertEquals(fillExtrusionColorTestValue, cachedLayer.fillExtrusionColor)
     assertEquals(fillExtrusionCutoffFadeRangeTestValue, cachedLayer.fillExtrusionCutoffFadeRange)
+    assertEquals(fillExtrusionEmissiveStrengthTestValue, cachedLayer.fillExtrusionEmissiveStrength)
     assertEquals(fillExtrusionFloodLightColorTestValue, cachedLayer.fillExtrusionFloodLightColor)
     assertEquals(fillExtrusionFloodLightGroundAttenuationTestValue, cachedLayer.fillExtrusionFloodLightGroundAttenuation)
     assertEquals(fillExtrusionFloodLightGroundRadiusTestValue, cachedLayer.fillExtrusionFloodLightGroundRadius)

@@ -6,6 +6,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Features ✨ and improvements 🏁
 * Define minCompileSdkVersion=31 for Maps SDK libraries.
+* Introduce `FillExtrusionLayer.fillExtrusionEmissiveStrength`, `HillshadeLayer.hillshadeEmissiveStrength` and `RasterLayer.rasterEmissiveStrength` properties.
+* Introduce `RasterLayer.rasterArrayBand` property.
 
 ## Bug fixes 🐞
 * Fix a `MapSurface` rendering issue when widgets are used.

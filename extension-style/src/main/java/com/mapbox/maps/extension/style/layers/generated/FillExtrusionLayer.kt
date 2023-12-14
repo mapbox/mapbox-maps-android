@@ -317,12 +317,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
    */
   @MapboxExperimental
   val fillExtrusionAmbientOcclusionGroundAttenuation: Double?
     /**
-     * Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. This property works only with 3D light, i.e. when `lights` root property is defined.
+     * Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionGroundAttenuation] to get the default property.
      *
@@ -333,7 +333,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionGroundAttenuation] to set the default property.
    *
@@ -346,7 +346,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
    *
    * This is an Expression representation of "fill-extrusion-ambient-occlusion-ground-attenuation".
    *
@@ -354,7 +354,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   @MapboxExperimental
   val fillExtrusionAmbientOcclusionGroundAttenuationAsExpression: Expression?
     /**
-     * Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. This property works only with 3D light, i.e. when `lights` root property is defined.
+     * Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
      *
      * Get the FillExtrusionAmbientOcclusionGroundAttenuation property as an Expression
      *
@@ -373,7 +373,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionGroundAttenuationAsExpression] to set the default property.
    *
@@ -423,12 +423,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters.
    */
   @MapboxExperimental
   val fillExtrusionAmbientOcclusionGroundRadius: Double?
     /**
-     * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters. This property works only with 3D light, i.e. when `lights` root property is defined.
+     * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters.
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionGroundRadius] to get the default property.
      *
@@ -439,7 +439,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionGroundRadius] to set the default property.
    *
@@ -452,7 +452,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters.
    *
    * This is an Expression representation of "fill-extrusion-ambient-occlusion-ground-radius".
    *
@@ -460,7 +460,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   @MapboxExperimental
   val fillExtrusionAmbientOcclusionGroundRadiusAsExpression: Expression?
     /**
-     * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters. This property works only with 3D light, i.e. when `lights` root property is defined.
+     * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters.
      *
      * Get the FillExtrusionAmbientOcclusionGroundRadius property as an Expression
      *
@@ -479,7 +479,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionGroundRadiusAsExpression] to set the default property.
    *
@@ -628,11 +628,11 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D light is enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead.
+   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D lights are enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead.
    */
   val fillExtrusionAmbientOcclusionRadius: Double?
     /**
-     * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D light is enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead.
+     * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D lights are enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead.
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionRadius] to get the default property.
      *
@@ -643,7 +643,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D light is enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead.
+   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D lights are enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionRadius] to set the default property.
    *
@@ -655,14 +655,14 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D light is enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead.
+   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D lights are enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead.
    *
    * This is an Expression representation of "fill-extrusion-ambient-occlusion-radius".
    *
    */
   val fillExtrusionAmbientOcclusionRadiusAsExpression: Expression?
     /**
-     * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D light is enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead.
+     * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D lights are enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead.
      *
      * Get the FillExtrusionAmbientOcclusionRadius property as an Expression
      *
@@ -681,7 +681,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D light is enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead.
+   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D lights are enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionRadiusAsExpression] to set the default property.
    *
@@ -727,12 +727,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings.
    */
   @MapboxExperimental
   val fillExtrusionAmbientOcclusionWallRadius: Double?
     /**
-     * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with 3D light, i.e. when `lights` root property is defined.
+     * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings.
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionWallRadius] to get the default property.
      *
@@ -743,7 +743,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionWallRadius] to set the default property.
    *
@@ -756,7 +756,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings.
    *
    * This is an Expression representation of "fill-extrusion-ambient-occlusion-wall-radius".
    *
@@ -764,7 +764,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   @MapboxExperimental
   val fillExtrusionAmbientOcclusionWallRadiusAsExpression: Expression?
     /**
-     * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with 3D light, i.e. when `lights` root property is defined.
+     * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings.
      *
      * Get the FillExtrusionAmbientOcclusionWallRadius property as an Expression
      *
@@ -783,7 +783,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionWallRadiusAsExpression] to set the default property.
    *
@@ -1127,12 +1127,111 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * The color of the flood light effect on the walls of the extruded buildings. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * Controls the intensity of light emitted on the source features.
+   */
+  val fillExtrusionEmissiveStrength: Double?
+    /**
+     * Controls the intensity of light emitted on the source features.
+     *
+     * Use static method [FillExtrusionLayer.defaultFillExtrusionEmissiveStrength] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      return getPropertyValue("fill-extrusion-emissive-strength")
+    }
+
+  /**
+   * Controls the intensity of light emitted on the source features.
+   *
+   * Use static method [FillExtrusionLayer.defaultFillExtrusionEmissiveStrength] to set the default property.
+   *
+   * @param fillExtrusionEmissiveStrength value of fillExtrusionEmissiveStrength
+   */
+  override fun fillExtrusionEmissiveStrength(fillExtrusionEmissiveStrength: Double): FillExtrusionLayer = apply {
+    val propertyValue = PropertyValue("fill-extrusion-emissive-strength", fillExtrusionEmissiveStrength)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Controls the intensity of light emitted on the source features.
+   *
+   * This is an Expression representation of "fill-extrusion-emissive-strength".
+   *
+   */
+  val fillExtrusionEmissiveStrengthAsExpression: Expression?
+    /**
+     * Controls the intensity of light emitted on the source features.
+     *
+     * Get the FillExtrusionEmissiveStrength property as an Expression
+     *
+     * Use static method [FillExtrusionLayer.defaultFillExtrusionEmissiveStrengthAsExpression] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      getPropertyValue<Expression>("fill-extrusion-emissive-strength")?.let {
+        return it
+      }
+      fillExtrusionEmissiveStrength?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * Controls the intensity of light emitted on the source features.
+   *
+   * Use static method [FillExtrusionLayer.defaultFillExtrusionEmissiveStrengthAsExpression] to set the default property.
+   *
+   * @param fillExtrusionEmissiveStrength value of fillExtrusionEmissiveStrength as Expression
+   */
+  override fun fillExtrusionEmissiveStrength(fillExtrusionEmissiveStrength: Expression): FillExtrusionLayer = apply {
+    val propertyValue = PropertyValue("fill-extrusion-emissive-strength", fillExtrusionEmissiveStrength)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Transition options for FillExtrusionEmissiveStrength.
+   */
+  val fillExtrusionEmissiveStrengthTransition: StyleTransition?
+    /**
+     * Get the FillExtrusionEmissiveStrength property transition options
+     *
+     * Use static method [FillExtrusionLayer.defaultFillExtrusionEmissiveStrengthTransition] to get the default property.
+     *
+     * @return transition options for Double
+     */
+    get() {
+      return getPropertyValue("fill-extrusion-emissive-strength-transition")
+    }
+
+  /**
+   * Set the FillExtrusionEmissiveStrength property transition options
+   *
+   * Use static method [FillExtrusionLayer.defaultFillExtrusionEmissiveStrengthTransition] to set the default property.
+   *
+   * @param options transition options for Double
+   */
+  override fun fillExtrusionEmissiveStrengthTransition(options: StyleTransition): FillExtrusionLayer = apply {
+    val propertyValue = PropertyValue("fill-extrusion-emissive-strength-transition", options)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * DSL for [fillExtrusionEmissiveStrengthTransition].
+   */
+  override fun fillExtrusionEmissiveStrengthTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer = apply {
+    fillExtrusionEmissiveStrengthTransition(StyleTransition.Builder().apply(block).build())
+  }
+
+  /**
+   * The color of the flood light effect on the walls of the extruded buildings.
    */
   @MapboxExperimental
   val fillExtrusionFloodLightColor: String?
     /**
-     * The color of the flood light effect on the walls of the extruded buildings. This property works only with 3D light, i.e. when `lights` root property is defined.
+     * The color of the flood light effect on the walls of the extruded buildings.
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightColor] to get the default property.
      *
@@ -1146,7 +1245,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * The color of the flood light effect on the walls of the extruded buildings. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * The color of the flood light effect on the walls of the extruded buildings.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightColor] to set the default property.
    *
@@ -1159,7 +1258,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * The color of the flood light effect on the walls of the extruded buildings. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * The color of the flood light effect on the walls of the extruded buildings.
    *
    * This is an Expression representation of "fill-extrusion-flood-light-color".
    *
@@ -1167,7 +1266,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   @MapboxExperimental
   val fillExtrusionFloodLightColorAsExpression: Expression?
     /**
-     * The color of the flood light effect on the walls of the extruded buildings. This property works only with 3D light, i.e. when `lights` root property is defined.
+     * The color of the flood light effect on the walls of the extruded buildings.
      *
      * Get the FillExtrusionFloodLightColor property as an Expression
      *
@@ -1183,7 +1282,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * The color of the flood light effect on the walls of the extruded buildings. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * The color of the flood light effect on the walls of the extruded buildings.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightColorAsExpression] to set the default property.
    *
@@ -1196,12 +1295,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * The color of the flood light effect on the walls of the extruded buildings. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * The color of the flood light effect on the walls of the extruded buildings.
    */
   @MapboxExperimental
   val fillExtrusionFloodLightColorAsColorInt: Int?
     /**
-     * The color of the flood light effect on the walls of the extruded buildings. This property works only with 3D light, i.e. when `lights` root property is defined.
+     * The color of the flood light effect on the walls of the extruded buildings.
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightColorAsColorInt] to get the default property.
      *
@@ -1216,7 +1315,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * The color of the flood light effect on the walls of the extruded buildings. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * The color of the flood light effect on the walls of the extruded buildings.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightColorAsColorInt] to set the default property.
    *
@@ -1266,12 +1365,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
    */
   @MapboxExperimental
   val fillExtrusionFloodLightGroundAttenuation: Double?
     /**
-     * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. This property works only with 3D light, i.e. when `lights` root property is defined.
+     * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightGroundAttenuation] to get the default property.
      *
@@ -1282,7 +1381,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightGroundAttenuation] to set the default property.
    *
@@ -1295,7 +1394,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
    *
    * This is an Expression representation of "fill-extrusion-flood-light-ground-attenuation".
    *
@@ -1303,7 +1402,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   @MapboxExperimental
   val fillExtrusionFloodLightGroundAttenuationAsExpression: Expression?
     /**
-     * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. This property works only with 3D light, i.e. when `lights` root property is defined.
+     * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
      *
      * Get the FillExtrusionFloodLightGroundAttenuation property as an Expression
      *
@@ -1322,7 +1421,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightGroundAttenuationAsExpression] to set the default property.
    *
@@ -1372,12 +1471,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * The extent of the flood light effect on the ground beneath the extruded buildings in meters.
    */
   @MapboxExperimental
   val fillExtrusionFloodLightGroundRadius: Double?
     /**
-     * The extent of the flood light effect on the ground beneath the extruded buildings in meters. This property works only with 3D light, i.e. when `lights` root property is defined.
+     * The extent of the flood light effect on the ground beneath the extruded buildings in meters.
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightGroundRadius] to get the default property.
      *
@@ -1388,7 +1487,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * The extent of the flood light effect on the ground beneath the extruded buildings in meters.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightGroundRadius] to set the default property.
    *
@@ -1401,7 +1500,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * The extent of the flood light effect on the ground beneath the extruded buildings in meters.
    *
    * This is an Expression representation of "fill-extrusion-flood-light-ground-radius".
    *
@@ -1409,7 +1508,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   @MapboxExperimental
   val fillExtrusionFloodLightGroundRadiusAsExpression: Expression?
     /**
-     * The extent of the flood light effect on the ground beneath the extruded buildings in meters. This property works only with 3D light, i.e. when `lights` root property is defined.
+     * The extent of the flood light effect on the ground beneath the extruded buildings in meters.
      *
      * Get the FillExtrusionFloodLightGroundRadius property as an Expression
      *
@@ -1428,7 +1527,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * The extent of the flood light effect on the ground beneath the extruded buildings in meters.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightGroundRadiusAsExpression] to set the default property.
    *
@@ -1478,12 +1577,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * The intensity of the flood light color. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * The intensity of the flood light color.
    */
   @MapboxExperimental
   val fillExtrusionFloodLightIntensity: Double?
     /**
-     * The intensity of the flood light color. This property works only with 3D light, i.e. when `lights` root property is defined.
+     * The intensity of the flood light color.
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightIntensity] to get the default property.
      *
@@ -1494,7 +1593,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * The intensity of the flood light color. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * The intensity of the flood light color.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightIntensity] to set the default property.
    *
@@ -1507,7 +1606,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * The intensity of the flood light color. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * The intensity of the flood light color.
    *
    * This is an Expression representation of "fill-extrusion-flood-light-intensity".
    *
@@ -1515,7 +1614,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   @MapboxExperimental
   val fillExtrusionFloodLightIntensityAsExpression: Expression?
     /**
-     * The intensity of the flood light color. This property works only with 3D light, i.e. when `lights` root property is defined.
+     * The intensity of the flood light color.
      *
      * Get the FillExtrusionFloodLightIntensity property as an Expression
      *
@@ -1534,7 +1633,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * The intensity of the flood light color. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * The intensity of the flood light color.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightIntensityAsExpression] to set the default property.
    *
@@ -1584,12 +1683,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * The extent of the flood light effect on the walls of the extruded buildings in meters. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * The extent of the flood light effect on the walls of the extruded buildings in meters.
    */
   @MapboxExperimental
   val fillExtrusionFloodLightWallRadius: Double?
     /**
-     * The extent of the flood light effect on the walls of the extruded buildings in meters. This property works only with 3D light, i.e. when `lights` root property is defined.
+     * The extent of the flood light effect on the walls of the extruded buildings in meters.
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightWallRadius] to get the default property.
      *
@@ -1600,7 +1699,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * The extent of the flood light effect on the walls of the extruded buildings in meters. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * The extent of the flood light effect on the walls of the extruded buildings in meters.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightWallRadius] to set the default property.
    *
@@ -1613,7 +1712,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * The extent of the flood light effect on the walls of the extruded buildings in meters. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * The extent of the flood light effect on the walls of the extruded buildings in meters.
    *
    * This is an Expression representation of "fill-extrusion-flood-light-wall-radius".
    *
@@ -1621,7 +1720,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   @MapboxExperimental
   val fillExtrusionFloodLightWallRadiusAsExpression: Expression?
     /**
-     * The extent of the flood light effect on the walls of the extruded buildings in meters. This property works only with 3D light, i.e. when `lights` root property is defined.
+     * The extent of the flood light effect on the walls of the extruded buildings in meters.
      *
      * Get the FillExtrusionFloodLightWallRadius property as an Expression
      *
@@ -1640,7 +1739,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * The extent of the flood light effect on the walls of the extruded buildings in meters. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * The extent of the flood light effect on the walls of the extruded buildings in meters.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightWallRadiusAsExpression] to set the default property.
    *
@@ -2458,12 +2557,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. This property works only with 3D light, i.e. when `lights` root property is defined.
+     * Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
      */
     @MapboxExperimental
     val defaultFillExtrusionAmbientOcclusionGroundAttenuation: Double?
       /**
-       * Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. This property works only with 3D light, i.e. when `lights` root property is defined.
+       * Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
        *
        * Get the default value of FillExtrusionAmbientOcclusionGroundAttenuation property
        *
@@ -2474,7 +2573,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. This property works only with 3D light, i.e. when `lights` root property is defined.
+     * Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
      *
      * This is an Expression representation of "fill-extrusion-ambient-occlusion-ground-attenuation".
      *
@@ -2509,12 +2608,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       get() = StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-ambient-occlusion-ground-attenuation-transition").silentUnwrap()
 
     /**
-     * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters. This property works only with 3D light, i.e. when `lights` root property is defined.
+     * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters.
      */
     @MapboxExperimental
     val defaultFillExtrusionAmbientOcclusionGroundRadius: Double?
       /**
-       * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters. This property works only with 3D light, i.e. when `lights` root property is defined.
+       * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters.
        *
        * Get the default value of FillExtrusionAmbientOcclusionGroundRadius property
        *
@@ -2525,7 +2624,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters. This property works only with 3D light, i.e. when `lights` root property is defined.
+     * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters.
      *
      * This is an Expression representation of "fill-extrusion-ambient-occlusion-ground-radius".
      *
@@ -2608,11 +2707,11 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       get() = StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-ambient-occlusion-intensity-transition").silentUnwrap()
 
     /**
-     * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D light is enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead.
+     * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D lights are enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead.
      */
     val defaultFillExtrusionAmbientOcclusionRadius: Double?
       /**
-       * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D light is enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead.
+       * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D lights are enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead.
        *
        * Get the default value of FillExtrusionAmbientOcclusionRadius property
        *
@@ -2623,7 +2722,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D light is enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead.
+     * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D lights are enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead.
      *
      * This is an Expression representation of "fill-extrusion-ambient-occlusion-radius".
      *
@@ -2656,12 +2755,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       get() = StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-ambient-occlusion-radius-transition").silentUnwrap()
 
     /**
-     * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with 3D light, i.e. when `lights` root property is defined.
+     * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings.
      */
     @MapboxExperimental
     val defaultFillExtrusionAmbientOcclusionWallRadius: Double?
       /**
-       * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with 3D light, i.e. when `lights` root property is defined.
+       * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings.
        *
        * Get the default value of FillExtrusionAmbientOcclusionWallRadius property
        *
@@ -2672,7 +2771,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with 3D light, i.e. when `lights` root property is defined.
+     * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings.
      *
      * This is an Expression representation of "fill-extrusion-ambient-occlusion-wall-radius".
      *
@@ -2859,12 +2958,60 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * The color of the flood light effect on the walls of the extruded buildings. This property works only with 3D light, i.e. when `lights` root property is defined.
+     * Controls the intensity of light emitted on the source features.
+     */
+    val defaultFillExtrusionEmissiveStrength: Double?
+      /**
+       * Controls the intensity of light emitted on the source features.
+       *
+       * Get the default value of FillExtrusionEmissiveStrength property
+       *
+       * @return Double
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-emissive-strength").silentUnwrap()
+      }
+
+    /**
+     * Controls the intensity of light emitted on the source features.
+     *
+     * This is an Expression representation of "fill-extrusion-emissive-strength".
+     *
+     */
+    val defaultFillExtrusionEmissiveStrengthAsExpression: Expression?
+      /**
+       * Get default value of the FillExtrusionEmissiveStrength property as an Expression
+       *
+       * @return Double
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-emissive-strength").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultFillExtrusionEmissiveStrength?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
+
+    /**
+     * Transition options for FillExtrusionEmissiveStrength.
+     */
+    val defaultFillExtrusionEmissiveStrengthTransition: StyleTransition?
+      /**
+       * Get the FillExtrusionEmissiveStrength property transition options
+       *
+       * @return transition options for Double
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-emissive-strength-transition").silentUnwrap()
+
+    /**
+     * The color of the flood light effect on the walls of the extruded buildings.
      */
     @MapboxExperimental
     val defaultFillExtrusionFloodLightColor: String?
       /**
-       * The color of the flood light effect on the walls of the extruded buildings. This property works only with 3D light, i.e. when `lights` root property is defined.
+       * The color of the flood light effect on the walls of the extruded buildings.
        *
        * Get the default value of FillExtrusionFloodLightColor property
        *
@@ -2878,7 +3025,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * The color of the flood light effect on the walls of the extruded buildings. This property works only with 3D light, i.e. when `lights` root property is defined.
+     * The color of the flood light effect on the walls of the extruded buildings.
      *
      * This is an Expression representation of "fill-extrusion-flood-light-color".
      *
@@ -2898,12 +3045,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * The color of the flood light effect on the walls of the extruded buildings. This property works only with 3D light, i.e. when `lights` root property is defined.
+     * The color of the flood light effect on the walls of the extruded buildings.
      */
     @MapboxExperimental
     val defaultFillExtrusionFloodLightColorAsColorInt: Int?
       /**
-       * The color of the flood light effect on the walls of the extruded buildings. This property works only with 3D light, i.e. when `lights` root property is defined.
+       * The color of the flood light effect on the walls of the extruded buildings.
        *
        * Get the default value of FillExtrusionFloodLightColor property as color int.
        *
@@ -2930,12 +3077,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       get() = StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-flood-light-color-transition").silentUnwrap()
 
     /**
-     * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. This property works only with 3D light, i.e. when `lights` root property is defined.
+     * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
      */
     @MapboxExperimental
     val defaultFillExtrusionFloodLightGroundAttenuation: Double?
       /**
-       * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. This property works only with 3D light, i.e. when `lights` root property is defined.
+       * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
        *
        * Get the default value of FillExtrusionFloodLightGroundAttenuation property
        *
@@ -2946,7 +3093,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. This property works only with 3D light, i.e. when `lights` root property is defined.
+     * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
      *
      * This is an Expression representation of "fill-extrusion-flood-light-ground-attenuation".
      *
@@ -2981,12 +3128,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       get() = StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-flood-light-ground-attenuation-transition").silentUnwrap()
 
     /**
-     * The extent of the flood light effect on the ground beneath the extruded buildings in meters. This property works only with 3D light, i.e. when `lights` root property is defined.
+     * The extent of the flood light effect on the ground beneath the extruded buildings in meters.
      */
     @MapboxExperimental
     val defaultFillExtrusionFloodLightGroundRadius: Double?
       /**
-       * The extent of the flood light effect on the ground beneath the extruded buildings in meters. This property works only with 3D light, i.e. when `lights` root property is defined.
+       * The extent of the flood light effect on the ground beneath the extruded buildings in meters.
        *
        * Get the default value of FillExtrusionFloodLightGroundRadius property
        *
@@ -2997,7 +3144,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * The extent of the flood light effect on the ground beneath the extruded buildings in meters. This property works only with 3D light, i.e. when `lights` root property is defined.
+     * The extent of the flood light effect on the ground beneath the extruded buildings in meters.
      *
      * This is an Expression representation of "fill-extrusion-flood-light-ground-radius".
      *
@@ -3032,12 +3179,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       get() = StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-flood-light-ground-radius-transition").silentUnwrap()
 
     /**
-     * The intensity of the flood light color. This property works only with 3D light, i.e. when `lights` root property is defined.
+     * The intensity of the flood light color.
      */
     @MapboxExperimental
     val defaultFillExtrusionFloodLightIntensity: Double?
       /**
-       * The intensity of the flood light color. This property works only with 3D light, i.e. when `lights` root property is defined.
+       * The intensity of the flood light color.
        *
        * Get the default value of FillExtrusionFloodLightIntensity property
        *
@@ -3048,7 +3195,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * The intensity of the flood light color. This property works only with 3D light, i.e. when `lights` root property is defined.
+     * The intensity of the flood light color.
      *
      * This is an Expression representation of "fill-extrusion-flood-light-intensity".
      *
@@ -3083,12 +3230,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       get() = StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-flood-light-intensity-transition").silentUnwrap()
 
     /**
-     * The extent of the flood light effect on the walls of the extruded buildings in meters. This property works only with 3D light, i.e. when `lights` root property is defined.
+     * The extent of the flood light effect on the walls of the extruded buildings in meters.
      */
     @MapboxExperimental
     val defaultFillExtrusionFloodLightWallRadius: Double?
       /**
-       * The extent of the flood light effect on the walls of the extruded buildings in meters. This property works only with 3D light, i.e. when `lights` root property is defined.
+       * The extent of the flood light effect on the walls of the extruded buildings in meters.
        *
        * Get the default value of FillExtrusionFloodLightWallRadius property
        *
@@ -3099,7 +3246,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * The extent of the flood light effect on the walls of the extruded buildings in meters. This property works only with 3D light, i.e. when `lights` root property is defined.
+     * The extent of the flood light effect on the walls of the extruded buildings in meters.
      *
      * This is an Expression representation of "fill-extrusion-flood-light-wall-radius".
      *
@@ -3576,7 +3723,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionEdgeRadius(fillExtrusionEdgeRadius: Expression): FillExtrusionLayer
 
   /**
-   * Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
    *
    * @param fillExtrusionAmbientOcclusionGroundAttenuation value of fillExtrusionAmbientOcclusionGroundAttenuation
    */
@@ -3584,7 +3731,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionAmbientOcclusionGroundAttenuation(fillExtrusionAmbientOcclusionGroundAttenuation: Double = 0.69): FillExtrusionLayer
 
   /**
-   * Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
    *
    * @param fillExtrusionAmbientOcclusionGroundAttenuation value of fillExtrusionAmbientOcclusionGroundAttenuation as Expression
    */
@@ -3592,7 +3739,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionAmbientOcclusionGroundAttenuation(fillExtrusionAmbientOcclusionGroundAttenuation: Expression): FillExtrusionLayer
 
   /**
-   * Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
    *
    * Set the FillExtrusionAmbientOcclusionGroundAttenuation property transition options
    *
@@ -3602,7 +3749,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionAmbientOcclusionGroundAttenuationTransition(options: StyleTransition): FillExtrusionLayer
 
   /**
-   * Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
    *
    * DSL for [fillExtrusionAmbientOcclusionGroundAttenuationTransition].
    */
@@ -3610,7 +3757,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionAmbientOcclusionGroundAttenuationTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer
 
   /**
-   * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters.
    *
    * @param fillExtrusionAmbientOcclusionGroundRadius value of fillExtrusionAmbientOcclusionGroundRadius
    */
@@ -3618,7 +3765,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionAmbientOcclusionGroundRadius(fillExtrusionAmbientOcclusionGroundRadius: Double = 3.0): FillExtrusionLayer
 
   /**
-   * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters.
    *
    * @param fillExtrusionAmbientOcclusionGroundRadius value of fillExtrusionAmbientOcclusionGroundRadius as Expression
    */
@@ -3626,7 +3773,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionAmbientOcclusionGroundRadius(fillExtrusionAmbientOcclusionGroundRadius: Expression): FillExtrusionLayer
 
   /**
-   * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters.
    *
    * Set the FillExtrusionAmbientOcclusionGroundRadius property transition options
    *
@@ -3636,7 +3783,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionAmbientOcclusionGroundRadiusTransition(options: StyleTransition): FillExtrusionLayer
 
   /**
-   * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters.
    *
    * DSL for [fillExtrusionAmbientOcclusionGroundRadiusTransition].
    */
@@ -3674,21 +3821,21 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionAmbientOcclusionIntensityTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer
 
   /**
-   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D light is enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead.
+   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D lights are enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead.
    *
    * @param fillExtrusionAmbientOcclusionRadius value of fillExtrusionAmbientOcclusionRadius
    */
   fun fillExtrusionAmbientOcclusionRadius(fillExtrusionAmbientOcclusionRadius: Double = 3.0): FillExtrusionLayer
 
   /**
-   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D light is enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead.
+   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D lights are enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead.
    *
    * @param fillExtrusionAmbientOcclusionRadius value of fillExtrusionAmbientOcclusionRadius as Expression
    */
   fun fillExtrusionAmbientOcclusionRadius(fillExtrusionAmbientOcclusionRadius: Expression): FillExtrusionLayer
 
   /**
-   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D light is enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead.
+   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D lights are enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead.
    *
    * Set the FillExtrusionAmbientOcclusionRadius property transition options
    *
@@ -3697,14 +3844,14 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionAmbientOcclusionRadiusTransition(options: StyleTransition): FillExtrusionLayer
 
   /**
-   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D light is enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead.
+   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with legacy light. When 3D lights are enabled `fill-extrusion-ambient-occlusion-wall-radius` and `fill-extrusion-ambient-occlusion-ground-radius` are used instead.
    *
    * DSL for [fillExtrusionAmbientOcclusionRadiusTransition].
    */
   fun fillExtrusionAmbientOcclusionRadiusTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer
 
   /**
-   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings.
    *
    * @param fillExtrusionAmbientOcclusionWallRadius value of fillExtrusionAmbientOcclusionWallRadius
    */
@@ -3712,7 +3859,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionAmbientOcclusionWallRadius(fillExtrusionAmbientOcclusionWallRadius: Double = 3.0): FillExtrusionLayer
 
   /**
-   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings.
    *
    * @param fillExtrusionAmbientOcclusionWallRadius value of fillExtrusionAmbientOcclusionWallRadius as Expression
    */
@@ -3720,7 +3867,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionAmbientOcclusionWallRadius(fillExtrusionAmbientOcclusionWallRadius: Expression): FillExtrusionLayer
 
   /**
-   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings.
    *
    * Set the FillExtrusionAmbientOcclusionWallRadius property transition options
    *
@@ -3730,7 +3877,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionAmbientOcclusionWallRadiusTransition(options: StyleTransition): FillExtrusionLayer
 
   /**
-   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * Shades area near ground and concave angles between walls where the radius defines only vertical impact. Default value 3.0 corresponds to height of one floor and brings the most plausible results for buildings.
    *
    * DSL for [fillExtrusionAmbientOcclusionWallRadiusTransition].
    */
@@ -3819,7 +3966,37 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionCutoffFadeRange(fillExtrusionCutoffFadeRange: Expression): FillExtrusionLayer
 
   /**
-   * The color of the flood light effect on the walls of the extruded buildings. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * Controls the intensity of light emitted on the source features.
+   *
+   * @param fillExtrusionEmissiveStrength value of fillExtrusionEmissiveStrength
+   */
+  fun fillExtrusionEmissiveStrength(fillExtrusionEmissiveStrength: Double = 0.0): FillExtrusionLayer
+
+  /**
+   * Controls the intensity of light emitted on the source features.
+   *
+   * @param fillExtrusionEmissiveStrength value of fillExtrusionEmissiveStrength as Expression
+   */
+  fun fillExtrusionEmissiveStrength(fillExtrusionEmissiveStrength: Expression): FillExtrusionLayer
+
+  /**
+   * Controls the intensity of light emitted on the source features.
+   *
+   * Set the FillExtrusionEmissiveStrength property transition options
+   *
+   * @param options transition options for Double
+   */
+  fun fillExtrusionEmissiveStrengthTransition(options: StyleTransition): FillExtrusionLayer
+
+  /**
+   * Controls the intensity of light emitted on the source features.
+   *
+   * DSL for [fillExtrusionEmissiveStrengthTransition].
+   */
+  fun fillExtrusionEmissiveStrengthTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer
+
+  /**
+   * The color of the flood light effect on the walls of the extruded buildings.
    *
    * @param fillExtrusionFloodLightColor value of fillExtrusionFloodLightColor
    */
@@ -3827,7 +4004,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightColor(fillExtrusionFloodLightColor: String = "#ffffff"): FillExtrusionLayer
 
   /**
-   * The color of the flood light effect on the walls of the extruded buildings. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * The color of the flood light effect on the walls of the extruded buildings.
    *
    * @param fillExtrusionFloodLightColor value of fillExtrusionFloodLightColor as Expression
    */
@@ -3835,7 +4012,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightColor(fillExtrusionFloodLightColor: Expression): FillExtrusionLayer
 
   /**
-   * The color of the flood light effect on the walls of the extruded buildings. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * The color of the flood light effect on the walls of the extruded buildings.
    *
    * @param fillExtrusionFloodLightColor value of fillExtrusionFloodLightColor
    */
@@ -3843,7 +4020,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightColor(@ColorInt fillExtrusionFloodLightColor: Int): FillExtrusionLayer
 
   /**
-   * The color of the flood light effect on the walls of the extruded buildings. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * The color of the flood light effect on the walls of the extruded buildings.
    *
    * Set the FillExtrusionFloodLightColor property transition options
    *
@@ -3853,7 +4030,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightColorTransition(options: StyleTransition): FillExtrusionLayer
 
   /**
-   * The color of the flood light effect on the walls of the extruded buildings. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * The color of the flood light effect on the walls of the extruded buildings.
    *
    * DSL for [fillExtrusionFloodLightColorTransition].
    */
@@ -3861,7 +4038,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightColorTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer
 
   /**
-   * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
    *
    * @param fillExtrusionFloodLightGroundAttenuation value of fillExtrusionFloodLightGroundAttenuation
    */
@@ -3869,7 +4046,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightGroundAttenuation(fillExtrusionFloodLightGroundAttenuation: Double = 0.69): FillExtrusionLayer
 
   /**
-   * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
    *
    * @param fillExtrusionFloodLightGroundAttenuation value of fillExtrusionFloodLightGroundAttenuation as Expression
    */
@@ -3877,7 +4054,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightGroundAttenuation(fillExtrusionFloodLightGroundAttenuation: Expression): FillExtrusionLayer
 
   /**
-   * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
    *
    * Set the FillExtrusionFloodLightGroundAttenuation property transition options
    *
@@ -3887,7 +4064,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightGroundAttenuationTransition(options: StyleTransition): FillExtrusionLayer
 
   /**
-   * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * Provides a control to futher fine-tune the look of the flood light on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
    *
    * DSL for [fillExtrusionFloodLightGroundAttenuationTransition].
    */
@@ -3895,7 +4072,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightGroundAttenuationTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer
 
   /**
-   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * The extent of the flood light effect on the ground beneath the extruded buildings in meters.
    *
    * @param fillExtrusionFloodLightGroundRadius value of fillExtrusionFloodLightGroundRadius
    */
@@ -3903,7 +4080,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightGroundRadius(fillExtrusionFloodLightGroundRadius: Double = 0.0): FillExtrusionLayer
 
   /**
-   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * The extent of the flood light effect on the ground beneath the extruded buildings in meters.
    *
    * @param fillExtrusionFloodLightGroundRadius value of fillExtrusionFloodLightGroundRadius as Expression
    */
@@ -3911,7 +4088,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightGroundRadius(fillExtrusionFloodLightGroundRadius: Expression): FillExtrusionLayer
 
   /**
-   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * The extent of the flood light effect on the ground beneath the extruded buildings in meters.
    *
    * Set the FillExtrusionFloodLightGroundRadius property transition options
    *
@@ -3921,7 +4098,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightGroundRadiusTransition(options: StyleTransition): FillExtrusionLayer
 
   /**
-   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * The extent of the flood light effect on the ground beneath the extruded buildings in meters.
    *
    * DSL for [fillExtrusionFloodLightGroundRadiusTransition].
    */
@@ -3929,7 +4106,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightGroundRadiusTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer
 
   /**
-   * The intensity of the flood light color. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * The intensity of the flood light color.
    *
    * @param fillExtrusionFloodLightIntensity value of fillExtrusionFloodLightIntensity
    */
@@ -3937,7 +4114,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightIntensity(fillExtrusionFloodLightIntensity: Double = 0.0): FillExtrusionLayer
 
   /**
-   * The intensity of the flood light color. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * The intensity of the flood light color.
    *
    * @param fillExtrusionFloodLightIntensity value of fillExtrusionFloodLightIntensity as Expression
    */
@@ -3945,7 +4122,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightIntensity(fillExtrusionFloodLightIntensity: Expression): FillExtrusionLayer
 
   /**
-   * The intensity of the flood light color. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * The intensity of the flood light color.
    *
    * Set the FillExtrusionFloodLightIntensity property transition options
    *
@@ -3955,7 +4132,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightIntensityTransition(options: StyleTransition): FillExtrusionLayer
 
   /**
-   * The intensity of the flood light color. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * The intensity of the flood light color.
    *
    * DSL for [fillExtrusionFloodLightIntensityTransition].
    */
@@ -3963,7 +4140,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightIntensityTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer
 
   /**
-   * The extent of the flood light effect on the walls of the extruded buildings in meters. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * The extent of the flood light effect on the walls of the extruded buildings in meters.
    *
    * @param fillExtrusionFloodLightWallRadius value of fillExtrusionFloodLightWallRadius
    */
@@ -3971,7 +4148,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightWallRadius(fillExtrusionFloodLightWallRadius: Double = 0.0): FillExtrusionLayer
 
   /**
-   * The extent of the flood light effect on the walls of the extruded buildings in meters. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * The extent of the flood light effect on the walls of the extruded buildings in meters.
    *
    * @param fillExtrusionFloodLightWallRadius value of fillExtrusionFloodLightWallRadius as Expression
    */
@@ -3979,7 +4156,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightWallRadius(fillExtrusionFloodLightWallRadius: Expression): FillExtrusionLayer
 
   /**
-   * The extent of the flood light effect on the walls of the extruded buildings in meters. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * The extent of the flood light effect on the walls of the extruded buildings in meters.
    *
    * Set the FillExtrusionFloodLightWallRadius property transition options
    *
@@ -3989,7 +4166,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightWallRadiusTransition(options: StyleTransition): FillExtrusionLayer
 
   /**
-   * The extent of the flood light effect on the walls of the extruded buildings in meters. This property works only with 3D light, i.e. when `lights` root property is defined.
+   * The extent of the flood light effect on the walls of the extruded buildings in meters.
    *
    * DSL for [fillExtrusionFloodLightWallRadiusTransition].
    */

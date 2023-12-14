@@ -2672,7 +2672,7 @@ interface ModelLayerDsl {
    * @param modelId value of modelId
    */
   @MapboxExperimental
-  fun modelId(modelId: String): ModelLayer
+  fun modelId(modelId: String = ""): ModelLayer
 
   /**
    * Model to render.
