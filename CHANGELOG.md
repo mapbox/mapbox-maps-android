@@ -2,6 +2,9 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
+# 10.16.4
+## ## Features ✨ and improvements 🏁
+* Improve performance of `StyleInterface.localizeLabels` method.
 
 # 10.16.3 December 08, 2023
 ## Bug fixes 🐞
