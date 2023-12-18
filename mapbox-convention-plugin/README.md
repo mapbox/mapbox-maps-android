@@ -19,7 +19,7 @@ plugins {
 
 mapboxLibrary {
   dokka {
-    extraListOfSources = File("upstream-api-doc-list.txt").readLines()
+    extraListOfSources = File("api-doc-list-maps-core.txt").readLines()
     reportUndocumented = false
   }
 }

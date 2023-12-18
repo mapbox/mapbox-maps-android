@@ -411,7 +411,7 @@ jobs:
             - run:
                 no_output_timeout: 30m
                 name: docs
-                command: bash scripts/kdoc-validate.sh
+                command: ./gradlew clean dokkaHtml -Pmapbox.dokkaHtmlFlavor=release
       - run: exit 0
 
   verify-api-metalava:

@@ -9,10 +9,19 @@ val buildFromSource: String by project
 
 mapboxLibrary {
   dokka {
-    // Include the files in "upstream-api-doc-list.txt" if available
-    val upstreamApiDocFile = rootProject.file("upstream-api-doc-list.txt")
-    if (upstreamApiDocFile.exists()) {
-      extraListOfSources = upstreamApiDocFile.readLines()
+    // Include extra list of files to generate documentation if available
+    val extraApiDocs = mutableListOf<String>()
+
+    val coreApiDocFile = rootProject.file("api-doc-list-maps-core.txt")
+    if (coreApiDocFile.exists()) {
+      extraApiDocs.addAll(coreApiDocFile.readLines())
+    }
+    val commonApiDocFile = rootProject.file("api-doc-list-maps-common.txt")
+    if (commonApiDocFile.exists()) {
+      extraApiDocs.addAll(commonApiDocFile.readLines())
+    }
+    if (extraApiDocs.isNotEmpty()) {
+      extraListOfSources = extraApiDocs
       // which might not have docs, so disable report undocumented
       reportUndocumented = false
     }

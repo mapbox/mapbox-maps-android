@@ -128,7 +128,7 @@ public abstract class MapboxDokkaExtension @Inject constructor(objects: ObjectFa
         }
       }
       this@MapboxDokkaExtension.extraListOfSources.forEach { filePath ->
-        if (!filePath.startsWith("//")) {
+        if (filePath.isNotBlank() && !filePath.startsWith("//")) {
           sourceRoots.from(project.file("${project.rootDir}/$filePath"))
         }
       }
