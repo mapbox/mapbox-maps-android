@@ -1,13 +1,9 @@
 package com.mapbox.maps.extension.localization
 
+import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxStyleManager
-import com.mapbox.maps.StyleObjectInfo
+import com.mapbox.maps.StylePropertyValueKind
 import com.mapbox.maps.extension.style.expressions.dsl.generated.get
-import com.mapbox.maps.extension.style.expressions.generated.Expression
-import com.mapbox.maps.extension.style.layers.generated.SymbolLayer
-import com.mapbox.maps.extension.style.layers.getLayerAs
-import com.mapbox.maps.extension.style.sources.generated.VectorSource
-import com.mapbox.maps.extension.style.sources.getSourceAs
 import com.mapbox.maps.logE
 import com.mapbox.maps.logI
 import java.util.*
@@ -20,70 +16,98 @@ import java.util.*
  * `["format",["coalesce",["get","name_de"],["get","name"]],{}]`
  */
 internal fun setMapLanguage(locale: Locale, style: MapboxStyleManager, layerIds: List<String>?) {
-  var convertedLocale = "name_${locale.language}"
+  val convertedLocale = "name_${locale.language}"
   if (!isSupportedLanguage(convertedLocale)) {
     logE(TAG, "Locale: $locale is not supported.")
     return
   }
 
-  style.styleSources
-    .forEach { source ->
-      style.styleLayers
-        .filter { it.type == LAYER_TYPE_SYMBOL }
-        .filter { layer ->
-          layerIds?.contains(layer.id) ?: true
-        }
-        .forEach { layer ->
-          val symbolLayer = style.getLayerAs<SymbolLayer>(layer.id)
-          symbolLayer?.let {
-            it.textFieldAsExpression?.let { textFieldExpression ->
-              if (BuildConfig.DEBUG) {
-                logI(TAG, "Localize layer id: ${it.layerId}")
-              }
-
-              if (sourceIsStreetsV8(style, source)) {
-                convertedLocale = getLanguageNameV8(locale)
-              } else if (sourceIsStreetsV7(style, source)) {
-                convertedLocale = getLanguageNameV7(locale)
-              }
-              convertExpression(convertedLocale, it, textFieldExpression)
-            }
-          }
-        }
+  layerIds?.forEach { id ->
+    localizeTextFieldExpression(
+      style = style,
+      layerId = id,
+      locale = locale,
+      convertedLocale = convertedLocale,
+      filterSymbolLayers = true,
+    )
+  } ?: style.styleLayers.forEach { layer ->
+    if (layer.type == SYMBOL) {
+      localizeTextFieldExpression(
+        style = style,
+        layerId = layer.id,
+        locale = locale,
+        convertedLocale = convertedLocale,
+        filterSymbolLayers = false,
+      )
     }
-}
-
-private fun convertExpression(language: String, layer: SymbolLayer, textField: Expression?) {
-  textField?.let {
-    val stringExpression: String = it.toJson().replace(
-      EXPRESSION_REGEX,
-      get(language).toJson()
-    ).replace(EXPRESSION_ABBR_REGEX, get(language).toJson())
-    if (BuildConfig.DEBUG) {
-      logI(TAG, "Localize layer with expression: $stringExpression")
-    }
-    layer.textField(Expression.fromRaw(stringExpression))
   }
 }
 
-private fun sourceIsStreetsV8(style: MapboxStyleManager, source: StyleObjectInfo): Boolean =
-  sourceIsType(style, source, STREET_V8)
-
-private fun sourceIsStreetsV7(style: MapboxStyleManager, source: StyleObjectInfo): Boolean =
-  sourceIsType(style, source, STREET_V7)
-
-private fun sourceIsType(style: MapboxStyleManager, source: StyleObjectInfo, type: String): Boolean {
-  if (source.type == SOURCE_TYPE_VECTOR) {
-    style.getSourceAs<VectorSource>(source.id)?.url?.let {
-      return it.contains(type)
+private fun localizeTextFieldExpression(
+  style: MapboxStyleManager,
+  layerId: String,
+  locale: Locale,
+  convertedLocale: String,
+  filterSymbolLayers: Boolean,
+) {
+  if (filterSymbolLayers) {
+    val type = style.getStyleLayerProperty(layerId, TYPE).value.contents as? String
+    if (type != SYMBOL) {
+      return
     }
   }
-  return false
+  val textFieldProperty = style.getStyleLayerProperty(layerId, TEXT_FIELD)
+  if (textFieldProperty.kind != StylePropertyValueKind.EXPRESSION) {
+    return
+  }
+  val textField = textFieldProperty.value.toJson()
+  val adaptedLocale = adaptLocaleToV8orV7IfNeeded(
+    style,
+    style.getStyleLayerProperty(layerId, SOURCE).value.contents as? String ?: "",
+    locale
+  ) ?: convertedLocale
+  val getExpression = get(adaptedLocale).toJson()
+  val localizedTextFieldExpressionAsJson = textField.replace(
+    EXPRESSION_REGEX,
+    getExpression
+  ).replace(EXPRESSION_ABBR_REGEX, getExpression)
+  if (BuildConfig.DEBUG) {
+    logI(TAG, "Localize layer with expression: $localizedTextFieldExpressionAsJson")
+  }
+  val expected = Value.fromJson(localizedTextFieldExpressionAsJson)
+  expected.value?.let { value ->
+    style.setStyleLayerProperty(
+      layerId,
+      TEXT_FIELD,
+      value
+    )
+  } ?: run {
+    logE(TAG, "An error ${expected.error} occurred when converting $localizedTextFieldExpressionAsJson to a Value!")
+  }
+}
+
+private fun adaptLocaleToV8orV7IfNeeded(style: MapboxStyleManager, sourceId: String, locale: Locale): String? {
+  if ((style.getStyleSourceProperty(sourceId, TYPE).value.contents as? String) == VECTOR) {
+    (style.getStyleSourceProperty(sourceId, URL).value.contents as? String)?.let { url ->
+      return if (url.contains(STREET_V8)) {
+        getLanguageNameV8(locale)
+      } else if (url.contains(STREET_V7)) {
+        getLanguageNameV7(locale)
+      } else {
+        null
+      }
+    }
+  }
+  return null
 }
 
 private const val TAG = "LocalizationPluginImpl"
-private const val SOURCE_TYPE_VECTOR = "vector"
-private const val LAYER_TYPE_SYMBOL = "symbol"
+private const val TYPE = "type"
+private const val SOURCE = "source"
+private const val SYMBOL = "symbol"
+private const val URL = "url"
+private const val VECTOR = "vector"
+private const val TEXT_FIELD = "text-field"
 private const val STREET_V7 = "mapbox.mapbox-streets-v7"
 private const val STREET_V8 = "mapbox.mapbox-streets-v8"
 private val EXPRESSION_REGEX = Regex("\\[\"get\",\\s*\"(name_.{2,7})\"\\]")

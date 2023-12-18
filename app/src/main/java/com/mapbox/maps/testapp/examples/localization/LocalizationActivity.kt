@@ -16,7 +16,8 @@ import java.util.*
  * Example showcasing how to localize a map client side to a specific locale using Style#localizeLabels(locale: Locale).
  * This function will attempt to localize a map into a selected locale if the symbol layers are using
  * a Mapbox source and the locale is being provided as part of the vector source data.
- * This feature supports both v7 and v8 of Mapbox style spec version.
+ *
+ * This feature supports both v7 and v8 of Mapbox style spec version and does not support [Style.STANDARD].
  */
 class LocalizationActivity : AppCompatActivity() {
   private lateinit var mapboxMap: MapboxMap
@@ -24,7 +25,7 @@ class LocalizationActivity : AppCompatActivity() {
   private var index: Int = 0
   private val styles =
     arrayOf(
-      Style.STANDARD,
+      Style.MAPBOX_STREETS,
       MAPBOX_STREETS_V10
     )
 
