@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>DeviceLocationProvider</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/jetbrains-mono.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+<div class="navigation-wrapper" id="navigation-wrapper">
+    <div id="leftToggler"><span class="icon-toggler"></span></div>
+    <div class="library-name">
+            <a href="../../../index.html">
+                    <span>mapbox-maps-android</span>
+            </a>
+    </div>
+    <div>
+    </div>
+    <div class="pull-right d-flex">
+        <button id="theme-toggle-button"><span id="theme-toggle"></span></button>
+        <div id="searchBar"></div>
+    </div>
+</div>
+<div id="container">
+    <div id="leftColumn">
+        <div id="sideMenu"></div>
+    </div>
+    <div id="main">
+<div class="main-content" id="content" pageIds="mapbox-maps-android::com.mapbox.common.location/DeviceLocationProvider///PointingToDeclaration//540127926">
+  <div class="breadcrumbs"><a href="../../../index.html">mapbox-maps-android</a><span class="delimiter">/</span><a href="../index.html">com.mapbox.common.location</a><span class="delimiter">/</span><span class="current">DeviceLocationProvider</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Device</span><wbr></wbr><span>Location</span><wbr></wbr><span><span>Provider</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">interface </span><a href="index.html">DeviceLocationProvider</a> : <a href="../-location-provider/index.html">LocationProvider</a></div><p class="paragraph">location provider specialisation that provides real-time locations generated from the device</p></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Functions">Functions</button></div>
+    <div class="tabs-section-body">
+      <h2 class="">Functions</h2>
+      <div class="table" data-togglable="Functions"><a data-name="-972604987%2FFunctions%2F540127926" anchor-label="addLocationObserver" id="-972604987%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../-location-provider/add-location-observer.html"><span>add</span><wbr></wbr><span>Location</span><wbr></wbr><span><span>Observer</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-972604987%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="../-location-provider/add-location-observer.html"><span class="token function">addLocationObserver</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">observer<span class="token operator">: </span><a href="../-location-observer/index.html">LocationObserver</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Registers an observer in this instance of LocationProvider. One instance of LocationProvider can have more than one observer. It is expected that LocationProvider will not start until an observer is added. The observer registered will receive notifications on the same looper as the one where this method is invoked. If the looper is not available, this method can be called from any thread.</p></div><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="../-location-provider/add-location-observer.html"><span class="token function">addLocationObserver</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">observer<span class="token operator">: </span><a href="../-location-observer/index.html">LocationObserver</a><span class="token punctuation">, </span></span><span class="parameter ">looper<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/os/Looper.html">Looper</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Registers an observer in this instance of the client. One instance of the client can have more than one observer. It is expected that the client will not start until an observer is added.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1737865868%2FFunctions%2F540127926" anchor-label="getLastLocation" id="-1737865868%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../-location-provider/get-last-location.html"><span>get</span><wbr></wbr><span>Last</span><wbr></wbr><span><span>Location</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1737865868%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="../-location-provider/get-last-location.html"><span class="token function">getLastLocation</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">callback<span class="token operator">: </span><a href="../-get-location-callback/index.html">GetLocationCallback</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../com.mapbox.common/-cancelable/index.html">Cancelable</a></div><div class="brief "><p class="paragraph">Gets the last known location. This call will never activate hardware to obtain a new location, and will only return a cached location. Note, that the returned location may be quite old, so the timestamp of the location should always be checked.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1718348678%2FFunctions%2F540127926" anchor-label="getName" id="1718348678%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="get-name.html"><span>get</span><wbr></wbr><span><span>Name</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1718348678%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="get-name.html"><span class="token function">getName</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-515264863%2FFunctions%2F540127926" anchor-label="removeLocationObserver" id="-515264863%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../-location-provider/remove-location-observer.html"><span>remove</span><wbr></wbr><span>Location</span><wbr></wbr><span><span>Observer</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-515264863%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="../-location-provider/remove-location-observer.html"><span class="token function">removeLocationObserver</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">observer<span class="token operator">: </span><a href="../-location-observer/index.html">LocationObserver</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Removes the observer from this instance of LocationProvider. If the observer is not registered, this is no-op. It is expected that if there are no observers, the LocationProvider will stop automatically.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="274547429%2FFunctions%2F540127926" anchor-label="removeLocationUpdates" id="274547429%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="remove-location-updates.html"><span>remove</span><wbr></wbr><span>Location</span><wbr></wbr><span><span>Updates</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="274547429%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="remove-location-updates.html"><span class="token function">removeLocationUpdates</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">pendingIntent<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/app/PendingIntent.html">PendingIntent</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Removes location updates for the given pending intent. It is recommended to remove location requests when the activity is in a paused or stopped state, doing so helps reducing battery consumption.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="2076429006%2FFunctions%2F540127926" anchor-label="requestLocationUpdates" id="2076429006%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="request-location-updates.html"><span>request</span><wbr></wbr><span>Location</span><wbr></wbr><span><span>Updates</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2076429006%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/RequiresPermission.html"><span class="token annotation builtin">RequiresPermission</span></a><span class="token punctuation">(</span><span>anyOf<span class="token operator"> = </span><span class="token punctuation">[</span><span><span class="breakable-word"><span class="token string">&quot;android.permission.ACCESS_COARSE_LOCATION&quot;</span></span><span class="token punctuation">, </span></span><wbr></wbr><span><span class="breakable-word"><span class="token string">&quot;android.permission.ACCESS_FINE_LOCATION&quot;</span></span></span><wbr></wbr><span class="token punctuation">]</span></span><wbr></wbr><span class="token punctuation">)</span></div></div><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="request-location-updates.html"><span class="token function">requestLocationUpdates</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">pendingIntent<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/app/PendingIntent.html">PendingIntent</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Register for location updates to be delivered via the provided <a href="https://developer.android.com/reference/kotlin/android/app/PendingIntent.html">PendingIntent</a>.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2023 Copyright</span><span
+                class="pull-right"><span>Generated by </span><a
+                href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+    </div>
+</div>
+</body>
+</html>
