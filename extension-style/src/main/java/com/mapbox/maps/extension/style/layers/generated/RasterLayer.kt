@@ -3,6 +3,7 @@
 package com.mapbox.maps.extension.style.layers.generated
 
 import androidx.annotation.UiThread
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.Layer
@@ -212,6 +213,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   /**
    * Displayed band of raster array source layer
    */
+  @MapboxExperimental
   val rasterArrayBand: String?
     /**
      * Displayed band of raster array source layer
@@ -231,6 +233,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
    *
    * @param rasterArrayBand value of rasterArrayBand
    */
+  @MapboxExperimental
   override fun rasterArrayBand(rasterArrayBand: String): RasterLayer = apply {
     val propertyValue = PropertyValue("raster-array-band", rasterArrayBand)
     setProperty(propertyValue)
@@ -242,6 +245,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
    * This is an Expression representation of "raster-array-band".
    *
    */
+  @MapboxExperimental
   val rasterArrayBandAsExpression: Expression?
     /**
      * Displayed band of raster array source layer
@@ -269,6 +273,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
    *
    * @param rasterArrayBand value of rasterArrayBand as Expression
    */
+  @MapboxExperimental
   override fun rasterArrayBand(rasterArrayBand: Expression): RasterLayer = apply {
     val propertyValue = PropertyValue("raster-array-band", rasterArrayBand)
     setProperty(propertyValue)
@@ -1387,6 +1392,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     /**
      * Displayed band of raster array source layer
      */
+    @MapboxExperimental
     val defaultRasterArrayBand: String?
       /**
        * Displayed band of raster array source layer
@@ -1405,6 +1411,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
      * This is an Expression representation of "raster-array-band".
      *
      */
+    @MapboxExperimental
     val defaultRasterArrayBandAsExpression: Expression?
       /**
        * Get default value of the RasterArrayBand property as an Expression
@@ -1938,6 +1945,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
  * Separated the DSL receiver class to this interface to avoid IDE code suggestion for
  * property getters.
  */
+@MapboxExperimental
 @LayersDsl
 interface RasterLayerDsl {
   /**
@@ -1999,6 +2007,7 @@ interface RasterLayerDsl {
    *
    * @param rasterArrayBand value of rasterArrayBand
    */
+  @MapboxExperimental
   fun rasterArrayBand(rasterArrayBand: String): RasterLayer
 
   /**
@@ -2006,6 +2015,7 @@ interface RasterLayerDsl {
    *
    * @param rasterArrayBand value of rasterArrayBand as Expression
    */
+  @MapboxExperimental
   fun rasterArrayBand(rasterArrayBand: Expression): RasterLayer
 
   /**

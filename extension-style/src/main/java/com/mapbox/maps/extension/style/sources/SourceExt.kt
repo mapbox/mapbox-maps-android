@@ -25,6 +25,7 @@ fun MapboxStyleManager.getSource(sourceId: String): Source? {
       "image" -> ImageSource.Builder(sourceId).build().also { it.delegate = this }
       "raster-dem" -> RasterDemSource.Builder(sourceId).build().also { it.delegate = this }
       "raster" -> RasterSource.Builder(sourceId).build().also { it.delegate = this }
+      "raster-array" -> RasterArraySource.Builder(sourceId).build().also { it.delegate = this }
       // we pass empty CustomGeometrySourceOptions as it will not be applied anyway; it is already stored in core
       "custom-geometry" -> CustomGeometrySource(sourceId, CustomGeometrySourceOptions.Builder().build())
         .also { it.delegate = this }

@@ -6,8 +6,10 @@ import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxStyleException
 import com.mapbox.maps.MapboxStyleManager
+import com.mapbox.maps.StylePropertyValueKind
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
+import com.mapbox.maps.extension.style.sources.generated.RasterArraySource
 import com.mapbox.maps.extension.style.utils.unwrap
 import com.mapbox.maps.logE
 
@@ -123,12 +125,21 @@ abstract class Source(
   }
 
   internal inline fun <reified T> getPropertyValue(propertyName: String): T? {
-    delegate?.let {
+    delegate?.let { styleManager ->
       return try {
-        it.getStyleSourceProperty(sourceId, propertyName).unwrap()
+        val stylePropertyValue = styleManager.getStyleSourceProperty(sourceId, propertyName)
+        if (propertyName == "rasterLayers" && stylePropertyValue.kind == StylePropertyValueKind.CONSTANT) {
+          return (stylePropertyValue.value.contents as HashMap<String, Value>).entries.map { entry ->
+            RasterArraySource.RasterDataLayer(
+              layerId = entry.key,
+              bands = (entry.value.contents as List<Value>).map { it.contents as String }
+            )
+          } as T
+        }
+        stylePropertyValue.unwrap()
       } catch (e: RuntimeException) {
         Log.e(TAG, "Get source property $propertyName failed: ${e.message}")
-        Log.e(TAG, "Value returned: ${it.getStyleSourceProperty(sourceId, propertyName)}")
+        Log.e(TAG, "Value returned: ${styleManager.getStyleSourceProperty(sourceId, propertyName).value.toJson()}")
         null
       }
     }

@@ -3673,8 +3673,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getVisibilityAsExpression();
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer maxZoom(double maxZoom);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer minZoom(double minZoom);
-    method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterArrayBand(String rasterArrayBand);
-    method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterArrayBand(com.mapbox.maps.extension.style.expressions.generated.Expression rasterArrayBand);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterArrayBand(String rasterArrayBand);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterArrayBand(com.mapbox.maps.extension.style.expressions.generated.Expression rasterArrayBand);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterBrightnessMax(double rasterBrightnessMax);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterBrightnessMax(com.mapbox.maps.extension.style.expressions.generated.Expression rasterBrightnessMax);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterBrightnessMaxTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -3840,11 +3840,11 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final com.mapbox.maps.extension.style.layers.properties.generated.Visibility? defaultVisibility;
   }
 
-  @com.mapbox.maps.extension.style.types.LayersDsl public interface RasterLayerDsl {
+  @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.style.types.LayersDsl public interface RasterLayerDsl {
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer maxZoom(double maxZoom);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer minZoom(double minZoom);
-    method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterArrayBand(String rasterArrayBand);
-    method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterArrayBand(com.mapbox.maps.extension.style.expressions.generated.Expression rasterArrayBand);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterArrayBand(String rasterArrayBand);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterArrayBand(com.mapbox.maps.extension.style.expressions.generated.Expression rasterArrayBand);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterBrightnessMax(double rasterBrightnessMax = 1.0);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterBrightnessMax(com.mapbox.maps.extension.style.expressions.generated.Expression rasterBrightnessMax);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterBrightnessMaxTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -5940,6 +5940,65 @@ package com.mapbox.maps.extension.style.sources.generated {
 
   public final class ImageSourceKt {
     method public static com.mapbox.maps.extension.style.sources.generated.ImageSource imageSource(String id, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.sources.generated.ImageSource.Builder,kotlin.Unit> block);
+  }
+
+  @com.mapbox.maps.MapboxExperimental public final class RasterArraySource extends com.mapbox.maps.extension.style.sources.Source {
+    ctor public RasterArraySource(com.mapbox.maps.extension.style.sources.generated.RasterArraySource.Builder builder);
+    method public String? getAttribution();
+    method public java.util.List<java.lang.Double>? getBounds();
+    method public Long? getMaxzoom();
+    method public Long? getMinzoom();
+    method public java.util.List<com.mapbox.maps.extension.style.sources.generated.RasterArraySource.RasterDataLayer>? getRasterLayers();
+    method public Long? getTileSize();
+    method public java.util.List<java.lang.String>? getTiles();
+    method public String? getUrl();
+    method public com.mapbox.maps.extension.style.sources.generated.RasterArraySource maxzoom(long value = 22L);
+    method public com.mapbox.maps.extension.style.sources.generated.RasterArraySource minzoom(long value = 0L);
+    method public com.mapbox.maps.extension.style.sources.generated.RasterArraySource tiles(java.util.List<java.lang.String> value);
+    method public com.mapbox.maps.extension.style.sources.generated.RasterArraySource url(String value);
+    property public final String? attribution;
+    property public final java.util.List<java.lang.Double>? bounds;
+    property public final Long? maxzoom;
+    property public final Long? minzoom;
+    property public final java.util.List<com.mapbox.maps.extension.style.sources.generated.RasterArraySource.RasterDataLayer>? rasterLayers;
+    property public final Long? tileSize;
+    property public final java.util.List<java.lang.String>? tiles;
+    property public final String? url;
+    field public static final com.mapbox.maps.extension.style.sources.generated.RasterArraySource.Companion Companion;
+  }
+
+  @com.mapbox.maps.extension.style.types.SourceDsl public static final class RasterArraySource.Builder {
+    ctor public RasterArraySource.Builder(String sourceId);
+    method public com.mapbox.maps.extension.style.sources.generated.RasterArraySource.Builder attribution(String value);
+    method public com.mapbox.maps.extension.style.sources.generated.RasterArraySource.Builder bounds(java.util.List<java.lang.Double> value = listOf(-180.0, -85.051129, 180.0, 85.051129));
+    method public com.mapbox.maps.extension.style.sources.generated.RasterArraySource build();
+    method public String getSourceId();
+    method public com.mapbox.maps.extension.style.sources.generated.RasterArraySource.Builder maxzoom(long value = 22L);
+    method public com.mapbox.maps.extension.style.sources.generated.RasterArraySource.Builder minzoom(long value = 0L);
+    method public com.mapbox.maps.extension.style.sources.generated.RasterArraySource.Builder tileSet(com.mapbox.maps.extension.style.sources.TileSet tileSet);
+    method public com.mapbox.maps.extension.style.sources.generated.RasterArraySource.Builder tileSet(String tilejson, java.util.List<java.lang.String> tiles, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.sources.TileSet.Builder,kotlin.Unit> block);
+    method public com.mapbox.maps.extension.style.sources.generated.RasterArraySource.Builder tileSize(long value = 512L);
+    method public com.mapbox.maps.extension.style.sources.generated.RasterArraySource.Builder tiles(java.util.List<java.lang.String> value);
+    method public com.mapbox.maps.extension.style.sources.generated.RasterArraySource.Builder url(String value);
+    property public final String sourceId;
+  }
+
+  public static final class RasterArraySource.Companion {
+    method public Long? getDefaultMaxzoom();
+    method public Long? getDefaultMinzoom();
+    property public final Long? defaultMaxzoom;
+    property public final Long? defaultMinzoom;
+  }
+
+  public static final class RasterArraySource.RasterDataLayer {
+    method public java.util.List<java.lang.String> getBands();
+    method public String getLayerId();
+    property public final java.util.List<java.lang.String> bands;
+    property public final String layerId;
+  }
+
+  public final class RasterArraySourceKt {
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.style.sources.generated.RasterArraySource rasterArraySource(String id, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.sources.generated.RasterArraySource.Builder,kotlin.Unit> block);
   }
 
   public final class RasterDemSource extends com.mapbox.maps.extension.style.sources.Source {
