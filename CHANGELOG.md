@@ -3,7 +3,8 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
-# 11.1.0-beta.1
+
+# 11.1.0-beta.1 December 19, 2023
 ## Features ✨ and improvements 🏁
 * Define minCompileSdkVersion=31 for Maps SDK libraries.
 * Introduce `FillExtrusionLayer.fillExtrusionEmissiveStrength`, `HillshadeLayer.hillshadeEmissiveStrength` and `RasterLayer.rasterEmissiveStrength` properties.
@@ -29,6 +30,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v11.1.0-beta.1 and common to v24.1.0-beta.2.
+
 
 # 11.0.0 November 29, 2023
 ## Breaking changes ⚠️
