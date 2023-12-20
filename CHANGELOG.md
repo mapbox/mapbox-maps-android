@@ -3,6 +3,9 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
+# 11.1.0-rc.1
+## Bug fixes 🐞
+* Fix possible rendering artifacts on startup when `ContextMode.SHARED` is used.
 
 # 11.1.0-beta.1 December 19, 2023
 ## Features ✨ and improvements 🏁
