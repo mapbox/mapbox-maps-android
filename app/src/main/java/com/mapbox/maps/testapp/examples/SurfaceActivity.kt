@@ -9,7 +9,6 @@ import android.view.SurfaceHolder
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.maps.*
 import com.mapbox.maps.renderer.widget.BitmapWidget
-import com.mapbox.maps.renderer.widget.Widget
 import com.mapbox.maps.renderer.widget.WidgetPosition
 import com.mapbox.maps.testapp.databinding.ActivitySurfaceBinding
 
@@ -21,7 +20,6 @@ class SurfaceActivity : AppCompatActivity(), SurfaceHolder.Callback {
 
   private lateinit var surfaceHolder: SurfaceHolder
   private lateinit var mapSurface: MapSurface
-  private lateinit var widget: Widget
   private val animator = ValueAnimator.ofFloat(0f, 1f).also {
     it.duration = ANIMATION_DURATION
     it.repeatCount = ValueAnimator.INFINITE
@@ -58,13 +56,23 @@ class SurfaceActivity : AppCompatActivity(), SurfaceHolder.Callback {
       .setHorizontalAlignment(WidgetPosition.Horizontal.CENTER)
       .setVerticalAlignment(WidgetPosition.Vertical.CENTER)
       .build()
-    widget = LogoWidget(this, widgetPosition)
-    mapSurface.addWidget(widget)
+    val rotatingWidget = LogoWidget(this, widgetPosition)
+    mapSurface.addWidget(rotatingWidget)
     animator.addUpdateListener {
       val angle = (it.animatedFraction * 360f) % 360f
-      widget.setRotation(angle)
+      rotatingWidget.setRotation(angle)
     }
     animator.start()
+
+    // add second widget to make sure both are rendered
+    val staticWidgetPosition = WidgetPosition
+      .Builder()
+      .setHorizontalAlignment(WidgetPosition.Horizontal.LEFT)
+      .setVerticalAlignment(WidgetPosition.Vertical.BOTTOM)
+      .setOffsetX(20f)
+      .setOffsetY(-20f)
+      .build()
+    mapSurface.addWidget(LogoWidget(this, staticWidgetPosition))
   }
 
   override fun surfaceCreated(holder: SurfaceHolder) {
