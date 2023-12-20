@@ -165,7 +165,6 @@ internal class BitmapWidgetRenderer(
   @RenderThread
   override fun render() {
     lock.withLock {
-      GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT)
       if (program == 0) {
         prepare()
       }
