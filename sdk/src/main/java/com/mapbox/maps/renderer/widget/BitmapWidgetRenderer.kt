@@ -157,7 +157,6 @@ internal class BitmapWidgetRenderer(
 
   override fun render() {
     lock.withLock {
-      GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT)
       if (program == 0) {
         prepare()
       }
@@ -184,6 +183,8 @@ internal class BitmapWidgetRenderer(
       GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textures[0])
 
       GLES20.glUniform1i(uniformTexture, 0)
+
+      GLES20.glClearColor(1f, 1f, 1f, 1f)
 
       GLES20.glEnableVertexAttribArray(attributeVertexPosition)
       GlUtils.checkError("glEnableVertexAttribArray")

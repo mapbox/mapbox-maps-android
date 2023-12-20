@@ -6,6 +6,9 @@ Mapbox welcomes participation and contributions from everyone.
 ## ## Features ✨ and improvements 🏁
 * Improve performance of `StyleInterface.localizeLabels` method.
 
+## Bug fixes 🐞
+* Fix regression introduced in v10.16.3 when only last added widget was rendered.
+
 # 10.16.3 December 08, 2023
 ## Bug fixes 🐞
 * Downgrade minimum required `compileSDK` from 31 to 30.
