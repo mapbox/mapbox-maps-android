@@ -39,11 +39,12 @@ class ViewAnnotationWithPointAnnotationActivity : AppCompatActivity() {
   private lateinit var pointAnnotationManager: PointAnnotationManager
   private lateinit var pointAnnotation: PointAnnotation
   private lateinit var viewAnnotation: View
+  private lateinit var binding: ActivityViewAnnotationShowcaseBinding
 
   @SuppressLint("SetTextI18n")
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    val binding = ActivityViewAnnotationShowcaseBinding.inflate(layoutInflater)
+    binding = ActivityViewAnnotationShowcaseBinding.inflate(layoutInflater)
     setContentView(binding.root)
 
     val iconBitmap = BitmapUtils.bitmapFromDrawableRes(
@@ -53,14 +54,7 @@ class ViewAnnotationWithPointAnnotationActivity : AppCompatActivity() {
 
     viewAnnotationManager = binding.mapView.viewAnnotationManager
 
-    binding.mapView.mapboxMap.setCamera(
-      CameraOptions.Builder()
-        .center(POINT)
-        .pitch(45.0)
-        .zoom(12.5)
-        .bearing(-17.6)
-        .build()
-    )
+    resetCamera()
 
     binding.mapView.mapboxMap.loadStyle(Style.STANDARD) {
       prepareAnnotationMarker(binding.mapView, iconBitmap)
@@ -83,6 +77,15 @@ class ViewAnnotationWithPointAnnotationActivity : AppCompatActivity() {
         }
         pointAnnotationManager.update(pointAnnotation)
       }
+
+      // reset annotations and camera position
+      binding.fabReframe.setOnClickListener {
+        resetCamera()
+        pointAnnotation.point = POINT
+        pointAnnotationManager.update(pointAnnotation)
+        syncAnnotationPosition()
+      }
+
       // update view annotation geometry if dragging the marker
       pointAnnotationManager.addDragListener(object : OnPointAnnotationDragListener {
         override fun onAnnotationDragStarted(annotation: Annotation<*>) {
@@ -90,24 +93,39 @@ class ViewAnnotationWithPointAnnotationActivity : AppCompatActivity() {
 
         override fun onAnnotationDrag(annotation: Annotation<*>) {
           if (annotation == pointAnnotation) {
-            binding.mapView.viewAnnotationManager.updateViewAnnotation(
-              viewAnnotation,
-              viewAnnotationOptions {
-                geometry(pointAnnotation.geometry)
-              }
-            )
-            ItemCalloutViewBinding.bind(viewAnnotation).apply {
-              textNativeView.text = "lat=%.2f\nlon=%.2f".format(
-                pointAnnotation.geometry.latitude(),
-                pointAnnotation.geometry.longitude()
-              )
-            }
+            syncAnnotationPosition()
           }
         }
 
         override fun onAnnotationDragFinished(annotation: Annotation<*>) {
         }
       })
+    }
+  }
+
+  private fun resetCamera() {
+    binding.mapView.mapboxMap.setCamera(
+      CameraOptions.Builder()
+        .center(POINT)
+        .pitch(45.0)
+        .zoom(12.5)
+        .bearing(-17.6)
+        .build()
+    )
+  }
+
+  private fun syncAnnotationPosition() {
+    viewAnnotationManager.updateViewAnnotation(
+      viewAnnotation,
+      viewAnnotationOptions {
+        geometry(pointAnnotation.geometry)
+      }
+    )
+    ItemCalloutViewBinding.bind(viewAnnotation).apply {
+      textNativeView.text = "lat=%.2f\nlon=%.2f".format(
+        pointAnnotation.geometry.latitude(),
+        pointAnnotation.geometry.longitude()
+      )
     }
   }
 
