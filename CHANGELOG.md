@@ -124,15 +124,7 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 * Introduce new Mapbox 3D style `Style.STANDARD` and make it default.
 * Add dynamic view annotations that can be attached to complex feature geometries and reposition itself based on the current camera viewport. To create dynamic view annotation use `AnnotatedFeature` of type `ANNOTATED_LAYER_FEATURE`. Multiple dynamic view annotations can be attached to the same feature. Also additional options `ViewAnnotationOptions.allowOverlapWithPuck` and `ViewAnnotationOptions.ignoreCameraPadding` introduced to configure the dynamic view annotation's behaviour.
-* The following APIs have been promoted to stable:
-  - `LineLayer.lineDepthOcclusionFactor`, `LineLayer.lineDepthOcclusionFactorTransition`, `LineLayer.lineEmissiveStrength` and `LineLayer.lineEmissiveStrengthTransition`
-  - `SymbolLayer.iconImageCrossFade`, `SymbolLayer.iconImageCrossFadeTransition`, `SymbolLayer.iconEmissiveStrength`, `SymbolLayer.iconEmissiveStrengthTransition`, `SymbolLayer.textEmissiveStrength` and `SymbolLayer.textEmissiveStrengthTransition`
-  - `BackgroundLayer.backgroundEmissiveStrength` and `BackgroundLayer.backgroundEmissiveStrengthTransition`
-  - `CircleLayer.circleEmissiveStrength` and `CircleLayer.circleEmissiveStrengthTransition`
-  - `FillLayer.fillEmissiveStrength` and `FillLayer.fillEmissiveStrengthTransition`
-  - `FlatLight`, `AmbientLight`, `DirectionalLight` and related APIs
-  - Annotation plugin APIs: `CircleAnnotationManager.circleEmissiveStrength`, `PolygonAnnotationManager.fillEmissiveStrength`, `PolylineAnnotationManager.lineDepthOcclusionFactor`, `PolylineAnnotationManager.lineEmissiveStrength`
-  - Map Overlay plugin and related APIs
+* The Map Overlay plugin and related APIs have been promoted to stable.
 * From v11.0.0-rc.1, Mapbox Compose Extension for Android is released as a separate module following the same release cadence with the main SDK, please refer to [this guide](extension-compose/README.md) to get started with Jetpack Compose, and [v0.1.0 changelog](extension-compose/CHANGELOG-v0.1.0.md) for previous changelogs.
 * Avoid creating unnecessary objects during animation under some conditions.
 * Improve map camera and gestures when terrain is used to fix camera bumpiness and map flickering.
@@ -163,7 +155,6 @@ Mapbox welcomes participation and contributions from everyone.
 * Introduce Expression overload functions `linearInterpolator`, `exponentialInterpolator`, `cubicBezierInterpolator`, `step`, `match` and `switchCase` to construct these expressions with strongly typed parameters.
 * Introduce `ImageExtensionImpl.Builder(imageId, image)`, `ImageExtensionImpl.Builder(imageId, image)` constructors and deprecated `ImageExtensionImpl.Builder(imageId)`, `ImageExtensionImpl.Builder.image(image)`, `ImageExtensionImpl.Builder.bitmap(bitmap)`, as image/bitmap is required for `ImageExtensionImpl.Builder`; DSL functions are updated to reflect these changes as well.
 * Deprecate `PointAnnotationManager.iconTextFit` and `PointAnnotationManager.iconTextFitPadding` in favor of `PointAnnotation.iconTextFit` and `PointAnnotation.iconTextFitPadding`.
-* Introduce experimental lights API to enable a uniform 3D lighting across the map. Use `Style.addLights3D` or `Style.setup3DLights` to enable `Ambient` and `Directional` light.
 * Introduce `LineLayer.lineDepthOcclusionFactor`, `PolylineAnnotationManager.lineDepthOcclusionFactor` API.
 * Introduce experimental `Expression.activeAnchor` API.
 * Introduce experimental `ModelLayer` API to render 3D models on the map.
@@ -172,17 +163,17 @@ Mapbox welcomes participation and contributions from everyone.
 * Introduce `Expression.hsl`, `Expression.hsla` color expression.
 * Introduce `Expression.measureLight` lights configuration property.
 * Introduce `LineLayer.lineBorderColor`, `LineLayer.lineBorderWidth` APIs.
-* Introduce experimental `BackgroundLayer.backgroundEmissiveStrength`, `CircleLayer.circleEmissiveStrength`, `FillLayer.fillEmissiveStrength`, `LineLayer.lineEmissiveStrength`, `SymbolLayer.iconEmissiveStrength`, `SymbolLayer.textEmissiveStrength` APIs.
+* Introduce `BackgroundLayer.backgroundEmissiveStrength`, `CircleLayer.circleEmissiveStrength`, `FillLayer.fillEmissiveStrength`, `LineLayer.lineEmissiveStrength`, `SymbolLayer.iconImageCrossFade`, `SymbolLayer.iconEmissiveStrength`, `SymbolLayer.textEmissiveStrength` APIs.
+* Introduce Annotation plugin APIs: `CircleAnnotationManager.circleEmissiveStrength`, `PolygonAnnotationManager.fillEmissiveStrength`, `PolylineAnnotationManager.lineDepthOcclusionFactor`, `PolylineAnnotationManager.lineEmissiveStrength`.
 * Introduce experimental `FillExtrusionLayer.fillExtrusionRoundedRoof`, `FillExtrusionLayer.fillExtrusionEdgeRadius`, `FillExtrusionLayer.fillExtrusionAmbientOcclusionWallRadius`, `FillExtrusionLayer.fillExtrusionAmbientOcclusionGroundRadius`, `FillExtrusionLayer.fillExtrusionAmbientOcclusionGroundAttenuation`, `FillExtrusionLayer.fillExtrusionFloodLightColor`, `FillExtrusionLayer.fillExtrusionFloodLightIntensity`, `FillExtrusionLayer.fillExtrusionFloodLightWallRadius`, `FillExtrusionLayer.fillExtrusionFloodLightGroundRadius`, `FillExtrusionLayer.fillExtrusionFloodLightGroundAttenuation`, `FillExtrusionLayer.fillExtrusionVerticalScale` APIs.
 * Introduce GeoJSONSource partial update APIs `GeoJsonSource.addGeoJSONSourceFeatures`, `GeoJsonSource.updateGeoJSONSourceFeatures`, `GeoJsonSource.removeGeoJSONSourceFeatures`.
 * Introduce raster colorization via `raster-color` expression and `RasterLayer.rasterColor`, `RasterLayer.rasterColorMix`, `RasterLayer.rasterColorRange` layer properties.
-* Introduce experimental APIs to work with Custom Raster Sources: `MapboxMap.addCustomRasterSource`, `MapboxMap.setCustomRasterSourceTileData`, `MapboxMap.invalidateCustomRasterSourceTile`, `MapboxMap.invalidateCustomRasterSourceRegion`.
 * Make both `Style` and `MapboxMap` implement `MapboxStyleManager` exposing all style related methods for the map and providing better alignment with iOS and GL-JS. 
 * Add `FillExtrusionLayer.fillExtrusionCutoffFadeRange` and `ModelLayer.modelCutoffFadeRange` to control fade out of the layers when pitch is used.
 * Improve atmosphere rendering performance.
 * Improve fill layer and model layer rendering performance on high pitch views.
 * Improve GPU performance by drawing opaque 3D geometry without blending.
-* Introduce experimental `SymbolLayer.symbolZElevate` property to elevate symbols along with the buildings that are in the same place. The feature is supported for symbols with point placement only.
+* Introduce `SymbolLayer.symbolZElevate` property to elevate symbols along with the buildings that are in the same place. The feature is supported for symbols with point placement only.
 * Add `Atmosphere.verticalRange` property.
 * Add `GeoJsonSource.data(..)` overloads to allow Java to call with and without `dataId`.
 * Add a new layer type `CustomLayer` and style DSL to create it. `CustomLayer` allows to use custom OpenGL ES rendering through `CustomLayerHost`. `CustomLayer` contains the `slot` property allowing using it with the Standard style.
@@ -210,6 +201,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Introduce `ExtendedLocationProviderParameters` to specify `DeviceLocationProvider` parameters.
 * Add `coordinatesPadding`, `maxZoom` and `offset` parameters to `OverviewViewportStateOptions` to allow more granular control of `OverviewViewportState`.
 * Add `CircleAnnotationManager.slot`, `PointAnnotationManager.slot`, `PolygonAnnotationManager.slot`, `PolylineAnnotationManager.slot` to place the associated layer of the `AnnotationManager` to the correct position of the map.
+* Introduce experimental APIs to work with Custom Raster Sources: `MapboxStyleManager.addStyleCustomRasterSource`, `MapboxStyleManager.setStyleCustomRasterSourceTileData`, `MapboxStyleManager.invalidateStyleCustomRasterSourceTile`, `MapboxStyleManager.invalidateStyleCustomRasterSourceRegion`.
 * Expose experimental `CustomRasterSource` and non-experimental `CustomGeometrySource` as regular `Source`'s providing a better way to work with them and also allowing using them in Style DSL.
 * Deprecate `CustomGeometrySource.invalidTile` and `CustomGeometrySource.invalidRegion`; `CustomGeometrySource.invalidateTile` and `CustomGeometrySource.invalidateRegion` should be used instead.
 * Add `LocationPuck3D.modelEmissiveStrength` and `LocationPuck3D.modelEmissiveStrengthExpression` properties to LocationComponent plugin to control the strength of the light emission.
