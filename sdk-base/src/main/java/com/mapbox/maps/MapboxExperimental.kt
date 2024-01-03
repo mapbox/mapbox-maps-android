@@ -9,4 +9,5 @@ package com.mapbox.maps
 )
 @Retention(AnnotationRetention.BINARY)
 @Target(AnnotationTarget.CLASS, AnnotationTarget.FUNCTION, AnnotationTarget.PROPERTY)
+@MustBeDocumented
 annotation class MapboxExperimental
