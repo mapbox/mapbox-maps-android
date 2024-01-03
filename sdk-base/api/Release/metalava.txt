@@ -34,7 +34,7 @@ package com.mapbox.maps {
     ctor public MapboxConcurrentGeometryModificationException(String exceptionText, String sourceId);
   }
 
-  @kotlin.RequiresOptIn(level=kotlin.RequiresOptIn.Level.WARNING, message="This API is experimental. It may be changed in the future without notice.") @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention.BINARY) @kotlin.annotation.Target(allowedTargets={kotlin.annotation.AnnotationTarget.CLASS, kotlin.annotation.AnnotationTarget.FUNCTION, kotlin.annotation.AnnotationTarget.PROPERTY}) public @interface MapboxExperimental {
+  @kotlin.RequiresOptIn(level=kotlin.RequiresOptIn.Level.WARNING, message="This API is experimental. It may be changed in the future without notice.") @kotlin.annotation.MustBeDocumented @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention.BINARY) @kotlin.annotation.Target(allowedTargets={kotlin.annotation.AnnotationTarget.CLASS, kotlin.annotation.AnnotationTarget.FUNCTION, kotlin.annotation.AnnotationTarget.PROPERTY}) public @interface MapboxExperimental {
   }
 
   public interface MapboxLifecycleObserver {
