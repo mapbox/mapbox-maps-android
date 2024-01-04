@@ -3,7 +3,8 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
-# 11.1.0-rc.1
+
+# 11.1.0-rc.1 January 04, 2024
 ## Bug fixes 🐞
 * Fix possible rendering artifacts on startup when `ContextMode.SHARED` is used.
 * Fix regression introduced in v11.1.0-beta.1 where only last added widget was rendered.
@@ -17,6 +18,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v11.1.0-rc.1 and common to v24.1.0-rc.1.
+
 
 # 11.1.0-beta.1 December 19, 2023
 ## Features ✨ and improvements 🏁
