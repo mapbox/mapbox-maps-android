@@ -6,7 +6,17 @@ Mapbox welcomes participation and contributions from everyone.
 # 11.1.0-rc.1
 ## Bug fixes 🐞
 * Fix possible rendering artifacts on startup when `ContextMode.SHARED` is used.
-* Fix regression introduced in v11.1.0-beta.1 when only last added widget was rendered.
+* Fix regression introduced in v11.1.0-beta.1 where only last added widget was rendered.
+* Fix wrong camera positions while using `setBounds`.
+* Fix missing IDs of flat light types when configured through the `setLights` API.
+* Reload image dependent tiles when sprites are loaded.
+* Fix an issue where memory use would grow continuously with Z-offset enabled symbol layers.
+* Fix crash when using Dynamic View Annotation with location indicator enabled but visibility is turned from visible to none.
+* Fix `getStyleSourceProperties()` API for `RasterArray` source.
+* Fix unreliable position update of View Annotations.
+
+## Dependencies
+* Update gl-native to v11.1.0-rc.1 and common to v24.1.0-rc.1.
 
 # 11.1.0-beta.1 December 19, 2023
 ## Features ✨ and improvements 🏁
