@@ -115,8 +115,8 @@ object Versions {
   const val mapboxGestures = "0.9.1" // Required to support compile SDK 30
   const val mapboxJavaServices = "5.4.1"
   const val mapboxBase = "0.8.0"
-  const val mapboxGlNative = "10.16.3"
-  const val mapboxCommon = "23.8.5"
+  const val mapboxGlNative = "10.16.4"
+  const val mapboxCommon = "23.8.6"
   const val androidxCore = "1.6.0" // Latest version that supports compile SDK 30
   const val androidxFragmentTesting = "1.3.6" // Latest version that supports compile SDK 30
   const val androidxAnnotation = "1.1.0"

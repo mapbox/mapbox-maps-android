@@ -3,11 +3,20 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # 10.16.4
-## ## Features ✨ and improvements 🏁
+## Features ✨ and improvements 🏁
 * Improve performance of `StyleInterface.localizeLabels` method.
 
 ## Bug fixes 🐞
 * Fix regression introduced in v10.16.3 when only last added widget was rendered.
+* Fix tile flickering with enabled terrain.
+* Fix race condition on repeated style transitions, when the transition fails for some layers.
+* Fix wrong camera positions while using `setBounds`.
+* Reload image dependent tiles when sprites are loaded.
+* Exclude duplicated `tileID` in `MapboxMap.tileCover` querying results.
+* Fix artefacts at style transition by using a more robust approach for the data-driven properties updates.
+
+## Dependencies
+* Update gl-native to v10.16.4 and common to v23.8.6.
 
 # 10.16.3 December 08, 2023
 ## Bug fixes 🐞
