@@ -4,6 +4,43 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 11.1.0
+## Features ✨ and improvements 🏁
+* Define minCompileSdkVersion=31 for Maps SDK libraries.
+* Introduce `FillExtrusionLayer.fillExtrusionEmissiveStrength`, `HillshadeLayer.hillshadeEmissiveStrength` and `RasterLayer.rasterEmissiveStrength` properties.
+* Introduce `RasterLayer.rasterArrayBand` property.
+* Improve performance of `StyleInterface.localizeLabels` method.
+* Introduce `RasterArraySource` with read only property `RasterArraySource.rasterLayers`, which can be used in combination with `RasterLayer.sourceLayer` and `RasterLayer.rasterArrayBand`.
+* Improve error handling for `UnknownNativeException`, more specific error message will be thrown instead.
+* Support landmark tilesets with compressed textures for improved tile load performance.
+* Improve performance of changing layers' properties.
+
+## Bug fixes 🐞
+* Fix `MapSurface` rendering issue when widgets are used.
+* Fix `coordinateBoundsForCameraUnwrapped` returning wrapped coordinates.
+* Fix inconsistent behavior in fill-extrusion color when using directional and ambient lights.
+* Downloaded but corrupted style is now invalidated and will be downloaded again on the next load.
+* Fixed missing tiles in the bottom part of the screen when looking from the mountain down to the valley.
+* Do not emit slot missing warnings if style imports are not fully loaded.
+* Fixed wrong dem tile selection from elevation snapshots in rare cases.
+* Fixed tile flickering with enabled terrain.
+* Add missing properties, i.e. `array`, `values`, `maxValue`, `minValue`, `stepValue`, `metadata` when using `getStyleImportSchema` API, if they are present in the original schema.
+* Exclude duplicated `tileID` in `MapboxMap.tileCover` querying results.
+* Fix race condition on repeated style transitions, when the transition fails for some layers.
+* Allow style schema to control imported fragment configs.
+* Fix possible rendering artifacts on startup when `ContextMode.SHARED` is used.
+* Fix wrong camera positions while using `setBounds`.
+* Fix missing IDs of flat light types when configured through the `setLights` API.
+* Reload image dependent tiles when sprites are loaded.
+* Fix an issue where memory use would grow continuously with Z-offset enabled symbol layers.
+* Fix crash when using Dynamic View Annotation with location indicator enabled but visibility is turned from visible to none.
+* Fix `getStyleSourceProperties()` API for `RasterArray` source.
+* Fix unreliable position update of View Annotations.
+* Fix GeoJSON partial updates when there is an error during update followed by multiple update calls.
+
+## Dependencies
+* Update gl-native to v11.1.0 and common to v24.1.0.
+
 # 11.1.0-rc.1 January 04, 2024
 ## Bug fixes 🐞
 * Fix possible rendering artifacts on startup when `ContextMode.SHARED` is used.
