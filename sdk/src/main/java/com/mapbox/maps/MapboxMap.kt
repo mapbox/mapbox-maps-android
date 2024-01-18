@@ -509,9 +509,11 @@ class MapboxMap :
   }
 
   /**
-   * Notify map about gesture being in progress.
+   * Tells the map rendering engine that there is currently a gesture in progress. This
+   * affects how the map renders labels, as it will use different texture filters if a gesture
+   * is ongoing.
    *
-   * @param inProgress True if gesture is in progress
+   * @param inProgress The `boolean` value representing if a gesture is in progress.
    */
   override fun setGestureInProgress(inProgress: Boolean) {
     checkNativeMap("setGestureInProgress")
@@ -2062,7 +2064,7 @@ class MapboxMap :
   }
 
   /**
-   * Sets the map `center altitude mode` that defines behavior of the center point
+   * Sets the map [MapCenterAltitudeMode] that defines behavior of the center point
    * altitude for all subsequent camera manipulations.
    *
    * Note: any gesture changing the map camera will set [MapCenterAltitudeMode.TERRAIN]
@@ -2071,6 +2073,16 @@ class MapboxMap :
   override fun setCenterAltitudeMode(mode: MapCenterAltitudeMode) {
     checkNativeMap("setCenterAltitudeMode")
     nativeMap.setCenterAltitudeMode(mode)
+  }
+
+  /**
+   * Returns the map's [MapCenterAltitudeMode].
+   *
+   * @return The map's [MapCenterAltitudeMode].
+   */
+  override fun getCenterAltitudeMode(): MapCenterAltitudeMode {
+    checkNativeMap("getCenterAltitudeMode")
+    return nativeMap.getCenterAltitudeMode()
   }
 
   /**

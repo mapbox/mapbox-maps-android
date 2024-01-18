@@ -7,9 +7,11 @@ import com.mapbox.maps.*
  */
 interface MapTransformDelegate {
   /**
-   * Notify map about gesture being in progress.
+   * Tells the map rendering engine that there is currently a gesture in progress. This
+   * affects how the map renders labels, as it will use different texture filters if a gesture
+   * is ongoing.
    *
-   * @param inProgress True if gesture is in progress
+   * @param inProgress The `boolean` value representing if a gesture is in progress.
    */
   fun setGestureInProgress(inProgress: Boolean)
 

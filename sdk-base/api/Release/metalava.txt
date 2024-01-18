@@ -1599,6 +1599,7 @@ package com.mapbox.maps.plugin.delegates {
     method public java.util.List<com.mapbox.maps.CoordinateInfo> coordinatesInfoForPixels(java.util.List<com.mapbox.maps.ScreenCoordinate> pixels);
     method public com.mapbox.maps.CameraBounds getBounds();
     method public com.mapbox.maps.CameraState getCameraState();
+    method public com.mapbox.maps.MapCenterAltitudeMode getCenterAltitudeMode();
     method public com.mapbox.maps.FreeCameraOptions getFreeCameraOptions();
     method public com.mapbox.maps.ScreenCoordinate pixelForCoordinate(com.mapbox.geojson.Point coordinate);
     method public java.util.List<com.mapbox.maps.ScreenCoordinate> pixelsForCoordinates(java.util.List<com.mapbox.geojson.Point> coordinates);

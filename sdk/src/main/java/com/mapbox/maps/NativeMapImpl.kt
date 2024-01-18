@@ -651,4 +651,8 @@ internal class NativeMapImpl(val map: Map) {
   fun setCenterAltitudeMode(mode: MapCenterAltitudeMode) {
     map.setCenterAltitudeMode(mode)
   }
+
+  fun getCenterAltitudeMode(): MapCenterAltitudeMode {
+    return map.centerAltitudeMode
+  }
 }

@@ -1,7 +1,5 @@
 package com.mapbox.maps.plugin.gestures
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
 import android.content.Context
 import android.content.res.Resources
@@ -13,6 +11,8 @@ import android.view.MotionEvent
 import androidx.annotation.RestrictTo
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.Companion.PRIVATE
+import androidx.core.animation.doOnEnd
+import androidx.core.animation.doOnStart
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import com.mapbox.android.gestures.*
 import com.mapbox.maps.*
@@ -29,7 +29,6 @@ import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.plugin.gestures.generated.GesturesAttributeParser
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettings
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettingsBase
-import com.mapbox.maps.threading.AnimationThreadController.postOnMainThread
 import java.util.*
 import java.util.concurrent.CopyOnWriteArraySet
 import kotlin.math.*
@@ -81,8 +80,6 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
   private var screenHeight: Double = 0.0
   private var startZoom: Double = 0.0
   private var scaleCachedAnchor: ScreenCoordinate? = null
-  private var flingStarted = false
-  private var gestureStarted = false
 
   // Rotate
   private var minimumScaleSpanWhenRotating: Float = 0f
@@ -98,27 +95,7 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
   private val scheduledAnimators = ArrayList<ValueAnimator>()
   private var gesturesInterpolator = LinearOutSlowInInterpolator()
 
-  private fun notifyCoreGestureStarted() {
-    if (!gestureStarted) {
-      gestureStarted = true
-      mapTransformDelegate.setGestureInProgress(true)
-      mapCameraManagerDelegate.setCenterAltitudeMode(MapCenterAltitudeMode.SEA)
-    }
-  }
-
-  private fun notifyCoreGestureEnded() {
-    // ACTION_UP or ACTION_CANCEL may be triggered but there was no actual gesture -
-    // then we don't have to call native functions to avoid triggering extra MAP_IDLE event
-    if (gestureStarted) {
-      // fling animation starts before ACTION_UP or ACTION_CANCEL so it's important to retain SEA elevation
-      // for the fling to avoid bumpiness
-      if (!flingStarted) {
-        mapCameraManagerDelegate.setCenterAltitudeMode(MapCenterAltitudeMode.TERRAIN)
-      }
-      mapTransformDelegate.setGestureInProgress(false)
-      gestureStarted = false
-    }
-  }
+  private lateinit var coreGesturesHandler: CoreGesturesHandler
 
   /**
    * Cancels scheduled velocity animations if user doesn't lift fingers within [SCHEDULED_ANIMATION_TIMEOUT]
@@ -283,7 +260,7 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
 
       MotionEvent.ACTION_UP -> {
         doubleTapFinished()
-        notifyCoreGestureEnded()
+        coreGesturesHandler.notifyCoreTouchEnded()
         if (scheduledAnimators.isNotEmpty()) {
           // Start all awaiting velocity animations
           animationsTimeoutHandler.removeCallbacksAndMessages(null)
@@ -297,7 +274,7 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
 
       MotionEvent.ACTION_CANCEL -> {
         scheduledAnimators.clear()
-        notifyCoreGestureEnded()
+        coreGesturesHandler.notifyCoreTouchEnded()
         doubleTapFinished()
       }
     }
@@ -594,7 +571,7 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
   internal fun handleScale(detector: StandardScaleGestureDetector): Boolean {
     val focalPoint = getScaleFocalPoint(detector)
     scaleCachedAnchor = cameraAnimationsPlugin.anchor
-    notifyCoreGestureStarted()
+    coreGesturesHandler.notifyCoreGestureStarted()
     if (quickZoom) {
       val pixelDeltaChange = abs(detector.currentEvent.y - doubleTapFocalPoint.y)
       val zoomedOut = detector.currentEvent.y < doubleTapFocalPoint.y
@@ -788,13 +765,8 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
       interpolator = rotateInterpolator
       duration = animationTime
     }
-    bearingAnimator.addListener(
-      object : AnimatorListenerAdapter() {
-        override fun onAnimationStart(animation: Animator) {
-          mapCameraManagerDelegate.setCenterAltitudeMode(MapCenterAltitudeMode.SEA)
-        }
-      }
-    )
+
+    bearingAnimator.addListener(coreGesturesHandler.coreGestureAnimatorHandler)
 
     val screenCoordinate = ScreenCoordinate(animationFocalPoint.x, animationFocalPoint.y)
     val anchorAnimator = cameraAnimationsPlugin.createAnchorAnimator(
@@ -807,14 +779,8 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
       duration = animationTime
     }
 
-    anchorAnimator.addListener(
-      object : AnimatorListenerAdapter() {
-        override fun onAnimationEnd(animation: Animator) {
-          mapCameraManagerDelegate.setCenterAltitudeMode(MapCenterAltitudeMode.TERRAIN)
-          cameraAnimationsPlugin.anchor = rotateCachedAnchor
-        }
-      }
-    )
+    anchorAnimator.doOnEnd { cameraAnimationsPlugin.anchor = rotateCachedAnchor }
+
     return arrayOf(bearingAnimator, anchorAnimator)
   }
 
@@ -871,7 +837,7 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
     rotateCachedAnchor = cameraAnimationsPlugin.anchor
     val bearing = currentBearing + rotationDegreesSinceLast
     val focalPoint = getRotateFocalPoint(detector)
-    notifyCoreGestureStarted()
+    coreGesturesHandler.notifyCoreGestureStarted()
     // Rotate the map
     if (internalSettings.simultaneousRotateAndPinchToZoomEnabled) {
       val bearingAnimator =
@@ -1005,11 +971,12 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
       pitch - (SHOVE_PIXEL_CHANGE_FACTOR * (deltaPixelsSinceLast))
     pitch = clamp(optimizedPitch, MINIMUM_PITCH, MAXIMUM_PITCH)
     if (cameraPaddingChanged || sizeChanged) {
-      cameraCenterScreenCoordinate = mapCameraManagerDelegate.pixelForCoordinate(mapCameraManagerDelegate.cameraState.center)
+      cameraCenterScreenCoordinate =
+        mapCameraManagerDelegate.pixelForCoordinate(mapCameraManagerDelegate.cameraState.center)
       cameraPaddingChanged = false
       sizeChanged = false
     }
-    notifyCoreGestureStarted()
+    coreGesturesHandler.notifyCoreGestureStarted()
     cameraAnimationsPlugin.easeTo(
       CameraOptions.Builder().anchor(cameraCenterScreenCoordinate).pitch(pitch).build(),
       IMMEDIATE_ANIMATION_OPTIONS
@@ -1072,14 +1039,12 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
       duration = animationTime
     }
 
-    zoomAnimator.addListener(object : AnimatorListenerAdapter() {
-      override fun onAnimationStart(animation: Animator) {
-        super.onAnimationStart(animation)
-        // notify scale gesture started when zoom animation (first registered) starts.
-        notifyOnScaleListeners(gesturesManager.standardScaleGestureDetector)
-        mapCameraManagerDelegate.setCenterAltitudeMode(MapCenterAltitudeMode.SEA)
-      }
-    })
+    zoomAnimator.doOnStart {
+      // notify scale gesture started when zoom animation (first registered) starts.
+      notifyOnScaleListeners(gesturesManager.standardScaleGestureDetector)
+    }
+
+    zoomAnimator.addListener(coreGesturesHandler.coreGestureAnimatorHandler)
 
     val anchorAnimator = cameraAnimationsPlugin.createAnchorAnimator(
       options = cameraAnimatorOptions(animationFocalPoint) {
@@ -1091,15 +1056,12 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
       duration = animationTime
     }
 
-    anchorAnimator.addListener(object : AnimatorListenerAdapter() {
+    anchorAnimator.doOnEnd {
+      // notify scale gesture ended when anchor animation (last registered) finished.
+      notifyOnScaleEndListeners(gesturesManager.standardScaleGestureDetector)
+      cameraAnimationsPlugin.anchor = scaleCachedAnchor
+    }
 
-      override fun onAnimationEnd(animation: Animator) {
-        // notify scale gesture ended when anchor animation (last registered) finished.
-        notifyOnScaleEndListeners(gesturesManager.standardScaleGestureDetector)
-        mapCameraManagerDelegate.setCenterAltitudeMode(MapCenterAltitudeMode.TERRAIN)
-        cameraAnimationsPlugin.anchor = scaleCachedAnchor
-      }
-    })
     return arrayOf(zoomAnimator, anchorAnimator)
   }
 
@@ -1274,6 +1236,7 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
       pitch < NORMAL_MAX_PITCH -> {
         pitch / 10.0
       }
+
       pitch in NORMAL_MAX_PITCH..MAXIMUM_PITCH -> {
         val a = ln(NORMAL_MAX_PITCH / 10.0)
         val b = ln(MAX_FLING_PITCH_FACTOR)
@@ -1281,6 +1244,7 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
         // exp(b) = pitch
         exp((b - a) * (pitch - NORMAL_MAX_PITCH) / (MAXIMUM_PITCH - NORMAL_MAX_PITCH) + a)
       }
+
       else -> 0.0
     }
     val pitchFactor =
@@ -1310,24 +1274,7 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
         duration(animationTime)
         interpolator(gesturesInterpolator)
       },
-      animatorListener = object : AnimatorListenerAdapter() {
-
-        override fun onAnimationStart(animation: Animator) {
-          super.onAnimationStart(animation)
-          postOnMainThread {
-            flingStarted = true
-            mapCameraManagerDelegate.setCenterAltitudeMode(MapCenterAltitudeMode.SEA)
-          }
-        }
-
-        override fun onAnimationEnd(animation: Animator) {
-          super.onAnimationEnd(animation)
-          postOnMainThread {
-            flingStarted = false
-            mapCameraManagerDelegate.setCenterAltitudeMode(MapCenterAltitudeMode.TERRAIN)
-          }
-        }
-      }
+      animatorListener = coreGesturesHandler.coreGestureAnimatorHandler
     )
     return true
   }
@@ -1438,7 +1385,7 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
       val toX = fromX - resolvedDistanceX
       val toY = fromY - resolvedDistanceY
 
-      notifyCoreGestureStarted()
+      coreGesturesHandler.notifyCoreGestureStarted()
       val cameraOptions = mapCameraManagerDelegate.cameraForDrag(
         ScreenCoordinate(fromX, fromY),
         ScreenCoordinate(toX, toY)
@@ -1752,6 +1699,7 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
     this.cameraAnimationsPlugin.addCameraPaddingChangeListener {
       cameraPaddingChanged = true
     }
+    coreGesturesHandler = CoreGesturesHandler(mapTransformDelegate, mapCameraManagerDelegate)
   }
 
   /**
@@ -1771,6 +1719,7 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
 
   private companion object {
     private const val TAG = "Gestures"
+
     // immediate options (duration = 0) are handled by Mapbox animation plugin instantly
     private val IMMEDIATE_ANIMATION_OPTIONS = mapAnimationOptions {
       duration(0)

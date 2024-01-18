@@ -3,7 +3,11 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
+## Features ✨ and improvements 🏁
+* Introduce `MapboxMap.getCenterAltitudeMode` API.
 
+## Bug fixes 🐞
+* Retain previous `CenterAltitudeMode` after gestures are finished.
 
 # 11.1.0 January 17, 2024
 ## Features ✨ and improvements 🏁

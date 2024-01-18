@@ -42,10 +42,12 @@ class GesturesPluginTest {
   private val mapDelegateProvider: MapDelegateProvider = mockk(relaxUnitFun = true)
 
   private val mapTransformDelegate: MapTransformDelegate = mockk(relaxUnitFun = true)
-  private val mapCameraManagerDelegate: MapCameraManagerDelegate = mockk(relaxUnitFun = true)
+  private val mapCameraManagerDelegate: MapCameraManagerDelegate = mockk()
   private val mapPluginProviderDelegate: MapPluginProviderDelegate = mockk(relaxUnitFun = true)
   private val mapProjectionDelegate: MapProjectionDelegate = mockk(relaxUnitFun = true)
   private val cameraAnimationsPlugin: CameraAnimationsPlugin = mockk(relaxed = true)
+
+  private val mapCenterAltitudeMode: MapCenterAltitudeMode = mockk()
 
   private val gesturesManager: AndroidGesturesManager = mockk(relaxed = true)
   private var rotateGestureDetector: RotateGestureDetector = mockk(relaxUnitFun = true)
@@ -94,6 +96,8 @@ class GesturesPluginTest {
       0.0,
       -10.0
     )
+    every { mapCameraManagerDelegate.getCenterAltitudeMode() } returns mapCenterAltitudeMode
+    every { mapCameraManagerDelegate.setCenterAltitudeMode(any()) } just runs
     val style = mockk<MapboxStyleManager>()
     every { style.getStyleProjectionProperty("name") } returns StylePropertyValue(
       Value.valueOf("mercator"),
@@ -176,6 +180,7 @@ class GesturesPluginTest {
   fun verifyIgnoreEvent() {
     val touchHandled = presenter.onTouchEvent(null)
     verify(exactly = 0) { mapTransformDelegate.setGestureInProgress(true) }
+    verify(exactly = 0) { mapCameraManagerDelegate.setCenterAltitudeMode(any()) }
     assertFalse(touchHandled)
   }
 
@@ -485,6 +490,13 @@ class GesturesPluginTest {
       )
     }
     verify(exactly = 1) { cameraAnimationsPlugin.easeTo(any(), any(), any()) }
+    verify(exactly = 2) { mapCameraManagerDelegate.getCenterAltitudeMode() }
+    verify(exactly = 1) { mapTransformDelegate.setGestureInProgress(true) }
+    verify(exactly = 1) { mapCameraManagerDelegate.setCenterAltitudeMode(MapCenterAltitudeMode.SEA) }
+
+    presenter.onTouchEvent(obtainMotionEventAction(ACTION_UP))
+    verify(exactly = 1) { mapCameraManagerDelegate.setCenterAltitudeMode(mapCenterAltitudeMode) }
+    verify(exactly = 1) { mapTransformDelegate.setGestureInProgress(false) }
   }
 
   @Test
@@ -536,6 +548,13 @@ class GesturesPluginTest {
       )
     }
     verify(exactly = 2) { cameraAnimationsPlugin.easeTo(any(), any(), any()) }
+    verify(exactly = 2) { mapCameraManagerDelegate.getCenterAltitudeMode() }
+    verify(exactly = 1) { mapTransformDelegate.setGestureInProgress(true) }
+    verify(exactly = 1) { mapCameraManagerDelegate.setCenterAltitudeMode(MapCenterAltitudeMode.SEA) }
+
+    presenter.onTouchEvent(obtainMotionEventAction(ACTION_UP))
+    verify(exactly = 1) { mapCameraManagerDelegate.setCenterAltitudeMode(mapCenterAltitudeMode) }
+    verify(exactly = 1) { mapTransformDelegate.setGestureInProgress(false) }
   }
 
   @Test
@@ -648,6 +667,13 @@ class GesturesPluginTest {
     assert(result)
     // setMoveDetectorEnabled
     verify(exactly = 1) { cameraAnimationsPlugin.easeTo(any(), any(), any()) }
+    verify(exactly = 2) { mapCameraManagerDelegate.getCenterAltitudeMode() }
+    verify(exactly = 1) { mapTransformDelegate.setGestureInProgress(true) }
+    verify(exactly = 1) { mapCameraManagerDelegate.setCenterAltitudeMode(MapCenterAltitudeMode.SEA) }
+
+    presenter.onTouchEvent(obtainMotionEventAction(ACTION_UP))
+    verify(exactly = 1) { mapCameraManagerDelegate.setCenterAltitudeMode(mapCenterAltitudeMode) }
+    verify(exactly = 1) { mapTransformDelegate.setGestureInProgress(false) }
   }
 
   @Test
@@ -674,6 +700,13 @@ class GesturesPluginTest {
     assert(result)
     verify(exactly = 1) { cameraAnimationsPlugin.playAnimatorsTogether(any(), zoomAnimator) }
     verify(exactly = 1) { listener.onScale(any()) }
+    verify(exactly = 2) { mapCameraManagerDelegate.getCenterAltitudeMode() }
+    verify(exactly = 1) { mapTransformDelegate.setGestureInProgress(true) }
+    verify(exactly = 1) { mapCameraManagerDelegate.setCenterAltitudeMode(MapCenterAltitudeMode.SEA) }
+
+    presenter.onTouchEvent(obtainMotionEventAction(ACTION_UP))
+    verify(exactly = 1) { mapCameraManagerDelegate.setCenterAltitudeMode(mapCenterAltitudeMode) }
+    verify(exactly = 1) { mapTransformDelegate.setGestureInProgress(false) }
   }
 
   @Test
@@ -708,6 +741,13 @@ class GesturesPluginTest {
     assert(result)
     // setMoveDetectorEnabled
     verify(exactly = 1) { cameraAnimationsPlugin.easeTo(any(), any(), any()) }
+    verify(exactly = 2) { mapCameraManagerDelegate.getCenterAltitudeMode() }
+    verify(exactly = 1) { mapTransformDelegate.setGestureInProgress(true) }
+    verify(exactly = 1) { mapCameraManagerDelegate.setCenterAltitudeMode(MapCenterAltitudeMode.SEA) }
+
+    presenter.onTouchEvent(obtainMotionEventAction(ACTION_UP))
+    verify(exactly = 1) { mapCameraManagerDelegate.setCenterAltitudeMode(mapCenterAltitudeMode) }
+    verify(exactly = 1) { mapTransformDelegate.setGestureInProgress(false) }
   }
 
   @Test
@@ -800,6 +840,14 @@ class GesturesPluginTest {
     val result = presenter.handleRotate(rotateGestureDetector, 34.0f)
     assert(result)
     verify(exactly = 1) { cameraAnimationsPlugin.easeTo(any(), any(), any()) }
+
+    verify(exactly = 2) { mapCameraManagerDelegate.getCenterAltitudeMode() }
+    verify(exactly = 1) { mapTransformDelegate.setGestureInProgress(true) }
+    verify(exactly = 1) { mapCameraManagerDelegate.setCenterAltitudeMode(MapCenterAltitudeMode.SEA) }
+
+    presenter.onTouchEvent(obtainMotionEventAction(ACTION_UP))
+    verify(exactly = 1) { mapCameraManagerDelegate.setCenterAltitudeMode(mapCenterAltitudeMode) }
+    verify(exactly = 1) { mapTransformDelegate.setGestureInProgress(false) }
   }
 
   @Test
@@ -820,6 +868,14 @@ class GesturesPluginTest {
     assert(result)
     verify(exactly = 1) { cameraAnimationsPlugin.playAnimatorsTogether(any(), bearingAnimator) }
     verify(exactly = 1) { listener.onRotate(any()) }
+
+    verify(exactly = 2) { mapCameraManagerDelegate.getCenterAltitudeMode() }
+    verify(exactly = 1) { mapTransformDelegate.setGestureInProgress(true) }
+    verify(exactly = 1) { mapCameraManagerDelegate.setCenterAltitudeMode(MapCenterAltitudeMode.SEA) }
+
+    presenter.onTouchEvent(obtainMotionEventAction(ACTION_UP))
+    verify(exactly = 1) { mapCameraManagerDelegate.setCenterAltitudeMode(mapCenterAltitudeMode) }
+    verify(exactly = 1) { mapTransformDelegate.setGestureInProgress(false) }
   }
 
   @Test
@@ -888,6 +944,35 @@ class GesturesPluginTest {
     }
     assertEquals(resultCameraOptions.captured.pitch!!, 2.5, EPS)
     assertEquals(resultCameraOptions.captured.anchor, cameraCenterScreenCoordinate)
+
+    verify(exactly = 2) { mapCameraManagerDelegate.getCenterAltitudeMode() }
+    verify(exactly = 1) { mapTransformDelegate.setGestureInProgress(true) }
+    verify(exactly = 1) { mapCameraManagerDelegate.setCenterAltitudeMode(MapCenterAltitudeMode.SEA) }
+
+    presenter.onTouchEvent(obtainMotionEventAction(ACTION_UP))
+    verify(exactly = 1) { mapCameraManagerDelegate.setCenterAltitudeMode(mapCenterAltitudeMode) }
+    verify(exactly = 1) { mapTransformDelegate.setGestureInProgress(false) }
+  }
+
+  @Test
+  fun verifyMapCenterAltitudeModeIsSEABeforeGesture() {
+    every { mapCameraManagerDelegate.getCenterAltitudeMode() } returns MapCenterAltitudeMode.SEA
+    val moveGestureDetector = mockk<MoveGestureDetector>()
+    every {
+      moveGestureDetector.focalPoint
+    } returns PointF(0.0f, 0.0f)
+
+    every { moveGestureDetector.pointersCount } returns 1
+    val handled = presenter.handleMove(moveGestureDetector, 50.0f, 50.0f)
+    // verify single finger pan gesture should work
+    assert(handled)
+    verify(exactly = 2) { mapCameraManagerDelegate.getCenterAltitudeMode() }
+    verify(exactly = 1) { mapTransformDelegate.setGestureInProgress(true) }
+    verify(exactly = 0) { mapCameraManagerDelegate.setCenterAltitudeMode(MapCenterAltitudeMode.SEA) }
+
+    presenter.onTouchEvent(obtainMotionEventAction(ACTION_UP))
+    verify(exactly = 0) { mapCameraManagerDelegate.setCenterAltitudeMode(mapCenterAltitudeMode) }
+    verify(exactly = 1) { mapTransformDelegate.setGestureInProgress(false) }
   }
 
   @Test
@@ -1092,6 +1177,7 @@ class IsPointAboveHorizonTest(
     every { mapTransformDelegate.getSize() } returns testMapSize
     every { mapCameraManagerDelegate.coordinateForPixel(any()) } returns Point.fromLngLat(0.0, 0.0)
     every { mapCameraManagerDelegate.pixelForCoordinate(any()) } returns testPixelForCoordinate
+    every { mapCameraManagerDelegate.getCenterAltitudeMode() } returns MapCenterAltitudeMode.TERRAIN
 
     presenter.onDelegateProvider(mapDelegateProvider)
     presenter.initialize()
@@ -1327,6 +1413,7 @@ class FlingGestureTest(
       0.0,
       -10.0
     )
+    every { mapCameraManagerDelegate.getCenterAltitudeMode() } returns MapCenterAltitudeMode.TERRAIN
     val style = mockk<MapboxStyleManager>()
     every { style.getStyleProjectionProperty("name") } returns StylePropertyValue(
       Value.valueOf("mercator"),

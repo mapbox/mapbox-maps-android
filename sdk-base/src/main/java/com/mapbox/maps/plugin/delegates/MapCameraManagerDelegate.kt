@@ -330,13 +330,20 @@ interface MapCameraManagerDelegate {
   fun getBounds(): CameraBounds
 
   /**
-   * Sets the map `center altitude mode` that defines behavior of the center point
+   * Sets the map [MapCenterAltitudeMode] that defines behavior of the center point
    * altitude for all subsequent camera manipulations.
    *
    * Note: any gesture changing the map camera will set [MapCenterAltitudeMode.TERRAIN]
    * when finished.
    */
   fun setCenterAltitudeMode(mode: MapCenterAltitudeMode)
+
+  /**
+   * Returns the map's [MapCenterAltitudeMode].
+   *
+   * @return The map's [MapCenterAltitudeMode].
+   */
+  fun getCenterAltitudeMode(): MapCenterAltitudeMode
 
   /**
    * Calculates a target point where the camera should move after dragging from
