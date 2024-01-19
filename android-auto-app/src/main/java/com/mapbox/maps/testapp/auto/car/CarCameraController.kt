@@ -9,6 +9,7 @@ import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.extension.androidauto.DefaultMapboxCarMapGestureHandler
 import com.mapbox.maps.extension.androidauto.MapboxCarMapObserver
 import com.mapbox.maps.extension.androidauto.MapboxCarMapSurface
+import com.mapbox.maps.plugin.PuckBearing
 import com.mapbox.maps.plugin.animation.camera
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorBearingChangedListener
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener
@@ -29,7 +30,7 @@ class CarCameraController : MapboxCarMapObserver {
   private val changePositionListener = OnIndicatorPositionChangedListener { point ->
     lastGpsLocation = point
     if (isTrackingPuck) {
-      surface?.mapSurface?.getMapboxMap()?.setCamera(
+      surface?.mapSurface?.mapboxMap?.setCamera(
         cameraOptions {
           center(point)
           padding(insets)
@@ -40,7 +41,7 @@ class CarCameraController : MapboxCarMapObserver {
 
   private val changeBearingListener = OnIndicatorBearingChangedListener { bearing ->
     if (isTrackingPuck) {
-      surface?.mapSurface?.getMapboxMap()?.setCamera(
+      surface?.mapSurface?.mapboxMap?.setCamera(
         cameraOptions {
           bearing(bearing)
         }
@@ -66,7 +67,7 @@ class CarCameraController : MapboxCarMapObserver {
   override fun onAttached(mapboxCarMapSurface: MapboxCarMapSurface) {
     super.onAttached(mapboxCarMapSurface)
     this.surface = mapboxCarMapSurface
-    mapboxCarMapSurface.mapSurface.getMapboxMap().setCamera(
+    mapboxCarMapSurface.mapSurface.mapboxMap.setCamera(
       cameraOptions {
         pitch(previousCameraState?.pitch ?: INITIAL_PITCH)
         zoom(previousCameraState?.zoom ?: INITIAL_ZOOM)
@@ -75,15 +76,16 @@ class CarCameraController : MapboxCarMapObserver {
     )
     with(mapboxCarMapSurface.mapSurface.location) {
       // Show a 3D location puck
-      locationPuck = CarLocationPuck.duckLocationPuckLowZoom
+      locationPuck = CarLocationPuck.duckLocationPuckConstantSize
       enabled = true
+      puckBearing = PuckBearing.HEADING
       addOnIndicatorPositionChangedListener(changePositionListener)
       addOnIndicatorBearingChangedListener(changeBearingListener)
     }
   }
 
   override fun onDetached(mapboxCarMapSurface: MapboxCarMapSurface) {
-    previousCameraState = mapboxCarMapSurface.mapSurface.getMapboxMap().cameraState
+    previousCameraState = mapboxCarMapSurface.mapSurface.mapboxMap.cameraState
     with(mapboxCarMapSurface.mapSurface.location) {
       removeOnIndicatorPositionChangedListener(changePositionListener)
       removeOnIndicatorBearingChangedListener(changeBearingListener)
@@ -119,7 +121,7 @@ class CarCameraController : MapboxCarMapObserver {
 
   private fun scaleEaseBy(delta: Double) {
     val mapSurface = surface?.mapSurface
-    val fromZoom = mapSurface?.getMapboxMap()?.cameraState?.zoom ?: return
+    val fromZoom = mapSurface?.mapboxMap?.cameraState?.zoom ?: return
     val toZoom = (fromZoom + delta).coerceIn(MIN_ZOOM_OUT, MAX_ZOOM_IN)
     mapSurface.camera.easeTo(cameraOptions { zoom(toZoom) })
   }
@@ -143,7 +145,7 @@ class CarCameraController : MapboxCarMapObserver {
     /**
      * When zooming the camera by a delta, this will prevent the camera from zooming further.
      */
-    private const val MIN_ZOOM_OUT = 6.0
+    private const val MIN_ZOOM_OUT = 0.0
 
     /**
      * When zooming the camera by a delta, this will prevent the camera from zooming further.

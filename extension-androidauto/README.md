@@ -32,12 +32,8 @@ allprojects {
 
 // In your build.gradle, add the extension with your other dependencies.
 dependencies {
-  implementation 'com.mapbox.extension:maps-androidauto:0.1.0'
-
-  // Pick your versions of Android Mapbox Map SDK
-  // Note that Android Auto extenison is compatibile with Maps SDK v10.0+, however some Android Auto features like Widgets requires Map SDK v10.4.0+
-  // See the detailed feature compatibility table below
-  implementation 'com.mapbox.maps:android:10.4.0'
+  // Note that the Mapbox Android Auto Extension depends on the entire Mapbox Maps SDK, it will bring the whole Mapbox Maps SDK with the same version as transitive dependency.
+  implementation 'com.mapbox.extension:maps-androidauto:11.1.0'
 }
 ```
 
@@ -153,25 +149,44 @@ AnimationThreadController.useMainThread()
 
 It is highly recommended to use background thread for animators just when it is absolutely necessary - when Xiaomi device is used and the map is running in background. You could refer to our official [example](../android-auto-app/src/main/java/com/mapbox/maps/testapp/auto/car/CarAnimationThreadController.kt) how to implement that.
 
+## Compatibility with Maps SDK v11
+
+From v11.1.0, Mapbox Android Auto Extension for Android is released as a separate module following the same release cadence with the main SDK and have a api dependency. The features list can be found below:
+
+| Features                   | Supported? |
+|----------------------------|------------|
+| Xiaomi animations          | ✅          |
+| Logo Widget                | ✅          |
+| Compass Widget             | ✅          |
+| Map rendering              | ✅          |
+| Runtime styling            | ✅          |
+| Camera animation           | ✅          |
+| Viewport plugin            | ✅          |
+| Location Component plugin  | ✅          |
+| Gestures(scroll and scale) | ✅          |
+| Annotation plugin          | ✅          |
+| View annotation plugin     | ❌          |
+| Scale bar plugin           | ❌          |
+| Attribution                | ❌          |
+
 ## Compatibility with Maps SDK v10
-The Android Auto extension is released separately from the Android Maps SDK v10 and has a compileOnly dependency. When using the Android Auto extension you need to include a compatible Maps SDK. The feature compatibility checklist can be found below.
 
-Below is the full feature compatibility table:
+The Android Auto extension before v0.5.0 is released separately from the Android Maps SDK v10 and has a compileOnly dependency. When using the Android Auto extension you need to include a compatible Maps SDK. The feature compatibility checklist can be found below.
 
-Features  | Supported? | Compatible Maps SDK version
-------------- | ------------- | -------------
-Xiaomi animations | ✅ | v10.9+
-Logo Widget | ✅ | v10.4+
-Compass Widget | ✅ | v10.4+
-Map rendering  | ✅ | v10.0+
-Runtime styling  | ✅ | v10.0+
-Camera animation | ✅ | v10.0+
-Viewport plugin | ✅ | v10.0+
-Location Component plugin | ✅ | v10.0+
-Gestures(scroll and scale) | ✅ | v10.0+
-Annotation plugin | ✅ | v10.0+
-View annotation plugin | ❌ | -
-Scale bar plugin | ❌ | -
-Attribution | ❌ | -
+| Features                   | Supported? | Compatible Maps SDK version |
+|----------------------------|------------|-----------------------------|
+| Xiaomi animations          | ✅          | v10.9+                      |
+| Logo Widget                | ✅          | v10.4+                      |
+| Compass Widget             | ✅          | v10.4+                      | 
+| Map rendering              | ✅          | v10.0+                      |
+| Runtime styling            | ✅          | v10.0+                      |
+| Camera animation           | ✅          | v10.0+                      |
+| Viewport plugin            | ✅          | v10.0+                      |
+| Location Component plugin  | ✅          | v10.0+                      |
+| Gestures(scroll and scale) | ✅          | v10.0+                      |
+| Annotation plugin          | ✅          | v10.0+                      |
+| View annotation plugin     | ❌          | -                           |
+| Scale bar plugin           | ❌          | -                           |
+| Attribution                | ❌          | -                           |
 
 View [LICENSE.md](LICENSE.md) for all dependencies used by this extension.

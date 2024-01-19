@@ -29,8 +29,6 @@ import com.mapbox.maps.MapboxExperimental
  * The internals of this class use [AppManager.setSurfaceCallback], which assumes there is a single
  * surface callback. Do not use setSurfaceCallback, and do not create multiple instances of
  * [MapboxCarMap].
- *
- * @since 1.0.0
  */
 class MapboxCarMap {
   private val carMapSurfaceOwner = CarMapSurfaceOwner()

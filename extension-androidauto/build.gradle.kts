@@ -18,14 +18,13 @@ android {
 }
 
 dependencies {
-  api(libs.android.autoMapboxMapSdk)
+  api(project(":sdk"))
   api(libs.googleCarAppLibrary)
   implementation(libs.kotlin)
   implementation(libs.androidx.coreKtx)
   implementation(libs.androidx.annotations)
 
   testImplementation(libs.bundles.base.dependenciesTests)
-  testImplementation(libs.android.autoMapboxMapSdk)
   androidTestImplementation(libs.bundles.base.dependenciesAndroidTests)
   detektPlugins(libs.detektFormatting)
 }

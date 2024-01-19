@@ -8,10 +8,9 @@ import com.mapbox.maps.plugin.animation.camera
  * This class contains the default map gestures. It Handles the gestures received from
  * [SurfaceCallback] and applies them to the [MapboxMap] camera. If you would like to customize
  * the map gestures, use [MapboxCarMap.setGestureHandler].
- *
- * @since 1.0.0
  */
 open class DefaultMapboxCarMapGestureHandler : MapboxCarMapGestureHandler {
+  private var gestureStarted = false
 
   /**
    * @see [MapboxCarMapGestureHandler.onScroll]
@@ -27,15 +26,15 @@ open class DefaultMapboxCarMapGestureHandler : MapboxCarMapGestureHandler {
     distanceX: Float,
     distanceY: Float
   ) {
-    with(mapboxCarMapSurface.mapSurface.getMapboxMap()) {
-      dragStart(visibleCenter)
+    with(mapboxCarMapSurface.mapSurface.mapboxMap) {
+      notifyCoreGestureStarted()
       val toCoordinate = ScreenCoordinate(
         visibleCenter.x - distanceX,
         visibleCenter.y - distanceY
       )
       logI(TAG, "scroll from $visibleCenter to $toCoordinate")
-      setCamera(getDragCameraOptions(visibleCenter, toCoordinate))
-      dragEnd()
+      setCamera(cameraForDrag(visibleCenter, toCoordinate))
+      notifyCoreGestureEnded()
     }
   }
 
@@ -74,7 +73,7 @@ open class DefaultMapboxCarMapGestureHandler : MapboxCarMapGestureHandler {
     scaleFactor: Float
   ) {
     with(mapboxCarMapSurface.mapSurface) {
-      val fromZoom = getMapboxMap().cameraState.zoom
+      val fromZoom = mapboxMap.cameraState.zoom
       val toZoom = fromZoom - (1.0 - scaleFactor.toDouble())
       val anchor = ScreenCoordinate(
         focusX.toDouble(),
@@ -90,8 +89,26 @@ open class DefaultMapboxCarMapGestureHandler : MapboxCarMapGestureHandler {
       if (scaleFactor == DOUBLE_TAP_SCALE_FACTOR) {
         camera.easeTo(cameraOptions)
       } else {
-        getMapboxMap().setCamera(cameraOptions)
+        mapboxMap.setCamera(cameraOptions)
       }
+    }
+  }
+
+  private fun MapboxMap.notifyCoreGestureStarted() {
+    if (!gestureStarted) {
+      gestureStarted = true
+      setGestureInProgress(true)
+      setCenterAltitudeMode(MapCenterAltitudeMode.SEA)
+    }
+  }
+
+  private fun MapboxMap.notifyCoreGestureEnded() {
+    // ACTION_UP or ACTION_CANCEL may be triggered but there was no actual gesture -
+    // then we don't have to call native functions to avoid triggering extra MAP_IDLE event
+    if (gestureStarted) {
+      setCenterAltitudeMode(MapCenterAltitudeMode.TERRAIN)
+      setGestureInProgress(false)
+      gestureStarted = false
     }
   }
 

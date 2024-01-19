@@ -339,7 +339,6 @@ class MapboxCarMapSessionInstallerTest {
       spyk(
         MapInitOptions(
           firstArg<CarContext>(),
-          resourceOptions = mockk(),
           mapOptions = contextMode?.let { MapOptions.Builder().contextMode(contextMode).build() }
             ?: MapOptions.Builder().build()
         )

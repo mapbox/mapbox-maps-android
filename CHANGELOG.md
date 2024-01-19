@@ -11,6 +11,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 # 11.1.0 January 17, 2024
 ## Features ✨ and improvements 🏁
+* From v11.1.0, Mapbox Android Auto Extension for Android is released as a separate module following the same release cadence with the main SDK, please refer to [this guide](extension-androidauto/README.md) to get started with Android Auto, and [v0.5.0 changelog](extension-androidauto/CHANGELOG-v0.5.0.md) for previous changelogs.
 * Define minCompileSdkVersion=31 for Maps SDK libraries.
 * Introduce `FillExtrusionLayer.fillExtrusionEmissiveStrength`, `HillshadeLayer.hillshadeEmissiveStrength` and `RasterLayer.rasterEmissiveStrength` properties.
 * Introduce `RasterLayer.rasterArrayBand` property.

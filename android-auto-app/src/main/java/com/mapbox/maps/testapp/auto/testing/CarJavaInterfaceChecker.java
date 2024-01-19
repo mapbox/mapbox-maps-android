@@ -12,11 +12,9 @@ import com.mapbox.maps.EdgeInsets;
 import com.mapbox.maps.MapInitOptions;
 import com.mapbox.maps.MapSurface;
 import com.mapbox.maps.MapboxExperimental;
-import com.mapbox.maps.ResourceOptions;
 import com.mapbox.maps.ScreenCoordinate;
-import com.mapbox.maps.extension.androidauto.CarMapSurfaceOwner;
-import com.mapbox.maps.extension.androidauto.MapboxCarMap;
 import com.mapbox.maps.extension.androidauto.DefaultMapboxCarMapGestureHandler;
+import com.mapbox.maps.extension.androidauto.MapboxCarMap;
 import com.mapbox.maps.extension.androidauto.MapboxCarMapEx;
 import com.mapbox.maps.extension.androidauto.MapboxCarMapGestureHandler;
 import com.mapbox.maps.extension.androidauto.MapboxCarMapObserver;
@@ -114,11 +112,7 @@ class CarJavaInterfaceChecker {
             .onCreated(observer1, observer2)
             .onStarted(observer1, observer2)
             .onResumed(observer1, observer2)
-            .install(carContext1 -> new MapInitOptions(
-                    carContext1,
-                    new ResourceOptions.Builder()
-                            .build())
-            );
+            .install(MapInitOptions::new);
   }
 
   private void screenInstaller(Screen screen, MapboxCarMap mapboxCarMap) {

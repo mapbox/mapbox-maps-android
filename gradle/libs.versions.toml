@@ -67,7 +67,6 @@ squareLeakCanary = "2.9.1"
 materialDesign = "1.2.0"
 googlePlayServicesLocation = "18.0.0"
 googleCarAppLibrary = "1.2.0"
-androidAutoMapboxMapSdk = "10.5.0"
 
 # Use kotlinCoroutines to 1.6.1 to be compatible with platform runtime.
 kotlinCoroutines = "1.6.1"
@@ -107,7 +106,6 @@ plugin-gradleVersions = { module = "com.github.ben-manes:gradle-versions-plugin"
 
 # Dependencies
 
-android-autoMapboxMapSdk = { module = "com.mapbox.maps:android", version.ref = "androidAutoMapboxMapSdk" }
 androidx-activityCompose = { module = "androidx.activity:activity-compose", version.ref = "androidxActivityCompose" }
 androidx-annotations = { module = "androidx.annotation:annotation", version.ref = "androidxAnnotation" }
 androidx-appCompat = { module = "androidx.appcompat:appcompat", version.ref = "androidxAppcompat" }

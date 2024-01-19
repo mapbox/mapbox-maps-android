@@ -8,8 +8,6 @@ import com.mapbox.maps.MapSurface
  * This contains the Android Auto head unit map information.
  * @see MapboxCarMap.registerObserver
  *
- * @since 1.0.0
- *
  * @property carContext reference to the context provided to the [MapboxCarMap]
  * @property mapSurface Mapbox controllable interface
  * @property surfaceContainer A container for the Surface created by the car.

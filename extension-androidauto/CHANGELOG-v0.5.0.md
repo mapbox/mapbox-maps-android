@@ -2,8 +2,7 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# main
-## Features ✨ and improvements 🏁
+# Please refer to [release notes](../CHANGELOG.md) in the main SDK for the latest Android Auto Extension related changes.
 
 # 0.5.0 November 16, 2022
 
