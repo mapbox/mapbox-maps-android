@@ -1,7 +1,8 @@
-package com.mapbox.maps.plugin.gestures
+package com.mapbox.maps.util
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import androidx.annotation.RestrictTo
 import com.mapbox.maps.MapCenterAltitudeMode
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
@@ -12,7 +13,8 @@ import com.mapbox.maps.threading.AnimationThreadController
  * Internal utility to handle gesture interactions with render engine.
  */
 @OptIn(MapboxExperimental::class)
-internal class CoreGesturesHandler(
+@RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
+class CoreGesturesHandler(
   private val mapTransformDelegate: MapTransformDelegate,
   private val mapCameraManagerDelegate: MapCameraManagerDelegate
 ) {

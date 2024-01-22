@@ -1927,7 +1927,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final com.mapbox.maps.extension.style.layers.properties.generated.Visibility? defaultVisibility;
   }
 
-  @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.style.types.LayersDsl public interface FillExtrusionLayerDsl {
+  @com.mapbox.maps.extension.style.types.LayersDsl public interface FillExtrusionLayerDsl {
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionAmbientOcclusionGroundAttenuation(double fillExtrusionAmbientOcclusionGroundAttenuation = 0.69);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionAmbientOcclusionGroundAttenuation(com.mapbox.maps.extension.style.expressions.generated.Expression fillExtrusionAmbientOcclusionGroundAttenuation);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionAmbientOcclusionGroundAttenuationTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -3840,7 +3840,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final com.mapbox.maps.extension.style.layers.properties.generated.Visibility? defaultVisibility;
   }
 
-  @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.style.types.LayersDsl public interface RasterLayerDsl {
+  @com.mapbox.maps.extension.style.types.LayersDsl public interface RasterLayerDsl {
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer maxZoom(double maxZoom);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer minZoom(double minZoom);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterArrayBand(String rasterArrayBand);

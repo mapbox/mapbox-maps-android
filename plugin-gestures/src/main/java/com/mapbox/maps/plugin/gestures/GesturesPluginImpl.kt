@@ -29,6 +29,7 @@ import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.plugin.gestures.generated.GesturesAttributeParser
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettings
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettingsBase
+import com.mapbox.maps.util.CoreGesturesHandler
 import java.util.*
 import java.util.concurrent.CopyOnWriteArraySet
 import kotlin.math.*

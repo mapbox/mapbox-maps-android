@@ -1,8 +1,12 @@
 package com.mapbox.maps.extension.androidauto
 
 import androidx.car.app.SurfaceCallback
-import com.mapbox.maps.*
+import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.MapboxMap
+import com.mapbox.maps.ScreenCoordinate
+import com.mapbox.maps.logI
 import com.mapbox.maps.plugin.animation.camera
+import com.mapbox.maps.util.CoreGesturesHandler
 
 /**
  * This class contains the default map gestures. It Handles the gestures received from
@@ -10,7 +14,7 @@ import com.mapbox.maps.plugin.animation.camera
  * the map gestures, use [MapboxCarMap.setGestureHandler].
  */
 open class DefaultMapboxCarMapGestureHandler : MapboxCarMapGestureHandler {
-  private var gestureStarted = false
+  private var coreGestureHandler: CoreGesturesHandler? = null
 
   /**
    * @see [MapboxCarMapGestureHandler.onScroll]
@@ -34,7 +38,7 @@ open class DefaultMapboxCarMapGestureHandler : MapboxCarMapGestureHandler {
       )
       logI(TAG, "scroll from $visibleCenter to $toCoordinate")
       setCamera(cameraForDrag(visibleCenter, toCoordinate))
-      notifyCoreGestureEnded()
+      coreGestureHandler?.notifyCoreTouchEnded()
     }
   }
 
@@ -95,21 +99,13 @@ open class DefaultMapboxCarMapGestureHandler : MapboxCarMapGestureHandler {
   }
 
   private fun MapboxMap.notifyCoreGestureStarted() {
-    if (!gestureStarted) {
-      gestureStarted = true
-      setGestureInProgress(true)
-      setCenterAltitudeMode(MapCenterAltitudeMode.SEA)
+    if (coreGestureHandler == null) {
+      coreGestureHandler = CoreGesturesHandler(
+        mapTransformDelegate = this,
+        mapCameraManagerDelegate = this
+      )
     }
-  }
-
-  private fun MapboxMap.notifyCoreGestureEnded() {
-    // ACTION_UP or ACTION_CANCEL may be triggered but there was no actual gesture -
-    // then we don't have to call native functions to avoid triggering extra MAP_IDLE event
-    if (gestureStarted) {
-      setCenterAltitudeMode(MapCenterAltitudeMode.TERRAIN)
-      setGestureInProgress(false)
-      gestureStarted = false
-    }
+    coreGestureHandler?.notifyCoreGestureStarted()
   }
 
   private companion object {

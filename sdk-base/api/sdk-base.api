@@ -2835,6 +2835,13 @@ public final class com/mapbox/maps/threading/AnimationThreadController {
 	public final fun useMainThread ()V
 }
 
+public final class com/mapbox/maps/util/CoreGesturesHandler {
+	public fun <init> (Lcom/mapbox/maps/plugin/delegates/MapTransformDelegate;Lcom/mapbox/maps/plugin/delegates/MapCameraManagerDelegate;)V
+	public final fun getCoreGestureAnimatorHandler ()Landroid/animation/AnimatorListenerAdapter;
+	public final fun notifyCoreGestureStarted ()V
+	public final fun notifyCoreTouchEnded ()V
+}
+
 public final class com/mapbox/maps/util/MathUtils {
 	public static final field INSTANCE Lcom/mapbox/maps/util/MathUtils;
 	public final fun prepareOptimalBearingPath ([D)[D

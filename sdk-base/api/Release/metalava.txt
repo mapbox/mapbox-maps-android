@@ -2899,6 +2899,14 @@ package com.mapbox.maps.threading {
 
 package com.mapbox.maps.util {
 
+  @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) public final class CoreGesturesHandler {
+    ctor public CoreGesturesHandler(com.mapbox.maps.plugin.delegates.MapTransformDelegate mapTransformDelegate, com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate mapCameraManagerDelegate);
+    method public android.animation.AnimatorListenerAdapter getCoreGestureAnimatorHandler();
+    method public void notifyCoreGestureStarted();
+    method public void notifyCoreTouchEnded();
+    property public final android.animation.AnimatorListenerAdapter coreGestureAnimatorHandler;
+  }
+
   public final class MathUtils {
     method public double[] prepareOptimalBearingPath(double[] targets);
     field public static final com.mapbox.maps.util.MathUtils INSTANCE;

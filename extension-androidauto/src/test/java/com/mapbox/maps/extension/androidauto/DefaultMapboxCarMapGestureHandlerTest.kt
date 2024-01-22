@@ -22,7 +22,13 @@ class DefaultMapboxCarMapGestureHandlerTest {
 
   private val surface = mockk<MapboxCarMapSurface>(relaxed = true) {
     every { mapSurface } returns mockk {
-      every { mapboxMap } returns mockk(relaxed = true)
+      every { mapboxMap } returns mockk {
+        every { getCenterAltitudeMode() } returns MapCenterAltitudeMode.TERRAIN
+        every { setCenterAltitudeMode(any()) } just runs
+        every { setGestureInProgress(any()) } just runs
+        every { cameraForDrag(any(), any()) } returns CameraOptions.Builder().build()
+        every { setCamera(any<CameraOptions>()) } just runs
+      }
       every { camera } returns mockk(relaxed = true)
     }
   }
@@ -47,11 +53,32 @@ class DefaultMapboxCarMapGestureHandlerTest {
     carMapGestures.onScroll(surface, center, 3.0f, -3.0f)
 
     verifyOrder {
+      mapboxMap.getCenterAltitudeMode()
+      mapboxMap.getCenterAltitudeMode()
       mapboxMap.setGestureInProgress(true)
       mapboxMap.setCenterAltitudeMode(MapCenterAltitudeMode.SEA)
       mapboxMap.cameraForDrag(any(), any())
       mapboxMap.setCamera(any<CameraOptions>())
       mapboxMap.setCenterAltitudeMode(MapCenterAltitudeMode.TERRAIN)
+      mapboxMap.setGestureInProgress(false)
+    }
+  }
+
+  @Test
+  fun `onScroll with center altitude mode set to SEA`() {
+    val center = ScreenCoordinate(450.0, 225.0)
+    val mapboxMap = surface.mapSurface.mapboxMap
+
+    every { mapboxMap.getCenterAltitudeMode() } returns MapCenterAltitudeMode.SEA
+
+    carMapGestures.onScroll(surface, center, 3.0f, -3.0f)
+
+    verifyOrder {
+      mapboxMap.getCenterAltitudeMode()
+      mapboxMap.getCenterAltitudeMode()
+      mapboxMap.setGestureInProgress(true)
+      mapboxMap.cameraForDrag(any(), any())
+      mapboxMap.setCamera(any<CameraOptions>())
       mapboxMap.setGestureInProgress(false)
     }
   }
