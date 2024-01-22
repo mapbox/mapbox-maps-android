@@ -4,10 +4,17 @@ import com.mapbox.common.Cancelable
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
-import com.mapbox.maps.Style
-import com.mapbox.maps.extension.style.sources.*
+import com.mapbox.maps.MapView
+import com.mapbox.maps.R
+import com.mapbox.maps.extension.style.sources.addGeoJSONSourceFeatures
+import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
+import com.mapbox.maps.extension.style.sources.getSourceAs
+import com.mapbox.maps.extension.style.sources.removeGeoJSONSourceFeatures
+import com.mapbox.maps.extension.style.sources.updateGeoJSONSourceFeatures
+import com.mapbox.maps.plugin.compass.compass
+import com.mapbox.maps.plugin.scalebar.scalebar
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
@@ -21,13 +28,29 @@ class GeoJsonSourceMutateTest(
 
   private lateinit var initialFeatures: List<Feature>
 
+  override fun initialiseMapView() {
+    withLatch(
+      timeoutMillis = 10000
+    ) { latch ->
+      rule.runOnUiThread {
+        mapView = MapView(context)
+        mapboxMap = mapView.mapboxMap
+        mapView.id = R.id.mapView
+        // We don't need any style, nor compass nor scalebar
+        mapView.mapboxMap.loadStyle("")
+        mapView.compass.enabled = false
+        mapView.scalebar.enabled = false
+        it.setContentView(mapView)
+        latch.countDown()
+      }
+    }
+  }
+
   override fun loadMap() {
     withLatch { latch ->
       initialFeatures = generateFeatures(initialFeatureCount)
 
       rule.runOnUiThread {
-        mapboxMap = mapView.mapboxMap
-
         var cancelable: Cancelable? = null
         cancelable = mapboxMap.subscribeSourceDataLoaded {
           if (it.sourceId == SOURCE_ID && it.dataId == DATA_ID) {
@@ -36,7 +59,7 @@ class GeoJsonSourceMutateTest(
           }
         }
 
-        mapboxMap.loadStyle(Style.MAPBOX_STREETS) {
+        mapboxMap.getStyle {
           this.style = it
           this.style.addSource(
             geoJsonSource(SOURCE_ID).featureCollection(
