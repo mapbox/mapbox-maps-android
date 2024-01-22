@@ -1,75 +1,31 @@
-public final class com/mapbox/maps/plugin/animation/CameraAnimationsPluginImpl : com/mapbox/maps/plugin/MapCameraPlugin, com/mapbox/maps/plugin/animation/CameraAnimationsPlugin {
-	public static final field Companion Lcom/mapbox/maps/plugin/animation/CameraAnimationsPluginImpl$Companion;
-	public field cameraAnimationsFactory Lcom/mapbox/maps/plugin/animation/CameraAnimatorsFactory;
-	public fun <init> ()V
-	public fun addCameraAnchorChangeListener (Lcom/mapbox/maps/plugin/animation/CameraAnimatorNullableChangeListener;)V
-	public fun addCameraAnimationsLifecycleListener (Lcom/mapbox/maps/plugin/animation/CameraAnimationsLifecycleListener;)V
-	public fun addCameraBearingChangeListener (Lcom/mapbox/maps/plugin/animation/CameraAnimatorChangeListener;)V
-	public fun addCameraCenterChangeListener (Lcom/mapbox/maps/plugin/animation/CameraAnimatorChangeListener;)V
-	public fun addCameraPaddingChangeListener (Lcom/mapbox/maps/plugin/animation/CameraAnimatorChangeListener;)V
-	public fun addCameraPitchChangeListener (Lcom/mapbox/maps/plugin/animation/CameraAnimatorChangeListener;)V
-	public fun addCameraZoomChangeListener (Lcom/mapbox/maps/plugin/animation/CameraAnimatorChangeListener;)V
-	public fun calculateScaleBy (DD)D
-	public fun cancelAllAnimators (Ljava/util/List;)V
-	public fun cleanup ()V
-	public fun createAnchorAnimator (Lcom/mapbox/maps/plugin/animation/CameraAnimatorOptions;Lkotlin/jvm/functions/Function1;)Landroid/animation/ValueAnimator;
-	public fun createBearingAnimator (Lcom/mapbox/maps/plugin/animation/CameraAnimatorOptions;ZLkotlin/jvm/functions/Function1;)Landroid/animation/ValueAnimator;
-	public fun createCenterAnimator (Lcom/mapbox/maps/plugin/animation/CameraAnimatorOptions;Lkotlin/jvm/functions/Function1;)Landroid/animation/ValueAnimator;
-	public fun createPaddingAnimator (Lcom/mapbox/maps/plugin/animation/CameraAnimatorOptions;Lkotlin/jvm/functions/Function1;)Landroid/animation/ValueAnimator;
-	public fun createPitchAnimator (Lcom/mapbox/maps/plugin/animation/CameraAnimatorOptions;Lkotlin/jvm/functions/Function1;)Landroid/animation/ValueAnimator;
-	public fun createZoomAnimator (Lcom/mapbox/maps/plugin/animation/CameraAnimatorOptions;Lkotlin/jvm/functions/Function1;)Landroid/animation/ValueAnimator;
-	public fun easeTo (Lcom/mapbox/maps/CameraOptions;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;)Lcom/mapbox/maps/plugin/animation/Cancelable;
-	public fun flyTo (Lcom/mapbox/maps/CameraOptions;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;)Lcom/mapbox/maps/plugin/animation/Cancelable;
-	public fun getAnchor ()Lcom/mapbox/maps/ScreenCoordinate;
-	public final fun getCameraAnimationsFactory ()Lcom/mapbox/maps/plugin/animation/CameraAnimatorsFactory;
-	public fun getDebugMode ()Z
-	public fun initialize ()V
-	public fun moveBy (Lcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;)Lcom/mapbox/maps/plugin/animation/Cancelable;
-	public fun onCameraMove (DDDDD[Ljava/lang/Double;)V
-	public fun onDelegateProvider (Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;)V
-	public fun pitchBy (DLcom/mapbox/maps/plugin/animation/MapAnimationOptions;)Lcom/mapbox/maps/plugin/animation/Cancelable;
-	public fun playAnimatorsSequentially ([Landroid/animation/ValueAnimator;)V
-	public fun playAnimatorsTogether ([Landroid/animation/ValueAnimator;)V
-	public fun registerAnimators ([Landroid/animation/ValueAnimator;)V
-	public fun removeCameraAnchorChangeListener (Lcom/mapbox/maps/plugin/animation/CameraAnimatorNullableChangeListener;)V
-	public fun removeCameraAnimationsLifecycleListener (Lcom/mapbox/maps/plugin/animation/CameraAnimationsLifecycleListener;)V
-	public fun removeCameraBearingChangeListener (Lcom/mapbox/maps/plugin/animation/CameraAnimatorChangeListener;)V
-	public fun removeCameraCenterChangeListener (Lcom/mapbox/maps/plugin/animation/CameraAnimatorChangeListener;)V
-	public fun removeCameraPaddingChangeListener (Lcom/mapbox/maps/plugin/animation/CameraAnimatorChangeListener;)V
-	public fun removeCameraPitchChangeListener (Lcom/mapbox/maps/plugin/animation/CameraAnimatorChangeListener;)V
-	public fun removeCameraZoomChangeListener (Lcom/mapbox/maps/plugin/animation/CameraAnimatorChangeListener;)V
-	public fun rotateBy (Lcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;)Lcom/mapbox/maps/plugin/animation/Cancelable;
-	public fun scaleBy (DLcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;)Lcom/mapbox/maps/plugin/animation/Cancelable;
-	public fun setAnchor (Lcom/mapbox/maps/ScreenCoordinate;)V
-	public final fun setCameraAnimationsFactory (Lcom/mapbox/maps/plugin/animation/CameraAnimatorsFactory;)V
-	public fun setDebugMode (Z)V
-	public final fun unregisterAllAnimators ()V
-	public fun unregisterAnimators ([Landroid/animation/ValueAnimator;Z)V
-}
-
-public final class com/mapbox/maps/plugin/animation/CameraAnimationsPluginImpl$Companion {
-}
-
 public final class com/mapbox/maps/plugin/animation/CameraAnimationsUtils {
-	public static final fun easeTo (Lcom/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate;Lcom/mapbox/maps/CameraOptions;)Lcom/mapbox/maps/plugin/animation/Cancelable;
-	public static final fun easeTo (Lcom/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate;Lcom/mapbox/maps/CameraOptions;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;)Lcom/mapbox/maps/plugin/animation/Cancelable;
-	public static synthetic fun easeTo$default (Lcom/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate;Lcom/mapbox/maps/CameraOptions;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;ILjava/lang/Object;)Lcom/mapbox/maps/plugin/animation/Cancelable;
-	public static final fun flyTo (Lcom/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate;Lcom/mapbox/maps/CameraOptions;)Lcom/mapbox/maps/plugin/animation/Cancelable;
-	public static final fun flyTo (Lcom/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate;Lcom/mapbox/maps/CameraOptions;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;)Lcom/mapbox/maps/plugin/animation/Cancelable;
-	public static synthetic fun flyTo$default (Lcom/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate;Lcom/mapbox/maps/CameraOptions;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;ILjava/lang/Object;)Lcom/mapbox/maps/plugin/animation/Cancelable;
+	public static final synthetic fun createCameraAnimationPlugin ()Lcom/mapbox/maps/plugin/animation/CameraAnimationsPlugin;
+	public static final fun easeTo (Lcom/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate;Lcom/mapbox/maps/CameraOptions;)Lcom/mapbox/common/Cancelable;
+	public static final fun easeTo (Lcom/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate;Lcom/mapbox/maps/CameraOptions;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;)Lcom/mapbox/common/Cancelable;
+	public static final fun easeTo (Lcom/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate;Lcom/mapbox/maps/CameraOptions;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;Landroid/animation/Animator$AnimatorListener;)Lcom/mapbox/common/Cancelable;
+	public static synthetic fun easeTo$default (Lcom/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate;Lcom/mapbox/maps/CameraOptions;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;Landroid/animation/Animator$AnimatorListener;ILjava/lang/Object;)Lcom/mapbox/common/Cancelable;
+	public static final fun flyTo (Lcom/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate;Lcom/mapbox/maps/CameraOptions;)Lcom/mapbox/common/Cancelable;
+	public static final fun flyTo (Lcom/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate;Lcom/mapbox/maps/CameraOptions;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;)Lcom/mapbox/common/Cancelable;
+	public static final fun flyTo (Lcom/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate;Lcom/mapbox/maps/CameraOptions;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;Landroid/animation/Animator$AnimatorListener;)Lcom/mapbox/common/Cancelable;
+	public static synthetic fun flyTo$default (Lcom/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate;Lcom/mapbox/maps/CameraOptions;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;Landroid/animation/Animator$AnimatorListener;ILjava/lang/Object;)Lcom/mapbox/common/Cancelable;
 	public static final fun getCamera (Lcom/mapbox/maps/plugin/delegates/MapPluginProviderDelegate;)Lcom/mapbox/maps/plugin/animation/CameraAnimationsPlugin;
-	public static final fun moveBy (Lcom/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate;Lcom/mapbox/maps/ScreenCoordinate;)Lcom/mapbox/maps/plugin/animation/Cancelable;
-	public static final fun moveBy (Lcom/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate;Lcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;)Lcom/mapbox/maps/plugin/animation/Cancelable;
-	public static synthetic fun moveBy$default (Lcom/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate;Lcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;ILjava/lang/Object;)Lcom/mapbox/maps/plugin/animation/Cancelable;
-	public static final fun pitchBy (Lcom/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate;D)Lcom/mapbox/maps/plugin/animation/Cancelable;
-	public static final fun pitchBy (Lcom/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate;DLcom/mapbox/maps/plugin/animation/MapAnimationOptions;)Lcom/mapbox/maps/plugin/animation/Cancelable;
-	public static synthetic fun pitchBy$default (Lcom/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate;DLcom/mapbox/maps/plugin/animation/MapAnimationOptions;ILjava/lang/Object;)Lcom/mapbox/maps/plugin/animation/Cancelable;
-	public static final fun rotateBy (Lcom/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate;Lcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/ScreenCoordinate;)Lcom/mapbox/maps/plugin/animation/Cancelable;
-	public static final fun rotateBy (Lcom/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate;Lcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;)Lcom/mapbox/maps/plugin/animation/Cancelable;
-	public static synthetic fun rotateBy$default (Lcom/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate;Lcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;ILjava/lang/Object;)Lcom/mapbox/maps/plugin/animation/Cancelable;
-	public static final fun scaleBy (Lcom/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate;DLcom/mapbox/maps/ScreenCoordinate;)Lcom/mapbox/maps/plugin/animation/Cancelable;
-	public static final fun scaleBy (Lcom/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate;DLcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;)Lcom/mapbox/maps/plugin/animation/Cancelable;
-	public static synthetic fun scaleBy$default (Lcom/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate;DLcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;ILjava/lang/Object;)Lcom/mapbox/maps/plugin/animation/Cancelable;
+	public static final synthetic fun getCameraAnimatorsFactory (Lcom/mapbox/maps/plugin/animation/CameraAnimationsPlugin;)Lcom/mapbox/maps/plugin/animation/CameraAnimatorsFactory;
+	public static final fun moveBy (Lcom/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate;Lcom/mapbox/maps/ScreenCoordinate;)Lcom/mapbox/common/Cancelable;
+	public static final fun moveBy (Lcom/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate;Lcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;)Lcom/mapbox/common/Cancelable;
+	public static final fun moveBy (Lcom/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate;Lcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;Landroid/animation/Animator$AnimatorListener;)Lcom/mapbox/common/Cancelable;
+	public static synthetic fun moveBy$default (Lcom/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate;Lcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;Landroid/animation/Animator$AnimatorListener;ILjava/lang/Object;)Lcom/mapbox/common/Cancelable;
+	public static final fun pitchBy (Lcom/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate;D)Lcom/mapbox/common/Cancelable;
+	public static final fun pitchBy (Lcom/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate;DLcom/mapbox/maps/plugin/animation/MapAnimationOptions;)Lcom/mapbox/common/Cancelable;
+	public static final fun pitchBy (Lcom/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate;DLcom/mapbox/maps/plugin/animation/MapAnimationOptions;Landroid/animation/Animator$AnimatorListener;)Lcom/mapbox/common/Cancelable;
+	public static synthetic fun pitchBy$default (Lcom/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate;DLcom/mapbox/maps/plugin/animation/MapAnimationOptions;Landroid/animation/Animator$AnimatorListener;ILjava/lang/Object;)Lcom/mapbox/common/Cancelable;
+	public static final fun rotateBy (Lcom/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate;Lcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/ScreenCoordinate;)Lcom/mapbox/common/Cancelable;
+	public static final fun rotateBy (Lcom/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate;Lcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;)Lcom/mapbox/common/Cancelable;
+	public static final fun rotateBy (Lcom/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate;Lcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;Landroid/animation/Animator$AnimatorListener;)Lcom/mapbox/common/Cancelable;
+	public static synthetic fun rotateBy$default (Lcom/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate;Lcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;Landroid/animation/Animator$AnimatorListener;ILjava/lang/Object;)Lcom/mapbox/common/Cancelable;
+	public static final fun scaleBy (Lcom/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate;DLcom/mapbox/maps/ScreenCoordinate;)Lcom/mapbox/common/Cancelable;
+	public static final fun scaleBy (Lcom/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate;DLcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;)Lcom/mapbox/common/Cancelable;
+	public static final fun scaleBy (Lcom/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate;DLcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;Landroid/animation/Animator$AnimatorListener;)Lcom/mapbox/common/Cancelable;
+	public static synthetic fun scaleBy$default (Lcom/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate;DLcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;Landroid/animation/Animator$AnimatorListener;ILjava/lang/Object;)Lcom/mapbox/common/Cancelable;
 }
 
 public final class com/mapbox/maps/plugin/animation/CameraAnimatorsFactory {
@@ -77,12 +33,24 @@ public final class com/mapbox/maps/plugin/animation/CameraAnimatorsFactory {
 	public static final field Companion Lcom/mapbox/maps/plugin/animation/CameraAnimatorsFactory$Companion;
 	public static final field DEFAULT_ANIMATION_DURATION_MS J
 	public final fun getEaseTo (Lcom/mapbox/maps/CameraOptions;)[Lcom/mapbox/maps/plugin/animation/animator/CameraAnimator;
+	public final fun getEaseTo (Lcom/mapbox/maps/CameraOptions;Ljava/lang/String;)[Lcom/mapbox/maps/plugin/animation/animator/CameraAnimator;
+	public static synthetic fun getEaseTo$default (Lcom/mapbox/maps/plugin/animation/CameraAnimatorsFactory;Lcom/mapbox/maps/CameraOptions;Ljava/lang/String;ILjava/lang/Object;)[Lcom/mapbox/maps/plugin/animation/animator/CameraAnimator;
 	public final fun getFlyTo (Lcom/mapbox/maps/CameraOptions;)[Lcom/mapbox/maps/plugin/animation/animator/CameraAnimator;
+	public final fun getFlyTo (Lcom/mapbox/maps/CameraOptions;Ljava/lang/String;)[Lcom/mapbox/maps/plugin/animation/animator/CameraAnimator;
+	public static synthetic fun getFlyTo$default (Lcom/mapbox/maps/plugin/animation/CameraAnimatorsFactory;Lcom/mapbox/maps/CameraOptions;Ljava/lang/String;ILjava/lang/Object;)[Lcom/mapbox/maps/plugin/animation/animator/CameraAnimator;
 	public final fun getMoveBy (Lcom/mapbox/maps/ScreenCoordinate;)[Lcom/mapbox/maps/plugin/animation/animator/CameraAnimator;
+	public final fun getMoveBy (Lcom/mapbox/maps/ScreenCoordinate;Ljava/lang/String;)[Lcom/mapbox/maps/plugin/animation/animator/CameraAnimator;
+	public static synthetic fun getMoveBy$default (Lcom/mapbox/maps/plugin/animation/CameraAnimatorsFactory;Lcom/mapbox/maps/ScreenCoordinate;Ljava/lang/String;ILjava/lang/Object;)[Lcom/mapbox/maps/plugin/animation/animator/CameraAnimator;
 	public final fun getPitchBy (D)[Lcom/mapbox/maps/plugin/animation/animator/CameraAnimator;
+	public final fun getPitchBy (DLjava/lang/String;)[Lcom/mapbox/maps/plugin/animation/animator/CameraAnimator;
+	public static synthetic fun getPitchBy$default (Lcom/mapbox/maps/plugin/animation/CameraAnimatorsFactory;DLjava/lang/String;ILjava/lang/Object;)[Lcom/mapbox/maps/plugin/animation/animator/CameraAnimator;
 	public final fun getRotateBy (Lcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/ScreenCoordinate;)[Lcom/mapbox/maps/plugin/animation/animator/CameraAnimator;
+	public final fun getRotateBy (Lcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/ScreenCoordinate;Ljava/lang/String;)[Lcom/mapbox/maps/plugin/animation/animator/CameraAnimator;
+	public static synthetic fun getRotateBy$default (Lcom/mapbox/maps/plugin/animation/CameraAnimatorsFactory;Lcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/ScreenCoordinate;Ljava/lang/String;ILjava/lang/Object;)[Lcom/mapbox/maps/plugin/animation/animator/CameraAnimator;
+	public final fun getScaleBy (D)[Lcom/mapbox/maps/plugin/animation/animator/CameraAnimator;
 	public final fun getScaleBy (DLcom/mapbox/maps/ScreenCoordinate;)[Lcom/mapbox/maps/plugin/animation/animator/CameraAnimator;
-	public static synthetic fun getScaleBy$default (Lcom/mapbox/maps/plugin/animation/CameraAnimatorsFactory;DLcom/mapbox/maps/ScreenCoordinate;ILjava/lang/Object;)[Lcom/mapbox/maps/plugin/animation/animator/CameraAnimator;
+	public final fun getScaleBy (DLcom/mapbox/maps/ScreenCoordinate;Ljava/lang/String;)[Lcom/mapbox/maps/plugin/animation/animator/CameraAnimator;
+	public static synthetic fun getScaleBy$default (Lcom/mapbox/maps/plugin/animation/CameraAnimatorsFactory;DLcom/mapbox/maps/ScreenCoordinate;Ljava/lang/String;ILjava/lang/Object;)[Lcom/mapbox/maps/plugin/animation/animator/CameraAnimator;
 	public static final fun setDefaultAnimatorOptions (Lcom/mapbox/maps/plugin/animation/CameraAnimatorType;Lkotlin/jvm/functions/Function1;)V
 	public static final fun setDefaultAnimatorOptions (Lkotlin/jvm/functions/Function1;)V
 }

@@ -25,28 +25,8 @@ public final class com/mapbox/maps/plugin/scalebar/ScaleBarImpl : android/view/V
 public final class com/mapbox/maps/plugin/scalebar/ScaleBarImpl$Companion {
 }
 
-public class com/mapbox/maps/plugin/scalebar/ScaleBarPluginImpl : com/mapbox/maps/plugin/scalebar/generated/ScaleBarSettingsBase, com/mapbox/maps/plugin/scalebar/ScaleBarPlugin {
-	public fun <init> ()V
-	public fun <init> (Lkotlin/jvm/functions/Function1;)V
-	public synthetic fun <init> (Lkotlin/jvm/functions/Function1;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	protected fun applySettings ()V
-	public fun bind (Landroid/widget/FrameLayout;Landroid/util/AttributeSet;F)Landroid/view/View;
-	public fun cleanup ()V
-	public fun getDistancePerPixel ()F
-	public fun getEnabled ()Z
-	protected fun getInternalSettings ()Lcom/mapbox/maps/plugin/scalebar/generated/ScaleBarSettings;
-	public fun getUseContinuousRendering ()Z
-	public fun initialize ()V
-	public fun onDelegateProvider (Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;)V
-	public fun onPluginView (Landroid/view/View;)V
-	public fun onSizeChanged (II)V
-	public fun setDistancePerPixel (F)V
-	public fun setEnabled (Z)V
-	protected fun setInternalSettings (Lcom/mapbox/maps/plugin/scalebar/generated/ScaleBarSettings;)V
-	public fun setUseContinuousRendering (Z)V
-}
-
 public final class com/mapbox/maps/plugin/scalebar/ScaleBarUtils {
+	public static final synthetic fun createScaleBarPlugin ()Lcom/mapbox/maps/plugin/scalebar/ScaleBarPlugin;
 	public static final fun getScaleBar (Lcom/mapbox/maps/plugin/delegates/MapPluginProviderDelegate;)Lcom/mapbox/maps/plugin/scalebar/ScaleBarPlugin;
 }
 

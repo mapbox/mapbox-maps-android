@@ -13,6 +13,11 @@ repositories {
       create<BasicAuthentication>("basic")
     }
   }
+
+  // Some plugins are only published in plugins.gradle.org (e.g. `japicmp` one)
+  maven {
+    url = uri("https://plugins.gradle.org/m2/")
+  }
 }
 
 plugins {
@@ -51,5 +56,6 @@ dependencies {
   // compileOnly because we want to leave versioning to the consumers
   compileOnly(libs.plugin.gradle)
   implementation(libs.plugin.dokka)
+  implementation(libs.plugin.japicmp)
   implementation(libs.plugin.mapbox.accessToken)
 }

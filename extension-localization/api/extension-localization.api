@@ -1,6 +1,6 @@
 public final class com/mapbox/maps/extension/localization/StyleInterfaceExtensionKt {
-	public static final fun localizeLabels (Lcom/mapbox/maps/extension/style/StyleInterface;Ljava/util/Locale;)V
-	public static final fun localizeLabels (Lcom/mapbox/maps/extension/style/StyleInterface;Ljava/util/Locale;Ljava/util/List;)V
-	public static synthetic fun localizeLabels$default (Lcom/mapbox/maps/extension/style/StyleInterface;Ljava/util/Locale;Ljava/util/List;ILjava/lang/Object;)V
+	public static final fun localizeLabels (Lcom/mapbox/maps/MapboxStyleManager;Ljava/util/Locale;)V
+	public static final fun localizeLabels (Lcom/mapbox/maps/MapboxStyleManager;Ljava/util/Locale;Ljava/util/List;)V
+	public static synthetic fun localizeLabels$default (Lcom/mapbox/maps/MapboxStyleManager;Ljava/util/Locale;Ljava/util/List;ILjava/lang/Object;)V
 }
 

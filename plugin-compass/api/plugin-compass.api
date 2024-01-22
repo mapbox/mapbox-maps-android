@@ -1,3 +1,8 @@
+public final class com/mapbox/maps/plugin/compass/CompassUtils {
+	public static final synthetic fun createCompassPlugin ()Lcom/mapbox/maps/plugin/compass/CompassPlugin;
+	public static final fun getCompass (Lcom/mapbox/maps/plugin/delegates/MapPluginProviderDelegate;)Lcom/mapbox/maps/plugin/compass/CompassPlugin;
+}
+
 public class com/mapbox/maps/plugin/compass/CompassViewImpl : androidx/appcompat/widget/AppCompatImageView, com/mapbox/maps/plugin/compass/CompassView {
 	public fun <init> (Landroid/content/Context;)V
 	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;)V
@@ -15,35 +20,5 @@ public class com/mapbox/maps/plugin/compass/CompassViewImpl : androidx/appcompat
 	public fun setCompassMargins (IIII)V
 	public fun setCompassRotation (F)V
 	public fun setCompassVisible (Z)V
-}
-
-public class com/mapbox/maps/plugin/compass/CompassViewPlugin : com/mapbox/maps/plugin/compass/generated/CompassSettingsBase, com/mapbox/maps/plugin/compass/CompassPlugin {
-	public static final field Companion Lcom/mapbox/maps/plugin/compass/CompassViewPlugin$Companion;
-	public fun <init> ()V
-	public fun <init> (Lkotlin/jvm/functions/Function1;Landroid/animation/ValueAnimator;Landroid/os/Handler;)V
-	public synthetic fun <init> (Lkotlin/jvm/functions/Function1;Landroid/animation/ValueAnimator;Landroid/os/Handler;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun addCompassClickListener (Lcom/mapbox/maps/plugin/compass/OnCompassClickListener;)V
-	protected fun applySettings ()V
-	public fun bind (Landroid/widget/FrameLayout;Landroid/util/AttributeSet;F)Landroid/view/View;
-	public fun cleanup ()V
-	public fun getEnabled ()Z
-	protected fun getInternalSettings ()Lcom/mapbox/maps/plugin/compass/generated/CompassSettings;
-	public fun initialize ()V
-	public fun onCameraMove (DDDDD[Ljava/lang/Double;)V
-	public fun onCompassClicked ()V
-	public fun onDelegateProvider (Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;)V
-	public fun onPluginView (Landroid/view/View;)V
-	public fun onStart ()V
-	public fun onStop ()V
-	public fun removeCompassClickListener (Lcom/mapbox/maps/plugin/compass/OnCompassClickListener;)V
-	public fun setEnabled (Z)V
-	protected fun setInternalSettings (Lcom/mapbox/maps/plugin/compass/generated/CompassSettings;)V
-}
-
-public final class com/mapbox/maps/plugin/compass/CompassViewPlugin$Companion {
-}
-
-public final class com/mapbox/maps/plugin/compass/CompassViewPluginKt {
-	public static final fun getCompass (Lcom/mapbox/maps/plugin/delegates/MapPluginProviderDelegate;)Lcom/mapbox/maps/plugin/compass/CompassPlugin;
 }
 

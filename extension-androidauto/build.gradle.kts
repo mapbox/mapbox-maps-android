@@ -17,6 +17,15 @@ android {
   }
 }
 
+mapboxLibrary{
+  jApiCmp{
+    // The first release for extension-androidauto was 11.1.0 so we force it if the current one is "11.1.0-SNAPSHOT"
+    if (project.hasProperty("VERSION_NAME") && project.property("VERSION_NAME") == "11.1.0-SNAPSHOT") {
+      previousVersion = "11.1.0"
+    }
+  }
+}
+
 dependencies {
   api(project(":sdk"))
   api(libs.googleCarAppLibrary)

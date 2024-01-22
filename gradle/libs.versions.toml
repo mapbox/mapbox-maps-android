@@ -25,11 +25,12 @@ pluginPitest = "0.2.8"
 pluginTaskTree = "2.1.0"
 pluginPlayPublisher = "3.7.0"
 pluginGradleVersions = "0.42.0"
-pluginBinaryCompatibilityValidator = "0.8.0"
+pluginBinaryCompatibilityValidator = "0.13.2"
 
 dokka = "1.7.20"
 kotlin = "1.7.20"
 detekt = "1.22.0"
+japicmp = "0.4.1"
 
 # Dependencies
 
@@ -95,6 +96,7 @@ plugin-jacoco = { module = "com.hiya:jacoco-android", version.ref = "pluginJacoc
 plugin-license = { module = "com.jaredsburrows:gradle-license-plugin", version.ref = "pluginLicense" }
 plugin-dokka = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref = "dokka" }
 plugin-detekt = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt" }
+plugin-japicmp = { module = "me.champeau.gradle:japicmp-gradle-plugin", version.ref = "japicmp" }
 
 plugin-mapbox-accessToken = { module = "com.mapbox.gradle.plugins:access-token", version.ref = "pluginMapboxAccessToken" }
 plugin-mapbox-sdkRegistry = { module = "com.mapbox.gradle.plugins:sdk-registry", version.ref = "pluginMapboxSdkRegistry" }
@@ -187,7 +189,6 @@ base-dependenciesTests = ["junit", "mockk", "androidx-testCore", "equalsVerifier
 base-dependenciesAndroidTests = ["androidx-testRunner", "androidx-jUnitTestRules", "androidx-espresso"]
 
 [plugins]
-dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 taskTreeId = { id = "com.dorongold.task-tree", version.ref = "pluginTaskTree" }
 binaryCompatibilityValidatorId = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "pluginBinaryCompatibilityValidator" }

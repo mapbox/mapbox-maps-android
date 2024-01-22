@@ -1,12 +1,5 @@
-public final class com/mapbox/maps/plugin/lifecycle/MapboxLifecyclePluginImpl : com/mapbox/maps/plugin/lifecycle/MapboxLifecyclePlugin {
-	public fun <init> ()V
-	public fun cleanup ()V
-	public fun initialize ()V
-	public fun onDelegateProvider (Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;)V
-	public fun registerLifecycleObserver (Landroid/view/View;Lcom/mapbox/maps/MapboxLifecycleObserver;)V
-}
-
-public final class com/mapbox/maps/plugin/lifecycle/MapboxLifecyclePluginImplKt {
+public final class com/mapbox/maps/plugin/lifecycle/LifecycleUtils {
+	public static final synthetic fun createLifecyclePlugin ()Lcom/mapbox/maps/plugin/lifecycle/MapboxLifecyclePlugin;
 	public static final fun getLifecycle (Lcom/mapbox/maps/plugin/delegates/MapPluginProviderDelegate;)Lcom/mapbox/maps/plugin/lifecycle/MapboxLifecyclePlugin;
 }
 

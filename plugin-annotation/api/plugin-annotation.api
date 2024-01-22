@@ -25,7 +25,7 @@ public abstract class com/mapbox/maps/plugin/annotation/AnnotationManagerImpl : 
 	protected abstract fun getLayerId ()Ljava/lang/String;
 	public fun getLongClickListeners ()Ljava/util/List;
 	protected abstract fun getSourceId ()Ljava/lang/String;
-	protected final fun initLayerAndSource (Lcom/mapbox/maps/extension/style/StyleInterface;)V
+	protected final fun initLayerAndSource (Lcom/mapbox/maps/MapboxStyleManager;)V
 	protected abstract fun initializeDataDrivenPropertyMap ()V
 	public fun onDestroy ()V
 	public fun onSizeChanged (II)V
@@ -59,19 +59,8 @@ public final class com/mapbox/maps/plugin/annotation/AnnotationManagerImpl$MapMo
 	public fun onMoveEnd (Lcom/mapbox/android/gestures/MoveGestureDetector;)V
 }
 
-public final class com/mapbox/maps/plugin/annotation/AnnotationPluginImpl : com/mapbox/maps/plugin/annotation/AnnotationPlugin {
-	public fun <init> ()V
-	public fun cleanup ()V
-	public fun createAnnotationManager (Landroid/view/View;Lcom/mapbox/maps/plugin/annotation/AnnotationType;Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;)Lcom/mapbox/maps/plugin/annotation/AnnotationManager;
-	public fun createAnnotationManager (Lcom/mapbox/maps/plugin/annotation/AnnotationType;Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;)Lcom/mapbox/maps/plugin/annotation/AnnotationManager;
-	public fun initialize ()V
-	public fun onDelegateProvider (Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;)V
-	public fun onSizeChanged (II)V
-	public fun onStyleChanged (Lcom/mapbox/maps/extension/style/StyleInterface;)V
-	public fun removeAnnotationManager (Lcom/mapbox/maps/plugin/annotation/AnnotationManager;)V
-}
-
-public final class com/mapbox/maps/plugin/annotation/AnnotationPluginImplKt {
+public final class com/mapbox/maps/plugin/annotation/AnnotationsUtils {
+	public static final synthetic fun createAnnotationPlugin ()Lcom/mapbox/maps/plugin/annotation/AnnotationPlugin;
 	public static final fun getAnnotations (Lcom/mapbox/maps/plugin/delegates/MapPluginProviderDelegate;)Lcom/mapbox/maps/plugin/annotation/AnnotationPlugin;
 }
 
@@ -92,7 +81,7 @@ public abstract interface class com/mapbox/maps/plugin/annotation/QueryAnnotatio
 public final class com/mapbox/maps/plugin/annotation/generated/CircleAnnotation : com/mapbox/maps/plugin/annotation/Annotation {
 	public static final field Companion Lcom/mapbox/maps/plugin/annotation/generated/CircleAnnotation$Companion;
 	public static final field ID_KEY Ljava/lang/String;
-	public fun <init> (JLcom/mapbox/maps/plugin/annotation/AnnotationManager;Lcom/google/gson/JsonObject;Lcom/mapbox/geojson/Point;)V
+	public fun <init> (Ljava/lang/String;Lcom/mapbox/maps/plugin/annotation/AnnotationManager;Lcom/google/gson/JsonObject;Lcom/mapbox/geojson/Point;)V
 	public final fun getCircleBlur ()Ljava/lang/Double;
 	public final fun getCircleColorInt ()Ljava/lang/Integer;
 	public final fun getCircleColorString ()Ljava/lang/String;
@@ -133,16 +122,20 @@ public final class com/mapbox/maps/plugin/annotation/generated/CircleAnnotationM
 	public synthetic fun createDragLayer ()Lcom/mapbox/maps/extension/style/layers/Layer;
 	public synthetic fun createLayer ()Lcom/mapbox/maps/extension/style/layers/Layer;
 	public fun getAnnotationIdKey ()Ljava/lang/String;
+	public final fun getCircleEmissiveStrength ()Ljava/lang/Double;
 	public final fun getCirclePitchAlignment ()Lcom/mapbox/maps/extension/style/layers/properties/generated/CirclePitchAlignment;
 	public final fun getCirclePitchScale ()Lcom/mapbox/maps/extension/style/layers/properties/generated/CirclePitchScale;
 	public final fun getCircleTranslate ()Ljava/util/List;
 	public final fun getCircleTranslateAnchor ()Lcom/mapbox/maps/extension/style/layers/properties/generated/CircleTranslateAnchor;
 	public fun getLayerFilter ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getSlot ()Ljava/lang/String;
+	public final fun setCircleEmissiveStrength (Ljava/lang/Double;)V
 	public final fun setCirclePitchAlignment (Lcom/mapbox/maps/extension/style/layers/properties/generated/CirclePitchAlignment;)V
 	public final fun setCirclePitchScale (Lcom/mapbox/maps/extension/style/layers/properties/generated/CirclePitchScale;)V
 	public final fun setCircleTranslate (Ljava/util/List;)V
 	public final fun setCircleTranslateAnchor (Lcom/mapbox/maps/extension/style/layers/properties/generated/CircleTranslateAnchor;)V
 	public fun setLayerFilter (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
+	public final fun setSlot (Ljava/lang/String;)V
 }
 
 public final class com/mapbox/maps/plugin/annotation/generated/CircleAnnotationManager$Companion {
@@ -151,10 +144,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/CircleAnnotationM
 }
 
 public final class com/mapbox/maps/plugin/annotation/generated/CircleAnnotationManagerKt {
-	public static final fun createCircleAnnotationManager (Lcom/mapbox/maps/plugin/annotation/AnnotationPlugin;Landroid/view/View;)Lcom/mapbox/maps/plugin/annotation/generated/CircleAnnotationManager;
-	public static final fun createCircleAnnotationManager (Lcom/mapbox/maps/plugin/annotation/AnnotationPlugin;Landroid/view/View;Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;)Lcom/mapbox/maps/plugin/annotation/generated/CircleAnnotationManager;
 	public static final fun createCircleAnnotationManager (Lcom/mapbox/maps/plugin/annotation/AnnotationPlugin;Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;)Lcom/mapbox/maps/plugin/annotation/generated/CircleAnnotationManager;
-	public static synthetic fun createCircleAnnotationManager$default (Lcom/mapbox/maps/plugin/annotation/AnnotationPlugin;Landroid/view/View;Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;ILjava/lang/Object;)Lcom/mapbox/maps/plugin/annotation/generated/CircleAnnotationManager;
 	public static synthetic fun createCircleAnnotationManager$default (Lcom/mapbox/maps/plugin/annotation/AnnotationPlugin;Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;ILjava/lang/Object;)Lcom/mapbox/maps/plugin/annotation/generated/CircleAnnotationManager;
 }
 
@@ -169,8 +159,8 @@ public final class com/mapbox/maps/plugin/annotation/generated/CircleAnnotationO
 	public static final field PROPERTY_CIRCLE_STROKE_OPACITY Ljava/lang/String;
 	public static final field PROPERTY_CIRCLE_STROKE_WIDTH Ljava/lang/String;
 	public fun <init> ()V
-	public synthetic fun build (JLcom/mapbox/maps/plugin/annotation/AnnotationManager;)Lcom/mapbox/maps/plugin/annotation/Annotation;
-	public fun build (JLcom/mapbox/maps/plugin/annotation/AnnotationManager;)Lcom/mapbox/maps/plugin/annotation/generated/CircleAnnotation;
+	public synthetic fun build (Ljava/lang/String;Lcom/mapbox/maps/plugin/annotation/AnnotationManager;)Lcom/mapbox/maps/plugin/annotation/Annotation;
+	public fun build (Ljava/lang/String;Lcom/mapbox/maps/plugin/annotation/AnnotationManager;)Lcom/mapbox/maps/plugin/annotation/generated/CircleAnnotation;
 	public final fun getCircleBlur ()Ljava/lang/Double;
 	public final fun getCircleColor ()Ljava/lang/String;
 	public final fun getCircleOpacity ()Ljava/lang/Double;
@@ -263,20 +253,24 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotation :
 	public static final field Companion Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotation$Companion;
 	public static final field ICON_DEFAULT_NAME_PREFIX Ljava/lang/String;
 	public static final field ID_KEY Ljava/lang/String;
-	public fun <init> (JLcom/mapbox/maps/plugin/annotation/AnnotationManager;Lcom/google/gson/JsonObject;Lcom/mapbox/geojson/Point;)V
+	public fun <init> (Ljava/lang/String;Lcom/mapbox/maps/plugin/annotation/AnnotationManager;Lcom/google/gson/JsonObject;Lcom/mapbox/geojson/Point;)V
 	public final fun getIconAnchor ()Lcom/mapbox/maps/extension/style/layers/properties/generated/IconAnchor;
 	public final fun getIconColorInt ()Ljava/lang/Integer;
 	public final fun getIconColorString ()Ljava/lang/String;
+	public final fun getIconEmissiveStrength ()Ljava/lang/Double;
 	public final fun getIconHaloBlur ()Ljava/lang/Double;
 	public final fun getIconHaloColorInt ()Ljava/lang/Integer;
 	public final fun getIconHaloColorString ()Ljava/lang/String;
 	public final fun getIconHaloWidth ()Ljava/lang/Double;
 	public final fun getIconImage ()Ljava/lang/String;
 	public final fun getIconImageBitmap ()Landroid/graphics/Bitmap;
+	public final fun getIconImageCrossFade ()Ljava/lang/Double;
 	public final fun getIconOffset ()Ljava/util/List;
 	public final fun getIconOpacity ()Ljava/lang/Double;
 	public final fun getIconRotate ()Ljava/lang/Double;
 	public final fun getIconSize ()Ljava/lang/Double;
+	public final fun getIconTextFit ()Lcom/mapbox/maps/extension/style/layers/properties/generated/IconTextFit;
+	public final fun getIconTextFitPadding ()Ljava/util/List;
 	public synthetic fun getOffsetGeometry (Lcom/mapbox/maps/plugin/delegates/MapCameraManagerDelegate;Lcom/mapbox/android/gestures/MoveDistancesObject;)Lcom/mapbox/geojson/Geometry;
 	public fun getOffsetGeometry (Lcom/mapbox/maps/plugin/delegates/MapCameraManagerDelegate;Lcom/mapbox/android/gestures/MoveDistancesObject;)Lcom/mapbox/geojson/Point;
 	public final fun getPoint ()Lcom/mapbox/geojson/Point;
@@ -284,6 +278,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotation :
 	public final fun getTextAnchor ()Lcom/mapbox/maps/extension/style/layers/properties/generated/TextAnchor;
 	public final fun getTextColorInt ()Ljava/lang/Integer;
 	public final fun getTextColorString ()Ljava/lang/String;
+	public final fun getTextEmissiveStrength ()Ljava/lang/Double;
 	public final fun getTextField ()Ljava/lang/String;
 	public final fun getTextHaloBlur ()Ljava/lang/Double;
 	public final fun getTextHaloColorInt ()Ljava/lang/Integer;
@@ -303,21 +298,26 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotation :
 	public final fun setIconAnchor (Lcom/mapbox/maps/extension/style/layers/properties/generated/IconAnchor;)V
 	public final fun setIconColorInt (Ljava/lang/Integer;)V
 	public final fun setIconColorString (Ljava/lang/String;)V
+	public final fun setIconEmissiveStrength (Ljava/lang/Double;)V
 	public final fun setIconHaloBlur (Ljava/lang/Double;)V
 	public final fun setIconHaloColorInt (Ljava/lang/Integer;)V
 	public final fun setIconHaloColorString (Ljava/lang/String;)V
 	public final fun setIconHaloWidth (Ljava/lang/Double;)V
 	public final fun setIconImage (Ljava/lang/String;)V
 	public final fun setIconImageBitmap (Landroid/graphics/Bitmap;)V
+	public final fun setIconImageCrossFade (Ljava/lang/Double;)V
 	public final fun setIconOffset (Ljava/util/List;)V
 	public final fun setIconOpacity (Ljava/lang/Double;)V
 	public final fun setIconRotate (Ljava/lang/Double;)V
 	public final fun setIconSize (Ljava/lang/Double;)V
+	public final fun setIconTextFit (Lcom/mapbox/maps/extension/style/layers/properties/generated/IconTextFit;)V
+	public final fun setIconTextFitPadding (Ljava/util/List;)V
 	public final fun setPoint (Lcom/mapbox/geojson/Point;)V
 	public final fun setSymbolSortKey (Ljava/lang/Double;)V
 	public final fun setTextAnchor (Lcom/mapbox/maps/extension/style/layers/properties/generated/TextAnchor;)V
 	public final fun setTextColorInt (Ljava/lang/Integer;)V
 	public final fun setTextColorString (Ljava/lang/String;)V
+	public final fun setTextEmissiveStrength (Ljava/lang/Double;)V
 	public final fun setTextField (Ljava/lang/String;)V
 	public final fun setTextHaloBlur (Ljava/lang/Double;)V
 	public final fun setTextHaloColorInt (Ljava/lang/Integer;)V
@@ -360,9 +360,11 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotationMa
 	public final fun getIconTranslate ()Ljava/util/List;
 	public final fun getIconTranslateAnchor ()Lcom/mapbox/maps/extension/style/layers/properties/generated/IconTranslateAnchor;
 	public fun getLayerFilter ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getSlot ()Ljava/lang/String;
 	public final fun getSymbolAvoidEdges ()Ljava/lang/Boolean;
 	public final fun getSymbolPlacement ()Lcom/mapbox/maps/extension/style/layers/properties/generated/SymbolPlacement;
 	public final fun getSymbolSpacing ()Ljava/lang/Double;
+	public final fun getSymbolZElevate ()Ljava/lang/Boolean;
 	public final fun getSymbolZOrder ()Lcom/mapbox/maps/extension/style/layers/properties/generated/SymbolZOrder;
 	public final fun getTextAllowOverlap ()Ljava/lang/Boolean;
 	public final fun getTextFont ()Ljava/util/List;
@@ -390,9 +392,11 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotationMa
 	public final fun setIconTranslate (Ljava/util/List;)V
 	public final fun setIconTranslateAnchor (Lcom/mapbox/maps/extension/style/layers/properties/generated/IconTranslateAnchor;)V
 	public fun setLayerFilter (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
+	public final fun setSlot (Ljava/lang/String;)V
 	public final fun setSymbolAvoidEdges (Ljava/lang/Boolean;)V
 	public final fun setSymbolPlacement (Lcom/mapbox/maps/extension/style/layers/properties/generated/SymbolPlacement;)V
 	public final fun setSymbolSpacing (Ljava/lang/Double;)V
+	public final fun setSymbolZElevate (Ljava/lang/Boolean;)V
 	public final fun setSymbolZOrder (Lcom/mapbox/maps/extension/style/layers/properties/generated/SymbolZOrder;)V
 	public final fun setTextAllowOverlap (Ljava/lang/Boolean;)V
 	public final fun setTextFont (Ljava/util/List;)V
@@ -416,10 +420,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotationMa
 }
 
 public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotationManagerKt {
-	public static final fun createPointAnnotationManager (Lcom/mapbox/maps/plugin/annotation/AnnotationPlugin;Landroid/view/View;)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationManager;
-	public static final fun createPointAnnotationManager (Lcom/mapbox/maps/plugin/annotation/AnnotationPlugin;Landroid/view/View;Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationManager;
 	public static final fun createPointAnnotationManager (Lcom/mapbox/maps/plugin/annotation/AnnotationPlugin;Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationManager;
-	public static synthetic fun createPointAnnotationManager$default (Lcom/mapbox/maps/plugin/annotation/AnnotationPlugin;Landroid/view/View;Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;ILjava/lang/Object;)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationManager;
 	public static synthetic fun createPointAnnotationManager$default (Lcom/mapbox/maps/plugin/annotation/AnnotationPlugin;Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;ILjava/lang/Object;)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationManager;
 }
 
@@ -427,17 +428,22 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotationOp
 	public static final field Companion Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions$Companion;
 	public static final field PROPERTY_ICON_ANCHOR Ljava/lang/String;
 	public static final field PROPERTY_ICON_COLOR Ljava/lang/String;
+	public static final field PROPERTY_ICON_EMISSIVE_STRENGTH Ljava/lang/String;
 	public static final field PROPERTY_ICON_HALO_BLUR Ljava/lang/String;
 	public static final field PROPERTY_ICON_HALO_COLOR Ljava/lang/String;
 	public static final field PROPERTY_ICON_HALO_WIDTH Ljava/lang/String;
 	public static final field PROPERTY_ICON_IMAGE Ljava/lang/String;
+	public static final field PROPERTY_ICON_IMAGE_CROSS_FADE Ljava/lang/String;
 	public static final field PROPERTY_ICON_OFFSET Ljava/lang/String;
 	public static final field PROPERTY_ICON_OPACITY Ljava/lang/String;
 	public static final field PROPERTY_ICON_ROTATE Ljava/lang/String;
 	public static final field PROPERTY_ICON_SIZE Ljava/lang/String;
+	public static final field PROPERTY_ICON_TEXT_FIT Ljava/lang/String;
+	public static final field PROPERTY_ICON_TEXT_FIT_PADDING Ljava/lang/String;
 	public static final field PROPERTY_SYMBOL_SORT_KEY Ljava/lang/String;
 	public static final field PROPERTY_TEXT_ANCHOR Ljava/lang/String;
 	public static final field PROPERTY_TEXT_COLOR Ljava/lang/String;
+	public static final field PROPERTY_TEXT_EMISSIVE_STRENGTH Ljava/lang/String;
 	public static final field PROPERTY_TEXT_FIELD Ljava/lang/String;
 	public static final field PROPERTY_TEXT_HALO_BLUR Ljava/lang/String;
 	public static final field PROPERTY_TEXT_HALO_COLOR Ljava/lang/String;
@@ -453,25 +459,30 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotationOp
 	public static final field PROPERTY_TEXT_SIZE Ljava/lang/String;
 	public static final field PROPERTY_TEXT_TRANSFORM Ljava/lang/String;
 	public fun <init> ()V
-	public synthetic fun build (JLcom/mapbox/maps/plugin/annotation/AnnotationManager;)Lcom/mapbox/maps/plugin/annotation/Annotation;
-	public fun build (JLcom/mapbox/maps/plugin/annotation/AnnotationManager;)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotation;
+	public synthetic fun build (Ljava/lang/String;Lcom/mapbox/maps/plugin/annotation/AnnotationManager;)Lcom/mapbox/maps/plugin/annotation/Annotation;
+	public fun build (Ljava/lang/String;Lcom/mapbox/maps/plugin/annotation/AnnotationManager;)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotation;
 	public final fun getData ()Lcom/google/gson/JsonElement;
 	public final fun getDraggable ()Z
 	public final fun getGeometry ()Lcom/mapbox/geojson/Point;
 	public final fun getIconAnchor ()Lcom/mapbox/maps/extension/style/layers/properties/generated/IconAnchor;
 	public final fun getIconColor ()Ljava/lang/String;
+	public final fun getIconEmissiveStrength ()Ljava/lang/Double;
 	public final fun getIconHaloBlur ()Ljava/lang/Double;
 	public final fun getIconHaloColor ()Ljava/lang/String;
 	public final fun getIconHaloWidth ()Ljava/lang/Double;
 	public final fun getIconImage ()Ljava/lang/String;
+	public final fun getIconImageCrossFade ()Ljava/lang/Double;
 	public final fun getIconOffset ()Ljava/util/List;
 	public final fun getIconOpacity ()Ljava/lang/Double;
 	public final fun getIconRotate ()Ljava/lang/Double;
 	public final fun getIconSize ()Ljava/lang/Double;
+	public final fun getIconTextFit ()Lcom/mapbox/maps/extension/style/layers/properties/generated/IconTextFit;
+	public final fun getIconTextFitPadding ()Ljava/util/List;
 	public final fun getPoint ()Lcom/mapbox/geojson/Point;
 	public final fun getSymbolSortKey ()Ljava/lang/Double;
 	public final fun getTextAnchor ()Lcom/mapbox/maps/extension/style/layers/properties/generated/TextAnchor;
 	public final fun getTextColor ()Ljava/lang/String;
+	public final fun getTextEmissiveStrength ()Ljava/lang/Double;
 	public final fun getTextField ()Ljava/lang/String;
 	public final fun getTextHaloBlur ()Ljava/lang/Double;
 	public final fun getTextHaloColor ()Ljava/lang/String;
@@ -488,17 +499,22 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotationOp
 	public final fun getTextTransform ()Lcom/mapbox/maps/extension/style/layers/properties/generated/TextTransform;
 	public final fun setIconAnchor (Lcom/mapbox/maps/extension/style/layers/properties/generated/IconAnchor;)V
 	public final fun setIconColor (Ljava/lang/String;)V
+	public final fun setIconEmissiveStrength (Ljava/lang/Double;)V
 	public final fun setIconHaloBlur (Ljava/lang/Double;)V
 	public final fun setIconHaloColor (Ljava/lang/String;)V
 	public final fun setIconHaloWidth (Ljava/lang/Double;)V
 	public final fun setIconImage (Ljava/lang/String;)V
+	public final fun setIconImageCrossFade (Ljava/lang/Double;)V
 	public final fun setIconOffset (Ljava/util/List;)V
 	public final fun setIconOpacity (Ljava/lang/Double;)V
 	public final fun setIconRotate (Ljava/lang/Double;)V
 	public final fun setIconSize (Ljava/lang/Double;)V
+	public final fun setIconTextFit (Lcom/mapbox/maps/extension/style/layers/properties/generated/IconTextFit;)V
+	public final fun setIconTextFitPadding (Ljava/util/List;)V
 	public final fun setSymbolSortKey (Ljava/lang/Double;)V
 	public final fun setTextAnchor (Lcom/mapbox/maps/extension/style/layers/properties/generated/TextAnchor;)V
 	public final fun setTextColor (Ljava/lang/String;)V
+	public final fun setTextEmissiveStrength (Ljava/lang/Double;)V
 	public final fun setTextField (Ljava/lang/String;)V
 	public final fun setTextHaloBlur (Ljava/lang/Double;)V
 	public final fun setTextHaloColor (Ljava/lang/String;)V
@@ -519,21 +535,26 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotationOp
 	public final fun withIconAnchor (Lcom/mapbox/maps/extension/style/layers/properties/generated/IconAnchor;)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withIconColor (I)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withIconColor (Ljava/lang/String;)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
+	public final fun withIconEmissiveStrength (D)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withIconHaloBlur (D)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withIconHaloColor (I)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withIconHaloColor (Ljava/lang/String;)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withIconHaloWidth (D)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withIconImage (Landroid/graphics/Bitmap;)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withIconImage (Ljava/lang/String;)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
+	public final fun withIconImageCrossFade (D)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withIconOffset (Ljava/util/List;)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withIconOpacity (D)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withIconRotate (D)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withIconSize (D)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
+	public final fun withIconTextFit (Lcom/mapbox/maps/extension/style/layers/properties/generated/IconTextFit;)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
+	public final fun withIconTextFitPadding (Ljava/util/List;)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withPoint (Lcom/mapbox/geojson/Point;)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withSymbolSortKey (D)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withTextAnchor (Lcom/mapbox/maps/extension/style/layers/properties/generated/TextAnchor;)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withTextColor (I)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withTextColor (Ljava/lang/String;)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
+	public final fun withTextEmissiveStrength (D)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withTextField (Ljava/lang/String;)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withTextHaloBlur (D)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withTextHaloColor (I)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
@@ -558,7 +579,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotationOp
 public final class com/mapbox/maps/plugin/annotation/generated/PolygonAnnotation : com/mapbox/maps/plugin/annotation/Annotation {
 	public static final field Companion Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotation$Companion;
 	public static final field ID_KEY Ljava/lang/String;
-	public fun <init> (JLcom/mapbox/maps/plugin/annotation/AnnotationManager;Lcom/google/gson/JsonObject;Lcom/mapbox/geojson/Polygon;)V
+	public fun <init> (Ljava/lang/String;Lcom/mapbox/maps/plugin/annotation/AnnotationManager;Lcom/google/gson/JsonObject;Lcom/mapbox/geojson/Polygon;)V
 	public final fun getFillColorInt ()Ljava/lang/Integer;
 	public final fun getFillColorString ()Ljava/lang/String;
 	public final fun getFillOpacity ()Ljava/lang/Double;
@@ -594,13 +615,17 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolygonAnnotation
 	public synthetic fun createLayer ()Lcom/mapbox/maps/extension/style/layers/Layer;
 	public fun getAnnotationIdKey ()Ljava/lang/String;
 	public final fun getFillAntialias ()Ljava/lang/Boolean;
+	public final fun getFillEmissiveStrength ()Ljava/lang/Double;
 	public final fun getFillTranslate ()Ljava/util/List;
 	public final fun getFillTranslateAnchor ()Lcom/mapbox/maps/extension/style/layers/properties/generated/FillTranslateAnchor;
 	public fun getLayerFilter ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getSlot ()Ljava/lang/String;
 	public final fun setFillAntialias (Ljava/lang/Boolean;)V
+	public final fun setFillEmissiveStrength (Ljava/lang/Double;)V
 	public final fun setFillTranslate (Ljava/util/List;)V
 	public final fun setFillTranslateAnchor (Lcom/mapbox/maps/extension/style/layers/properties/generated/FillTranslateAnchor;)V
 	public fun setLayerFilter (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
+	public final fun setSlot (Ljava/lang/String;)V
 }
 
 public final class com/mapbox/maps/plugin/annotation/generated/PolygonAnnotationManager$Companion {
@@ -609,10 +634,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolygonAnnotation
 }
 
 public final class com/mapbox/maps/plugin/annotation/generated/PolygonAnnotationManagerKt {
-	public static final fun createPolygonAnnotationManager (Lcom/mapbox/maps/plugin/annotation/AnnotationPlugin;Landroid/view/View;)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationManager;
-	public static final fun createPolygonAnnotationManager (Lcom/mapbox/maps/plugin/annotation/AnnotationPlugin;Landroid/view/View;Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationManager;
 	public static final fun createPolygonAnnotationManager (Lcom/mapbox/maps/plugin/annotation/AnnotationPlugin;Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationManager;
-	public static synthetic fun createPolygonAnnotationManager$default (Lcom/mapbox/maps/plugin/annotation/AnnotationPlugin;Landroid/view/View;Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;ILjava/lang/Object;)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationManager;
 	public static synthetic fun createPolygonAnnotationManager$default (Lcom/mapbox/maps/plugin/annotation/AnnotationPlugin;Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;ILjava/lang/Object;)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotationManager;
 }
 
@@ -624,8 +646,8 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolygonAnnotation
 	public static final field PROPERTY_FILL_PATTERN Ljava/lang/String;
 	public static final field PROPERTY_FILL_SORT_KEY Ljava/lang/String;
 	public fun <init> ()V
-	public synthetic fun build (JLcom/mapbox/maps/plugin/annotation/AnnotationManager;)Lcom/mapbox/maps/plugin/annotation/Annotation;
-	public fun build (JLcom/mapbox/maps/plugin/annotation/AnnotationManager;)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotation;
+	public synthetic fun build (Ljava/lang/String;Lcom/mapbox/maps/plugin/annotation/AnnotationManager;)Lcom/mapbox/maps/plugin/annotation/Annotation;
+	public fun build (Ljava/lang/String;Lcom/mapbox/maps/plugin/annotation/AnnotationManager;)Lcom/mapbox/maps/plugin/annotation/generated/PolygonAnnotation;
 	public final fun getData ()Lcom/google/gson/JsonElement;
 	public final fun getDraggable ()Z
 	public final fun getFillColor ()Ljava/lang/String;
@@ -660,8 +682,11 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolygonAnnotation
 public final class com/mapbox/maps/plugin/annotation/generated/PolylineAnnotation : com/mapbox/maps/plugin/annotation/Annotation {
 	public static final field Companion Lcom/mapbox/maps/plugin/annotation/generated/PolylineAnnotation$Companion;
 	public static final field ID_KEY Ljava/lang/String;
-	public fun <init> (JLcom/mapbox/maps/plugin/annotation/AnnotationManager;Lcom/google/gson/JsonObject;Lcom/mapbox/geojson/LineString;)V
+	public fun <init> (Ljava/lang/String;Lcom/mapbox/maps/plugin/annotation/AnnotationManager;Lcom/google/gson/JsonObject;Lcom/mapbox/geojson/LineString;)V
 	public final fun getLineBlur ()Ljava/lang/Double;
+	public final fun getLineBorderColorInt ()Ljava/lang/Integer;
+	public final fun getLineBorderColorString ()Ljava/lang/String;
+	public final fun getLineBorderWidth ()Ljava/lang/Double;
 	public final fun getLineColorInt ()Ljava/lang/Integer;
 	public final fun getLineColorString ()Ljava/lang/String;
 	public final fun getLineGapWidth ()Ljava/lang/Double;
@@ -676,6 +701,9 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolylineAnnotatio
 	public final fun getPoints ()Ljava/util/List;
 	public fun getType ()Lcom/mapbox/maps/plugin/annotation/AnnotationType;
 	public final fun setLineBlur (Ljava/lang/Double;)V
+	public final fun setLineBorderColorInt (Ljava/lang/Integer;)V
+	public final fun setLineBorderColorString (Ljava/lang/String;)V
+	public final fun setLineBorderWidth (Ljava/lang/Double;)V
 	public final fun setLineColorInt (Ljava/lang/Integer;)V
 	public final fun setLineColorString (Ljava/lang/String;)V
 	public final fun setLineGapWidth (Ljava/lang/Double;)V
@@ -704,19 +732,25 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolylineAnnotatio
 	public fun getLayerFilter ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getLineCap ()Lcom/mapbox/maps/extension/style/layers/properties/generated/LineCap;
 	public final fun getLineDasharray ()Ljava/util/List;
+	public final fun getLineDepthOcclusionFactor ()Ljava/lang/Double;
+	public final fun getLineEmissiveStrength ()Ljava/lang/Double;
 	public final fun getLineMiterLimit ()Ljava/lang/Double;
 	public final fun getLineRoundLimit ()Ljava/lang/Double;
 	public final fun getLineTranslate ()Ljava/util/List;
 	public final fun getLineTranslateAnchor ()Lcom/mapbox/maps/extension/style/layers/properties/generated/LineTranslateAnchor;
 	public final fun getLineTrimOffset ()Ljava/util/List;
+	public final fun getSlot ()Ljava/lang/String;
 	public fun setLayerFilter (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
 	public final fun setLineCap (Lcom/mapbox/maps/extension/style/layers/properties/generated/LineCap;)V
 	public final fun setLineDasharray (Ljava/util/List;)V
+	public final fun setLineDepthOcclusionFactor (Ljava/lang/Double;)V
+	public final fun setLineEmissiveStrength (Ljava/lang/Double;)V
 	public final fun setLineMiterLimit (Ljava/lang/Double;)V
 	public final fun setLineRoundLimit (Ljava/lang/Double;)V
 	public final fun setLineTranslate (Ljava/util/List;)V
 	public final fun setLineTranslateAnchor (Lcom/mapbox/maps/extension/style/layers/properties/generated/LineTranslateAnchor;)V
 	public final fun setLineTrimOffset (Ljava/util/List;)V
+	public final fun setSlot (Ljava/lang/String;)V
 }
 
 public final class com/mapbox/maps/plugin/annotation/generated/PolylineAnnotationManager$Companion {
@@ -725,16 +759,15 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolylineAnnotatio
 }
 
 public final class com/mapbox/maps/plugin/annotation/generated/PolylineAnnotationManagerKt {
-	public static final fun createPolylineAnnotationManager (Lcom/mapbox/maps/plugin/annotation/AnnotationPlugin;Landroid/view/View;)Lcom/mapbox/maps/plugin/annotation/generated/PolylineAnnotationManager;
-	public static final fun createPolylineAnnotationManager (Lcom/mapbox/maps/plugin/annotation/AnnotationPlugin;Landroid/view/View;Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;)Lcom/mapbox/maps/plugin/annotation/generated/PolylineAnnotationManager;
 	public static final fun createPolylineAnnotationManager (Lcom/mapbox/maps/plugin/annotation/AnnotationPlugin;Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;)Lcom/mapbox/maps/plugin/annotation/generated/PolylineAnnotationManager;
-	public static synthetic fun createPolylineAnnotationManager$default (Lcom/mapbox/maps/plugin/annotation/AnnotationPlugin;Landroid/view/View;Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;ILjava/lang/Object;)Lcom/mapbox/maps/plugin/annotation/generated/PolylineAnnotationManager;
 	public static synthetic fun createPolylineAnnotationManager$default (Lcom/mapbox/maps/plugin/annotation/AnnotationPlugin;Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;ILjava/lang/Object;)Lcom/mapbox/maps/plugin/annotation/generated/PolylineAnnotationManager;
 }
 
 public final class com/mapbox/maps/plugin/annotation/generated/PolylineAnnotationOptions : com/mapbox/maps/plugin/annotation/AnnotationOptions {
 	public static final field Companion Lcom/mapbox/maps/plugin/annotation/generated/PolylineAnnotationOptions$Companion;
 	public static final field PROPERTY_LINE_BLUR Ljava/lang/String;
+	public static final field PROPERTY_LINE_BORDER_COLOR Ljava/lang/String;
+	public static final field PROPERTY_LINE_BORDER_WIDTH Ljava/lang/String;
 	public static final field PROPERTY_LINE_COLOR Ljava/lang/String;
 	public static final field PROPERTY_LINE_GAP_WIDTH Ljava/lang/String;
 	public static final field PROPERTY_LINE_JOIN Ljava/lang/String;
@@ -744,12 +777,14 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolylineAnnotatio
 	public static final field PROPERTY_LINE_SORT_KEY Ljava/lang/String;
 	public static final field PROPERTY_LINE_WIDTH Ljava/lang/String;
 	public fun <init> ()V
-	public synthetic fun build (JLcom/mapbox/maps/plugin/annotation/AnnotationManager;)Lcom/mapbox/maps/plugin/annotation/Annotation;
-	public fun build (JLcom/mapbox/maps/plugin/annotation/AnnotationManager;)Lcom/mapbox/maps/plugin/annotation/generated/PolylineAnnotation;
+	public synthetic fun build (Ljava/lang/String;Lcom/mapbox/maps/plugin/annotation/AnnotationManager;)Lcom/mapbox/maps/plugin/annotation/Annotation;
+	public fun build (Ljava/lang/String;Lcom/mapbox/maps/plugin/annotation/AnnotationManager;)Lcom/mapbox/maps/plugin/annotation/generated/PolylineAnnotation;
 	public final fun getData ()Lcom/google/gson/JsonElement;
 	public final fun getDraggable ()Z
 	public final fun getGeometry ()Lcom/mapbox/geojson/LineString;
 	public final fun getLineBlur ()Ljava/lang/Double;
+	public final fun getLineBorderColor ()Ljava/lang/String;
+	public final fun getLineBorderWidth ()Ljava/lang/Double;
 	public final fun getLineColor ()Ljava/lang/String;
 	public final fun getLineGapWidth ()Ljava/lang/Double;
 	public final fun getLineJoin ()Lcom/mapbox/maps/extension/style/layers/properties/generated/LineJoin;
@@ -760,6 +795,8 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolylineAnnotatio
 	public final fun getLineWidth ()Ljava/lang/Double;
 	public final fun getPoints ()Ljava/util/List;
 	public final fun setLineBlur (Ljava/lang/Double;)V
+	public final fun setLineBorderColor (Ljava/lang/String;)V
+	public final fun setLineBorderWidth (Ljava/lang/Double;)V
 	public final fun setLineColor (Ljava/lang/String;)V
 	public final fun setLineGapWidth (Ljava/lang/Double;)V
 	public final fun setLineJoin (Lcom/mapbox/maps/extension/style/layers/properties/generated/LineJoin;)V
@@ -772,6 +809,9 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolylineAnnotatio
 	public final fun withDraggable (Z)Lcom/mapbox/maps/plugin/annotation/generated/PolylineAnnotationOptions;
 	public final fun withGeometry (Lcom/mapbox/geojson/LineString;)Lcom/mapbox/maps/plugin/annotation/generated/PolylineAnnotationOptions;
 	public final fun withLineBlur (D)Lcom/mapbox/maps/plugin/annotation/generated/PolylineAnnotationOptions;
+	public final fun withLineBorderColor (I)Lcom/mapbox/maps/plugin/annotation/generated/PolylineAnnotationOptions;
+	public final fun withLineBorderColor (Ljava/lang/String;)Lcom/mapbox/maps/plugin/annotation/generated/PolylineAnnotationOptions;
+	public final fun withLineBorderWidth (D)Lcom/mapbox/maps/plugin/annotation/generated/PolylineAnnotationOptions;
 	public final fun withLineColor (I)Lcom/mapbox/maps/plugin/annotation/generated/PolylineAnnotationOptions;
 	public final fun withLineColor (Ljava/lang/String;)Lcom/mapbox/maps/plugin/annotation/generated/PolylineAnnotationOptions;
 	public final fun withLineGapWidth (D)Lcom/mapbox/maps/plugin/annotation/generated/PolylineAnnotationOptions;

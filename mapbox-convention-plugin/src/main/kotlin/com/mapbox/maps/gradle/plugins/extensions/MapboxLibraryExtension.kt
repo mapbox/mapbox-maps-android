@@ -10,10 +10,16 @@ import javax.inject.Inject
 
 public abstract class MapboxLibraryExtension @Inject constructor(objects: ObjectFactory) {
   private val dokka = objects.newInstance<MapboxDokkaExtension>()
+  private val jApiCmp = objects.newInstance<MapboxJApiCmpExtension>()
 
   /** Configure the inner DSL object, [MapboxDokkaExtension]. */
   public fun dokka(action: Action<MapboxDokkaExtension>) {
     action.execute(dokka)
+  }
+
+  /** Configure the inner DSL object, [MapboxJApiCmpExtension]. */
+  public fun jApiCmp(action: Action<MapboxJApiCmpExtension>) {
+    action.execute(jApiCmp)
   }
 
   internal fun applyTo(project: Project) {
@@ -22,6 +28,7 @@ public abstract class MapboxLibraryExtension @Inject constructor(objects: Object
     libraryExtension.configurePublicResource(project)
     libraryExtension.setMinCompileSdkVersion(project)
     dokka.applyTo(project, libraryExtension)
+    jApiCmp.applyTo(project)
   }
 
   private fun Project.applyRequiredPlugins() {

@@ -51,7 +51,7 @@ workflows:
       - verify-api-metalava:
           requires:
             - verify-code
-      - verify-api-revapi:
+      - verify-api-japicmp:
           requires:
             - verify-code
       - run-lint:
@@ -453,7 +453,7 @@ jobs:
             #      ./gradlew checkApiKotlinValidator
       - run: exit 0
 
-  verify-api-revapi:
+  verify-api-japicmp:
     executor:
       name: ubuntu
       machine: large
@@ -467,20 +467,13 @@ jobs:
           steps:
             - checkout
             - restore-gradle-cache
-            - init-aws
             - run:
                 no_output_timeout: 30m
-                name: verify-api-revapi
-                command: |
-                  make sdk-build
-                  echo "$(./mbx-ci github reader token)" > gh_token.txt
-                  if [[ $CIRCLE_TAG =~ << pipeline.parameters.git_release_tag >> ]]; then
-                    ./scripts/java-api-check-all.sh "${CIRCLE_TAG}"
-                  else
-                    ./scripts/java-api-check-all.sh ""
-                  fi
+                name: Running japicmp. See output in "Artifacts" tab
+                # Run with --continue to get all errors at once and skip extension-androidauto
+                command: ./gradlew japicmp --continue
             - store_artifacts:
-                path: api_compat_report
+                path: build/reports/japi
       - run: exit 0
 
   verify-permissions:

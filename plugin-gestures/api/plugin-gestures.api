@@ -1,36 +1,3 @@
-public final class com/mapbox/maps/plugin/gestures/GesturesPluginImpl : com/mapbox/maps/plugin/gestures/generated/GesturesSettingsBase, com/mapbox/maps/plugin/MapStyleObserverPlugin, com/mapbox/maps/plugin/gestures/GesturesPlugin {
-	public static final field MAX_SHOVE_ANGLE F
-	public static final field ROTATION_ANGLE_THRESHOLD F
-	public fun <init> (Landroid/content/Context;F)V
-	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;F)V
-	public fun addOnFlingListener (Lcom/mapbox/maps/plugin/gestures/OnFlingListener;)V
-	public fun addOnMapClickListener (Lcom/mapbox/maps/plugin/gestures/OnMapClickListener;)V
-	public fun addOnMapLongClickListener (Lcom/mapbox/maps/plugin/gestures/OnMapLongClickListener;)V
-	public fun addOnMoveListener (Lcom/mapbox/maps/plugin/gestures/OnMoveListener;)V
-	public fun addOnRotateListener (Lcom/mapbox/maps/plugin/gestures/OnRotateListener;)V
-	public fun addOnScaleListener (Lcom/mapbox/maps/plugin/gestures/OnScaleListener;)V
-	public fun addOnShoveListener (Lcom/mapbox/maps/plugin/gestures/OnShoveListener;)V
-	public fun addProtectedAnimationOwner (Ljava/lang/String;)V
-	public fun bind (Landroid/content/Context;Landroid/util/AttributeSet;F)V
-	public fun cleanup ()V
-	public fun getGesturesManager ()Lcom/mapbox/android/gestures/AndroidGesturesManager;
-	public fun initialize ()V
-	public fun onDelegateProvider (Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;)V
-	public fun onGenericMotionEvent (Landroid/view/MotionEvent;)Z
-	public fun onSizeChanged (II)V
-	public fun onStyleChanged (Lcom/mapbox/maps/extension/style/StyleInterface;)V
-	public fun onTouchEvent (Landroid/view/MotionEvent;)Z
-	public fun removeOnFlingListener (Lcom/mapbox/maps/plugin/gestures/OnFlingListener;)V
-	public fun removeOnMapClickListener (Lcom/mapbox/maps/plugin/gestures/OnMapClickListener;)V
-	public fun removeOnMapLongClickListener (Lcom/mapbox/maps/plugin/gestures/OnMapLongClickListener;)V
-	public fun removeOnMoveListener (Lcom/mapbox/maps/plugin/gestures/OnMoveListener;)V
-	public fun removeOnRotateListener (Lcom/mapbox/maps/plugin/gestures/OnRotateListener;)V
-	public fun removeOnScaleListener (Lcom/mapbox/maps/plugin/gestures/OnScaleListener;)V
-	public fun removeOnShoveListener (Lcom/mapbox/maps/plugin/gestures/OnShoveListener;)V
-	public fun removeProtectedAnimationOwner (Ljava/lang/String;)V
-	public fun setGesturesManager (Lcom/mapbox/android/gestures/AndroidGesturesManager;ZZ)V
-}
-
 public final class com/mapbox/maps/plugin/gestures/GesturesUtils {
 	public static final fun addOnFlingListener (Lcom/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate;Lcom/mapbox/maps/plugin/gestures/OnFlingListener;)V
 	public static final fun addOnMapClickListener (Lcom/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate;Lcom/mapbox/maps/plugin/gestures/OnMapClickListener;)V
@@ -39,9 +6,9 @@ public final class com/mapbox/maps/plugin/gestures/GesturesUtils {
 	public static final fun addOnRotateListener (Lcom/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate;Lcom/mapbox/maps/plugin/gestures/OnRotateListener;)V
 	public static final fun addOnScaleListener (Lcom/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate;Lcom/mapbox/maps/plugin/gestures/OnScaleListener;)V
 	public static final fun addOnShoveListener (Lcom/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate;Lcom/mapbox/maps/plugin/gestures/OnShoveListener;)V
+	public static final synthetic fun createGesturePlugin (Landroid/content/Context;Landroid/util/AttributeSet;F)Lcom/mapbox/maps/plugin/gestures/GesturesPlugin;
 	public static final fun getGestures (Lcom/mapbox/maps/plugin/delegates/MapPluginProviderDelegate;)Lcom/mapbox/maps/plugin/gestures/GesturesPlugin;
 	public static final fun getGesturesManager (Lcom/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate;)Lcom/mapbox/android/gestures/AndroidGesturesManager;
-	public static final fun getGesturesSettings (Lcom/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate;)Lcom/mapbox/maps/plugin/gestures/generated/GesturesSettings;
 	public static final fun isScrollHorizontallyLimited (Lcom/mapbox/maps/plugin/gestures/generated/GesturesSettings;)Z
 	public static final fun isScrollVerticallyLimited (Lcom/mapbox/maps/plugin/gestures/generated/GesturesSettings;)Z
 	public static final fun removeOnFlingListener (Lcom/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate;Lcom/mapbox/maps/plugin/gestures/OnFlingListener;)V
