@@ -3636,7 +3636,6 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
  * Separated the DSL receiver class to this interface to avoid IDE code suggestion for
  * property getters.
  */
-@MapboxExperimental
 @LayersDsl
 interface FillExtrusionLayerDsl {
   /**

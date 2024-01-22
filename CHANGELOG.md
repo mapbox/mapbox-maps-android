@@ -8,6 +8,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Bug fixes 🐞
 * Retain previous `CenterAltitudeMode` after gestures are finished.
+* Avoid marking whole `LayerDsl` as experimental when only a part of the layer properties are experimental.
 
 # 11.1.0 January 17, 2024
 ## Features ✨ and improvements 🏁
