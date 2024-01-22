@@ -26,11 +26,11 @@ fix:
 
 .PHONY: sdkRegistryUpload
 sdkRegistryUpload:
-	./gradlew mapboxSDKRegistryUpload -x extension-androidauto:mapboxSDKRegistryUpload --no-parallel --no-daemon;
+	./gradlew mapboxSDKRegistryUpload --no-parallel --no-daemon;
 
 .PHONY: sdkRegistryReleaseUpload
 sdkRegistryReleaseUpload:
-	./gradlew mapboxSDKRegistryReleaseUpload -x extension-androidauto:mapboxSDKRegistryReleaseUpload --no-parallel --no-daemon;
+	./gradlew mapboxSDKRegistryReleaseUpload --no-parallel --no-daemon;
 
 .PHONY: sdkRegistryPublish
 sdkRegistryPublish:
@@ -39,14 +39,6 @@ sdkRegistryPublish:
 .PHONY: sdkRegistryReleasePublish
 sdkRegistryReleasePublish:
 	./gradlew mapboxSDKRegistryReleasePublishAll;
-
-.PHONY: sdkRegistryUploadReleaseAndroidAutoExtension
-sdkRegistryUploadReleaseAndroidAutoExtension:
-	./gradlew extension-androidauto:mapboxSDKRegistryReleaseUpload;
-
-.PHONY: sdkRegistryPublishReleaseAndroidAutoExtension
-sdkRegistryPublishReleaseAndroidAutoExtension:
-	./gradlew extension-androidauto:mapboxSDKRegistryReleasePublish;
 
 .PHONY: clean
 clean:

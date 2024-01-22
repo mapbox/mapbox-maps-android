@@ -343,16 +343,11 @@ The SDK, the default extensions and the default plugins use the same versioning,
 separate versioning for individual subprojects/modules. Subprojects can define the `MODULE_VERSION_NAME`
 in the subproject-level gradle.properties to overwrite the `VERSION_NAME` defined in the root project.
 
-Currently, the only module that uses its own versioning is the `extension-androidauto` and it's published
-separately from the main SDK.
-
 ### Publish new releases
 
 The CI is setup to publish new releases when new tag that follows the release tag pattern is created.
 
 * To publish a Maps SDK release with all the default plugins/extensions, create a release git tag `v*`.
-* To publish a Android Auto extension, create a release tag `extension-androidauto-v*`.
-
 
 ## Opening tickets
 
