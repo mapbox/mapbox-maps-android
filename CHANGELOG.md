@@ -9,6 +9,10 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * Retain previous `CenterAltitudeMode` after gestures are finished.
 * Avoid marking whole `LayerDsl` as experimental when only a part of the layer properties are experimental.
+* Fix R8 error due to missing class `com.tobrun.datacompat.annotation.Default`.
+
+## Dependencies
+* Upgrade to [Kotlin Data compat v0.8.0](https://github.com/tobrun/kotlin-data-compat/releases/tag/v0.8.0).
 
 # 11.1.0 January 17, 2024
 ## Features ✨ and improvements 🏁
