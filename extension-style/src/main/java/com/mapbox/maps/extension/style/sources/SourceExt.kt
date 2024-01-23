@@ -4,6 +4,7 @@ package com.mapbox.maps.extension.style.sources
 
 import com.mapbox.maps.CustomGeometrySourceOptions
 import com.mapbox.maps.CustomRasterSourceOptions
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.sources.generated.*
@@ -17,6 +18,7 @@ import com.mapbox.maps.logW
  * @param sourceId the source id
  * @return StyleSourcePlugin
  */
+@OptIn(MapboxExperimental::class)
 fun MapboxStyleManager.getSource(sourceId: String): Source? {
   return this.getStyleSourceProperty(sourceId, "type").silentUnwrap<String>()?.let { type ->
     when (type) {

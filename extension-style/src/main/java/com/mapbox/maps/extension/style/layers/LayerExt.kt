@@ -5,6 +5,7 @@ package com.mapbox.maps.extension.style.layers
 import com.mapbox.maps.CustomLayerHost
 import com.mapbox.maps.CustomLayerRenderParameters
 import com.mapbox.maps.LayerPosition
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.layers.generated.*
@@ -18,6 +19,7 @@ import com.mapbox.maps.logE
  * @param layerId the layer id
  * @return StyleLayerPlugin
  */
+@OptIn(MapboxExperimental::class)
 fun MapboxStyleManager.getLayer(layerId: String): Layer? {
   val source by lazy { getStyleLayerProperty(layerId, "source").unwrap<String>() }
   return when (val type = getStyleLayerProperty(layerId, "type").silentUnwrap<String>()) {

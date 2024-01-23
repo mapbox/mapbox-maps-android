@@ -4,6 +4,7 @@ import android.util.Log
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxStyleException
 import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.StylePropertyValueKind
@@ -21,6 +22,7 @@ import com.mapbox.maps.logE
  * For image and video sources, a URL must be provided.
  * For GeoJSON sources, a URL or inline GeoJSON must be provided.
  */
+@OptIn(MapboxExperimental::class)
 abstract class Source(
   /**
    * The ID of the Source.

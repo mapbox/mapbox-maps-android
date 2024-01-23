@@ -4,6 +4,7 @@ package com.mapbox.maps.testapp.style.sources.generated
 
 import androidx.test.annotation.UiThreadTest
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.style.sources.generated.*
 import com.mapbox.maps.testapp.style.BaseStyleTest
 import org.junit.Assert.assertEquals
@@ -15,6 +16,7 @@ import org.junit.runner.RunWith
 /**
  * Basic smoke tests for RasterArraySource.
  */
+@OptIn(MapboxExperimental::class)
 @RunWith(AndroidJUnit4::class)
 class RasterArraySourceTest : BaseStyleTest() {
 

@@ -239,6 +239,7 @@ private class MapboxMapNode(
   }
 }
 
+@OptIn(MapboxExperimental::class)
 @JvmSynthetic
 @Composable
 internal fun MapboxMapComposeNode(
@@ -318,6 +319,7 @@ internal fun MapboxMapComposeNode(
   )
 }
 
+@OptIn(MapboxExperimental::class)
 private fun GesturesPlugin.addNonDefaultOnClickListener(onMapClickListener: OnMapClickListener) {
   // Avoid addOnMapClickListener when the default instance is used.
   if (onMapClickListener !== DefaultSettingsProvider.defaultOnClickListener) {
@@ -325,6 +327,7 @@ private fun GesturesPlugin.addNonDefaultOnClickListener(onMapClickListener: OnMa
   }
 }
 
+@OptIn(MapboxExperimental::class)
 private fun GesturesPlugin.removeNonDefaultOnClickListener(onMapClickListener: OnMapClickListener) {
   // Avoid removeOnMapClickListener when the default instance is used.
   if (onMapClickListener !== DefaultSettingsProvider.defaultOnClickListener) {
@@ -332,6 +335,7 @@ private fun GesturesPlugin.removeNonDefaultOnClickListener(onMapClickListener: O
   }
 }
 
+@OptIn(MapboxExperimental::class)
 private fun GesturesPlugin.addNonDefaultOnLongClickListener(onMapLongClickListener: OnMapLongClickListener) {
   // Avoid addOnMapLongClickListener when the default instance is used.
   if (onMapLongClickListener !== DefaultSettingsProvider.defaultOnLongClickListener) {
@@ -339,6 +343,7 @@ private fun GesturesPlugin.addNonDefaultOnLongClickListener(onMapLongClickListen
   }
 }
 
+@OptIn(MapboxExperimental::class)
 private fun GesturesPlugin.removeNonDefaultOnLongClickListener(onMapLongClickListener: OnMapLongClickListener) {
   // Avoid removeOnMapLongClickListener when the default instance is used.
   if (onMapLongClickListener !== DefaultSettingsProvider.defaultOnLongClickListener) {

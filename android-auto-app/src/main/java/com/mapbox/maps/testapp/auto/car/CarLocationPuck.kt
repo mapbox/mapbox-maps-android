@@ -2,6 +2,7 @@ package com.mapbox.maps.testapp.auto.car
 
 import android.annotation.SuppressLint
 import com.mapbox.maps.ImageHolder
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.R
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.LocationPuck3D
@@ -14,6 +15,7 @@ internal object CarLocationPuck {
   /**
    * 3D location puck with the real world size.
    */
+  @OptIn(MapboxExperimental::class)
   val duckLocationPuckRealWorld = LocationPuck3D(
     modelUri = "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF-Embedded/Duck.gltf",
     modelScale = listOf(20f, 20f, 20f),
@@ -24,6 +26,7 @@ internal object CarLocationPuck {
   /**
    * 3D location puck with a constant size across zoom levels.
    */
+  @OptIn(MapboxExperimental::class)
   val duckLocationPuckConstantSize = LocationPuck3D(
     modelUri = "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF-Embedded/Duck.gltf",
     modelScale = listOf(20f, 20f, 20f),
