@@ -12,19 +12,15 @@ import com.mapbox.maps.plugin.animation.CameraAnimatorType
  * Animator class used to animate [CameraOptions.center] property.
  */
 @RestrictTo(RestrictTo.Scope.LIBRARY)
-internal class CameraCenterAnimator : CameraAnimator<Point> {
-  internal constructor(
-    options: CameraAnimatorOptions<Point>,
-    block: (ValueAnimator.() -> Unit)? = null
-  ) : super(Evaluators.POINT, options) {
-    block?.invoke(this)
-  }
-
-  internal constructor(
-    evaluator: TypeEvaluator<Point>,
-    options: CameraAnimatorOptions<Point>,
-    block: (ValueAnimator.() -> Unit)? = null
-  ) : super(evaluator, options) {
+internal class CameraCenterAnimator internal constructor(
+  evaluator: TypeEvaluator<Point> = Evaluators.POINT,
+  options: CameraAnimatorOptions<Point>,
+  val useShortestPath: Boolean,
+  block: (ValueAnimator.() -> Unit)? = null
+) : CameraAnimator<Point>(
+  evaluator, options
+) {
+  init {
     block?.invoke(this)
   }
 

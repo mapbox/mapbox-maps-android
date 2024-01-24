@@ -196,8 +196,25 @@ interface CameraAnimationsPlugin : MapPlugin {
    * @param options animator options object to set targets and other non mandatory options
    * @param block optional block to apply any [ValueAnimator] parameters
    */
+  @Deprecated(
+    message = "createCenterAnimator(options, block) is deprecated, please use createCenterAnimator(options, useShortestPath, block) instead.",
+    replaceWith = ReplaceWith("createCenterAnimator(options, useShortestPath, block)")
+  )
   fun createCenterAnimator(
     options: CameraAnimatorOptions<Point>,
+    block: (ValueAnimator.() -> Unit)? = null
+  ): ValueAnimator = createCenterAnimator(options, false, block)
+
+  /**
+   * Create CameraCenterAnimator. Current map camera option will be applied on animation start if not specified explicitly with [options.startValue].
+   *
+   * @param options animator options object to set targets and other non mandatory options
+   * @param useShortestPath if set to True, shortest path will be applied when the start and end camera is across the antimeridian, for example from -170 to 170 longitude.
+   * @param block optional block to apply any [ValueAnimator] parameters
+   */
+  fun createCenterAnimator(
+    options: CameraAnimatorOptions<Point>,
+    useShortestPath: Boolean,
     block: (ValueAnimator.() -> Unit)? = null
   ): ValueAnimator
 

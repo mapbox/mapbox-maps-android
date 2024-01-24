@@ -5,11 +5,13 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 ## Features ✨ and improvements 🏁
 * Introduce `MapboxMap.getCenterAltitudeMode` API.
+* Add `useShortestPath` option to `CameraAnimationPlugin.createCenterAnimator`, when enabled, shortest path will be applied when the start and end camera  center is across the antimeridian, for example from -170 to 170 longitude. Defaults to true.
 
 ## Bug fixes 🐞
 * Retain previous `CenterAltitudeMode` after gestures are finished.
 * Avoid marking whole `LayerDsl` as experimental when only a part of the layer properties are experimental.
 * Fix R8 error due to missing class `com.tobrun.datacompat.annotation.Default`.
+* `EaseTo` and `MoveBy` camera animation and `DefaultViewportTransition` now will use shortest path when the start and end camera center is across the antimeridian, for example from -170 to 170 longitude.
 
 ## Dependencies
 * Upgrade to [Kotlin Data compat v0.8.0](https://github.com/tobrun/kotlin-data-compat/releases/tag/v0.8.0).

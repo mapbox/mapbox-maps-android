@@ -901,6 +901,7 @@ public abstract interface class com/mapbox/maps/plugin/animation/CameraAnimation
 	public abstract fun createAnchorAnimator (Lcom/mapbox/maps/plugin/animation/CameraAnimatorOptions;Lkotlin/jvm/functions/Function1;)Landroid/animation/ValueAnimator;
 	public abstract fun createBearingAnimator (Lcom/mapbox/maps/plugin/animation/CameraAnimatorOptions;ZLkotlin/jvm/functions/Function1;)Landroid/animation/ValueAnimator;
 	public abstract fun createCenterAnimator (Lcom/mapbox/maps/plugin/animation/CameraAnimatorOptions;Lkotlin/jvm/functions/Function1;)Landroid/animation/ValueAnimator;
+	public abstract fun createCenterAnimator (Lcom/mapbox/maps/plugin/animation/CameraAnimatorOptions;ZLkotlin/jvm/functions/Function1;)Landroid/animation/ValueAnimator;
 	public abstract fun createPaddingAnimator (Lcom/mapbox/maps/plugin/animation/CameraAnimatorOptions;Lkotlin/jvm/functions/Function1;)Landroid/animation/ValueAnimator;
 	public abstract fun createPitchAnimator (Lcom/mapbox/maps/plugin/animation/CameraAnimatorOptions;Lkotlin/jvm/functions/Function1;)Landroid/animation/ValueAnimator;
 	public abstract fun createZoomAnimator (Lcom/mapbox/maps/plugin/animation/CameraAnimatorOptions;Lkotlin/jvm/functions/Function1;)Landroid/animation/ValueAnimator;
@@ -932,7 +933,9 @@ public final class com/mapbox/maps/plugin/animation/CameraAnimationsPlugin$Defau
 	public static fun cleanup (Lcom/mapbox/maps/plugin/animation/CameraAnimationsPlugin;)V
 	public static synthetic fun createAnchorAnimator$default (Lcom/mapbox/maps/plugin/animation/CameraAnimationsPlugin;Lcom/mapbox/maps/plugin/animation/CameraAnimatorOptions;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Landroid/animation/ValueAnimator;
 	public static synthetic fun createBearingAnimator$default (Lcom/mapbox/maps/plugin/animation/CameraAnimationsPlugin;Lcom/mapbox/maps/plugin/animation/CameraAnimatorOptions;ZLkotlin/jvm/functions/Function1;ILjava/lang/Object;)Landroid/animation/ValueAnimator;
+	public static fun createCenterAnimator (Lcom/mapbox/maps/plugin/animation/CameraAnimationsPlugin;Lcom/mapbox/maps/plugin/animation/CameraAnimatorOptions;Lkotlin/jvm/functions/Function1;)Landroid/animation/ValueAnimator;
 	public static synthetic fun createCenterAnimator$default (Lcom/mapbox/maps/plugin/animation/CameraAnimationsPlugin;Lcom/mapbox/maps/plugin/animation/CameraAnimatorOptions;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Landroid/animation/ValueAnimator;
+	public static synthetic fun createCenterAnimator$default (Lcom/mapbox/maps/plugin/animation/CameraAnimationsPlugin;Lcom/mapbox/maps/plugin/animation/CameraAnimatorOptions;ZLkotlin/jvm/functions/Function1;ILjava/lang/Object;)Landroid/animation/ValueAnimator;
 	public static synthetic fun createPaddingAnimator$default (Lcom/mapbox/maps/plugin/animation/CameraAnimationsPlugin;Lcom/mapbox/maps/plugin/animation/CameraAnimatorOptions;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Landroid/animation/ValueAnimator;
 	public static synthetic fun createPitchAnimator$default (Lcom/mapbox/maps/plugin/animation/CameraAnimationsPlugin;Lcom/mapbox/maps/plugin/animation/CameraAnimatorOptions;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Landroid/animation/ValueAnimator;
 	public static synthetic fun createZoomAnimator$default (Lcom/mapbox/maps/plugin/animation/CameraAnimationsPlugin;Lcom/mapbox/maps/plugin/animation/CameraAnimatorOptions;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Landroid/animation/ValueAnimator;

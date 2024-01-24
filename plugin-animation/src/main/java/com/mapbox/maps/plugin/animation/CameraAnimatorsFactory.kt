@@ -48,6 +48,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
           options = cameraAnimatorOptions(target) {
             startValue(currentCameraState.center)
           },
+          useShortestPath = true,
           block = defaultAnimationParameters[CameraAnimatorType.CENTER]
         ).apply {
           owner?.let { customOwner ->
@@ -227,6 +228,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
         options = cameraAnimatorOptions(centerTarget) {
           startValue(cameraState.center)
         },
+        useShortestPath = true,
         block = defaultAnimationParameters[CameraAnimatorType.CENTER]
       ).apply {
         owner?.let { customOwner ->
@@ -423,6 +425,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
         options = cameraAnimatorOptions(endPointRaw) {
           startValue(startPointRaw)
         },
+        useShortestPath = true,
         block = defaultAnimationParameters[CameraAnimatorType.CENTER]
       ).apply {
         owner?.let { customOwner ->

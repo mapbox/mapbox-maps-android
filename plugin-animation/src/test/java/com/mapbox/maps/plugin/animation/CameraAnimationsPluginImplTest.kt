@@ -1,6 +1,7 @@
 package com.mapbox.maps.plugin.animation
 
 import android.animation.Animator
+import android.animation.Animator.AnimatorListener
 import android.animation.AnimatorListenerAdapter
 import android.animation.AnimatorSet
 import android.animation.ValueAnimator
@@ -26,6 +27,7 @@ import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.ParameterizedRobolectricTestRunner
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.LooperMode
@@ -1361,14 +1363,133 @@ class CameraAnimationsPluginImplTest {
 
     private fun CameraAnimationsPluginImpl.onCameraMove(cameraState: CameraState) {
       onCameraMove(
-          center = cameraState.center,
-          zoom = cameraState.zoom,
-          pitch = cameraState.pitch,
-          bearing = cameraState.bearing,
-          padding = cameraState.padding
+        center = cameraState.center,
+        zoom = cameraState.zoom,
+        pitch = cameraState.pitch,
+        bearing = cameraState.bearing,
+        padding = cameraState.padding
       )
     }
 
     const val EPS = 0.000001
+  }
+}
+
+@RunWith(ParameterizedRobolectricTestRunner::class)
+class RegisterCameraCenterAnimatorUsingShortestPathTest(
+  private val shortestPathEnabled: Boolean,
+  private val testStartValue: Point?,
+  private val testTargets: Array<Point>,
+  private val expectedObjectValues: Array<Point>
+) {
+  private lateinit var mapCameraManagerDelegate: MapCameraManagerDelegate
+  private lateinit var cameraAnimationsPluginImpl: CameraAnimationsPluginImpl
+
+  @Before
+  fun setup() {
+    val delegateProvider = mockk<MapDelegateProvider>(relaxed = true)
+    mapCameraManagerDelegate = mockk(relaxed = true)
+    val mapTransformDelegate = mockk<MapTransformDelegate>(relaxed = true)
+    mockkObject(CameraTransform)
+    mockkStatic("com.mapbox.maps.MapboxLogger")
+    every { logW(any(), any()) } just Runs
+    every { logI(any(), any()) } just Runs
+    every { logE(any(), any()) } just Runs
+    every { delegateProvider.mapCameraManagerDelegate } returns mapCameraManagerDelegate
+    every { delegateProvider.mapTransformDelegate } returns mapTransformDelegate
+    cameraAnimationsPluginImpl = CameraAnimationsPluginImpl().apply {
+      onDelegateProvider(delegateProvider)
+    }
+  }
+
+  @After
+  fun cleanUp() {
+    unmockkObject(CameraTransform)
+    unmockkStatic("com.mapbox.maps.MapboxLogger")
+  }
+
+  @Test
+  fun testCenterAnimationWithShortestPath() {
+    val internalListenerSlot = slot<AnimatorListener>()
+    val argValues = mutableListOf<Any?>()
+    every { mapCameraManagerDelegate.cameraState } returns CameraState(
+      Point.fromLngLat(0.0, 0.0),
+      EdgeInsets(0.0, 0.0, 0.0, 0.0),
+      0.0,
+      0.0,
+      0.0
+    )
+    val cameraCenterAnimator = mockk<CameraCenterAnimator> {
+      every { addInternalListener(capture(internalListenerSlot)) } just runs
+      every { canceled } returns false
+      every { targets } returns testTargets
+      arrayOf(Point.fromLngLat(170.0, 0.0), Point.fromLngLat(-90.0, 0.0))
+      every { startValue } returns testStartValue
+      every { useShortestPath } returns shortestPathEnabled
+      every { type } returns CameraAnimatorType.CENTER
+      every { setObjectValues(*varargAllNullable { argValues.add(it); true }) } just runs
+      every { isRunning } returns false
+      every { addInternalUpdateListener(any()) } just runs
+    }
+    cameraAnimationsPluginImpl.registerAnimators(cameraCenterAnimator)
+
+    internalListenerSlot.captured.onAnimationStart(cameraCenterAnimator)
+
+    assertEquals(/* expected = */ expectedObjectValues.size, /* actual = */ argValues.size)
+    expectedObjectValues.forEachIndexed { index, point ->
+      assertEquals(
+        /* expected = */ point.longitude(),
+        /* actual = */ (argValues[index] as Point).longitude(),
+        /* delta = */ EPS
+      )
+      assertEquals(
+        /* expected = */ point.latitude(),
+        /* actual = */ (argValues[index] as Point).latitude(),
+        /* delta = */ EPS
+      )
+    }
+  }
+
+  private companion object {
+    @JvmStatic
+    @ParameterizedRobolectricTestRunner.Parameters(name = "shortest path enabled: {0}, startPoint: {1}, original targets: {2}, expected targets: {3}")
+    fun data() = listOf(
+      arrayOf(
+        true,
+        (-170.0).toTestPoint(),
+        arrayOf(170.0.toTestPoint(), (-90.0).toTestPoint()),
+        arrayOf((-170.0).toTestPoint(), (-190.0).toTestPoint(), (-90.0).toTestPoint())
+      ),
+      arrayOf(
+        false,
+        (-170.0).toTestPoint(),
+        arrayOf(170.0.toTestPoint(), (-90.0).toTestPoint()),
+        arrayOf((-170.0).toTestPoint(), (170.0).toTestPoint(), (-90.0).toTestPoint())
+      ),
+      arrayOf(
+        true,
+        (-170.0).toTestPoint(),
+        arrayOf(170.0.toTestPoint()),
+        arrayOf(190.0.toTestPoint(), 170.0.toTestPoint())
+      ),
+      arrayOf(
+        true,
+        null,
+        arrayOf(170.0.toTestPoint()),
+        arrayOf(0.0.toTestPoint(), 170.0.toTestPoint())
+      ),
+      arrayOf(
+        true,
+        null,
+        arrayOf(170.0.toTestPoint(), (-90.0).toTestPoint()),
+        arrayOf(0.0.toTestPoint(), (-190.0).toTestPoint(), (-90.0).toTestPoint())
+      ),
+    )
+
+    private fun Double.toTestPoint(): Point {
+      return Point.fromLngLat(this, 0.0)
+    }
+
+    private const val EPS = 0.000001
   }
 }

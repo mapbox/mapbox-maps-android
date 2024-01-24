@@ -11,6 +11,7 @@ import com.mapbox.common.Cancelable
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.plugin.MapCameraPlugin
+import com.mapbox.maps.plugin.animation.CameraTransform.wrapCoordinate
 import com.mapbox.maps.plugin.animation.animator.*
 import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.threading.AnimationThreadController.postOnAnimatorThread
@@ -270,25 +271,46 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
         )
       }
     }
-    val animationObjectValues = if (cameraAnimator is CameraBearingAnimator && cameraAnimator.useShortestPath) {
-      MathUtils.prepareOptimalBearingPath(
-        DoubleArray(cameraAnimator.targets.size + 1) { index ->
+    val animationObjectValues =
+      if (cameraAnimator is CameraBearingAnimator && cameraAnimator.useShortestPath) {
+        MathUtils.prepareOptimalBearingPath(
+          DoubleArray(cameraAnimator.targets.size + 1) { index ->
+            if (index == 0) {
+              startValue as Double
+            } else {
+              cameraAnimator.targets[index - 1]
+            }
+          }
+        ).toTypedArray()
+      } else if (cameraAnimator is CameraCenterAnimator && cameraAnimator.useShortestPath) {
+        // assemble the original targets by inserting the start point
+        val originalTargets: List<Point> = listOf(startValue as Point) + cameraAnimator.targets
+        // Build the reversed target list with wrapped coordinates
+        val mutableTargetReversedList = mutableListOf<Point>()
+        originalTargets.map { it.wrapCoordinate() }.reversed().forEach {
+          if (mutableTargetReversedList.isEmpty()) {
+            // insert the raw end point
+            mutableTargetReversedList.add(it)
+          } else {
+            // calculate the previous point
+            mutableTargetReversedList.add(
+              CameraTransform.unwrapForShortestPath(
+                start = it,
+                end = mutableTargetReversedList.last()
+              )
+            )
+          }
+        }
+        mutableTargetReversedList.reversed().toTypedArray()
+      } else {
+        Array(cameraAnimator.targets.size + 1) { index ->
           if (index == 0) {
-            startValue as Double
+            startValue
           } else {
             cameraAnimator.targets[index - 1]
           }
         }
-      ).toTypedArray()
-    } else {
-      Array(cameraAnimator.targets.size + 1) { index ->
-        if (index == 0) {
-          startValue
-        } else {
-          cameraAnimator.targets[index - 1]
-        }
       }
-    }
     if (skipRedundantAnimator(animationObjectValues, cameraAnimator.type)) {
       if (debugMode) {
         logI(
@@ -302,7 +324,10 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
     return true
   }
 
-  private fun skipRedundantAnimator(animationObjectValues: Array<out Any?>, type: CameraAnimatorType) = when (type) {
+  private fun skipRedundantAnimator(
+    animationObjectValues: Array<out Any?>,
+    type: CameraAnimatorType
+  ) = when (type) {
     CameraAnimatorType.ANCHOR -> false // anchor animations are never skipped
     CameraAnimatorType.CENTER -> animationObjectValues.all { Objects.equals(center, it) }
     CameraAnimatorType.ZOOM -> animationObjectValues.all { Objects.equals(zoom, it) }
@@ -687,9 +712,9 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
    * @return [Cancelable] animator set object.
    */
   override fun easeTo(
-      cameraOptions: CameraOptions,
-      animationOptions: MapAnimationOptions?,
-      animatorListener: Animator.AnimatorListener?
+    cameraOptions: CameraOptions,
+    animationOptions: MapAnimationOptions?,
+    animatorListener: Animator.AnimatorListener?
   ) = startHighLevelAnimation(
     cameraAnimationsFactory.getEaseTo(cameraOptions),
     animationOptions,
@@ -871,12 +896,15 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
    * Create CameraCenterAnimator. Current map camera option will be applied on animation start if not specified explicitly with [options.startValue][CameraAnimatorOptions.startValue].
    *
    * @param options animator options object to set targets and other non mandatory options
+   * @param useShortestPath if set to True, shortest path will be applied when the start and end camera center is across the antimeridian, for example from -170 to 170 longitude.
    * @param block optional block to apply any [ValueAnimator] parameters
    */
   override fun createCenterAnimator(
     options: CameraAnimatorOptions<Point>,
+    useShortestPath: Boolean,
     block: (ValueAnimator.() -> Unit)?
-  ): ValueAnimator = CameraCenterAnimator(options, block)
+  ): ValueAnimator =
+    CameraCenterAnimator(options = options, useShortestPath = useShortestPath, block = block)
 
   /**
    * Play given [ValueAnimator]'s together.
@@ -980,7 +1008,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
   /**
    * Static variables and methods.
    */
-   internal companion object {
+  internal companion object {
     internal const val TAG = "Mbgl-CameraManager"
   }
 }

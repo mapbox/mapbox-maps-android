@@ -110,7 +110,8 @@ class CameraAnimatorsFactoryTest {
   @Test
   fun testRotateByAnimators() {
     every { mapCameraManagerDelegate.cameraState } returns initialCameraPosition
-    every { mapTransformDelegate.getMapOptions() } returns MapOptions.Builder().size(Size(1078.875f, 1698.375f)).build()
+    every { mapTransformDelegate.getMapOptions() } returns MapOptions.Builder()
+      .size(Size(1078.875f, 1698.375f)).build()
     val target = CameraOptions.Builder().bearing(-25.981604850040434).build()
     val animators = cameraAnimatorsFactory.getRotateBy(
       ScreenCoordinate(0.0, 0.0),
@@ -142,7 +143,8 @@ class CameraAnimatorsFactoryTest {
     every { mapCameraManagerDelegate.cameraState } returns initialCameraPosition
     val scaleBy = 15.0
     val zoomTarget = CameraTransform.calculateScaleBy(scaleBy, initialCameraPosition.zoom)
-    val target = CameraOptions.Builder().zoom(zoomTarget).anchor(ScreenCoordinate(10.0, 10.0)).build()
+    val target =
+      CameraOptions.Builder().zoom(zoomTarget).anchor(ScreenCoordinate(10.0, 10.0)).build()
     val animators = cameraAnimatorsFactory.getScaleBy(scaleBy, target.anchor, owner = customOwner)
     testAnimators(animators, target)
   }
@@ -156,7 +158,10 @@ class CameraAnimatorsFactoryTest {
     testAnimators(animators, target)
   }
 
-  private fun testAnimators(animators: Array<CameraAnimator<*>>, targetCameraPosition: CameraOptions) {
+  private fun testAnimators(
+    animators: Array<CameraAnimator<*>>,
+    targetCameraPosition: CameraOptions
+  ) {
     animators.forEach {
       Assert.assertEquals(it.interpolator, decelerateInterpolatorNew)
       Assert.assertEquals(it.startDelay, delayNew)
@@ -171,21 +176,26 @@ class CameraAnimatorsFactoryTest {
           Assert.assertEquals(initialCameraPosition.bearing, startValue)
           Assert.assertEquals(targetCameraPosition.bearing!!, targetValue)
         }
+
         CameraAnimatorType.CENTER -> {
           Assert.assertEquals(initialCameraPosition.center, startValue)
           Assert.assertEquals(targetCameraPosition.center, targetValue)
         }
+
         CameraAnimatorType.PITCH -> {
           Assert.assertEquals(initialCameraPosition.pitch, startValue)
           Assert.assertEquals(targetCameraPosition.pitch, targetValue)
         }
+
         CameraAnimatorType.ZOOM -> {
           Assert.assertEquals(initialCameraPosition.zoom, startValue)
           Assert.assertEquals(targetCameraPosition.zoom, targetValue)
         }
+
         CameraAnimatorType.ANCHOR -> {
           Assert.assertEquals(targetCameraPosition.anchor, targetValue)
         }
+
         CameraAnimatorType.PADDING -> {
           Assert.assertEquals(initialCameraPosition.padding, startValue)
           Assert.assertEquals(targetCameraPosition.padding, targetValue)
@@ -209,21 +219,26 @@ class CameraAnimatorsFactoryTest {
           Assert.assertEquals(initialCameraPosition.bearing, startValue)
           Assert.assertEquals(targetCameraPosition.bearing!!, targetValue)
         }
+
         CameraAnimatorType.PITCH -> {
           Assert.assertEquals(initialCameraPosition.pitch, startValue)
           Assert.assertEquals(targetCameraPosition.pitch, targetValue)
         }
+
         CameraAnimatorType.ZOOM -> {
           Assert.assertEquals(initialCameraPosition.zoom, startValue)
           Assert.assertEquals(targetCameraPosition.zoom, targetValue)
         }
+
         CameraAnimatorType.ANCHOR -> {
           Assert.assertEquals(targetCameraPosition.anchor, targetValue)
         }
+
         CameraAnimatorType.PADDING -> {
           Assert.assertEquals(initialCameraPosition.padding, startValue)
           Assert.assertEquals(targetCameraPosition.padding, targetValue)
         }
+
         CameraAnimatorType.CENTER -> {
           Assert.assertEquals(initialCameraPosition.center, startValue)
           Assert.assertEquals(targetCameraPosition.center, targetValue)
@@ -263,5 +278,46 @@ class WrapCoordinateTest(
       CameraTransform.wrap(actual.first, actual.second, actual.third),
       DELTA
     )
+  }
+}
+
+@RunWith(Parameterized::class)
+class UnwrapForShortestPathTest(
+  private val actual: Pair<Double, Double>,
+  private val expected: Double
+) {
+
+  @Test
+  fun testUnwrapForShortestPath() {
+    val modifiedStart = CameraTransform.unwrapForShortestPath(
+      start = Point.fromLngLat(actual.first, LATITUDE),
+      end = Point.fromLngLat(actual.second, LATITUDE)
+    )
+    Assert.assertEquals(
+      expected,
+      modifiedStart.longitude(),
+      DELTA
+    )
+    Assert.assertEquals(
+      LATITUDE,
+      modifiedStart.latitude(),
+      DELTA
+    )
+  }
+
+  private companion object {
+    @JvmStatic
+    @Parameterized.Parameters(name = "input start/end longitude {0} should be unwrapped to start longitude {1}")
+    fun data() = listOf(
+      arrayOf(Pair(-170.0, -LONGITUDE_MAX), -170),
+      arrayOf(Pair(-170.0, LONGITUDE_MAX), 190),
+      arrayOf(Pair(-170.0, 170.0), 190.0),
+      arrayOf(Pair(LONGITUDE_MAX, -LONGITUDE_MAX), LONGITUDE_MAX),
+      arrayOf(Pair(275.0, -10.0), -85.0),
+    )
+
+    private const val DELTA = 0.0001
+    private const val LONGITUDE_MAX = 180.0
+    private const val LATITUDE = 40.0
   }
 }

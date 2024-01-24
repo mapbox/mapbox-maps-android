@@ -210,12 +210,16 @@ internal class MapboxViewportTransitionFactory(
     startDelay: Long = 0L,
     duration: Long,
     interpolator: Interpolator = SLOW_OUT_SLOW_IN_INTERPOLATOR
-  ): Animator = cameraPlugin.createCenterAnimator(
-    cameraAnimatorOptions(center) { owner(VIEWPORT_CAMERA_OWNER) }
-  ) {
-    this.startDelay = startDelay
-    this.duration = duration
-    this.interpolator = interpolator
+  ): Animator {
+
+    return cameraPlugin.createCenterAnimator(
+      useShortestPath = true,
+      options = cameraAnimatorOptions(center) { owner(VIEWPORT_CAMERA_OWNER) }
+    ) {
+      this.startDelay = startDelay
+      this.duration = duration
+      this.interpolator = interpolator
+    }
   }
 
   private fun createZoomAnimator(
