@@ -3289,6 +3289,113 @@ class SymbolLayerTest {
   }
 
   @Test
+  fun iconColorSaturationSet() {
+    val layer = symbolLayer("id", "source") {}
+    val testValue = 1.0
+    layer.bindTo(style)
+    layer.iconColorSaturation(testValue)
+    verify { style.setStyleLayerProperty("id", "icon-color-saturation", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "1.0")
+  }
+
+  @Test
+  fun iconColorSaturationGet() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), layer.iconColorSaturation?.toString())
+    verify { style.getStyleLayerProperty("id", "icon-color-saturation") }
+  }
+  // Expression Tests
+
+  @Test
+  fun iconColorSaturationAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.iconColorSaturation(expression)
+    verify { style.setStyleLayerProperty("id", "icon-color-saturation", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun iconColorSaturationAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.iconColorSaturationAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "icon-color-saturation") }
+  }
+
+  @Test
+  fun iconColorSaturationAsExpressionGetNull() {
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.iconColorSaturationAsExpression)
+    verify { style.getStyleLayerProperty("id", "icon-color-saturation") }
+  }
+
+  @Test
+  fun iconColorSaturationAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(1.0, layer.iconColorSaturationAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.iconColorSaturation!!, 1E-5)
+    verify { style.getStyleLayerProperty("id", "icon-color-saturation") }
+  }
+
+  @Test
+  fun iconColorSaturationTransitionSet() {
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.iconColorSaturationTransition(
+      transitionOptions {
+        duration(100)
+        delay(200)
+      }
+    )
+    verify { style.setStyleLayerProperty("id", "icon-color-saturation-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
+  fun iconColorSaturationTransitionGet() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(transition.toValue().toString(), layer.iconColorSaturationTransition?.toValue().toString())
+    verify { style.getStyleLayerProperty("id", "icon-color-saturation-transition") }
+  }
+
+  @Test
+  fun iconColorSaturationTransitionSetDsl() {
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.iconColorSaturationTransition {
+      duration(100)
+      delay(200)
+    }
+    verify { style.setStyleLayerProperty("id", "icon-color-saturation-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
   fun iconEmissiveStrengthSet() {
     val layer = symbolLayer("id", "source") {}
     val testValue = 1.0
@@ -6618,6 +6725,50 @@ class SymbolLayerTest {
 
     assertEquals(transition.toValue().toString(), SymbolLayer.defaultIconColorTransition?.toValue().toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-color-transition") }
+  }
+
+  @Test
+  fun defaultIconColorSaturationTest() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), SymbolLayer.defaultIconColorSaturation?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-color-saturation") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultIconColorSaturationAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), SymbolLayer.defaultIconColorSaturationAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-color-saturation") }
+  }
+
+  @Test
+  fun defaultIconColorSaturationAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    assertEquals(1.0, SymbolLayer.defaultIconColorSaturationAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, SymbolLayer.defaultIconColorSaturation!!, 1E-5)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-color-saturation") }
+  }
+
+  @Test
+  fun defaultIconColorSaturationTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+
+    assertEquals(transition.toValue().toString(), SymbolLayer.defaultIconColorSaturationTransition?.toValue().toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-color-saturation-transition") }
   }
 
   @Test

@@ -49,6 +49,7 @@ import com.mapbox.maps.plugin.annotation.generated.createPointAnnotationManager
  * @param textRotationAlignment In combination with {@link Property.SYMBOL_PLACEMENT}, determines the rotation behavior of the individual glyphs forming the text.
  * @param textVariableAnchor To increase the chance of placing high-priority labels on the map, you can provide an array of {@link Property.TEXT_ANCHOR} locations: the renderer will attempt to place the label at each location, in order, before moving onto the next label. Use `text-justify: auto` to choose justification based on anchor position. To apply an offset, use the {@link PropertyFactory#textRadialOffset} or the two-dimensional {@link PropertyFactory#textOffset}.
  * @param textWritingMode The property allows control over a symbol's orientation. Note that the property values act as a hint, so that a symbol whose language doesn’t support the provided orientation will be laid out in its natural orientation. Example: English point symbol will be rendered horizontally even if array value contains single 'vertical' enum value. For symbol with point placement, the order of elements in an array define priority order for the placement of an orientation variant. For symbol with line placement, the default text writing mode is either ['horizontal', 'vertical'] or ['vertical', 'horizontal'], the order doesn't affect the placement.
+ * @param iconColorSaturation Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white. The unit of iconColorSaturation is in intensity.
  * @param iconTranslate Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. The unit of iconTranslate is in density-independent pixels.
  * @param iconTranslateAnchor Controls the frame of reference for {@link PropertyFactory#iconTranslate}.
  * @param textTranslate Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. The unit of textTranslate is in density-independent pixels.
@@ -84,6 +85,7 @@ public fun PointAnnotationGroup(
   textRotationAlignment: TextRotationAlignment? = null,
   textVariableAnchor: List<String>? = null,
   textWritingMode: List<String>? = null,
+  iconColorSaturation: Double? = null,
   iconTranslate: List<Double>? = null,
   iconTranslateAnchor: IconTranslateAnchor? = null,
   textTranslate: List<Double>? = null,
@@ -172,6 +174,9 @@ public fun PointAnnotationGroup(
       }
       set(textWritingMode) {
         annotationManager.textWritingMode = it
+      }
+      set(iconColorSaturation) {
+        annotationManager.iconColorSaturation = it
       }
       set(iconTranslate) {
         annotationManager.iconTranslate = it

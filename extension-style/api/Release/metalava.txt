@@ -3650,6 +3650,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public Double? getRasterContrast();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getRasterContrastAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getRasterContrastTransition();
+    method public Double? getRasterElevation();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getRasterElevationAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getRasterElevationTransition();
     method public Double? getRasterEmissiveStrength();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getRasterEmissiveStrengthAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getRasterEmissiveStrengthTransition();
@@ -3696,6 +3699,10 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterContrast(com.mapbox.maps.extension.style.expressions.generated.Expression rasterContrast);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterContrastTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterContrastTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterElevation(double rasterElevation);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterElevation(com.mapbox.maps.extension.style.expressions.generated.Expression rasterElevation);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterElevationTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterElevationTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterEmissiveStrength(double rasterEmissiveStrength);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterEmissiveStrength(com.mapbox.maps.extension.style.expressions.generated.Expression rasterEmissiveStrength);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterEmissiveStrengthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -3741,6 +3748,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final Double? rasterContrast;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? rasterContrastAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? rasterContrastTransition;
+    property public final Double? rasterElevation;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? rasterElevationAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? rasterElevationTransition;
     property public final Double? rasterEmissiveStrength;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? rasterEmissiveStrengthAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? rasterEmissiveStrengthTransition;
@@ -3785,6 +3795,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public Double? getDefaultRasterContrast();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultRasterContrastAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultRasterContrastTransition();
+    method public Double? getDefaultRasterElevation();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultRasterElevationAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultRasterElevationTransition();
     method public Double? getDefaultRasterEmissiveStrength();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultRasterEmissiveStrengthAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultRasterEmissiveStrengthTransition();
@@ -3821,6 +3834,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final Double? defaultRasterContrast;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultRasterContrastAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultRasterContrastTransition;
+    property public final Double? defaultRasterElevation;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultRasterElevationAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultRasterElevationTransition;
     property public final Double? defaultRasterEmissiveStrength;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultRasterEmissiveStrengthAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultRasterEmissiveStrengthTransition;
@@ -3866,6 +3882,10 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterContrast(com.mapbox.maps.extension.style.expressions.generated.Expression rasterContrast);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterContrastTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterContrastTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterElevation(double rasterElevation = 0.0);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterElevation(com.mapbox.maps.extension.style.expressions.generated.Expression rasterElevation);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterElevationTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterElevationTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterEmissiveStrength(double rasterEmissiveStrength = 0.0);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterEmissiveStrength(com.mapbox.maps.extension.style.expressions.generated.Expression rasterEmissiveStrength);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterEmissiveStrengthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -4076,6 +4096,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public String? getIconColor();
     method @ColorInt public Integer? getIconColorAsColorInt();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getIconColorAsExpression();
+    method public Double? getIconColorSaturation();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getIconColorSaturationAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getIconColorSaturationTransition();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getIconColorTransition();
     method public Double? getIconEmissiveStrength();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getIconEmissiveStrengthAsExpression();
@@ -4222,6 +4245,10 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconColor(String iconColor);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconColor(com.mapbox.maps.extension.style.expressions.generated.Expression iconColor);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconColor(@ColorInt int iconColor);
+    method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconColorSaturation(double iconColorSaturation);
+    method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconColorSaturation(com.mapbox.maps.extension.style.expressions.generated.Expression iconColorSaturation);
+    method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconColorSaturationTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconColorSaturationTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconColorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconColorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconEmissiveStrength(double iconEmissiveStrength);
@@ -4383,6 +4410,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final String? iconColor;
     property @ColorInt public final Integer? iconColorAsColorInt;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? iconColorAsExpression;
+    property public final Double? iconColorSaturation;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? iconColorSaturationAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? iconColorSaturationTransition;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? iconColorTransition;
     property public final Double? iconEmissiveStrength;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? iconEmissiveStrengthAsExpression;
@@ -4533,6 +4563,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public String? getDefaultIconColor();
     method @ColorInt public Integer? getDefaultIconColorAsColorInt();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultIconColorAsExpression();
+    method public Double? getDefaultIconColorSaturation();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultIconColorSaturationAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultIconColorSaturationTransition();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultIconColorTransition();
     method public Double? getDefaultIconEmissiveStrength();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultIconEmissiveStrengthAsExpression();
@@ -4674,6 +4707,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final String? defaultIconColor;
     property @ColorInt public final Integer? defaultIconColorAsColorInt;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultIconColorAsExpression;
+    property public final Double? defaultIconColorSaturation;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultIconColorSaturationAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultIconColorSaturationTransition;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultIconColorTransition;
     property public final Double? defaultIconEmissiveStrength;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultIconEmissiveStrengthAsExpression;
@@ -4819,6 +4855,10 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconColor(String iconColor = "#000000");
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconColor(com.mapbox.maps.extension.style.expressions.generated.Expression iconColor);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconColor(@ColorInt int iconColor);
+    method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconColorSaturation(double iconColorSaturation = 1.0);
+    method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconColorSaturation(com.mapbox.maps.extension.style.expressions.generated.Expression iconColorSaturation);
+    method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconColorSaturationTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconColorSaturationTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconColorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconColorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconEmissiveStrength(double iconEmissiveStrength = 1.0);

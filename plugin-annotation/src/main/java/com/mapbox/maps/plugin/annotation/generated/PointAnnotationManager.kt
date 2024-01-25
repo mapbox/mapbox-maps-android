@@ -927,6 +927,32 @@ class PointAnnotationManager(
     }
 
   /**
+   * The IconColorSaturation property
+   *
+   * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white. The unit of iconColorSaturation is in intensity.
+   */
+  var iconColorSaturation: Double?
+    /**
+     * Get the IconColorSaturation property
+     *
+     * @return property wrapper value around Double
+     */
+    get(): Double? {
+      return layer?.iconColorSaturation
+    }
+    /**
+     * Set the IconColorSaturation property
+     * @param value property wrapper value around Double
+     */
+    set(value) {
+      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-color-saturation").silentUnwrap()
+      newValue?.let {
+        layer?.iconColorSaturation(it)
+        dragLayer?.iconColorSaturation(it)
+      }
+    }
+
+  /**
    * The IconTranslate property
    *
    * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up. The unit of iconTranslate is in density-independent pixels.

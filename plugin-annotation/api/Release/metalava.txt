@@ -429,6 +429,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method protected String getDragLayerId();
     method protected String getDragSourceId();
     method public Boolean? getIconAllowOverlap();
+    method public Double? getIconColorSaturation();
     method public Boolean? getIconIgnorePlacement();
     method public Boolean? getIconKeepUpright();
     method public Boolean? getIconOptional();
@@ -465,6 +466,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method protected void initializeDataDrivenPropertyMap();
     method protected void setDataDrivenPropertyIsUsed(String property);
     method public void setIconAllowOverlap(Boolean?);
+    method public void setIconColorSaturation(Double?);
     method public void setIconIgnorePlacement(Boolean?);
     method public void setIconKeepUpright(Boolean?);
     method public void setIconOptional(Boolean?);
@@ -499,6 +501,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     property protected String dragLayerId;
     property protected String dragSourceId;
     property public final Boolean? iconAllowOverlap;
+    property public final Double? iconColorSaturation;
     property public final Boolean? iconIgnorePlacement;
     property public final Boolean? iconKeepUpright;
     property public final Boolean? iconOptional;

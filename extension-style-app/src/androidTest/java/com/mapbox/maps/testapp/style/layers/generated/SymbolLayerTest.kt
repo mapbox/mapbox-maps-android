@@ -1302,6 +1302,61 @@ class SymbolLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun iconColorSaturationTest() {
+    val testValue = 1.0
+    val layer = symbolLayer("id", "source") {
+      iconColorSaturation(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(testValue, layer.iconColorSaturation!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun iconColorSaturationAsExpressionTest() {
+    val expression = literal(1.0)
+    val layer = symbolLayer("id", "source") {
+      iconColorSaturation(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(1.0, layer.iconColorSaturationAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.iconColorSaturation!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun iconColorSaturationTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = symbolLayer("id", "source") {
+      iconColorSaturationTransition(transition)
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.iconColorSaturationTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun iconColorSaturationTransitionSetDslTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = symbolLayer("id", "source") {
+      iconColorSaturationTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.iconColorSaturationTransition)
+  }
+
+  @Test
+  @UiThreadTest
   fun iconEmissiveStrengthTest() {
     val testValue = 1.0
     val layer = symbolLayer("id", "source") {
@@ -2316,6 +2371,9 @@ class SymbolLayerTest : BaseStyleTest() {
     assertNotNull("defaultIconColorAsExpression should not be null", SymbolLayer.defaultIconColorAsExpression)
     assertNotNull("defaultIconColorAsColorInt should not be null", SymbolLayer.defaultIconColorAsColorInt)
     assertNotNull("defaultIconColorTransition should not be null", SymbolLayer.defaultIconColorTransition)
+    assertNotNull("defaultIconColorSaturation should not be null", SymbolLayer.defaultIconColorSaturation)
+    assertNotNull("defaultIconColorSaturationAsExpression should not be null", SymbolLayer.defaultIconColorSaturationAsExpression)
+    assertNotNull("defaultIconColorSaturationTransition should not be null", SymbolLayer.defaultIconColorSaturationTransition)
     assertNotNull("defaultIconEmissiveStrength should not be null", SymbolLayer.defaultIconEmissiveStrength)
     assertNotNull("defaultIconEmissiveStrengthAsExpression should not be null", SymbolLayer.defaultIconEmissiveStrengthAsExpression)
     assertNotNull("defaultIconEmissiveStrengthTransition should not be null", SymbolLayer.defaultIconEmissiveStrengthTransition)
@@ -2436,6 +2494,7 @@ class SymbolLayerTest : BaseStyleTest() {
     val textVariableAnchorTestValue = listOf("center", "left")
     val textWritingModeTestValue = listOf("horizontal", "vertical")
     val iconColorTestValue = "rgba(0, 0, 0, 1)"
+    val iconColorSaturationTestValue = 1.0
     val iconEmissiveStrengthTestValue = 1.0
     val iconHaloBlurTestValue = 1.0
     val iconHaloColorTestValue = "rgba(0, 0, 0, 1)"
@@ -2503,6 +2562,7 @@ class SymbolLayerTest : BaseStyleTest() {
       textVariableAnchor(textVariableAnchorTestValue)
       textWritingMode(textWritingModeTestValue)
       iconColor(iconColorTestValue)
+      iconColorSaturation(iconColorSaturationTestValue)
       iconEmissiveStrength(iconEmissiveStrengthTestValue)
       iconHaloBlur(iconHaloBlurTestValue)
       iconHaloColor(iconHaloColorTestValue)
@@ -2575,6 +2635,7 @@ class SymbolLayerTest : BaseStyleTest() {
     assertEquals(textVariableAnchorTestValue, cachedLayer.textVariableAnchor)
     assertEquals(textWritingModeTestValue, cachedLayer.textWritingMode)
     assertEquals(iconColorTestValue, cachedLayer.iconColor)
+    assertEquals(iconColorSaturationTestValue, cachedLayer.iconColorSaturation)
     assertEquals(iconEmissiveStrengthTestValue, cachedLayer.iconEmissiveStrength)
     assertEquals(iconHaloBlurTestValue, cachedLayer.iconHaloBlur)
     assertEquals(iconHaloColorTestValue, cachedLayer.iconHaloColor)

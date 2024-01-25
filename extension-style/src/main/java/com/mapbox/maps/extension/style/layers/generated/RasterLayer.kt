@@ -802,6 +802,112 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   }
 
   /**
+   * Specifies an uniform elevation from the ground, in meters. Only supported with image sources.
+   */
+  @MapboxExperimental
+  val rasterElevation: Double?
+    /**
+     * Specifies an uniform elevation from the ground, in meters. Only supported with image sources.
+     *
+     * Use static method [RasterLayer.defaultRasterElevation] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      return getPropertyValue("raster-elevation")
+    }
+
+  /**
+   * Specifies an uniform elevation from the ground, in meters. Only supported with image sources.
+   *
+   * Use static method [RasterLayer.defaultRasterElevation] to set the default property.
+   *
+   * @param rasterElevation value of rasterElevation
+   */
+  @MapboxExperimental
+  override fun rasterElevation(rasterElevation: Double): RasterLayer = apply {
+    val propertyValue = PropertyValue("raster-elevation", rasterElevation)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Specifies an uniform elevation from the ground, in meters. Only supported with image sources.
+   *
+   * This is an Expression representation of "raster-elevation".
+   *
+   */
+  @MapboxExperimental
+  val rasterElevationAsExpression: Expression?
+    /**
+     * Specifies an uniform elevation from the ground, in meters. Only supported with image sources.
+     *
+     * Get the RasterElevation property as an Expression
+     *
+     * Use static method [RasterLayer.defaultRasterElevationAsExpression] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      getPropertyValue<Expression>("raster-elevation")?.let {
+        return it
+      }
+      rasterElevation?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * Specifies an uniform elevation from the ground, in meters. Only supported with image sources.
+   *
+   * Use static method [RasterLayer.defaultRasterElevationAsExpression] to set the default property.
+   *
+   * @param rasterElevation value of rasterElevation as Expression
+   */
+  @MapboxExperimental
+  override fun rasterElevation(rasterElevation: Expression): RasterLayer = apply {
+    val propertyValue = PropertyValue("raster-elevation", rasterElevation)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Transition options for RasterElevation.
+   */
+  @MapboxExperimental
+  val rasterElevationTransition: StyleTransition?
+    /**
+     * Get the RasterElevation property transition options
+     *
+     * Use static method [RasterLayer.defaultRasterElevationTransition] to get the default property.
+     *
+     * @return transition options for Double
+     */
+    get() {
+      return getPropertyValue("raster-elevation-transition")
+    }
+
+  /**
+   * Set the RasterElevation property transition options
+   *
+   * Use static method [RasterLayer.defaultRasterElevationTransition] to set the default property.
+   *
+   * @param options transition options for Double
+   */
+  @MapboxExperimental
+  override fun rasterElevationTransition(options: StyleTransition): RasterLayer = apply {
+    val propertyValue = PropertyValue("raster-elevation-transition", options)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * DSL for [rasterElevationTransition].
+   */
+  @MapboxExperimental
+  override fun rasterElevationTransition(block: StyleTransition.Builder.() -> Unit): RasterLayer = apply {
+    rasterElevationTransition(StyleTransition.Builder().apply(block).build())
+  }
+
+  /**
    * Controls the intensity of light emitted on the source features.
    */
   val rasterEmissiveStrength: Double?
@@ -1669,6 +1775,57 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-contrast-transition").silentUnwrap()
 
     /**
+     * Specifies an uniform elevation from the ground, in meters. Only supported with image sources.
+     */
+    @MapboxExperimental
+    val defaultRasterElevation: Double?
+      /**
+       * Specifies an uniform elevation from the ground, in meters. Only supported with image sources.
+       *
+       * Get the default value of RasterElevation property
+       *
+       * @return Double
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-elevation").silentUnwrap()
+      }
+
+    /**
+     * Specifies an uniform elevation from the ground, in meters. Only supported with image sources.
+     *
+     * This is an Expression representation of "raster-elevation".
+     *
+     */
+    @MapboxExperimental
+    val defaultRasterElevationAsExpression: Expression?
+      /**
+       * Get default value of the RasterElevation property as an Expression
+       *
+       * @return Double
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-elevation").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultRasterElevation?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
+
+    /**
+     * Transition options for RasterElevation.
+     */
+    @MapboxExperimental
+    val defaultRasterElevationTransition: StyleTransition?
+      /**
+       * Get the RasterElevation property transition options
+       *
+       * @return transition options for Double
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-elevation-transition").silentUnwrap()
+
+    /**
      * Controls the intensity of light emitted on the source features.
      */
     val defaultRasterEmissiveStrength: Double?
@@ -2173,6 +2330,40 @@ interface RasterLayerDsl {
    * DSL for [rasterContrastTransition].
    */
   fun rasterContrastTransition(block: StyleTransition.Builder.() -> Unit): RasterLayer
+
+  /**
+   * Specifies an uniform elevation from the ground, in meters. Only supported with image sources.
+   *
+   * @param rasterElevation value of rasterElevation
+   */
+  @MapboxExperimental
+  fun rasterElevation(rasterElevation: Double = 0.0): RasterLayer
+
+  /**
+   * Specifies an uniform elevation from the ground, in meters. Only supported with image sources.
+   *
+   * @param rasterElevation value of rasterElevation as Expression
+   */
+  @MapboxExperimental
+  fun rasterElevation(rasterElevation: Expression): RasterLayer
+
+  /**
+   * Specifies an uniform elevation from the ground, in meters. Only supported with image sources.
+   *
+   * Set the RasterElevation property transition options
+   *
+   * @param options transition options for Double
+   */
+  @MapboxExperimental
+  fun rasterElevationTransition(options: StyleTransition): RasterLayer
+
+  /**
+   * Specifies an uniform elevation from the ground, in meters. Only supported with image sources.
+   *
+   * DSL for [rasterElevationTransition].
+   */
+  @MapboxExperimental
+  fun rasterElevationTransition(block: StyleTransition.Builder.() -> Unit): RasterLayer
 
   /**
    * Controls the intensity of light emitted on the source features.

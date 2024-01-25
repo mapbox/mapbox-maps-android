@@ -385,6 +385,61 @@ class RasterLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun rasterElevationTest() {
+    val testValue = 1.0
+    val layer = rasterLayer("id", "source") {
+      rasterElevation(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(testValue, layer.rasterElevation!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun rasterElevationAsExpressionTest() {
+    val expression = literal(1.0)
+    val layer = rasterLayer("id", "source") {
+      rasterElevation(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(1.0, layer.rasterElevationAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.rasterElevation!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun rasterElevationTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = rasterLayer("id", "source") {
+      rasterElevationTransition(transition)
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.rasterElevationTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun rasterElevationTransitionSetDslTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = rasterLayer("id", "source") {
+      rasterElevationTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.rasterElevationTransition)
+  }
+
+  @Test
+  @UiThreadTest
   fun rasterEmissiveStrengthTest() {
     val testValue = 1.0
     val layer = rasterLayer("id", "source") {
@@ -700,6 +755,9 @@ class RasterLayerTest : BaseStyleTest() {
     assertNotNull("defaultRasterContrast should not be null", RasterLayer.defaultRasterContrast)
     assertNotNull("defaultRasterContrastAsExpression should not be null", RasterLayer.defaultRasterContrastAsExpression)
     assertNotNull("defaultRasterContrastTransition should not be null", RasterLayer.defaultRasterContrastTransition)
+    assertNotNull("defaultRasterElevation should not be null", RasterLayer.defaultRasterElevation)
+    assertNotNull("defaultRasterElevationAsExpression should not be null", RasterLayer.defaultRasterElevationAsExpression)
+    assertNotNull("defaultRasterElevationTransition should not be null", RasterLayer.defaultRasterElevationTransition)
     assertNotNull("defaultRasterEmissiveStrength should not be null", RasterLayer.defaultRasterEmissiveStrength)
     assertNotNull("defaultRasterEmissiveStrengthAsExpression should not be null", RasterLayer.defaultRasterEmissiveStrengthAsExpression)
     assertNotNull("defaultRasterEmissiveStrengthTransition should not be null", RasterLayer.defaultRasterEmissiveStrengthTransition)
@@ -749,6 +807,7 @@ class RasterLayerTest : BaseStyleTest() {
     val rasterColorMixTestValue = listOf(0.0, 1.0, 2.0, 3.0)
     val rasterColorRangeTestValue = listOf(0.0, 1.0)
     val rasterContrastTestValue = 1.0
+    val rasterElevationTestValue = 1.0
     val rasterEmissiveStrengthTestValue = 1.0
     val rasterFadeDurationTestValue = 1.0
     val rasterHueRotateTestValue = 1.0
@@ -769,6 +828,7 @@ class RasterLayerTest : BaseStyleTest() {
       rasterColorMix(rasterColorMixTestValue)
       rasterColorRange(rasterColorRangeTestValue)
       rasterContrast(rasterContrastTestValue)
+      rasterElevation(rasterElevationTestValue)
       rasterEmissiveStrength(rasterEmissiveStrengthTestValue)
       rasterFadeDuration(rasterFadeDurationTestValue)
       rasterHueRotate(rasterHueRotateTestValue)
@@ -794,6 +854,7 @@ class RasterLayerTest : BaseStyleTest() {
     assertEquals(rasterColorMixTestValue, cachedLayer.rasterColorMix)
     assertEquals(rasterColorRangeTestValue, cachedLayer.rasterColorRange)
     assertEquals(rasterContrastTestValue, cachedLayer.rasterContrast)
+    assertEquals(rasterElevationTestValue, cachedLayer.rasterElevation)
     assertEquals(rasterEmissiveStrengthTestValue, cachedLayer.rasterEmissiveStrength)
     assertEquals(rasterFadeDurationTestValue, cachedLayer.rasterFadeDuration)
     assertEquals(rasterHueRotateTestValue, cachedLayer.rasterHueRotate)

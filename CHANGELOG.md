@@ -6,6 +6,8 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 * Introduce `MapboxMap.getCenterAltitudeMode` API.
 * Add `useShortestPath` option to `CameraAnimationPlugin.createCenterAnimator`, when enabled, shortest path will be applied when the start and end camera  center is across the antimeridian, for example from -170 to 170 longitude. Defaults to true.
+* Introduce `SymbolLayer.iconColorSaturation` API.
+* Introduce experimental `RasterLayer.rasterElevation` API.
 
 ## Bug fixes 🐞
 * Retain previous `CenterAltitudeMode` after gestures are finished.

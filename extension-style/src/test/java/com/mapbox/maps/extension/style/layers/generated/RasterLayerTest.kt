@@ -816,6 +816,113 @@ class RasterLayerTest {
   }
 
   @Test
+  fun rasterElevationSet() {
+    val layer = rasterLayer("id", "source") {}
+    val testValue = 1.0
+    layer.bindTo(style)
+    layer.rasterElevation(testValue)
+    verify { style.setStyleLayerProperty("id", "raster-elevation", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "1.0")
+  }
+
+  @Test
+  fun rasterElevationGet() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = rasterLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), layer.rasterElevation?.toString())
+    verify { style.getStyleLayerProperty("id", "raster-elevation") }
+  }
+  // Expression Tests
+
+  @Test
+  fun rasterElevationAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = rasterLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.rasterElevation(expression)
+    verify { style.setStyleLayerProperty("id", "raster-elevation", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun rasterElevationAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = rasterLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.rasterElevationAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "raster-elevation") }
+  }
+
+  @Test
+  fun rasterElevationAsExpressionGetNull() {
+    val layer = rasterLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.rasterElevationAsExpression)
+    verify { style.getStyleLayerProperty("id", "raster-elevation") }
+  }
+
+  @Test
+  fun rasterElevationAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    val layer = rasterLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(1.0, layer.rasterElevationAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.rasterElevation!!, 1E-5)
+    verify { style.getStyleLayerProperty("id", "raster-elevation") }
+  }
+
+  @Test
+  fun rasterElevationTransitionSet() {
+    val layer = rasterLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.rasterElevationTransition(
+      transitionOptions {
+        duration(100)
+        delay(200)
+      }
+    )
+    verify { style.setStyleLayerProperty("id", "raster-elevation-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
+  fun rasterElevationTransitionGet() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+    val layer = rasterLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(transition.toValue().toString(), layer.rasterElevationTransition?.toValue().toString())
+    verify { style.getStyleLayerProperty("id", "raster-elevation-transition") }
+  }
+
+  @Test
+  fun rasterElevationTransitionSetDsl() {
+    val layer = rasterLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.rasterElevationTransition {
+      duration(100)
+      delay(200)
+    }
+    verify { style.setStyleLayerProperty("id", "raster-elevation-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
   fun rasterEmissiveStrengthSet() {
     val layer = rasterLayer("id", "source") {}
     val testValue = 1.0
@@ -1697,6 +1804,50 @@ class RasterLayerTest {
 
     assertEquals(transition.toValue().toString(), RasterLayer.defaultRasterContrastTransition?.toValue().toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-contrast-transition") }
+  }
+
+  @Test
+  fun defaultRasterElevationTest() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), RasterLayer.defaultRasterElevation?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-elevation") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultRasterElevationAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), RasterLayer.defaultRasterElevationAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-elevation") }
+  }
+
+  @Test
+  fun defaultRasterElevationAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    assertEquals(1.0, RasterLayer.defaultRasterElevationAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, RasterLayer.defaultRasterElevation!!, 1E-5)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-elevation") }
+  }
+
+  @Test
+  fun defaultRasterElevationTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+
+    assertEquals(transition.toValue().toString(), RasterLayer.defaultRasterElevationTransition?.toValue().toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-elevation-transition") }
   }
 
   @Test

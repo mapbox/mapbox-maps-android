@@ -349,6 +349,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotationMa
 	public synthetic fun createLayer ()Lcom/mapbox/maps/extension/style/layers/Layer;
 	public fun getAnnotationIdKey ()Ljava/lang/String;
 	public final fun getIconAllowOverlap ()Ljava/lang/Boolean;
+	public final fun getIconColorSaturation ()Ljava/lang/Double;
 	public final fun getIconIgnorePlacement ()Ljava/lang/Boolean;
 	public final fun getIconKeepUpright ()Ljava/lang/Boolean;
 	public final fun getIconOptional ()Ljava/lang/Boolean;
@@ -381,6 +382,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotationMa
 	public final fun getTextVariableAnchor ()Ljava/util/List;
 	public final fun getTextWritingMode ()Ljava/util/List;
 	public final fun setIconAllowOverlap (Ljava/lang/Boolean;)V
+	public final fun setIconColorSaturation (Ljava/lang/Double;)V
 	public final fun setIconIgnorePlacement (Ljava/lang/Boolean;)V
 	public final fun setIconKeepUpright (Ljava/lang/Boolean;)V
 	public final fun setIconOptional (Ljava/lang/Boolean;)V

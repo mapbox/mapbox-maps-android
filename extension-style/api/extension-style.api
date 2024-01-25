@@ -3052,6 +3052,9 @@ public final class com/mapbox/maps/extension/style/layers/generated/RasterLayer 
 	public final fun getRasterContrast ()Ljava/lang/Double;
 	public final fun getRasterContrastAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getRasterContrastTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
+	public final fun getRasterElevation ()Ljava/lang/Double;
+	public final fun getRasterElevationAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getRasterElevationTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getRasterEmissiveStrength ()Ljava/lang/Double;
 	public final fun getRasterEmissiveStrengthAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getRasterEmissiveStrengthTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
@@ -3100,6 +3103,10 @@ public final class com/mapbox/maps/extension/style/layers/generated/RasterLayer 
 	public fun rasterContrast (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public fun rasterContrastTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public fun rasterContrastTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
+	public fun rasterElevation (D)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
+	public fun rasterElevation (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
+	public fun rasterElevationTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
+	public fun rasterElevationTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public fun rasterEmissiveStrength (D)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public fun rasterEmissiveStrength (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public fun rasterEmissiveStrengthTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
@@ -3149,6 +3156,9 @@ public final class com/mapbox/maps/extension/style/layers/generated/RasterLayer$
 	public final fun getDefaultRasterContrast ()Ljava/lang/Double;
 	public final fun getDefaultRasterContrastAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultRasterContrastTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
+	public final fun getDefaultRasterElevation ()Ljava/lang/Double;
+	public final fun getDefaultRasterElevationAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getDefaultRasterElevationTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getDefaultRasterEmissiveStrength ()Ljava/lang/Double;
 	public final fun getDefaultRasterEmissiveStrengthAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultRasterEmissiveStrengthTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
@@ -3194,6 +3204,10 @@ public abstract interface class com/mapbox/maps/extension/style/layers/generated
 	public abstract fun rasterContrast (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public abstract fun rasterContrastTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public abstract fun rasterContrastTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
+	public abstract fun rasterElevation (D)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
+	public abstract fun rasterElevation (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
+	public abstract fun rasterElevationTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
+	public abstract fun rasterElevationTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public abstract fun rasterEmissiveStrength (D)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public abstract fun rasterEmissiveStrength (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public abstract fun rasterEmissiveStrengthTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
@@ -3226,6 +3240,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/RasterLayerD
 	public static synthetic fun rasterColorMix$default (Lcom/mapbox/maps/extension/style/layers/generated/RasterLayerDsl;Ljava/util/List;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public static synthetic fun rasterColorRange$default (Lcom/mapbox/maps/extension/style/layers/generated/RasterLayerDsl;Ljava/util/List;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public static synthetic fun rasterContrast$default (Lcom/mapbox/maps/extension/style/layers/generated/RasterLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
+	public static synthetic fun rasterElevation$default (Lcom/mapbox/maps/extension/style/layers/generated/RasterLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public static synthetic fun rasterEmissiveStrength$default (Lcom/mapbox/maps/extension/style/layers/generated/RasterLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public static synthetic fun rasterFadeDuration$default (Lcom/mapbox/maps/extension/style/layers/generated/RasterLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public static synthetic fun rasterHueRotate$default (Lcom/mapbox/maps/extension/style/layers/generated/RasterLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
@@ -3384,6 +3399,9 @@ public final class com/mapbox/maps/extension/style/layers/generated/SymbolLayer 
 	public final fun getIconColor ()Ljava/lang/String;
 	public final fun getIconColorAsColorInt ()Ljava/lang/Integer;
 	public final fun getIconColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getIconColorSaturation ()Ljava/lang/Double;
+	public final fun getIconColorSaturationAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getIconColorSaturationTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getIconColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getIconEmissiveStrength ()Ljava/lang/Double;
 	public final fun getIconEmissiveStrengthAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
@@ -3530,6 +3548,10 @@ public final class com/mapbox/maps/extension/style/layers/generated/SymbolLayer 
 	public fun iconColor (I)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public fun iconColor (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public fun iconColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
+	public fun iconColorSaturation (D)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
+	public fun iconColorSaturation (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
+	public fun iconColorSaturationTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
+	public fun iconColorSaturationTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public fun iconColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public fun iconColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public fun iconEmissiveStrength (D)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
@@ -3698,6 +3720,9 @@ public final class com/mapbox/maps/extension/style/layers/generated/SymbolLayer$
 	public final fun getDefaultIconColor ()Ljava/lang/String;
 	public final fun getDefaultIconColorAsColorInt ()Ljava/lang/Integer;
 	public final fun getDefaultIconColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getDefaultIconColorSaturation ()Ljava/lang/Double;
+	public final fun getDefaultIconColorSaturationAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getDefaultIconColorSaturationTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getDefaultIconColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getDefaultIconEmissiveStrength ()Ljava/lang/Double;
 	public final fun getDefaultIconEmissiveStrengthAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
@@ -3843,6 +3868,10 @@ public abstract interface class com/mapbox/maps/extension/style/layers/generated
 	public abstract fun iconColor (I)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public abstract fun iconColor (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public abstract fun iconColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
+	public abstract fun iconColorSaturation (D)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
+	public abstract fun iconColorSaturation (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
+	public abstract fun iconColorSaturationTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
+	public abstract fun iconColorSaturationTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public abstract fun iconColorTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public abstract fun iconColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public abstract fun iconEmissiveStrength (D)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
@@ -4002,6 +4031,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/SymbolLayerD
 	public static synthetic fun iconAllowOverlap$default (Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayerDsl;ZILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public static synthetic fun iconAnchor$default (Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayerDsl;Lcom/mapbox/maps/extension/style/layers/properties/generated/IconAnchor;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public static synthetic fun iconColor$default (Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayerDsl;Ljava/lang/String;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
+	public static synthetic fun iconColorSaturation$default (Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public static synthetic fun iconEmissiveStrength$default (Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public static synthetic fun iconHaloBlur$default (Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public static synthetic fun iconHaloColor$default (Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayerDsl;Ljava/lang/String;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;

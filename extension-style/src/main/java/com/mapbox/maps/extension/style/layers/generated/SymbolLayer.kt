@@ -3179,6 +3179,105 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
+   * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white.
+   */
+  val iconColorSaturation: Double?
+    /**
+     * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white.
+     *
+     * Use static method [SymbolLayer.defaultIconColorSaturation] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      return getPropertyValue("icon-color-saturation")
+    }
+
+  /**
+   * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white.
+   *
+   * Use static method [SymbolLayer.defaultIconColorSaturation] to set the default property.
+   *
+   * @param iconColorSaturation value of iconColorSaturation
+   */
+  override fun iconColorSaturation(iconColorSaturation: Double): SymbolLayer = apply {
+    val propertyValue = PropertyValue("icon-color-saturation", iconColorSaturation)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white.
+   *
+   * This is an Expression representation of "icon-color-saturation".
+   *
+   */
+  val iconColorSaturationAsExpression: Expression?
+    /**
+     * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white.
+     *
+     * Get the IconColorSaturation property as an Expression
+     *
+     * Use static method [SymbolLayer.defaultIconColorSaturationAsExpression] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      getPropertyValue<Expression>("icon-color-saturation")?.let {
+        return it
+      }
+      iconColorSaturation?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white.
+   *
+   * Use static method [SymbolLayer.defaultIconColorSaturationAsExpression] to set the default property.
+   *
+   * @param iconColorSaturation value of iconColorSaturation as Expression
+   */
+  override fun iconColorSaturation(iconColorSaturation: Expression): SymbolLayer = apply {
+    val propertyValue = PropertyValue("icon-color-saturation", iconColorSaturation)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Transition options for IconColorSaturation.
+   */
+  val iconColorSaturationTransition: StyleTransition?
+    /**
+     * Get the IconColorSaturation property transition options
+     *
+     * Use static method [SymbolLayer.defaultIconColorSaturationTransition] to get the default property.
+     *
+     * @return transition options for Double
+     */
+    get() {
+      return getPropertyValue("icon-color-saturation-transition")
+    }
+
+  /**
+   * Set the IconColorSaturation property transition options
+   *
+   * Use static method [SymbolLayer.defaultIconColorSaturationTransition] to set the default property.
+   *
+   * @param options transition options for Double
+   */
+  override fun iconColorSaturationTransition(options: StyleTransition): SymbolLayer = apply {
+    val propertyValue = PropertyValue("icon-color-saturation-transition", options)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * DSL for [iconColorSaturationTransition].
+   */
+  override fun iconColorSaturationTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer = apply {
+    iconColorSaturationTransition(StyleTransition.Builder().apply(block).build())
+  }
+
+  /**
    * Controls the intensity of light emitted on the source features.
    */
   val iconEmissiveStrength: Double?
@@ -6525,6 +6624,54 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-color-transition").silentUnwrap()
 
     /**
+     * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white.
+     */
+    val defaultIconColorSaturation: Double?
+      /**
+       * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white.
+       *
+       * Get the default value of IconColorSaturation property
+       *
+       * @return Double
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-color-saturation").silentUnwrap()
+      }
+
+    /**
+     * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white.
+     *
+     * This is an Expression representation of "icon-color-saturation".
+     *
+     */
+    val defaultIconColorSaturationAsExpression: Expression?
+      /**
+       * Get default value of the IconColorSaturation property as an Expression
+       *
+       * @return Double
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-color-saturation").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultIconColorSaturation?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
+
+    /**
+     * Transition options for IconColorSaturation.
+     */
+    val defaultIconColorSaturationTransition: StyleTransition?
+      /**
+       * Get the IconColorSaturation property transition options
+       *
+       * @return transition options for Double
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-color-saturation-transition").silentUnwrap()
+
+    /**
      * Controls the intensity of light emitted on the source features.
      */
     val defaultIconEmissiveStrength: Double?
@@ -8050,6 +8197,36 @@ interface SymbolLayerDsl {
    * DSL for [iconColorTransition].
    */
   fun iconColorTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer
+
+  /**
+   * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white.
+   *
+   * @param iconColorSaturation value of iconColorSaturation
+   */
+  fun iconColorSaturation(iconColorSaturation: Double = 1.0): SymbolLayer
+
+  /**
+   * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white.
+   *
+   * @param iconColorSaturation value of iconColorSaturation as Expression
+   */
+  fun iconColorSaturation(iconColorSaturation: Expression): SymbolLayer
+
+  /**
+   * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white.
+   *
+   * Set the IconColorSaturation property transition options
+   *
+   * @param options transition options for Double
+   */
+  fun iconColorSaturationTransition(options: StyleTransition): SymbolLayer
+
+  /**
+   * Controls saturation level of the symbol icon. With the default value of 1 the icon color is preserved while with a value of 0 it is fully desaturated and looks black and white.
+   *
+   * DSL for [iconColorSaturationTransition].
+   */
+  fun iconColorSaturationTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer
 
   /**
    * Controls the intensity of light emitted on the source features.

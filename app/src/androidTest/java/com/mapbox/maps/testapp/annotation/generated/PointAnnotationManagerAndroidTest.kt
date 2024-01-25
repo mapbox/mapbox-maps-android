@@ -320,6 +320,18 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
   }
 
   @Test
+  fun testIconColorSaturation() {
+    rule.runOnUiThread {
+      val expectedValue = 1.0
+      val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
+      pointAnnotationManager.iconColorSaturation = expectedValue
+      assertEquals(expectedValue, pointAnnotationManager.iconColorSaturation)
+      pointAnnotationManager.iconColorSaturation = null
+      assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-color-saturation").silentUnwrap(), pointAnnotationManager.iconColorSaturation)
+    }
+  }
+
+  @Test
   fun testIconTranslate() {
     rule.runOnUiThread {
       val expectedValue = listOf(0.0, 1.0)
