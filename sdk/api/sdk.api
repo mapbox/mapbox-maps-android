@@ -281,6 +281,8 @@ public final class com/mapbox/maps/MapboxMap : com/mapbox/maps/MapboxStyleManage
 	public final fun setTileCacheBudget (Lcom/mapbox/maps/TileCacheBudget;)V
 	public fun setUserAnimationInProgress (Z)V
 	public fun setViewportMode (Lcom/mapbox/maps/ViewportMode;)V
+	public final fun startPerformanceStatisticsCollection (Lcom/mapbox/maps/PerformanceStatisticsOptions;Lcom/mapbox/maps/PerformanceStatisticsCallback;)V
+	public final fun stopPerformanceStatisticsCollection ()V
 	public fun subscribeCameraChanged (Lcom/mapbox/maps/CameraChangedCallback;)Lcom/mapbox/common/Cancelable;
 	public fun subscribeGenericEvent (Ljava/lang/String;Lcom/mapbox/maps/GenericEventCallback;)Lcom/mapbox/common/Cancelable;
 	public fun subscribeMapIdle (Lcom/mapbox/maps/MapIdleCallback;)Lcom/mapbox/common/Cancelable;

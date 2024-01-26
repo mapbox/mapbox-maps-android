@@ -8,6 +8,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Add `useShortestPath` option to `CameraAnimationPlugin.createCenterAnimator`, when enabled, shortest path will be applied when the start and end camera  center is across the antimeridian, for example from -170 to 170 longitude. Defaults to true.
 * Introduce `SymbolLayer.iconColorSaturation` API.
 * Introduce experimental `RasterLayer.rasterElevation` API.
+* Introduce experimental `MapboxMap.startPerformanceStatisticsCollection` / `MapboxMap.stopPerformanceStatisticsCollection` APIs allowing to start / stop collecting map rendering performance statistics.
 
 ## Bug fixes 🐞
 * Retain previous `CenterAltitudeMode` after gestures are finished.
@@ -55,7 +56,6 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v11.1.0 and common to v24.1.0.
-
 
 # 11.1.0-rc.1 January 04, 2024
 ## Bug fixes 🐞

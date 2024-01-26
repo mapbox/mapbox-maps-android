@@ -655,4 +655,15 @@ internal class NativeMapImpl(val map: Map) {
   fun getCenterAltitudeMode(): MapCenterAltitudeMode {
     return map.centerAltitudeMode
   }
+
+  fun startPerformanceStatisticsCollection(
+    options: PerformanceStatisticsOptions,
+    callback: PerformanceStatisticsCallback,
+  ) {
+    map.startPerformanceStatisticsCollection(options, callback)
+  }
+
+  fun stopPerformanceStatisticsCollection() {
+    map.stopPerformanceStatisticsCollection()
+  }
 }

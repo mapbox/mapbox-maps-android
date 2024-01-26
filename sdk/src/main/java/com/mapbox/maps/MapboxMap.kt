@@ -2050,6 +2050,51 @@ class MapboxMap :
   }
 
   /**
+   * Enable real-time collection of map rendering performance statistics, for development purposes. Use after `render()` has
+   * been called for the first time.
+   *
+   * Collects CPU, GPU resource usage and timings of layers and rendering groups over a user-configurable sampling duration.
+   * Use the collected information to find which layers or rendering groups might be performing poorly. Use
+   * [PerformanceStatisticsOptions] to configure the following statistics collection behaviors:
+   * <ul>
+   *     <li>Specify the types of sampling: cumulative, per-frame, or both.</li>
+   *     <li>Define the minimum amount of time over which to perform sampling.</li>
+   * </ul>
+   *
+   * Utilize [PerformanceStatisticsCallback] to observe the collected performance statistics. The callback function is invoked
+   * after the configured sampling duration has elapsed. The callback is invoked on the main thread. The collection process is
+   * continuous; without user-input, it restarts after each callback invocation. Note: Specifying a negative sampling duration
+   * or omitting the callback function will result in no operation, which will be logged for visibility.
+   *
+   * In order to stop the collection process, call [stopPerformanceStatisticsCollection].
+   *
+   * @param options Statistics collection options
+   * @param callback The callback to be invoked when statistics are available after the configured amount of
+   * time.
+   */
+  @MapboxExperimental
+  fun startPerformanceStatisticsCollection(
+    options: PerformanceStatisticsOptions,
+    callback: PerformanceStatisticsCallback,
+  ) {
+    checkNativeMap("startPerformanceStatisticsCollection")
+    nativeMap.startPerformanceStatisticsCollection(options, callback)
+  }
+
+  /**
+   * Disable performance statistics collection.
+   *
+   * Calling [stopPerformanceStatisticsCollection] when no collection is enabled is a no-op. After calling
+   * [startPerformanceStatisticsCollection], [stopPerformanceStatisticsCollection] must be called before collection can be
+   * restarted.
+   */
+  @MapboxExperimental
+  fun stopPerformanceStatisticsCollection() {
+    checkNativeMap("stopPerformanceStatisticsCollection")
+    nativeMap.stopPerformanceStatisticsCollection()
+  }
+
+  /**
    * Calculates a target point where the camera should move after dragging from
    * a screen coordinate `startCoordinate` to another coordinate `endCoordinate`.
    *
@@ -2117,8 +2162,10 @@ class MapboxMap :
     return null
   }
 
+  @OptIn(MapboxExperimental::class)
   @JvmSynthetic
   internal fun onDestroy() {
+    stopPerformanceStatisticsCollection()
     cameraAnimationsPlugin = null
     gesturesPlugin = null
     styleObserver.onDestroy()

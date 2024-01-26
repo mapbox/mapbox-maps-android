@@ -78,7 +78,14 @@ class StyleLoadTest {
     assertFalse(styles[0].isValid())
     assertTrue(styles[1].isValid())
 
-    mapboxMap.onDestroy()
+    countDownLatch = CountDownLatch(1)
+    rule.scenario.onActivity { style ->
+      style.runOnUiThread {
+        mapboxMap.onDestroy()
+        countDownLatch.countDown()
+      }
+    }
+    countDownLatch.throwExceptionOnTimeoutMs()
 
     assertFalse(styles[0].isValid())
     assertFalse(styles[1].isValid())

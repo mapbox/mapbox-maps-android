@@ -1,9 +1,12 @@
 package com.mapbox.maps.testapp.examples
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.snackbar.Snackbar
 import com.mapbox.common.Cancelable
 import com.mapbox.maps.*
 import com.mapbox.maps.plugin.compass.compass
@@ -13,6 +16,7 @@ import com.mapbox.maps.testapp.databinding.ActivityDebugBinding
 /**
  * Example of enabling and visualizing some debug information for a map.
  */
+@OptIn(MapboxExperimental::class)
 class DebugModeActivity : AppCompatActivity() {
 
   private lateinit var mapboxMap: MapboxMap
@@ -44,9 +48,53 @@ class DebugModeActivity : AppCompatActivity() {
     }
 
     mapboxMap.loadStyle(Style.STANDARD)
+    setupPerformanceStatisticsCollection()
     binding.mapView.compass.opacity = 0.5f
     mapboxMap.setDebug(debugOptions, true)
     registerListeners(mapboxMap)
+  }
+
+  private fun setupPerformanceStatisticsCollection() {
+    binding.perfStatButton.setOnClickListener {
+      when (binding.perfStatButton.text) {
+        PERF_STAT_START_COLLECT_BUTTON -> {
+          mapboxMap.startPerformanceStatisticsCollection(
+            PerformanceStatisticsOptions.Builder()
+              .samplerOptions(
+                listOf(
+                  PerformanceSamplerOptions.PER_FRAME_RENDERING_STATS,
+                  PerformanceSamplerOptions.CUMULATIVE_RENDERING_STATS
+                )
+              )
+              // we should be collecting the results every 5 seconds
+              .samplingDurationMillis(5_000.0)
+              .build()
+          ) { performanceStatistics ->
+            logI(TAG_PERFORMANCE_STATISTICS, "Collection duration:\n ${performanceStatistics.collectionDurationMillis}")
+            logI(TAG_PERFORMANCE_STATISTICS, "Per frame performance statistics:\n ${performanceStatistics.perFrameStatistics}")
+            logI(TAG_PERFORMANCE_STATISTICS, "Cumulative performance statistics:\n ${performanceStatistics.cumulativeStatistics}")
+            logI(TAG_PERFORMANCE_STATISTICS, "Render duration statistics:\n ${performanceStatistics.mapRenderDurationStatistics}")
+            val mostExpensiveLayerData = performanceStatistics.perFrameStatistics?.topRenderLayers?.firstOrNull()
+            val snackBar = Snackbar.make(
+              binding.mapView,
+              "The most expensive layer to render is ${mostExpensiveLayerData?.name} " +
+                "(time ${mostExpensiveLayerData?.durationMillis} ms)",
+              Snackbar.LENGTH_LONG
+            )
+            snackBar.animationMode = Snackbar.ANIMATION_MODE_SLIDE
+            snackBar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).maxLines = 5
+            snackBar.show()
+          }
+          @SuppressLint("SetTextI18n")
+          binding.perfStatButton.text = PERF_STAT_STOP_COLLECT_BUTTON
+        }
+        PERF_STAT_STOP_COLLECT_BUTTON -> {
+          mapboxMap.stopPerformanceStatisticsCollection()
+          @SuppressLint("SetTextI18n")
+          binding.perfStatButton.text = PERF_STAT_START_COLLECT_BUTTON
+        }
+      }
+    }
   }
 
   private fun registerListeners(mapboxMap: MapboxMap) {
@@ -164,7 +212,10 @@ class DebugModeActivity : AppCompatActivity() {
     untypedEventCancelable?.cancel()
   }
 
-  companion object {
-    const val TAG = "DebugModeActivity"
+  private companion object {
+    private const val TAG = "DebugModeActivity"
+    private const val TAG_PERFORMANCE_STATISTICS = "PerformanceStatistics"
+    private const val PERF_STAT_STOP_COLLECT_BUTTON = "Stop collecting"
+    private const val PERF_STAT_START_COLLECT_BUTTON = "Collect Perf Stats"
   }
 }

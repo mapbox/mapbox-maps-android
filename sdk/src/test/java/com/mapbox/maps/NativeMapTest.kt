@@ -923,4 +923,36 @@ class NativeMapTest {
     nativeMap.getAttributions()
     verify { map.attributions }
   }
+
+  @Test
+  fun cameraForDrag() {
+    val nativeMap = NativeMapImpl(map)
+    val start = ScreenCoordinate(0.0, 0.0)
+    val end = ScreenCoordinate(1.0, 1.0)
+    nativeMap.cameraForDrag(start, end)
+    verify { map.cameraForDrag(start, end) }
+  }
+
+  @Test
+  fun setCenterAltitudeMode() {
+    val nativeMap = NativeMapImpl(map)
+    nativeMap.setCenterAltitudeMode(MapCenterAltitudeMode.TERRAIN)
+    verify { map.centerAltitudeMode = MapCenterAltitudeMode.TERRAIN }
+  }
+
+  @Test
+  fun startPerformanceStatisticsCollection() {
+    val nativeMap = NativeMapImpl(map)
+    val options = mockk<PerformanceStatisticsOptions>()
+    val callback = mockk<PerformanceStatisticsCallback>()
+    nativeMap.startPerformanceStatisticsCollection(options, callback)
+    verify { map.startPerformanceStatisticsCollection(options, callback) }
+  }
+
+  @Test
+  fun stopPerformanceStatisticsCollection() {
+    val nativeMap = NativeMapImpl(map)
+    nativeMap.stopPerformanceStatisticsCollection()
+    verify { map.stopPerformanceStatisticsCollection() }
+  }
 }

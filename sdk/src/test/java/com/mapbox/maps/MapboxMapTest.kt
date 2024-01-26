@@ -1071,6 +1071,20 @@ class MapboxMapTest {
   }
 
   @Test
+  fun startPerformanceStatisticsCollection() {
+    val options = mockk<PerformanceStatisticsOptions>()
+    val callback = mockk<PerformanceStatisticsCallback>()
+    mapboxMap.startPerformanceStatisticsCollection(options, callback)
+    verify { nativeMap.startPerformanceStatisticsCollection(options, callback) }
+  }
+
+  @Test
+  fun stopPerformanceStatisticsCollection() {
+    mapboxMap.stopPerformanceStatisticsCollection()
+    verify { nativeMap.stopPerformanceStatisticsCollection() }
+  }
+
+  @Test
   fun cameraAnimationsPluginValid() {
     val animations = mockk<CameraAnimationsPlugin>(relaxed = true)
     mapboxMap.cameraAnimationsPlugin = animations

@@ -38,4 +38,17 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="30 FPS" />
 
+    <Button
+        android:id="@+id/perfStatButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textSize="18sp"
+        android:text="Collect Perf Stats"
+        android:layout_marginStart="12dp"
+        android:layout_marginBottom="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:ignore="HardcodedText" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
