@@ -2,10 +2,15 @@
 
 package com.mapbox.maps.extension.style.sources
 
+import com.mapbox.bindgen.Value
 import com.mapbox.maps.CustomGeometrySourceOptions
 import com.mapbox.maps.CustomRasterSourceOptions
 import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.MapboxStyleException
 import com.mapbox.maps.MapboxStyleManager
+import com.mapbox.maps.TileCacheBudget
+import com.mapbox.maps.TileCacheBudgetInMegabytes
+import com.mapbox.maps.TileCacheBudgetInTiles
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.sources.generated.*
 import com.mapbox.maps.extension.style.utils.silentUnwrap
@@ -29,11 +34,15 @@ fun MapboxStyleManager.getSource(sourceId: String): Source? {
       "raster" -> RasterSource.Builder(sourceId).build().also { it.delegate = this }
       "raster-array" -> RasterArraySource.Builder(sourceId).build().also { it.delegate = this }
       // we pass empty CustomGeometrySourceOptions as it will not be applied anyway; it is already stored in core
-      "custom-geometry" -> CustomGeometrySource(sourceId, CustomGeometrySourceOptions.Builder().build())
+      "custom-geometry" -> CustomGeometrySource(
+        sourceId,
+        CustomGeometrySourceOptions.Builder().build()
+      )
         .also { it.delegate = this }
       // we pass empty CustomRasterSourceOptions as it will not be applied anyway; it is already stored in core
       "custom-raster" -> CustomRasterSource(sourceId, CustomRasterSourceOptions.Builder().build())
         .also { it.delegate = this }
+
       else -> {
         logE("StyleSourcePlugin", "Source type: $type unknown.")
         null
@@ -68,4 +77,42 @@ inline fun <reified T : Source> MapboxStyleManager.getSourceAs(sourceId: String)
  */
 fun MapboxStyleManager.addSource(source: StyleContract.StyleSourceExtension) {
   source.bindTo(this)
+}
+
+/**
+ * Convert [TileCacheBudget] to a [Value] class to be passed to sources.
+ */
+@JvmSynthetic
+internal fun TileCacheBudget.toValue(): Value {
+  val hashMap = HashMap<String, Value>()
+  when (typeInfo) {
+    TileCacheBudget.Type.TILE_CACHE_BUDGET_IN_MEGABYTES -> {
+      hashMap["megabytes"] = Value(tileCacheBudgetInMegabytes.size)
+    }
+
+    TileCacheBudget.Type.TILE_CACHE_BUDGET_IN_TILES -> {
+      hashMap["tiles"] = Value(tileCacheBudgetInTiles.size)
+    }
+    else -> throw MapboxStyleException("Failed to parse TileCacheBudget: $this")
+  }
+  return Value(hashMap)
+}
+
+/**
+ * Parse [Value] to a [TileCacheBudget].
+ */
+@JvmSynthetic
+internal fun Value.unwrapToTileCacheBudget(): TileCacheBudget {
+  (contents as? HashMap<String, Value>)?.let {
+    if (it.size != 1) {
+      throw MapboxStyleException("Map memory budget setting must contain 'tiles' or 'megabytes' property, but was $this")
+    }
+    val entry = it.entries.first()
+    if (entry.key == "tiles") {
+      return TileCacheBudget(TileCacheBudgetInTiles(entry.value.contents as Long))
+    } else if (entry.key == "megabytes") {
+      return TileCacheBudget(TileCacheBudgetInMegabytes(entry.value.contents as Long))
+    }
+  }
+  throw MapboxStyleException("Can not parse $this to TileCacheBudget.")
 }

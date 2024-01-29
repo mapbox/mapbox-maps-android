@@ -7,10 +7,12 @@ import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Geometry
 import com.mapbox.maps.StylePropertyValue
 import com.mapbox.maps.StylePropertyValueKind
+import com.mapbox.maps.TileCacheBudget
 import com.mapbox.maps.TransitionOptions
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.properties.generated.LayerProperty
 import com.mapbox.maps.extension.style.light.LightPosition
+import com.mapbox.maps.extension.style.sources.toValue
 import com.mapbox.maps.extension.style.types.Formatted
 import com.mapbox.maps.extension.style.types.StyleTransition
 
@@ -33,6 +35,9 @@ internal object TypeUtils {
         Value(value.value)
       }
       is LightPosition -> {
+        value.toValue()
+      }
+      is TileCacheBudget -> {
         value.toValue()
       }
       is Int -> {

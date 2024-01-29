@@ -3,6 +3,7 @@
 package com.mapbox.maps.extension.style.sources.generated
 
 import com.mapbox.maps.StyleManager
+import com.mapbox.maps.TileCacheBudget
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
 import com.mapbox.maps.extension.style.sources.Source
 import com.mapbox.maps.extension.style.sources.TileSet
@@ -211,6 +212,30 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
     get() = getPropertyValue("prefetch-zoom-delta")
 
   /**
+   * This property defines a source-specific resource budget, either in tile units or in megabytes. Whenever the
+   * tile cache goes over the defined limit, the least recently used tile will be evicted from
+   * the in-memory cache. Note that the current implementation does not take into account resources allocated by
+   * the visible tiles.
+   */
+  fun tileCacheBudget(value: TileCacheBudget): RasterSource = apply {
+    setVolatileProperty(PropertyValue("tile-cache-budget", TypeUtils.wrapToValue(value)))
+  }
+
+  /**
+   * This property defines a source-specific resource budget, either in tile units or in megabytes. Whenever the
+   * tile cache goes over the defined limit, the least recently used tile will be evicted from
+   * the in-memory cache. Note that the current implementation does not take into account resources allocated by
+   * the visible tiles.
+   */
+  val tileCacheBudget: TileCacheBudget?
+    /**
+     * Get the TileCacheBudget property
+     *
+     * @return TileCacheBudget
+     */
+    get() = getPropertyValue("tile-cache-budget")
+
+  /**
    * Minimum tile update interval in seconds, which is used to throttle the tile update network requests.
    * If the given source supports loading tiles from a server, sets the minimum tile update interval.
    * Update network requests that are more frequent than the minimum tile update interval are suppressed.
@@ -403,6 +428,17 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
      */
     fun prefetchZoomDelta(value: Long = 4L): Builder = apply {
       val propertyValue = PropertyValue("prefetch-zoom-delta", TypeUtils.wrapToValue(value))
+      volatileProperties[propertyValue.propertyName] = propertyValue
+    }
+
+    /**
+     * This property defines a source-specific resource budget, either in tile units or in megabytes. Whenever the
+     * tile cache goes over the defined limit, the least recently used tile will be evicted from
+     * the in-memory cache. Note that the current implementation does not take into account resources allocated by
+     * the visible tiles.
+     */
+    fun tileCacheBudget(value: TileCacheBudget): Builder = apply {
+      val propertyValue = PropertyValue("tile-cache-budget", TypeUtils.wrapToValue(value))
       volatileProperties[propertyValue.propertyName] = propertyValue
     }
 

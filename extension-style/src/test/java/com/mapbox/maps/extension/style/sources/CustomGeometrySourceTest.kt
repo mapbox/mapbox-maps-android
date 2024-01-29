@@ -2,12 +2,16 @@ package com.mapbox.maps.extension.style.sources
 
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.None
+import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
+import com.mapbox.maps.extension.style.utils.TypeUtils
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.slot
 import io.mockk.verify
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 
@@ -17,6 +21,7 @@ class CustomGeometrySourceTest {
 
   private val tileFunctionCallback: TileFunctionCallback = mockk()
   private val tileOptions: TileOptions = mockk()
+  private val styleProperty = mockk<StylePropertyValue>()
 
   @Before
   fun prepareTest() {
@@ -26,6 +31,10 @@ class CustomGeometrySourceTest {
     every { style.invalidateStyleCustomGeometrySourceTile(any(), any()) } returns expected
 
     every { expected.error } returns null
+
+    every { styleProperty.kind } returns StylePropertyValueKind.CONSTANT
+    every { style.getStyleSourceProperty(any(), any()) } returns styleProperty
+    every { style.setStyleSourceProperty(any(), any(), any()) } returns expected
 
     testSource = customGeometrySource("testId") {
       fetchTileFunction(tileFunctionCallback)
@@ -89,5 +98,24 @@ class CustomGeometrySourceTest {
     val tileID: CanonicalTileID = mockk()
     testSource.invalidateTile(tileID)
     verify { style.invalidateStyleCustomGeometrySourceTile("testId", tileID) }
+  }
+
+  @Test
+  fun tileCacheBudgetSet() {
+    val valueSlot = slot<Value>()
+    testSource.bindTo(style)
+    testSource.setTileCacheBudget(TileCacheBudget(TileCacheBudgetInMegabytes(100)))
+    verify { style.setStyleSourceProperty("testId", "tile-cache-budget", capture(valueSlot)) }
+    Assert.assertEquals("{megabytes=100}", valueSlot.captured.toString())
+  }
+
+  @Test
+  fun tileCacheBudgetGet() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(TileCacheBudget(TileCacheBudgetInMegabytes(100)))
+    testSource.bindTo(style)
+    val tileCacheBudget = testSource.tileCacheBudget!!
+    Assert.assertEquals(TileCacheBudget.Type.TILE_CACHE_BUDGET_IN_MEGABYTES, tileCacheBudget.typeInfo)
+    Assert.assertEquals(100L, tileCacheBudget.tileCacheBudgetInMegabytes.size)
+    verify { style.getStyleSourceProperty("testId", "tile-cache-budget") }
   }
 }

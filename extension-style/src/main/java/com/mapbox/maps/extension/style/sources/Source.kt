@@ -138,6 +138,9 @@ abstract class Source(
             )
           } as T
         }
+        if (propertyName == "tile-cache-budget" && stylePropertyValue.kind == StylePropertyValueKind.CONSTANT) {
+          return stylePropertyValue.value.unwrapToTileCacheBudget() as T
+        }
         stylePropertyValue.unwrap()
       } catch (e: RuntimeException) {
         Log.e(TAG, "Get source property $propertyName failed: ${e.message}")

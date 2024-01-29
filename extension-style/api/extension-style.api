@@ -4835,10 +4835,12 @@ public final class com/mapbox/maps/extension/style/projection/generated/StylePro
 
 public final class com/mapbox/maps/extension/style/sources/CustomGeometrySource : com/mapbox/maps/extension/style/sources/Source {
 	public fun <init> (Ljava/lang/String;Lcom/mapbox/maps/CustomGeometrySourceOptions;)V
+	public final fun getTileCacheBudget ()Lcom/mapbox/maps/TileCacheBudget;
 	public final fun invalidRegion (Lcom/mapbox/maps/CoordinateBounds;)V
 	public final fun invalidTile (Lcom/mapbox/maps/CanonicalTileID;)V
 	public final fun invalidateRegion (Lcom/mapbox/maps/CoordinateBounds;)V
 	public final fun invalidateTile (Lcom/mapbox/maps/CanonicalTileID;)V
+	public final fun setTileCacheBudget (Lcom/mapbox/maps/TileCacheBudget;)V
 	public final fun setTileData (Lcom/mapbox/maps/CanonicalTileID;Ljava/util/List;)V
 }
 
@@ -4848,8 +4850,10 @@ public final class com/mapbox/maps/extension/style/sources/CustomGeometrySourceK
 
 public final class com/mapbox/maps/extension/style/sources/CustomRasterSource : com/mapbox/maps/extension/style/sources/Source {
 	public fun <init> (Ljava/lang/String;Lcom/mapbox/maps/CustomRasterSourceOptions;)V
+	public final fun getTileCacheBudget ()Lcom/mapbox/maps/TileCacheBudget;
 	public final fun invalidateRegion (Lcom/mapbox/maps/CoordinateBounds;)V
 	public final fun invalidateTile (Lcom/mapbox/maps/CanonicalTileID;)V
+	public final fun setTileCacheBudget (Lcom/mapbox/maps/TileCacheBudget;)V
 	public final fun setTileData (Lcom/mapbox/maps/CanonicalTileID;Landroid/graphics/Bitmap;)V
 	public final fun setTileData (Lcom/mapbox/maps/CanonicalTileID;Lcom/mapbox/maps/Image;)V
 }
@@ -4991,9 +4995,11 @@ public final class com/mapbox/maps/extension/style/sources/generated/GeoJsonSour
 	public final fun getMaxzoom ()Ljava/lang/Long;
 	public final fun getPrefetchZoomDelta ()Ljava/lang/Long;
 	public final fun getPromoteId ()Lcom/mapbox/maps/extension/style/types/PromoteId;
+	public final fun getTileCacheBudget ()Lcom/mapbox/maps/TileCacheBudget;
 	public final fun getTolerance ()Ljava/lang/Double;
 	public final fun prefetchZoomDelta (J)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource;
 	public static synthetic fun prefetchZoomDelta$default (Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource;JILjava/lang/Object;)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource;
+	public final fun tileCacheBudget (Lcom/mapbox/maps/TileCacheBudget;)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource;
 	public final fun url (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource;
 	public final fun url (Ljava/lang/String;Ljava/lang/String;)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource;
 	public static synthetic fun url$default (Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource;
@@ -5035,6 +5041,7 @@ public final class com/mapbox/maps/extension/style/sources/generated/GeoJsonSour
 	public final fun prefetchZoomDelta (J)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;
 	public static synthetic fun prefetchZoomDelta$default (Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;JILjava/lang/Object;)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;
 	public final fun promoteId (Lcom/mapbox/maps/extension/style/types/PromoteId;)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;
+	public final fun tileCacheBudget (Lcom/mapbox/maps/TileCacheBudget;)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;
 	public final fun tolerance (D)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;
 	public static synthetic fun tolerance$default (Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;
 	public final fun url (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;
@@ -5097,6 +5104,7 @@ public final class com/mapbox/maps/extension/style/sources/generated/RasterArray
 	public final fun getMaxzoom ()Ljava/lang/Long;
 	public final fun getMinzoom ()Ljava/lang/Long;
 	public final fun getRasterLayers ()Ljava/util/List;
+	public final fun getTileCacheBudget ()Lcom/mapbox/maps/TileCacheBudget;
 	public final fun getTileSize ()Ljava/lang/Long;
 	public final fun getTiles ()Ljava/util/List;
 	public final fun getUrl ()Ljava/lang/String;
@@ -5104,6 +5112,7 @@ public final class com/mapbox/maps/extension/style/sources/generated/RasterArray
 	public static synthetic fun maxzoom$default (Lcom/mapbox/maps/extension/style/sources/generated/RasterArraySource;JILjava/lang/Object;)Lcom/mapbox/maps/extension/style/sources/generated/RasterArraySource;
 	public final fun minzoom (J)Lcom/mapbox/maps/extension/style/sources/generated/RasterArraySource;
 	public static synthetic fun minzoom$default (Lcom/mapbox/maps/extension/style/sources/generated/RasterArraySource;JILjava/lang/Object;)Lcom/mapbox/maps/extension/style/sources/generated/RasterArraySource;
+	public final fun tileCacheBudget (Lcom/mapbox/maps/TileCacheBudget;)Lcom/mapbox/maps/extension/style/sources/generated/RasterArraySource;
 	public final fun tiles (Ljava/util/List;)Lcom/mapbox/maps/extension/style/sources/generated/RasterArraySource;
 	public final fun url (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/sources/generated/RasterArraySource;
 }
@@ -5119,6 +5128,7 @@ public final class com/mapbox/maps/extension/style/sources/generated/RasterArray
 	public static synthetic fun maxzoom$default (Lcom/mapbox/maps/extension/style/sources/generated/RasterArraySource$Builder;JILjava/lang/Object;)Lcom/mapbox/maps/extension/style/sources/generated/RasterArraySource$Builder;
 	public final fun minzoom (J)Lcom/mapbox/maps/extension/style/sources/generated/RasterArraySource$Builder;
 	public static synthetic fun minzoom$default (Lcom/mapbox/maps/extension/style/sources/generated/RasterArraySource$Builder;JILjava/lang/Object;)Lcom/mapbox/maps/extension/style/sources/generated/RasterArraySource$Builder;
+	public final fun tileCacheBudget (Lcom/mapbox/maps/TileCacheBudget;)Lcom/mapbox/maps/extension/style/sources/generated/RasterArraySource$Builder;
 	public final fun tileSet (Lcom/mapbox/maps/extension/style/sources/TileSet;)Lcom/mapbox/maps/extension/style/sources/generated/RasterArraySource$Builder;
 	public final fun tileSet (Ljava/lang/String;Ljava/util/List;Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/sources/generated/RasterArraySource$Builder;
 	public final fun tileSize (J)Lcom/mapbox/maps/extension/style/sources/generated/RasterArraySource$Builder;
@@ -5155,6 +5165,7 @@ public final class com/mapbox/maps/extension/style/sources/generated/RasterDemSo
 	public final fun getMinimumTileUpdateInterval ()Ljava/lang/Double;
 	public final fun getMinzoom ()Ljava/lang/Long;
 	public final fun getPrefetchZoomDelta ()Ljava/lang/Long;
+	public final fun getTileCacheBudget ()Lcom/mapbox/maps/TileCacheBudget;
 	public final fun getTileNetworkRequestsDelay ()Ljava/lang/Double;
 	public final fun getTileRequestsDelay ()Ljava/lang/Double;
 	public final fun getTileSize ()Ljava/lang/Long;
@@ -5170,6 +5181,7 @@ public final class com/mapbox/maps/extension/style/sources/generated/RasterDemSo
 	public static synthetic fun minzoom$default (Lcom/mapbox/maps/extension/style/sources/generated/RasterDemSource;JILjava/lang/Object;)Lcom/mapbox/maps/extension/style/sources/generated/RasterDemSource;
 	public final fun prefetchZoomDelta (J)Lcom/mapbox/maps/extension/style/sources/generated/RasterDemSource;
 	public static synthetic fun prefetchZoomDelta$default (Lcom/mapbox/maps/extension/style/sources/generated/RasterDemSource;JILjava/lang/Object;)Lcom/mapbox/maps/extension/style/sources/generated/RasterDemSource;
+	public final fun tileCacheBudget (Lcom/mapbox/maps/TileCacheBudget;)Lcom/mapbox/maps/extension/style/sources/generated/RasterDemSource;
 	public final fun tileNetworkRequestsDelay (D)Lcom/mapbox/maps/extension/style/sources/generated/RasterDemSource;
 	public static synthetic fun tileNetworkRequestsDelay$default (Lcom/mapbox/maps/extension/style/sources/generated/RasterDemSource;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/sources/generated/RasterDemSource;
 	public final fun tileRequestsDelay (D)Lcom/mapbox/maps/extension/style/sources/generated/RasterDemSource;
@@ -5198,6 +5210,7 @@ public final class com/mapbox/maps/extension/style/sources/generated/RasterDemSo
 	public static synthetic fun minzoom$default (Lcom/mapbox/maps/extension/style/sources/generated/RasterDemSource$Builder;JILjava/lang/Object;)Lcom/mapbox/maps/extension/style/sources/generated/RasterDemSource$Builder;
 	public final fun prefetchZoomDelta (J)Lcom/mapbox/maps/extension/style/sources/generated/RasterDemSource$Builder;
 	public static synthetic fun prefetchZoomDelta$default (Lcom/mapbox/maps/extension/style/sources/generated/RasterDemSource$Builder;JILjava/lang/Object;)Lcom/mapbox/maps/extension/style/sources/generated/RasterDemSource$Builder;
+	public final fun tileCacheBudget (Lcom/mapbox/maps/TileCacheBudget;)Lcom/mapbox/maps/extension/style/sources/generated/RasterDemSource$Builder;
 	public final fun tileNetworkRequestsDelay (D)Lcom/mapbox/maps/extension/style/sources/generated/RasterDemSource$Builder;
 	public static synthetic fun tileNetworkRequestsDelay$default (Lcom/mapbox/maps/extension/style/sources/generated/RasterDemSource$Builder;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/sources/generated/RasterDemSource$Builder;
 	public final fun tileRequestsDelay (D)Lcom/mapbox/maps/extension/style/sources/generated/RasterDemSource$Builder;
@@ -5238,6 +5251,7 @@ public final class com/mapbox/maps/extension/style/sources/generated/RasterSourc
 	public final fun getMinzoom ()Ljava/lang/Long;
 	public final fun getPrefetchZoomDelta ()Ljava/lang/Long;
 	public final fun getScheme ()Lcom/mapbox/maps/extension/style/sources/generated/Scheme;
+	public final fun getTileCacheBudget ()Lcom/mapbox/maps/TileCacheBudget;
 	public final fun getTileNetworkRequestsDelay ()Ljava/lang/Double;
 	public final fun getTileRequestsDelay ()Ljava/lang/Double;
 	public final fun getTileSize ()Ljava/lang/Long;
@@ -5253,6 +5267,7 @@ public final class com/mapbox/maps/extension/style/sources/generated/RasterSourc
 	public static synthetic fun minzoom$default (Lcom/mapbox/maps/extension/style/sources/generated/RasterSource;JILjava/lang/Object;)Lcom/mapbox/maps/extension/style/sources/generated/RasterSource;
 	public final fun prefetchZoomDelta (J)Lcom/mapbox/maps/extension/style/sources/generated/RasterSource;
 	public static synthetic fun prefetchZoomDelta$default (Lcom/mapbox/maps/extension/style/sources/generated/RasterSource;JILjava/lang/Object;)Lcom/mapbox/maps/extension/style/sources/generated/RasterSource;
+	public final fun tileCacheBudget (Lcom/mapbox/maps/TileCacheBudget;)Lcom/mapbox/maps/extension/style/sources/generated/RasterSource;
 	public final fun tileNetworkRequestsDelay (D)Lcom/mapbox/maps/extension/style/sources/generated/RasterSource;
 	public static synthetic fun tileNetworkRequestsDelay$default (Lcom/mapbox/maps/extension/style/sources/generated/RasterSource;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/sources/generated/RasterSource;
 	public final fun tileRequestsDelay (D)Lcom/mapbox/maps/extension/style/sources/generated/RasterSource;
@@ -5281,6 +5296,7 @@ public final class com/mapbox/maps/extension/style/sources/generated/RasterSourc
 	public static synthetic fun prefetchZoomDelta$default (Lcom/mapbox/maps/extension/style/sources/generated/RasterSource$Builder;JILjava/lang/Object;)Lcom/mapbox/maps/extension/style/sources/generated/RasterSource$Builder;
 	public final fun scheme (Lcom/mapbox/maps/extension/style/sources/generated/Scheme;)Lcom/mapbox/maps/extension/style/sources/generated/RasterSource$Builder;
 	public static synthetic fun scheme$default (Lcom/mapbox/maps/extension/style/sources/generated/RasterSource$Builder;Lcom/mapbox/maps/extension/style/sources/generated/Scheme;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/sources/generated/RasterSource$Builder;
+	public final fun tileCacheBudget (Lcom/mapbox/maps/TileCacheBudget;)Lcom/mapbox/maps/extension/style/sources/generated/RasterSource$Builder;
 	public final fun tileNetworkRequestsDelay (D)Lcom/mapbox/maps/extension/style/sources/generated/RasterSource$Builder;
 	public static synthetic fun tileNetworkRequestsDelay$default (Lcom/mapbox/maps/extension/style/sources/generated/RasterSource$Builder;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/sources/generated/RasterSource$Builder;
 	public final fun tileRequestsDelay (D)Lcom/mapbox/maps/extension/style/sources/generated/RasterSource$Builder;
@@ -5337,6 +5353,7 @@ public final class com/mapbox/maps/extension/style/sources/generated/VectorSourc
 	public final fun getPrefetchZoomDelta ()Ljava/lang/Long;
 	public final fun getPromoteId ()Lcom/mapbox/maps/extension/style/types/PromoteId;
 	public final fun getScheme ()Lcom/mapbox/maps/extension/style/sources/generated/Scheme;
+	public final fun getTileCacheBudget ()Lcom/mapbox/maps/TileCacheBudget;
 	public final fun getTileNetworkRequestsDelay ()Ljava/lang/Double;
 	public final fun getTileRequestsDelay ()Ljava/lang/Double;
 	public final fun getTiles ()Ljava/util/List;
@@ -5351,6 +5368,7 @@ public final class com/mapbox/maps/extension/style/sources/generated/VectorSourc
 	public static synthetic fun minzoom$default (Lcom/mapbox/maps/extension/style/sources/generated/VectorSource;JILjava/lang/Object;)Lcom/mapbox/maps/extension/style/sources/generated/VectorSource;
 	public final fun prefetchZoomDelta (J)Lcom/mapbox/maps/extension/style/sources/generated/VectorSource;
 	public static synthetic fun prefetchZoomDelta$default (Lcom/mapbox/maps/extension/style/sources/generated/VectorSource;JILjava/lang/Object;)Lcom/mapbox/maps/extension/style/sources/generated/VectorSource;
+	public final fun tileCacheBudget (Lcom/mapbox/maps/TileCacheBudget;)Lcom/mapbox/maps/extension/style/sources/generated/VectorSource;
 	public final fun tileNetworkRequestsDelay (D)Lcom/mapbox/maps/extension/style/sources/generated/VectorSource;
 	public static synthetic fun tileNetworkRequestsDelay$default (Lcom/mapbox/maps/extension/style/sources/generated/VectorSource;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/sources/generated/VectorSource;
 	public final fun tileRequestsDelay (D)Lcom/mapbox/maps/extension/style/sources/generated/VectorSource;
@@ -5380,6 +5398,7 @@ public final class com/mapbox/maps/extension/style/sources/generated/VectorSourc
 	public final fun promoteId (Lcom/mapbox/maps/extension/style/types/PromoteId;)Lcom/mapbox/maps/extension/style/sources/generated/VectorSource$Builder;
 	public final fun scheme (Lcom/mapbox/maps/extension/style/sources/generated/Scheme;)Lcom/mapbox/maps/extension/style/sources/generated/VectorSource$Builder;
 	public static synthetic fun scheme$default (Lcom/mapbox/maps/extension/style/sources/generated/VectorSource$Builder;Lcom/mapbox/maps/extension/style/sources/generated/Scheme;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/sources/generated/VectorSource$Builder;
+	public final fun tileCacheBudget (Lcom/mapbox/maps/TileCacheBudget;)Lcom/mapbox/maps/extension/style/sources/generated/VectorSource$Builder;
 	public final fun tileNetworkRequestsDelay (D)Lcom/mapbox/maps/extension/style/sources/generated/VectorSource$Builder;
 	public static synthetic fun tileNetworkRequestsDelay$default (Lcom/mapbox/maps/extension/style/sources/generated/VectorSource$Builder;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/sources/generated/VectorSource$Builder;
 	public final fun tileRequestsDelay (D)Lcom/mapbox/maps/extension/style/sources/generated/VectorSource$Builder;

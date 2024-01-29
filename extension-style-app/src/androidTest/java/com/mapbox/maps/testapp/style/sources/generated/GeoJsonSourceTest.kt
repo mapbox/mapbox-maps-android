@@ -9,6 +9,8 @@ import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.maps.SourceDataLoadedCallback
 import com.mapbox.maps.SourceDataLoadedType
+import com.mapbox.maps.TileCacheBudget
+import com.mapbox.maps.TileCacheBudgetInMegabytes
 import com.mapbox.maps.extension.style.expressions.dsl.generated.*
 import com.mapbox.maps.extension.style.sources.generated.*
 import com.mapbox.maps.extension.style.types.PromoteId
@@ -339,6 +341,32 @@ class GeoJsonSourceTest : BaseStyleTest() {
     setupSource(testSource)
     testSource.prefetchZoomDelta(1L)
     assertEquals(1L, testSource.prefetchZoomDelta)
+  }
+
+  @Test
+  @UiThreadTest
+  fun tileCacheBudgetTest() {
+    val testSource = geoJsonSource(SOURCE_ID) {
+      url(TEST_URI)
+      tileCacheBudget(TileCacheBudget(TileCacheBudgetInMegabytes(100)))
+    }
+    setupSource(testSource)
+    val tileCacheBudget = testSource.tileCacheBudget!!
+    assertEquals(TileCacheBudget.Type.TILE_CACHE_BUDGET_IN_MEGABYTES, tileCacheBudget.typeInfo)
+    assertEquals(100L, tileCacheBudget.tileCacheBudgetInMegabytes.size)
+  }
+
+  @Test
+  @UiThreadTest
+  fun tileCacheBudgetAfterBindTest() {
+    val testSource = geoJsonSource(SOURCE_ID) {
+      url(TEST_URI)
+    }
+    setupSource(testSource)
+    testSource.tileCacheBudget(TileCacheBudget(TileCacheBudgetInMegabytes(100)))
+    val tileCacheBudget = testSource.tileCacheBudget!!
+    assertEquals(TileCacheBudget.Type.TILE_CACHE_BUDGET_IN_MEGABYTES, tileCacheBudget.typeInfo)
+    assertEquals(100L, tileCacheBudget.tileCacheBudgetInMegabytes.size)
   }
 
   @Test

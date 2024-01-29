@@ -11,6 +11,12 @@ import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.maps.*
+import com.mapbox.maps.MapboxStyleManager
+import com.mapbox.maps.StyleManager
+import com.mapbox.maps.StylePropertyValue
+import com.mapbox.maps.StylePropertyValueKind
+import com.mapbox.maps.TileCacheBudget
+import com.mapbox.maps.TileCacheBudgetInMegabytes
 import com.mapbox.maps.extension.style.ShadowStyleManager
 import com.mapbox.maps.extension.style.expressions.dsl.generated.get
 import com.mapbox.maps.extension.style.expressions.dsl.generated.sum
@@ -478,6 +484,39 @@ class GeoJsonSourceTest {
 
     assertEquals(1L.toString(), testSource.prefetchZoomDelta?.toString())
     verify { style.getStyleSourceProperty("testId", "prefetch-zoom-delta") }
+  }
+
+  @Test
+  fun tileCacheBudgetSet() {
+    val testSource = geoJsonSource("testId") {
+      tileCacheBudget(TileCacheBudget(TileCacheBudgetInMegabytes(100)))
+    }
+    testSource.bindTo(style)
+
+    verify { style.setStyleSourceProperty("testId", "tile-cache-budget", capture(valueSlot)) }
+    assertEquals("{megabytes=100}", valueSlot.captured.toString())
+  }
+
+  @Test
+  fun tileCacheBudgetSetAfterBind() {
+    val testSource = geoJsonSource("testId") {}
+    testSource.bindTo(style)
+    testSource.tileCacheBudget(TileCacheBudget(TileCacheBudgetInMegabytes(100)))
+
+    verify { style.setStyleSourceProperty("testId", "tile-cache-budget", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{megabytes=100}")
+  }
+
+  @Test
+  fun tileCacheBudgetGet() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(TileCacheBudget(TileCacheBudgetInMegabytes(100)))
+    val testSource = geoJsonSource("testId") {}
+    testSource.bindTo(style)
+
+    val tileCacheBudget = testSource.tileCacheBudget!!
+    assertEquals(TileCacheBudget.Type.TILE_CACHE_BUDGET_IN_MEGABYTES, tileCacheBudget.typeInfo)
+    assertEquals(100L, tileCacheBudget.tileCacheBudgetInMegabytes.size)
+    verify { style.getStyleSourceProperty("testId", "tile-cache-budget") }
   }
 
   @Test

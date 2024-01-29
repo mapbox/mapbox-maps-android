@@ -9,6 +9,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Introduce `SymbolLayer.iconColorSaturation` API.
 * Introduce experimental `RasterLayer.rasterElevation` API.
 * Introduce experimental `MapboxMap.startPerformanceStatisticsCollection` / `MapboxMap.stopPerformanceStatisticsCollection` APIs allowing to start / stop collecting map rendering performance statistics.
+* Introduce `GeoJsonSource.tileCacheBudget`, `RasterSource.tileCacheBudget`, `RasterDemSource.tileCacheBudget`, `RasterArraySource.tileCacheBudget`, `VectorSource.tileCacheBudget`, `CustomGeometrySource.tileCacheBudget`, `CustomRasterSource.tileCacheBudget`.
 
 ## Bug fixes 🐞
 * Retain previous `CenterAltitudeMode` after gestures are finished.

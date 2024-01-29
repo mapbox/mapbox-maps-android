@@ -4,6 +4,8 @@ import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.None
 import com.mapbox.geojson.Feature
 import com.mapbox.maps.*
+import com.mapbox.maps.extension.style.layers.properties.PropertyValue
+import com.mapbox.maps.extension.style.utils.TypeUtils
 import com.mapbox.maps.extension.style.utils.check
 
 /**
@@ -89,6 +91,30 @@ class CustomGeometrySource(
   fun invalidateTile(tileID: CanonicalTileID) {
     delegate?.invalidateStyleCustomGeometrySourceTile(sourceId, tileID).check()
   }
+
+  /**
+   * The property allows to define source specific resource budget, either in tile units or in megabytes.
+   * Whenever tile cache goes over the defined limit, least recently used tile will be evicted from
+   * the in-memory cache. Note that the current implementation does not take into account resources allocated by
+   * the visible tiles.
+   */
+  fun setTileCacheBudget(value: TileCacheBudget) {
+    setVolatileProperty(PropertyValue("tile-cache-budget", TypeUtils.wrapToValue(value)))
+  }
+
+  /**
+   * The property allows to define source specific resource budget, either in tile units or in megabytes.
+   * Whenever tile cache goes over the defined limit, least recently used tile will be evicted from
+   * the in-memory cache. Note that the current implementation does not take into account resources allocated by
+   * the visible tiles.
+   */
+  val tileCacheBudget: TileCacheBudget?
+    /**
+     * Get the TileCacheBudget property
+     *
+     * @return TileCacheBudget
+     */
+    get() = getPropertyValue("tile-cache-budget")
 }
 
 /**

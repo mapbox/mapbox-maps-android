@@ -4,6 +4,8 @@ package com.mapbox.maps.testapp.style.sources.generated
 
 import androidx.test.annotation.UiThreadTest
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.mapbox.maps.TileCacheBudget
+import com.mapbox.maps.TileCacheBudgetInMegabytes
 import com.mapbox.maps.extension.style.sources.TileSet
 import com.mapbox.maps.extension.style.sources.generated.*
 import com.mapbox.maps.extension.style.types.PromoteId
@@ -198,6 +200,32 @@ class VectorSourceTest : BaseStyleTest() {
     setupSource(testSource)
     testSource.prefetchZoomDelta(1L)
     assertEquals(1L, testSource.prefetchZoomDelta)
+  }
+
+  @Test
+  @UiThreadTest
+  fun tileCacheBudgetTest() {
+    val testSource = vectorSource(SOURCE_ID) {
+      url(TEST_URI)
+      tileCacheBudget(TileCacheBudget(TileCacheBudgetInMegabytes(100)))
+    }
+    setupSource(testSource)
+    val tileCacheBudget = testSource.tileCacheBudget!!
+    assertEquals(TileCacheBudget.Type.TILE_CACHE_BUDGET_IN_MEGABYTES, tileCacheBudget.typeInfo)
+    assertEquals(100L, tileCacheBudget.tileCacheBudgetInMegabytes.size)
+  }
+
+  @Test
+  @UiThreadTest
+  fun tileCacheBudgetAfterBindTest() {
+    val testSource = vectorSource(SOURCE_ID) {
+      url(TEST_URI)
+    }
+    setupSource(testSource)
+    testSource.tileCacheBudget(TileCacheBudget(TileCacheBudgetInMegabytes(100)))
+    val tileCacheBudget = testSource.tileCacheBudget!!
+    assertEquals(TileCacheBudget.Type.TILE_CACHE_BUDGET_IN_MEGABYTES, tileCacheBudget.typeInfo)
+    assertEquals(100L, tileCacheBudget.tileCacheBudgetInMegabytes.size)
   }
 
   @Test

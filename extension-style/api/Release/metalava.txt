@@ -153,23 +153,23 @@ package com.mapbox.maps.extension.style.atmosphere.generated {
     method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere highColorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere highColorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere horizonBlend(double horizonBlend);
-    method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere horizonBlend(com.mapbox.maps.extension.style.expressions.generated.Expression horizonBlend = Expression.fromRaw("[" + "\"" + "interpolate" + "\"" + ",[" + "\"" + "linear" + "\"" + "],[" + "\"" + "zoom" + "\"" + "],4,0.2,7,0.1]".trimIndent()));
+    method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere horizonBlend(com.mapbox.maps.extension.style.expressions.generated.Expression horizonBlend = Expression.fromRaw("[" + "\"" + "interpolate" + "\"" + ",[" + "\"" + "linear" + "\"" + "],[" + "\"" + "zoom" + "\"" + "],4,0.2,7,0.1]".<anonymous class>()));
     method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere horizonBlendTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere horizonBlendTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
-    method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere range(java.util.List<java.lang.Double> range = listOf(0.5, 10.0));
+    method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere range(java.util.List<java.lang.Double> range = <anonymous class>(0.5, 10.0));
     method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere range(com.mapbox.maps.extension.style.expressions.generated.Expression range);
     method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere rangeTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere rangeTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere spaceColor(@ColorInt int spaceColor);
     method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere spaceColor(String spaceColor);
-    method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere spaceColor(com.mapbox.maps.extension.style.expressions.generated.Expression spaceColor = Expression.fromRaw("[" + "\"" + "interpolate" + "\"" + ",[" + "\"" + "linear" + "\"" + "],[" + "\"" + "zoom" + "\"" + "],4," + "\"" + "#010b19" + "\"" + ",7," + "\"" + "#367ab9" + "\"" + "]".trimIndent()));
+    method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere spaceColor(com.mapbox.maps.extension.style.expressions.generated.Expression spaceColor = Expression.fromRaw("[" + "\"" + "interpolate" + "\"" + ",[" + "\"" + "linear" + "\"" + "],[" + "\"" + "zoom" + "\"" + "],4," + "\"" + "#010b19" + "\"" + ",7," + "\"" + "#367ab9" + "\"" + "]".<anonymous class>()));
     method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere spaceColorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere spaceColorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere starIntensity(double starIntensity);
-    method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere starIntensity(com.mapbox.maps.extension.style.expressions.generated.Expression starIntensity = Expression.fromRaw("[" + "\"" + "interpolate" + "\"" + ",[" + "\"" + "linear" + "\"" + "],[" + "\"" + "zoom" + "\"" + "],5,0.35,6,0]".trimIndent()));
+    method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere starIntensity(com.mapbox.maps.extension.style.expressions.generated.Expression starIntensity = Expression.fromRaw("[" + "\"" + "interpolate" + "\"" + ",[" + "\"" + "linear" + "\"" + "],[" + "\"" + "zoom" + "\"" + "],5,0.35,6,0]".<anonymous class>()));
     method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere starIntensityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere starIntensityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
-    method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere verticalRange(java.util.List<java.lang.Double> verticalRange = listOf(0.0, 0.0));
+    method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere verticalRange(java.util.List<java.lang.Double> verticalRange = <anonymous class>(0.0, 0.0));
     method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere verticalRange(com.mapbox.maps.extension.style.expressions.generated.Expression verticalRange);
     method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere verticalRangeTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere verticalRangeTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
@@ -983,8 +983,8 @@ package com.mapbox.maps.extension.style.image {
     method @Deprecated public com.mapbox.maps.extension.style.image.ImageExtensionImpl.Builder image(com.mapbox.maps.Image image);
     method public com.mapbox.maps.extension.style.image.ImageExtensionImpl.Builder scale(float scale);
     method public com.mapbox.maps.extension.style.image.ImageExtensionImpl.Builder sdf(boolean sdf = false);
-    method public com.mapbox.maps.extension.style.image.ImageExtensionImpl.Builder stretchX(java.util.List<com.mapbox.maps.ImageStretches> stretchX = listOf());
-    method public com.mapbox.maps.extension.style.image.ImageExtensionImpl.Builder stretchY(java.util.List<com.mapbox.maps.ImageStretches> stretchY = listOf());
+    method public com.mapbox.maps.extension.style.image.ImageExtensionImpl.Builder stretchX(java.util.List<com.mapbox.maps.ImageStretches> stretchX = <anonymous class>());
+    method public com.mapbox.maps.extension.style.image.ImageExtensionImpl.Builder stretchY(java.util.List<com.mapbox.maps.ImageStretches> stretchY = <anonymous class>());
     property public final String imageId;
   }
 
@@ -1527,7 +1527,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.CircleLayer circleStrokeWidth(com.mapbox.maps.extension.style.expressions.generated.Expression circleStrokeWidth);
     method public com.mapbox.maps.extension.style.layers.generated.CircleLayer circleStrokeWidthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.CircleLayer circleStrokeWidthTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
-    method public com.mapbox.maps.extension.style.layers.generated.CircleLayer circleTranslate(java.util.List<java.lang.Double> circleTranslate = listOf(0.0, 0.0));
+    method public com.mapbox.maps.extension.style.layers.generated.CircleLayer circleTranslate(java.util.List<java.lang.Double> circleTranslate = <anonymous class>(0.0, 0.0));
     method public com.mapbox.maps.extension.style.layers.generated.CircleLayer circleTranslate(com.mapbox.maps.extension.style.expressions.generated.Expression circleTranslate);
     method public com.mapbox.maps.extension.style.layers.generated.CircleLayer circleTranslateAnchor(com.mapbox.maps.extension.style.layers.properties.generated.CircleTranslateAnchor circleTranslateAnchor = com.mapbox.maps.extension.style.layers.properties.generated.CircleTranslateAnchor.MAP);
     method public com.mapbox.maps.extension.style.layers.generated.CircleLayer circleTranslateAnchor(com.mapbox.maps.extension.style.expressions.generated.Expression circleTranslateAnchor);
@@ -1998,7 +1998,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionPattern(com.mapbox.maps.extension.style.expressions.generated.Expression fillExtrusionPattern);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionRoundedRoof(boolean fillExtrusionRoundedRoof = true);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionRoundedRoof(com.mapbox.maps.extension.style.expressions.generated.Expression fillExtrusionRoundedRoof);
-    method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionTranslate(java.util.List<java.lang.Double> fillExtrusionTranslate = listOf(0.0, 0.0));
+    method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionTranslate(java.util.List<java.lang.Double> fillExtrusionTranslate = <anonymous class>(0.0, 0.0));
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionTranslate(com.mapbox.maps.extension.style.expressions.generated.Expression fillExtrusionTranslate);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionTranslateAnchor(com.mapbox.maps.extension.style.layers.properties.generated.FillExtrusionTranslateAnchor fillExtrusionTranslateAnchor = com.mapbox.maps.extension.style.layers.properties.generated.FillExtrusionTranslateAnchor.MAP);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionTranslateAnchor(com.mapbox.maps.extension.style.expressions.generated.Expression fillExtrusionTranslateAnchor);
@@ -2217,7 +2217,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillPattern(com.mapbox.maps.extension.style.expressions.generated.Expression fillPattern);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillSortKey(double fillSortKey);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillSortKey(com.mapbox.maps.extension.style.expressions.generated.Expression fillSortKey);
-    method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillTranslate(java.util.List<java.lang.Double> fillTranslate = listOf(0.0, 0.0));
+    method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillTranslate(java.util.List<java.lang.Double> fillTranslate = <anonymous class>(0.0, 0.0));
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillTranslate(com.mapbox.maps.extension.style.expressions.generated.Expression fillTranslate);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillTranslateAnchor(com.mapbox.maps.extension.style.layers.properties.generated.FillTranslateAnchor fillTranslateAnchor = com.mapbox.maps.extension.style.layers.properties.generated.FillTranslateAnchor.MAP);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillTranslateAnchor(com.mapbox.maps.extension.style.expressions.generated.Expression fillTranslateAnchor);
@@ -2931,13 +2931,13 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineRoundLimit(com.mapbox.maps.extension.style.expressions.generated.Expression lineRoundLimit);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineSortKey(double lineSortKey);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineSortKey(com.mapbox.maps.extension.style.expressions.generated.Expression lineSortKey);
-    method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineTranslate(java.util.List<java.lang.Double> lineTranslate = listOf(0.0, 0.0));
+    method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineTranslate(java.util.List<java.lang.Double> lineTranslate = <anonymous class>(0.0, 0.0));
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineTranslate(com.mapbox.maps.extension.style.expressions.generated.Expression lineTranslate);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineTranslateAnchor(com.mapbox.maps.extension.style.layers.properties.generated.LineTranslateAnchor lineTranslateAnchor = com.mapbox.maps.extension.style.layers.properties.generated.LineTranslateAnchor.MAP);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineTranslateAnchor(com.mapbox.maps.extension.style.expressions.generated.Expression lineTranslateAnchor);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineTranslateTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineTranslateTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
-    method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineTrimOffset(java.util.List<java.lang.Double> lineTrimOffset = listOf(0.0, 0.0));
+    method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineTrimOffset(java.util.List<java.lang.Double> lineTrimOffset = <anonymous class>(0.0, 0.0));
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineTrimOffset(com.mapbox.maps.extension.style.expressions.generated.Expression lineTrimOffset);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineWidth(double lineWidth = 1.0);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineWidth(com.mapbox.maps.extension.style.expressions.generated.Expression lineWidth);
@@ -3263,7 +3263,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer emphasisCircleRadiusTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer imagePitchDisplacement(double imagePitchDisplacement = 0.0);
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer imagePitchDisplacement(com.mapbox.maps.extension.style.expressions.generated.Expression imagePitchDisplacement);
-    method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer location(java.util.List<java.lang.Double> location = listOf(0.0, 0.0, 0.0));
+    method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer location(java.util.List<java.lang.Double> location = <anonymous class>(0.0, 0.0, 0.0));
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer location(com.mapbox.maps.extension.style.expressions.generated.Expression location);
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer locationIndicatorOpacity(double locationIndicatorOpacity = 1.0);
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer locationIndicatorOpacity(com.mapbox.maps.extension.style.expressions.generated.Expression locationIndicatorOpacity);
@@ -3585,7 +3585,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelEmissiveStrength(com.mapbox.maps.extension.style.expressions.generated.Expression modelEmissiveStrength);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelEmissiveStrengthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelEmissiveStrengthTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelHeightBasedEmissiveStrengthMultiplier(java.util.List<java.lang.Double> modelHeightBasedEmissiveStrengthMultiplier = listOf(1.0, 1.0, 1.0, 1.0, 0.0));
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelHeightBasedEmissiveStrengthMultiplier(java.util.List<java.lang.Double> modelHeightBasedEmissiveStrengthMultiplier = <anonymous class>(1.0, 1.0, 1.0, 1.0, 0.0));
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelHeightBasedEmissiveStrengthMultiplier(com.mapbox.maps.extension.style.expressions.generated.Expression modelHeightBasedEmissiveStrengthMultiplier);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelHeightBasedEmissiveStrengthMultiplierTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelHeightBasedEmissiveStrengthMultiplierTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
@@ -3597,7 +3597,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelOpacityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelReceiveShadows(boolean modelReceiveShadows = true);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelReceiveShadows(com.mapbox.maps.extension.style.expressions.generated.Expression modelReceiveShadows);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelRotation(java.util.List<java.lang.Double> modelRotation = listOf(0.0, 0.0, 0.0));
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelRotation(java.util.List<java.lang.Double> modelRotation = <anonymous class>(0.0, 0.0, 0.0));
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelRotation(com.mapbox.maps.extension.style.expressions.generated.Expression modelRotation);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelRotationTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelRotationTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
@@ -3605,13 +3605,13 @@ package com.mapbox.maps.extension.style.layers.generated {
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelRoughness(com.mapbox.maps.extension.style.expressions.generated.Expression modelRoughness);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelRoughnessTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelRoughnessTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelScale(java.util.List<java.lang.Double> modelScale = listOf(1.0, 1.0, 1.0));
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelScale(java.util.List<java.lang.Double> modelScale = <anonymous class>(1.0, 1.0, 1.0));
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelScale(com.mapbox.maps.extension.style.expressions.generated.Expression modelScale);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelScaleMode(com.mapbox.maps.extension.style.layers.properties.generated.ModelScaleMode modelScaleMode = com.mapbox.maps.extension.style.layers.properties.generated.ModelScaleMode.MAP);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelScaleMode(com.mapbox.maps.extension.style.expressions.generated.Expression modelScaleMode);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelScaleTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelScaleTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelTranslation(java.util.List<java.lang.Double> modelTranslation = listOf(0.0, 0.0, 0.0));
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelTranslation(java.util.List<java.lang.Double> modelTranslation = <anonymous class>(0.0, 0.0, 0.0));
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelTranslation(com.mapbox.maps.extension.style.expressions.generated.Expression modelTranslation);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelTranslationTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelTranslationTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
@@ -3870,11 +3870,11 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterBrightnessMinTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterBrightnessMinTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterColor(com.mapbox.maps.extension.style.expressions.generated.Expression rasterColor);
-    method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterColorMix(java.util.List<java.lang.Double> rasterColorMix = listOf(0.2126, 0.7152, 0.0722, 0.0));
+    method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterColorMix(java.util.List<java.lang.Double> rasterColorMix = <anonymous class>(0.2126, 0.7152, 0.0722, 0.0));
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterColorMix(com.mapbox.maps.extension.style.expressions.generated.Expression rasterColorMix);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterColorMixTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterColorMixTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
-    method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterColorRange(java.util.List<java.lang.Double> rasterColorRange = listOf(0.0, 1.0));
+    method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterColorRange(java.util.List<java.lang.Double> rasterColorRange = <anonymous class>(0.0, 1.0));
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterColorRange(com.mapbox.maps.extension.style.expressions.generated.Expression rasterColorRange);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterColorRangeTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterColorRangeTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
@@ -4066,7 +4066,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.SkyLayer skyAtmosphereSunIntensity(double skyAtmosphereSunIntensity = 10.0);
     method public com.mapbox.maps.extension.style.layers.generated.SkyLayer skyAtmosphereSunIntensity(com.mapbox.maps.extension.style.expressions.generated.Expression skyAtmosphereSunIntensity);
     method public com.mapbox.maps.extension.style.layers.generated.SkyLayer skyGradient(com.mapbox.maps.extension.style.expressions.generated.Expression skyGradient);
-    method public com.mapbox.maps.extension.style.layers.generated.SkyLayer skyGradientCenter(java.util.List<java.lang.Double> skyGradientCenter = listOf(0.0, 0.0));
+    method public com.mapbox.maps.extension.style.layers.generated.SkyLayer skyGradientCenter(java.util.List<java.lang.Double> skyGradientCenter = <anonymous class>(0.0, 0.0));
     method public com.mapbox.maps.extension.style.layers.generated.SkyLayer skyGradientCenter(com.mapbox.maps.extension.style.expressions.generated.Expression skyGradientCenter);
     method public com.mapbox.maps.extension.style.layers.generated.SkyLayer skyGradientRadius(double skyGradientRadius = 90.0);
     method public com.mapbox.maps.extension.style.layers.generated.SkyLayer skyGradientRadius(com.mapbox.maps.extension.style.expressions.generated.Expression skyGradientRadius);
@@ -4888,7 +4888,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconImageCrossFadeTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconKeepUpright(boolean iconKeepUpright = false);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconKeepUpright(com.mapbox.maps.extension.style.expressions.generated.Expression iconKeepUpright);
-    method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconOffset(java.util.List<java.lang.Double> iconOffset = listOf(0.0, 0.0));
+    method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconOffset(java.util.List<java.lang.Double> iconOffset = <anonymous class>(0.0, 0.0));
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconOffset(com.mapbox.maps.extension.style.expressions.generated.Expression iconOffset);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconOpacity(double iconOpacity = 1.0);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconOpacity(com.mapbox.maps.extension.style.expressions.generated.Expression iconOpacity);
@@ -4908,9 +4908,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconSize(com.mapbox.maps.extension.style.expressions.generated.Expression iconSize);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconTextFit(com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit iconTextFit = com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit.NONE);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconTextFit(com.mapbox.maps.extension.style.expressions.generated.Expression iconTextFit);
-    method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconTextFitPadding(java.util.List<java.lang.Double> iconTextFitPadding = listOf(0.0, 0.0, 0.0, 0.0));
+    method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconTextFitPadding(java.util.List<java.lang.Double> iconTextFitPadding = <anonymous class>(0.0, 0.0, 0.0, 0.0));
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconTextFitPadding(com.mapbox.maps.extension.style.expressions.generated.Expression iconTextFitPadding);
-    method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconTranslate(java.util.List<java.lang.Double> iconTranslate = listOf(0.0, 0.0));
+    method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconTranslate(java.util.List<java.lang.Double> iconTranslate = <anonymous class>(0.0, 0.0));
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconTranslate(com.mapbox.maps.extension.style.expressions.generated.Expression iconTranslate);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconTranslateAnchor(com.mapbox.maps.extension.style.layers.properties.generated.IconTranslateAnchor iconTranslateAnchor = com.mapbox.maps.extension.style.layers.properties.generated.IconTranslateAnchor.MAP);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer iconTranslateAnchor(com.mapbox.maps.extension.style.expressions.generated.Expression iconTranslateAnchor);
@@ -4949,7 +4949,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textField(com.mapbox.maps.extension.style.expressions.generated.Expression textField);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textField(String textField);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textField(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.Formatted,kotlin.Unit> block);
-    method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textFont(java.util.List<java.lang.String> textFont = listOf("Open Sans Regular", "Arial Unicode MS Regular"));
+    method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textFont(java.util.List<java.lang.String> textFont = <anonymous class>("Open Sans Regular", "Arial Unicode MS Regular"));
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textFont(com.mapbox.maps.extension.style.expressions.generated.Expression textFont);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textHaloBlur(double textHaloBlur = 0.0);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textHaloBlur(com.mapbox.maps.extension.style.expressions.generated.Expression textHaloBlur);
@@ -4978,7 +4978,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textMaxAngle(com.mapbox.maps.extension.style.expressions.generated.Expression textMaxAngle);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textMaxWidth(double textMaxWidth = 10.0);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textMaxWidth(com.mapbox.maps.extension.style.expressions.generated.Expression textMaxWidth);
-    method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textOffset(java.util.List<java.lang.Double> textOffset = listOf(0.0, 0.0));
+    method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textOffset(java.util.List<java.lang.Double> textOffset = <anonymous class>(0.0, 0.0));
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textOffset(com.mapbox.maps.extension.style.expressions.generated.Expression textOffset);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textOpacity(double textOpacity = 1.0);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textOpacity(com.mapbox.maps.extension.style.expressions.generated.Expression textOpacity);
@@ -5000,7 +5000,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textSize(com.mapbox.maps.extension.style.expressions.generated.Expression textSize);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textTransform(com.mapbox.maps.extension.style.layers.properties.generated.TextTransform textTransform = com.mapbox.maps.extension.style.layers.properties.generated.TextTransform.NONE);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textTransform(com.mapbox.maps.extension.style.expressions.generated.Expression textTransform);
-    method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textTranslate(java.util.List<java.lang.Double> textTranslate = listOf(0.0, 0.0));
+    method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textTranslate(java.util.List<java.lang.Double> textTranslate = <anonymous class>(0.0, 0.0));
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textTranslate(com.mapbox.maps.extension.style.expressions.generated.Expression textTranslate);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textTranslateAnchor(com.mapbox.maps.extension.style.layers.properties.generated.TextTranslateAnchor textTranslateAnchor = com.mapbox.maps.extension.style.layers.properties.generated.TextTranslateAnchor.MAP);
     method public com.mapbox.maps.extension.style.layers.generated.SymbolLayer textTranslateAnchor(com.mapbox.maps.extension.style.expressions.generated.Expression textTranslateAnchor);
@@ -5614,7 +5614,7 @@ package com.mapbox.maps.extension.style.light.generated {
     method public com.mapbox.maps.extension.style.light.generated.DirectionalLight color(com.mapbox.maps.extension.style.expressions.generated.Expression color);
     method public com.mapbox.maps.extension.style.light.generated.DirectionalLight colorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.light.generated.DirectionalLight colorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
-    method public com.mapbox.maps.extension.style.light.generated.DirectionalLight direction(java.util.List<java.lang.Double> direction = listOf(210.0, 30.0));
+    method public com.mapbox.maps.extension.style.light.generated.DirectionalLight direction(java.util.List<java.lang.Double> direction = <anonymous class>(210.0, 30.0));
     method public com.mapbox.maps.extension.style.light.generated.DirectionalLight direction(com.mapbox.maps.extension.style.expressions.generated.Expression direction);
     method public com.mapbox.maps.extension.style.light.generated.DirectionalLight directionTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.light.generated.DirectionalLight directionTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
@@ -5749,11 +5749,14 @@ package com.mapbox.maps.extension.style.sources {
 
   public final class CustomGeometrySource extends com.mapbox.maps.extension.style.sources.Source {
     ctor public CustomGeometrySource(String id, com.mapbox.maps.CustomGeometrySourceOptions options);
+    method public com.mapbox.maps.TileCacheBudget? getTileCacheBudget();
     method @Deprecated public void invalidRegion(com.mapbox.maps.CoordinateBounds coordinateBounds);
     method @Deprecated public void invalidTile(com.mapbox.maps.CanonicalTileID tileID);
     method public void invalidateRegion(com.mapbox.maps.CoordinateBounds coordinateBounds);
     method public void invalidateTile(com.mapbox.maps.CanonicalTileID tileID);
+    method public void setTileCacheBudget(com.mapbox.maps.TileCacheBudget value);
     method public void setTileData(com.mapbox.maps.CanonicalTileID tileID, java.util.List<com.mapbox.geojson.Feature> featureCollection);
+    property public final com.mapbox.maps.TileCacheBudget? tileCacheBudget;
   }
 
   public final class CustomGeometrySourceKt {
@@ -5762,10 +5765,13 @@ package com.mapbox.maps.extension.style.sources {
 
   @com.mapbox.maps.MapboxExperimental public final class CustomRasterSource extends com.mapbox.maps.extension.style.sources.Source {
     ctor public CustomRasterSource(String id, com.mapbox.maps.CustomRasterSourceOptions options);
+    method public com.mapbox.maps.TileCacheBudget? getTileCacheBudget();
     method public void invalidateRegion(com.mapbox.maps.CoordinateBounds coordinateBounds);
     method public void invalidateTile(com.mapbox.maps.CanonicalTileID tileID);
+    method public void setTileCacheBudget(com.mapbox.maps.TileCacheBudget value);
     method public void setTileData(com.mapbox.maps.CanonicalTileID tileID, com.mapbox.maps.Image? image);
     method public void setTileData(com.mapbox.maps.CanonicalTileID tileID, android.graphics.Bitmap? bitmap);
+    property public final com.mapbox.maps.TileCacheBudget? tileCacheBudget;
   }
 
   public final class CustomRasterSourceKt {
@@ -5810,7 +5816,7 @@ package com.mapbox.maps.extension.style.sources {
   public static class TileSet.Builder {
     ctor public TileSet.Builder(String tilejson, java.util.List<java.lang.String> tiles);
     method public final com.mapbox.maps.extension.style.sources.TileSet.Builder attribution(String value);
-    method public final com.mapbox.maps.extension.style.sources.TileSet.Builder bounds(java.util.List<java.lang.Double> value = listOf(-180.0, -90.0, 180.0, 90.0));
+    method public final com.mapbox.maps.extension.style.sources.TileSet.Builder bounds(java.util.List<java.lang.Double> value = <anonymous class>(-180.0, -90.0, 180.0, 90.0));
     method public final com.mapbox.maps.extension.style.sources.TileSet build();
     method public final com.mapbox.maps.extension.style.sources.TileSet.Builder center(java.util.List<java.lang.Double> value);
     method public final com.mapbox.maps.extension.style.sources.TileSet.Builder data(java.util.List<java.lang.String> value);
@@ -5872,8 +5878,10 @@ package com.mapbox.maps.extension.style.sources.generated {
     method public Long? getMaxzoom();
     method public Long? getPrefetchZoomDelta();
     method public com.mapbox.maps.extension.style.types.PromoteId? getPromoteId();
+    method public com.mapbox.maps.TileCacheBudget? getTileCacheBudget();
     method public Double? getTolerance();
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource prefetchZoomDelta(long value = 4L);
+    method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource tileCacheBudget(com.mapbox.maps.TileCacheBudget value);
     method @Deprecated public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource url(String value, String dataId = "");
     method @Deprecated public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource url(String value);
     property public final String? attribution;
@@ -5888,6 +5896,7 @@ package com.mapbox.maps.extension.style.sources.generated {
     property public final Long? maxzoom;
     property public final Long? prefetchZoomDelta;
     property public final com.mapbox.maps.extension.style.types.PromoteId? promoteId;
+    property public final com.mapbox.maps.TileCacheBudget? tileCacheBudget;
     property public final Double? tolerance;
     field public static final com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Companion Companion;
   }
@@ -5917,6 +5926,7 @@ package com.mapbox.maps.extension.style.sources.generated {
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder maxzoom(long value = 18L);
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder prefetchZoomDelta(long value = 4L);
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder promoteId(com.mapbox.maps.extension.style.types.PromoteId value);
+    method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder tileCacheBudget(com.mapbox.maps.TileCacheBudget value);
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder tolerance(double value = 0.375);
     method @Deprecated public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder url(String value, String dataId = "");
     method @Deprecated public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource.Builder url(String value);
@@ -5989,11 +5999,13 @@ package com.mapbox.maps.extension.style.sources.generated {
     method public Long? getMaxzoom();
     method public Long? getMinzoom();
     method public java.util.List<com.mapbox.maps.extension.style.sources.generated.RasterArraySource.RasterDataLayer>? getRasterLayers();
+    method public com.mapbox.maps.TileCacheBudget? getTileCacheBudget();
     method public Long? getTileSize();
     method public java.util.List<java.lang.String>? getTiles();
     method public String? getUrl();
     method public com.mapbox.maps.extension.style.sources.generated.RasterArraySource maxzoom(long value = 22L);
     method public com.mapbox.maps.extension.style.sources.generated.RasterArraySource minzoom(long value = 0L);
+    method public com.mapbox.maps.extension.style.sources.generated.RasterArraySource tileCacheBudget(com.mapbox.maps.TileCacheBudget value);
     method public com.mapbox.maps.extension.style.sources.generated.RasterArraySource tiles(java.util.List<java.lang.String> value);
     method public com.mapbox.maps.extension.style.sources.generated.RasterArraySource url(String value);
     property public final String? attribution;
@@ -6001,6 +6013,7 @@ package com.mapbox.maps.extension.style.sources.generated {
     property public final Long? maxzoom;
     property public final Long? minzoom;
     property public final java.util.List<com.mapbox.maps.extension.style.sources.generated.RasterArraySource.RasterDataLayer>? rasterLayers;
+    property public final com.mapbox.maps.TileCacheBudget? tileCacheBudget;
     property public final Long? tileSize;
     property public final java.util.List<java.lang.String>? tiles;
     property public final String? url;
@@ -6010,11 +6023,12 @@ package com.mapbox.maps.extension.style.sources.generated {
   @com.mapbox.maps.extension.style.types.SourceDsl public static final class RasterArraySource.Builder {
     ctor public RasterArraySource.Builder(String sourceId);
     method public com.mapbox.maps.extension.style.sources.generated.RasterArraySource.Builder attribution(String value);
-    method public com.mapbox.maps.extension.style.sources.generated.RasterArraySource.Builder bounds(java.util.List<java.lang.Double> value = listOf(-180.0, -85.051129, 180.0, 85.051129));
+    method public com.mapbox.maps.extension.style.sources.generated.RasterArraySource.Builder bounds(java.util.List<java.lang.Double> value = <anonymous class>(-180.0, -85.051129, 180.0, 85.051129));
     method public com.mapbox.maps.extension.style.sources.generated.RasterArraySource build();
     method public String getSourceId();
     method public com.mapbox.maps.extension.style.sources.generated.RasterArraySource.Builder maxzoom(long value = 22L);
     method public com.mapbox.maps.extension.style.sources.generated.RasterArraySource.Builder minzoom(long value = 0L);
+    method public com.mapbox.maps.extension.style.sources.generated.RasterArraySource.Builder tileCacheBudget(com.mapbox.maps.TileCacheBudget value);
     method public com.mapbox.maps.extension.style.sources.generated.RasterArraySource.Builder tileSet(com.mapbox.maps.extension.style.sources.TileSet tileSet);
     method public com.mapbox.maps.extension.style.sources.generated.RasterArraySource.Builder tileSet(String tilejson, java.util.List<java.lang.String> tiles, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.sources.TileSet.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.sources.generated.RasterArraySource.Builder tileSize(long value = 512L);
@@ -6051,6 +6065,7 @@ package com.mapbox.maps.extension.style.sources.generated {
     method public Double? getMinimumTileUpdateInterval();
     method public Long? getMinzoom();
     method public Long? getPrefetchZoomDelta();
+    method public com.mapbox.maps.TileCacheBudget? getTileCacheBudget();
     method public Double? getTileNetworkRequestsDelay();
     method public Double? getTileRequestsDelay();
     method public Long? getTileSize();
@@ -6062,6 +6077,7 @@ package com.mapbox.maps.extension.style.sources.generated {
     method public com.mapbox.maps.extension.style.sources.generated.RasterDemSource minimumTileUpdateInterval(double value = 0.0);
     method public com.mapbox.maps.extension.style.sources.generated.RasterDemSource minzoom(long value = 0L);
     method public com.mapbox.maps.extension.style.sources.generated.RasterDemSource prefetchZoomDelta(long value = 4L);
+    method public com.mapbox.maps.extension.style.sources.generated.RasterDemSource tileCacheBudget(com.mapbox.maps.TileCacheBudget value);
     method public com.mapbox.maps.extension.style.sources.generated.RasterDemSource tileNetworkRequestsDelay(double value = 0.0);
     method public com.mapbox.maps.extension.style.sources.generated.RasterDemSource tileRequestsDelay(double value = 0.0);
     method public com.mapbox.maps.extension.style.sources.generated.RasterDemSource tiles(java.util.List<java.lang.String> value);
@@ -6075,6 +6091,7 @@ package com.mapbox.maps.extension.style.sources.generated {
     property public final Double? minimumTileUpdateInterval;
     property public final Long? minzoom;
     property public final Long? prefetchZoomDelta;
+    property public final com.mapbox.maps.TileCacheBudget? tileCacheBudget;
     property public final Double? tileNetworkRequestsDelay;
     property public final Double? tileRequestsDelay;
     property public final Long? tileSize;
@@ -6087,7 +6104,7 @@ package com.mapbox.maps.extension.style.sources.generated {
   @com.mapbox.maps.extension.style.types.SourceDsl public static final class RasterDemSource.Builder {
     ctor public RasterDemSource.Builder(String sourceId);
     method public com.mapbox.maps.extension.style.sources.generated.RasterDemSource.Builder attribution(String value);
-    method public com.mapbox.maps.extension.style.sources.generated.RasterDemSource.Builder bounds(java.util.List<java.lang.Double> value = listOf(-180.0, -85.051129, 180.0, 85.051129));
+    method public com.mapbox.maps.extension.style.sources.generated.RasterDemSource.Builder bounds(java.util.List<java.lang.Double> value = <anonymous class>(-180.0, -85.051129, 180.0, 85.051129));
     method public com.mapbox.maps.extension.style.sources.generated.RasterDemSource build();
     method public com.mapbox.maps.extension.style.sources.generated.RasterDemSource.Builder encoding(com.mapbox.maps.extension.style.sources.generated.Encoding value = com.mapbox.maps.extension.style.sources.generated.Encoding.MAPBOX);
     method public String getSourceId();
@@ -6096,6 +6113,7 @@ package com.mapbox.maps.extension.style.sources.generated {
     method public com.mapbox.maps.extension.style.sources.generated.RasterDemSource.Builder minimumTileUpdateInterval(double value = 0.0);
     method public com.mapbox.maps.extension.style.sources.generated.RasterDemSource.Builder minzoom(long value = 0L);
     method public com.mapbox.maps.extension.style.sources.generated.RasterDemSource.Builder prefetchZoomDelta(long value = 4L);
+    method public com.mapbox.maps.extension.style.sources.generated.RasterDemSource.Builder tileCacheBudget(com.mapbox.maps.TileCacheBudget value);
     method public com.mapbox.maps.extension.style.sources.generated.RasterDemSource.Builder tileNetworkRequestsDelay(double value = 0.0);
     method public com.mapbox.maps.extension.style.sources.generated.RasterDemSource.Builder tileRequestsDelay(double value = 0.0);
     method public com.mapbox.maps.extension.style.sources.generated.RasterDemSource.Builder tileSet(com.mapbox.maps.extension.style.sources.TileSet tileSet);
@@ -6140,6 +6158,7 @@ package com.mapbox.maps.extension.style.sources.generated {
     method public Long? getMinzoom();
     method public Long? getPrefetchZoomDelta();
     method public com.mapbox.maps.extension.style.sources.generated.Scheme? getScheme();
+    method public com.mapbox.maps.TileCacheBudget? getTileCacheBudget();
     method public Double? getTileNetworkRequestsDelay();
     method public Double? getTileRequestsDelay();
     method public Long? getTileSize();
@@ -6151,6 +6170,7 @@ package com.mapbox.maps.extension.style.sources.generated {
     method public com.mapbox.maps.extension.style.sources.generated.RasterSource minimumTileUpdateInterval(double value = 0.0);
     method public com.mapbox.maps.extension.style.sources.generated.RasterSource minzoom(long value = 0L);
     method public com.mapbox.maps.extension.style.sources.generated.RasterSource prefetchZoomDelta(long value = 4L);
+    method public com.mapbox.maps.extension.style.sources.generated.RasterSource tileCacheBudget(com.mapbox.maps.TileCacheBudget value);
     method public com.mapbox.maps.extension.style.sources.generated.RasterSource tileNetworkRequestsDelay(double value = 0.0);
     method public com.mapbox.maps.extension.style.sources.generated.RasterSource tileRequestsDelay(double value = 0.0);
     method public com.mapbox.maps.extension.style.sources.generated.RasterSource tiles(java.util.List<java.lang.String> value);
@@ -6164,6 +6184,7 @@ package com.mapbox.maps.extension.style.sources.generated {
     property public final Long? minzoom;
     property public final Long? prefetchZoomDelta;
     property public final com.mapbox.maps.extension.style.sources.generated.Scheme? scheme;
+    property public final com.mapbox.maps.TileCacheBudget? tileCacheBudget;
     property public final Double? tileNetworkRequestsDelay;
     property public final Double? tileRequestsDelay;
     property public final Long? tileSize;
@@ -6176,7 +6197,7 @@ package com.mapbox.maps.extension.style.sources.generated {
   @com.mapbox.maps.extension.style.types.SourceDsl public static final class RasterSource.Builder {
     ctor public RasterSource.Builder(String sourceId);
     method public com.mapbox.maps.extension.style.sources.generated.RasterSource.Builder attribution(String value);
-    method public com.mapbox.maps.extension.style.sources.generated.RasterSource.Builder bounds(java.util.List<java.lang.Double> value = listOf(-180.0, -85.051129, 180.0, 85.051129));
+    method public com.mapbox.maps.extension.style.sources.generated.RasterSource.Builder bounds(java.util.List<java.lang.Double> value = <anonymous class>(-180.0, -85.051129, 180.0, 85.051129));
     method public com.mapbox.maps.extension.style.sources.generated.RasterSource build();
     method public String getSourceId();
     method public com.mapbox.maps.extension.style.sources.generated.RasterSource.Builder maxOverscaleFactorForParentTiles(long value);
@@ -6185,6 +6206,7 @@ package com.mapbox.maps.extension.style.sources.generated {
     method public com.mapbox.maps.extension.style.sources.generated.RasterSource.Builder minzoom(long value = 0L);
     method public com.mapbox.maps.extension.style.sources.generated.RasterSource.Builder prefetchZoomDelta(long value = 4L);
     method public com.mapbox.maps.extension.style.sources.generated.RasterSource.Builder scheme(com.mapbox.maps.extension.style.sources.generated.Scheme value = com.mapbox.maps.extension.style.sources.generated.Scheme.XYZ);
+    method public com.mapbox.maps.extension.style.sources.generated.RasterSource.Builder tileCacheBudget(com.mapbox.maps.TileCacheBudget value);
     method public com.mapbox.maps.extension.style.sources.generated.RasterSource.Builder tileNetworkRequestsDelay(double value = 0.0);
     method public com.mapbox.maps.extension.style.sources.generated.RasterSource.Builder tileRequestsDelay(double value = 0.0);
     method public com.mapbox.maps.extension.style.sources.generated.RasterSource.Builder tileSet(com.mapbox.maps.extension.style.sources.TileSet tileSet);
@@ -6243,6 +6265,7 @@ package com.mapbox.maps.extension.style.sources.generated {
     method public Long? getPrefetchZoomDelta();
     method public com.mapbox.maps.extension.style.types.PromoteId? getPromoteId();
     method public com.mapbox.maps.extension.style.sources.generated.Scheme? getScheme();
+    method public com.mapbox.maps.TileCacheBudget? getTileCacheBudget();
     method public Double? getTileNetworkRequestsDelay();
     method public Double? getTileRequestsDelay();
     method public java.util.List<java.lang.String>? getTiles();
@@ -6253,6 +6276,7 @@ package com.mapbox.maps.extension.style.sources.generated {
     method public com.mapbox.maps.extension.style.sources.generated.VectorSource minimumTileUpdateInterval(double value = 0.0);
     method public com.mapbox.maps.extension.style.sources.generated.VectorSource minzoom(long value = 0L);
     method public com.mapbox.maps.extension.style.sources.generated.VectorSource prefetchZoomDelta(long value = 4L);
+    method public com.mapbox.maps.extension.style.sources.generated.VectorSource tileCacheBudget(com.mapbox.maps.TileCacheBudget value);
     method public com.mapbox.maps.extension.style.sources.generated.VectorSource tileNetworkRequestsDelay(double value = 0.0);
     method public com.mapbox.maps.extension.style.sources.generated.VectorSource tileRequestsDelay(double value = 0.0);
     method public com.mapbox.maps.extension.style.sources.generated.VectorSource tiles(java.util.List<java.lang.String> value);
@@ -6267,6 +6291,7 @@ package com.mapbox.maps.extension.style.sources.generated {
     property public final Long? prefetchZoomDelta;
     property public final com.mapbox.maps.extension.style.types.PromoteId? promoteId;
     property public final com.mapbox.maps.extension.style.sources.generated.Scheme? scheme;
+    property public final com.mapbox.maps.TileCacheBudget? tileCacheBudget;
     property public final Double? tileNetworkRequestsDelay;
     property public final Double? tileRequestsDelay;
     property public final java.util.List<java.lang.String>? tiles;
@@ -6278,7 +6303,7 @@ package com.mapbox.maps.extension.style.sources.generated {
   @com.mapbox.maps.extension.style.types.SourceDsl public static final class VectorSource.Builder {
     ctor public VectorSource.Builder(String sourceId);
     method public com.mapbox.maps.extension.style.sources.generated.VectorSource.Builder attribution(String value);
-    method public com.mapbox.maps.extension.style.sources.generated.VectorSource.Builder bounds(java.util.List<java.lang.Double> value = listOf(-180.0, -85.051129, 180.0, 85.051129));
+    method public com.mapbox.maps.extension.style.sources.generated.VectorSource.Builder bounds(java.util.List<java.lang.Double> value = <anonymous class>(-180.0, -85.051129, 180.0, 85.051129));
     method public com.mapbox.maps.extension.style.sources.generated.VectorSource build();
     method public String getSourceId();
     method public com.mapbox.maps.extension.style.sources.generated.VectorSource.Builder maxOverscaleFactorForParentTiles(long value);
@@ -6288,6 +6313,7 @@ package com.mapbox.maps.extension.style.sources.generated {
     method public com.mapbox.maps.extension.style.sources.generated.VectorSource.Builder prefetchZoomDelta(long value = 4L);
     method public com.mapbox.maps.extension.style.sources.generated.VectorSource.Builder promoteId(com.mapbox.maps.extension.style.types.PromoteId value);
     method public com.mapbox.maps.extension.style.sources.generated.VectorSource.Builder scheme(com.mapbox.maps.extension.style.sources.generated.Scheme value = com.mapbox.maps.extension.style.sources.generated.Scheme.XYZ);
+    method public com.mapbox.maps.extension.style.sources.generated.VectorSource.Builder tileCacheBudget(com.mapbox.maps.TileCacheBudget value);
     method public com.mapbox.maps.extension.style.sources.generated.VectorSource.Builder tileNetworkRequestsDelay(double value = 0.0);
     method public com.mapbox.maps.extension.style.sources.generated.VectorSource.Builder tileRequestsDelay(double value = 0.0);
     method public com.mapbox.maps.extension.style.sources.generated.VectorSource.Builder tileSet(com.mapbox.maps.extension.style.sources.TileSet tileSet);

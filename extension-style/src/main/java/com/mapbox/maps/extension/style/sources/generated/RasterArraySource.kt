@@ -4,6 +4,7 @@ package com.mapbox.maps.extension.style.sources.generated
 
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.StyleManager
+import com.mapbox.maps.TileCacheBudget
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
 import com.mapbox.maps.extension.style.sources.Source
 import com.mapbox.maps.extension.style.sources.TileSet
@@ -158,6 +159,30 @@ class RasterArraySource(builder: Builder) : Source(builder.sourceId) {
     get() = getPropertyValue("rasterLayers")
 
   /**
+   * This property defines a source-specific resource budget, either in tile units or in megabytes. Whenever the
+   * tile cache goes over the defined limit, the least recently used tile will be evicted from
+   * the in-memory cache. Note that the current implementation does not take into account resources allocated by
+   * the visible tiles.
+   */
+  fun tileCacheBudget(value: TileCacheBudget): RasterArraySource = apply {
+    setVolatileProperty(PropertyValue("tile-cache-budget", TypeUtils.wrapToValue(value)))
+  }
+
+  /**
+   * This property defines a source-specific resource budget, either in tile units or in megabytes. Whenever the
+   * tile cache goes over the defined limit, the least recently used tile will be evicted from
+   * the in-memory cache. Note that the current implementation does not take into account resources allocated by
+   * the visible tiles.
+   */
+  val tileCacheBudget: TileCacheBudget?
+    /**
+     * Get the TileCacheBudget property
+     *
+     * @return TileCacheBudget
+     */
+    get() = getPropertyValue("tile-cache-budget")
+
+  /**
    * Builder for RasterArraySource.
    *
    * @param sourceId the ID of the source
@@ -225,6 +250,17 @@ class RasterArraySource(builder: Builder) : Source(builder.sourceId) {
     fun attribution(value: String): Builder = apply {
       val propertyValue = PropertyValue("attribution", TypeUtils.wrapToValue(value))
       properties[propertyValue.propertyName] = propertyValue
+    }
+
+    /**
+     * This property defines a source-specific resource budget, either in tile units or in megabytes. Whenever the
+     * tile cache goes over the defined limit, the least recently used tile will be evicted from
+     * the in-memory cache. Note that the current implementation does not take into account resources allocated by
+     * the visible tiles.
+     */
+    fun tileCacheBudget(value: TileCacheBudget): Builder = apply {
+      val propertyValue = PropertyValue("tile-cache-budget", TypeUtils.wrapToValue(value))
+      volatileProperties[propertyValue.propertyName] = propertyValue
     }
 
     /**

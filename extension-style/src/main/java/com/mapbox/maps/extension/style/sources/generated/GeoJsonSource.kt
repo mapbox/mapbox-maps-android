@@ -14,6 +14,7 @@ import com.mapbox.geojson.Geometry
 import com.mapbox.maps.*
 import com.mapbox.maps.GeoJSONSourceData
 import com.mapbox.maps.StyleManager
+import com.mapbox.maps.TileCacheBudget
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
 import com.mapbox.maps.extension.style.sources.Source
@@ -337,6 +338,30 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
     get() = getPropertyValue("prefetch-zoom-delta")
 
   /**
+   * This property defines a source-specific resource budget, either in tile units or in megabytes. Whenever the
+   * tile cache goes over the defined limit, the least recently used tile will be evicted from
+   * the in-memory cache. Note that the current implementation does not take into account resources allocated by
+   * the visible tiles.
+   */
+  fun tileCacheBudget(value: TileCacheBudget): GeoJsonSource = apply {
+    setVolatileProperty(PropertyValue("tile-cache-budget", TypeUtils.wrapToValue(value)))
+  }
+
+  /**
+   * This property defines a source-specific resource budget, either in tile units or in megabytes. Whenever the
+   * tile cache goes over the defined limit, the least recently used tile will be evicted from
+   * the in-memory cache. Note that the current implementation does not take into account resources allocated by
+   * the visible tiles.
+   */
+  val tileCacheBudget: TileCacheBudget?
+    /**
+     * Get the TileCacheBudget property
+     *
+     * @return TileCacheBudget
+     */
+    get() = getPropertyValue("tile-cache-budget")
+
+  /**
    * Add a Feature to the GeojsonSource.
    * The data will be scheduled and applied on a worker thread.
    *
@@ -619,6 +644,17 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
      */
     fun prefetchZoomDelta(value: Long = 4L): Builder = apply {
       val propertyValue = PropertyValue("prefetch-zoom-delta", TypeUtils.wrapToValue(value))
+      volatileProperties[propertyValue.propertyName] = propertyValue
+    }
+
+    /**
+     * This property defines a source-specific resource budget, either in tile units or in megabytes. Whenever the
+     * tile cache goes over the defined limit, the least recently used tile will be evicted from
+     * the in-memory cache. Note that the current implementation does not take into account resources allocated by
+     * the visible tiles.
+     */
+    fun tileCacheBudget(value: TileCacheBudget): Builder = apply {
+      val propertyValue = PropertyValue("tile-cache-budget", TypeUtils.wrapToValue(value))
       volatileProperties[propertyValue.propertyName] = propertyValue
     }
 

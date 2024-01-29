@@ -267,6 +267,8 @@ package com.mapbox.maps {
     method public void setTileCacheBudget(com.mapbox.maps.TileCacheBudget? tileCacheBudget);
     method public void setUserAnimationInProgress(boolean inProgress);
     method public void setViewportMode(com.mapbox.maps.ViewportMode viewportMode);
+    method @com.mapbox.maps.MapboxExperimental public void startPerformanceStatisticsCollection(com.mapbox.maps.PerformanceStatisticsOptions options, com.mapbox.maps.PerformanceStatisticsCallback callback);
+    method @com.mapbox.maps.MapboxExperimental public void stopPerformanceStatisticsCollection();
     method public com.mapbox.common.Cancelable subscribeCameraChanged(com.mapbox.maps.CameraChangedCallback cameraChangedCallback);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.common.Cancelable subscribeGenericEvent(String eventName, com.mapbox.maps.GenericEventCallback genericEventCallback);
     method public com.mapbox.common.Cancelable subscribeMapIdle(com.mapbox.maps.MapIdleCallback mapIdleCallback);
@@ -407,7 +409,9 @@ package com.mapbox.maps {
   }
 
   public final class Style extends com.mapbox.maps.MapboxStyleManager {
+    method @MainThread public com.mapbox.bindgen.Expected<java.lang.String,error.NonExistentClass> getStyleImportConfigProperties(String importId);
     method public boolean isValid();
+    method @MainThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleImportConfigProperties(String importId, error.NonExistentClass configs);
     property @MainThread public com.mapbox.maps.CameraOptions styleDefaultCamera;
     property @MainThread public String styleJSON;
     property @MainThread public java.util.List<com.mapbox.maps.StyleObjectInfo> styleLayers;
