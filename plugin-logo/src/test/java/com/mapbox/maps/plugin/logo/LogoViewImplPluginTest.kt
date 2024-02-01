@@ -2,18 +2,13 @@ package com.mapbox.maps.plugin.logo
 
 import android.view.Gravity
 import android.widget.FrameLayout
-import com.mapbox.common.BaseMapboxInitializer
 import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
-import io.mockk.Runs
 import io.mockk.every
-import io.mockk.just
 import io.mockk.mockk
-import io.mockk.mockkObject
 import io.mockk.verify
 import org.junit.Assert.assertEquals
 import org.junit.Before
-import org.junit.BeforeClass
 import org.junit.Test
 
 class LogoViewImplPluginTest {
@@ -97,14 +92,5 @@ class LogoViewImplPluginTest {
       position = Gravity.BOTTOM
     }
     verify { logoView.logoGravity = Gravity.BOTTOM }
-  }
-
-  companion object {
-    @JvmStatic
-    @BeforeClass
-    fun before() {
-      mockkObject(BaseMapboxInitializer)
-      every { BaseMapboxInitializer.init<Any>(any()) } just Runs
-    }
   }
 }

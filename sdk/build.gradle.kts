@@ -48,7 +48,6 @@ android {
   testOptions {
     unitTests.apply {
       isIncludeAndroidResources = true
-      isReturnDefaultValues = true
     }
     animationsDisabled = true
     if (!project.hasProperty("android.injected.invoked.from.ide")) {

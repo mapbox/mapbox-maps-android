@@ -30,7 +30,7 @@ package com.mapbox.maps {
     ctor public MapboxCameraAnimationException(String? exceptionText);
   }
 
-  public final class MapboxConcurrentGeometryModificationException extends java.util.ConcurrentModificationException {
+  public final class MapboxConcurrentGeometryModificationException {
     ctor public MapboxConcurrentGeometryModificationException(String exceptionText, String sourceId);
   }
 
@@ -695,17 +695,17 @@ package com.mapbox.maps.plugin {
   }
 
   public final class LocationPuck3D extends com.mapbox.maps.plugin.LocationPuck {
-    ctor public LocationPuck3D(String modelUri, java.util.List<java.lang.Float> position = listOf(0.0, 0.0), float modelOpacity = 1f, java.util.List<java.lang.Float> modelScale = listOf(1.0, 1.0, 1.0), String? modelScaleExpression = null, java.util.List<java.lang.Float> modelTranslation = listOf(0.0, 0.0, 0.0), java.util.List<java.lang.Float> modelRotation = listOf(0.0, 0.0, 90.0), @com.mapbox.maps.MapboxExperimental boolean modelCastShadows = true, @com.mapbox.maps.MapboxExperimental boolean modelReceiveShadows = true, @com.mapbox.maps.MapboxExperimental com.mapbox.maps.plugin.ModelScaleMode modelScaleMode = com.mapbox.maps.plugin.ModelScaleMode.VIEWPORT, float modelEmissiveStrength = 1f, String? modelEmissiveStrengthExpression = null);
-    ctor public LocationPuck3D(String modelUri, java.util.List<java.lang.Float> position = listOf(0.0, 0.0), float modelOpacity = 1f, java.util.List<java.lang.Float> modelScale = listOf(1.0, 1.0, 1.0), String? modelScaleExpression = null, java.util.List<java.lang.Float> modelTranslation = listOf(0.0, 0.0, 0.0), java.util.List<java.lang.Float> modelRotation = listOf(0.0, 0.0, 90.0), @com.mapbox.maps.MapboxExperimental boolean modelCastShadows = true, @com.mapbox.maps.MapboxExperimental boolean modelReceiveShadows = true, @com.mapbox.maps.MapboxExperimental com.mapbox.maps.plugin.ModelScaleMode modelScaleMode = com.mapbox.maps.plugin.ModelScaleMode.VIEWPORT, float modelEmissiveStrength = 1f);
-    ctor public LocationPuck3D(String modelUri, java.util.List<java.lang.Float> position = listOf(0.0, 0.0), float modelOpacity = 1f, java.util.List<java.lang.Float> modelScale = listOf(1.0, 1.0, 1.0), String? modelScaleExpression = null, java.util.List<java.lang.Float> modelTranslation = listOf(0.0, 0.0, 0.0), java.util.List<java.lang.Float> modelRotation = listOf(0.0, 0.0, 90.0), @com.mapbox.maps.MapboxExperimental boolean modelCastShadows = true, @com.mapbox.maps.MapboxExperimental boolean modelReceiveShadows = true, @com.mapbox.maps.MapboxExperimental com.mapbox.maps.plugin.ModelScaleMode modelScaleMode = com.mapbox.maps.plugin.ModelScaleMode.VIEWPORT);
-    ctor public LocationPuck3D(String modelUri, java.util.List<java.lang.Float> position = listOf(0.0, 0.0), float modelOpacity = 1f, java.util.List<java.lang.Float> modelScale = listOf(1.0, 1.0, 1.0), String? modelScaleExpression = null, java.util.List<java.lang.Float> modelTranslation = listOf(0.0, 0.0, 0.0), java.util.List<java.lang.Float> modelRotation = listOf(0.0, 0.0, 90.0), @com.mapbox.maps.MapboxExperimental boolean modelCastShadows = true, @com.mapbox.maps.MapboxExperimental boolean modelReceiveShadows = true);
-    ctor public LocationPuck3D(String modelUri, java.util.List<java.lang.Float> position = listOf(0.0, 0.0), float modelOpacity = 1f, java.util.List<java.lang.Float> modelScale = listOf(1.0, 1.0, 1.0), String? modelScaleExpression = null, java.util.List<java.lang.Float> modelTranslation = listOf(0.0, 0.0, 0.0), java.util.List<java.lang.Float> modelRotation = listOf(0.0, 0.0, 90.0), @com.mapbox.maps.MapboxExperimental boolean modelCastShadows = true);
-    ctor public LocationPuck3D(String modelUri, java.util.List<java.lang.Float> position = listOf(0.0, 0.0), float modelOpacity = 1f, java.util.List<java.lang.Float> modelScale = listOf(1.0, 1.0, 1.0), String? modelScaleExpression = null, java.util.List<java.lang.Float> modelTranslation = listOf(0.0, 0.0, 0.0), java.util.List<java.lang.Float> modelRotation = listOf(0.0, 0.0, 90.0));
-    ctor public LocationPuck3D(String modelUri, java.util.List<java.lang.Float> position = listOf(0.0, 0.0), float modelOpacity = 1f, java.util.List<java.lang.Float> modelScale = listOf(1.0, 1.0, 1.0), String? modelScaleExpression = null, java.util.List<java.lang.Float> modelTranslation = listOf(0.0, 0.0, 0.0));
-    ctor public LocationPuck3D(String modelUri, java.util.List<java.lang.Float> position = listOf(0.0, 0.0), float modelOpacity = 1f, java.util.List<java.lang.Float> modelScale = listOf(1.0, 1.0, 1.0), String? modelScaleExpression = null);
-    ctor public LocationPuck3D(String modelUri, java.util.List<java.lang.Float> position = listOf(0.0, 0.0), float modelOpacity = 1f, java.util.List<java.lang.Float> modelScale = listOf(1.0, 1.0, 1.0));
-    ctor public LocationPuck3D(String modelUri, java.util.List<java.lang.Float> position = listOf(0.0, 0.0), float modelOpacity = 1f);
-    ctor public LocationPuck3D(String modelUri, java.util.List<java.lang.Float> position = listOf(0.0, 0.0));
+    ctor public LocationPuck3D(String modelUri, java.util.List<java.lang.Float> position = <anonymous class>(0.0, 0.0), float modelOpacity = 1f, java.util.List<java.lang.Float> modelScale = <anonymous class>(1.0, 1.0, 1.0), String? modelScaleExpression = null, java.util.List<java.lang.Float> modelTranslation = <anonymous class>(0.0, 0.0, 0.0), java.util.List<java.lang.Float> modelRotation = <anonymous class>(0.0, 0.0, 90.0), @com.mapbox.maps.MapboxExperimental boolean modelCastShadows = true, @com.mapbox.maps.MapboxExperimental boolean modelReceiveShadows = true, @com.mapbox.maps.MapboxExperimental com.mapbox.maps.plugin.ModelScaleMode modelScaleMode = com.mapbox.maps.plugin.ModelScaleMode.VIEWPORT, float modelEmissiveStrength = 1f, String? modelEmissiveStrengthExpression = null);
+    ctor public LocationPuck3D(String modelUri, java.util.List<java.lang.Float> position = <anonymous class>(0.0, 0.0), float modelOpacity = 1f, java.util.List<java.lang.Float> modelScale = <anonymous class>(1.0, 1.0, 1.0), String? modelScaleExpression = null, java.util.List<java.lang.Float> modelTranslation = <anonymous class>(0.0, 0.0, 0.0), java.util.List<java.lang.Float> modelRotation = <anonymous class>(0.0, 0.0, 90.0), @com.mapbox.maps.MapboxExperimental boolean modelCastShadows = true, @com.mapbox.maps.MapboxExperimental boolean modelReceiveShadows = true, @com.mapbox.maps.MapboxExperimental com.mapbox.maps.plugin.ModelScaleMode modelScaleMode = com.mapbox.maps.plugin.ModelScaleMode.VIEWPORT, float modelEmissiveStrength = 1f);
+    ctor public LocationPuck3D(String modelUri, java.util.List<java.lang.Float> position = <anonymous class>(0.0, 0.0), float modelOpacity = 1f, java.util.List<java.lang.Float> modelScale = <anonymous class>(1.0, 1.0, 1.0), String? modelScaleExpression = null, java.util.List<java.lang.Float> modelTranslation = <anonymous class>(0.0, 0.0, 0.0), java.util.List<java.lang.Float> modelRotation = <anonymous class>(0.0, 0.0, 90.0), @com.mapbox.maps.MapboxExperimental boolean modelCastShadows = true, @com.mapbox.maps.MapboxExperimental boolean modelReceiveShadows = true, @com.mapbox.maps.MapboxExperimental com.mapbox.maps.plugin.ModelScaleMode modelScaleMode = com.mapbox.maps.plugin.ModelScaleMode.VIEWPORT);
+    ctor public LocationPuck3D(String modelUri, java.util.List<java.lang.Float> position = <anonymous class>(0.0, 0.0), float modelOpacity = 1f, java.util.List<java.lang.Float> modelScale = <anonymous class>(1.0, 1.0, 1.0), String? modelScaleExpression = null, java.util.List<java.lang.Float> modelTranslation = <anonymous class>(0.0, 0.0, 0.0), java.util.List<java.lang.Float> modelRotation = <anonymous class>(0.0, 0.0, 90.0), @com.mapbox.maps.MapboxExperimental boolean modelCastShadows = true, @com.mapbox.maps.MapboxExperimental boolean modelReceiveShadows = true);
+    ctor public LocationPuck3D(String modelUri, java.util.List<java.lang.Float> position = <anonymous class>(0.0, 0.0), float modelOpacity = 1f, java.util.List<java.lang.Float> modelScale = <anonymous class>(1.0, 1.0, 1.0), String? modelScaleExpression = null, java.util.List<java.lang.Float> modelTranslation = <anonymous class>(0.0, 0.0, 0.0), java.util.List<java.lang.Float> modelRotation = <anonymous class>(0.0, 0.0, 90.0), @com.mapbox.maps.MapboxExperimental boolean modelCastShadows = true);
+    ctor public LocationPuck3D(String modelUri, java.util.List<java.lang.Float> position = <anonymous class>(0.0, 0.0), float modelOpacity = 1f, java.util.List<java.lang.Float> modelScale = <anonymous class>(1.0, 1.0, 1.0), String? modelScaleExpression = null, java.util.List<java.lang.Float> modelTranslation = <anonymous class>(0.0, 0.0, 0.0), java.util.List<java.lang.Float> modelRotation = <anonymous class>(0.0, 0.0, 90.0));
+    ctor public LocationPuck3D(String modelUri, java.util.List<java.lang.Float> position = <anonymous class>(0.0, 0.0), float modelOpacity = 1f, java.util.List<java.lang.Float> modelScale = <anonymous class>(1.0, 1.0, 1.0), String? modelScaleExpression = null, java.util.List<java.lang.Float> modelTranslation = <anonymous class>(0.0, 0.0, 0.0));
+    ctor public LocationPuck3D(String modelUri, java.util.List<java.lang.Float> position = <anonymous class>(0.0, 0.0), float modelOpacity = 1f, java.util.List<java.lang.Float> modelScale = <anonymous class>(1.0, 1.0, 1.0), String? modelScaleExpression = null);
+    ctor public LocationPuck3D(String modelUri, java.util.List<java.lang.Float> position = <anonymous class>(0.0, 0.0), float modelOpacity = 1f, java.util.List<java.lang.Float> modelScale = <anonymous class>(1.0, 1.0, 1.0));
+    ctor public LocationPuck3D(String modelUri, java.util.List<java.lang.Float> position = <anonymous class>(0.0, 0.0), float modelOpacity = 1f);
+    ctor public LocationPuck3D(String modelUri, java.util.List<java.lang.Float> position = <anonymous class>(0.0, 0.0));
     ctor public LocationPuck3D(String modelUri);
     method public String component1();
     method public com.mapbox.maps.plugin.ModelScaleMode component10();
@@ -867,7 +867,7 @@ package com.mapbox.maps.plugin.animation {
     method public void addCameraPitchChangeListener(com.mapbox.maps.plugin.animation.CameraAnimatorChangeListener<java.lang.Double> listener);
     method public void addCameraZoomChangeListener(com.mapbox.maps.plugin.animation.CameraAnimatorChangeListener<java.lang.Double> listener);
     method public double calculateScaleBy(double amount, double currentZoom);
-    method public void cancelAllAnimators(java.util.List<java.lang.String> exceptOwnerList = emptyList());
+    method public void cancelAllAnimators(java.util.List<java.lang.String> exceptOwnerList = <anonymous class>());
     method public android.animation.ValueAnimator createAnchorAnimator(com.mapbox.maps.plugin.animation.CameraAnimatorOptions<com.mapbox.maps.ScreenCoordinate> options, kotlin.jvm.functions.Function1<? super android.animation.ValueAnimator,kotlin.Unit>? block = null);
     method public android.animation.ValueAnimator createBearingAnimator(com.mapbox.maps.plugin.animation.CameraAnimatorOptions<java.lang.Double> options, boolean useShortestPath = true, kotlin.jvm.functions.Function1<? super android.animation.ValueAnimator,kotlin.Unit>? block = null);
     method @Deprecated public default android.animation.ValueAnimator createCenterAnimator(com.mapbox.maps.plugin.animation.CameraAnimatorOptions<com.mapbox.geojson.Point> options, kotlin.jvm.functions.Function1<? super android.animation.ValueAnimator,kotlin.Unit>? block = null);
@@ -928,7 +928,7 @@ package com.mapbox.maps.plugin.animation {
   }
 
   public static final class CameraAnimatorOptions.Companion {
-    method public inline <T> com.mapbox.maps.plugin.animation.CameraAnimatorOptions<T> cameraAnimatorOptions(T![]? targets, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Builder<T>,kotlin.Unit> block = {});
+    method public inline <T> error.NonExistentClass! cameraAnimatorOptions(T![]? targets, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Builder<T>,kotlin.Unit> block = {});
   }
 
   public enum CameraAnimatorType {
@@ -1107,8 +1107,8 @@ package com.mapbox.maps.plugin.annotation {
   }
 
   public final class ClusterOptions {
-    ctor public ClusterOptions(boolean cluster = true, long clusterRadius = 50, com.mapbox.bindgen.Value? circleRadiusExpression = null, double circleRadius = 18.0, com.mapbox.bindgen.Value? textColorExpression = null, int textColor = -1, com.mapbox.bindgen.Value? textSizeExpression = null, double textSize = 12.0, com.mapbox.bindgen.Value? textField = null, long clusterMaxZoom = 14, java.util.List<kotlin.Pair<java.lang.Integer,java.lang.Integer>> colorLevels = listOf(<init>(0, Color.BLUE)), java.util.HashMap<java.lang.String,java.lang.Object>? clusterProperties = null);
-    ctor public ClusterOptions(boolean cluster = true, long clusterRadius = 50, com.mapbox.bindgen.Value? circleRadiusExpression = null, double circleRadius = 18.0, com.mapbox.bindgen.Value? textColorExpression = null, int textColor = -1, com.mapbox.bindgen.Value? textSizeExpression = null, double textSize = 12.0, com.mapbox.bindgen.Value? textField = null, long clusterMaxZoom = 14, java.util.List<kotlin.Pair<java.lang.Integer,java.lang.Integer>> colorLevels = listOf(<init>(0, Color.BLUE)));
+    ctor public ClusterOptions(boolean cluster = true, long clusterRadius = 50, com.mapbox.bindgen.Value? circleRadiusExpression = null, double circleRadius = 18.0, com.mapbox.bindgen.Value? textColorExpression = null, int textColor = -1, com.mapbox.bindgen.Value? textSizeExpression = null, double textSize = 12.0, com.mapbox.bindgen.Value? textField = null, long clusterMaxZoom = 14, java.util.List<kotlin.Pair<java.lang.Integer,java.lang.Integer>> colorLevels = <anonymous class>(<init>(0, Color.BLUE)), java.util.HashMap<java.lang.String,java.lang.Object>? clusterProperties = null);
+    ctor public ClusterOptions(boolean cluster = true, long clusterRadius = 50, com.mapbox.bindgen.Value? circleRadiusExpression = null, double circleRadius = 18.0, com.mapbox.bindgen.Value? textColorExpression = null, int textColor = -1, com.mapbox.bindgen.Value? textSizeExpression = null, double textSize = 12.0, com.mapbox.bindgen.Value? textField = null, long clusterMaxZoom = 14, java.util.List<kotlin.Pair<java.lang.Integer,java.lang.Integer>> colorLevels = <anonymous class>(<init>(0, Color.BLUE)));
     ctor public ClusterOptions(boolean cluster = true, long clusterRadius = 50, com.mapbox.bindgen.Value? circleRadiusExpression = null, double circleRadius = 18.0, com.mapbox.bindgen.Value? textColorExpression = null, int textColor = -1, com.mapbox.bindgen.Value? textSizeExpression = null, double textSize = 12.0, com.mapbox.bindgen.Value? textField = null, long clusterMaxZoom = 14);
     ctor public ClusterOptions(boolean cluster = true, long clusterRadius = 50, com.mapbox.bindgen.Value? circleRadiusExpression = null, double circleRadius = 18.0, com.mapbox.bindgen.Value? textColorExpression = null, int textColor = -1, com.mapbox.bindgen.Value? textSizeExpression = null, double textSize = 12.0, com.mapbox.bindgen.Value? textField = null);
     ctor public ClusterOptions(boolean cluster = true, long clusterRadius = 50, com.mapbox.bindgen.Value? circleRadiusExpression = null, double circleRadius = 18.0, com.mapbox.bindgen.Value? textColorExpression = null, int textColor = -1, com.mapbox.bindgen.Value? textSizeExpression = null, double textSize = 12.0);
@@ -1267,6 +1267,7 @@ package com.mapbox.maps.plugin.attribution.generated {
     method public float getMarginTop();
     method public int getPosition();
     method public com.mapbox.maps.plugin.attribution.generated.AttributionSettings.Builder toBuilder();
+    method public error.NonExistentClass toString();
     property public final boolean clickable;
     property public final boolean enabled;
     property public final int iconColor;
@@ -1426,6 +1427,7 @@ package com.mapbox.maps.plugin.compass.generated {
     method public float getRotation();
     method public boolean getVisibility();
     method public com.mapbox.maps.plugin.compass.generated.CompassSettings.Builder toBuilder();
+    method public error.NonExistentClass toString();
     property public final boolean clickable;
     property public final boolean enabled;
     property public final boolean fadeWhenFacingNorth;
@@ -1851,6 +1853,7 @@ package com.mapbox.maps.plugin.gestures.generated {
     method public boolean getSimultaneousRotateAndPinchToZoomEnabled();
     method public float getZoomAnimationAmount();
     method public com.mapbox.maps.plugin.gestures.generated.GesturesSettings.Builder toBuilder();
+    method public error.NonExistentClass toString();
     property public final boolean doubleTapToZoomInEnabled;
     property public final boolean doubleTouchToZoomOutEnabled;
     property public final com.mapbox.maps.ScreenCoordinate? focalPoint;
@@ -2120,6 +2123,7 @@ package com.mapbox.maps.plugin.locationcomponent.generated {
     method public float getPulsingMaxRadius();
     method public boolean getShowAccuracyRing();
     method public com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings.Builder toBuilder();
+    method public error.NonExistentClass toString();
     property public final int accuracyRingBorderColor;
     property public final int accuracyRingColor;
     property public final boolean enabled;
@@ -2294,6 +2298,7 @@ package com.mapbox.maps.plugin.logo.generated {
     method public float getMarginTop();
     method public int getPosition();
     method public com.mapbox.maps.plugin.logo.generated.LogoSettings.Builder toBuilder();
+    method public error.NonExistentClass toString();
     property public final boolean enabled;
     property public final float marginBottom;
     property public final float marginLeft;
@@ -2460,6 +2465,7 @@ package com.mapbox.maps.plugin.scalebar.generated {
     method public boolean getUseContinuousRendering();
     method public boolean isMetricUnits();
     method public com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings.Builder toBuilder();
+    method public error.NonExistentClass toString();
     property public final float borderWidth;
     property public final boolean enabled;
     property public final float height;

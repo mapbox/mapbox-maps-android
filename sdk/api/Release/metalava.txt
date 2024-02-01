@@ -409,7 +409,9 @@ package com.mapbox.maps {
   }
 
   public final class Style extends com.mapbox.maps.MapboxStyleManager {
+    method @MainThread public com.mapbox.bindgen.Expected<java.lang.String,error.NonExistentClass> getStyleImportConfigProperties(String importId);
     method public boolean isValid();
+    method @MainThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleImportConfigProperties(String importId, error.NonExistentClass configs);
     property @MainThread public com.mapbox.maps.CameraOptions styleDefaultCamera;
     property @MainThread public String styleJSON;
     property @MainThread public java.util.List<com.mapbox.maps.StyleObjectInfo> styleLayers;
