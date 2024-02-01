@@ -3,6 +3,8 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
+
+# 11.2.0-beta.1 February 01, 2024
 ## Features ✨ and improvements 🏁
 * Introduce better way of SDK initialization to avoid `java.lang.UnsatisfiedLinkError` exception on process startup. If the native library is still not found when actual Mapbox API is called, meaningful `MapboxInitializerException` is thrown and could be caught and processed on user's side.
 * Introduce `MapboxMap.getCenterAltitudeMode` API.
@@ -55,6 +57,7 @@ every { BaseMapboxInitializer.init<Any>(any()) } just Runs
 unmockkObject(BaseMapboxInitializer)
 ```
 Alternative solution is to apply [`unitTests.returnDefaultValues`](https://developer.android.com/training/testing/local-tests#error).
+
 
 # 11.1.0 January 17, 2024
 ## Features ✨ and improvements 🏁
