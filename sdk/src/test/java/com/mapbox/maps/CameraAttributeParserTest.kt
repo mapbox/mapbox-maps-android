@@ -1,15 +1,10 @@
 package com.mapbox.maps
 
 import android.content.res.TypedArray
-import com.mapbox.common.BaseMapboxInitializer
-import io.mockk.Runs
 import io.mockk.every
-import io.mockk.just
 import io.mockk.mockk
-import io.mockk.mockkObject
 import org.junit.Assert.assertEquals
 import org.junit.Before
-import org.junit.BeforeClass
 import org.junit.Test
 
 class CameraAttributeParserTest {
@@ -56,14 +51,5 @@ class CameraAttributeParserTest {
       EdgeInsets(0.0, 0.0, 0.0, 5.0),
       cameraOptions?.padding,
     )
-  }
-
-  companion object {
-    @JvmStatic
-    @BeforeClass
-    fun before() {
-      mockkObject(BaseMapboxInitializer)
-      every { BaseMapboxInitializer.init<Any>(any()) } just Runs
-    }
   }
 }

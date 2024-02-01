@@ -36,7 +36,7 @@ japicmp = "0.4.1"
 
 mapboxBase = "0.8.0"
 mapboxGlNative = "11.2.0-beta.1"
-mapboxCommon = "24.2.0-beta.1"
+mapboxCommon = "24.2.0-SNAPSHOT.0201T1130Z.d0232fe"
 mapboxGestures = "0.8.0"
 mapboxJavaServices = "5.4.1"
 
