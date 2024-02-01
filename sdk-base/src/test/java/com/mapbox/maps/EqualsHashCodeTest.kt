@@ -1,5 +1,6 @@
 package com.mapbox.maps
 
+import com.mapbox.common.BaseMapboxInitializer
 import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOptions
@@ -15,8 +16,13 @@ import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateBearing
 import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions
 import com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions
 import com.mapbox.maps.plugin.viewport.data.ViewportOptions
+import io.mockk.Runs
+import io.mockk.every
+import io.mockk.just
+import io.mockk.mockkObject
 import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning
+import org.junit.BeforeClass
 import org.junit.Test
 
 class EqualsHashCodeTest {
@@ -135,5 +141,14 @@ class EqualsHashCodeTest {
     EqualsVerifier.forClass(ScaleBarSettings::class.java)
       .usingGetClass()
       .verify()
+  }
+
+  companion object {
+    @JvmStatic
+    @BeforeClass
+    fun before() {
+      mockkObject(BaseMapboxInitializer)
+      every { BaseMapboxInitializer.init<Any>(any()) } just Runs
+    }
   }
 }

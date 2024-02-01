@@ -3,6 +3,7 @@ package com.mapbox.maps.extension.androidauto
 import androidx.car.app.AppManager
 import androidx.car.app.CarContext
 import androidx.car.app.SurfaceCallback
+import com.mapbox.common.BaseMapboxInitializer
 import com.mapbox.maps.*
 import io.mockk.Runs
 import io.mockk.every
@@ -43,6 +44,8 @@ class MapboxCarMapTest {
     every { logI(any(), any()) } just Runs
     mockkObject(MapSurfaceProvider)
     every { MapSurfaceProvider.create(any(), any(), any()) } returns testMapSurface
+    mockkObject(BaseMapboxInitializer)
+    every { BaseMapboxInitializer.init<Any>(any()) } just Runs
   }
 
   @After

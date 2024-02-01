@@ -10,6 +10,7 @@ import android.util.AttributeSet
 import android.view.Gravity
 import android.widget.FrameLayout
 import androidx.appcompat.content.res.AppCompatResources
+import com.mapbox.common.BaseMapboxInitializer
 import com.mapbox.geojson.Point
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.ImageHolder
@@ -22,6 +23,7 @@ import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import io.mockk.*
 import org.junit.Assert.*
 import org.junit.Before
+import org.junit.BeforeClass
 import org.junit.Test
 
 class CompassViewPluginTest {
@@ -427,5 +429,14 @@ class CompassViewPluginTest {
     every { compassView.compassRotation } returns -40.0f
     compassPlugin.enabled = true
     verify { compassView.isCompassVisible = true }
+  }
+
+  companion object {
+    @JvmStatic
+    @BeforeClass
+    fun before() {
+      mockkObject(BaseMapboxInitializer)
+      every { BaseMapboxInitializer.init<Any>(any()) } just Runs
+    }
   }
 }

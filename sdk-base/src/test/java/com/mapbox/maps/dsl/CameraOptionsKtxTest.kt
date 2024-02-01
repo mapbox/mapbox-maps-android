@@ -1,10 +1,16 @@
 package com.mapbox.maps.dsl
 
+import com.mapbox.common.BaseMapboxInitializer
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.CameraState
 import com.mapbox.maps.EdgeInsets
+import io.mockk.Runs
+import io.mockk.every
+import io.mockk.just
+import io.mockk.mockkObject
 import org.junit.Assert
+import org.junit.BeforeClass
 import org.junit.Test
 
 class CameraOptionsKtxTest {
@@ -81,5 +87,14 @@ class CameraOptionsKtxTest {
     }
 
     Assert.assertEquals(expected, result)
+  }
+
+  companion object {
+    @JvmStatic
+    @BeforeClass
+    fun before() {
+      mockkObject(BaseMapboxInitializer)
+      every { BaseMapboxInitializer.init<Any>(any()) } just Runs
+    }
   }
 }

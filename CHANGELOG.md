@@ -4,21 +4,57 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 ## Features ✨ and improvements 🏁
+* Introduce better way of SDK initialization to avoid `java.lang.UnsatisfiedLinkError` exception on process startup. If the native library is still not found when actual Mapbox API is called, meaningful `MapboxInitializerException` is thrown and could be caught and processed on user's side.
 * Introduce `MapboxMap.getCenterAltitudeMode` API.
 * Add `useShortestPath` option to `CameraAnimationPlugin.createCenterAnimator`, when enabled, shortest path will be applied when the start and end camera  center is across the antimeridian, for example from -170 to 170 longitude. Defaults to true.
 * Introduce `SymbolLayer.iconColorSaturation` API.
 * Introduce experimental `RasterLayer.rasterElevation` API.
 * Introduce experimental `MapboxMap.startPerformanceStatisticsCollection` / `MapboxMap.stopPerformanceStatisticsCollection` APIs allowing to start / stop collecting map rendering performance statistics.
 * Introduce `GeoJsonSource.tileCacheBudget`, `RasterSource.tileCacheBudget`, `RasterDemSource.tileCacheBudget`, `RasterArraySource.tileCacheBudget`, `VectorSource.tileCacheBudget`, `CustomGeometrySource.tileCacheBudget`, `CustomRasterSource.tileCacheBudget`.
+* Skip unneeded layers properties re-evaluation on zoom change.
+* Add the possibility to use constant expressions for `model-emissive-strength` when rendering 3D model layers using 2D sources.
+* Introduce static `HttpServiceFactory.setMaxRequestsPerHost` API.
+* `TileStoreOptions.DiskQuota` is now an abort threshold for tilestore size. When we have more than this amount of bytes stored, new downloads will fail. `Tilestore` starts to evict tiles with closest expiration date 50Mb before this abort threshold is reached.
 
 ## Bug fixes 🐞
 * Retain previous `CenterAltitudeMode` after gestures are finished.
 * Avoid marking whole `LayerDsl` as experimental when only a part of the layer properties are experimental.
 * Fix R8 error due to missing class `com.tobrun.datacompat.annotation.Default`.
 * `EaseTo` and `MoveBy` camera animation and `DefaultViewportTransition` now will use shortest path when the start and end camera center is across the antimeridian, for example from -170 to 170 longitude.
+* Remove extra image padding from text shaping offset. 
+* Address crashes on certain Android devices by disabling the texture pool.
+* Fixed elevated rasters with coordinates not aligned to the longitude/latitude grid.
+* Fixed a bug that was causing absence of `MapLoaded` event and never ending background task processing.
+* Fixed a bug that heatmap layer wasn't updating visuals after feature state change.
+* Fixed a bug where scientific notation is not supported when parse JSON numbers to `Value`.
 
 ## Dependencies
 * Upgrade to [Kotlin Data compat v0.8.0](https://github.com/tobrun/kotlin-data-compat/releases/tag/v0.8.0).
+* Update gl-native to v11.2.0-beta.1 and common to v24.2.0-beta.1.
+
+## Known issues
+With the new way of Mapbox SDK initialization, your application __unit tests__ may start failing when interacting with Mapbox APIs, even if mocked.
+The error may look like:
+```
+Exception java.lang.NoClassDefFoundError: Could not initialize class com.mapbox.common.location.Location
+```
+or
+```
+Caused by: java.lang.RuntimeException: Method w in android.util.Log not mocked. See https://developer.android.com/r/studio-ui/build/not-mocked for details.
+  at android.util.Log.w(Log.java)
+  at com.mapbox.common.BaseMapboxInitializer$Companion.init(BaseMapboxInitializer.kt:116)
+  at com.mapbox.common.BaseMapboxInitializer.init(BaseMapboxInitializer.kt)
+  at com.mapbox.common.location.Location.<clinit>(Location.java:442)
+```
+
+To fix above errors, `BaseMapboxInitializer` should be properly mocked before accessing the failing Mapbox class. For example, when using Kotlin [MockK](https://mockk.io/) you should add the following code:
+```kotlin
+mockkObject(BaseMapboxInitializer)
+every { BaseMapboxInitializer.init<Any>(any()) } just Runs
+// your test code
+unmockkObject(BaseMapboxInitializer)
+```
+Alternative solution is to apply [`unitTests.returnDefaultValues`](https://developer.android.com/training/testing/local-tests#error).
 
 # 11.1.0 January 17, 2024
 ## Features ✨ and improvements 🏁

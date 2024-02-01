@@ -6,7 +6,6 @@ import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
-import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
@@ -43,7 +42,6 @@ class MapboxMapTest {
 
   @Before
   fun setUp() {
-    mockkStatic(Map::class)
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logI(any(), any()) } just Runs
     styleObserver = mockk(relaxUnitFun = true)
