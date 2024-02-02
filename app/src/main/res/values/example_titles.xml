@@ -73,6 +73,7 @@
     <string name="activity_fill">Add a Fill/Polygon Annotation</string>
     <string name="activity_circle">Add Circle Annotations</string>
     <string name="activity_symbol">Add Point Annotations</string>
+    <string name="activity_symbol_java">Add Point Annotations in Java</string>
     <string name="activity_animate_symbol">AnimatePointAnnotation</string>
     <string name="activity_symbol_cluster">Add Cluster Symbol Annotations</string>
     <string name="activity_line">Add Polylines Annotations</string>
