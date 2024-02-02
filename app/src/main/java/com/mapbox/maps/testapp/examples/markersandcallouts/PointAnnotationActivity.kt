@@ -221,6 +221,7 @@ class PointAnnotationActivity : AppCompatActivity() {
     binding.deleteAll.setOnClickListener {
       pointAnnotationManager?.let {
         annotationPlugin.removeAnnotationManager(it)
+        pointAnnotationManager = null
       }
     }
     binding.changeStyle.setOnClickListener {
