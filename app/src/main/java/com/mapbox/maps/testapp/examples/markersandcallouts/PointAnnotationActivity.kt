@@ -288,7 +288,7 @@ class PointAnnotationActivity : AppCompatActivity() {
         pointAnnotation?.let {
           easeSymbol(
             it,
-            Point.fromLngLat(AIRPORT_LATITUDE, AIRPORT_LONGITUDE)
+            Point.fromLngLat(AIRPORT_LONGITUDE, AIRPORT_LATITUDE)
           )
         }
         return true
