@@ -227,9 +227,11 @@ class PointAnnotationActivity : AppCompatActivity() {
       binding.mapView.mapboxMap.loadStyle(nextStyle)
     }
     binding.changeSlot.setOnClickListener {
-      val slot = nextSlot
-      showShortToast("Switching to $slot slot")
-      pointAnnotationManager?.slot = slot
+      pointAnnotationManager?.let {
+        val slot = nextSlot
+        showShortToast("Switching to $slot slot")
+        it.slot = slot
+      }
     }
   }
 
