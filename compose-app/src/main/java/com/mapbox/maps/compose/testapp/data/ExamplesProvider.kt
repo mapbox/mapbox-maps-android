@@ -3,6 +3,7 @@ package com.mapbox.maps.compose.testapp.data
 import android.content.Context
 import android.content.pm.PackageManager
 import android.content.res.Resources
+import android.os.Build
 import android.os.Bundle
 import androidx.annotation.StringRes
 import com.mapbox.maps.compose.testapp.ExampleOverviewActivity
@@ -33,10 +34,18 @@ public object ExamplesProvider {
 
   private fun loadExamplesFromManifest(context: Context): List<SpecificExample> {
     val exampleListFromManifest = ArrayList<SpecificExample>()
-    val appPackageInfo = context.packageManager.getPackageInfo(
-      context.packageName,
-      PackageManager.GET_ACTIVITIES or PackageManager.GET_META_DATA
-    )
+    val appPackageInfo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+      context.packageManager.getPackageInfo(
+        context.packageName,
+        PackageManager.PackageInfoFlags.of(PackageManager.GET_ACTIVITIES.toLong() or PackageManager.GET_META_DATA.toLong())
+      )
+    } else {
+      @Suppress("DEPRECATION")
+      context.packageManager.getPackageInfo(
+        context.packageName,
+        PackageManager.GET_ACTIVITIES or PackageManager.GET_META_DATA
+      )
+    }
     val packageName = context.applicationContext.packageName
     val metaDataKey = context.getString(com.mapbox.maps.compose.testapp.R.string.category)
     for (info in appPackageInfo.activities) {

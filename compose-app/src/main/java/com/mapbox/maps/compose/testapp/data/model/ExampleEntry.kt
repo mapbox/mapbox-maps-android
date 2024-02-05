@@ -1,7 +1,7 @@
 package com.mapbox.maps.compose.testapp.data.model
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 public sealed class ExampleEntry
 
@@ -18,7 +18,7 @@ public data class SpecificExample(
   val category: String
 ) : ExampleEntry(), Parcelable {
 
-  val simpleName: String
+  private val simpleName: String
     get() = buildSimpleName()
 
   private fun buildSimpleName(): String {

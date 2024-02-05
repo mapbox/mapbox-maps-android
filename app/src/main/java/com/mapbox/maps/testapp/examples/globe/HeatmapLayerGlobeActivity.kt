@@ -51,7 +51,7 @@ class HeatmapLayerGlobeActivity : AppCompatActivity() {
 
   private fun createEarthquakeSource(): GeoJsonSource {
     return geoJsonSource(EARTHQUAKE_SOURCE_ID) {
-      url(EARTHQUAKE_SOURCE_URL)
+      data(EARTHQUAKE_SOURCE_URL)
     }
   }
 

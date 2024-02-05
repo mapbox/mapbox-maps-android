@@ -33,7 +33,7 @@ class DrawGeoJsonLineActivity : AppCompatActivity() {
       (
         style(style = Style.STANDARD) {
           +geoJsonSource(GEOJSON_SOURCE_ID) {
-            url("asset://from_crema_to_council_crest.geojson")
+            data("asset://from_crema_to_council_crest.geojson")
           }
           +lineLayer("linelayer", GEOJSON_SOURCE_ID) {
             lineCap(LineCap.ROUND)
