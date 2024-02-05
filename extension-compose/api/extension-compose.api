@@ -77,6 +77,9 @@ public final class com/mapbox/maps/extension/compose/MapboxMapScope {
 	public static final field INSTANCE Lcom/mapbox/maps/extension/compose/MapboxMapScope;
 }
 
+public abstract interface annotation class com/mapbox/maps/extension/compose/MapboxMapScopeMarker : java/lang/annotation/Annotation {
+}
+
 public final class com/mapbox/maps/extension/compose/animation/viewport/MapViewportState {
 	public static final field $stable I
 	public static final field Companion Lcom/mapbox/maps/extension/compose/animation/viewport/MapViewportState$Companion;

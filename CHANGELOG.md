@@ -5,6 +5,9 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 # [compose] Introduce `DisposableMapEffect` API.
 
+## Bug fixes 🐞
+* [compose] Fixed a warning that using UI composable where Mapbox Map composable is expected.
+
 # 11.2.0-beta.1 February 01, 2024
 ## Features ✨ and improvements 🏁
 * Introduce better way of SDK initialization to avoid `java.lang.UnsatisfiedLinkError` exception on process startup. If the native library is still not found when actual Mapbox API is called, meaningful `MapboxInitializerException` is thrown and could be caught and processed on user's side.

@@ -11,7 +11,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxExperimental
-import com.mapbox.maps.extension.compose.MapboxMapComposable
 
 /**
  * Handle the lifecycle of [MapView] in compose.
@@ -27,7 +26,6 @@ import com.mapbox.maps.extension.compose.MapboxMapComposable
  */
 @Composable
 @JvmSynthetic
-@MapboxMapComposable
 @MapboxExperimental
 @SuppressLint("Lifecycle")
 internal fun MapViewLifecycle(mapView: MapView) {
