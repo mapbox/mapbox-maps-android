@@ -31,6 +31,13 @@ public final class com/mapbox/maps/extension/compose/DefaultSettingsProvider {
 	public final fun getDefaultOnLongClickListener ()Lcom/mapbox/maps/plugin/gestures/OnMapLongClickListener;
 }
 
+public final class com/mapbox/maps/extension/compose/DisposableMapEffectKt {
+	public static final fun DisposableMapEffect (Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;I)V
+	public static final fun DisposableMapEffect (Ljava/lang/Object;Ljava/lang/Object;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;I)V
+	public static final fun DisposableMapEffect (Ljava/lang/Object;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;I)V
+	public static final fun DisposableMapEffect ([Ljava/lang/Object;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;I)V
+}
+
 public final class com/mapbox/maps/extension/compose/MapEffectKt {
 	public static final fun MapEffect (Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;I)V
 	public static final fun MapEffect (Ljava/lang/Object;Ljava/lang/Object;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;I)V
