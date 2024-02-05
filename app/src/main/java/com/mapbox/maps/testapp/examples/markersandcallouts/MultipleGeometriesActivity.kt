@@ -42,7 +42,7 @@ class MultipleGeometriesActivity : AppCompatActivity() {
       // Load data from GeoJSON file in the assets folder
       loadedMapStyle.addSource(
         geoJsonSource(GEOJSON_SOURCE_ID) {
-          url(GEOJSON_SOURCE_URL)
+          data(GEOJSON_SOURCE_URL)
         }
       )
     } catch (exception: URISyntaxException) {

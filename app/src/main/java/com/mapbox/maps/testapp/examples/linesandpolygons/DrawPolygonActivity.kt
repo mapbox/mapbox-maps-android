@@ -32,7 +32,7 @@ class DrawPolygonActivity : AppCompatActivity() {
     binding.mapView.mapboxMap.loadStyle(
       style(style = Style.LIGHT) {
         +geoJsonSource(SOURCE_ID) {
-          url(SOURCE_URL)
+          data(SOURCE_URL)
         }
         +layerAtPosition(
           fillLayer(LAYER_ID, SOURCE_ID) {

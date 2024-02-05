@@ -119,6 +119,7 @@ import java.util.Locale;
 import kotlin.Pair;
 
 /** @noinspection UnusedAssignment*/
+@SuppressWarnings("unused")
 public class JavaInterfaceChecker {
   private void getClusterLeaves(MapboxMap mapboxMap, String sourceId, Feature cluster, QueryFeatureExtensionCallback callback) {
     mapboxMap.getGeoJsonClusterLeaves(sourceId, cluster, callback);
