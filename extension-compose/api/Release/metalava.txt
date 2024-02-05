@@ -23,6 +23,13 @@ package com.mapbox.maps.extension.compose {
     field public static final com.mapbox.maps.extension.compose.DefaultSettingsProvider INSTANCE;
   }
 
+  public final class DisposableMapEffectKt {
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void DisposableMapEffect(Object? key1, kotlin.jvm.functions.Function2<? super androidx.compose.runtime.DisposableEffectScope,? super com.mapbox.maps.MapView,? extends androidx.compose.runtime.DisposableEffectResult> block);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void DisposableMapEffect(Object? key1, Object? key2, kotlin.jvm.functions.Function2<? super androidx.compose.runtime.DisposableEffectScope,? super com.mapbox.maps.MapView,? extends androidx.compose.runtime.DisposableEffectResult> block);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void DisposableMapEffect(Object? key1, Object? key2, Object? key3, kotlin.jvm.functions.Function2<? super androidx.compose.runtime.DisposableEffectScope,? super com.mapbox.maps.MapView,? extends androidx.compose.runtime.DisposableEffectResult> block);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void DisposableMapEffect(Object![]? keys, kotlin.jvm.functions.Function2<? super androidx.compose.runtime.DisposableEffectScope,? super com.mapbox.maps.MapView,? extends androidx.compose.runtime.DisposableEffectResult> block);
+  }
+
   public final class MapEffectKt {
     method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void MapEffect(Object? key1, kotlin.jvm.functions.Function3<? super kotlinx.coroutines.CoroutineScope,? super com.mapbox.maps.MapView,? super kotlin.coroutines.Continuation<? super kotlin.Unit>,?> block);
     method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void MapEffect(Object? key1, Object? key2, kotlin.jvm.functions.Function3<? super kotlinx.coroutines.CoroutineScope,? super com.mapbox.maps.MapView,? super kotlin.coroutines.Continuation<? super kotlin.Unit>,?> block);

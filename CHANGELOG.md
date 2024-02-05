@@ -3,6 +3,7 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
+# [compose] Introduce `DisposableMapEffect` API.
 
 # 11.2.0-beta.1 February 01, 2024
 ## Features ✨ and improvements 🏁
