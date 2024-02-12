@@ -112,7 +112,11 @@ class AttributionDialogManagerImpl(
   }
 
   private fun showTelemetryDialog() {
-    val builder = AlertDialog.Builder(context)
+    val builder = AlertDialog.Builder(
+      // needed to avoid incompatibility between e.g. Material themes coming from the user
+      // and Appcompat theme used by our AlertDialog
+      ContextThemeWrapper(context, R.style.Theme_AppCompat_Dialog)
+    )
     builder.setTitle(R.string.mapbox_attributionTelemetryTitle)
     builder.setMessage(R.string.mapbox_attributionTelemetryMessage)
     builder.setPositiveButton(R.string.mapbox_attributionTelemetryPositive) { dialog, _ ->

@@ -2,7 +2,9 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# main
+# 11.2.0-rc.1
+## Bug fixes 🐞
+* Fix a crash occuring when clicking on the "Telemetry settings" option in the attribution dialog when not using the `AppCompat` theme.
 
 # 11.2.0-beta.1 February 01, 2024
 ## Features ✨ and improvements 🏁
