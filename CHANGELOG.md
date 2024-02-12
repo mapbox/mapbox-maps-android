@@ -3,7 +3,10 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
-# [compose] Introduce `DisposableMapEffect` API.
+
+# 11.2.0-rc.1
+## Features ✨ and improvements 🏁
+* [compose] Introduce `DisposableMapEffect` API.
 
 ## Bug fixes 🐞
 * [compose] Fixed a warning that using UI composable where Mapbox Map composable is expected.
