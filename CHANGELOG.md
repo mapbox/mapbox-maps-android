@@ -3,12 +3,11 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # 11.2.0-rc.1
-## Bug fixes 🐞
-* Fix a crash occuring when clicking on the "Telemetry settings" option in the attribution dialog when not using the `AppCompat` theme.
-# main
-# [compose] Introduce `DisposableMapEffect` API.
+## Features ✨ and improvements 🏁
+* [compose] Introduce `DisposableMapEffect` API.
 
 ## Bug fixes 🐞
+* Fix a crash occuring when clicking on the "Telemetry settings" option in the attribution dialog when not using the `AppCompat` theme.
 * [compose] Fixed a warning that using UI composable where Mapbox Map composable is expected.
 
 # 11.2.0-beta.1 February 01, 2024
