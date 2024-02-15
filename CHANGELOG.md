@@ -2,7 +2,8 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# 11.2.0-rc.1
+
+# 11.2.0-rc.1 February 15, 2024
 ## Features ✨ and improvements 🏁
 * [compose] Introduce `DisposableMapEffect` API.
 * Speedup preparing tiled sources for rendering.
@@ -18,6 +19,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v11.2.0-rc.1 and common to v24.2.0-rc.2.
+
 
 # 11.2.0-beta.1 February 01, 2024
 ## Features ✨ and improvements 🏁

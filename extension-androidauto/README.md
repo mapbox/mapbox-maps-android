@@ -33,7 +33,7 @@ allprojects {
 // In your build.gradle, add the extension with your other dependencies.
 dependencies {
   // Note that the Mapbox Android Auto Extension depends on the entire Mapbox Maps SDK, it will bring the whole Mapbox Maps SDK with the same version as transitive dependency.
-  implementation 'com.mapbox.extension:maps-androidauto:11.1.0'
+  implementation 'com.mapbox.extension:maps-androidauto:11.2.0-rc.1'
 }
 ```
 
