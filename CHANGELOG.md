@@ -7,10 +7,19 @@ Mapbox welcomes participation and contributions from everyone.
 # 11.2.0-rc.1
 ## Features ✨ and improvements 🏁
 * [compose] Introduce `DisposableMapEffect` API.
+* Speedup preparing tiled sources for rendering.
+* Uploading model resources to GPU in continuous map mode is now limited by fixed time per frame.
+* Modify `FillExtrusionLayer.fillExtrusionCutoffFadeRange` to scale down and remove buildings in a staggered fashion, instead of fading opacity.
 
 ## Bug fixes 🐞
-* [compose] Fixed a warning that using UI composable where Mapbox Map composable is expected.
-* Fix a crash occuring when clicking on the "Telemetry settings" option in the attribution dialog when not using the `AppCompat` theme.
+* [compose] Fix a warning that using UI composable where Mapbox Map composable is expected.
+* Fix a crash occurring when clicking on the "Telemetry settings" option in the attribution dialog when not using the `AppCompat` theme.
+* Fix `ModelLayer.modelCutoffFadeRange` calculation on low zoom levels.
+* Fix `RasterArray` rendering on Android.
+* Fix rare null pointer dereference crash.
+
+## Dependencies
+* Update gl-native to v11.2.0-rc.1 and common to v24.2.0-rc.2.
 
 # 11.2.0-beta.1 February 01, 2024
 ## Features ✨ and improvements 🏁
