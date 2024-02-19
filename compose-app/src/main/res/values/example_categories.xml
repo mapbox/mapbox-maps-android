@@ -20,4 +20,5 @@
     <string name="category_markers_and_callouts">Markers and callouts</string>
     <string name="category_data_visualization">Data Visualization</string>
     <string name="category_globe">Globe and atmosphere</string>
+    <string name="category_ornaments">Ornaments</string>
 </resources>

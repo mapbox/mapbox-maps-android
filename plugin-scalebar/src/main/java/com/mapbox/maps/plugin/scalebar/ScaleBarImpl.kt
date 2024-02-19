@@ -112,7 +112,7 @@ class ScaleBarImpl : ScaleBar, View {
       }
 
       field = value
-      (layoutParams as FrameLayout.LayoutParams).apply {
+      (layoutParams as? FrameLayout.LayoutParams)?.apply {
         gravity = value.position
         setMargins(
           value.marginLeft.toInt(),

@@ -26,6 +26,7 @@ internal class MapPluginRegistry(private val mapDelegateProvider: MapDelegatePro
               it.onStart()
             }
           }
+
           State.STOPPED -> plugins.values.forEach {
             if (it is LifecyclePlugin) {
               it.onStop()
@@ -34,6 +35,8 @@ internal class MapPluginRegistry(private val mapDelegateProvider: MapDelegatePro
         }
       }
     }
+
+  private var mapSize: Pair<Int, Int>? = null
 
   private val plugins = mutableMapOf<String, MapPlugin>()
   private val cameraPlugins = CopyOnWriteArraySet<MapCameraPlugin>()
@@ -80,6 +83,9 @@ internal class MapPluginRegistry(private val mapDelegateProvider: MapDelegatePro
 
         if (mapPlugin is MapSizePlugin) {
           mapSizePlugins.add(mapPlugin)
+          mapSize?.let {
+            mapPlugin.onSizeChanged(it.first, it.second)
+          }
         }
 
         if (mapPlugin is MapCameraPlugin) {
@@ -112,6 +118,21 @@ internal class MapPluginRegistry(private val mapDelegateProvider: MapDelegatePro
   @Suppress("UNCHECKED_CAST")
   fun <T> getPlugin(id: String): T? = plugins[id] as T
 
+  fun removePlugin(id: String) {
+    val plugin = plugins[id]
+    when (plugin) {
+      is MapCameraPlugin -> cameraPlugins.remove(plugin)
+      is GesturesPlugin -> gesturePlugins.remove(plugin)
+      is MapStyleObserverPlugin -> styleObserverPlugins.remove(plugin)
+      is MapSizePlugin -> mapSizePlugins.remove(plugin)
+      is MapboxLifecyclePlugin -> mapboxLifecyclePlugin = null
+      else -> Unit
+    }
+    plugin?.cleanup()
+    plugins.remove(id)
+    logI(TAG, "Removed plugin: $id from the Map.")
+  }
+
   fun onStart() {
     mapState = State.STARTED
   }
@@ -143,6 +164,7 @@ internal class MapPluginRegistry(private val mapDelegateProvider: MapDelegatePro
   }
 
   fun onSizeChanged(width: Int, height: Int) {
+    mapSize = width to height
     for (mapSizePlugin in mapSizePlugins) {
       mapSizePlugin.onSizeChanged(width, height)
     }
@@ -168,5 +190,9 @@ internal class MapPluginRegistry(private val mapDelegateProvider: MapDelegatePro
 
   fun onAttachedToWindow(mapView: MapView) {
     mapboxLifecyclePlugin?.registerLifecycleObserver(mapView, mapView)
+  }
+
+  private companion object {
+    private const val TAG = "MapPluginRegistry"
   }
 }

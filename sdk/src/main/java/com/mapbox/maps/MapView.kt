@@ -312,6 +312,16 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   ) = mapController.createPlugin(this, plugin)
 
   /**
+   * Remove the plugin instance that will be removed from the map.
+   *
+   * Removing the plugin from [MapView] will result in [MapPlugin.cleanup] being called and existing
+   * events subscription cancelled.
+   *
+   * @param id the id of the plugin to be removed
+   */
+  fun removePlugin(id: String) = mapController.removePlugin(id)
+
+  /**
    * Get the plugin instance.
    *
    * @param id plugin id

@@ -122,6 +122,7 @@ package com.mapbox.maps {
     method public void onStart();
     method public void onStop();
     method public void queueEvent(Runnable event, boolean needRender);
+    method public final void removePlugin(String id);
     method public void removeRendererSetupErrorListener(com.mapbox.maps.renderer.RendererSetupErrorListener rendererSetupErrorListener);
     method @com.mapbox.maps.MapboxExperimental public boolean removeWidget(com.mapbox.maps.renderer.widget.Widget widget);
     method public void setMaximumFps(@IntRange(from=1L, to=kotlin.jvm.internal.IntCompanionObject.MAX_VALUE.toLong()) int fps);

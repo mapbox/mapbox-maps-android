@@ -35,6 +35,7 @@ dependencies {
     implementation(platform(libs.compose.bom))
     implementation(libs.compose.ui)
     implementation(libs.compose.material)
+    implementation(libs.bundles.base.dependencies)
 
     implementation(libs.androidx.coreKtx)
     androidTestUtil(libs.androidx.orchestrator)

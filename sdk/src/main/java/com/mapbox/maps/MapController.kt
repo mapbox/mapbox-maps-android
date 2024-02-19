@@ -300,6 +300,8 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     plugin: Plugin
   ) = pluginRegistry.createPlugin(mapView, mapInitOptions, plugin)
 
+  fun removePlugin(id: String) = pluginRegistry.removePlugin(id)
+
   fun initializePlugins(
     options: MapInitOptions,
     mapView: MapView? = null,

@@ -9,4 +9,5 @@
     <string name="activity_view_annotation">View annotation</string>
     <string name="activity_map_viewport_animation">Map Viewport animation</string>
     <string name="activity_multiple_display">Multi display</string>
+    <string name="activity_ornaments_customisation">Ornament customisation</string>
 </resources>

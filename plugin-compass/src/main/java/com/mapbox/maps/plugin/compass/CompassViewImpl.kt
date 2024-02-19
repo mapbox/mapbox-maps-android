@@ -40,7 +40,7 @@ open class CompassViewImpl
     layoutParams = FrameLayout.LayoutParams(compassViewSize, compassViewSize)
 
     // click listener
-    setOnClickListener { presenter.onCompassClicked() }
+    setOnClickListener { if (::presenter.isInitialized) presenter.onCompassClicked() }
   }
 
   /**

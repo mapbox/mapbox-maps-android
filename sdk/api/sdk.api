@@ -124,6 +124,7 @@ public class com/mapbox/maps/MapView : android/widget/FrameLayout, com/mapbox/ma
 	public fun onStop ()V
 	public fun onTouchEvent (Landroid/view/MotionEvent;)Z
 	public fun queueEvent (Ljava/lang/Runnable;Z)V
+	public final fun removePlugin (Ljava/lang/String;)V
 	public fun removeRendererSetupErrorListener (Lcom/mapbox/maps/renderer/RendererSetupErrorListener;)V
 	public fun removeWidget (Lcom/mapbox/maps/renderer/widget/Widget;)Z
 	public fun setMaximumFps (I)V

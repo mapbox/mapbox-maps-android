@@ -25,10 +25,6 @@ import com.mapbox.maps.StyleLoadedCallback
 import com.mapbox.maps.extension.compose.DefaultSettingsProvider
 import com.mapbox.maps.extension.compose.MapEvents
 import com.mapbox.maps.extension.compose.animation.viewport.MapViewportState
-import com.mapbox.maps.plugin.attribution.attribution
-import com.mapbox.maps.plugin.attribution.generated.AttributionSettings
-import com.mapbox.maps.plugin.compass.compass
-import com.mapbox.maps.plugin.compass.generated.CompassSettings
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import com.mapbox.maps.plugin.gestures.OnMapClickListener
 import com.mapbox.maps.plugin.gestures.OnMapLongClickListener
@@ -36,10 +32,6 @@ import com.mapbox.maps.plugin.gestures.generated.GesturesSettings
 import com.mapbox.maps.plugin.gestures.gestures
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
 import com.mapbox.maps.plugin.locationcomponent.location
-import com.mapbox.maps.plugin.logo.generated.LogoSettings
-import com.mapbox.maps.plugin.logo.logo
-import com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings
-import com.mapbox.maps.plugin.scalebar.scalebar
 import com.mapbox.maps.plugin.viewport.ViewportStatusObserver
 import com.mapbox.maps.plugin.viewport.viewport
 
@@ -60,7 +52,7 @@ private class MapboxMapNode(
     val cameraState = controller.mapboxMap.cameraState
     mapViewportState.cameraState = cameraState
   }
-  private val viewportStatusObserver = ViewportStatusObserver { from, to, reason ->
+  private val viewportStatusObserver = ViewportStatusObserver { _, to, reason ->
     mapViewportState.mapViewportStatus = to
     mapViewportState.mapViewportStatusChangedReason = reason
   }
@@ -244,12 +236,8 @@ private class MapboxMapNode(
 @Composable
 internal fun MapboxMapComposeNode(
   mapInitOptionsFactory: (Context) -> MapInitOptions,
-  attributionSettings: AttributionSettings,
-  compassSettings: CompassSettings,
   gesturesSettings: GesturesSettings,
   locationComponentSettings: LocationComponentSettings,
-  logoSettings: LogoSettings,
-  scaleBarSettings: ScaleBarSettings,
   mapViewportState: MapViewportState,
   onMapClickListener: OnMapClickListener,
   onMapLongClickListener: OnMapLongClickListener,
@@ -275,23 +263,11 @@ internal fun MapboxMapComposeNode(
           """.trimIndent()
         )
       }
-      set(attributionSettings) {
-        this.controller.attribution.applySettings(it)
-      }
-      set(compassSettings) {
-        this.controller.compass.applySettings(it)
-      }
       set(gesturesSettings) {
         this.controller.gestures.applySettings(it)
       }
       set(locationComponentSettings) {
         this.controller.location.applySettings(it)
-      }
-      set(logoSettings) {
-        this.controller.logo.applySettings(it)
-      }
-      set(scaleBarSettings) {
-        this.controller.scalebar.applySettings(it)
       }
       update(onMapClickListener) { listener ->
         this.clickListener = listener
