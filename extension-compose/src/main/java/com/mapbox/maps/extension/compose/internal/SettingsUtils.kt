@@ -86,8 +86,13 @@ internal fun LocationComponentSettingsInterface.applySettings(locationComponentS
     pulsingEnabled = locationComponentSettings.pulsingEnabled
     pulsingColor = locationComponentSettings.pulsingColor
     pulsingMaxRadius = locationComponentSettings.pulsingMaxRadius
+    showAccuracyRing = locationComponentSettings.showAccuracyRing
+    accuracyRingColor = locationComponentSettings.accuracyRingColor
+    accuracyRingBorderColor = locationComponentSettings.accuracyRingBorderColor
     layerAbove = locationComponentSettings.layerAbove
     layerBelow = locationComponentSettings.layerBelow
+    puckBearingEnabled = locationComponentSettings.puckBearingEnabled
+    puckBearing = locationComponentSettings.puckBearing
     locationPuck = locationComponentSettings.locationPuck
   }
 }

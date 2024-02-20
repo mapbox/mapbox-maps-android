@@ -2,6 +2,17 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
+# main
+## Breaking changes ⚠️
+* [compose] Replace `MapboxMap.compassSettings`, `MapboxMap.scaleBarSettings`, `MapboxMap.logoSettings`, `MapboxMap.attributionSettings` with composable functions in dedicated scopes: `MapCompassScope.Compass()`, `MapScaleBarScope.ScaleBar()`, `MapLogoScope.Logo()`, `MapAttributionScope.Attribution()`.
+
+# 11.2.0
+## Features ✨ and improvements 🏁
+* [compose] Add default value for `MapViewportState.transitionToFollowPuckState.followPuckViewportStateOptions`.
+
+## Bug fixes 🐞
+* [compose] Fix losing some location component settings during wrapping.
+
 
 # 11.2.0-rc.1 February 15, 2024
 ## Features ✨ and improvements 🏁
