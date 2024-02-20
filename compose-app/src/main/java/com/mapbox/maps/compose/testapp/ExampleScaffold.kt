@@ -19,6 +19,7 @@ import androidx.compose.ui.platform.LocalContext
 @Composable
 public fun ExampleScaffold(
   modifier: Modifier = Modifier,
+  snackbarHost: @Composable (SnackbarHostState) -> Unit = { SnackbarHost(it) },
   floatingActionButton: @Composable () -> Unit = {},
   floatingActionButtonPosition: FabPosition = FabPosition.End,
   content: @Composable (PaddingValues) -> Unit
@@ -32,6 +33,7 @@ public fun ExampleScaffold(
   }
   Scaffold(
     modifier = modifier,
+    snackbarHost = snackbarHost,
     floatingActionButton = floatingActionButton,
     floatingActionButtonPosition = floatingActionButtonPosition,
     topBar = {

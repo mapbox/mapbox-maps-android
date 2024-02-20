@@ -247,7 +247,7 @@ public class MapViewportState(
    */
   @MapboxExperimental
   public fun transitionToFollowPuckState(
-    followPuckViewportStateOptions: FollowPuckViewportStateOptions,
+    followPuckViewportStateOptions: FollowPuckViewportStateOptions = FollowPuckViewportStateOptions.Builder().build(),
     defaultTransitionOptions: DefaultViewportTransitionOptions = DefaultViewportTransitionOptions.Builder()
       .build(),
     completionListener: CompletionListener? = null
