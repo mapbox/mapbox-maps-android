@@ -39,7 +39,6 @@ class MapboxMapTest {
 
   @Before
   fun setUp() {
-    mockkStatic(Map::class)
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logI(any(), any()) } just Runs
     every { Map.clearData(any(), any()) } just runs

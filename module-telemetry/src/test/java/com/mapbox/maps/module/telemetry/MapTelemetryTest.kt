@@ -76,8 +76,8 @@ class MapTelemetryTest {
     mockkStatic(EventsService::class)
     mockkStatic(TelemetryService::class)
     mockkStatic(TelemetryUtils::class)
-    every { TelemetryUtils.setEventsCollectionState(any(), any()) } returns Unit
     every { TelemetryUtils.getEventsCollectionState() } returns true
+    every { TelemetryUtils.setEventsCollectionState(any(), any()) } returns Unit
     every { TelemetryUtils.getClientServerEventsCollectionState(any()) } returns TelemetryCollectionState.ENABLED
 
     every { EventsService.getOrCreate(any()) } returns eventsService

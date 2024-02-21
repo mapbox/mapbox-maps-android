@@ -42,12 +42,16 @@ class MapViewTypedArrayTest(
     context = mockk()
     val typedArray = mockk<TypedArray>()
     val resources = mockk<Resources>()
+    val mapOptions = mockk<MapOptions>()
+    val cameraOptions = mockk<CameraOptions>()
     val displayMetrics: DisplayMetrics = mockk()
     mockkObject(ResourcesAttributeParser)
     mockkObject(MapAttributeParser)
     mockkObject(CameraAttributeParser)
     every { context.resources } returns resources
     every { resources.displayMetrics } returns displayMetrics
+    every { MapAttributeParser.parseMapOptions(any(), any()) } returns mapOptions
+    every { CameraAttributeParser.parseCameraOptions(any()) } returns cameraOptions
     every { ResourcesAttributeParser.parseResourcesOptions(any(), any()) } returns mockk()
     every { MapAttributeParser.parseMapOptions(any(), any()) } returns mockk()
     every { CameraAttributeParser.parseCameraOptions(any()) } returns mockk()
