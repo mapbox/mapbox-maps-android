@@ -92,7 +92,6 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
     defStyleRes: Int,
     initOptions: MapInitOptions?,
   ) : super(context, attrs, defStyleAttr, defStyleRes) {
-    MapboxInitializer.init(context)
     val resolvedMapInitOptions = if (attrs != null) {
       parseTypedArray(context, attrs)
     } else {

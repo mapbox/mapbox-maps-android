@@ -50,7 +50,6 @@ dependencies {
     api(Dependencies.mapboxGlNative)
     api(Dependencies.mapboxCoreCommon)
   }
-  implementation(Dependencies.androidxStartup)
 
   testImplementation(Dependencies.junit)
   testImplementation(Dependencies.mockk)
