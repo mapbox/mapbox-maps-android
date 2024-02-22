@@ -2,7 +2,8 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# 10.16.5
+
+# 10.16.5 February 22, 2024
 ## Features ✨ and improvements 🏁
 * Introduce better way (compared to v10.16.3) of dealing with `java.lang.UnsatisfiedLinkError` exception happening on the startup.
 
@@ -12,6 +13,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v10.16.5 and common to v23.9.0.
+
 
 # 10.16.4 January 08, 2024
 ## Features ✨ and improvements 🏁
