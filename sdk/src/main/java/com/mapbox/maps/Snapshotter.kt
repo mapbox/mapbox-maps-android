@@ -46,7 +46,6 @@ open class Snapshotter {
     options: MapSnapshotOptions,
     overlayOptions: SnapshotOverlayOptions = SnapshotOverlayOptions()
   ) {
-    MapboxInitializer.init(context)
     this.context = WeakReference(context)
     mapSnapshotOptions = options
     snapshotOverlayOptions = overlayOptions

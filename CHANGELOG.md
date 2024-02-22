@@ -4,6 +4,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 # 10.16.5
 ## Features ✨ and improvements 🏁
+* Introduce better way (compared to v10.16.3) of dealing with `java.lang.UnsatisfiedLinkError` exception happening on the startup.
 
 ## Bug fixes 🐞
 * Address crashes on certain Android devices by disabling the texture pool.

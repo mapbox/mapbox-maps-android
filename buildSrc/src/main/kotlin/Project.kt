@@ -52,7 +52,6 @@ object Dependencies {
   const val androidxRecyclerView = "androidx.recyclerview:recyclerview:${Versions.androidxRecyclerView}"
   const val androidxCoreKtx = "androidx.core:core-ktx:${Versions.androidxCore}"
   const val androidxAnnotations = "androidx.annotation:annotation:${Versions.androidxAnnotation}"
-  const val androidxStartup = "androidx.startup:startup-runtime:${Versions.androidxStartup}"
   const val androidxInterpolators = "androidx.interpolator:interpolator:${Versions.androidxInterpolator}"
   const val androidxConstraintLayout = "androidx.constraintlayout:constraintlayout:${Versions.androidxConstraintLayout}"
   const val androidxEspresso = "androidx.test.espresso:espresso-core:${Versions.androidxEspresso}"
@@ -120,7 +119,6 @@ object Versions {
   const val androidxCore = "1.6.0" // Latest version that supports compile SDK 30
   const val androidxFragmentTesting = "1.3.6" // Latest version that supports compile SDK 30
   const val androidxAnnotation = "1.1.0"
-  const val androidxStartup = "1.1.0"
   const val androidxAppcompat = "1.3.0"
   const val androidxTest = "1.4.0"
   const val androidxArchCoreTest = "2.1.0"
