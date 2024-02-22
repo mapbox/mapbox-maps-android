@@ -2,6 +2,15 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
+# 10.16.5
+## Features ✨ and improvements 🏁
+
+## Bug fixes 🐞
+* Address crashes on certain Android devices by disabling the texture pool.
+* Fix snapshotter race conditions to ensure new request could effectively trigger map rendering.
+
+## Dependencies
+* Update gl-native to v10.16.5 and common to v23.9.0.
 
 # 10.16.4 January 08, 2024
 ## Features ✨ and improvements 🏁
