@@ -81,6 +81,7 @@ dependencies {
   implementation(libs.kotlin)
   implementation(libs.mapbox.base)
   implementation(libs.androidx.annotations)
+  implementation(libs.androidx.startup)
   api(libs.mapbox.gestures)
   if (buildFromSource.toBoolean()) {
     api(project(":maps-core"))

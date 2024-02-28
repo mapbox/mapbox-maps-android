@@ -56,6 +56,7 @@ androidxFragmentTesting = "1.5.0"
 androidxInterpolator = "1.0.0"
 androidxJUnit = "1.1.5"
 androidxLifecycle = "2.3.0"
+androidxStartup = "1.1.1"
 androidxMultidex = "2.0.1"
 androidxRecyclerView = "1.1.0"
 androidxTest = "1.5.0"
@@ -120,6 +121,7 @@ androidx-interpolators = { module = "androidx.interpolator:interpolator", versio
 androidx-jUnitTestRules = { module = "androidx.test:rules", version.ref = "androidxTest" }
 androidx-lifecycle = { module = "androidx.lifecycle:lifecycle-runtime", version.ref = "androidxLifecycle" }
 androidx-lifecycleKtx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidxLifecycle" }
+androidx-startup = { module = "androidx.startup:startup-runtime", version.ref = "androidxStartup" }
 androidx-lifecycleRuntimeTesting = { module = "androidx.lifecycle:lifecycle-runtime-testing", version.ref = "androidxLifecycle" }
 androidx-multidex = { module = "androidx.multidex:multidex", version.ref = "androidxMultidex" }
 androidx-orchestrator = { module = "androidx.test:orchestrator", version.ref = "androidxTestOrchestrator" }
