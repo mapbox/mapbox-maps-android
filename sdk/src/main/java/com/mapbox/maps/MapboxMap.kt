@@ -733,9 +733,9 @@ class MapboxMap :
    *
    * @param coordinates The `coordinates` representing the bounds of the camera.
    * @param camera The [CameraOptions] for which zoom should be adjusted. Note that the `camera.center`, and `camera.zoom` (as fallback) is required.
-   * @param box The `screen box` into which `coordinates` should fit.
+   * @param box The [ScreenBox] into which [coordinates] should fit.
    *
-   * @return The [CameraOptions] object with the zoom level adjusted to fit `coordinates` into the `box`.
+   * @return The [CameraOptions] object with the zoom level adjusted to fit [coordinates] into the [box].
    */
   override fun cameraForCoordinates(
     coordinates: List<Point>,
@@ -758,7 +758,7 @@ class MapboxMap :
    *
    * Note: if the render thread did not yet calculate the size of the map - current [cameraState] will be returned.
    *
-   * @return The [CameraOptions] object representing the provided parameters. Padding is absent in the returned [CameraOptions] as the zoom level already accounts for the padding.
+   * @return The [CameraOptions] object representing the provided parameters.
    */
   override fun cameraForCoordinates(
     coordinates: List<Point>,

@@ -8,11 +8,51 @@ Mapbox welcomes participation and contributions from everyone.
 
 # 11.2.0
 ## Features ✨ and improvements 🏁
+* Introduce better way of SDK initialization to avoid `java.lang.UnsatisfiedLinkError` exception on process startup. If the native library is still not found when actual Mapbox API is called, meaningful `MapboxInitializerException` is thrown and could be caught and processed on user's side.
+* Introduce `MapboxMap.getCenterAltitudeMode` API.
+* Add `useShortestPath` option to `CameraAnimationPlugin.createCenterAnimator`, when enabled, shortest path will be applied when the start and end camera  center is across the antimeridian, for example from -170 to 170 longitude. Defaults to true.
+* Introduce `SymbolLayer.iconColorSaturation` API.
+* Introduce experimental `RasterLayer.rasterElevation` API.
+* Introduce experimental `MapboxMap.startPerformanceStatisticsCollection` / `MapboxMap.stopPerformanceStatisticsCollection` APIs allowing to start / stop collecting map rendering performance statistics.
+* Introduce `GeoJsonSource.tileCacheBudget`, `RasterSource.tileCacheBudget`, `RasterDemSource.tileCacheBudget`, `RasterArraySource.tileCacheBudget`, `VectorSource.tileCacheBudget`, `CustomGeometrySource.tileCacheBudget`, `CustomRasterSource.tileCacheBudget`.
+* Skip unneeded layers properties re-evaluation on zoom change.
+* Add the possibility to use constant expressions for `model-emissive-strength` when rendering 3D model layers using 2D sources.
+* Introduce static `HttpServiceFactory.setMaxRequestsPerHost` API.
+* `TileStoreOptions.DiskQuota` is now an abort threshold for tilestore size. When we have more than this amount of bytes stored, new downloads will fail. `Tilestore` starts to evict tiles with closest expiration date 50Mb (or 10% of DiskQuota, whatever is smaller) before this abort threshold is reached.
+* Speedup preparing tiled sources for rendering.
+* Uploading model resources to GPU in continuous map mode is now limited by fixed time per frame.
+* Modify `FillExtrusionLayer.fillExtrusionCutoffFadeRange` to scale down and remove buildings in a staggered fashion, instead of fading opacity.
+* [compose] Introduce `DisposableMapEffect` API.
 * [compose] Add default value for `MapViewportState.transitionToFollowPuckState.followPuckViewportStateOptions`.
 
 ## Bug fixes 🐞
+* Retain previous `CenterAltitudeMode` after gestures are finished.
+* Avoid marking whole `LayerDsl` as experimental when only a part of the layer properties are experimental.
+* Fix R8 error due to missing class `com.tobrun.datacompat.annotation.Default`.
+* `EaseTo` and `MoveBy` camera animation and `DefaultViewportTransition` now will use shortest path when the start and end camera center is across the antimeridian, for example from -170 to 170 longitude.
+* Remove extra image padding from text shaping offset.
+* Address crashes on certain Android devices by disabling the texture pool.
+* Fix elevated rasters with coordinates not aligned to the longitude/latitude grid.
+* Fix a bug that was causing absence of `MapLoaded` event and never ending background task processing.
+* Fix a bug that heatmap layer wasn't updating visuals after feature state change.
+* Fix a bug where scientific notation is not supported when parse JSON numbers to `Value`.
+* Fix a crash occurring when clicking on the "Telemetry settings" option in the attribution dialog when not using the `AppCompat` theme.
+* Fix `ModelLayer.modelCutoffFadeRange` calculation on low zoom levels.
+* Fix `RasterArray` rendering on Android.
+* Fix rare null pointer dereference crash.
+* Fix a bug with disappearing models during light changes.
+* Fix rendering artifacts on long fill outlines on pitched map view.
+* Fix style parsing when the style and import's urls are both empty.
+* Fix config expression evaluation if the expected type is formatted but the actual value is string.
+* Fix not taking `line-trim-offset` into account for Dynamic View Annotation placement.
+* Fix issue that View Annotation stays visible when the associated layer's visibility is none.
+* Fix camera framing on globe with padding.
+* [compose] Fix a warning that using UI composable where Mapbox Map composable is expected.
 * [compose] Fix losing some location component settings during wrapping.
 
+## Dependencies
+* Update gl-native to v11.2.0 and common to v24.2.0.
+* Upgrade to [Kotlin Data compat v0.8.0](https://github.com/tobrun/kotlin-data-compat/releases/tag/v0.8.0).
 
 # 11.2.0-rc.1 February 15, 2024
 ## Features ✨ and improvements 🏁
@@ -44,7 +84,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Skip unneeded layers properties re-evaluation on zoom change.
 * Add the possibility to use constant expressions for `model-emissive-strength` when rendering 3D model layers using 2D sources.
 * Introduce static `HttpServiceFactory.setMaxRequestsPerHost` API.
-* `TileStoreOptions.DiskQuota` is now an abort threshold for tilestore size. When we have more than this amount of bytes stored, new downloads will fail. `Tilestore` starts to evict tiles with closest expiration date 50Mb before this abort threshold is reached.
+* `TileStoreOptions.DiskQuota` is now an abort threshold for tilestore size. When we have more than this amount of bytes stored, new downloads will fail. `Tilestore` starts to evict tiles with closest expiration date 50Mb (or 10% of DiskQuota, whatever is smaller) before this abort threshold is reached.
 
 ## Bug fixes 🐞
 * Retain previous `CenterAltitudeMode` after gestures are finished.
@@ -53,10 +93,10 @@ Mapbox welcomes participation and contributions from everyone.
 * `EaseTo` and `MoveBy` camera animation and `DefaultViewportTransition` now will use shortest path when the start and end camera center is across the antimeridian, for example from -170 to 170 longitude.
 * Remove extra image padding from text shaping offset. 
 * Address crashes on certain Android devices by disabling the texture pool.
-* Fixed elevated rasters with coordinates not aligned to the longitude/latitude grid.
-* Fixed a bug that was causing absence of `MapLoaded` event and never ending background task processing.
-* Fixed a bug that heatmap layer wasn't updating visuals after feature state change.
-* Fixed a bug where scientific notation is not supported when parse JSON numbers to `Value`.
+* Fix elevated rasters with coordinates not aligned to the longitude/latitude grid.
+* Fix a bug that was causing absence of `MapLoaded` event and never ending background task processing.
+* Fix a bug that heatmap layer wasn't updating visuals after feature state change.
+* Fix a bug where scientific notation is not supported when parse JSON numbers to `Value`.
 
 ## Dependencies
 * Upgrade to [Kotlin Data compat v0.8.0](https://github.com/tobrun/kotlin-data-compat/releases/tag/v0.8.0).
