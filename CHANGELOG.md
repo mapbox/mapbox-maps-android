@@ -6,7 +6,8 @@ Mapbox welcomes participation and contributions from everyone.
 ## Breaking changes ⚠️
 * [compose] Replace `MapboxMap.compassSettings`, `MapboxMap.scaleBarSettings`, `MapboxMap.logoSettings`, `MapboxMap.attributionSettings` with composable functions in dedicated scopes: `MapCompassScope.Compass()`, `MapScaleBarScope.ScaleBar()`, `MapLogoScope.Logo()`, `MapAttributionScope.Attribution()`.
 
-# 11.2.0
+
+# 11.2.0 February 29, 2024
 ## Features ✨ and improvements 🏁
 * Introduce better way of SDK initialization to avoid `java.lang.UnsatisfiedLinkError` exception on process startup. If the native library is still not found when actual Mapbox API is called, meaningful `MapboxInitializerException` is thrown and could be caught and processed on user's side.
 * Introduce `MapboxMap.getCenterAltitudeMode` API.
@@ -53,6 +54,7 @@ Mapbox welcomes participation and contributions from everyone.
 ## Dependencies
 * Update gl-native to v11.2.0 and common to v24.2.0.
 * Upgrade to [Kotlin Data compat v0.8.0](https://github.com/tobrun/kotlin-data-compat/releases/tag/v0.8.0).
+
 
 # 11.2.0-rc.1 February 15, 2024
 ## Features ✨ and improvements 🏁
