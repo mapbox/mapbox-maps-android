@@ -19,9 +19,11 @@ interface MapCameraManagerDelegate {
   val cameraState: CameraState
 
   /**
-   * Convenience method that returns the [CameraOptions] object for given parameters.
+   * Convert the given [bounds], [boundsPadding], [bearing] and [pitch] values to [CameraOptions].
+   * Note that this method takes into account the current map padding in addition to the
+   * [boundsPadding] provided in parameters.
    *
-   * In order for this method to produce correct results `MapView` must be already
+   * In order for this method to produce correct results [MapView] must be already
    * measured and inflated to have correct width and height values.
    * Calling this method in [Activity.onCreate] will lead to incorrect results.
    *
@@ -32,7 +34,8 @@ interface MapCameraManagerDelegate {
    * @param maxZoom The maximum zoom level allowed in the returned camera options.
    * @param offset The center of the given bounds relative to map center in pixels.
    *
-   * @return The [CameraOptions] object representing the provided parameters.
+   * @return the converted [CameraOptions]. Padding is absent in the returned [CameraOptions]
+   * as the zoom level already accounts for the [boundsPadding] provided.
    */
   fun cameraForCoordinateBounds(
     bounds: CoordinateBounds,
@@ -77,9 +80,9 @@ interface MapCameraManagerDelegate {
    *
    * @param coordinates The `coordinates` representing the bounds of the camera.
    * @param camera The [CameraOptions] for which zoom should be adjusted. Note that the `camera.center`, and `camera.zoom` (as fallback) is required.
-   * @param box The `screen box` into which `coordinates` should fit.
+   * @param box The [ScreenBox] into which [coordinates] should fit.
    *
-   * @return The [CameraOptions] object with the zoom level adjusted to fit `coordinates` into the `box`.
+   * @return The [CameraOptions] object with the zoom level adjusted to fit [coordinates] into the [box].
    */
   fun cameraForCoordinates(
     coordinates: List<Point>,
@@ -97,7 +100,9 @@ interface MapCameraManagerDelegate {
    * @param maxZoom The maximum zoom level allowed in the returned camera options.
    * @param offset The center of the given bounds relative to map center in pixels.
    *
-   * @return The [CameraOptions] object representing the provided parameters. Padding is absent in the returned [CameraOptions] as the zoom level already accounts for the padding.
+   * Note: if the render thread did not yet calculate the size of the map - current [cameraState] will be returned.
+   *
+   * @return The [CameraOptions] object representing the provided parameters.
    */
   fun cameraForCoordinates(
     coordinates: List<Point>,
@@ -108,16 +113,21 @@ interface MapCameraManagerDelegate {
   ): CameraOptions
 
   /**
-   * Convenience method that returns the camera options object for given arguments
+   * Convert the given [geometry], [geometryPadding], [bearing] and [pitch] values to [CameraOptions].
+   * Note that this method takes into account the current map padding in addition to the
+   * [geometryPadding] provided in parameters.
    *
-   * This API isn't supported by Globe projection.
+   * In order for this method to produce correct results `MapView` must be already
+   * measured and inflated to have correct width and height values.
+   * Calling this method in [Activity.onCreate] will lead to incorrect results.
    *
-   * @param geometry The geometry of the map
-   * @param geometryPadding The edge padding of the map
-   * @param bearing The bearing of the map
-   * @param pitch The pitch of the map
+   * @param geometry The [Geometry] to take in account when converting
+   * @param geometryPadding The optional amount of padding in pixels to add to the given [geometry].
+   * @param bearing The optional bearing to take in account when converting
+   * @param pitch The optional pitch to take in account when converting
    *
-   * @return Returns the camera options object representing the provided params
+   * @return Returns the converted [CameraOptions]. Padding is absent in the returned
+   * [CameraOptions] as the zoom level already accounts for the [geometryPadding] provided.
    */
   fun cameraForGeometry(
     geometry: Geometry,
