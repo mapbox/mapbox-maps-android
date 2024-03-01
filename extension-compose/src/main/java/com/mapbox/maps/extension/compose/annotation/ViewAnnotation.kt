@@ -48,6 +48,7 @@ internal class ViewAnnotationNode(
         removeOnViewAnnotationUpdatedListener(it)
       }
     }
+    viewAnnotationManager.removeViewAnnotation(view = view)
   }
 }
 

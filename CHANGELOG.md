@@ -6,6 +6,8 @@ Mapbox welcomes participation and contributions from everyone.
 ## Breaking changes ⚠️
 * [compose] Replace `MapboxMap.compassSettings`, `MapboxMap.scaleBarSettings`, `MapboxMap.logoSettings`, `MapboxMap.attributionSettings` with composable functions in dedicated scopes: `MapCompassScope.Compass()`, `MapScaleBarScope.ScaleBar()`, `MapLogoScope.Logo()`, `MapAttributionScope.Attribution()`.
 
+## Bug fixes 🐞
+* [compose] Fix `ViewAnnotation` not cleared when it leaves composition.
 
 # 11.2.0 February 29, 2024
 ## Features ✨ and improvements 🏁
