@@ -2,13 +2,15 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# 10.16.6
+
+# 10.16.6 March 04, 2024
 ## Bug fixes 🐞
 * Fix rare crash in `LocationServiceImpl` on startup.
 * Reduce network data transfer on style package update.
 
 ## Dependencies
 * Update gl-native to v10.16.6 and common to v23.9.1.
+
 
 # 10.16.5 February 22, 2024
 ## Features ✨ and improvements 🏁
