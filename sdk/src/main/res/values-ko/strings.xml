@@ -1,0 +1,5 @@
+<resources>
+    <string name="mapbox_telemetryImproveMap">이 지도를 개선하세요</string>
+    <string name="mapbox_telemetrySettings">Mapbox 원격 측정</string>
+    <string name="mapbox_privacy_policy">Mapbox 개인정보 보호정책</string>
+</resources>

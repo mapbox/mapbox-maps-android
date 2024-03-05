@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mapbox_attributionErrorNoBrowser">No hi ha navegador web instal·lat al dispositiu, no es pot obrir la pàgina web.</string>
+    <string name="mapbox_attributionsDialogTitle">Desenvolupat per Mapbox Maps</string>
+    <string name="mapbox_attributionTelemetryTitle">Millorar els mapes de Mapbox</string>
+    <string name="mapbox_attributionTelemetryMessage">Esteu ajudant a millorar els mapes OpenStreetMap i Mapbox aportant dades d\'ús anònimes.</string>
+    <string name="mapbox_attributionTelemetryPositive">Participa</string>
+    <string name="mapbox_attributionTelemetryNegative">Deixa de participar</string>
+    <string name="mapbox_attributionTelemetryNeutral">Més informació</string>
+    <string name="mapbox_warning_attribution_disabled">L\'atribució ha d\'estar activada si utilitzeu dades de fonts que ho requereixen. Vegeu https://docs.mapbox.com/help/getting-started/attribution/ per a més detalls.</string>
+</resources>

@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="mapbox_compassContentDescription">Map compass. Activate to reset the map rotation to North.</string>
-    <string name="mapbox_myLocationViewContentDescription">Location View. This shows your location on the map.</string>
 </resources>

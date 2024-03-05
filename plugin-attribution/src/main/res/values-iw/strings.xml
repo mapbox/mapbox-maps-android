@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mapbox_attributionErrorNoBrowser">לא מותקן דפדפן אינטרנט במכשיר, לא ניתן לפתוח דף אינטרנט.</string>
+    <string name="mapbox_attributionsDialogTitle">מופעל על ידי Mapbox Maps</string>
+    <string name="mapbox_attributionTelemetryTitle">הפוך את Mapbox Maps לטוב יותר</string>
+    <string name="mapbox_attributionTelemetryMessage">אתה עוזר לשפר את מפות OpenStreetMap ו- Mapbox על ידי תרומה של נתוני שימוש אנונימיים.</string>
+    <string name="mapbox_attributionTelemetryPositive">לְהִשְׂתַתֵף</string>
+    <string name="mapbox_attributionTelemetryNegative">תפסיק להשתתף</string>
+    <string name="mapbox_attributionTelemetryNeutral">עוד מידע</string>
+    <string name="mapbox_warning_attribution_disabled">יש להפעיל ייחוס אם אתה משתמש בנתונים ממקורות הדורשים זאת. ראה https://docs.mapbox.com/help/getting-started/attribution/ לפרטים נוספים.</string>
+</resources>

@@ -1,0 +1,3 @@
+<resources>
+    <string name="mapbox_compassContentDescription">Brújula del mapa. Actívelo para restablecer la rotación del mapa hacia el norte.</string>
+</resources>

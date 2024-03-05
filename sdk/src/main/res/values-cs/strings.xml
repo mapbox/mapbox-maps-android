@@ -1,0 +1,5 @@
+<resources>
+    <string name="mapbox_telemetryImproveMap">Vylepšete tuto mapu</string>
+    <string name="mapbox_telemetrySettings">Telemetrie Mapboxu</string>
+    <string name="mapbox_privacy_policy">Zásady ochrany osobních údajů Mapbox</string>
+</resources>

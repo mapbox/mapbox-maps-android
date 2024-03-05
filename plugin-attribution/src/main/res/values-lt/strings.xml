@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mapbox_attributionErrorNoBrowser">Įrenginyje neįdiegta žiniatinklio naršyklė, negalima atidaryti tinklalapio.</string>
+    <string name="mapbox_attributionsDialogTitle">Parengta naudojant „Mapbox Maps“.</string>
+    <string name="mapbox_attributionTelemetryTitle">Patobulinkite „Mapbox“ žemėlapius</string>
+    <string name="mapbox_attributionTelemetryMessage">Pateikdami anoniminius naudojimo duomenis, padedate tobulinti „OpenStreetMap“ ir „Mapbox“ žemėlapius.</string>
+    <string name="mapbox_attributionTelemetryPositive">Dalyvauti</string>
+    <string name="mapbox_attributionTelemetryNegative">Nustokite dalyvauti</string>
+    <string name="mapbox_attributionTelemetryNeutral">Daugiau informacijos</string>
+    <string name="mapbox_warning_attribution_disabled">Priskyrimas turi būti įgalintas, jei naudojate duomenis iš šaltinių, kuriems to reikia. Daugiau informacijos rasite adresu https://docs.mapbox.com/help/getting-started/attribution/.</string>
+</resources>

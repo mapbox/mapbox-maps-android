@@ -1200,7 +1200,7 @@ package com.mapbox.maps.plugin.attribution {
     field public static final String OSM_ABBR = "OSM";
     field public static final String PRIVACY_POLICY = "Mapbox Privacy Policy";
     field public static final String PRIVACY_POLICY_URL = "https://www.mapbox.com/legal/privacy#product-privacy-policy/";
-    field public static final String TELEMETRY_SETTINGS = "Telemetry Settings";
+    field public static final String TELEMETRY_SETTINGS = "Mapbox Telemetry";
   }
 
   public static final class Attribution.Companion {

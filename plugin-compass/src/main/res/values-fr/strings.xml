@@ -1,0 +1,3 @@
+<resources>
+    <string name="mapbox_compassContentDescription">Boussole cartographique. Activez pour réinitialiser la rotation de la carte vers le Nord.</string>
+</resources>

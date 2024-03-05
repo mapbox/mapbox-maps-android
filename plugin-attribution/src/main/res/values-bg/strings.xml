@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mapbox_attributionErrorNoBrowser">Няма инсталиран уеб браузър на устройството, не може да отвори уеб страница.</string>
+    <string name="mapbox_attributionsDialogTitle">Осъществено от Mapbox Maps</string>
+    <string name="mapbox_attributionTelemetryTitle">Направете Mapbox Maps по-добри</string>
+    <string name="mapbox_attributionTelemetryMessage">Вие помагате да направим картите на OpenStreetMap и Mapbox по-добри, като предоставяте анонимни данни за употребата.</string>
+    <string name="mapbox_attributionTelemetryPositive">Участвайте</string>
+    <string name="mapbox_attributionTelemetryNegative">Спрете да участвате</string>
+    <string name="mapbox_attributionTelemetryNeutral">Повече информация</string>
+    <string name="mapbox_warning_attribution_disabled">Приписването трябва да е активирано, ако използвате данни от източници, които го изискват. Вижте https://docs.mapbox.com/help/getting-started/attribution/ за повече подробности.</string>
+</resources>

@@ -1,5 +1,5 @@
 <resources>
     <string name="mapbox_telemetryImproveMap">Improve This Map</string>
-    <string name="mapbox_telemetrySettings">Telemetry Settings</string>
+    <string name="mapbox_telemetrySettings">Mapbox Telemetry</string>
     <string name="mapbox_privacy_policy">Mapbox Privacy Policy</string>
 </resources>

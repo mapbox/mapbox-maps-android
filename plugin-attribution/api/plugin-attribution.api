@@ -1,12 +1,8 @@
 public final class com/mapbox/maps/plugin/attribution/AttributionDialogManagerImpl : android/content/DialogInterface$OnClickListener, com/mapbox/maps/plugin/attribution/AttributionDialogManager {
-	public static final field Companion Lcom/mapbox/maps/plugin/attribution/AttributionDialogManagerImpl$Companion;
 	public fun <init> (Landroid/content/Context;)V
 	public fun onClick (Landroid/content/DialogInterface;I)V
 	public fun onStop ()V
 	public fun showAttribution (Lcom/mapbox/maps/plugin/delegates/MapAttributionDelegate;)V
-}
-
-public final class com/mapbox/maps/plugin/attribution/AttributionDialogManagerImpl$Companion {
 }
 
 public final class com/mapbox/maps/plugin/attribution/AttributionUtils {

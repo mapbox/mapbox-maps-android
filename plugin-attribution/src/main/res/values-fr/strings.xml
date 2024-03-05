@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mapbox_attributionErrorNoBrowser">Aucun navigateur Web n\'est installé sur l\'appareil, impossible d\'ouvrir la page Web.</string>
+    <string name="mapbox_attributionsDialogTitle">Développé par Mapbox Maps</string>
+    <string name="mapbox_attributionTelemetryTitle">Améliorer les cartes Mapbox</string>
+    <string name="mapbox_attributionTelemetryMessage">Vous contribuez à améliorer les cartes OpenStreetMap et Mapbox en fournissant des données d\'utilisation anonymes.</string>
+    <string name="mapbox_attributionTelemetryPositive">Participer</string>
+    <string name="mapbox_attributionTelemetryNegative">Arrêter de participer</string>
+    <string name="mapbox_attributionTelemetryNeutral">Plus d\'informations</string>
+    <string name="mapbox_warning_attribution_disabled">L\'attribution doit être activée si vous utilisez des données provenant de sources qui l\'exigent. Voir https://docs.mapbox.com/help/getting-started/attribution/ pour plus de détails.</string>
+</resources>

@@ -1,0 +1,5 @@
+<resources>
+    <string name="mapbox_telemetryImproveMap">Patobulinkite šį žemėlapį</string>
+    <string name="mapbox_telemetrySettings">„Mapbox“ telemetrija</string>
+    <string name="mapbox_privacy_policy">„Mapbox“ privatumo politika</string>
+</resources>

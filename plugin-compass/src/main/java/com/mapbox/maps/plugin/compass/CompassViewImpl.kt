@@ -41,6 +41,7 @@ open class CompassViewImpl
 
     // click listener
     setOnClickListener { if (::presenter.isInitialized) presenter.onCompassClicked() }
+    contentDescription = context.getString(R.string.mapbox_compassContentDescription)
   }
 
   /**

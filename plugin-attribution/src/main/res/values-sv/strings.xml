@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mapbox_attributionErrorNoBrowser">Ingen webbläsare installerad på enheten, kan inte öppna webbsidan.</string>
+    <string name="mapbox_attributionsDialogTitle">Drivs av Mapbox Maps</string>
+    <string name="mapbox_attributionTelemetryTitle">Gör Mapbox Maps bättre</string>
+    <string name="mapbox_attributionTelemetryMessage">Du hjälper till att göra OpenStreetMap- och Mapbox-kartor bättre genom att bidra med anonym användningsdata.</string>
+    <string name="mapbox_attributionTelemetryPositive">Delta</string>
+    <string name="mapbox_attributionTelemetryNegative">Sluta delta</string>
+    <string name="mapbox_attributionTelemetryNeutral">Mer information</string>
+    <string name="mapbox_warning_attribution_disabled">Attribution måste vara aktiverat om du använder data från källor som kräver det. Se https://docs.mapbox.com/help/getting-started/attribution/ för mer information.</string>
+</resources>

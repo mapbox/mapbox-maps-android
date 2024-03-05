@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mapbox_attributionErrorNoBrowser">Er is geen webbrowser geïnstalleerd op het apparaat. Kan webpagina niet openen.</string>
+    <string name="mapbox_attributionsDialogTitle">Mogelijk gemaakt door Mapbox Maps</string>
+    <string name="mapbox_attributionTelemetryTitle">Maak Mapbox-kaarten beter</string>
+    <string name="mapbox_attributionTelemetryMessage">U helpt OpenStreetMap- en Mapbox-kaarten beter te maken door anonieme gebruiksgegevens bij te dragen.</string>
+    <string name="mapbox_attributionTelemetryPositive">Deelnemen</string>
+    <string name="mapbox_attributionTelemetryNegative">Stop met deelnemen</string>
+    <string name="mapbox_attributionTelemetryNeutral">Meer informatie</string>
+    <string name="mapbox_warning_attribution_disabled">Attributie moet zijn ingeschakeld als u gegevens gebruikt uit bronnen waarvoor dit vereist is. Zie https://docs.mapbox.com/help/getting-started/attribution/ voor meer details.</string>
+</resources>

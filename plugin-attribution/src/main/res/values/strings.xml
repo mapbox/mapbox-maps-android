@@ -5,8 +5,8 @@
     <string name="mapbox_attributionsDialogTitle">Powered by Mapbox Maps</string>
     <string name="mapbox_attributionTelemetryTitle">Make Mapbox Maps Better</string>
     <string name="mapbox_attributionTelemetryMessage">You are helping to make OpenStreetMap and Mapbox maps better by contributing anonymous usage data.</string>
-    <string name="mapbox_attributionTelemetryPositive">Agree</string>
-    <string name="mapbox_attributionTelemetryNegative">Disagree</string>
+    <string name="mapbox_attributionTelemetryPositive">Participate</string>
+    <string name="mapbox_attributionTelemetryNegative">Stop participating</string>
     <string name="mapbox_attributionTelemetryNeutral">More info</string>
     <string name="mapbox_warning_attribution_disabled">Attribution must be enabled if you use data from sources that require it. See https://docs.mapbox.com/help/getting-started/attribution/ for more details.</string>
 </resources>

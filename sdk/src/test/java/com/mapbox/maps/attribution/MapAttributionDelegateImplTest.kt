@@ -113,7 +113,7 @@ class MapAttributionDelegateImplTest {
       attributions.last().url
     )
     assertEquals(
-      "Telemetry title should match", "Telemetry Settings",
+      "Telemetry title should match", "Mapbox Telemetry",
       attributions.last().title
     )
 
@@ -174,7 +174,7 @@ class MapAttributionDelegateImplTest {
             url
           )
           assertEquals(
-            "Telemetry title should match", "Telemetry Settings",
+            "Telemetry title should match", "Mapbox Telemetry",
             title
           )
         }

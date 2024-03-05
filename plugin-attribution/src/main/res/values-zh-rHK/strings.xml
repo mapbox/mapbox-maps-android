@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mapbox_attributionErrorNoBrowser">設備中未安裝任何瀏覽器，不能打開該網頁</string>
+    <string name="mapbox_attributionsDialogTitle">Powered by Mapbox</string>
+    <string name="mapbox_attributionTelemetryTitle">讓Mapbox地圖變得更好</string>
+    <string name="mapbox_attributionTelemetryMessage">您的匿名數據幫助OpenStreetMap和Mapbox的地圖變得更好。</string>
+    <string name="mapbox_attributionTelemetryPositive">繼續參與</string>
+    <string name="mapbox_attributionTelemetryNegative">不再參與</string>
+    <string name="mapbox_attributionTelemetryNeutral">更多資訊</string>
+    <string name="mapbox_warning_attribution_disabled">如果您使用來自需要歸因的來源的數據，則必須啟用歸因。有關更多詳細信息，請參閱 https://docs.mapbox.com/help/getting-started/attribution/。</string>
+</resources>

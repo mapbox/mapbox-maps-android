@@ -30,7 +30,7 @@ class AttributionDialogManagerImplTest {
       )
     } returns listOf(
       Attribution("feadback", "feadback_url"),
-      Attribution("Telemetry", "telemetry_url")
+      Attribution("Telemetry", Attribution.ABOUT_TELEMETRY_URL)
     )
     attributionDialogManagerImpl = AttributionDialogManagerImpl(
       Robolectric.buildActivity(AppCompatActivity::class.java).get().also {

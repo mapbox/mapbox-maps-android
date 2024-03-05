@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mapbox_attributionErrorNoBrowser">Ingen webbrowser installeret på enheden, kan ikke åbne websiden.</string>
+    <string name="mapbox_attributionsDialogTitle">Drevet af Mapbox Maps</string>
+    <string name="mapbox_attributionTelemetryTitle">Gør Mapbox Maps bedre</string>
+    <string name="mapbox_attributionTelemetryMessage">Du er med til at gøre OpenStreetMap- og Mapbox-kort bedre ved at bidrage med anonyme brugsdata.</string>
+    <string name="mapbox_attributionTelemetryPositive">Deltage</string>
+    <string name="mapbox_attributionTelemetryNegative">Stop med at deltage</string>
+    <string name="mapbox_attributionTelemetryNeutral">Mere info</string>
+    <string name="mapbox_warning_attribution_disabled">Tilskrivning skal være aktiveret, hvis du bruger data fra kilder, der kræver det. Se https://docs.mapbox.com/help/getting-started/attribution/ for flere detaljer.</string>
+</resources>

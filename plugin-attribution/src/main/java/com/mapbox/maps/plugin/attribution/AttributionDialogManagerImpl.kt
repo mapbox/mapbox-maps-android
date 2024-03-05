@@ -96,10 +96,11 @@ class AttributionDialogManagerImpl(
    * Called when someone selects an attribution or telemetry settings from the dialog
    */
   override fun onClick(dialog: DialogInterface, which: Int) {
-    if (attributionList[which].title.contains(TELEMETRY_KEY_WORLD)) {
+    val attribution = attributionList[which]
+    if (attribution.url == Attribution.ABOUT_TELEMETRY_URL) {
       showTelemetryDialog()
     } else {
-      showMapAttributionWebPage(which)
+      showMapAttributionWebPage(attribution.url)
     }
   }
 
@@ -134,10 +135,10 @@ class AttributionDialogManagerImpl(
     telemetryDialog = builder.show()
   }
 
-  private fun showMapAttributionWebPage(which: Int) {
-    var url = attributionList[which].url
+  private fun showMapAttributionWebPage(attributionUrl: String) {
+    var url = attributionUrl
     mapAttributionDelegate?.let {
-      if (url.contains(FEEDBACK_KEY_WORLD)) {
+      if (url.contains(FEEDBACK_KEY_WORD)) {
         url = it.buildMapBoxFeedbackUrl(context)
       }
     }
@@ -158,11 +159,7 @@ class AttributionDialogManagerImpl(
     }
   }
 
-  /**
-   * Static variables and methods.
-   */
-  companion object {
-    private const val FEEDBACK_KEY_WORLD = "feedback"
-    private const val TELEMETRY_KEY_WORLD = "Telemetry"
+  private companion object {
+    private const val FEEDBACK_KEY_WORD = "feedback"
   }
 }

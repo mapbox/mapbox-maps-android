@@ -7,9 +7,8 @@ import android.net.Uri
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxScope
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -164,10 +163,10 @@ public class MapAttributionScope internal constructor(
         },
         onAttributionClick = { attribution ->
           showAttributionDialog = false
-          if (attribution.title.contains(TELEMETRY_KEY_WORLD)) {
+          if (attribution.url == Attribution.ABOUT_TELEMETRY_URL) {
             showTelemetryDialog = true
           } else {
-            val url = if (attribution.url.contains(FEEDBACK_KEY_WORLD)) {
+            val url = if (attribution.url.contains(FEEDBACK_KEY_WORD)) {
               mapboxFeedbackUrl
             } else attribution.url
             if (url.isNotEmpty()) {
@@ -283,32 +282,27 @@ public class MapAttributionScope internal constructor(
     AlertDialog(
       onDismissRequest = onDismissRequest,
       buttons = {
-        Row(
+        Column(
           modifier = Modifier
-            .padding(all = 8.dp)
+            // The alert dialog `title` and `text` are padded 24.dp by default.
+            // To align the button text, we use 16.dp here because TextButton adds 8.dp padding around the text
+            .padding(horizontal = 16.dp)
             .fillMaxWidth(),
-          horizontalArrangement = Arrangement.SpaceBetween
         ) {
           TextButton(
-            onClick = {
-              onMoreInfo()
-            }
+            onClick = { onMoreInfo() }
           ) {
             Text(stringResource(id = R.string.mapbox_attributionTelemetryNeutral).uppercase())
           }
 
           TextButton(
-            onClick = {
-              onDisagree()
-            }
+            onClick = { onDisagree() }
           ) {
             Text(stringResource(id = R.string.mapbox_attributionTelemetryNegative).uppercase())
           }
 
           TextButton(
-            onClick = {
-              onAgree()
-            }
+            onClick = { onAgree() }
           ) {
             Text(stringResource(id = R.string.mapbox_attributionTelemetryPositive).uppercase())
           }
@@ -358,8 +352,7 @@ public class MapAttributionScope internal constructor(
   private companion object {
     private const val PLUGIN_ID = "MAPBOX_ATTRIBUTION_COMPOSE_PLUGIN"
     private var INSTANCE_COUNT = 0
-    private const val FEEDBACK_KEY_WORLD = "feedback"
-    private const val TELEMETRY_KEY_WORLD = "Telemetry"
+    private const val FEEDBACK_KEY_WORD = "feedback"
     fun getNextId(): String {
       return "$PLUGIN_ID-${INSTANCE_COUNT++}"
     }
