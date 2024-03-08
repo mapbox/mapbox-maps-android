@@ -1261,6 +1261,10 @@
             android:name=".TestMapActivity"
             android:exported="true" />
         <activity
+            android:name=".EmptyFragmentActivity"
+            android:theme="@android:style/Theme.Material.Light"
+            android:exported="true" />
+        <activity
             android:name=".examples.SecondaryDisplayPresentationActivity"
             android:description="@string/description_secondary_display_presentation"
             android:exported="true"

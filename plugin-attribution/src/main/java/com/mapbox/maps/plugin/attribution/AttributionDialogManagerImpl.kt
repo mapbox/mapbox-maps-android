@@ -1,5 +1,6 @@
 package com.mapbox.maps.plugin.attribution
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Context
@@ -62,11 +63,7 @@ class AttributionDialogManagerImpl(
    * @param attributions an array of attribution titles
    */
   private fun showAttributionDialog(attributions: List<Attribution>) {
-    val builder = AlertDialog.Builder(
-      // needed to avoid incompatibility between e.g. Material themes coming from the user
-      // and Appcompat theme used by our AlertDialog
-      ContextThemeWrapper(context, R.style.Theme_AppCompat_Dialog)
-    )
+    val builder = prepareDialogBuilder()
     builder.setTitle(R.string.mapbox_attributionsDialogTitle)
     val adapter: ArrayAdapter<Attribution> = object : ArrayAdapter<Attribution>(
       context,
@@ -113,15 +110,11 @@ class AttributionDialogManagerImpl(
   }
 
   private fun showTelemetryDialog() {
-    val builder = AlertDialog.Builder(
-      // needed to avoid incompatibility between e.g. Material themes coming from the user
-      // and Appcompat theme used by our AlertDialog
-      ContextThemeWrapper(context, R.style.Theme_AppCompat_Dialog)
-    )
+    val builder = prepareDialogBuilder()
     builder.setTitle(R.string.mapbox_attributionTelemetryTitle)
     builder.setMessage(R.string.mapbox_attributionTelemetryMessage)
     builder.setPositiveButton(R.string.mapbox_attributionTelemetryPositive) { dialog, _ ->
-      telemetry?.setUserTelemetryRequestState(true)
+      telemetry?.userTelemetryRequestState = true
       dialog.cancel()
     }
     builder.setNeutralButton(R.string.mapbox_attributionTelemetryNeutral) { dialog, _ ->
@@ -129,7 +122,7 @@ class AttributionDialogManagerImpl(
       dialog.cancel()
     }
     builder.setNegativeButton(R.string.mapbox_attributionTelemetryNegative) { dialog, _ ->
-      telemetry?.setUserTelemetryRequestState(false)
+      telemetry?.userTelemetryRequestState = false
       dialog.cancel()
     }
     telemetryDialog = builder.show()
@@ -157,6 +150,29 @@ class AttributionDialogManagerImpl(
     } catch (t: Throwable) {
       Toast.makeText(context, t.localizedMessage, Toast.LENGTH_LONG).show()
     }
+  }
+
+  @SuppressLint("PrivateResource")
+  private fun prepareDialogBuilder(): AlertDialog.Builder {
+    // using way from AOSP to determine if current theme used is AppCompat, see
+    // https://cs.android.com/androidx/platform/frameworks/support/+/androidx-main:appcompat/appcompat/src/main/java/androidx/appcompat/app/AppCompatDelegateImpl.java;l=908
+    val a = context.obtainStyledAttributes(R.styleable.AppCompatTheme)
+    val appCompatThemeUsed = try {
+      a.hasValue(R.styleable.AppCompatTheme_windowActionBar)
+    } catch (_: Throwable) {
+      false
+    }
+    val builder = if (appCompatThemeUsed) {
+      AlertDialog.Builder(context)
+    } else {
+      AlertDialog.Builder(
+        // explicitly use Day-Night AppCompat theme if non AppCompat theme is used in activity
+        // noting that using ContextThemeWrapper should make sure we apply our theme on top of base one
+        ContextThemeWrapper(context, R.style.Theme_AppCompat_DayNight_Dialog_Alert)
+      )
+    }
+    a.recycle()
+    return builder
   }
 
   private companion object {

@@ -12,6 +12,7 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * [compose] Fix `ViewAnnotation` not cleared when it leaves composition.
 * Fix attribution links not opening in some scenarios.
+* Fix attribution and telemetry dialogs not respecting current theme.
 
 # 11.2.0 February 29, 2024
 ## Features ✨ and improvements 🏁
