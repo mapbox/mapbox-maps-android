@@ -148,14 +148,14 @@ class AttributionDialogManagerImpl(
   }
 
   private fun showWebPage(url: String) {
-    if (context is Activity) {
-      try {
-        val intent = Intent(Intent.ACTION_VIEW)
-        intent.data = Uri.parse(url)
-        context.startActivity(intent)
-      } catch (exception: ActivityNotFoundException) { // explicitly handling if the device hasn't have a web browser installed. #8899
-        Toast.makeText(context, R.string.mapbox_attributionErrorNoBrowser, Toast.LENGTH_LONG).show()
-      }
+    try {
+      val intent = Intent(Intent.ACTION_VIEW)
+      intent.data = Uri.parse(url)
+      context.applicationContext.startActivity(intent)
+    } catch (exception: ActivityNotFoundException) {
+      Toast.makeText(context, R.string.mapbox_attributionErrorNoBrowser, Toast.LENGTH_LONG).show()
+    } catch (t: Throwable) {
+      Toast.makeText(context, t.localizedMessage, Toast.LENGTH_LONG).show()
     }
   }
 

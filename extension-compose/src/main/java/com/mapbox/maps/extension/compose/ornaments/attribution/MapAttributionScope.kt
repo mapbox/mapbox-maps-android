@@ -1,6 +1,5 @@
 package com.mapbox.maps.extension.compose.ornaments.attribution
 
-import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
@@ -334,18 +333,22 @@ public class MapAttributionScope internal constructor(
     }
 
   private fun showWebPage(url: String) {
-    if (mapView.context is Activity) {
-      try {
-        val intent = Intent(Intent.ACTION_VIEW)
-        intent.data = Uri.parse(url)
-        mapView.context.startActivity(intent)
-      } catch (exception: ActivityNotFoundException) { // explicitly handling if the device hasn't have a web browser installed. #8899
-        Toast.makeText(
-          mapView.context,
-          R.string.mapbox_attributionErrorNoBrowser,
-          Toast.LENGTH_LONG
-        ).show()
-      }
+    try {
+      val intent = Intent(Intent.ACTION_VIEW)
+      intent.data = Uri.parse(url)
+      mapView.context.startActivity(intent)
+    } catch (exception: ActivityNotFoundException) {
+      Toast.makeText(
+        mapView.context,
+        R.string.mapbox_attributionErrorNoBrowser,
+        Toast.LENGTH_LONG
+      ).show()
+    } catch (t: Throwable) {
+      Toast.makeText(
+        mapView.context,
+        t.localizedMessage,
+        Toast.LENGTH_LONG
+      ).show()
     }
   }
 
