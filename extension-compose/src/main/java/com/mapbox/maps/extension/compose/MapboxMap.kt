@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.viewinterop.AndroidView
+import com.mapbox.maps.CameraBoundsOptions
 import com.mapbox.maps.MapInitOptions
 import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxExperimental
@@ -55,6 +56,7 @@ import kotlinx.coroutines.awaitCancellation
  * @param onMapClickListener Callback to be invoked when the user clicks on the map view.
  * @param onMapLongClickListener Callback to be invoked when the user long clicks on the map view.
  * @param content The content of the map.
+ * @param boundsOptions A direct control over user's panning through camera
  */
 @Composable
 @MapboxExperimental
@@ -73,6 +75,7 @@ public fun MapboxMap(
   mapViewportState: MapViewportState = rememberMapViewportState(),
   onMapClickListener: OnMapClickListener = DefaultSettingsProvider.defaultOnClickListener,
   onMapLongClickListener: OnMapLongClickListener = DefaultSettingsProvider.defaultOnLongClickListener,
+  boundsOptions: CameraBoundsOptions? = null,
   content: (@Composable @MapboxMapComposable MapboxMapScope.() -> Unit)? = null
 ) {
   // display placeholder when in preview mode.
@@ -120,6 +123,7 @@ public fun MapboxMap(
   val currentOnMapLongClickListener by rememberUpdatedState(onMapLongClickListener)
   val currentContent by rememberUpdatedState(content)
   val currentMapEvents by rememberUpdatedState(mapEvents)
+  val currentBoundsOptions by rememberUpdatedState(boundsOptions)
   LaunchedEffect(Unit) {
     disposingComposition(
       Composition(
@@ -134,6 +138,7 @@ public fun MapboxMap(
             currentOnMapClickListener,
             currentOnMapLongClickListener,
             currentMapEvents,
+            currentBoundsOptions
           )
           currentContent?.let { MapboxMapScope.it() }
         }
