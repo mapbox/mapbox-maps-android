@@ -6,8 +6,6 @@
             <enum name="unique" value="0" />
             <!-- Shared context mode: in OpenGL, the GL context is shared with other renderers, thus we cannot rely on the GL state set from a previous render pass. -->
             <enum name="shared" value="1" />
-            <!-- A once-off still image of a single tile. -->
-            <enum name="tile" value="2" />
         </attr>
         <!-- The map constrain mode. This can be used to limit the map to wrap around the globe horizontally. By default, it is set to HeightOnly. -->
         <attr name="mapbox_mapConstrainMode" format="enum">

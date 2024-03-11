@@ -106,15 +106,18 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
     } else {
       SurfaceView(context, attrs)
     }
+    val contextMode = resolvedMapInitOptions.mapOptions.contextMode ?: ContextMode.UNIQUE
     mapController = MapController(
       when (view) {
         is SurfaceView -> MapboxSurfaceHolderRenderer(
           view.holder,
-          resolvedMapInitOptions.antialiasingSampleCount
+          resolvedMapInitOptions.antialiasingSampleCount,
+          contextMode
         )
         is TextureView -> MapboxTextureViewRenderer(
           view,
-          resolvedMapInitOptions.antialiasingSampleCount
+          resolvedMapInitOptions.antialiasingSampleCount,
+          contextMode
         )
         else -> throw IllegalArgumentException("Provided view has to be a texture or a surface.")
       },

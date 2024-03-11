@@ -13,6 +13,8 @@ Mapbox welcomes participation and contributions from everyone.
 * [compose] Fix `ViewAnnotation` not cleared when it leaves composition.
 * Fix attribution links not opening in some scenarios.
 * Fix attribution and telemetry dialogs not respecting current theme.
+* Fix map being pixelated on some devices when `ContextMode.SHARED` is used (e.g. in AndroidAuto extension).
+* Fix incorrect widget position and scale when resizing the drawing surface.
 
 # 11.2.0 February 29, 2024
 ## Features ✨ and improvements 🏁

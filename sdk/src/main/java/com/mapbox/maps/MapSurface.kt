@@ -49,7 +49,10 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
     this.context = context
     this.surface = surface
     this.mapInitOptions = mapInitOptions
-    this.renderer = MapboxSurfaceRenderer(mapInitOptions.antialiasingSampleCount)
+    this.renderer = MapboxSurfaceRenderer(
+      mapInitOptions.antialiasingSampleCount,
+      mapInitOptions.mapOptions.contextMode ?: ContextMode.UNIQUE
+    )
     this.mapController = MapController(renderer, mapInitOptions).apply {
       initializePlugins(mapInitOptions)
     }

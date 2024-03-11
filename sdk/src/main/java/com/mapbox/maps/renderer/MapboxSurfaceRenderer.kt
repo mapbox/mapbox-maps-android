@@ -2,6 +2,7 @@ package com.mapbox.maps.renderer
 
 import android.view.Surface
 import androidx.annotation.VisibleForTesting
+import com.mapbox.maps.ContextMode
 
 internal open class MapboxSurfaceRenderer : MapboxRenderer {
 
@@ -9,7 +10,7 @@ internal open class MapboxSurfaceRenderer : MapboxRenderer {
 
   override val widgetRenderer: MapboxWidgetRenderer
 
-  constructor(antialiasingSampleCount: Int) {
+  constructor(antialiasingSampleCount: Int, contextMode: ContextMode) {
     widgetRenderer = MapboxWidgetRenderer(
       antialiasingSampleCount = antialiasingSampleCount,
     )
@@ -18,6 +19,7 @@ internal open class MapboxSurfaceRenderer : MapboxRenderer {
       mapboxWidgetRenderer = widgetRenderer,
       translucentSurface = false,
       antialiasingSampleCount = antialiasingSampleCount,
+      contextMode = contextMode
     )
   }
 
