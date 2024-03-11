@@ -9,6 +9,7 @@ import android.view.Choreographer
 import android.view.Surface
 import androidx.annotation.*
 import com.mapbox.common.MapboxSDKCommon
+import com.mapbox.maps.ContextMode
 import com.mapbox.maps.logE
 import com.mapbox.maps.logI
 import com.mapbox.maps.logW
@@ -55,6 +56,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   private val widgetRenderer: MapboxWidgetRenderer
   private var widgetRenderCreated = false
   private val widgetTextureRenderer: TextureRenderer
+  private val contextMode: ContextMode
 
   @Volatile
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
@@ -133,6 +135,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     mapboxWidgetRenderer: MapboxWidgetRenderer,
     translucentSurface: Boolean,
     antialiasingSampleCount: Int,
+    contextMode: ContextMode,
   ) {
     this.translucentSurface = translucentSurface
     this.mapboxRenderer = mapboxRenderer
@@ -140,6 +143,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     this.eglCore = EGLCore(translucentSurface, antialiasingSampleCount)
     this.eglSurface = eglCore.eglNoSurface
     this.widgetTextureRenderer = TextureRenderer()
+    this.contextMode = contextMode
     renderHandlerThread = RenderHandlerThread()
     val handler = renderHandlerThread.start()
     fpsManager = FpsManager(handler)
@@ -162,6 +166,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     this.fpsManager = fpsManager
     this.widgetTextureRenderer = widgetTextureRenderer
     this.eglSurface = eglCore.eglNoSurface
+    this.contextMode = ContextMode.UNIQUE
   }
 
   private fun postPrepareRenderFrame(delayMillis: Long = 0L) {
@@ -315,9 +320,12 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       postPrepareRenderFrame()
       return
     }
+    if (contextMode == ContextMode.SHARED) {
+      GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT or GLES20.GL_DEPTH_BUFFER_BIT or GLES20.GL_STENCIL_BUFFER_BIT)
+    }
     if (widgetRenderer.hasWidgets()) {
-      if (widgetRenderer.needTextureUpdate) {
-        widgetRenderer.updateTexture()
+      if (widgetRenderer.needRender) {
+        widgetRenderer.renderToFrameBuffer()
         eglCore.makeCurrent(eglSurface)
       }
 

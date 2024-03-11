@@ -2,10 +2,11 @@ package com.mapbox.maps.renderer
 
 import android.view.SurfaceHolder
 import androidx.annotation.VisibleForTesting
+import com.mapbox.maps.ContextMode
 
 internal class MapboxSurfaceHolderRenderer : MapboxSurfaceRenderer, SurfaceHolder.Callback {
 
-  constructor(surfaceHolder: SurfaceHolder, antialiasingSampleCount: Int) : super(antialiasingSampleCount) {
+  constructor(surfaceHolder: SurfaceHolder, antialiasingSampleCount: Int, contextMode: ContextMode) : super(antialiasingSampleCount, contextMode) {
     surfaceHolder.addCallback(this)
   }
 

@@ -5,12 +5,14 @@ import android.opengl.GLES20
 import android.opengl.GLUtils
 import android.opengl.Matrix
 import androidx.annotation.AnyThread
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.renderer.gl.GlUtils
 import com.mapbox.maps.renderer.gl.GlUtils.put
 import com.mapbox.maps.renderer.gl.GlUtils.toFloatBuffer
 import java.util.concurrent.locks.ReentrantLock
 import kotlin.concurrent.withLock
 
+@OptIn(MapboxExperimental::class)
 internal class BitmapWidgetRenderer(
   // Bitmap is retained throughout BitmapWidgetRenderer lifetime.
   private var bitmap: Bitmap?,
@@ -183,8 +185,6 @@ internal class BitmapWidgetRenderer(
       GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textures[0])
 
       GLES20.glUniform1i(uniformTexture, 0)
-
-      GLES20.glClearColor(1f, 1f, 1f, 1f)
 
       GLES20.glEnableVertexAttribArray(attributeVertexPosition)
       GlUtils.checkError("glEnableVertexAttribArray")

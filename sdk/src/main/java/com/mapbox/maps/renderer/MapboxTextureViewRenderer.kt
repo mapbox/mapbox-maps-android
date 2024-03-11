@@ -4,12 +4,13 @@ import android.graphics.SurfaceTexture
 import android.view.Surface
 import android.view.TextureView
 import androidx.annotation.VisibleForTesting
+import com.mapbox.maps.ContextMode
 
 internal class MapboxTextureViewRenderer : MapboxRenderer, TextureView.SurfaceTextureListener {
 
   override val widgetRenderer: MapboxWidgetRenderer
 
-  constructor(textureView: TextureView, antialiasingSampleCount: Int) {
+  constructor(textureView: TextureView, antialiasingSampleCount: Int, contextMode: ContextMode) {
     val widgetRenderer = MapboxWidgetRenderer(
       antialiasingSampleCount = antialiasingSampleCount,
     )
@@ -19,6 +20,7 @@ internal class MapboxTextureViewRenderer : MapboxRenderer, TextureView.SurfaceTe
       mapboxWidgetRenderer = widgetRenderer,
       translucentSurface = true,
       antialiasingSampleCount = antialiasingSampleCount,
+      contextMode = contextMode,
     )
     textureView.let {
       it.isOpaque = false

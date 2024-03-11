@@ -74,7 +74,7 @@ class MapboxRenderThreadTest {
     mapboxWidgetRenderer = mockk(relaxUnitFun = true)
     every { mapboxWidgetRenderer.getTexture() } returns 0
     every { mapboxWidgetRenderer.hasTexture() } returns false
-    every { mapboxWidgetRenderer.needTextureUpdate } returns false
+    every { mapboxWidgetRenderer.needRender } returns false
     every { mapboxWidgetRenderer.hasWidgets() } returns false
   }
 
@@ -662,7 +662,7 @@ class MapboxRenderThreadTest {
   fun onDrawDoesNotRenderWidgets() {
     initRenderThread()
     provideValidSurface()
-    every { mapboxWidgetRenderer.needTextureUpdate } returns false
+    every { mapboxWidgetRenderer.needRender } returns false
     every { mapboxWidgetRenderer.getTexture() } returns 0
     pauseHandler()
     mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
@@ -670,7 +670,7 @@ class MapboxRenderThreadTest {
     mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
     idleHandler()
     verifyNo {
-      mapboxWidgetRenderer.updateTexture()
+      mapboxWidgetRenderer.renderToFrameBuffer()
       textureRenderer.render(any())
     }
   }
@@ -680,7 +680,7 @@ class MapboxRenderThreadTest {
     initRenderThread()
     provideValidSurface()
     val textureId = 1
-    every { mapboxWidgetRenderer.needTextureUpdate } returns true
+    every { mapboxWidgetRenderer.needRender } returns true
     every { mapboxWidgetRenderer.hasWidgets() } returns true
     every { mapboxWidgetRenderer.hasTexture() } returns true
     every { mapboxWidgetRenderer.getTexture() } returns textureId
@@ -690,7 +690,7 @@ class MapboxRenderThreadTest {
     mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
     idleHandler()
     verify(exactly = 2) {
-      mapboxWidgetRenderer.updateTexture()
+      mapboxWidgetRenderer.renderToFrameBuffer()
       textureRenderer.render(textureId)
     }
   }
@@ -700,7 +700,7 @@ class MapboxRenderThreadTest {
     initRenderThread()
     provideValidSurface()
     val textureId = 1
-    every { mapboxWidgetRenderer.needTextureUpdate } returns true
+    every { mapboxWidgetRenderer.needRender } returns true
     every { mapboxWidgetRenderer.hasWidgets() } returns true
     every { mapboxWidgetRenderer.hasTexture() } returns true
     every { mapboxWidgetRenderer.getTexture() } returns textureId
@@ -708,7 +708,7 @@ class MapboxRenderThreadTest {
     mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
     idleHandler()
     verifyOrder {
-      mapboxWidgetRenderer.updateTexture()
+      mapboxWidgetRenderer.renderToFrameBuffer()
       mapboxRenderer.render()
       textureRenderer.render(textureId)
     }
