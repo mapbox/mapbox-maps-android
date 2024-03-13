@@ -4,17 +4,36 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 ## Breaking changes ⚠️
-* [compose] Replace `MapboxMap.compassSettings`, `MapboxMap.scaleBarSettings`, `MapboxMap.logoSettings`, `MapboxMap.attributionSettings` with composable functions in dedicated scopes: `MapCompassScope.Compass()`, `MapScaleBarScope.ScaleBar()`, `MapLogoScope.Logo()`, `MapAttributionScope.Attribution()`.
+* [compose] Replace experimental `MapboxMap.compassSettings`, `MapboxMap.scaleBarSettings`, `MapboxMap.logoSettings`, `MapboxMap.attributionSettings` with composable functions in dedicated scopes: `MapCompassScope.Compass()`, `MapScaleBarScope.ScaleBar()`, `MapLogoScope.Logo()`, `MapAttributionScope.Attribution()`.
 
 ## Features ✨ and improvements 🏁
 * Added Attribution and Telemetry pop-up dialogs and compass view content description translations for Arabic, Bulgarian, Catalan, Chinese Simplified, Chinese Traditional, Czech, Danish, Dutch, French, Galician, German, Hebrew, Italian, Japanese, Korean, Lithuanian, Norwegian, Polish, Belarusian, Russian, Spanish, Swedish, Ukranian and Vietnamese.
+* Faster landmark parsing by switching tinygltf in favor of cgltf.
+* Use mipmap with pattern images .
+* Add `SdkInformationQuery` to expose sdk version information.
+* Enable `TileStore` delta updates by default for Maps domain. 
+* Add `TileStore.estimateTileRegion` API for estimating Tile Region downloads and storage size.
 
 ## Bug fixes 🐞
 * [compose] Fix `ViewAnnotation` not cleared when it leaves composition.
 * Fix attribution links not opening in some scenarios.
 * Fix attribution and telemetry dialogs not respecting current theme.
 * Fix map being pixelated on some devices when `ContextMode.SHARED` is used (e.g. in AndroidAuto extension).
-* Fix incorrect widget position and scale when resizing the drawing surface.
+* Fix incorrect widget position and scale when resizing the drawing surface. 
+* Fix layer paint property update with feature state changes, especially if the paint property value data-driven by brightness or zoom. 
+* Fix snapshotter race conditions to ensure new request could effectively trigger map rendering.
+* Fix raster array band updates glitches during the camera zoom animation.
+* Reload vector source tiles when language or worldview setting is changed. 
+* Apply config expression to atmosphere properties. 
+* Fix map freezing when using `queryRenderedFeatures` with 3d models in mercator projection. 
+* Reduce time spent on line gradient updates on the render thread.
+* Fix network reachability status getting stuck with ReachableViaWWAN status if HTTP requests completed at the same time as network reported being disconnected.
+* Fix wrong network reachability statuses.
+* Fix double `LocationServiceObserver.onAvailabilityChanged` callback trigger.
+* Avoid bringing Kotlin 1.8 as transitive dependency, Maps SDK should use Kotlin 1.7.20.
+
+## Dependencies
+* Update gl-native to v11.3.0-beta.1 and common to v24.3.0-beta.1.
 
 # 11.2.0 February 29, 2024
 ## Features ✨ and improvements 🏁
