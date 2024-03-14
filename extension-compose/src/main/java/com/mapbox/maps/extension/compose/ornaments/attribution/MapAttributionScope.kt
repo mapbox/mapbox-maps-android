@@ -22,10 +22,12 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
@@ -105,8 +107,8 @@ public class MapAttributionScope internal constructor(
     val pluginId = remember {
       getNextId()
     }
-    var attributions by remember {
-      mutableStateOf(listOf<Attribution>())
+    val attributions = remember {
+      mutableStateListOf<Attribution>()
     }
     var showAttributionDialog by remember {
       mutableStateOf(false)
@@ -147,8 +149,8 @@ public class MapAttributionScope internal constructor(
     // to current style.
     LaunchedEffect(showAttributionDialog) {
       mapView.getPlugin<AttributionComposePlugin>(pluginId)?.let {
-        attributions =
-          it.mapAttributionDelegate.parseAttributions(mapView.context, AttributionParserConfig())
+        attributions.clear()
+        attributions.addAll(it.mapAttributionDelegate.parseAttributions(mapView.context, AttributionParserConfig()))
         mapboxFeedbackUrl = it.mapAttributionDelegate.buildMapBoxFeedbackUrl(mapView.context)
       }
     }
@@ -223,6 +225,7 @@ public class MapAttributionScope internal constructor(
    * @param onDismissRequest The callback to be invoked when the attribution is dismissed.
    * @param onAttributionClick The callback to be invoked when a attribution is clicked.
    */
+  @OptIn(ExperimentalComposeUiApi::class)
   @MapboxExperimental
   @Composable
   public fun AttributionDialog(
@@ -232,6 +235,7 @@ public class MapAttributionScope internal constructor(
   ) {
     AlertDialog(
       onDismissRequest = onDismissRequest,
+      modifier = Modifier.padding(start = 10.dp, end = 10.dp),
       confirmButton = { },
       title = {
         Text(
@@ -258,7 +262,11 @@ public class MapAttributionScope internal constructor(
           }
         }
       },
-      properties = DialogProperties()
+      properties = DialogProperties(
+        // should be fully fixed in Compose 1.5, now using workaround from
+        // https://issuetracker.google.com/issues/221643630
+        usePlatformDefaultWidth = false
+      )
     )
   }
 
