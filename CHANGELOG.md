@@ -15,6 +15,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Add `TileStore.estimateTileRegion` API for estimating Tile Region downloads and storage size.
 * [compose] Introduce experimental `MapStyle`, `MapboxStandardStyle`, `GenericStyle` composable functions to work with the map style.
 * [compose] Added experimental layer and source composable functions to insert layer/sources to the map.
+* [compose] Improve annotation group update speed.
 
 ## Bug fixes 🐞
 * [compose] Fix `ViewAnnotation` not cleared when it leaves composition.

@@ -25,10 +25,10 @@ internal class CircleAnnotationManagerNode(
   var annotationClusterItems: List<CircleAnnotationOptions> = emptyList()
     set(value) {
       if (currentAnnotations.isNotEmpty()) {
-        annotationManager.delete(currentAnnotations)
-        currentAnnotations.clear()
+        annotationManager.update(currentAnnotations)
+      } else {
+        currentAnnotations.addAll(annotationManager.create(value))
       }
-      currentAnnotations.addAll(annotationManager.create(value))
       field = value
     }
 
