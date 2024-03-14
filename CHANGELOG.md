@@ -3,6 +3,8 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
+
+# 11.3.0-beta.1 March 14, 2024
 ## Breaking changes ⚠️
 * [compose] Replace experimental `MapboxMap.compassSettings`, `MapboxMap.scaleBarSettings`, `MapboxMap.logoSettings`, `MapboxMap.attributionSettings` with composable functions in dedicated scopes: `MapCompassScope.Compass()`, `MapScaleBarScope.ScaleBar()`, `MapLogoScope.Logo()`, `MapAttributionScope.Attribution()`.
 
@@ -37,6 +39,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v11.3.0-beta.1 and common to v24.3.0-beta.1.
+
 
 # 11.2.0 February 29, 2024
 ## Features ✨ and improvements 🏁
