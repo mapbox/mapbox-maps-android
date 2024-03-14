@@ -65,6 +65,19 @@ class MapboxMapTest {
   }
 
   @Test
+  fun onDestroyWhenPerformanceStatisticsStarted() {
+    mapboxMap.startPerformanceStatisticsCollection(mockk(), mockk())
+    mapboxMap.onDestroy()
+    verify(exactly = 1) { nativeMap.stopPerformanceStatisticsCollection() }
+  }
+
+  @Test
+  fun onDestroyWhenPerformanceStatisticsNotStarted() {
+    mapboxMap.onDestroy()
+    verify(exactly = 0) { nativeMap.stopPerformanceStatisticsCollection() }
+  }
+
+  @Test
   fun loadStyleMapboxUri() {
     Shadows.shadowOf(Looper.getMainLooper()).pause()
     assertFalse(mapboxMap.isStyleLoadInitiated)
