@@ -5591,6 +5591,11 @@ public final class com/mapbox/maps/extension/style/utils/ColorUtils {
 	public final fun rgbaToColor (Ljava/lang/String;)Ljava/lang/Integer;
 }
 
+public final class com/mapbox/maps/extension/style/utils/TypeUtils {
+	public static final field INSTANCE Lcom/mapbox/maps/extension/style/utils/TypeUtils;
+	public final fun wrapToValue (Ljava/lang/Object;)Lcom/mapbox/bindgen/Value;
+}
+
 public final class com/mapbox/maps/extension/style/utils/TypeUtilsKt {
 	public static final fun toValue (Lcom/mapbox/geojson/Feature;)Lcom/mapbox/bindgen/Value;
 	public static final fun toValue (Lcom/mapbox/geojson/FeatureCollection;)Lcom/mapbox/bindgen/Value;

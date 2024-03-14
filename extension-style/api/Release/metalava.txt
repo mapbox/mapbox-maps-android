@@ -6511,6 +6511,11 @@ package com.mapbox.maps.extension.style.utils {
   public final class ExpectedUtilsKt {
   }
 
+  @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) public final class TypeUtils {
+    method public com.mapbox.bindgen.Value wrapToValue(Object value);
+    field public static final com.mapbox.maps.extension.style.utils.TypeUtils INSTANCE;
+  }
+
   public final class TypeUtilsKt {
     method public static inline <reified T> T! silentUnwrap(com.mapbox.maps.StylePropertyValue);
     method public static com.mapbox.bindgen.Value toValue(com.mapbox.geojson.Feature);

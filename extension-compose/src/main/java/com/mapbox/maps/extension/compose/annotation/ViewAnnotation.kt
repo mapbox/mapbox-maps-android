@@ -26,7 +26,7 @@ internal class ViewAnnotationNode(
   val view: View,
   var updatedListener: OnViewAnnotationUpdatedListener?,
 ) : MapNode() {
-  override fun onAttached() {
+  override fun onAttached(parent: MapNode) {
     viewAnnotationManager.apply {
       updatedListener?.let {
         addOnViewAnnotationUpdatedListener(it)
@@ -34,7 +34,7 @@ internal class ViewAnnotationNode(
     }
   }
 
-  override fun onRemoved() {
+  override fun onRemoved(parent: MapNode) {
     cleanUp()
   }
 

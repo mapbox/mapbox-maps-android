@@ -7,7 +7,7 @@ internal abstract class BaseAnnotationNode : MapNode() {
     cleanUp()
   }
 
-  override fun onRemoved() {
+  override fun onRemoved(parent: MapNode) {
     cleanUp()
   }
 

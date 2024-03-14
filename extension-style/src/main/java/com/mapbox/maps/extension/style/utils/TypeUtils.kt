@@ -1,5 +1,6 @@
 package com.mapbox.maps.extension.style.utils
 
+import androidx.annotation.RestrictTo
 import com.google.gson.JsonPrimitive
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
@@ -16,7 +17,17 @@ import com.mapbox.maps.extension.style.sources.toValue
 import com.mapbox.maps.extension.style.types.Formatted
 import com.mapbox.maps.extension.style.types.StyleTransition
 
-internal object TypeUtils {
+/**
+ * Internal utility to convert Any type to Value class.
+ */
+@RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
+object TypeUtils {
+  /**
+   * Wrap the Any Kotlin type to [Value] class to be consumed by native renderer.
+   *
+   * @param value the value to be wrapped.
+   * @return the [Value] class.
+   */
   fun wrapToValue(value: Any): Value {
     return when (value) {
       is Value -> {

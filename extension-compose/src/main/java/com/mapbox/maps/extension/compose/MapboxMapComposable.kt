@@ -4,8 +4,8 @@ import androidx.compose.runtime.ComposableTargetMarker
 import com.mapbox.maps.MapboxExperimental
 
 /**
- * Marks a composable function being expected to be used inside another composable function marked as
- * [MapboxMapComposable].
+ * Marks a composable function as being expected to be used inside another composable function that is
+ * also marked or inferred to be marked as a [MapboxMapComposable].
  *
  * This will produce build warnings when [MapboxMapComposable] composable functions are used outside
  * of a [MapboxMapComposable] content lambda, and vice versa.

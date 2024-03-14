@@ -3,6 +3,7 @@
 package com.mapbox.maps.extension.compose.annotation.internal.generated
 
 import com.mapbox.maps.extension.compose.annotation.internal.BaseAnnotationNode
+import com.mapbox.maps.extension.compose.internal.MapNode
 import com.mapbox.maps.plugin.annotation.generated.OnPolylineAnnotationClickListener
 import com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation
 import com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationManager
@@ -16,7 +17,7 @@ internal class PolylineAnnotationManagerNode(
     onClicked.invoke(it)
   }
 
-  override fun onAttached() {
+  override fun onAttached(parent: MapNode) {
     annotationManager.addClickListener(onClickedListener)
   }
 

@@ -1,10 +1,10 @@
 package com.mapbox.maps.extension.compose.internal
 
 import androidx.compose.runtime.AbstractApplier
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Composition
-import androidx.compose.runtime.CompositionContext
 import com.mapbox.maps.MapView
+import com.mapbox.maps.base.BuildConfig
+import com.mapbox.maps.logD
+import com.mapbox.maps.logW
 
 /**
  * Defines the contract of a MapNode, the MapNode will be notified when it's added/moved/removed from
@@ -16,7 +16,7 @@ internal abstract class MapNode {
   /**
    * Invoked when the [MapNode] is attached to the node tree.
    */
-  open fun onAttached() {}
+  open fun onAttached(parent: MapNode) {}
 
   /**
    * Invoked when the [MapNode] is moved inside the node tree.
@@ -29,7 +29,7 @@ internal abstract class MapNode {
   /**
    * Invoked when the [MapNode] is removed from the node tree.
    */
-  open fun onRemoved() {}
+  open fun onRemoved(parent: MapNode) {}
 
   /**
    * Invoked when the node tree is cleared.
@@ -40,7 +40,11 @@ internal abstract class MapNode {
 /**
  * Root level [MapNode] for MapboxMap composable function.
  */
-internal object RootMapNode : MapNode()
+internal object RootMapNode : MapNode() {
+  override fun toString(): String {
+    return "RootMapNode()"
+  }
+}
 
 /**
  * MapApplier is responsible for applying the tree-based operations on MapboxMap, that get emitted
@@ -59,8 +63,10 @@ internal class MapApplier(
   }
 
   override fun insertBottomUp(index: Int, instance: MapNode) {
+    logD(TAG, "insertBottomUp: $index, $instance")
     current.children.add(index, instance)
-    instance.onAttached()
+    instance.onAttached(parent = current)
+    printNodesTree()
   }
 
   override fun insertTopDown(index: Int, instance: MapNode) {
@@ -74,24 +80,35 @@ internal class MapApplier(
   }
 
   override fun move(from: Int, to: Int, count: Int) {
+    logD(TAG, "move: $from, $to, $count")
     // TODO: Notify the nodes that has been moved
     current.children.move(from, to, count)
+    printNodesTree()
   }
 
   override fun remove(index: Int, count: Int) {
+    logD(TAG, "remove: $index, $count")
     repeat(count) { offset ->
-      current.children[index + offset].onRemoved()
+      current.children[index + offset].onRemoved(parent = current)
     }
     current.children.remove(index, count)
+    printNodesTree()
   }
-}
 
-internal fun MapNode.setContent(
-  mapView: MapView,
-  parent: CompositionContext,
-  content: @Composable () -> Unit
-): Composition {
-  return Composition(MapApplier(mapView), parent).apply {
-    setContent(content)
+  private fun printNodesTree() {
+    if (BuildConfig.DEBUG) {
+      walkChildren(node = root)
+    }
+  }
+
+  private fun walkChildren(prefix: String = "\t", node: MapNode) {
+    logW(TAG, "$prefix - $node")
+    node.children.forEach {
+      walkChildren("$prefix\t", it)
+    }
+  }
+
+  private companion object {
+    private const val TAG = "MapApplier"
   }
 }
