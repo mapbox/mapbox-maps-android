@@ -102,4 +102,5 @@
     <string name="description_raster_colorization">Raster colorization using raster-color</string>
     <string name="description_secondary_display_presentation">Displaying a map on a secondary display using Presentation.</string>
     <string name="description_model_layer">Showcase the usage of a 3D model layer.</string>
+    <string name="description_custom_raster_source">Showcase the usage of a custom raster source.</string>
 </resources>

@@ -1303,6 +1303,17 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ExampleOverviewActivity" />
         </activity>
-
+        <activity
+            android:name=".examples.style.CustomRasterSourceActivity"
+            android:description="@string/description_custom_raster_source"
+            android:exported="true"
+            android:label="@string/activity_custom_raster_source">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_styles" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ExampleOverviewActivity" />
+        </activity>
     </application>
 </manifest>
