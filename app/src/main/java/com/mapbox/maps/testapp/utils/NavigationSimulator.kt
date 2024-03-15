@@ -307,6 +307,7 @@ class NavigationSimulator(
 
   private fun initLocationComponent() {
     val locationComponentPlugin = mapView.location
+    locationComponentPlugin.setLocationProvider(locationProvider)
     locationComponentPlugin.updateSettings {
       puckBearing = PuckBearing.COURSE
       puckBearingEnabled = true
@@ -327,7 +328,6 @@ class NavigationSimulator(
         }.toJson()
       )
     }
-    locationComponentPlugin.setLocationProvider(locationProvider)
     locationComponentPlugin.addOnIndicatorPositionChangedListener(this)
   }
 
