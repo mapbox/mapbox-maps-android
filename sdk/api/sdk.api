@@ -770,7 +770,7 @@ public final class com/mapbox/maps/viewannotation/ViewAnnotationManager$DefaultI
 public final class com/mapbox/maps/viewannotation/ViewAnnotationOptionsKtxKt {
 	public static final fun annotatedLayerFeature (Lcom/mapbox/maps/ViewAnnotationOptions$Builder;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/ViewAnnotationOptions$Builder;
 	public static synthetic fun annotatedLayerFeature$default (Lcom/mapbox/maps/ViewAnnotationOptions$Builder;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lcom/mapbox/maps/ViewAnnotationOptions$Builder;
-	public static final fun annotationAnchor (Lcom/mapbox/maps/ViewAnnotationOptions$Builder;Lkotlin/jvm/functions/Function1;)V
+	public static final fun annotationAnchor (Lcom/mapbox/maps/ViewAnnotationOptions$Builder;Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/ViewAnnotationOptions$Builder;
 	public static final fun annotationAnchors (Lcom/mapbox/maps/ViewAnnotationOptions$Builder;[Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/ViewAnnotationOptions$Builder;
 	public static final fun geometry (Lcom/mapbox/maps/ViewAnnotationOptions$Builder;Lcom/mapbox/geojson/Geometry;)Lcom/mapbox/maps/ViewAnnotationOptions$Builder;
 	public static final fun viewAnnotationOptions (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/ViewAnnotationOptions;
