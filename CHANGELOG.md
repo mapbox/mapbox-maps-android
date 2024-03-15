@@ -4,13 +4,15 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-# 11.2.1
+
+# 11.2.1 March 15, 2024
 ## Bug fixes 🐞
 * Apply config expression to atmosphere properties.
 * Fix map freezing when using `queryRenderedFeatures` with 3d models in mercator projection.
 
 ## Dependencies
 * Update gl-native to v11.2.1.
+
 
 # 11.3.0-rc.1
 ## Bug fixes 🐞
