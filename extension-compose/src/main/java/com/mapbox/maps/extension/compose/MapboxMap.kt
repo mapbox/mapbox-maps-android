@@ -78,6 +78,7 @@ public fun MapboxMap(
   mapViewportState: MapViewportState = rememberMapViewportState(),
   onMapClickListener: OnMapClickListener = DefaultSettingsProvider.defaultOnClickListener,
   onMapLongClickListener: OnMapLongClickListener = DefaultSettingsProvider.defaultOnLongClickListener,
+  boundsOptions: CameraBoundsOptions? = null,
   style: @Composable @MapboxStyleComposable () -> Unit = { MapboxStandardStyle() },
   content: (@Composable @MapboxMapComposable MapboxMapScope.() -> Unit)? = null
 ) {
@@ -126,6 +127,7 @@ public fun MapboxMap(
   val currentOnMapLongClickListener by rememberUpdatedState(onMapLongClickListener)
   val currentContent by rememberUpdatedState(content)
   val currentMapEvents by rememberUpdatedState(mapEvents)
+  val currentBoundsOptions by rememberUpdatedState(boundsOptions)
   val currentStyle by rememberUpdatedState(style)
   LaunchedEffect(Unit) {
     disposingComposition(
