@@ -102,4 +102,5 @@
     <string name="activity_raster_colorization">Raster Colorization</string>
     <string name="activity_secondary_display_presentation">Secondary Display using Presentation</string>
     <string name="activity_model_layer">Display 3D model in a model layer</string>
+    <string name="activity_custom_raster_source">Custom Raster Source</string>
 </resources>

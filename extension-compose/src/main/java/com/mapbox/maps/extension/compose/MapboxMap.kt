@@ -29,6 +29,8 @@ import com.mapbox.maps.extension.compose.ornaments.attribution.MapAttributionSco
 import com.mapbox.maps.extension.compose.ornaments.compass.MapCompassScope
 import com.mapbox.maps.extension.compose.ornaments.logo.MapLogoScope
 import com.mapbox.maps.extension.compose.ornaments.scalebar.MapScaleBarScope
+import com.mapbox.maps.extension.compose.style.MapboxStandardStyle
+import com.mapbox.maps.extension.compose.style.MapboxStyleComposable
 import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_ATTRIBUTION_PLUGIN_ID
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_COMPASS_PLUGIN_ID
@@ -55,6 +57,7 @@ import kotlinx.coroutines.awaitCancellation
  * @param mapViewportState A state object that can be hoisted to control and observe the map's camera state. A [MapViewportState] may only be used by a single [MapboxMap] composable at a time as it reflects instance state for a single view of a map.
  * @param onMapClickListener Callback to be invoked when the user clicks on the map view.
  * @param onMapLongClickListener Callback to be invoked when the user long clicks on the map view.
+ * @param style The Style of the map.
  * @param content The content of the map.
  * @param boundsOptions A direct control over user's panning through camera
  */
@@ -75,7 +78,7 @@ public fun MapboxMap(
   mapViewportState: MapViewportState = rememberMapViewportState(),
   onMapClickListener: OnMapClickListener = DefaultSettingsProvider.defaultOnClickListener,
   onMapLongClickListener: OnMapLongClickListener = DefaultSettingsProvider.defaultOnLongClickListener,
-  boundsOptions: CameraBoundsOptions? = null,
+  style: @Composable @MapboxStyleComposable () -> Unit = { MapboxStandardStyle() },
   content: (@Composable @MapboxMapComposable MapboxMapScope.() -> Unit)? = null
 ) {
   // display placeholder when in preview mode.
@@ -123,7 +126,7 @@ public fun MapboxMap(
   val currentOnMapLongClickListener by rememberUpdatedState(onMapLongClickListener)
   val currentContent by rememberUpdatedState(content)
   val currentMapEvents by rememberUpdatedState(mapEvents)
-  val currentBoundsOptions by rememberUpdatedState(boundsOptions)
+  val currentStyle by rememberUpdatedState(style)
   LaunchedEffect(Unit) {
     disposingComposition(
       Composition(
@@ -140,6 +143,8 @@ public fun MapboxMap(
             currentMapEvents,
             currentBoundsOptions
           )
+          // add Style node with the styleUri
+          currentStyle.invoke()
           currentContent?.let { MapboxMapScope.it() }
         }
       }

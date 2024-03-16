@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mapbox_attributionErrorNoBrowser">Na urządzeniu nie jest zainstalowana przeglądarka internetowa, nie można otworzyć strony internetowej.</string>
+    <string name="mapbox_attributionsDialogTitle">Obsługiwane przez mapy Mapbox</string>
+    <string name="mapbox_attributionTelemetryTitle">Ulepszaj mapy Mapbox</string>
+    <string name="mapbox_attributionTelemetryMessage">Pomagasz ulepszyć mapy OpenStreetMap i Mapbox, przekazując anonimowe dane o użytkowaniu.</string>
+    <string name="mapbox_attributionTelemetryPositive">Brać udział</string>
+    <string name="mapbox_attributionTelemetryNegative">Przestań brać udział</string>
+    <string name="mapbox_attributionTelemetryNeutral">Więcej informacji</string>
+    <string name="mapbox_warning_attribution_disabled">Atrybucja musi być włączona, jeśli korzystasz z danych ze źródeł, które tego wymagają. Więcej szczegółów można znaleźć na stronie https://docs.mapbox.com/help/getting-started/attribution/.</string>
+</resources>

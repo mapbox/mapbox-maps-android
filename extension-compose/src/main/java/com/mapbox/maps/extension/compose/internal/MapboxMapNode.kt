@@ -187,7 +187,7 @@ private class MapboxMapNode(
       field = value
     }
 
-  override fun onAttached() {
+  override fun onAttached(parent: MapNode) {
     controller.gestures.apply {
       addNonDefaultOnClickListener(clickListener)
       addNonDefaultOnLongClickListener(longClickListener)
@@ -213,7 +213,7 @@ private class MapboxMapNode(
     }
   }
 
-  override fun onRemoved() {
+  override fun onRemoved(parent: MapNode) {
     cleanUp()
   }
 
@@ -229,6 +229,10 @@ private class MapboxMapNode(
     cancelable?.cancel()
     mapEventCancelableHolder.cancelAll()
     controller.viewport.removeStatusObserver(viewportStatusObserver)
+  }
+
+  override fun toString(): String {
+    return "MapboxMapNode()"
   }
 }
 

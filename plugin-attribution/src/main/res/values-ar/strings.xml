@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mapbox_attributionErrorNoBrowser">لا يوجد متصفح ويب مثبت على الجهاز، ولا يمكن فتح صفحة الويب.</string>
+    <string name="mapbox_attributionsDialogTitle">مدعوم من خرائط Mapbox</string>
+    <string name="mapbox_attributionTelemetryTitle">جعل خرائط Mapbox أفضل</string>
+    <string name="mapbox_attributionTelemetryMessage">أنت تساعد في تحسين خرائط OpenStreetMap وMapbox من خلال المساهمة ببيانات استخدام مجهولة المصدر.</string>
+    <string name="mapbox_attributionTelemetryPositive">يشارك</string>
+    <string name="mapbox_attributionTelemetryNegative">التوقف عن المشاركة</string>
+    <string name="mapbox_attributionTelemetryNeutral">مزيد من المعلومات</string>
+    <string name="mapbox_warning_attribution_disabled">يجب تمكين الإسناد إذا كنت تستخدم بيانات من مصادر تتطلب ذلك. راجع https://docs.mapbox.com/help/getting-started/attribution/ لمزيد من التفاصيل.</string>
+</resources>

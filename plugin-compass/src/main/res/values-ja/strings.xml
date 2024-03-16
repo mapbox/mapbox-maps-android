@@ -1,0 +1,3 @@
+<resources>
+    <string name="mapbox_compassContentDescription">地図コンパス。有効にすると、マップの回転が北にリセットされます。</string>
+</resources>

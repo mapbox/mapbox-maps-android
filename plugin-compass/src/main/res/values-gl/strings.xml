@@ -1,0 +1,3 @@
+<resources>
+    <string name="mapbox_compassContentDescription">Compás do mapa. Active para restablecer a rotación do mapa ao norte.</string>
+</resources>

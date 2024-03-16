@@ -3,6 +3,7 @@
 package com.mapbox.maps.extension.compose.annotation.internal.generated
 
 import com.mapbox.maps.extension.compose.annotation.internal.BaseAnnotationNode
+import com.mapbox.maps.extension.compose.internal.MapNode
 import com.mapbox.maps.plugin.annotation.generated.OnPolygonAnnotationClickListener
 import com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation
 import com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationManager
@@ -16,7 +17,7 @@ internal class PolygonAnnotationNode(
     onClicked.invoke(it)
   }
 
-  override fun onAttached() {
+  override fun onAttached(parent: MapNode) {
     annotationManager.addClickListener(onClickedListener)
   }
 

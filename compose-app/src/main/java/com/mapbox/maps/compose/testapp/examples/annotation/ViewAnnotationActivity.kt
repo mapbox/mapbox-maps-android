@@ -7,8 +7,11 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -16,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import com.mapbox.maps.*
 import com.mapbox.maps.compose.testapp.ExampleScaffold
 import com.mapbox.maps.compose.testapp.examples.utils.CityLocations.HELSINKI
@@ -40,9 +44,23 @@ public class ViewAnnotationActivity : ComponentActivity() {
       var buttonColor by remember {
         mutableStateOf(Color.Blue)
       }
+      var showViewAnnotation by remember {
+        mutableStateOf(true)
+      }
       val animatedColor by animateColorAsState(buttonColor, label = "ButtonAnnotationColor")
       MapboxMapComposeTheme {
-        ExampleScaffold {
+        ExampleScaffold(
+          floatingActionButton = {
+            FloatingActionButton(
+              onClick = {
+                showViewAnnotation = !showViewAnnotation
+              },
+              shape = RoundedCornerShape(16.dp),
+            ) {
+              Text(modifier = Modifier.padding(10.dp), text = "Toggle Visibility")
+            }
+          }
+        ) {
           MapboxMap(
             Modifier.fillMaxSize(),
             mapViewportState = MapViewportState().apply {
@@ -52,29 +70,32 @@ public class ViewAnnotationActivity : ComponentActivity() {
               }
             }
           ) {
-            ViewAnnotation(
-              options = viewAnnotationOptions {
-                geometry(HELSINKI)
-                annotationAnchors(
-                  {
-                    anchor(ViewAnnotationAnchor.BOTTOM)
-                  }
-                )
-                allowOverlap(false)
-              }
-            ) {
-              Button(
-                onClick = {
-                  buttonColor = Color(random.nextInt(256), random.nextInt(256), random.nextInt(256))
-                  Toast.makeText(applicationContext, "Click", LENGTH_SHORT).show()
-                },
-                colors = ButtonDefaults.buttonColors(
-                  backgroundColor = animatedColor
-                ),
+            if (showViewAnnotation) {
+              ViewAnnotation(
+                options = viewAnnotationOptions {
+                  geometry(HELSINKI)
+                  annotationAnchors(
+                    {
+                      anchor(ViewAnnotationAnchor.BOTTOM)
+                    }
+                  )
+                  allowOverlap(false)
+                }
               ) {
-                Text(
-                  "Click me"
-                )
+                Button(
+                  onClick = {
+                    buttonColor =
+                      Color(random.nextInt(256), random.nextInt(256), random.nextInt(256))
+                    Toast.makeText(applicationContext, "Click", LENGTH_SHORT).show()
+                  },
+                  colors = ButtonDefaults.buttonColors(
+                    backgroundColor = animatedColor
+                  ),
+                ) {
+                  Text(
+                    "Click me"
+                  )
+                }
               }
             }
           }

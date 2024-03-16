@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mapbox_attributionErrorNoBrowser">기기에 웹 브라우저가 설치되어 있지 않아 웹 페이지를 열 수 없습니다.</string>
+    <string name="mapbox_attributionsDialogTitle">Mapbox 지도 제공</string>
+    <string name="mapbox_attributionTelemetryTitle">Mapbox 지도를 더 좋게 만들기</string>
+    <string name="mapbox_attributionTelemetryMessage">익명의 사용 데이터를 제공하여 OpenStreetMap 및 Mapbox 지도를 개선하는 데 도움을 주고 계십니다.</string>
+    <string name="mapbox_attributionTelemetryPositive">참가하다</string>
+    <string name="mapbox_attributionTelemetryNegative">참여 중지</string>
+    <string name="mapbox_attributionTelemetryNeutral">더 많은 정보</string>
+    <string name="mapbox_warning_attribution_disabled">기여가 필요한 소스의 데이터를 사용하는 경우 기여를 활성화해야 합니다. 자세한 내용은 https://docs.mapbox.com/help/getting-started/attribution/ 을 참조하세요.</string>
+</resources>

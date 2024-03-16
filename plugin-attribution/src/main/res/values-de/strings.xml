@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mapbox_attributionErrorNoBrowser">Auf dem Gerät ist kein Webbrowser installiert. Die Webseite kann nicht geöffnet werden.</string>
+    <string name="mapbox_attributionsDialogTitle">Unterstützt von Mapbox Maps</string>
+    <string name="mapbox_attributionTelemetryTitle">Machen Sie Mapbox-Karten besser</string>
+    <string name="mapbox_attributionTelemetryMessage">Sie tragen dazu bei, die Karten von OpenStreetMap und Mapbox zu verbessern, indem Sie anonyme Nutzungsdaten beisteuern.</string>
+    <string name="mapbox_attributionTelemetryPositive">Teilnehmen</string>
+    <string name="mapbox_attributionTelemetryNegative">Hören Sie auf, mitzumachen</string>
+    <string name="mapbox_attributionTelemetryNeutral">Mehr Info</string>
+    <string name="mapbox_warning_attribution_disabled">Die Attribution muss aktiviert sein, wenn Sie Daten aus Quellen verwenden, die dies erfordern. Weitere Einzelheiten finden Sie unter https://docs.mapbox.com/help/getting-started/attribution/.</string>
+</resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mapbox_attributionErrorNoBrowser">设备上未安装网页浏览器，无法打开网页。</string>
+    <string name="mapbox_attributionsDialogTitle">由 Mapbox 地图提供支持</string>
+    <string name="mapbox_attributionTelemetryTitle">让 Mapbox 地图变得更好</string>
+    <string name="mapbox_attributionTelemetryMessage">您通过贡献匿名使用数据来帮助改进 OpenStreetMap 和 Mapbox 地图。</string>
+    <string name="mapbox_attributionTelemetryPositive">参加</string>
+    <string name="mapbox_attributionTelemetryNegative">停止参与</string>
+    <string name="mapbox_attributionTelemetryNeutral">更多信息</string>
+    <string name="mapbox_warning_attribution_disabled">如果您使用来自需要归因的来源的数据，则必须启用归因。有关更多详细信息，请参阅 https://docs.mapbox.com/help/getting-started/attribution/。</string>
+</resources>

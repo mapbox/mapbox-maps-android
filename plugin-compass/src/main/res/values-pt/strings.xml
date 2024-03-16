@@ -1,0 +1,3 @@
+<resources>
+    <string name="mapbox_compassContentDescription">Bússola do mapa. Ative para redefinir a rotação do mapa para Norte.</string>
+</resources>

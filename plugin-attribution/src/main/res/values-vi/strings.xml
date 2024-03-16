@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mapbox_attributionErrorNoBrowser">Không có trình duyệt web được cài đặt trên thiết bị, không thể mở trang web.</string>
+    <string name="mapbox_attributionsDialogTitle">Được hỗ trợ bởi Mapbox Maps</string>
+    <string name="mapbox_attributionTelemetryTitle">Làm cho bản đồ Mapbox tốt hơn</string>
+    <string name="mapbox_attributionTelemetryMessage">Bạn đang giúp cải thiện bản đồ OpenStreetMap và Mapbox bằng cách đóng góp dữ liệu sử dụng ẩn danh.</string>
+    <string name="mapbox_attributionTelemetryPositive">Tham gia</string>
+    <string name="mapbox_attributionTelemetryNegative">Ngừng tham gia</string>
+    <string name="mapbox_attributionTelemetryNeutral">Thêm thông tin</string>
+    <string name="mapbox_warning_attribution_disabled">Thuộc tính phải được bật nếu bạn sử dụng dữ liệu từ các nguồn yêu cầu nó. Xem https://docs.mapbox.com/help/getting-started/attribution/ để biết thêm chi tiết.</string>
+</resources>

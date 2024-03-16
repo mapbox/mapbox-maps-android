@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mapbox_attributionErrorNoBrowser">Ingen nettleser installert på enheten, kan ikke åpne nettsiden.</string>
+    <string name="mapbox_attributionsDialogTitle">Drevet av Mapbox Maps</string>
+    <string name="mapbox_attributionTelemetryTitle">Gjør Mapbox Maps bedre</string>
+    <string name="mapbox_attributionTelemetryMessage">Du er med på å gjøre OpenStreetMap- og Mapbox-kart bedre ved å bidra med anonyme bruksdata.</string>
+    <string name="mapbox_attributionTelemetryPositive">Delta</string>
+    <string name="mapbox_attributionTelemetryNegative">Slutt å delta</string>
+    <string name="mapbox_attributionTelemetryNeutral">Mer informasjon</string>
+    <string name="mapbox_warning_attribution_disabled">Attribusjon må være aktivert hvis du bruker data fra kilder som krever det. Se https://docs.mapbox.com/help/getting-started/attribution/ for mer informasjon.</string>
+</resources>

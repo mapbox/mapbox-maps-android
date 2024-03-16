@@ -1,0 +1,5 @@
+<resources>
+    <string name="mapbox_telemetryImproveMap">Поліпшити картку</string>
+    <string name="mapbox_telemetrySettings">Mapbox Телеметрія</string>
+    <string name="mapbox_privacy_policy">Політика конфіденційності Mapbox</string>
+</resources>

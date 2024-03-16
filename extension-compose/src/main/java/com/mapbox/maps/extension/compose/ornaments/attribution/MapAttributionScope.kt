@@ -1,15 +1,13 @@
 package com.mapbox.maps.extension.compose.ornaments.attribution
 
-import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxScope
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -24,10 +22,12 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
@@ -107,8 +107,8 @@ public class MapAttributionScope internal constructor(
     val pluginId = remember {
       getNextId()
     }
-    var attributions by remember {
-      mutableStateOf(listOf<Attribution>())
+    val attributions = remember {
+      mutableStateListOf<Attribution>()
     }
     var showAttributionDialog by remember {
       mutableStateOf(false)
@@ -149,8 +149,8 @@ public class MapAttributionScope internal constructor(
     // to current style.
     LaunchedEffect(showAttributionDialog) {
       mapView.getPlugin<AttributionComposePlugin>(pluginId)?.let {
-        attributions =
-          it.mapAttributionDelegate.parseAttributions(mapView.context, AttributionParserConfig())
+        attributions.clear()
+        attributions.addAll(it.mapAttributionDelegate.parseAttributions(mapView.context, AttributionParserConfig()))
         mapboxFeedbackUrl = it.mapAttributionDelegate.buildMapBoxFeedbackUrl(mapView.context)
       }
     }
@@ -164,10 +164,10 @@ public class MapAttributionScope internal constructor(
         },
         onAttributionClick = { attribution ->
           showAttributionDialog = false
-          if (attribution.title.contains(TELEMETRY_KEY_WORLD)) {
+          if (attribution.url == Attribution.ABOUT_TELEMETRY_URL) {
             showTelemetryDialog = true
           } else {
-            val url = if (attribution.url.contains(FEEDBACK_KEY_WORLD)) {
+            val url = if (attribution.url.contains(FEEDBACK_KEY_WORD)) {
               mapboxFeedbackUrl
             } else attribution.url
             if (url.isNotEmpty()) {
@@ -225,6 +225,7 @@ public class MapAttributionScope internal constructor(
    * @param onDismissRequest The callback to be invoked when the attribution is dismissed.
    * @param onAttributionClick The callback to be invoked when a attribution is clicked.
    */
+  @OptIn(ExperimentalComposeUiApi::class)
   @MapboxExperimental
   @Composable
   public fun AttributionDialog(
@@ -234,6 +235,7 @@ public class MapAttributionScope internal constructor(
   ) {
     AlertDialog(
       onDismissRequest = onDismissRequest,
+      modifier = Modifier.padding(start = 10.dp, end = 10.dp),
       confirmButton = { },
       title = {
         Text(
@@ -260,7 +262,11 @@ public class MapAttributionScope internal constructor(
           }
         }
       },
-      properties = DialogProperties()
+      properties = DialogProperties(
+        // should be fully fixed in Compose 1.5, now using workaround from
+        // https://issuetracker.google.com/issues/221643630
+        usePlatformDefaultWidth = false
+      )
     )
   }
 
@@ -283,32 +289,27 @@ public class MapAttributionScope internal constructor(
     AlertDialog(
       onDismissRequest = onDismissRequest,
       buttons = {
-        Row(
+        Column(
           modifier = Modifier
-            .padding(all = 8.dp)
+            // The alert dialog `title` and `text` are padded 24.dp by default.
+            // To align the button text, we use 16.dp here because TextButton adds 8.dp padding around the text
+            .padding(horizontal = 16.dp)
             .fillMaxWidth(),
-          horizontalArrangement = Arrangement.SpaceBetween
         ) {
           TextButton(
-            onClick = {
-              onMoreInfo()
-            }
+            onClick = { onMoreInfo() }
           ) {
             Text(stringResource(id = R.string.mapbox_attributionTelemetryNeutral).uppercase())
           }
 
           TextButton(
-            onClick = {
-              onDisagree()
-            }
+            onClick = { onDisagree() }
           ) {
             Text(stringResource(id = R.string.mapbox_attributionTelemetryNegative).uppercase())
           }
 
           TextButton(
-            onClick = {
-              onAgree()
-            }
+            onClick = { onAgree() }
           ) {
             Text(stringResource(id = R.string.mapbox_attributionTelemetryPositive).uppercase())
           }
@@ -340,26 +341,29 @@ public class MapAttributionScope internal constructor(
     }
 
   private fun showWebPage(url: String) {
-    if (mapView.context is Activity) {
-      try {
-        val intent = Intent(Intent.ACTION_VIEW)
-        intent.data = Uri.parse(url)
-        mapView.context.startActivity(intent)
-      } catch (exception: ActivityNotFoundException) { // explicitly handling if the device hasn't have a web browser installed. #8899
-        Toast.makeText(
-          mapView.context,
-          R.string.mapbox_attributionErrorNoBrowser,
-          Toast.LENGTH_LONG
-        ).show()
-      }
+    try {
+      val intent = Intent(Intent.ACTION_VIEW)
+      intent.data = Uri.parse(url)
+      mapView.context.startActivity(intent)
+    } catch (exception: ActivityNotFoundException) {
+      Toast.makeText(
+        mapView.context,
+        R.string.mapbox_attributionErrorNoBrowser,
+        Toast.LENGTH_LONG
+      ).show()
+    } catch (t: Throwable) {
+      Toast.makeText(
+        mapView.context,
+        t.localizedMessage,
+        Toast.LENGTH_LONG
+      ).show()
     }
   }
 
   private companion object {
     private const val PLUGIN_ID = "MAPBOX_ATTRIBUTION_COMPOSE_PLUGIN"
     private var INSTANCE_COUNT = 0
-    private const val FEEDBACK_KEY_WORLD = "feedback"
-    private const val TELEMETRY_KEY_WORLD = "Telemetry"
+    private const val FEEDBACK_KEY_WORD = "feedback"
     fun getNextId(): String {
       return "$PLUGIN_ID-${INSTANCE_COUNT++}"
     }

@@ -180,6 +180,7 @@ internal class EGLCore(
     if (eglCreatePbufferSurfaceError != null || eglSurface == null) {
       return eglNoSurface
     }
+    logI(TAG, "Created PBuffer, w = $width, h = $height")
     return eglSurface
   }
 

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mapbox_attributionErrorNoBrowser">На устройстве нет веб-браузера, нельзя показать веб-страницу.</string>
+    <string name="mapbox_attributionsDialogTitle">Предоставлено Mapbox Maps</string>
+    <string name="mapbox_attributionTelemetryTitle">Сделать карты Mapbox лучше</string>
+    <string name="mapbox_attributionTelemetryMessage">Вы помогаете улучшать карты OpenStreetMap и Mapbox, предоставляя обезличенные данные об использовании.</string>
+    <string name="mapbox_attributionTelemetryPositive">Участвовать</string>
+    <string name="mapbox_attributionTelemetryNegative">Прекратить участие</string>
+    <string name="mapbox_attributionTelemetryNeutral">Дополнительная информация</string>
+    <string name="mapbox_warning_attribution_disabled">Атрибуция должна быть включена при использовании данных из источников, требующих этого. Дополнительная информация: https://docs.mapbox.com/help/getting-started/attribution/.</string>
+</resources>

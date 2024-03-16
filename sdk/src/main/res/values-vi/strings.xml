@@ -1,0 +1,5 @@
+<resources>
+    <string name="mapbox_telemetryImproveMap">Cải thiện bản đồ này</string>
+    <string name="mapbox_telemetrySettings">Đo từ xa Mapbox</string>
+    <string name="mapbox_privacy_policy">Chính sách quyền riêng tư của Mapbox</string>
+</resources>

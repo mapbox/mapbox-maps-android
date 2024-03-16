@@ -6,10 +6,6 @@ package com.mapbox.maps.plugin.attribution {
     method public void onClick(android.content.DialogInterface dialog, int which);
     method public void onStop();
     method public void showAttribution(com.mapbox.maps.plugin.delegates.MapAttributionDelegate mapAttributionDelegate);
-    field public static final com.mapbox.maps.plugin.attribution.AttributionDialogManagerImpl.Companion Companion;
-  }
-
-  public static final class AttributionDialogManagerImpl.Companion {
   }
 
   public final class AttributionUtils {

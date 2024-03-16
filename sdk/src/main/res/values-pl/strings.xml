@@ -1,0 +1,5 @@
+<resources>
+    <string name="mapbox_telemetryImproveMap">Popraw tę mapę</string>
+    <string name="mapbox_telemetrySettings">Telemetria Mapboxa</string>
+    <string name="mapbox_privacy_policy">Polityka prywatności Mapboxa</string>
+</resources>

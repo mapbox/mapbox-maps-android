@@ -1,0 +1,3 @@
+<resources>
+    <string name="mapbox_compassContentDescription">地图指南针。激活可将地图旋转重置为北。</string>
+</resources>

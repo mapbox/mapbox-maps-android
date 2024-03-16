@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mapbox_attributionErrorNoBrowser">デバイスに Web ブラウザがインストールされていないため、Web ページを開けません。</string>
+    <string name="mapbox_attributionsDialogTitle">Mapbox マップを利用</string>
+    <string name="mapbox_attributionTelemetryTitle">Mapbox マップをより良くする</string>
+    <string name="mapbox_attributionTelemetryMessage">匿名の使用状況データを提供することで、OpenStreetMap と Mapbox の地図をより良くすることに貢献しています。</string>
+    <string name="mapbox_attributionTelemetryPositive">参加する</string>
+    <string name="mapbox_attributionTelemetryNegative">参加をやめる</string>
+    <string name="mapbox_attributionTelemetryNeutral">より詳しい情報</string>
+    <string name="mapbox_warning_attribution_disabled">アトリビューションを必要とするソースからのデータを使用する場合は、アトリビューションを有効にする必要があります。詳細については、https://docs.mapbox.com/help/getting-started/attribution/ を参照してください。</string>
+</resources>

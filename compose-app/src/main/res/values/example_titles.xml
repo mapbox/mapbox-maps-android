@@ -11,4 +11,6 @@
     <string name="activity_multiple_display">Multi display</string>
     <string name="activity_ornaments_customisation">Ornament customisation</string>
     <string name="activity_location_location_component">Location Component</string>
+    <string name="activity_style_composition">Style composition</string>
+    <string name="activity_navigation_simulation">Simulate navigation</string>
 </resources>

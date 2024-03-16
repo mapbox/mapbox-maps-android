@@ -1,0 +1,3 @@
+<resources>
+    <string name="mapbox_warning_logo_disabled">Mapbox ロゴのワードマークは、サービス利用規約に従って有効にしておく必要があります。詳細については、https://www.mapbox.com/legal/tos を参照してください。</string>
+</resources>

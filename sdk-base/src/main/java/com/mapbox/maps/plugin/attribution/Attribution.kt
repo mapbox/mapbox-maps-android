@@ -27,7 +27,7 @@ data class Attribution(val title: String, val url: String) {
   companion object {
     const val OSM = "OpenStreetMap"
     const val OSM_ABBR = "OSM"
-    const val TELEMETRY_SETTINGS = "Telemetry Settings"
+    const val TELEMETRY_SETTINGS = "Mapbox Telemetry"
     const val PRIVACY_POLICY = "Mapbox Privacy Policy"
     const val ABOUT_MAPS_URL = "https://www.mapbox.com/about/maps/"
     const val ABOUT_TELEMETRY_URL = "https://www.mapbox.com/telemetry/"

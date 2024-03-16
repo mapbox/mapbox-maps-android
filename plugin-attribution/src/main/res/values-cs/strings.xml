@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mapbox_attributionErrorNoBrowser">V zařízení není nainstalován webový prohlížeč, nelze otevřít webovou stránku.</string>
+    <string name="mapbox_attributionsDialogTitle">Provozováno na Mapbox Maps</string>
+    <string name="mapbox_attributionTelemetryTitle">Vylepšete Mapbox Maps</string>
+    <string name="mapbox_attributionTelemetryMessage">Pomáháte zlepšovat mapy OpenStreetMap a Mapbox tím, že přispíváte anonymními údaji o používání.</string>
+    <string name="mapbox_attributionTelemetryPositive">Účastnit se</string>
+    <string name="mapbox_attributionTelemetryNegative">Přestat se účastnit</string>
+    <string name="mapbox_attributionTelemetryNeutral">Více informací</string>
+    <string name="mapbox_warning_attribution_disabled">Pokud používáte data ze zdrojů, které to vyžadují, musí být atribuce povolena. Další podrobnosti najdete na https://docs.mapbox.com/help/getting-started/attribution/.</string>
+</resources>

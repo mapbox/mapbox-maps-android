@@ -46,6 +46,7 @@ class MapboxMap :
 
   private val nativeMap: NativeMapImpl
   private var isMapValid = true
+  private var performanceCollectionStatisticsStarted = false
 
   /**
    * Whether the [MapboxMap] instance is valid.
@@ -2079,6 +2080,7 @@ class MapboxMap :
   ) {
     checkNativeMap("startPerformanceStatisticsCollection")
     nativeMap.startPerformanceStatisticsCollection(options, callback)
+    performanceCollectionStatisticsStarted = true
   }
 
   /**
@@ -2092,6 +2094,7 @@ class MapboxMap :
   fun stopPerformanceStatisticsCollection() {
     checkNativeMap("stopPerformanceStatisticsCollection")
     nativeMap.stopPerformanceStatisticsCollection()
+    performanceCollectionStatisticsStarted = false
   }
 
   /**
@@ -2165,7 +2168,9 @@ class MapboxMap :
   @OptIn(MapboxExperimental::class)
   @JvmSynthetic
   internal fun onDestroy() {
-    stopPerformanceStatisticsCollection()
+    if (performanceCollectionStatisticsStarted) {
+      stopPerformanceStatisticsCollection()
+    }
     cameraAnimationsPlugin = null
     gesturesPlugin = null
     styleObserver.onDestroy()

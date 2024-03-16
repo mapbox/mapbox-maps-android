@@ -61,6 +61,8 @@ dependencies {
   implementation(libs.googleMaterialDesign)
   implementation(libs.compose.uiToolingPreview)
   implementation(libs.compose.uiTooling)
+  implementation(libs.mapbox.javaTurf)
+  implementation(libs.mapbox.services)
 
   implementation(libs.squareRetrofit)
   implementation(libs.androidx.appCompat)

@@ -28,7 +28,7 @@ internal class MapboxWidgetRenderer(
   private var width = 0
   private var height = 0
 
-  val needTextureUpdate: Boolean
+  val needRender: Boolean
     get() = widgets.any { it.renderer.needRender }
 
   fun hasWidgets() = widgets.isNotEmpty()
@@ -55,12 +55,9 @@ internal class MapboxWidgetRenderer(
     widgets.forEach { it.renderer.onSurfaceChanged(width, height) }
   }
 
-  private fun attachTexture() {
-    if (textures[0] != 0) {
-      GLES20.glDeleteTextures(textures.size, textures, 0)
-    }
+  private fun prepareFrameBufferWithTexture() {
+    GLES20.glGenFramebuffers(1, framebuffers, 0)
     GLES20.glGenTextures(1, textures, 0)
-
     GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textures[0])
     GLES20.glTexParameterf(
       GLES20.GL_TEXTURE_2D,
@@ -93,23 +90,26 @@ internal class MapboxWidgetRenderer(
       GLES20.GL_UNSIGNED_BYTE,
       null
     )
+    GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, 0)
+    GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, framebuffers[0])
     GLES20.glFramebufferTexture2D(
       GLES20.GL_FRAMEBUFFER, GLES20.GL_COLOR_ATTACHMENT0,
       GLES20.GL_TEXTURE_2D, textures[0], 0
     )
-    GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, 0)
+    GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, 0)
   }
 
   fun release() {
+    releaseAll(resizing = false)
+  }
+
+  private fun releaseAll(resizing: Boolean) {
     val eglCore = this.eglCore
     val eglSurface = this.eglSurface
     if (eglCore != null) {
       if (eglSurface != null && eglSurface != eglCore.eglNoSurface) {
         eglCore.makeCurrent(eglSurface)
-
-        GLES20.glDeleteFramebuffers(framebuffers.size, framebuffers, 0)
-        GLES20.glDeleteTextures(textures.size, textures, 0)
-
+        deleteFrameBufferWithTexture()
         // Do not clear widgets here, or they will be lost if Activity is paused/resumed.
         widgets.forEach {
           it.renderer.release()
@@ -121,26 +121,37 @@ internal class MapboxWidgetRenderer(
       eglCore.release()
     }
     this.eglSurface = null
-    this.eglCore = null
+    if (!resizing) {
+      this.eglCore = null
+    }
     this.eglContextCreated = false
   }
 
-  fun updateTexture() {
-    if (needTextureUpdate) {
-      checkSizeChanged()
-      checkEgl()
-      val eglCore = this.eglCore
-      val eglSurface = this.eglSurface
-      if (eglCore != null && eglSurface != null && eglSurface != eglCore.eglNoSurface) {
-        eglCore.makeCurrent(eglSurface)
-        bindFramebuffer()
-        attachTexture()
-        widgets.forEach {
-          it.renderer.render()
-        }
-        unbindFramebuffer()
-      }
+  fun renderToFrameBuffer() {
+    checkSizeChanged()
+    checkEgl()
+    val eglCore = this.eglCore
+    val eglSurface = this.eglSurface
+    if (eglCore == null || eglSurface == null || eglSurface == eglCore.eglNoSurface) {
+      return
     }
+    eglCore.makeCurrent(eglSurface)
+    if (!hasTexture()) {
+      prepareFrameBufferWithTexture()
+    }
+    GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, framebuffers[0])
+    GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT or GLES20.GL_DEPTH_BUFFER_BIT or GLES20.GL_STENCIL_BUFFER_BIT)
+    widgets.forEach {
+      it.renderer.render()
+    }
+    GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, 0)
+  }
+
+  private fun deleteFrameBufferWithTexture() {
+    GLES20.glDeleteFramebuffers(framebuffers.size, framebuffers, 0)
+    GLES20.glDeleteTextures(textures.size, textures, 0)
+    framebuffers[0] = 0
+    textures[0] = 0
   }
 
   private fun checkSizeChanged() {
@@ -148,23 +159,10 @@ internal class MapboxWidgetRenderer(
       val eglCore = this.eglCore
       val eglSurface = this.eglSurface
       if (eglCore != null && eglSurface != null && eglSurface != eglCore.eglNoSurface) {
-        eglCore.releaseSurface(eglSurface)
-        this.eglSurface = eglCore.eglNoSurface
+        releaseAll(resizing = true)
       }
-
       sizeChanged = false
     }
-  }
-
-  private fun unbindFramebuffer() {
-    GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, 0)
-  }
-
-  private fun bindFramebuffer() {
-    if (framebuffers[0] == 0) {
-      GLES20.glGenFramebuffers(1, framebuffers, 0)
-    }
-    GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, framebuffers[0])
   }
 
   private fun checkEgl() {
@@ -189,7 +187,7 @@ internal class MapboxWidgetRenderer(
 
     if (eglSurface == null || eglSurface == eglCore.eglNoSurface) {
       this.eglSurface = eglCore.createOffscreenSurface(width = width, height = height)
-      if (eglSurface == eglCore.eglNoSurface) {
+      if (this.eglSurface == eglCore.eglNoSurface) {
         logE(TAG, "Widget offscreen surface was not configured, please check logs above.")
         return
       }

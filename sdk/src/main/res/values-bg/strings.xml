@@ -1,0 +1,5 @@
+<resources>
+    <string name="mapbox_telemetryImproveMap">Подобрете тази карта</string>
+    <string name="mapbox_telemetrySettings">Телеметрия на Mapbox</string>
+    <string name="mapbox_privacy_policy">Правила за поверителност на Mapbox</string>
+</resources>

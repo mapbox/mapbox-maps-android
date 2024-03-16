@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mapbox_attributionErrorNoBrowser">На пристрої не встановлено веб-браузер, не вдається відкрити веб-сторінку.</string>
+    <string name="mapbox_attributionsDialogTitle">Мапи від Mapbox</string>
+    <string name="mapbox_attributionTelemetryTitle">Зробимо мапи Mapbox кращими</string>
+    <string name="mapbox_attributionTelemetryMessage">Ви допомагаєте покращити OpenStreetMap та Mapbox надаючи анонімні дані про користування.</string>
+    <string name="mapbox_attributionTelemetryPositive">Брати участь</string>
+    <string name="mapbox_attributionTelemetryNegative">Припинити участь</string>
+    <string name="mapbox_attributionTelemetryNeutral">Більше інформації</string>
+    <string name="mapbox_warning_attribution_disabled">Атрибуцію потрібно ввімкнути, якщо ви використовуєте дані з джерел, які її потребують. Додаткову інформацію див. на сторінці https://docs.mapbox.com/help/getting-started/attribution/.</string>
+</resources>

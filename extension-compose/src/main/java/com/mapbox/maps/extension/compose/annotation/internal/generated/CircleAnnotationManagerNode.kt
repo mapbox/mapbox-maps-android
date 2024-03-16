@@ -3,6 +3,7 @@
 package com.mapbox.maps.extension.compose.annotation.internal.generated
 
 import com.mapbox.maps.extension.compose.annotation.internal.BaseAnnotationNode
+import com.mapbox.maps.extension.compose.internal.MapNode
 import com.mapbox.maps.plugin.annotation.generated.CircleAnnotation
 import com.mapbox.maps.plugin.annotation.generated.CircleAnnotationManager
 import com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions
@@ -16,7 +17,7 @@ internal class CircleAnnotationManagerNode(
     onClicked.invoke(it)
   }
 
-  override fun onAttached() {
+  override fun onAttached(parent: MapNode) {
     annotationManager.addClickListener(onClickedListener)
   }
 
@@ -24,10 +25,10 @@ internal class CircleAnnotationManagerNode(
   var annotationClusterItems: List<CircleAnnotationOptions> = emptyList()
     set(value) {
       if (currentAnnotations.isNotEmpty()) {
-        annotationManager.delete(currentAnnotations)
-        currentAnnotations.clear()
+        annotationManager.update(currentAnnotations)
+      } else {
+        currentAnnotations.addAll(annotationManager.create(value))
       }
-      currentAnnotations.addAll(annotationManager.create(value))
       field = value
     }
 
