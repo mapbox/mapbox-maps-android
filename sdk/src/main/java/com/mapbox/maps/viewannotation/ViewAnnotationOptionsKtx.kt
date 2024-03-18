@@ -26,9 +26,8 @@ fun ViewAnnotationOptions.Builder.annotationAnchors(
 /**
  * DSL function to set single [ViewAnnotationAnchorConfig]  to [ViewAnnotationOptions.Builder.variableAnchors].
  */
-inline fun ViewAnnotationOptions.Builder.annotationAnchor(block: ViewAnnotationAnchorConfig.Builder.() -> Unit) {
+inline fun ViewAnnotationOptions.Builder.annotationAnchor(block: ViewAnnotationAnchorConfig.Builder.() -> Unit): ViewAnnotationOptions.Builder =
   variableAnchors(listOf(ViewAnnotationAnchorConfig.Builder().apply(block).build()))
-}
 
 /**
  * DSL function to set [AnnotatedLayerFeature] to [ViewAnnotationOptions.Builder.annotatedFeature].

@@ -674,7 +674,7 @@ package com.mapbox.maps.viewannotation {
 
   public final class ViewAnnotationOptionsKtxKt {
     method public static inline com.mapbox.maps.ViewAnnotationOptions.Builder annotatedLayerFeature(com.mapbox.maps.ViewAnnotationOptions.Builder, String layerId, kotlin.jvm.functions.Function1<? super com.mapbox.maps.AnnotatedLayerFeature.Builder,kotlin.Unit> block = {});
-    method public static inline void annotationAnchor(com.mapbox.maps.ViewAnnotationOptions.Builder, kotlin.jvm.functions.Function1<? super com.mapbox.maps.ViewAnnotationAnchorConfig.Builder,kotlin.Unit> block);
+    method public static inline com.mapbox.maps.ViewAnnotationOptions.Builder annotationAnchor(com.mapbox.maps.ViewAnnotationOptions.Builder, kotlin.jvm.functions.Function1<? super com.mapbox.maps.ViewAnnotationAnchorConfig.Builder,kotlin.Unit> block);
     method public static com.mapbox.maps.ViewAnnotationOptions.Builder annotationAnchors(com.mapbox.maps.ViewAnnotationOptions.Builder, kotlin.jvm.functions.Function1<? super com.mapbox.maps.ViewAnnotationAnchorConfig.Builder,kotlin.Unit>... blocks);
     method public static com.mapbox.maps.ViewAnnotationOptions.Builder geometry(com.mapbox.maps.ViewAnnotationOptions.Builder, com.mapbox.geojson.Geometry geometry);
     method public static inline com.mapbox.maps.ViewAnnotationOptions viewAnnotationOptions(kotlin.jvm.functions.Function1<? super com.mapbox.maps.ViewAnnotationOptions.Builder,kotlin.Unit> block);
