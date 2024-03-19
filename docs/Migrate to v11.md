@@ -440,7 +440,7 @@ addLocationObserver(observer: LocationObserver, looper: Looper)
 
 The location provider automatically starts and stops collecting locations based on the amount of subscribers: once the first subscriber is registered, the service starts, and when the last observer is unregistered, the service stops.
 
-If you want to get the last known location, you can do so via the asynchronous `LocationProivder.getLastLocation` function. The function returns a Cancelable object which allows cancelling the request if needed:
+If you want to get the last known location, you can do so via the asynchronous `LocationProvider.getLastLocation` function. The function returns a Cancelable object which allows cancelling the request if needed:
 ``` kotlin
 val lastLocationCancelable = locationProvider.getLastLocation { result ->
           result?.let { doSomething(it) }
