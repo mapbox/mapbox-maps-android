@@ -40,9 +40,9 @@ internal abstract class MapNode {
 /**
  * Root level [MapNode] for MapboxMap composable function.
  */
-internal object RootMapNode : MapNode() {
+internal class RootMapNode : MapNode() {
   override fun toString(): String {
-    return "RootMapNode()"
+    return "RootMapNode(${hashCode()})"
   }
 }
 
@@ -55,9 +55,10 @@ internal class MapApplier(
    * The raw map controller to be used within current Compose.
    */
   val mapView: MapView
-) : AbstractApplier<MapNode>(RootMapNode) {
+) : AbstractApplier<MapNode>(RootMapNode()) {
 
   override fun onClear() {
+    logD(TAG, "onClear: current=$current")
     root.children.forEach { it.onClear() }
     root.children.clear()
   }
