@@ -17,7 +17,7 @@ Mapbox welcomes participation and contributions from everyone.
 # 11.3.0-rc.1
 ## Bug fixes 🐞
 * Return `ViewAnnotationOptions.Builder` when calling `ViewAnnotationOptions.Builder.annotationAnchor` extension function.
-
+* [compose] Fix the `IndexOutOfBoundsException` because of `RootNode` of `MapboxMap` node tree being shared across multiple maps.
 
 # 11.3.0-beta.1 March 14, 2024
 ## Breaking changes ⚠️
