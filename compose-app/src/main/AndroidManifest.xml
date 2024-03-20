@@ -165,6 +165,17 @@
                 android:name="@string/category"
                 android:value="@string/category_location" />
         </activity>
+        <activity
+            android:name=".examples.basic.MultiMapActivity"
+            android:configChanges="orientation|screenSize|screenLayout"
+            android:description="@string/description_multi_map"
+            android:exported="true"
+            android:label="@string/activity_multi_map"
+            android:parentActivityName=".ExampleOverviewActivity">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_basic" />
+        </activity>
     </application>
 
 </manifest>

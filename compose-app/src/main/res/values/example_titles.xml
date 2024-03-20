@@ -13,4 +13,5 @@
     <string name="activity_location_location_component">Location Component</string>
     <string name="activity_style_composition">Style composition</string>
     <string name="activity_navigation_simulation">Simulate navigation</string>
+    <string name="activity_multi_map">Display multiple maps</string>
 </resources>
