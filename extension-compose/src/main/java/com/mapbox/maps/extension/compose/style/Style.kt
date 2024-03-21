@@ -5,12 +5,14 @@ import androidx.compose.runtime.ComposeNode
 import androidx.compose.runtime.currentComposer
 import androidx.compose.runtime.key
 import com.mapbox.bindgen.Value
+import com.mapbox.maps.LayerPosition
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.compose.MapboxMapComposable
 import com.mapbox.maps.extension.compose.internal.MapApplier
 import com.mapbox.maps.extension.compose.style.internal.MapStyleNode
 import com.mapbox.maps.extension.compose.style.internal.StyleConfig
+import com.mapbox.maps.extension.compose.style.internal.StyleLayerPosition
 import com.mapbox.maps.extension.compose.style.internal.StyleSlot
 
 /**
@@ -77,6 +79,7 @@ public fun MapStyle(style: String) {
 public fun GenericStyle(
   style: String,
   slots: Map<String, (@Composable @MapboxMapComposable () -> Unit)?> = emptyMap(),
+  layerPositions: Map<LayerPosition, (@Composable @MapboxMapComposable () -> Unit)?> = emptyMap(),
   configs: Map<String, Map<String, Value>> = emptyMap(),
 ) {
   // When style is changed, we want to trigger the recompose of the whole style node
@@ -94,9 +97,14 @@ public fun GenericStyle(
       },
       update = { }
     ) {
-      slots.entries.forEach {
+      slots.entries.filter { it.value != null }.forEach {
         key(it.key) {
           StyleSlot(name = it.key, content = it.value)
+        }
+      }
+      layerPositions.filter { it.value != null }.entries.forEach {
+        key(it.key) {
+          StyleLayerPosition(layerPosition = it.key, content = it.value)
         }
       }
       configs.entries.forEach { import ->

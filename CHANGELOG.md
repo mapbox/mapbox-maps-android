@@ -4,7 +4,19 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 11.2.1 March 15, 2024
+## Bug fixes 🐞
+* Apply config expression to atmosphere properties.
+* Fix map freezing when using `queryRenderedFeatures` with 3d models in mercator projection.
+
+## Dependencies
+* Update gl-native to v11.2.1.
+
+
 # 11.3.0-rc.1
+## Features ✨ and improvements 🏁
+* [compose] Add layerPosition support in `GenericStyle` composable function.
+
 ## Bug fixes 🐞
 * Return `ViewAnnotationOptions.Builder` when calling `ViewAnnotationOptions.Builder.annotationAnchor` extension function.
 * [compose] Fix the `IndexOutOfBoundsException` because of `RootNode` of `MapboxMap` node tree being shared across multiple maps.

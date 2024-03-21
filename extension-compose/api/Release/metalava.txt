@@ -208,7 +208,7 @@ package com.mapbox.maps.extension.compose.style {
   }
 
   public final class StyleKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void GenericStyle(String style, java.util.Map<java.lang.String,? extends kotlin.jvm.functions.Function0<kotlin.Unit>> slots = emptyMap(), java.util.Map<java.lang.String,? extends java.util.Map<java.lang.String,? extends com.mapbox.bindgen.Value>> configs = emptyMap());
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void GenericStyle(String style, java.util.Map<java.lang.String,? extends kotlin.jvm.functions.Function0<kotlin.Unit>> slots = emptyMap(), java.util.Map<com.mapbox.maps.LayerPosition,? extends kotlin.jvm.functions.Function0<kotlin.Unit>> layerPositions = emptyMap(), java.util.Map<java.lang.String,? extends java.util.Map<java.lang.String,? extends com.mapbox.bindgen.Value>> configs = emptyMap());
     method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void MapStyle(String style);
     method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void MapboxStandardStyle(kotlin.jvm.functions.Function0<kotlin.Unit>? topSlot = null, kotlin.jvm.functions.Function0<kotlin.Unit>? middleSlot = null, kotlin.jvm.functions.Function0<kotlin.Unit>? bottomSlot = null, com.mapbox.bindgen.Value lightPreset = Value.nullValue());
   }
@@ -218,6 +218,9 @@ package com.mapbox.maps.extension.compose.style {
 package com.mapbox.maps.extension.compose.style.internal {
 
   public final class StyleConfigKt {
+  }
+
+  public final class StyleLayerPositionKt {
   }
 
   public final class StyleSlotKt {

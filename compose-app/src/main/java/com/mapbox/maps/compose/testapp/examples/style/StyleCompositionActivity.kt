@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.mapbox.geojson.Point
+import com.mapbox.maps.LayerPosition
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.Style
 import com.mapbox.maps.compose.testapp.ExampleScaffold
@@ -124,8 +125,17 @@ public class StyleCompositionActivity : ComponentActivity() {
                 slots = mapOf(
                   "top" to {
                     BackgroundLayer(
-                      layerId = "background-layer-id",
+                      layerId = "background-layer-at-top-slot",
                       backgroundColor = BackgroundColor(Color.Yellow),
+                      backgroundOpacity = BackgroundOpacity(0.3)
+                    )
+                  }
+                ),
+                layerPositions = mapOf(
+                  LayerPosition(null, "building", null) to {
+                    BackgroundLayer(
+                      layerId = "background-layer-at-position",
+                      backgroundColor = BackgroundColor(Color.Red),
                       backgroundOpacity = BackgroundOpacity(0.3)
                     )
                   }
@@ -135,7 +145,7 @@ public class StyleCompositionActivity : ComponentActivity() {
           ) {
             if (showSymbolLayer) {
               SymbolLayer(
-                layerId = "layerId",
+                layerId = "symbol-layer",
                 sourceId = "sourceId",
                 textField = text,
                 textColor = TextColor(Color.Blue),
