@@ -4,6 +4,7 @@ import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.extension.compose.internal.MapNode
 import com.mapbox.maps.extension.compose.style.internal.PausingDispatcherNode
+import com.mapbox.maps.extension.compose.style.internal.StyleLayerPositionNode
 import com.mapbox.maps.extension.compose.style.internal.StyleSlotNode
 import com.mapbox.maps.logD
 import com.mapbox.maps.logE
@@ -50,7 +51,7 @@ internal class LayerNode(
     when (parent) {
       is StyleSlotNode -> {
         // layer added within the style node, add as non-persistent layer
-        logD(TAG, "Adding layer: $parameters")
+        logD(TAG, "Adding layer: $parameters, at slot: ${parent.slotName}")
         coroutineScope.launch {
           parent.mapStyleNode.styleDataLoaded.collect {
             map.addStyleLayer(
@@ -58,6 +59,26 @@ internal class LayerNode(
               position = null
             ).error?.let {
               logE(TAG, "Failed to add layer: $it")
+            } ?: run {
+              logD(TAG, "Added layer: $parameters")
+              onNodeReady()
+            }
+          }
+        }
+      }
+
+      is StyleLayerPositionNode -> {
+        // layer added within the style node, add as non-persistent layer
+        logD(TAG, "Adding layer: $parameters, at position: ${parent.layerPosition}")
+        coroutineScope.launch {
+          parent.mapStyleNode.styleDataLoaded.collect {
+            map.addStyleLayer(
+              parameters = Value(parameters),
+              position = parent.layerPosition
+            ).error?.let { error ->
+              logE(TAG, "Failed to add layer $parameters at ${parent.layerPosition}: $error")
+              logE(TAG, "Available layers in style:")
+              map.styleLayers.forEach { logE(TAG, "\t ${it.id}") }
             } ?: run {
               logD(TAG, "Added layer: $parameters")
               onNodeReady()

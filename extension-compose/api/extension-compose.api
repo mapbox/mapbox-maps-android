@@ -194,7 +194,7 @@ public abstract interface annotation class com/mapbox/maps/extension/compose/sty
 }
 
 public final class com/mapbox/maps/extension/compose/style/StyleKt {
-	public static final fun GenericStyle (Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;Landroidx/compose/runtime/Composer;II)V
+	public static final fun GenericStyle (Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;Ljava/util/Map;Landroidx/compose/runtime/Composer;II)V
 	public static final fun MapStyle (Ljava/lang/String;Landroidx/compose/runtime/Composer;I)V
 	public static final fun MapboxStandardStyle (Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lcom/mapbox/bindgen/Value;Landroidx/compose/runtime/Composer;II)V
 }
