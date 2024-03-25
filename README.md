@@ -12,6 +12,9 @@ This README is intended for developers who are interested in contributing to the
 ## Developing
 If you are interested in contributing to the Maps SDK, please see the [DEVELOPING.md](DEVELOPING.md) file for information on setting up, running and building the SDK.
 
+## Migrating from previous versions
+To ensure a smooth transition for developers upgrading from previous versions of the Mapbox SDK, we've prepared comprehensive migration guides. If you're upgrading from version 10 to 11, please refer to our [v11 migration guide](https://docs.mapbox.com/android/maps/guides/migrate-to-v11/) for detailed instructions. For those moving from version 9 to 10, the [v10 migration guide](https://docs.mapbox.com/android/maps/guides/old-versions/migrate-to-v10/) is available to facilitate your upgrade process.
+
 ## Reporting issues / Need help?
 
 #### Report a bug :beetle:
