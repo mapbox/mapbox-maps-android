@@ -3,7 +3,11 @@ package com.mapbox.maps.plugin.locationcomponent
 import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
-import com.mapbox.maps.*
+import com.mapbox.maps.CameraState
+import com.mapbox.maps.EdgeInsets
+import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.MapboxStyleManager
+import com.mapbox.maps.logE
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.LocationPuck3D
 import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
@@ -11,8 +15,21 @@ import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.locationcomponent.animators.PuckAnimatorManager
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
 import com.mapbox.maps.util.captureVararg
-import io.mockk.*
-import org.junit.Assert.*
+import io.mockk.every
+import io.mockk.just
+import io.mockk.mockk
+import io.mockk.mockkObject
+import io.mockk.mockkStatic
+import io.mockk.runs
+import io.mockk.unmockkAll
+import io.mockk.unmockkObject
+import io.mockk.unmockkStatic
+import io.mockk.verify
+import io.mockk.verifyOrder
+import org.junit.After
+import org.junit.Assert.assertArrayEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -26,17 +43,22 @@ class LocationPuckManagerTest {
   private val mapCameraDelegate = mockk<MapCameraManagerDelegate>(relaxed = true)
   private val style = mockk<MapboxStyleManager>(relaxed = true)
   private val positionManager = mockk<LocationComponentPositionManager>(relaxed = true)
-  private val locationLayerRenderer = mockk<LocationLayerRenderer>(relaxed = true)
+  private val locationLayerRenderer = mockk<LocationIndicatorLayerRenderer>()
+  private val modelLayerRenderer = mockk<ModelLayerRenderer>()
   private val animationManager = mockk<PuckAnimatorManager>(relaxed = true)
-
-  private val callbackSlot = CapturingSlot<(MapboxStyleManager) -> Unit>()
 
   private lateinit var locationPuckManager: LocationPuckManager
 
   @Before
   fun setup() {
     mockkStatic(Value::class)
+    mockkStatic("com.mapbox.maps.MapboxLogger")
+    mockkObject(LayerSourceProvider)
+    every { LayerSourceProvider.getLocationIndicatorLayerRenderer(any(), any()) } returns locationLayerRenderer
+    every { LayerSourceProvider.getModelLayerRenderer(any()) } returns modelLayerRenderer
+    every { logE(any(), any()) } just runs
     every { delegateProvider.mapCameraManagerDelegate } returns mapCameraDelegate
+    every { delegateProvider.mapStyleManagerDelegate } returns style
     every { mapCameraDelegate.cameraState.bearing } returns 0.0
     every { mapCameraDelegate.cameraState } returns CameraState(
       Point.fromLngLat(0.0, 0.0),
@@ -48,6 +70,15 @@ class LocationPuckManagerTest {
     every { settings.locationPuck } returns LocationPuck2D()
     every { settings.enabled } returns true
     every { settings.puckBearingEnabled } returns true
+    every { locationLayerRenderer.clearBitmaps() } just runs
+    every { locationLayerRenderer.isRendererInitialised() } returns false
+    every { locationLayerRenderer.show() } just runs
+    every { locationLayerRenderer.hide() } just runs
+    every { locationLayerRenderer.styleScaling(any()) } just runs
+    every { locationLayerRenderer.addLayers(any()) } just runs
+    every { locationLayerRenderer.removeLayers() } just runs
+    every { locationLayerRenderer.initializeComponents(any()) } just runs
+    every { locationLayerRenderer.updateStyle(any()) } just runs
     locationPuckManager = LocationPuckManager(
       settings,
       mockk(),
@@ -55,7 +86,14 @@ class LocationPuckManagerTest {
       positionManager,
       animationManager
     )
-    locationPuckManager.locationLayerRenderer = locationLayerRenderer
+  }
+
+  @After
+  fun cleanUp() {
+    unmockkStatic("com.mapbox.maps.MapboxLogger")
+    unmockkStatic(Value::class)
+    unmockkObject(LayerSourceProvider)
+    unmockkAll()
   }
 
   @Test
@@ -138,15 +176,11 @@ class LocationPuckManagerTest {
   fun testUpdateSettings() {
     every { settings.layerAbove } returns "layer-above"
     every { settings.layerBelow } returns "layer-below"
-    every { delegateProvider.getStyle(capture(callbackSlot)) } returns Unit
-
     locationPuckManager.updateSettings(settings)
     verify { positionManager.layerAbove = "layer-above" }
     verify { positionManager.layerBelow = "layer-below" }
     verify { locationLayerRenderer.clearBitmaps() }
     verify { locationLayerRenderer.removeLayers() }
-    locationPuckManager.locationLayerRenderer = locationLayerRenderer
-    callbackSlot.captured.invoke(style)
     verify { locationLayerRenderer.addLayers(positionManager) }
     verify { locationLayerRenderer.initializeComponents(style) }
     verify { locationLayerRenderer.hide() }
@@ -154,7 +188,6 @@ class LocationPuckManagerTest {
     locationPuckManager.lastLocation = Point.fromLngLat(0.0, 0.0)
     locationPuckManager.updateSettings(settings)
     locationPuckManager.locationLayerRenderer = locationLayerRenderer
-    callbackSlot.captured.invoke(style)
     verify { locationLayerRenderer.show() }
   }
 
@@ -285,15 +318,18 @@ class LocationPuckManagerTest {
     verify(exactly = 0) { locationLayerRenderer.styleScaling(any()) }
   }
 
+  @OptIn(MapboxExperimental::class)
   @Test
   fun test3DStyleScaling() {
+    locationPuckManager.locationLayerRenderer = modelLayerRenderer
+    every { modelLayerRenderer.styleScaling(any()) } just runs
     every { settings.locationPuck } returns LocationPuck3D(
       modelUri = "uri",
       modelScaleExpression = "expression"
     )
     every { Value.fromJson(any()) } returns ExpectedFactory.createValue(Value("expression"))
     locationPuckManager.styleScaling(settings)
-    verify { locationLayerRenderer.styleScaling(Value("expression")) }
+    verify { modelLayerRenderer.styleScaling(Value("expression")) }
   }
 
   @Test
@@ -336,7 +372,6 @@ class LocationPuckManagerTest {
   @Test
   fun testDisablePuckBearingSnapsToNorth() {
     val lastBearing = 180.0
-    val newBearing = 90.0
     val settings = LocationComponentSettings(LocationPuck2D()) {
       puckBearingEnabled = false
     }
@@ -345,9 +380,8 @@ class LocationPuckManagerTest {
 
     locationPuckManager.lastBearing = lastBearing
     locationPuckManager.updateSettings(settings)
-    locationPuckManager.updateCurrentBearing(newBearing)
 
-    verify {
+    verify(exactly = 1) {
       animationManager.animateBearing(
         targets = captureVararg(bearings).toDoubleArray(),
         options = any()
@@ -355,12 +389,8 @@ class LocationPuckManagerTest {
     }
 
     assertArrayEquals(
-      bearings.toTypedArray(),
-      arrayOf(180.0, 0.0)
+      arrayOf(180.0, 0.0),
+      bearings.toTypedArray()
     )
-  }
-
-  private companion object {
-    const val MODEL_SCALE_CONSTANT = 2965820.800757861
   }
 }

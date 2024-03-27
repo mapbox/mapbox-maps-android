@@ -1,10 +1,12 @@
 package com.mapbox.maps.plugin.delegates
 
+import androidx.annotation.RestrictTo
 import com.mapbox.maps.MapboxStyleManager
 
 /**
  * Definition of map delegate transporter. Provides hooks to all map delegate instances.
  */
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 interface MapDelegateProvider {
 
   /**
@@ -28,9 +30,14 @@ interface MapDelegateProvider {
   val mapAttributionDelegate: MapAttributionDelegate
 
   /**
-   * Delegate used to interact with map's plugins.
+   * Delegate used to interact with map's style.
    */
   fun getStyle(callback: (MapboxStyleManager) -> Unit)
+
+  /**
+   * Delegate used to interact with map's style manager without waiting for style loading events.
+   */
+  val mapStyleManagerDelegate: MapboxStyleManager
 
   /**
    * Delegate used to interact with map's plugins.

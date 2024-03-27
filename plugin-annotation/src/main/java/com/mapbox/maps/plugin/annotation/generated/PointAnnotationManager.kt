@@ -33,16 +33,6 @@ class PointAnnotationManager(
   override val sourceId = annotationConfig?.sourceId ?: "mapbox-android-pointAnnotation-source-$id"
   override val dragLayerId = "mapbox-android-pointAnnotation-draglayer-$id"
   override val dragSourceId = "mapbox-android-pointAnnotation-dragsource-$id"
-  init {
-    delegateProvider.getStyle {
-      initLayerAndSource(it)
-      // Show all icons and texts by default.
-      iconAllowOverlap = true
-      textAllowOverlap = true
-      iconIgnorePlacement = true
-      textIgnorePlacement = true
-    }
-  }
 
   override fun initializeDataDrivenPropertyMap() {
     dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_ICON_ANCHOR] = false
@@ -1203,6 +1193,15 @@ class PointAnnotationManager(
         dragLayer?.filter(it)
       }
     }
+
+  init {
+    initLayerAndSource(delegateProvider.mapStyleManagerDelegate)
+    // Show all icons and texts by default.
+    iconAllowOverlap = true
+    textAllowOverlap = true
+    iconIgnorePlacement = true
+    textIgnorePlacement = true
+  }
 
   /**
    * Static variables and methods.

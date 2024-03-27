@@ -33,11 +33,6 @@ class CircleAnnotationManager(
   override val sourceId = annotationConfig?.sourceId ?: "mapbox-android-circleAnnotation-source-$id"
   override val dragLayerId = "mapbox-android-circleAnnotation-draglayer-$id"
   override val dragSourceId = "mapbox-android-circleAnnotation-dragsource-$id"
-  init {
-    delegateProvider.getStyle {
-      initLayerAndSource(it)
-    }
-  }
 
   override fun initializeDataDrivenPropertyMap() {
     dataDrivenPropertyUsageMap[CircleAnnotationOptions.PROPERTY_CIRCLE_SORT_KEY] = false
@@ -343,6 +338,10 @@ class CircleAnnotationManager(
         dragLayer?.filter(it)
       }
     }
+
+  init {
+    initLayerAndSource(delegateProvider.mapStyleManagerDelegate)
+  }
 
   /**
    * Static variables and methods.

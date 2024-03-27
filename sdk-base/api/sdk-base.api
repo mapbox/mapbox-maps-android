@@ -1646,6 +1646,7 @@ public abstract interface class com/mapbox/maps/plugin/delegates/MapDelegateProv
 	public abstract fun getMapListenerDelegate ()Lcom/mapbox/maps/plugin/delegates/MapListenerDelegate;
 	public abstract fun getMapPluginProviderDelegate ()Lcom/mapbox/maps/plugin/delegates/MapPluginProviderDelegate;
 	public abstract fun getMapProjectionDelegate ()Lcom/mapbox/maps/plugin/delegates/MapProjectionDelegate;
+	public abstract fun getMapStyleManagerDelegate ()Lcom/mapbox/maps/MapboxStyleManager;
 	public abstract fun getMapTransformDelegate ()Lcom/mapbox/maps/plugin/delegates/MapTransformDelegate;
 	public abstract fun getStyle (Lkotlin/jvm/functions/Function1;)V
 }

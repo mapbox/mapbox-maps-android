@@ -203,33 +203,32 @@ internal class LocationComponentPluginImpl : LocationComponentPlugin, LocationCo
 
   private fun activateLocationComponent() {
     if (internalSettings.enabled) {
-      delegateProvider.getStyle { style ->
-        if (locationPuckManager?.isLayerInitialised() == true && isLocationComponentActivated) {
-          return@getStyle
-        }
-        if (locationPuckManager == null) {
-          locationPuckManager = LocationPuckManager(
-            settings = internalSettings,
-            weakContext = weakContext,
-            delegateProvider = delegateProvider,
-            positionManager = LocationComponentPositionManager(
-              style,
-              internalSettings.layerAbove,
-              internalSettings.layerBelow
-            ),
-            animationManager = PuckAnimatorManager(
-              indicatorPositionChangedListener,
-              indicatorBearingChangedListener,
-              indicatorAccuracyRadiusChangedListener,
-              style.pixelRatio
-            )
-          )
-        }
-        locationPuckManager?.initialize(style)
-        locationPuckManager?.onStart()
-        locationProvider?.registerLocationConsumer(this)
-        isLocationComponentActivated = true
+      val style = delegateProvider.mapStyleManagerDelegate
+      if (locationPuckManager?.isLayerInitialised() == true && isLocationComponentActivated) {
+        return
       }
+      if (locationPuckManager == null) {
+        locationPuckManager = LocationPuckManager(
+          settings = internalSettings,
+          weakContext = weakContext,
+          delegateProvider = delegateProvider,
+          positionManager = LocationComponentPositionManager(
+            style,
+            internalSettings.layerAbove,
+            internalSettings.layerBelow
+          ),
+          animationManager = PuckAnimatorManager(
+            indicatorPositionChangedListener,
+            indicatorBearingChangedListener,
+            indicatorAccuracyRadiusChangedListener,
+            style.pixelRatio
+          )
+        )
+      }
+      locationPuckManager?.initialize(style)
+      locationPuckManager?.onStart()
+      locationProvider?.registerLocationConsumer(this)
+      isLocationComponentActivated = true
     }
   }
 
