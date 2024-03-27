@@ -27,6 +27,7 @@ internal class EGLCore(
   private val translucentSurface: Boolean,
   private val antialiasingSampleCount: Int,
   private val sharedContext: EGLContext = EGL14.EGL_NO_CONTEXT,
+  private val mapName: String,
 ) {
   private lateinit var eglConfig: EGLConfig
   private var eglDisplay: EGLDisplay = EGL14.EGL_NO_DISPLAY
@@ -47,6 +48,9 @@ internal class EGLCore(
   private val accumulatedRendererErrorList = LinkedList<RendererError>()
   private val rendererSetupErrorListenerSet = HashSet<RendererSetupErrorListener>()
 
+  @Suppress("PrivatePropertyName")
+  private val TAG = "Mbgl-EglCore" + if (mapName.isNotBlank()) "\\$mapName" else ""
+
   fun prepareEgl(): Boolean {
     eglDisplay = EGL14.eglGetDisplay(EGL14.EGL_DEFAULT_DISPLAY)
     if (eglDisplay == EGL14.EGL_NO_DISPLAY) {
@@ -66,7 +70,7 @@ internal class EGLCore(
       return false
     }
 
-    EGLConfigChooser(translucentSurface, antialiasingSampleCount).chooseConfig(eglDisplay)?.let {
+    EGLConfigChooser(translucentSurface, antialiasingSampleCount, mapName).chooseConfig(eglDisplay)?.let {
       eglConfig = it
     } ?: run {
       notifyListeners(RendererError.NO_VALID_EGL_CONFIG_FOUND)
@@ -291,8 +295,7 @@ internal class EGLCore(
     }
   }
 
-  companion object {
-    private const val TAG = "Mbgl-EglCore"
+  private companion object {
     private val attribsEgl3 = intArrayOf(EGL14.EGL_CONTEXT_CLIENT_VERSION, 3, EGL14.EGL_NONE)
   }
 }

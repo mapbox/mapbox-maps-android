@@ -14,6 +14,7 @@ import java.util.concurrent.CopyOnWriteArraySet
 @RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class MapboxWidgetRenderer(
   private val antialiasingSampleCount: Int,
+  private val mapName: String,
 ) {
   private var eglCore: EGLCore? = null
   private var eglContextCreated = false
@@ -27,6 +28,9 @@ internal class MapboxWidgetRenderer(
 
   private var width = 0
   private var height = 0
+
+  @Suppress("PrivatePropertyName")
+  private val TAG = "MapboxWidgetRenderer" + if (mapName.isNotBlank()) "\\$mapName" else ""
 
   val needRender: Boolean
     get() = widgets.any { it.renderer.needRender }
@@ -45,6 +49,7 @@ internal class MapboxWidgetRenderer(
       translucentSurface = false,
       antialiasingSampleCount = antialiasingSampleCount,
       sharedContext = sharedContext,
+      mapName = mapName,
     )
   }
 
@@ -210,9 +215,5 @@ internal class MapboxWidgetRenderer(
   fun cleanUpAllWidgets() {
     widgets.forEach { it.setTriggerRepaintAction(null) }
     widgets.clear()
-  }
-
-  private companion object {
-    private const val TAG: String = "MapboxWidgetRenderer"
   }
 }

@@ -5,6 +5,7 @@ Mapbox welcomes participation and contributions from everyone.
 # 11.3.0-rc.1
 ## Features ✨ and improvements 🏁
 * [compose] Add layerPosition support in `GenericStyle` composable function.
+* Expose `MapInitOptions.mapName` (`mapbox_mapName` in XML) property allowing to set the custom name which will be appended to map render related logs.
 
 ## Bug fixes 🐞
 * Return `ViewAnnotationOptions.Builder` when calling `ViewAnnotationOptions.Builder.annotationAnchor` extension function.

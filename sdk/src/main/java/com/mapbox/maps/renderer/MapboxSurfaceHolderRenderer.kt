@@ -8,7 +8,12 @@ import com.mapbox.maps.ContextMode
 @RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class MapboxSurfaceHolderRenderer : MapboxSurfaceRenderer, SurfaceHolder.Callback {
 
-  constructor(surfaceHolder: SurfaceHolder, antialiasingSampleCount: Int, contextMode: ContextMode) : super(antialiasingSampleCount, contextMode) {
+  constructor(
+    surfaceHolder: SurfaceHolder,
+    antialiasingSampleCount: Int,
+    contextMode: ContextMode,
+    mapName: String,
+  ) : super(antialiasingSampleCount, contextMode, mapName) {
     surfaceHolder.addCallback(this)
   }
 

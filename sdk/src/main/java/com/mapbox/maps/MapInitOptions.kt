@@ -20,7 +20,8 @@ import com.mapbox.maps.plugin.*
  * @property textureView Flag indicating to use a TextureView as render surface for the MapView. Default is false.
  * @property styleUri The styleUri will applied for the MapView in the onStart lifecycle event if no style is set. Default is [Style.STANDARD]. If set to null, then there is no default style will be loaded.
  * @property attrs The [AttributeSet] object that init the MapView.
- * @property antialiasingSampleCount sample count to control multisample anti-aliasing (MSAA) option for rendering. E.g. passing 4 enables MSAA x4 if it is supported. Default is 1 (MSAA turned off).
+ * @property antialiasingSampleCount Sample count to control multisample anti-aliasing (MSAA) option for rendering. E.g. passing 4 enables MSAA x4 if it is supported. Default is 1 (MSAA turned off).
+ * @property mapName Custom name which will be appended to map render related logs. May be useful when using several [MapView]s. Defaults to an empty string.
  */
 data class MapInitOptions @JvmOverloads constructor(
   val context: Context,
@@ -31,6 +32,7 @@ data class MapInitOptions @JvmOverloads constructor(
   val styleUri: String? = Style.STANDARD,
   var attrs: AttributeSet? = null,
   var antialiasingSampleCount: Int = DEFAULT_ANTIALIASING_SAMPLE_COUNT,
+  var mapName: String = "",
 ) {
 
   /**

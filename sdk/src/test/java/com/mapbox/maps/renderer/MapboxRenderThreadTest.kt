@@ -44,7 +44,7 @@ class MapboxRenderThreadTest {
     this.mapboxRenderer = mapboxRenderer
     mockEglCore()
     mockWidgetRenderer()
-    renderHandlerThread = RenderHandlerThread()
+    renderHandlerThread = RenderHandlerThread(mapName = "")
     textureRenderer = mockk(relaxed = true)
     fpsManager = mockk(relaxUnitFun = true)
     every { fpsManager.preRender(any()) } returns true

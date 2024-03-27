@@ -23,7 +23,7 @@ class EGLSupportTest {
   @UiThreadTest
   @Test
   fun testEglContext() {
-    EGLCore(false, MapView.DEFAULT_ANTIALIASING_SAMPLE_COUNT).let { eglCore ->
+    EGLCore(false, MapView.DEFAULT_ANTIALIASING_SAMPLE_COUNT, mapName = "").let { eglCore ->
       val eglConfigOk = eglCore.prepareEgl()
       val eglVersion = eglCore.queryContextVersion()
 
