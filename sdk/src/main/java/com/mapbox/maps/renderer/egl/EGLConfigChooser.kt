@@ -20,6 +20,7 @@ import java.lang.Integer.compare
 internal class EGLConfigChooser constructor(
   private val translucentSurface: Boolean,
   private var antialiasingSampleCount: Int,
+  mapName: String,
 ) {
   private val antialiasingEnabled get() = antialiasingSampleCount > DEFAULT_ANTIALIASING_SAMPLE_COUNT
 
@@ -61,6 +62,9 @@ internal class EGLConfigChooser constructor(
         }
       ).plus(EGL14.EGL_NONE)
     }
+
+  @Suppress("PrivatePropertyName")
+  private val TAG = "Mbgl-EGLConfigChooser" + if (mapName.isNotBlank()) "\\$mapName" else ""
 
   fun chooseConfig(display: EGLDisplay): EGLConfig? {
     val allConfigs = getConfigs(display)
@@ -287,8 +291,6 @@ internal class EGLConfigChooser constructor(
   }
 
   companion object {
-
-    private const val TAG = "Mbgl-EGLConfigChooser"
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     internal var STENCIL_SIZE = 8

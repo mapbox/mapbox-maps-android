@@ -22,7 +22,7 @@ class RenderHandlerThreadTest {
 
   @Before
   fun setUp() {
-    renderHandlerThread = RenderHandlerThread()
+    renderHandlerThread = RenderHandlerThread(mapName = "")
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logW(any(), any()) } just Runs
   }

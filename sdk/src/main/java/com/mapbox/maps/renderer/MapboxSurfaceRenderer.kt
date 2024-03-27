@@ -9,22 +9,28 @@ internal open class MapboxSurfaceRenderer : MapboxRenderer {
 
   override val widgetRenderer: MapboxWidgetRenderer
 
-  constructor(antialiasingSampleCount: Int) {
+  constructor(
+    antialiasingSampleCount: Int,
+    mapName: String,
+  ) : super(mapName) {
     widgetRenderer = MapboxWidgetRenderer(
       antialiasingSampleCount = antialiasingSampleCount,
+      mapName = mapName,
     )
     renderThread = MapboxRenderThread(
       mapboxRenderer = this,
       mapboxWidgetRenderer = widgetRenderer,
       translucentSurface = false,
       antialiasingSampleCount = antialiasingSampleCount,
+      mapName = mapName,
     )
   }
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  internal constructor(renderThread: MapboxRenderThread) {
+  internal constructor(renderThread: MapboxRenderThread) : super(mapName = "") {
     widgetRenderer = MapboxWidgetRenderer(
       antialiasingSampleCount = 1,
+      mapName = "",
     )
     this.renderThread = renderThread
   }

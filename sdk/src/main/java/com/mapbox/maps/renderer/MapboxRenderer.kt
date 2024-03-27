@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.locks.ReentrantLock
 import kotlin.concurrent.withLock
 
-internal abstract class MapboxRenderer : DelegatingMapClient {
+internal abstract class MapboxRenderer(mapName: String) : DelegatingMapClient {
 
   internal lateinit var renderThread: MapboxRenderThread
   internal abstract val widgetRenderer: MapboxWidgetRenderer
@@ -38,6 +38,8 @@ internal abstract class MapboxRenderer : DelegatingMapClient {
       renderFrameCancelable?.cancel()
     }
   }
+  @Suppress("PrivatePropertyName")
+  private val TAG = "Mbgl-Renderer" + if (mapName.isNotBlank()) "\\$mapName" else ""
 
   @UiThread
   fun onDestroy() {
@@ -213,7 +215,6 @@ internal abstract class MapboxRenderer : DelegatingMapClient {
   }
 
   companion object {
-    private const val TAG = "Mbgl-Renderer"
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     internal val repaintRenderEvent = RenderEvent(null, true)
   }

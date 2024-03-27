@@ -9,7 +9,10 @@ import kotlin.math.pow
 
 @RenderThread
 @RestrictTo(RestrictTo.Scope.LIBRARY)
-internal class FpsManager(private val handler: Handler) {
+internal class FpsManager(
+  private val handler: Handler,
+  mapName: String,
+) {
   private var userRefreshRate = USER_DEFINED_REFRESH_RATE_NOT_SET
   private var userToScreenRefreshRateRatio: Double? = null
 
@@ -26,6 +29,9 @@ internal class FpsManager(private val handler: Handler) {
   private var choreographerSkips = 0
 
   internal var fpsChangedListener: OnFpsChangedListener? = null
+
+  @Suppress("PrivatePropertyName")
+  private val TAG = "Mbgl-FpsManager" + if (mapName.isNotBlank()) "\\$mapName" else ""
 
   fun setScreenRefreshRate(screenRefreshRate: Int) {
     if (this.screenRefreshRate == screenRefreshRate) {
@@ -206,7 +212,6 @@ internal class FpsManager(private val handler: Handler) {
   }
 
   internal companion object {
-    private const val TAG = "Mbgl-FpsManager"
     private const val USER_DEFINED_REFRESH_RATE_NOT_SET = -1
     private const val SCREEN_METRICS_NOT_DEFINED = -1
     private const val LOG_STATISTICS = false

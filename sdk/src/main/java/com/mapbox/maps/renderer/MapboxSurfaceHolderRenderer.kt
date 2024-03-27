@@ -7,7 +7,11 @@ import androidx.annotation.VisibleForTesting
 @RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class MapboxSurfaceHolderRenderer : MapboxSurfaceRenderer, SurfaceHolder.Callback {
 
-  constructor(surfaceHolder: SurfaceHolder, antialiasingSampleCount: Int) : super(antialiasingSampleCount) {
+  constructor(
+    surfaceHolder: SurfaceHolder,
+    antialiasingSampleCount: Int,
+    mapName: String,
+  ) : super(antialiasingSampleCount, mapName) {
     surfaceHolder.addCallback(this)
   }
 
