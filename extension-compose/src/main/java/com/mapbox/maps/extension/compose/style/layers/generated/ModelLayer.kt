@@ -47,19 +47,29 @@ public fun ModelLayer(
   sourceId: String,
   modelId: ModelId = ModelId.default,
   modelAmbientOcclusionIntensity: ModelAmbientOcclusionIntensity = ModelAmbientOcclusionIntensity.default,
+  modelAmbientOcclusionIntensityTransition: Transition = Transition.default,
   modelCastShadows: ModelCastShadows = ModelCastShadows.default,
   modelColor: ModelColor = ModelColor.default,
+  modelColorTransition: Transition = Transition.default,
   modelColorMixIntensity: ModelColorMixIntensity = ModelColorMixIntensity.default,
+  modelColorMixIntensityTransition: Transition = Transition.default,
   modelCutoffFadeRange: ModelCutoffFadeRange = ModelCutoffFadeRange.default,
   modelEmissiveStrength: ModelEmissiveStrength = ModelEmissiveStrength.default,
+  modelEmissiveStrengthTransition: Transition = Transition.default,
   modelHeightBasedEmissiveStrengthMultiplier: ModelHeightBasedEmissiveStrengthMultiplier = ModelHeightBasedEmissiveStrengthMultiplier.default,
+  modelHeightBasedEmissiveStrengthMultiplierTransition: Transition = Transition.default,
   modelOpacity: ModelOpacity = ModelOpacity.default,
+  modelOpacityTransition: Transition = Transition.default,
   modelReceiveShadows: ModelReceiveShadows = ModelReceiveShadows.default,
   modelRotation: ModelRotation = ModelRotation.default,
+  modelRotationTransition: Transition = Transition.default,
   modelRoughness: ModelRoughness = ModelRoughness.default,
+  modelRoughnessTransition: Transition = Transition.default,
   modelScale: ModelScale = ModelScale.default,
+  modelScaleTransition: Transition = Transition.default,
   modelScaleMode: ModelScaleMode = ModelScaleMode.default,
   modelTranslation: ModelTranslation = ModelTranslation.default,
+  modelTranslationTransition: Transition = Transition.default,
   modelType: ModelType = ModelType.default,
   visibility: Visibility = Visibility.default,
   minZoom: MinZoom = MinZoom.default,
@@ -90,14 +100,23 @@ public fun ModelLayer(
         if (modelAmbientOcclusionIntensity != ModelAmbientOcclusionIntensity.default) {
           setProperty(ModelAmbientOcclusionIntensity.NAME, modelAmbientOcclusionIntensity.value)
         }
+        if (modelAmbientOcclusionIntensityTransition != Transition.default) {
+          setProperty(ModelAmbientOcclusionIntensity.TRANSITION_NAME, modelAmbientOcclusionIntensityTransition.value)
+        }
         if (modelCastShadows != ModelCastShadows.default) {
           setProperty(ModelCastShadows.NAME, modelCastShadows.value)
         }
         if (modelColor != ModelColor.default) {
           setProperty(ModelColor.NAME, modelColor.value)
         }
+        if (modelColorTransition != Transition.default) {
+          setProperty(ModelColor.TRANSITION_NAME, modelColorTransition.value)
+        }
         if (modelColorMixIntensity != ModelColorMixIntensity.default) {
           setProperty(ModelColorMixIntensity.NAME, modelColorMixIntensity.value)
+        }
+        if (modelColorMixIntensityTransition != Transition.default) {
+          setProperty(ModelColorMixIntensity.TRANSITION_NAME, modelColorMixIntensityTransition.value)
         }
         if (modelCutoffFadeRange != ModelCutoffFadeRange.default) {
           setProperty(ModelCutoffFadeRange.NAME, modelCutoffFadeRange.value)
@@ -105,11 +124,20 @@ public fun ModelLayer(
         if (modelEmissiveStrength != ModelEmissiveStrength.default) {
           setProperty(ModelEmissiveStrength.NAME, modelEmissiveStrength.value)
         }
+        if (modelEmissiveStrengthTransition != Transition.default) {
+          setProperty(ModelEmissiveStrength.TRANSITION_NAME, modelEmissiveStrengthTransition.value)
+        }
         if (modelHeightBasedEmissiveStrengthMultiplier != ModelHeightBasedEmissiveStrengthMultiplier.default) {
           setProperty(ModelHeightBasedEmissiveStrengthMultiplier.NAME, modelHeightBasedEmissiveStrengthMultiplier.value)
         }
+        if (modelHeightBasedEmissiveStrengthMultiplierTransition != Transition.default) {
+          setProperty(ModelHeightBasedEmissiveStrengthMultiplier.TRANSITION_NAME, modelHeightBasedEmissiveStrengthMultiplierTransition.value)
+        }
         if (modelOpacity != ModelOpacity.default) {
           setProperty(ModelOpacity.NAME, modelOpacity.value)
+        }
+        if (modelOpacityTransition != Transition.default) {
+          setProperty(ModelOpacity.TRANSITION_NAME, modelOpacityTransition.value)
         }
         if (modelReceiveShadows != ModelReceiveShadows.default) {
           setProperty(ModelReceiveShadows.NAME, modelReceiveShadows.value)
@@ -117,17 +145,29 @@ public fun ModelLayer(
         if (modelRotation != ModelRotation.default) {
           setProperty(ModelRotation.NAME, modelRotation.value)
         }
+        if (modelRotationTransition != Transition.default) {
+          setProperty(ModelRotation.TRANSITION_NAME, modelRotationTransition.value)
+        }
         if (modelRoughness != ModelRoughness.default) {
           setProperty(ModelRoughness.NAME, modelRoughness.value)
         }
+        if (modelRoughnessTransition != Transition.default) {
+          setProperty(ModelRoughness.TRANSITION_NAME, modelRoughnessTransition.value)
+        }
         if (modelScale != ModelScale.default) {
           setProperty(ModelScale.NAME, modelScale.value)
+        }
+        if (modelScaleTransition != Transition.default) {
+          setProperty(ModelScale.TRANSITION_NAME, modelScaleTransition.value)
         }
         if (modelScaleMode != ModelScaleMode.default) {
           setProperty(ModelScaleMode.NAME, modelScaleMode.value)
         }
         if (modelTranslation != ModelTranslation.default) {
           setProperty(ModelTranslation.NAME, modelTranslation.value)
+        }
+        if (modelTranslationTransition != Transition.default) {
+          setProperty(ModelTranslation.TRANSITION_NAME, modelTranslationTransition.value)
         }
         if (modelType != ModelType.default) {
           setProperty(ModelType.NAME, modelType.value)
@@ -160,14 +200,23 @@ public fun ModelLayer(
       update(modelAmbientOcclusionIntensity) {
         setProperty(ModelAmbientOcclusionIntensity.NAME, modelAmbientOcclusionIntensity.value)
       }
+      update(modelAmbientOcclusionIntensityTransition) {
+        setProperty(ModelAmbientOcclusionIntensity.TRANSITION_NAME, modelAmbientOcclusionIntensityTransition.value)
+      }
       update(modelCastShadows) {
         setProperty(ModelCastShadows.NAME, modelCastShadows.value)
       }
       update(modelColor) {
         setProperty(ModelColor.NAME, modelColor.value)
       }
+      update(modelColorTransition) {
+        setProperty(ModelColor.TRANSITION_NAME, modelColorTransition.value)
+      }
       update(modelColorMixIntensity) {
         setProperty(ModelColorMixIntensity.NAME, modelColorMixIntensity.value)
+      }
+      update(modelColorMixIntensityTransition) {
+        setProperty(ModelColorMixIntensity.TRANSITION_NAME, modelColorMixIntensityTransition.value)
       }
       update(modelCutoffFadeRange) {
         setProperty(ModelCutoffFadeRange.NAME, modelCutoffFadeRange.value)
@@ -175,11 +224,20 @@ public fun ModelLayer(
       update(modelEmissiveStrength) {
         setProperty(ModelEmissiveStrength.NAME, modelEmissiveStrength.value)
       }
+      update(modelEmissiveStrengthTransition) {
+        setProperty(ModelEmissiveStrength.TRANSITION_NAME, modelEmissiveStrengthTransition.value)
+      }
       update(modelHeightBasedEmissiveStrengthMultiplier) {
         setProperty(ModelHeightBasedEmissiveStrengthMultiplier.NAME, modelHeightBasedEmissiveStrengthMultiplier.value)
       }
+      update(modelHeightBasedEmissiveStrengthMultiplierTransition) {
+        setProperty(ModelHeightBasedEmissiveStrengthMultiplier.TRANSITION_NAME, modelHeightBasedEmissiveStrengthMultiplierTransition.value)
+      }
       update(modelOpacity) {
         setProperty(ModelOpacity.NAME, modelOpacity.value)
+      }
+      update(modelOpacityTransition) {
+        setProperty(ModelOpacity.TRANSITION_NAME, modelOpacityTransition.value)
       }
       update(modelReceiveShadows) {
         setProperty(ModelReceiveShadows.NAME, modelReceiveShadows.value)
@@ -187,17 +245,29 @@ public fun ModelLayer(
       update(modelRotation) {
         setProperty(ModelRotation.NAME, modelRotation.value)
       }
+      update(modelRotationTransition) {
+        setProperty(ModelRotation.TRANSITION_NAME, modelRotationTransition.value)
+      }
       update(modelRoughness) {
         setProperty(ModelRoughness.NAME, modelRoughness.value)
       }
+      update(modelRoughnessTransition) {
+        setProperty(ModelRoughness.TRANSITION_NAME, modelRoughnessTransition.value)
+      }
       update(modelScale) {
         setProperty(ModelScale.NAME, modelScale.value)
+      }
+      update(modelScaleTransition) {
+        setProperty(ModelScale.TRANSITION_NAME, modelScaleTransition.value)
       }
       update(modelScaleMode) {
         setProperty(ModelScaleMode.NAME, modelScaleMode.value)
       }
       update(modelTranslation) {
         setProperty(ModelTranslation.NAME, modelTranslation.value)
+      }
+      update(modelTranslationTransition) {
+        setProperty(ModelTranslation.TRANSITION_NAME, modelTranslationTransition.value)
       }
       update(modelType) {
         setProperty(ModelType.NAME, modelType.value)

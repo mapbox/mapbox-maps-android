@@ -58,21 +58,32 @@ public fun LineLayer(
   lineRoundLimit: LineRoundLimit = LineRoundLimit.default,
   lineSortKey: LineSortKey = LineSortKey.default,
   lineBlur: LineBlur = LineBlur.default,
+  lineBlurTransition: Transition = Transition.default,
   lineBorderColor: LineBorderColor = LineBorderColor.default,
+  lineBorderColorTransition: Transition = Transition.default,
   lineBorderWidth: LineBorderWidth = LineBorderWidth.default,
+  lineBorderWidthTransition: Transition = Transition.default,
   lineColor: LineColor = LineColor.default,
+  lineColorTransition: Transition = Transition.default,
   lineDasharray: LineDasharray = LineDasharray.default,
   lineDepthOcclusionFactor: LineDepthOcclusionFactor = LineDepthOcclusionFactor.default,
+  lineDepthOcclusionFactorTransition: Transition = Transition.default,
   lineEmissiveStrength: LineEmissiveStrength = LineEmissiveStrength.default,
+  lineEmissiveStrengthTransition: Transition = Transition.default,
   lineGapWidth: LineGapWidth = LineGapWidth.default,
+  lineGapWidthTransition: Transition = Transition.default,
   lineGradient: LineGradient = LineGradient.default,
   lineOffset: LineOffset = LineOffset.default,
+  lineOffsetTransition: Transition = Transition.default,
   lineOpacity: LineOpacity = LineOpacity.default,
+  lineOpacityTransition: Transition = Transition.default,
   linePattern: LinePattern = LinePattern.default,
   lineTranslate: LineTranslate = LineTranslate.default,
+  lineTranslateTransition: Transition = Transition.default,
   lineTranslateAnchor: LineTranslateAnchor = LineTranslateAnchor.default,
   lineTrimOffset: LineTrimOffset = LineTrimOffset.default,
   lineWidth: LineWidth = LineWidth.default,
+  lineWidthTransition: Transition = Transition.default,
   visibility: Visibility = Visibility.default,
   minZoom: MinZoom = MinZoom.default,
   maxZoom: MaxZoom = MaxZoom.default,
@@ -114,14 +125,26 @@ public fun LineLayer(
         if (lineBlur != LineBlur.default) {
           setProperty(LineBlur.NAME, lineBlur.value)
         }
+        if (lineBlurTransition != Transition.default) {
+          setProperty(LineBlur.TRANSITION_NAME, lineBlurTransition.value)
+        }
         if (lineBorderColor != LineBorderColor.default) {
           setProperty(LineBorderColor.NAME, lineBorderColor.value)
+        }
+        if (lineBorderColorTransition != Transition.default) {
+          setProperty(LineBorderColor.TRANSITION_NAME, lineBorderColorTransition.value)
         }
         if (lineBorderWidth != LineBorderWidth.default) {
           setProperty(LineBorderWidth.NAME, lineBorderWidth.value)
         }
+        if (lineBorderWidthTransition != Transition.default) {
+          setProperty(LineBorderWidth.TRANSITION_NAME, lineBorderWidthTransition.value)
+        }
         if (lineColor != LineColor.default) {
           setProperty(LineColor.NAME, lineColor.value)
+        }
+        if (lineColorTransition != Transition.default) {
+          setProperty(LineColor.TRANSITION_NAME, lineColorTransition.value)
         }
         if (lineDasharray != LineDasharray.default) {
           setProperty(LineDasharray.NAME, lineDasharray.value)
@@ -129,11 +152,20 @@ public fun LineLayer(
         if (lineDepthOcclusionFactor != LineDepthOcclusionFactor.default) {
           setProperty(LineDepthOcclusionFactor.NAME, lineDepthOcclusionFactor.value)
         }
+        if (lineDepthOcclusionFactorTransition != Transition.default) {
+          setProperty(LineDepthOcclusionFactor.TRANSITION_NAME, lineDepthOcclusionFactorTransition.value)
+        }
         if (lineEmissiveStrength != LineEmissiveStrength.default) {
           setProperty(LineEmissiveStrength.NAME, lineEmissiveStrength.value)
         }
+        if (lineEmissiveStrengthTransition != Transition.default) {
+          setProperty(LineEmissiveStrength.TRANSITION_NAME, lineEmissiveStrengthTransition.value)
+        }
         if (lineGapWidth != LineGapWidth.default) {
           setProperty(LineGapWidth.NAME, lineGapWidth.value)
+        }
+        if (lineGapWidthTransition != Transition.default) {
+          setProperty(LineGapWidth.TRANSITION_NAME, lineGapWidthTransition.value)
         }
         if (lineGradient != LineGradient.default) {
           setProperty(LineGradient.NAME, lineGradient.value)
@@ -141,14 +173,23 @@ public fun LineLayer(
         if (lineOffset != LineOffset.default) {
           setProperty(LineOffset.NAME, lineOffset.value)
         }
+        if (lineOffsetTransition != Transition.default) {
+          setProperty(LineOffset.TRANSITION_NAME, lineOffsetTransition.value)
+        }
         if (lineOpacity != LineOpacity.default) {
           setProperty(LineOpacity.NAME, lineOpacity.value)
+        }
+        if (lineOpacityTransition != Transition.default) {
+          setProperty(LineOpacity.TRANSITION_NAME, lineOpacityTransition.value)
         }
         if (linePattern != LinePattern.default) {
           setProperty(LinePattern.NAME, linePattern.value)
         }
         if (lineTranslate != LineTranslate.default) {
           setProperty(LineTranslate.NAME, lineTranslate.value)
+        }
+        if (lineTranslateTransition != Transition.default) {
+          setProperty(LineTranslate.TRANSITION_NAME, lineTranslateTransition.value)
         }
         if (lineTranslateAnchor != LineTranslateAnchor.default) {
           setProperty(LineTranslateAnchor.NAME, lineTranslateAnchor.value)
@@ -158,6 +199,9 @@ public fun LineLayer(
         }
         if (lineWidth != LineWidth.default) {
           setProperty(LineWidth.NAME, lineWidth.value)
+        }
+        if (lineWidthTransition != Transition.default) {
+          setProperty(LineWidth.TRANSITION_NAME, lineWidthTransition.value)
         }
         if (visibility != Visibility.default) {
           setProperty(Visibility.NAME, visibility.value)
@@ -199,14 +243,26 @@ public fun LineLayer(
       update(lineBlur) {
         setProperty(LineBlur.NAME, lineBlur.value)
       }
+      update(lineBlurTransition) {
+        setProperty(LineBlur.TRANSITION_NAME, lineBlurTransition.value)
+      }
       update(lineBorderColor) {
         setProperty(LineBorderColor.NAME, lineBorderColor.value)
+      }
+      update(lineBorderColorTransition) {
+        setProperty(LineBorderColor.TRANSITION_NAME, lineBorderColorTransition.value)
       }
       update(lineBorderWidth) {
         setProperty(LineBorderWidth.NAME, lineBorderWidth.value)
       }
+      update(lineBorderWidthTransition) {
+        setProperty(LineBorderWidth.TRANSITION_NAME, lineBorderWidthTransition.value)
+      }
       update(lineColor) {
         setProperty(LineColor.NAME, lineColor.value)
+      }
+      update(lineColorTransition) {
+        setProperty(LineColor.TRANSITION_NAME, lineColorTransition.value)
       }
       update(lineDasharray) {
         setProperty(LineDasharray.NAME, lineDasharray.value)
@@ -214,11 +270,20 @@ public fun LineLayer(
       update(lineDepthOcclusionFactor) {
         setProperty(LineDepthOcclusionFactor.NAME, lineDepthOcclusionFactor.value)
       }
+      update(lineDepthOcclusionFactorTransition) {
+        setProperty(LineDepthOcclusionFactor.TRANSITION_NAME, lineDepthOcclusionFactorTransition.value)
+      }
       update(lineEmissiveStrength) {
         setProperty(LineEmissiveStrength.NAME, lineEmissiveStrength.value)
       }
+      update(lineEmissiveStrengthTransition) {
+        setProperty(LineEmissiveStrength.TRANSITION_NAME, lineEmissiveStrengthTransition.value)
+      }
       update(lineGapWidth) {
         setProperty(LineGapWidth.NAME, lineGapWidth.value)
+      }
+      update(lineGapWidthTransition) {
+        setProperty(LineGapWidth.TRANSITION_NAME, lineGapWidthTransition.value)
       }
       update(lineGradient) {
         setProperty(LineGradient.NAME, lineGradient.value)
@@ -226,14 +291,23 @@ public fun LineLayer(
       update(lineOffset) {
         setProperty(LineOffset.NAME, lineOffset.value)
       }
+      update(lineOffsetTransition) {
+        setProperty(LineOffset.TRANSITION_NAME, lineOffsetTransition.value)
+      }
       update(lineOpacity) {
         setProperty(LineOpacity.NAME, lineOpacity.value)
+      }
+      update(lineOpacityTransition) {
+        setProperty(LineOpacity.TRANSITION_NAME, lineOpacityTransition.value)
       }
       update(linePattern) {
         setProperty(LinePattern.NAME, linePattern.value)
       }
       update(lineTranslate) {
         setProperty(LineTranslate.NAME, lineTranslate.value)
+      }
+      update(lineTranslateTransition) {
+        setProperty(LineTranslate.TRANSITION_NAME, lineTranslateTransition.value)
       }
       update(lineTranslateAnchor) {
         setProperty(LineTranslateAnchor.NAME, lineTranslateAnchor.value)
@@ -243,6 +317,9 @@ public fun LineLayer(
       }
       update(lineWidth) {
         setProperty(LineWidth.NAME, lineWidth.value)
+      }
+      update(lineWidthTransition) {
+        setProperty(LineWidth.TRANSITION_NAME, lineWidthTransition.value)
       }
       update(visibility) {
         setProperty(Visibility.NAME, visibility.value)

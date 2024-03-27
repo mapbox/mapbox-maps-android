@@ -49,6 +49,7 @@ public fun SkyLayer(
   skyGradientCenter: SkyGradientCenter = SkyGradientCenter.default,
   skyGradientRadius: SkyGradientRadius = SkyGradientRadius.default,
   skyOpacity: SkyOpacity = SkyOpacity.default,
+  skyOpacityTransition: Transition = Transition.default,
   skyType: SkyType = SkyType.default,
   visibility: Visibility = Visibility.default,
   minZoom: MinZoom = MinZoom.default,
@@ -96,6 +97,9 @@ public fun SkyLayer(
         if (skyOpacity != SkyOpacity.default) {
           setProperty(SkyOpacity.NAME, skyOpacity.value)
         }
+        if (skyOpacityTransition != Transition.default) {
+          setProperty(SkyOpacity.TRANSITION_NAME, skyOpacityTransition.value)
+        }
         if (skyType != SkyType.default) {
           setProperty(SkyType.NAME, skyType.value)
         }
@@ -141,6 +145,9 @@ public fun SkyLayer(
       }
       update(skyOpacity) {
         setProperty(SkyOpacity.NAME, skyOpacity.value)
+      }
+      update(skyOpacityTransition) {
+        setProperty(SkyOpacity.TRANSITION_NAME, skyOpacityTransition.value)
       }
       update(skyType) {
         setProperty(SkyType.NAME, skyType.value)

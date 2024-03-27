@@ -39,12 +39,17 @@ public fun HillshadeLayer(
   layerId: String,
   sourceId: String,
   hillshadeAccentColor: HillshadeAccentColor = HillshadeAccentColor.default,
+  hillshadeAccentColorTransition: Transition = Transition.default,
   hillshadeEmissiveStrength: HillshadeEmissiveStrength = HillshadeEmissiveStrength.default,
+  hillshadeEmissiveStrengthTransition: Transition = Transition.default,
   hillshadeExaggeration: HillshadeExaggeration = HillshadeExaggeration.default,
+  hillshadeExaggerationTransition: Transition = Transition.default,
   hillshadeHighlightColor: HillshadeHighlightColor = HillshadeHighlightColor.default,
+  hillshadeHighlightColorTransition: Transition = Transition.default,
   hillshadeIlluminationAnchor: HillshadeIlluminationAnchor = HillshadeIlluminationAnchor.default,
   hillshadeIlluminationDirection: HillshadeIlluminationDirection = HillshadeIlluminationDirection.default,
   hillshadeShadowColor: HillshadeShadowColor = HillshadeShadowColor.default,
+  hillshadeShadowColorTransition: Transition = Transition.default,
   visibility: Visibility = Visibility.default,
   minZoom: MinZoom = MinZoom.default,
   maxZoom: MaxZoom = MaxZoom.default,
@@ -71,14 +76,26 @@ public fun HillshadeLayer(
         if (hillshadeAccentColor != HillshadeAccentColor.default) {
           setProperty(HillshadeAccentColor.NAME, hillshadeAccentColor.value)
         }
+        if (hillshadeAccentColorTransition != Transition.default) {
+          setProperty(HillshadeAccentColor.TRANSITION_NAME, hillshadeAccentColorTransition.value)
+        }
         if (hillshadeEmissiveStrength != HillshadeEmissiveStrength.default) {
           setProperty(HillshadeEmissiveStrength.NAME, hillshadeEmissiveStrength.value)
+        }
+        if (hillshadeEmissiveStrengthTransition != Transition.default) {
+          setProperty(HillshadeEmissiveStrength.TRANSITION_NAME, hillshadeEmissiveStrengthTransition.value)
         }
         if (hillshadeExaggeration != HillshadeExaggeration.default) {
           setProperty(HillshadeExaggeration.NAME, hillshadeExaggeration.value)
         }
+        if (hillshadeExaggerationTransition != Transition.default) {
+          setProperty(HillshadeExaggeration.TRANSITION_NAME, hillshadeExaggerationTransition.value)
+        }
         if (hillshadeHighlightColor != HillshadeHighlightColor.default) {
           setProperty(HillshadeHighlightColor.NAME, hillshadeHighlightColor.value)
+        }
+        if (hillshadeHighlightColorTransition != Transition.default) {
+          setProperty(HillshadeHighlightColor.TRANSITION_NAME, hillshadeHighlightColorTransition.value)
         }
         if (hillshadeIlluminationAnchor != HillshadeIlluminationAnchor.default) {
           setProperty(HillshadeIlluminationAnchor.NAME, hillshadeIlluminationAnchor.value)
@@ -88,6 +105,9 @@ public fun HillshadeLayer(
         }
         if (hillshadeShadowColor != HillshadeShadowColor.default) {
           setProperty(HillshadeShadowColor.NAME, hillshadeShadowColor.value)
+        }
+        if (hillshadeShadowColorTransition != Transition.default) {
+          setProperty(HillshadeShadowColor.TRANSITION_NAME, hillshadeShadowColorTransition.value)
         }
         if (visibility != Visibility.default) {
           setProperty(Visibility.NAME, visibility.value)
@@ -114,14 +134,26 @@ public fun HillshadeLayer(
       update(hillshadeAccentColor) {
         setProperty(HillshadeAccentColor.NAME, hillshadeAccentColor.value)
       }
+      update(hillshadeAccentColorTransition) {
+        setProperty(HillshadeAccentColor.TRANSITION_NAME, hillshadeAccentColorTransition.value)
+      }
       update(hillshadeEmissiveStrength) {
         setProperty(HillshadeEmissiveStrength.NAME, hillshadeEmissiveStrength.value)
+      }
+      update(hillshadeEmissiveStrengthTransition) {
+        setProperty(HillshadeEmissiveStrength.TRANSITION_NAME, hillshadeEmissiveStrengthTransition.value)
       }
       update(hillshadeExaggeration) {
         setProperty(HillshadeExaggeration.NAME, hillshadeExaggeration.value)
       }
+      update(hillshadeExaggerationTransition) {
+        setProperty(HillshadeExaggeration.TRANSITION_NAME, hillshadeExaggerationTransition.value)
+      }
       update(hillshadeHighlightColor) {
         setProperty(HillshadeHighlightColor.NAME, hillshadeHighlightColor.value)
+      }
+      update(hillshadeHighlightColorTransition) {
+        setProperty(HillshadeHighlightColor.TRANSITION_NAME, hillshadeHighlightColorTransition.value)
       }
       update(hillshadeIlluminationAnchor) {
         setProperty(HillshadeIlluminationAnchor.NAME, hillshadeIlluminationAnchor.value)
@@ -131,6 +163,9 @@ public fun HillshadeLayer(
       }
       update(hillshadeShadowColor) {
         setProperty(HillshadeShadowColor.NAME, hillshadeShadowColor.value)
+      }
+      update(hillshadeShadowColorTransition) {
+        setProperty(HillshadeShadowColor.TRANSITION_NAME, hillshadeShadowColorTransition.value)
       }
       update(visibility) {
         setProperty(Visibility.NAME, visibility.value)

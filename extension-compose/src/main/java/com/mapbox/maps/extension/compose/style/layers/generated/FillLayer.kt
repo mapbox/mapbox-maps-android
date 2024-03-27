@@ -43,11 +43,16 @@ public fun FillLayer(
   fillSortKey: FillSortKey = FillSortKey.default,
   fillAntialias: FillAntialias = FillAntialias.default,
   fillColor: FillColor = FillColor.default,
+  fillColorTransition: Transition = Transition.default,
   fillEmissiveStrength: FillEmissiveStrength = FillEmissiveStrength.default,
+  fillEmissiveStrengthTransition: Transition = Transition.default,
   fillOpacity: FillOpacity = FillOpacity.default,
+  fillOpacityTransition: Transition = Transition.default,
   fillOutlineColor: FillOutlineColor = FillOutlineColor.default,
+  fillOutlineColorTransition: Transition = Transition.default,
   fillPattern: FillPattern = FillPattern.default,
   fillTranslate: FillTranslate = FillTranslate.default,
+  fillTranslateTransition: Transition = Transition.default,
   fillTranslateAnchor: FillTranslateAnchor = FillTranslateAnchor.default,
   visibility: Visibility = Visibility.default,
   minZoom: MinZoom = MinZoom.default,
@@ -81,20 +86,35 @@ public fun FillLayer(
         if (fillColor != FillColor.default) {
           setProperty(FillColor.NAME, fillColor.value)
         }
+        if (fillColorTransition != Transition.default) {
+          setProperty(FillColor.TRANSITION_NAME, fillColorTransition.value)
+        }
         if (fillEmissiveStrength != FillEmissiveStrength.default) {
           setProperty(FillEmissiveStrength.NAME, fillEmissiveStrength.value)
+        }
+        if (fillEmissiveStrengthTransition != Transition.default) {
+          setProperty(FillEmissiveStrength.TRANSITION_NAME, fillEmissiveStrengthTransition.value)
         }
         if (fillOpacity != FillOpacity.default) {
           setProperty(FillOpacity.NAME, fillOpacity.value)
         }
+        if (fillOpacityTransition != Transition.default) {
+          setProperty(FillOpacity.TRANSITION_NAME, fillOpacityTransition.value)
+        }
         if (fillOutlineColor != FillOutlineColor.default) {
           setProperty(FillOutlineColor.NAME, fillOutlineColor.value)
+        }
+        if (fillOutlineColorTransition != Transition.default) {
+          setProperty(FillOutlineColor.TRANSITION_NAME, fillOutlineColorTransition.value)
         }
         if (fillPattern != FillPattern.default) {
           setProperty(FillPattern.NAME, fillPattern.value)
         }
         if (fillTranslate != FillTranslate.default) {
           setProperty(FillTranslate.NAME, fillTranslate.value)
+        }
+        if (fillTranslateTransition != Transition.default) {
+          setProperty(FillTranslate.TRANSITION_NAME, fillTranslateTransition.value)
         }
         if (fillTranslateAnchor != FillTranslateAnchor.default) {
           setProperty(FillTranslateAnchor.NAME, fillTranslateAnchor.value)
@@ -130,20 +150,35 @@ public fun FillLayer(
       update(fillColor) {
         setProperty(FillColor.NAME, fillColor.value)
       }
+      update(fillColorTransition) {
+        setProperty(FillColor.TRANSITION_NAME, fillColorTransition.value)
+      }
       update(fillEmissiveStrength) {
         setProperty(FillEmissiveStrength.NAME, fillEmissiveStrength.value)
+      }
+      update(fillEmissiveStrengthTransition) {
+        setProperty(FillEmissiveStrength.TRANSITION_NAME, fillEmissiveStrengthTransition.value)
       }
       update(fillOpacity) {
         setProperty(FillOpacity.NAME, fillOpacity.value)
       }
+      update(fillOpacityTransition) {
+        setProperty(FillOpacity.TRANSITION_NAME, fillOpacityTransition.value)
+      }
       update(fillOutlineColor) {
         setProperty(FillOutlineColor.NAME, fillOutlineColor.value)
+      }
+      update(fillOutlineColorTransition) {
+        setProperty(FillOutlineColor.TRANSITION_NAME, fillOutlineColorTransition.value)
       }
       update(fillPattern) {
         setProperty(FillPattern.NAME, fillPattern.value)
       }
       update(fillTranslate) {
         setProperty(FillTranslate.NAME, fillTranslate.value)
+      }
+      update(fillTranslateTransition) {
+        setProperty(FillTranslate.TRANSITION_NAME, fillTranslateTransition.value)
       }
       update(fillTranslateAnchor) {
         setProperty(FillTranslateAnchor.NAME, fillTranslateAnchor.value)

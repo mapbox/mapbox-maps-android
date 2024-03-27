@@ -49,18 +49,29 @@ public fun LocationIndicatorLayer(
   shadowImage: ShadowImage = ShadowImage.default,
   topImage: TopImage = TopImage.default,
   accuracyRadius: AccuracyRadius = AccuracyRadius.default,
+  accuracyRadiusTransition: Transition = Transition.default,
   accuracyRadiusBorderColor: AccuracyRadiusBorderColor = AccuracyRadiusBorderColor.default,
+  accuracyRadiusBorderColorTransition: Transition = Transition.default,
   accuracyRadiusColor: AccuracyRadiusColor = AccuracyRadiusColor.default,
+  accuracyRadiusColorTransition: Transition = Transition.default,
   bearing: Bearing = Bearing.default,
+  bearingTransition: Transition = Transition.default,
   bearingImageSize: BearingImageSize = BearingImageSize.default,
+  bearingImageSizeTransition: Transition = Transition.default,
   emphasisCircleColor: EmphasisCircleColor = EmphasisCircleColor.default,
+  emphasisCircleColorTransition: Transition = Transition.default,
   emphasisCircleRadius: EmphasisCircleRadius = EmphasisCircleRadius.default,
+  emphasisCircleRadiusTransition: Transition = Transition.default,
   imagePitchDisplacement: ImagePitchDisplacement = ImagePitchDisplacement.default,
   location: Location = Location.default,
+  locationTransition: Transition = Transition.default,
   locationIndicatorOpacity: LocationIndicatorOpacity = LocationIndicatorOpacity.default,
+  locationIndicatorOpacityTransition: Transition = Transition.default,
   perspectiveCompensation: PerspectiveCompensation = PerspectiveCompensation.default,
   shadowImageSize: ShadowImageSize = ShadowImageSize.default,
+  shadowImageSizeTransition: Transition = Transition.default,
   topImageSize: TopImageSize = TopImageSize.default,
+  topImageSizeTransition: Transition = Transition.default,
   visibility: Visibility = Visibility.default,
   minZoom: MinZoom = MinZoom.default,
   maxZoom: MaxZoom = MaxZoom.default,
@@ -95,23 +106,44 @@ public fun LocationIndicatorLayer(
         if (accuracyRadius != AccuracyRadius.default) {
           setProperty(AccuracyRadius.NAME, accuracyRadius.value)
         }
+        if (accuracyRadiusTransition != Transition.default) {
+          setProperty(AccuracyRadius.TRANSITION_NAME, accuracyRadiusTransition.value)
+        }
         if (accuracyRadiusBorderColor != AccuracyRadiusBorderColor.default) {
           setProperty(AccuracyRadiusBorderColor.NAME, accuracyRadiusBorderColor.value)
+        }
+        if (accuracyRadiusBorderColorTransition != Transition.default) {
+          setProperty(AccuracyRadiusBorderColor.TRANSITION_NAME, accuracyRadiusBorderColorTransition.value)
         }
         if (accuracyRadiusColor != AccuracyRadiusColor.default) {
           setProperty(AccuracyRadiusColor.NAME, accuracyRadiusColor.value)
         }
+        if (accuracyRadiusColorTransition != Transition.default) {
+          setProperty(AccuracyRadiusColor.TRANSITION_NAME, accuracyRadiusColorTransition.value)
+        }
         if (bearing != Bearing.default) {
           setProperty(Bearing.NAME, bearing.value)
+        }
+        if (bearingTransition != Transition.default) {
+          setProperty(Bearing.TRANSITION_NAME, bearingTransition.value)
         }
         if (bearingImageSize != BearingImageSize.default) {
           setProperty(BearingImageSize.NAME, bearingImageSize.value)
         }
+        if (bearingImageSizeTransition != Transition.default) {
+          setProperty(BearingImageSize.TRANSITION_NAME, bearingImageSizeTransition.value)
+        }
         if (emphasisCircleColor != EmphasisCircleColor.default) {
           setProperty(EmphasisCircleColor.NAME, emphasisCircleColor.value)
         }
+        if (emphasisCircleColorTransition != Transition.default) {
+          setProperty(EmphasisCircleColor.TRANSITION_NAME, emphasisCircleColorTransition.value)
+        }
         if (emphasisCircleRadius != EmphasisCircleRadius.default) {
           setProperty(EmphasisCircleRadius.NAME, emphasisCircleRadius.value)
+        }
+        if (emphasisCircleRadiusTransition != Transition.default) {
+          setProperty(EmphasisCircleRadius.TRANSITION_NAME, emphasisCircleRadiusTransition.value)
         }
         if (imagePitchDisplacement != ImagePitchDisplacement.default) {
           setProperty(ImagePitchDisplacement.NAME, imagePitchDisplacement.value)
@@ -119,8 +151,14 @@ public fun LocationIndicatorLayer(
         if (location != Location.default) {
           setProperty(Location.NAME, location.value)
         }
+        if (locationTransition != Transition.default) {
+          setProperty(Location.TRANSITION_NAME, locationTransition.value)
+        }
         if (locationIndicatorOpacity != LocationIndicatorOpacity.default) {
           setProperty(LocationIndicatorOpacity.NAME, locationIndicatorOpacity.value)
+        }
+        if (locationIndicatorOpacityTransition != Transition.default) {
+          setProperty(LocationIndicatorOpacity.TRANSITION_NAME, locationIndicatorOpacityTransition.value)
         }
         if (perspectiveCompensation != PerspectiveCompensation.default) {
           setProperty(PerspectiveCompensation.NAME, perspectiveCompensation.value)
@@ -128,8 +166,14 @@ public fun LocationIndicatorLayer(
         if (shadowImageSize != ShadowImageSize.default) {
           setProperty(ShadowImageSize.NAME, shadowImageSize.value)
         }
+        if (shadowImageSizeTransition != Transition.default) {
+          setProperty(ShadowImageSize.TRANSITION_NAME, shadowImageSizeTransition.value)
+        }
         if (topImageSize != TopImageSize.default) {
           setProperty(TopImageSize.NAME, topImageSize.value)
+        }
+        if (topImageSizeTransition != Transition.default) {
+          setProperty(TopImageSize.TRANSITION_NAME, topImageSizeTransition.value)
         }
         if (visibility != Visibility.default) {
           setProperty(Visibility.NAME, visibility.value)
@@ -162,23 +206,44 @@ public fun LocationIndicatorLayer(
       update(accuracyRadius) {
         setProperty(AccuracyRadius.NAME, accuracyRadius.value)
       }
+      update(accuracyRadiusTransition) {
+        setProperty(AccuracyRadius.TRANSITION_NAME, accuracyRadiusTransition.value)
+      }
       update(accuracyRadiusBorderColor) {
         setProperty(AccuracyRadiusBorderColor.NAME, accuracyRadiusBorderColor.value)
+      }
+      update(accuracyRadiusBorderColorTransition) {
+        setProperty(AccuracyRadiusBorderColor.TRANSITION_NAME, accuracyRadiusBorderColorTransition.value)
       }
       update(accuracyRadiusColor) {
         setProperty(AccuracyRadiusColor.NAME, accuracyRadiusColor.value)
       }
+      update(accuracyRadiusColorTransition) {
+        setProperty(AccuracyRadiusColor.TRANSITION_NAME, accuracyRadiusColorTransition.value)
+      }
       update(bearing) {
         setProperty(Bearing.NAME, bearing.value)
+      }
+      update(bearingTransition) {
+        setProperty(Bearing.TRANSITION_NAME, bearingTransition.value)
       }
       update(bearingImageSize) {
         setProperty(BearingImageSize.NAME, bearingImageSize.value)
       }
+      update(bearingImageSizeTransition) {
+        setProperty(BearingImageSize.TRANSITION_NAME, bearingImageSizeTransition.value)
+      }
       update(emphasisCircleColor) {
         setProperty(EmphasisCircleColor.NAME, emphasisCircleColor.value)
       }
+      update(emphasisCircleColorTransition) {
+        setProperty(EmphasisCircleColor.TRANSITION_NAME, emphasisCircleColorTransition.value)
+      }
       update(emphasisCircleRadius) {
         setProperty(EmphasisCircleRadius.NAME, emphasisCircleRadius.value)
+      }
+      update(emphasisCircleRadiusTransition) {
+        setProperty(EmphasisCircleRadius.TRANSITION_NAME, emphasisCircleRadiusTransition.value)
       }
       update(imagePitchDisplacement) {
         setProperty(ImagePitchDisplacement.NAME, imagePitchDisplacement.value)
@@ -186,8 +251,14 @@ public fun LocationIndicatorLayer(
       update(location) {
         setProperty(Location.NAME, location.value)
       }
+      update(locationTransition) {
+        setProperty(Location.TRANSITION_NAME, locationTransition.value)
+      }
       update(locationIndicatorOpacity) {
         setProperty(LocationIndicatorOpacity.NAME, locationIndicatorOpacity.value)
+      }
+      update(locationIndicatorOpacityTransition) {
+        setProperty(LocationIndicatorOpacity.TRANSITION_NAME, locationIndicatorOpacityTransition.value)
       }
       update(perspectiveCompensation) {
         setProperty(PerspectiveCompensation.NAME, perspectiveCompensation.value)
@@ -195,8 +266,14 @@ public fun LocationIndicatorLayer(
       update(shadowImageSize) {
         setProperty(ShadowImageSize.NAME, shadowImageSize.value)
       }
+      update(shadowImageSizeTransition) {
+        setProperty(ShadowImageSize.TRANSITION_NAME, shadowImageSizeTransition.value)
+      }
       update(topImageSize) {
         setProperty(TopImageSize.NAME, topImageSize.value)
+      }
+      update(topImageSizeTransition) {
+        setProperty(TopImageSize.TRANSITION_NAME, topImageSizeTransition.value)
       }
       update(visibility) {
         setProperty(Visibility.NAME, visibility.value)

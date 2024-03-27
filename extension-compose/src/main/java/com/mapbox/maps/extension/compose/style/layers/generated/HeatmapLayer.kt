@@ -38,8 +38,11 @@ public fun HeatmapLayer(
   sourceId: String,
   heatmapColor: HeatmapColor = HeatmapColor.default,
   heatmapIntensity: HeatmapIntensity = HeatmapIntensity.default,
+  heatmapIntensityTransition: Transition = Transition.default,
   heatmapOpacity: HeatmapOpacity = HeatmapOpacity.default,
+  heatmapOpacityTransition: Transition = Transition.default,
   heatmapRadius: HeatmapRadius = HeatmapRadius.default,
+  heatmapRadiusTransition: Transition = Transition.default,
   heatmapWeight: HeatmapWeight = HeatmapWeight.default,
   visibility: Visibility = Visibility.default,
   minZoom: MinZoom = MinZoom.default,
@@ -70,11 +73,20 @@ public fun HeatmapLayer(
         if (heatmapIntensity != HeatmapIntensity.default) {
           setProperty(HeatmapIntensity.NAME, heatmapIntensity.value)
         }
+        if (heatmapIntensityTransition != Transition.default) {
+          setProperty(HeatmapIntensity.TRANSITION_NAME, heatmapIntensityTransition.value)
+        }
         if (heatmapOpacity != HeatmapOpacity.default) {
           setProperty(HeatmapOpacity.NAME, heatmapOpacity.value)
         }
+        if (heatmapOpacityTransition != Transition.default) {
+          setProperty(HeatmapOpacity.TRANSITION_NAME, heatmapOpacityTransition.value)
+        }
         if (heatmapRadius != HeatmapRadius.default) {
           setProperty(HeatmapRadius.NAME, heatmapRadius.value)
+        }
+        if (heatmapRadiusTransition != Transition.default) {
+          setProperty(HeatmapRadius.TRANSITION_NAME, heatmapRadiusTransition.value)
         }
         if (heatmapWeight != HeatmapWeight.default) {
           setProperty(HeatmapWeight.NAME, heatmapWeight.value)
@@ -107,11 +119,20 @@ public fun HeatmapLayer(
       update(heatmapIntensity) {
         setProperty(HeatmapIntensity.NAME, heatmapIntensity.value)
       }
+      update(heatmapIntensityTransition) {
+        setProperty(HeatmapIntensity.TRANSITION_NAME, heatmapIntensityTransition.value)
+      }
       update(heatmapOpacity) {
         setProperty(HeatmapOpacity.NAME, heatmapOpacity.value)
       }
+      update(heatmapOpacityTransition) {
+        setProperty(HeatmapOpacity.TRANSITION_NAME, heatmapOpacityTransition.value)
+      }
       update(heatmapRadius) {
         setProperty(HeatmapRadius.NAME, heatmapRadius.value)
+      }
+      update(heatmapRadiusTransition) {
+        setProperty(HeatmapRadius.TRANSITION_NAME, heatmapRadiusTransition.value)
       }
       update(heatmapWeight) {
         setProperty(HeatmapWeight.NAME, heatmapWeight.value)

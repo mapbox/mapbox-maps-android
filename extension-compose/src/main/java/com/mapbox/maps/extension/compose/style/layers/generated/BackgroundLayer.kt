@@ -32,8 +32,11 @@ import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
 public fun BackgroundLayer(
   layerId: String,
   backgroundColor: BackgroundColor = BackgroundColor.default,
+  backgroundColorTransition: Transition = Transition.default,
   backgroundEmissiveStrength: BackgroundEmissiveStrength = BackgroundEmissiveStrength.default,
+  backgroundEmissiveStrengthTransition: Transition = Transition.default,
   backgroundOpacity: BackgroundOpacity = BackgroundOpacity.default,
+  backgroundOpacityTransition: Transition = Transition.default,
   backgroundPattern: BackgroundPattern = BackgroundPattern.default,
   visibility: Visibility = Visibility.default,
   minZoom: MinZoom = MinZoom.default,
@@ -58,11 +61,20 @@ public fun BackgroundLayer(
         if (backgroundColor != BackgroundColor.default) {
           setProperty(BackgroundColor.NAME, backgroundColor.value)
         }
+        if (backgroundColorTransition != Transition.default) {
+          setProperty(BackgroundColor.TRANSITION_NAME, backgroundColorTransition.value)
+        }
         if (backgroundEmissiveStrength != BackgroundEmissiveStrength.default) {
           setProperty(BackgroundEmissiveStrength.NAME, backgroundEmissiveStrength.value)
         }
+        if (backgroundEmissiveStrengthTransition != Transition.default) {
+          setProperty(BackgroundEmissiveStrength.TRANSITION_NAME, backgroundEmissiveStrengthTransition.value)
+        }
         if (backgroundOpacity != BackgroundOpacity.default) {
           setProperty(BackgroundOpacity.NAME, backgroundOpacity.value)
+        }
+        if (backgroundOpacityTransition != Transition.default) {
+          setProperty(BackgroundOpacity.TRANSITION_NAME, backgroundOpacityTransition.value)
         }
         if (backgroundPattern != BackgroundPattern.default) {
           setProperty(BackgroundPattern.NAME, backgroundPattern.value)
@@ -83,11 +95,20 @@ public fun BackgroundLayer(
       update(backgroundColor) {
         setProperty(BackgroundColor.NAME, backgroundColor.value)
       }
+      update(backgroundColorTransition) {
+        setProperty(BackgroundColor.TRANSITION_NAME, backgroundColorTransition.value)
+      }
       update(backgroundEmissiveStrength) {
         setProperty(BackgroundEmissiveStrength.NAME, backgroundEmissiveStrength.value)
       }
+      update(backgroundEmissiveStrengthTransition) {
+        setProperty(BackgroundEmissiveStrength.TRANSITION_NAME, backgroundEmissiveStrengthTransition.value)
+      }
       update(backgroundOpacity) {
         setProperty(BackgroundOpacity.NAME, backgroundOpacity.value)
+      }
+      update(backgroundOpacityTransition) {
+        setProperty(BackgroundOpacity.TRANSITION_NAME, backgroundOpacityTransition.value)
       }
       update(backgroundPattern) {
         setProperty(BackgroundPattern.NAME, backgroundPattern.value)

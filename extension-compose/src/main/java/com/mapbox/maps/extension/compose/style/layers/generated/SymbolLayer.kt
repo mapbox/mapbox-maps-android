@@ -134,22 +134,38 @@ public fun SymbolLayer(
   textVariableAnchor: TextVariableAnchor = TextVariableAnchor.default,
   textWritingMode: TextWritingMode = TextWritingMode.default,
   iconColor: IconColor = IconColor.default,
+  iconColorTransition: Transition = Transition.default,
   iconColorSaturation: IconColorSaturation = IconColorSaturation.default,
+  iconColorSaturationTransition: Transition = Transition.default,
   iconEmissiveStrength: IconEmissiveStrength = IconEmissiveStrength.default,
+  iconEmissiveStrengthTransition: Transition = Transition.default,
   iconHaloBlur: IconHaloBlur = IconHaloBlur.default,
+  iconHaloBlurTransition: Transition = Transition.default,
   iconHaloColor: IconHaloColor = IconHaloColor.default,
+  iconHaloColorTransition: Transition = Transition.default,
   iconHaloWidth: IconHaloWidth = IconHaloWidth.default,
+  iconHaloWidthTransition: Transition = Transition.default,
   iconImageCrossFade: IconImageCrossFade = IconImageCrossFade.default,
+  iconImageCrossFadeTransition: Transition = Transition.default,
   iconOpacity: IconOpacity = IconOpacity.default,
+  iconOpacityTransition: Transition = Transition.default,
   iconTranslate: IconTranslate = IconTranslate.default,
+  iconTranslateTransition: Transition = Transition.default,
   iconTranslateAnchor: IconTranslateAnchor = IconTranslateAnchor.default,
   textColor: TextColor = TextColor.default,
+  textColorTransition: Transition = Transition.default,
   textEmissiveStrength: TextEmissiveStrength = TextEmissiveStrength.default,
+  textEmissiveStrengthTransition: Transition = Transition.default,
   textHaloBlur: TextHaloBlur = TextHaloBlur.default,
+  textHaloBlurTransition: Transition = Transition.default,
   textHaloColor: TextHaloColor = TextHaloColor.default,
+  textHaloColorTransition: Transition = Transition.default,
   textHaloWidth: TextHaloWidth = TextHaloWidth.default,
+  textHaloWidthTransition: Transition = Transition.default,
   textOpacity: TextOpacity = TextOpacity.default,
+  textOpacityTransition: Transition = Transition.default,
   textTranslate: TextTranslate = TextTranslate.default,
+  textTranslateTransition: Transition = Transition.default,
   textTranslateAnchor: TextTranslateAnchor = TextTranslateAnchor.default,
   visibility: Visibility = Visibility.default,
   minZoom: MinZoom = MinZoom.default,
@@ -303,29 +319,56 @@ public fun SymbolLayer(
         if (iconColor != IconColor.default) {
           setProperty(IconColor.NAME, iconColor.value)
         }
+        if (iconColorTransition != Transition.default) {
+          setProperty(IconColor.TRANSITION_NAME, iconColorTransition.value)
+        }
         if (iconColorSaturation != IconColorSaturation.default) {
           setProperty(IconColorSaturation.NAME, iconColorSaturation.value)
+        }
+        if (iconColorSaturationTransition != Transition.default) {
+          setProperty(IconColorSaturation.TRANSITION_NAME, iconColorSaturationTransition.value)
         }
         if (iconEmissiveStrength != IconEmissiveStrength.default) {
           setProperty(IconEmissiveStrength.NAME, iconEmissiveStrength.value)
         }
+        if (iconEmissiveStrengthTransition != Transition.default) {
+          setProperty(IconEmissiveStrength.TRANSITION_NAME, iconEmissiveStrengthTransition.value)
+        }
         if (iconHaloBlur != IconHaloBlur.default) {
           setProperty(IconHaloBlur.NAME, iconHaloBlur.value)
+        }
+        if (iconHaloBlurTransition != Transition.default) {
+          setProperty(IconHaloBlur.TRANSITION_NAME, iconHaloBlurTransition.value)
         }
         if (iconHaloColor != IconHaloColor.default) {
           setProperty(IconHaloColor.NAME, iconHaloColor.value)
         }
+        if (iconHaloColorTransition != Transition.default) {
+          setProperty(IconHaloColor.TRANSITION_NAME, iconHaloColorTransition.value)
+        }
         if (iconHaloWidth != IconHaloWidth.default) {
           setProperty(IconHaloWidth.NAME, iconHaloWidth.value)
+        }
+        if (iconHaloWidthTransition != Transition.default) {
+          setProperty(IconHaloWidth.TRANSITION_NAME, iconHaloWidthTransition.value)
         }
         if (iconImageCrossFade != IconImageCrossFade.default) {
           setProperty(IconImageCrossFade.NAME, iconImageCrossFade.value)
         }
+        if (iconImageCrossFadeTransition != Transition.default) {
+          setProperty(IconImageCrossFade.TRANSITION_NAME, iconImageCrossFadeTransition.value)
+        }
         if (iconOpacity != IconOpacity.default) {
           setProperty(IconOpacity.NAME, iconOpacity.value)
         }
+        if (iconOpacityTransition != Transition.default) {
+          setProperty(IconOpacity.TRANSITION_NAME, iconOpacityTransition.value)
+        }
         if (iconTranslate != IconTranslate.default) {
           setProperty(IconTranslate.NAME, iconTranslate.value)
+        }
+        if (iconTranslateTransition != Transition.default) {
+          setProperty(IconTranslate.TRANSITION_NAME, iconTranslateTransition.value)
         }
         if (iconTranslateAnchor != IconTranslateAnchor.default) {
           setProperty(IconTranslateAnchor.NAME, iconTranslateAnchor.value)
@@ -333,23 +376,44 @@ public fun SymbolLayer(
         if (textColor != TextColor.default) {
           setProperty(TextColor.NAME, textColor.value)
         }
+        if (textColorTransition != Transition.default) {
+          setProperty(TextColor.TRANSITION_NAME, textColorTransition.value)
+        }
         if (textEmissiveStrength != TextEmissiveStrength.default) {
           setProperty(TextEmissiveStrength.NAME, textEmissiveStrength.value)
+        }
+        if (textEmissiveStrengthTransition != Transition.default) {
+          setProperty(TextEmissiveStrength.TRANSITION_NAME, textEmissiveStrengthTransition.value)
         }
         if (textHaloBlur != TextHaloBlur.default) {
           setProperty(TextHaloBlur.NAME, textHaloBlur.value)
         }
+        if (textHaloBlurTransition != Transition.default) {
+          setProperty(TextHaloBlur.TRANSITION_NAME, textHaloBlurTransition.value)
+        }
         if (textHaloColor != TextHaloColor.default) {
           setProperty(TextHaloColor.NAME, textHaloColor.value)
+        }
+        if (textHaloColorTransition != Transition.default) {
+          setProperty(TextHaloColor.TRANSITION_NAME, textHaloColorTransition.value)
         }
         if (textHaloWidth != TextHaloWidth.default) {
           setProperty(TextHaloWidth.NAME, textHaloWidth.value)
         }
+        if (textHaloWidthTransition != Transition.default) {
+          setProperty(TextHaloWidth.TRANSITION_NAME, textHaloWidthTransition.value)
+        }
         if (textOpacity != TextOpacity.default) {
           setProperty(TextOpacity.NAME, textOpacity.value)
         }
+        if (textOpacityTransition != Transition.default) {
+          setProperty(TextOpacity.TRANSITION_NAME, textOpacityTransition.value)
+        }
         if (textTranslate != TextTranslate.default) {
           setProperty(TextTranslate.NAME, textTranslate.value)
+        }
+        if (textTranslateTransition != Transition.default) {
+          setProperty(TextTranslate.TRANSITION_NAME, textTranslateTransition.value)
         }
         if (textTranslateAnchor != TextTranslateAnchor.default) {
           setProperty(TextTranslateAnchor.NAME, textTranslateAnchor.value)
@@ -505,29 +569,56 @@ public fun SymbolLayer(
       update(iconColor) {
         setProperty(IconColor.NAME, iconColor.value)
       }
+      update(iconColorTransition) {
+        setProperty(IconColor.TRANSITION_NAME, iconColorTransition.value)
+      }
       update(iconColorSaturation) {
         setProperty(IconColorSaturation.NAME, iconColorSaturation.value)
+      }
+      update(iconColorSaturationTransition) {
+        setProperty(IconColorSaturation.TRANSITION_NAME, iconColorSaturationTransition.value)
       }
       update(iconEmissiveStrength) {
         setProperty(IconEmissiveStrength.NAME, iconEmissiveStrength.value)
       }
+      update(iconEmissiveStrengthTransition) {
+        setProperty(IconEmissiveStrength.TRANSITION_NAME, iconEmissiveStrengthTransition.value)
+      }
       update(iconHaloBlur) {
         setProperty(IconHaloBlur.NAME, iconHaloBlur.value)
+      }
+      update(iconHaloBlurTransition) {
+        setProperty(IconHaloBlur.TRANSITION_NAME, iconHaloBlurTransition.value)
       }
       update(iconHaloColor) {
         setProperty(IconHaloColor.NAME, iconHaloColor.value)
       }
+      update(iconHaloColorTransition) {
+        setProperty(IconHaloColor.TRANSITION_NAME, iconHaloColorTransition.value)
+      }
       update(iconHaloWidth) {
         setProperty(IconHaloWidth.NAME, iconHaloWidth.value)
+      }
+      update(iconHaloWidthTransition) {
+        setProperty(IconHaloWidth.TRANSITION_NAME, iconHaloWidthTransition.value)
       }
       update(iconImageCrossFade) {
         setProperty(IconImageCrossFade.NAME, iconImageCrossFade.value)
       }
+      update(iconImageCrossFadeTransition) {
+        setProperty(IconImageCrossFade.TRANSITION_NAME, iconImageCrossFadeTransition.value)
+      }
       update(iconOpacity) {
         setProperty(IconOpacity.NAME, iconOpacity.value)
       }
+      update(iconOpacityTransition) {
+        setProperty(IconOpacity.TRANSITION_NAME, iconOpacityTransition.value)
+      }
       update(iconTranslate) {
         setProperty(IconTranslate.NAME, iconTranslate.value)
+      }
+      update(iconTranslateTransition) {
+        setProperty(IconTranslate.TRANSITION_NAME, iconTranslateTransition.value)
       }
       update(iconTranslateAnchor) {
         setProperty(IconTranslateAnchor.NAME, iconTranslateAnchor.value)
@@ -535,23 +626,44 @@ public fun SymbolLayer(
       update(textColor) {
         setProperty(TextColor.NAME, textColor.value)
       }
+      update(textColorTransition) {
+        setProperty(TextColor.TRANSITION_NAME, textColorTransition.value)
+      }
       update(textEmissiveStrength) {
         setProperty(TextEmissiveStrength.NAME, textEmissiveStrength.value)
+      }
+      update(textEmissiveStrengthTransition) {
+        setProperty(TextEmissiveStrength.TRANSITION_NAME, textEmissiveStrengthTransition.value)
       }
       update(textHaloBlur) {
         setProperty(TextHaloBlur.NAME, textHaloBlur.value)
       }
+      update(textHaloBlurTransition) {
+        setProperty(TextHaloBlur.TRANSITION_NAME, textHaloBlurTransition.value)
+      }
       update(textHaloColor) {
         setProperty(TextHaloColor.NAME, textHaloColor.value)
+      }
+      update(textHaloColorTransition) {
+        setProperty(TextHaloColor.TRANSITION_NAME, textHaloColorTransition.value)
       }
       update(textHaloWidth) {
         setProperty(TextHaloWidth.NAME, textHaloWidth.value)
       }
+      update(textHaloWidthTransition) {
+        setProperty(TextHaloWidth.TRANSITION_NAME, textHaloWidthTransition.value)
+      }
       update(textOpacity) {
         setProperty(TextOpacity.NAME, textOpacity.value)
       }
+      update(textOpacityTransition) {
+        setProperty(TextOpacity.TRANSITION_NAME, textOpacityTransition.value)
+      }
       update(textTranslate) {
         setProperty(TextTranslate.NAME, textTranslate.value)
+      }
+      update(textTranslateTransition) {
+        setProperty(TextTranslate.TRANSITION_NAME, textTranslateTransition.value)
       }
       update(textTranslateAnchor) {
         setProperty(TextTranslateAnchor.NAME, textTranslateAnchor.value)
