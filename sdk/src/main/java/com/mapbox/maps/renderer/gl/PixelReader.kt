@@ -20,7 +20,12 @@ import java.nio.IntBuffer
  * Inspired by http://www.songho.ca/opengl/gl_pbo.html
  */
 @RestrictTo(RestrictTo.Scope.LIBRARY)
-internal class PixelReader(val width: Int, val height: Int) {
+internal class PixelReader(
+  val width: Int,
+  val height: Int,
+  @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.N)
+  internal val supportsPbo: Boolean = Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
+) {
   private val bufferSize = width * height * channelNum
   private var buffer = ByteBuffer
     .allocateDirect(bufferSize)
@@ -85,7 +90,5 @@ internal class PixelReader(val width: Int, val height: Int) {
   private companion object {
     // currently support just RGBA
     private const val channelNum = 4
-    @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.N)
-    private val supportsPbo = Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
   }
 }

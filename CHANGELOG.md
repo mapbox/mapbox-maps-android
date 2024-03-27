@@ -18,6 +18,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix location indicator models rendering issue with globe projection.
 * Offline: composite higher level tiles from their parents, when a non-standard [tile pack zoom ranges scheme](https://docs.mapbox.com/android/maps/guides/offline/#tile-count-granularity) is used.
 * Use bigger http buffers to avoid reference table overflow.
+* Fix a crash in `MapView.snapshot` happening on specific devices.
 
 ## Dependencies
 * Update gl-native to v11.3.0-rc.1 and common to v24.3.0-rc.1.
@@ -36,7 +37,6 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v11.2.1.
-
 
 # 11.3.0-beta.1 March 14, 2024
 ## Breaking changes ⚠️
