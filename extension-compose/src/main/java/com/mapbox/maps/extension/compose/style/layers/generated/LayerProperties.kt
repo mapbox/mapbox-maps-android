@@ -91,6 +91,7 @@ public data class FillColor(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "fill-color"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [FillColor], setting default will result in restoring the property value defined in the style.
@@ -121,6 +122,7 @@ public data class FillEmissiveStrength(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "fill-emissive-strength"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [FillEmissiveStrength], setting default will result in restoring the property value defined in the style.
@@ -151,6 +153,7 @@ public data class FillOpacity(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "fill-opacity"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [FillOpacity], setting default will result in restoring the property value defined in the style.
@@ -181,6 +184,7 @@ public data class FillOutlineColor(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "fill-outline-color"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [FillOutlineColor], setting default will result in restoring the property value defined in the style.
@@ -241,6 +245,7 @@ public data class FillTranslate(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "fill-translate"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [FillTranslate], setting default will result in restoring the property value defined in the style.
@@ -641,6 +646,7 @@ public data class LineBlur(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "line-blur"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [LineBlur], setting default will result in restoring the property value defined in the style.
@@ -671,6 +677,7 @@ public data class LineBorderColor(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "line-border-color"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [LineBorderColor], setting default will result in restoring the property value defined in the style.
@@ -701,6 +708,7 @@ public data class LineBorderWidth(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "line-border-width"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [LineBorderWidth], setting default will result in restoring the property value defined in the style.
@@ -731,6 +739,7 @@ public data class LineColor(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "line-color"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [LineColor], setting default will result in restoring the property value defined in the style.
@@ -791,6 +800,7 @@ public data class LineDepthOcclusionFactor(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "line-depth-occlusion-factor"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [LineDepthOcclusionFactor], setting default will result in restoring the property value defined in the style.
@@ -821,6 +831,7 @@ public data class LineEmissiveStrength(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "line-emissive-strength"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [LineEmissiveStrength], setting default will result in restoring the property value defined in the style.
@@ -851,6 +862,7 @@ public data class LineGapWidth(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "line-gap-width"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [LineGapWidth], setting default will result in restoring the property value defined in the style.
@@ -907,6 +919,7 @@ public data class LineOffset(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "line-offset"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [LineOffset], setting default will result in restoring the property value defined in the style.
@@ -937,6 +950,7 @@ public data class LineOpacity(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "line-opacity"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [LineOpacity], setting default will result in restoring the property value defined in the style.
@@ -997,6 +1011,7 @@ public data class LineTranslate(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "line-translate"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [LineTranslate], setting default will result in restoring the property value defined in the style.
@@ -1095,6 +1110,7 @@ public data class LineWidth(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "line-width"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [LineWidth], setting default will result in restoring the property value defined in the style.
@@ -2681,6 +2697,7 @@ public data class IconColor(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "icon-color"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [IconColor], setting default will result in restoring the property value defined in the style.
@@ -2711,6 +2728,7 @@ public data class IconColorSaturation(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "icon-color-saturation"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [IconColorSaturation], setting default will result in restoring the property value defined in the style.
@@ -2741,6 +2759,7 @@ public data class IconEmissiveStrength(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "icon-emissive-strength"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [IconEmissiveStrength], setting default will result in restoring the property value defined in the style.
@@ -2771,6 +2790,7 @@ public data class IconHaloBlur(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "icon-halo-blur"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [IconHaloBlur], setting default will result in restoring the property value defined in the style.
@@ -2801,6 +2821,7 @@ public data class IconHaloColor(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "icon-halo-color"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [IconHaloColor], setting default will result in restoring the property value defined in the style.
@@ -2831,6 +2852,7 @@ public data class IconHaloWidth(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "icon-halo-width"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [IconHaloWidth], setting default will result in restoring the property value defined in the style.
@@ -2861,6 +2883,7 @@ public data class IconImageCrossFade(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "icon-image-cross-fade"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [IconImageCrossFade], setting default will result in restoring the property value defined in the style.
@@ -2891,6 +2914,7 @@ public data class IconOpacity(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "icon-opacity"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [IconOpacity], setting default will result in restoring the property value defined in the style.
@@ -2921,6 +2945,7 @@ public data class IconTranslate(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "icon-translate"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [IconTranslate], setting default will result in restoring the property value defined in the style.
@@ -2989,6 +3014,7 @@ public data class TextColor(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "text-color"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [TextColor], setting default will result in restoring the property value defined in the style.
@@ -3019,6 +3045,7 @@ public data class TextEmissiveStrength(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "text-emissive-strength"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [TextEmissiveStrength], setting default will result in restoring the property value defined in the style.
@@ -3049,6 +3076,7 @@ public data class TextHaloBlur(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "text-halo-blur"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [TextHaloBlur], setting default will result in restoring the property value defined in the style.
@@ -3079,6 +3107,7 @@ public data class TextHaloColor(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "text-halo-color"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [TextHaloColor], setting default will result in restoring the property value defined in the style.
@@ -3109,6 +3138,7 @@ public data class TextHaloWidth(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "text-halo-width"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [TextHaloWidth], setting default will result in restoring the property value defined in the style.
@@ -3139,6 +3169,7 @@ public data class TextOpacity(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "text-opacity"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [TextOpacity], setting default will result in restoring the property value defined in the style.
@@ -3169,6 +3200,7 @@ public data class TextTranslate(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "text-translate"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [TextTranslate], setting default will result in restoring the property value defined in the style.
@@ -3267,6 +3299,7 @@ public data class CircleBlur(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "circle-blur"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [CircleBlur], setting default will result in restoring the property value defined in the style.
@@ -3297,6 +3330,7 @@ public data class CircleColor(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "circle-color"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [CircleColor], setting default will result in restoring the property value defined in the style.
@@ -3327,6 +3361,7 @@ public data class CircleEmissiveStrength(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "circle-emissive-strength"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [CircleEmissiveStrength], setting default will result in restoring the property value defined in the style.
@@ -3357,6 +3392,7 @@ public data class CircleOpacity(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "circle-opacity"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [CircleOpacity], setting default will result in restoring the property value defined in the style.
@@ -3463,6 +3499,7 @@ public data class CircleRadius(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "circle-radius"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [CircleRadius], setting default will result in restoring the property value defined in the style.
@@ -3493,6 +3530,7 @@ public data class CircleStrokeColor(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "circle-stroke-color"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [CircleStrokeColor], setting default will result in restoring the property value defined in the style.
@@ -3523,6 +3561,7 @@ public data class CircleStrokeOpacity(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "circle-stroke-opacity"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [CircleStrokeOpacity], setting default will result in restoring the property value defined in the style.
@@ -3553,6 +3592,7 @@ public data class CircleStrokeWidth(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "circle-stroke-width"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [CircleStrokeWidth], setting default will result in restoring the property value defined in the style.
@@ -3583,6 +3623,7 @@ public data class CircleTranslate(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "circle-translate"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [CircleTranslate], setting default will result in restoring the property value defined in the style.
@@ -3677,6 +3718,7 @@ public data class HeatmapIntensity(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "heatmap-intensity"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [HeatmapIntensity], setting default will result in restoring the property value defined in the style.
@@ -3707,6 +3749,7 @@ public data class HeatmapOpacity(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "heatmap-opacity"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [HeatmapOpacity], setting default will result in restoring the property value defined in the style.
@@ -3737,6 +3780,7 @@ public data class HeatmapRadius(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "heatmap-radius"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [HeatmapRadius], setting default will result in restoring the property value defined in the style.
@@ -3827,6 +3871,7 @@ public data class FillExtrusionAmbientOcclusionGroundAttenuation(public val valu
    */
   public companion object {
     internal const val NAME: String = "fill-extrusion-ambient-occlusion-ground-attenuation"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [FillExtrusionAmbientOcclusionGroundAttenuation], setting default will result in restoring the property value defined in the style.
@@ -3857,6 +3902,7 @@ public data class FillExtrusionAmbientOcclusionGroundRadius(public val value: Va
    */
   public companion object {
     internal const val NAME: String = "fill-extrusion-ambient-occlusion-ground-radius"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [FillExtrusionAmbientOcclusionGroundRadius], setting default will result in restoring the property value defined in the style.
@@ -3887,6 +3933,7 @@ public data class FillExtrusionAmbientOcclusionIntensity(public val value: Value
    */
   public companion object {
     internal const val NAME: String = "fill-extrusion-ambient-occlusion-intensity"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [FillExtrusionAmbientOcclusionIntensity], setting default will result in restoring the property value defined in the style.
@@ -3917,6 +3964,7 @@ public data class FillExtrusionAmbientOcclusionRadius(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "fill-extrusion-ambient-occlusion-radius"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [FillExtrusionAmbientOcclusionRadius], setting default will result in restoring the property value defined in the style.
@@ -3947,6 +3995,7 @@ public data class FillExtrusionAmbientOcclusionWallRadius(public val value: Valu
    */
   public companion object {
     internal const val NAME: String = "fill-extrusion-ambient-occlusion-wall-radius"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [FillExtrusionAmbientOcclusionWallRadius], setting default will result in restoring the property value defined in the style.
@@ -3977,6 +4026,7 @@ public data class FillExtrusionBase(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "fill-extrusion-base"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [FillExtrusionBase], setting default will result in restoring the property value defined in the style.
@@ -4007,6 +4057,7 @@ public data class FillExtrusionColor(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "fill-extrusion-color"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [FillExtrusionColor], setting default will result in restoring the property value defined in the style.
@@ -4067,6 +4118,7 @@ public data class FillExtrusionEmissiveStrength(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "fill-extrusion-emissive-strength"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [FillExtrusionEmissiveStrength], setting default will result in restoring the property value defined in the style.
@@ -4097,6 +4149,7 @@ public data class FillExtrusionFloodLightColor(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "fill-extrusion-flood-light-color"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [FillExtrusionFloodLightColor], setting default will result in restoring the property value defined in the style.
@@ -4127,6 +4180,7 @@ public data class FillExtrusionFloodLightGroundAttenuation(public val value: Val
    */
   public companion object {
     internal const val NAME: String = "fill-extrusion-flood-light-ground-attenuation"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [FillExtrusionFloodLightGroundAttenuation], setting default will result in restoring the property value defined in the style.
@@ -4157,6 +4211,7 @@ public data class FillExtrusionFloodLightGroundRadius(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "fill-extrusion-flood-light-ground-radius"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [FillExtrusionFloodLightGroundRadius], setting default will result in restoring the property value defined in the style.
@@ -4187,6 +4242,7 @@ public data class FillExtrusionFloodLightIntensity(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "fill-extrusion-flood-light-intensity"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [FillExtrusionFloodLightIntensity], setting default will result in restoring the property value defined in the style.
@@ -4217,6 +4273,7 @@ public data class FillExtrusionFloodLightWallRadius(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "fill-extrusion-flood-light-wall-radius"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [FillExtrusionFloodLightWallRadius], setting default will result in restoring the property value defined in the style.
@@ -4247,6 +4304,7 @@ public data class FillExtrusionHeight(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "fill-extrusion-height"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [FillExtrusionHeight], setting default will result in restoring the property value defined in the style.
@@ -4277,6 +4335,7 @@ public data class FillExtrusionOpacity(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "fill-extrusion-opacity"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [FillExtrusionOpacity], setting default will result in restoring the property value defined in the style.
@@ -4367,6 +4426,7 @@ public data class FillExtrusionTranslate(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "fill-extrusion-translate"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [FillExtrusionTranslate], setting default will result in restoring the property value defined in the style.
@@ -4465,6 +4525,7 @@ public data class FillExtrusionVerticalScale(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "fill-extrusion-vertical-scale"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [FillExtrusionVerticalScale], setting default will result in restoring the property value defined in the style.
@@ -4525,6 +4586,7 @@ public data class RasterBrightnessMax(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "raster-brightness-max"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [RasterBrightnessMax], setting default will result in restoring the property value defined in the style.
@@ -4555,6 +4617,7 @@ public data class RasterBrightnessMin(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "raster-brightness-min"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [RasterBrightnessMin], setting default will result in restoring the property value defined in the style.
@@ -4611,6 +4674,7 @@ public data class RasterColorMix(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "raster-color-mix"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [RasterColorMix], setting default will result in restoring the property value defined in the style.
@@ -4641,6 +4705,7 @@ public data class RasterColorRange(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "raster-color-range"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [RasterColorRange], setting default will result in restoring the property value defined in the style.
@@ -4671,6 +4736,7 @@ public data class RasterContrast(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "raster-contrast"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [RasterContrast], setting default will result in restoring the property value defined in the style.
@@ -4701,6 +4767,7 @@ public data class RasterElevation(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "raster-elevation"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [RasterElevation], setting default will result in restoring the property value defined in the style.
@@ -4731,6 +4798,7 @@ public data class RasterEmissiveStrength(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "raster-emissive-strength"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [RasterEmissiveStrength], setting default will result in restoring the property value defined in the style.
@@ -4791,6 +4859,7 @@ public data class RasterHueRotate(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "raster-hue-rotate"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [RasterHueRotate], setting default will result in restoring the property value defined in the style.
@@ -4821,6 +4890,7 @@ public data class RasterOpacity(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "raster-opacity"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [RasterOpacity], setting default will result in restoring the property value defined in the style.
@@ -4889,6 +4959,7 @@ public data class RasterSaturation(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "raster-saturation"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [RasterSaturation], setting default will result in restoring the property value defined in the style.
@@ -4919,6 +4990,7 @@ public data class HillshadeAccentColor(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "hillshade-accent-color"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [HillshadeAccentColor], setting default will result in restoring the property value defined in the style.
@@ -4949,6 +5021,7 @@ public data class HillshadeEmissiveStrength(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "hillshade-emissive-strength"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [HillshadeEmissiveStrength], setting default will result in restoring the property value defined in the style.
@@ -4979,6 +5052,7 @@ public data class HillshadeExaggeration(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "hillshade-exaggeration"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [HillshadeExaggeration], setting default will result in restoring the property value defined in the style.
@@ -5009,6 +5083,7 @@ public data class HillshadeHighlightColor(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "hillshade-highlight-color"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [HillshadeHighlightColor], setting default will result in restoring the property value defined in the style.
@@ -5107,6 +5182,7 @@ public data class HillshadeShadowColor(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "hillshade-shadow-color"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [HillshadeShadowColor], setting default will result in restoring the property value defined in the style.
@@ -5167,6 +5243,7 @@ public data class ModelAmbientOcclusionIntensity(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "model-ambient-occlusion-intensity"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [ModelAmbientOcclusionIntensity], setting default will result in restoring the property value defined in the style.
@@ -5227,6 +5304,7 @@ public data class ModelColor(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "model-color"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [ModelColor], setting default will result in restoring the property value defined in the style.
@@ -5257,6 +5335,7 @@ public data class ModelColorMixIntensity(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "model-color-mix-intensity"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [ModelColorMixIntensity], setting default will result in restoring the property value defined in the style.
@@ -5317,6 +5396,7 @@ public data class ModelEmissiveStrength(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "model-emissive-strength"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [ModelEmissiveStrength], setting default will result in restoring the property value defined in the style.
@@ -5347,6 +5427,7 @@ public data class ModelHeightBasedEmissiveStrengthMultiplier(public val value: V
    */
   public companion object {
     internal const val NAME: String = "model-height-based-emissive-strength-multiplier"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [ModelHeightBasedEmissiveStrengthMultiplier], setting default will result in restoring the property value defined in the style.
@@ -5377,6 +5458,7 @@ public data class ModelOpacity(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "model-opacity"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [ModelOpacity], setting default will result in restoring the property value defined in the style.
@@ -5437,6 +5519,7 @@ public data class ModelRotation(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "model-rotation"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [ModelRotation], setting default will result in restoring the property value defined in the style.
@@ -5467,6 +5550,7 @@ public data class ModelRoughness(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "model-roughness"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [ModelRoughness], setting default will result in restoring the property value defined in the style.
@@ -5497,6 +5581,7 @@ public data class ModelScale(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "model-scale"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [ModelScale], setting default will result in restoring the property value defined in the style.
@@ -5565,6 +5650,7 @@ public data class ModelTranslation(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "model-translation"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [ModelTranslation], setting default will result in restoring the property value defined in the style.
@@ -5633,6 +5719,7 @@ public data class BackgroundColor(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "background-color"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [BackgroundColor], setting default will result in restoring the property value defined in the style.
@@ -5663,6 +5750,7 @@ public data class BackgroundEmissiveStrength(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "background-emissive-strength"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [BackgroundEmissiveStrength], setting default will result in restoring the property value defined in the style.
@@ -5693,6 +5781,7 @@ public data class BackgroundOpacity(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "background-opacity"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [BackgroundOpacity], setting default will result in restoring the property value defined in the style.
@@ -5959,6 +6048,7 @@ public data class SkyOpacity(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "sky-opacity"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [SkyOpacity], setting default will result in restoring the property value defined in the style.
@@ -6117,6 +6207,7 @@ public data class AccuracyRadius(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "accuracy-radius"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [AccuracyRadius], setting default will result in restoring the property value defined in the style.
@@ -6147,6 +6238,7 @@ public data class AccuracyRadiusBorderColor(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "accuracy-radius-border-color"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [AccuracyRadiusBorderColor], setting default will result in restoring the property value defined in the style.
@@ -6177,6 +6269,7 @@ public data class AccuracyRadiusColor(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "accuracy-radius-color"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [AccuracyRadiusColor], setting default will result in restoring the property value defined in the style.
@@ -6207,6 +6300,7 @@ public data class Bearing(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "bearing"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [Bearing], setting default will result in restoring the property value defined in the style.
@@ -6237,6 +6331,7 @@ public data class BearingImageSize(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "bearing-image-size"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [BearingImageSize], setting default will result in restoring the property value defined in the style.
@@ -6267,6 +6362,7 @@ public data class EmphasisCircleColor(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "emphasis-circle-color"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [EmphasisCircleColor], setting default will result in restoring the property value defined in the style.
@@ -6297,6 +6393,7 @@ public data class EmphasisCircleRadius(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "emphasis-circle-radius"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [EmphasisCircleRadius], setting default will result in restoring the property value defined in the style.
@@ -6357,6 +6454,7 @@ public data class Location(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "location"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [Location], setting default will result in restoring the property value defined in the style.
@@ -6387,6 +6485,7 @@ public data class LocationIndicatorOpacity(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "location-indicator-opacity"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [LocationIndicatorOpacity], setting default will result in restoring the property value defined in the style.
@@ -6447,6 +6546,7 @@ public data class ShadowImageSize(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "shadow-image-size"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [ShadowImageSize], setting default will result in restoring the property value defined in the style.
@@ -6477,11 +6577,42 @@ public data class TopImageSize(public val value: Value) {
    */
   public companion object {
     internal const val NAME: String = "top-image-size"
+    internal const val TRANSITION_NAME = "$NAME-transition"
 
     /**
      * Default value for [TopImageSize], setting default will result in restoring the property value defined in the style.
      */
     public val default: TopImageSize = TopImageSize(Value.nullValue())
+  }
+}
+
+/**
+ * Defines the timing for the interpolation between a transitionable style layer property's previous value and new value.
+ *
+ * @param value the transition wrapped in [Value] to be used with native renderer.
+ */
+public data class Transition private constructor(public val value: Value) {
+
+  /**
+   * Construct the [Transition] with duration and delay.
+   */
+  public constructor(duration: Long = 0L, delay: Long = 0L) : this(
+    Value(
+      hashMapOf(
+        "delay" to Value(delay),
+        "duration" to Value(duration)
+      )
+    )
+  )
+
+  /**
+   * Public companion object.
+   */
+  public companion object {
+    /**
+     * Default value for [Transition], setting default will result in restoring the transition defined in the style.
+     */
+    public val default: Transition = Transition(Value.nullValue())
   }
 }
 // End of generated file.

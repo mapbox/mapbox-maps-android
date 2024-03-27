@@ -37,6 +37,7 @@ import com.mapbox.maps.extension.compose.style.layers.generated.SymbolLayer
 import com.mapbox.maps.extension.compose.style.layers.generated.TextColor
 import com.mapbox.maps.extension.compose.style.layers.generated.TextField
 import com.mapbox.maps.extension.compose.style.layers.generated.TextSize
+import com.mapbox.maps.extension.compose.style.layers.generated.Transition
 import com.mapbox.maps.extension.compose.style.sources.generated.GeoJSONData
 import com.mapbox.maps.extension.compose.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.expressions.generated.Expression
@@ -63,6 +64,10 @@ public class StyleCompositionActivity : ComponentActivity() {
 
       var centerLocation by remember {
         mutableStateOf(CityLocations.HELSINKI)
+      }
+
+      var textColor by remember {
+        mutableStateOf(Color.Red)
       }
 
       val animatedLocation by animateValueAsState(
@@ -94,6 +99,19 @@ public class StyleCompositionActivity : ComponentActivity() {
                 shape = RoundedCornerShape(16.dp),
               ) {
                 Text(modifier = Modifier.padding(10.dp), text = "Animate Source")
+              }
+              FloatingActionButton(
+                modifier = Modifier.padding(bottom = 10.dp),
+                onClick = {
+                  textColor = if (textColor == Color.Red) {
+                    Color.Yellow
+                  } else {
+                    Color.Red
+                  }
+                },
+                shape = RoundedCornerShape(16.dp),
+              ) {
+                Text(modifier = Modifier.padding(10.dp), text = "Animate text color transition")
               }
               FloatingActionButton(
                 modifier = Modifier.padding(bottom = 10.dp),
@@ -148,7 +166,8 @@ public class StyleCompositionActivity : ComponentActivity() {
                 layerId = "symbol-layer",
                 sourceId = "sourceId",
                 textField = text,
-                textColor = TextColor(Color.Blue),
+                textColor = TextColor(textColor),
+                textColorTransition = Transition(duration = 3000),
                 textSize = TextSize(
                   Expression.interpolate {
                     linear()

@@ -47,18 +47,28 @@ public fun RasterLayer(
   sourceId: String,
   rasterArrayBand: RasterArrayBand = RasterArrayBand.default,
   rasterBrightnessMax: RasterBrightnessMax = RasterBrightnessMax.default,
+  rasterBrightnessMaxTransition: Transition = Transition.default,
   rasterBrightnessMin: RasterBrightnessMin = RasterBrightnessMin.default,
+  rasterBrightnessMinTransition: Transition = Transition.default,
   rasterColor: RasterColor = RasterColor.default,
   rasterColorMix: RasterColorMix = RasterColorMix.default,
+  rasterColorMixTransition: Transition = Transition.default,
   rasterColorRange: RasterColorRange = RasterColorRange.default,
+  rasterColorRangeTransition: Transition = Transition.default,
   rasterContrast: RasterContrast = RasterContrast.default,
+  rasterContrastTransition: Transition = Transition.default,
   rasterElevation: RasterElevation = RasterElevation.default,
+  rasterElevationTransition: Transition = Transition.default,
   rasterEmissiveStrength: RasterEmissiveStrength = RasterEmissiveStrength.default,
+  rasterEmissiveStrengthTransition: Transition = Transition.default,
   rasterFadeDuration: RasterFadeDuration = RasterFadeDuration.default,
   rasterHueRotate: RasterHueRotate = RasterHueRotate.default,
+  rasterHueRotateTransition: Transition = Transition.default,
   rasterOpacity: RasterOpacity = RasterOpacity.default,
+  rasterOpacityTransition: Transition = Transition.default,
   rasterResampling: RasterResampling = RasterResampling.default,
   rasterSaturation: RasterSaturation = RasterSaturation.default,
+  rasterSaturationTransition: Transition = Transition.default,
   visibility: Visibility = Visibility.default,
   minZoom: MinZoom = MinZoom.default,
   maxZoom: MaxZoom = MaxZoom.default,
@@ -88,8 +98,14 @@ public fun RasterLayer(
         if (rasterBrightnessMax != RasterBrightnessMax.default) {
           setProperty(RasterBrightnessMax.NAME, rasterBrightnessMax.value)
         }
+        if (rasterBrightnessMaxTransition != Transition.default) {
+          setProperty(RasterBrightnessMax.TRANSITION_NAME, rasterBrightnessMaxTransition.value)
+        }
         if (rasterBrightnessMin != RasterBrightnessMin.default) {
           setProperty(RasterBrightnessMin.NAME, rasterBrightnessMin.value)
+        }
+        if (rasterBrightnessMinTransition != Transition.default) {
+          setProperty(RasterBrightnessMin.TRANSITION_NAME, rasterBrightnessMinTransition.value)
         }
         if (rasterColor != RasterColor.default) {
           setProperty(RasterColor.NAME, rasterColor.value)
@@ -97,17 +113,32 @@ public fun RasterLayer(
         if (rasterColorMix != RasterColorMix.default) {
           setProperty(RasterColorMix.NAME, rasterColorMix.value)
         }
+        if (rasterColorMixTransition != Transition.default) {
+          setProperty(RasterColorMix.TRANSITION_NAME, rasterColorMixTransition.value)
+        }
         if (rasterColorRange != RasterColorRange.default) {
           setProperty(RasterColorRange.NAME, rasterColorRange.value)
+        }
+        if (rasterColorRangeTransition != Transition.default) {
+          setProperty(RasterColorRange.TRANSITION_NAME, rasterColorRangeTransition.value)
         }
         if (rasterContrast != RasterContrast.default) {
           setProperty(RasterContrast.NAME, rasterContrast.value)
         }
+        if (rasterContrastTransition != Transition.default) {
+          setProperty(RasterContrast.TRANSITION_NAME, rasterContrastTransition.value)
+        }
         if (rasterElevation != RasterElevation.default) {
           setProperty(RasterElevation.NAME, rasterElevation.value)
         }
+        if (rasterElevationTransition != Transition.default) {
+          setProperty(RasterElevation.TRANSITION_NAME, rasterElevationTransition.value)
+        }
         if (rasterEmissiveStrength != RasterEmissiveStrength.default) {
           setProperty(RasterEmissiveStrength.NAME, rasterEmissiveStrength.value)
+        }
+        if (rasterEmissiveStrengthTransition != Transition.default) {
+          setProperty(RasterEmissiveStrength.TRANSITION_NAME, rasterEmissiveStrengthTransition.value)
         }
         if (rasterFadeDuration != RasterFadeDuration.default) {
           setProperty(RasterFadeDuration.NAME, rasterFadeDuration.value)
@@ -115,14 +146,23 @@ public fun RasterLayer(
         if (rasterHueRotate != RasterHueRotate.default) {
           setProperty(RasterHueRotate.NAME, rasterHueRotate.value)
         }
+        if (rasterHueRotateTransition != Transition.default) {
+          setProperty(RasterHueRotate.TRANSITION_NAME, rasterHueRotateTransition.value)
+        }
         if (rasterOpacity != RasterOpacity.default) {
           setProperty(RasterOpacity.NAME, rasterOpacity.value)
+        }
+        if (rasterOpacityTransition != Transition.default) {
+          setProperty(RasterOpacity.TRANSITION_NAME, rasterOpacityTransition.value)
         }
         if (rasterResampling != RasterResampling.default) {
           setProperty(RasterResampling.NAME, rasterResampling.value)
         }
         if (rasterSaturation != RasterSaturation.default) {
           setProperty(RasterSaturation.NAME, rasterSaturation.value)
+        }
+        if (rasterSaturationTransition != Transition.default) {
+          setProperty(RasterSaturation.TRANSITION_NAME, rasterSaturationTransition.value)
         }
         if (visibility != Visibility.default) {
           setProperty(Visibility.NAME, visibility.value)
@@ -152,8 +192,14 @@ public fun RasterLayer(
       update(rasterBrightnessMax) {
         setProperty(RasterBrightnessMax.NAME, rasterBrightnessMax.value)
       }
+      update(rasterBrightnessMaxTransition) {
+        setProperty(RasterBrightnessMax.TRANSITION_NAME, rasterBrightnessMaxTransition.value)
+      }
       update(rasterBrightnessMin) {
         setProperty(RasterBrightnessMin.NAME, rasterBrightnessMin.value)
+      }
+      update(rasterBrightnessMinTransition) {
+        setProperty(RasterBrightnessMin.TRANSITION_NAME, rasterBrightnessMinTransition.value)
       }
       update(rasterColor) {
         setProperty(RasterColor.NAME, rasterColor.value)
@@ -161,17 +207,32 @@ public fun RasterLayer(
       update(rasterColorMix) {
         setProperty(RasterColorMix.NAME, rasterColorMix.value)
       }
+      update(rasterColorMixTransition) {
+        setProperty(RasterColorMix.TRANSITION_NAME, rasterColorMixTransition.value)
+      }
       update(rasterColorRange) {
         setProperty(RasterColorRange.NAME, rasterColorRange.value)
+      }
+      update(rasterColorRangeTransition) {
+        setProperty(RasterColorRange.TRANSITION_NAME, rasterColorRangeTransition.value)
       }
       update(rasterContrast) {
         setProperty(RasterContrast.NAME, rasterContrast.value)
       }
+      update(rasterContrastTransition) {
+        setProperty(RasterContrast.TRANSITION_NAME, rasterContrastTransition.value)
+      }
       update(rasterElevation) {
         setProperty(RasterElevation.NAME, rasterElevation.value)
       }
+      update(rasterElevationTransition) {
+        setProperty(RasterElevation.TRANSITION_NAME, rasterElevationTransition.value)
+      }
       update(rasterEmissiveStrength) {
         setProperty(RasterEmissiveStrength.NAME, rasterEmissiveStrength.value)
+      }
+      update(rasterEmissiveStrengthTransition) {
+        setProperty(RasterEmissiveStrength.TRANSITION_NAME, rasterEmissiveStrengthTransition.value)
       }
       update(rasterFadeDuration) {
         setProperty(RasterFadeDuration.NAME, rasterFadeDuration.value)
@@ -179,14 +240,23 @@ public fun RasterLayer(
       update(rasterHueRotate) {
         setProperty(RasterHueRotate.NAME, rasterHueRotate.value)
       }
+      update(rasterHueRotateTransition) {
+        setProperty(RasterHueRotate.TRANSITION_NAME, rasterHueRotateTransition.value)
+      }
       update(rasterOpacity) {
         setProperty(RasterOpacity.NAME, rasterOpacity.value)
+      }
+      update(rasterOpacityTransition) {
+        setProperty(RasterOpacity.TRANSITION_NAME, rasterOpacityTransition.value)
       }
       update(rasterResampling) {
         setProperty(RasterResampling.NAME, rasterResampling.value)
       }
       update(rasterSaturation) {
         setProperty(RasterSaturation.NAME, rasterSaturation.value)
+      }
+      update(rasterSaturationTransition) {
+        setProperty(RasterSaturation.TRANSITION_NAME, rasterSaturationTransition.value)
       }
       update(visibility) {
         setProperty(Visibility.NAME, visibility.value)

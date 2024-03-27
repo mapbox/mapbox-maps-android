@@ -46,16 +46,25 @@ public fun CircleLayer(
   sourceId: String,
   circleSortKey: CircleSortKey = CircleSortKey.default,
   circleBlur: CircleBlur = CircleBlur.default,
+  circleBlurTransition: Transition = Transition.default,
   circleColor: CircleColor = CircleColor.default,
+  circleColorTransition: Transition = Transition.default,
   circleEmissiveStrength: CircleEmissiveStrength = CircleEmissiveStrength.default,
+  circleEmissiveStrengthTransition: Transition = Transition.default,
   circleOpacity: CircleOpacity = CircleOpacity.default,
+  circleOpacityTransition: Transition = Transition.default,
   circlePitchAlignment: CirclePitchAlignment = CirclePitchAlignment.default,
   circlePitchScale: CirclePitchScale = CirclePitchScale.default,
   circleRadius: CircleRadius = CircleRadius.default,
+  circleRadiusTransition: Transition = Transition.default,
   circleStrokeColor: CircleStrokeColor = CircleStrokeColor.default,
+  circleStrokeColorTransition: Transition = Transition.default,
   circleStrokeOpacity: CircleStrokeOpacity = CircleStrokeOpacity.default,
+  circleStrokeOpacityTransition: Transition = Transition.default,
   circleStrokeWidth: CircleStrokeWidth = CircleStrokeWidth.default,
+  circleStrokeWidthTransition: Transition = Transition.default,
   circleTranslate: CircleTranslate = CircleTranslate.default,
+  circleTranslateTransition: Transition = Transition.default,
   circleTranslateAnchor: CircleTranslateAnchor = CircleTranslateAnchor.default,
   visibility: Visibility = Visibility.default,
   minZoom: MinZoom = MinZoom.default,
@@ -86,14 +95,26 @@ public fun CircleLayer(
         if (circleBlur != CircleBlur.default) {
           setProperty(CircleBlur.NAME, circleBlur.value)
         }
+        if (circleBlurTransition != Transition.default) {
+          setProperty(CircleBlur.TRANSITION_NAME, circleBlurTransition.value)
+        }
         if (circleColor != CircleColor.default) {
           setProperty(CircleColor.NAME, circleColor.value)
+        }
+        if (circleColorTransition != Transition.default) {
+          setProperty(CircleColor.TRANSITION_NAME, circleColorTransition.value)
         }
         if (circleEmissiveStrength != CircleEmissiveStrength.default) {
           setProperty(CircleEmissiveStrength.NAME, circleEmissiveStrength.value)
         }
+        if (circleEmissiveStrengthTransition != Transition.default) {
+          setProperty(CircleEmissiveStrength.TRANSITION_NAME, circleEmissiveStrengthTransition.value)
+        }
         if (circleOpacity != CircleOpacity.default) {
           setProperty(CircleOpacity.NAME, circleOpacity.value)
+        }
+        if (circleOpacityTransition != Transition.default) {
+          setProperty(CircleOpacity.TRANSITION_NAME, circleOpacityTransition.value)
         }
         if (circlePitchAlignment != CirclePitchAlignment.default) {
           setProperty(CirclePitchAlignment.NAME, circlePitchAlignment.value)
@@ -104,17 +125,32 @@ public fun CircleLayer(
         if (circleRadius != CircleRadius.default) {
           setProperty(CircleRadius.NAME, circleRadius.value)
         }
+        if (circleRadiusTransition != Transition.default) {
+          setProperty(CircleRadius.TRANSITION_NAME, circleRadiusTransition.value)
+        }
         if (circleStrokeColor != CircleStrokeColor.default) {
           setProperty(CircleStrokeColor.NAME, circleStrokeColor.value)
+        }
+        if (circleStrokeColorTransition != Transition.default) {
+          setProperty(CircleStrokeColor.TRANSITION_NAME, circleStrokeColorTransition.value)
         }
         if (circleStrokeOpacity != CircleStrokeOpacity.default) {
           setProperty(CircleStrokeOpacity.NAME, circleStrokeOpacity.value)
         }
+        if (circleStrokeOpacityTransition != Transition.default) {
+          setProperty(CircleStrokeOpacity.TRANSITION_NAME, circleStrokeOpacityTransition.value)
+        }
         if (circleStrokeWidth != CircleStrokeWidth.default) {
           setProperty(CircleStrokeWidth.NAME, circleStrokeWidth.value)
         }
+        if (circleStrokeWidthTransition != Transition.default) {
+          setProperty(CircleStrokeWidth.TRANSITION_NAME, circleStrokeWidthTransition.value)
+        }
         if (circleTranslate != CircleTranslate.default) {
           setProperty(CircleTranslate.NAME, circleTranslate.value)
+        }
+        if (circleTranslateTransition != Transition.default) {
+          setProperty(CircleTranslate.TRANSITION_NAME, circleTranslateTransition.value)
         }
         if (circleTranslateAnchor != CircleTranslateAnchor.default) {
           setProperty(CircleTranslateAnchor.NAME, circleTranslateAnchor.value)
@@ -147,14 +183,26 @@ public fun CircleLayer(
       update(circleBlur) {
         setProperty(CircleBlur.NAME, circleBlur.value)
       }
+      update(circleBlurTransition) {
+        setProperty(CircleBlur.TRANSITION_NAME, circleBlurTransition.value)
+      }
       update(circleColor) {
         setProperty(CircleColor.NAME, circleColor.value)
+      }
+      update(circleColorTransition) {
+        setProperty(CircleColor.TRANSITION_NAME, circleColorTransition.value)
       }
       update(circleEmissiveStrength) {
         setProperty(CircleEmissiveStrength.NAME, circleEmissiveStrength.value)
       }
+      update(circleEmissiveStrengthTransition) {
+        setProperty(CircleEmissiveStrength.TRANSITION_NAME, circleEmissiveStrengthTransition.value)
+      }
       update(circleOpacity) {
         setProperty(CircleOpacity.NAME, circleOpacity.value)
+      }
+      update(circleOpacityTransition) {
+        setProperty(CircleOpacity.TRANSITION_NAME, circleOpacityTransition.value)
       }
       update(circlePitchAlignment) {
         setProperty(CirclePitchAlignment.NAME, circlePitchAlignment.value)
@@ -165,17 +213,32 @@ public fun CircleLayer(
       update(circleRadius) {
         setProperty(CircleRadius.NAME, circleRadius.value)
       }
+      update(circleRadiusTransition) {
+        setProperty(CircleRadius.TRANSITION_NAME, circleRadiusTransition.value)
+      }
       update(circleStrokeColor) {
         setProperty(CircleStrokeColor.NAME, circleStrokeColor.value)
+      }
+      update(circleStrokeColorTransition) {
+        setProperty(CircleStrokeColor.TRANSITION_NAME, circleStrokeColorTransition.value)
       }
       update(circleStrokeOpacity) {
         setProperty(CircleStrokeOpacity.NAME, circleStrokeOpacity.value)
       }
+      update(circleStrokeOpacityTransition) {
+        setProperty(CircleStrokeOpacity.TRANSITION_NAME, circleStrokeOpacityTransition.value)
+      }
       update(circleStrokeWidth) {
         setProperty(CircleStrokeWidth.NAME, circleStrokeWidth.value)
       }
+      update(circleStrokeWidthTransition) {
+        setProperty(CircleStrokeWidth.TRANSITION_NAME, circleStrokeWidthTransition.value)
+      }
       update(circleTranslate) {
         setProperty(CircleTranslate.NAME, circleTranslate.value)
+      }
+      update(circleTranslateTransition) {
+        setProperty(CircleTranslate.TRANSITION_NAME, circleTranslateTransition.value)
       }
       update(circleTranslateAnchor) {
         setProperty(CircleTranslateAnchor.NAME, circleTranslateAnchor.value)
