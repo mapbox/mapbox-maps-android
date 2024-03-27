@@ -204,9 +204,10 @@ internal abstract class MapboxRenderer : MapClient {
       pixelReader?.release()
       pixelReader = PixelReader(width, height)
     }
+    val pixelReader = pixelReader!!
 
-    pixelReader?.let {
-      val buffer = it.readPixels()
+    try {
+      val buffer = pixelReader.readPixels()
       buffer.rewind()
       val flipped = Bitmap.createBitmap(
         width,
@@ -227,6 +228,18 @@ internal abstract class MapboxRenderer : MapClient {
         )
       } finally {
         flipped.recycle()
+      }
+    } catch (e: Throwable) {
+      logW(TAG, "Exception ${e.localizedMessage} happened when reading pixels")
+      if (pixelReader.supportsPbo) {
+        logW(TAG, "Re-creating PixelReader with no PBO support and making snapshot again")
+        pixelReader.release()
+        this.pixelReader = PixelReader(
+          width = pixelReader.width,
+          height = pixelReader.height,
+          supportsPbo = false
+        )
+        return performSnapshot()
       }
     }
     return null

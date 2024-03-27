@@ -20,7 +20,9 @@ import java.nio.IntBuffer
  */
 internal class PixelReader(
   val width: Int,
-  val height: Int
+  val height: Int,
+  @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.N)
+  internal val supportsPbo: Boolean = Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
 ) {
   private val bufferSize = width * height * channelNum
   private var buffer = ByteBuffer
@@ -86,7 +88,5 @@ internal class PixelReader(
   companion object {
     // currently support just RGBA
     private const val channelNum = 4
-    @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.N)
-    private val supportsPbo = Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
   }
 }
