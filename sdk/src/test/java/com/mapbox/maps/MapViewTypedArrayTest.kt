@@ -54,6 +54,7 @@ class MapViewTypedArrayTest(
 
     every { typedArray.getInt(R.styleable.mapbox_MapView_mapbox_mapSurface, 0) } returns inputMapSurfaceMode
     every { typedArray.getInteger(R.styleable.mapbox_MapView_mapbox_mapAntialiasingSampleCount, DEFAULT_ANTIALIASING_SAMPLE_COUNT) } returns inputAntialiasingSampleCount
+    every { typedArray.getString(R.styleable.mapbox_MapView_mapbox_mapName) } returns ""
     every { typedArray.getString(R.styleable.mapbox_MapView_mapbox_styleUri) } returns inputMapStyle
     every { typedArray.recycle() } just Runs
     every { context.obtainStyledAttributes(any(), any(), 0, 0) } returns typedArray

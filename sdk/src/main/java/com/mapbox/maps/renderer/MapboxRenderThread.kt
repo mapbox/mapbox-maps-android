@@ -138,23 +138,28 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     }
   }
 
+  @Suppress("PrivatePropertyName")
+  private val TAG: String
+
   constructor(
     mapboxRenderer: MapboxRenderer,
     mapboxWidgetRenderer: MapboxWidgetRenderer,
     translucentSurface: Boolean,
     antialiasingSampleCount: Int,
     contextMode: ContextMode,
+    mapName: String,
   ) {
     this.translucentSurface = translucentSurface
     this.mapboxRenderer = mapboxRenderer
     this.widgetRenderer = mapboxWidgetRenderer
-    this.eglCore = EGLCore(translucentSurface, antialiasingSampleCount)
+    this.TAG = "Mbgl-RenderThread" + if (mapName.isNotBlank()) "\\$mapName" else ""
+    this.eglCore = EGLCore(translucentSurface, antialiasingSampleCount, mapName = mapName)
     this.eglSurface = eglCore.eglNoSurface
     this.widgetTextureRenderer = TextureRenderer()
     this.contextMode = contextMode
-    renderHandlerThread = RenderHandlerThread()
+    renderHandlerThread = RenderHandlerThread(mapName)
     val handler = renderHandlerThread.start()
-    fpsManager = FpsManager(handler)
+    fpsManager = FpsManager(handler, mapName)
   }
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
@@ -175,6 +180,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     this.widgetTextureRenderer = widgetTextureRenderer
     this.eglSurface = eglCore.eglNoSurface
     this.contextMode = ContextMode.UNIQUE
+    this.TAG = ""
   }
 
   private fun postPrepareRenderFrame(delayMillis: Long = 0L) {
@@ -715,7 +721,6 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   }
 
   internal companion object {
-    private const val TAG = "Mbgl-RenderThread"
     /**
      * If we hit some issue caused by invalid state (most likely caused by GPU driver) we start
      * rescheduling configuration with that delay in order not to overflood handler thread message queue.

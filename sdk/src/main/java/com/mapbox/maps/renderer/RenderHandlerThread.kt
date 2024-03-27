@@ -9,16 +9,26 @@ import androidx.annotation.VisibleForTesting
 import com.mapbox.maps.logW
 
 @RestrictTo(RestrictTo.Scope.LIBRARY)
-internal class RenderHandlerThread {
+internal class RenderHandlerThread(
+  mapName: String,
+) {
+
+  private val handlerThreadName = if (mapName.isNotBlank())
+    "MbxRender$mapName"
+  else
+    "MapboxRenderThread"
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal val handlerThread: HandlerThread =
-    HandlerThread(HANDLE_THREAD_NAME, THREAD_PRIORITY_DISPLAY)
+    HandlerThread(handlerThreadName, THREAD_PRIORITY_DISPLAY)
 
   internal var handler: Handler? = null
 
   internal val isRunning
     get() = handler != null && handlerThread.isAlive
+
+  @Suppress("PrivatePropertyName")
+  private val TAG = "Mbgl-$handlerThreadName" + if (mapName.isNotBlank()) "\\$mapName" else ""
 
   fun post(task: () -> Unit) {
     postDelayed(task, 0)
@@ -28,7 +38,7 @@ internal class RenderHandlerThread {
     handler?.let {
       val message = Message.obtain(it, task)
       it.sendMessageDelayed(message, delayMillis)
-    } ?: logW(TAG, "Thread $HANDLE_THREAD_NAME was not started, ignoring event")
+    } ?: logW(TAG, "Thread $handlerThreadName was not started, ignoring event")
   }
 
   fun start(): Handler {
@@ -48,10 +58,5 @@ internal class RenderHandlerThread {
    */
   fun clearRenderEventQueue() {
     handler?.removeCallbacksAndMessages(null)
-  }
-
-  companion object {
-    private const val HANDLE_THREAD_NAME = "MapboxRenderThread"
-    private const val TAG = "Mbgl-$HANDLE_THREAD_NAME"
   }
 }

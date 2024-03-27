@@ -23,7 +23,7 @@ class MapFragment : Fragment() {
     mapView = MapView(
       inflater.context,
       // Use TextureView as render surface for the MapView, for smooth transitions following holding views, e.g. in a ViewPager.
-      MapInitOptions(inflater.context, textureView = true)
+      MapInitOptions(inflater.context, textureView = true, mapName = "fragmentMap")
     )
     return mapView
   }

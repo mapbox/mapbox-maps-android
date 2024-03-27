@@ -112,12 +112,14 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
         is SurfaceView -> MapboxSurfaceHolderRenderer(
           view.holder,
           resolvedMapInitOptions.antialiasingSampleCount,
-          contextMode
+          contextMode,
+          resolvedMapInitOptions.mapName
         )
         is TextureView -> MapboxTextureViewRenderer(
           view,
           resolvedMapInitOptions.antialiasingSampleCount,
-          contextMode
+          contextMode,
+          resolvedMapInitOptions.mapName
         )
         else -> throw IllegalArgumentException("Provided view has to be a texture or a surface.")
       },
@@ -150,6 +152,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
         R.styleable.mapbox_MapView_mapbox_mapAntialiasingSampleCount,
         DEFAULT_ANTIALIASING_SAMPLE_COUNT
       )
+      val mapName = typedArray.getString(R.styleable.mapbox_MapView_mapbox_mapName) ?: ""
 
       return MapInitOptions(
         context,
@@ -160,7 +163,8 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
           styleUri
         },
         attrs = attrs,
-        antialiasingSampleCount = antialiasingSampleCount
+        antialiasingSampleCount = antialiasingSampleCount,
+        mapName = mapName,
       ).also {
         it.cameraOptions = cameraOptions
         it.textureView = textureView
@@ -495,7 +499,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
      */
     @JvmStatic
     fun isRenderingSupported(): Boolean {
-      EGLCore(false, DEFAULT_ANTIALIASING_SAMPLE_COUNT).apply {
+      EGLCore(false, DEFAULT_ANTIALIASING_SAMPLE_COUNT, mapName = "").apply {
         val eglConfigOk = prepareEgl()
         release()
         return eglConfigOk
@@ -510,7 +514,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
      */
     @JvmStatic
     fun isTerrainRenderingSupported(): Boolean {
-      EGLCore(false, DEFAULT_ANTIALIASING_SAMPLE_COUNT).apply {
+      EGLCore(false, DEFAULT_ANTIALIASING_SAMPLE_COUNT, mapName = "").apply {
         val eglConfigOk = prepareEgl()
         val eglSurface = createOffscreenSurface(1, 1)
         makeCurrent(eglSurface)

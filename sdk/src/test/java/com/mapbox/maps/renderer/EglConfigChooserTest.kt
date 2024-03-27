@@ -357,7 +357,7 @@ internal class EglConfigChooserTest(
 
     mockkStatic("android.opengl.EGL14")
     every { EGL14.eglGetError() } returns EGL14.EGL_BAD_DISPLAY
-    eglConfigChooser = EGLConfigChooser(translucentSurface, antialiasingSampleCount)
+    eglConfigChooser = EGLConfigChooser(translucentSurface, antialiasingSampleCount, mapName = "")
   }
 
   @After

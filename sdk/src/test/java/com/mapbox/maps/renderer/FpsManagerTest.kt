@@ -26,7 +26,7 @@ class FpsManagerTest {
 
   @Before
   fun setUp() {
-    fpsManager = FpsManager(Handler(Looper.getMainLooper()))
+    fpsManager = FpsManager(Handler(Looper.getMainLooper()), mapName = "")
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logI(any(), any()) } just Runs
     every { logW(any(), any()) } just Runs

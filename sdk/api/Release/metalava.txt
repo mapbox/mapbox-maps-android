@@ -19,6 +19,7 @@ package com.mapbox.maps {
   }
 
   public final class MapInitOptions {
+    ctor public MapInitOptions(android.content.Context context, com.mapbox.maps.MapOptions mapOptions = getDefaultMapOptions(context), java.util.List<? extends com.mapbox.maps.plugin.Plugin> plugins = defaultPluginList, com.mapbox.maps.CameraOptions? cameraOptions = null, boolean textureView = false, String? styleUri = "mapbox://styles/mapbox/standard", android.util.AttributeSet? attrs = null, int antialiasingSampleCount = 1, String mapName = "");
     ctor public MapInitOptions(android.content.Context context, com.mapbox.maps.MapOptions mapOptions = getDefaultMapOptions(context), java.util.List<? extends com.mapbox.maps.plugin.Plugin> plugins = defaultPluginList, com.mapbox.maps.CameraOptions? cameraOptions = null, boolean textureView = false, String? styleUri = "mapbox://styles/mapbox/standard", android.util.AttributeSet? attrs = null, int antialiasingSampleCount = 1);
     ctor public MapInitOptions(android.content.Context context, com.mapbox.maps.MapOptions mapOptions = getDefaultMapOptions(context), java.util.List<? extends com.mapbox.maps.plugin.Plugin> plugins = defaultPluginList, com.mapbox.maps.CameraOptions? cameraOptions = null, boolean textureView = false, String? styleUri = "mapbox://styles/mapbox/standard", android.util.AttributeSet? attrs = null);
     ctor public MapInitOptions(android.content.Context context, com.mapbox.maps.MapOptions mapOptions = getDefaultMapOptions(context), java.util.List<? extends com.mapbox.maps.plugin.Plugin> plugins = defaultPluginList, com.mapbox.maps.CameraOptions? cameraOptions = null, boolean textureView = false, String? styleUri = "mapbox://styles/mapbox/standard");
@@ -35,11 +36,13 @@ package com.mapbox.maps {
     method public String? component6();
     method public android.util.AttributeSet? component7();
     method public int component8();
-    method public com.mapbox.maps.MapInitOptions copy(android.content.Context context, com.mapbox.maps.MapOptions mapOptions, java.util.List<? extends com.mapbox.maps.plugin.Plugin> plugins, com.mapbox.maps.CameraOptions? cameraOptions, boolean textureView, String? styleUri, android.util.AttributeSet? attrs, int antialiasingSampleCount);
+    method public String component9();
+    method public com.mapbox.maps.MapInitOptions copy(android.content.Context context, com.mapbox.maps.MapOptions mapOptions, java.util.List<? extends com.mapbox.maps.plugin.Plugin> plugins, com.mapbox.maps.CameraOptions? cameraOptions, boolean textureView, String? styleUri, android.util.AttributeSet? attrs, int antialiasingSampleCount, String mapName);
     method public int getAntialiasingSampleCount();
     method public android.util.AttributeSet? getAttrs();
     method public com.mapbox.maps.CameraOptions? getCameraOptions();
     method public android.content.Context getContext();
+    method public String getMapName();
     method public com.mapbox.maps.MapOptions getMapOptions();
     method public java.util.List<com.mapbox.maps.plugin.Plugin> getPlugins();
     method public String? getStyleUri();
@@ -47,6 +50,7 @@ package com.mapbox.maps {
     method public void setAntialiasingSampleCount(int);
     method public void setAttrs(android.util.AttributeSet?);
     method public void setCameraOptions(com.mapbox.maps.CameraOptions?);
+    method public void setMapName(String);
     method public void setMapOptions(com.mapbox.maps.MapOptions);
     method public void setPlugins(java.util.List<? extends com.mapbox.maps.plugin.Plugin>);
     method public void setTextureView(boolean);
@@ -54,6 +58,7 @@ package com.mapbox.maps {
     property public final android.util.AttributeSet? attrs;
     property public final com.mapbox.maps.CameraOptions? cameraOptions;
     property public final android.content.Context context;
+    property public final String mapName;
     property public final com.mapbox.maps.MapOptions mapOptions;
     property public final java.util.List<com.mapbox.maps.plugin.Plugin> plugins;
     property public final String? styleUri;

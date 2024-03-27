@@ -12,9 +12,15 @@ internal class MapboxTextureViewRenderer : MapboxRenderer, TextureView.SurfaceTe
 
   override val widgetRenderer: MapboxWidgetRenderer
 
-  constructor(textureView: TextureView, antialiasingSampleCount: Int, contextMode: ContextMode) {
+  constructor(
+    textureView: TextureView,
+    antialiasingSampleCount: Int,
+    contextMode: ContextMode,
+    mapName: String,
+  ) : super(mapName) {
     val widgetRenderer = MapboxWidgetRenderer(
       antialiasingSampleCount = antialiasingSampleCount,
+      mapName = mapName,
     )
     this.widgetRenderer = widgetRenderer
     renderThread = MapboxRenderThread(
@@ -23,6 +29,7 @@ internal class MapboxTextureViewRenderer : MapboxRenderer, TextureView.SurfaceTe
       translucentSurface = true,
       antialiasingSampleCount = antialiasingSampleCount,
       contextMode = contextMode,
+      mapName = mapName,
     )
     textureView.let {
       it.isOpaque = false
@@ -31,9 +38,10 @@ internal class MapboxTextureViewRenderer : MapboxRenderer, TextureView.SurfaceTe
   }
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  internal constructor(renderThread: MapboxRenderThread) {
+  internal constructor(renderThread: MapboxRenderThread) : super(mapName = "") {
     val widgetRenderer = MapboxWidgetRenderer(
       antialiasingSampleCount = 1,
+      mapName = "",
     )
     this.widgetRenderer = widgetRenderer
     this.renderThread = renderThread
