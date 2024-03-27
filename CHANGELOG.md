@@ -12,6 +12,14 @@ Mapbox welcomes participation and contributions from everyone.
 * Return `ViewAnnotationOptions.Builder` when calling `ViewAnnotationOptions.Builder.annotationAnchor` extension function.
 * [compose] Fix the `IndexOutOfBoundsException` because of `RootNode` of `MapboxMap` node tree being shared across multiple maps.
 * Immediately add annotations and location component to the map instead of waiting for style load events.
+* Fix a bug where specifying a large negative value for padding in `MapboxMap.camera*()` methods resulted in the returned zoom value being NaN.
+* Fix location indicator models rendering issue with globe projection.
+* Offline: composite higher level tiles from their parents, when a non-standard [tile pack zoom ranges scheme](https://docs.mapbox.com/android/maps/guides/offline/#tile-count-granularity) is used.
+* Use bigger http buffers to avoid reference table overflow.
+
+## Dependencies
+* Update gl-native to v11.3.0-rc.1 and common to v24.3.0-rc.1.
+
 
 # 11.3.0-beta.1 March 14, 2024
 ## Breaking changes ⚠️
