@@ -2,7 +2,8 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# 11.2.2
+
+# 11.2.2 March 27, 2024
 ## Features ✨ and improvements 🏁
 * Expose `MapInitOptions.mapName` (`mapbox_mapName` in XML) property allowing to set the custom name which will be appended to map render related logs.
 
