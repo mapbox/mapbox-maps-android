@@ -66,10 +66,7 @@ class PolylineAnnotationManagerTest {
     mockkStatic(Projection::class)
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logE(any(), any()) } just Runs
-    val captureCallback = slot<(MapboxStyleManager) -> Unit>()
-    every { delegateProvider.getStyle(capture(captureCallback)) } answers {
-      captureCallback.captured.invoke(style)
-    }
+    every { delegateProvider.mapStyleManagerDelegate } returns style
     every { style.addSource(any()) } just Runs
     every { style.getSource(any()) } returns null
     every { style.addPersistentStyleLayer(any(), any()) } returns ExpectedFactory.createNone()
@@ -184,8 +181,8 @@ class PolylineAnnotationManagerTest {
     val captureCallback = slot<(MapboxStyleManager) -> Unit>()
     every { delegateProvider.getStyle(capture(captureCallback)) } just Runs
     manager = PolylineAnnotationManager(delegateProvider, AnnotationConfig("test_layer"))
-    // Style is not loaded, can't create and add layer to style
-    verify(exactly = 0) { style.addPersistentLayer(any(), LayerPosition(null, "test_layer", null)) }
+    // Style is not loaded, still create and add layer to style as it's persistent layer
+    verify(exactly = 1) { style.addPersistentLayer(any(), LayerPosition(null, "test_layer", null)) }
     every { delegateProvider.getStyle(capture(captureCallback)) } answers {
       captureCallback.captured.invoke(style)
     }

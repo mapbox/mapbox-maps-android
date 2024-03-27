@@ -33,11 +33,6 @@ class PolylineAnnotationManager(
   override val sourceId = annotationConfig?.sourceId ?: "mapbox-android-polylineAnnotation-source-$id"
   override val dragLayerId = "mapbox-android-polylineAnnotation-draglayer-$id"
   override val dragSourceId = "mapbox-android-polylineAnnotation-dragsource-$id"
-  init {
-    delegateProvider.getStyle {
-      initLayerAndSource(it)
-    }
-  }
 
   override fun initializeDataDrivenPropertyMap() {
     dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_JOIN] = false
@@ -468,6 +463,10 @@ class PolylineAnnotationManager(
         dragLayer?.filter(it)
       }
     }
+
+  init {
+    initLayerAndSource(delegateProvider.mapStyleManagerDelegate)
+  }
 
   /**
    * Static variables and methods.

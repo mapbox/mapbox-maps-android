@@ -33,11 +33,6 @@ class PolygonAnnotationManager(
   override val sourceId = annotationConfig?.sourceId ?: "mapbox-android-polygonAnnotation-source-$id"
   override val dragLayerId = "mapbox-android-polygonAnnotation-draglayer-$id"
   override val dragSourceId = "mapbox-android-polygonAnnotation-dragsource-$id"
-  init {
-    delegateProvider.getStyle {
-      initLayerAndSource(it)
-    }
-  }
 
   override fun initializeDataDrivenPropertyMap() {
     dataDrivenPropertyUsageMap[PolygonAnnotationOptions.PROPERTY_FILL_SORT_KEY] = false
@@ -296,6 +291,10 @@ class PolygonAnnotationManager(
         dragLayer?.filter(it)
       }
     }
+
+  init {
+    initLayerAndSource(delegateProvider.mapStyleManagerDelegate)
+  }
 
   /**
    * Static variables and methods.

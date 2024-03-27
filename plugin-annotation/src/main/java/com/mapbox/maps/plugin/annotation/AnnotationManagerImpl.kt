@@ -7,7 +7,11 @@ import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
-import com.mapbox.maps.*
+import com.mapbox.maps.LayerPosition
+import com.mapbox.maps.MapboxStyleManager
+import com.mapbox.maps.RenderedQueryGeometry
+import com.mapbox.maps.RenderedQueryOptions
+import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.extension.style.expressions.dsl.generated.literal
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.all
@@ -27,18 +31,22 @@ import com.mapbox.maps.extension.style.layers.generated.symbolLayer
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
+import com.mapbox.maps.logE
+import com.mapbox.maps.logW
 import com.mapbox.maps.plugin.InvalidPluginConfigurationException
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_GESTURES_PLUGIN_ID
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotation
-import com.mapbox.maps.plugin.delegates.*
+import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
+import com.mapbox.maps.plugin.delegates.MapDelegateProvider
+import com.mapbox.maps.plugin.delegates.MapFeatureQueryDelegate
+import com.mapbox.maps.plugin.delegates.MapListenerDelegate
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import com.mapbox.maps.plugin.gestures.OnMapClickListener
 import com.mapbox.maps.plugin.gestures.OnMapLongClickListener
 import com.mapbox.maps.plugin.gestures.OnMoveListener
-import java.util.*
+import java.util.UUID
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
-import kotlin.collections.LinkedHashMap
 
 /**
  * Base class for annotation managers
@@ -387,20 +395,19 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   }
 
   private fun updateDragSource() {
-    delegateProvider.getStyle { style ->
-      dragSource?.let { geoJsonSource ->
-        dragLayer?.let { layer ->
-          if (!style.styleSourceExists(geoJsonSource.sourceId) || !style.styleLayerExists(layer.layerId)) {
-            logE(
-              TAG,
-              "Can't update dragSource: drag source or layer has not been added to style."
-            )
-            return@getStyle
-          }
-          addIconToStyle(style, dragAnnotationMap.values)
-          val features = convertAnnotationsToFeatures(dragAnnotationMap.values)
-          geoJsonSource.featureCollection(FeatureCollection.fromFeatures(features))
+    val style = delegateProvider.mapStyleManagerDelegate
+    dragSource?.let { geoJsonSource ->
+      dragLayer?.let { layer ->
+        if (!style.styleSourceExists(geoJsonSource.sourceId) || !style.styleLayerExists(layer.layerId)) {
+          logE(
+            TAG,
+            "Can't update dragSource: drag source or layer has not been added to style."
+          )
+          return
         }
+        addIconToStyle(style, dragAnnotationMap.values)
+        val features = convertAnnotationsToFeatures(dragAnnotationMap.values)
+        geoJsonSource.featureCollection(FeatureCollection.fromFeatures(features))
       }
     }
   }
@@ -409,20 +416,19 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
    * Trigger an update to the underlying source
    */
   private fun updateSource() {
-    delegateProvider.getStyle { style ->
-      if (source == null || layer == null) {
-        initLayerAndSource(style)
-      }
-      source?.let { geoJsonSource ->
-        layer?.let { layer ->
-          if (!style.styleSourceExists(geoJsonSource.sourceId) || !style.styleLayerExists(layer.layerId)) {
-            logE(TAG, "Can't update source: source or layer has not been added to style.")
-            return@getStyle
-          }
-          addIconToStyle(style, annotationMap.values)
-          val features = convertAnnotationsToFeatures(annotationMap.values)
-          geoJsonSource.featureCollection(FeatureCollection.fromFeatures(features))
+    val style = delegateProvider.mapStyleManagerDelegate
+    if (source == null || layer == null) {
+      initLayerAndSource(style)
+    }
+    source?.let { geoJsonSource ->
+      layer?.let { layer ->
+        if (!style.styleSourceExists(geoJsonSource.sourceId) || !style.styleLayerExists(layer.layerId)) {
+          logE(TAG, "Can't update source: source or layer has not been added to style.")
+          return
         }
+        addIconToStyle(style, annotationMap.values)
+        val features = convertAnnotationsToFeatures(annotationMap.values)
+        geoJsonSource.featureCollection(FeatureCollection.fromFeatures(features))
       }
     }
   }
@@ -508,26 +514,25 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
    * Invoked when Mapview or Annotation manager is destroyed.
    */
   override fun onDestroy() {
-    delegateProvider.getStyle { style ->
-      layer?.let {
-        if (style.styleLayerExists(it.layerId)) {
-          style.removeStyleLayer(it.layerId)
-        }
+    val style = delegateProvider.mapStyleManagerDelegate
+    layer?.let {
+      if (style.styleLayerExists(it.layerId)) {
+        style.removeStyleLayer(it.layerId)
       }
-      source?.let {
-        if (style.styleSourceExists(it.sourceId)) {
-          style.removeStyleSource(it.sourceId)
-        }
+    }
+    source?.let {
+      if (style.styleSourceExists(it.sourceId)) {
+        style.removeStyleSource(it.sourceId)
       }
-      dragLayer?.let {
-        if (style.styleLayerExists(it.layerId)) {
-          style.removeStyleLayer(it.layerId)
-        }
+    }
+    dragLayer?.let {
+      if (style.styleLayerExists(it.layerId)) {
+        style.removeStyleLayer(it.layerId)
       }
-      dragSource?.let {
-        if (style.styleSourceExists(it.sourceId)) {
-          style.removeStyleSource(it.sourceId)
-        }
+    }
+    dragSource?.let {
+      if (style.styleSourceExists(it.sourceId)) {
+        style.removeStyleSource(it.sourceId)
       }
     }
 
