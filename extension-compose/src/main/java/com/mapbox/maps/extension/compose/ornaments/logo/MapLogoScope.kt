@@ -2,6 +2,7 @@ package com.mapbox.maps.extension.compose.ornaments.logo
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
@@ -31,19 +32,22 @@ public class MapLogoScope internal constructor(
    * By default, the [Logo] will be placed to the [Alignment.BottomStart] of the map with padding of 4dp.
    *
    * @param modifier Modifier to be applied to the [Logo].
+   * @param contentPadding The default padding applied to the [Logo], paddings from [modifier] will be applied on top of this default padding.
    * @param alignment The alignment of the [Logo] within the Map.
    */
   @Composable
   @MapboxExperimental
-  public fun Logo(modifier: Modifier = Modifier, alignment: Alignment = Alignment.BottomStart) {
+  public fun Logo(
+    modifier: Modifier = Modifier,
+    contentPadding: PaddingValues = PaddingValues(4.dp),
+    alignment: Alignment = Alignment.BottomStart
+  ) {
     Image(
       modifier = with(boxScope) {
-        if (modifier === Modifier) {
-          Modifier
-            .padding(4.dp)
-        } else {
-          modifier
-        }.align(alignment)
+        Modifier
+          .padding(contentPadding)
+          .then(modifier)
+          .align(alignment)
       },
       painter = painterResource(id = R.drawable.mapbox_logo_icon),
       contentDescription = "Mapbox Logo"

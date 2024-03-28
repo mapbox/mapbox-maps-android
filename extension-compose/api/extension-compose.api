@@ -166,7 +166,7 @@ public final class com/mapbox/maps/extension/compose/ornaments/attribution/Compo
 }
 
 public final class com/mapbox/maps/extension/compose/ornaments/attribution/MapAttributionScope {
-	public final fun Attribution-T042LqI (Landroidx/compose/ui/Modifier;Landroidx/compose/ui/Alignment;JLkotlin/jvm/functions/Function5;Lkotlin/jvm/functions/Function6;Landroidx/compose/runtime/Composer;II)V
+	public final fun Attribution-fWhpE4E (Landroidx/compose/ui/Modifier;Landroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/ui/Alignment;JLkotlin/jvm/functions/Function5;Lkotlin/jvm/functions/Function6;Landroidx/compose/runtime/Composer;II)V
 	public final fun AttributionDialog (Ljava/util/List;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;I)V
 	public final fun TelemetryDialog (Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;I)V
 }
@@ -179,15 +179,15 @@ public final class com/mapbox/maps/extension/compose/ornaments/compass/Composabl
 }
 
 public final class com/mapbox/maps/extension/compose/ornaments/compass/MapCompassScope {
-	public final fun Compass (Landroidx/compose/ui/Modifier;Landroidx/compose/ui/Alignment;ZZLkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+	public final fun Compass (Landroidx/compose/ui/Modifier;Landroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/ui/Alignment;ZZLkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class com/mapbox/maps/extension/compose/ornaments/logo/MapLogoScope {
-	public final fun Logo (Landroidx/compose/ui/Modifier;Landroidx/compose/ui/Alignment;Landroidx/compose/runtime/Composer;II)V
+	public final fun Logo (Landroidx/compose/ui/Modifier;Landroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/ui/Alignment;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class com/mapbox/maps/extension/compose/ornaments/scalebar/MapScaleBarScope {
-	public final fun ScaleBar-P8FXyMQ (Landroidx/compose/ui/Modifier;Landroidx/compose/ui/Alignment;JJJFFFFJZJZFZLandroidx/compose/runtime/Composer;III)V
+	public final fun ScaleBar-vLKV3eY (Landroidx/compose/ui/Modifier;Landroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/ui/Alignment;JJJFFFFJZJZFZLandroidx/compose/runtime/Composer;III)V
 }
 
 public abstract interface annotation class com/mapbox/maps/extension/compose/style/MapboxStyleComposable : java/lang/annotation/Annotation {

@@ -8,6 +8,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -70,6 +71,7 @@ public class MapAttributionScope internal constructor(
    * By default, the [Attribution] will be placed to the [Alignment.BottomStart] of the map with padding of 92dp, 4dp, 4dp, 4dp.
    *
    * @param modifier Modifier to be applied to the [Attribution].
+   * @param contentPadding The default padding applied to the [Attribution], paddings from [modifier] will be applied on top of this default padding.
    * @param alignment The alignment of the [Attribution] within the Map.
    * @param attributionDialog Defines AlertDialog when the attribution is clicked.
    */
@@ -77,6 +79,7 @@ public class MapAttributionScope internal constructor(
   @MapboxExperimental
   public fun Attribution(
     modifier: Modifier = Modifier,
+    contentPadding: PaddingValues = PaddingValues(92.dp, 4.dp, 4.dp, 4.dp),
     alignment: Alignment = Alignment.BottomStart,
     iconColor: Color = Color(0xFF1E8CAB),
     attributionDialog: @Composable (
@@ -150,7 +153,12 @@ public class MapAttributionScope internal constructor(
     LaunchedEffect(showAttributionDialog) {
       mapView.getPlugin<AttributionComposePlugin>(pluginId)?.let {
         attributions.clear()
-        attributions.addAll(it.mapAttributionDelegate.parseAttributions(mapView.context, AttributionParserConfig()))
+        attributions.addAll(
+          it.mapAttributionDelegate.parseAttributions(
+            mapView.context,
+            AttributionParserConfig()
+          )
+        )
         mapboxFeedbackUrl = it.mapAttributionDelegate.buildMapBoxFeedbackUrl(mapView.context)
       }
     }
@@ -201,12 +209,9 @@ public class MapAttributionScope internal constructor(
     // Show Attribution image button.
     Image(
       modifier = with(boxScope) {
-        if (modifier === Modifier) {
-          Modifier
-            .padding(92.dp, 4.dp, 4.dp, 4.dp)
-        } else {
-          modifier
-        }
+        Modifier
+          .padding(contentPadding)
+          .then(modifier)
           .align(alignment)
           .clickable {
             showAttributionDialog = true

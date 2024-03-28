@@ -2,7 +2,14 @@ package com.mapbox.maps.compose.testapp
 
 import android.app.Activity
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.material.*
+import androidx.compose.material.FabPosition
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.Scaffold
+import androidx.compose.material.SnackbarHost
+import androidx.compose.material.SnackbarHostState
+import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
@@ -22,6 +29,7 @@ public fun ExampleScaffold(
   snackbarHost: @Composable (SnackbarHostState) -> Unit = { SnackbarHost(it) },
   floatingActionButton: @Composable () -> Unit = {},
   floatingActionButtonPosition: FabPosition = FabPosition.End,
+  bottomBar: @Composable () -> Unit = {},
   content: @Composable (PaddingValues) -> Unit
 ) {
   val activity = LocalContext.current as? Activity
@@ -55,6 +63,7 @@ public fun ExampleScaffold(
         }
       )
     },
+    bottomBar = bottomBar,
     content = content
   )
 }
