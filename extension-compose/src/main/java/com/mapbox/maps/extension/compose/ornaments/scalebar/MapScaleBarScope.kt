@@ -1,6 +1,7 @@
 package com.mapbox.maps.extension.compose.ornaments.scalebar
 
 import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -43,6 +44,7 @@ public class MapScaleBarScope internal constructor(
    * By default, the [ScaleBar] will be placed to the [Alignment.TopStart] of the map with padding of 4dp.
    *
    * @param modifier Modifier to be applied to the [ScaleBar].
+   * @param contentPadding The default padding applied to the [ScaleBar], paddings from [modifier] will be applied on top of this default padding.
    * @param alignment The alignment of the [ScaleBar] within the Map.
    * @param textColor Defines text color of the scale bar.
    * @param primaryColor Defines primary color of the scale bar.
@@ -65,6 +67,7 @@ public class MapScaleBarScope internal constructor(
   @MapboxExperimental
   public fun ScaleBar(
     modifier: Modifier = Modifier,
+    contentPadding: PaddingValues = PaddingValues(4.dp),
     alignment: Alignment = Alignment.TopStart,
     textColor: Color = Color.Black,
     primaryColor: Color = Color.Black,
@@ -86,12 +89,10 @@ public class MapScaleBarScope internal constructor(
     val density = LocalDensity.current
     AndroidView(
       modifier = with(boxScope) {
-        if (modifier === Modifier) {
-          Modifier
-            .padding(4.dp)
-        } else {
-          modifier
-        }.align(alignment)
+        Modifier
+          .padding(contentPadding)
+          .then(modifier)
+          .align(alignment)
       },
       factory = { context ->
         ScaleBarImpl(context).also { scaleBar ->

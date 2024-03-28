@@ -8,6 +8,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
@@ -52,6 +53,7 @@ public class MapCompassScope internal constructor(
    * By default, the [Compass] will be placed to the [Alignment.TopEnd] of the map with padding of 4dp.
    *
    * @param modifier Modifier to be applied to the [Compass].
+   * @param contentPadding The default padding applied to the [Compass], paddings from [modifier] will be applied on top of this default padding.
    * @param alignment The alignment of the [Compass] within the Map.
    * @param fadeWhenFacingNorth Whether the compass fades out to invisible when facing north direction.
    * @param resetToNorthUponClick Whether the map camera bearing should be reset to 0 when the compass is clicked.
@@ -61,6 +63,7 @@ public class MapCompassScope internal constructor(
   @MapboxExperimental
   public fun Compass(
     modifier: Modifier = Modifier,
+    contentPadding: PaddingValues = PaddingValues(4.dp),
     alignment: Alignment = Alignment.TopEnd,
     fadeWhenFacingNorth: Boolean = true,
     resetToNorthUponClick: Boolean = true,
@@ -97,30 +100,27 @@ public class MapCompassScope internal constructor(
       enter = fadeIn(animationSpec = tween(durationMillis = 500)),
       exit = fadeOut(animationSpec = tween(durationMillis = 500, delayMillis = 500)),
       modifier = with(boxScope) {
-        if (modifier === Modifier) {
           Modifier
-            .padding(4.dp)
-        } else {
-          modifier
-        }
-          .align(alignment)
-          .rotate(compassBearing)
-          .clickable(
-            interactionSource = interactionSource,
-            indication = null
-          ) {
-            if (resetToNorthUponClick) {
-              // Reset bearing to 0 and set the animation owner to GESTURES so that it can interrupt current viewport.
-              mapView.camera.easeTo(
-                cameraOptions { bearing(0.0) },
-                MapAnimationOptions.mapAnimationOptions {
-                  owner(
-                    MapAnimationOwnerRegistry.GESTURES
-                  )
-                }
-              )
-            }
-          }
+              .padding(contentPadding)
+              .then(modifier)
+              .align(alignment)
+              .rotate(compassBearing)
+              .clickable(
+                  interactionSource = interactionSource,
+                  indication = null
+              ) {
+                  if (resetToNorthUponClick) {
+                      // Reset bearing to 0 and set the animation owner to GESTURES so that it can interrupt current viewport.
+                      mapView.camera.easeTo(
+                          cameraOptions { bearing(0.0) },
+                          MapAnimationOptions.mapAnimationOptions {
+                              owner(
+                                  MapAnimationOwnerRegistry.GESTURES
+                              )
+                          }
+                      )
+                  }
+              }
       }
     ) {
       content()
