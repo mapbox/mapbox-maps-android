@@ -6,6 +6,13 @@ Mapbox welcomes participation and contributions from everyone.
 
 
 # 11.3.0-rc.1 March 28, 2024
+##  Known Issues ⚠️
+* The tiles fetching from the offline database is malfunctioning for the composited sources. Setting `com.mapbox.maps.experimental.offline_vt_compositing` runtime flag to `false` resolves this issue:
+```Kotlin
+val settings = SettingsServiceFactory.getInstance(SettingsServiceStorageType.NON_PERSISTENT)
+settings.set("com.mapbox.maps.experimental.offline_vt_compositing", Value.valueOf(false))
+```
+
 ## Features ✨ and improvements 🏁
 * [compose] Add layerPosition support in `GenericStyle` composable function.
 * Expose `MapInitOptions.mapName` (`mapbox_mapName` in XML) property allowing to set the custom name which will be appended to map render related logs.
