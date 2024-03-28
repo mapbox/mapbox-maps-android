@@ -2,7 +2,8 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# 11.3.0-rc.1
+
+# 11.3.0-rc.1 March 28, 2024
 ## Features ✨ and improvements 🏁
 * [compose] Add layerPosition support in `GenericStyle` composable function.
 * Expose `MapInitOptions.mapName` (`mapbox_mapName` in XML) property allowing to set the custom name which will be appended to map render related logs.
@@ -21,6 +22,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v11.3.0-rc.1 and common to v24.3.0-rc.1.
+
 
 # 11.3.0-beta.1 March 14, 2024
 ## Breaking changes ⚠️
