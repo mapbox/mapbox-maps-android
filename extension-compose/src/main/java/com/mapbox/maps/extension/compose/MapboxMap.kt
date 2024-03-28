@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.viewinterop.AndroidView
+import com.mapbox.maps.CameraBoundsOptions
 import com.mapbox.maps.MapInitOptions
 import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxExperimental
@@ -58,6 +59,7 @@ import kotlinx.coroutines.awaitCancellation
  * @param onMapLongClickListener Callback to be invoked when the user long clicks on the map view.
  * @param style The Style of the map.
  * @param content The content of the map.
+ * @param boundsOptions A direct control over user's panning through camera
  */
 @Composable
 @MapboxExperimental
@@ -76,6 +78,7 @@ public fun MapboxMap(
   mapViewportState: MapViewportState = rememberMapViewportState(),
   onMapClickListener: OnMapClickListener = DefaultSettingsProvider.defaultOnClickListener,
   onMapLongClickListener: OnMapLongClickListener = DefaultSettingsProvider.defaultOnLongClickListener,
+  boundsOptions: CameraBoundsOptions? = null,
   style: @Composable @MapboxStyleComposable () -> Unit = { MapboxStandardStyle() },
   content: (@Composable @MapboxMapComposable MapboxMapScope.() -> Unit)? = null
 ) {
@@ -124,6 +127,7 @@ public fun MapboxMap(
   val currentOnMapLongClickListener by rememberUpdatedState(onMapLongClickListener)
   val currentContent by rememberUpdatedState(content)
   val currentMapEvents by rememberUpdatedState(mapEvents)
+  val currentBoundsOptions by rememberUpdatedState(boundsOptions)
   val currentStyle by rememberUpdatedState(style)
   LaunchedEffect(Unit) {
     disposingComposition(
@@ -139,6 +143,7 @@ public fun MapboxMap(
             currentOnMapClickListener,
             currentOnMapLongClickListener,
             currentMapEvents,
+            currentBoundsOptions
           )
           // add Style node with the styleUri
           currentStyle.invoke()

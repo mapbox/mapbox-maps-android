@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ComposeNode
 import androidx.compose.runtime.currentComposer
 import com.mapbox.common.Cancelable
+import com.mapbox.maps.CameraBoundsOptions
 import com.mapbox.maps.CameraChangedCallback
 import com.mapbox.maps.MapIdleCallback
 import com.mapbox.maps.MapInitOptions
@@ -246,6 +247,7 @@ internal fun MapboxMapComposeNode(
   onMapClickListener: OnMapClickListener,
   onMapLongClickListener: OnMapLongClickListener,
   mapEvents: MapEvents?,
+  boundsOptions: CameraBoundsOptions?
 ) {
   val mapApplier = currentComposer.applier as MapApplier
   ComposeNode<MapboxMapNode, MapApplier>(
@@ -272,6 +274,11 @@ internal fun MapboxMapComposeNode(
       }
       set(locationComponentSettings) {
         this.controller.location.applySettings(it)
+      }
+      set(boundsOptions) {cameraBoundsOptions ->
+        cameraBoundsOptions?.let {
+          this.controller.mapboxMap.setBounds(it)
+        }
       }
       update(onMapClickListener) { listener ->
         this.clickListener = listener
