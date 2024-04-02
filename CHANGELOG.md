@@ -2,11 +2,15 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# 10.17.0
+# 10.17.0 April 02, 2024
 ## Bug fixes 🐞
 * Fix map being pixelated on some devices when `ContextMode.SHARED` is used (e.g. in AndroidAuto extension).
 * Fix incorrect widget position and scale when resizing the drawing surface.
 * Fix a crash in `MapView.snapshot` happening on specific devices.
+
+## Dependencies
+* Update gl-native to v10.17.0 and common to v23.9.2.
+
 
 # 10.16.6 March 04, 2024
 ## Bug fixes 🐞
