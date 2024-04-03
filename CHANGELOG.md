@@ -4,6 +4,9 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 11.3.0
+# Bug fixes 🐞
+* [compose] Fix a bug introduced in `11.3.0-beta.1` where AnnotationGroup items updates were skipped.
 
 # 11.3.0-rc.1 March 28, 2024
 ##  Known Issues ⚠️

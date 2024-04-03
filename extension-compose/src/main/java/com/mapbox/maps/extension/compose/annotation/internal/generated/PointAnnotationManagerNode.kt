@@ -25,10 +25,10 @@ internal class PointAnnotationManagerNode(
   var annotationClusterItems: List<PointAnnotationOptions> = emptyList()
     set(value) {
       if (currentAnnotations.isNotEmpty()) {
-        annotationManager.update(currentAnnotations)
-      } else {
-        currentAnnotations.addAll(annotationManager.create(value))
+        annotationManager.delete(currentAnnotations)
+        currentAnnotations.clear()
       }
+      currentAnnotations.addAll(annotationManager.create(value))
       field = value
     }
 
