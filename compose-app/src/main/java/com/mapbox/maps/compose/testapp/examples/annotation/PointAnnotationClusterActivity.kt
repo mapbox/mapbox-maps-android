@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
 import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.Style
 import com.mapbox.maps.compose.testapp.ExampleScaffold
 import com.mapbox.maps.compose.testapp.examples.utils.AnnotationUtils
 import com.mapbox.maps.compose.testapp.examples.utils.CityLocations
@@ -25,6 +26,7 @@ import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.MapViewportState
 import com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationGroup
+import com.mapbox.maps.extension.compose.style.MapStyle
 import com.mapbox.maps.extension.style.expressions.dsl.generated.literal
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.plugin.annotation.AnnotationConfig
@@ -62,6 +64,9 @@ public class PointAnnotationClusterActivity : ComponentActivity() {
                 center(CityLocations.WASHINGTON)
               }
             },
+            style = {
+              MapStyle(style = Style.LIGHT)
+            }
           ) {
             PointAnnotationGroup(
               annotations = points.map {
@@ -134,7 +139,7 @@ public class PointAnnotationClusterActivity : ComponentActivity() {
   private companion object {
     const val ZOOM: Double = 10.0
     const val AMOUNT = 10000
-    const val ICON_FIRE_STATION = "fire-station-11"
+    const val ICON_FIRE_STATION = "fire-station"
     private const val POINTS_URL =
       "https://opendata.arcgis.com/datasets/01d0ff375695466d93d1fa2a976e2bdd_5.geojson"
   }

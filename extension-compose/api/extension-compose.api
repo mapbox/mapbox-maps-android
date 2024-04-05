@@ -20,12 +20,36 @@ public final class com/mapbox/maps/extension/compose/ComposableSingletons$Mapbox
 	public final fun getLambda-5$extension_compose_release ()Lkotlin/jvm/functions/Function2;
 }
 
+public final class com/mapbox/maps/extension/compose/ComposeMapInitOptions {
+	public static final field $stable I
+	public static final field Companion Lcom/mapbox/maps/extension/compose/ComposeMapInitOptions$Companion;
+	public static final field DEFAULT_ANTIALIASING_SAMPLE_COUNT I
+	public fun <init> (FZILjava/lang/String;)V
+	public synthetic fun <init> (FZILjava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Lcom/mapbox/maps/MapOptions;ZILjava/lang/String;)V
+	public synthetic fun <init> (Lcom/mapbox/maps/MapOptions;ZILjava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Lcom/mapbox/maps/MapOptions;
+	public final fun component2 ()Z
+	public final fun component3 ()I
+	public final fun component4 ()Ljava/lang/String;
+	public final fun copy (Lcom/mapbox/maps/MapOptions;ZILjava/lang/String;)Lcom/mapbox/maps/extension/compose/ComposeMapInitOptions;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/ComposeMapInitOptions;Lcom/mapbox/maps/MapOptions;ZILjava/lang/String;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/ComposeMapInitOptions;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAntialiasingSampleCount ()I
+	public final fun getMapName ()Ljava/lang/String;
+	public final fun getMapOptions ()Lcom/mapbox/maps/MapOptions;
+	public final fun getTextureView ()Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/compose/ComposeMapInitOptions$Companion {
+}
+
 public final class com/mapbox/maps/extension/compose/DefaultSettingsProvider {
 	public static final field $stable I
 	public static final field INSTANCE Lcom/mapbox/maps/extension/compose/DefaultSettingsProvider;
-	public final fun defaultLocationComponentSettings (Landroid/content/Context;)Lcom/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings;
-	public final fun defaultLocationComponentSettings (Landroid/content/Context;F)Lcom/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings;
-	public static synthetic fun defaultLocationComponentSettings$default (Lcom/mapbox/maps/extension/compose/DefaultSettingsProvider;Landroid/content/Context;FILjava/lang/Object;)Lcom/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings;
+	public final fun defaultLocationComponentSettings (F)Lcom/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings;
 	public final fun getDefaultOnClickListener ()Lcom/mapbox/maps/plugin/gestures/OnMapClickListener;
 	public final fun getDefaultOnLongClickListener ()Lcom/mapbox/maps/plugin/gestures/OnMapLongClickListener;
 }
@@ -69,7 +93,7 @@ public abstract interface annotation class com/mapbox/maps/extension/compose/Map
 }
 
 public final class com/mapbox/maps/extension/compose/MapboxMapKt {
-	public static final fun MapboxMap (Landroidx/compose/ui/Modifier;Lcom/mapbox/maps/extension/compose/MapEvents;Lkotlin/jvm/functions/Function1;Lcom/mapbox/maps/plugin/gestures/generated/GesturesSettings;Lcom/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings;Lkotlin/jvm/functions/Function3;Lkotlin/jvm/functions/Function3;Lkotlin/jvm/functions/Function3;Lkotlin/jvm/functions/Function3;Lcom/mapbox/maps/extension/compose/animation/viewport/MapViewportState;Lcom/mapbox/maps/plugin/gestures/OnMapClickListener;Lcom/mapbox/maps/plugin/gestures/OnMapLongClickListener;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;III)V
+	public static final fun MapboxMap (Landroidx/compose/ui/Modifier;Lcom/mapbox/maps/extension/compose/MapEvents;Lcom/mapbox/maps/extension/compose/ComposeMapInitOptions;Lcom/mapbox/maps/plugin/gestures/generated/GesturesSettings;Lcom/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings;Lkotlin/jvm/functions/Function3;Lkotlin/jvm/functions/Function3;Lkotlin/jvm/functions/Function3;Lkotlin/jvm/functions/Function3;Lcom/mapbox/maps/extension/compose/animation/viewport/MapViewportState;Lcom/mapbox/maps/plugin/gestures/OnMapClickListener;Lcom/mapbox/maps/plugin/gestures/OnMapLongClickListener;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;III)V
 }
 
 public final class com/mapbox/maps/extension/compose/MapboxMapScope {
