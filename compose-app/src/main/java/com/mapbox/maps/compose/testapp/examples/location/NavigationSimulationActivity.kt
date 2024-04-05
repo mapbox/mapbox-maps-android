@@ -18,7 +18,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.mapbox.api.directions.v5.models.DirectionsResponse
@@ -36,9 +36,9 @@ import com.mapbox.maps.extension.compose.DefaultSettingsProvider
 import com.mapbox.maps.extension.compose.DisposableMapEffect
 import com.mapbox.maps.extension.compose.MapEffect
 import com.mapbox.maps.extension.compose.MapboxMap
-import com.mapbox.maps.extension.compose.MapboxMapComposable
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
 import com.mapbox.maps.extension.compose.style.MapboxStandardStyle
+import com.mapbox.maps.extension.compose.style.MapboxStyleComposable
 import com.mapbox.maps.extension.compose.style.layers.generated.LineCap
 import com.mapbox.maps.extension.compose.style.layers.generated.LineGradient
 import com.mapbox.maps.extension.compose.style.layers.generated.LineJoin
@@ -106,7 +106,9 @@ public class NavigationSimulationActivity : ComponentActivity() {
             Column {
               if (routeLine != null) {
                 FloatingActionButton(
-                  modifier = Modifier.padding(bottom = 10.dp).align(Alignment.End),
+                  modifier = Modifier
+                    .padding(bottom = 10.dp)
+                    .align(Alignment.End),
                   onClick = {
                     if ((mapViewportState.mapViewportStatus as? ViewportStatus.State)?.state is FollowPuckViewportState) {
                       routeLine?.let {
@@ -155,7 +157,7 @@ public class NavigationSimulationActivity : ComponentActivity() {
             Modifier.fillMaxSize(),
             mapViewportState = mapViewportState,
             locationComponentSettings = DefaultSettingsProvider.defaultLocationComponentSettings(
-              LocalContext.current
+              LocalDensity.current.density
             ).toBuilder()
               .setLocationPuck(createDefault2DPuck(withBearing = true))
               .setPuckBearingEnabled(true)
@@ -188,7 +190,7 @@ public class NavigationSimulationActivity : ComponentActivity() {
     }
   }
 
-  @MapboxMapComposable
+  @MapboxStyleComposable
   @Composable
   public fun NavigationStyle(routeLine: LineString?, progress: Double, lightPreset: Value) {
     MapboxStandardStyle(

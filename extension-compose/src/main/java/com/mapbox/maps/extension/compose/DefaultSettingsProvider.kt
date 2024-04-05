@@ -1,6 +1,5 @@
 package com.mapbox.maps.extension.compose
 
-import android.content.Context
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.plugin.gestures.OnMapClickListener
 import com.mapbox.maps.plugin.gestures.OnMapLongClickListener
@@ -15,15 +14,10 @@ public object DefaultSettingsProvider {
   /**
    * Create a default [LocationComponentSettings] with 2D location puck.
    *
-   * @param context the context of the application
    * @param pixelRatio the pixel ratio to be applied to the [LocationComponentSettings.pulsingMaxRadius]
    */
-  @JvmOverloads
   @MapboxExperimental
-  public fun defaultLocationComponentSettings(
-    context: Context,
-    pixelRatio: Float = context.resources.displayMetrics.density
-  ): LocationComponentSettings {
+  public fun defaultLocationComponentSettings(pixelRatio: Float): LocationComponentSettings {
     return LocationComponentSettings(
       locationPuck = createDefault2DPuck(withBearing = false)
     ) {

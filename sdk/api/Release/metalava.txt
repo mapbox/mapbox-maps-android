@@ -74,6 +74,7 @@ package com.mapbox.maps {
 
   public final class MapInitOptionsKt {
     method public static com.mapbox.maps.MapOptions.Builder applyDefaultParams(com.mapbox.maps.MapOptions.Builder, android.content.Context context);
+    method public static com.mapbox.maps.MapOptions.Builder applyDefaultParams(com.mapbox.maps.MapOptions.Builder, float pixelRatio);
   }
 
   public final class MapSurface implements com.mapbox.maps.MapControllable com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate {

@@ -1,13 +1,11 @@
 package com.mapbox.maps.extension.compose.internal
 
-import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ComposeNode
 import androidx.compose.runtime.currentComposer
 import com.mapbox.common.Cancelable
 import com.mapbox.maps.CameraChangedCallback
 import com.mapbox.maps.MapIdleCallback
-import com.mapbox.maps.MapInitOptions
 import com.mapbox.maps.MapLoadedCallback
 import com.mapbox.maps.MapLoadingErrorCallback
 import com.mapbox.maps.MapView
@@ -239,7 +237,6 @@ private class MapboxMapNode(
 @JvmSynthetic
 @Composable
 internal fun MapboxMapComposeNode(
-  mapInitOptionsFactory: (Context) -> MapInitOptions,
   gesturesSettings: GesturesSettings,
   locationComponentSettings: LocationComponentSettings,
   mapViewportState: MapViewportState,
@@ -260,13 +257,6 @@ internal fun MapboxMapComposeNode(
     },
     update = {
       // input arguments updater
-      update(mapInitOptionsFactory) {
-        throw IllegalStateException(
-          """
-          Mutating MapInitOptions during composition is not allowed.
-          """.trimIndent()
-        )
-      }
       set(gesturesSettings) {
         this.controller.gestures.applySettings(it)
       }

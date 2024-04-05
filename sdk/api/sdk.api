@@ -68,6 +68,7 @@ public final class com/mapbox/maps/MapInitOptions$Companion {
 }
 
 public final class com/mapbox/maps/MapInitOptionsKt {
+	public static final fun applyDefaultParams (Lcom/mapbox/maps/MapOptions$Builder;F)Lcom/mapbox/maps/MapOptions$Builder;
 	public static final fun applyDefaultParams (Lcom/mapbox/maps/MapOptions$Builder;Landroid/content/Context;)Lcom/mapbox/maps/MapOptions$Builder;
 }
 

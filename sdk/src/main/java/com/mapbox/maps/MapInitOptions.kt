@@ -75,14 +75,22 @@ data class MapInitOptions @JvmOverloads constructor(
  * @property context the context of the application.
  * @return [MapOptions.Builder]
  */
-fun MapOptions.Builder.applyDefaultParams(context: Context): MapOptions.Builder = also {
+fun MapOptions.Builder.applyDefaultParams(context: Context): MapOptions.Builder =
+  applyDefaultParams(context.resources.displayMetrics.density)
+
+/**
+ * Get a default [MapOptions.Builder] with reasterization mode [GlyphsRasterizationMode#ALL_GLYPHS_RASTERIZED_LOCALLY]
+ * @property context the context of the application.
+ * @return [MapOptions.Builder]
+ */
+fun MapOptions.Builder.applyDefaultParams(pixelRatio: Float): MapOptions.Builder = also {
   glyphsRasterizationOptions(
     GlyphsRasterizationOptions.Builder()
       .rasterizationMode(GlyphsRasterizationMode.IDEOGRAPHS_RASTERIZED_LOCALLY)
       .fontFamily(FontUtils.extractValidFont(null))
       .build()
   )
-  pixelRatio(context.resources.displayMetrics.density)
+  pixelRatio(pixelRatio)
   constrainMode(ConstrainMode.HEIGHT_ONLY)
   contextMode(ContextMode.UNIQUE)
   orientation(NorthOrientation.UPWARDS)

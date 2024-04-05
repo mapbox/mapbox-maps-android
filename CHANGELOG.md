@@ -5,6 +5,9 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 
 # 11.3.0
+## Breaking changes ⚠️
+* [compose] Introduce `ComposeMapInitOptions` and remove `mapInitOptionsFactory`.
+
 # Bug fixes 🐞
 * [compose] Fix a bug introduced in `11.3.0-beta.1` where AnnotationGroup items updates were skipped.
 
