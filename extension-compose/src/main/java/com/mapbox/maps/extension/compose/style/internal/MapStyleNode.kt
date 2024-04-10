@@ -1,10 +1,13 @@
 package com.mapbox.maps.extension.compose.style.internal
 
+import android.util.Log
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.StyleDataLoaded
 import com.mapbox.maps.StyleDataLoadedType
 import com.mapbox.maps.coroutine.styleDataLoadedEvents
 import com.mapbox.maps.extension.compose.internal.MapNode
+import com.mapbox.maps.extension.compose.style.projection.Projection
 import com.mapbox.maps.logD
 import com.mapbox.maps.logW
 import kotlinx.coroutines.CoroutineName
@@ -17,10 +20,13 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.shareIn
+import kotlinx.coroutines.launch
 
+@OptIn(MapboxExperimental::class)
 internal class MapStyleNode(
   val style: String,
   val mapboxMap: MapboxMap,
+  private val projection: Projection,
 ) : MapNode() {
 
   val coroutineScope =
@@ -56,6 +62,7 @@ internal class MapStyleNode(
   override fun onAttached(parent: MapNode) {
     logD(TAG, "onAttached: parent=$parent")
     updateStyle(style)
+    updateProjection(projection)
   }
 
   override fun onRemoved(parent: MapNode) {
@@ -78,6 +85,19 @@ internal class MapStyleNode(
     logD(TAG, "loadStyle $style started")
     mapboxMap.loadStyle(style) {
       logD(TAG, "loadStyle $style finished")
+    }
+  }
+
+  internal fun updateProjection(projection: Projection) {
+    coroutineScope.launch {
+      styleDataLoaded.collect {
+        mapboxMap.setStyleProjection(projection.value)
+          .onValue {
+            Log.d(TAG, "$projection projection  applied")
+          }.onError {
+            Log.e(TAG, "Error $it when applying $projection projection")
+          }
+      }
     }
   }
 

@@ -15,6 +15,7 @@ Mapbox welcomes participation and contributions from everyone.
 * [compose] Add `contentPadding` to map ornament composable functions(e.g. `Compass`, `Logo`, `Attribution`, `ScaleBar`).
 * [compose] Introduce experimental `MapStyle`, `MapboxStandardStyle`, `GenericStyle` composable functions to work with the map style.
 * [compose] Added experimental layer and source composable functions to insert layer/sources to the map.
+* [compose] Add map projection support in `GenericStyle` composable function.
 * Expose `MapInitOptions.mapName` (`mapbox_mapName` in XML) property allowing to set the custom name which will be appended to map render related logs.
 * Add Attribution and Telemetry pop-up dialogs and compass view content description translations for Arabic, Bulgarian, Catalan, Chinese Simplified, Chinese Traditional, Czech, Danish, Dutch, French, Galician, German, Hebrew, Italian, Japanese, Korean, Lithuanian, Norwegian, Polish, Belarusian, Russian, Spanish, Swedish, Ukranian and Vietnamese.
 * Perform faster landmark parsing by switching tinygltf in favor of cgltf.
