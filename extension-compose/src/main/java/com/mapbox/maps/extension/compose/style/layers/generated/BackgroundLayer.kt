@@ -5,19 +5,20 @@ package com.mapbox.maps.extension.compose.style.layers.generated
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ComposeNode
 import androidx.compose.runtime.currentComposer
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.MapboxMapComposable
 import com.mapbox.maps.extension.compose.internal.MapApplier
+import com.mapbox.maps.extension.compose.style.IdGenerator.generateRandomLayerId
 import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
 
 /**
  * The background color or pattern of the map.
  *
- * @see [The online documentation](https://www.mapbox.com/mapbox-gl-style-spec/#layers-background)
+ * @see [The online documentation](https://docs.mapbox.com/style-spec/reference/layers#background)
  *
- * @param layerId the ID of the layer
+ * @param layerId the ID of the layer, by default, a random id will be generated with UUID.
  * @param backgroundColor The color with which the background will be drawn.
  * @param backgroundEmissiveStrength Controls the intensity of light emitted on the source features.
  * @param backgroundOpacity The opacity at which the background will be drawn.
@@ -30,7 +31,9 @@ import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
 @Composable
 @MapboxMapComposable
 public fun BackgroundLayer(
-  layerId: String,
+  layerId: String = remember {
+    generateRandomLayerId("background")
+  },
   backgroundColor: BackgroundColor = BackgroundColor.default,
   backgroundColorTransition: Transition = Transition.default,
   backgroundEmissiveStrength: BackgroundEmissiveStrength = BackgroundEmissiveStrength.default,
@@ -90,7 +93,7 @@ public fun BackgroundLayer(
         }
       }
       update(layerId) {
-        setConstructorProperty("id", Value(layerId))
+        updateLayerId(layerId)
       }
       update(backgroundColor) {
         setProperty(BackgroundColor.NAME, backgroundColor.value)

@@ -44,9 +44,15 @@ public class MapViewportAnimationsActivity : ComponentActivity() {
     setContent {
       val mapViewportState = rememberMapViewportState {
         setCameraOptions {
-          center(CityLocations.HELSINKI)
+          center(CityLocations.BERLIN)
           zoom(15.0)
         }
+        flyTo(
+          cameraOptions {
+            center(CityLocations.HELSINKI)
+          },
+          MapAnimationOptions.mapAnimationOptions { duration(5000) }
+        )
       }
       MapboxMapComposeTheme {
         ExampleScaffold(

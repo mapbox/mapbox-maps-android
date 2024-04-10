@@ -214,6 +214,13 @@ public final class com/mapbox/maps/extension/compose/ornaments/scalebar/MapScale
 	public final fun ScaleBar-vLKV3eY (Landroidx/compose/ui/Modifier;Landroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/ui/Alignment;JJJFFFFJZJZFZLandroidx/compose/runtime/Composer;III)V
 }
 
+public final class com/mapbox/maps/extension/compose/style/IdGenerator {
+	public static final field $stable I
+	public static final field INSTANCE Lcom/mapbox/maps/extension/compose/style/IdGenerator;
+	public final fun generateRandomLayerId (Ljava/lang/String;)Ljava/lang/String;
+	public final fun generateRandomSourceId (Ljava/lang/String;)Ljava/lang/String;
+}
+
 public abstract interface annotation class com/mapbox/maps/extension/compose/style/MapboxStyleComposable : java/lang/annotation/Annotation {
 }
 
@@ -462,7 +469,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Circ
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/CircleLayerKt {
-	public static final fun CircleLayer (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/layers/generated/CircleSortKey;Lcom/mapbox/maps/extension/compose/style/layers/generated/CircleBlur;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/CircleColor;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/CircleEmissiveStrength;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/CircleOpacity;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/CirclePitchAlignment;Lcom/mapbox/maps/extension/compose/style/layers/generated/CirclePitchScale;Lcom/mapbox/maps/extension/compose/style/layers/generated/CircleRadius;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/CircleStrokeColor;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/CircleStrokeOpacity;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/CircleStrokeWidth;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/CircleTranslate;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/CircleTranslateAnchor;Lcom/mapbox/maps/extension/compose/style/layers/generated/Visibility;Lcom/mapbox/maps/extension/compose/style/layers/generated/MinZoom;Lcom/mapbox/maps/extension/compose/style/layers/generated/MaxZoom;Lcom/mapbox/maps/extension/compose/style/layers/generated/SourceLayer;Lcom/mapbox/maps/extension/compose/style/layers/generated/Filter;Landroidx/compose/runtime/Composer;IIII)V
+	public static final fun CircleLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/layers/generated/CircleSortKey;Lcom/mapbox/maps/extension/compose/style/layers/generated/CircleBlur;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/CircleColor;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/CircleEmissiveStrength;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/CircleOpacity;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/CirclePitchAlignment;Lcom/mapbox/maps/extension/compose/style/layers/generated/CirclePitchScale;Lcom/mapbox/maps/extension/compose/style/layers/generated/CircleRadius;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/CircleStrokeColor;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/CircleStrokeOpacity;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/CircleStrokeWidth;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/CircleTranslate;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/CircleTranslateAnchor;Lcom/mapbox/maps/extension/compose/style/layers/generated/Visibility;Lcom/mapbox/maps/extension/compose/style/layers/generated/MinZoom;Lcom/mapbox/maps/extension/compose/style/layers/generated/MaxZoom;Lcom/mapbox/maps/extension/compose/style/layers/generated/SourceLayer;Lcom/mapbox/maps/extension/compose/style/layers/generated/Filter;Landroidx/compose/runtime/Composer;IIII)V
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/CircleOpacity {
@@ -1027,7 +1034,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Fill
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionLayerKt {
-	public static final fun FillExtrusionLayer (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionEdgeRadius;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionAmbientOcclusionGroundAttenuation;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionAmbientOcclusionGroundRadius;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionAmbientOcclusionIntensity;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionAmbientOcclusionRadius;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionAmbientOcclusionWallRadius;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionBase;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionColor;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionCutoffFadeRange;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionEmissiveStrength;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionFloodLightColor;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionFloodLightGroundAttenuation;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionFloodLightGroundRadius;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionFloodLightIntensity;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionFloodLightWallRadius;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionHeight;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionOpacity;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionPattern;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionRoundedRoof;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionTranslate;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionTranslateAnchor;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionVerticalGradient;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionVerticalScale;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/Visibility;Lcom/mapbox/maps/extension/compose/style/layers/generated/MinZoom;Lcom/mapbox/maps/extension/compose/style/layers/generated/MaxZoom;Lcom/mapbox/maps/extension/compose/style/layers/generated/SourceLayer;Lcom/mapbox/maps/extension/compose/style/layers/generated/Filter;Landroidx/compose/runtime/Composer;IIIIIII)V
+	public static final fun FillExtrusionLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionEdgeRadius;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionAmbientOcclusionGroundAttenuation;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionAmbientOcclusionGroundRadius;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionAmbientOcclusionIntensity;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionAmbientOcclusionRadius;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionAmbientOcclusionWallRadius;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionBase;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionColor;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionCutoffFadeRange;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionEmissiveStrength;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionFloodLightColor;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionFloodLightGroundAttenuation;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionFloodLightGroundRadius;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionFloodLightIntensity;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionFloodLightWallRadius;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionHeight;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionOpacity;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionPattern;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionRoundedRoof;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionTranslate;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionTranslateAnchor;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionVerticalGradient;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionVerticalScale;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/Visibility;Lcom/mapbox/maps/extension/compose/style/layers/generated/MinZoom;Lcom/mapbox/maps/extension/compose/style/layers/generated/MaxZoom;Lcom/mapbox/maps/extension/compose/style/layers/generated/SourceLayer;Lcom/mapbox/maps/extension/compose/style/layers/generated/Filter;Landroidx/compose/runtime/Composer;IIIIIII)V
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionOpacity {
@@ -1158,7 +1165,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Fill
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/FillLayerKt {
-	public static final fun FillLayer (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillSortKey;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillAntialias;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillColor;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillEmissiveStrength;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillOpacity;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillOutlineColor;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillPattern;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillTranslate;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillTranslateAnchor;Lcom/mapbox/maps/extension/compose/style/layers/generated/Visibility;Lcom/mapbox/maps/extension/compose/style/layers/generated/MinZoom;Lcom/mapbox/maps/extension/compose/style/layers/generated/MaxZoom;Lcom/mapbox/maps/extension/compose/style/layers/generated/SourceLayer;Lcom/mapbox/maps/extension/compose/style/layers/generated/Filter;Landroidx/compose/runtime/Composer;IIII)V
+	public static final fun FillLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillSortKey;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillAntialias;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillColor;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillEmissiveStrength;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillOpacity;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillOutlineColor;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillPattern;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillTranslate;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/FillTranslateAnchor;Lcom/mapbox/maps/extension/compose/style/layers/generated/Visibility;Lcom/mapbox/maps/extension/compose/style/layers/generated/MinZoom;Lcom/mapbox/maps/extension/compose/style/layers/generated/MaxZoom;Lcom/mapbox/maps/extension/compose/style/layers/generated/SourceLayer;Lcom/mapbox/maps/extension/compose/style/layers/generated/Filter;Landroidx/compose/runtime/Composer;IIII)V
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/FillOpacity {
@@ -1323,7 +1330,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Heat
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/HeatmapLayerKt {
-	public static final fun HeatmapLayer (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/layers/generated/HeatmapColor;Lcom/mapbox/maps/extension/compose/style/layers/generated/HeatmapIntensity;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/HeatmapOpacity;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/HeatmapRadius;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/HeatmapWeight;Lcom/mapbox/maps/extension/compose/style/layers/generated/Visibility;Lcom/mapbox/maps/extension/compose/style/layers/generated/MinZoom;Lcom/mapbox/maps/extension/compose/style/layers/generated/MaxZoom;Lcom/mapbox/maps/extension/compose/style/layers/generated/SourceLayer;Lcom/mapbox/maps/extension/compose/style/layers/generated/Filter;Landroidx/compose/runtime/Composer;III)V
+	public static final fun HeatmapLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/layers/generated/HeatmapColor;Lcom/mapbox/maps/extension/compose/style/layers/generated/HeatmapIntensity;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/HeatmapOpacity;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/HeatmapRadius;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/HeatmapWeight;Lcom/mapbox/maps/extension/compose/style/layers/generated/Visibility;Lcom/mapbox/maps/extension/compose/style/layers/generated/MinZoom;Lcom/mapbox/maps/extension/compose/style/layers/generated/MaxZoom;Lcom/mapbox/maps/extension/compose/style/layers/generated/SourceLayer;Lcom/mapbox/maps/extension/compose/style/layers/generated/Filter;Landroidx/compose/runtime/Composer;III)V
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/HeatmapOpacity {
@@ -1490,7 +1497,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Hill
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/HillshadeLayerKt {
-	public static final fun HillshadeLayer (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/layers/generated/HillshadeAccentColor;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/HillshadeEmissiveStrength;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/HillshadeExaggeration;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/HillshadeHighlightColor;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/HillshadeIlluminationAnchor;Lcom/mapbox/maps/extension/compose/style/layers/generated/HillshadeIlluminationDirection;Lcom/mapbox/maps/extension/compose/style/layers/generated/HillshadeShadowColor;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/Visibility;Lcom/mapbox/maps/extension/compose/style/layers/generated/MinZoom;Lcom/mapbox/maps/extension/compose/style/layers/generated/MaxZoom;Lcom/mapbox/maps/extension/compose/style/layers/generated/SourceLayer;Lcom/mapbox/maps/extension/compose/style/layers/generated/Filter;Landroidx/compose/runtime/Composer;III)V
+	public static final fun HillshadeLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/layers/generated/HillshadeAccentColor;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/HillshadeEmissiveStrength;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/HillshadeExaggeration;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/HillshadeHighlightColor;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/HillshadeIlluminationAnchor;Lcom/mapbox/maps/extension/compose/style/layers/generated/HillshadeIlluminationDirection;Lcom/mapbox/maps/extension/compose/style/layers/generated/HillshadeShadowColor;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/Visibility;Lcom/mapbox/maps/extension/compose/style/layers/generated/MinZoom;Lcom/mapbox/maps/extension/compose/style/layers/generated/MaxZoom;Lcom/mapbox/maps/extension/compose/style/layers/generated/SourceLayer;Lcom/mapbox/maps/extension/compose/style/layers/generated/Filter;Landroidx/compose/runtime/Composer;III)V
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/HillshadeShadowColor {
@@ -2179,7 +2186,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Line
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/LineLayerKt {
-	public static final fun LineLayer (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/layers/generated/LineCap;Lcom/mapbox/maps/extension/compose/style/layers/generated/LineJoin;Lcom/mapbox/maps/extension/compose/style/layers/generated/LineMiterLimit;Lcom/mapbox/maps/extension/compose/style/layers/generated/LineRoundLimit;Lcom/mapbox/maps/extension/compose/style/layers/generated/LineSortKey;Lcom/mapbox/maps/extension/compose/style/layers/generated/LineBlur;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/LineBorderColor;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/LineBorderWidth;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/LineColor;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/LineDasharray;Lcom/mapbox/maps/extension/compose/style/layers/generated/LineDepthOcclusionFactor;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/LineEmissiveStrength;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/LineGapWidth;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/LineGradient;Lcom/mapbox/maps/extension/compose/style/layers/generated/LineOffset;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/LineOpacity;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/LinePattern;Lcom/mapbox/maps/extension/compose/style/layers/generated/LineTranslate;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/LineTranslateAnchor;Lcom/mapbox/maps/extension/compose/style/layers/generated/LineTrimOffset;Lcom/mapbox/maps/extension/compose/style/layers/generated/LineWidth;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/Visibility;Lcom/mapbox/maps/extension/compose/style/layers/generated/MinZoom;Lcom/mapbox/maps/extension/compose/style/layers/generated/MaxZoom;Lcom/mapbox/maps/extension/compose/style/layers/generated/SourceLayer;Lcom/mapbox/maps/extension/compose/style/layers/generated/Filter;Landroidx/compose/runtime/Composer;IIIIII)V
+	public static final fun LineLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/layers/generated/LineCap;Lcom/mapbox/maps/extension/compose/style/layers/generated/LineJoin;Lcom/mapbox/maps/extension/compose/style/layers/generated/LineMiterLimit;Lcom/mapbox/maps/extension/compose/style/layers/generated/LineRoundLimit;Lcom/mapbox/maps/extension/compose/style/layers/generated/LineSortKey;Lcom/mapbox/maps/extension/compose/style/layers/generated/LineBlur;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/LineBorderColor;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/LineBorderWidth;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/LineColor;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/LineDasharray;Lcom/mapbox/maps/extension/compose/style/layers/generated/LineDepthOcclusionFactor;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/LineEmissiveStrength;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/LineGapWidth;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/LineGradient;Lcom/mapbox/maps/extension/compose/style/layers/generated/LineOffset;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/LineOpacity;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/LinePattern;Lcom/mapbox/maps/extension/compose/style/layers/generated/LineTranslate;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/LineTranslateAnchor;Lcom/mapbox/maps/extension/compose/style/layers/generated/LineTrimOffset;Lcom/mapbox/maps/extension/compose/style/layers/generated/LineWidth;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/Visibility;Lcom/mapbox/maps/extension/compose/style/layers/generated/MinZoom;Lcom/mapbox/maps/extension/compose/style/layers/generated/MaxZoom;Lcom/mapbox/maps/extension/compose/style/layers/generated/SourceLayer;Lcom/mapbox/maps/extension/compose/style/layers/generated/Filter;Landroidx/compose/runtime/Composer;IIIIII)V
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/LineMiterLimit {
@@ -2584,7 +2591,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Mode
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/ModelLayerKt {
-	public static final fun ModelLayer (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelId;Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelAmbientOcclusionIntensity;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelCastShadows;Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelColor;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelColorMixIntensity;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelCutoffFadeRange;Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelEmissiveStrength;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelHeightBasedEmissiveStrengthMultiplier;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelOpacity;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelReceiveShadows;Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelRotation;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelRoughness;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelScale;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelScaleMode;Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelTranslation;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelType;Lcom/mapbox/maps/extension/compose/style/layers/generated/Visibility;Lcom/mapbox/maps/extension/compose/style/layers/generated/MinZoom;Lcom/mapbox/maps/extension/compose/style/layers/generated/MaxZoom;Lcom/mapbox/maps/extension/compose/style/layers/generated/SourceLayer;Lcom/mapbox/maps/extension/compose/style/layers/generated/Filter;Landroidx/compose/runtime/Composer;IIIIII)V
+	public static final fun ModelLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelId;Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelAmbientOcclusionIntensity;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelCastShadows;Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelColor;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelColorMixIntensity;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelCutoffFadeRange;Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelEmissiveStrength;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelHeightBasedEmissiveStrengthMultiplier;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelOpacity;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelReceiveShadows;Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelRotation;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelRoughness;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelScale;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelScaleMode;Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelTranslation;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelType;Lcom/mapbox/maps/extension/compose/style/layers/generated/Visibility;Lcom/mapbox/maps/extension/compose/style/layers/generated/MinZoom;Lcom/mapbox/maps/extension/compose/style/layers/generated/MaxZoom;Lcom/mapbox/maps/extension/compose/style/layers/generated/SourceLayer;Lcom/mapbox/maps/extension/compose/style/layers/generated/Filter;Landroidx/compose/runtime/Composer;IIIIII)V
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/ModelOpacity {
@@ -2949,7 +2956,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Rast
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/RasterLayerKt {
-	public static final fun RasterLayer (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterArrayBand;Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterBrightnessMax;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterBrightnessMin;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterColor;Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterColorMix;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterColorRange;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterContrast;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterElevation;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterEmissiveStrength;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterFadeDuration;Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterHueRotate;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterOpacity;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterResampling;Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterSaturation;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/Visibility;Lcom/mapbox/maps/extension/compose/style/layers/generated/MinZoom;Lcom/mapbox/maps/extension/compose/style/layers/generated/MaxZoom;Lcom/mapbox/maps/extension/compose/style/layers/generated/SourceLayer;Lcom/mapbox/maps/extension/compose/style/layers/generated/Filter;Landroidx/compose/runtime/Composer;IIIII)V
+	public static final fun RasterLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterArrayBand;Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterBrightnessMax;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterBrightnessMin;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterColor;Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterColorMix;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterColorRange;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterContrast;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterElevation;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterEmissiveStrength;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterFadeDuration;Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterHueRotate;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterOpacity;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterResampling;Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterSaturation;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/Visibility;Lcom/mapbox/maps/extension/compose/style/layers/generated/MinZoom;Lcom/mapbox/maps/extension/compose/style/layers/generated/MaxZoom;Lcom/mapbox/maps/extension/compose/style/layers/generated/SourceLayer;Lcom/mapbox/maps/extension/compose/style/layers/generated/Filter;Landroidx/compose/runtime/Composer;IIIII)V
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/RasterOpacity {
@@ -3246,7 +3253,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Symb
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/SymbolLayerKt {
-	public static final fun SymbolLayer (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/layers/generated/IconAllowOverlap;Lcom/mapbox/maps/extension/compose/style/layers/generated/IconAnchor;Lcom/mapbox/maps/extension/compose/style/layers/generated/IconIgnorePlacement;Lcom/mapbox/maps/extension/compose/style/layers/generated/IconImage;Lcom/mapbox/maps/extension/compose/style/layers/generated/IconKeepUpright;Lcom/mapbox/maps/extension/compose/style/layers/generated/IconOffset;Lcom/mapbox/maps/extension/compose/style/layers/generated/IconOptional;Lcom/mapbox/maps/extension/compose/style/layers/generated/IconPadding;Lcom/mapbox/maps/extension/compose/style/layers/generated/IconPitchAlignment;Lcom/mapbox/maps/extension/compose/style/layers/generated/IconRotate;Lcom/mapbox/maps/extension/compose/style/layers/generated/IconRotationAlignment;Lcom/mapbox/maps/extension/compose/style/layers/generated/IconSize;Lcom/mapbox/maps/extension/compose/style/layers/generated/IconTextFit;Lcom/mapbox/maps/extension/compose/style/layers/generated/IconTextFitPadding;Lcom/mapbox/maps/extension/compose/style/layers/generated/SymbolAvoidEdges;Lcom/mapbox/maps/extension/compose/style/layers/generated/SymbolPlacement;Lcom/mapbox/maps/extension/compose/style/layers/generated/SymbolSortKey;Lcom/mapbox/maps/extension/compose/style/layers/generated/SymbolSpacing;Lcom/mapbox/maps/extension/compose/style/layers/generated/SymbolZElevate;Lcom/mapbox/maps/extension/compose/style/layers/generated/SymbolZOrder;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextAllowOverlap;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextAnchor;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextField;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextFont;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextIgnorePlacement;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextJustify;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextKeepUpright;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextLetterSpacing;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextLineHeight;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextMaxAngle;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextMaxWidth;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextOffset;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextOptional;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextPadding;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextPitchAlignment;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextRadialOffset;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextRotate;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextRotationAlignment;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextSize;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextTransform;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextVariableAnchor;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextWritingMode;Lcom/mapbox/maps/extension/compose/style/layers/generated/IconColor;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/IconColorSaturation;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/IconEmissiveStrength;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/IconHaloBlur;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/IconHaloColor;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/IconHaloWidth;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/IconImageCrossFade;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/IconOpacity;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/IconTranslate;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/IconTranslateAnchor;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextColor;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextEmissiveStrength;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextHaloBlur;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextHaloColor;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextHaloWidth;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextOpacity;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextTranslate;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextTranslateAnchor;Lcom/mapbox/maps/extension/compose/style/layers/generated/Visibility;Lcom/mapbox/maps/extension/compose/style/layers/generated/MinZoom;Lcom/mapbox/maps/extension/compose/style/layers/generated/MaxZoom;Lcom/mapbox/maps/extension/compose/style/layers/generated/SourceLayer;Lcom/mapbox/maps/extension/compose/style/layers/generated/Filter;Landroidx/compose/runtime/Composer;IIIIIIIIIIII)V
+	public static final fun SymbolLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/layers/generated/IconAllowOverlap;Lcom/mapbox/maps/extension/compose/style/layers/generated/IconAnchor;Lcom/mapbox/maps/extension/compose/style/layers/generated/IconIgnorePlacement;Lcom/mapbox/maps/extension/compose/style/layers/generated/IconImage;Lcom/mapbox/maps/extension/compose/style/layers/generated/IconKeepUpright;Lcom/mapbox/maps/extension/compose/style/layers/generated/IconOffset;Lcom/mapbox/maps/extension/compose/style/layers/generated/IconOptional;Lcom/mapbox/maps/extension/compose/style/layers/generated/IconPadding;Lcom/mapbox/maps/extension/compose/style/layers/generated/IconPitchAlignment;Lcom/mapbox/maps/extension/compose/style/layers/generated/IconRotate;Lcom/mapbox/maps/extension/compose/style/layers/generated/IconRotationAlignment;Lcom/mapbox/maps/extension/compose/style/layers/generated/IconSize;Lcom/mapbox/maps/extension/compose/style/layers/generated/IconTextFit;Lcom/mapbox/maps/extension/compose/style/layers/generated/IconTextFitPadding;Lcom/mapbox/maps/extension/compose/style/layers/generated/SymbolAvoidEdges;Lcom/mapbox/maps/extension/compose/style/layers/generated/SymbolPlacement;Lcom/mapbox/maps/extension/compose/style/layers/generated/SymbolSortKey;Lcom/mapbox/maps/extension/compose/style/layers/generated/SymbolSpacing;Lcom/mapbox/maps/extension/compose/style/layers/generated/SymbolZElevate;Lcom/mapbox/maps/extension/compose/style/layers/generated/SymbolZOrder;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextAllowOverlap;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextAnchor;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextField;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextFont;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextIgnorePlacement;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextJustify;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextKeepUpright;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextLetterSpacing;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextLineHeight;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextMaxAngle;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextMaxWidth;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextOffset;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextOptional;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextPadding;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextPitchAlignment;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextRadialOffset;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextRotate;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextRotationAlignment;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextSize;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextTransform;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextVariableAnchor;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextWritingMode;Lcom/mapbox/maps/extension/compose/style/layers/generated/IconColor;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/IconColorSaturation;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/IconEmissiveStrength;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/IconHaloBlur;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/IconHaloColor;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/IconHaloWidth;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/IconImageCrossFade;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/IconOpacity;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/IconTranslate;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/IconTranslateAnchor;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextColor;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextEmissiveStrength;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextHaloBlur;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextHaloColor;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextHaloWidth;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextOpacity;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextTranslate;Lcom/mapbox/maps/extension/compose/style/layers/generated/Transition;Lcom/mapbox/maps/extension/compose/style/layers/generated/TextTranslateAnchor;Lcom/mapbox/maps/extension/compose/style/layers/generated/Visibility;Lcom/mapbox/maps/extension/compose/style/layers/generated/MinZoom;Lcom/mapbox/maps/extension/compose/style/layers/generated/MaxZoom;Lcom/mapbox/maps/extension/compose/style/layers/generated/SourceLayer;Lcom/mapbox/maps/extension/compose/style/layers/generated/Filter;Landroidx/compose/runtime/Composer;IIIIIIIIIIII)V
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/SymbolPlacement {
@@ -4000,6 +4007,46 @@ public final class com/mapbox/maps/extension/compose/style/projection/Projection
 	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/projection/Projection;
 }
 
+public abstract class com/mapbox/maps/extension/compose/style/sources/SourceState {
+	public static final field $stable I
+	protected final fun getBuilderProperty (Ljava/lang/String;)Lcom/mapbox/bindgen/Value;
+	protected final fun getCachedGeoJsonSourceData ()Lkotlinx/coroutines/flow/MutableStateFlow;
+	protected final fun getProperty (Ljava/lang/String;)Lcom/mapbox/bindgen/Value;
+	public fun getSourceId ()Ljava/lang/String;
+	protected final fun setBuilderProperty (Ljava/lang/String;Lcom/mapbox/bindgen/Value;)V
+	protected final fun setProperty (Ljava/lang/String;Lcom/mapbox/bindgen/Value;)V
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/compose/style/sources/SourceState$Holder : android/os/Parcelable {
+	public static final field $stable I
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;Lcom/mapbox/maps/extension/compose/style/sources/generated/GeoJSONData;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/util/Map;
+	public final fun component3 ()Ljava/util/Map;
+	public final fun component4 ()Lcom/mapbox/maps/extension/compose/style/sources/generated/GeoJSONData;
+	public final fun copy (Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;Lcom/mapbox/maps/extension/compose/style/sources/generated/GeoJSONData;)Lcom/mapbox/maps/extension/compose/style/sources/SourceState$Holder;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/sources/SourceState$Holder;Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;Lcom/mapbox/maps/extension/compose/style/sources/generated/GeoJSONData;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/sources/SourceState$Holder;
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBuilderProperties ()Ljava/util/Map;
+	public final fun getCachedProperties ()Ljava/util/Map;
+	public final fun getGeoJSONData ()Lcom/mapbox/maps/extension/compose/style/sources/generated/GeoJSONData;
+	public final fun getSourcedId ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/maps/extension/compose/style/sources/SourceState$Holder$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/maps/extension/compose/style/sources/SourceState$Holder;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/maps/extension/compose/style/sources/SourceState$Holder;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
 public final class com/mapbox/maps/extension/compose/style/sources/generated/Attribution {
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/Attribution$Companion;
 	public fun <init> (Lcom/mapbox/bindgen/Value;)V
@@ -4199,12 +4246,72 @@ public final class com/mapbox/maps/extension/compose/style/sources/generated/Geo
 	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/sources/generated/GeoJSONData;
 }
 
-public final class com/mapbox/maps/extension/compose/style/sources/generated/GeoJsonSourceKt {
-	public static final fun GeoJsonSource (Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/sources/generated/GeoJSONData;Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxZoom;Lcom/mapbox/maps/extension/compose/style/sources/generated/Attribution;Lcom/mapbox/maps/extension/compose/style/sources/generated/Buffer;Lcom/mapbox/maps/extension/compose/style/sources/generated/Tolerance;Lcom/mapbox/maps/extension/compose/style/sources/generated/Cluster;Lcom/mapbox/maps/extension/compose/style/sources/generated/ClusterRadius;Lcom/mapbox/maps/extension/compose/style/sources/generated/ClusterMaxZoom;Lcom/mapbox/maps/extension/compose/style/sources/generated/ClusterProperties;Lcom/mapbox/maps/extension/compose/style/sources/generated/LineMetrics;Lcom/mapbox/maps/extension/compose/style/sources/generated/GenerateId;Lcom/mapbox/maps/extension/compose/style/sources/generated/PromoteId;Lcom/mapbox/maps/extension/compose/style/sources/generated/PrefetchZoomDelta;Lcom/mapbox/maps/extension/compose/style/sources/generated/TileCacheBudget;Landroidx/compose/runtime/Composer;III)V
+public final class com/mapbox/maps/extension/compose/style/sources/generated/GeoJsonSourceState : com/mapbox/maps/extension/compose/style/sources/SourceState {
+	public static final field $stable I
+	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/GeoJsonSourceState$Companion;
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/sources/generated/GeoJSONData;Ljava/util/Map;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/sources/generated/GeoJSONData;Ljava/util/Map;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getAttribution ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Attribution;
+	public final fun getBuffer ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Buffer;
+	public final fun getCluster ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Cluster;
+	public final fun getClusterMaxZoom ()Lcom/mapbox/maps/extension/compose/style/sources/generated/ClusterMaxZoom;
+	public final fun getClusterProperties ()Lcom/mapbox/maps/extension/compose/style/sources/generated/ClusterProperties;
+	public final fun getClusterRadius ()Lcom/mapbox/maps/extension/compose/style/sources/generated/ClusterRadius;
+	public final fun getData ()Lcom/mapbox/maps/extension/compose/style/sources/generated/GeoJSONData;
+	public final fun getGenerateId ()Lcom/mapbox/maps/extension/compose/style/sources/generated/GenerateId;
+	public final fun getLineMetrics ()Lcom/mapbox/maps/extension/compose/style/sources/generated/LineMetrics;
+	public final fun getMaxZoom ()Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxZoom;
+	public final fun getPrefetchZoomDelta ()Lcom/mapbox/maps/extension/compose/style/sources/generated/PrefetchZoomDelta;
+	public final fun getPromoteId ()Lcom/mapbox/maps/extension/compose/style/sources/generated/PromoteId;
+	public fun getSourceId ()Ljava/lang/String;
+	public final fun getTileCacheBudget ()Lcom/mapbox/maps/extension/compose/style/sources/generated/TileCacheBudget;
+	public final fun getTolerance ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Tolerance;
+	public final fun setAttribution (Lcom/mapbox/maps/extension/compose/style/sources/generated/Attribution;)V
+	public final fun setBuffer (Lcom/mapbox/maps/extension/compose/style/sources/generated/Buffer;)V
+	public final fun setCluster (Lcom/mapbox/maps/extension/compose/style/sources/generated/Cluster;)V
+	public final fun setClusterMaxZoom (Lcom/mapbox/maps/extension/compose/style/sources/generated/ClusterMaxZoom;)V
+	public final fun setClusterProperties (Lcom/mapbox/maps/extension/compose/style/sources/generated/ClusterProperties;)V
+	public final fun setClusterRadius (Lcom/mapbox/maps/extension/compose/style/sources/generated/ClusterRadius;)V
+	public final fun setData (Lcom/mapbox/maps/extension/compose/style/sources/generated/GeoJSONData;)V
+	public final fun setGenerateId (Lcom/mapbox/maps/extension/compose/style/sources/generated/GenerateId;)V
+	public final fun setLineMetrics (Lcom/mapbox/maps/extension/compose/style/sources/generated/LineMetrics;)V
+	public final fun setMaxZoom (Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxZoom;)V
+	public final fun setPrefetchZoomDelta (Lcom/mapbox/maps/extension/compose/style/sources/generated/PrefetchZoomDelta;)V
+	public final fun setPromoteId (Lcom/mapbox/maps/extension/compose/style/sources/generated/PromoteId;)V
+	public final fun setTileCacheBudget (Lcom/mapbox/maps/extension/compose/style/sources/generated/TileCacheBudget;)V
+	public final fun setTolerance (Lcom/mapbox/maps/extension/compose/style/sources/generated/Tolerance;)V
 }
 
-public final class com/mapbox/maps/extension/compose/style/sources/generated/ImageSourceKt {
-	public static final fun ImageSource (Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/sources/generated/Url;Lcom/mapbox/maps/extension/compose/style/sources/generated/Coordinates;Lcom/mapbox/maps/extension/compose/style/sources/generated/PrefetchZoomDelta;Landroidx/compose/runtime/Composer;II)V
+public final class com/mapbox/maps/extension/compose/style/sources/generated/GeoJsonSourceState$Companion {
+	public final fun getSaver ()Landroidx/compose/runtime/saveable/Saver;
+}
+
+public final class com/mapbox/maps/extension/compose/style/sources/generated/GeoJsonSourceStateKt {
+	public static final fun rememberGeoJsonSourceState (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)Lcom/mapbox/maps/extension/compose/style/sources/generated/GeoJsonSourceState;
+}
+
+public final class com/mapbox/maps/extension/compose/style/sources/generated/ImageSourceState : com/mapbox/maps/extension/compose/style/sources/SourceState {
+	public static final field $stable I
+	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/ImageSourceState$Companion;
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getCoordinates ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Coordinates;
+	public final fun getPrefetchZoomDelta ()Lcom/mapbox/maps/extension/compose/style/sources/generated/PrefetchZoomDelta;
+	public fun getSourceId ()Ljava/lang/String;
+	public final fun getUrl ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Url;
+	public final fun setCoordinates (Lcom/mapbox/maps/extension/compose/style/sources/generated/Coordinates;)V
+	public final fun setPrefetchZoomDelta (Lcom/mapbox/maps/extension/compose/style/sources/generated/PrefetchZoomDelta;)V
+	public final fun setUrl (Lcom/mapbox/maps/extension/compose/style/sources/generated/Url;)V
+}
+
+public final class com/mapbox/maps/extension/compose/style/sources/generated/ImageSourceState$Companion {
+	public final fun getSaver ()Landroidx/compose/runtime/saveable/Saver;
+}
+
+public final class com/mapbox/maps/extension/compose/style/sources/generated/ImageSourceStateKt {
+	public static final fun rememberImageSourceState (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)Lcom/mapbox/maps/extension/compose/style/sources/generated/ImageSourceState;
 }
 
 public final class com/mapbox/maps/extension/compose/style/sources/generated/LineMetrics {
@@ -4333,12 +4440,86 @@ public final class com/mapbox/maps/extension/compose/style/sources/generated/Pro
 	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/sources/generated/PromoteId;
 }
 
-public final class com/mapbox/maps/extension/compose/style/sources/generated/RasterArraySourceKt {
-	public static final fun RasterArraySource (Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/sources/generated/Url;Lcom/mapbox/maps/extension/compose/style/sources/generated/Tiles;Lcom/mapbox/maps/extension/compose/style/sources/generated/Bounds;Lcom/mapbox/maps/extension/compose/style/sources/generated/MinZoom;Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxZoom;Lcom/mapbox/maps/extension/compose/style/sources/generated/TileSize;Lcom/mapbox/maps/extension/compose/style/sources/generated/Attribution;Lcom/mapbox/maps/extension/compose/style/sources/generated/RasterLayers;Lcom/mapbox/maps/extension/compose/style/sources/generated/TileCacheBudget;Landroidx/compose/runtime/Composer;II)V
+public final class com/mapbox/maps/extension/compose/style/sources/generated/RasterArraySourceState : com/mapbox/maps/extension/compose/style/sources/SourceState {
+	public static final field $stable I
+	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/RasterArraySourceState$Companion;
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getAttribution ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Attribution;
+	public final fun getBounds ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Bounds;
+	public final fun getMaxZoom ()Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxZoom;
+	public final fun getMinZoom ()Lcom/mapbox/maps/extension/compose/style/sources/generated/MinZoom;
+	public final fun getRasterLayers ()Lcom/mapbox/maps/extension/compose/style/sources/generated/RasterLayers;
+	public fun getSourceId ()Ljava/lang/String;
+	public final fun getTileCacheBudget ()Lcom/mapbox/maps/extension/compose/style/sources/generated/TileCacheBudget;
+	public final fun getTileSize ()Lcom/mapbox/maps/extension/compose/style/sources/generated/TileSize;
+	public final fun getTiles ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Tiles;
+	public final fun getUrl ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Url;
+	public final fun setAttribution (Lcom/mapbox/maps/extension/compose/style/sources/generated/Attribution;)V
+	public final fun setBounds (Lcom/mapbox/maps/extension/compose/style/sources/generated/Bounds;)V
+	public final fun setMaxZoom (Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxZoom;)V
+	public final fun setMinZoom (Lcom/mapbox/maps/extension/compose/style/sources/generated/MinZoom;)V
+	public final fun setRasterLayers (Lcom/mapbox/maps/extension/compose/style/sources/generated/RasterLayers;)V
+	public final fun setTileCacheBudget (Lcom/mapbox/maps/extension/compose/style/sources/generated/TileCacheBudget;)V
+	public final fun setTileSize (Lcom/mapbox/maps/extension/compose/style/sources/generated/TileSize;)V
+	public final fun setTiles (Lcom/mapbox/maps/extension/compose/style/sources/generated/Tiles;)V
+	public final fun setUrl (Lcom/mapbox/maps/extension/compose/style/sources/generated/Url;)V
 }
 
-public final class com/mapbox/maps/extension/compose/style/sources/generated/RasterDemSourceKt {
-	public static final fun RasterDemSource (Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/sources/generated/Url;Lcom/mapbox/maps/extension/compose/style/sources/generated/Tiles;Lcom/mapbox/maps/extension/compose/style/sources/generated/Bounds;Lcom/mapbox/maps/extension/compose/style/sources/generated/MinZoom;Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxZoom;Lcom/mapbox/maps/extension/compose/style/sources/generated/TileSize;Lcom/mapbox/maps/extension/compose/style/sources/generated/Attribution;Lcom/mapbox/maps/extension/compose/style/sources/generated/Encoding;Lcom/mapbox/maps/extension/compose/style/sources/generated/Volatile;Lcom/mapbox/maps/extension/compose/style/sources/generated/PrefetchZoomDelta;Lcom/mapbox/maps/extension/compose/style/sources/generated/TileCacheBudget;Lcom/mapbox/maps/extension/compose/style/sources/generated/MinimumTileUpdateInterval;Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxOverscaleFactorForParentTiles;Lcom/mapbox/maps/extension/compose/style/sources/generated/TileRequestsDelay;Lcom/mapbox/maps/extension/compose/style/sources/generated/TileNetworkRequestsDelay;Landroidx/compose/runtime/Composer;III)V
+public final class com/mapbox/maps/extension/compose/style/sources/generated/RasterArraySourceState$Companion {
+	public final fun getSaver ()Landroidx/compose/runtime/saveable/Saver;
+}
+
+public final class com/mapbox/maps/extension/compose/style/sources/generated/RasterArraySourceStateKt {
+	public static final fun rememberRasterArraySourceState (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)Lcom/mapbox/maps/extension/compose/style/sources/generated/RasterArraySourceState;
+}
+
+public final class com/mapbox/maps/extension/compose/style/sources/generated/RasterDemSourceState : com/mapbox/maps/extension/compose/style/sources/SourceState {
+	public static final field $stable I
+	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/RasterDemSourceState$Companion;
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getAttribution ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Attribution;
+	public final fun getBounds ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Bounds;
+	public final fun getEncoding ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Encoding;
+	public final fun getMaxOverscaleFactorForParentTiles ()Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxOverscaleFactorForParentTiles;
+	public final fun getMaxZoom ()Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxZoom;
+	public final fun getMinZoom ()Lcom/mapbox/maps/extension/compose/style/sources/generated/MinZoom;
+	public final fun getMinimumTileUpdateInterval ()Lcom/mapbox/maps/extension/compose/style/sources/generated/MinimumTileUpdateInterval;
+	public final fun getPrefetchZoomDelta ()Lcom/mapbox/maps/extension/compose/style/sources/generated/PrefetchZoomDelta;
+	public fun getSourceId ()Ljava/lang/String;
+	public final fun getTileCacheBudget ()Lcom/mapbox/maps/extension/compose/style/sources/generated/TileCacheBudget;
+	public final fun getTileNetworkRequestsDelay ()Lcom/mapbox/maps/extension/compose/style/sources/generated/TileNetworkRequestsDelay;
+	public final fun getTileRequestsDelay ()Lcom/mapbox/maps/extension/compose/style/sources/generated/TileRequestsDelay;
+	public final fun getTileSize ()Lcom/mapbox/maps/extension/compose/style/sources/generated/TileSize;
+	public final fun getTiles ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Tiles;
+	public final fun getUrl ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Url;
+	public final fun getVolatile ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Volatile;
+	public final fun setAttribution (Lcom/mapbox/maps/extension/compose/style/sources/generated/Attribution;)V
+	public final fun setBounds (Lcom/mapbox/maps/extension/compose/style/sources/generated/Bounds;)V
+	public final fun setEncoding (Lcom/mapbox/maps/extension/compose/style/sources/generated/Encoding;)V
+	public final fun setMaxOverscaleFactorForParentTiles (Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxOverscaleFactorForParentTiles;)V
+	public final fun setMaxZoom (Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxZoom;)V
+	public final fun setMinZoom (Lcom/mapbox/maps/extension/compose/style/sources/generated/MinZoom;)V
+	public final fun setMinimumTileUpdateInterval (Lcom/mapbox/maps/extension/compose/style/sources/generated/MinimumTileUpdateInterval;)V
+	public final fun setPrefetchZoomDelta (Lcom/mapbox/maps/extension/compose/style/sources/generated/PrefetchZoomDelta;)V
+	public final fun setTileCacheBudget (Lcom/mapbox/maps/extension/compose/style/sources/generated/TileCacheBudget;)V
+	public final fun setTileNetworkRequestsDelay (Lcom/mapbox/maps/extension/compose/style/sources/generated/TileNetworkRequestsDelay;)V
+	public final fun setTileRequestsDelay (Lcom/mapbox/maps/extension/compose/style/sources/generated/TileRequestsDelay;)V
+	public final fun setTileSize (Lcom/mapbox/maps/extension/compose/style/sources/generated/TileSize;)V
+	public final fun setTiles (Lcom/mapbox/maps/extension/compose/style/sources/generated/Tiles;)V
+	public final fun setUrl (Lcom/mapbox/maps/extension/compose/style/sources/generated/Url;)V
+	public final fun setVolatile (Lcom/mapbox/maps/extension/compose/style/sources/generated/Volatile;)V
+}
+
+public final class com/mapbox/maps/extension/compose/style/sources/generated/RasterDemSourceState$Companion {
+	public final fun getSaver ()Landroidx/compose/runtime/saveable/Saver;
+}
+
+public final class com/mapbox/maps/extension/compose/style/sources/generated/RasterDemSourceStateKt {
+	public static final fun rememberRasterDemSourceState (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)Lcom/mapbox/maps/extension/compose/style/sources/generated/RasterDemSourceState;
 }
 
 public final class com/mapbox/maps/extension/compose/style/sources/generated/RasterLayers {
@@ -4359,8 +4540,51 @@ public final class com/mapbox/maps/extension/compose/style/sources/generated/Ras
 	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/sources/generated/RasterLayers;
 }
 
-public final class com/mapbox/maps/extension/compose/style/sources/generated/RasterSourceKt {
-	public static final fun RasterSource (Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/sources/generated/Url;Lcom/mapbox/maps/extension/compose/style/sources/generated/Tiles;Lcom/mapbox/maps/extension/compose/style/sources/generated/Bounds;Lcom/mapbox/maps/extension/compose/style/sources/generated/MinZoom;Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxZoom;Lcom/mapbox/maps/extension/compose/style/sources/generated/TileSize;Lcom/mapbox/maps/extension/compose/style/sources/generated/Scheme;Lcom/mapbox/maps/extension/compose/style/sources/generated/Attribution;Lcom/mapbox/maps/extension/compose/style/sources/generated/Volatile;Lcom/mapbox/maps/extension/compose/style/sources/generated/PrefetchZoomDelta;Lcom/mapbox/maps/extension/compose/style/sources/generated/TileCacheBudget;Lcom/mapbox/maps/extension/compose/style/sources/generated/MinimumTileUpdateInterval;Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxOverscaleFactorForParentTiles;Lcom/mapbox/maps/extension/compose/style/sources/generated/TileRequestsDelay;Lcom/mapbox/maps/extension/compose/style/sources/generated/TileNetworkRequestsDelay;Landroidx/compose/runtime/Composer;III)V
+public final class com/mapbox/maps/extension/compose/style/sources/generated/RasterSourceState : com/mapbox/maps/extension/compose/style/sources/SourceState {
+	public static final field $stable I
+	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/RasterSourceState$Companion;
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getAttribution ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Attribution;
+	public final fun getBounds ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Bounds;
+	public final fun getMaxOverscaleFactorForParentTiles ()Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxOverscaleFactorForParentTiles;
+	public final fun getMaxZoom ()Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxZoom;
+	public final fun getMinZoom ()Lcom/mapbox/maps/extension/compose/style/sources/generated/MinZoom;
+	public final fun getMinimumTileUpdateInterval ()Lcom/mapbox/maps/extension/compose/style/sources/generated/MinimumTileUpdateInterval;
+	public final fun getPrefetchZoomDelta ()Lcom/mapbox/maps/extension/compose/style/sources/generated/PrefetchZoomDelta;
+	public final fun getScheme ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Scheme;
+	public fun getSourceId ()Ljava/lang/String;
+	public final fun getTileCacheBudget ()Lcom/mapbox/maps/extension/compose/style/sources/generated/TileCacheBudget;
+	public final fun getTileNetworkRequestsDelay ()Lcom/mapbox/maps/extension/compose/style/sources/generated/TileNetworkRequestsDelay;
+	public final fun getTileRequestsDelay ()Lcom/mapbox/maps/extension/compose/style/sources/generated/TileRequestsDelay;
+	public final fun getTileSize ()Lcom/mapbox/maps/extension/compose/style/sources/generated/TileSize;
+	public final fun getTiles ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Tiles;
+	public final fun getUrl ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Url;
+	public final fun getVolatile ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Volatile;
+	public final fun setAttribution (Lcom/mapbox/maps/extension/compose/style/sources/generated/Attribution;)V
+	public final fun setBounds (Lcom/mapbox/maps/extension/compose/style/sources/generated/Bounds;)V
+	public final fun setMaxOverscaleFactorForParentTiles (Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxOverscaleFactorForParentTiles;)V
+	public final fun setMaxZoom (Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxZoom;)V
+	public final fun setMinZoom (Lcom/mapbox/maps/extension/compose/style/sources/generated/MinZoom;)V
+	public final fun setMinimumTileUpdateInterval (Lcom/mapbox/maps/extension/compose/style/sources/generated/MinimumTileUpdateInterval;)V
+	public final fun setPrefetchZoomDelta (Lcom/mapbox/maps/extension/compose/style/sources/generated/PrefetchZoomDelta;)V
+	public final fun setScheme (Lcom/mapbox/maps/extension/compose/style/sources/generated/Scheme;)V
+	public final fun setTileCacheBudget (Lcom/mapbox/maps/extension/compose/style/sources/generated/TileCacheBudget;)V
+	public final fun setTileNetworkRequestsDelay (Lcom/mapbox/maps/extension/compose/style/sources/generated/TileNetworkRequestsDelay;)V
+	public final fun setTileRequestsDelay (Lcom/mapbox/maps/extension/compose/style/sources/generated/TileRequestsDelay;)V
+	public final fun setTileSize (Lcom/mapbox/maps/extension/compose/style/sources/generated/TileSize;)V
+	public final fun setTiles (Lcom/mapbox/maps/extension/compose/style/sources/generated/Tiles;)V
+	public final fun setUrl (Lcom/mapbox/maps/extension/compose/style/sources/generated/Url;)V
+	public final fun setVolatile (Lcom/mapbox/maps/extension/compose/style/sources/generated/Volatile;)V
+}
+
+public final class com/mapbox/maps/extension/compose/style/sources/generated/RasterSourceState$Companion {
+	public final fun getSaver ()Landroidx/compose/runtime/saveable/Saver;
+}
+
+public final class com/mapbox/maps/extension/compose/style/sources/generated/RasterSourceStateKt {
+	public static final fun rememberRasterSourceState (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)Lcom/mapbox/maps/extension/compose/style/sources/generated/RasterSourceState;
 }
 
 public final class com/mapbox/maps/extension/compose/style/sources/generated/Scheme {
@@ -4508,8 +4732,51 @@ public final class com/mapbox/maps/extension/compose/style/sources/generated/Url
 	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Url;
 }
 
-public final class com/mapbox/maps/extension/compose/style/sources/generated/VectorSourceKt {
-	public static final fun VectorSource (Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/sources/generated/Url;Lcom/mapbox/maps/extension/compose/style/sources/generated/Tiles;Lcom/mapbox/maps/extension/compose/style/sources/generated/Bounds;Lcom/mapbox/maps/extension/compose/style/sources/generated/Scheme;Lcom/mapbox/maps/extension/compose/style/sources/generated/MinZoom;Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxZoom;Lcom/mapbox/maps/extension/compose/style/sources/generated/Attribution;Lcom/mapbox/maps/extension/compose/style/sources/generated/PromoteId;Lcom/mapbox/maps/extension/compose/style/sources/generated/Volatile;Lcom/mapbox/maps/extension/compose/style/sources/generated/PrefetchZoomDelta;Lcom/mapbox/maps/extension/compose/style/sources/generated/TileCacheBudget;Lcom/mapbox/maps/extension/compose/style/sources/generated/MinimumTileUpdateInterval;Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxOverscaleFactorForParentTiles;Lcom/mapbox/maps/extension/compose/style/sources/generated/TileRequestsDelay;Lcom/mapbox/maps/extension/compose/style/sources/generated/TileNetworkRequestsDelay;Landroidx/compose/runtime/Composer;III)V
+public final class com/mapbox/maps/extension/compose/style/sources/generated/VectorSourceState : com/mapbox/maps/extension/compose/style/sources/SourceState {
+	public static final field $stable I
+	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/VectorSourceState$Companion;
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getAttribution ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Attribution;
+	public final fun getBounds ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Bounds;
+	public final fun getMaxOverscaleFactorForParentTiles ()Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxOverscaleFactorForParentTiles;
+	public final fun getMaxZoom ()Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxZoom;
+	public final fun getMinZoom ()Lcom/mapbox/maps/extension/compose/style/sources/generated/MinZoom;
+	public final fun getMinimumTileUpdateInterval ()Lcom/mapbox/maps/extension/compose/style/sources/generated/MinimumTileUpdateInterval;
+	public final fun getPrefetchZoomDelta ()Lcom/mapbox/maps/extension/compose/style/sources/generated/PrefetchZoomDelta;
+	public final fun getPromoteId ()Lcom/mapbox/maps/extension/compose/style/sources/generated/PromoteId;
+	public final fun getScheme ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Scheme;
+	public fun getSourceId ()Ljava/lang/String;
+	public final fun getTileCacheBudget ()Lcom/mapbox/maps/extension/compose/style/sources/generated/TileCacheBudget;
+	public final fun getTileNetworkRequestsDelay ()Lcom/mapbox/maps/extension/compose/style/sources/generated/TileNetworkRequestsDelay;
+	public final fun getTileRequestsDelay ()Lcom/mapbox/maps/extension/compose/style/sources/generated/TileRequestsDelay;
+	public final fun getTiles ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Tiles;
+	public final fun getUrl ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Url;
+	public final fun getVolatile ()Lcom/mapbox/maps/extension/compose/style/sources/generated/Volatile;
+	public final fun setAttribution (Lcom/mapbox/maps/extension/compose/style/sources/generated/Attribution;)V
+	public final fun setBounds (Lcom/mapbox/maps/extension/compose/style/sources/generated/Bounds;)V
+	public final fun setMaxOverscaleFactorForParentTiles (Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxOverscaleFactorForParentTiles;)V
+	public final fun setMaxZoom (Lcom/mapbox/maps/extension/compose/style/sources/generated/MaxZoom;)V
+	public final fun setMinZoom (Lcom/mapbox/maps/extension/compose/style/sources/generated/MinZoom;)V
+	public final fun setMinimumTileUpdateInterval (Lcom/mapbox/maps/extension/compose/style/sources/generated/MinimumTileUpdateInterval;)V
+	public final fun setPrefetchZoomDelta (Lcom/mapbox/maps/extension/compose/style/sources/generated/PrefetchZoomDelta;)V
+	public final fun setPromoteId (Lcom/mapbox/maps/extension/compose/style/sources/generated/PromoteId;)V
+	public final fun setScheme (Lcom/mapbox/maps/extension/compose/style/sources/generated/Scheme;)V
+	public final fun setTileCacheBudget (Lcom/mapbox/maps/extension/compose/style/sources/generated/TileCacheBudget;)V
+	public final fun setTileNetworkRequestsDelay (Lcom/mapbox/maps/extension/compose/style/sources/generated/TileNetworkRequestsDelay;)V
+	public final fun setTileRequestsDelay (Lcom/mapbox/maps/extension/compose/style/sources/generated/TileRequestsDelay;)V
+	public final fun setTiles (Lcom/mapbox/maps/extension/compose/style/sources/generated/Tiles;)V
+	public final fun setUrl (Lcom/mapbox/maps/extension/compose/style/sources/generated/Url;)V
+	public final fun setVolatile (Lcom/mapbox/maps/extension/compose/style/sources/generated/Volatile;)V
+}
+
+public final class com/mapbox/maps/extension/compose/style/sources/generated/VectorSourceState$Companion {
+	public final fun getSaver ()Landroidx/compose/runtime/saveable/Saver;
+}
+
+public final class com/mapbox/maps/extension/compose/style/sources/generated/VectorSourceStateKt {
+	public static final fun rememberVectorSourceState (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)Lcom/mapbox/maps/extension/compose/style/sources/generated/VectorSourceState;
 }
 
 public final class com/mapbox/maps/extension/compose/style/sources/generated/Volatile {

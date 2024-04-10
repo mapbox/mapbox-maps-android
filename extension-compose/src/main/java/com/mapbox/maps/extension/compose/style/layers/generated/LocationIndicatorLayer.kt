@@ -5,19 +5,20 @@ package com.mapbox.maps.extension.compose.style.layers.generated
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ComposeNode
 import androidx.compose.runtime.currentComposer
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.MapboxMapComposable
 import com.mapbox.maps.extension.compose.internal.MapApplier
+import com.mapbox.maps.extension.compose.style.IdGenerator.generateRandomLayerId
 import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
 
 /**
  * Location Indicator layer.
  *
- * @see [The online documentation](https://www.mapbox.com/mapbox-gl-style-spec/#layers-location-indicator)
+ * @see [The online documentation](https://docs.mapbox.com/style-spec/reference/layers#location-indicator)
  *
- * @param layerId the ID of the layer
+ * @param layerId the ID of the layer, by default, a random id will be generated with UUID.
  * @param bearingImage Name of image in sprite to use as the middle of the location indicator.
  * @param shadowImage Name of image in sprite to use as the background of the location indicator.
  * @param topImage Name of image in sprite to use as the top of the location indicator.
@@ -44,7 +45,9 @@ import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
 @Composable
 @MapboxMapComposable
 public fun LocationIndicatorLayer(
-  layerId: String,
+  layerId: String = remember {
+    generateRandomLayerId("location-indicator")
+  },
   bearingImage: BearingImage = BearingImage.default,
   shadowImage: ShadowImage = ShadowImage.default,
   topImage: TopImage = TopImage.default,
@@ -192,7 +195,7 @@ public fun LocationIndicatorLayer(
         }
       }
       update(layerId) {
-        setConstructorProperty("id", Value(layerId))
+        updateLayerId(layerId)
       }
       update(bearingImage) {
         setProperty(BearingImage.NAME, bearingImage.value)

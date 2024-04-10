@@ -145,7 +145,6 @@
         </activity>
         <activity
             android:name=".examples.style.StyleCompositionActivity"
-            android:configChanges="orientation|screenSize|screenLayout"
             android:description="@string/description_style_composition"
             android:exported="true"
             android:label="@string/activity_style_composition"

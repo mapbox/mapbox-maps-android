@@ -1,29 +1,32 @@
 package com.mapbox.maps.extension.compose.style.layers.internal
 
 import com.mapbox.bindgen.Value
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.extension.compose.internal.MapNode
 import com.mapbox.maps.extension.compose.style.internal.PausingDispatcherNode
 import com.mapbox.maps.extension.compose.style.internal.StyleLayerPositionNode
 import com.mapbox.maps.extension.compose.style.internal.StyleSlotNode
+import com.mapbox.maps.extension.compose.style.sources.SourceState
 import com.mapbox.maps.logD
 import com.mapbox.maps.logE
 import com.mapbox.maps.logW
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
+@OptIn(MapboxExperimental::class)
 internal class LayerNode(
-  val map: MapboxMap,
+  private val map: MapboxMap,
   private val layerType: String,
-  layerId: String,
-  sourceId: String? = null,
+  private var layerId: String,
+  private var sourceState: SourceState? = null,
   private val coroutineScope: CoroutineScope,
 ) : PausingDispatcherNode() {
   private val parameters = hashMapOf(
     "id" to Value(layerId),
     "type" to Value(layerType)
   ).apply {
-    sourceId?.let {
+    sourceState?.sourceId?.let {
       this["source"] = Value(it)
     }
   }
@@ -41,10 +44,25 @@ internal class LayerNode(
     addLayer()
   }
 
+  private fun attachSource() {
+    sourceState?.attachToLayer(layerId, map)
+  }
+
+  private fun detachSource() {
+    sourceState?.detachFromLayer(layerId)
+  }
+
   override fun onRemoved(parent: MapNode) {
     logD(TAG, "onRemoved: parent=$parent")
     removeLayer()
+    detachSource()
     super.onRemoved(parent)
+  }
+
+  override fun onClear() {
+    removeLayer()
+    detachSource()
+    super.onClear()
   }
 
   private fun addLayer(parent: MapNode = parentNode) {
@@ -61,6 +79,7 @@ internal class LayerNode(
               logE(TAG, "Failed to add layer: $it")
             } ?: run {
               logD(TAG, "Added layer: $parameters")
+              attachSource()
               onNodeReady()
             }
           }
@@ -81,6 +100,7 @@ internal class LayerNode(
               map.styleLayers.forEach { logE(TAG, "\t ${it.id}") }
             } ?: run {
               logD(TAG, "Added layer: $parameters")
+              attachSource()
               onNodeReady()
             }
           }
@@ -97,6 +117,7 @@ internal class LayerNode(
           logE(TAG, "Failed to add persistent layer: $it")
         } ?: run {
           logD(TAG, "Added persistent layer: $parameters")
+          attachSource()
           onNodeReady()
         }
       }
@@ -105,7 +126,6 @@ internal class LayerNode(
 
   private fun removeLayer() {
     logD(TAG, "Removing layer: $this")
-    val layerId = parameters["id"]!!.contents as String
     map.removeStyleLayer(layerId).error?.let {
       logW(
         TAG,
@@ -114,13 +134,22 @@ internal class LayerNode(
     }
   }
 
-  /**
-   * Use this method to set properties that require removing and re-adding the layer, for example `layerId` and `sourceId`.
-   */
-  internal fun setConstructorProperty(name: String, value: Value) {
+  internal fun updateLayerId(layerId: String) {
+    detachSource()
     removeLayer()
-    parameters[name] = value
+    this.layerId = layerId
+    parameters["id"] = Value(layerId)
     addLayer()
+    attachSource()
+  }
+
+  internal fun updateSource(sourceState: SourceState) {
+    detachSource()
+    removeLayer()
+    this.sourceState = sourceState
+    parameters["source"] = Value(sourceState.sourceId)
+    addLayer()
+    attachSource()
   }
 
   internal fun setProperty(name: String, value: Value) {
@@ -128,7 +157,6 @@ internal class LayerNode(
     coroutineScope.launch {
       whenNodeReady {
         parameters[name] = value
-        val layerId = parameters["id"]!!.contents as String
         map.setStyleLayerProperty(layerId, name, value).error?.let {
           logW(
             TAG,

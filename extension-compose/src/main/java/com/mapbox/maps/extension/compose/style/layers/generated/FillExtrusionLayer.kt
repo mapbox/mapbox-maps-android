@@ -5,20 +5,22 @@ package com.mapbox.maps.extension.compose.style.layers.generated
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ComposeNode
 import androidx.compose.runtime.currentComposer
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.MapboxMapComposable
 import com.mapbox.maps.extension.compose.internal.MapApplier
+import com.mapbox.maps.extension.compose.style.IdGenerator.generateRandomLayerId
 import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
+import com.mapbox.maps.extension.compose.style.sources.SourceState
 
 /**
  * An extruded (3D) polygon.
  *
- * @see [The online documentation](https://www.mapbox.com/mapbox-gl-style-spec/#layers-fill-extrusion)
+ * @see [The online documentation](https://docs.mapbox.com/style-spec/reference/layers#fill-extrusion)
  *
- * @param layerId the ID of the layer
- * @param sourceId the ID of the source
+ * @param sourceState the source that drives this layer.
+ * @param layerId the ID of the layer, by default, a random id will be generated with UUID.
  * @param fillExtrusionEdgeRadius Radius of a fill extrusion edge in meters. If not zero, rounds extrusion edges for a smoother appearance.
  * @param fillExtrusionAmbientOcclusionGroundAttenuation Provides a control to futher fine-tune the look of the ambient occlusion on the ground beneath the extruded buildings. Lower values give the effect a more solid look while higher values make it smoother.
  * @param fillExtrusionAmbientOcclusionGroundRadius The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters.
@@ -52,8 +54,10 @@ import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
 @Composable
 @MapboxMapComposable
 public fun FillExtrusionLayer(
-  layerId: String,
-  sourceId: String,
+  sourceState: SourceState,
+  layerId: String = remember {
+    generateRandomLayerId("fill-extrusion")
+  },
   fillExtrusionEdgeRadius: FillExtrusionEdgeRadius = FillExtrusionEdgeRadius.default,
   fillExtrusionAmbientOcclusionGroundAttenuation: FillExtrusionAmbientOcclusionGroundAttenuation = FillExtrusionAmbientOcclusionGroundAttenuation.default,
   fillExtrusionAmbientOcclusionGroundAttenuationTransition: Transition = Transition.default,
@@ -110,8 +114,8 @@ public fun FillExtrusionLayer(
       LayerNode(
         map = mapApplier.mapView.mapboxMap,
         layerType = "fill-extrusion",
+        sourceState = sourceState,
         layerId = layerId,
-        sourceId = sourceId,
         coroutineScope = coroutineScope
       )
     },
@@ -253,11 +257,11 @@ public fun FillExtrusionLayer(
           setProperty(Filter.NAME, filter.value)
         }
       }
-      update(layerId) {
-        setConstructorProperty("id", Value(layerId))
+      update(sourceState) {
+        updateSource(sourceState)
       }
-      update(sourceId) {
-        setConstructorProperty("source", Value(sourceId))
+      update(layerId) {
+        updateLayerId(layerId)
       }
       update(fillExtrusionEdgeRadius) {
         setProperty(FillExtrusionEdgeRadius.NAME, fillExtrusionEdgeRadius.value)

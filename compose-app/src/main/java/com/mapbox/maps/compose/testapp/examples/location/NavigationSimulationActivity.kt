@@ -46,8 +46,8 @@ import com.mapbox.maps.extension.compose.style.layers.generated.LineLayer
 import com.mapbox.maps.extension.compose.style.layers.generated.LineTrimOffset
 import com.mapbox.maps.extension.compose.style.layers.generated.LineWidth
 import com.mapbox.maps.extension.compose.style.sources.generated.GeoJSONData
-import com.mapbox.maps.extension.compose.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.compose.style.sources.generated.LineMetrics
+import com.mapbox.maps.extension.compose.style.sources.generated.rememberGeoJsonSourceState
 import com.mapbox.maps.extension.style.expressions.dsl.generated.interpolate
 import com.mapbox.maps.plugin.PuckBearing
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener
@@ -193,13 +193,20 @@ public class NavigationSimulationActivity : ComponentActivity() {
   @MapboxStyleComposable
   @Composable
   public fun NavigationStyle(routeLine: LineString?, progress: Double, lightPreset: Value) {
+    val geoJsonSource = rememberGeoJsonSourceState {
+      lineMetrics = LineMetrics(true)
+    }
+    LaunchedEffect(routeLine) {
+      routeLine?.let {
+        geoJsonSource.data = GeoJSONData(it)
+      }
+    }
     MapboxStandardStyle(
       lightPreset = lightPreset,
       topSlot = {
         if (routeLine != null) {
           LineLayer(
-            layerId = ROUTE_CASING_LAYER_ID,
-            sourceId = ROUTE_LINE_SOURCE_ID,
+            sourceState = geoJsonSource,
             lineTrimOffset = LineTrimOffset(listOf(0.0, progress)),
             lineWidth = LineWidth(
               interpolate {
@@ -247,8 +254,7 @@ public class NavigationSimulationActivity : ComponentActivity() {
             )
           )
           LineLayer(
-            layerId = ROUTE_LINE_LAYER_ID,
-            sourceId = ROUTE_LINE_SOURCE_ID,
+            sourceState = geoJsonSource,
             lineTrimOffset = LineTrimOffset(listOf(0.0, progress)),
             lineWidth = LineWidth(
               interpolate {
@@ -303,11 +309,6 @@ public class NavigationSimulationActivity : ComponentActivity() {
               }
             )
           )
-          GeoJsonSource(
-            sourceId = ROUTE_LINE_SOURCE_ID,
-            data = GeoJSONData(routeLine),
-            lineMetrics = LineMetrics(true)
-          )
         }
       }
     )
@@ -315,8 +316,5 @@ public class NavigationSimulationActivity : ComponentActivity() {
 
   private companion object {
     private const val NAVIGATION_ROUTE_JSON_NAME = "navigation_route.json"
-    private const val ROUTE_CASING_LAYER_ID = "route-casing-layer"
-    private const val ROUTE_LINE_LAYER_ID = "route-line-layer"
-    private const val ROUTE_LINE_SOURCE_ID = "route-line-source"
   }
 }

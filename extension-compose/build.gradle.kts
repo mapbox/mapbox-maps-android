@@ -1,5 +1,6 @@
 plugins {
   id("com.mapbox.gradle.library")
+  id("kotlin-parcelize")
 }
 
 android {

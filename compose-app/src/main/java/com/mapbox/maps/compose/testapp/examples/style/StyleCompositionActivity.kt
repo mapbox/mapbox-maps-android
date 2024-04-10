@@ -13,9 +13,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Text
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,11 +30,14 @@ import com.mapbox.maps.compose.testapp.ExampleScaffold
 import com.mapbox.maps.compose.testapp.examples.utils.CityLocations
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
 import com.mapbox.maps.extension.compose.MapboxMap
-import com.mapbox.maps.extension.compose.animation.viewport.MapViewportState
+import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
 import com.mapbox.maps.extension.compose.style.GenericStyle
 import com.mapbox.maps.extension.compose.style.layers.generated.BackgroundColor
 import com.mapbox.maps.extension.compose.style.layers.generated.BackgroundLayer
 import com.mapbox.maps.extension.compose.style.layers.generated.BackgroundOpacity
+import com.mapbox.maps.extension.compose.style.layers.generated.CircleColor
+import com.mapbox.maps.extension.compose.style.layers.generated.CircleLayer
+import com.mapbox.maps.extension.compose.style.layers.generated.CircleRadius
 import com.mapbox.maps.extension.compose.style.layers.generated.SymbolLayer
 import com.mapbox.maps.extension.compose.style.layers.generated.TextColor
 import com.mapbox.maps.extension.compose.style.layers.generated.TextField
@@ -40,7 +45,7 @@ import com.mapbox.maps.extension.compose.style.layers.generated.TextSize
 import com.mapbox.maps.extension.compose.style.layers.generated.Transition
 import com.mapbox.maps.extension.compose.style.projection.Projection
 import com.mapbox.maps.extension.compose.style.sources.generated.GeoJSONData
-import com.mapbox.maps.extension.compose.style.sources.generated.GeoJsonSource
+import com.mapbox.maps.extension.compose.style.sources.generated.rememberGeoJsonSourceState
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 
 /**
@@ -63,7 +68,7 @@ public class StyleCompositionActivity : ComponentActivity() {
         mutableStateOf(Style.LIGHT)
       }
 
-      var centerLocation by remember {
+      var centerLocation by rememberSaveable {
         mutableStateOf(CityLocations.HELSINKI)
       }
 
@@ -75,12 +80,20 @@ public class StyleCompositionActivity : ComponentActivity() {
         mutableStateOf(Color.Red)
       }
 
+      val geoJsonSource = rememberGeoJsonSourceState {
+        data = GeoJSONData(centerLocation)
+      }
+
       val animatedLocation by animateValueAsState(
         targetValue = centerLocation,
         typeConverter = PointToVector,
-        animationSpec = TweenSpec(durationMillis = 1000),
+        animationSpec = TweenSpec(durationMillis = 1_000),
         label = "Animate location"
       )
+
+      LaunchedEffect(animatedLocation) {
+        geoJsonSource.data = GeoJSONData(animatedLocation)
+      }
 
       MapboxMapComposeTheme {
         ExampleScaffold(
@@ -155,7 +168,7 @@ public class StyleCompositionActivity : ComponentActivity() {
         ) {
           MapboxMap(
             Modifier.fillMaxSize(),
-            mapViewportState = MapViewportState().apply {
+            mapViewportState = rememberMapViewportState {
               setCameraOptions {
                 zoom(ZOOM)
                 center(CityLocations.HELSINKI)
@@ -166,20 +179,26 @@ public class StyleCompositionActivity : ComponentActivity() {
                 style = styleUri,
                 slots = mapOf(
                   "top" to {
-                    BackgroundLayer(
-                      layerId = "background-layer-at-top-slot",
-                      backgroundColor = BackgroundColor(Color.Yellow),
-                      backgroundOpacity = BackgroundOpacity(0.3)
-                    )
+                    // Only add background layer in top slot for standard style, where the top slot
+                    // is available.
+                    if (styleUri == Style.STANDARD) {
+                      BackgroundLayer(
+                        backgroundColor = BackgroundColor(Color.Yellow),
+                        backgroundOpacity = BackgroundOpacity(0.3)
+                      )
+                    }
                   }
                 ),
                 layerPositions = mapOf(
                   LayerPosition(null, "building", null) to {
-                    BackgroundLayer(
-                      layerId = "background-layer-at-position",
-                      backgroundColor = BackgroundColor(Color.Red),
-                      backgroundOpacity = BackgroundOpacity(0.3)
-                    )
+                    // only add background layer below building layer if the style is not standard
+                    // style, where layers are available in runtime styling.
+                    if (styleUri != Style.STANDARD) {
+                      BackgroundLayer(
+                        backgroundColor = BackgroundColor(Color.Red),
+                        backgroundOpacity = BackgroundOpacity(0.3)
+                      )
+                    }
                   }
                 ),
                 projection = projection
@@ -187,12 +206,17 @@ public class StyleCompositionActivity : ComponentActivity() {
             }
           ) {
             if (showSymbolLayer) {
+              CircleLayer(
+                sourceState = geoJsonSource,
+                circleColor = CircleColor(Color.Cyan),
+                circleRadius = CircleRadius(50.0),
+                circleRadiusTransition = Transition(duration = 1000L)
+              )
               SymbolLayer(
-                layerId = "symbol-layer",
-                sourceId = "sourceId",
+                sourceState = geoJsonSource,
                 textField = text,
                 textColor = TextColor(textColor),
-                textColorTransition = Transition(duration = 3000),
+                textColorTransition = Transition(duration = 1000),
                 textSize = TextSize(
                   Expression.interpolate {
                     linear()
@@ -207,10 +231,6 @@ public class StyleCompositionActivity : ComponentActivity() {
                     }
                   }
                 )
-              )
-              GeoJsonSource(
-                sourceId = "sourceId",
-                data = GeoJSONData(animatedLocation)
               )
             }
           }
