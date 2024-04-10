@@ -5,20 +5,22 @@ package com.mapbox.maps.extension.compose.style.layers.generated
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ComposeNode
 import androidx.compose.runtime.currentComposer
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.MapboxMapComposable
 import com.mapbox.maps.extension.compose.internal.MapApplier
+import com.mapbox.maps.extension.compose.style.IdGenerator.generateRandomLayerId
 import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
+import com.mapbox.maps.extension.compose.style.sources.SourceState
 
 /**
  * Raster map textures such as satellite imagery.
  *
- * @see [The online documentation](https://www.mapbox.com/mapbox-gl-style-spec/#layers-raster)
+ * @see [The online documentation](https://docs.mapbox.com/style-spec/reference/layers#raster)
  *
- * @param layerId the ID of the layer
- * @param sourceId the ID of the source
+ * @param sourceState the source that drives this layer.
+ * @param layerId the ID of the layer, by default, a random id will be generated with UUID.
  * @param rasterArrayBand Displayed band of raster array source layer
  * @param rasterBrightnessMax Increase or reduce the brightness of the image. The value is the maximum brightness.
  * @param rasterBrightnessMin Increase or reduce the brightness of the image. The value is the minimum brightness.
@@ -43,8 +45,10 @@ import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
 @Composable
 @MapboxMapComposable
 public fun RasterLayer(
-  layerId: String,
-  sourceId: String,
+  sourceState: SourceState,
+  layerId: String = remember {
+    generateRandomLayerId("raster")
+  },
   rasterArrayBand: RasterArrayBand = RasterArrayBand.default,
   rasterBrightnessMax: RasterBrightnessMax = RasterBrightnessMax.default,
   rasterBrightnessMaxTransition: Transition = Transition.default,
@@ -85,8 +89,8 @@ public fun RasterLayer(
       LayerNode(
         map = mapApplier.mapView.mapboxMap,
         layerType = "raster",
+        sourceState = sourceState,
         layerId = layerId,
-        sourceId = sourceId,
         coroutineScope = coroutineScope
       )
     },
@@ -180,11 +184,11 @@ public fun RasterLayer(
           setProperty(Filter.NAME, filter.value)
         }
       }
-      update(layerId) {
-        setConstructorProperty("id", Value(layerId))
+      update(sourceState) {
+        updateSource(sourceState)
       }
-      update(sourceId) {
-        setConstructorProperty("source", Value(sourceId))
+      update(layerId) {
+        updateLayerId(layerId)
       }
       update(rasterArrayBand) {
         setProperty(RasterArrayBand.NAME, rasterArrayBand.value)

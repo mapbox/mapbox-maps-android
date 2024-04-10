@@ -5,11 +5,12 @@ package com.mapbox.maps.extension.compose.style.layers.generated
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ComposeNode
 import androidx.compose.runtime.currentComposer
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.MapboxMapComposable
 import com.mapbox.maps.extension.compose.internal.MapApplier
+import com.mapbox.maps.extension.compose.style.IdGenerator.generateRandomLayerId
 import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
 
 /**
@@ -18,9 +19,9 @@ import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
  * **Warning**: As of v10.6.0, [Atmosphere] is the preferred method for atmospheric styling.
  * Sky layer is not supported by the globe projection, and will be phased out in future major release.
  *
- * @see [The online documentation](https://www.mapbox.com/mapbox-gl-style-spec/#layers-sky)
+ * @see [The online documentation](https://docs.mapbox.com/style-spec/reference/layers#sky)
  *
- * @param layerId the ID of the layer
+ * @param layerId the ID of the layer, by default, a random id will be generated with UUID.
  * @param skyAtmosphereColor A color used to tweak the main atmospheric scattering coefficients. Using white applies the default coefficients giving the natural blue color to the atmosphere. This color affects how heavily the corresponding wavelength is represented during scattering. The alpha channel describes the density of the atmosphere, with 1 maximum density and 0 no density.
  * @param skyAtmosphereHaloColor A color applied to the atmosphere sun halo. The alpha channel describes how strongly the sun halo is represented in an atmosphere sky layer.
  * @param skyAtmosphereSun Position of the sun center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the sun relative to 0 degree north, where degrees proceed clockwise. The polar angle indicates the height of the sun, where 0 degree is directly above, at zenith, and 90 degree at the horizon. When this property is ommitted, the sun center is directly inherited from the light position.
@@ -40,7 +41,9 @@ import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
 @Composable
 @MapboxMapComposable
 public fun SkyLayer(
-  layerId: String,
+  layerId: String = remember {
+    generateRandomLayerId("sky")
+  },
   skyAtmosphereColor: SkyAtmosphereColor = SkyAtmosphereColor.default,
   skyAtmosphereHaloColor: SkyAtmosphereHaloColor = SkyAtmosphereHaloColor.default,
   skyAtmosphereSun: SkyAtmosphereSun = SkyAtmosphereSun.default,
@@ -120,7 +123,7 @@ public fun SkyLayer(
         }
       }
       update(layerId) {
-        setConstructorProperty("id", Value(layerId))
+        updateLayerId(layerId)
       }
       update(skyAtmosphereColor) {
         setProperty(SkyAtmosphereColor.NAME, skyAtmosphereColor.value)

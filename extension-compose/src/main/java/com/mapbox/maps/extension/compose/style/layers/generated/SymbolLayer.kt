@@ -5,20 +5,22 @@ package com.mapbox.maps.extension.compose.style.layers.generated
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ComposeNode
 import androidx.compose.runtime.currentComposer
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.MapboxMapComposable
 import com.mapbox.maps.extension.compose.internal.MapApplier
+import com.mapbox.maps.extension.compose.style.IdGenerator.generateRandomLayerId
 import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
+import com.mapbox.maps.extension.compose.style.sources.SourceState
 
 /**
  * An icon or a text label.
  *
- * @see [The online documentation](https://www.mapbox.com/mapbox-gl-style-spec/#layers-symbol)
+ * @see [The online documentation](https://docs.mapbox.com/style-spec/reference/layers#symbol)
  *
- * @param layerId the ID of the layer
- * @param sourceId the ID of the source
+ * @param sourceState the source that drives this layer.
+ * @param layerId the ID of the layer, by default, a random id will be generated with UUID.
  * @param iconAllowOverlap If true, the icon will be visible even if it collides with other previously drawn symbols.
  * @param iconAnchor Part of the icon placed closest to the anchor.
  * @param iconIgnorePlacement If true, other symbols can be visible even if they collide with the icon.
@@ -89,8 +91,10 @@ import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
 @Composable
 @MapboxMapComposable
 public fun SymbolLayer(
-  layerId: String,
-  sourceId: String,
+  sourceState: SourceState,
+  layerId: String = remember {
+    generateRandomLayerId("symbol")
+  },
   iconAllowOverlap: IconAllowOverlap = IconAllowOverlap.default,
   iconAnchor: IconAnchor = IconAnchor.default,
   iconIgnorePlacement: IconIgnorePlacement = IconIgnorePlacement.default,
@@ -183,8 +187,8 @@ public fun SymbolLayer(
       LayerNode(
         map = mapApplier.mapView.mapboxMap,
         layerType = "symbol",
+        sourceState = sourceState,
         layerId = layerId,
-        sourceId = sourceId,
         coroutineScope = coroutineScope
       )
     },
@@ -434,11 +438,11 @@ public fun SymbolLayer(
           setProperty(Filter.NAME, filter.value)
         }
       }
-      update(layerId) {
-        setConstructorProperty("id", Value(layerId))
+      update(sourceState) {
+        updateSource(sourceState)
       }
-      update(sourceId) {
-        setConstructorProperty("source", Value(sourceId))
+      update(layerId) {
+        updateLayerId(layerId)
       }
       update(iconAllowOverlap) {
         setProperty(IconAllowOverlap.NAME, iconAllowOverlap.value)

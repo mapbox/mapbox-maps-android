@@ -4,6 +4,7 @@ import android.content.Context
 import com.mapbox.maps.MapInitOptions
 import com.mapbox.maps.MapOptions
 import com.mapbox.maps.MapView
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.applyDefaultParams
 import com.mapbox.maps.plugin.Plugin
 
@@ -15,6 +16,7 @@ import com.mapbox.maps.plugin.Plugin
  * @property antialiasingSampleCount Sample count to control multisample anti-aliasing (MSAA) option for rendering. E.g. passing 4 enables MSAA x4 if it is supported. Default is 1 (MSAA turned off).
  * @property mapName Custom name which will be appended to map render related logs. May be useful when using several [MapView]s. Defaults to an empty string.
  */
+@MapboxExperimental
 public data class ComposeMapInitOptions(
   val mapOptions: MapOptions,
   val textureView: Boolean = false,

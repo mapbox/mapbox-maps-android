@@ -5,20 +5,22 @@ package com.mapbox.maps.extension.compose.style.layers.generated
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ComposeNode
 import androidx.compose.runtime.currentComposer
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.MapboxMapComposable
 import com.mapbox.maps.extension.compose.internal.MapApplier
+import com.mapbox.maps.extension.compose.style.IdGenerator.generateRandomLayerId
 import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
+import com.mapbox.maps.extension.compose.style.sources.SourceState
 
 /**
  * A filled polygon with an optional stroked border.
  *
- * @see [The online documentation](https://www.mapbox.com/mapbox-gl-style-spec/#layers-fill)
+ * @see [The online documentation](https://docs.mapbox.com/style-spec/reference/layers#fill)
  *
- * @param layerId the ID of the layer
- * @param sourceId the ID of the source
+ * @param sourceState the source that drives this layer.
+ * @param layerId the ID of the layer, by default, a random id will be generated with UUID.
  * @param fillSortKey Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
  * @param fillAntialias Whether or not the fill should be antialiased.
  * @param fillColor The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
@@ -38,8 +40,10 @@ import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
 @Composable
 @MapboxMapComposable
 public fun FillLayer(
-  layerId: String,
-  sourceId: String,
+  sourceState: SourceState,
+  layerId: String = remember {
+    generateRandomLayerId("fill")
+  },
   fillSortKey: FillSortKey = FillSortKey.default,
   fillAntialias: FillAntialias = FillAntialias.default,
   fillColor: FillColor = FillColor.default,
@@ -70,8 +74,8 @@ public fun FillLayer(
       LayerNode(
         map = mapApplier.mapView.mapboxMap,
         layerType = "fill",
+        sourceState = sourceState,
         layerId = layerId,
-        sourceId = sourceId,
         coroutineScope = coroutineScope
       )
     },
@@ -135,11 +139,11 @@ public fun FillLayer(
           setProperty(Filter.NAME, filter.value)
         }
       }
-      update(layerId) {
-        setConstructorProperty("id", Value(layerId))
+      update(sourceState) {
+        updateSource(sourceState)
       }
-      update(sourceId) {
-        setConstructorProperty("source", Value(sourceId))
+      update(layerId) {
+        updateLayerId(layerId)
       }
       update(fillSortKey) {
         setProperty(FillSortKey.NAME, fillSortKey.value)

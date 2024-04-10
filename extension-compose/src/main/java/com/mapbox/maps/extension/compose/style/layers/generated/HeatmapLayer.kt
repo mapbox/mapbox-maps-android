@@ -5,20 +5,22 @@ package com.mapbox.maps.extension.compose.style.layers.generated
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ComposeNode
 import androidx.compose.runtime.currentComposer
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.MapboxMapComposable
 import com.mapbox.maps.extension.compose.internal.MapApplier
+import com.mapbox.maps.extension.compose.style.IdGenerator.generateRandomLayerId
 import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
+import com.mapbox.maps.extension.compose.style.sources.SourceState
 
 /**
  * A heatmap.
  *
- * @see [The online documentation](https://www.mapbox.com/mapbox-gl-style-spec/#layers-heatmap)
+ * @see [The online documentation](https://docs.mapbox.com/style-spec/reference/layers#heatmap)
  *
- * @param layerId the ID of the layer
- * @param sourceId the ID of the source
+ * @param sourceState the source that drives this layer.
+ * @param layerId the ID of the layer, by default, a random id will be generated with UUID.
  * @param heatmapColor Defines the color of each pixel based on its density value in a heatmap. Should be an expression that uses `["heatmap-density"]` as input.
  * @param heatmapIntensity Similar to `heatmap-weight` but controls the intensity of the heatmap globally. Primarily used for adjusting the heatmap based on zoom level.
  * @param heatmapOpacity The global opacity at which the heatmap layer will be drawn.
@@ -34,8 +36,10 @@ import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
 @Composable
 @MapboxMapComposable
 public fun HeatmapLayer(
-  layerId: String,
-  sourceId: String,
+  sourceState: SourceState,
+  layerId: String = remember {
+    generateRandomLayerId("heatmap")
+  },
   heatmapColor: HeatmapColor = HeatmapColor.default,
   heatmapIntensity: HeatmapIntensity = HeatmapIntensity.default,
   heatmapIntensityTransition: Transition = Transition.default,
@@ -60,8 +64,8 @@ public fun HeatmapLayer(
       LayerNode(
         map = mapApplier.mapView.mapboxMap,
         layerType = "heatmap",
+        sourceState = sourceState,
         layerId = layerId,
-        sourceId = sourceId,
         coroutineScope = coroutineScope
       )
     },
@@ -107,11 +111,11 @@ public fun HeatmapLayer(
           setProperty(Filter.NAME, filter.value)
         }
       }
-      update(layerId) {
-        setConstructorProperty("id", Value(layerId))
+      update(sourceState) {
+        updateSource(sourceState)
       }
-      update(sourceId) {
-        setConstructorProperty("source", Value(sourceId))
+      update(layerId) {
+        updateLayerId(layerId)
       }
       update(heatmapColor) {
         setProperty(HeatmapColor.NAME, heatmapColor.value)

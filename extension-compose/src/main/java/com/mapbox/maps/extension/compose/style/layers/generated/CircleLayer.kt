@@ -5,20 +5,22 @@ package com.mapbox.maps.extension.compose.style.layers.generated
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ComposeNode
 import androidx.compose.runtime.currentComposer
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.MapboxMapComposable
 import com.mapbox.maps.extension.compose.internal.MapApplier
+import com.mapbox.maps.extension.compose.style.IdGenerator.generateRandomLayerId
 import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
+import com.mapbox.maps.extension.compose.style.sources.SourceState
 
 /**
  * A filled circle.
  *
- * @see [The online documentation](https://www.mapbox.com/mapbox-gl-style-spec/#layers-circle)
+ * @see [The online documentation](https://docs.mapbox.com/style-spec/reference/layers#circle)
  *
- * @param layerId the ID of the layer
- * @param sourceId the ID of the source
+ * @param sourceState the source that drives this layer.
+ * @param layerId the ID of the layer, by default, a random id will be generated with UUID.
  * @param circleSortKey Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
  * @param circleBlur Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity.
  * @param circleColor The fill color of the circle.
@@ -42,8 +44,10 @@ import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
 @Composable
 @MapboxMapComposable
 public fun CircleLayer(
-  layerId: String,
-  sourceId: String,
+  sourceState: SourceState,
+  layerId: String = remember {
+    generateRandomLayerId("circle")
+  },
   circleSortKey: CircleSortKey = CircleSortKey.default,
   circleBlur: CircleBlur = CircleBlur.default,
   circleBlurTransition: Transition = Transition.default,
@@ -82,8 +86,8 @@ public fun CircleLayer(
       LayerNode(
         map = mapApplier.mapView.mapboxMap,
         layerType = "circle",
+        sourceState = sourceState,
         layerId = layerId,
-        sourceId = sourceId,
         coroutineScope = coroutineScope
       )
     },
@@ -171,11 +175,11 @@ public fun CircleLayer(
           setProperty(Filter.NAME, filter.value)
         }
       }
-      update(layerId) {
-        setConstructorProperty("id", Value(layerId))
+      update(sourceState) {
+        updateSource(sourceState)
       }
-      update(sourceId) {
-        setConstructorProperty("source", Value(sourceId))
+      update(layerId) {
+        updateLayerId(layerId)
       }
       update(circleSortKey) {
         setProperty(CircleSortKey.NAME, circleSortKey.value)

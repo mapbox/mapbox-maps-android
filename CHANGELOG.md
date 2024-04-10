@@ -6,7 +6,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 # 11.3.0
 ## Breaking changes ⚠️
-* [compose] Introduce `ComposeMapInitOptions` and remove `mapInitOptionsFactory`.
+* [compose] Introduce experimental `ComposeMapInitOptions` and remove `mapInitOptionsFactory`.
 * [compose] Replace experimental `MapboxMap.compassSettings`, `MapboxMap.scaleBarSettings`, `MapboxMap.logoSettings`, `MapboxMap.attributionSettings` with composable functions in dedicated scopes: `MapCompassScope.Compass()`, `MapScaleBarScope.ScaleBar()`, `MapLogoScope.Logo()`, `MapAttributionScope.Attribution()`.
 
 ## Features ✨ and improvements 🏁
@@ -14,7 +14,8 @@ Mapbox welcomes participation and contributions from everyone.
 * [compose] Add layer transition properties.
 * [compose] Add `contentPadding` to map ornament composable functions(e.g. `Compass`, `Logo`, `Attribution`, `ScaleBar`).
 * [compose] Introduce experimental `MapStyle`, `MapboxStandardStyle`, `GenericStyle` composable functions to work with the map style.
-* [compose] Added experimental layer and source composable functions to insert layer/sources to the map.
+* [compose] Introduce experimental layer composable functions to insert layers to the map.
+* [compose] Introduce experimental source states to work with layer composable functions.
 * [compose] Add map projection support in `GenericStyle` composable function.
 * Expose `MapInitOptions.mapName` (`mapbox_mapName` in XML) property allowing to set the custom name which will be appended to map render related logs.
 * Add Attribution and Telemetry pop-up dialogs and compass view content description translations for Arabic, Bulgarian, Catalan, Chinese Simplified, Chinese Traditional, Czech, Danish, Dutch, French, Galician, German, Hebrew, Italian, Japanese, Korean, Lithuanian, Norwegian, Polish, Belarusian, Russian, Spanish, Swedish, Ukranian and Vietnamese.

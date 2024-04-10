@@ -5,18 +5,20 @@ package com.mapbox.maps.extension.compose.style.layers.generated
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ComposeNode
 import androidx.compose.runtime.currentComposer
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.MapboxMapComposable
 import com.mapbox.maps.extension.compose.internal.MapApplier
+import com.mapbox.maps.extension.compose.style.IdGenerator.generateRandomLayerId
 import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
+import com.mapbox.maps.extension.compose.style.sources.SourceState
 
 /**
  * A layer to render 3D Models.
  *
- * @param layerId the ID of the layer
- * @param sourceId the ID of the source
+ * @param sourceState the source that drives this layer.
+ * @param layerId the ID of the layer, by default, a random id will be generated with UUID.
  * @param modelId Model to render.
  * @param modelAmbientOcclusionIntensity Intensity of the ambient occlusion if present in the 3D model.
  * @param modelCastShadows Enable/Disable shadow casting for this layer
@@ -43,8 +45,10 @@ import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
 @Composable
 @MapboxMapComposable
 public fun ModelLayer(
-  layerId: String,
-  sourceId: String,
+  sourceState: SourceState,
+  layerId: String = remember {
+    generateRandomLayerId("model")
+  },
   modelId: ModelId = ModelId.default,
   modelAmbientOcclusionIntensity: ModelAmbientOcclusionIntensity = ModelAmbientOcclusionIntensity.default,
   modelAmbientOcclusionIntensityTransition: Transition = Transition.default,
@@ -87,8 +91,8 @@ public fun ModelLayer(
       LayerNode(
         map = mapApplier.mapView.mapboxMap,
         layerType = "model",
+        sourceState = sourceState,
         layerId = layerId,
-        sourceId = sourceId,
         coroutineScope = coroutineScope
       )
     },
@@ -188,11 +192,11 @@ public fun ModelLayer(
           setProperty(Filter.NAME, filter.value)
         }
       }
-      update(layerId) {
-        setConstructorProperty("id", Value(layerId))
+      update(sourceState) {
+        updateSource(sourceState)
       }
-      update(sourceId) {
-        setConstructorProperty("source", Value(sourceId))
+      update(layerId) {
+        updateLayerId(layerId)
       }
       update(modelId) {
         setProperty(ModelId.NAME, modelId.value)
