@@ -14,6 +14,7 @@ import com.mapbox.maps.extension.compose.style.internal.MapStyleNode
 import com.mapbox.maps.extension.compose.style.internal.StyleConfig
 import com.mapbox.maps.extension.compose.style.internal.StyleLayerPosition
 import com.mapbox.maps.extension.compose.style.internal.StyleSlot
+import com.mapbox.maps.extension.compose.style.projection.Projection
 
 /**
  * The convenient composable function to set a Mapbox Standard style to the map, with available slots
@@ -72,6 +73,7 @@ public fun MapStyle(style: String) {
  * @param style The Style JSON or Style Uri to be set to the map.
  * @param slots The slot name and [MapboxStyleComposable] pairs that would be inserted to the corresponding slots in the style.
  * @param configs The map of importId and the config name/value pairs that would be applied to the style as style import configs.
+ * @param projection The projection to be set to the map. Defaults to [Projection.default] meaning that projection value is taken from the [style] definition.
  */
 @Composable
 @MapboxStyleComposable
@@ -81,6 +83,7 @@ public fun GenericStyle(
   slots: Map<String, (@Composable @MapboxMapComposable () -> Unit)?> = emptyMap(),
   layerPositions: Map<LayerPosition, (@Composable @MapboxMapComposable () -> Unit)?> = emptyMap(),
   configs: Map<String, Map<String, Value>> = emptyMap(),
+  projection: Projection = Projection.default,
 ) {
   // When style is changed, we want to trigger the recompose of the whole style node
   key(style) {
@@ -93,9 +96,14 @@ public fun GenericStyle(
         MapStyleNode(
           style = style,
           mapboxMap = mapApplier.mapView.mapboxMap,
+          projection = projection
         )
       },
-      update = { }
+      update = {
+        update(projection) {
+          updateProjection(projection)
+        }
+      }
     ) {
       slots.entries.filter { it.value != null }.forEach {
         key(it.key) {

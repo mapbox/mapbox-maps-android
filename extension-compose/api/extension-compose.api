@@ -218,7 +218,7 @@ public abstract interface annotation class com/mapbox/maps/extension/compose/sty
 }
 
 public final class com/mapbox/maps/extension/compose/style/StyleKt {
-	public static final fun GenericStyle (Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;Ljava/util/Map;Landroidx/compose/runtime/Composer;II)V
+	public static final fun GenericStyle (Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;Ljava/util/Map;Lcom/mapbox/maps/extension/compose/style/projection/Projection;Landroidx/compose/runtime/Composer;II)V
 	public static final fun MapStyle (Ljava/lang/String;Landroidx/compose/runtime/Composer;I)V
 	public static final fun MapboxStandardStyle (Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lcom/mapbox/bindgen/Value;Landroidx/compose/runtime/Composer;II)V
 }
@@ -3981,6 +3981,23 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Visi
 
 public final class com/mapbox/maps/extension/compose/style/layers/generated/Visibility$Companion {
 	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/layers/generated/Visibility;
+}
+
+public final class com/mapbox/maps/extension/compose/style/projection/Projection {
+	public static final field Companion Lcom/mapbox/maps/extension/compose/style/projection/Projection$Companion;
+	public static final field GLOBE Lcom/mapbox/maps/extension/compose/style/projection/Projection;
+	public static final field MERCATOR Lcom/mapbox/maps/extension/compose/style/projection/Projection;
+	public final fun component1 ()Lcom/mapbox/bindgen/Value;
+	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/projection/Projection;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/projection/Projection;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/projection/Projection;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/compose/style/projection/Projection$Companion {
+	public final fun getDefault ()Lcom/mapbox/maps/extension/compose/style/projection/Projection;
 }
 
 public final class com/mapbox/maps/extension/compose/style/sources/generated/Attribution {

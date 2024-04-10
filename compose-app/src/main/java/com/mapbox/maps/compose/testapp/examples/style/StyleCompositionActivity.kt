@@ -38,6 +38,7 @@ import com.mapbox.maps.extension.compose.style.layers.generated.TextColor
 import com.mapbox.maps.extension.compose.style.layers.generated.TextField
 import com.mapbox.maps.extension.compose.style.layers.generated.TextSize
 import com.mapbox.maps.extension.compose.style.layers.generated.Transition
+import com.mapbox.maps.extension.compose.style.projection.Projection
 import com.mapbox.maps.extension.compose.style.sources.generated.GeoJSONData
 import com.mapbox.maps.extension.compose.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.expressions.generated.Expression
@@ -64,6 +65,10 @@ public class StyleCompositionActivity : ComponentActivity() {
 
       var centerLocation by remember {
         mutableStateOf(CityLocations.HELSINKI)
+      }
+
+      var projection by remember {
+        mutableStateOf(Projection.MERCATOR)
       }
 
       var textColor by remember {
@@ -126,6 +131,25 @@ public class StyleCompositionActivity : ComponentActivity() {
               ) {
                 Text(modifier = Modifier.padding(10.dp), text = "Toggle Style")
               }
+              FloatingActionButton(
+                modifier = Modifier.padding(bottom = 10.dp),
+                onClick = {
+                  projection = when (projection) {
+                      Projection.default -> {
+                        Projection.GLOBE
+                      }
+                      Projection.GLOBE -> {
+                        Projection.MERCATOR
+                      }
+                      else -> {
+                        Projection.default
+                      }
+                  }
+                },
+                shape = RoundedCornerShape(16.dp),
+              ) {
+                Text(modifier = Modifier.padding(10.dp), text = "Change projection")
+              }
             }
           }
         ) {
@@ -157,7 +181,8 @@ public class StyleCompositionActivity : ComponentActivity() {
                       backgroundOpacity = BackgroundOpacity(0.3)
                     )
                   }
-                )
+                ),
+                projection = projection
               )
             }
           ) {
