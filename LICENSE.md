@@ -360,7 +360,7 @@ Mapbox Maps Android uses portions of the Mapbox Annotations.
 
 URL: [https://github.com/mapbox/mapbox-base-android](https://github.com/mapbox/mapbox-base-android)
 
-License: [BSD](https://opensource.org/licenses/BSD-2-Clause)
+License: [Mapbox Terms of Service](https://www.mapbox.com/legal/tos/)
 
 ===========================================================================
 
@@ -368,7 +368,7 @@ Mapbox Maps Android uses portions of the Mapbox Common.
 
 URL: [https://github.com/mapbox/mapbox-base-android](https://github.com/mapbox/mapbox-base-android)
 
-License: [BSD](https://opensource.org/licenses/BSD-2-Clause)
+License: [Mapbox Terms of Service](https://www.mapbox.com/legal/tos/)
 
 ===========================================================================
 
@@ -384,7 +384,7 @@ Mapbox Maps Android uses portions of the Mapbox LibraryLoader.
 
 URL: [https://github.com/mapbox/mapbox-base-android](https://github.com/mapbox/mapbox-base-android)
 
-License: [BSD](https://opensource.org/licenses/BSD-2-Clause)
+License: [Mapbox Terms of Service](https://www.mapbox.com/legal/tos/)
 
 ===========================================================================
 
@@ -392,7 +392,7 @@ Mapbox Maps Android uses portions of the Mapbox Logger.
 
 URL: [https://github.com/mapbox/mapbox-base-android](https://github.com/mapbox/mapbox-base-android)
 
-License: [BSD](https://opensource.org/licenses/BSD-2-Clause)
+License: [Mapbox Terms of Service](https://www.mapbox.com/legal/tos/)
 
 ===========================================================================
 
@@ -444,7 +444,7 @@ License: [The Apache Software License, Version 2.0](http://www.apache.org/licens
 
 ===========================================================================
 
-### MapboxCoreMaps,11.3.0-rc.1,Mapbox ToS,Mapbox,https://www.mapbox.com/
+### MapboxCoreMaps,11.3.0,Mapbox ToS,Mapbox,https://www.mapbox.com/
 
 ```
 Mapbox Core Maps version 10.0
