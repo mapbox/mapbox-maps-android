@@ -7,9 +7,55 @@ Mapbox welcomes participation and contributions from everyone.
 # 11.3.0
 ## Breaking changes ⚠️
 * [compose] Introduce `ComposeMapInitOptions` and remove `mapInitOptionsFactory`.
+* [compose] Replace experimental `MapboxMap.compassSettings`, `MapboxMap.scaleBarSettings`, `MapboxMap.logoSettings`, `MapboxMap.attributionSettings` with composable functions in dedicated scopes: `MapCompassScope.Compass()`, `MapScaleBarScope.ScaleBar()`, `MapLogoScope.Logo()`, `MapAttributionScope.Attribution()`.
+
+## Features ✨ and improvements 🏁
+* [compose] Add layerPosition support in `GenericStyle` composable function.
+* [compose] Add layer transition properties.
+* [compose] Add `contentPadding` to map ornament composable functions(e.g. `Compass`, `Logo`, `Attribution`, `ScaleBar`).
+* [compose] Introduce experimental `MapStyle`, `MapboxStandardStyle`, `GenericStyle` composable functions to work with the map style.
+* [compose] Added experimental layer and source composable functions to insert layer/sources to the map.
+* Expose `MapInitOptions.mapName` (`mapbox_mapName` in XML) property allowing to set the custom name which will be appended to map render related logs.
+* Add Attribution and Telemetry pop-up dialogs and compass view content description translations for Arabic, Bulgarian, Catalan, Chinese Simplified, Chinese Traditional, Czech, Danish, Dutch, French, Galician, German, Hebrew, Italian, Japanese, Korean, Lithuanian, Norwegian, Polish, Belarusian, Russian, Spanish, Swedish, Ukranian and Vietnamese.
+* Perform faster landmark parsing by switching tinygltf in favor of cgltf.
+* Use mipmap with pattern images.
+* Add `SdkInformationQuery` to expose sdk version information.
+* Enable `TileStore` delta updates by default for Maps domain.
+* Add `TileStore.estimateTileRegion` API for estimating Tile Region downloads and storage size.
 
 # Bug fixes 🐞
 * [compose] Fix a bug introduced in `11.3.0-beta.1` where AnnotationGroup items updates were skipped.
+* [compose] Fix `ViewAnnotation` not cleared when it leaves composition.
+* [compose] Fix the `IndexOutOfBoundsException` because of `RootNode` of `MapboxMap` node tree being shared across multiple maps.
+* Resolve the data race by ensuring that when terrain is enabled, the transform state is updated with the correct elevation instance.
+* Fix offline composited tiles fetching when the request tile zoom level is above maximum zoom for one of the composed tile packs but below maximum zoom level for another one.
+* Fix override of line-gradient textures when fill-extrusion effects are used on terrain.
+* Return `ViewAnnotationOptions.Builder` when calling `ViewAnnotationOptions.Builder.annotationAnchor` extension function.
+* Immediately add annotations and location component to the map instead of waiting for style load events.
+* Fix a bug where specifying a large negative value for padding in `MapboxMap.camera*()` methods resulted in the returned zoom value being NaN.
+* Fix location indicator models rendering issue with globe projection.
+* Offline: composite higher level tiles from their parents, when a non-standard [tile pack zoom ranges scheme](https://docs.mapbox.com/android/maps/guides/offline/#tile-count-granularity) is used.
+* Use bigger http buffers to avoid reference table overflow.
+* Fix attribution links not opening in some scenarios.
+* Fix attribution and telemetry dialogs not respecting current theme.
+* Fix map being pixelated on some devices when `ContextMode.SHARED` is used (e.g. in AndroidAuto extension).
+* Fix map being black on some zoom levels when `ContextMode.SHARED` is used (e.g. in AndroidAuto extension).
+* Fix incorrect widget position and scale when resizing the drawing surface.
+* Fix layer paint property update with feature state changes, especially if the paint property value data-driven by brightness or zoom.
+* Fix snapshotter race conditions to ensure new request could effectively trigger map rendering.
+* Fix raster array band updates glitches during the camera zoom animation.
+* Reload vector source tiles when language or worldview setting is changed.
+* Apply config expression to atmosphere properties.
+* Fix map freezing when using `queryRenderedFeatures` with 3d models in mercator projection.
+* Reduce time spent on line gradient updates on the render thread.
+* Fix network reachability status getting stuck with ReachableViaWWAN status if HTTP requests completed at the same time as network reported being disconnected.
+* Fix wrong network reachability statuses.
+* Fix double `LocationServiceObserver.onAvailabilityChanged` callback trigger.
+* Avoid bringing Kotlin 1.8 as transitive dependency, Maps SDK should use Kotlin 1.7.20.
+
+## Dependencies
+* Update gl-native to v11.3.0 and common to v24.3.1. 
+* Update Mapbox Base Android library to [v0.11.0](https://github.com/mapbox/mapbox-base-android/releases/tag/v0.11.0).
 
 # 11.3.0-rc.1 March 28, 2024
 ##  Known Issues ⚠️
