@@ -4,7 +4,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-# 11.3.0
+
+# 11.3.0 April 11, 2024
 ## Breaking changes ⚠️
 * [compose] Introduce experimental `ComposeMapInitOptions` and remove `mapInitOptionsFactory`.
 * [compose] Replace experimental `MapboxMap.compassSettings`, `MapboxMap.scaleBarSettings`, `MapboxMap.logoSettings`, `MapboxMap.attributionSettings` with composable functions in dedicated scopes: `MapCompassScope.Compass()`, `MapScaleBarScope.ScaleBar()`, `MapLogoScope.Logo()`, `MapAttributionScope.Attribution()`.
@@ -25,7 +26,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Enable `TileStore` delta updates by default for Maps domain.
 * Add `TileStore.estimateTileRegion` API for estimating Tile Region downloads and storage size.
 
-# Bug fixes 🐞
+## Bug fixes 🐞
 * [compose] Fix a bug introduced in `11.3.0-beta.1` where AnnotationGroup items updates were skipped.
 * [compose] Fix `ViewAnnotation` not cleared when it leaves composition.
 * [compose] Fix the `IndexOutOfBoundsException` because of `RootNode` of `MapboxMap` node tree being shared across multiple maps.
