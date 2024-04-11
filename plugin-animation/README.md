@@ -34,7 +34,7 @@ allprojects {
 
 // In the app build.gradle file
 dependencies {
-  implementation 'com.mapbox.plugin:maps-animation:11.3.0-rc.1'
+  implementation 'com.mapbox.plugin:maps-animation:11.3.0'
 }
 ```
 
