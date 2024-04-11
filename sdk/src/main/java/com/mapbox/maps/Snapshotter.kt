@@ -445,6 +445,8 @@ open class Snapshotter {
         .withAttributionData(*overlay.attributions.toTypedArray())
         .withCopyrightSign(false)
         .withImproveMap(false)
+        .withMapboxPrivacyPolicy(false)
+        .withTelemetryAttribution(false)
         .build()
       return attributionParser.createAttributionString(shortText)
     }

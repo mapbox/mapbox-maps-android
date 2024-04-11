@@ -117,6 +117,9 @@ open class AttributionParser internal constructor(
     if (isUrlValid(url)) {
       var anchor = parseAnchorValue(htmlBuilder, urlSpan)
       if (isImproveThisMapAnchor(anchor)) {
+        if (!withImproveMap) {
+          return
+        }
         anchor = translateImproveThisMapAnchor(anchor)
       }
       attributions.add(
