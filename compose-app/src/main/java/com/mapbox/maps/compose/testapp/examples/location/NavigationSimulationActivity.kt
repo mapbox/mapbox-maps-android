@@ -18,7 +18,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.mapbox.api.directions.v5.models.DirectionsResponse
@@ -32,7 +31,6 @@ import com.mapbox.maps.compose.testapp.examples.utils.AnnotationUtils
 import com.mapbox.maps.compose.testapp.examples.utils.CityLocations
 import com.mapbox.maps.compose.testapp.examples.utils.SimulateRouteLocationProvider
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
-import com.mapbox.maps.extension.compose.DefaultSettingsProvider
 import com.mapbox.maps.extension.compose.DisposableMapEffect
 import com.mapbox.maps.extension.compose.MapEffect
 import com.mapbox.maps.extension.compose.MapboxMap
@@ -156,14 +154,6 @@ public class NavigationSimulationActivity : ComponentActivity() {
           MapboxMap(
             Modifier.fillMaxSize(),
             mapViewportState = mapViewportState,
-            locationComponentSettings = DefaultSettingsProvider.defaultLocationComponentSettings(
-              LocalDensity.current.density
-            ).toBuilder()
-              .setLocationPuck(createDefault2DPuck(withBearing = true))
-              .setPuckBearingEnabled(true)
-              .setPuckBearing(PuckBearing.HEADING)
-              .setEnabled(routeLine != null)
-              .build(),
             style = {
               NavigationStyle(routeLine = routeLine, progress = progress, lightPreset = lightPreset)
             }
@@ -171,10 +161,16 @@ public class NavigationSimulationActivity : ComponentActivity() {
             MapEffect(routeLine) { map ->
               routeLine?.let {
                 map.location.setLocationProvider(SimulateRouteLocationProvider(it))
+                map.location.enabled = true
                 mapViewportState.transitionToFollowPuckState()
               }
             }
             DisposableMapEffect(Unit) { map ->
+              map.location.updateSettings {
+                locationPuck = createDefault2DPuck(withBearing = true)
+                puckBearingEnabled = true
+                puckBearing = PuckBearing.HEADING
+              }
               val locationListener = OnIndicatorPositionChangedListener { point ->
                 // in SimulateRouteLocationProvider we use altitude field to insert animated progress info.
                 progress = point.altitude()

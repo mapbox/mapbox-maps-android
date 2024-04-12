@@ -33,7 +33,6 @@ import com.mapbox.maps.extension.compose.style.MapboxStyleComposable
 import com.mapbox.maps.plugin.gestures.OnMapClickListener
 import com.mapbox.maps.plugin.gestures.OnMapLongClickListener
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettings
-import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
 import kotlinx.coroutines.awaitCancellation
 
 /**
@@ -42,7 +41,6 @@ import kotlinx.coroutines.awaitCancellation
  * @param modifier Modifier to be applied to the Mapbox map.
  * @param composeMapInitOptions Defines the initialisation configurations for a [MapboxMap]. It should only be set once and not mutated after the initialisation. Mutating the [ComposeMapInitOptions] will result in internal [MapView] recreation and impact performance.
  * @param gesturesSettings Gesture configuration allows to control the user touch interaction.
- * @param locationComponentSettings Settings for showing a location puck on the map.
  * @param compass The Mapbox Compass ornament of the map, consider using [MapCompassScope.Compass].
  * @param scaleBar The Mapbox ScaleBar ornament of the map, consider using [MapScaleBarScope.ScaleBar].
  * @param logo The Mapbox Logo ornament of the map, consider using [MapLogoScope.Logo].
@@ -60,9 +58,6 @@ public fun MapboxMap(
   mapEvents: MapEvents? = null,
   composeMapInitOptions: ComposeMapInitOptions = ComposeMapInitOptions(LocalDensity.current.density),
   gesturesSettings: GesturesSettings = GesturesSettings { },
-  locationComponentSettings: LocationComponentSettings = DefaultSettingsProvider.defaultLocationComponentSettings(
-    LocalDensity.current.density
-  ),
   compass: (@Composable MapCompassScope.() -> Unit) = { Compass() },
   scaleBar: (@Composable MapScaleBarScope.() -> Unit) = { ScaleBar() },
   logo: (@Composable MapLogoScope.() -> Unit) = { Logo() },
@@ -103,7 +98,6 @@ public fun MapboxMap(
 
     val parentComposition = rememberCompositionContext()
     val currentGesturesSettings by rememberUpdatedState(gesturesSettings)
-    val currentLocationComponentSettings by rememberUpdatedState(locationComponentSettings)
     val currentMapViewportState by rememberUpdatedState(mapViewportState)
     val currentOnMapClickListener by rememberUpdatedState(onMapClickListener)
     val currentOnMapLongClickListener by rememberUpdatedState(onMapLongClickListener)
@@ -118,7 +112,6 @@ public fun MapboxMap(
           setContent {
             MapboxMapComposeNode(
               currentGesturesSettings,
-              currentLocationComponentSettings,
               currentMapViewportState,
               currentOnMapClickListener,
               currentOnMapLongClickListener,

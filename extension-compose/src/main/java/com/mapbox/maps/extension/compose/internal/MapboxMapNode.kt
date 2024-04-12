@@ -28,8 +28,6 @@ import com.mapbox.maps.plugin.gestures.OnMapClickListener
 import com.mapbox.maps.plugin.gestures.OnMapLongClickListener
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettings
 import com.mapbox.maps.plugin.gestures.gestures
-import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
-import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.plugin.viewport.ViewportStatusObserver
 import com.mapbox.maps.plugin.viewport.viewport
 
@@ -238,7 +236,6 @@ private class MapboxMapNode(
 @Composable
 internal fun MapboxMapComposeNode(
   gesturesSettings: GesturesSettings,
-  locationComponentSettings: LocationComponentSettings,
   mapViewportState: MapViewportState,
   onMapClickListener: OnMapClickListener,
   onMapLongClickListener: OnMapLongClickListener,
@@ -259,9 +256,6 @@ internal fun MapboxMapComposeNode(
       // input arguments updater
       set(gesturesSettings) {
         this.controller.gestures.applySettings(it)
-      }
-      set(locationComponentSettings) {
-        this.controller.location.applySettings(it)
       }
       update(onMapClickListener) { listener ->
         this.clickListener = listener

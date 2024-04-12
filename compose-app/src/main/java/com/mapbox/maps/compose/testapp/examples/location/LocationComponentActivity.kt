@@ -14,7 +14,6 @@ import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.SnackbarHost
 import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.Text
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -23,18 +22,18 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.compose.testapp.ExampleScaffold
 import com.mapbox.maps.compose.testapp.examples.utils.CityLocations
 import com.mapbox.maps.compose.testapp.examples.utils.RequestLocationPermission
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
-import com.mapbox.maps.extension.compose.DefaultSettingsProvider
+import com.mapbox.maps.extension.compose.MapEffect
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
 import com.mapbox.maps.plugin.PuckBearing
 import com.mapbox.maps.plugin.locationcomponent.createDefault2DPuck
+import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.plugin.viewport.ViewportStatus
 import kotlinx.coroutines.launch
 
@@ -104,16 +103,14 @@ public class LocationComponentActivity : ComponentActivity() {
             MapboxMap(
               Modifier.fillMaxSize(),
               mapViewportState = mapViewportState,
-              locationComponentSettings = DefaultSettingsProvider.defaultLocationComponentSettings(
-                LocalDensity.current.density
-              ).toBuilder()
-                .setLocationPuck(createDefault2DPuck(withBearing = true))
-                .setPuckBearingEnabled(true)
-                .setPuckBearing(PuckBearing.HEADING)
-                .setEnabled(true)
-                .build()
             ) {
-              LaunchedEffect(Unit) {
+              MapEffect(Unit) { mapView ->
+                mapView.location.updateSettings {
+                  locationPuck = createDefault2DPuck(withBearing = true)
+                  puckBearingEnabled = true
+                  puckBearing = PuckBearing.HEADING
+                  enabled = true
+                }
                 mapViewportState.transitionToFollowPuckState()
               }
             }

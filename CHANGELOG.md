@@ -4,6 +4,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+## Breaking changes ⚠️
+[compose] Remove `locationComponentSettings` from `MapboxMap` composable function, `MapEffect` with location component API should be used instead. More compose-friendly location component API will be introduced in future releases.
 
 # 11.3.0 April 11, 2024
 ## Breaking changes ⚠️
