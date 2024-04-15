@@ -12,7 +12,14 @@ import com.mapbox.maps.extension.style.layers.properties.generated.ProjectionNam
  */
 @Immutable
 @MapboxExperimental
-public data class Projection private constructor(public val value: Value) {
+public data class Projection private constructor(
+  public val value: Value
+) {
+
+  private constructor(name: ProjectionName) : this(
+    Value.valueOf(hashMapOf("name" to Value(name.value))),
+  )
+
   /**
    * Public companion object.
    */
@@ -27,24 +34,12 @@ public data class Projection private constructor(public val value: Value) {
      * The globe projection.
      */
     @JvmField
-    public val GLOBE: Projection = Projection(
-      Value.valueOf(
-        hashMapOf(
-          "name" to Value(ProjectionName.GLOBE.value)
-        )
-      )
-    )
+    public val GLOBE: Projection = Projection(ProjectionName.GLOBE)
 
     /**
      * The Mercator projection.
      */
     @JvmField
-    public val MERCATOR: Projection = Projection(
-      Value.valueOf(
-        hashMapOf(
-          "name" to Value(ProjectionName.MERCATOR.value)
-        )
-      )
-    )
+    public val MERCATOR: Projection = Projection(ProjectionName.MERCATOR)
   }
 }

@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.FloatingActionButton
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -53,6 +54,10 @@ import com.mapbox.maps.extension.style.expressions.generated.Expression
  */
 @OptIn(MapboxExperimental::class)
 public class StyleCompositionActivity : ComponentActivity() {
+  private val projections =
+    // Standard style default projection is GLOBE so we make sure that MERCATOR is before and after
+    // default so the map changes visually.
+    listOf(Projection.default, Projection.MERCATOR, Projection.GLOBE, Projection.MERCATOR)
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContent {
@@ -72,8 +77,8 @@ public class StyleCompositionActivity : ComponentActivity() {
         mutableStateOf(CityLocations.HELSINKI)
       }
 
-      var projection by remember {
-        mutableStateOf(Projection.MERCATOR)
+      var currentProjectionIdx by remember {
+        mutableStateOf(0)
       }
 
       var textColor by remember {
@@ -93,6 +98,13 @@ public class StyleCompositionActivity : ComponentActivity() {
 
       LaunchedEffect(animatedLocation) {
         geoJsonSource.data = GeoJSONData(animatedLocation)
+      }
+
+      val mapViewportState = rememberMapViewportState {
+        setCameraOptions {
+          zoom(ZOOM)
+          center(CityLocations.HELSINKI)
+        }
       }
 
       MapboxMapComposeTheme {
@@ -144,36 +156,30 @@ public class StyleCompositionActivity : ComponentActivity() {
               ) {
                 Text(modifier = Modifier.padding(10.dp), text = "Toggle Style")
               }
+              val enableProjectionBt = mapViewportState.cameraState.zoom < 6.0
               FloatingActionButton(
                 modifier = Modifier.padding(bottom = 10.dp),
+                backgroundColor = if (enableProjectionBt) MaterialTheme.colors.secondary else Color.LightGray,
                 onClick = {
-                  projection = when (projection) {
-                      Projection.default -> {
-                        Projection.GLOBE
-                      }
-                      Projection.GLOBE -> {
-                        Projection.MERCATOR
-                      }
-                      else -> {
-                        Projection.default
-                      }
+                  if (enableProjectionBt) {
+                    currentProjectionIdx = (currentProjectionIdx + 1) % projections.size
                   }
                 },
                 shape = RoundedCornerShape(16.dp),
               ) {
-                Text(modifier = Modifier.padding(10.dp), text = "Change projection")
+                val nextProjectionName =
+                  projections[(currentProjectionIdx + 1) % projections.size].friendlyName()
+                Text(
+                  modifier = Modifier.padding(10.dp),
+                  text = "Change projection to $nextProjectionName"
+                )
               }
             }
           }
         ) {
           MapboxMap(
             Modifier.fillMaxSize(),
-            mapViewportState = rememberMapViewportState {
-              setCameraOptions {
-                zoom(ZOOM)
-                center(CityLocations.HELSINKI)
-              }
-            },
+            mapViewportState = mapViewportState,
             style = {
               GenericStyle(
                 style = styleUri,
@@ -201,7 +207,7 @@ public class StyleCompositionActivity : ComponentActivity() {
                     }
                   }
                 ),
-                projection = projection
+                projection = projections[currentProjectionIdx]
               )
             }
           ) {
@@ -258,5 +264,17 @@ public class StyleCompositionActivity : ComponentActivity() {
     const val ZOOM: Double = 9.0
     private var count = 0
     private const val OFFSET = 0.03
+  }
+  @OptIn(MapboxExperimental::class)
+  private fun Projection.friendlyName(): String {
+    return when (this) {
+      Projection.GLOBE -> "globe"
+
+      Projection.MERCATOR -> "mercator"
+
+      Projection.default -> "default"
+
+      else -> "Unknown"
+    }
   }
 }

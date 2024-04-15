@@ -93,7 +93,7 @@ internal class MapStyleNode(
       styleDataLoaded.collect {
         mapboxMap.setStyleProjection(projection.value)
           .onValue {
-            Log.d(TAG, "$projection projection  applied")
+            Log.d(TAG, "$projection projection applied")
           }.onError {
             Log.e(TAG, "Error $it when applying $projection projection")
           }
