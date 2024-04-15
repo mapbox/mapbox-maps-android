@@ -7,6 +7,9 @@ Mapbox welcomes participation and contributions from everyone.
 ## Breaking changes ⚠️
 [compose] Remove `locationComponentSettings` from `MapboxMap` composable function, `MapEffect` with location component API should be used instead. More compose-friendly location component API will be introduced in future releases.
 
+## Bug fixes 🐞
+[compose] Fix an issue with `rememberGeoJsonSourceState`, where the `Value` and `GeoJsonData` can not be serialised. 
+
 # 11.3.0 April 11, 2024
 ## Breaking changes ⚠️
 * [compose] Introduce experimental `ComposeMapInitOptions` and remove `mapInitOptionsFactory`.

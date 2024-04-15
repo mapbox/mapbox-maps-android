@@ -3667,7 +3667,7 @@ package com.mapbox.maps.extension.compose.style.sources {
     property public String sourceId;
   }
 
-  @com.mapbox.maps.MapboxExperimental @kotlinx.parcelize.Parcelize public static final class SourceState.Holder implements android.os.Parcelable {
+  @com.mapbox.maps.MapboxExperimental @kotlinx.parcelize.Parcelize @kotlinx.parcelize.TypeParceler @kotlinx.parcelize.TypeParceler public static final class SourceState.Holder implements android.os.Parcelable {
     ctor public SourceState.Holder(String sourcedId, java.util.Map<java.lang.String,? extends com.mapbox.bindgen.Value> builderProperties, java.util.Map<java.lang.String,? extends com.mapbox.bindgen.Value> cachedProperties, com.mapbox.maps.extension.compose.style.sources.generated.GeoJSONData geoJSONData);
     method public String component1();
     method public java.util.Map<java.lang.String,com.mapbox.bindgen.Value> component2();
